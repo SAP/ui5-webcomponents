@@ -15,17 +15,15 @@
 {{/inline}}
 
 {{#*inline "iconBegin"}}
-	{{#if _siblingsWithIcon}}
-		{{#if hasIcon}}
-			<ui5-icon
-				part="icon"
-				class="ui5-li-icon"
-				name="{{icon}}"
-			>
-			</ui5-icon>
-		{{else}}
-			<div class="ui5-menu-item-dummy-icon"></div>
-		{{/if}}
+	{{#if hasIcon}}
+		<ui5-icon
+			part="icon"
+			class="ui5-li-icon"
+			name="{{icon}}"
+		>
+		</ui5-icon>
+	{{else if _siblingsWithIcon}}
+		<div class="ui5-menu-item-dummy-icon"></div>
 	{{/if}}
 {{/inline}}
 
@@ -45,4 +43,78 @@
 				></ui5-icon>
 			{{/if}}
 	{{/if}}
+{{/inline}}
+
+{{#if hasSubmenu}}
+	{{> listItemPostContent}}
+{{/if}}
+
+{{#*inline "listItemPostContent"}}
+	<ui5-responsive-popover
+		id="{{_id}}-navigation-menu-rp"
+		class="ui5-menu-rp ui5-navigation-menu"
+		vertical-align="Center"
+		sub-menu
+		prevent-focus-restore
+		_disable-initial-focus
+		accessible-name-ref="{{_id}}-navigationMenuPopoverText"
+	>
+	<span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
+	{{#if isPhone}}
+		<div
+			slot="header"
+			class="ui5-menu-dialog-header"
+		>
+		{{#if isSubMenuOpen}}
+			<ui5-button
+				icon="nav-back"
+				class="ui5-menu-back-button"
+				design="Transparent"
+				aria-label="{{labelBack}}"
+				@click={{_close}}
+			>
+			</ui5-button>
+		{{/if}}
+			<div
+				class="ui5-menu-dialog-title"
+			>
+				<div>
+					{{menuHeaderTextPhone}}
+				</div>
+			</div>
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				aria-label="{{labelClose}}"
+				@click={{_closeAll}}
+			>
+			</ui5-button>
+		</div>
+	{{/if}}
+		<div
+			id="{{_id}}-menu-main"
+			class="ui5-navigation-menu-main"
+		>
+		{{#if items.length}}
+			<ui5-list
+				accessible-role="tree"
+				id="{{_id}}-menu-list"
+				selection-mode="None"
+				?loading="{{loading}}"
+				loading-delay="{{loadingDelay}}"
+				separators="None"
+				@ui5-close-menu={{_close}}
+			>
+				<slot></slot>
+			</ui5-list>
+		{{else if loading}}
+			<ui5-busy-indicator
+				id="{{_id}}-menu-busy-indicator"
+				delay="{{loadingDelay}}"
+				class="ui5-menu-busy-indicator"
+				active>
+			</ui5-busy-indicator>
+		{{/if}}
+		</div>
+	</ui5-responsive-popover>
 {{/inline}}

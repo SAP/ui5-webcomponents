@@ -2,11 +2,12 @@
 	id="{{_id}}-menu-rp"
 	class="ui5-menu-rp"
 	horizontal-align="Start"
-	placement={{placement}}
-	vertical-align={{verticalAlign}}
+	placement="Bottom"
+	vertical-align="Bottom"
+	prevent-focus-restore
 	hide-arrow
 	allow-target-overlap
-	?sub-menu={{_isSubMenu}}
+	_disable-initial-focus
 	@ui5-before-open={{_beforePopoverOpen}}
 	@ui5-after-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
@@ -17,28 +18,18 @@
 		slot="header"
 		class="ui5-menu-dialog-header"
 	>
-	{{#if isSubMenuOpen}}
-		<ui5-button
-			icon="nav-back"
-			class="ui5-menu-back-button"
-			design="Transparent"
-			accessible-name="{{labelBack}}"
-			@click={{_navigateBack}}
-		>
-		</ui5-button>
-	{{/if}}
 		<div
 			class="ui5-menu-dialog-title"
 		>
 			<div>
-				{{menuHeaderTextPhone}}
+				{{headerText}}
 			</div>
 		</div>
 		<ui5-button
 			icon="decline"
 			design="Transparent"
-			accessible-name="{{labelClose}}"
-			@click={{_closeAll}}
+			aria-label="{{labelClose}}"
+			@click={{_close}}
 		>
 		</ui5-button>
 	</div>
@@ -55,10 +46,9 @@
 			separators="None"
 			accessible-role="Menu"
 			@ui5-item-click={{_itemClick}}
+			@ui5-close-menu={{_close}}
 			@mouseover={{_itemMouseOver}}
-			@mouseout={{_itemMouseOut}}
 			@keydown={{_itemKeyDown}}
-			
 		>
 			<slot></slot>
 		</ui5-list>
@@ -67,14 +57,8 @@
 			id="{{_id}}-menu-busy-indicator"
 			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}
 	</div>
 </ui5-responsive-popover>
-
-<div
-	class="ui5-menu-submenus"
->
-</div>

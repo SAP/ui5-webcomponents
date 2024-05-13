@@ -50,26 +50,15 @@ describe("Menu interaction", () => {
 		await openButton.click();
 
 		const menuItems = await browser.$$("#menu > ui5-menu-item");
-		const submenuList = await browser.$("#menu").shadow$(".ui5-menu-submenus");
 
 		await menuItems[3].click(); // open sub-menu
 
-		await submenuList.$("ui5-menu:nth-of-type(1)").waitForExist({
+		await menuItems[3].shadow$("ui5-responsive-popover").waitForExist({
 			timeout: 1000,
-			timeoutMsg: "First sub-menu is created"
+			timeoutMsg: "Sub-menu is created"
 		})
 
-		assert.ok(await submenuList.$("ui5-menu"), "The second level sub-menu is being created"); // new ui5-menu element is created for the sub-menu
-
-		await menuItems[4].click(); // open sub-menu
-
-		await submenuList.$("ui5-menu:nth-of-type(2)").waitForExist({
-			timeout: 1000,
-			timeoutMsg: "Second sub-menu is created"
-		})
-
-		assert.strictEqual(await submenuList.$$("ui5-menu").length, 2,
-								"Two sub-menus are present");
+		assert.ok(await menuItems[3].shadow$("ui5-responsive-popover"), "Submenu created"); // new ui5-menu element is created for the sub-menu
 	});
 
 	it("Event firing after 'click' on menu item", async () => {
@@ -137,19 +126,18 @@ describe("Menu interaction", () => {
 			const openButton = await browser.$("#btnOpen");
 			await openButton.click();
 
-			const menu = await browser.$("#menu");
 			const menuItems = await browser.$$("#menu > ui5-menu-item");
 
 			await menuItems[2].click();
 
 			// assert.ok(await openMenuList.getProperty("loading"), "Busy property is properly propagated to the ui5-list component.");
 			await browser.waitUntil(async () => {
-				return (await await menu.shadow$$(".ui5-menu-submenus ui5-menu:last-of-type > ui5-menu-item")).length === 4
+				return await (await menuItems[2].$$("& > ui5-menu-item")).length === 4
 			}, 1500, "Two additional nodes have been added.");
 
 			await menuItems[4].click();
 
-			const closeSubmenuPopover = await menu.shadow$(".ui5-menu-submenus ui5-menu:last-of-type").shadow$("ui5-responsive-popover");
+			const closeSubmenuPopover = await menuItems[4].shadow$("ui5-responsive-popover");
 			const busyIndicator = await closeSubmenuPopover.$("ui5-busy-indicator");
 			assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
 			assert.strictEqual(await busyIndicator.getProperty("size"), "M", "Size attribute is properly set.");
@@ -196,7 +184,7 @@ describe("Menu Accessibility", () => {
 		const menuItem = await browser.$("#menu > ui5-menu-item[text='Open']");
 		const menuItem2 = await browser.$("#menu > ui5-menu-item[text='New File(selection prevented)']");
 
-		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
+		assert.strictEqual(await list.getAttribute("accessible-role"), "Menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await menuItem.shadow$("li").getAttribute("role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
 		assert.strictEqual(await menuItem.shadow$("li").getAttribute("aria-haspopup"), "menu", "Popup attribute is properly set");
 		assert.strictEqual(await menuItem.getAttribute("accessible-name"), "Choose platform", "Additional description is added");

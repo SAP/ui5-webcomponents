@@ -2,10 +2,15 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "./MenuItem.js";
+import NavigationMenu from "./NavigationMenu.js";
 import NavigationMenuItemTemplate from "./generated/templates/NavigationMenuItemTemplate.lit.js";
 
 // Styles
 import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js";
+
+import {
+	NAVIGATION_MENU_POPOVER_HIDDEN_TEXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -88,6 +93,10 @@ class NavigationMenuItem extends MenuItem {
 		result.main["ui5-navigation-menu-item-root"] = true;
 
 		return result;
+	}
+
+	get accSideNavigationPopoverHiddenText() {
+		return NavigationMenu.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
 	}
 }
 

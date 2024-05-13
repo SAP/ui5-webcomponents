@@ -2,14 +2,25 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import CustomListItem from "./CustomListItem.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import PopoverPlacement from "./types/PopoverPlacement.js";
 import Icon from "./Icon.js";
 import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
-import type Menu from "./Menu.js";
-import HasPopup from "./types/HasPopup.js";
+import {
+	MENU_BACK_BUTTON_ARIA_LABEL,
+	MENU_CLOSE_BUTTON_ARIA_LABEL,
+} from "./generated/i18n/i18n-defaults.js";
+import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
+
+type MenuBeforeOpenEventDetail = { item?: MenuItem };
+type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
 /**
  * @class
@@ -37,9 +48,13 @@ import menuItemCss from "./generated/themes/MenuItem.css.js";
 	tag: "ui5-menu-item",
 	template: MenuItemTemplate,
 	styles: [CustomListItem.styles, menuItemCss],
-	dependencies: [...CustomListItem.dependencies, Icon],
+	dependencies: [...CustomListItem.dependencies, Icon, ResponsivePopover],
 })
 class MenuItem extends CustomListItem {
+	static async onDefine() {
+		MenuItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
 	/**
 	 * Defines the text of the tree item.
 	 * @default ""
@@ -135,23 +150,19 @@ class MenuItem extends CustomListItem {
 	_siblingsWithIcon!: boolean;
 
 	/**
-	 * Defines whether the submenu closing must be prevented
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_preventSubMenuClose!: boolean;
-
-	/**
-	 * Stores Menu object with submenu items
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_subMenu?: Menu;
-
-	/**
 	 * Defines the items of this component.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
+
+	get placement(): `${PopoverPlacement}` {
+		return this.isRtl ? "Start" : "End";
+	}
+
+	get isRtl() {
+		return this.effectiveDir === "rtl";
+	}
 
 	get hasSubmenu() {
 		return !!(this.items.length || this.loading);
@@ -161,12 +172,38 @@ class MenuItem extends CustomListItem {
 		return !!this.icon;
 	}
 
-	get subMenuOpened() {
-		return !!this._subMenu?._popover?.isOpen();
+	get isSubMenuOpen() {
+		return this._popover?.isOpen();
 	}
 
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
+	}
+
+	get menuHeaderTextPhone() {
+		return this.text;
+	}
+
+	get isPhone() {
+		return isPhone();
+	}
+
+	get labelBack() {
+		return MenuItem.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL);
+	}
+
+	get labelClose() {
+		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
+	}
+
+	onBeforeRendering() {
+		const siblingsWithIcon = this.items.some(item => !!item.icon);
+
+		if (siblingsWithIcon) {
+			this.items.forEach(item => {
+				item._siblingsWithIcon = true;
+			});
+		}
 	}
 
 	get _focusable() {
@@ -177,13 +214,65 @@ class MenuItem extends CustomListItem {
 		const accInfoSettings = {
 			role: "menuitem",
 			listItemAriaLabel: this.text,
-			ariaHaspopup: this.hasSubmenu ? HasPopup.Menu.toLowerCase() as Lowercase<HasPopup> : undefined,
+			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
+	}
+
+	get _popover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	_closeAll() {
+		if (this._popover) {
+			this._popover.open = false;
+		}
+		this.fireEvent("close-menu", {});
+	}
+
+	_close() {
+		if (this._popover) {
+			this._popover.open = false;
+		}
+	}
+
+	_beforePopoverOpen(e: CustomEvent) {
+		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
+
+		if (prevented) {
+			e.preventDefault();
+		}
+	}
+
+	_afterPopoverOpen() {
+		this.items[0]?.focus();
+		this.fireEvent("open", {}, false, false);
+	}
+
+	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
+
+		if (e.detail.escPressed) {
+			this.focus();
+		}
+
+		if (prevented) {
+			e.preventDefault();
+		}
+	}
+
+	_afterPopoverClose() {
+		this.selected = false;
+		this.fireEvent("close", {}, false, false);
 	}
 }
 
 MenuItem.define();
 
 export default MenuItem;
+
+export type {
+	MenuBeforeCloseEventDetail,
+	MenuBeforeOpenEventDetail,
+};

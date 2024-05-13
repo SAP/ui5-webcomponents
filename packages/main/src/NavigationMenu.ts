@@ -4,9 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
-import type { MenuItemClickEventDetail } from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
 import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
@@ -56,13 +54,7 @@ class NavigationMenu extends Menu {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	declare items: Array<NavigationMenuItem>;
 
-	_isMenu(element: HTMLElement) {
-		return element.hasAttribute("ui5-navigation-menu");
-	}
-
 	_itemMouseOver(e: MouseEvent) {
-		this._loadingMouseOver();
-
 		if (isDesktop()) {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
@@ -70,46 +62,6 @@ class NavigationMenu extends Menu {
 			// Opens submenu with 300ms delay
 			this._startOpenTimeout(item);
 		}
-	}
-
-	_clonedItemsFragment(item: MenuItem) {
-		const fragment = document.createDocumentFragment();
-
-		for (let i = 0; i < item.items.length; ++i) {
-			const subItem = item.items[i] as any;
-
-			const clonedItem = item.items[i].cloneNode(true) as any;
-			if (subItem.associatedItem) {
-				clonedItem.associatedItem = subItem.associatedItem;
-			}
-			fragment.appendChild(clonedItem);
-		}
-
-		return fragment;
-	}
-
-	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item as MenuItem;
-		const mainMenu = this._findMainMenu(item);
-		const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
-			"item": item,
-			"text": item.text,
-		}, true, false);
-
-		if (!prevented) {
-			let openerMenuItem = item;
-			let parentMenu = openerMenuItem.parentElement as Menu;
-			do {
-				openerMenuItem._preventSubMenuClose = false;
-				this._closeItemSubMenu(openerMenuItem);
-				parentMenu = openerMenuItem.parentElement as Menu;
-				openerMenuItem = parentMenu._parentMenuItem as MenuItem;
-			} while (parentMenu._parentMenuItem);
-
-			mainMenu._popover!.close();
-		}
-
-		this._prepareSubMenu(item);
 	}
 
 	get accSideNavigationPopoverHiddenText() {

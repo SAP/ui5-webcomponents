@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -27,13 +26,11 @@ import List from "./List.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
-import PopoverPlacement from "./types/PopoverPlacement.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
-	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -41,7 +38,6 @@ import {
 import menuCss from "./generated/themes/Menu.css.js";
 
 const MENU_OPEN_DELAY = 300;
-const MENU_CLOSE_DELAY = 400;
 
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -223,32 +219,6 @@ class Menu extends UI5Element {
 	opener!: HTMLElement | string;
 
 	/**
-	 * Defines if the menu is sub-menu (not first-level).
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_isSubMenu!: boolean;
-
-	/**
-	 * Stores the ResponsivePopover instance
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_popover?: ResponsivePopover;
-
-	/**
-	 * Stores parent menu item (if there is such).
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_parentMenuItem?: MenuItem;
-
-	/**
-	 * Stores menu item that have sub-menu opened.
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_openedSubMenuItem?: MenuItem;
-
-	/**
 	 * Defines the items of this component.
 	 *
 	 * **Note:** Use `ui5-menu-item` for the intended design.
@@ -264,25 +234,8 @@ class Menu extends UI5Element {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	get itemsWithIcon() {
-		return !!this.items.filter(item => item.icon !== "").length;
-	}
-
 	get isRtl() {
 		return this.effectiveDir === "rtl";
-	}
-
-	get placement(): `${PopoverPlacement}` {
-		const placement = this.isRtl ? "Start" : "End";
-		return this._isSubMenu ? placement : "Bottom";
-	}
-
-	get verticalAlign() {
-		return this._isSubMenu ? "Top" : "Bottom";
-	}
-
-	get labelBack() {
-		return Menu.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL);
 	}
 
 	get labelClose() {
@@ -293,76 +246,26 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
-	get isSubMenuOpen() {
-		return this._parentMenuItem && this._popover?.isOpen();
-	}
-
-	get menuHeaderTextPhone() {
-		return this._parentMenuItem ? this._parentMenuItem.text : this.headerText;
+	get _popover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	onBeforeRendering() {
-		const itemsWithIcon = this.itemsWithIcon;
+		const siblingsWithIcon = this.items.some(item => !!item.icon);
 
-		this.items.forEach(item => {
-			item._siblingsWithIcon = itemsWithIcon;
-			const subMenu = item._subMenu;
-			if (subMenu && subMenu.loading) {
-				subMenu.innerHTML = "";
-				const fragment = this._clonedItemsFragment(item);
-				subMenu.appendChild(fragment);
-			}
-
-			if (subMenu) {
-				subMenu.loading = item.loading;
-				subMenu.loadingDelay = item.loadingDelay;
-			}
-		});
+		if (siblingsWithIcon) {
+			this.items.forEach(item => {
+				item._siblingsWithIcon = true;
+			});
+		}
 	}
 
 	onAfterRendering() {
-		if (!this.opener) {
-			return;
+		const opener = this.getOpener();
+		if (opener && this._popover) {
+			this._popover.opener = opener;
+			this._popover.open = this.open;
 		}
-
-		if (this.open) {
-			const opener = this.getOpener();
-			if (opener && !this.isSubMenuOpen) {
-				this.showAt(opener);
-			}
-		} else {
-			this.close();
-		}
-	}
-
-	/**
-	 * Shows the Menu near the opener element.
-	 * @param opener the element that the popover is shown at
-	 * @public
-	 */
-	async showAt(opener: HTMLElement): Promise<void> {
-		if (!this._isSubMenu) {
-			this._parentMenuItem = undefined;
-		}
-		const popover = await this._createPopover();
-		popover.opener = opener;
-		popover.open = true;
-	}
-
-	/**
-	 * Closes the Menu.
-	 * @public
-	 */
-	close(): void {
-		this._popover?.close(false, false, true);
-	}
-
-	async _createPopover() {
-		if (!this._popover) {
-			await renderFinished();
-			this._popover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
-		}
-		return this._popover;
 	}
 
 	getOpener() {
@@ -370,116 +273,36 @@ class Menu extends UI5Element {
 		return this.opener instanceof HTMLElement ? this.opener : rootNode?.getElementById?.(this.opener);
 	}
 
-	_navigateBack() {
-		this.close();
-	}
-
-	_closeAll() {
-		const mainMenu = this._findMainMenu(this);
-		mainMenu?.close();
-	}
-
-	_createSubMenu(item: MenuItem) {
-		if (item._subMenu) {
-			return;
-		}
-		const ctor = this.constructor as typeof Menu;
-		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
-
-		subMenu._isSubMenu = true;
-		subMenu._parentMenuItem = item;
-		subMenu.loading = item.loading;
-		subMenu.loadingDelay = item.loadingDelay;
-		const fragment = this._clonedItemsFragment(item);
-		subMenu.appendChild(fragment);
-		this.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
-		item._subMenu = subMenu;
-	}
-
-	_clonedItemsFragment(item: MenuItem) {
-		const fragment = document.createDocumentFragment();
-
-		for (let i = 0; i < item.items.length; ++i) {
-			const clonedItem = item.items[i].cloneNode(true);
-			fragment.appendChild(clonedItem);
-		}
-
-		return fragment;
+	_close() {
+		this.open = false;
 	}
 
 	_openItemSubMenu(item: MenuItem) {
-		const mainMenu = this._findMainMenu(item);
-		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+		if (!item._popover) {
+			return;
+		}
+
+		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._subMenu!.showAt(item);
+		item._popover.opener = item;
+		item._popover.open = true;
 		item.selected = true;
-		item._preventSubMenuClose = true;
-		this._openedSubMenuItem = item;
 	}
 
-	_closeItemSubMenu(item: MenuItem, forceClose = false, keyboard = false) {
-		if (item) {
-			if (forceClose) {
-				item._preventSubMenuClose = false;
-				this._closeSubMenuPopover(item._subMenu!, forceClose, keyboard);
-			} else {
-				setTimeout(() => this._closeSubMenuPopover(item._subMenu!), 0);
+	_closeItemSubMenu(item: MenuItem) {
+		if (item && item._popover) {
+			const openedSibling = item.items.find(menuItem => menuItem._popover && menuItem._popover.open);
+			if (openedSibling) {
+				this._closeItemSubMenu(openedSibling);
 			}
+
+			item._popover.open = false;
+			item.selected = false;
 		}
-	}
-
-	_closeSubMenuPopover(subMenu: Menu, forceClose = false, keyboard = false) {
-		if (subMenu) {
-			const parentItem = subMenu._parentMenuItem!;
-
-			if (forceClose || !parentItem._preventSubMenuClose) {
-				subMenu.close();
-				parentItem.selected = false;
-				if (keyboard) {
-					parentItem?.focus();
-				}
-				this._openedSubMenuItem = undefined;
-			}
-		}
-	}
-
-	_prepareSubMenu(item: MenuItem) {
-		if (!this._openedSubMenuItem?.isEqualNode(item)) {
-			this._closeItemSubMenu(this._openedSubMenuItem!, true);
-		}
-
-		if (item && item.hasSubmenu) {
-			// create new sub-menu
-			this._createSubMenu(item);
-			this._openItemSubMenu(item);
-		}
-		if (this._parentMenuItem) {
-			this._parentMenuItem._preventSubMenuClose = true;
-		}
-	}
-
-	_startOpenTimeout(item: MenuItem) {
-		clearTimeout(this._timeout);
-
-		// Sets the new timeout
-		this._timeout = setTimeout(() => {
-			this._prepareSubMenu(item);
-		}, MENU_OPEN_DELAY);
-	}
-
-	_startCloseTimeout(item: MenuItem) {
-		clearTimeout(this._timeout);
-
-		// Sets the new timeout
-		this._timeout = setTimeout(() => {
-			this._closeItemSubMenu(item);
-		}, MENU_CLOSE_DELAY);
 	}
 
 	_itemMouseOver(e: MouseEvent) {
-		this._loadingMouseOver();
-
 		if (isDesktop()) {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
@@ -491,98 +314,58 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_loadingMouseOver() {
-		if (this._parentMenuItem) {
-			this._parentMenuItem._preventSubMenuClose = true;
-		}
+	_startOpenTimeout(item: MenuItem) {
+		clearTimeout(this._timeout);
+
+		this._timeout = setTimeout(() => {
+			const opener = item.parentElement as MenuItem | Menu;
+			const openedSibling = opener && opener.items.find(menuItem => menuItem._popover && menuItem._popover.open);
+			if (openedSibling) {
+				this._closeItemSubMenu(openedSibling);
+			}
+
+			this._openItemSubMenu(item);
+		}, MENU_OPEN_DELAY);
 	}
 
-	_itemMouseOut(e: MouseEvent) {
-		if (isDesktop()) {
-			const item = e.target as MenuItem;
+	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
+		const item = e.detail.item as MenuItem;
 
-			clearTimeout(this._timeout);
+		if (!item._popover) {
+			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
+				"item": item,
+				"text": item.text,
+			}, true, false);
 
-			// Close submenu with 400ms delay
-			if (item && item.hasSubmenu && item._subMenu) {
-				// try to close the sub-menu
-				item._preventSubMenuClose = false;
-				this._startCloseTimeout(item);
+			if (!prevented && this._popover) {
+				item.fireEvent("close-menu", {});
 			}
+		} else {
+			this._openItemSubMenu(item);
 		}
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const item = e.target as MenuItem;
+		const parentElement = item.parentElement as MenuItem;
 
 		if (isEnter(e)) {
 			e.preventDefault();
 		}
 		if (shouldOpenMenu) {
-			const item = e.target as MenuItem;
-			this._prepareSubMenu(item);
-		} else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
-			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
-			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true, true);
-		}
-	}
-
-	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item as MenuItem;
-
-		if (!item.hasSubmenu) {
-			// click on an item that doesn't have sub-items fires an "item-click" event
-			if (!this._isSubMenu) {
-				// fire event if the click is on top-level menu item
-				const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
-					"item": item,
-					"text": item.text,
-				}, true, false);
-
-				if (!prevented) {
-					this._popover!.close();
-				}
-			} else {
-				const mainMenu = this._findMainMenu(item);
-				const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
-					"item": item,
-					"text": item.text,
-				}, true, false);
-
-				if (!prevented) {
-					let openerMenuItem = item;
-					let parentMenu = openerMenuItem.parentElement as Menu;
-					do {
-						openerMenuItem._preventSubMenuClose = false;
-						this._closeItemSubMenu(openerMenuItem);
-						parentMenu = openerMenuItem.parentElement as Menu;
-						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
-					} while (parentMenu._parentMenuItem);
-
-					mainMenu._popover!.close();
-				}
+			this._openItemSubMenu(item);
+		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item")) {
+			if (parentElement._popover) {
+				parentElement._popover.open = false;
+				parentElement._popover.opener?.focus();
 			}
-		} else {
-			this._prepareSubMenu(item);
 		}
-	}
-
-	_findMainMenu(element: MenuItem | Menu) {
-		let menu = this._isMenu(element) ? element as Menu : element.parentElement as Menu;
-		while (menu && menu._parentMenuItem) {
-			menu = menu._parentMenuItem.parentElement as Menu;
-		}
-
-		return menu;
-	}
-
-	_isMenu(element: HTMLElement) {
-		return element.hasAttribute("ui5-menu");
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
+		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
 
 		if (prevented) {
 			this.open = false;
@@ -593,27 +376,21 @@ class Menu extends UI5Element {
 	_afterPopoverOpen() {
 		this.open = true;
 		this.items[0]?.focus();
-		this.fireEvent("open", {}, false, false);
+		this.fireEvent("open", {}, false, true);
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
+		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
 
 		if (prevented) {
 			this.open = true;
 			e.preventDefault();
-			return;
-		}
-
-		if (this._openedSubMenuItem) {
-			this._openedSubMenuItem._preventSubMenuClose = false;
-			this._closeItemSubMenu(this._openedSubMenuItem);
 		}
 	}
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("close", {}, false, false);
+		this.fireEvent("close", {}, false, true);
 	}
 }
 
