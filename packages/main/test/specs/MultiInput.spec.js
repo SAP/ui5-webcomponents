@@ -122,7 +122,7 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
 	});
 
-	it("adds a token after selection change", async () => {
+	it("Should create a token on change event", async () => {
 		await browser.url(`test/pages/MultiInput.html`);
 
 		const mi = await browser.$("#suggestion-token");
@@ -132,15 +132,15 @@ describe("MultiInput general interaction", () => {
 		await input.click();
 		await input.keys("c");
 
-		assert.ok(await popover.getProperty("open"), "Suggestion Popovoer is open");
+		assert.ok(await popover.getProperty("open"), "Suggestion popover is open");
 		let allTokens = await mi.$$("ui5-token");
 		assert.strictEqual(allTokens.length, 0, "0 tokens");
 
 		await popover.$("ui5-li-suggestion-item").click();
 
 		allTokens = await mi.$$("ui5-token");
-		assert.notOk(await popover.getProperty("open"), "Suggestion Popovoer is closed");
-		assert.strictEqual(allTokens.length, 1, "a token is added after selection");
+		assert.notOk(await popover.getProperty("open"), "Suggestion popover is closed");
+		assert.strictEqual(allTokens.length, 1, "a token is added after change");
 	});
 
 	it ("Placeholder", async () => {

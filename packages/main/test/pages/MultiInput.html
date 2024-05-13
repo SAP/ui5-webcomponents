@@ -426,11 +426,8 @@
 
 		document.getElementById("suggestion-token").addEventListener("ui5-change", function (event) {
 			var text = event.target.value;
-			var token = document.createElement("ui5-token");
 
-			token.setAttribute("text", text);
-			token.setAttribute("slot", "tokens");
-			event.target.appendChild(token);
+			addTokenToMI(createTokenFromText(text), "suggestion-token");
 
 			event.target.value = "";
 		});
