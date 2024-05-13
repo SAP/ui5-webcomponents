@@ -66,7 +66,7 @@
 				press: function() {
 					dialogSpecial.open();
 					btnChain.addEventListener("click", () => {
-						dialogChain.addEventListener("after-open", () => {
+						dialogChain.addEventListener("open", () => {
 							const popoverChain = new sap.m.Popover({
 								title: "This is a sap.m.Popover",
 								content: [
@@ -182,7 +182,7 @@
 	})
 
 	let done = false;
-	componentPopover.addEventListener("after-open", () => {
+	componentPopover.addEventListener("open", () => {
 		if (done) {
 			return;
 		}

@@ -90,7 +90,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is opened. **This event does not bubble.**
  * @public
  */
-@event("after-open")
+@event("open")
 
 /**
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
@@ -113,7 +113,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is closed. **This event does not bubble.**
  * @public
  */
-@event("after-close")
+@event("close")
 
 /**
  * Fired whenever the popup content area is scrolled
@@ -300,7 +300,7 @@ abstract class Popup extends UI5Element {
 		// initial focus, if focused element is dynamically created
 		await this.applyInitialFocus();
 
-		this.fireEvent("after-open", {}, false, false);
+		this.fireEvent("open", {}, false, false);
 	}
 
 	_resize() {
@@ -507,7 +507,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {}, false, false);
+		this.fireEvent("close", {}, false, false);
 	}
 
 	/**
