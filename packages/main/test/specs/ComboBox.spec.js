@@ -1229,7 +1229,7 @@ describe("Keyboard navigation", async () => {
 
 
 		assert.ok(liItemDomRef, "ComboBoxItem's DOM reference exists");
-		assert.strictEqual(cbItemStableDomRef, "cbi" "ComboBoxItem's real DOM reference ID is correct");
+		assert.strictEqual(cbItemStableDomRef, "cbi", "ComboBoxItem's real DOM reference ID is correct");
 	});
 
 });
