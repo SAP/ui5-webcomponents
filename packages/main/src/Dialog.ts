@@ -271,10 +271,6 @@ class Dialog extends Popup {
 		return true;
 	}
 
-	get shouldHideBackdrop() {
-		return false;
-	}
-
 	get _ariaLabelledBy() {
 		let ariaLabelledById;
 

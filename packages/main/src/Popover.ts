@@ -139,15 +139,6 @@ class Popover extends Popup {
 	modal!: boolean;
 
 	/**
-	 * Defines whether the block layer will be shown if modal property is set to true.
-	 * @default false
-	 * @public
-	 * @since 1.0.0-rc.10
-	 */
-	@property({ type: Boolean })
-	hideBackdrop!: boolean;
-
-	/**
 	 * Determines whether the component arrow is hidden.
 	 * @default false
 	 * @public
@@ -751,10 +742,6 @@ class Popover extends Popup {
 
 	get isModal() { // Required by Popup.js
 		return this.modal;
-	}
-
-	get shouldHideBackdrop() { // Required by Popup.js
-		return this.hideBackdrop;
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js
