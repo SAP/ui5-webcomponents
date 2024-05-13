@@ -2,7 +2,7 @@
  * Different Button designs.
  *
  * @public
- * @since 1.23.0
+ * @since 2.0.0
  */
 enum FormItemSpacing {
 	/**
