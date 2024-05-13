@@ -1220,7 +1220,7 @@ describe("Keyboard navigation", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const cbItemDomRef = await browser.executeAsync(done => {
-			return done(document.getElementById("cbi").getDomRef());
+			return done(document.getElementById("cbi").getDomRef().getAttribute("data-ui5-stable"));
 		});
 
 		assert.ok(cbItemDomRef, "ComboBoxItem's DOM reference exists");
