@@ -24,6 +24,7 @@ const Template: UI5StoryArgs<ShellBar, StoryArgsSlots> = (
     ?show-search-field="${ifDefined(args.showSearchField)}"
     .accessibilityAttributes="${ifDefined(args.accessibilityAttributes)}"
 >
+    ${unsafeHTML(args.assistant)}
     ${unsafeHTML(args.default)}
 	${unsafeHTML(args.profile)}
     ${unsafeHTML(args.logo)}
