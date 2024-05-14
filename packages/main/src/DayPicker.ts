@@ -411,8 +411,11 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			return timestamp === this.selectedDates[0];
 		}
 
-		// Multiple, Range
-		return this.selectedDates.includes(timestamp);
+		if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			return this.selectedDates.includes(timestamp);
+		}
+
+		return timestamp === this.selectedDates[0] || timestamp === this.selectedDates[this.selectedDates.length - 1];
 	}
 
 	/**
@@ -432,7 +435,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 
 		// Two dates selected - stable range
-		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[this.selectedDates.length - 1]);
 	}
 
 	/**
