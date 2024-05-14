@@ -16,6 +16,7 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git",
     "directory": "packages/base"
   },
+  "types": "./dist",
   "exports": {
     "./dist/ssr-dom.js": {
       "browser": "./dist/ssr-dom.js",

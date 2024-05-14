@@ -22,6 +22,7 @@ const getConfig = async () => {
         entryPoints: await globby("src/**/*.ts"),
         bundle: false,
         minify: true,
+        sourcemap: true,
         outdir: 'dist/prod',
         outbase: 'src',
         plugins: [
