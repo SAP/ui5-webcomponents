@@ -12,8 +12,9 @@ import FormTemplate from "./generated/templates/FormTemplate.lit.js";
 import FormCss from "./generated/themes/Form.css.js";
 
 import Title from "./Title.js";
-import type FormGroup from "./FormGroup.js";
 import FormItemSpacing from "./types/FormItemSpacing.js";
+import type FormGroup from "./FormGroup.js";
+import type FormItem from "./FormItem.js";
 
 const additionalStylesMap = new Map<string, string>();
 
@@ -216,7 +217,7 @@ class Form extends UI5Element {
 		individualSlots: true,
 		invalidateOnChildChange: true,
 	})
-	items!: Array<IFormItem>;
+	items!: Array<FormGroup | FormItem>;
 
 	/**
 	 * @private
@@ -354,11 +355,10 @@ class Form extends UI5Element {
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
 		return this.items.map((groupItem: IFormItem) => {
-			const grItem = groupItem as FormGroup;
 			return {
 				groupItem,
-				classes: `ui5-form-column-spanL-${grItem.colsL} ui5-form-column-spanXL-${grItem.colsXl} ui5-form-column-spanM-${grItem.colsM} ui5-form-column-spanS-${grItem.colsS}`,
-				items: this.getItemsInfo((Array.from(grItem.children) as Array<IFormItem>)),
+				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
+				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
 			};
 		});
 	}
