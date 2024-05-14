@@ -18,10 +18,10 @@
 		<ui5-icon id="custom-icon" name="search" slot="icon"></ui5-icon>
 	</ui5-input>
 	<script type="module">
-		import inputCss from "@ui5/webcomponents/dist/styles/InputIcon.module.css";
+		import { inputIcon } from "@ui5/webcomponents/dist/styles/Icon.module.css";
 
-		const input = document.getElementById("custom-icon");
-		input.classList.add(inputCss["input-icon"]);
+		const icon = document.getElementById("custom-icon");
+		icon.classList.add(inputIcon);
 	</script>
 </body>
 

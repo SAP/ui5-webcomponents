@@ -37,9 +37,9 @@
 
 }
 
-.input-root-phone [value-state="Negative"] .input-icon[data-ui5-compact-size],
-.input-root-phone [value-state="Positive"] .input-icon[data-ui5-compact-size],
-.input-root-phone [value-state="Critical"] .input-icon[data-ui5-compact-size] {
+.input-root-phone [value-state="Negative"] .inputIcon[data-ui5-compact-size],
+.input-root-phone [value-state="Positive"] .inputIcon[data-ui5-compact-size],
+.input-root-phone [value-state="Critical"] .inputIcon[data-ui5-compact-size] {
 	padding: .1875rem .5rem
 }
 

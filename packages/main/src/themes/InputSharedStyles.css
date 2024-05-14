@@ -18,19 +18,19 @@
 	border-color: var(--_ui5_input_disabled_border_color);
 }
 
-:host([value-state="Negative"]) .input-icon:not([pressed]):not(:active):hover {
+:host([value-state="Negative"]) .inputIcon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 }
 
-:host([value-state="Critical"]) .input-icon:not([pressed]):not(:active):hover {
+:host([value-state="Critical"]) .inputIcon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 }
 
-:host([value-state="Information"]) .input-icon:not([pressed]):not(:active):hover {
+:host([value-state="Information"]) .inputIcon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 }
 
-:host([value-state="Positive"]) .input-icon:not([pressed]):not(:active):hover {
+:host([value-state="Positive"]) .inputIcon:not([pressed]):not(:active):hover {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 
@@ -64,35 +64,35 @@
 	box-shadow: var(--sapField_InformationShadow);
 }
 
-:host([value-state="Negative"]) .input-icon:active,
-:host([value-state="Negative"]) .input-icon[pressed] {
+:host([value-state="Negative"]) .inputIcon:active,
+:host([value-state="Negative"]) .inputIcon[pressed] {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 	color: var(--_ui5_input_icon_error_pressed_color);
 }
 
-:host([value-state="Critical"]) .input-icon:active,
-:host([value-state="Critical"]) .input-icon[pressed] {
+:host([value-state="Critical"]) .inputIcon:active,
+:host([value-state="Critical"]) .inputIcon[pressed] {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 	color: var(--_ui5_input_icon_warning_pressed_color);
 }
 
-:host([value-state="Information"]) .input-icon:active,
-:host([value-state="Information"]) .input-icon[pressed] {
+:host([value-state="Information"]) .inputIcon:active,
+:host([value-state="Information"]) .inputIcon[pressed] {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 	color: var(--_ui5_input_icon_information_pressed_color);
 }
 
-:host([value-state="Positive"]) .input-icon:active,
-:host([value-state="Positive"]) .input-icon[pressed] {
+:host([value-state="Positive"]) .inputIcon:active,
+:host([value-state="Positive"]) .inputIcon[pressed] {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 	color: var(--_ui5_input_icon_success_pressed_color);
 }
 
-:host([value-state="Negative"]) .input-icon,
-:host([value-state="Critical"]) .input-icon {
+:host([value-state="Negative"]) .inputIcon,
+:host([value-state="Critical"]) .inputIcon {
 	padding: var(--_ui5_input_error_warning_icon_padding);
 }
 
-:host([value-state="Information"]) .input-icon {
+:host([value-state="Information"]) .inputIcon {
 	padding: var(--_ui5_input_information_icon_padding);
 }

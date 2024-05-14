@@ -6,6 +6,6 @@
     import inputCss from "@ui5/webcomponents/dist/styles/InputIcon.module.css";
 
     const icon = document.getElementById("custom-icon");
-    icon.classList.add(inputCss["input-icon"]);
+    icon.classList.add(inputCss["inputIcon"]);
 </script>
 ```
