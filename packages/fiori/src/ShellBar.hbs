@@ -145,16 +145,8 @@
 		{{/unless}}
 		{{/unless}}
 
-			{{#if showCoPilot}}
-				<ui5-button
-					id="{{this._id}}-item-coPilot"
-					@click={{_coPilotClick}}
-					tooltip="{{_copilotText}}"
-					class="{{classes.items.copilot}} ui5-shellbar-button ui5-shellbar-coPilot"
-					icon={{_coPilotIcon}}
-					design="Transparent"
-					data-ui5-stable="copilot"
-				/>
+			{{#if hasAssistant}}
+				<slot name="assistant"></slot>
 			{{/if}}
 
 			{{#each customItemsInfo}}

@@ -21,10 +21,10 @@ const Template: UI5StoryArgs<ShellBar, StoryArgsSlots> = (
     secondary-title="${ifDefined(args.secondaryTitle)}"
     notifications-count="${ifDefined(args.notificationsCount)}"
     ?show-notifications="${ifDefined(args.showNotifications)}"
-    ?show-co-pilot="${ifDefined(args.showCoPilot)}"
     ?show-search-field="${ifDefined(args.showSearchField)}"
     .accessibilityAttributes="${ifDefined(args.accessibilityAttributes)}"
 >
+    ${unsafeHTML(args.assistant)}
     ${unsafeHTML(args.default)}
 	${unsafeHTML(args.profile)}
     ${unsafeHTML(args.logo)}
@@ -37,6 +37,7 @@ export const Basic = Template.bind({});
 Basic.args = {
     primaryTitle: "Corporate Portal",
     secondaryTitle: "secondary title",
+    assistant: `<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>`,
     profile: `<ui5-avatar slot="profile" icon="customer"></ui5-avatar>`,
     logo: `<img slot="logo" src="../assets/images/sap-logo-svg.svg" />`,
     startButton: `<ui5-button icon="nav-back" slot="startButton"></ui5-button>`,
@@ -60,12 +61,12 @@ export const WithJoule = Template.bind({});
 WithJoule.args = {
     primaryTitle: "Corporate Portal",
     secondaryTitle: "secondary title",
-    showCoPilot: true,
     profile: `
 	<ui5-avatar slot="profile">
 		<img src="../assets/images/avatars/woman_avatar_5.png" />
 	</ui5-avatar>`,
     logo: `<img slot="logo" src="../assets/images/sap-logo-svg.svg" />`,
+	assistant: `<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>`,
 };
 
 let index = 0;
@@ -78,7 +79,6 @@ export const Advanced: StoryFn = () => {
             secondary-title="secondary title"
             notifications-count="99+"
             show-notifications=""
-            show-co-pilot=""
         >
             <ui5-avatar slot="profile">
                 <img src="../assets/images/avatars/woman_avatar_5.png" />

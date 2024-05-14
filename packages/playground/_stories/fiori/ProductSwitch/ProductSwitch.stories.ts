@@ -37,7 +37,6 @@ WithShellBar.decorators = [
             secondary-title="home"
             logo="../assets/images/sap-logo-svg.svg"
             show-product-switch=""
-            show-co-pilot=""
         >
         </ui5-shellbar>
         <ui5-popover id="productswitch-popover" placement="Bottom">
