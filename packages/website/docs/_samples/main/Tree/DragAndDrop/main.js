@@ -4,7 +4,7 @@ import "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents/dist/Label.js";
 
 
-const tree1 = document.getElementById("tree");
+const tree = document.getElementById("tree");
 const handleBeforeItemMove = (e) => {
     const { destination, source } = e.detail;
 
@@ -19,10 +19,10 @@ const handleBeforeItemMove = (e) => {
     console.log(`Moving "${source.element.text}" ${destination.placement.toLowerCase()} "${destination.element.text}"`);
 };
 
-const tree1HandleMoveOver = (e) => {
+const handleMoveOver = (e) => {
     const { destination, source } = e.detail;
 
-    if (!tree1.contains(source.element)) {
+    if (!tree.contains(source.element)) {
         return;
     }
 
@@ -51,15 +51,5 @@ const handleMove = (e) => {
     }
 };
 
-tree1.addEventListener("move-over", tree1HandleMoveOver);
-tree1.addEventListener("move", handleMove);
-
-const densityCb = document.getElementById("density");
-densityCb.addEventListener("change", e => {
-    document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
-});
-
-const reorderCb = document.getElementById("reorder");
-reorderCb.addEventListener("change", e => {
-    tree1.items.forEach((item) => item.movable = e.target.checked);
-});
+tree.addEventListener("move-over", handleMoveOver);
+tree.addEventListener("move", handleMove);

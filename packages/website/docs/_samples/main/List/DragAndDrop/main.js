@@ -13,7 +13,7 @@ const handleBeforeItemMove = (e) => {
 
 };
 
-const listHandleMoveOver = (e) => {
+const handleMoveOver = (e) => {
   const { destination, source } = e.detail;
 
   if (!list.contains(source.element)) {
@@ -40,6 +40,6 @@ const handleMove = (e) => {
   }
 };
 
-list.addEventListener('move-over', listHandleMoveOver);
+list.addEventListener('move-over', handleMoveOver);
 list.addEventListener('move', handleMove);
 
