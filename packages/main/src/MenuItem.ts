@@ -211,7 +211,6 @@ class MenuItem extends ListItem {
 	get _accInfo() {
 		const accInfoSettings = {
 			role: "menuitem",
-			listItemAriaLabel: this.text,
 			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
 		};
 
@@ -254,6 +253,7 @@ class MenuItem extends ListItem {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (e.detail.escPressed) {
+			this.selected = false;
 			this.focus();
 		}
 

@@ -344,6 +344,7 @@ class Menu extends UI5Element {
 		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item")) {
 			if (parentElement._popover) {
 				parentElement._popover.open = false;
+				parentElement.selected = false;
 				parentElement._popover.opener?.focus();
 			}
 		}
