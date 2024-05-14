@@ -51,15 +51,15 @@ const handleMove = (e) => {
     }
 };
 
-tree1.addEventListener("ui5-move-over", tree1HandleMoveOver);
-tree1.addEventListener("ui5-move", handleMove);
+tree1.addEventListener("move-over", tree1HandleMoveOver);
+tree1.addEventListener("move", handleMove);
 
 const densityCb = document.getElementById("density");
-densityCb.addEventListener("ui5-change", e => {
+densityCb.addEventListener("change", e => {
     document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
 });
 
 const reorderCb = document.getElementById("reorder");
-reorderCb.addEventListener("ui5-change", e => {
+reorderCb.addEventListener("change", e => {
     tree1.items.forEach((item) => item.movable = e.target.checked);
 });

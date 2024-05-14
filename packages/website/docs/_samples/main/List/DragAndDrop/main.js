@@ -40,6 +40,6 @@ const handleMove = (e) => {
   }
 };
 
-list.addEventListener('ui5-move-over', listHandleMoveOver);
-list.addEventListener('ui5-move', handleMove);
+list.addEventListener('move-over', listHandleMoveOver);
+list.addEventListener('move', handleMove);
 
