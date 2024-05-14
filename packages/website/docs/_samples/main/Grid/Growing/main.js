@@ -21,7 +21,7 @@ growing.addEventListener("load-more", () => {
 			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
 			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
-			<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
 		`;
 		grid.appendChild(newRow);
 	}

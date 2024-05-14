@@ -9,15 +9,14 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * The `ui5-grid-cell` represents a cell inside of a `ui5-grid`.
+ * It is tightly coupled to the `ui5-grid` and thus should only be used in the table component.
  *
- * <h3>Usage</h3>
+ * ### ES6 Module Import
  *
- * For the <code>ui5-grid-cell</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import @ui5/webcomponents/dist/GridCell.js";</code>
+ * `import @ui5/webcomponents/dist/GridCell.js;`
  *
  * @constructor
  * @extends UI5Element

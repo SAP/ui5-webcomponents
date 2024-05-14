@@ -8,15 +8,16 @@ import GridHeaderCellStyles from "./generated/themes/GridHeaderCell.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * The `ui5-grid-header-cell` component represents a column in the `ui5-grid`.
  *
- * <h3>Usage</h3>
+ * As it is tightly coupled to the `ui5-grid`, it should only be used in the `ui5-grid-header-row`
+ * to ensure correct layout and design.
  *
- * For the <code>ui5-grid-header-cell</code>
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/GridHeaderCell.js";</code>
+ * `import "@ui5/webcomponents/dist/GridHeaderCell.js";`
  *
  * @constructor
  * @extends GridCellBase
@@ -29,7 +30,7 @@ import GridHeaderCellStyles from "./generated/themes/GridHeaderCell.css.js";
 })
 class GridHeaderCell extends GridCellBase {
 	/**
-	 * Defines the width of the component, including padding and border.
+	 * Defines the width of column.
 	 *
 	 * @default "auto"
 	 * @public
@@ -37,12 +38,37 @@ class GridHeaderCell extends GridCellBase {
 	@property({ type: String, defaultValue: "auto" })
 	width!: string;
 
+	/**
+ * Defines the minimum width of the column.
+	 *
+	 * If the table is in `Popin` mode, the column will move into the popin when
+	 * when the minimum width does not fit anymore.
+	 *
+	 * @default "auto"
+	 * @public
+	 */
 	@property({ type: String, defaultValue: "auto" })
 	minWidth!: string;
 
+	/**
+	 * Defines the maximum width of the column.
+	 *
+	 * @default "auto"
+	 * @public
+	 */
 	@property({ type: String, defaultValue: "auto" })
 	maxWidth!: string;
 
+	/**
+	 * Defines the importance of the column.
+	 *
+	 * This property affects the popin behaviour.
+	 * Columns with higher importance will move into the popin area later then less important
+	 * columns.
+	 *
+	 * @default 0
+	 * @public
+	 */
 	@property({ validator: Integer, defaultValue: 0 })
 	importance!: number;
 

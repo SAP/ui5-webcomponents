@@ -1,3 +1,7 @@
+:host {
+	background: var(--sapList_Background);
+}
+
 :host([aria-selected=true]) {
 	background-color: var(--sapList_SelectionBackgroundColor);
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_SelectionBorderColor);

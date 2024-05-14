@@ -13,15 +13,16 @@ import {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * The `ui5-grid-header-row` component represents the table headers of a `ui5-grid`.
  *
- * <h3>Usage</h3>
+ * It is tightly coupled to the `ui5-grid` and should therefore be used in the `ui5-grid` only.
+ * The header row is placed in the `header-row` slot of the table.
  *
- * For the <code>grid-header-row</code>
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/GridHeaderRow.js";</code>
+ * `import "@ui5/webcomponents/dist/GridHeaderRow.js";`
  *
  * @constructor
  * @extends GridRowBase
@@ -43,8 +44,8 @@ import {
 class GridHeaderRow extends GridRowBase {
 	/**
 	 * Defines the cells of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-header-cell</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-grid-header-cell` for the intended design.
 	 *
 	 * @public
 	 */
@@ -59,6 +60,12 @@ class GridHeaderRow extends GridRowBase {
 	})
 	cells!: Array<GridHeaderCell>;
 
+	/**
+	 * Sticks the `grid-header-row` to the top of a table.
+	 *
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	sticky!: boolean;
 

@@ -1,14 +1,15 @@
 ---
 slug: ../../Grid
+sidebar_class_name: newComponentBadge
 ---
 
 import Basic from "../../../_samples/main/Grid/Basic/Basic.md";
 import Popin from "../../../_samples/main/Grid/Popin/Popin.md";
-import Selection from "../../../_samples/main/Grid/Selection/Selection.md";
-import Growing from "../../../_samples/main/Grid/Growing/Growing.md";
-import ScrollToLoad from "../../../_samples/main/Grid/ScrollToLoad/ScrollToLoad.md";
+import Scroll from "../../../_samples/main/Grid/ScrollMode/Scroll.md";
 import StickyHeader from "../../../_samples/main/Grid/StickyHeader/StickyHeader.md";
 import StickyHeaderContainer from "../../../_samples/main/Grid/StickyHeaderContainer/StickyHeaderContainer.md";
+import NoDataSlot from "../../../_samples/main/Grid/NoDataSlot/NoDataSlot.md";
+import Interactive from "../../../_samples/main/Grid/Interactive/Interactive.md";
 
 <%COMPONENT_OVERVIEW%>
 
@@ -17,37 +18,41 @@ import StickyHeaderContainer from "../../../_samples/main/Grid/StickyHeaderConta
 
 <%COMPONENT_METADATA%>
 
-# More Samples
+## Base Functionalities
 
-## Selection Feature
-<Selection />
+### Overflow Mode
 
-## Popin Configuration
+The table provides two horizontal overflow modes: Popin (default) or Scroll.
+
+#### Popin Mode
+
 <Popin />
 
-## Growing Feature
+#### Scroll Mode
 
-Add growing/data loading capabilities to your Grid by adding the **Growing** feature.
+<Scroll />
 
-### Load more with Button
-
-<Growing />
-
-### Load more with Scrolling
-
-<ScrollToLoad />
-
-## Sticky Header Row
+### Sticky Header Row
 
 Enable a sticky header by utilizing the properties `sticky` and `sticky-top` of the `ui5-grid-header-row`.
 
-### Sticky Behaviour with scrollable table
+#### Sticky Behaviour with scrollable table
 
 <StickyHeader />
 
-### Sticky Behaviour with scrollable container
-
-If your table is located inside of a scrollable container and you have other sticky content,
-you can use `sticky-top` to define the header's top offset.
+#### Sticky Behaviour with scrollable container
 
 <StickyHeaderContainer />
+
+### No Data
+
+You can provide an illustration or a custom text, that is shown when the table has no data using the `nodata` slot.
+
+<NoDataSlot />
+
+### Interactive Rows
+
+Create an interactive table by marking `ui5-grid-row` components as `interactive`. Pressing on an interactive row
+will fire the `row-press` event.
+
+<Interactive />

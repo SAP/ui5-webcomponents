@@ -72,9 +72,17 @@ type GridRowPressEventDetail = {
  * ### Overview
  *
  * The `ui5-grid` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner.
- *
  * To render the `ui5-grid`, you need to define the columns and rows. You can use the provided `ui5-grid-row` and `ui5-grid-column` components for this purpose.
- * The `ui5-grid` can be enhanced in its functionality by applying different features selection (`ui5-grid-selection`) or growing (`ui5-grid-growing`).
+ *
+ * ### Features
+ *
+ * The `ui5-grid` can be enhanced in its functionalities by applying different features.
+ * Features can be slotted into the `features` slot, to enable them in the component.
+ *
+ * The following features are currently available:
+ *
+ * * [GridSelection](../GridSelection) - adds selection capabilities to the table
+ * * [GridGrowing](../GridGrowing) - provides growing capabilities to load more data
  *
  * ### Keyboard Handling
  *
@@ -121,10 +129,10 @@ type GridRowPressEventDetail = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Grid.js";`
- * `import "@ui5/webcomponents/dist/GridRow.js";` (`ui5-grid-row`)
- * `import "@ui5/webcomponents/dist/GridCell.js";` (`ui5-grid-cell`)
- * `import "@ui5/webcomponents/dist/GridHeaderRow.js";` (`ui5-grid-header-row`)
+ * `import "@ui5/webcomponents/dist/Grid.js";`\
+ * `import "@ui5/webcomponents/dist/GridRow.js";` (`ui5-grid-row`)\
+ * `import "@ui5/webcomponents/dist/GridCell.js";` (`ui5-grid-cell`)\
+ * `import "@ui5/webcomponents/dist/GridHeaderRow.js";` (`ui5-grid-header-row`)\
  * `import "@ui5/webcomponents/dist/GridHeaderCell.js";` (`ui5-grid-header-cell`)
  *
  * @constructor

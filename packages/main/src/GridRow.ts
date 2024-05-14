@@ -13,15 +13,7 @@ import RadioButton from "./RadioButton.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- *
- *
- * <h3>Usage</h3>
- *
- * For the <code>ui5-grid-row</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import @ui5/webcomponents/dist/GridRow.js";</code>
+ * ### Overview
  *
  * @constructor
  * @extends GridRowBase
@@ -36,8 +28,8 @@ import RadioButton from "./RadioButton.js";
 class GridRow extends GridRowBase {
 	/**
 	 * Defines the cells of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-grid-cell</code> for the intended design.
+	 *
+	 * **Note:** Use `ui5-grid-cell` for the intended design.
 	 *
 	 * @public
 	 */

@@ -41,8 +41,7 @@ import {
  *
  * ```html
  * <ui5-grid>
- * 	<ui5-grid-growing type="Button" growing-text="More" slot="features">
- * 	</ui5-grid-growing>
+ * 	<ui5-grid-growing type="Button" growing-text="More" slot="features"></ui5-grid-growing>
  * </ui5-grid>
  * ```
  *

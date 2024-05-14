@@ -2,7 +2,6 @@
 	display: block;
     color: var(--sapList_TextColor);
     font: var(--sapFontSize) var(--sapFontFamily);
-    background: var(--sapList_Background);
 }
 
 :host([hidden]) {

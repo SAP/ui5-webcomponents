@@ -10,15 +10,32 @@ import GridRowBase from "./GridRowBase.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * The `ui5-grid-selection` component is used inside the `ui5-grid` ti add key-based selection capabilities to the `ui5-grid`.
  *
- * <h3>Usage</h3>
+ * The component offers three selection modes:
+ * * Single - select a single row.
+ * * Multi - select multiple rows.
+ * * None - no selection active.
  *
- * For the <code>ui5-grid-selection</code>
- * <h3>ES6 Module Import</h3>
+ * As the selection is key-based, `ui5-grid-row` components need to define a unique `key` property.
  *
- * <code>import @ui5/webcomponents/dist/GridSelection.js";</code>
+ * ### Usage
+ *
+ * The `ui5-grid-selection` component is only used inside the `ui5-grid` component as a feature.
+ * It has to be slotted inside the `ui5-grid` in the `features` slot.
+ * The component is not intended to be used as a standalone component.
+ *
+ * ```html
+ * <ui5-grid>
+ * 	<ui5-grid-selection mode="Multi" slot="features"></ui5-grid-selection>
+ * </ui5-grid>
+ * ```
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/GridSelection.js";`
  *
  * @constructor
  * @extends UI5Element
