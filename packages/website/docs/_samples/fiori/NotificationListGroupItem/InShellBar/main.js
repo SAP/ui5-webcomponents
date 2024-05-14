@@ -40,5 +40,6 @@ notificationList.addEventListener("item-close", e => {
 
 shellbar.addEventListener("notifications-click", e => {
     e.preventDefault();
-    notificationsPopover.showAt(e.detail.targetRef);
+    notificationsPopover.opener = e.detail.targetRef;
+	notificationsPopover.open = true;
 });

@@ -353,12 +353,14 @@
 		});
 
 		openNotifications.addEventListener("click", function(event) {
-			notificationsPopover.showAt(openNotifications);
+			notificationsPopover.opener = openNotifications;
+			notificationsPopover.open = true;
 		});
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
-			notificationsPopover.showAt(event.detail.targetRef);
+			notificationsPopover.opener = event.detail.targetRef;
+			notificationsPopover.open = true;
 		});
 	</script>
 </body>

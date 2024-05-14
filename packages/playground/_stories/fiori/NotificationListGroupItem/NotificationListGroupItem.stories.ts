@@ -223,7 +223,8 @@ InShellBar.decorators = [
 
 	shellbar.addEventListener("notifications-click", e => {
 		event.preventDefault();
-		notificationsPopover.showAt(e.detail.targetRef);
+		notificationsPopover.opener = e.detail.targetRef;
+		notificationsPopover.open = true;
 	});
 </script>`;
 	},
