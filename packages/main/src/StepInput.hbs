@@ -35,7 +35,7 @@
 			class="ui5-step-input-input"
 			placeholder="{{placeholder}}"
 			type="{{type}}"
-			value="{{_valuePrecisioned}}"
+			value="{{_displayValue}}"
 			?disabled="{{disabled}}"
 			?required="{{required}}"
 			?readonly="{{readonly}}"
@@ -76,6 +76,4 @@
 		></ui5-icon>
 	</div>
 	{{/unless}}
-	<slot name="formSupport"></slot>
-
 </div>

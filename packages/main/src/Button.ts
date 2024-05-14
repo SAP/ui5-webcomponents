@@ -6,8 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -20,20 +19,19 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
-import HasPopup from "./types/HasPopup.js";
 import IconMode from "./types/IconMode.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -46,11 +44,7 @@ interface IButton extends HTMLElement, ITabbable {
 let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
 
-type AccessibilityAttributes = {
-	expanded?: "true" | "false" | boolean,
-	hasPopup?: `${HasPopup}`,
-	controls?: string
-};
+type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
 
 /**
  * @class
@@ -85,6 +79,7 @@ type AccessibilityAttributes = {
  */
 @customElement({
 	tag: "ui5-button",
+	formAssociated: true,
 	languageAware: true,
 	renderer: litRender,
 	template: ButtonTemplate,
@@ -107,7 +102,7 @@ type AccessibilityAttributes = {
  * @private
  */
 @event("_active-state-change")
-class Button extends UI5Element implements IFormElement, IButton {
+class Button extends UI5Element implements IButton, IFormElement {
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -150,8 +145,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * When set to `true`, the component will
 	 * automatically submit the nearest HTML form element on `press`.
 	 *
-	 * **Note:** For the `submits` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
+	 * **Note:** This property is only applicable within the context of an HTML Form element.`
 	 * @default false
 	 * @public
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
@@ -189,35 +183,29 @@ class Button extends UI5Element implements IFormElement, IButton {
 	accessibleNameRef!: string;
 
 	/**
-	 * An object of strings that defines several additional accessibility attribute values
-	 * for customization depending on the use case.
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
 	 *
-	 * It supports the following fields:
+	 * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
+	 * Accepts the following string values: `true` or `false`
 	 *
-	 * - `expanded`: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-	 *	- `true`
-	 *	- `false`
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
 	 *
-	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
-	 *	- `Dialog`
-	 *	- `Grid`
-	 *	- `ListBox`
-	 *	- `Menu`
-	 *	- `Tree`
+	 * - **controls**: Identifies the element (or elements) whose contents or presence are controlled by the button element.
+	 * Accepts a lowercase string value.
 	 *
-	 * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
 	 * @public
 	 * @since 1.2.0
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes!: ButtonAccessibilityAttributes;
 
 	/**
 	 * Defines whether the button has special form-related functionality.
 	 *
-	 * **Note:** For the `type` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default "Button"
 	 * @public
 	 * @since 1.15.0
@@ -228,7 +216,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Describes the accessibility role of the button.
 	 *
-	 * **Note:** Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
+	 * **Note:** Use <code>ButtonAccessibleRole.Link</code> role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
 	 *
 	 * @default "Button"
 	 * @public
@@ -345,14 +333,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	async onBeforeRendering() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (this.type !== ButtonType.Button && !formSupport) {
-			console.warn(`In order for the "type" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-		if (this.submits && !formSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 
@@ -365,12 +345,12 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport && this._isSubmit) {
-			formSupport.triggerFormSubmit(this);
+		if (this._isSubmit) {
+			submitForm(this);
 		}
-		if (formSupport && this._isReset) {
-			formSupport.triggerFormReset(this);
+
+		if (this._isReset) {
+			resetForm(this);
 		}
 
 		if (isSafari()) {
@@ -452,7 +432,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	get _hasPopup() {
-		return this.accessibilityAttributes.hasPopup?.toLowerCase();
+		return this.accessibilityAttributes.hasPopup;
 	}
 
 	get hasButtonType() {
@@ -483,7 +463,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
-	get buttonAccessibleRole() {
+	get effectiveAccRole() {
 		return this.accessibleRole.toLowerCase();
 	}
 
@@ -522,6 +502,6 @@ Button.define();
 
 export default Button;
 export type {
-	AccessibilityAttributes,
+	ButtonAccessibilityAttributes,
 	IButton,
 };

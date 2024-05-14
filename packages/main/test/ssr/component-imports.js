@@ -1,6 +1,5 @@
 import Avatar from "../../dist/Avatar.js";
 import AvatarGroup from "../../dist/AvatarGroup.js";
-import Badge from "../../dist/Badge.js";
 import Bar from "../../dist/Bar.js";
 import Breadcrumbs from "../../dist/Breadcrumbs.js";
 import BusyIndicator from "../../dist/BusyIndicator.js";
@@ -46,9 +45,11 @@ import MessageStrip from "../../dist/MessageStrip.js";
 import MultiComboBox from "../../dist/MultiComboBox.js";
 import ProgressIndicator from "../../dist/ProgressIndicator.js";
 import RatingIndicator from "../../dist/RatingIndicator.js";
+import Tag from "../../dist/Tag.js";
 import TabContainer from "../../dist/TabContainer.js";
 import Tab from "../../dist/Tab.js";
 import TabSeparator from "../../dist/TabSeparator.js";
+import Text from "../../dist/Text.js";
 import TextArea from "../../dist/TextArea.js";
 import TimePicker from "../../dist/TimePicker.js";
 import TimePickerClock from "../../dist/TimePickerClock.js";
@@ -73,6 +74,5 @@ import CustomListItem from "../../dist/CustomListItem.js";
 import ListItemGroupHeader from "../../dist/ListItemGroupHeader.js";
 
 // Features
-import "../../dist/features/InputElementsFormSupport.js";
 import "../../dist/features/ColorPaletteMoreColors.js";
 import "../../dist/features/InputSuggestions.js";

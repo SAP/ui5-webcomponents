@@ -4,9 +4,9 @@
 	vertical-align="Center"
 	?sub-menu={{_isSubMenu}}
 	@ui5-before-open={{_beforePopoverOpen}}
-	@ui5-after-open={{_afterPopoverOpen}}
+	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
-	@ui5-after-close={{_afterPopoverClose}}
+	@ui5-close={{_afterPopoverClose}}
     accessible-name-ref="{{_id}}-navigationMenuPopoverText"
 >
 <span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
@@ -20,7 +20,7 @@
 			icon="nav-back"
 			class="ui5-menu-back-button"
 			design="Transparent"
-			aria-label="{{labelBack}}"
+			accessible-name="{{labelBack}}"
 			@click={{_navigateBack}}
 		>
 		</ui5-button>
@@ -35,7 +35,7 @@
 		<ui5-button
 			icon="decline"
 			design="Transparent"
-			aria-label="{{labelClose}}"
+			accessible-name="{{labelClose}}"
 			@click={{close}}
 		>
 		</ui5-button>

@@ -79,13 +79,13 @@
 				<p>this is footer</p>
 			</div>
 		</ui5-popover>
-		<ui5-avatar-group aria-haspopup="menu" type="Individual" id="avatar-group-individual">
-			<ui5-avatar interactive size="XL" aria-haspopup="menu" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="dialog" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="listbox" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="tree" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="grid" initials="XL"></ui5-avatar>
-			<ui5-avatar interactive size="XL" aria-haspopup="none" initials="XL"></ui5-avatar>
+		<ui5-avatar-group type="Individual" id="avatar-group-individual">
+			<ui5-avatar interactive size="XL" icon="home" initials="XL" id="avatar-1"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
+			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
 			<ui5-avatar interactive size="XL" icon="home">
 				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
 			</ui5-avatar>
@@ -96,7 +96,7 @@
 			<ui5-avatar interactive size="XL" initials="XL"></ui5-avatar>
 		</ui5-avatar-group>
 		<br>
-		<ui5-avatar-group aria-haspopup="menu" type="Group" id="avatar-group-group">
+		<ui5-avatar-group type="Group" id="avatar-group-group">
 			<ui5-avatar size="M" initials="M">
 				<img src="./img/woman_avatar_5.png" alt="Woman Avatar 5">
 			</ui5-avatar>
@@ -297,8 +297,9 @@
 		}
 		placeholder.innerHTML = html;
 
-		groupPop.close();
-		groupPop.showAt(event.detail.targetRef);
+		groupPop.open = false;
+		groupPop.opener = event.detail.targetRef;
+		groupPop.open = true;
 	}
 
 	function onAvatarClicked(avatarGroup, avatarRef) {
@@ -312,8 +313,9 @@
 		popAvatar.initials = avatarRef.initials;
 		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
 
-		individualPop.close();
-		individualPop.showAt(avatarRef);
+		individualPop.open = false;
+		individualPop.opener = avatarRef;
+		individualPop.open = true;
 	}
 
 	avatarGroupGroupEvents.addEventListener("ui5-click", function (event) {
@@ -324,6 +326,7 @@
 		eventAvatarsClicked.value= ++eventAvatarsClickedValue;
 	});
 
+	avatarGroupIndividual.accessibilityAttributes = { hasPopup: "menu" };
 	avatarGroupIndividual.addEventListener("ui5-click", function (event) {
 		eventTargetRef.value = event.detail.targetRef.tagName;
 		eventOverflowButtonClicked.value = event.detail.overflowButtonClicked;
@@ -335,6 +338,7 @@
 		}
 	});
 
+	avatarGroupGroup.accessibilityAttributes = { hasPopup: "menu" };
 	avatarGroupGroup.addEventListener("ui5-click", function (event) {
 		eventTargetRef.value = event.detail.targetRef.tagName + '.' + event.detail.targetRef.className;
 		eventOverflowButtonClicked.value = event.detail.overflowButtonClicked;
