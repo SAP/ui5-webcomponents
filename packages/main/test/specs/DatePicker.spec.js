@@ -1369,4 +1369,30 @@ describe("Date Picker Tests", () => {
 		assert.ok(await monthPicker.getAttribute("hidden"));
 		assert.ok(await yearPicker.getAttribute("hidden"));
 	});
+
+	it("should open day picker view initially when open is triggered via keyboard", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		await browser.keys("Escape");
+
+		const calendar = await datepicker.getCalendar();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		let currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		await browser.keys("F4");
+		currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+
+		await browser.keys("Escape");
+		assert.notOk(await datepicker.isPickerOpen(), "Datepicker is closed");
+
+		await valueHelpIcon.click();
+		currentPicker = await calendar.getProperty("_currentPicker");
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+	});
 });
