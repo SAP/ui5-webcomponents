@@ -251,6 +251,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * **Note:** When the component is used inside a form element,
+	 * the value is sent as the first element in the form data, even if it's empty.
 	 * @default ""
 	 * @public
 	 * @since 2.0.0
