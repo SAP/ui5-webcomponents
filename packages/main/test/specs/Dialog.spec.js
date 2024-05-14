@@ -371,6 +371,17 @@ describe("Dialog general interaction", () => {
 		await browser.keys(["Shift", "Tab"]);
 		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
 	});
+
+	it("initial focus with autofocus", async () => {
+		const openDialogAutofocus = await browser.$("#btnDialogAutofocus");
+		await openDialogAutofocus.scrollIntoView();
+		await openDialogAutofocus.click();
+
+		const closeButton = await browser.$("#btnDialogAutofocusClose");
+
+		assert.ok(closeButton.isFocused(), "initial focus is correct");
+		await closeButton.click();
+	});
 });
 
 describe("Acc", () => {
