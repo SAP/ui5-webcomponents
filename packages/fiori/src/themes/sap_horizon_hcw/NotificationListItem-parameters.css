@@ -15,5 +15,7 @@
 	--_ui5-notification_item-root-padding-inline: 1rem;
 	--_ui5-notification_item-content-padding: 0.75rem 0;
 	--_ui5-notification_item-title-margin-bottom: 0;
+	--_ui5-notification_item-title-padding-end-two-buttons: 4.875rem;
+	--_ui5-notification_item-title-padding-end-one-button: 2.375rem;
 	--_ui5-notification_item-focus-offset: 0.1875rem;
 }
