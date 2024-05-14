@@ -184,9 +184,6 @@ import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 
-// import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-// import { getTagsToScope } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-
 // @ts-ignore
 window.sanitizeHTML = sanitizeHTML;
 // @ts-ignore
@@ -309,21 +306,6 @@ registerIconLoader("my-icons", () => {
 		},
 	}]);
 });
-
-// const connectedCallbackOrig = UI5Element.prototype.connectedCallback;
-// UI5Element.prototype.connectedCallback = function () {
-// 	// debugger;
-// 	const rootNode = this.getRootNode();
-// 	// when an element is connected, check if it exists in the `dependencies` of the parent
-// 	if (rootNode instanceof ShadowRoot && "isUI5Element" in rootNode.host) {
-// 		const klass = rootNode.host.constructor;
-// 		const hasDependency =  getTagsToScope(rootNode.host).includes((this.constructor).getMetadata().getPureTag());
-// 		if (!hasDependency) {
-// 			console.error(`[UI5-FWK] ${(this.constructor).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
-// 		}
-// 	}
-// 	return connectedCallbackOrig.call(this);
-// }
 
 // @ts-ignore
 window["sap-ui-webcomponents-bundle"] = testAssets;
