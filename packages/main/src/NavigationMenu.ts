@@ -9,7 +9,7 @@ import Menu from "./Menu.js";
 import type { MenuItemClickEventDetail } from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
-import type NavigationMenuItem from "./NavigationMenuItem.js";
+import NavigationMenuItem from "./NavigationMenuItem.js";
 import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles

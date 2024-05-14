@@ -43,7 +43,6 @@
 .ui5-menu-rp.ui5-navigation-menu {
     box-shadow: var(--_ui5_side_navigation_popup_box_shadow);
     min-width: 10rem;
-    height: auto;
     background: var(--sapGroup_ContentBackground);
     border: none;
     border-radius: 0.75rem;
