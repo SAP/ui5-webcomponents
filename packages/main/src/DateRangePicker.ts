@@ -5,11 +5,13 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
@@ -52,6 +54,8 @@ import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 @customElement({
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
+	template: DateRangePickerTemplate,
+	dependencies: [...DatePicker.dependencies, CalendarDateRange],
 })
 class DateRangePicker extends DatePicker {
 	 /**
@@ -153,6 +157,14 @@ class DateRangePicker extends DatePicker {
 	 */
 	get endDateValue(): Date | null {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();
+	}
+
+	get startValue(): string {
+		return this._calendarSelectedDates[0] || "";
+	}
+
+	get endValue(): string {
+		return this._calendarSelectedDates[1] || "";
 	}
 
 	/**

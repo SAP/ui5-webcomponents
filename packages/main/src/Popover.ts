@@ -139,15 +139,6 @@ class Popover extends Popup {
 	modal!: boolean;
 
 	/**
-	 * Defines whether the block layer will be shown if modal property is set to true.
-	 * @default false
-	 * @public
-	 * @since 1.0.0-rc.10
-	 */
-	@property({ type: Boolean })
-	hideBackdrop!: boolean;
-
-	/**
 	 * Determines whether the component arrow is hidden.
 	 * @default false
 	 * @public
@@ -254,6 +245,10 @@ class Popover extends Popup {
 	}
 
 	async openPopup() {
+		if (this._opened) {
+			return;
+		}
+
 		let opener;
 
 		if (this.opener instanceof HTMLElement) {
@@ -274,12 +269,15 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
-			this.fireEvent("after-close", {}, false, false);
-			return;
-		}
+		// if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+		// 	this.fireEvent("close", {}, false, false);
+		// 	return;
+		// }
 
-		await this.showAt(opener);
+		this._opener = opener;
+		this._openerRect = opener.getBoundingClientRect();
+
+		await super.openPopup();
 	}
 
 	isOpenerClicked(e: MouseEvent) {
@@ -295,24 +293,6 @@ class Popover extends Popup {
 		}
 
 		return e.composedPath().indexOf(this._opener as EventTarget) > -1;
-	}
-
-	/**
-	 * Shows the popover.
-	 * @param opener the element that the popover is shown at
-	 * @param [preventInitialFocus=false] prevents applying the focus inside the popover
-	 * @public
-	 * @returns Resolved when the popover is open
-	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
-		if (!opener || this._isOpened) {
-			return;
-		}
-
-		this._opener = opener;
-		this._openerRect = opener.getBoundingClientRect();
-
-		await super._open(preventInitialFocus);
 	}
 
 	/**
@@ -344,8 +324,8 @@ class Popover extends Popup {
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if ((closedPopupParent as Popover).showAt) {
-			const contentRect = (closedPopupParent as Popover).contentDOM.getBoundingClientRect();
+		if (closedPopupParent instanceof Popover) {
+			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
 		}
@@ -385,7 +365,7 @@ class Popover extends Popup {
 	_show() {
 		super._show();
 
-		if (!this._isOpened) {
+		if (!this._opened) {
 			this._showOutsideViewport();
 		}
 
@@ -397,7 +377,7 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.isOpen()) {
+		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
 			this._openerRect = this._opener!.getBoundingClientRect();
 		}
@@ -411,7 +391,7 @@ class Popover extends Popup {
 		}
 
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
-			return this.close();
+			return this.closePopup();
 		}
 
 		this._oldPlacement = placement;
@@ -764,10 +744,6 @@ class Popover extends Popup {
 		return this.modal;
 	}
 
-	get shouldHideBackdrop() { // Required by Popup.js
-		return this.hideBackdrop;
-	}
-
 	get _ariaLabelledBy() { // Required by Popup.js
 		if (!this._ariaLabel && this._displayHeader) {
 			return "ui5-popup-header";
@@ -826,7 +802,7 @@ class Popover extends Popup {
 }
 
 const instanceOfPopover = (object: any): object is Popover => {
-	return "showAt" in object;
+	return "opener" in object;
 };
 
 Popover.define();

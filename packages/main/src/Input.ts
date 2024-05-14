@@ -258,6 +258,20 @@ type InputSuggestionScrollEventDetail = {
 		scrollContainer: { type: HTMLElement },
 	},
 })
+
+/**
+ * Fired when the suggestions picker is opened.
+ * @public
+ * @since 2.0.0-rc.3
+ */
+@event("open")
+
+/**
+ * Fired when the suggestions picker is closed.
+ * @public
+ * @since 2.0.0-rc.3
+ */
+@event("close")
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines whether the component is in disabled state.
@@ -429,7 +443,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	showClearIcon!: boolean;
 
 	/**
-	 * Defines whether the suggestions popover is open.
+	 * Defines whether the suggestions picker is open.
+	 * Once the picker is open only the input field can close the picker internally.
 	 * @default false
 	 * @public
 	 * @since rc.2.0.0
@@ -678,6 +693,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (this.Suggestions && this.showSuggestions && this.Suggestions._getPicker()) {
 			this._listWidth = this.Suggestions._getListWidth();
+
+			if (!this.focused && this.open && innerInput) {
+				innerInput.focus();
+			}
 		}
 
 		if (this._performTextSelection) {
@@ -1145,10 +1164,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_handlePickerAfterOpen() {
 		this.Suggestions?._onOpen();
+		this.fireEvent("open", null, false, false);
 	}
 
 	_handlePickerAfterClose() {
 		this.Suggestions?._onClose();
+		this.fireEvent("close", null, false, false);
 	}
 
 	openValueStatePopover() {

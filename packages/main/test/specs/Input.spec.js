@@ -1567,7 +1567,7 @@ describe("Selection-change event", () => {
 });
 
 describe("Property open", () => {
-	it("Suggestions popover is open when attribute open is true", async () => {
+	it("Suggestions picker is open when attribute open is true", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await $("#input-suggestions-open");
@@ -1576,5 +1576,20 @@ describe("Property open", () => {
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+
+	it("Suggestions popover is closed when attribute open is set to false", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = false;
+		});
+
+		assert.strictEqual(await respPopover.getProperty("open"), false, "Suggestions popover is closed");
 	});
 });
