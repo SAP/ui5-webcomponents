@@ -6,7 +6,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
 		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
@@ -18,7 +18,7 @@ describe("General interaction", () => {
 
 	it ("Should close the popover when clicking on the arrow second time", async () => {
 		const combo = await $("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
 		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
@@ -32,7 +32,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -113,7 +113,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -153,7 +153,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -218,7 +218,7 @@ describe("General interaction", () => {
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#change-cb");
 		const placeholder = await browser.$("#change-placeholder");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		await arrow.click();
 
@@ -243,7 +243,7 @@ describe("General interaction", () => {
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#value-state-error");
 		const placeholder = await browser.$("#change-placeholder");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		await browser.executeAsync(done => {
 			document.querySelector("[value-state='Negative']").addEventListener("ui5-change", function(event) {
@@ -362,7 +362,7 @@ describe("General interaction", () => {
 
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#change-cb");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("[inner-input]");
 
 		await arrow.click();
@@ -449,7 +449,7 @@ describe("General interaction", () => {
 	it ("Tests Combo with contains filter", async () => {
 		const combo = await browser.$("#contains-cb");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -476,7 +476,7 @@ describe("General interaction", () => {
 	it ("Tests Combo with startswith filter", async () => {
 		const combo = await browser.$("#startswith-cb");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -499,7 +499,7 @@ describe("General interaction", () => {
 	it ("Tests selection-change event and its parameters", async () => {
 		const combo = await browser.$("#combo");
 		const label = await browser.$("#selection-change-event-result");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -516,7 +516,7 @@ describe("General interaction", () => {
 	it ("Tests selection-change event when type text after selection", async () => {
 		const combo = await browser.$("#combo");
 		let label = await browser.$("#selection-change-event-result");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -533,7 +533,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		assert.notOk(await combo.getProperty("focused"), "property focused should be false");
 
@@ -557,7 +557,7 @@ describe("General interaction", () => {
 
 	it ("Tests Combo with two-column layout", async () => {
 		const combo = await browser.$("#combobox-two-column-layout");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
@@ -580,7 +580,7 @@ describe("General interaction", () => {
 
 		const cb = await $("#dynamic-items");
 		const btn = await $("#add-items-btn");
-		const arrow = await cb.shadow$("[input-icon]");
+		const arrow = await cb.shadow$(".inputIcon");
 
 		await btn.click();
 		await arrow.click();
@@ -631,7 +631,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const cb = await $("#combo");
-		const arrow = await cb.shadow$("[input-icon]");
+		const arrow = await cb.shadow$(".inputIcon");
 		const input = cb.shadow$("input");
 
 		await input.click();
@@ -653,7 +653,7 @@ describe("Grouping", () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		let popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -677,7 +677,7 @@ describe("Grouping", () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem;
 
@@ -692,7 +692,7 @@ describe("Grouping", () => {
 	it ("Tests input value while group item is focused", async () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem;
 
@@ -733,7 +733,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "List item 1 of 11";
@@ -756,7 +756,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#value-state-error-text");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "Please choose a country";
@@ -774,7 +774,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combobox-two-column-layout");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "DZ List item 1 of 10";
@@ -797,7 +797,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "Group Header A";
@@ -915,7 +915,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem, listItem;
 
@@ -946,7 +946,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let valueStateHeader, groupItem;
 
@@ -977,7 +977,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
@@ -1017,7 +1017,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
@@ -1053,7 +1053,7 @@ describe("Keyboard navigation", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		const prevCombo = await browser.$("#value-state-grouping");
 		const nextCombo = await browser.$("#combobox-two-column-layout");
@@ -1074,7 +1074,7 @@ describe("Keyboard navigation", async () => {
 
 		const comboBox = await browser.$("#combo2");
 		const input = await comboBox.shadow$("#ui5-combobox-input");
-		const pickerIcon = await comboBox.shadow$("[input-icon]");
+		const pickerIcon = await comboBox.shadow$(".inputIcon");
 		const respPopover = await comboBox.shadow$("ui5-responsive-popover");
 		let listItem;
 
@@ -1170,7 +1170,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		await combo.scrollIntoView();
 
