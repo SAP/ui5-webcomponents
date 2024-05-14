@@ -207,7 +207,7 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines a reference (ID or DOM element) of component's menu of options
 	 * as alternative to define the select's dropdown.
-	 * When using this attribute in a declarative way you must only use the `id` as string of the element you want to use as menu.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the menu.
 	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 *
 	 * **Note:** Usage of `ui5-select-menu` is recommended.
