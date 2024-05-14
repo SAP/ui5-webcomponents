@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.2...v1.24.3) (2024-05-14)
+
+
+### Bug Fixes
+
+* **ui5-cb-item:** return the DOM reference of the list item ([#8914](https://github.com/SAP/ui5-webcomponents/issues/8914)) ([0751448](https://github.com/SAP/ui5-webcomponents/commit/07514484a1474706c77d1bae6bdd72064490b227)), closes [#8872](https://github.com/SAP/ui5-webcomponents/issues/8872) [#8841](https://github.com/SAP/ui5-webcomponents/issues/8841)
+* **ui5-menu-item:** apply scoping to internal `Icon` ([#8751](https://github.com/SAP/ui5-webcomponents/issues/8751)) ([62f7a2e](https://github.com/SAP/ui5-webcomponents/commit/62f7a2e939ac906c4a47b2c75e11018824471568))
+
+
+
+
+
 ## [1.24.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v1.24.1) (2024-05-13)
 
 
