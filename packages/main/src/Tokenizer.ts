@@ -257,6 +257,8 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
+	 * When using this attribute in a declarative way you must only use the `id` as string of the element you want to show the menu at.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * **Note:** Used inside MultiInput and MultiComboBox components.
 	 * @private
 	 * @default ""

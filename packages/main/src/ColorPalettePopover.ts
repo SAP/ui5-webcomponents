@@ -134,6 +134,8 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at.
+	 * When using this attribute in a declarative way you must only use the `id` as string of the element you want to show the popover at.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
 	 * @default undefined
 	 * @since 1.21.0
