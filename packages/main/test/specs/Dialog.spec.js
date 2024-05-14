@@ -370,6 +370,8 @@ describe("Dialog general interaction", () => {
 		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
 		await browser.keys(["Shift", "Tab"]);
 		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+
+		await browser.keys("Escape");
 	});
 
 	it("initial focus with autofocus", async () => {
