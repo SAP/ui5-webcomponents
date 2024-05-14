@@ -6,6 +6,7 @@
 	_disable-initial-focus
 	placement="Bottom"
 	horizontal-align="Start"
+	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
@@ -101,7 +102,7 @@
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		tabindex="-1"

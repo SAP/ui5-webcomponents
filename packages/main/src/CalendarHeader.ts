@@ -36,8 +36,8 @@ type SecondaryCalendarButtonTexts = {
 })
 @event("next-press")
 @event("previous-press")
-@event("show-month-press")
-@event("show-year-press")
+@event("show-month-view")
+@event("show-year-view")
 class CalendarHeader extends UI5Element {
 	/**
 	 * Defines component's timestamp.
@@ -144,7 +144,7 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onMonthButtonClick(e: MouseEvent) {
-		this.fireEvent("show-month-press", e);
+		this.fireEvent("show-month-view", e);
 	}
 
 	onMonthButtonKeyDown(e: KeyboardEvent) {
@@ -153,19 +153,19 @@ class CalendarHeader extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("show-month-press", e);
+			this.fireEvent("show-month-view", e);
 		}
 	}
 
 	onMonthButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("show-month-press", e);
+			this.fireEvent("show-month-view", e);
 		}
 	}
 
 	onYearButtonClick(e: MouseEvent) {
-		this.fireEvent("show-year-press", e);
+		this.fireEvent("show-year-view", e);
 	}
 
 	onYearButtonKeyDown(e: KeyboardEvent) {
@@ -174,14 +174,14 @@ class CalendarHeader extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("show-year-press", e);
+			this.fireEvent("show-year-view", e);
 		}
 	}
 
 	onYearButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("show-year-press", e);
+			this.fireEvent("show-year-view", e);
 		}
 	}
 

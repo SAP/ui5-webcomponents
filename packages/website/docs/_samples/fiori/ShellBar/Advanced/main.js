@@ -19,5 +19,6 @@ const shellbar = document.getElementById("shellbar");
 const actionPopover = document.getElementById("action-popover");
 
 shellbar.addEventListener("ui5-profile-click", (event) => {
-    actionPopover.showAt(event.detail.targetRef);
+    actionPopover.opener = event.detail.targetRef;
+	actionPopover.open = true;
 });
