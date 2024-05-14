@@ -3,9 +3,9 @@
     <ui5-icon id="custom-icon" name="search" slot="icon"></ui5-icon>
 </ui5-input>
 <script type="module">
-    import inputCss from "@ui5/webcomponents/dist/styles/InputIcon.module.css";
+    import { inputIcon } from "@ui5/webcomponents/dist/styles/Icon.module.css";
 
     const icon = document.getElementById("custom-icon");
-    icon.classList.add(inputCss["inputIcon"]);
+    icon.classList.add(inputIcon);
 </script>
 ```
