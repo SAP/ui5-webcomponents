@@ -58,7 +58,8 @@ describe("Button general interaction", () => {
 
 		const field = await browser.$("#click-counter");
 		assert.strictEqual(await field.getProperty("value"), "3", "Click should be called 3 times");
-		assert.ok(await nativeButton.hasAttribute("disabled"), )
+		assert.ok(await nativeButton.hasAttribute("disabled"), );
+		assert.notOk(await nativeButton.hasAttribute("tabindex"), "Disabled button doesn't have tabindex attribute");
 	});
 
 	it("tests clicking on disabled button whith Icon", async () => {
