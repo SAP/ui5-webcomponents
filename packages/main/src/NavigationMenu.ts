@@ -6,7 +6,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
-import type NavigationMenuItem from "./NavigationMenuItem.js";
+import NavigationMenuItem from "./NavigationMenuItem.js";
 import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
