@@ -55,12 +55,12 @@
 	color: var(--sapNegativeElementColor);
 }
 
-.ui5-message-strip-root--warning {
+.ui5-message-strip-root--critical {
 	background-color: var(--sapWarningBackground);
 	border-color: var(--sapMessage_WarningBorderColor);
 }
 
-.ui5-message-strip-root--warning .ui5-message-strip-icon {
+.ui5-message-strip-root--critical .ui5-message-strip-icon {
 	color: var(--sapCriticalElementColor);
 }
 

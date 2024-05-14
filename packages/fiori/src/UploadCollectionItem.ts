@@ -178,9 +178,15 @@ class UploadCollectionItem extends ListItem {
 	progress!: number;
 
 	/**
-	 * If set to `Uploading` or `Error`, a progress indicator showing the `progress` is displayed.
-	 * Also if set to `Error`, a refresh button is shown. When this icon is pressed `retry` event is fired.
-	 * If set to `Uploading`, a terminate button is shown. When this icon is pressed `terminate` event is fired.
+	 * Upload state.
+	 *
+	 * Depending on this property, the item displays the following:
+	 *
+	 * - `Ready` - progress indicator is displayed.
+	 * - `Uploading` - progress indicator and terminate button are displayed. When the terminate button is pressed, `terminate` event is fired.
+	 * - `Error` - progress indicator and retry button are displayed. When the retry button is pressed, `retry` event is fired.
+	 * - `Complete` - progress indicator is not displayed.
+	 *
 	 * @default "Ready"
 	 * @public
 	 */
@@ -397,7 +403,7 @@ class UploadCollectionItem extends ListItem {
 
 	get valueStateName(): ValueState {
 		if (this.uploadState === UploadState.Error) {
-			return ValueState.Error;
+			return ValueState.Negative;
 		}
 
 		if (this.uploadState === UploadState.Ready || this.uploadState === UploadState.Uploading) {

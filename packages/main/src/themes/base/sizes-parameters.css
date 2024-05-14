@@ -29,6 +29,13 @@
 	--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom: 0;
 	--_ui5_daypicker_two_calendar_item_selected_focus_padding_right: 0.4375rem;
 
+	/* CalendarLegend */
+	--_ui5-calendar-legend-item-root-focus-offset: -0.125rem;
+
+	/* Calendar Legend Item */
+	--_ui5-calendar-legend-item-box-margin: 0.25rem;
+	--_ui5-calendar-legend-item-box-inner-margin: 0.5rem;
+
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
 	 --_ui5_color-palette-item-hover-height: 2.375rem;
@@ -118,16 +125,6 @@
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2.75rem;
 
-	/* Table */
-
-	--_ui5_load_more_text_height: 2.75rem;
-	--_ui5_load_more_text_font_size: var(--sapFontMediumSize);
-	--_ui5_load_more_desc_padding:  0.375rem 2rem 0.875rem 2rem;
-	--ui5_table_header_row_height: 2.75rem;
-	--ui5_table_row_height: 2.75rem;
-	--ui5_table_focus_outline_offset: -0.125rem;
-	--ui5_table_group_row_height: 2rem;
-
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
 	--_ui5-tree-toggle-box-width: 2.75rem;
@@ -175,7 +172,6 @@
 	--_ui5-calendar-legend-root-width: 16.75rem;
 
 	/* Calendar Legend Item */
-	--_ui5-calendar-legend-item-box-margin: 0.125rem 0.5rem 0.125rem 0.125rem;
 	--_ui5-calendar-legend-item-root-focus-margin: -0.125rem;
 
 	/* CheckBox */
@@ -302,13 +298,6 @@
 	--_ui5_tl_padding: .5rem;
 	--_ui5_tl_li_margin_bottom: .5rem;
 
-	--_ui5_wheelslider_item_width: 64px;
-	--_ui5_wheelslider_item_height: 32px;
-	--_ui5_wheelslider_height: 224px;
-	--_ui5_wheelslider_selection_frame_margin_top: calc(var(--_ui5_wheelslider_item_height) * 2);
-	--_ui5_wheelslider_arrows_visibility: visible;
-	--_ui5_wheelslider_mobile_selection_frame_margin_top: 128px;
-
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_size: 1rem;
@@ -346,13 +335,6 @@
 	/* StepInput */
 	--_ui5_step_input_min_width: 6rem;
 	--_ui5_step_input_padding: 2rem;
-
-	/* Table */
-	--_ui5_load_more_text_height: 2.625rem;
-	--_ui5_load_more_text_font_size: var(--sapFontSize);
-	--_ui5_load_more_desc_padding: 0 2rem 0.875rem 2rem;
-	--ui5_table_header_row_height: 2rem;
-	--ui5_table_row_height: 2rem;
 
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;

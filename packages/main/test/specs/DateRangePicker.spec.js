@@ -12,7 +12,7 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("123123123");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
+		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is negative");
 	});
 
 	it("Custom Validation None", async () => {
@@ -259,6 +259,6 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("10.02.2023 г. - 25.07.2023 г.");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Error", "Min and max dates are set correctly");
+		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Negative", "Min and max dates are set correctly");
 	});
 });

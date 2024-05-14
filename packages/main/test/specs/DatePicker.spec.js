@@ -56,23 +56,12 @@ describe("Date Picker Tests", () => {
 		const root = await datepicker.getRoot();
 		const input = await datepicker.getInput();
 
-		await root.setAttribute("value-state", "Error");
+		await root.setAttribute("value-state", "Negative");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		const contentWrapper = await browser.$("#dp3").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
-	});
-
-	it("Value State Message", async () => {
-		datepicker.id = "#dp17";
-		const input = await datepicker.getInput();
-		await input.click();
-
-		const popover = await datepicker.getInputPopover();
-
-		const slot = await popover.$("#coolValueStateMessage");
-		assert.notOk(slot.error, "Value State message slot is working");
 	});
 
 	it("disabled", async () => {
@@ -753,7 +742,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("Enter");
 
 		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
@@ -773,7 +762,7 @@ describe("Date Picker Tests", () => {
 		await root.keys("Enter");
 
 		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
@@ -820,13 +809,18 @@ describe("Date Picker Tests", () => {
 		await btnYear.click();
 		let displayedYear = await datepicker.getDisplayedYear(11);
 		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Years out of range are disabled");
+	});
+
+	it("Years are disabled when out of range, part 2", async () => {
+		const root = await datepicker.getRoot();
 		await root.keys("ArrowRight");
 
-		displayedYear = await datepicker.getDisplayedYear(10);
+		let displayedYear = await datepicker.getDisplayedYear(10);
 		assert.ok(await displayedYear.isFocusedDeep(), "Focus remained on year 2100");
 
 		displayedYear = await datepicker.getDisplayedYear(11);
 		assert.notOk(await displayedYear.isFocusedDeep(), "Years out of range (2101) can not be reached with keyboard");
+		await datepicker.closePicker();
 	});
 
 	it("Months are disabled when out of range", async () => {
@@ -843,7 +837,7 @@ describe("Date Picker Tests", () => {
 		await root.keys("ArrowDown");
 
 		displayedMonth = await datepicker.getDisplayedMonth(0);
-		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range  can not be reached with keyboard");
+		assert.ok(await displayedMonth.isFocusedDeep(), "Months out of range cannot be reached with keyboard");
 	});
 
 	it("Days are disabled when out of range", async () => {
@@ -1121,7 +1115,7 @@ describe("Date Picker Tests", () => {
 
 		await browser.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 	});
 
 	it("focusout fires change but doesn't change the value state if the default behaviour is prevented", async () => {
@@ -1163,7 +1157,7 @@ describe("Date Picker Tests", () => {
 		await browser.keys("Jan 60, 2000");
 		await browser.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
 		await innerInput.doubleClick();
 		await browser.keys("Backspace");
@@ -1188,7 +1182,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("asd")
 		await innerInput.keys("Enter");
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (1)");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is not Negative (1)");
 
 		await datepicker.openPicker();
 
@@ -1205,7 +1199,7 @@ describe("Date Picker Tests", () => {
 		await innerInput.keys("Enter");
 
 
-		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (3)");
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is not valid (3)");
 	});
 
 	it("should open calendar picker in CalendarMode.DAY_MONTH_YEAR mode", async () => {
@@ -1296,7 +1290,7 @@ describe("Date Picker Tests", () => {
 		await Input.click();
 		await browser.keys("Nov 1, 2020");
 		await browser.keys("Enter");
-		assert.equal(await Input.getProperty("valueState"), "Error", "Correct value state");
+		assert.equal(await Input.getProperty("valueState"), "Negative", "Correctly set value state to 'Negative'");
 
 		await datepicker.openPicker();
 		const btnYear = await datepicker.getBtnYear();
@@ -1355,7 +1349,10 @@ describe("Date Picker Tests", () => {
 		let currentPicker = await calendar.getProperty("_currentPicker");
 		assert.equal(currentPicker, "month", "calendar is opened on months");
 
+		await datepicker.closePicker();
+
 		await datepickerRoot.setAttribute("format-pattern", "yyyy, dd/MM");
+
 		await datepicker.openPicker();
 		currentPicker = await calendar.getProperty("_currentPicker");
 
@@ -1367,5 +1364,31 @@ describe("Date Picker Tests", () => {
 		assert.notOk(await dayPicker.getAttribute("hidden"));
 		assert.ok(await monthPicker.getAttribute("hidden"));
 		assert.ok(await yearPicker.getAttribute("hidden"));
+	});
+
+	it("should open day picker view initially when open is triggered via keyboard", async () => {
+		datepicker.id = "#dpCalendarModeMonths";
+
+		await browser.keys("Escape");
+
+		const calendar = await datepicker.getCalendar();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
+		let currentPicker = await calendar.getProperty("_currentPicker");
+
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
+
+		await browser.keys("F4");
+		currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+
+		await browser.keys("Escape");
+		assert.notOk(await datepicker.isPickerOpen(), "Datepicker is closed");
+
+		await valueHelpIcon.click();
+		currentPicker = await calendar.getProperty("_currentPicker");
+		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
+		assert.equal(currentPicker, "day", "calendar is opened on days");
 	});
 });

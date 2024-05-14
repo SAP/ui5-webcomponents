@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var Configuration = window["sap-ui-webcomponents-bundle"].configuration;
 	var COMPACT_CLASS = "ui5-content-density-compact";
 	var THEME = Configuration.getTheme();
-	var HCB = "sap_belize_hcb";
+	var HCB = "sap_horizon_hcb";
 	var FIORI3 = "sap_fiori_3";
 	var FIORI3_DARK = "sap_fiori_3_dark";
 	var btnRTL = document.getElementById("btnRTL");
@@ -78,10 +78,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var popoverCloser = document.getElementById("closePopoverButton");
 
 	popoverOpener.addEventListener("click", function() {
-		popover.showAt(popoverOpener);
+		popover.opener = popoverOpener;
+		popover.open = true;
 	});
 	popoverCloser.addEventListener("click", function() {
-		popover.close();
+		popover.open = false;
 	});
 
 	/* Dialog */
@@ -94,16 +95,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 	dialogOpener.addEventListener("click", function() {
-		dialog.show();
+		dialog.open = true;
 	});
 	dialogOpener2.addEventListener("click", function() {
-		dialog2.show();
+		dialog2.open = true;
 	});
 	dialogCloser.addEventListener("click", function() {
-		dialog.close();
+		dialog.open = false;
 	});
 	dialogCloser2.addEventListener("click", function() {
-		dialog2.close();
+		dialog2.open = false;
 	});
 
 	/* List */

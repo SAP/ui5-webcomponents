@@ -20,13 +20,13 @@
 	aria-label="{{ariaLabelText}}"
 	title="{{buttonTitle}}"
 	part="button"
-	role="{{buttonAccessibleRole}}"
+	role="{{effectiveAccRole}}"
 >
 	{{#if icon}}
 		<ui5-icon
 			class="ui5-button-icon"
 			name="{{icon}}"
-			accessible-role="{{iconRole}}"
+			mode="{{iconMode}}"
 			part="icon"
 			?show-tooltip={{showIconTooltip}}
 		></ui5-icon>

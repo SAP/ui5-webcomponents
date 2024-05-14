@@ -11,6 +11,7 @@ import {
 	isRightCtrl,
 	isHome,
 	isEnd,
+	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -19,14 +20,13 @@ import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
+import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
 import type {
-	InputSuggestionItemSelectEventDetail as MultiInputSuggestionItemSelectEventDetail,
-	InputSuggestionItemPreviewEventDetail as MultiInputSuggestionItemPreviewEventDetail,
+	InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail,
 } from "./Input.js";
 
 interface IToken extends HTMLElement, ITabbable {
@@ -49,7 +49,8 @@ type MultiInputTokenDeleteEventDetail = {
  * Fiori Guidelines say that user should create tokens when:
  *
  * - Type a value in the input and press enter or focus out the input field (`change` event is fired)
- * - Select a value from the suggestion list (`suggestion-item-select` event is fired)
+ * - Move between suggestion items (`selection-change` event is fired)
+ * - Clicking on a suggestion item (`selection-change` event is fired if the clicked item is different than the current value. Also `change` event is fired )
  *
  * ### ES6 Module Import
  *
@@ -106,14 +107,6 @@ class MultiInput extends Input {
 	showValueHelpIcon!: boolean;
 
 	/**
-	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	expandedTokenizer!: boolean;
-
-	/**
 	 * Indicates whether the tokenizer has tokens
 	 * @default false
 	 * @private
@@ -140,13 +133,8 @@ class MultiInput extends Input {
 	}
 
 	valueHelpPress() {
-		this.closePopover();
+		this.closeValueStatePopover();
 		this.fireEvent("value-help-trigger");
-	}
-
-	showMorePress() {
-		this.expandedTokenizer = false;
-		this.focus();
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -178,8 +166,8 @@ class MultiInput extends Input {
 
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
-		this.closePopover();
-		this.tokenizer.closeMorePopover();
+		this.closeValueStatePopover();
+		this.tokenizer.open = false;
 		this._valueHelpIconPressed = true;
 		target.focus();
 	}
@@ -188,10 +176,6 @@ class MultiInput extends Input {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
-		}
-
-		if (e.relatedTarget === this.nativeInput) {
-			this.tokenizer.closeMorePopover();
 		}
 	}
 
@@ -202,11 +186,11 @@ class MultiInput extends Input {
 	}
 
 	innerFocusIn() {
-		this.expandedTokenizer = true;
+		this.tokenizer.expanded = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
 
-		this.tokenizer._getTokens().forEach(token => {
+		this.tokens.forEach(token => {
 			token.selected = false;
 		});
 	}
@@ -216,8 +200,6 @@ class MultiInput extends Input {
 
 		const target = e.target as HTMLInputElement;
 		const isHomeInBeginning = isHome(e) && target.selectionStart === 0;
-		const isCtrl: boolean = e.metaKey || e.ctrlKey;
-		const tokens = this.tokens;
 
 		if (isHomeInBeginning) {
 			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
@@ -234,20 +216,11 @@ class MultiInput extends Input {
 		if (isShow(e)) {
 			this.valueHelpPress();
 		}
-
-		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
-			e.preventDefault();
-			this.closePopover();
-			this.tokenizer.openMorePopover();
-		}
 	}
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
-		const isCtrl = !!(e.metaKey || e.ctrlKey);
-		const tokens = this.tokens;
-
-		if (isRight(e) || isEnd(e) || rightCtrl) {
+		if (isRight(e) || isDown(e) || isEnd(e) || rightCtrl) {
 			e.preventDefault();
 			const lastTokenIndex = this.tokens.length - 1;
 
@@ -255,36 +228,7 @@ class MultiInput extends Input {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
-			} else if (rightCtrl) {
-				e.preventDefault();
-				return this.tokenizer._handleArrowCtrl(e, e.target as Token, this.tokens, true);
 			}
-		}
-
-		if (isCtrl && ["c", "x"].includes(e.key.toLowerCase())) {
-			e.preventDefault();
-
-			const isCut = e.key.toLowerCase() === "x";
-			const selectedTokens = tokens.filter(token => token.selected);
-
-			if (isCut) {
-				const cutResult = this.tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
-
-				selectedTokens.forEach(token => {
-					this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
-				});
-
-				this.focus();
-
-				return cutResult;
-			}
-
-			return this.tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
-		}
-
-		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
-			e.preventDefault();
-			this.tokenizer.openMorePopover();
 		}
 	}
 
@@ -293,7 +237,8 @@ class MultiInput extends Input {
 		const tokens = this.tokens;
 		const lastToken = tokens.length && tokens[tokens.length - 1];
 
-		if (cursorPosition === 0 && lastToken) {
+		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
+		if (((cursorPosition === null && !this.value) || cursorPosition === 0) && lastToken) {
 			e.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
@@ -319,21 +264,18 @@ class MultiInput extends Input {
 		const insideShadowDom = this.shadowRoot!.contains(relatedTarget);
 
 		if (!insideDOM && !insideShadowDom) {
-			this.expandedTokenizer = false;
-
-			// we need to reset tabindex setting by tokenizer
-			this.tokenizer._itemNav._currentIndex = -1;
+			this.tokenizer.expanded = false;
 		}
 	}
 
 	/**
 	 * @override
 	 */
-	async _onfocusin(e: FocusEvent) {
-		const inputDomRef = await this.getInputDOMRef();
+	_onfocusin(e: FocusEvent) {
+		const inputDomRef = this.getInputDOMRef();
 
 		if (e.target === inputDomRef) {
-			await super._onfocusin(e);
+			super._onfocusin(e);
 		}
 	}
 
@@ -350,12 +292,28 @@ class MultiInput extends Input {
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
 	}
 
+	onAfterRendering() {
+		super.onAfterRendering();
+
+		this.tokenizer.preventInitialFocus = true;
+
+		if (this.tokenizer.expanded) {
+			this.tokenizer.scrollToEnd();
+		} else {
+			this.tokenizer.scrollToStart();
+		}
+	}
+
 	get iconsCount() {
 		return super.iconsCount + (this.showValueHelpIcon ? 1 : 0);
 	}
 
 	get tokenizer() {
 		return this.shadowRoot!.querySelector<Tokenizer>("[ui5-tokenizer]")!;
+	}
+
+	get tokenizerExpanded() {
+		return this.tokenizer && this.tokenizer.expanded;
 	}
 
 	get _tokensCountText() {
@@ -366,7 +324,7 @@ class MultiInput extends Input {
 	}
 
 	get _tokensCountTextId() {
-		return `${this._id}-hiddenText-nMore`;
+		return `hiddenText-nMore`;
 	}
 
 	/**
@@ -374,7 +332,7 @@ class MultiInput extends Input {
 	 * @protected
 	 */
 	get _placeholder() {
-		if (this.tokenizer && this.tokenizer._tokens.length) {
+		if (this.tokens.length) {
 			return "";
 		}
 
@@ -405,7 +363,7 @@ class MultiInput extends Input {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer._isOpen;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer.open;
 	}
 }
 
@@ -415,6 +373,5 @@ export default MultiInput;
 export type {
 	IToken,
 	MultiInputTokenDeleteEventDetail,
-	MultiInputSuggestionItemSelectEventDetail,
-	MultiInputSuggestionItemPreviewEventDetail,
+	MultiInputSelectionChangeEventDetail,
 };

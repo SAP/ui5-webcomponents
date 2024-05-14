@@ -155,7 +155,7 @@
 
 	<section>
 		<h3>Avatar - interactive disabled</h3>
-		<ui5-avatar id="interactive-disabled" disabled aria-haspopup="menu" interactive initials="XS" size="XS" accessible-name="Interactive avatar"></ui5-avatar>
+		<ui5-avatar id="interactive-disabled" disabled interactive initials="XS" size="XS" accessible-name="Interactive avatar"></ui5-avatar>
 		<br>
 		<ui5-input id="click-event-3"></ui5-input>
 		<h3>Avatar - non-interactive disabled</h3>
@@ -164,55 +164,55 @@
 
 	<section>
 		<h3>Avatar - interactive</h3>
-		<ui5-avatar id="interactive-avatar" aria-haspopup="menu" interactive initials="XS" size="XS" accessible-name="Interactive avatar"></ui5-avatar>
+		<ui5-avatar id="interactive-avatar" interactive initials="XS" size="XS" accessible-name="Interactive avatar"></ui5-avatar>
 		<ui5-avatar id="non-interactive-avatar" initials="S" size="S"></ui5-avatar>
 		<ui5-input id="click-event" value="0"></ui5-input>
 
 		<br>
-		<ui5-avatar id="myInteractiveAvatar" aria-haspopup="menu" interactive initials="L" size="L"></ui5-avatar>
+		<ui5-avatar id="myInteractiveAvatar" interactive initials="L" size="L"></ui5-avatar>
 		<ui5-input id="click-event-2"></ui5-input>
 	</section>
 
 	<section>
 		<h3>Avatar - Visual affordance</h3>
 		<ui5-avatar initials="AB" color-scheme="Accent1">
-			<ui5-badge slot="badge">
+			<ui5-tag slot="badge">
 				<ui5-icon slot="icon" name="accelerated"></ui5-icon>
-			</ui5-badge>
+			</ui5-tag>
 		</ui5-avatar>
 
 		<ui5-avatar interactive size="L" initials="CD" color-scheme="Accent2">
-			<ui5-badge slot="badge">
+			<ui5-tag slot="badge">
 				<ui5-icon slot="icon" name="accept"></ui5-icon>
-			</ui5-badge>
+			</ui5-tag>
 		</ui5-avatar>
 
 		<ui5-avatar size="XL">
 			<img src="./img/John_Miller.png" alt="John Miller">
-			<ui5-badge slot="badge">
+			<ui5-tag slot="badge">
 				<ui5-icon slot="icon" name="bar-chart"></ui5-icon>
-			</ui5-badge>
+			</ui5-tag>
 		</ui5-avatar>
 
 		<br>
 
 		<ui5-avatar shape="Square" size="XS" initials="EF" color-scheme="Accent3">
-			<ui5-badge slot="badge">
+			<ui5-tag slot="badge">
 				<ui5-icon slot="icon" name="filter"></ui5-icon>
-			</ui5-badge>
+			</ui5-tag>
 		</ui5-avatar>
 
 		<ui5-avatar interactive shape="Square" initials="GH" color-scheme="Accent4">
-			<ui5-badge slot="badge">
+			<ui5-tag slot="badge">
 				<ui5-icon slot="icon" name="add-employee"></ui5-icon>
-			</ui5-badge>
+			</ui5-tag>
 		</ui5-avatar>
 
 		<ui5-avatar shape="Square" size="L">
 			<img src="./img/John_Miller.png" alt="John Miller">
-			<ui5-badge slot="badge">
+			<ui5-tag slot="badge">
 				<ui5-icon slot="icon" name="document"></ui5-icon>
-			</ui5-badge>
+			</ui5-tag>
 		</ui5-avatar>
 		<br><br>
 	</section>
@@ -237,10 +237,13 @@
 			inputValue2 = 0;
 			inputValue3 = 0;
 
+		avatar.accessibilityAttributes = { hasPopup: "menu" };
 		avatar.addEventListener("ui5-click", function() {
 			input.value = ++inputValue;
 		});
 
+		
+		interactiveDisabled.accessibilityAttributes = { hasPopup: "menu" };
 		interactiveDisabled.addEventListener("ui5-click", function() {
 			input3.value = ++inputValue3;
 		});
@@ -249,6 +252,7 @@
 			input.value = ++inputValue;
 		});
 
+		myInteractiveAvatar.accessibilityAttributes = { hasPopup: "menu" };
 		myInteractiveAvatar.addEventListener("ui5-click", function() {
 			input2.value = ++inputValue2;
 		});

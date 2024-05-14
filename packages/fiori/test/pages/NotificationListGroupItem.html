@@ -264,32 +264,33 @@
 	<script>
 		notificationList.addEventListener("item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		notificationList.addEventListener("item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		notificationList.addEventListener("item-toggle", function(event) {
 			var item = event.detail.item;
 			wcToastBS.textContent = item.titleText + " has been " + (item.collapsed ? "collapsed" : "expanded");
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		acceptBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Accept btn In popover btn clicked";
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		rejectBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Reject btn In popover btn clicked";
-			wcToastBS.show();
+			wcToastBS.open = true;
 		});
 
 		openNotifications.addEventListener("click", function(event) {
-			notificationsPopover.showAt(openNotifications);
+			notificationsPopover.opener = openNotifications;
+			notificationsPopover.open = true;
 		});
 
 		btnMakeGroupBusy.addEventListener("click", function(event) {
@@ -302,12 +303,13 @@
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
-			notificationsPopover.showAt(event.detail.targetRef);
+			notificationsPopover.opener = event.detail.targetRef;
+			notificationsPopover.open = true;
 		});
 
 		notificationListTop.addEventListener("ui5-item-close", function (event) {
 				wcToastBS.textContent = event.detail.item.titleText;
-				wcToastBS.show();
+				wcToastBS.open = true;
 		});
 
 		btnCompact.addEventListener("click", function() {
