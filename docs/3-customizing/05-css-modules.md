@@ -1,6 +1,6 @@
 # CSS Modules
 ## What Are CSS Modules?
-[CSS Modules](https://github.com/css-modules/css-modules/) are CSS files where all class names and animation names are scoped locally by default. They help us to provide styles which could be used to improve the styles of components to make them suitable for specific use cases.
+[CSS Modules](https://github.com/css-modules/css-modules/) are CSS files where all class names and animation names are scoped locally by default. They help us to provide styles which could be used to improve the existing styles / visual appearance of components and to make them suitable for specific use cases.
 
 ## Local Scope
 CSS Modules have class selectors scoped locally by default. For instance, the class `inputIcon` is specific to that file. This is useful when the class is used in micro-front-end scenarios.
@@ -11,7 +11,7 @@ CSS Modules have class selectors scoped locally by default. For instance, the cl
 ```
 
 ## Support
-CSS modules allow you to import your .css file into a JavaScript Object with the CSS definitions as properties. They don't have an official specification, nor are they a browser feature. They are part of a compilation process that runs against your project to convert scoped classes and selectors into CSS files that the browser can understand.
+CSS modules allow you to import your .css file into a JavaScript Object with the CSS definitions as properties (keys). They don't have an official specification, nor are they a browser feature. They are part of a compilation process that runs against your project to convert scoped classes and selectors into CSS files that the browser can understand.
 
 ### Tools
 | Name    | Description                                                   |
@@ -34,7 +34,7 @@ As mentioned earlier, each tool that supports CSS modules resolves them to a Jav
 
 ### Usage with tooling
 
-With the current example, we cover the use case for interactive icons inside `ui5-input`. By default, not every icon placed inside `ui5-input` should have an interactive visual appearance, and people had to implement missing styles themselves. With `@ui5/webcomponents/dist/styles/Icon.module.css`, we provide styles for interactive icons that might be reused.
+With the current example, we cover the use case for interactive `ui5-icon` inside `ui5-input`. By default, not every `ui5-icon` placed inside `ui5-input` should have an interactive visual appearance, and people had to implement missing styles themselves. With `@ui5/webcomponents/dist/styles/Icon.module.css`, we provide styles for interactive `ui5-icon` that might be reused.
 
 ```html
 <ui5-input>
