@@ -118,18 +118,18 @@ class ProgressIndicator extends UI5Element {
 
 	valueStateTextMappings(): Record<string, string> {
 		return {
-			"Error": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Negative": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Positive": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
 	valueStateIconMappings(): Record<string, string> {
 		return {
-			"Error": "status-negative",
-			"Warning": "status-critical",
-			"Success": "status-positive",
+			"Negative": "status-negative",
+			"Critical": "status-critical",
+			"Positive": "status-positive",
 			"Information": "information",
 		};
 	}

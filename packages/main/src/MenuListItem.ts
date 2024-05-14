@@ -1,9 +1,10 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import CustomListItem from "./CustomListItem.js";
+import Icon from "./Icon.js";
 import MenuListItemTemplate from "./generated/templates/MenuListItemTemplate.lit.js";
 import MenuItem from "./MenuItem.js";
-import HasPopup from "./types/HasPopup.js";
 
 // Styles
 import menuListItemCss from "./generated/themes/MenuListItem.css.js";
@@ -19,6 +20,7 @@ import menuListItemCss from "./generated/themes/MenuListItem.css.js";
 	tag: "ui5-menu-li",
 	template: MenuListItemTemplate,
 	styles: [CustomListItem.styles, menuListItemCss],
+	dependencies: [...CustomListItem.dependencies, Icon],
 })
 class MenuListItem extends CustomListItem {
 	/**
@@ -66,7 +68,7 @@ class MenuListItem extends CustomListItem {
 	}
 
 	get hasSubmenu() {
-		return !!(this.associatedItem?.items.length || this.associatedItem?.busy);
+		return !!(this.associatedItem?.items.length || this.associatedItem?.loading);
 	}
 
 	get subMenuOpened() {
@@ -83,7 +85,7 @@ class MenuListItem extends CustomListItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			ariaHaspopup: this.associatedItem?.hasSubmenu ? HasPopup.Menu.toLowerCase() as Lowercase<HasPopup> : undefined,
+			ariaHaspopup: this.associatedItem?.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };

@@ -4,9 +4,9 @@
 	vertical-align="Center"
 	?sub-menu={{_isSubMenu}}
 	@ui5-before-open={{_beforePopoverOpen}}
-	@ui5-after-open={{_afterPopoverOpen}}
+	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
-	@ui5-after-close={{_afterPopoverClose}}
+	@ui5-close={{_afterPopoverClose}}
     accessible-name-ref="{{_id}}-navigationMenuPopoverText"
 >
 <span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
@@ -20,7 +20,7 @@
 			icon="nav-back"
 			class="ui5-menu-back-button"
 			design="Transparent"
-			aria-label="{{labelBack}}"
+			accessible-name="{{labelBack}}"
 			@click={{_navigateBack}}
 		>
 		</ui5-button>
@@ -35,7 +35,7 @@
 		<ui5-button
 			icon="decline"
 			design="Transparent"
-			aria-label="{{labelClose}}"
+			accessible-name="{{labelClose}}"
 			@click={{close}}
 		>
 		</ui5-button>
@@ -47,14 +47,14 @@
 	>
 	{{#if _currentItems.length}}
 		<ui5-list
-			accessible-role="tree"
+			accessible-role="Tree"
 			id="{{_id}}-menu-list"
 			selection-mode="None"
-			?busy="{{busy}}"
-			busy-delay="{{busyDelay}}"
+			?loading="{{loading}}"
+			loading-delay="{{loadingDelay}}"
 			separators="None"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 		>
 		{{#each _currentItems}}
 			{{#if this.item.href}}
@@ -63,7 +63,7 @@
 					id="{{../_id}}-menu-item-{{@index}}"
 					.icon="{{this.item.icon}}"
 					accessible-name={{this.item.ariaLabelledByText}}
-					accessible-role="none"
+					accessible-role="None"
 					.additionalText="{{this.item._additionalText}}"
 					.ariaHasPopup={{this.ariaHasPopup}}
 					?disabled={{this.item.disabled}}
@@ -104,7 +104,7 @@
 					id="{{../_id}}-menu-item-{{@index}}"
 					.icon="{{this.item.icon}}"
 					accessible-name={{this.item.ariaLabelledByText}}
-					accessible-role="treeitem"
+					accessible-role="TreeItem"
 					.additionalText="{{this.item._additionalText}}"
 					.ariaHasPopup={{this.ariaHasPopup}}
 					?disabled={{this.item.disabled}}
@@ -133,12 +133,12 @@
 			{{/if}}
 		{{/each}}
 		</ui5-list>
-	{{else if busy}}
+	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
-			delay="{{busyDelay}}"
+			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}

@@ -81,7 +81,7 @@ class MenuItem extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
 	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
 	 * @default false
@@ -89,16 +89,16 @@ class MenuItem extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -150,7 +150,7 @@ class MenuItem extends UI5Element {
 	items!: Array<MenuItem>;
 
 	get hasSubmenu() {
-		return !!(this.items.length || this.busy);
+		return !!(this.items.length || this.loading);
 	}
 
 	get hasDummyIcon() {
@@ -158,7 +158,7 @@ class MenuItem extends UI5Element {
 	}
 
 	get subMenuOpened() {
-		return !!this._subMenu?._popover?.isOpen();
+		return !!this._subMenu?._popover?.open;
 	}
 
 	get _additionalText() {

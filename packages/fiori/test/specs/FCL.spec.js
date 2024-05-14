@@ -45,26 +45,83 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await browser.setWindowSize(1400, 1080);
 	});
 
-	it("tests layout-change on arrow press", async () => {
+	it("tests 2-column-desktop layout-change on drag separator", async () => {
 		const fcl = await browser.$("#fcl1");
 		const layoutChangeCounter = await browser.$("#layoutChangeRes4");
-		const arrow = await fcl.shadow$(".ui5-fcl-grip--start");
+		const separator = await fcl.shadow$(".ui5-fcl-separator-start");
 		let counter = parseInt(await layoutChangeCounter.getValue()) || 0;
 
 		// act
-		await arrow.click();
+		await separator.dragAndDrop({ x: -400, y: 0 });
 
 		// assert
 		assert.strictEqual(await layoutChangeCounter.getValue(), `${++counter}`, "The event layout-change fired once.");
 		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsMidExpanded", "new layout set");
 
 		// act
-		await arrow.click();
+		await separator.dragAndDrop({ x: 400, y: 0 });
 
 		// assert
 		assert.strictEqual(await layoutChangeCounter.getValue(), `${++counter}`, "The event layout-change fired again.");
 		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
 	});
+
+	it("tests 3-column-desktop layout-change on drag start separator", async () => {
+		const fcl = await browser.$("#fcl3"),
+			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start");
+
+		// act
+		await startSeparator.dragAndDrop({ x: 300, y: 0 });
+		// assert
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpandedEndHidden", "new layout set");
+
+		// act
+		await startSeparator.dragAndDrop({ x: 100, y: 0 });
+		// assert
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsStartExpandedEndHidden", "new layout set");
+
+		// act
+		await startSeparator.dragAndDrop({ x: -100, y: 0 });
+		// assert
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpandedEndHidden", "new layout set");
+
+		// act
+		await startSeparator.dragAndDrop({ x: -300, y: 0 });
+		// assert
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+	});
+
+	it("tests 3-column-desktop layout-change on drag end separator", async () => {
+		const fcl = await browser.$("#fcl3"),
+			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
+			endSeparator = await fcl.shadow$(".ui5-fcl-separator-end");
+
+		await startSeparator.dragAndDrop({ x: 300, y: 0 });
+		// assert init state
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpandedEndHidden", "new layout set");
+
+		// act: drag to show the end column
+		await endSeparator.dragAndDrop({ x: -400, y: 0 });
+		// assert
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+
+		// back to initial state
+		await startSeparator.dragAndDrop({ x: 300, y: 0 });
+		// assert init state
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpandedEndHidden", "new layout set");
+
+		// act: drag to show only minor part of the end column (100px only)
+		await endSeparator.dragAndDrop({ x: -100, y: 0 });
+		// assert: the end column automatically opens to full width
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+
+		// act: expand the end column further
+		await endSeparator.dragAndDrop({ x: -400, y: 0 });
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsEndExpanded", "new layout set");
+	});
+
+	// TODO: test layout-change event on tablet
+	// TODO: change min-width of the columns satisfied
 
 	it("tests change layout with API", async () => {
 		const fcl = await browser.$("#fcl1");
@@ -85,34 +142,18 @@ describe("FlexibleColumnLayout Behavior", () => {
 		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
 	});
 
-	it("tests arrows acc attrs", async () => {
+	it("tests separator acc attrs", async () => {
 		const fcl = await browser.$("#fclAcc");
-		const startArrow = await fcl.shadow$(".ui5-fcl-grip--start");
-		const endArrow = await fcl.shadow$(".ui5-fcl-grip--end");
-		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-start");
-		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-end");
-		const startArrowText1 = "Expand products list";
-		const startArrowText2 = "Collapse products list";
-		const endArrowText = "Expand product detailed information";
-		const startArrowContainerText = "Start Arrow Container";
-		const endArrowContainerText = "End Arrow Container";
+		const startSeparatorDOM = await fcl.shadow$(".ui5-fcl-separator-start");
+		const endSeparatorDOM = await fcl.shadow$(".ui5-fcl-separator-end");
+		const startSeparatorText = "Start Draggable Splitter";
+		const endSeparatorText = "End Draggable Splitter";
 
 		// assert
-		assert.strictEqual(await startArrow.getAttribute("tooltip"), startArrowText1,
-			"Start arrow has the correct tooltip.");
-		assert.strictEqual(await endArrow.getAttribute("tooltip"), endArrowText,
-			"End arrow has the correct tooltip.");
-		assert.strictEqual(await startArrowContainerDOM.getAttribute("aria-label"), startArrowContainerText,
+		assert.strictEqual(await startSeparatorDOM.getAttribute("title"), startSeparatorText,
 			"Start arrow container has the correct label.");
-		assert.strictEqual(await endArrowContainerDOM.getAttribute("aria-label"), endArrowContainerText,
+		assert.strictEqual(await endSeparatorDOM.getAttribute("title"), endSeparatorText,
 			"End arrow container has the correct label.");
-
-		// act
-		await startArrow.click();
-
-		// assert
-		assert.strictEqual(await startArrow.getAttribute("tooltip"), startArrowText2,
-			"Start arrow has the correct tooltip.");
 	});
 
 	it("tests acc default roles", async () => {
@@ -122,8 +163,8 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
 		const endColumnDOM = await fcl.shadow$(".ui5-fcl-column--end");
 
-		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-start");
-		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-end");
+		const startSeparatorDOM = await fcl.shadow$(".ui5-fcl-separator-start");
+		const endSeparatorDOM = await fcl.shadow$(".ui5-fcl-separator-end");
 
 		// assert
 		assert.strictEqual(await startColumnDOM.getAttribute("role"), "region",
@@ -135,10 +176,10 @@ describe("FlexibleColumnLayout Behavior", () => {
 		assert.strictEqual(await endColumnDOM.getAttribute("role"), null, /* hidden column */
 			"End column has the correct default role.");
 
-		assert.strictEqual(await startArrowContainerDOM.getAttribute("role"), null,
+		assert.strictEqual(await startSeparatorDOM.getAttribute("role"), "separator",
 			"Start arrow container has the correct default role.");
 
-		assert.strictEqual(await endArrowContainerDOM.getAttribute("role"), null,
+		assert.strictEqual(await endSeparatorDOM.getAttribute("role"), "separator",
 			"End arrow container has the correct default role.");
 	});
 
@@ -149,11 +190,11 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
 		const endColumnDOM = await fcl.shadow$(".ui5-fcl-column--end");
 
-		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-start");
-		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-end");
+		const startSeparatorDOM = await fcl.shadow$(".ui5-fcl-separator-start");
+		const endSeparatorDOM = await fcl.shadow$(".ui5-fcl-separator-end");
 
 		// assert
-		assert.strictEqual(await startColumnDOM.getAttribute("role"), "complimentary",
+		assert.strictEqual(await startColumnDOM.getAttribute("role"), "complementary",
 			"Start column has the correct custom role.");
 
 		assert.strictEqual(await middleColumnDOM.getAttribute("role"), "main",
@@ -162,10 +203,10 @@ describe("FlexibleColumnLayout Behavior", () => {
 		assert.strictEqual(await endColumnDOM.getAttribute("role"), "complementary",
 			"End column has the correct custom role.");
 
-		assert.strictEqual(await startArrowContainerDOM.getAttribute("role"), "navigation",
+		assert.strictEqual(await startSeparatorDOM.getAttribute("role"), "navigation",
 			"Start arrow container has the correct custom role.");
 
-		assert.strictEqual(await endArrowContainerDOM.getAttribute("role"), "navigation",
+		assert.strictEqual(await endSeparatorDOM.getAttribute("role"), "navigation",
 			"End arrow container has the correct custom role.");
 	});
 

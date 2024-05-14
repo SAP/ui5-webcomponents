@@ -39,14 +39,14 @@ import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
  */
 const STEP_SIZE = 16;
 
-type ValueStateWithIcon = ValueState.Error | ValueState.Warning | ValueState.Success | ValueState.Information;
+type ValueStateWithIcon = ValueState.Negative | ValueState.Critical | ValueState.Positive | ValueState.Information;
 /**
  * Defines the icons corresponding to the dialog's state.
  */
 const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
-	[ValueState.Error]: "error",
-	[ValueState.Warning]: "alert",
-	[ValueState.Success]: "sys-enter-2",
+	[ValueState.Negative]: "error",
+	[ValueState.Critical]: "alert",
+	[ValueState.Positive]: "sys-enter-2",
 	[ValueState.Information]: "information",
 };
 
@@ -181,7 +181,7 @@ class Dialog extends Popup {
 	/**
 	 * Defines the state of the `Dialog`.
 	 *
-	 * **Note:** If `"Error"` and `"Warning"` state is set, it will change the
+	 * **Note:** If `"Negative"` and `"Critical"` states is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to `"Dialog"`.
 	 * @default "None"
 	 * @public
@@ -267,22 +267,8 @@ class Dialog extends Popup {
 		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
 	}
 
-	/**
-	 * Shows the dialog.
-	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-	 * @public
-	 * @returns Resolves when the dialog is open
-	 */
-	async show(preventInitialFocus = false): Promise<void> {
-		await super._open(preventInitialFocus);
-	}
-
 	get isModal() {
 		return true;
-	}
-
-	get shouldHideBackdrop() {
-		return false;
 	}
 
 	get _ariaLabelledBy() {
@@ -363,7 +349,7 @@ class Dialog extends Popup {
 			return undefined;
 		}
 
-		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
+		if (this.state === ValueState.Negative || this.state === ValueState.Critical) {
 			return PopupAccessibleRole.AlertDialog.toLowerCase();
 		}
 

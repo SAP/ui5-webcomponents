@@ -1,29 +1,18 @@
 {{>include "./Input.hbs"}}
 
 {{#*inline "preContent"}}
-	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
+	<span id="hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 	<ui5-tokenizer
 		class="ui5-multi-input-tokenizer"
-		.morePopoverOpener={{morePopoverOpener}}
+		.opener={{morePopoverOpener}}
 		.popoverMinWidth={{_inputWidth}}
-		.valueState={{valueState}}
-		?expanded="{{expandedTokenizer}}"
-		show-more
+		hide-popover-arrow
+		?expanded="{{tokenizerExpanded}}"
 		@keydown="{{_onTokenizerKeydown}}"
-		@ui5-show-more-items-press={{showMorePress}}
 		@ui5-token-delete={{tokenDelete}}
 		@focusout="{{_tokenizerFocusOut}}"
 	>
 		<slot name="tokens"></slot>
-		<div slot="valueStateMessage">
-			{{#if shouldDisplayDefaultValueStateMessage}}
-				{{valueStateText}}
-			{{else}}
-				{{#each valueStateMessageText}}
-					{{this}}
-				{{/each}}
-			{{/if}}
-		</div>
 	</ui5-tokenizer>
 {{/inline}}
 
@@ -34,7 +23,7 @@
 			@click={{valueHelpPress}}
 			@mousedown={{valueHelpMouseDown}}
 			@mouseup={{valueHelpMouseUp}}
-			input-icon
+			class="inputIcon"
 			name="value-help"
 		></ui5-icon>
 	{{/if}}

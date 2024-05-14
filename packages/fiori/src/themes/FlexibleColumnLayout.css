@@ -28,7 +28,7 @@
 }
 
 /* arrow */
-.ui5-fcl-grip-container {
+.ui5-fcl-separator {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -39,7 +39,7 @@
 	position: relative;
 }
 
-.ui5-fcl-grip-container:focus {
+.ui5-fcl-separator:focus {
 	border:var(--_ui5_fcl_separator_focus_border);
 	outline: none;
 }
@@ -76,8 +76,8 @@
 	background-position-x: calc(50% - 0.03125rem);
 }
 
-.ui5-fcl-grip-container:hover .ui5-fcl-grip:before,
-.ui5-fcl-grip-container:hover .ui5-fcl-grip:after {
+.ui5-fcl-separator:hover .ui5-fcl-grip:before,
+.ui5-fcl-separator:hover .ui5-fcl-grip:after {
 	height: 50%;
 }
 

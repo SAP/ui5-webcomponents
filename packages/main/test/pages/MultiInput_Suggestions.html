@@ -94,10 +94,10 @@
 				list.appendChild(li);
 			});
 
-			document.getElementById("dialog").show();
+			document.getElementById("dialog").open = true;
 		});
 
-		document.getElementById("suggestion-token").addEventListener("ui5-suggestion-item-select", function (event) {
+		document.getElementById("suggestion-token").addEventListener("ui5-selection-change", function (event) {
 			var item = event.detail.item;
 			var mi = event.target
 			var token = document.createElement("ui5-token");
@@ -136,7 +136,7 @@
 			});
 
 			if (isDuplicate) {
-				event.target.valueState = "Error";
+				event.target.valueState = "Negative";
 
 				setTimeout(function () {
 					event.target.valueState = "None";

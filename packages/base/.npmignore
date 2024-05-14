@@ -1,2 +1,8 @@
 test/
 src/**/*.ts
+node_modules/
+.eslintignore
+.eslintrc.cjs
+used-modules.txt
+bundle.esm.js
+lib/

@@ -353,56 +353,52 @@
 			<ui5-tab text="Tab 1" selected id="scrollable-tab">
 				<ui5-button>Toggle style</ui5-button>
 
-				<ui5-table>
-					<ui5-table-column slot="columns">Source</ui5-table-column>
-					<ui5-table-column slot="columns">Method</ui5-table-column>
-
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-					<ui5-table-row>
-						<ui5-table-cell>Cell 1</ui5-table-cell>
-						<ui5-table-cell>Cell 2</ui5-table-cell>
-					</ui5-table-row>
-				</ui5-table>
+				<ui5-list separators="Inner">
+					<ui5-li >Option 1</ui5-li>
+					<ui5-li >Option 2</ui5-li>
+					<ui5-li >Option 4</ui5-li>
+					<ui5-li >Option 5</ui5-li>
+					<ui5-li >Option 6</ui5-li>
+					<ui5-li >Option 7</ui5-li>
+					<ui5-li >Option 8</ui5-li>
+					<ui5-li >Option 9</ui5-li>
+					<ui5-li >Option 10</ui5-li>
+					<ui5-li >Option 11</ui5-li>
+					<ui5-li >Option 12</ui5-li>
+					<ui5-li >Option 13</ui5-li>
+					<ui5-li >Option 14</ui5-li>
+					<ui5-li >Option 15</ui5-li>
+					<ui5-li >Option 16</ui5-li>
+					<ui5-li >Option 17</ui5-li>
+					<ui5-li >Option 18</ui5-li>
+					<ui5-li >Option 19</ui5-li>
+					<ui5-li >Option 20</ui5-li>
+					<ui5-li >Option 21</ui5-li>
+					<ui5-li >Option 22</ui5-li>
+					<ui5-li >Option 23</ui5-li>
+					<ui5-li >Option 24</ui5-li>
+					<ui5-li >Option 25</ui5-li>
+					<ui5-li >Option 26</ui5-li>
+					<ui5-li >Option 27</ui5-li>
+					<ui5-li >Option 28</ui5-li>
+					<ui5-li >Option 29</ui5-li>
+					<ui5-li >Option 30</ui5-li>
+					<ui5-li >Option 31</ui5-li>
+					<ui5-li >Option 32</ui5-li>
+					<ui5-li >Option 33</ui5-li>
+					<ui5-li >Option 34</ui5-li>
+					<ui5-li >Option 35</ui5-li>
+					<ui5-li >Option 36</ui5-li>
+					<ui5-li >Option 37</ui5-li>
+					<ui5-li >Option 38</ui5-li>
+					<ui5-li >Option 39</ui5-li>
+					<ui5-li >Option 40</ui5-li>
+					<ui5-li >Option 41</ui5-li>
+					<ui5-li >Option 42</ui5-li>
+					<ui5-li >Option 43</ui5-li>
+					<ui5-li >Option 44</ui5-li>
+					<ui5-li >Option 45</ui5-li>
+			</ui5-list>
 			</ui5-tab>
 
 		</ui5-tabcontainer>
@@ -798,11 +794,19 @@
 		</section>
 		<section>
 			<h3>Add new selected tab programmatically</h3>
+			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
 			<ui5-tabcontainer id="tabContainerAddTabsProgrammatically">
 				<ui5-tab text="Tab 0" selected></ui5-tab>
 				<ui5-tab text="Tab 1"></ui5-tab>
 			</ui5-tabcontainer>
-			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
+		</section>
+		<section>
+			<h3>No explicitly selected tab</h3>
+			<ui5-button id="buttonAddTabAtNoExplicitlySelectedTab">add new tab at the beginning</ui5-button>
+			<ui5-tabcontainer id="tabContainerNoExplicitlySelectedTab">
+				<ui5-tab text="Tab 0"></ui5-tab>
+				<ui5-tab text="Tab 1"></ui5-tab>
+			</ui5-tabcontainer>
 		</section>
 
 	</section>
@@ -845,6 +849,17 @@
 			<ui5-tab text="One">
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
+		<h3>Narrow Tab Container</h3>
+		<ui5-tabcontainer id="narrowTabContainer" class="narrowTabContainer">
+			<ui5-tab text="One"></ui5-tab>
+			<ui5-tab text="Two"></ui5-tab>
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Four"></ui5-tab>
+			<ui5-tab id="narrowTabContainerTabFive" text="Five"></ui5-tab>
 		</ui5-tabcontainer>
 	</section>
 
@@ -935,6 +950,13 @@
 			addTab(true);
 			addTab();
 			addTab();
+		});
+
+		document.getElementById("buttonAddTabAtNoExplicitlySelectedTab").addEventListener("click", function () {
+			const newTab = document.createElement("ui5-tab");
+			newTab.text = "New Tab";
+
+			document.getElementById("tabContainerNoExplicitlySelectedTab").prepend(newTab);
 		});
 
 		document.getElementById("insertAndFocusNewTab").addEventListener("click", () => {

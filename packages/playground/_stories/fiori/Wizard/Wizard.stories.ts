@@ -21,7 +21,7 @@ export const Basic: StoryFn = () => html`
 				<ui5-message-strip>
 					The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 				</ui5-message-strip><br/>
-				<ui5-label wrapping-type="Normal">Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
+				<ui5-label>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 				</ui5-label>
 			</div>
 			<ui5-button id="wiz-${index}-toStep2" design="Emphasized">Step 2</ui5-button>
@@ -29,7 +29,7 @@ export const Basic: StoryFn = () => html`
 		<ui5-wizard-step icon="hint" title-text="Product Information" disabled="">
 			<div style="display: flex;flex-direction: column">
 				<ui5-title>2. Product Information</ui5-title><br/>
-				<ui5-label wrapping-type="Normal">
+				<ui5-label>
 					Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 				</ui5-label>
 				<div style="display: flex; flex-direction: column;">
@@ -60,7 +60,7 @@ export const Basic: StoryFn = () => html`
 		<ui5-wizard-step icon="action-settings" title-text="Options" disabled="">
 			<div style="display: flex; flex-direction: column;">
 				<ui5-title>3. Options</ui5-title><br/>
-				<ui5-label wrapping-type="Normal">
+				<ui5-label>
 					Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 				</ui5-label>
 				<ui5-message-strip>
@@ -133,14 +133,14 @@ export const PageMode: StoryFn = () => html`
 					<ui5-message-strip>
 						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
 					</ui5-message-strip><br/>
-					<ui5-label wrapping-type="Normal">Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
+					<ui5-label>Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet, dapibus velit. Maecenas eleifend tempor lorem. Mauris vitae elementum mi, sed eleifend ligula. Nulla tempor vulputate dolor, nec dignissim quam convallis ut. Praesent vitae commodo felis, ut iaculis felis. Fusce quis eleifend sapien, eget facilisis nibh. Suspendisse est velit, scelerisque ut commodo eget, dignissim quis metus. Cras faucibus consequat gravida. Curabitur vitae quam felis. Phasellus ac leo eleifend, commodo tortor et, varius quam. Aliquam erat volutpat.
 					</ui5-label>
 				</div>
 			</ui5-wizard-step>
 			<ui5-wizard-step icon="hint" title-text="Product Information" disabled="">
 				<div style="display: flex;flex-direction: column">
 					<ui5-title>2. Product Information</ui5-title><br/>
-					<ui5-label wrapping-type="Normal">
+					<ui5-label>
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
 					<div style="display: flex; flex-direction: column;">
@@ -170,7 +170,7 @@ export const PageMode: StoryFn = () => html`
 			<ui5-wizard-step icon="action-settings" title-text="Options" disabled="">
 				<div style="display: flex; flex-direction: column;">
 					<ui5-title>3. Options</ui5-title><br/>
-					<ui5-label wrapping-type="Normal">
+					<ui5-label>
 						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
 					</ui5-label>
 					<ui5-message-strip>
@@ -247,7 +247,7 @@ export const PageMode: StoryFn = () => html`
 		}
 
 		btnOpendialog${index}.addEventListener("click", () => {
-			dialog${index}.show();
+			dialog${index}.open = true;
 			const index = wizard${index}Wiz.getSelectedStepIndex();
 			setButtonVisibility${index}(index, wizard${index}Wiz.children.length);
 		});
@@ -271,12 +271,12 @@ export const PageMode: StoryFn = () => html`
 		});
 
 		cancelButton${index}.addEventListener("click", () => {
-			dialog${index}.close();
+			dialog${index}.open = false;
 		});
 
 		wizard${index}Finalize.addEventListener("click", () => {
 			alert("Finalize");
-			dialog${index}.close();
+			dialog${index}.open = false;
 		});
 	</script>
 `;
