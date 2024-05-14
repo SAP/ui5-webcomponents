@@ -48,7 +48,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 	it("tests layout-change on arrow press", async () => {
 		const fcl = await browser.$("#fcl1");
 		const layoutChangeCounter = await browser.$("#layoutChangeRes4");
-		const arrow = await fcl.shadow$(".ui5-fcl-arrow--start");
+		const arrow = await fcl.shadow$(".ui5-fcl-grip--start");
 		let counter = parseInt(await layoutChangeCounter.getValue()) || 0;
 
 		// act
@@ -87,10 +87,10 @@ describe("FlexibleColumnLayout Behavior", () => {
 
 	it("tests arrows acc attrs", async () => {
 		const fcl = await browser.$("#fclAcc");
-		const startArrow = await fcl.shadow$(".ui5-fcl-arrow--start");
-		const endArrow = await fcl.shadow$(".ui5-fcl-arrow--end");
-		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-start");
-		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
+		const startArrow = await fcl.shadow$(".ui5-fcl-grip--start");
+		const endArrow = await fcl.shadow$(".ui5-fcl-grip--end");
+		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-start");
+		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-end");
 		const startArrowText1 = "Expand products list";
 		const startArrowText2 = "Collapse products list";
 		const endArrowText = "Expand product detailed information";
@@ -122,8 +122,8 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
 		const endColumnDOM = await fcl.shadow$(".ui5-fcl-column--end");
 
-		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-start");
-		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
+		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-start");
+		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-end");
 
 		// assert
 		assert.strictEqual(await startColumnDOM.getAttribute("role"), "region",
@@ -149,8 +149,8 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const middleColumnDOM = await fcl.shadow$(".ui5-fcl-column--middle");
 		const endColumnDOM = await fcl.shadow$(".ui5-fcl-column--end");
 
-		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-start");
-		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
+		const startArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-start");
+		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-grip-container-end");
 
 		// assert
 		assert.strictEqual(await startColumnDOM.getAttribute("role"), "complimentary",

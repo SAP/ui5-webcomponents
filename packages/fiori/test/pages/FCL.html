@@ -23,6 +23,10 @@
 	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." class="fcl2auto"></ui5-input><br>
 	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." class="fcl2auto"></ui5-input><br>
 	<ui5-input id="layoutChangeRes4" placeholder="change counter..." class="fcl2auto"></ui5-input><br>
+	<div>
+		<ui5-label show-colon>Switch RTL: </ui5-label>
+		<ui5-switch id="swRTL"></ui5-switch>
+	</div>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl1" class="fcl3auto" layout="TwoColumnsStartExpanded">
@@ -958,6 +962,20 @@
 		function getStep(idx) {
 			return Array.from(wiz.children)[idx];
 		}
+
+		// Utility function to change RTL and apply the changes
+		function setDir(dir) {
+			document.body.dir = dir;
+			window['sap-ui-webcomponents-bundle'].applyDirection();
+		}
+
+		document.getElementById("swRTL").addEventListener("ui5-change", (e) => {
+			if (e.target.checked) {
+				setDir("rtl");
+			} else {
+				setDir("ltr");
+			}
+		});
 	</script>
 </body>
 </html>

@@ -28,41 +28,43 @@
 }
 
 /* arrow */
-.ui5-fcl-arrow-container {
+.ui5-fcl-grip-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 1rem;
 	background-color: var(--sapShell_Background);
 	border-inline-start: var(--_ui5_fcl_column_border);
-	border-inline-end: var(--_ui5_fcl_column_border)
+	border-inline-end: var(--_ui5_fcl_column_border);
+	position: relative;
 }
 
-.ui5-fcl-arrow {
-	position: relative;
-	width: 1.5rem;
-	height: 1.5rem;
-	min-width: 1.5rem;
-	will-change: transform;
+.ui5-fcl-grip-container:focus {
+	border:var(--_ui5_fcl_separator_focus_border);
+	outline: none;
+}
+.ui5-fcl-grip {
+	cursor: col-resize;
 	overflow: visible;
 	z-index: 1;
+	color: var(--sapButton_TextColor);
+	padding-top: 0.3125rem;
+	padding-bottom: 0.3125rem;
 }
 
 /* arrow decoration */
-.ui5-fcl-arrow:before {
+.ui5-fcl-grip:before {
 	background-image: var(--_ui5_fcl_decoration_top);
-	background-position-y: -0.3125rem;
-	bottom: 100%;
+	bottom: calc(50% + 1rem);
 }
 
-.ui5-fcl-arrow:after {
+.ui5-fcl-grip:after {
 	background-image: var(--_ui5_fcl_decoration_bottom);
-	background-position-y: 0.3125rem;
-	top: 100%;
+	top: calc(50% + 1rem);
 }
 
-.ui5-fcl-arrow:before,
-.ui5-fcl-arrow:after {
+.ui5-fcl-grip:before,
+.ui5-fcl-grip:after {
 	content: '';
 	position: absolute;
 	left: 0;
@@ -74,9 +76,9 @@
 	background-position-x: calc(50% - 0.03125rem);
 }
 
-.ui5-fcl-arrow:hover:before,
-.ui5-fcl-arrow:hover:after {
-	height: 7rem;
+.ui5-fcl-grip-container:hover .ui5-fcl-grip:before,
+.ui5-fcl-grip-container:hover .ui5-fcl-grip:after {
+	height: 50%;
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),

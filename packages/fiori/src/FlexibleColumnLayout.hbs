@@ -9,7 +9,8 @@
 		<slot name="startColumn" aria-hidden="{{_accAttributes.columns.middle.ariaHidden}}"></slot>
 	</div>
 
-	<div role="{{accStartArrowContainerRole}}" aria-label={{accStartArrowContainerText}} class="ui5-fcl-arrow-container ui5-fcl-arrow-container-start" style="{{styles.arrowsContainer.start}}">
+	<div role="{{accStartArrowContainerRole}}" aria-label={{accStartArrowContainerText}} class="ui5-fcl-grip-container ui5-fcl-grip-container-start" style="{{styles.arrowsContainer.start}}" tabindex="{{startSeparatorTabIndex}}"
+		@mousedown="{{handleDown}}" @touchstart="{{handleDown}}" @keydown="{{_onkeydown}}">
 		{{> startArrow}}
 	</div>
 
@@ -23,7 +24,8 @@
 		<slot name="midColumn" aria-hidden="{{_accAttributes.columns.middle.ariaHidden}}"></slot>
 	</div>
 
-	<div role="{{accEndArrowContainerRole}}" aria-label="{{accEndArrowContainerText}}" class="ui5-fcl-arrow-container ui5-fcl-arrow-container-end" style="{{styles.arrowsContainer.end}}">
+	<div role="{{accEndArrowContainerRole}}" aria-label="{{accEndArrowContainerText}}" class="ui5-fcl-grip-container ui5-fcl-grip-container-end" style="{{styles.arrowsContainer.end}}" tabindex="{{endSeparatorTabIndex}}"
+		@mousedown="{{handleDown}}" @touchstart="{{handleDown}}" @keydown="{{_onkeydown}}">
 		{{> endArrow}}
 	</div>
 
@@ -39,24 +41,20 @@
 </div>
 
 {{#*inline "startArrow"}}
-	<ui5-button
-		class="ui5-fcl-arrow ui5-fcl-arrow--start"
-		icon="slim-arrow-right"
-		design="Transparent"
-		@click="{{startArrowClick}}"
+	<ui5-icon
+		class="ui5-fcl-grip ui5-fcl-grip--start"
+		name="vertical-grip"
 		style="{{styles.arrows.start}}"
 		tooltip="{{accStartArrowText}}"
-	></ui5-button>
+	></ui5-icon>
 {{/inline}}
 
 
 {{#*inline "endArrow"}}
-	<ui5-button
-		class="ui5-fcl-arrow ui5-fcl-arrow--end"
+	<ui5-icon
+		class="ui5-fcl-grip ui5-fcl-grip--end"
 		style="{{styles.arrows.end}}"
-		icon="slim-arrow-left"
-		design="Transparent"
-		@click="{{endArrowClick}}"
+		name="vertical-grip"
 		tooltip="{{accEndArrowText}}"
-	></ui5-button>
+	></ui5-icon>
 {{/inline}}

@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -15,6 +16,16 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import Button from "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import {
+	isLeft,
+	isLeftShift,
+	isRight,
+	isRightShift,
+	isHome,
+	isEnd,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
@@ -51,6 +62,16 @@ const BREAKPOINTS = {
 	"TABLET": 1023,
 } as const;
 
+const COLUMN_MIN_WIDTH = 312;
+
+const COLUMN_INDEX = { // TODO to type
+	START: 0,
+	MID: 1,
+	END: 2,
+};
+
+type EDGE_COLUMN = 0 | 2;
+
 type FlexibleColumnLayoutColumnLayout = Array<string | number>;
 
 type FlexibleColumnLayoutLayoutChangeEventDetail = {
@@ -83,6 +104,15 @@ type FlexibleColumnLayoutAccessibilityRoles = {
 	startArrowContainerRole?: I18nText;
 	endArrowContainerRole?: I18nText;
 };
+
+type UserDefinedColumnLayouts = {
+	"tablet": {
+		[layoutName in FCLLayout]?: FlexibleColumnLayoutColumnLayout;
+	},
+	"desktop": {
+		[layoutName in FCLLayout]?: FlexibleColumnLayoutColumnLayout;
+	},
+}
 
 /**
  * @class
@@ -299,8 +329,17 @@ class FlexibleColumnLayout extends UI5Element {
 
 	initialRendering: boolean;
 	_handleResize: () => void;
+	_handleMove: (e: TouchEvent | MouseEvent) => void;
+	_handleUp: (e: TouchEvent | MouseEvent) => void;
 	static i18nBundle: I18nBundle;
 	_prevLayout: `${FCLLayout}` | null;
+	_userDefinedColumnLayouts: UserDefinedColumnLayouts = {
+		tablet: {},
+		desktop: {},
+	};
+	_ontouchstart: PassiveEventListenerObject;
+	cursorX?: number;
+	movedSeparator?: HTMLElement; // which separator is dragged
 
 	constructor() {
 		super();
@@ -308,6 +347,17 @@ class FlexibleColumnLayout extends UI5Element {
 		this._prevLayout = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
+		this._handleMove = this.handleMove.bind(this);
+		this._handleUp = this.handleUp.bind(this);
+
+		const handleTouchStartEvent = (e: TouchEvent) => {
+			this.handleDown(e);
+		};
+
+		this._ontouchstart = {
+			handleEvent: handleTouchStartEvent,
+			passive: true,
+		};
 	}
 
 	static async onDefine() {
@@ -356,25 +406,6 @@ class FlexibleColumnLayout extends UI5Element {
 		if (prevLayoutHash !== this.columnLayout!.join()) {
 			this.fireLayoutChange(false, true);
 		}
-	}
-
-	startArrowClick() {
-		this.arrowClick({ start: true, end: false });
-	}
-
-	endArrowClick() {
-		this.arrowClick({ start: false, end: true });
-	}
-
-	arrowClick(options: { start: boolean, end: boolean }) {
-		// update public property
-		this.layout = this.nextLayout(this.layout, { start: options.start, end: options.end })!;
-
-		// update layout
-		this.updateLayout();
-
-		// fire layout-change
-		this.fireLayoutChange(true, false);
 	}
 
 	updateLayout() {
@@ -464,7 +495,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	nextColumnLayout(layout: `${FCLLayout}`) {
-		return this._effectiveLayoutsByMedia[this.media][layout].layout;
+		let customLayout;
+		if (this.media !== MEDIA.PHONE && this._userDefinedColumnLayouts[this.media]) {
+			customLayout = this._userDefinedColumnLayouts[this.media][layout];
+		}
+		return customLayout || this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
 	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
@@ -482,6 +517,376 @@ class FlexibleColumnLayout extends UI5Element {
 			arrowsUsed: arrowUsed, // as documented
 			resize,
 		});
+	}
+
+	handleDown(e: TouchEvent | MouseEvent) {
+		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-grip-container") as HTMLElement;
+		if (pressedSeparator.classList.contains("ui5-fcl-grip-container-start") && !this.showStartArrow) {
+			return;
+		}
+
+		this.movedSeparator = pressedSeparator;
+		this.cursorX = this.getPageXValueFromEvent(e);
+
+		this.attachMoveListeners(e instanceof TouchEvent);
+		this.toggleSideAnimations(pressedSeparator, false); // toggle animations for side colmns
+	}
+
+	handleMove(e: TouchEvent | MouseEvent) {
+		e.preventDefault(); // TODO: check if needed
+
+		const latestCursorX = this.getPageXValueFromEvent(e),
+			latestSeparatorX = this.movedSeparator!.getBoundingClientRect().x, // TODO: can we agoid getBoundingClientRect
+			movementDelta = latestCursorX - this.cursorX!,
+			isStartSeparator = this.movedSeparator! === this.startSeparatorDOM,
+			isForwardMove = movementDelta > 0; // is start-to-end direction
+
+		if (!movementDelta) {
+			return;
+		}
+
+		// if the dragged separator was re-rendered away from the cursor
+		// due to change of layout during drag
+		// => check if the cursor lags-behind the separator
+		// and skip resizing untill the cursor catches-up with the separator
+		if (this.isSeparatorAheadOfCursor(latestCursorX, latestSeparatorX, isForwardMove)) {
+			this.cursorX = latestCursorX;
+			return;
+		}
+
+		// synchronously move the separator in DOM => resizes the columns accordingly
+		this.moveSeparator(isStartSeparator, movementDelta, false);
+
+		this.cursorX = latestCursorX;
+	}
+
+	private handleUp() {
+		// ensure %
+		this._columnLayout!.forEach((w, i) => { // TODO refactor to move inside function
+			this._columnLayout![i] = this.convertToRelativeColumnWidth(w);
+		});
+		this.toggleColumns();
+
+		const separator = this.movedSeparator!;
+		this.detachMoveListeners();
+		this.toggleSideAnimations(separator, true);
+
+		separator.focus();
+		this.movedSeparator = undefined;
+	}
+
+	private isSeparatorAheadOfCursor(cursorX: number, separatorX: number, isForwardMove: boolean) {
+		if (isForwardMove) {
+			return separatorX > cursorX;
+		}
+		return separatorX < cursorX;
+	}
+
+	// sounds odd
+	calculateNewColumnWidth(columnToResize: EDGE_COLUMN, columnLayout: Array<number>, separatorOffset: number) {
+		const previousColumnWidth = columnLayout[columnToResize];
+		const newColumnWidth = columnToResize === COLUMN_INDEX.START
+			? previousColumnWidth + separatorOffset
+			: previousColumnWidth - separatorOffset;
+
+		// correct if needed against constraint for column-minimal-required-width
+		return this.normalizeColumnWidth(newColumnWidth, columnToResize as EDGE_COLUMN, columnLayout);
+	}
+
+	moveSeparator(isStartSeparator: boolean, offsetX: number, isResizeEnd: boolean) {
+		const previousLayout = this.layout,
+			oldColumnLayout: Array<number> = this._columnLayout!.map(x => this.convertColumnWidthToPixels(x)),
+			newColumnLayout = [...oldColumnLayout],
+			columnToResize = isStartSeparator ? COLUMN_INDEX.START : COLUMN_INDEX.END,
+			media = this.media as MEDIA.TABLET | MEDIA.DESKTOP,
+			isRTL = this.effectiveDir === "rtl";
+
+		if (isRTL) {
+			offsetX = -offsetX;
+		}
+
+		const newColumnWidth = this.calculateNewColumnWidth(columnToResize as EDGE_COLUMN, oldColumnLayout, offsetX),
+			isExpandingWidth = newColumnWidth > oldColumnLayout[columnToResize],
+			forwardDirection = offsetX > 0;
+
+		// required when the user is dragging a separator to reveal a hidden column
+		this.displayColumnIfHidden(columnToResize);
+		// update the columnLayout array with the new column widths
+		this.adjustColumnLayout(newColumnLayout, columnToResize, newColumnWidth);
+
+		if (!offsetX && !isResizeEnd) {
+			return;
+		}
+
+		// obtain the layout that corresponds to the new column widths
+		this.layout = this.getNextLayoutOnMoveSeparator(isStartSeparator, forwardDirection, newColumnLayout);
+		const layoutChange = this.layout !== previousLayout,
+			visibleColumnsChange = layoutChange
+			&& this.getColumnsVisibilityHash(this.layout as FCLLayout)
+			!== this.getColumnsVisibilityHash(previousLayout as FCLLayout);
+
+		if (visibleColumnsChange) { // the user dragged the separator to a point where the layout should change
+			// but *the new layout also requires some column to be shown or hidden*
+			// => the old _columnLayout is no longer valid and should be updated:
+			this._columnLayout = this.nextColumnLayout(this.layout);
+			this._visibleColumns = this.calcVisibleColumns(this._columnLayout);
+		}
+		// apply the requested <code>offset</code> on the new <code>columnLayout</code>
+		this.adjustColumnLayout(this._columnLayout!, columnToResize, newColumnWidth, isExpandingWidth);
+
+		this.toggleColumns();
+		this._userDefinedColumnLayouts[media][this.layout] = [...this._columnLayout!];
+		if (layoutChange) {
+			this.fireLayoutChange(true, false);
+		}
+	}
+
+	displayColumnIfHidden(columnToOffset: number) {
+		if (!this._columnLayout) {
+			return;
+		}
+		const columnIsHidden = this._isColumnHidden(this._columnLayout[columnToOffset]);
+		if (columnIsHidden) {
+			const columnDOM = this.getDomRef()!.querySelectorAll(".ui5-fcl-column")[columnToOffset];
+			columnDOM.classList.remove("ui5-fcl-column--hidden");
+			columnDOM.removeAttribute("aria-hidden");
+		}
+	}
+
+	adjustColumnLayout(columnLayout: Array<string|number>, columnToResize: number, newSize: number, isExpandingColumn? : boolean) {
+		if (this._isColumnHidden(columnLayout[columnToResize]) && isExpandingColumn === false) {
+			// the user move was a transition to hide the column
+			newSize = 0;
+			this.handleUp(); // TODO
+		}
+
+		columnLayout.forEach((x, i) => {
+			columnLayout[i] = this.convertColumnWidthToPixels(x);
+		});
+
+		// apply the new size
+		columnLayout[columnToResize] = newSize;
+		columnLayout[COLUMN_INDEX.MID] = this._width
+			- (columnLayout[COLUMN_INDEX.START] as number)
+			- (columnLayout[COLUMN_INDEX.END] as number);
+	}
+
+	async _onkeydown(e: KeyboardEvent) {
+		const stepSize = 2,
+			bigStepSize = this._width;
+		let step = 0;
+		if (isLeft(e)) {
+			step = -stepSize * 10;
+		} else if (isRight(e)) {
+			step = stepSize * 10;
+		} else if (isLeftShift(e)) {
+			step = -stepSize;
+		} else if (isRightShift(e)) {
+			step = stepSize;
+		} else if (isHome(e)) {
+			step = -bigStepSize;
+		} else if (isEnd(e)) {
+			step = bigStepSize;
+		}
+
+		const separator = e.target as HTMLElement,
+			isStartSeparator = separator === this.startSeparatorDOM;
+		this.moveSeparator(isStartSeparator, step, false);
+
+		await renderFinished();
+		separator.focus();
+	}
+
+	private normalizeColumnWidth(newColumnWidth: number, columnToResize: 0 | 2, oldColumnWidths: Array<number>) {
+		const newColumnWidths = [...oldColumnWidths];
+
+		this.adjustColumnLayout(newColumnWidths, columnToResize, newColumnWidth);
+		const indexOfBelowMinWidth = newColumnWidths.findIndex(width => width && width < COLUMN_MIN_WIDTH);
+		if (indexOfBelowMinWidth === -1) { // no off-limits column to normalize
+			return newColumnWidth;
+		}
+
+		if (indexOfBelowMinWidth === columnToResize) {
+			return COLUMN_MIN_WIDTH;
+		}
+
+		const correction = COLUMN_MIN_WIDTH - newColumnWidths[indexOfBelowMinWidth];
+		// shrink the resized column by the correction value
+		// to make space for its sibling column to expand to min-width
+		return newColumnWidth - correction;
+	}
+
+	private attachMoveListeners(isTouch: boolean) {
+		// TODO: attach to DOMRef?
+		if (isTouch && supportsTouch()) {
+			window.addEventListener("touchmove", this._handleMove);
+			window.addEventListener("touchend", this._handleUp);
+		} else {
+			window.addEventListener("mousemove", this._handleMove);
+			window.addEventListener("mouseup", this._handleUp);
+		}
+	}
+
+	private detachMoveListeners() {
+		window.removeEventListener("mouseup", this._handleUp);
+		window.removeEventListener("touchend", this._handleUp);
+		// Only one of the following was attached, but it's ok to remove both as there is no error
+		window.removeEventListener("mousemove", this._handleMove);
+		window.removeEventListener("touchmove", this._handleMove);
+	}
+
+	private toggleSideAnimations(separator: HTMLElement, shouldAnimate: boolean) {
+		const adjacentColumns = [
+			separator.previousElementSibling,
+			separator.nextElementSibling,
+		];
+
+		adjacentColumns.forEach(column => column!.classList.toggle("ui5-fcl-column-animation", shouldAnimate));
+	}
+
+	private getPageXValueFromEvent(e: TouchEvent | MouseEvent): number {
+		if (supportsTouch() && e instanceof TouchEvent) {
+			if (e.changedTouches && e.changedTouches.length > 0) {
+				return e.changedTouches[0].pageX;
+			}
+			return 0;
+		}
+
+		return (e as MouseEvent).pageX; // MouseEvent
+	}
+
+	convertColumnWidthToPixels(width: string | number) {
+		if (typeof width === "number") {
+			return width;
+		}
+		const parsedValue = parseFloat(width),
+			totalWidth = this._width;
+
+		if (width.endsWith("%")) {
+			return (totalWidth / 100) * parsedValue;
+		}
+		return parsedValue;
+	}
+
+	convertToRelativeColumnWidth(pxWidth: string | number) {
+		if (typeof pxWidth === "string") {
+			return pxWidth;
+		}
+		if (pxWidth === 0) {
+			return "0px";
+		}
+		return `${(pxWidth / this._width) * 100}%`;
+	}
+
+	getNextLayoutOnMoveSeparator(isStartSeparator: boolean, forwardDirection: boolean, newColumnLayout: Array<number>) {
+		const separatorName = isStartSeparator ? "start" : "end",
+			moved = (options: any) => {
+				return options.from === this.layout
+				&& options.separator === separatorName
+				&& options.forward === forwardDirection;
+			},
+			newColumnWidths = {
+				start: newColumnLayout[0],
+				mid: newColumnLayout[1],
+				end: newColumnLayout[2],
+			},
+			startColumnPxWidth = newColumnWidths.start,
+			startColumnPercentWidth = (startColumnPxWidth / this.widthDOM) * 100,
+			isTablet = this.media === MEDIA.TABLET;
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.TwoColumnsMidExpanded,
+			forward: true,
+		}) && (newColumnWidths.start >= newColumnWidths.mid)) {
+			return FCLLayout.TwoColumnsStartExpanded;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.TwoColumnsStartExpanded,
+			forward: false,
+		}) && (newColumnWidths.start < newColumnWidths.mid)) {
+			return FCLLayout.TwoColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsMidExpanded,
+			forward: true,
+		}) && startColumnPercentWidth >= 33) {
+			return FCLLayout.ThreeColumnsMidExpandedEndHidden;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
+			forward: false,
+		}) && startColumnPercentWidth < 33) {
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
+			forward: false,
+		}) && ((newColumnWidths.end >= COLUMN_MIN_WIDTH))) {
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsMidExpanded,
+			forward: false,
+		}) && newColumnWidths.mid < newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsEndExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsEndExpanded,
+			forward: true,
+		}) && newColumnWidths.mid >= newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
+			forward: true,
+		}) && newColumnWidths.start >= newColumnWidths.mid) {
+			return FCLLayout.ThreeColumnsStartExpandedEndHidden;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsStartExpandedEndHidden,
+			forward: false,
+		}) && newColumnWidths.start < newColumnWidths.mid) {
+			return FCLLayout.ThreeColumnsMidExpandedEndHidden;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsMidExpanded,
+			forward: true,
+		}) && isTablet && ((startColumnPxWidth >= COLUMN_MIN_WIDTH) /* || isResizeEnd */)) {
+			return FCLLayout.ThreeColumnsMidExpandedEndHidden;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
+			forward: false,
+		}) && isTablet && ((newColumnWidths.end >= COLUMN_MIN_WIDTH) /* || isResizeEnd */)) {
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		return this.layout; // no layout change
+	}
+
+	getColumnsVisibilityHash(layout: FCLLayout): string {
+		return this.nextColumnLayout(layout).map(width => (this.convertColumnWidthToPixels(width) ? 1 : 0)).join();
 	}
 
 	/**
@@ -591,11 +996,9 @@ class FlexibleColumnLayout extends UI5Element {
 			arrows: {
 				start: {
 					display: this.showStartArrow ? "inline-block" : "none",
-					transform: this.startArrowDirection === "mirror" ? "rotate(180deg)" : "",
 				},
 				end: {
 					display: this.showEndArrow ? "inline-block" : "none",
-					transform: this.endArrowDirection === "mirror" ? "rotate(180deg)" : "",
 				},
 			},
 		};
@@ -647,6 +1050,27 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get effectiveArrowsInfo() {
 		return this._effectiveLayoutsByMedia[this.media][this.layout].arrows;
+	}
+
+	get startSeparatorDOM() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-grip-container-start")!;
+	}
+
+	get endSeparatorDOM() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-grip-container-end")!;
+	}
+
+	get startSeparatorTabIndex() {
+		if (this.showStartArrow) {
+			return 0;
+		}
+	}
+
+	get endSeparatorTabIndex() {
+		if (this.showEndArrow) {
+			return 0;
+		}
+		return -1;
 	}
 
 	get media() {
@@ -719,11 +1143,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartArrowContainerRole() {
-		return this.accessibilityRoles.startArrowContainerRole || undefined;
+		return this.accessibilityRoles.startArrowContainerRole || "separator";
 	}
 
 	get accEndArrowContainerRole() {
-		return this.accessibilityRoles.endArrowContainerRole || undefined;
+		return this.accessibilityRoles.endArrowContainerRole || "separator";
 	}
 
 	get _effectiveLayoutsByMedia() {
