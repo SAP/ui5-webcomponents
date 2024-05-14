@@ -64,6 +64,13 @@ import {
  */
 @event("pin-button-click")
 
+/**
+ * Event that is being fired by hovering over the expand button.
+ *
+ * @protected
+ */
+@event("expand-button-hover")
+
 class DynamicPageHeaderActions extends UI5Element {
 	/**
 	 * Defines whether the header is pinned.
@@ -150,6 +157,14 @@ class DynamicPageHeaderActions extends UI5Element {
 
 	onPinClick() {
 		this.fireEvent("pin-button-click");
+	}
+
+	onExpandHoverIn() {
+		this.fireEvent("expand-button-hover-in");
+	}
+
+	onExpandHoverOut() {
+		this.fireEvent("expand-button-hover-out");
 	}
 
 	get showPinButton() {

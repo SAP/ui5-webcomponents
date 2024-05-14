@@ -13,6 +13,10 @@
     border-bottom: var(--_ui5_dynamic_page_title_border);
 }
 
+:host(:not([interactive])) {
+    box-shadow: var(--_ui5_dynamic_page_header-box-shadow);
+}
+
 :host .ui5-dynamic-page-title-root {
     display: inherit;
     flex-direction: inherit;
@@ -20,7 +24,8 @@
     height: inherit;
 }
 
-:host(:hover) {
+:host:host([interactive]:hover),
+:host:host([interactive][hovered]) {
     background-color: var(--_ui5_dynamic_page_title_hover_background);
     cursor: pointer;
     border-bottom: var(--_ui5_dynamic_page_title_hover_border);

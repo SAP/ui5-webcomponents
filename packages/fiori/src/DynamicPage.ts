@@ -96,7 +96,7 @@ const SCROLL_THRESHOLD = 10; // px
 	renderer: litRender,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
-	dependencies: [DynamicPageHeader, DynamicPageTitle, DynamicPageHeaderActions],
+	dependencies: [DynamicPageHeaderActions],
 })
 
 /**
@@ -220,6 +220,7 @@ class DynamicPage extends UI5Element {
 	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this.headerSnapped;
+			this.dynamicPageTitle.toggleAttribute("interactive", this.showHeaderActions);
 		}
 	}
 
@@ -275,6 +276,10 @@ class DynamicPage extends UI5Element {
 		return (this.headerSnapped || this.headerSnappedByInteraction);
 	}
 
+	get showHeaderActions() {
+		return this.headerArea.length > 0;
+	}
+
 	snapOnScroll() {
 		debounce(() => this.snapTitleByScroll(), SCROLL_DEBOUNCE_RATE);
 	}
@@ -294,8 +299,8 @@ class DynamicPage extends UI5Element {
 		this.headerSnappedByInteraction = false;
 
 		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
-			this.headerSnapped = true;
 			this.showHeaderInStickArea = false;
+			this.headerSnapped = true;
 		} else {
 			this.headerSnapped = false;
 		}
@@ -329,6 +334,7 @@ class DynamicPage extends UI5Element {
 		if (this.scrollContainer!.scrollTop === SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = 0;
 		}
+
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
 		this.headerSnapped = !this.headerSnapped;
 		this.headerSnappedByInteraction = this.headerSnapped;
@@ -339,6 +345,16 @@ class DynamicPage extends UI5Element {
 		if (this.headerSnapped && this.scrollContainer!.scrollTop < SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
 		}
+	}
+
+	async onExpandHoverIn() {
+		this.dynamicPageTitle?.setAttribute("hovered", "");
+		await renderFinished();
+	}
+
+	async onExpandHoverOut() {
+		this.dynamicPageTitle?.removeAttribute("hovered");
+		await renderFinished();
 	}
 
 	updateMediaRange() {

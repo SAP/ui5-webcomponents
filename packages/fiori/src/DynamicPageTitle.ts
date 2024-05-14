@@ -134,7 +134,7 @@ class DynamicPageTitle extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	navigationActions!: HTMLElement[];
+	navigationActions!: Array<Toolbar>;
 
 	/**
 	 * Defines the content of the Dynamic page title.

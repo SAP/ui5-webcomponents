@@ -42,12 +42,17 @@
 </div>
 
 {{#*inline "header-actions"}}
-	<ui5-dynamic-page-header-actions
-		?snapped="{{headerSnapped}}"
-		?pinned="{{headerPinned}}"
-		?hide-pin-button="{{hidePinButton}}"
-		.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
-		@ui5-expand-button-click={{onExpandClick}}
-		@ui5-pin-button-click={{onPinClick}}>
-	</ui5-dynamic-page-header-actions>
+	{{#if showHeaderActions}}
+		<ui5-dynamic-page-header-actions
+			?snapped="{{headerSnapped}}"
+			?pinned="{{headerPinned}}"
+			?hide-pin-button="{{hidePinButton}}"
+			.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
+			@ui5-expand-button-click={{onExpandClick}}
+			@ui5-pin-button-click={{onPinClick}}
+			@ui5-expand-button-hover-in={{onExpandHoverIn}}
+			@ui5-expand-button-hover-out={{onExpandHoverOut}}
+			>
+		</ui5-dynamic-page-header-actions>
+	{{/if}}
 {{/inline}}
