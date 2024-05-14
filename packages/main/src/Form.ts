@@ -12,7 +12,6 @@ import FormTemplate from "./generated/templates/FormTemplate.lit.js";
 import FormCss from "./generated/themes/Form.css.js";
 
 import Title from "./Title.js";
-import type FormItem from "./FormItem.js";
 import type FormGroup from "./FormGroup.js";
 import FormItemSpacing from "./types/FormItemSpacing.js";
 
@@ -36,10 +35,15 @@ interface IFormItem extends HTMLElement {
 	columnSpan?: number;
 }
 
+type GroupItemsInfo = {
+	groupItem: IFormItem,
+	classes: string,
+	items: Array<ItemsInfo>,
+}
+
 type ItemsInfo = {
 	item: IFormItem,
 	classes: string,
-	items: Array<FormItem>,
 }
 
 /**
@@ -98,8 +102,11 @@ type ItemsInfo = {
  * ### Groups Column Span
  *
  * To influence the built-in group distribution, described in the previous section,
- * you can use the FormGroup's <code>columnSpan</code> property,
- * that defines how many columns the group should expand to.
+ * you can use the FormGroup's <code>columnSpan</code> property, that defines how many columns the group should expand to.
+ *
+ * ### Items Column Span
+ *
+ * FormItem's columnSpan property  defines how many columns fhe form item should expand to inside a form group or the form.
  *
  * ### Items Label Span
  *
@@ -115,6 +122,10 @@ type ItemsInfo = {
  * - <code>import @ui5/webcomponents/dist/Form.js";</code>
  * - <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
  * - <code>import @ui5/webcomponents/dist/FormItem.js";</code>
+ *
+ * @csspart header - Used to style the wrapper of the header.
+ * @csspart layout - Used to style the element defining the form column layout.
+ * @csspart column - Used to style a single column of the form column layout.
  *
  * @public
  * @since 2.0.0
@@ -148,8 +159,7 @@ class Form extends UI5Element {
 	 * By default, the labels take 4/12 (or 1/3) of the form item in M,L and XL sizes,
 	 * and 12/12 in S size, e.g in S the label is on top of its associated field.
 	 *
-	 * The supported values are between 1 and 12.
-	 * Greater the number, more space the label will use.
+	 * The supported values are between 1 and 12. Greater the number, more space the label will use.
 	 *
 	 * **Note:** If "12" is set, the label will be displayed on top of its assosiated field.
 	 * @default "S12 M4 L4 XL4"
@@ -342,12 +352,26 @@ class Form extends UI5Element {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
 
+	get groupItemsInfo(): Array<GroupItemsInfo> {
+		return this.items.map((groupItem: IFormItem) => {
+			const grItem = groupItem as FormGroup;
+			return {
+				groupItem,
+				classes: `ui5-form-column-spanL-${grItem.colsL} ui5-form-column-spanXL-${grItem.colsXl} ui5-form-column-spanM-${grItem.colsM} ui5-form-column-spanS-${grItem.colsS}`,
+				items: this.getItemsInfo((Array.from(grItem.children) as Array<IFormItem>)),
+			};
+		});
+	}
+
 	get itemsInfo(): Array<ItemsInfo> {
-		return this.items.map((item: IFormItem) => {
+		return this.getItemsInfo();
+	}
+
+	getItemsInfo(items?: Array<IFormItem>): Array<ItemsInfo> {
+		return (items || this.items).map((item: IFormItem) => {
 			return {
 				item,
-				classes: `ui5-form-column-spanL-${(item as FormGroup).colsL} ui5-form-column-spanXL-${(item as FormGroup).colsXl} ui5-form-column-spanM-${(item as FormGroup).colsM} ui5-form-column-spanS-${(item as FormGroup).colsS}`,
-				items: Array.from((item as FormGroup).children) as Array<FormItem>,
+				classes: item.columnSpan ? `ui5-form-item-span-${item.columnSpan}` : "",
 			};
 		});
 	}
@@ -400,9 +424,11 @@ class Form extends UI5Element {
 					grid-template-columns: repeat(${cols}, 1fr);
 				}
 				
-				.ui5-form-column-span${step}-${cols} {
+				.ui5-form-column-span${step}-${cols},
+				.ui5-form-item-span-${cols} {
 					grid-column: span ${cols};
 				}
+
 				.ui5-form-column-span${step}-${cols} .ui5-form-group-layout {
 					grid-template-columns: repeat(${cols}, 1fr);
 				}

@@ -30,7 +30,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  * <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
  *
  * @public
- * @since 1.23.0
+ * @since 2.0.0
  */
 @customElement("ui5-form-group")
 class FormGroup extends UI5Element implements IFormItem {

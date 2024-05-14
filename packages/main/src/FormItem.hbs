@@ -1,9 +1,9 @@
 <div class="ui5-form-item-root">
-	<div class="ui5-form-item-layout">
-		<div class="ui5-form-item-label">
+	<div class="ui5-form-item-layout" part="layout">
+		<div class="ui5-form-item-label" part="label">
 			<slot name="labelContent"></slot>
 		</div>
-		<div class="ui5-form-item-content">
+		<div class="ui5-form-item-content" part="content">
 			{{#each content}}
 				<div class="ui5-form-item-content-child">
 					<slot name="{{this._individualSlot}}"></slot>

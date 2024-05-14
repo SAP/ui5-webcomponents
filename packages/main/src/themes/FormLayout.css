@@ -138,3 +138,22 @@
 		grid-template-columns: repeat(6, 1fr);
 	}
 }
+
+.ui5-form-item-span-2 {
+	grid-column: span 2;
+}
+
+.ui5-form-item-span-3 {
+	grid-column: span 3;
+}
+
+.ui5-form-item-span-4 {
+	grid-column: span 4;
+}
+
+.ui5-form-item-span-5 {
+	grid-column: span 5;
+}
+.ui5-form-item-span-6 {
+	grid-column: span 6;
+}

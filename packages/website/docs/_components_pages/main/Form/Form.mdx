@@ -9,9 +9,9 @@ import Edit from "../../../_samples/main/Form/Edit/Edit.md";
 import Layout from "../../../_samples/main/Form/Layout/Layout.md";
 import LabelSpan from "../../../_samples/main/Form/LabelSpan/LabelSpan.md";
 import LabelsOnTop from "../../../_samples/main/Form/LabelsOnTop/LabelsOnTop.md";
-import ColumnSpan from "../../../_samples/main/Form/ColumnSpan/ColumnSpan.md";
+import GroupColumnSpan from "../../../_samples/main/Form/GroupColumnSpan/GroupColumnSpan.md";
+import ItemColumnSpan from "../../../_samples/main/Form/ItemColumnSpan/ItemColumnSpan.md";
 import FreeStyleForm from "../../../_samples/main/Form/FreeStyleForm/FreeStyleForm.md";
-import FreeStyleForm2 from "../../../_samples/main/Form/FreeStyleForm2/FreeStyleForm2.md";
 
 :::info
 The Form, FormGroup and FormItem web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
@@ -27,12 +27,6 @@ The Form, FormGroup and FormItem web components are availabe since 2.0 under an 
 
 ## More Samples
 
-### Groups
-You can define groups via the **ui5-form-group** web component.
-
-<Groups />
-
-
 ### Layout
 Use the Form#**layout** property to define the number of columns to distribute the form content by breakpoint.
 
@@ -42,11 +36,13 @@ Use the Form#**layout** property to define the number of columns to distribute t
 
 <Layout />
 
-### Edit
-The Form has no built-in functionality to transform texts into inputs to implement editable forms. This is delegated to the consumers as shown in the sample.
-**Note:** We recommend using "Large" item spacing in "display" mode, and "Normal" for "edit" mode, to avoid "jumping" effect of switching between texts and inputs.
 
-<Edit />
+
+### Groups
+You can define groups via the **ui5-form-group** web component.
+
+<Groups />
+
 
 
 ### Label Span
@@ -58,18 +54,37 @@ Use the Form#**labelSpan** property to define the width proportion of the labels
 
 <LabelSpan />
 
+
+
 ### Labels On Top
 Force labels always on top Form#**labelSpan=S12 M12 L12 XL12**.
 
 <LabelsOnTop />
 
+
+
+### Edit
+The Form has no built-in functionality to transform texts into inputs to implement editable forms. This is delegated to the consumers as shown in the sample.
+**Note:** We recommend using "Large" item spacing in "display" mode, and "Normal" for "edit" mode, to avoid "jumping" effect of switching between texts and inputs.
+
+<Edit />
+
+
+
 ### Column Span
-Use the FormGroup#**columnSpan** property to define how many columns the group should expand to.
 
-<ColumnSpan />
+#### FormGroup#**columnSpan**
+The FormGroup#columnSpan property defines how many columns the form group should expand to.
 
-### Freestyle Forms
+<GroupColumnSpan />
+
+#### FormItem#**columnSpan**
+The FormItem#**columnSpan** defines to how many columns the form item should expand to.
+
+<ItemColumnSpan />
+
+
+
+### Freestyle Form
 
 <FreeStyleForm />
-
-<FreeStyleForm2 />

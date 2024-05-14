@@ -1,5 +1,30 @@
+:host([column-span="1"]) {
+	grid-column: span 1;
+}
+
+:host([column-span="2"]) {
+	grid-column: span 2;
+}
+
+:host([column-span="3"]) {
+	grid-column: span 3;
+}
+	
+:host([column-span="4"]) {
+	grid-column: span 4;
+}
+
+:host([column-span="5"]) {
+	grid-column: span 5;
+}
+:host([column-span="6"]) {
+	grid-column: span 6;
+}
+
 .ui5-form-item-root {
 	container-type: inline-size;
+	background-color: inherit;
+	color: inherit;
 }
 
 .ui5-form-item-layout {

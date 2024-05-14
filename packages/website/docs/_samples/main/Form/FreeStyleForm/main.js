@@ -6,12 +6,20 @@ import "@ui5/webcomponents/dist/FormItem.js";
 // The following code is required only for the sample
 import "@ui5/webcomponents/dist/CheckBox.js";
 import "@ui5/webcomponents/dist/Label.js";
+import "@ui5/webcomponents/dist/Switch.js";
+import "@ui5/webcomponents/dist/RadioButton.js";
+import "@ui5/webcomponents/dist/Label.js";
+import "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents/dist/TimePicker.js";
+import "@ui5/webcomponents/dist/FileUploader.js";
 import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/Slider.js";
 import "@ui5/webcomponents/dist/Select.js";
 import "@ui5/webcomponents/dist/Option.js";
 import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents/dist/TextArea.js";
+import "@ui5/webcomponents/dist/MultiInput.js";
+import "@ui5/webcomponents/dist/Token.js";
 
 const slider = document.getElementById("slider");
 const txtLayout = document.getElementById("txtLayout");
