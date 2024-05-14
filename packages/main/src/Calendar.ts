@@ -206,8 +206,8 @@ type SpecialCalendarDateT = {
 	},
 })
 
-@event("show-month-press")
-@event("show-year-press")
+@event("show-month-view")
+@event("show-year-view")
 class Calendar extends CalendarPart {
 	/**
 	 * Defines the type of selection used in the calendar component.
@@ -483,7 +483,7 @@ class Calendar extends CalendarPart {
 	onHeaderShowMonthPress(e: CustomEvent) {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
-		this.fireEvent("show-month-press", e);
+		this.fireEvent("show-month-view", e);
 	}
 
 	/**
@@ -492,7 +492,7 @@ class Calendar extends CalendarPart {
 	onHeaderShowYearPress(e: CustomEvent) {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
-		this.fireEvent("show-year-press", e);
+		this.fireEvent("show-year-view", e);
 	}
 
 	get _currentPickerDOM() {
@@ -629,10 +629,12 @@ class Calendar extends CalendarPart {
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
+			this.fireEvent("show-month-view", e);
 		}
 
 		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
+			this.fireEvent("show-year-view", e);
 		}
 	}
 
