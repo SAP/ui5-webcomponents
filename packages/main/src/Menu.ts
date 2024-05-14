@@ -253,24 +253,9 @@ class Menu extends UI5Element {
 	onBeforeRendering() {
 		const siblingsWithIcon = this.items.some(item => !!item.icon);
 
-		if (siblingsWithIcon) {
-			this.items.forEach(item => {
-				item._siblingsWithIcon = true;
-			});
-		}
-	}
-
-	onAfterRendering() {
-		const opener = this.getOpener();
-		if (opener && this._popover) {
-			this._popover.opener = opener;
-			this._popover.open = this.open;
-		}
-	}
-
-	getOpener() {
-		const rootNode = this.getRootNode() as Document;
-		return this.opener instanceof HTMLElement ? this.opener : rootNode?.getElementById?.(this.opener);
+		this.items.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
 	}
 
 	_close() {

@@ -5,7 +5,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
-import CustomListItem from "./CustomListItem.js";
+import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
 import Icon from "./Icon.js";
@@ -40,17 +40,17 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  *
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
- * @extends CustomListItem
+ * @extends ListItem
  * @since 1.3.0
  * @public
  */
 @customElement({
 	tag: "ui5-menu-item",
 	template: MenuItemTemplate,
-	styles: [CustomListItem.styles, menuItemCss],
-	dependencies: [...CustomListItem.dependencies, Icon, ResponsivePopover],
+	styles: [ListItem.styles, menuItemCss],
+	dependencies: [...ListItem.dependencies, Icon, ResponsivePopover],
 })
-class MenuItem extends CustomListItem {
+class MenuItem extends ListItem {
 	static async onDefine() {
 		MenuItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -199,11 +199,9 @@ class MenuItem extends CustomListItem {
 	onBeforeRendering() {
 		const siblingsWithIcon = this.items.some(item => !!item.icon);
 
-		if (siblingsWithIcon) {
-			this.items.forEach(item => {
-				item._siblingsWithIcon = true;
-			});
-		}
+		this.items.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
 	}
 
 	get _focusable() {
@@ -228,6 +226,7 @@ class MenuItem extends CustomListItem {
 		if (this._popover) {
 			this._popover.open = false;
 		}
+		this.selected = false;
 		this.fireEvent("close-menu", {});
 	}
 
@@ -235,6 +234,7 @@ class MenuItem extends CustomListItem {
 		if (this._popover) {
 			this._popover.open = false;
 		}
+		this.selected = false;
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {

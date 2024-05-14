@@ -4,6 +4,8 @@
 	horizontal-align="Start"
 	placement="Bottom"
 	vertical-align="Bottom"
+	.opener={{opener}}
+	?open={{open}}
 	prevent-focus-restore
 	hide-arrow
 	allow-target-overlap
@@ -37,7 +39,14 @@
 	<div
 		id="{{_id}}-menu-main"
 	>
-	{{#if items.length}}
+	{{#if loading}}
+		<ui5-busy-indicator
+			id="{{_id}}-menu-busy-indicator"
+			delay="{{loadingDelay}}"
+			class="ui5-menu-busy-indicator"
+			active>
+		</ui5-busy-indicator>
+	{{else if items.length}}
 		<ui5-list
 			id="{{_id}}-menu-list"
 			selection-mode="None"
@@ -52,13 +61,6 @@
 		>
 			<slot></slot>
 		</ui5-list>
-	{{else if loading}}
-		<ui5-busy-indicator
-			id="{{_id}}-menu-busy-indicator"
-			delay="{{loadingDelay}}"
-			class="ui5-menu-busy-indicator"
-			active>
-		</ui5-busy-indicator>
 	{{/if}}
 	</div>
 </ui5-responsive-popover>
