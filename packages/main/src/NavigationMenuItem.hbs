@@ -58,6 +58,10 @@
 		prevent-focus-restore
 		_disable-initial-focus
 		accessible-name-ref="{{_id}}-navigationMenuPopoverText"
+		@ui5-before-open={{_beforePopoverOpen}}
+		@ui5-open={{_afterPopoverOpen}}
+		@ui5-before-close={{_beforePopoverClose}}
+		@ui5-close={{_afterPopoverClose}}
 	>
 	<span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 	{{#if isPhone}}
