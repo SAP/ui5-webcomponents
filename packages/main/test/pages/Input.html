@@ -33,6 +33,7 @@
 		</div>
 		<div id="myInput-change-result"></div>
 		<div id="myInput-selection-change-result"></div>
+		<div id="myInput-open-picker"></div>
 	</div>
 
 	<div class="sapUiSizeCompact">
@@ -599,6 +600,14 @@
 			labelChange.innerHTML = "Event [change] :: " + event.target.value;
 			changeCounter += 1;
 			inputResult.value = changeCounter;
+		});
+
+		input.addEventListener("ui5-open", () => {
+			document.getElementById("myInput-open-picker").innerHTML = "Open";
+		});
+
+		input.addEventListener("ui5-close", () => {
+			document.getElementById("myInput-open-picker").innerHTML = "Close";
 		});
 
 		input1.addEventListener("ui5-change", function (event) {

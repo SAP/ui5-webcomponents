@@ -741,6 +741,32 @@ describe("Input general interaction", () => {
 		assert.ok(await helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 
+	it("fires open event when suggestions picker is opened on typing", async () => {
+		await browser.url(`test/pages/Input.html`);
+		const input = await browser.$("#myInput");
+		await input.click();
+		await input.keys("a");
+
+		const popover = await input.shadow$("ui5-responsive-popover");
+
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+		assert.strictEqual( await $("#myInput-open-picker").getHTML(false), "Open", "The open event is fired");
+	});
+
+	it("fires close event when suggestions picker is closed", async () => {
+		await browser.url(`test/pages/Input.html`);
+		const input = await browser.$("#myInput");
+		await input.click();
+		await input.keys("a");
+
+		const popover = await input.shadow$("ui5-responsive-popover");
+		const listItem = await popover.$("ui5-li-suggestion-item");
+		await listItem.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "The popover is not visible");
+		assert.strictEqual( await $("#myInput-open-picker").getHTML(false), "Close", "The close event is fired");
+	});
+
 	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", async () => {
 		await browser.url(`test/pages/Input.html`);
 		const input = await browser.$("#inputInDialog");
@@ -1570,7 +1596,7 @@ describe("Property open", () => {
 	it("Suggestions picker is open when attribute open is true", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#input-suggestions-open");
+		const input = await browser.$("#input-suggestions-open");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
 
@@ -1578,10 +1604,10 @@ describe("Property open", () => {
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
 	});
 
-	it("Suggestions popover is closed when attribute open is set to false", async () => {
+	it("Suggestions picker is closed when attribute open is set to false", async () => {
 		await browser.url(`test/pages/Input.html`);
 
-		const input = await $("#input-suggestions-open");
+		const input = await browser.$("#input-suggestions-open");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");

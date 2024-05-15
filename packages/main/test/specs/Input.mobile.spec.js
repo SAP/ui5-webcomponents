@@ -204,12 +204,22 @@ describe("Property open", () => {
 		await browser.emulateDevice('iPhone X');
 	});
 
-	it("Suggestions popover is open when attribute open is true", async () => {
-		const input = await $("#input-suggestions-open");
+	it("Suggestions dialog is open when attribute open is true", async () => {
+		const input = await browser.$("#input-suggestions-open");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+	it("Suggestions dialog is closed when attribute open is set to false", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = false;
+		});
+
+		assert.strictEqual(await respPopover.getProperty("open"), false, "Suggestions popover is closed");
 	});
 });
