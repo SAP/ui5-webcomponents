@@ -144,7 +144,7 @@ class MultiInput extends Input implements IFormInputElement {
 	get formFormattedValue(): FormData | string | null {
 		const tokens = (this.tokens || []);
 
-		if (tokens.length) {
+		if (tokens.length && this.name) {
 			const formData = new FormData();
 
 			formData.append(this.name, this.value);

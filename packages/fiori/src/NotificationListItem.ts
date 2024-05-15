@@ -180,8 +180,8 @@ class NotificationListItem extends NotificationListItemBase {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: `${ValueState}`;
+	@property()
+	state: `${ValueState}` = "None"
 
 	/**
 	 * Defines if the `Close` button would be displayed.
@@ -189,15 +189,15 @@ class NotificationListItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showClose!: boolean;
+	showClose = false;
 
 	/**
 	 * Defines the `Important` label of the item.
 	 * @default "Standard"
 	 * @public
 	 */
-	@property({ type: NotificationListItemImportance, defaultValue: NotificationListItemImportance.Standard })
-	importance!: `${NotificationListItemImportance}`;
+	@property()
+	importance: `${NotificationListItemImportance}` = "Standard";
 
 	/**
 	* Defines the state of the `titleText` and `description`,

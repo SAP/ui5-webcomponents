@@ -459,7 +459,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	openPopover() {
 		this.valueStatePopover = this._getPopover();
 		if (this.valueStatePopover) {
-			this.valueStatePopover.opener = this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!;
+			this.valueStatePopover.opener = this.shadowRoot!.querySelector<HTMLElement>(".ui5-textarea-root .ui5-textarea-wrapper")!;
 			this.valueStatePopover.open = true;
 		}
 	}
