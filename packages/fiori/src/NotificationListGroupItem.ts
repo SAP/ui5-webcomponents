@@ -191,13 +191,17 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
+		if (e.target !== this.getDomRef()) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			return;
+		}
+
 		const space = isSpace(e);
 		const plus = isPlus(e);
 		const minus = isMinus(e);
 		const left = isLeft(e);
 		const right = isRight(e);
-		const down = isDown(e);
-		const up = isUp(e);
 
 		if (space) {
 			this.toggleCollapsed();
@@ -214,37 +218,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// collapse
 			if (!this.collapsed) {
 				this.toggleCollapsed();
-			}
-		}
-
-		if (down) {
-			const notificationItems = this.items;
-			const lastItemIndex = notificationItems.length - 1;
-			const isLastItem = e.target === notificationItems[lastItemIndex];
-			const groupsInList = this.parentElement?.children;
-			const indexOfCurrentGroup = groupsInList ? Array.from(groupsInList).findIndex(element => (element === this)) : -1;
-
-			// if the focus is on the header (whole group) move it to the first notification item
-			if (!this.collapsed && this.hasAttribute("focused") && notificationItems[0]) {
-				notificationItems[0].focus();
-			}
-
-			// if the focus is on the last item move it to the next group (if available)
-			if (!this.collapsed && isLastItem) {
-				// focus the next (sibling) group
-				if (groupsInList && groupsInList[indexOfCurrentGroup] && groupsInList[indexOfCurrentGroup + 1]) {
-					// @ts-ignore
-					groupsInList[indexOfCurrentGroup + 1].focus();
-				}
-			}
-		}
-
-		if (up) {
-			const notificationItems = this.items;
-
-			// if the focus is on the first notification item move it to the header (whole group)
-			if (!this.collapsed && e.target === notificationItems[0]) {
-				this.focus();
 			}
 		}
 	}
