@@ -1,39 +1,38 @@
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
+	isSpace,
+	isUp,
 	isDown,
-	isEnd,
 	isEnter,
 	isEscape,
 	isHome,
+	isEnd,
 	isShow,
-	isSpace,
 	isTabNext,
 	isTabPrevious,
-	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
 import Icon from "./Icon.js";
@@ -43,29 +42,27 @@ import List from "./List.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import {
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_WARNING,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
-	VALUE_STATE_ERROR,
-	VALUE_STATE_INFORMATION,
-	VALUE_STATE_SUCCESS,
-	VALUE_STATE_TYPE_ERROR,
-	VALUE_STATE_TYPE_INFORMATION,
-	VALUE_STATE_TYPE_SUCCESS,
-	VALUE_STATE_TYPE_WARNING,
-	VALUE_STATE_WARNING,
 	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
 // Styles
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 import selectCss from "./generated/themes/Select.css.js";
 import ListItemBase from "./ListItemBase.js";
 
@@ -295,11 +292,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * **Note:** Use the `ui5-option` component to define the desired options.
 	 * @public
 	 */
-	@slot({
-		"default": true,
-		type: HTMLElement,
-		invalidateOnChildChange: true,
-	})
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<IOption>;
 
 	/**
@@ -365,7 +358,6 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	onBeforeRendering() {
-		this._enableFormSupport();
 		this._ensureSingleSelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
@@ -467,19 +459,6 @@ class Select extends UI5Element implements IFormInputElement {
 		} else {
 			this.responsivePopover.opener = this;
 			this.responsivePopover.open = true;
-		}
-	}
-
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				const selectElement = (element as Select);
-				nativeInput.disabled = !!element.disabled;
-				nativeInput.value = selectElement.value;
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
