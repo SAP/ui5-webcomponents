@@ -1,4 +1,4 @@
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -106,7 +106,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showValueHelpIcon!: boolean;
+	showValueHelpIcon = false;
 
 	/**
 	 * Indicates whether the tokenizer has tokens
@@ -114,7 +114,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	tokenizerAvailable!: boolean;
+	tokenizerAvailable = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
