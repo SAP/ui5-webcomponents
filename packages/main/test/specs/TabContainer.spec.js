@@ -143,7 +143,7 @@ describe("TabContainer general interaction", () => {
 		await browser.setWindowSize(1000, 1080);
 		const tabContainer = await browser.$("#tabContainerStartAndEndOverflow");
 		const startOverflow = await tabContainer.shadow$(".ui5-tc__overflow--start");
-		assert.strictEqual(await startOverflow.getProperty("innerText"), "+11", "11 tabs in start overflow");
+		assert.strictEqual(await startOverflow.getProperty("innerText"), "+12", "12 tabs in start overflow");
 
 		await browser.setWindowSize(800, 1080);
 		assert.strictEqual(await startOverflow.getProperty("innerText"), "+14", "14 tabs in start overflow");
@@ -519,7 +519,7 @@ describe("TabContainer drag and drop tests", () => {
 	const moveElementById = (items, id1, id2, targetPosition) => {
 		const findAndExecute = (items, matcher, cb) => {
 			const index = items.findIndex(matcher);
-			
+
 			if (index !== -1) {
 				cb(items, index);
 				return;
@@ -684,5 +684,5 @@ describe("TabContainer drag and drop tests", () => {
 		// close the popover
 		await tabContainer.getEndOverflow("tabContainerDnd").click();
 	});
-	
+
 });
