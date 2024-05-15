@@ -371,7 +371,7 @@ describe("Popover general interaction", () => {
 		await btnOpenPopover.click();
 
 		const popover = await browser.$("#pop");
-		const iframe = await browser.$("#clickThisIframeInsideShadowRoot");
+		const iframe = await browser.$("host").shadow$("#clickThisIframeInsideShadowRoot");
 
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 
