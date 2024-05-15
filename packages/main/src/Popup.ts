@@ -6,7 +6,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isChrome,
+	isSafari,
+	isDesktop,
+	isPhone,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -197,7 +202,19 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>
+	content!: Array<HTMLElement>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onDesktop!: boolean;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
@@ -213,6 +230,11 @@ abstract class Popup extends UI5Element {
 		this._getRealDomRef = () => {
 			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
 		};
+	}
+
+	onBeforeRendering() {
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
 	}
 
 	onAfterRendering() {

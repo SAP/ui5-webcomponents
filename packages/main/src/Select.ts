@@ -207,6 +207,8 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a reference (ID or DOM element) of component's menu of options
 	 * as alternative to define the select's dropdown.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the menu.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 *
 	 * **Note:** Usage of `ui5-select-menu` is recommended.
 	 * @default undefined
@@ -645,8 +647,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	attachMenuListeners(menu: HTMLElement) {
-		menu.addEventListener("ui5-after-close", this._onMenuClose);
-		menu.addEventListener("ui5-after-open", this._onMenuOpen);
+		menu.addEventListener("ui5-close", this._onMenuClose);
+		menu.addEventListener("ui5-open", this._onMenuOpen);
 		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
 		// @ts-ignore
 		menu.addEventListener("ui5-option-click", this._onMenuClick);
@@ -655,8 +657,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	detachMenuListeners(menu: HTMLElement) {
-		menu.removeEventListener("ui5-after-close", this._onMenuClose);
-		menu.removeEventListener("ui5-after-open", this._onMenuOpen);
+		menu.removeEventListener("ui5-close", this._onMenuClose);
+		menu.removeEventListener("ui5-open", this._onMenuOpen);
 		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
 		// @ts-ignore
 		menu.removeEventListener("ui5-option-click", this._onMenuClick);
