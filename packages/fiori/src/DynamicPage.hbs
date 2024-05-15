@@ -1,5 +1,5 @@
 <div class="ui5-dynamic-page-root">
-	<div class="ui5-dynamic-page-scroll-container" @scroll="{{snapOnScroll}}">
+	<div  class="ui5-dynamic-page-scroll-container" @scroll="{{snapOnScroll}}">
 		<header
 			class="ui5-dynamic-page-title-header-wrapper"
 			id="{{_id}}-header"
@@ -10,7 +10,7 @@
 		>
 			<slot name="titleArea"></slot>
 			{{#if headerInTitle}}
-				<slot name="headerArea"></slot>
+				<slot tabindex="{{headerTabIndex}}" ?aria-hidden="{{headerAriaHidden}}" name="headerArea"></slot>
 			{{/if}}
 
 			{{#if actionsInTitle}}
@@ -19,7 +19,7 @@
 		</header>
 
 		{{#if headerInContent}}
-			<slot name="headerArea"></slot>
+			<slot tabindex="{{headerTabIndex}}" ?aria-hidden="{{headerAriaHidden}}" name="headerArea"></slot>
 		{{/if}}
 
 		{{#unless actionsInTitle}}
@@ -42,12 +42,17 @@
 </div>
 
 {{#*inline "header-actions"}}
-	<ui5-dynamic-page-header-actions
-		?snapped="{{headerSnapped}}"
-		?pinned="{{headerPinned}}"
-		?hide-pin-button="{{hidePinButton}}"
-		.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
-		@ui5-expand-button-click={{onExpandClick}}
-		@ui5-pin-button-click={{onPinClick}}>
-	</ui5-dynamic-page-header-actions>
+	{{#if showHeaderActions}}
+		<ui5-dynamic-page-header-actions
+			?snapped="{{headerSnapped}}"
+			?pinned="{{headerPinned}}"
+			?hide-pin-button="{{hidePinButton}}"
+			.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
+			@ui5-expand-button-click={{onExpandClick}}
+			@ui5-pin-button-click={{onPinClick}}
+			@ui5-expand-button-hover-in={{onExpandHoverIn}}
+			@ui5-expand-button-hover-out={{onExpandHoverOut}}
+			>
+		</ui5-dynamic-page-header-actions>
+	{{/if}}
 {{/inline}}
