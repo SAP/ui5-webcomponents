@@ -645,8 +645,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	attachMenuListeners(menu: HTMLElement) {
-		menu.addEventListener("ui5-after-close", this._onMenuClose);
-		menu.addEventListener("ui5-after-open", this._onMenuOpen);
+		menu.addEventListener("ui5-close", this._onMenuClose);
+		menu.addEventListener("ui5-open", this._onMenuOpen);
 		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
 		// @ts-ignore
 		menu.addEventListener("ui5-option-click", this._onMenuClick);
@@ -655,8 +655,8 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	detachMenuListeners(menu: HTMLElement) {
-		menu.removeEventListener("ui5-after-close", this._onMenuClose);
-		menu.removeEventListener("ui5-after-open", this._onMenuOpen);
+		menu.removeEventListener("ui5-close", this._onMenuClose);
+		menu.removeEventListener("ui5-open", this._onMenuOpen);
 		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
 		// @ts-ignore
 		menu.removeEventListener("ui5-option-click", this._onMenuClick);

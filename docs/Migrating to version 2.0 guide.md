@@ -976,6 +976,24 @@ Now you have to use it like:
 <ui5-tree-item additional-text-state="Success"></ui5-tree-item>
 ```
 
+### ui5-toast
+
+| Changed item | Old          | New    | 
+|--------------|--------------|--------|
+| event        | after-close  | close  | 
+
+- The event `after-close`  has been renamed to `close`. If you previously used it like:
+
+```ts
+toast.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+toast.addEventListener("close", (event) => {
+});
+```
+
 
 ## Fiori package (@ui5/webcomponents-fiori)
 
