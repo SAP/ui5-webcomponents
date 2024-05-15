@@ -38,17 +38,17 @@ swEditable.addEventListener("selection-change", function () {
 const displayTemplate = `
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Name:</ui5-label>
-		<span class="text">Red Point Stores</span>
+		<ui5-text>Red Point Stores</ui5-text>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Country:</ui5-label>
-		<span class="text">Germany</span>
+		<ui5-text>Germany</ui5-text>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">ZIP Code/City:</ui5-label>
-		<span class="text">411 Maintown</span>
+		<ui5-text>411 Maintown</ui5-text>
 	</ui5-form-item>
 
 	<ui5-form-item>
@@ -58,12 +58,12 @@ const displayTemplate = `
 
 	<ui5-form-item>
 		<ui5-label slot="labelContent">Street:</ui5-label>
-		<span class="text">Main St 1618</span>
+		<ui5-text>Main St 1618</ui5-text>
 	</ui5-form-item>
 
 	<ui5-form-item>
 		<ui5-label for="delInp" slot="labelContent">Delivery address:</ui5-label>
-		<span class="text">Newtown</span>
+		<ui5-text>Newtown</ui5-text>
 	</ui5-form-item>
 `;
 
