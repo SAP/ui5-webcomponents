@@ -81,7 +81,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
 	itemSpacing!: FormItemSpacing;
 
-	@property({ defaultValue: "S12 M4 L4 XL4" })
+	@property({ type: String, defaultValue: "S12 M4 L4 XL4" })
 	labelSpan!: string;
 
 	onBeforeRendering() {
