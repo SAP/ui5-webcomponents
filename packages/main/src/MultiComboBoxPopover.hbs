@@ -73,7 +73,9 @@
 				{{#if isGroupItem}}
 					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
 						{{#each this.items}}
-							{{> listItem}}
+							{{#if _isVisible}}
+								{{> listItem}}
+							{{/if}}
 						{{/each}}
 					</ui5-li-group>
 				{{else}}
@@ -87,7 +89,9 @@
 				{{#if isGroupItem}}
 					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
 						{{#each this.items}}
-							{{> listItem}}
+							{{#if _isVisible}}
+								{{> listItem}}
+							{{/if}}
 						{{/each}}
 					</ui5-li-group>
 				{{else}}

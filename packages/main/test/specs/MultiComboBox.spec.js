@@ -1730,7 +1730,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
 			let popover = await mcb.shadow$("ui5-responsive-popover");
-			let groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
+			let groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 			let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 			await arrow.click();
@@ -1741,7 +1741,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("B");
 
 			popover = await mcb.shadow$("ui5-responsive-popover");
-			groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
+			groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 			listItems = await popover.$("ui5-list").$$("ui5-li");
 
 			assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
@@ -1765,7 +1765,7 @@ describe("MultiComboBox general interaction", () => {
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-list").$$("ui5-li-group-header")[0];
+			groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0];
 
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 		});

@@ -24,7 +24,19 @@
 		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
-			{{#if this.selected}}
+			{{#if isGroupItem}}
+				{{#each this.items}}
+					{{#if selected}}
+						<ui5-token
+							?readonly="{{../readonly}}"
+							class="ui5-multi-combobox-token"
+							data-ui5-id="{{this._id}}"
+							part="token-{{@index}}"
+							text="{{this.text}}"
+						>
+					{{/if}}
+				{{/each}}
+			{{else}}
 				<ui5-token
 					?readonly="{{../readonly}}"
 					class="ui5-multi-combobox-token"

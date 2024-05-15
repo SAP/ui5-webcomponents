@@ -245,7 +245,7 @@ type ListItemClickEventDetail = {
 	detail: {
 		/**
 		 * @public
-		 */
+		*/
 		selectedItems: { type: Array },
 		/**
 		 * @public
@@ -867,7 +867,6 @@ class List extends UI5Element {
 				items.push(item);
 			}
 		});
-
 		return items;
 	}
 
