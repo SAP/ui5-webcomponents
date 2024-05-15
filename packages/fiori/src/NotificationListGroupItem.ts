@@ -1,5 +1,5 @@
 import {
-	isSpace, isPlus, isMinus, isLeft, isRight, isDown, isUp,
+	isSpace, isPlus, isMinus, isLeft, isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -121,6 +121,13 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		}
 	}
 
+	onAfterRendering() {
+		super.onAfterRendering();
+
+		const list = this.shadowRoot!.querySelector(`#${this._id}-notificationsList`) as List;
+		list.getEnabledItems = () => { return []; };
+	}
+
 	/**
 	 * Clears child items loading state to show a single loading over the entire group,
 	 * instead of multiple BusyIndicator instances
@@ -183,19 +190,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * Event handlers
 	 *
 	 */
-
 	_onHeaderToggleClick() {
 		this.toggleCollapsed();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
-
-		if (e.target !== this.getDomRef()) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-			return;
-		}
 
 		const space = isSpace(e);
 		const plus = isPlus(e);
