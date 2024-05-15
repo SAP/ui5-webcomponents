@@ -156,6 +156,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get ariaLabelledBy() {
+		if (this.loading) {
+			return null;
+		}
+
 		const id = this._id;
 
 		return this.hasTitleText ? `${id}-title-text` : "";

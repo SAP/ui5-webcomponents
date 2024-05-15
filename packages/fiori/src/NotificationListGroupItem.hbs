@@ -7,45 +7,54 @@
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-description="{{accInvisibleText}}"
 	aria-level="1"
+	aria-busy="{{loading}}"
 >
-	<div class="ui5-nli-group-header"
-		@click="{{_onHeaderToggleClick}}"
-		@keydown="{{_onkeydown}}"
-		role="button"
-		aria-expanded="{{_ariaExpanded}}"
-		aria-controls="{{_id}}-notificationsList">
-		<ui5-icon
-			name={{groupCollapsedIcon}}
-			show-tooltip="true"
-			accessible-name={{groupCollapsedTooltip}}
-			class="ui5-nli-group-toggle-icon"
-			mode="Decorative"
-		></ui5-icon>
-		<div
-			id="{{_id}}-title-text"
-			class="ui5-nli-group-title-text"
-			part="title-text"
-			role="heading"
-			aria-level="2">
-			{{titleText}}
-		</div>
-
-		<div class="ui5-nli-group-divider"></div>
-	</div>
-
-	<ui5-list
-		id="{{_id}}-notificationsList"
-		class="ui5-nli-group-items"
-		role="list"
-		aria-labelledby="{{_id}}-title-text">
-		<slot></slot>
-	</ui5-list>
-
 	{{#if loading}}
 		<ui5-busy-indicator
 				delay="{{loadingDelay}}"
 				active
 				class="ui5-nli-loading"
-		></ui5-busy-indicator>
+		>
+			{{> content}}
+		</ui5-busy-indicator>
+	{{else}}
+		{{> content}}
 	{{/if}}
 </li>
+
+{{#*inline "content"}}
+	<div class="ui5-nli-group-content-wrapper">
+		<div class="ui5-nli-group-header"
+			@click="{{_onHeaderToggleClick}}"
+			@keydown="{{_onkeydown}}"
+			role="button"
+			aria-expanded="{{_ariaExpanded}}"
+			aria-controls="{{_id}}-notificationsList">
+			<ui5-icon
+				name={{groupCollapsedIcon}}
+				show-tooltip="true"
+				accessible-name={{groupCollapsedTooltip}}
+				class="ui5-nli-group-toggle-icon"
+				mode="Decorative"
+			></ui5-icon>
+			<div
+				id="{{_id}}-title-text"
+				class="ui5-nli-group-title-text"
+				part="title-text"
+				role="heading"
+				aria-level="2">
+				{{titleText}}
+			</div>
+
+			<div class="ui5-nli-group-divider"></div>
+		</div>
+
+		<ui5-list
+			id="{{_id}}-notificationsList"
+			class="ui5-nli-group-items"
+			role="list"
+			aria-labelledby="{{_id}}-title-text">
+			<slot></slot>
+		</ui5-list>
+	</div>
+{{/inline}}

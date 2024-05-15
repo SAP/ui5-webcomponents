@@ -10,11 +10,19 @@
 }
 
 .ui5-nli-group-root {
-	display: flex;
-	flex-direction: column;
 	position: relative;
 	width: 100%;
 	box-sizing: border-box;
+}
+
+.ui5-nli-group-content-wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+[ui5-busy-indicator] {
+	width: 100%;
 }
 
 .ui5-nli-group-header {

@@ -26,12 +26,4 @@
 
 :host([loading])  {
 	opacity: 0.6;
-	pointer-events: none;
-}
-
-:host([loading]) .ui5-nli-loading {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 }

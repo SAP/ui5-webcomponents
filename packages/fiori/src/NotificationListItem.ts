@@ -371,6 +371,11 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
+
+		if (this.loading) {
+			return null;
+		}
+
 		const ids = [];
 
 		if (this.hasTitleText) {
