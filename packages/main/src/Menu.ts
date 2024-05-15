@@ -26,7 +26,7 @@ import MenuListItem from "./MenuListItem.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
-import type MenuItem from "./MenuItem.js";
+import MenuItem from "./MenuItem.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
@@ -104,6 +104,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		Button,
 		List,
 		StandardListItem,
+		MenuItem,
 		MenuListItem,
 		Icon,
 		BusyIndicator,

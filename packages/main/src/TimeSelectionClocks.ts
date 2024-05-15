@@ -24,6 +24,7 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
@@ -62,6 +63,7 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 		TimePickerClock,
 		ToggleSpinButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 

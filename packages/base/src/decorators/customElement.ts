@@ -62,7 +62,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};
