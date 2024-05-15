@@ -13,6 +13,7 @@ import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import {
 	isSpace,
 	isSpaceCtrl,
@@ -262,18 +263,7 @@ class Tokenizer extends UI5Element {
 	 * @default ""
 	 */
 	@property({
-		converter: {
-			toAttribute(propertyValue: string | HTMLElement) {
-				if (propertyValue instanceof HTMLElement) {
-					return null;
-				}
-
-				return propertyValue;
-			},
-			fromAttribute(value: string | null) {
-				return value;
-			},
-		},
+		converter: DOMReferenceConverter,
 	})
 	opener?: HTMLElement;
 

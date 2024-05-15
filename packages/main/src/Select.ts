@@ -33,6 +33,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import {
@@ -214,18 +215,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @since 1.17.0
 	 */
 	@property({
-		converter: {
-			toAttribute(propertyValue: string | HTMLElement) {
-				if (propertyValue instanceof HTMLElement) {
-					return null;
-				}
-
-				return propertyValue;
-			},
-			fromAttribute(value: string | null) {
-				return value;
-			},
-		},
+		converter: DOMReferenceConverter,
 	})
 	menu?: HTMLElement | string;
 

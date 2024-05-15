@@ -7,6 +7,8 @@ import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUti
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
@@ -229,18 +231,7 @@ class Popover extends Popup {
 	 * @since 1.2.0
 	 */
 	@property({
-		converter: {
-			toAttribute(propertyValue: string | HTMLElement) {
-				if (propertyValue instanceof HTMLElement) {
-					return null;
-				}
-
-				return propertyValue;
-			},
-			fromAttribute(value: string | null) {
-				return value;
-			},
-		},
+		converter: DOMReferenceConverter,
 	})
 	set opener(value: HTMLElement | string) {
 		if (this._openerStorage === value) {
