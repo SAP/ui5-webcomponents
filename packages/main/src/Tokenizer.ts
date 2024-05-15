@@ -275,7 +275,7 @@ class Tokenizer extends UI5Element {
 			},
 		},
 	})
-	opener!: HTMLElement;
+	opener?: HTMLElement;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
@@ -978,7 +978,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get morePopoverOpener(): HTMLElement {
-		return Object.keys(this.opener).length === 0 ? this : this.opener;
+		// return this.opener ? this : this.opener;
+		if (this.opener) {
+			return this.opener;
+		}
+		return this;
 	}
 
 	get _nMoreText() {

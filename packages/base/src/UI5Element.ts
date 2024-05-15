@@ -674,7 +674,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
-		if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
+		if (newAttrValue === null || newAttrValue === undefined) { // null means there must be no attribute for the current value of the property
 			this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
 			this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
