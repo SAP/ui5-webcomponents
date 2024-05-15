@@ -139,15 +139,6 @@ class Popover extends Popup {
 	modal!: boolean;
 
 	/**
-	 * Defines whether the block layer will be shown if modal property is set to true.
-	 * @default false
-	 * @public
-	 * @since 1.0.0-rc.10
-	 */
-	@property({ type: Boolean })
-	hideBackdrop!: boolean;
-
-	/**
 	 * Determines whether the component arrow is hidden.
 	 * @default false
 	 * @public
@@ -231,7 +222,9 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Defines the ID or DOM Reference of the element that the popover is shown at
+	 * Defines the ID or DOM Reference of the element at which the popover is shown.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
 	 * @default undefined
 	 * @since 1.2.0
@@ -279,7 +272,7 @@ class Popover extends Popup {
 		}
 
 		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
-			this.fireEvent("after-close", {}, false, false);
+			this.fireEvent("close", {}, false, false);
 			return;
 		}
 
@@ -751,10 +744,6 @@ class Popover extends Popup {
 
 	get isModal() { // Required by Popup.js
 		return this.modal;
-	}
-
-	get shouldHideBackdrop() { // Required by Popup.js
-		return this.hideBackdrop;
 	}
 
 	get _ariaLabelledBy() { // Required by Popup.js

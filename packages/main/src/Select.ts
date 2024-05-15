@@ -27,6 +27,7 @@ import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMe
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -53,6 +54,7 @@ import {
 	VALUE_STATE_TYPE_SUCCESS,
 	VALUE_STATE_TYPE_WARNING,
 	VALUE_STATE_WARNING,
+	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -124,6 +126,7 @@ type IOption = ListItemBase & {
 @customElement({
 	tag: "ui5-select",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: SelectTemplate,
 	styles: [
@@ -181,7 +184,7 @@ type IOption = ListItemBase & {
  * @public
  */
 @event("close")
-class Select extends UI5Element implements IFormElement {
+class Select extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -195,15 +198,9 @@ class Select extends UI5Element implements IFormElement {
 	disabled!: boolean;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
-	 * The value of the component will be the value of the currently selected `ui5-option`.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the `ui5-select` so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -306,14 +303,6 @@ class Select extends UI5Element implements IFormElement {
 	options!: Array<IOption>;
 
 	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
-	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
@@ -339,6 +328,30 @@ class Select extends UI5Element implements IFormElement {
 	*/
 	@slot()
 	label!: Array<HTMLElement>;
+
+	get formValidityMessage() {
+		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		const selectedOption = this.selectedOption;
+
+		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		const selectedOption = this.selectedOption;
+
+		if (selectedOption) {
+			return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
+		}
+
+		return "";
+	}
 
 	constructor() {
 		super();

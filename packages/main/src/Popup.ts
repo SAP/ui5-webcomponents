@@ -6,7 +6,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isChrome,
+	isSafari,
+	isDesktop,
+	isPhone,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -90,7 +95,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is opened. **This event does not bubble.**
  * @public
  */
-@event("after-open")
+@event("open")
 
 /**
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
@@ -113,7 +118,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is closed. **This event does not bubble.**
  * @public
  */
-@event("after-close")
+@event("close")
 
 /**
  * Fired whenever the popup content area is scrolled
@@ -197,7 +202,19 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>
+	content!: Array<HTMLElement>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onDesktop!: boolean;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
@@ -213,6 +230,11 @@ abstract class Popup extends UI5Element {
 		this._getRealDomRef = () => {
 			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
 		};
+	}
+
+	onBeforeRendering() {
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
 	}
 
 	onAfterRendering() {
@@ -276,7 +298,7 @@ abstract class Popup extends UI5Element {
 
 		this._opened = true;
 
-		if (this.isModal && !this.shouldHideBackdrop) {
+		if (this.isModal) {
 			Popup.blockPageScrolling(this);
 		}
 
@@ -300,7 +322,7 @@ abstract class Popup extends UI5Element {
 		// initial focus, if focused element is dynamically created
 		await this.applyInitialFocus();
 
-		this.fireEvent("after-open", {}, false, false);
+		this.fireEvent("open", {}, false, false);
 	}
 
 	_resize() {
@@ -507,7 +529,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {}, false, false);
+		this.fireEvent("close", {}, false, false);
 	}
 
 	/**
@@ -555,12 +577,6 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	abstract get isModal(): boolean
-
-	/**
-	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-	 * @protected
-	 */
-	abstract get shouldHideBackdrop(): boolean
 
 	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup

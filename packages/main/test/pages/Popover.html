@@ -26,6 +26,12 @@
 
 <body class="popover2auto">
 	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
+	<div id="host">
+		<template shadowrootmode="open">
+			<span>I'm in the shadow DOM</span>
+			<iframe id="clickThisIframeInsideShadowRoot" src="//localhost:8080"></iframe>
+		</template>
+	</div>
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover id="pop" class="popover6auto" placement="Top" accessible-name="This popover is important">
@@ -177,7 +183,7 @@ z-index: 1;
 
 	<ui5-button id="btnPopModalNoLayer">Opens modal popover with no block layer!</ui5-button>
 
-	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" hide-backdrop>
+	<ui5-popover id="modalPopoverNoLayer" modal header-text="Modal popover" class="hidebackdrop">
 		<ui5-list>
 			<ui5-li>Hello</ui5-li>
 			<ui5-li>Again</ui5-li>
@@ -685,7 +691,7 @@ z-index: 1;
 			chainedPopover2.open = false;
 		});
 
-		chainedPopover2.addEventListener("ui5-after-close", function () {
+		chainedPopover2.addEventListener("ui5-close", function () {
 			var toast = document.createElement("ui5-toast");
 			toast.appendChild(document.createTextNode("Closed chained popover 2"));
 			document.body.appendChild(toast);

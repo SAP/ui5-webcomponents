@@ -1,4 +1,3 @@
-import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -190,18 +189,6 @@ class Dialog extends Popup {
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	state!: `${ValueState}`;
 
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	onPhone!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	onDesktop!: boolean;
-
 	_screenResizeHandler: () => void;
 	_dragMouseMoveHandler: (e: MouseEvent) => void;
 	_dragMouseUpHandler: (e: MouseEvent) => void;
@@ -269,10 +256,6 @@ class Dialog extends Popup {
 
 	get isModal() {
 		return true;
-	}
-
-	get shouldHideBackdrop() {
-		return false;
 	}
 
 	get _ariaLabelledBy() {
@@ -369,8 +352,6 @@ class Dialog extends Popup {
 		super.onBeforeRendering();
 
 		this._isRTL = this.effectiveDir === "rtl";
-		this.onPhone = isPhone();
-		this.onDesktop = isDesktop();
 	}
 
 	onEnterDOM() {
