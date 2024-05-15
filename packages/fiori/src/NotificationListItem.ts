@@ -232,7 +232,7 @@ class NotificationListItem extends NotificationListItemBase {
 	*
 	* **Note:** Use this for implementing actions.
 	*
-	* **Note:** Should be used instead `u5-notification-action`, which is deprecated as of version 2.0.
+	* **Note:** Should be used instead `ui5-notification-action`, which is deprecated as of version 2.0.
 	* @public
 	*/
 	@slot()

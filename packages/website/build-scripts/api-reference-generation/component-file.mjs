@@ -1,3 +1,6 @@
+
+import { findDeclaration } from "./manifest.mjs";
+
 const parseDeclarationDescription = (description) => {
     if (!description) {
         return "";
@@ -18,12 +21,46 @@ const processDescription = (description) => {
         .replaceAll(/\n/g, " ");
 }
 
+const declarationKindUrls = {
+    "interface": "interfaces/",
+    "class": "",
+}
+
+const getLink = (declaration) => {
+    if ("@ui5/webcomponents" === declaration._ui5package) {
+        return `/components/${declarationKindUrls[declaration.kind]}${declaration.name}/`
+    } else if ("@ui5/webcomponents-fiori" === declaration._ui5package) {
+        return `/components/fiori/${declarationKindUrls[declaration.kind]}${declaration.name}/`
+    } else if ("@ui5/webcomponents-compat" === declaration._ui5package) {
+        return `/components/compat/${declarationKindUrls[declaration.kind]}${declaration.name}/`
+    }
+}
+
 const processType = (type) => {
     if (!type || !type.text) {
         return " - "
     }
 
-    return `\`${type?.text?.replaceAll("|", "\\|")}\``
+    let links = [];
+
+    if (type.references) {
+        type.references.forEach(element => {
+            const declaration = findDeclaration(element)
+            // this will observe only valid declarations (class, interface). Enums are represented as a union type in documentation page.
+            // Event types doesn't have page in documentation but they are included in type references
+            const hasValidDeclaration = declaration && declaration.name && ["class", "interface"].includes(declaration.kind)
+            const hasTypeDocumentation = hasValidDeclaration && [
+                "@ui5/webcomponents",
+                "@ui5/webcomponents-fiori",
+                "@ui5/webcomponents-compat",
+            ].includes(declaration._ui5package)
+            if (hasTypeDocumentation) {
+                links.push(`See the **${declaration.name}** [here](${getLink(declaration)}).`)
+            }
+        });
+    }
+
+    return [`\`${type?.text?.replaceAll("|", "\\|")}\``, links.length ? links.join("<br />") : ""].filter(Boolean).join("<br /><br />")
 }
 
 const getPropsTables = (declaration) => {
