@@ -106,6 +106,13 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	icon!: string;
 
 	/**
+	 * Defines if a content has been added to the default slot
+	 * @private
+	 */
+	@property({ type: Boolean })
+	iconOnly!: boolean;
+
+	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
@@ -162,6 +169,10 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+	}
+
+	onAfterRendering(): void {
+		this.iconOnly = this.isIconOnly;
 	}
 
 	_onkeyup(e: KeyboardEvent) {
