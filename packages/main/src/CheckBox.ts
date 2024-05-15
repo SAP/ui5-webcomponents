@@ -2,19 +2,18 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/complete.js";
 import "@ui5/webcomponents-icons/dist/border.js";
 import "@ui5/webcomponents-icons/dist/tri-state.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
 import WrappingType from "./types/WrappingType.js";
@@ -22,12 +21,11 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
+	FORM_CHECKABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 
 // Template
 import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
@@ -80,6 +78,7 @@ let activeCb: CheckBox;
 @customElement({
 	tag: "ui5-checkbox",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: CheckBoxTemplate,
 	styles: checkboxCss,
@@ -95,7 +94,7 @@ let activeCb: CheckBox;
  */
 @event("change")
 
-class CheckBox extends UI5Element implements IFormElement {
+class CheckBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @default ""
@@ -216,14 +215,9 @@ class CheckBox extends UI5Element implements IFormElement {
 	wrappingType: `${WrappingType}` = "None";
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -237,16 +231,24 @@ class CheckBox extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	active = false;
 
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
+
+	get formValidityMessage() {
+		return CheckBox.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.checked };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.checked ? "on" : null;
+	}
 
 	constructor() {
 		super();
@@ -263,26 +265,9 @@ class CheckBox extends UI5Element implements IFormElement {
 		}
 	}
 
-	onBeforeRendering() {
-		this._enableFormSupport();
-	}
-
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
-		}
-	}
-
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				nativeInput.disabled = !!element.disabled;
-				(nativeInput as HTMLInputElement).checked = !!element.checked;
-				nativeInput.value = element.checked ? "on" : "";
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 

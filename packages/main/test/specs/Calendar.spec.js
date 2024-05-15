@@ -364,16 +364,13 @@ describe("Calendar general interaction", () => {
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 
-		const calendar = await browser.$("#calendar6");
+		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0]); // sets the max date to 2024-10-04
 		
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 
-		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
-			const text = await span.getText();
-			return text === "2025";
-		}).parentElement();
+		const year2025 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[11];
 
 		assert.strictEqual(await year2025.hasClass("ui5-yp-item--disabled"), true, "Year 2025 is disabled");
 	});
@@ -389,17 +386,11 @@ describe("Calendar general interaction", () => {
 		console.log(await calendar.getAttribute("max-date"));
 
 		await yearButton.click();
-		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
-			const text = await span.getText();
-			return text === "2016";
-		}).parentElement();
+		const year2016 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[3];
 
 		assert.strictEqual(await year2016.hasClass("ui5-yp-item--disabled"), false, "Year 2016 is not disabled");
 
-		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
-			const text = await span.getText();
-			return text === "2024";
-		}).parentElement();
+		const year2024 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[10];
 
 		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});
@@ -422,12 +413,12 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), false, "Secondary Calendar class is applied correctly");
 	});
 
-	it("Focus goes into the selected day item of the day picker", async () => {
+	it("Focus goes into first selected day of the range selection", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 
-		const calendar = await browser.$("#calendar4");
+		const calendar = await browser.$("#calendar7");
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="1594166400"]`);
+		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="1611100800"]`);
 
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});

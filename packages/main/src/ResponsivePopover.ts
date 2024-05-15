@@ -83,54 +83,42 @@ class ResponsivePopover extends Popover {
 		super();
 	}
 
-	/**
-	 * Shows popover on desktop and dialog on mobile.
-	 * @param opener the element that the popover is shown at
-	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-	 * @public
-	 * @returns Resolves when the responsive popover is open
-	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
+	async openPopup() {
 		if (!isPhone()) {
-			await super.showAt(opener, preventInitialFocus);
+			await super.openPopup();
 		} else {
-			this.style.display = "contents";
-			await this._dialog.show(preventInitialFocus);
+			await this._dialog.openPopup();
 		}
 	}
 
 	_show() {
 		if (!isPhone()) {
 			super._show();
+		} else {
+			this.style.display = "contents";
 		}
 	}
 
 	/**
 	 * Closes the popover/dialog.
-	 * @public
+	 * @override
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
+	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
 		if (!isPhone()) {
-			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			super.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
-			this._dialog?.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			this._dialog?.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
 		}
 	}
 
-	toggle(opener: HTMLElement) {
-		if (this.isOpen()) {
-			return this.close();
+	toggle(opener: HTMLElement) : void {
+		if (this.open) {
+			this.closePopup();
+			return;
 		}
 
-		this.showAt(opener);
-	}
-
-	/**
-	 * Tells if the responsive popover is open.
-	 * @public
-	 */
-	isOpen() : boolean {
-		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
+		this.opener = opener;
+		this.open = true;
 	}
 
 	get classes() {
@@ -169,13 +157,13 @@ class ResponsivePopover extends Popover {
 	}
 
 	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
-		this._isOpened = true;
+		this._opened = true;
 		this.open = true;
 		this._propagateDialogEvent(e);
 	}
 
 	_afterDialogClose(e: CustomEvent) {
-		this._isOpened = false;
+		this._opened = false;
 		this.open = false;
 		this._propagateDialogEvent(e);
 	}

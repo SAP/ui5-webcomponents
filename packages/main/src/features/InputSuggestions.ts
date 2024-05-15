@@ -255,7 +255,9 @@ class Suggestions {
 		const selectedItem = this._getItems() && this._getItems()[this.selectedItemIndex];
 
 		this._getComponent().open = false;
-		this._getPicker().close(false, false, preventFocusRestore);
+		const picker = this._getPicker();
+		picker.preventFocusRestore = preventFocusRestore;
+		picker.open = false;
 
 		if (selectedItem && selectedItem.focused) {
 			selectedItem.focused = false;

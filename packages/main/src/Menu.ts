@@ -251,7 +251,9 @@ class Menu extends UI5Element {
 	loadingDelay = 1000;
 
 	/**
-	 * Defines the ID or DOM Reference of the element that the menu is shown at
+	 * Defines the ID or DOM Reference of the element at which the menu is shown.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
 	 * @default ""
 	 * @since 1.10.0
@@ -358,7 +360,7 @@ class Menu extends UI5Element {
 	}
 
 	get isSubMenuOpened() {
-		return this._parentMenuItem && this._popover?.isOpen();
+		return this._parentMenuItem && this._popover?.open;
 	}
 
 	get menuHeaderTextPhone() {
@@ -417,7 +419,9 @@ class Menu extends UI5Element {
 		const loadingWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.loading;
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
-		popover.showAt(opener, loadingWithoutItems);
+		popover.preventInitialFocus = !!loadingWithoutItems;
+		popover.opener = opener;
+		popover.open = true;
 	}
 
 	/**
@@ -425,7 +429,10 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	close(): void {
-		this._popover?.close(false, false, true);
+		if (this._popover) {
+			this._popover.preventFocusRestore = true;
+			this._popover.open = false;
+		}
 	}
 
 	async _createPopover() {
@@ -495,7 +502,8 @@ class Menu extends UI5Element {
 		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._subMenu!.showAt(opener);
+		item._subMenu!.opener = opener;
+		item._subMenu!.open = true;
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
 		this._subMenuOpenerId = opener.id;
@@ -517,7 +525,7 @@ class Menu extends UI5Element {
 			const parentItem = subMenu._parentMenuItem!;
 
 			if (forceClose || !parentItem._preventSubMenuClose) {
-				subMenu.close();
+				subMenu.open = false;
 				if (keyboard) {
 					subMenu._opener?.focus();
 				}
@@ -637,7 +645,7 @@ class Menu extends UI5Element {
 				}, true, false);
 
 				if (!prevented) {
-					this._popover!.close();
+					this._popover!.open = false;
 				}
 			} else {
 				const mainMenu = this._findMainMenu(item);
@@ -656,7 +664,8 @@ class Menu extends UI5Element {
 						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
 					} while (parentMenu._parentMenuItem);
 
-					mainMenu._popover!.close();
+					mainMenu._popover!.preventFocusRestore = false;
+					mainMenu._popover!.open = false;
 				}
 			}
 		} else {

@@ -98,12 +98,13 @@ class RadioButtonGroup {
 			return;
 		}
 
-		group.forEach(r => r._resetFormValidity());
+		const hasRequired = group.some(r => r.required);
+		const hasChecked = group.some(r => r.checked);
 
-		const groupRequiresValue = group.some(r => r.required) && group.every(r => !r.checked);
-		if (groupRequiresValue) {
-			group[0]._invalidateForm();
-		}
+		group.forEach(r => {
+			r._groupChecked = hasChecked;
+			r._groupRequired = hasRequired;
+		});
 	}
 
 	static updateTabOrder(groupName: string) {

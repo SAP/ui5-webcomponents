@@ -9,7 +9,7 @@ import Menu from "./Menu.js";
 import type { MenuItemClickEventDetail } from "./Menu.js";
 import StandardListItem from "./StandardListItem.js";
 import MenuItem from "./MenuItem.js";
-import type NavigationMenuItem from "./NavigationMenuItem.js";
+import NavigationMenuItem from "./NavigationMenuItem.js";
 import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 
 // Styles
@@ -117,7 +117,7 @@ class NavigationMenu extends Menu {
 				openerMenuItem = parentMenu._parentMenuItem as MenuItem;
 			} while (parentMenu._parentMenuItem);
 
-			mainMenu._popover!.close();
+			mainMenu._popover!.open = false;
 		}
 
 		this._prepareSubMenu(item, opener);

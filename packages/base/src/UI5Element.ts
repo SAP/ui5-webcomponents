@@ -35,6 +35,8 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
+import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -155,6 +157,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
+	_internals?: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -449,7 +452,12 @@ abstract class UI5Element extends HTMLElement {
 					name: propertyNameToSlotMap.get(propertyName)!,
 					reason: "children",
 				});
+
 				invalidated = true;
+
+				if (ctor.getMetadata().isFormAssociated()) {
+					setFormValue(this as unknown as IFormInputElement);
+				}
 			}
 		}
 
@@ -573,6 +581,20 @@ abstract class UI5Element extends HTMLElement {
 
 			(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
 		}
+	}
+
+	formAssociatedCallback() {
+		const ctor = this.constructor as typeof UI5Element;
+
+		if (!ctor.getMetadata().isFormAssociated()) {
+			return;
+		}
+
+		attachFormElementInternals(this);
+	}
+
+	static get formAssociated() {
+		return this.getMetadata().isFormAssociated();
 	}
 
 	/**
@@ -1119,7 +1141,6 @@ abstract class UI5Element extends HTMLElement {
 					let isDifferent;
 					const ctor = this.constructor as typeof UI5Element;
 					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
-
 					const oldState = origGet ? origGet.call(this) : this._state[prop];
 
 					if (!propData.hasInitializer) {
@@ -1158,6 +1179,11 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
+
+						if (ctor.getMetadata().isFormAssociated()) {
+							setFormValue(this as unknown as IFormInputElement);
+						}
+
 						// todo
 						if (!propData.hasInitializer || this._rendering) {
 							// old style properties with default value, update the attribute here
@@ -1294,6 +1320,11 @@ abstract class UI5Element extends HTMLElement {
 		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
+
+	get validity() { return this._internals?.validity; }
+	get validationMessage() { return this._internals?.validationMessage; }
+	checkValidity() { return this._internals?.checkValidity(); }
+	reportValidity() { return this._internals?.reportValidity(); }
 }
 
 /**

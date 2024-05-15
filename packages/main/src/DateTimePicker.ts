@@ -6,6 +6,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Button from "./Button.js";
@@ -126,7 +127,7 @@ type PreviewValues = {
 		TimeSelectionClocks,
 	],
 })
-class DateTimePicker extends DatePicker {
+class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * Defines the visibility of the time view in `phoneMode`.
 	 * For more information, see the `phoneMode` property.

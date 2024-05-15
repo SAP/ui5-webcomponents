@@ -552,7 +552,8 @@ class ShellBar extends UI5Element {
 
 			if (this.hasMenuItems) {
 				const menuPopover = this._getMenuPopover();
-				menuPopover.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+				menuPopover.opener = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!;
+				menuPopover.open = true;
 			}
 		};
 
@@ -560,7 +561,7 @@ class ShellBar extends UI5Element {
 			this._debounce(() => {
 				this.menuPopover = this._getMenuPopover();
 				this.overflowPopover = this._getOverflowPopover();
-				this.overflowPopover.close();
+				this.overflowPopover.open = false;
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
@@ -585,7 +586,7 @@ class ShellBar extends UI5Element {
 			item: e.detail.selectedItems[0],
 		}, true);
 		if (shouldContinue) {
-			this.menuPopover!.close();
+			this.menuPopover!.open = false;
 		}
 	}
 
@@ -677,7 +678,7 @@ class ShellBar extends UI5Element {
 	 */
 	closeOverflow(): void {
 		if (this.overflowPopover) {
-			this.overflowPopover.close();
+			this.overflowPopover.open = false;
 		}
 	}
 
@@ -778,7 +779,8 @@ class ShellBar extends UI5Element {
 	_toggleActionPopover() {
 		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
 		const overflowPopover = this._getOverflowPopover();
-		overflowPopover.showAt(overflowButton, true);
+		overflowPopover.opener = overflowButton;
+		overflowPopover.open = true;
 	}
 
 	onEnterDOM() {

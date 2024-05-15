@@ -65,7 +65,7 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Override
 	 */
-	get buttonAccessibleRole() {
+	get effectiveAccRole() {
 		return "spinbutton";
 	}
 }

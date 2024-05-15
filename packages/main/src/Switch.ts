@@ -2,9 +2,9 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -14,11 +14,9 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
+import { FORM_CHECKABLE_REQUIRED } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import SwitchTemplate from "./generated/templates/SwitchTemplate.lit.js";
@@ -56,6 +54,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  */
 @customElement({
 	tag: "ui5-switch",
+	formAssociated: true,
 	languageAware: true,
 	styles: switchCss,
 	renderer: litRender,
@@ -68,7 +67,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @allowPreventDefault
  */
 @event("change")
-class Switch extends UI5Element implements IFormElement {
+class Switch extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the component design.
 	 *
@@ -168,14 +167,9 @@ class Switch extends UI5Element implements IFormElement {
 	required = false;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default undefined
 	 * @public
 	 * @since 1.16.0
@@ -183,32 +177,22 @@ class Switch extends UI5Element implements IFormElement {
 	@property()
 	name?: string;
 
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit, when `Switch` is a part of HTML form.
-	 * @private
-	 * @since 1.16.0
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
 	static i18nBundle: I18nBundle;
 
-	onBeforeRendering() {
-		this._enableFormSupport();
+	get formValidityMessage() {
+		return Switch.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);
 	}
 
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				const switchComponent = (element as Switch);
-				(nativeInput as HTMLInputElement).checked = !!switchComponent.checked;
-				nativeInput.disabled = !!switchComponent.disabled;
-				nativeInput.value = switchComponent.checked ? "on" : "";
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.checked };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.checked ? "on" : null;
 	}
 
 	get sapNextIcon() {

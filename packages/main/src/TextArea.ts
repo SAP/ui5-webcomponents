@@ -11,8 +11,8 @@ import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webc
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -22,8 +22,6 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -36,6 +34,7 @@ import {
 	VALUE_STATE_TYPE_WARNING,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -75,6 +74,7 @@ type ExceededText = {
  */
 @customElement({
 	tag: "ui5-textarea",
+	formAssociated: true,
 	languageAware: true,
 	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
 	renderer: litRender,
@@ -111,7 +111,7 @@ type ExceededText = {
  */
 @event("scroll")
 
-class TextArea extends UI5Element implements IFormElement {
+class TextArea extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component.
 	 * @formEvents change input
@@ -223,14 +223,9 @@ class TextArea extends UI5Element implements IFormElement {
 	growingMaxRows = 0;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default undefined
 	 * @public
 	 */
@@ -298,24 +293,32 @@ class TextArea extends UI5Element implements IFormElement {
 	 */
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	 @slot()
-	 formSupport!: Array<HTMLElement>;
 
 	_fnOnResize: ResizeObserverCallback;
 	_firstRendering: boolean;
 	_openValueStateMsgPopover: boolean;
 	_exceededTextProps!: ExceededText;
 	_keyDown?: boolean;
-	FormSupport?: typeof FormSupportT;
 	previousValue: string;
 	valueStatePopover?: Popover;
 
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return TextArea.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value;
+	}
 
 	static async onDefine() {
 		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -349,13 +352,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 		this.exceeding = !!this._exceededTextProps.leftCharactersCount && this._exceededTextProps.leftCharactersCount < 0;
 		this._setCSSParams();
-
-		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenTextArea(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 	}
 
 	onAfterRendering() {
@@ -460,14 +456,19 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openPopover() {
+	openPopover() {
 		this.valueStatePopover = this._getPopover();
-		this.valueStatePopover && await this.valueStatePopover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
+		if (this.valueStatePopover) {
+			this.valueStatePopover.opener = this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!;
+			this.valueStatePopover.open = true;
+		}
 	}
 
 	closePopover() {
 		this.valueStatePopover = this._getPopover();
-		this.valueStatePopover && this.valueStatePopover.close();
+		if (this.valueStatePopover) {
+			this.valueStatePopover.open = false;
+		}
 	}
 
 	_getPopover() {

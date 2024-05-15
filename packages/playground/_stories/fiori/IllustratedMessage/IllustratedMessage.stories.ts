@@ -56,10 +56,10 @@ export const WithADialog: StoryFn = () => html`
         const dialog = document.getElementById("hello-dialog");
         const dialogCloser = document.getElementById("closeDialogButton");
         dialogOpener.addEventListener("click", function () {
-            dialog.show();
+            dialog.open = true;
         });
         dialogCloser.addEventListener("click", function () {
-            dialog.close();
+            dialog.open = false;
         });
     </script>
 `;

@@ -18,7 +18,6 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -33,6 +32,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import {
@@ -47,6 +47,7 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
+	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -64,8 +65,6 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
 import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
@@ -141,6 +140,7 @@ type SelectLiveChangeEventDetail = {
 @customElement({
 	tag: "ui5-select",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: SelectTemplate,
 	styles: [
@@ -199,12 +199,14 @@ type SelectLiveChangeEventDetail = {
  * @public
  */
 @event("close")
-class Select extends UI5Element implements IFormElement {
+class Select extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 
 	/**
 	 * Defines a reference (ID or DOM element) of component's menu of options
 	 * as alternative to define the select's dropdown.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the menu.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 *
 	 * **Note:** Usage of `ui5-select-menu` is recommended.
 	 * @default undefined
@@ -238,15 +240,9 @@ class Select extends UI5Element implements IFormElement {
 	disabled = false;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
-	 * The value of the component will be the value of the currently selected `ui5-option`.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the `ui5-select` so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default undefined
 	 * @public
 	 */
@@ -361,14 +357,6 @@ class Select extends UI5Element implements IFormElement {
 	options!: Array<IOption>;
 
 	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
-	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 *
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
@@ -406,6 +394,30 @@ class Select extends UI5Element implements IFormElement {
 	_attachMenuListeners: (menu: HTMLElement) => void;
 	_detachMenuListeners: (menu: HTMLElement) => void;
 
+	get formValidityMessage() {
+		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		const selectedOption = this.selectedOption;
+
+		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		const selectedOption = this.selectedOption;
+
+		if (selectedOption) {
+			return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
+		}
+
+		return "";
+	}
+
 	constructor() {
 		super();
 
@@ -437,8 +449,6 @@ class Select extends UI5Element implements IFormElement {
 		} else {
 			this._syncSelection();
 		}
-
-		this._enableFormSupport();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
@@ -572,9 +582,10 @@ class Select extends UI5Element implements IFormElement {
 
 		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
-			this.responsivePopover.close();
+			this.responsivePopover.open = false;
 		} else {
-			this.responsivePopover.showAt(this);
+			this.responsivePopover.opener = this;
+			this.responsivePopover.open = true;
 		}
 	}
 
@@ -666,28 +677,15 @@ class Select extends UI5Element implements IFormElement {
 		menu.removeEventListener("ui5-menu-change", this._onMenuChange);
 	}
 
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: NativeFormElement) => {
-				const selectElement = (element as Select);
-				nativeInput.disabled = !!element.disabled;
-				nativeInput.value = selectElement.value;
-			});
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = (isTabNext(e) || isTabPrevious(e));
 
 		if (isTab && this._isPickerOpen) {
 			const menu = this._getSelectMenu();
 			if (menu) {
-				menu.close(false, false, true /* preventFocusRestore */);
+				menu.close(true /* preventFocusRestore */);
 			} else {
-				this.responsivePopover.close();
+				this.responsivePopover.open = false;
 			}
 		} else if (isShow(e)) {
 			e.preventDefault();
@@ -1116,12 +1114,13 @@ class Select extends UI5Element implements IFormElement {
 	openValueStatePopover() {
 		this.valueStatePopover = this._getPopover() as Popover;
 		if (this.valueStatePopover) {
-			this.valueStatePopover.showAt(this);
+			this.valueStatePopover.opener = this;
+			this.valueStatePopover.open = true;
 		}
 	}
 
 	closeValueStatePopover() {
-		this.valueStatePopover && this.valueStatePopover.close();
+		this.valueStatePopover && (this.valueStatePopover.open = false);
 	}
 
 	toggleValueStatePopover(open: boolean) {
