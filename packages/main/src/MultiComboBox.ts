@@ -380,7 +380,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_open = false;
 
 	@property()
-	_valueBeforeOpen?: string;
+	_valueBeforeOpen = this.value;
 
 	@property({ type: Array })
 	_filteredItems!: Array<IMultiComboBoxItem>;
@@ -401,7 +401,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_iconPressed = false;
 
 	@property({ type: Number, noAttribute: true })
-	_inputWidth?: number;
+	_inputWidth = 0;
 
 	@property({ type: Number, noAttribute: true })
 	_listWidth = 0;
