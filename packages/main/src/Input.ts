@@ -31,6 +31,8 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getAssociatedLabelForTexts,
 	getAllAccessibleNameRefTexts,
@@ -48,8 +50,6 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { InputSuggestion, SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
 import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
@@ -77,6 +77,7 @@ import {
 	INPUT_SUGGESTIONS_MORE_HITS,
 	INPUT_SUGGESTIONS_NO_HIT,
 	INPUT_CLEAR_ICON_ACC_NAME,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -191,6 +192,7 @@ type InputSuggestionScrollEventDetail = {
 @customElement({
 	tag: "ui5-input",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: InputTemplate,
 	styles: [
@@ -258,7 +260,7 @@ type InputSuggestionScrollEventDetail = {
 		scrollContainer: { type: HTMLElement },
 	},
 })
-class Input extends UI5Element implements SuggestionComponent, IFormElement {
+class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
@@ -365,14 +367,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -521,14 +518,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	icon!: Array<IIcon>;
 
 	/**
-	 * The slot is used for native `input` HTML element to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
-	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 * The value state message slot should contain only one root element.
 	 *
@@ -563,13 +552,28 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_keyDown?: boolean;
 	_isKeyNavigation?: boolean;
 	Suggestions?: InputSuggestions;
-	FormSupport?: typeof FormSupportT;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value;
+	}
 
 	constructor() {
 		super();
@@ -637,7 +641,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 
-		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		const hasItems = !!this.suggestionItems.length;
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot!.querySelector("input") === getActiveElement();
@@ -653,18 +656,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.open = true;
 		} else {
 			this.open = hasValue && hasItems && isFocused && this.isTyping;
-		}
-
-		if (this.shouldDisplayOnlyValueStateMessage) {
-			this.openValueStatePopover();
-		} else {
-			this.closeValueStatePopover();
-		}
-
-		if (this.FormSupport) {
-			this.FormSupport.syncNativeHiddenInput(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 
 		const value = this.value;
@@ -824,8 +815,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		if (!suggestionItemPressed) {
 			this.lastConfirmedValue = this.value;
 
-			if (this.FormSupport) {
-				this.FormSupport.triggerFormSubmit(this);
+			if (this._internals?.form) {
+				submitForm(this);
 			}
 
 			return;

@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
@@ -57,7 +58,7 @@ import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 	template: DateRangePickerTemplate,
 	dependencies: [...DatePicker.dependencies, CalendarDateRange],
 })
-class DateRangePicker extends DatePicker {
+class DateRangePicker extends DatePicker implements IFormInputElement {
 	 /**
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
@@ -75,6 +76,22 @@ class DateRangePicker extends DatePicker {
 	_tempValue!: string;
 
 	private _prevDelimiter: string | null;
+
+	get formFormattedValue() {
+		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);
+
+		if (values.length) {
+			const formData = new FormData();
+
+			for (let i = 0; i < values.length; i++) {
+				formData.append(this.name, values[i]);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();

@@ -8,8 +8,9 @@
 	horizontal-align="Start"
 	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
-	@ui5-after-open={{_afterOpenPopover}}
-	@ui5-after-close={{_afterClosePopover}}
+	@ui5-before-open="{{_beforeOpenPopover}}"
+	@ui5-open={{_afterOpenPopover}}
+	@ui5-close={{_afterClosePopover}}
 	.open={{open}}
 	.opener={{this}}
 >
@@ -34,7 +35,7 @@
 
 			<div class="row">
 				<ui5-input
-					.value="{{value}}"
+					@keydown="{{_handleMobileKeydown}}"
 					@ui5-input="{{_handleMobileInput}}"
 					@ui5-change="{{_inputChange}}"
 					placeholder="{{placeholder}}"

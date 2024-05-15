@@ -20,7 +20,8 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isBackSpace,
 	isDelete,
@@ -53,6 +54,7 @@ import {
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
 	INPUT_CLEAR_ICON_ACC_NAME,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -77,7 +79,6 @@ import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input, { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
@@ -156,6 +157,7 @@ type ComboBoxSelectionChangeEventDetail = {
 @customElement({
 	tag: "ui5-combobox",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	styles: [
 		ComboBoxCss,
@@ -207,7 +209,7 @@ type ComboBoxSelectionChangeEventDetail = {
 	},
 })
 
-class ComboBox extends UI5Element {
+class ComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component.
 	 * @default ""
@@ -217,6 +219,17 @@ class ComboBox extends UI5Element {
 	 */
 	@property()
 	value!: string;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
@@ -398,8 +411,23 @@ class ComboBox extends UI5Element {
 	_lastValue: string;
 	_selectedItemText: string;
 	_userTypedValue: string;
-	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return ComboBox.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.value;
+	}
 
 	constructor() {
 		super();
@@ -417,8 +445,6 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
-
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
 		if (this._initialRendering || this.filter === "None") {
@@ -503,6 +529,12 @@ class ComboBox extends UI5Element {
 		}
 	}
 
+	_beforeOpenPopover() {
+		if (isPhone()) {
+			this.inner.value = this.value;
+		}
+	}
+
 	_afterOpenPopover() {
 		this._iconPressed = true;
 		this.inner.focus();
@@ -516,6 +548,7 @@ class ComboBox extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this.blur();
+			this.value = this.inner.value;
 		}
 
 		if (this._selectionPerformed) {
@@ -564,6 +597,12 @@ class ComboBox extends UI5Element {
 		}
 
 		this._toggleRespPopover();
+	}
+
+	_handleMobileKeydown(e: KeyboardEvent) {
+		if (isEscape(e)) {
+			this.inner.value = this._lastValue;
+		}
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
@@ -846,8 +885,8 @@ class ComboBox extends UI5Element {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
-			} else if (this.FormSupport) {
-				this.FormSupport.triggerFormSubmit(this);
+			} else if (this._internals?.form) {
+				submitForm(this);
 			}
 		}
 

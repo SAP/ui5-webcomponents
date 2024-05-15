@@ -17,10 +17,99 @@
 	<ui5-shellbar id="shellbar" primary-title="Product Title" show-notifications>
 	</ui5-shellbar>
 
-	<ui5-list id="notificationList" header-text="Notifications titleText and content 'truncates'">
+	<ui5-list id="notificationListWithMenu" header-text="Notifications that use Menu for actions">
+		<ui5-li-notification
+			show-close
+			priority="High"
+			state="Positive"
+			importance="Important"
+			title-text="When 'priority' and 'state' are set at the same time - we need to see the status icon Success (Positive) from the 'state'"
+		>Notification with several actions.
+
+			<ui5-avatar size="XS" slot="avatar" shape="Square" initials="JS"></ui5-avatar>
+
+			<ui5-menu slot="menu">
+				<ui5-menu-item text="View"></ui5-menu-item>
+				<ui5-menu-item text="Clear"></ui5-menu-item>
+				<ui5-menu-item text="Unsubscribe" starts-section></ui5-menu-item>
+				<ui5-menu-item text="Settings"></ui5-menu-item>
+			</ui5-menu>
+
+			<span slot="footnotes">Product Name</span>
+			<span slot="footnotes">Category</span>
+			<span slot="footnotes">More info</span>
+			<span slot="footnotes">And more info</span>
+			<span slot="footnotes">11:13</span>
+		</ui5-li-notification>
 
 		<ui5-li-notification
-			busy
+			show-close
+			priority="Medium"
+			title-text="When 'priority' (deprecated) is set to 'Medium' we shouldn't see it"
+		>Notification with one action.
+
+			<ui5-avatar size="XS" slot="avatar">
+				<img src="./img/man_avatar_1.png" />
+			</ui5-avatar>
+
+			<ui5-menu slot="menu">
+				<ui5-menu-item text="Action 1" icon="action-settings"></ui5-menu-item>
+			</ui5-menu>
+
+			<span slot="footnotes">John Doe</span>
+			<span slot="footnotes">2 Days</span>
+			<span slot="footnotes">Other stuff</span>
+		</ui5-li-notification>
+
+		<ui5-li-notification
+			show-close
+			state="Information"
+			title-text="When 'state' is set to 'Information' we need to see it"
+		>Notification with Menu and Notification actions (deprecated) - overflow button should open Menu with 4 options
+
+			<ui5-avatar size="XS" slot="avatar">
+				<img src="./img/man_avatar_1.png" />
+			</ui5-avatar>
+
+			<ui5-menu slot="menu">
+				<ui5-menu-item text="View"></ui5-menu-item>
+				<ui5-menu-item text="Clear" icon="message-error"></ui5-menu-item>
+				<ui5-menu-item text="Unsubscribe" starts-section></ui5-menu-item>
+				<ui5-menu-item text="Settings"></ui5-menu-item>
+			</ui5-menu>
+
+			<span slot="footnotes">John Doe</span>
+			<span slot="footnotes">2 Days</span>
+			<span slot="footnotes">Other stuff</span>
+
+			<ui5-notification-action
+				icon="message-error"
+				text="Reject"
+				slot="actions"
+				design="Negative"
+			></ui5-notification-action>
+		</ui5-li-notification>
+
+		<ui5-li-notification
+			show-close
+			state="Negative"
+			title-text="Title"
+		>Notification with no actions
+
+			<ui5-avatar size="XS" slot="avatar">
+				<img src="./img/man_avatar_1.png" />
+			</ui5-avatar>
+
+			<span slot="footnotes">John Doe</span>
+			<span slot="footnotes">2 Days</span>
+			<span slot="footnotes">Other stuff</span>
+		</ui5-li-notification>
+	</ui5-list>
+
+	<ui5-list id="notificationList" header-text="Notifications 'titleText' and content is truncated">
+
+		<ui5-li-notification
+			loading
 			show-close
 			title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 		>
@@ -34,20 +123,16 @@
 			<span slot="footnotes">2 Days</span>
 			<span slot="footnotes">Other stuff</span>
 
-			<ui5-notification-action id="acceptBtn" icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-			<ui5-notification-action
-				id="rejectBtn"
-				icon="message-error"
-				text="Reject"
-				slot="actions"
-				design="Negative"
-			></ui5-notification-action>
+			<ui5-menu slot="menu">
+				<ui5-menu-item id="acceptBtn" icon="accept" text="Accept"></ui5-menu-item>
+				<ui5-menu-item id="rejectBtn" icon="message-error" text="Reject"></ui5-menu-item>
+			</ui5-menu>
 		</ui5-li-notification>
 
 		<ui5-li-notification
 			show-close
+			state="Negative"
 			title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-			priority="High"
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 			<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
@@ -55,12 +140,14 @@
 			<span slot="footnotes">Office Notifications</span>
 			<span slot="footnotes">3 Days</span>
 
-			<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+			<ui5-menu slot="menu">
+				<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+			</ui5-menu>
 		</ui5-li-notification>
 
 		<ui5-li-notification
 			title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-			priority="Medium"
+			state="Critical"
 			>
 				Short description
 			<ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
@@ -68,9 +155,11 @@
 			<span slot="footnotes">Patricia Clarck</span>
 			<span slot="footnotes">3 Days</span>
 
-			<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
-			<ui5-notification-action icon="decline" design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
-			<ui5-notification-action icon="decline" design="Negative" text="Reject More" slot="actions"></ui5-notification-action>
+			<ui5-menu slot="menu">
+				<ui5-menu-item icon="accept" text="Accept All Requested Information"></ui5-menu-item>
+				<ui5-menu-item icon="decline" text="Reject All Requested Information"></ui5-menu-item>
+				<ui5-menu-item icon="decline" text="Reject More" ></ui5-menu-item>
+			</ui5-menu>
 		</ui5-li-notification>
 
 		<ui5-li-notification title-text="New order (#2523)">
@@ -79,14 +168,13 @@
 			<span slot="footnotes">John SMith</span>
 			<span slot="footnotes">3 Days</span>
 
-			<ui5-notification-action
-				icon="message-error"
-				design="Negative"
-				text="Reject"
-				slot="actions">
-			</ui5-notification-action>
+			<ui5-menu slot="menu">
+				<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+			</ui5-menu>
 
-			<ui5-notification-action icon="decline" disabled design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
+			<ui5-menu slot="menu">
+				<ui5-menu-item disabled icon="decline" text="Reject All Requested Information"></ui5-menu-item>
+			</ui5-menu>
 		</ui5-li-notification>
 	</ui5-list>
 
@@ -112,7 +200,7 @@
 			show-close
 			wrapping-type="Normal"
 			title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-			priority="High"
+			state="Negative"
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 			<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
@@ -124,7 +212,7 @@
 		<ui5-li-notification
 			wrapping-type="Normal"
 			title-text="New order (#2522)"
-			priority="Low"
+			state="Positive"
 		>
 			And short description
 			<ui5-avatar initials="PS" size="XS" slot="avatar"></ui5-avatar>
@@ -147,7 +235,7 @@
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" class="notificationlistitem2auto" placement="Bottom" horizontal-align="End">
-		<ui5-list id="notificationListTop" header-text="Notifications titleText and content 'truncates'">
+		<ui5-list id="notificationListTop" header-text="Notifications 'titleText' and content is truncated">
 			<ui5-li-notification
 				show-close
 				title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
@@ -160,20 +248,16 @@
 				<span slot="footnotes">2 Days</span>
 				<span slot="footnotes">Other stuff</span>
 
-				<ui5-notification-action id="acceptBtnInPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-				<ui5-notification-action
-					id="rejectBtnInPopover"
-					icon="message-error"
-					text="Reject"
-					design="Negative"
-					slot="actions">
-				</ui5-notification-action>
+				<ui5-menu slot="menu">
+					<ui5-menu-item id="acceptBtnInPopover" icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu-item id="rejectBtnInPopover" icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
 			</ui5-li-notification>
 
 			<ui5-li-notification
 				show-close
 				title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-				priority="High"
+				state="Negative"
 			>
 				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
@@ -181,12 +265,14 @@
 				<span slot="footnotes">Office Notifications</span>
 				<span slot="footnotes">3 Days</span>
 
-				<ui5-notification-action id="acceptBtn2InPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+				<ui5-menu slot="menu">
+					<ui5-menu-item id="acceptBtn2InPopover" icon="accept" text="Accept"></ui5-menu-item>
+				</ui5-menu>
 			</ui5-li-notification>
 
 			<ui5-li-notification
 				title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-				priority="Medium"
+				state="Critical"
 			>
 					Short description
 				<ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
@@ -194,8 +280,10 @@
 				<span slot="footnotes">Patricia Clarck</span>
 				<span slot="footnotes">3 Days</span>
 
-				<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
-				<ui5-notification-action icon="decline" design="Negative" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept All Requested Information"></ui5-menu-item>
+					<ui5-menu-item icon="decline" text="Reject All Requested Information"></ui5-menu-item>
+				</ui5-menu>
 			</ui5-li-notification>
 
 			<ui5-li-notification title-text="New order (#2523)">
@@ -204,7 +292,9 @@
 				<span slot="footnotes">John SMith</span>
 				<span slot="footnotes">3 Days</span>
 
-				<ui5-notification-action icon="message-error" design="Negative" text="Reject" slot="actions"></ui5-notification-action>
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
 			</ui5-li-notification>
 		</ui5-list>
 	</ui5-popover>
@@ -228,11 +318,11 @@
 			var item = event.detail.item;
 
 			setTimeout(function() {
-				item.busy = false;
+				item.loading = false;
 				item.read = true;
 			}, 1000);
 
-			item.busy = true;
+			item.loading = true;
 			wcToastBS.textContent = item.titleText;
 			wcToastBS.open = true;
 		});
