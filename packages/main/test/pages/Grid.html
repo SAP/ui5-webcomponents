@@ -95,8 +95,8 @@
 		slider.addEventListener("input", (e) => {
 			grid.style.width = `${e.target.value}%`;
 		});
-		grid.addEventListener("row-press", (e) => {
-			console.log(`${Date.now()}: Row with the key ${e.detail.row.key} is pressed`);
+		grid.addEventListener("row-click", (e) => {
+			console.log(`${Date.now()}: Row with the key ${e.detail.row.key} is clicked`);
 		});
 
 		const growing = document.getElementById("growing");

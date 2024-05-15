@@ -262,28 +262,28 @@ describe("Grid - Keyboard Navigation", async () => {
 		const anotherRow = await browser.$("#notinteractive-row");
 
 		await row.click();
-		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-press event result is correct.`);
+		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-click event result is correct.`);
 
 		await browser.keys("Enter");
-		assert.equal(await input.getValue(), "2", `Enter is presed for the interactive row and the row-press event result is correct.`);
+		assert.equal(await input.getValue(), "2", `Enter is presed for the interactive row and the row-click event result is correct.`);
 
 		await anotherRow.click();
-		assert.equal(await input.getValue(), "2", `Not interactive row is clicked and there is no row-press event triggered.`);
+		assert.equal(await input.getValue(), "2", `Not interactive row is clicked and there is no row-click event triggered.`);
 
 		await rowButton.click();
-		assert.equal(await input.getValue(), "2", `Button in a row is clicked and there is no row-press event triggered.`);
+		assert.equal(await input.getValue(), "2", `Button in a row is clicked and there is no row-click event triggered.`);
 
 		await browser.keys("Enter");
-		assert.equal(await input.getValue(), "2", `Enter is presed for the row button and there is no row-press event triggered.`);
+		assert.equal(await input.getValue(), "2", `Enter is presed for the row button and there is no row-click event triggered.`);
 
 		await browser.keys("F7");
 		assert.ok(await row.isFocused(), `Interactive Row is focused.`);
 
 		await browser.keys("Space");
-		assert.equal(await input.getValue(), "2", `Space is presed for the row and there is no row-press event triggered.`);
+		assert.equal(await input.getValue(), "2", `Space is presed for the row and there is no row-click event triggered.`);
 
 		await browser.keys("Enter");
-		assert.equal(await input.getValue(), "3", `Enter is finally presed for the interactive row and the row-press event result is correct.`);
+		assert.equal(await input.getValue(), "3", `Enter is finally presed for the interactive row and the row-click event result is correct.`);
 	});
 });
 

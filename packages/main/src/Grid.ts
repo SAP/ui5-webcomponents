@@ -154,7 +154,7 @@ type GridRowPressEventDetail = {
  * @param {GridRow} row The row instance
  * @public
  */
-@event<GridRowPressEventDetail>("row-press", {
+@event<GridRowPressEventDetail>("row-click", {
 	detail: {
 		/**
 		 * @public
@@ -446,7 +446,7 @@ class Grid extends UI5Element {
 	}
 
 	_onRowPress(row: GridRow) {
-		this.fireEvent<GridRowPressEventDetail>("row-press", { row });
+		this.fireEvent<GridRowPressEventDetail>("row-click", { row });
 	}
 
 	get styles() {
