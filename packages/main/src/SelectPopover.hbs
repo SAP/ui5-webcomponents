@@ -1,5 +1,7 @@
 {{#if options}}
 	<ui5-responsive-popover
+		{{!-- tabindex -1 is needed to keep the popover out of tab chain --}}
+		tabindex="-1"
 		hide-arrow
 		prevent-initial-focus
 		placement="Bottom"
@@ -40,31 +42,20 @@
 		{{/unless}}
 
 		<ui5-list
-			selection-mode="SingleAuto"
+			mode="SingleAuto"
 			separators="None"
 			@mousedown="{{_itemMousedown}}"
 			@ui5-item-click="{{_handleItemPress}}"
 		>
-			{{#each _syncedOptions}}
-				<ui5-li
-					id="{{this.id}}-li"
-					icon="{{this.icon}}"
-					?selected="{{this.selected}}"
-					?focused="{{this._focused}}"
-					tooltip="{{this.tooltip}}"
-					additional-text="{{this.additionalText}}"
-					?aria-selected="{{this.selected}}"
-					data-ui5-stable="{{this.stableDomRef}}"
-				>
-					{{this.textContent}}
-				</ui5-li>
-			{{/each}}
+			<slot></slot>
 		</ui5-list>
 	</ui5-responsive-popover>
 {{/if}}
 
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
+		{{!-- tabindex -1 is needed to keep the popover out of tab chain --}}
+		tabindex="-1"
 		skip-registry-update
 		prevent-initial-focus
 		prevent-focus-restore
