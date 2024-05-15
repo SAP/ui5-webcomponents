@@ -22,7 +22,7 @@ const repositionPopovers = () => {
 
 const closePopoversIfLostFocus = () => {
 	if (getActiveElement()!.tagName === "IFRAME") {
-		getRegistry().reverse().forEach(popup => popup.instance.closePopup(false, false, true));
+		getRegistry().reverse().forEach(popup => popup.instance.close(false, false, true));
 	}
 };
 
