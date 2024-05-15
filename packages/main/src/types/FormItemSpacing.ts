@@ -6,13 +6,13 @@
  */
 enum FormItemSpacing {
 	/**
-	 * Normal spacing (spacing between form items is normal).
+	 * Normal spacing (smaller vertical space between form items).
 	 * @public
 	 */
 	Normal = "Normal",
 
 	/**
-	 * Large spacing (spacing between form items is large).
+	 * Large spacing (larger vertical space between form items).
 	 * @public
 	 */
 	Large = "Large",

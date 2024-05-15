@@ -17,7 +17,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  * and it consists of FormItem (ui5-form-item) components.
  *
  * The layout of the FormGroup is mostly defined and controlled by the overarching Form (ui5-form) component.
- * Still, one can influence the layout via the FormGroup's <code>columnSpan</code> property,
+ * Still, one can influence the layout via the FormGroup's `columnSpan` property,
  * that defines how many columns the group should expand to.
  *
  * ### Usage
@@ -27,7 +27,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  *
  * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
+ * - import @ui5/webcomponents/dist/FormGroup.js";
  *
  * @public
  * @since 2.0.0

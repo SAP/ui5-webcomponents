@@ -14,7 +14,6 @@ import FormCss from "./generated/themes/Form.css.js";
 import Title from "./Title.js";
 import FormItemSpacing from "./types/FormItemSpacing.js";
 import type FormGroup from "./FormGroup.js";
-import type FormItem from "./FormItem.js";
 
 const additionalStylesMap = new Map<string, string>();
 
@@ -57,16 +56,16 @@ type ItemsInfo = {
  *
  * ### Structure
  *
- * - **Form** (<code>ui5-form</code>) is the top-level container component, responsible for the content layout and responsiveness.
- * - **FormGroup** (<code>ui5-form-group</code>) enables the grouping of the Form content.
- * - **FormItem** (<code>ui5-form-item</code>) is a pair of label and form fields and can be used directly in a Form, or as part of a FormGroup.
+ * - **Form** (`ui5-form`) is the top-level container component, responsible for the content layout and responsiveness.
+ * - **FormGroup** (`ui5-form-group`) enables the grouping of the Form content.
+ * - **FormItem** (`ui5-form-item`) is a pair of label and form fields and can be used directly in a Form, or as part of a FormGroup.
  *
- * The simplest Form (<code>ui5-form</code>) consists of a header area on top,
- * displaying a header text (see the <code>headingText</code> property) and content below - an arbitrary number of FormItems (ui5-form-item),
+ * The simplest Form (`ui5-form`) consists of a header area on top,
+ * displaying a header text (see the `headingText` property) and content below - an arbitrary number of FormItems (ui5-form-item),
  * representing the pairs of label and form fields.
  *
  * And, there is also "grouping" available to assist the implementation of richer UIs.
- * This is enabled by the FormGroup (<code>ui5-form-group</code>) component.
+ * This is enabled by the FormGroup (`ui5-form-group`) component.
  * In this case, the Form is structured into FormGroups and each FormGroup consists of FormItems.
  *
  *  ### Responsiveness
@@ -78,7 +77,7 @@ type ItemsInfo = {
  * - **L** (1023px - 1439px) - up to 3 columns are recommended (default: 2)
  * - **XL** (> 1439px) – up to 6 columns are recommended (default: 2)
  *
- * To change the layout, use the <code>layout</code> property - f.e. layout="S1 M2 L3 XL6".
+ * To change the layout, use the `layout` property - f.e. layout="S1 M2 L3 XL6".
  *
  * ### Groups
  *
@@ -94,6 +93,7 @@ type ItemsInfo = {
  * - **Example #3** (unbalanced distribution):
  * 3 columns and 2 groups: the larger one will use 2 columns, the smaller 1 column.
  * 5 columns and 3 groups: two of the groups will use 2 columns each, the smallest 1 column.
+ *
  * **Note:** The size of a group element is determined by the number of FormItems assigned to it.
  * In the case of equality, the first in the DOM will use more columns, and the last - fewer columns.
  *
@@ -103,26 +103,26 @@ type ItemsInfo = {
  * ### Groups Column Span
  *
  * To influence the built-in group distribution, described in the previous section,
- * you can use the FormGroup's <code>columnSpan</code> property, that defines how many columns the group should expand to.
+ * you can use the FormGroup's `columnSpan` property, that defines how many columns the group should expand to.
  *
  * ### Items Column Span
  *
- * FormItem's columnSpan property  defines how many columns fhe form item should expand to inside a form group or the form.
+ * FormItem's columnSpan property defines how many columns the form item should expand to inside a form group or the form.
  *
  * ### Items Label Span
  *
  * The placement of the labels depends on the size of the used column.
  * If there is enough space, the labels are next to their associated fields, otherwise  - above the fields.
  * By default, the labels take 4/12 of the FormItem, leaving 8/12 parts to associated fields.
- * You can control what space the labels should take via the <code>labelSpan</code> property.
+ * You can control what space the labels should take via the `labelSpan` property.
  *
- * **For example:** To always place the labels on top set: <code>labelSpan="S12 M12 L12 XL12"</code> property.
+ * **For example:** To always place the labels on top set: `labelSpan="S12 M12 L12 XL12"` property.
  *
  * ### ES6 Module Import
  *
- * - <code>import @ui5/webcomponents/dist/Form.js";</code>
- * - <code>import @ui5/webcomponents/dist/FormGroup.js";</code>
- * - <code>import @ui5/webcomponents/dist/FormItem.js";</code>
+ * - import @ui5/webcomponents/dist/Form.js";
+ * - import @ui5/webcomponents/dist/FormGroup.js";
+ * - import @ui5/webcomponents/dist/FormItem.js";
  *
  * @csspart header - Used to style the wrapper of the header.
  * @csspart layout - Used to style the element defining the form column layout.
@@ -171,7 +171,8 @@ class Form extends UI5Element {
 
 	/**
 	 * Defines the header text of the component.
-	 * **Note:** The property gets overridden by the <code>header</code> slot.
+	 *
+	 * **Note:** The property gets overridden by the `header` slot.
 	 *
 	 * @default ""
 	 * @public
@@ -182,12 +183,9 @@ class Form extends UI5Element {
 	/**
 	 * Defines the vertical spacing between form items.
 	 *
-	 * - `Normal` - smaller vertical space between form items
-	 * - `Large` - greater vertical space between form items
-	 *
-	 * **Note:** If the Form is meant to be switched between "non-edit" (display only) and "edit" modes,
+	 * **Note:** If the Form is meant to be switched between "non-edit" and "edit" modes,
 	 * we recommend using "Large" item spacing in "non-edit" mode, and "Normal" - for "edit" mode,
-	 * to avoid "jumping" effect, caused by the hight difference between texts in "non-edit" mode and inputs in "edit" mode.
+	 * to avoid "jumping" effect, caused by the hight difference between texts in "non-edit" mode and the input fields in "edit" mode.
 	 *
 	 * @default "Normal"
 	 * @public
@@ -198,7 +196,7 @@ class Form extends UI5Element {
 	/**
 	 * Defines the component header area.
 	 *
-	 * **Note:** When a <code>header</code> is provided, the <code>headerText</code> property is ignored.
+	 * **Note:** When a `header` is provided, the `headerText` property is ignored.
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -217,7 +215,7 @@ class Form extends UI5Element {
 		individualSlots: true,
 		invalidateOnChildChange: true,
 	})
-	items!: Array<FormGroup | FormItem>;
+	items!: Array<IFormItem>;
 
 	/**
 	 * @private

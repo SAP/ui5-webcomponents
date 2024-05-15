@@ -28,7 +28,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  *
  * ### ES6 Module Import
  *
- * <code>import @ui5/webcomponents/dist/FormItem.js";</code>
+ * - import @ui5/webcomponents/dist/FormItem.js";
  *
  * @csspart layout - Used to style the parent element of the label and content parts.
  * @csspart label - Used to style the label part of the form item.
@@ -68,7 +68,7 @@ class FormItem extends UI5Element implements IFormItem {
 
 	/**
 	 * Defines the content of the component,
-	 * associated to <code>labelContent</code>.
+	 * associated to `labelContent`.
 	 * @public
 	 */
 	@slot({
