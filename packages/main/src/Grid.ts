@@ -315,7 +315,7 @@ class Grid extends UI5Element {
 	_onEvent(e: Event) {
 		const composedPath = e.composedPath();
 		const eventOrigin = composedPath[0] as HTMLElement;
-		const elements = [this._gridNavigation, ...composedPath, this.features];
+		const elements = [this._gridNavigation, ...composedPath, ...this.features];
 		elements.forEach(element => {
 			if (element instanceof GridExtension || (element instanceof HTMLElement && element.localName.includes("ui5-grid"))) {
 				const eventHandlerName = `_on${e.type}` as keyof typeof element;
