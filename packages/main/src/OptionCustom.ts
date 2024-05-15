@@ -1,9 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
-import OptionBase from "./OptionBase.js";
-import optionCustomCss from "./generated/themes/OptionCustom.css.js";
+import CustomListItem from "./CustomListItem.js";
+import { IButton } from "./Button.js";
+import ListItemType from "./types/ListItemType.js";
+import type { ListItemAccessibilityAttributes as CustomOptionAccessibilityAttributes } from "./ListItem.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 
 /**
  * @class
@@ -19,16 +23,18 @@ import optionCustomCss from "./generated/themes/OptionCustom.css.js";
  * `import "@ui5/webcomponents/dist/OptionCustom.js";`
  * @constructor
  * @since 2.0.0
- * @extends OptionBase
+ * @extends CustomListItem
  * @public
  */
 @customElement({
 	tag: "ui5-option-custom",
-	styles: [
-		optionCustomCss,
-	],
 })
-class OptionCustom extends OptionBase {
+/**
+ * **Note:** The event is inherited and not supported. If used, it won't take any effect.
+ * @deprecated
+ */
+@event("detail-click")
+class OptionCustom extends CustomListItem {
 	/**
 	 * Defines the text, displayed inside the `ui5-select` input filed
 	 * when the option gets selected.
@@ -39,15 +45,66 @@ class OptionCustom extends OptionBase {
 	displayText!: string;
 
 	/**
-	 * Defines the content of the component.
+	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
+	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
+	 * @default ""
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	@property()
+	value!: string;
 
-	get isCustom() {
-		return true;
-	}
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	iconEnd!: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default "Active"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: ListItemType, defaultValue: ListItemType.Active })
+	declare type: `${ListItemType}`;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default {}
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Object })
+	declare accessibilityAttributes: CustomOptionAccessibilityAttributes;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	declare navigated: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default "None"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+	highlight!: `${HighlightTypes}`;
+
+	/**
+	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
+	 * @public
+	 * @deprecated
+	 */
+	@slot()
+	declare deleteButton: Array<IButton>;
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";

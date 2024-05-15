@@ -1,8 +1,14 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-import OptionBase from "./OptionBase.js";
+import StandardListItem from "./StandardListItem.js";
+import ListItemType from "./types/ListItemType.js";
+import { IButton } from "./Button.js";
+import type { ListItemAccessibilityAttributes as OptionAccessibilityAttributes } from "./ListItem.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 
 /**
  * @class
@@ -15,34 +21,18 @@ import OptionBase from "./OptionBase.js";
  *
  * `import "@ui5/webcomponents/dist/Option.js";`
  * @constructor
- * @extends OptionBase
+ * @extends StandardListItem
  * @public
  */
 @customElement({
 	tag: "ui5-option",
 })
-class Option extends OptionBase {
-	/**
-	 * Defines the `icon` source URI.
-	 *
-	 * **Note:**
-	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	icon!: string;
-
-	/**
-	 * Defines the additional text displayed at the end of the option element.
-	 * @default ""
-	 * @public
-	 * @since 1.3.0
-	 */
-	@property()
-	additionalText!: string;
-
+/**
+ * **Note:** The event is inherited and not supported. If used, it won't take any effect.
+ * @deprecated
+ */
+@event("detail-click")
+class Option extends StandardListItem {
 	/**
 	 * Defines the text of the component.
 	 *
@@ -51,6 +41,72 @@ class Option extends OptionBase {
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
 	text!: Array<Node>;
+
+	/**
+	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
+	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	value!: string;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default "Active"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: ListItemType, defaultValue: ListItemType.Active })
+	declare type: `${ListItemType}`;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default {}
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Object })
+	declare accessibilityAttributes: OptionAccessibilityAttributes;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	declare navigated: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default "None"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+	highlight!: `${HighlightTypes}`;
+
+	/**
+	 *
+	 * @default "None"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	additionalTextState!: `${ValueState}`;
+
+	/**
+	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
+	 * @public
+	 * @deprecated
+	 */
+	@slot()
+	declare deleteButton: Array<IButton>;
+
+	get effectiveDisplayText() {
+		return this.textContent || "";
+	}
 }
 
 Option.define();

@@ -1,78 +1,83 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
-	isSpace,
-	isUp,
 	isDown,
+	isEnd,
 	isEnter,
 	isEscape,
 	isHome,
-	isEnd,
 	isShow,
+	isSpace,
 	isTabNext,
 	isTabPrevious,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/information.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import List from "./List.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/information.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import Button from "./Button.js";
+import CustomListItem from "./CustomListItem.js";
+import Icon from "./Icon.js";
+import Label from "./Label.js";
 import type { ListItemClickEventDetail } from "./List.js";
+import List from "./List.js";
+import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
 import {
-	VALUE_STATE_SUCCESS,
-	VALUE_STATE_INFORMATION,
-	VALUE_STATE_ERROR,
-	VALUE_STATE_WARNING,
-	VALUE_STATE_TYPE_SUCCESS,
-	VALUE_STATE_TYPE_INFORMATION,
-	VALUE_STATE_TYPE_ERROR,
-	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_WARNING,
+	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
-import Label from "./Label.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Popover from "./Popover.js";
-import CustomListItem from "./CustomListItem.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
-import OptionBase from "./OptionBase.js";
-import Option from "./Option.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
 // Styles
-import selectCss from "./generated/themes/Select.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement, NativeFormElement } from "./features/InputElementsFormSupport.js";
+import selectCss from "./generated/themes/Select.css.js";
+import ListItemBase from "./ListItemBase.js";
 
 type SelectChangeEventDetail = {
-	selectedOption: OptionBase,
+	selectedOption: IOption,
 }
 type SelectLiveChangeEventDetail = {
-	selectedOption: OptionBase,
+	selectedOption: IOption,
+}
+
+type IOption = ListItemBase & {
+	icon?: string,
+	value?: string,
+	effectiveDisplayText: string
 }
 
 /**
@@ -109,7 +114,7 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/OptionBase";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/IOption";` (comes with `ui5-select`)
  * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
  * @constructor
  * @extends UI5Element
@@ -140,7 +145,7 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the selected option changes.
  * @allowPreventDefault
- * @param {OptionBase} selectedOption the selected option.
+ * @param {IOption} selectedOption the selected option.
  * @public
  */
 @event<SelectChangeEventDetail>("change", {
@@ -154,7 +159,7 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
  * or when pressing the ESC key to revert the current selection.
- * @param {OptionBase} selectedOption the selected option.
+ * @param {IOption} selectedOption the selected option.
  * @public
  * @since 1.17.0
  */
@@ -278,7 +283,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption: OptionBase | null;
+	_lastSelectedOption: IOption | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
@@ -296,10 +301,9 @@ class Select extends UI5Element implements IFormElement {
 	@slot({
 		"default": true,
 		type: HTMLElement,
-		individualSlots: true,
 		invalidateOnChildChange: true,
 	})
-	options!: Array<OptionBase>;
+	options!: Array<IOption>;
 
 	/**
 	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
@@ -409,7 +413,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const options = Array.from(this.children) as Array<OptionBase>;
+		const options = Array.from(this.children) as Array<IOption>;
 
 		options.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
@@ -429,7 +433,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 * @default undefined
 	 */
-	get selectedOption(): OptionBase | undefined {
+	get selectedOption(): IOption | undefined {
 		return this.options.find(option => option.selected);
 	}
 
@@ -570,7 +574,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	_getItemIndex(item: OptionBase) {
+	_getItemIndex(item: IOption) {
 		return this.options.indexOf(item);
 	}
 
@@ -595,12 +599,7 @@ class Select extends UI5Element implements IFormElement {
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
 		const listItem = e.detail.item;
-		const id = listItem.getAttribute("data-ui5-id");
-		const item = this.options.find(option => option.__id === id);
-		if (!item) {
-			return;
-		}
-		const selectedItemIndex = this._getItemIndex(item);
+		const selectedItemIndex = this._getItemIndex(listItem as IOption);
 
 		this._handleSelectionChange(selectedItemIndex);
 	}
@@ -667,7 +666,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options: Array<OptionBase> = this.options;
+		const options: Array<IOption> = this.options;
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
@@ -731,7 +730,7 @@ class Select extends UI5Element implements IFormElement {
 		return !!this.label.length;
 	}
 
-	_fireChangeEvent(selectedOption: OptionBase) {
+	_fireChangeEvent(selectedOption: IOption) {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
@@ -916,7 +915,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get selectedOptionIcon() {
-		return this.selectedOption && (this.selectedOption as Option).icon;
+		return this.selectedOption && this.selectedOption.icon;
 	}
 
 	_getPopover() {
@@ -932,7 +931,6 @@ Select.define();
 
 export default Select;
 export type {
-	SelectChangeEventDetail,
+	IOption, SelectChangeEventDetail,
 	SelectLiveChangeEventDetail,
-	OptionBase,
 };
