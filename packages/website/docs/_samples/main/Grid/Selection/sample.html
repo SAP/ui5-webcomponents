@@ -10,6 +10,7 @@
 
 <body style="background-color: var(--sapBackgroundColor)">
     <div class="section">
+<!-- playground-fold-end -->
 		<div id="selectionGroup" role="radiogroup">
 			<ui5-radio-button name="selection" text="Multi" checked></ui5-radio-button>
 			<ui5-radio-button name="selection" text="Single"></ui5-radio-button>
@@ -18,6 +19,7 @@
 
 		<ui5-grid id="grid" accessible-name-ref="title" no-data-text="No data found">
 			<ui5-grid-selection id="selection" slot="features"></ui5-grid-selection>
+<!-- playground-fold -->
 			<ui5-grid-header-row slot="header-row">
 				<ui5-grid-header-cell id="produtCol" width="300px"><span>Product</span></ui5-grid-header-cell>
 				<ui5-grid-header-cell id="supplierCol">Supplier</ui5-grid-header-cell>
@@ -46,9 +48,10 @@
 				<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
 				<ui5-grid-cell style="text-align: end;"><ui5-label style="text-align: end;"><b>29</b> EUR</ui5-label></ui5-grid-cell>
 			</ui5-grid-row>
+<!-- playground-fold-end -->
 		</ui5-grid>
+<!-- playground-fold -->
 	</div>
-    <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>
 

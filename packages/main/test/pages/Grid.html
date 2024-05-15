@@ -25,7 +25,7 @@
 
 	<!-- <div style="height: 300px; overflow: auto;"> -->
 
-	<ui5-grid id="grid" column-mode="Popin" sticky-top="50px" accessible-name-ref="title" no-data-text="No data found">
+	<ui5-grid id="grid" overflow-mode="Popin" sticky-top="50px" accessible-name-ref="title">
 		<ui5-grid-growing id="growing" type="Scroll" slot="features"></ui5-grid-growing>
 		<ui5-grid-selection id="selection" selected="0 2" slot="features"></ui5-grid-selection>
 		<ui5-grid-header-row slot="header-row">
@@ -101,7 +101,7 @@
 
 		const growing = document.getElementById("growing");
 		growing.addEventListener("load-more", (e) => {
-			grid.busy = true;
+			grid.loading = true;
 			grid.disabled = true;
 			// add 10 more additional rows to the ui5-grid element by utilizing a loop
 			for (let i = 0; i < 10; i++) {
@@ -117,7 +117,7 @@
 				grid.appendChild(newRow);
 			}
 			setTimeout(() => {
-				grid.busy = false;
+				grid.loading = false;
 			}, 500);
 		});
 

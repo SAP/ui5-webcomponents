@@ -16,7 +16,7 @@ import GridRowBase from "./GridRowBase.js";
  *
  * The component offers three selection modes:
  * * Single - select a single row.
- * * Multi - select multiple rows.
+ * * Multiple - select multiple rows.
  * * None - no selection active.
  *
  * As the selection is key-based, `ui5-grid-row` components need to define a unique `key` property.
@@ -29,7 +29,7 @@ import GridRowBase from "./GridRowBase.js";
  *
  * ```html
  * <ui5-grid>
- * 	<ui5-grid-selection mode="Multi" slot="features"></ui5-grid-selection>
+ * 	<ui5-grid-selection mode="Multiple" slot="features"></ui5-grid-selection>
  * </ui5-grid>
  * ```
  *
@@ -54,10 +54,10 @@ class GridSelection extends UI5Element implements IGridFeature {
 	/**
 	 * Defines the selection mode.
 	 *
-	 * @default "Multi"
+	 * @default "Multiple"
 	 * @public
 	 */
-	@property({ type: GridSelectionMode, defaultValue: GridSelectionMode.Multi })
+	@property({ type: GridSelectionMode, defaultValue: GridSelectionMode.Multiple })
 	mode!: `${GridSelectionMode}`;
 
 	/**
@@ -91,7 +91,7 @@ class GridSelection extends UI5Element implements IGridFeature {
 	}
 
 	isMultiSelect(): boolean {
-		return this.mode === GridSelectionMode.Multi;
+		return this.mode === GridSelectionMode.Multiple;
 	}
 
 	hasRowSelector(): boolean {
@@ -128,7 +128,7 @@ class GridSelection extends UI5Element implements IGridFeature {
 	}
 
 	areAllRowsSelected(): boolean {
-		if (!this._grid || !this._grid.rows.length || this.mode !== GridSelectionMode.Multi) {
+		if (!this._grid || !this._grid.rows.length || this.mode !== GridSelectionMode.Multiple) {
 			return false;
 		}
 
@@ -166,7 +166,7 @@ class GridSelection extends UI5Element implements IGridFeature {
 	_informRowSelectionChange(row: GridRow) {
 		const isRowSelected = this.isMultiSelect() ? this.isSelected(row) : true;
 		const rowIdentifier = this.getRowIdentifier(row);
-		if (this.selected && this.mode === GridSelectionMode.Multi) {
+		if (this.selected && this.mode === GridSelectionMode.Multiple) {
 			const selectedSet = this.selectedAsSet;
 			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
 			this.selectedAsSet = selectedSet;

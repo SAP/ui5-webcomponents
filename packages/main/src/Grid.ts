@@ -241,14 +241,14 @@ class Grid extends UI5Element {
 	overflowMode!: `${GridOverflowMode}`;
 
 	/**
-	 * Defines if the component is in busy state.
+	 * Defines if the loading indicator should be shown.
 	 *
-	 * <b>Note:</b> When the component is in busy state, it is non-interactive.
+	 * <b>Note:</b> When the component is loading, it is non-interactive.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean, defaultValue: false })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.

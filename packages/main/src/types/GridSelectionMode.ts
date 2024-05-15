@@ -20,7 +20,7 @@ enum GridSelectionMode {
 	 * Multi selection mode (more than one grid row can be selected).
 	 * @public
 	 */
-	Multi = "Multi",
+	Multiple = "Multiple",
 }
 
 export default GridSelectionMode;
