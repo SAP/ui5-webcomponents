@@ -123,7 +123,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	declare name: string;
+	declare name?: string;
 
 	/**
 	 * Defines the component tokens.
