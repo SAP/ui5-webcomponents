@@ -600,6 +600,9 @@ it will no longer work for the component. Instead, do not render disabled option
 | Property                     | `horizontalAlign` | values have changed, f.e. `Left` to `Start` | 
 | Property                     | `placementType` | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
+| Event        | after-open  | open  | 
+| Event        | after-close  | close  | 
+
 
 - The `Left` and `Right` options have been renamed. If you previously used them to set the placement or the alignment of the popover:
 ```html
@@ -624,6 +627,23 @@ Now use `placement` instead:
 ```
 ```js
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+```
+
+- The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
+If you previously used the events like:
+
+```ts
+poover.addEventListener("after-open", (event) => {
+});
+poover.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+poover.addEventListener("open", (event) => {
+});
+poover.addEventListener("close", (event) => {
+});
 ```
 
 ### ui5-progress-indicator
@@ -980,7 +1000,7 @@ Now you have to use it like:
 
 | Changed item | Old          | New    | 
 |--------------|--------------|--------|
-| event        | after-close  | close  | 
+| Event        | after-close  | close  | 
 
 - The event `after-close`  has been renamed to `close`. If you previously used it like:
 
