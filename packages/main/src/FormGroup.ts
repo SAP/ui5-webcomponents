@@ -51,7 +51,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: undefined })
-	columnSpan!: number;
+	columnSpan?: number;
 
 	/**
 	 * Defines the items of the component.

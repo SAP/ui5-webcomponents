@@ -57,7 +57,7 @@ class FormItem extends UI5Element implements IFormItem {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: undefined })
-	columnSpan!: number;
+	columnSpan?: number;
 
 	/**
 	 * Defines the label of the component.
