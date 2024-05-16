@@ -6,10 +6,10 @@
 	vertical-align="Bottom"
 	.opener={{opener}}
 	?open={{open}}
+	prevent-initial-focus
 	prevent-focus-restore
 	hide-arrow
 	allow-target-overlap
-	_disable-initial-focus
 	@ui5-before-open={{_beforePopoverOpen}}
 	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}

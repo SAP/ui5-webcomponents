@@ -254,18 +254,18 @@ class MenuItem extends ListItem {
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
-		if (e.detail.escPressed) {
-			this.selected = false;
-			this.focus();
-		}
-
 		if (prevented) {
 			e.preventDefault();
+			return;
+		}
+
+		this.selected = false;
+		if (e.detail.escPressed) {
+			this.focus();
 		}
 	}
 
 	_afterPopoverClose() {
-		this.selected = false;
 		this.fireEvent("close", {}, false, false);
 	}
 }
