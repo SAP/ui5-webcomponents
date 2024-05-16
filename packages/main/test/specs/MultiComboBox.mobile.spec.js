@@ -65,6 +65,8 @@ describe("Basic interaction", () => {
 	});
 
 	it("Should open the picker with preselected items only when n-more is clicked", async () => {
+		await browser.url(`test/pages/MultiComboBox.html`);
+
 		const multiCombo = await browser.$("#multi1");
 
 		await multiCombo.scrollIntoView();
@@ -245,8 +247,10 @@ describe("Items selection", () => {
 
 	it("Should not allow additional selection when readonly", async () => {
 		const multiCombo = await browser.$("#mcb-ro");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 
 		await multiCombo.scrollIntoView();
+		await mcbInput.click();
 		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
 
 		const toggleSelectedButton =  await multiCombo.shadow$("ui5-responsive-popover").$("ui5-toggle-button");
@@ -262,7 +266,7 @@ describe("Items selection", () => {
 		assert.strictEqual(tokens.length, 3, "No deselection was performed");
 	});
 
-	it ("should select all items when clicking select all", async () => {
+	it("should select all items when clicking select all", async () => {
 		const cb = await $("#mcb-select-all-vs");
 		const popover = await cb.shadow$("ui5-responsive-popover");
 		const spanRef = await $("#select-all-event");

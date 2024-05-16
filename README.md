@@ -103,17 +103,17 @@ UI5 Web Components are supported by all major modern browsers.
 
 Browser | Supported versions
 --------|--------
-Chrome | Latest
-Firefox | Latest
-Safari | Latest
-Edge | Latest
+Chrome | Latest two stable releases
+Firefox | Latest two stable releases
+Safari | Latest two stable releases
+Edge | Latest two stable releases
 
 ## Project Structure, Development and Build
 
 This section might be of interest to you mainly if you need to run or build the project locally
 
 ### Requirements
-- [Node.js](https://nodejs.org/) (**version 20 or higher**)
+- [Node.js](https://nodejs.org/) (**version 21 or higher**)
 - [Yarn](https://yarnpkg.com/en) (**version 1.22 or higher**)
 
 **Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.
@@ -171,7 +171,7 @@ Afterwards, you can find the build output in the `dist` folder of the correspond
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## Limitations
-None as of 1.3.0
+None as of 1.24.0
 
 ## Known Issues
 No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/SAP/ui5-webcomponents/issues).

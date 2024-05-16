@@ -354,7 +354,7 @@ Examples:
 
 ```handlebars
 {{#if hasText}}
-	<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
+	<label class="ui5-tag-text"><bdi><slot></slot></bdi></label>
 {{/if}}
 ```
 

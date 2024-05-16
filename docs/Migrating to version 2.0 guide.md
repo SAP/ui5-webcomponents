@@ -58,6 +58,22 @@ import "@ui5/webcomponents-icons/dist/Assets.js"
 
 ## Main package (@ui5/webcomponents)
 
+### ui5-badge
+
+| Changed item                  | Old               | New          | 
+|-------------------------------|-------------------|--------------|
+| tag                      | `ui5-badge` | `ui5-tag` | 
+
+- The Badge `ui5-badge` has been renamed to Tag `ui5-tag`. If you have previously used the `ui5-badge`:
+```html
+<ui5-badge></ui5-badge>
+```
+Now use `ui5-tag` instead:
+```html
+<ui5-tag></ui5-tag>
+```
+
+
 ### ui5-breadcrumbs
 
 | Changed item                  | Old               | New          | 
@@ -74,7 +90,6 @@ Now use  `separators`  instead:
 ```html
 <ui5-breadcrumbs separators="Slash">
 ```
-
 
 ### ui5-busy-indicator
 
@@ -243,6 +258,7 @@ Now you have to use it like:
 <ui5-combobox value-state="Success"></ui5-combobox>
 ```
 
+
 ### ui5-date-picker
 
 | Changed item | Old     | New     | 
@@ -262,6 +278,26 @@ Now you have to use it like:
 <ui5-date-picker value-state="Success"></ui5-date-picker>
 ```
 
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const datePicker = document.getElementById("exampleID");
+datePicker.openPicker();
+datePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const datePicker = document.getElementById("exampleID");
+datePicker.open = true;
+datePicker.open = false;
+```
 
 ### ui5-date-time-picker
 
@@ -271,18 +307,38 @@ Now you have to use it like:
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
-<ui5-date-time-picker value-state="Error"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Warning"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Success"></ui5-date-time-picker>
+<ui5-datetime-picker value-state="Error"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Warning"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
 ```
 Now you have to use it like:
 ```html
-<ui5-date-time-picker value-state="Negative"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Critical"></ui5-date-time-picker>
-<ui5-date-time-picker value-state="Success"></ui5-date-time-picker>
+<ui5-datetime-picker value-state="Negative"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Critical"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
 ```
 
-### ui5-date-range-picker
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const datetimePicker = document.getElementById("exampleID");
+datetimePicker.openPicker();
+datetimePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const datetimePicker = document.getElementById("exampleID");
+datetimePicker.open = true;
+datetimePicker.open = false;
+```
+
+### ui5-daterange-picker
 
 | Changed item | Old     | New     | 
 |--------------|---------|---------|
@@ -290,15 +346,35 @@ Now you have to use it like:
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
-<ui5-date-range-picker value-state="Error"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Warning"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+<ui5-daterange-picker value-state="Error"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Warning"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Success"></ui5-daterange-picker>
 ```
 Now you have to use it like:
 ```html
-<ui5-date-range-picker value-state="Negative"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Critical"></ui5-date-range-picker>
-<ui5-date-range-picker value-state="Success"></ui5-date-range-picker>
+<ui5-daterange-picker value-state="Negative"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Critical"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Success"></ui5-daterange-picker>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const dateRangePicker = document.getElementById("exampleID");
+dateRangePicker.openPicker();
+dateRangePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const dateRangePicker = document.getElementById("exampleID");
+dateRangePicker.open = true;
+dateRangePicker.open = false;
 ```
 
 ### ui5-dialog
@@ -524,6 +600,9 @@ it will no longer work for the component. Instead, do not render disabled option
 | Property                     | `horizontalAlign` | values have changed, f.e. `Left` to `Start` | 
 | Property                     | `placementType` | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
+| Event        | after-open  | open  | 
+| Event        | after-close  | close  | 
+
 
 - The `Left` and `Right` options have been renamed. If you previously used them to set the placement or the alignment of the popover:
 ```html
@@ -548,6 +627,23 @@ Now use `placement` instead:
 ```
 ```js
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+```
+
+- The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
+If you previously used the events like:
+
+```ts
+poover.addEventListener("after-open", (event) => {
+});
+poover.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+poover.addEventListener("open", (event) => {
+});
+poover.addEventListener("close", (event) => {
+});
 ```
 
 ### ui5-progress-indicator
@@ -821,6 +917,29 @@ Now you have to use it like:
 <ui5-textarea value-state="Success"></ui5-textarea>
 ```
 
+### ui5-title
+
+| Changed item  | Old   | New | 
+|---------------|-------|-----|
+| `wrappingType` default value | `None` | `Normal` |
+
+- The defualt value of the wrappingType property has been changed from `None` to `Normal`.
+
+Previously long texts would truncate if there is not enough space:
+```html
+<ui5-title>some very very very long title</ui5-title> <!-- text will truncate if there is not enough space -->
+```
+
+Now, long texts would wrap:
+```html
+<ui5-title>some very very very long title</ui5-title> <!-- text will wrap if there is not enough space -->
+```
+And you need to set `wrapping-type="None"` explicitly to make it truncate as before:
+```html
+<ui5-title wrapping-type="None">some very very very long title</ui5-title> <!-- will truncate the text -->
+```
+
+
 ### ui5-tree
 
 | Changed item | Old       | New                                                                  | 
@@ -877,6 +996,24 @@ Now you have to use it like:
 <ui5-tree-item additional-text-state="Success"></ui5-tree-item>
 ```
 
+### ui5-toast
+
+| Changed item | Old          | New    | 
+|--------------|--------------|--------|
+| Event        | after-close  | close  | 
+
+- The event `after-close`  has been renamed to `close`. If you previously used it like:
+
+```ts
+toast.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+toast.addEventListener("close", (event) => {
+});
+```
+
 
 ## Fiori package (@ui5/webcomponents-fiori)
 
@@ -918,6 +1055,75 @@ d.open = false;
 
 instead.
 
+
+
+### ui5-flexible-column-layout
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `accessibilityTexts` | removed |
+| Property     | `accessibilityRoles` | removed |
+
+- The `accessibilityTexts` and `accessibilityRoles` properties of the `ui5-flexible-column-layout` are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+fcl.accessibilityTexts = {
+    startColumnAccessibleName: "Products list",
+    midColumnAccessibleName: "Product information",
+    endColumnAccessibleName: "Product detailed information",
+    startArrowLeftText: "Collapse products list",
+    startArrowRightText: "Expand products list",
+    endArrowLeftText: "Expand product detailed information",
+    endArrowRightText: "Collapse product detailed information",
+    startArrowContainerAccessibleName: "Start Arrow Container",
+    endArrowContainerAccessibleName: "End Arrow Container",
+}
+
+fclAccRoles.accessibilityRoles = {
+    startColumnRole: "complementary",
+    startArrowContainerRole: "navigation",
+    midColumnRole: "main",
+    endArrowContainerRole: "navigation",
+    endColumnRole: "complementary".
+}
+```
+
+Now use `accessibilityAttributes` instead:
+```js
+fcl.accessibilityAttributes = {
+    startColumn: {
+      role: "complementary"
+      name: "Products list",
+    },
+    midColumn: {
+      role: "complementary"
+      name: "Product information",
+    },
+    endColumn: {
+      role: "complementary"
+      name: "Product detailed information",
+    },
+    startArrowLeft:  {
+      name: "Collapse products list",
+    },
+    startArrowRight: {
+      name: "Expand products list",
+    },
+    endArrowLeft: {
+      name: "Expand product detailed information",
+    },
+    endArrowRight:  {
+      name: "Collapse product detailed information",
+    },
+    startArrowContainer: {
+      role: "navigation"
+      name: "Start Arrow Container",
+    },
+    endArrowContainer: {
+      role: "navigation"
+      name: "End Arrow Container",
+    },
+};
+```
+
 ### ui5-illustrated-message
 
 | Changed item | Old    | New                                                           | 
@@ -933,6 +1139,38 @@ Now use `design` instead:
 ```html
 <ui5-illustrated-message design="Dialog">
 ```
+
+
+### ui5-shellbar
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `accessibilityTexts` | removed |
+| Property     | `accessibilityRoles` | removed |
+
+- The `accessibilityTexts` and `accessibilityRoles` properties of the `ui5-shellbar` are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+shellbar.accessibilityTexts = {
+    profileButtonTitle: "John Dow",
+    logoTitle: "Custom logo title",
+}
+
+shellbar.accessibilityRoles = {
+		logoRole: "link"
+};
+```
+Now use `accessibilityAttributes` instead:
+```js
+shellbar.accessibilityAttributes = {
+    profile: {
+      name:  "John Dow",
+    },
+    logo: {
+      role: "link"
+      name: "Custom logo title"
+    },
+};
+```
+
 
 ### ui5-upload-collection
 

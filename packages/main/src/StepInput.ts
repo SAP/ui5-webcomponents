@@ -21,13 +21,11 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
@@ -94,6 +92,7 @@ type StepInputValueStateChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-step-input",
+	formAssociated: true,
 	renderer: litRender,
 	styles: StepInputCss,
 	template: StepInputTemplate,
@@ -133,7 +132,7 @@ type StepInputValueStateChangeEventDetail = {
 		},
 	},
 })
-class StepInput extends UI5Element implements IFormElement {
+class StepInput extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a value of the component.
 	 * @default 0
@@ -211,14 +210,9 @@ class StepInput extends UI5Element implements IFormElement {
 	placeholder?: string;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -293,17 +287,17 @@ class StepInput extends UI5Element implements IFormElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
-
 	_initialValueState?: `${ValueState}`;
 
 	static i18nBundle: I18nBundle;
+
+	async formElementAnchor() {
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value.toString();
+	}
 
 	static async onDefine() {
 		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -343,8 +337,16 @@ class StepInput extends UI5Element implements IFormElement {
 		return this.focused;
 	}
 
-	get _valuePrecisioned() {
-		return this.value.toFixed(this.valuePrecision);
+	get _displayValue() {
+		if ((this.value === 0) || (Number.isInteger(this.value))) {
+			return this.value.toFixed(this.valuePrecision);
+		}
+
+		if (this.value === Number(this.input.value)) { // For the cases where the number is fractional and is ending with 0s.
+			return this.input.value;
+		}
+
+		return this.value.toString();
 	}
 
 	get accInfo() {
@@ -367,17 +369,14 @@ class StepInput extends UI5Element implements IFormElement {
 		if (this._previousValue === undefined) {
 			this._previousValue = this.value;
 		}
-
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 	}
 
 	get input(): Input {
 		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
+	}
+
+	get innerInput(): HTMLInputElement {
+		return this.input.shadowRoot!.querySelector<HTMLInputElement>("input")!;
 	}
 
 	get inputOuter() {
@@ -418,12 +417,18 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	_updateValueState() {
-		const valid = !((this.min !== undefined && this.value < this.min) || (this.max !== undefined && this.value > this.max));
+		const isWithinRange = (this.min === undefined || Number(this.input.value) >= this.min)
+							  && (this.max === undefined || Number(this.input.value) <= this.max);
+		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision;
 		const previousValueState = this.valueState;
+		const isValid = isWithinRange && isValueWithCorrectPrecision;
 
-		this.valueState = valid ? ValueState.None : ValueState.Negative;
+		this.valueState = isValid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
+		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
+			valueState: this.valueState,
+			valid: isValid,
+		}, true);
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;
@@ -451,7 +456,6 @@ class StepInput extends UI5Element implements IFormElement {
 	 */
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
-		this.value = this._preciseValue(parseFloat(this.input.value));
 		value = this.value + modifier;
 		if (this.min !== undefined && value < this.min) {
 			value = this.min;
@@ -462,6 +466,7 @@ class StepInput extends UI5Element implements IFormElement {
 		value = this._preciseValue(value);
 		if (value !== this.value) {
 			this.value = value;
+			this.input.value = value.toFixed(this.valuePrecision);
 			this._validate();
 			this._setButtonState();
 			this.focused = true;
@@ -488,17 +493,50 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
+	get _isValueWithCorrectPrecision() {
+		// gets either "." or "," as delimiter which is based on locale, and splits the number by it
+		const delimiter = this.input.value.includes(".") ? "." : ",";
+		const numberParts = this.input.value.split(delimiter);
+		const decimalPartLength = numberParts.length > 1 ? numberParts[1].length : 0;
+
+		return decimalPartLength === this.valuePrecision;
+	}
+
 	_onInputChange() {
+		this._setDefaultInputValueIfNeeded();
+
+		const inputValue = Number(this.input.value);
+		if (this._isValueChanged(inputValue)) {
+			this._updateValueAndValidate(inputValue);
+		}
+	}
+
+	_setDefaultInputValueIfNeeded() {
 		if (this.input.value === "") {
-			this.input.value = (this.min || 0) as unknown as string;
+			const defaultValue = (this.min || 0).toFixed(this.valuePrecision);
+			this.input.value = defaultValue;
+			this.innerInput.value = defaultValue; // we need to update inner input value as well, to avoid empty input scenario
 		}
-		const inputValue = this._preciseValue(parseFloat(this.input.value));
-		if (this.value !== this._previousValue || this.value !== inputValue) {
-			this.value = inputValue;
-			this._validate();
-			this._setButtonState();
-			this._fireChangeEvent();
-		}
+	}
+
+	_isValueChanged(inputValue: number) {
+		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision;
+		// Treat values as distinct when modified to match a specific precision (e.g., from 3.4000 to 3.40),
+		// even if JavaScript sees them as equal, to correctly update valueState based on expected valuePrecision.
+		const isPrecisionCorrectButValueStateError = isValueWithCorrectPrecision && this.valueState === ValueState.Negative;
+
+		return this.value !== this._previousValue
+			|| this.value !== inputValue
+			|| inputValue === 0
+			|| !isValueWithCorrectPrecision
+			|| isPrecisionCorrectButValueStateError;
+	}
+
+	_updateValueAndValidate(inputValue: number) {
+		this.value = inputValue;
+		this._validate();
+		this._setButtonState();
+		this._fireChangeEvent();
 	}
 
 	_onfocusin() {

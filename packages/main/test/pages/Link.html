@@ -145,15 +145,15 @@
 		});
 
 		signInLink.addEventListener("ui5-click", function(event) {
-			singInDialog.show();
+			singInDialog.open = true;
 		});
 
 		signInLink.accessibilityAttributes = {
-			hasPopup: "Dialog"
+			hasPopup: "dialog"
 		};
 
 		closeSignInDialogButton.addEventListener("ui5-click", function(event) {
-			singInDialog.close();
+			singInDialog.open = false;
 		});
 
 		linkClickPreventDefault.addEventListener("ui5-click", function(event) {

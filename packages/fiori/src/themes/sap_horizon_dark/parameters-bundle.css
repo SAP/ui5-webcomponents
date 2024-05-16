@@ -2,6 +2,7 @@
 @import "../base/IllustratedMessage-parameters.css";
 @import "../base/MediaGallery-parameters.css";
 @import "../base/MediaGalleryItem-parameters.css";
+@import "./NotificationListItem-parameters.css";
 @import "../base/Page-parameters.css";
 @import "../base/ViewSettingsDialog-parameters.css";
 @import "./ProductSwitchItem-parameters.css";
@@ -11,7 +12,6 @@
 @import "./UploadCollection-parameters.css";
 @import "./Wizard-parameters.css";
 @import "./WizardTab-parameters.css";
-@import "./NotificationListItem-parameters.css";
 @import "./FlexibleColumnLayout-parameters.css";
 @import "./MediaGallery-parameters.css";
 @import "../base/DynamicPage-parameters.css";

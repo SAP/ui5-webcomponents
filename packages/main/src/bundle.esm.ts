@@ -98,7 +98,6 @@ import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
-import Badge from "./Badge.js";
 import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -144,10 +143,11 @@ import MessageStrip from "./MessageStrip.js";
 import MultiComboBox from "./MultiComboBox.js";
 import ProgressIndicator from "./ProgressIndicator.js";
 import RatingIndicator from "./RatingIndicator.js";
-import Text from "./Text.js";
+import Tag from "./Tag.js";
 import TabContainer from "./TabContainer.js";
 import Tab from "./Tab.js";
 import TabSeparator from "./TabSeparator.js";
+import Text from "./Text.js";
 import TextArea from "./TextArea.js";
 import TimePicker from "./TimePicker.js";
 import TimePickerClock from "./TimePickerClock.js";
@@ -174,7 +174,6 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
 
 // Features
-import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 

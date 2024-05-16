@@ -51,7 +51,7 @@
 	<script>
 		sbAccAttr.accessibilityAttributes = {
 			notifications: {
-				ariaHasPopup: "Dialog"
+				hasPopup: "dialog"
 			},
 		};
 	</script>
@@ -240,19 +240,21 @@
 	</ui5-shellbar>
 
 	<script>
-		mySearch.addEventListener("ui5-suggestion-item-select", function (event) {
+		mySearch.addEventListener("ui5-selection-change", function (event) {
 			console.log(event);
 		});
 
 		shellbar.addEventListener("ui5-profile-click", function(event) {
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 			window["press-input"].value = "Profile";
 		});
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			window["press-input"].value = "Notifications";
 			event.preventDefault();
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 		});
 
 		shellbar.addEventListener("ui5-product-switch-click", function(event) {
@@ -287,12 +289,14 @@
 
 		shelbarCompact.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 		});
 
 		shelbarCompact.addEventListener("ui5-product-switch-click", function(event) {
 			event.preventDefault();
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 		});
 
 		menuItemsSB.addEventListener("ui5-menu-item-click", function(event) {
@@ -312,7 +316,8 @@
 			currenItem.addEventListener("ui5-click", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
-				window["custom-item-popover"].showAt(event.detail.targetRef);
+				window["custom-item-popover"].opener = event.detail.targetRef;
+				window["custom-item-popover"].open = true;
 			});
 		});
 
@@ -324,13 +329,19 @@
 			});
 		});
 
-		sbAcc.accessibilityTexts = {
-			profileButtonTitle: "John Dow",
-			logoTitle: "Custom logo title",
+		sbAcc.accessibilityAttributes = {
+			profile: {
+				name:  "John Dow",
+			},
+			logo: {
+				name: "Custom logo title"
+			},
 		};
 
-		sb.accessibilityRoles = {
-			logoRole: "link"
+		sb.accessibilityAttributes = {
+			logo: {
+				role: "link"
+			},
 		};
 
 		sb.addEventListener("ui5-search-button-click", function(event) {
