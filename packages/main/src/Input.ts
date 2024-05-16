@@ -691,8 +691,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				innerInput.value = this._innerValue;
 			}
 
-			if (this.typedInValue.length && innerInput.value.length) {
-				innerInput.setSelectionRange(this.typedInValue.length, innerInput.value.length);
+			if (this.typedInValue.length && this.value.length) {
+				innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
 			}
 		}
 

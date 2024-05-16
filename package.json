@@ -11,6 +11,7 @@
   "scripts": {
     "generate": "wsrun --exclude-missing generate",
     "generateAPI": "wsrun --exclude-missing generateAPI",
+    "generateProd": "wsrun --exclude-missing generateProd",
     "ts": "tsc -b packages/compat/tsconfig.json packages/fiori/tsconfig.json",
     "bundle": "wsrun --exclude-missing bundle",
     "clean": "wsrun --exclude-missing clean",
@@ -36,9 +37,9 @@
     "build": "yarn ci:releasebuild",
     "test": "yarn wsrun --exclude-missing test",
 
-    "ci:releasebuild": "npm-run-all --sequential generate ts generateAPI",
+    "ci:releasebuild": "npm-run-all --sequential generate ts generateProd generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
-    "ci:testbuild": "npm-run-all --sequential generate ts bundle",
+    "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle",
     "ci:deploybuild": "yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-playground build",
     "ci:deploy": "yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
     "ci:deploy:nightly": "yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",

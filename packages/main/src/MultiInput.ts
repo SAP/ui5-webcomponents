@@ -67,12 +67,15 @@ type MultiInputTokenDeleteEventDetail = {
 	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
-	dependencies: [
-		...Input.dependencies,
-		Tokenizer,
-		Token,
-		Icon,
-	],
+	get dependencies() {
+		return [
+			...Input.dependencies,
+			Input,
+			Tokenizer,
+			Token,
+			Icon,
+		];
+	},
 })
 /**
  * Fired when the value help icon is pressed
