@@ -65,13 +65,6 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
-type SelectChangeEventDetail = {
-	selectedOption: IOption,
-}
-type SelectLiveChangeEventDetail = {
-	selectedOption: IOption,
-}
-
 /**
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
@@ -83,6 +76,13 @@ type IOption = ListItemBase & {
 	additionalText?: string,
 	focused?: boolean,
 	effectiveDisplayText: string,
+};
+
+type SelectChangeEventDetail = {
+	selectedOption: IOption,
+}
+type SelectLiveChangeEventDetail = {
+	selectedOption: IOption,
 }
 
 /**
