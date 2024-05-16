@@ -8,7 +8,9 @@ import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
+import List from "./List.js";
 import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
 import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -48,7 +50,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 	tag: "ui5-menu-item",
 	template: MenuItemTemplate,
 	styles: [ListItem.styles, menuItemCss],
-	dependencies: [...ListItem.dependencies, Icon, ResponsivePopover],
+	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
 })
 class MenuItem extends ListItem {
 	static async onDefine() {
