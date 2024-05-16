@@ -91,7 +91,7 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
  * @public
  * @since 2.0.0
  */
-@event("after-close")
+@event("close")
 
 class Toast extends UI5Element {
 	/**
@@ -226,7 +226,7 @@ class Toast extends UI5Element {
 		this.open = false;
 		this.focusable = false;
 		this.focused = false;
-		this.fireEvent("after-close");
+		this.fireEvent("close");
 	}
 
 	_onmouseover() {

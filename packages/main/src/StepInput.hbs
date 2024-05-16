@@ -22,7 +22,7 @@
 			@mousedown="{{_decSpin}}"
 			@mouseup="{{_resetSpin}}"
 			@mouseout="{{_resetSpinOut}}"
-			input-icon
+			class="inputIcon"
 			show-tooltip
 			?clickable="{{_decIconClickable}}"
 		></ui5-icon>
@@ -70,12 +70,10 @@
 			@mousedown="{{_incSpin}}"
 			@mouseup="{{_resetSpin}}"
 			@mouseout="{{_resetSpinOut}}"
-			input-icon
+			class="inputIcon"
 			show-tooltip
 			?clickable="{{_incIconClickable}}"
 		></ui5-icon>
 	</div>
 	{{/unless}}
-	<slot name="formSupport"></slot>
-
 </div>

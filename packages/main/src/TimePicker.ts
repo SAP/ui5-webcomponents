@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -123,6 +124,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 @customElement({
 	tag: "ui5-time-picker",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: TimePickerTemplate,
 	styles: [
@@ -187,7 +189,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 		},
 	},
 })
-class TimePicker extends UI5Element {
+class TimePicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a formatted time value.
 	 * @default undefined
@@ -195,8 +197,19 @@ class TimePicker extends UI5Element {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property({ type: String, defaultValue: undefined })
 	value?: string;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines the value state of the component.
@@ -275,6 +288,14 @@ class TimePicker extends UI5Element {
 			getI18nBundle("@ui5/webcomponents"),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value || "";
 	}
 
 	onBeforeRendering() {

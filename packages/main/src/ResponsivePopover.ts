@@ -94,8 +94,6 @@ class ResponsivePopover extends Popover {
 	_show() {
 		if (!isPhone()) {
 			super._show();
-		} else {
-			this.style.display = "contents";
 		}
 	}
 

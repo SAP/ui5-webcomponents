@@ -15,6 +15,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
@@ -63,14 +64,18 @@ type MultiInputTokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-multi-input",
 	renderer: litRender,
+	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
-	dependencies: [
-		...Input.dependencies,
-		Tokenizer,
-		Token,
-		Icon,
-	],
+	get dependencies() {
+		return [
+			...Input.dependencies,
+			Input,
+			Tokenizer,
+			Token,
+			Icon,
+		];
+	},
 })
 /**
  * Fired when the value help icon is pressed
@@ -93,7 +98,7 @@ type MultiInputTokenDeleteEventDetail = {
 	},
 })
 
-class MultiInput extends Input {
+class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
@@ -112,14 +117,50 @@ class MultiInput extends Input {
 	tokenizerAvailable!: boolean;
 
 	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * **Note:** When the component is used inside a form element,
+	 * the value is sent as the first element in the form data, even if it's empty.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	declare name: string;
+
+	/**
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot()
+	@slot({ type: HTMLElement })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
+
+	get formValidity(): ValidityStateFlags {
+		const tokens = (this.tokens || []);
+
+		return { valueMissing: this.required && !this.value && !tokens.length };
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		const tokens = (this.tokens || []);
+
+		if (tokens.length) {
+			const formData = new FormData();
+
+			formData.append(this.name, this.value);
+
+			for (let i = 0; i < tokens.length; i++) {
+				formData.append(this.name, tokens[i].text);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();
