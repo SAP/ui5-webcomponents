@@ -26,7 +26,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-li-group",

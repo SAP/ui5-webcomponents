@@ -79,3 +79,7 @@ ui5-date-picker,
     justify-content: space-between;
 }
 
+.hidebackdrop::backdrop {
+	background: transparent;
+}
+

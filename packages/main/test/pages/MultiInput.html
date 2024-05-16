@@ -421,7 +421,15 @@
 				list.appendChild(li);
 			});
 
-			document.getElementById("dialog").show();
+			document.getElementById("dialog").open = true;
+		});
+
+		document.getElementById("suggestion-token").addEventListener("ui5-change", function (event) {
+			var text = event.target.value;
+
+			addTokenToMI(createTokenFromText(text), "suggestion-token");
+
+			event.target.value = "";
 		});
 
 		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {
