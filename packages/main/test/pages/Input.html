@@ -681,7 +681,10 @@
 		openPickerInput.addEventListener("input", handleSuggestions);
 		openPickerInput.addEventListener("selection-change", handleSelection);
 		openPickerInput.addEventListener("click", handleHistory);
-		openPickerInput.addEventListener("focus", handleHistory);
+		openPickerInput.addEventListener("focus", () => {
+			handleHistory();
+			openPickerInput.open = true;
+		});
 
 		function handleSuggestions() {
 			fetch('https://dummyjson.com/users?select=firstName,lastName&limit=100')
@@ -744,7 +747,6 @@
 
 		function handleHistory() {
 			handleSuggestions();
-			openPickerInput.open = true;
 		}
 
 		document.getElementById("clear-button").addEventListener("click", event => {

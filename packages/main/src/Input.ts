@@ -262,16 +262,16 @@ type InputSuggestionScrollEventDetail = {
 })
 
 /**
- * Fired when the suggestions picker is opened.
+ * Fired when the suggestions picker is open.
  * @public
- * @since 2.0.0-rc.3
+ * @since 2.0.0
  */
 @event("open")
 
 /**
  * Fired when the suggestions picker is closed.
  * @public
- * @since 2.0.0-rc.3
+ * @since 2.0.0
  */
 @event("close")
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
@@ -441,10 +441,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	/**
 	 * Defines whether the suggestions picker is open.
-	 * Once the picker is open only the input field can close the picker internally.
+	 * The picker will not open if the `showSuggestions` property is set to `false`, the input is disabled or the input is readonly.
+	 * The picker will close automatically and `close` event will be fired if the input is not in the view port.
 	 * @default false
 	 * @public
-	 * @since rc.2.0.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	open!: boolean;
@@ -662,8 +663,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.closeValueStatePopover();
 		}
 
-		if (!this._isPhone) {
-			this.open = this.open || (hasValue && hasItems && isFocused && this.isTyping);
+		const preventOpenPicker = this.disabled || this.readonly;
+
+		if (preventOpenPicker) {
+			this.open = false;
+		} else if (!this._isPhone) {
+			this.open = hasItems && (this.open || (hasValue && isFocused && this.isTyping));
 		}
 
 		const value = this.value;
