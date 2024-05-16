@@ -135,8 +135,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the button text.
-	 * <b>Note:</b> It is highly recommended to use <b>iconEnd</b> property only together with icon and/or text.
-	 * Usage of endIcon only should be avoided.
+	 *
+	 * **Note:** It is highly recommended to use `endIcon` property only together with `icon` and/or `text` properties.
+	 * Usage of `endIcon` only should be avoided.
 	 *
 	 * The SAP-icons font provides numerous options.
 	 *
@@ -146,7 +147,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @public
 	 */
 	@property()
-	iconEnd!: string;
+	endIcon!: string;
 
 	/**
 	 * When set to `true`, the component will
@@ -260,7 +261,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasIconEnd!: boolean;
+	hasEndIcon!: boolean;
 
 	/**
 	 * Indicates if the element is focusable
@@ -358,7 +359,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		this.hasIcon = !!this.icon;
-		this.hasIconEnd = !!this.iconEnd;
+		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
@@ -472,8 +473,8 @@ class Button extends UI5Element implements IFormElement, IButton {
 		return IconMode.Decorative;
 	}
 
-	get iconEndMode() {
-		if (!this.iconEnd) {
+	get endIconMode() {
+		if (!this.endIcon) {
 			return "";
 		}
 

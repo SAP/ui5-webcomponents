@@ -59,16 +59,16 @@
 }
 
 .ui5-button-icon,
-.ui5-button-icon-end {
+.ui5-button-end-icon {
 	color: inherit;
 	flex-shrink: 0;
 }
 
-.ui5-button-icon-end {
+.ui5-button-end-icon {
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([icon-only]:not([has-icon-end])) .ui5-button-root {
+:host([icon-only]:not([has-end-icon])) .ui5-button-root {
 	min-width: auto;
 	padding: 0;
 }
@@ -89,7 +89,7 @@
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([has-icon-end]:not([has-icon]):empty) .ui5-button-icon-end {
+:host([has-end-icon]:not([has-icon]):empty) .ui5-button-end-icon {
 	margin-inline-start: 0;
 }
 
@@ -99,7 +99,7 @@
 	cursor: default;
 }
 
-:host([has-icon]:not([icon-only]):not([has-icon-end])) .ui5-button-text{
+:host([has-icon]:not([icon-only]):not([has-end-icon])) .ui5-button-text{
 	/* calculating the minimum width by removing the icon size  */
 	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
 }
