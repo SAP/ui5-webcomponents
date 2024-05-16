@@ -480,8 +480,8 @@ class NotificationListItem extends NotificationListItemBase {
 		this._showMorePressed = !this._showMorePressed;
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (isEnter(e)) {
 			this.fireItemPress(e);

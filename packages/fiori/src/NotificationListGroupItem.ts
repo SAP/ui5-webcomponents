@@ -197,8 +197,8 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		this.toggleCollapsed();
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		const space = isSpace(e);
 		const plus = isPlus(e);
@@ -223,6 +223,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 				this.toggleCollapsed();
 			}
 		}
+	}
+
+	getHeaderDomRef() {
+		return this.getDomRef()?.querySelector(".ui5-nli-group-header") as HTMLElement;
 	}
 }
 
