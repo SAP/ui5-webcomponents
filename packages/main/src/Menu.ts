@@ -265,7 +265,9 @@ class Menu extends UI5Element {
 	}
 
 	_openItemSubMenu(item: MenuItem) {
-		if (!item._popover) {
+		clearTimeout(this._timeout);
+
+		if (!item._popover || item._popover.open) {
 			return;
 		}
 
