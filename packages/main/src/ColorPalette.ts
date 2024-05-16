@@ -298,8 +298,6 @@ class ColorPalette extends UI5Element {
 					lastSelectedItem.selected = false;
 				}
 				lastSelectedItem = item;
-			} else {
-				item.selected = false;
 			}
 		});
 	}
