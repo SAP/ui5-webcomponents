@@ -8,6 +8,7 @@ import { IButton } from "./Button.js";
 import ListItemType from "./types/ListItemType.js";
 import type { ListItemAccessibilityAttributes as CustomOptionAccessibilityAttributes } from "./ListItem.js";
 import HighlightTypes from "./types/HighlightTypes.js";
+import { IOption } from "./Select.js";
 
 /**
  * @class
@@ -34,7 +35,7 @@ import HighlightTypes from "./types/HighlightTypes.js";
  * @deprecated
  */
 @event("detail-click")
-class OptionCustom extends CustomListItem {
+class OptionCustom extends CustomListItem implements IOption {
 	/**
 	 * Defines the text, displayed inside the `ui5-select` input filed
 	 * when the option gets selected.
@@ -105,6 +106,15 @@ class OptionCustom extends CustomListItem {
 	 */
 	@slot()
 	declare deleteButton: Array<IButton>;
+
+	/**
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
+	content!: Array<Node>;
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";

@@ -9,6 +9,7 @@ import ListItemType from "./types/ListItemType.js";
 import { IButton } from "./Button.js";
 import type { ListItemAccessibilityAttributes as OptionAccessibilityAttributes } from "./ListItem.js";
 import HighlightTypes from "./types/HighlightTypes.js";
+import { IOption } from "./Select.js";
 
 /**
  * @class
@@ -32,7 +33,7 @@ import HighlightTypes from "./types/HighlightTypes.js";
  * @deprecated
  */
 @event("detail-click")
-class Option extends StandardListItem {
+class Option extends StandardListItem implements IOption {
 	/**
 	 * Defines the text of the component.
 	 *

@@ -19,28 +19,22 @@ import {
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/information.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/error.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
+import "@ui5/webcomponents-icons/dist/information.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
-import Icon from "./Icon.js";
-import Label from "./Label.js";
-import type { ListItemClickEventDetail } from "./List.js";
 import List from "./List.js";
-import Popover from "./Popover.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
@@ -55,16 +49,21 @@ import {
 	SELECT_ROLE_DESCRIPTION,
 	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
+import Label from "./Label.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import Popover from "./Popover.js";
+import Icon from "./Icon.js";
+import Button from "./Button.js";
+import ListItemBase from "./ListItemBase.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
-import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
-import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
 // Styles
 import selectCss from "./generated/themes/Select.css.js";
-import ListItemBase from "./ListItemBase.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -73,10 +72,17 @@ type SelectLiveChangeEventDetail = {
 	selectedOption: IOption,
 }
 
+/**
+ * Interface for components that may be slotted inside `ui5-select` as options
+ * @public
+ */
 type IOption = ListItemBase & {
-	icon?: string,
-	value?: string,
-	effectiveDisplayText: string
+	tooltip: string,
+	icon?: string | null,
+	value: string,
+	additionalText?: string,
+	focused?: boolean,
+	effectiveDisplayText: string,
 }
 
 /**
@@ -137,7 +143,6 @@ type IOption = ListItemBase & {
 		ResponsivePopover,
 		Popover,
 		List,
-		CustomListItem,
 		Icon,
 		Button,
 	],
@@ -340,7 +345,7 @@ class Select extends UI5Element implements IFormInputElement {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
-			return selectedOption.hasAttribute("value") ? selectedOption.value as string : selectedOption.textContent;
+			return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
 		}
 
 		return "";
@@ -923,6 +928,7 @@ Select.define();
 
 export default Select;
 export type {
-	IOption, SelectChangeEventDetail,
+	IOption,
+	SelectChangeEventDetail,
 	SelectLiveChangeEventDetail,
 };

@@ -3,11 +3,11 @@
 	padding: 0;
 }
 
-.ui5-select-popover [ui5-li],
-.ui5-select-popover [ui5-li-custom] {
+.ui5-select-popover [ui5-option],
+.ui5-select-popover [ui5-option-custom] {
 	height: var(--_ui5_list_item_dropdown_base_height);
 }
 
-.ui5-select-popover [ui5-li]::part(icon) {
+.ui5-select-popover [ui5-option]::part(icon) {
 	color: var(--sapList_TextColor);
 }
