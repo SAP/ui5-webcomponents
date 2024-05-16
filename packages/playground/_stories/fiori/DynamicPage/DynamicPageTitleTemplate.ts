@@ -16,11 +16,11 @@ export default `<ui5-dynamic-page-title slot="titleArea">
             <ui5-breadcrumbs-item>Location</ui5-breadcrumbs-item>
         </ui5-breadcrumbs>
 
-        <ui5-title slot="expandedHeading">Expanded Heading</ui5-title>
+        <ui5-title slot="heading">Expanded Heading</ui5-title>
 
         <ui5-title slot="snappedHeading">Snapped Heading</ui5-title>
 
-        <div slot="expandedContent">
+        <div slot="content">
             <ui5-title level="H6"
                 >This is an expanded subheading</ui5-title
             >
@@ -38,14 +38,14 @@ export default `<ui5-dynamic-page-title slot="titleArea">
             ></ui5-toolbar-button>
         </ui5-toolbar>
 
-        <ui5-toolbar slot="actions">
+        <ui5-toolbar slot="actionsBar">
             <ui5-toolbar-button design="Transparent" text="Edit" overflow-priority="NeverOverflow"></ui5-toolbar-button>
             <ui5-toolbar-button design="Transparent" icon="delete"></ui5-toolbar-button>
             <ui5-toolbar-button design="Transparent" icon="copy"></ui5-toolbar-button>
             <ui5-toolbar-button design="Transparent" icon="share"></ui5-toolbar-button>
         </ui5-toolbar>
 
-        <ui5-toolbar slot="navigationActions">
+        <ui5-toolbar slot="navigationBar">
             <ui5-toolbar-button design="Transparent" icon="full-screen"></ui5-toolbar-button>
             <ui5-toolbar-button design="Transparent" icon="decline"></ui5-toolbar-button>
         </ui5-toolbar>

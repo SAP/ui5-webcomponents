@@ -121,7 +121,7 @@ class DynamicPage extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	headerSnapped!: boolean;
+	_headerSnapped!: boolean;
 
 	/**
 	 * Defines if the pin button is hidden.
@@ -219,7 +219,7 @@ class DynamicPage extends UI5Element {
 
 	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
-			this.dynamicPageTitle.snapped = this.headerSnapped;
+			this.dynamicPageTitle.snapped = this._headerSnapped;
 			this.dynamicPageTitle.toggleAttribute("interactive", this.showHeaderActions);
 		}
 	}
@@ -241,11 +241,11 @@ class DynamicPage extends UI5Element {
 	}
 
 	get actionsInTitle(): boolean {
-		return this.headerSnapped || this.showHeaderInStickArea || this.headerPinned;
+		return this._headerSnapped || this.showHeaderInStickArea || this.headerPinned;
 	}
 
 	get headerInTitle(): boolean {
-		return !this.headerSnapped && (this.showHeaderInStickArea || this.headerPinned);
+		return !this._headerSnapped && (this.showHeaderInStickArea || this.headerPinned);
 	}
 
 	get headerInContent(): boolean {
@@ -253,13 +253,13 @@ class DynamicPage extends UI5Element {
 	}
 
 	get _headerLabel() {
-		return this.headerSnapped
+		return this._headerSnapped
 			? DynamicPage.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_SNAPPED_HEADER)
 			: DynamicPage.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_EXPANDED_HEADER);
 	}
 
 	get _headerExpanded() {
-		return !this.headerSnapped;
+		return !this._headerSnapped;
 	}
 
 	get _accAttributesForHeaderActions() {
@@ -269,15 +269,23 @@ class DynamicPage extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return (this.headerSnapped || this.headerSnappedByInteraction) ? -1 : 0;
+		return (this._headerSnapped || this.headerSnappedByInteraction) ? -1 : 0;
 	}
 
 	get headerAriaHidden() {
-		return (this.headerSnapped || this.headerSnappedByInteraction);
+		return (this._headerSnapped || this.headerSnappedByInteraction);
 	}
 
 	get showHeaderActions() {
 		return this.headerArea.length > 0;
+	}
+
+	get headerSnapped() {
+		return this._headerSnapped;
+	}
+
+	set headerSnapped(snapped) {
+		this._toggleHeader();
 	}
 
 	snapOnScroll() {
@@ -300,12 +308,12 @@ class DynamicPage extends UI5Element {
 
 		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
 			this.showHeaderInStickArea = false;
-			this.headerSnapped = true;
+			this._headerSnapped = true;
 		} else {
-			this.headerSnapped = false;
+			this._headerSnapped = false;
 		}
 
-		this.dynamicPageTitle.snapped = this.headerSnapped;
+		this.dynamicPageTitle.snapped = this._headerSnapped;
 	}
 
 	async onExpandClick() {
@@ -336,13 +344,13 @@ class DynamicPage extends UI5Element {
 		}
 
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
-		this.headerSnapped = !this.headerSnapped;
-		this.headerSnappedByInteraction = this.headerSnapped;
+		this._headerSnapped = !this._headerSnapped;
+		this.headerSnappedByInteraction = this._headerSnapped;
 
 		this.skipSnapOnScroll = true;
 
 		await renderFinished();
-		if (this.headerSnapped && this.scrollContainer!.scrollTop < SCROLL_THRESHOLD) {
+		if (this._headerSnapped && this.scrollContainer!.scrollTop < SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
 		}
 	}
