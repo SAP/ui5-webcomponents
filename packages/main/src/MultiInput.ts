@@ -241,9 +241,14 @@ class MultiInput extends Input implements IFormInputElement {
 			return this._focusFirstToken(e);
 		}
 
-		if (isLeft(e) || isBackSpace(e)) {
+		if (isLeft(e)) {
 			this._skipOpenSuggestions = true;
 			return this._handleLeft(e);
+		}
+
+		if (isBackSpace(e)) {
+			this._skipOpenSuggestions = true;
+			return this._handleBackspace(e);
 		}
 
 		this._skipOpenSuggestions = false;
@@ -274,6 +279,19 @@ class MultiInput extends Input implements IFormInputElement {
 
 		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
 		if (((cursorPosition === null && !this.value) || cursorPosition === 0) && lastToken) {
+			e.preventDefault();
+			lastToken.focus();
+			this.tokenizer._itemNav.setCurrentItem(lastToken);
+		}
+	}
+
+	_handleBackspace(e: KeyboardEvent) {
+		const cursorPosition = this.getDomRef()!.querySelector(`input`)!.selectionStart;
+		const tokens = this.tokens;
+		const lastToken = tokens.length && tokens[tokens.length - 1];
+
+		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
+		if (((cursorPosition === null || cursorPosition === 0) && !this.value) && lastToken) {
 			e.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
