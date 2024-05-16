@@ -1,7 +1,5 @@
 {{#if options}}
 	<ui5-responsive-popover
-		{{!-- tabindex -1 is needed to keep the popover out of tab chain --}}
-		tabindex="-1"
 		hide-arrow
 		prevent-initial-focus
 		placement="Bottom"
@@ -54,8 +52,6 @@
 
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
-		{{!-- tabindex -1 is needed to keep the popover out of tab chain --}}
-		tabindex="-1"
 		skip-registry-update
 		prevent-initial-focus
 		prevent-focus-restore

@@ -319,6 +319,9 @@ class Select extends UI5Element implements IFormInputElement {
 	 * Defines the HTML element that will be displayed in the component input part,
 	 * representing the selected option.
 	 *
+	 * **Note:** If not specified and `ui5-option-custom` is used,
+	 * either the option's `display-text` or its textContent will be displayed.
+	 *
 	 * **Note:** If not specified and `ui5-option` is used,
 	 * the option's textContent will be displayed.
 	 * @public

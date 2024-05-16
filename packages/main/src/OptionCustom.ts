@@ -32,6 +32,7 @@ import { IOption } from "./Select.js";
 })
 /**
  * **Note:** The event is inherited and not supported. If used, it won't take any effect.
+ * @public
  * @deprecated
  */
 @event("detail-click")

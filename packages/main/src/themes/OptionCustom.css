@@ -1,7 +1,0 @@
-:host {
-	display: flex;
-	align-items: center;
-	height: var(--_ui5_list_item_base_height);
-	width: 100%;
-	padding: var(--_ui5_list_item_base_padding);
-}
