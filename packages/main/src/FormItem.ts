@@ -88,7 +88,7 @@ class FormItem extends UI5Element implements IFormItem {
 	 * @private
 	 */
 	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: FormItemSpacing;
+	itemSpacing!: `${FormItemSpacing}`;
 
 	get isGroup() {
 		return false;

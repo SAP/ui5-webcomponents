@@ -26,7 +26,7 @@ const StepColumn = {
 
 interface IFormItem extends HTMLElement {
 	labelSpan: string
-	itemSpacing: FormItemSpacing;
+	itemSpacing: `${FormItemSpacing}`;
 	readonly isGroup: boolean;
 	colsXl?: number;
 	colsL?: number;
@@ -191,7 +191,7 @@ class Form extends UI5Element {
 	 * @public
 	 */
 	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: FormItemSpacing;
+	itemSpacing!: `${FormItemSpacing}`;
 
 	/**
 	 * Defines the component header area.

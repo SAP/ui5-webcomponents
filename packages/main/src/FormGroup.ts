@@ -79,7 +79,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	colsXl!: number;
 
 	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: FormItemSpacing;
+	itemSpacing!: `${FormItemSpacing}`;
 
 	@property({ type: String, defaultValue: "S12 M4 L4 XL4" })
 	labelSpan!: string;
