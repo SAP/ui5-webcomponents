@@ -6,7 +6,9 @@ import NotificationListGroupItem from "./NotificationListGroupItem.js";
 /**
  * @class
  *
- * The ...
+ * TThe `ui5-notification-list` web component represents
+ * a container for `ui5-li-notification-group` and `ui5-li-notification`.
+ *
  * @constructor
  * @extends List
  * @since 2.0

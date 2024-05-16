@@ -126,6 +126,9 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 		const list = this.shadowRoot!.querySelector(`#${this._id}-notificationsList`) as List;
 		list.getEnabledItems = () => { return []; };
+		list._handleTabNext = () => { };
+		list.onForwardBefore = () => { };
+		list.onForwardAfter = () => { };
 	}
 
 	/**
