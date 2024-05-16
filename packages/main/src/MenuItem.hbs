@@ -8,22 +8,7 @@
 	{{#if text}}
 		<div class="ui5-menu-item-text">{{text}}</div>
 	{{/if}}
-	{{#if additionalText}}
-		{{#unless hasSubmenu}}
-			<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
-		{{/unless}}
-	{{/if}}
-{{/inline}}
 
-{{#*inline "iconBegin"}}
-	{{#if hasIcon}}
-		<ui5-icon class="ui5-li-icon" name="{{icon}}"></ui5-icon>
-	{{else if _siblingsWithIcon}}
-		<div class="ui5-menu-item-dummy-icon"></div>
-	{{/if}}
-{{/inline}}
-
-{{#*inline "iconEnd"}}
 	{{#if hasSubmenu}}
 		<div
 			class="ui5-menu-item-submenu-icon"
@@ -35,6 +20,17 @@
 			>
 			</ui5-icon>
 		</div>
+	{{else if additionalText}}
+		<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
+	{{/if}}
+
+{{/inline}}
+
+{{#*inline "iconBegin"}}
+	{{#if hasIcon}}
+		<ui5-icon class="ui5-li-icon" name="{{icon}}"></ui5-icon>
+	{{else if _siblingsWithIcon}}
+		<div class="ui5-menu-item-dummy-icon"></div>
 	{{/if}}
 {{/inline}}
 
