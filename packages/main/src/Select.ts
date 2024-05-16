@@ -337,7 +337,13 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
-		return this.value;
+		const selectedOption = this.selectedOption;
+
+		if (selectedOption) {
+			return selectedOption.hasAttribute("value") ? selectedOption.value as string : selectedOption.textContent;
+		}
+
+		return "";
 	}
 
 	constructor() {
