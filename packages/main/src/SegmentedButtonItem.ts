@@ -106,7 +106,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	icon!: string;
 
 	/**
-	 * Defines if a content has been added to the default slot
+	 * Defines if the button has icon and no text.
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -171,7 +171,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		}
 	}
 
-	onAfterRendering(): void {
+	onBeforeRendering(): void {
 		this.iconOnly = this.isIconOnly;
 	}
 
