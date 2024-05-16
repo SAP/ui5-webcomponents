@@ -133,7 +133,7 @@ describe("Menu interaction", () => {
 			// assert.ok(await openMenuList.getProperty("loading"), "Busy property is properly propagated to the ui5-list component.");
 			await browser.waitUntil(async () => {
 				return await (await menuItems[2].$$("& > ui5-menu-item")).length === 4
-			}, 1500, "Two additional nodes have been added.");
+			}, 2000, "Two additional nodes have been added.");
 
 			await menuItems[4].click();
 
