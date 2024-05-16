@@ -38,6 +38,12 @@ enum InputType {
 	 * @public
 	 */
 	URL = "URL",
+
+	/**
+	 * Used for input fields that should contain a search term.
+	 * @public
+	 */
+	Search = "Search",
 }
 
 export default InputType;
