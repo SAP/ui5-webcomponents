@@ -1,6 +1,6 @@
   <ul class="ui5-group-li-root" role="group">
     {{#if hasHeader}}
-      <ui5-li-group-header part="header">
+      <ui5-li-group-header part="header" ?focused="{{this.focused}}">
           {{#if hasFormattedHeader}}
             <slot name="header"></slot>
           {{else}}
