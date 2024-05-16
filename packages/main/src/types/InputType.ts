@@ -41,6 +41,7 @@ enum InputType {
 
 	/**
 	 * Used for input fields that should contain a search term.
+	 * @since 2.0.0
 	 * @public
 	 */
 	Search = "Search",
