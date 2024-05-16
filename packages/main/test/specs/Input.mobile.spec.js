@@ -206,6 +206,12 @@ describe("Property open", () => {
 
 	it("Suggestions dialog is open when attribute open is true", async () => {
 		const input = await browser.$("#input-suggestions-open");
+		await input.scrollIntoView();
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = true;
+		});
+		
 		const respPopover = await input.shadow$("ui5-responsive-popover");
 		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
 
