@@ -16,7 +16,7 @@ import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 /**
  * @class
  * A class to serve as a foundation
- * for the `ListItem` and `GroupHeaderListItem` classes.
+ * for the `ListItem` and `ListItemGroupHeader` classes.
  * @constructor
  * @abstract
  * @extends UI5Element
@@ -43,6 +43,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * Defines whether the item is movable.
 	 * @default false
 	 * @private
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	movable!: boolean;

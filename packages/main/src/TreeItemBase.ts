@@ -10,7 +10,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
-import type HasPopup from "./types/HasPopup.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -118,6 +117,15 @@ class TreeItemBase extends ListItem {
 	expanded!: boolean;
 
 	/**
+	 * Defines whether the item is movable.
+	 * @default false
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
+
+	/**
 	* Defines whether the selection of a tree node is displayed as partially selected.
 	*
 	* **Note:** The indeterminate state can be set only programmatically and can’t be achieved by user
@@ -151,7 +159,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Defines the state of the `additionalText`.
 	 *
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -243,7 +251,7 @@ class TreeItemBase extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this.accessibleRoleDescription ? undefined : TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
@@ -256,7 +264,7 @@ class TreeItemBase extends ListItem {
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
 			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
-			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
+			ariaHaspopup: this.accessibilityAttributes.hasPopup,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
@@ -284,8 +292,8 @@ class TreeItemBase extends ListItem {
 		this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {

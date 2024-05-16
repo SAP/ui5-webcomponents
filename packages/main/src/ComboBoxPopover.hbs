@@ -3,9 +3,10 @@
 	hide-arrow
 	placement="Bottom"
 	horizontal-align="Start"
+	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
-	@ui5-after-open={{_afterOpenPopover}}
-	@ui5-after-close={{_afterClosePopover}}
+	@ui5-open={{_afterOpenPopover}}
+	@ui5-close={{_afterClosePopover}}
 >
 	<ui5-busy-indicator
 		?active={{loading}}
@@ -70,7 +71,7 @@
 	>
 		{{#each _filteredItems}}
 			{{#if isGroupItem}}
-				<ui5-li-groupheader ?focused={{this.focused}}>{{ this.text }}</ui5-li-groupheader>
+				<ui5-li-group-header ?focused={{this.focused}}>{{ this.text }}</ui5-li-group-header>
 			{{else}}
 				{{> listItem}}
 			{{/if}}
@@ -91,7 +92,7 @@
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
@@ -125,6 +126,7 @@
 			.mappedItem={{this}}
 			?selected={{this.selected}}
 			?focused={{this.focused}}
+			data-ui5-stable="{{this.stableDomRef}}"
 	>
 		{{this.text}}
 	</ui5-li>

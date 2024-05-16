@@ -97,13 +97,22 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the state of the `additionalText`.
 	 *
-	 * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+	 * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
 	 * @default "None"
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	additionalTextState!: `${ValueState}`;
+
+	/**
+	 * Defines whether the item is movable.
+	 * @default false
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
 
 	/**
 	 * Defines the text alternative of the component.

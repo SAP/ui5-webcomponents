@@ -3,6 +3,178 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
+
+
+### chore
+
+* **Icons:** make pathData async ([#8785](https://github.com/SAP/ui5-webcomponents/issues/8785)) ([0549dc9](https://github.com/SAP/ui5-webcomponents/commit/0549dc95edae139f7a4f9efbbc7170922b3ab6cb))
+
+
+### Code Refactoring
+
+* rename ValueState values ([#8864](https://github.com/SAP/ui5-webcomponents/issues/8864)) ([ef9304d](https://github.com/SAP/ui5-webcomponents/commit/ef9304da4b1446178b1b2bfa737d9867461cc4bc))
+* **theming:** remove Belize theme ([#8519](https://github.com/SAP/ui5-webcomponents/issues/8519)) ([990313f](https://github.com/SAP/ui5-webcomponents/commit/990313fc8e429a491f4d6e67306d3df2703e54fe)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-*:** use unified API to define a11y attributes via `accessibilityAttributes` ([#8810](https://github.com/SAP/ui5-webcomponents/issues/8810)) ([49d587c](https://github.com/SAP/ui5-webcomponents/commit/49d587c73120a5511a34e61be949018605f49acd))
+
+
+### BREAKING CHANGES
+
+* **ui5-*:** FlexibleLayout's `accessibilityTexts` and `accessibilityRoles` properties are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+fcl.accessibilityTexts = {
+    startColumnAccessibleName: "Products list",
+    midColumnAccessibleName: "Product information",
+    endColumnAccessibleName: "Product detailed information",
+    startArrowLeftText: "Collapse products list",
+    startArrowRightText: "Expand products list",
+    endArrowLeftText: "Expand product detailed information",
+    endArrowRightText: "Collapse product detailed information",
+    startArrowContainerAccessibleName: "Start Arrow Container",
+    endArrowContainerAccessibleName: "End Arrow Container",
+}
+
+fcl.accessibilityRoles = {
+    startColumnRole: "complementary",
+    startArrowContainerRole: "navigation",
+    midColumnRole: "main",
+    endArrowContainerRole: "navigation",
+    endColumnRole: "complementary".
+}
+```
+Now use `accessibilityAttributes` instead:
+```js
+fcl.accessibilityAttributes = {
+    startColumn: {
+      role: "complementary",
+      name: "Products list",
+    },
+    midColumn: {
+      role: "main",
+      name: "Product information",
+    },
+    endColumn: {
+      role: "complementary",
+      name: "Product detailed information",
+    },
+    startArrowLeft:  {
+      name: "Collapse products list",
+    },
+    startArrowRight: {
+      name: "Expand products list",
+    },
+    endArrowLeft: {
+      name: "Expand product detailed information",
+    },
+    endArrowRight:  {
+      name: "Collapse product detailed information",
+    },
+    startArrowContainer: {
+      role: "navigation",
+      name: "Start Arrow Container",
+    },
+    endArrowContainer: {
+      role: "navigation",
+      name: "End Arrow Container",
+    },
+};
+```
+
+ShellBar's `accessibilityTexts` and `accessibilityRoles` properties are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+shellbar.accessibilityTexts = {
+    profileButtonTitle: "John Dow",
+    logoTitle: "Custom logo title",
+}
+
+shellbar.accessibilityRoles = {
+    logoRole: "link"
+};
+```
+Now use `accessibilityAttributes` instead:
+```js
+shellbar.accessibilityAttributes = {
+  profile: {
+    name:  "John Dow",
+  },
+  logo: {
+    role: "link"
+    name: "Custom logo title"
+  },
+};
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+
+				
+* If you previously used ValueState.Warning, ValueState.Error or ValueState.Success, start using ValueState.Critical, ValueState.Negative and ValueState.Positive respectively. 
+All components with valueState property are also affected. For example:
+```html
+<ui5-input value-state="Success"></ui5-input>
+<ui5-input value-state="Warning"></ui5-input>
+<ui5-input value-state="Error"></ui5-input>
+```
+```html
+<ui5-input value-state="Positive"></ui5-input>
+<ui5-input value-state="Critical"></ui5-input>
+<ui5-input value-state="Negative"></ui5-input>
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* **theming:** Remove SAP Belize theme
+* **Icons:** UI5 Web Components Icons now export `getPathData` (function) instead of `pathData` (string)
+
+If you used icons like this:
+
+```js
+import "@ui5/webcomponents-icons/dist/accept.js";
+```
+
+or like this:
+
+```js
+import accept from "@ui5/webcomponents-icons/dist/accept.js";
+```
+
+**there is no change and no adaptations are required**.
+
+In the rare case you imported `pathData` from icons, for example:
+
+```js
+import { pathData, ltr, accData } from "@ui5/webcomponents-icons/dist/accept.js";
+console.log(pathData); // String containing the SVG path
+```
+
+you must change your code to, for example:
+
+```js
+import { getPathData, ltr, accData } from "@ui5/webcomponents-icons/dist/accept.js";
+getPathData().then(pathData => {
+  console.log(pathData); // String containing the SVG path
+});
+```
+
+
+
+
+
+# [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* **u5-dialog:** soft keyboard is correctly opened on iOS devices ([#8583](https://github.com/SAP/ui5-webcomponents/issues/8583)) ([6cf1d74](https://github.com/SAP/ui5-webcomponents/commit/6cf1d746e59352430d0d086cf0814dc7ce7fdb9c))
+* **ui5-popover:** fix popover going out of the viewport ([#8735](https://github.com/SAP/ui5-webcomponents/issues/8735)) ([bca8f2a](https://github.com/SAP/ui5-webcomponents/commit/bca8f2a3ff15d002ce778bf85e1d2dd8da789059))
+
+
+### Features
+
+* **ui5-li:** add support for F2 key ([#8619](https://github.com/SAP/ui5-webcomponents/issues/8619)) ([24c3807](https://github.com/SAP/ui5-webcomponents/commit/24c380758f88b3f66dce46e2f57297634b42a85a)), closes [#7736](https://github.com/SAP/ui5-webcomponents/issues/7736)
+
+
+
+
+
 # [2.0.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2024-04-11)
 
 

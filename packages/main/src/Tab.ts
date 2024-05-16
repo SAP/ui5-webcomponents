@@ -6,6 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -149,9 +150,6 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	movable!: boolean;
 
 	@property({ type: Boolean })
-	forcedSelected!: boolean;
-
-	@property({ type: Boolean })
 	_isTopLevelTab!: boolean;
 
 	@property({ type: Object, defaultValue: null })
@@ -190,6 +188,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_isInline?: boolean;
 	_forcedMixedMode?: boolean;
 	_getElementInStrip?: () => HTMLElement | undefined;
+	_getElementInOverflow?: () => HTMLElement | undefined;
 	_individualSlot!: string;
 	_forcedPosinset?: number;
 	_forcedSetsize?: number;
@@ -259,6 +258,12 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		return willShowContent(this.content);
 	}
 
+	get expandBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
+	}
+
 	receiveStripInfo({
 		getElementInStrip, posinset, setsize, isInline, isTopLevelTab, mixedMode,
 	}: TabContainerStripInfo) {
@@ -270,7 +275,8 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		this._isTopLevelTab = !!isTopLevelTab;
 	}
 
-	receiveOverflowInfo({ style }: TabContainerOverflowInfo) {
+	receiveOverflowInfo({ getElementInOverflow, style }: TabContainerOverflowInfo) {
+		this._getElementInOverflow = getElementInOverflow;
 		this._forcedStyleInOverflow = style;
 	}
 
@@ -288,10 +294,10 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	}
 
 	getFocusDomRef() {
-		let focusedDomRef = super.getFocusDomRef();
+		let focusedDomRef = this._getElementInOverflow?.();
 
-		if (this._getElementInStrip && this._getElementInStrip()) {
-			focusedDomRef = this._getElementInStrip()!;
+		if (!focusedDomRef) {
+			focusedDomRef = this._getElementInStrip?.();
 		}
 
 		return focusedDomRef;
@@ -320,7 +326,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 
 	get effectiveSelected() {
 		const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
-		return this.selected || this.forcedSelected || subItemSelected;
+		return this.selected || this._selectedTabReference === this || subItemSelected;
 	}
 
 	get effectiveHidden() {

@@ -9,11 +9,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
@@ -71,6 +73,8 @@ const offsets = {
 		[AvatarGroupType.Group]: "-2.75rem",
 	},
 };
+
+type AvatarGroupAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 type AvatarGroupClickEventDetail = {
 	targetRef: HTMLElement,
@@ -184,15 +188,18 @@ class AvatarGroup extends UI5Element {
 	type!: `${AvatarGroupType}`;
 
 	/**
-	 * Defines the aria-haspopup value of the component on:
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following field is supported:
 	 *
-	 * -  the whole container when `type` property is `Group`
-	 * -  the default "More" overflow button when `type` is `Individual`
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	 @property({ type: Object })
+	 accessibilityAttributes!: AvatarGroupAccessibilityAttributes;
 
 	/**
 	 * @private
@@ -393,6 +400,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+
 		ResizeHandler.register(this, this._onResizeHandler);
 	}
 
@@ -572,11 +583,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		if (this.ariaHaspopup === "") {
-			return;
-		}
-
-		return this.ariaHaspopup;
+		return this.accessibilityAttributes.hasPopup;
 	}
 }
 
@@ -585,5 +592,6 @@ AvatarGroup.define();
 export default AvatarGroup;
 export type {
 	AvatarGroupClickEventDetail,
+	AvatarGroupAccessibilityAttributes,
 	IAvatarGroupItem,
 };

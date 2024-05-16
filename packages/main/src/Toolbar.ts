@@ -13,6 +13,7 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -25,7 +26,6 @@ import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
-import HasPopup from "./types/HasPopup.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
@@ -263,7 +263,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: HasPopup.Menu.toLowerCase(),
+					hasPopup: AriaHasPopup.Menu.toLowerCase(),
 				},
 			},
 		};
@@ -324,18 +324,19 @@ class Toolbar extends UI5Element {
 	 */
 	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
-		return overflowPopover!.isOpen();
+		return overflowPopover!.open;
 	}
 
 	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.showAt(this.overflowButtonDOM!);
+		overflowPopover!.opener = this.overflowButtonDOM!;
+		overflowPopover!.open = true;
 		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.close();
+		overflowPopover!.open = false;
 	}
 
 	toggleOverflow() {
@@ -486,9 +487,10 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			const eventType: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
-			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
+			const eventType = e.type;
+			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
+			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
+			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
 				return;

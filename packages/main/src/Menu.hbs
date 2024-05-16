@@ -8,9 +8,9 @@
 	allow-target-overlap
 	?sub-menu={{_isSubMenu}}
 	@ui5-before-open={{_beforePopoverOpen}}
-	@ui5-after-open={{_afterPopoverOpen}}
+	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
-	@ui5-after-close={{_afterPopoverClose}}
+	@ui5-close={{_afterPopoverClose}}
 >
 {{#if isPhone}}
 	<div
@@ -22,7 +22,7 @@
 			icon="nav-back"
 			class="ui5-menu-back-button"
 			design="Transparent"
-			aria-label="{{labelBack}}"
+			accessible-name="{{labelBack}}"
 			@click={{_navigateBack}}
 		>
 		</ui5-button>
@@ -37,7 +37,7 @@
 		<ui5-button
 			icon="decline"
 			design="Transparent"
-			aria-label="{{labelClose}}"
+			accessible-name="{{labelClose}}"
 			@click={{_closeAll}}
 		>
 		</ui5-button>
@@ -50,12 +50,12 @@
 		<ui5-list
 			id="{{_id}}-menu-list"
 			selection-mode="None"
-			?busy="{{busy}}"
-			busy-delay="{{busyDelay}}"
+			?loading="{{loading}}"
+			loading-delay="{{loadingDelay}}"
 			separators="None"
-			accessible-role="menu"
+			accessible-role="Menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 		>
 		{{#each _currentItems}}
 			<ui5-menu-li
@@ -64,7 +64,7 @@
 				id="{{../_id}}-menu-item-{{@index}}"
 				.icon="{{this.item.icon}}"
 				accessible-name={{this.item.ariaLabelledByText}}
-				accessible-role="menuitem"
+				accessible-role="MenuItem"
 				.additionalText="{{this.item._additionalText}}"
 				tooltip="{{this.item.tooltip}}"
 				selected="{{this.item.subMenuOpened}}"
@@ -80,12 +80,12 @@
 			</ui5-menu-li>
 		{{/each}}
 		</ui5-list>
-	{{else if busy}}
+	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
-			delay="{{busyDelay}}"
+			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_busyMouseOver}}"
+			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}

@@ -23,7 +23,6 @@ const Template: UI5StoryArgs<IllustratedMessage, StoryArgsSlots> = (
     subtitle-text="${ifDefined(args.subtitleText)}"
     title-text="${ifDefined(args.titleText)}"
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
-    title-level="${ifDefined(args.titleLevel)}"
 >
     ${unsafeHTML(args.title)}
 	${unsafeHTML(args.subtitle)}
@@ -57,10 +56,10 @@ export const WithADialog: StoryFn = () => html`
         const dialog = document.getElementById("hello-dialog");
         const dialogCloser = document.getElementById("closeDialogButton");
         dialogOpener.addEventListener("click", function () {
-            dialog.show();
+            dialog.open = true;
         });
         dialogCloser.addEventListener("click", function () {
-            dialog.close();
+            dialog.open = false;
         });
     </script>
 `;
@@ -79,8 +78,4 @@ CustomTitle.args = {
 	`,
     default: `
 	<ui5-button icon="refresh">Try again</ui5-button>`,
-};
-
-CustomTitle.parameters = {
-	controls: { exclude: ['titleLevel'] },
 };

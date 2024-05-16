@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -29,6 +30,8 @@ import AvatarColorScheme from "./types/AvatarColorScheme.js";
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
+
+type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
  * @class
@@ -191,12 +194,18 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	accessibleName!: string;
 
 	/**
-	 * Defines the aria-haspopup value of the component when `interactive` property is `true`.
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following field is supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	@property({ type: Object })
+	accessibilityAttributes!: AvatarAccessibilityAttributes;
 
 	@property({ noAttribute: true })
 	forcedTabIndex!: string;
@@ -218,7 +227,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Defines the optional badge that will be used for visual affordance.
 	 *
 	 * **Note:** While the slot allows for custom badges, to achieve
-	 * the Fiori design, please use `ui5-badge` with `ui5-icon`
+	 * the Fiori design, you can use the `ui5-tag` with `ui5-icon`
 	 * in the corresponding `icon` slot, without text nodes.
 	 * @public
 	 * @since 1.7.0
@@ -400,14 +409,19 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	_getAriaHasPopup() {
-		if (!this._interactive || this.ariaHaspopup === "") {
+		const ariaHaspopup = this.accessibilityAttributes.hasPopup;
+
+		if (!this._interactive || !ariaHaspopup) {
 			return;
 		}
 
-		return this.ariaHaspopup;
+		return ariaHaspopup;
 	}
 }
 
 Avatar.define();
 
 export default Avatar;
+export type {
+	AvatarAccessibilityAttributes,
+};

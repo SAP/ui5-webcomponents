@@ -87,12 +87,12 @@ MultipleUI5SelectComponents.args = {
 				<ui5-toolbar-select-option>Belarus</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option>Belgium</ui5-toolbar-select-option>
 			</ui5-toolbar-select>
-			<ui5-toolbar-select value-state="Success" width="auto">
+			<ui5-toolbar-select value-state="Positive" width="auto">
 				<ui5-toolbar-select-option icon="meal" selected="">Apple</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option icon="meal">Avocado</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option icon="meal">Mango</ui5-toolbar-select-option>
 			</ui5-toolbar-select>
-			<ui5-toolbar-select value-state="Warning" width="auto">
+			<ui5-toolbar-select value-state="Critical" width="auto">
 				<ui5-toolbar-select-option icon="meal">Orange</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option icon="meal" selected="">Pumpkin</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option icon="meal">Carrot</ui5-toolbar-select-option>
@@ -107,7 +107,7 @@ MultipleUI5SelectComponents.args = {
 					message - 2. Extra long text used as an information message - 3.
 				</div>
 			</ui5-toolbar-select>
-			<ui5-toolbar-select value-state="Error">
+			<ui5-toolbar-select value-state="Negative">
 				<ui5-toolbar-select-option icon="meal">Strawberry</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option icon="meal">Tomato</ui5-toolbar-select-option>
 				<ui5-toolbar-select-option icon="meal" selected="">Red Chili Pepper</ui5-toolbar-select-option>

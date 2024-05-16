@@ -79,8 +79,8 @@ type SelectMenuChange = {
 	},
 })
 @event("before-open")
-@event("after-open")
-@event("after-close")
+@event("open")
+@event("close")
 @event<SelectMenuChange>("menu-change", {
 	detail: {
 		text: { type: String },
@@ -155,8 +155,9 @@ class SelectMenu extends UI5Element {
 	/**
 	 * Closes the dropdown.
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		this.respPopover.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+	close(preventFocusRestore = false) {
+		this.respPopover.preventFocusRestore = preventFocusRestore;
+		this.respPopover.open = false;
 	}
 
 	onBeforeRendering() {
@@ -221,11 +222,11 @@ class SelectMenu extends UI5Element {
 	}
 
 	_onAfterOpen() {
-		this.fireEvent<CustomEvent>("after-open");
+		this.fireEvent<CustomEvent>("open");
 	}
 
 	_onAfterClose() {
-		this.fireEvent<CustomEvent>("after-close");
+		this.fireEvent<CustomEvent>("close");
 	}
 
 	_onCloseBtnClick() {
@@ -244,9 +245,9 @@ class SelectMenu extends UI5Element {
 		return {
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 			popover: {
@@ -268,9 +269,9 @@ class SelectMenu extends UI5Element {
 
 	get _valueStateMessageInputIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 

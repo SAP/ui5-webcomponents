@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -49,8 +49,9 @@ import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
-import type { TabSeparatorInStrip } from "./TabSeparator.js";
+import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
+import CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -81,6 +82,7 @@ type TabContainerStripInfo = {
 }
 
 type TabContainerOverflowInfo = {
+	getElementInOverflow: () => HTMLElement | undefined;
 	style: Record<string, any>;
 }
 
@@ -171,6 +173,7 @@ interface ITab extends UI5Element {
 		List,
 		ResponsivePopover,
 		DropIndicator,
+		CustomListItem,
 	],
 })
 /**
@@ -397,13 +400,12 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected tab
-		const selectedTabs = this._itemsFlat.filter((tab): tab is Tab => !tab.isSeparator && (tab as Tab).selected);
-		if (selectedTabs.length) {
-			this._selectedTab.forcedSelected = false;
-			this._selectedTab = selectedTabs[0];
+		const selectedTab = this._itemsFlat.find((tab): tab is Tab => !tab.isSeparator && (tab as Tab).selected);
+
+		if (selectedTab) {
+			this._selectedTab = selectedTab;
 		} else {
 			this._selectedTab = this._itemsFlat[0] as Tab;
-			this._selectedTab.forcedSelected = true;
 		}
 
 		walk(this.items, item => {
@@ -731,6 +733,14 @@ class TabContainer extends UI5Element {
 		return <TabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
+	_findTabInOverflow(realTab: ITab) {
+		if (!this.responsivePopover!.open) {
+			return undefined;
+		}
+
+		return ((this.responsivePopover!.content[0] as List).items as Array<TabInOverflow | TabSeparatorInOverflow>).find(item => item.realTabReference === realTab);
+	}
+
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
@@ -825,14 +835,9 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected property on all items
-		this._itemsFlat!.forEach((item, index) => {
+		this._itemsFlat!.forEach(item => {
 			if (!item.isSeparator) {
-				const selected = selectedTabIndex === index;
-				(item as Tab).selected = selected;
-
-				if ((item as Tab).forcedSelected) {
-					(item as Tab).forcedSelected = false;
-				}
+				(item as Tab).selected = item === selectedTab;
 			}
 		});
 	}
@@ -882,27 +887,22 @@ class TabContainer extends UI5Element {
 		await this._togglePopover(opener, true);
 	}
 
-	_setIndentLevels(items: Array<ITab>, level: number, extraIndent: boolean) {
-		items.forEach(item => {
-			item.receiveOverflowInfo({
-				style: {
-					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
-					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
-				},
-			});
-
-			if (item.items) {
-				this._setIndentLevels(item.items, level + 1, extraIndent);
-			}
-		});
-	}
-
 	_sendOverflowPresentationInfos(items: Array<ITab>) {
 		const extraIndent = items
 			.filter((item): item is Tab => !item.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
-		this._setIndentLevels(this.items, 0, extraIndent);
+		walk(items, (item, level) => {
+			item.receiveOverflowInfo({
+				getElementInOverflow: () => {
+					return this._findTabInOverflow(item);
+				},
+				style: {
+					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
+					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
+				},
+			});
+		});
 	}
 
 	async _onOverflowKeyDown(e: KeyboardEvent) {
@@ -1279,7 +1279,7 @@ class TabContainer extends UI5Element {
 	async _togglePopover(opener: HTMLElement, setInitialFocus = false) {
 		this.responsivePopover = await this._respPopover();
 
-		if (this.responsivePopover.isOpen()) {
+		if (this.responsivePopover.open) {
 			this._closePopover();
 		} else {
 			await this._showPopoverAt(opener, setInitialFocus);
@@ -1296,7 +1296,9 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this._hasScheduledPopoverOpen) {
-			await this.responsivePopover.showAt(opener, preventInitialFocus);
+			this.responsivePopover.preventInitialFocus = preventInitialFocus;
+			this.responsivePopover.opener = opener;
+			this.responsivePopover.open = true;
 		}
 	}
 
@@ -1339,7 +1341,9 @@ class TabContainer extends UI5Element {
 
 	_closePopover() {
 		this._hasScheduledPopoverOpen = false;
-		this.responsivePopover?.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
 	get dropIndicatorDOM(): DropIndicator | null {
@@ -1420,6 +1424,12 @@ class TabContainer extends UI5Element {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_SUBTABS_DESCRIPTION);
 	}
 
+	get overflowBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
+	}
+
 	get tablistAriaDescribedById() {
 		return this.hasItems ? `${this._id}-invisibleText` : undefined;
 	}
@@ -1443,13 +1453,17 @@ const getTabInStrip = (el: HTMLElement | null) => {
 	return false;
 };
 
-const walk = (items: Array<ITab>, callback: (_: ITab) => void) => {
+const _walk = (items: Array<ITab>, callback: (arg0: ITab, arg1: number) => void, level: number) => {
 	[...items].forEach(item => {
-		callback(item);
+		callback(item, level);
 		if (item.hasAttribute("ui5-tab") && item.items) {
-			walk(item.items, callback);
+			_walk(item.items, callback, level + 1);
 		}
 	});
+};
+
+const walk = (items: Array<ITab>, callback: (arg0: ITab, arg1: number) => void) => {
+	_walk(items, callback, 0);
 };
 
 TabContainer.define();
