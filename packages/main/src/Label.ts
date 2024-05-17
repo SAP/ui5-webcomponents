@@ -81,10 +81,10 @@ class Label extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 * @default "None"
+	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
 	wrappingType!: `${WrappingType}`;
 
 	static i18nBundle: I18nBundle;

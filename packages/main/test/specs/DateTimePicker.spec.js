@@ -1,22 +1,22 @@
 import { assert } from "chai";
 
-const openPickerById = async (id, options) => {
+const openPickerById = async (id) => {
 	await browser.$(`#${id}`).scrollIntoView();
 
-	return browser.executeAsync((id, options, done) => {
-		done(document.querySelector(`[id="${id}"]`).openPicker(options));
-	}, id, options);
+	return browser.executeAsync((id, done) => {
+		done(document.querySelector(`[id="${id}"]`).open = true);
+	}, id);
 };
 
-const closePickerById = id => {
+const closePickerById = async (id) => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`[id="${id}"]`).closePicker());
+		done(document.querySelector(`[id="${id}"]`).open = false);
 	}, id);
 };
 
 const isPickerOpen = id => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`[id="${id}"]`).isOpen());
+		done(document.querySelector(`[id="${id}"]`).open);
 	}, id);
 };
 

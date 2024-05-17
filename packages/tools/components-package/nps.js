@@ -89,7 +89,7 @@ const getScripts = (options) => {
 				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
-			bundle: `vite build ${viteConfig}`,
+			bundle: `vite build ${viteConfig} --mode testing`,
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},

@@ -12,14 +12,14 @@ const mediaGallery = document.querySelector(".container > ui5-media-gallery");
 const closeDialogButton = document.getElementById("closeDialogButton");
 
 closeDialogButton.addEventListener("click", () => {
-    mediaGalleryDialog.close();
+    mediaGalleryDialog.open = false;
 });
 mediaGallery.addEventListener("overflow-click", (event) => {
-    mediaGalleryDialog.show();
+    mediaGalleryDialog.open = true;
 });
 mediaGallery.addEventListener(
     "display-area-click",
     (event) => {
-        mediaGalleryDialog.show();
+        mediaGalleryDialog.open = true;
     }
 );

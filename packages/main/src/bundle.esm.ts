@@ -115,6 +115,9 @@ import DatePicker from "./DatePicker.js";
 import DateRangePicker from "./DateRangePicker.js";
 import DateTimePicker from "./DateTimePicker.js";
 import Dialog from "./Dialog.js";
+import Form from "./Form.js";
+import FormItem from "./FormItem.js";
+import FormGroup from "./FormGroup.js";
 import FileUploader from "./FileUploader.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
@@ -174,7 +177,6 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
 
 // Features
-import "./features/InputElementsFormSupport.js";
 import "./features/ColorPaletteMoreColors.js";
 import "./features/InputSuggestions.js";
 
