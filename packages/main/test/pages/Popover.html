@@ -26,6 +26,12 @@
 
 <body class="popover2auto">
 	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
+	<div id="host">
+		<template shadowrootmode="open">
+			<span>I'm in the shadow DOM</span>
+			<iframe id="clickThisIframeInsideShadowRoot" src="//localhost:8080"></iframe>
+		</template>
+	</div>
 	<ui5-button id="btn">Click me !</ui5-button>
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">

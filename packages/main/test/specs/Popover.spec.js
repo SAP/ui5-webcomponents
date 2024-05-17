@@ -363,6 +363,20 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests clicking on an iframe inside a shadow root closes the popover", async () => {
+		const btnOpenPopover = await browser.$("#btn");
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#pop");
+		const iframe = await browser.$("#host").shadow$("#clickThisIframeInsideShadowRoot");
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await iframe.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
 	it("Test initial focus when content is provided after the header and footer", async () => {
 		const listContainerItem = await browser.$("#popoverFocusButton");
 		await listContainerItem.scrollIntoView();
