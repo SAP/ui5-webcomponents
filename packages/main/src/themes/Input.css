@@ -1,5 +1,6 @@
 @import "./FormComponents.css";
 @import "./InvisibleTextStyles.css";
+@import "./InputSharedStyles.css";
 @import "./InputIcon.css";
 
 :host(:not([hidden])) {
@@ -84,14 +85,6 @@
 	transition: border-color .2s ease-in-out;
 	border-radius: var(--_ui5_input_border_radius);
 	overflow: hidden;
-}
-
-:host([disabled]) {
-	opacity: var(--_ui5_input_disabled_opacity);
-	cursor: default;
-	pointer-events: none;
-	background-color: var(--_ui5-input_disabled_background);
-	border-color: var(--_ui5_input_disabled_border_color);
 }
 
 :host([disabled]) .ui5-input-root::before,
@@ -219,12 +212,6 @@
 	border-radius: var(--_ui5_input_border_radius);
 }
 
-:host([readonly]:not([disabled])) {
-	border-color: var(--_ui5_input_readonly_border_color);
-	background: var(--sapField_ReadOnly_BackgroundStyle);
-	background-color: var(--_ui5_input_readonly_background);
-}
-
 :host([value-state="None"]:not([readonly]):hover),
 :host(:not([value-state]):not([readonly]):hover) {
 	border: var(--_ui5_input_hover_border);
@@ -260,13 +247,6 @@
 	font-weight: var(--_ui5_input_warning_font_weight);
 }
 
-:host([value-state="Negative"]:not([readonly]):not([disabled])) {
-	background: var(--sapField_InvalidBackgroundStyle);
-	background-color: var(--sapField_InvalidBackground);
-	border-color: var(--_ui5_input_value_state_error_border_color);
-	box-shadow: var(--sapField_InvalidShadow);
-}
-
 :host([value-state="Negative"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_error_background);
 	border-color: var(--_ui5_input_focused_value_state_error_border_color);
@@ -292,13 +272,6 @@
 	border-style: var(--_ui5_input_error_warning_border_style);
 }
 
-:host([value-state="Critical"]:not([readonly]):not([disabled])) {
-	background: var(--sapField_WarningBackgroundStyle);
-	background-color: var(--sapField_WarningBackground);
-	border-color: var(--_ui5_input_value_state_warning_border_color);
-	box-shadow: var(--sapField_WarningShadow);
-}
-
 :host([value-state="Critical"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_warning_background);
 	border-color: var(--_ui5_input_focused_value_state_warning_border_color);
@@ -316,14 +289,6 @@
 :host([value-state="Critical"]:not([readonly])[focused][opened]:hover)  {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--sapField_Hover_WarningShadow);
-}
-
-:host([value-state="Positive"]:not([readonly]):not([disabled])) {
-	background: var(--sapField_SuccessBackgroundStyle);
-	background-color: var(--sapField_SuccessBackground);
-	border-color: var(--_ui5_input_value_state_success_border_color);
-	border-width: var(--_ui5_input_value_state_success_border_width);
-	box-shadow: var(--sapField_SuccessShadow);
 }
 
 :host([value-state="Positive"][focused]:not([opened]):not([readonly])) {
@@ -345,14 +310,6 @@
 	box-shadow: var(--sapField_Hover_SuccessShadow);
 }
 
-:host([value-state="Information"]:not([readonly]):not([disabled])) {
-	background: var(--sapField_InformationBackgroundStyle);
-	background-color: var(--sapField_InformationBackground);
-	border-color: var(--_ui5_input_value_state_information_border_color);
-	border-width: var(--_ui5_input_information_border_width);
-	box-shadow: var(--sapField_InformationShadow);
-}
-
 :host([value-state="Information"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_information_background);
 	border-color: var(--_ui5_input_focused_value_state_information_border_color);
@@ -369,128 +326,31 @@
 }
 
 /* Input Icon */
-
-.ui5-input-icon-root {
-	min-width: var(--_ui5_input_icon_min_width);
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-/* TODO: Remove this after parser is fixed
-	-	this statement is transformed to [ui5-multi-combobox] [ui5-icon] which
-	affects all icons in the combobox incuding these in the list items
-*/
-::slotted([ui5-icon][slot="icon"]) {
-	align-self: start;
-	padding: var(--_ui5_input_custom_icon_padding);
-	/* Normalize like libraries overrule the selector, thefore we need !important */
-	box-sizing: content-box !important;
-}
-
-:host([value-state="Negative"]) .inputIcon,
-:host([value-state="Critical"]) .inputIcon{
-	padding: var(--_ui5_input_error_warning_icon_padding);
-}
-
-:host([value-state="Negative"][focused]) .inputIcon,
-:host([value-state="Critical"][focused]) .inputIcon{
-	padding: var(--_ui5_input_error_warning_focused_icon_padding);
-}
-
-:host([value-state="Information"]) .inputIcon {
-	padding: var(--_ui5_input_information_icon_padding);
-}
-
-:host([value-state="Information"][focused]) .inputIcon {
-	padding: var(--_ui5_input_information_focused_icon_padding);
-}
-
-:host([value-state="Negative"]) ::slotted(.inputIcon[ui5-icon]),
-:host([value-state="Negative"]) ::slotted([ui5-icon][slot="icon"]),
-:host([value-state="Critical"]) ::slotted([ui5-icon][slot="icon"]) {
-	padding: var(--_ui5_input_error_warning_custom_icon_padding);
-}
-
-:host([value-state="Negative"][focused]) ::slotted(.inputIcon[ui5-icon]),
-:host([value-state="Negative"][focused]) ::slotted([ui5-icon][slot="icon"]),
-:host([value-state="Critical"][focused]) ::slotted([ui5-icon][slot="icon"]) {
-	padding: var(--_ui5_input_error_warning_custom_focused_icon_padding);
-}
-
-:host([value-state="Information"]) ::slotted([ui5-icon][slot="icon"]) {
-	padding: var(--_ui5_input_information_custom_icon_padding);
-}
-
-:host([value-state="Information"][focused]) ::slotted([ui5-icon][slot="icon"]) {
-	padding: var(--_ui5_input_information_custom_focused_icon_padding);
-}
-
-:host([value-state="Negative"]) .inputIcon:active,
-:host([value-state="Negative"]) .inputIcon[pressed] {
-	box-shadow: var(--_ui5_input_error_icon_box_shadow);
-	color: var(--_ui5_input_icon_error_pressed_color);
-}
-
-:host([value-state="Negative"]) .inputIcon:not([pressed]):not(:active):hover {
-	box-shadow: var(--_ui5_input_error_icon_box_shadow);
-}
-
-:host([value-state="Critical"]) .inputIcon:active,
-:host([value-state="Critical"]) .inputIcon[pressed] {
-	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
-	color: var(--_ui5_input_icon_warning_pressed_color);
-}
-
-:host([value-state="Critical"]) .inputIcon:not([pressed]):not(:active):hover {
-	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
-}
-
-:host([value-state="Information"]) .inputIcon:active,
-:host([value-state="Information"]) .inputIcon[pressed] {
-	box-shadow: var(--_ui5_input_information_icon_box_shadow);
-	color: var(--_ui5_input_icon_information_pressed_color);
-}
-
-:host([value-state="Information"]) .inputIcon:not([pressed]):not(:active):hover {
-	box-shadow: var(--_ui5_input_information_icon_box_shadow);
-}
-
-:host([value-state="Positive"]) .inputIcon:active,
-:host([value-state="Positive"]) .inputIcon[pressed] {
-	box-shadow: var(--_ui5_input_success_icon_box_shadow);
-	color: var(--_ui5_input_icon_success_pressed_color);
-}
-
-:host([value-state="Positive"]) .inputIcon:not([pressed]):not(:active):hover {
-	box-shadow: var(--_ui5_input_success_icon_box_shadow);
-}
-
+.ui5-input-icon-root,
 .ui5-input-clear-icon-wrapper {
-	height: var(--_ui5_input_icon_wrapper_height);
 	padding: 0;
-	width: var(--_ui5_input_icon_width);
-	min-width: var(--_ui5_input_icon_width);
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: stretch;
+	height: var(--_ui5_input_icon_wrapper_height);
+	margin-bottom: 1px;
 	box-sizing: border-box;
 }
 
+.ui5-input-icon-root {
+	min-width: var(--_ui5_input_icon_min_width);
+}
+
+.ui5-input-clear-icon-wrapper {
+	width: var(--_ui5_input_icon_width);
+	min-width: var(--_ui5_input_icon_width);
+}
+/* 
+:host([value-state]:not([value-state="None"]):not([value-state="Positive"])) .ui5-input-icon-root,
 :host([value-state]:not([value-state="None"]):not([value-state="Positive"])) .ui5-input-clear-icon-wrapper {
 	height: var(--_ui5_input_icon_wrapper_state_height);
 	vertical-align: top;
-}
-
-:host([value-state="Positive"]) .ui5-input-clear-icon-wrapper {
-	height: var(--_ui5_input_icon_wrapper_success_state_height);
-}
-
-[ui5-icon].ui5-input-clear-icon {
-	padding: 0;
-	color: inherit;
-}
+} */
 
 /* Chrome, Safari, Edge, Opera */
 [inner-input]::-webkit-outer-spin-button,

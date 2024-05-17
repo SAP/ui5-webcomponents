@@ -20,8 +20,8 @@
 	--_ui5_input_error_warning_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_input_error_warning_focused_icon_padding: .625rem .625rem .5625rem .625rem;
 	--_ui5_input_custom_icon_padding: .625rem .625rem .5625rem .625rem;
-	--_ui5_input_error_warning_custom_icon_padding: .625rem .625rem .5rem .625rem;
-	--_ui5_input_error_warning_custom_focused_icon_padding: .625rem .625rem .5625rem .625rem;
+	--_ui5_input_information_error_warning_custom_icon_padding: .625rem .625rem .5rem .625rem;
+	--_ui5_input_information_error_warning_custom_focused_icon_padding: .625rem .625rem .5625rem .625rem;
 	--_ui5_input_information_custom_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_input_information_custom_focused_icon_padding: .625rem .625rem .5625rem .625rem;
 	--_ui5_input_focus_outline_color: var(--sapField_Active_BorderColor);
@@ -38,8 +38,8 @@
 	--_ui5_input_error_warning_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_input_error_warning_focused_icon_padding: .3125rem .5rem .25rem .5rem;
 	--_ui5_input_custom_icon_padding: .3125rem .5rem .25rem .5rem;
-	--_ui5_input_error_warning_custom_icon_padding: .3125rem .5rem .1875rem .5rem;
-	--_ui5_input_error_warning_custom_focused_icon_padding: .3125rem .5rem .25rem .5rem;
+	--_ui5_input_information_error_warning_custom_icon_padding: .3125rem .5rem .1875rem .5rem;
+	--_ui5_input_information_error_warning_custom_focused_icon_padding: .3125rem .5rem .25rem .5rem;
 	--_ui5_input_information_custom_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_input_information_custom_focused_icon_padding: .3125rem .5rem .25rem .5rem;
 }
