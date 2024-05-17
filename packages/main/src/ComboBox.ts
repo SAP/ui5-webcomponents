@@ -756,14 +756,13 @@ class ComboBox extends UI5Element {
 
 	_handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean) {
 		const allItems = this._getItems();
-		// const suggPopover = await this._getPicker();
 
 		const isOpen = this.open;
 		const currentItem: IComboBoxItem = allItems[indexOfItem];
-
+		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const nextItem = isForward ? allItems[indexOfItem + 1] : allItems[indexOfItem - 1];
 
-		if ((!isOpen) && (!nextItem || !currentItem)) {
+		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
 			return;
 		}
 
@@ -771,13 +770,13 @@ class ComboBox extends UI5Element {
 
 		if (isOpen) {
 			this._itemFocused = true;
-			this.value = currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.text;
 			this.focused = false;
 
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
-			this.value = currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.text;
 			currentItem.focused = false;
 		}
 
@@ -786,6 +785,9 @@ class ComboBox extends UI5Element {
 		this._announceSelectedItem(indexOfItem);
 		this._scrollToItem(indexOfItem, isForward);
 
+		if (isGroupItem && isOpen) {
+			return;
+		}
 		// autocomplete
 		const item = this._getFirstMatchingItem(this.value);
 		item && this._applyAtomicValueAndSelection(item, (this.open ? this._userTypedValue : ""), true);
@@ -918,7 +920,7 @@ class ComboBox extends UI5Element {
 
 			this._fireChangeEvent();
 
-			if (picker?.open && focusedItem && !focusedItem?.isGroupItem) {
+			if (picker?.open && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
@@ -1124,8 +1126,9 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem: number) {
-		const currentItem = this._filteredItems[indexOfItem];
-		const nonGroupItems = this._filteredItems.filter(item => !item.isGroupItem);
+		const allItems = this._getItems();
+		const currentItem = allItems[indexOfItem];
+		const nonGroupItems = allItems.filter(item => !item.isGroupItem);
 		const currentItemAdditionalText = currentItem?.additionalText || "";
 		const isGroupItem = currentItem?.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, nonGroupItems.indexOf(currentItem) + 1, nonGroupItems.length);

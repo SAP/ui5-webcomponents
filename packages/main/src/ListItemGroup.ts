@@ -54,13 +54,6 @@ class ListItemGroup extends UI5Element {
 	headerAccessibleName!: string;
 
 	/**
-	 * Indicates if the element is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
 	 * @public
 	 */
