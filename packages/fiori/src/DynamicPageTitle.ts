@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -96,6 +97,12 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	focused!: boolean;
 
+	@property({ type: Integer })
+	minContentWidth?: number;
+
+	@property({ type: Integer })
+	minActionsWidth?: number;
+
 	/**
 	 * Defines the content of the Heading of the Dynamic Page.
 	 *
@@ -155,8 +162,6 @@ class DynamicPageTitle extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
-	minContentWidth?: number;
-	minActionsWidth?: number;
 
 	constructor() {
 		super();
@@ -185,10 +190,10 @@ class DynamicPageTitle extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				"min-width": `${this.minContentWidth || 0}px`,
+				"min-width": this.minContentWidth ? `${this.minContentWidth || 0}px` : undefined,
 			},
 			actions: {
-				"min-width": `${this.minActionsWidth || 0}px`,
+				"min-width": this.minActionsWidth ? `${this.minActionsWidth || 0}px` : undefined,
 			},
 		};
 	}
