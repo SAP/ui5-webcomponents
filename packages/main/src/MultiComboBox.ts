@@ -681,10 +681,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		this._previouslySelectedItems = this._getSelectedItems();
-		const token: Token = e.detail.ref;
-		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"))!;
+		const token: Token[] = e.detail.tokens;
+		const deletingItems = this.items.filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
 
-		deletingItem.selected = false;
+		deletingItems.forEach(item => {
+			item.selected = false;
+		});
+
 		this._deleting = true;
 		this._preventTokenizerToggle = true;
 

@@ -180,27 +180,19 @@
 		});
 
 		deleteTokenizer.addEventListener("ui5-token-delete", event => {
-			const token = event.detail?.ref;
-			token && token.remove();
-		});
+			const tokens = event.detail?.tokens;
 
-		deleteTokenizer.addEventListener("show-more-items-press", () => {
-			tokensToShowMoreItemsPress = Array.from(deleteTokenizer.children);
-		});
-
-		deleteTokenizer.addEventListener("dialog-button-press", event => {
-			const confirm = event.detail?.confirm;
-			if (!confirm) {
-				tokensToShowMoreItemsPress.forEach(token => {
-					deleteTokenizer.appendChild(token);
-				});
-				tokensToShowMoreItemsPress = [];
+			if (tokens) {
+				tokens.forEach(token => token.remove());
 			}
 		});
 
 		document.getElementById("readonly-tokenizer").addEventListener("ui5-token-delete", event => {
-			const token = event.detail?.ref;
-			token && token.remove();
+			const tokens = event.detail?.tokens;
+
+			if (tokens) {
+				tokens.forEach(token => token.remove());
+			}
 		});
 	</script>
 </body>

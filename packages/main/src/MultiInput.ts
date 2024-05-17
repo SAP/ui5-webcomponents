@@ -38,7 +38,7 @@ interface IToken extends HTMLElement, ITabbable {
 }
 
 type MultiInputTokenDeleteEventDetail = {
-	token: IToken;
+	tokens: Token[];
 }
 
 /**
@@ -85,8 +85,8 @@ type MultiInputTokenDeleteEventDetail = {
 @event("value-help-trigger")
 
 /**
- * Fired when a token is about to be deleted.
- * @param {HTMLElement} token deleted token.
+ * Fired when tokens are being deleted.
+ * @param {Array} tokens An array containing the deleted tokens.
  * @public
  */
 @event<MultiInputTokenDeleteEventDetail>("token-delete", {
@@ -94,7 +94,7 @@ type MultiInputTokenDeleteEventDetail = {
 		/**
 		 * @public
 		 */
-		token: { type: HTMLElement },
+		tokens: { type: Array },
 	},
 })
 
@@ -176,7 +176,7 @@ class MultiInput extends Input implements IFormInputElement {
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
-		const focusedToken = e.detail.ref;
+		const deletedTokens = e.detail.tokens;
 		const selectedTokens = this.tokens.filter(token => token.selected);
 		const shouldFocusInput = this.tokens.length - 1 === 0 || this.tokens.length === selectedTokens.length;
 
@@ -184,22 +184,13 @@ class MultiInput extends Input implements IFormInputElement {
 			return;
 		}
 
-		if (focusedToken) {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token: focusedToken });
+		if (deletedTokens) {
+			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
+
 			if (shouldFocusInput) {
 				this.focus();
 			}
-
-			return;
 		}
-
-		if (selectedTokens.indexOf(focusedToken) === -1) {
-			selectedTokens.push(focusedToken);
-		}
-
-		selectedTokens.forEach(token => {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
-		});
 	}
 
 	valueHelpMouseDown(e: MouseEvent) {
