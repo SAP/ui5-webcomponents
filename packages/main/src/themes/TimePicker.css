@@ -4,7 +4,6 @@
 @import "./InputSharedStyles.css";
 
 :host(:not([hidden])) {
-	box-shadow: none;
 	display: inline-block;
 	line-height: normal;
 	letter-spacing: normal;

@@ -47,7 +47,6 @@ import {
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
-import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 type TimePickerChangeInputEventDetail = {
@@ -128,7 +127,6 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 	styles: [
 		TimePickerCss,
 		ResponsivePopoverCommonCss,
-		PopoverCss,
 		TimePickerPopoverCss,
 	],
 	dependencies: [
