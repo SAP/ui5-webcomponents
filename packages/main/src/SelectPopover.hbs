@@ -1,13 +1,13 @@
 {{#if options}}
 	<ui5-responsive-popover
 		hide-arrow
-		_disable-initial-focus
+		prevent-initial-focus
 		placement="Bottom"
 		class="ui5-select-popover {{classes.popover}}"
 		horizontal-align="Start"
-		@ui5-after-open="{{_afterOpen}}"
+		@ui5-open="{{_afterOpen}}"
 		@ui5-before-open="{{_beforeOpen}}"
-		@ui5-after-close="{{_afterClose}}"
+		@ui5-close="{{_afterClose}}"
 		@keydown="{{_onkeydown}}"
 		style={{styles.responsivePopover}}
 	>
@@ -66,7 +66,7 @@
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"

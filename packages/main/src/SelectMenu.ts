@@ -79,8 +79,8 @@ type SelectMenuChange = {
 	},
 })
 @event("before-open")
-@event("after-open")
-@event("after-close")
+@event("open")
+@event("close")
 @event<SelectMenuChange>("menu-change", {
 	detail: {
 		text: { type: String },
@@ -155,8 +155,9 @@ class SelectMenu extends UI5Element {
 	/**
 	 * Closes the dropdown.
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
-		this.respPopover.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+	close(preventFocusRestore = false) {
+		this.respPopover.preventFocusRestore = preventFocusRestore;
+		this.respPopover.open = false;
 	}
 
 	onBeforeRendering() {
@@ -221,11 +222,11 @@ class SelectMenu extends UI5Element {
 	}
 
 	_onAfterOpen() {
-		this.fireEvent<CustomEvent>("after-open");
+		this.fireEvent<CustomEvent>("open");
 	}
 
 	_onAfterClose() {
-		this.fireEvent<CustomEvent>("after-close");
+		this.fireEvent<CustomEvent>("close");
 	}
 
 	_onCloseBtnClick() {

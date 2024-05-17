@@ -36,7 +36,8 @@
 			btn.addEventListener("click", function() {
 				myPopover.placement = btn.dataset.placement;
 				myPopover.verticalAlign = btn.dataset.verticalAlign;
-				myPopover.showAt(btn);
+				myPopover.opener = btn;
+				myPopover.open = true;
 			});
 		});
 

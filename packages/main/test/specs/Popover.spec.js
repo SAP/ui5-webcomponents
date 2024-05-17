@@ -62,15 +62,16 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
-	it("tests popover is closed after click outside of it after multiple 'showAt'", async () => {
+	it("tests popover is closed after click outside of it after multiple 'open = true'", async () => {
 		await browser.executeAsync((done) => {
 			const btn = document.getElementById("btn");
 			const popover = document.getElementById("pop");
 
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
+			popover.opener = btn;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
 
 			done();
 		});
@@ -357,6 +358,20 @@ describe("Popover general interaction", () => {
 
 		const popover = await browser.$("#pop");
 		const iframe = await browser.$("#clickThisIframe");
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await iframe.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
+	it("tests clicking on an iframe inside a shadow root closes the popover", async () => {
+		const btnOpenPopover = await browser.$("#btn");
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#pop");
+		const iframe = await browser.$("#host").shadow$("#clickThisIframeInsideShadowRoot");
 
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 

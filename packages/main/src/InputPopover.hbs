@@ -3,13 +3,13 @@
 		class="{{classes.popover}}"
 		hide-arrow
 		prevent-focus-restore
-		_disable-initial-focus
+		prevent-initial-focus
 		placement="Bottom"
 		horizontal-align="Start"
 		tabindex="-1"
 		style="{{styles.suggestionsPopover}}"
-		@ui5-after-open="{{_afterOpenPicker}}"
-		@ui5-after-close="{{_afterClosePicker}}"
+		@ui5-open="{{_afterOpenPicker}}"
+		@ui5-close="{{_afterClosePicker}}"
 		@ui5-scroll="{{_scroll}}"
 		.open={{open}}
 		.opener={{this}}
@@ -76,7 +76,7 @@
 {{#if hasValueStateMessage}}
 		<ui5-popover
 			skip-registry-update
-			_disable-initial-focus
+			prevent-initial-focus
 			prevent-focus-restore
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
@@ -85,7 +85,7 @@
 			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 			.opener={{this}}
 			.open={{valueStateOpen}}
-			@ui5-after-close="{{_handleValueStatePopoverAfterClose}}"
+			@ui5-close="{{_handleValueStatePopoverAfterClose}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
