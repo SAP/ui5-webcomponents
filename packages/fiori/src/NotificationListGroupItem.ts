@@ -200,6 +200,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	async _onkeydown(e: KeyboardEvent) {
 		await super._onkeydown(e);
 
+		if (!this.focused) {
+			return;
+		}
+
 		const space = isSpace(e);
 		const plus = isPlus(e);
 		const minus = isMinus(e);

@@ -329,28 +329,28 @@ describe("Keyboard navigation", () => {
 		});
 
 		await browser.keys("ArrowDown");
-		assert.ok(await browser.$("#nli1").isFocused(), "The first item is focused.");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
 
 		await browser.keys("ArrowDown");
-		assert.ok(await browser.$("#nli2").isFocused(), "The second item is focused.");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
 
 		await browser.keys("ArrowDown");
-		assert.ok(await browser.$("#nlgi2").isFocused(), "The second group  is focused.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
 
 		await browser.keys("ArrowDown");
-		assert.ok(await browser.$("#nli3").isFocused(), "The second group first item is focused.");
+		assert.ok(await browser.$("#nli3").isFocused(), "Second group first item is focused.");
 
 		await browser.keys("ArrowUp");
-		assert.ok(await browser.$("#nlgi2").isFocused(), "The second group  is focused.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
 
 		await browser.keys("ArrowUp");
-		assert.ok(await browser.$("#nli2").isFocused(), "The second item is focused.");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
 
 		await browser.keys("ArrowUp");
-		assert.ok(await browser.$("#nli1").isFocused(), "The first item is focused.");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
 
 		await browser.keys("ArrowUp");
-		assert.ok(await browser.$("#nlgi1").isFocused(), "The first group is focused.");
+		assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
 	});
 
 	it("Tab and F2 navigation", async () => {
@@ -378,7 +378,7 @@ describe("Keyboard navigation", () => {
 		assert.ok(res, "'close button' is focused.");
 
 		await browser.keys("F2");
-		assert.ok(await browser.$("#nli1").isFocused(), "The first item is focused.");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
 
 		await browser.keys("F2");
 		res = await browser.executeAsync(done => {
@@ -386,6 +386,41 @@ describe("Keyboard navigation", () => {
 		});
 
 		assert.ok(res, "'show more' is focused.");
+	});
+
+	it("Focusing same item on next row", async () => {
+		await browser.$("#nli1").click();
+		await browser.keys("Tab");
+		await browser.keys("ArrowDown");
+
+		let res = await browser.executeAsync(done => {
+			done(document.getElementById("nli2").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
+		});
+
+		assert.ok(res, "'show more' is focused.");
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+
+		await browser.keys("ArrowUp");
+		await browser.keys("Tab");
+		await browser.keys("Tab");
+
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli2").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
+		});
+
+		assert.ok(res, "'menu button' is focused.");
+
+		await browser.keys("ArrowUp");
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
+		});
+
+		assert.ok(res, "'menu button' is focused.");
+
+		await browser.keys("ArrowUp");
+		assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
 	});
 });
 

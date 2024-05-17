@@ -1,7 +1,14 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import NotificationListGroupItem from "./NotificationListGroupItem.js";
+
+// Texts
+import {
+	NOTIFICATION_LIST_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -17,6 +24,13 @@ import NotificationListGroupItem from "./NotificationListGroupItem.js";
 @customElement("ui5-notification-list")
 
 class NotificationList extends List {
+	constructor() {
+		super();
+		this.accessibleName = NotificationList.i18nFioriBundle.getText(NOTIFICATION_LIST_ACCESSIBLE_NAME);
+	}
+
+	static i18nFioriBundle: I18nBundle;
+
 	getEnabledItems(): Array<ListItemBase> {
 		const items = new Array<ListItemBase>();
 
@@ -31,6 +45,10 @@ class NotificationList extends List {
 		});
 
 		return items;
+	}
+
+	static async onDefine() {
+		NotificationList.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 
