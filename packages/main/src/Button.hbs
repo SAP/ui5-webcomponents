@@ -18,6 +18,7 @@
 	aria-controls="{{accessibilityAttributes.controls}}"
 	aria-haspopup="{{_hasPopup}}"
 	aria-label="{{ariaLabelText}}"
+	aria-describedby="{{ariaDescribedbyText}}"
 	title="{{buttonTitle}}"
 	part="button"
 	role="{{effectiveAccRole}}"
@@ -48,7 +49,7 @@
 	{{/if}}
 
 	{{#if hasButtonType}}
-		<span class="ui5-hidden-text">{{buttonTypeText}}</span>
+		<span id="{{_id}}-buttonTypeText" aria-hidden="true" class="ui5-hidden-text">{{buttonTypeText}}</span>
 	{{/if}}
 </button>
 

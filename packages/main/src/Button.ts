@@ -509,6 +509,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get ariaDescribedbyText() {
+		return this.hasButtonType ? `${this._id}-buttonTypeText` : "";
+	}
+
 	get _isSubmit() {
 		return this.type === ButtonType.Submit || this.submits;
 	}
