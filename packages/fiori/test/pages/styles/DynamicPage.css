@@ -22,8 +22,13 @@ html, body {
 
 .product-info {
     display: flex;
-    gap: 10px;
     flex-wrap: wrap;
+}
+
+.product-info [ui5-avatar],
+.product-info .product-info-cell {
+    margin-right: 2rem;
+    margin-bottom: 1rem; 
 }
 
 .product-info-cell {
