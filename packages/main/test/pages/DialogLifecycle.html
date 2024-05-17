@@ -45,14 +45,14 @@
 		const dialog = document.getElementById("hello-dialog");
 		const closeBtn = dialog.querySelector("#closeDialogButton");
 		closeBtn.addEventListener("click", () => {
-			dialog.addEventListener("ui5-after-close", () => {
+			dialog.addEventListener("ui5-close", () => {
 				dialog.parentElement.removeChild(dialog);
 			});
-			dialog.close();
+			dialog.open = false;
 		});
 
 		document.body.appendChild(dialog);
-		dialog.show();
+		dialog.open = true;
 	});
 </script>
 

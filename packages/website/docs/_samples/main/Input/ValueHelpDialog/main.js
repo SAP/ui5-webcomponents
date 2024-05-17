@@ -23,7 +23,7 @@ const loadInputSuggestions = async () => {
         response = await fetch("../assets/data/products.json");
         products = await response.json();
     }
-    
+
     const query = valueHelpInput.value.toLowerCase();
 
     if (query) {
@@ -52,11 +52,11 @@ const loadInputSuggestions = async () => {
 const showDialog = () => {
     dialogSearchInput.value = valueHelpInput.value;
     loadDialogList();
-    dialog.show();
+    dialog.open = true;
 }
 
 const closeDialog = () => {
-    dialog.close();
+    dialog.open = false;
 }
 
 const loadDialogList = async () => {
@@ -86,7 +86,7 @@ const loadDialogList = async () => {
 const onDialogListItemClick = event => {
     const item = event.detail.item;
     valueHelpInput.setAttribute("value", item.innerHTML);
-    dialog.close();
+    dialog.open = false;
 }
 
 valueHelpInput.addEventListener("input", loadInputSuggestions);

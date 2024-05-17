@@ -187,13 +187,13 @@ export const ValueHelpDialog: StoryFn = () => html`
 		if (screen.width <= 768) {
 			dialog${index}.setAttribute("stretch", "");
 		}
-		dialog${index}.show();
+		dialog${index}.open = true;
 		// Required by UX as the VH dialog's popup content has no padding in UI5.
 		dialog${index}.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
 		dialog${index}.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
 	}
 	const closeDialog = () => {
-		dialog${index}.close();
+		dialog${index}.open = false;
 	}
 	const loadList = async () => {
 		const response = await fetch("../assets/data/products.json");
@@ -219,7 +219,7 @@ export const ValueHelpDialog: StoryFn = () => html`
 	const handleItemClick = event => {
 		const item = event.detail.item;
 		valueHelpInput${index}.setAttribute("value", item.innerHTML);
-		dialog${index}.close();
+		dialog${index}.open = false;
 	}
 	const clearQuery = () => {
 		dialogSearchInput${index}.setAttribute("value", "");

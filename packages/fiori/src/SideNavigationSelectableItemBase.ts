@@ -162,6 +162,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_activate(e: KeyboardEvent | PointerEvent) {
+		e.stopPropagation();
+
 		if (this.isOverflow) {
 			this.fireEvent("click");
 		} else {
