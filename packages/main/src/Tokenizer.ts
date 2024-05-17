@@ -51,6 +51,7 @@ import List from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import StandardListItem from "./StandardListItem.js";
 import Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
@@ -128,8 +129,8 @@ enum ClipboardDataOperation {
  *
  * @constructor
  * @extends sap.ui.webc.base.UI5Element
- * @since 2.0
  * @public
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-tokenizer",
@@ -148,6 +149,7 @@ enum ClipboardDataOperation {
 		StandardListItem,
 		Title,
 		Button,
+		Icon,
 	],
 })
 
