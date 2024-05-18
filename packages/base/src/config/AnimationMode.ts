@@ -22,7 +22,8 @@ const getAnimationMode = (): `${AnimationMode}` => {
  * @param { AnimationMode } animationMode
  */
 const setAnimationMode = (animationMode: `${AnimationMode}`) => {
-	if (animationMode in AnimationMode) {
+	const options: string[] = Object.values(AnimationMode);
+	if (options.includes(animationMode)) {
 		curAnimationMode = animationMode;
 	}
 };

@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -20,7 +19,8 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
@@ -32,7 +32,6 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
 
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
@@ -80,6 +79,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  */
 @customElement({
 	tag: "ui5-button",
+	formAssociated: true,
 	languageAware: true,
 	renderer: litRender,
 	template: ButtonTemplate,
@@ -102,7 +102,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @private
  */
 @event("_active-state-change")
-class Button extends UI5Element implements IFormElement, IButton {
+class Button extends UI5Element implements IButton, IFormElement {
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -134,19 +134,26 @@ class Button extends UI5Element implements IFormElement, IButton {
 	icon!: string;
 
 	/**
-	 * Defines whether the icon should be displayed after the component text.
-	 * @default false
+	 * Defines the icon, displayed as graphical element within the component after the button text.
+	 *
+	 * **Note:** It is highly recommended to use `endIcon` property only together with `icon` and/or `text` properties.
+	 * Usage of `endIcon` only should be avoided.
+	 *
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
 	 * @public
 	 */
-	@property({ type: Boolean })
-	iconEnd!: boolean;
+	@property()
+	endIcon!: string;
 
 	/**
 	 * When set to `true`, the component will
 	 * automatically submit the nearest HTML form element on `press`.
 	 *
-	 * **Note:** For the `submits` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
+	 * **Note:** This property is only applicable within the context of an HTML Form element.`
 	 * @default false
 	 * @public
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
@@ -206,8 +213,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Defines whether the button has special form-related functionality.
 	 *
-	 * **Note:** For the `type` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default "Button"
 	 * @public
 	 * @since 1.15.0
@@ -218,7 +224,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	/**
 	 * Describes the accessibility role of the button.
 	 *
-	 * **Note:** Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
+	 * **Note:** Use <code>ButtonAccessibleRole.Link</code> role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
 	 *
 	 * @default "Button"
 	 * @public
@@ -247,6 +253,13 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 */
 	@property({ type: Boolean })
 	hasIcon!: boolean;
+
+	/**
+	 * Indicates if the elements has a slotted end icon
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasEndIcon!: boolean;
 
 	/**
 	 * Indicates if the element is focusable
@@ -335,16 +348,9 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	async onBeforeRendering() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (this.type !== ButtonType.Button && !formSupport) {
-			console.warn(`In order for the "type" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-		if (this.submits && !formSupport) {
-			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-
-		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
+		this.hasEndIcon = !!this.endIcon;
+		this.iconOnly = this.isIconOnly;
 
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
@@ -355,12 +361,12 @@ class Button extends UI5Element implements IFormElement, IButton {
 		}
 
 		markEvent(e, "button");
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport && this._isSubmit) {
-			formSupport.triggerFormSubmit(this);
+		if (this._isSubmit) {
+			submitForm(this);
 		}
-		if (formSupport && this._isReset) {
-			formSupport.triggerFormReset(this);
+
+		if (this._isReset) {
+			resetForm(this);
 		}
 
 		if (isSafari()) {
@@ -457,6 +463,14 @@ class Button extends UI5Element implements IFormElement, IButton {
 		return IconMode.Decorative;
 	}
 
+	get endIconMode() {
+		if (!this.endIcon) {
+			return "";
+		}
+
+		return IconMode.Decorative;
+	}
+
 	get isIconOnly() {
 		return !willShowContent(this.text);
 	}
@@ -473,7 +487,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
-	get buttonAccessibleRole() {
+	get effectiveAccRole() {
 		return this.accessibleRole.toLowerCase();
 	}
 

@@ -1,9 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -11,6 +11,8 @@ import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getR
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isPageUp,
 	isPageDown,
@@ -29,11 +31,14 @@ import {
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATEPICKER_OPEN_ICON_TITLE,
+	DATEPICKER_DATE_DESCRIPTION,
+	INPUT_SUGGESTIONS_TITLE,
+	FORM_TEXTFIELD_REQUIRED,
+} from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -153,6 +158,7 @@ type DatePickerInputEventDetail = {
 @customElement({
 	tag: "ui5-date-picker",
 	languageAware: true,
+	formAssociated: true,
 	template: DatePickerTemplate,
 	styles: [
 		datePickerCss,
@@ -239,7 +245,7 @@ type DatePickerInputEventDetail = {
 		},
 	},
 })
-class DatePicker extends DateComponentBase implements IFormElement {
+class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * Defines a formatted date value.
 	 * @default ""
@@ -296,14 +302,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	placeholder?: string;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -326,7 +327,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines the open or closed state of the popover.
 	 * @public
 	 * @default false
-	 * @since 2.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	open!: boolean;
@@ -370,19 +371,25 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	@slot({ type: HTMLElement })
 	valueStateMessage!: Array<HTMLElement>;
 
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot({ type: HTMLElement })
-	formSupport!: Array<HTMLElement>;
-
 	responsivePopover?: ResponsivePopover;
 
-	FormSupport?: typeof FormSupportT;
-
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value;
+	}
 
 	/**
 	 * @protected
@@ -401,8 +408,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	onBeforeRendering() {
-		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
-
 		["minDate", "maxDate"].forEach((prop: string) => {
 			const propValue = this[prop as keyof DatePicker] as string;
 
@@ -410,12 +415,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 				console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
 			}
 		});
-
-		if (this.FormSupport) {
-			this.FormSupport.syncNativeHiddenInput(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 
 		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
@@ -478,8 +477,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if (isEnter(e)) {
-			if (this.FormSupport) {
-				this.FormSupport.triggerFormSubmit(this);
+			if (this._internals?.form) {
+				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();

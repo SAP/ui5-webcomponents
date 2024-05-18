@@ -35,11 +35,9 @@
                     mode={{_iconMode}}
                     show-tooltip
                     @click="{{_togglePicker}}"
-                    input-icon
+                    class="inputIcon"
                     ?pressed="{{open}}"
             ></ui5-icon>
         {{/unless}}
     </ui5-input>
-
-    <slot name="formSupport"></slot>
 </div>
