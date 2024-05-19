@@ -260,8 +260,14 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@property()
 	formatPattern!: string;
 
-	@property({ type: Boolean, noAttribute: true })
-	_isPickerOpen!: boolean;
+	/**
+	 * Defines the open or closed state of the popover.
+	 * @public
+	 * @default false
+	 * @since 2.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
 
 	@property({ type: Boolean, noAttribute: true })
 	_isInputsPopoverOpen!: boolean;
@@ -302,6 +308,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		if (this.value) {
 			this.value = this.normalizeValue(this.value) || this.value;
 		}
+
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
 	}
 
 	get dateAriaDescription() {
@@ -363,56 +371,21 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
-	/**
-	 * Opens the picker.
-	 * @public
-	 * @returns Resolves when the picker is open
-	 */
-	openPicker(): void {
-		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
-		const responsivePopover = this._getPopover();
-		responsivePopover.opener = this;
-		responsivePopover.open = true;
-	}
-
-	/**
-	 * Closes the picker
-	 * @public
-	 * @returns Resolves when the picker is closed
-	 */
-	closePicker(): void {
-		const responsivePopover = this._getPopover();
-		responsivePopover.open = false;
-		this._isPickerOpen = false;
-	}
-
-	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
-		} else if (this._canOpenPicker()) {
-			this.openPicker();
-		}
-	}
-
-	/**
-	 * Checks if the picker is open
-	 * @public
-	 */
-	isOpen(): boolean {
-		return !!this._isPickerOpen;
+	_togglePicker() {
+		this.open = !this.open;
 	}
 
 	submitPickers() {
 		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	onResponsivePopoverAfterClose() {
-		this._isPickerOpen = false;
+		this.open = false;
 	}
 
 	onResponsivePopoverAfterOpen() {
-		this._isPickerOpen = true;
+		this.open = true;
 		const responsivePopover = this._getPopover();
 		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
 	}
@@ -470,9 +443,9 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		this._isInputsPopoverOpen = false;
 	}
 
-	_handleInputClick(evt: MouseEvent) {
-		const target = evt.target as HTMLElement;
-		if (this._isPickerOpen) {
+	_handleInputClick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		if (this.open) {
 			return;
 		}
 
@@ -558,15 +531,15 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 		if (isShow(e)) {
 			e.preventDefault();
-			this.togglePicker();
+			this._togglePicker();
 		}
 
 		const target = e.target as Node;
 
-		if ((this._getInput().isEqualNode(target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-			this.closePicker();
+		if ((this._getInput().isEqualNode(target) && this.open) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+			this._togglePicker();
 		}
-		if (this.isOpen()) {
+		if (this.open) {
 			return;
 		}
 		if (isPageUpShiftCtrl(e)) {
@@ -677,20 +650,20 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		setTimeout(() => { this._getInput().readonly = false; }, 0);
 	}
 
-	_onfocusin(evt: FocusEvent) {
+	_onfocusin(e: FocusEvent) {
 		if (this._isPhone) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
 				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
-			evt.preventDefault();
+			e.preventDefault();
 		}
 	}
 
-	_oninput(evt: CustomEvent) {
+	_oninput(e: CustomEvent) {
 		if (this._isPhone) {
-			evt.preventDefault();
+			e.preventDefault();
 		}
 	}
 

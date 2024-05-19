@@ -212,4 +212,25 @@ describe("TimePicker general interaction", () => {
 		// assert that the value in the input is different than the string 'now'
 		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "now", "the value is not 'now'");
 	});
+
+	it("opening time picker's value-help, sets the 'open' property to true", async () => {
+		const timepicker = await browser.$("#timepicker");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
+
+		// act
+		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+
+		assert.strictEqual(await timepicker.getProperty("open"), true, "The timepicker's open property is set to true");
+		assert.strictEqual(await timepickerPopover.getProperty("open"), true, "The popover is opened");
+	})
+
+	it("setting time picker's open property to true, opens the value-help", async () => {
+		const timepicker = await browser.$("#timepicker");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
+
+		// act
+		await timepicker.setProperty("open", true);
+
+		assert.strictEqual(await timepickerPopover.getProperty("open"), true, "The popover is opened");
+	})
 });
