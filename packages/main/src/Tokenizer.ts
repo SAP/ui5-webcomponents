@@ -440,7 +440,7 @@ class Tokenizer extends UI5Element {
 
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
-			this.open = !this._tokens.length;
+			this.open = false;
 
 			return;
 		}
