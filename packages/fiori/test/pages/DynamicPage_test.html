@@ -116,6 +116,7 @@
                                     ><b>Titanium</b></ui5-title>
                                 <ui5-button id="scrollDownBtn">Scroll down</ui5-button>
                                 <ui5-button id="scrollToBottomBtn">Scroll to bottom</ui5-button>
+                                <!-- <ui5-button id="scrollToTopBtn">Scroll to top</ui5-button> -->
                             </div>
                         </div>
                     </div>
@@ -847,6 +848,11 @@
                 const newScrollTop = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
                 scrollContainer.scrollTop = newScrollTop;
             });
+
+//            document.getElementById("scrollToTopBtn").addEventListener("click", () => {
+  //              const scrollContainer = getScrollContainer();
+    //            scrollContainer.scrollTop = 0;
+      //      });
         </script>
     </body>
 </html>
