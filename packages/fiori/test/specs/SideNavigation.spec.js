@@ -201,7 +201,7 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree is correctly set");
 			assert.notExists(await items[1].getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
 
-			assert.strictEqual(await items[4].getAttribute("aria-selected"), "true", "'aria-selected' is set explicitly");
+			assert.strictEqual(await items[3].getAttribute("aria-selected"), "true", "'aria-selected' is set explicitly");
 
 			// fixed items
 			assert.strictEqual(await sideNavigationFixedTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation fixed tree element is correctly set");
