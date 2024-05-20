@@ -263,7 +263,6 @@ class Popover extends Popup {
 			return;
 		}
 
-		this._opener = opener;
 		this._openerRect = opener.getBoundingClientRect();
 
 		await super.openPopup();
