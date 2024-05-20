@@ -5,10 +5,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
 // Icons
@@ -85,7 +85,7 @@ type NotificationListGroupItemToggleEventDetail = {
 	],
 	template: NotificationListGroupItemTemplate,
 	dependencies: [
-		List,
+		NotificationListGroupList,
 		Button,
 		Icon,
 		BusyIndicator,
@@ -119,16 +119,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
-	}
-
-	onAfterRendering() {
-		super.onAfterRendering();
-
-		const list = this.shadowRoot!.querySelector(`#${this._id}-notificationsList`) as List;
-		list.getEnabledItems = () => { return []; };
-		list._handleTabNext = () => { };
-		list.onForwardBefore = () => { };
-		list.onForwardAfter = () => { };
 	}
 
 	/**

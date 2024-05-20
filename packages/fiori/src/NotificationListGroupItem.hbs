@@ -33,13 +33,13 @@
 		<div class="ui5-nli-group-divider"></div>
 	</div>
 
-	<ui5-list
+	<ui5-li-notification-group-list
 		id="{{_id}}-notificationsList"
 		class="ui5-nli-group-items"
 		role="list"
 		aria-labelledby="{{_id}}-title-text">
 		<slot></slot>
-	</ui5-list>
+	</ui5-li-notification-group-list>
 
 	{{#if loading}}
 		<ui5-busy-indicator
