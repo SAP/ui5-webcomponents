@@ -137,6 +137,13 @@ class Token extends UI5Element implements IToken {
 	forcedTabIndex!: string;
 
 	/**
+	 * Indicates whether the item is filtered
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible!: boolean;
+
+	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
 	 * Accepts `ui5-icon`.
 	 * @public

@@ -88,13 +88,49 @@ describe("nMore Popover", () => {
 
 		await browser.keys('F7');
 
-		// assert.ok(await itemDeleteButton.getProperty("focused"), "Delete button should be focused upon F7 key press.");
 		assert.notOk(await firstListItem.getProperty("focused"), "List item should no longer be focused.");
 
 		await browser.keys('F7');
 
 		assert.notOk(await itemDeleteButton.getProperty("focused"), "List item should be focused upon F7 key press.");
 		assert.ok(await firstListItem.getProperty("focused"), "Delete button should no longer be focused.");
+	});
+
+	it("tests item deletion via mouse", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+
+		await nMoreLabel.click();
+
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
+		const firstListItem = await rpo.$$("ui5-li")[0];
+		const secondListItem = await rpo.$$("ui5-li")[1];
+		const firstlistItemDeleteButton = await firstListItem.shadow$('.ui5-li-deletebtn ui5-button');
+
+		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened upon click of nMore label.");
+		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+
+		await firstlistItemDeleteButton.click();
+
+		assert.ok(await secondListItem.getProperty("focused"), "Second list item should be focused, after first item deletion.");
+	});
+
+	it("tests item deletion via keyboard", async () => {
+		const tokenizer = await browser.$("#nmore-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+
+		await nMoreLabel.click();
+
+		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
+		const firstListItem = await rpo.$$("ui5-li")[0];
+		const secondListItem = await rpo.$$("ui5-li")[1];
+
+		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened upon click of nMore label.");
+		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+
+		await browser.keys('Delete');
+
+		assert.ok(await secondListItem.getProperty("focused"), "Second list item should be focused, after first item deletion.");
 	});
 });
 
@@ -415,7 +451,7 @@ describe("Keyboard handling", () => {
 		assert.equal(await secondToken.getProperty("focused"), true, "Previous token is focused");
 	});
 
-	it("should delete token on [Backspace]", async () => {
+	it("should delete first token on [Backspace]", async () => {
 		const tokenizer = await browser.$("#delete-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
@@ -435,6 +471,22 @@ describe("Keyboard handling", () => {
 		tokens = await tokenizer.$$("ui5-token");
 
 		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
+	});
+
+	it("should delete second token on [Backspace]", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await secondToken.click();
+		await browser.keys("Backspace");
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await firstToken.getProperty("focused"), "The first token is focused on [Backspace]");
+		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
 	});
 
 	it("should delete first and last token with [Backspace]", async () => {
@@ -457,7 +509,93 @@ describe("Keyboard handling", () => {
 		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
 	});
 
-	it("should delete token on [Delete]", async () => {
+	it("should delete first and second token with [Backspace] when focus is on second", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const thirdToken = await tokenizer.$("ui5-token:nth-child(3)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
+		await browser.keys("Backspace");
+
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await thirdToken.getProperty("focused"), "The third token is focused after [Backspace]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
+	});
+
+	it("should delete first and third token with [Backspace] when focus is on second", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Backspace");
+
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused after [Backspace]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
+	});
+
+	it("should delete first and third token with [Backspace] when focus is on fourth", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
+		await browser.keys("ArrowRight");
+		await browser.keys("Backspace");
+
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused after [Backspace]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
+	});
+
+	it("should delete first token on [Delete]", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const secondToken = await tokenizer.$("ui5-token:nth-child(2)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("Delete");
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await secondToken.getProperty("focused"), "The second token is focused on [Delete]");
+		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
+
+		await browser.keys(["Control", "A"]);
+		await browser.keys("Backspace");
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
+	});
+
+	it("should delete second token on [Delete]", async () => {
 		const tokenizer = await browser.$("#delete-tokenizer");
 		const firstToken = await tokenizer.$("ui5-token:first-child");
 		const thirdToken = await tokenizer.$("ui5-token:nth-child(3)");
@@ -484,6 +622,71 @@ describe("Keyboard handling", () => {
 		tokens = await tokenizer.$$("ui5-token");
 
 		assert.strictEqual(tokens.length, 0, "The tokenizer has no tokens");
+	});
+
+	it("should delete first and last token with [Delete]", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("End");
+		await browser.keys("Space");
+		await browser.keys("Delete");
+
+		tokens = await tokenizer.$$("ui5-token");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused after [Delete]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
+	});
+
+	it("should delete last and second last token with [Delete] when focus is on second", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const thirdToken = await tokenizer.$("ui5-token:nth-child(3)");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("Space");
+		await browser.keys("End");
+		await browser.keys("Space");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Space");
+		await browser.keys("Delete");
+
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await thirdToken.getProperty("focused"), "The third token is focused after [Delete]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
+	});
+
+	it("should delete first and third token with [Delete] when focus is on fourth", async () => {
+		const tokenizer = await browser.$("#delete-tokenizer");
+		const firstToken = await tokenizer.$("ui5-token:first-child");
+		const lastToken = await tokenizer.$("ui5-token:last-child");
+		let tokens = await tokenizer.$$("ui5-token");
+
+		assert.equal(tokens.length, 5, "Should have 5 tokens");
+
+		await firstToken.click();
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("Space");
+		await browser.keys("ArrowRight");
+		await browser.keys("Delete");
+
+		tokens = await tokenizer.$$("ui5-token");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused after [Delete]");
+		assert.strictEqual(tokens.length, 3, "The tokenizer has 3 tokens");
+		assert.ok(await tokenizer.getProperty("expanded"), "Tokenizer should be expanded after token deletion");
 	});
 
 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
