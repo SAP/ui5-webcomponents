@@ -733,14 +733,14 @@ describe("Grouping", () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
-		const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
-		const hiddenItem = await popover.$("ui5-list").$$("ui5-li")[5];
+		const list = await popover.$("ui5-list");
+		const listItem = await list.$("ui5-li");
 
 		await input.click();
 		await input.keys("a");
 
 		assert.ok(await listItem.getProperty("_isVisible"), "The filtered item is shown");
-		assert.notOk(await hiddenItem.getProperty("_isVisible"), "The filtered-out item is not rendered");
+		assert.strictEqual(await list.$$("ui5-li").length, 5, "Group items are filtered correctly");
 	});
 });
 
