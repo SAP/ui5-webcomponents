@@ -33,6 +33,15 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
 })
 class CustomListItem extends ListItem {
 	/**
+	 * Defines whether the item is movable.
+	 * @default false
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
+
+	/**
 	 * Defines the text alternative of the component.
 	 *
 	 * **Note**: If not provided a default text alternative will be set, if present.

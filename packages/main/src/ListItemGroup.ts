@@ -26,7 +26,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-li-group",
@@ -63,6 +63,13 @@ class ListItemGroup extends UI5Element {
 		type: HTMLElement,
 	})
 	items!: Array<ListItemBase>;
+
+	/**
+	 * Indicates whether the header is focused
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	* Defines the header of the component.

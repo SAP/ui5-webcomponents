@@ -327,7 +327,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * Defines the open or closed state of the popover.
 	 * @public
 	 * @default false
-	 * @since 2.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	open!: boolean;
