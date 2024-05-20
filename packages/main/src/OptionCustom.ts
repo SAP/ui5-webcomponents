@@ -62,7 +62,7 @@ class OptionCustom extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean;
+	declare iconEnd: boolean;
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -98,7 +98,25 @@ class OptionCustom extends CustomListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
-	highlight!: `${HighlightTypes}`;
+	declare highlight: `${HighlightTypes}`;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	declare movable: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default ""
+	 * @public
+	 * @deprecated
+	 */
+	@property()
+	declare accessibleName: string;
 
 	/**
 	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.

@@ -87,16 +87,61 @@ class Option extends StandardListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
-	highlight!: `${HighlightTypes}`;
+	declare highlight: `${HighlightTypes}`;
 
 	/**
-	 *
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
 	 * @default "None"
 	 * @public
 	 * @deprecated
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: `${ValueState}`;
+	declare additionalTextState: `${ValueState}`;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default ""
+	 * @public
+	 * @deprecated
+	 */
+	@property()
+	declare description: string;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	declare iconEnd: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default ""
+	 * @public
+	 * @deprecated
+	 */
+	@property()
+	declare image: string;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	declare movable: boolean;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default ""
+	 * @public
+	 * @deprecated
+	 */
+	@property()
+	declare accessibleName: string;
 
 	/**
 	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
@@ -105,6 +150,14 @@ class Option extends StandardListItem implements IOption {
 	 */
 	@slot()
 	declare deleteButton: Array<IButton>;
+
+	/**
+	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
+	 * @public
+	 * @deprecated
+	 */
+	@slot()
+	declare imageContent: Array<HTMLElement>;
 
 	get effectiveDisplayText() {
 		return this.textContent || "";
