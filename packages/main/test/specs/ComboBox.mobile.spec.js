@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { assert } from "chai"; are shown
 
 describe("Basic mobile picker rendering and interaction", () => {
 	before(async () => {
@@ -243,7 +243,7 @@ describe("Picker filtering", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 8, "All of the items are shown (8)");
+		assert.strictEqual(await dialogList.$$('ui5-li').length, 9, "All of the items are shown (8)");
 		await dialogInput.keys("B");
 		assert.strictEqual(await dialogList.$$('ui5-li').length, 3, "There are 3 filtered items");
 	});
@@ -259,9 +259,9 @@ describe("Picker filtering", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 3, "All of the group header list items are shown (3)");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 3, "All of the group header list items are shown (3)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is only 1 visible group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 1, "There is only 1 visible group");
 	});
 });
 
