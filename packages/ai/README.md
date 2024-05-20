@@ -1,25 +1,20 @@
 ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_wide.png)
 
 
-# UI5 Web Components - Compatibility
+# UI5 Web Components - AI
 
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 
-Provides Table web component for compatibility (previously part of the "@ui5/webcomponents" package), while brand new Table web component is being developed and will replace it in the "@ui5/webcomponents" package.
+Provides web components implementing AI-related visual and interaction.
 
 
-**Note:** The package is available since 2.0 and will be available until the next major release (3.0) when it will be removed as the Table "@ui5/webcomponents" will finally replace it.
+**Note:** The package is available since 2.0 and experimental
 
 
 ## Provided components
 
 | Web Component            | Tag name                    | Module import                                              |
 |--------------------------|-----------------------------|------------------------------------------------------------|
-| Table                    | `ui5-table`                 | `import "@ui5/webcomponents-compat/dist/Table.js";`               |
-| Table Column             | `ui5-table-column`          | `import "@ui5/webcomponents-compat/dist/TableColumn.js";`         |
-| Table Row                | `ui5-table-row`             | `import "@ui5/webcomponents-compat/dist/TableRow.js";`            |
-| Table Group Row          | `ui5-table-group-row`       | `import "@ui5/webcomponents-compat/dist/TableGroupRow.js";`       |
-| Table Cell               | `ui5-table-cell`            | `import "@ui5/webcomponents-compat/dist/TableCell.js";`           |
 
 
 ## Provided assets
