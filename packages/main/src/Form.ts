@@ -343,6 +343,10 @@ class Form extends UI5Element {
 		return this.items.some((item: IFormItem) => item.isGroup);
 	}
 
+	get hasHeader(): boolean {
+		return this.hasCustomHeader || !!this.headerText;
+	}
+
 	get hasCustomHeader(): boolean {
 		return !!this.header.length;
 	}
