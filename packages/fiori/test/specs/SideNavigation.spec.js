@@ -235,9 +235,9 @@ describe("Component Behavior", () => {
 
 			// fixed items
 			assert.strictEqual(await sideNavigationFixedTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation fixed tree element is correctly set");
-			assert.notExists(await items[9].getAttribute("aria-roledescription"), "Role description of the SideNavigation fixed tree item is not set");
-			assert.strictEqual(await items[9].getAttribute("aria-haspopup"), "tree", "There is 'aria-haspopup' with correct value");
-			assert.notExists(await items[10].getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+			assert.notExists(await items[8].getAttribute("aria-roledescription"), "Role description of the SideNavigation fixed tree item is not set");
+			assert.strictEqual(await items[8].getAttribute("aria-haspopup"), "tree", "There is 'aria-haspopup' with correct value");
+			assert.notExists(await items[9].getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
 
 			// popup
 			await browser.$("#item2").click();
