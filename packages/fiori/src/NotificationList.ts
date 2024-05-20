@@ -13,7 +13,7 @@ import {
 /**
  * @class
  *
- * TThe `ui5-notification-list` web component represents
+ * The `ui5-notification-list` web component represents
  * a container for `ui5-li-notification-group` and `ui5-li-notification`.
  *
  * @constructor
