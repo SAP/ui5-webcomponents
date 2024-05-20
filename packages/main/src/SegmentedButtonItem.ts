@@ -172,17 +172,13 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	onBeforeRendering(): void {
-		this.iconOnly = this.isIconOnly;
+		this.iconOnly = !willShowContent(this.text);
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpaceShift(e)) {
 			e.preventDefault();
 		}
-	}
-
-	get isIconOnly() {
-		return !willShowContent(this.text);
 	}
 
 	get tabIndexValue() {
@@ -200,7 +196,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get showIconTooltip() {
-		return this.isIconOnly && !this.tooltip;
+		return this.iconOnly && !this.tooltip;
 	}
 
 	static async onDefine() {
