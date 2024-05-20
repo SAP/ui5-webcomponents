@@ -137,7 +137,7 @@ class Token extends UI5Element implements IToken {
 	forcedTabIndex!: string;
 
 	/**
-	 * Indicates whether the item is filtered
+	 * Indicates whether the token is visible or not.
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })

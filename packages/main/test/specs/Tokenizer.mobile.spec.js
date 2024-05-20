@@ -70,6 +70,7 @@ describe("Deleting tokens", () => {
 		await nMoreLabel.click();
 
 		assert.ok(await nMoreDialog.getProperty("open"), "Popover should be opened.");
+		assert.strictEqual(await nMoreDialog.$$("ui5-li").length, 3, "3 items should be present");
 		assert.ok(await nMoreDialog.$$("ui5-li")[0].getProperty("focused"), "First item should be focused on open");
 	});
 
@@ -119,6 +120,7 @@ describe("Deleting tokens", () => {
 		await nMoreLabel.click();
 
 		assert.ok(await nMoreDialog.getProperty("open"), "Popover should be opened.");
+		assert.strictEqual(await nMoreDialog.$$("ui5-li").length, 5, "All items should be present");
 		assert.ok(await nMoreDialog.$$("ui5-li")[0].getProperty("focused"), "First item should be focused on open");
 	});
 });
