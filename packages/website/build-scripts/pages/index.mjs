@@ -17,9 +17,7 @@ function copyFileSync(source, target) {
         }
     }
 
-    const content = fs.readFileSync(source, { encoding: "utf-8"}).replaceAll(`src="/assets/`, `src="./assets/`).replaceAll(`href="/assets/`, `href="./assets/`);
-
-    fs.writeFileSync(targetFile, content);
+    fs.writeFileSync(targetFile, fs.readFileSync(source));
 }
 
 function copyFolderRecursiveSync(source, target) {
@@ -48,6 +46,6 @@ packages.forEach(packageName => {
     // html files
     copyFolderRecursiveSync(path.join(path.resolve(), `../${packageName}/dist/test/pages/`), path.join(path.resolve(), `./static/packages/${packageName}/`))
     // assets
-    copyFolderRecursiveSync(path.join(path.resolve(), `../${packageName}/dist/assets/`), path.join(path.resolve(), `./static/packages/${packageName}/assets`))
+    copyFolderRecursiveSync(path.join(path.resolve(), `../${packageName}/dist/assets/`), path.join(path.resolve(), `./static/assets`))
 })
 

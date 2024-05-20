@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
+const websiteBaseUrl = process.env.NIGHTLY_WEBSITE ? "/ui5-webcomponents/nightly/" : "/ui5-webcomponents/";
 
 const getScripts = (options) => {
 
@@ -90,6 +91,7 @@ const getScripts = (options) => {
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig} --mode testing`,
+			bundleForDeploy: `vite build ${viteConfig} --mode testing --base ${websiteBaseUrl}`,
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},

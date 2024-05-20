@@ -11,7 +11,7 @@
     "generate-local-env": "yarn generate-api-reference && yarn generate-documentation && yarn generate-local-cdn && yarn generate-icons",
     "generate-production-env": "yarn generate-local-env && yarn generate-pages",
     "docusaurus": "docusaurus",
-    "start": "yarn generate-local-dev && docusaurus start",
+    "start": "yarn generate-local-env && docusaurus start",
     "build": "yarn generate-production-env && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
