@@ -202,12 +202,8 @@ class DynamicPageTitle extends UI5Element {
 		return !!this.content.length;
 	}
 
-	get hasHeading() {
-		return !!this.heading.length;
-	}
-
 	get headingSlotName() {
-		if (this.hasHeading) {
+		if (!this.snapped) {
 			return "heading";
 		}
 		return "snappedHeading";

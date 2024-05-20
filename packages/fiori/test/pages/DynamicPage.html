@@ -17,6 +17,22 @@
 
         <link rel="stylesheet" type="text/css" href="./styles/DynamicPage.css" />
 
+        <style>
+            .snapped-title-content {
+                display: flex;
+                align-items: center;
+            }
+            .snapped-title-content [ui5-avatar] {
+                margin-right: 1rem;
+            }
+            .snapped-title-content [ui5-title] {
+                font-family: var(--sapObjectHeader_Title_FontFamily);
+                color: var(--sapObjectHeader_Title_TextColor);
+                padding: 0.3125rem 0 0 0;
+                font-size: var(--sapObjectHeader_Title_SnappedFontSize);
+                text-overflow: ellipsis;
+            }
+        </style>
     </head>
 
     <body>
@@ -29,7 +45,11 @@
                 </ui5-breadcrumbs>
 
                 <ui5-title wrapping-type="None" slot="heading">Special Running Shoe</ui5-title>
-                <ui5-title wrapping-type="None" slot="snappedHeading">Special Running Shoe</ui5-title>
+
+                <div slot="snappedHeading" class="snapped-title-content">
+                    <ui5-avatar shape="square" icon="laptop" color-scheme="Accent5" size="S"></ui5-avatar>
+                    <ui5-title wrapping-type="None">Special Running Shoe</ui5-title>
+                </div>
 
                 <p slot="content" class="text">PO-48865</p>
                 <p slot="snappedContent" class="text">PO-48865</p>
