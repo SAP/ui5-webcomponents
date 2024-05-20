@@ -30,7 +30,6 @@
     "start:all": "npm-run-all --parallel watch:allWithDelay dev",
     "dev": "node packages/tools/lib/dev-server/dev-server.js",
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:compat scopeWatch:fiori dev",
-    "start:storybook": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-playground start",
     "start:website": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-website start",
 
     "start": "npm-run-all --sequential generate start:all",
@@ -40,7 +39,6 @@
     "ci:releasebuild": "npm-run-all --sequential generate ts generateProd generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle",
-    "ci:deploybuild": "yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-playground build",
     "ci:deploy": "DEPOY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
     "ci:deploy:nightly": "DEPLOY_NIGHTLY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",
 
@@ -92,7 +90,6 @@
     "packages/icons-business-suite",
     "packages/icons-tnt",
     "packages/tools",
-    "packages/playground",
     "packages/website",
     "packages/create-package"
   ]
