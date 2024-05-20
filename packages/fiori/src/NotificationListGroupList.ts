@@ -9,7 +9,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  *
  * @private
  */
-@customElement("ui5-li-notification-group-list")
+@customElement("ui5-notification-group-list")
 class NotificationListGroupList extends List {
 	getEnabledItems() {
 		return [];
