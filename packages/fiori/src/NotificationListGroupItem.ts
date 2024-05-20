@@ -170,6 +170,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get groupCollapsedTooltip() {
+		// eslint-disable-next-line
 		// ToDo: edit and add translation when spec is ready
 		return this.collapsed ? "expand arrow" : "collapse arrow";
 	}
