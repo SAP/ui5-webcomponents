@@ -205,7 +205,7 @@ class Popover extends Popup {
 	@slot({ type: HTMLElement })
 	footer!: Array<HTMLElement>;
 
-	_opener?: HTMLElement;
+	_opener?: HTMLElement | string;
 	_openerRect?: DOMRect;
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
@@ -230,7 +230,7 @@ class Popover extends Popup {
 	 * @since 1.2.0
 	 */
 	@property({ validator: DOMReference })
-	set opener(value: HTMLElement) {
+	set opener(value: HTMLElement | string) {
 		if (this._opener === value) {
 			return;
 		}
@@ -242,7 +242,7 @@ class Popover extends Popup {
 		}
 	}
 
-	get opener(): HTMLElement | undefined {
+	get opener(): HTMLElement | string | undefined {
 		return this._opener;
 	}
 
