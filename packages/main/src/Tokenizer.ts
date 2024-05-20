@@ -541,13 +541,11 @@ class Tokenizer extends UI5Element {
 			const currentListItem = e.detail.item as ListItem;
 			const nextListItem = currentListItem.nextElementSibling as ListItem;
 			const previousListItem = currentListItem.previousElementSibling as ListItem;
+			const focusItem = nextListItem || previousListItem;
 
-			if (nextListItem) {
+			if (focusItem) {
 				await renderFinished();
-				nextListItem.focus();
-			} else if (previousListItem) {
-				await renderFinished();
-				previousListItem.focus();
+				focusItem.focus();
 			}
 		}
 	}
