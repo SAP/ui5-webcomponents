@@ -40,7 +40,7 @@ Basic.args = {
   <ui5-menu-item text="Open from Cloud"></ui5-menu-item>`
 };
 Basic.decorators = [
-	(story) => html`<ui5-button id="btnOpenBasic" class="samples-margin" icon="slim-arrow-down" icon-end>Open Menu</ui5-button> <br/>
+	(story) => html`<ui5-button id="btnOpenBasic" class="samples-margin" end-icon="slim-arrow-down">Open Menu</ui5-button> <br/>
 	${story()}
 	<script>
 		btnOpenBasic.addEventListener("click", function(event) {
