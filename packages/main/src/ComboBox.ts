@@ -78,6 +78,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxItemGroup.js";
+import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -178,6 +179,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		BusyIndicator,
 		Button,
 		StandardListItem,
+		ListItemGroup,
 		ListItemGroupHeader,
 		Popover,
 		ComboBoxGroupItem,

@@ -739,7 +739,9 @@ describe("Grouping", () => {
 		await input.click();
 		await input.keys("a");
 
-		assert.ok(await listItem.getProperty("_isVisible"), "The filtered item is shown");
+		assert.ok(await listItem, "The filtered item is shown");
+		assert.strictEqual(await list.getAttribute("accessible-role"), "ListBox", "The list item has the correct role attribute");
+		assert.strictEqual(await listItem.getAttribute("accessible-role"), "Option", "The list item has the correct role attribute");
 		assert.strictEqual(await list.$$("ui5-li").length, 5, "Group items are filtered correctly");
 	});
 });
