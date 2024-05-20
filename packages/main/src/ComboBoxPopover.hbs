@@ -62,6 +62,7 @@
 	{{/unless}}
 
 	<ui5-list
+		accessible-role="ListBox"
 		class="ui5-combobox-items-list"
 		separators="None"
 		@ui5-item-click={{_selectItem}}
@@ -124,6 +125,7 @@
 
 {{#*inline "listItem"}}
 	<ui5-li
+			accessible-role="Option"
 			type="Active"
 			wrapping-type="Normal"
 			additional-text={{this.additionalText}}

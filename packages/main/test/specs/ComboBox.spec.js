@@ -726,6 +726,22 @@ describe("Grouping", () => {
 
 		assert.ok(await popover.getProperty("open"), "Popover remains open");
 	});
+
+	it ("Pressing enter on a group item should not close the picker", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const popover = await combo.shadow$("ui5-responsive-popover");
+		const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+		const hiddenItem = await popover.$("ui5-list").$$("ui5-li")[5];
+
+		await input.click();
+		await input.keys("a");
+
+		assert.ok(await listItem.getProperty("_isVisible"), "The filtered item is shown");
+		assert.notOk(await hiddenItem.getProperty("_isVisible"), "The filtered-out item is not rendered");
+	});
 });
 
 describe("Accessibility", async () => {
