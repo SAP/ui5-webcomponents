@@ -434,7 +434,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this.responsivePopover?.open) {
-			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner((this.responsivePopover._opener as HTMLElement)!));
+			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner(this.responsivePopover.opener as HTMLElement));
 
 			if (popoverItems.length) {
 				this._setPopoverItems(popoverItems);
