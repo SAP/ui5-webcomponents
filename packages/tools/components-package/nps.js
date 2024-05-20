@@ -1,7 +1,13 @@
 const path = require("path");
 const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
-const websiteBaseUrl = process.env.NIGHTLY_WEBSITE ? "/ui5-webcomponents/nightly/" : "/ui5-webcomponents/";
+let websiteBaseUrl = "/";
+
+if (process.env.DEPOY) {
+	websiteBaseUrl = "/ui5-webcomponents/";
+} else if (process.env.DEPLOY_NIGHTLY) {
+	websiteBaseUrl = "/ui5-webcomponents/nightly/";
+}
 
 const getScripts = (options) => {
 
@@ -90,8 +96,7 @@ const getScripts = (options) => {
 				default: "mkdirp src/generated/js-imports && nps build.jsImports.illustrationsLoaders",
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
-			bundle: `vite build ${viteConfig} --mode testing`,
-			bundleForDeploy: `vite build ${viteConfig} --mode testing --base ${websiteBaseUrl}`,
+			bundle: `vite build ${viteConfig} --mode testing  --base ${websiteBaseUrl}`,
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},

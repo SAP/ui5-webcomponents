@@ -16,6 +16,7 @@ src/components/Editor/ui5-autocomplete.json
 /icons-tnt
 /icons-business-suite
 static/packages
+static/assets
 
 # Generated files
 .docusaurus
