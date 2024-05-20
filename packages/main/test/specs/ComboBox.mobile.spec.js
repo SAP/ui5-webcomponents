@@ -1,4 +1,4 @@
-import { assert } from "chai"; are shown
+import { assert } from "chai";
 
 describe("Basic mobile picker rendering and interaction", () => {
 	before(async () => {
