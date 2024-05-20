@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 
 /**
  * @class
- * @private
+ * @internal
  *
  * Internal `ui5-li-notification-group-list` component,
  * that is used to support keyboard navigation of the notification group internal list.
