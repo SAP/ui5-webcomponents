@@ -457,7 +457,21 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		if (this.open && !this._isKeyNavigation) {
 			const items = this._filterItems(this.filterValue);
 
-			this._filteredItems = items.length ? items : this.items;
+			this._filteredItems = (items.length && items) || [];
+		}
+
+		if (((!this._filteredItems.length && !isPhone) || !this._filteredItems.some(i => i._isVisible)) && this.value) {
+			this.items.forEach(item => {
+				if (item?.items?.length) {
+					item.items.forEach(i => {
+						i._isVisible = true;
+					});
+				} else {
+					item._isVisible = true;
+				}
+			});
+
+			this._filteredItems = this.items;
 		}
 
 		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length && popover) {
@@ -638,19 +652,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_input(e: InputEvent) {
 		const { value } = e.target as HTMLInputElement;
 		const shouldAutocomplete = this.shouldAutocomplete(e);
-
-		// Reset item filtration
-		this.items.forEach(item => {
-			if (item.isGroupItem) {
-				item.items?.forEach(i => {
-					i._isVisible = false;
-				});
-
-				return;
-			}
-
-			item._isVisible = false;
-		});
 
 		if (e.target === this.inner) {
 			// stop the native event, as the semantic "input" would be fired.
@@ -1042,6 +1043,19 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const filteredItems: Array<IComboBoxItem> = [];
 		const filteredItemGroups: Array<IComboBoxItem> = [];
 
+		// Reset item filtration
+		this.items.forEach(item => {
+			if (item.isGroupItem) {
+				item.items?.forEach(i => {
+					i._isVisible = false;
+				});
+				return;
+			}
+
+			item._isVisible = false;
+		});
+
+		// Filter items
 		this.items.forEach(item => {
 			if (item.items?.length) {
 				filteredGroupItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
@@ -1057,7 +1071,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			}
 
 			[filteredItem] = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, [item], "text");
-			filteredItem && filteredItems.push(filteredItem);
+
+			if (filteredItem) {
+				filteredItem._isVisible = true;
+				filteredItems.push(filteredItem);
+			}
 		});
 
 		return [...filteredItemGroups, ...filteredItems];

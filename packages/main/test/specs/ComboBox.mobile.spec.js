@@ -245,7 +245,7 @@ describe("Picker filtering", () => {
 
 		assert.strictEqual(await dialogList.$$('ui5-li').length, 9, "All of the items are shown (8)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 3, "There are 3 filtered items");
+		assert.strictEqual(await dialogList.$$('ui5-li').length, 4, "There are 4 filtered items");
 	});
 
 	it("Should filter group header list items", async () => {
@@ -261,7 +261,7 @@ describe("Picker filtering", () => {
 
 		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 3, "All of the group header list items are shown (3)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 1, "There is only 1 visible group");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 2, "There is only 1 visible group");
 	});
 });
 

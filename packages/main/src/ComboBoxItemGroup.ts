@@ -33,7 +33,7 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		focused!: boolean;
 
 		/**
-		 * Defines the items of the <code>ui5-li-group</code>.
+		 * Defines the items of the <code>ui5-cb-item-group</code>.
 		 * @public
 		 */
 		@slot({
@@ -53,6 +53,10 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 
 		get stableDomRef() {
 			return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+		}
+
+		get _isVisible() {
+			return this.items.some(item => item._isVisible);
 		}
 }
 

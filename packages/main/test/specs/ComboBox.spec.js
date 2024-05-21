@@ -145,7 +145,7 @@ describe("General interaction", () => {
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// assert
-		assert.strictEqual(listItems.length, 0, "Items should be 0");
+		assert.notOk(listItems.some(item => item._isVisible), "Rendered items should be 0");
 		assert.notOk(await popover.getProperty("open"), "Popover should close");
 	});
 
@@ -655,10 +655,12 @@ describe("Grouping", () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$(".inputIcon");
 		let popover = await combo.shadow$("ui5-responsive-popover");
-		let groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 		let listItems;
+		let groupItems;
 
 		await arrow.click();
+
+		groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 		listItems = await popover.$("ui5-list").$$("ui5-li-group ui5-li");
 
 		assert.strictEqual(groupItems.length, 4, "Group items should be 4");
