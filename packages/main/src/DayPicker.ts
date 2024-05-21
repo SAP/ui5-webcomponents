@@ -301,7 +301,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
 				week.unshift({
-					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData),
+					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType),
 					isHidden: this.shouldHideWeekNumbers,
 				});
 			}

@@ -4,7 +4,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isEscape,
+	isShift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -295,6 +300,9 @@ class Button extends UI5Element implements IButton, IFormElement {
 	@property({ type: Boolean })
 	_isTouch = false;
 
+	@property({ type: Boolean, noAttribute: true })
+	_cancelAction!: boolean;
+
 	/**
 	 * Defines the text of the component.
 	 *
@@ -403,14 +411,21 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		this._cancelAction = isShift(e) || isEscape(e);
 		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
+		} else if (this._cancelAction) {
+			this._setActiveState(false);
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		if (this._cancelAction) {
+			e.preventDefault();
+		}
+
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
 				this._setActiveState(false);

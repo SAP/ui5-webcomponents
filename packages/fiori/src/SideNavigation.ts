@@ -339,7 +339,7 @@ class SideNavigation extends UI5Element {
 
 		const menu = this.getOverflowPopover();
 		menu.opener = opener;
-		menu.showAt(opener);
+		menu.open = true;
 	}
 
 	closePicker() {
@@ -349,7 +349,7 @@ class SideNavigation extends UI5Element {
 
 	closeMenu() {
 		const menu = this.getOverflowPopover();
-		menu.close();
+		menu.open = false;
 	}
 
 	getPickerTree() {

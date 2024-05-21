@@ -205,7 +205,7 @@ class Popover extends Popup {
 	@slot({ type: HTMLElement })
 	footer!: Array<HTMLElement>;
 
-	_opener?: HTMLElement;
+	_opener?: HTMLElement | string;
 	_openerRect?: DOMRect;
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
@@ -254,20 +254,7 @@ class Popover extends Popup {
 			return;
 		}
 
-		let opener;
-
-		if (this.opener instanceof HTMLElement) {
-			opener = this.opener;
-		} else if (typeof this.opener === "string") {
-			const rootNode = this.getRootNode();
-			if (rootNode instanceof Document) {
-				opener = rootNode.getElementById(this.opener);
-			}
-
-			if (!opener) {
-				opener = document.getElementById(this.opener);
-			}
-		}
+		const opener = this.getOpenerHTMLElement(this.opener);
 
 		if (!opener) {
 			console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
@@ -279,7 +266,6 @@ class Popover extends Popup {
 			return;
 		}
 
-		this._opener = opener;
 		this._openerRect = opener.getBoundingClientRect();
 
 		await super.openPopup();
@@ -316,6 +302,19 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
+	getOpenerHTMLElement(opener: HTMLElement | string | undefined): HTMLElement | null | undefined {
+		if (opener === undefined || opener instanceof HTMLElement) {
+			return opener;
+		}
+
+		const rootNode = this.getRootNode();
+
+		if (rootNode instanceof Document) {
+			return rootNode.getElementById(opener);
+		}
+		return document.getElementById(opener);
+	}
+
 	shouldCloseDueToOverflow(placement: `${PopoverPlacement}`, openerRect: DOMRect): boolean {
 		const threshold = 32;
 		const limits = {
@@ -325,7 +324,8 @@ class Popover extends Popup {
 			"Bottom": openerRect.bottom,
 		};
 
-		const closedPopupParent = getClosedPopupParent(this._opener!);
+		const opener = this.getOpenerHTMLElement(this.opener);
+		const closedPopupParent = getClosedPopupParent(opener!);
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
@@ -388,7 +388,7 @@ class Popover extends Popup {
 
 		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = this._opener.getBoundingClientRect();
+			this._openerRect = this.getOpenerHTMLElement(this.opener)!.getBoundingClientRect();
 		}
 
 		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin() && this._oldPlacement) {
