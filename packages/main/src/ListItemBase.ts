@@ -143,7 +143,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.disabled) {
+		if (this.disabled || !this.actionable) {
 			return;
 		}
 		if (isEnter(e as KeyboardEvent)) {
