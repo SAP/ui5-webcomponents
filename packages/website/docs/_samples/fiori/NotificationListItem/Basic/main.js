@@ -3,7 +3,7 @@ import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/Toast.js";
 
-
+import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 
 var notificationList = document.querySelector("ui5-list");

@@ -9,6 +9,7 @@ import "@ui5/webcomponents-icons/dist/action-settings.js"
 import "@ui5/webcomponents-icons/dist/sort.js"
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 
@@ -25,7 +26,7 @@ notificationList.addEventListener("item-close", e => {
 
     // hide the closed Notification item
     e.detail.item.hidden = true;
-    
+
     Array.from(e.detail.item.parentElement.childNodes).forEach((element) => {
         if (element.nodeName === "UI5-LI-NOTIFICATION" && !element.hidden) {
             visibleItems++;

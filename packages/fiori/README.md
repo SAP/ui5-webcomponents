@@ -18,7 +18,8 @@ such as a common header (ShellBar).
 | Illustrated Message                       | `ui5-illustrated-message`      | `import "@ui5/webcomponents-fiori/dist/IllustratedMessage.js";`       |
 | Media Gallery                             | `ui5-media-gallery`            | `import "@ui5/webcomponents-fiori/dist/MediaGallery.js";`             |
 | Media Gallery Item                        | `ui5-media-gallery-item`       | comes with  `ui5-media-gallery`                                       |
-| Notification List Item                    | `ui5-li-notifcation`           | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`      |
+| Notification List                         | `ui5-notification-list`        | `import "@ui5/webcomponents-fiori/dist/NotifcationList.js";`          |
+| Notification List Item                    | `ui5-li-notification`          | `import "@ui5/webcomponents-fiori/dist/NotifcationListItem.js";`      |
 | Notification Group List Item              | `ui5-li-notification-group`    | `import "@ui5/webcomponents-fiori/dist/NotifcationListGroupItem.js";` |
 | Notification Action                       | `ui5-notification-action`      | `import "@ui5/webcomponents-fiori/dist/NotificationAction.js";`       |
 | Page                                      | `ui5-page`                     | `import "@ui5/webcomponents-fiori/dist/Page.js";`                     |
