@@ -345,12 +345,10 @@ class Menu extends UI5Element {
 		}
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
-		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item")) {
-			if (parentElement._popover) {
-				parentElement._popover.open = false;
-				parentElement.selected = false;
-				parentElement._popover.opener?.focus();
-			}
+		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
+			parentElement._popover.open = false;
+			parentElement.selected = false;
+			parentElement._popover.opener?.focus();
 		}
 	}
 

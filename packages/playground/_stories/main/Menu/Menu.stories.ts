@@ -27,6 +27,7 @@ export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
 	id: "menuBasic",
+	opener: "btnOpenBasic",
 	headerText: "Basic Menu with Items",
 	default: `<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
 <ui5-menu-item text="New Folder" icon="add-folder" disabled=""></ui5-menu-item>
@@ -40,7 +41,7 @@ Basic.decorators = [
 	${story()}
 	<script>
 		btnOpenBasic.addEventListener("click", function(event) {
-			menuBasic.showAt(btnOpenBasic);
+			menuBasic.open = !menuBasic.open;
 		});
 	</script>`,
 ];
@@ -56,6 +57,7 @@ export const SubMenu = Template.bind({});
 SubMenu.storyName = "Menu with Submenu";
 SubMenu.args = {
 	id: "menuSubs",
+	opener: "btnOpenBasic",
 	default: `<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
 <ui5-menu-item text="New Folder" icon="add-folder" disabled=""></ui5-menu-item>
 <ui5-menu-item text="Open" icon="open-folder" starts-section="">
@@ -83,7 +85,7 @@ SubMenu.decorators = [
 	${story()}
 	<script>
 		btnOpenBasic.addEventListener("click", function(event) {
-			menuSubs.showAt(btnOpenBasic);
+			menuSubs.open = !menuSubs.open;
 		});
 	</script>`,
 ];
@@ -99,6 +101,7 @@ export const AditionalText = Template.bind({});
 AditionalText.storyName = "Menu Items with Additional Text";
 AditionalText.args = {
 	id: "menuAdditionalText",
+	opener: "btnOpenAdditionalText",
 	default: `<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
 <ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled=""></ui5-menu-item>
 <ui5-menu-item text="Open" icon="open-folder" starts-section=""></ui5-menu-item>
@@ -111,7 +114,7 @@ AditionalText.decorators = [
 	${story()}
 	<script>
 		btnOpenAdditionalText.addEventListener("click", function(event) {
-			menuAdditionalText.showAt(btnOpenAdditionalText);
+			menuAdditionalText.open = !menuAdditionalText.open;
 		});
 	</script>`,
 ];
