@@ -62,15 +62,16 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
-	it("tests popover is closed after click outside of it after multiple 'showAt'", async () => {
+	it("tests popover is closed after click outside of it after multiple 'open = true'", async () => {
 		await browser.executeAsync((done) => {
 			const btn = document.getElementById("btn");
 			const popover = document.getElementById("pop");
 
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
+			popover.opener = btn;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
 
 			done();
 		});
@@ -139,8 +140,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.$$("ui5-li");
+		const items = await await browser.$$("#many-items ui5-option")
 
 		await manyItemsSelect.click();
 
@@ -151,8 +151,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 2", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.$$("ui5-li");
+		const items = await await browser.$$("#many-items ui5-option")
 		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
@@ -357,6 +356,20 @@ describe("Popover general interaction", () => {
 
 		const popover = await browser.$("#pop");
 		const iframe = await browser.$("#clickThisIframe");
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await iframe.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
+	it("tests clicking on an iframe inside a shadow root closes the popover", async () => {
+		const btnOpenPopover = await browser.$("#btn");
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#pop");
+		const iframe = await browser.$("#host").shadow$("#clickThisIframeInsideShadowRoot");
 
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 

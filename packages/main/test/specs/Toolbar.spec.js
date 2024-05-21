@@ -49,4 +49,16 @@ describe("Toolbar general interaction", () => {
 		assert.strictEqual(await declineButton.getTagName(), "ui5-button", false, "Toolbar button is properly rendered");
 	});
 
+	it("Should properly prevent the closing of the overflow menu when preventClosing = true", async () => {
+		const toolbar = await browser.$("#testEventpreventClosing-toolbar")
+		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
+		const popover = await toolbar.shadow$(".ui5-overflow-popover");
+		const select = await toolbar.shadow$("[ui5-select]");
+
+		await overflowButton.click();
+		await select.click();
+
+		assert.strictEqual(await popover.getProperty("open"), true, "Popover is opened");
+	});
+
 });

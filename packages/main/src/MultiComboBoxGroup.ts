@@ -56,7 +56,6 @@ class MultiComboBoxGroup extends UI5Element implements IMultiComboBoxItem {
 
 MultiComboBoxGroup.define();
 
-
 const isInstanceOfMultiComboBoxItemGroup = (object: any): object is MultiComboBoxGroup => {
 	return "isGroupItem" in object;
 };

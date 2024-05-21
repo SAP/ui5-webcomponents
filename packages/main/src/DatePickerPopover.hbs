@@ -8,7 +8,7 @@
 	hide-arrow
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
-	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
+	@ui5-close="{{onResponsivePopoverAfterClose}}"
 	@ui5-before-open="{{onResponsivePopoverBeforeOpen}}"
 >
 	{{#if showHeader}}
@@ -48,8 +48,8 @@
 		.minDate="{{minDate}}"
 		.maxDate="{{maxDate}}"
 		@ui5-selection-change="{{onSelectedDatesChange}}"
-		@ui5-show-month-press="{{onHeaderShowMonthPress}}"
-		@ui5-show-year-press="{{onHeaderShowYearPress}}"
+		@ui5-show-month-view="{{onHeaderShowMonthPress}}"
+		@ui5-show-year-view="{{onHeaderShowYearPress}}"
 		?hide-week-numbers="{{hideWeekNumbers}}"
 		._currentPicker="{{_calendarCurrentPicker}}"
 		._pickersMode="{{_calendarPickersMode}}"

@@ -9,13 +9,19 @@
 	placement="Bottom"
 	horizontal-align="Start"
 	@ui5-before-close="{{handleBeforeClose}}"
-	@ui5-after-close="{{handleAfterClose}}"
+	@ui5-close="{{handleAfterClose}}"
 	@ui5-before-open="{{handleBeforeOpen}}"
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
-				<ui5-title level="H5" class="ui5-responsive-popover-header-text">{{morePopoverTitle}}</ui5-title>
+				<ui5-title
+					level="H5"
+					wrapping-type="None"
+					class="ui5-responsive-popover-header-text"
+				>
+					{{morePopoverTitle}}
+				</ui5-title>
 			</div>
 		</div>
 	{{/if}}
