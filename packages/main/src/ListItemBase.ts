@@ -146,7 +146,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.disabled || !this.actionable) {
+		if (this.disabled || !this._pressable) {
 			return;
 		}
 		if (isEnter(e as KeyboardEvent)) {
@@ -203,6 +203,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	get _focusable() {
 		return !this.disabled;
+	}
+
+	get _pressable() {
+		return true;
 	}
 
 	get hasConfigurableMode() {
