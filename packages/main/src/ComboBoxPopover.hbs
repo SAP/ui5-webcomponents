@@ -3,10 +3,9 @@
 	hide-arrow
 	placement="Bottom"
 	horizontal-align="Start"
-	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
-	@ui5-open={{_afterOpenPopover}}
-	@ui5-close={{_afterClosePopover}}
+	@ui5-after-open={{_afterOpenPopover}}
+	@ui5-after-close={{_afterClosePopover}}
 >
 	<ui5-busy-indicator
 		?active={{loading}}
@@ -92,7 +91,7 @@
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
 		skip-registry-update
-		prevent-initial-focus
+		_disable-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"
