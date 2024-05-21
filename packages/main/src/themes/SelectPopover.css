@@ -2,8 +2,3 @@
 .ui5-select-popover::part(header) {
 	padding: 0;
 }
-
-.ui5-select-popover [ui5-option],
-.ui5-select-popover [ui5-option-custom] {
-	height: var(--_ui5_list_item_dropdown_base_height);
-}
