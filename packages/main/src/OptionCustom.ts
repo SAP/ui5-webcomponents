@@ -8,6 +8,9 @@ import ListItemBase from "./ListItemBase.js";
 // Template
 import OptionCustomTemplate from "./generated/templates/OptionCustomTemplate.lit.js";
 
+// Styles
+import optionBaseCss from "./generated/themes/OptionBase.css.js";
+
 /**
  * @class
  *
@@ -28,6 +31,9 @@ import OptionCustomTemplate from "./generated/templates/OptionCustomTemplate.lit
 @customElement({
 	tag: "ui5-option-custom",
 	template: OptionCustomTemplate,
+	styles: [
+		optionBaseCss,
+	],
 })
 class OptionCustom extends ListItemBase implements IOption {
 	/**
@@ -61,9 +67,8 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * Defines the text of the tooltip that would be displayed for the list item.
 	 * @default ""
 	 * @public
-	 * @since 1.23.0
 	 */
-	@property({ type: String, defaultValue: "" })
+	@property({ type: String })
 	tooltip!: string;
 
 	get effectiveDisplayText() {

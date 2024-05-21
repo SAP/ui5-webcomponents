@@ -8,7 +8,9 @@ import ListItemBase from "./ListItemBase.js";
 import OptionTemplate from "./generated/templates/OptionTemplate.lit.js";
 
 // Styles
-import optionCss from "./generated/themes/Option.css.js";
+import optionBaseCss from "./generated/themes/OptionBase.css.js";
+import listItemIconCss from "./generated/themes/ListItemIcon.css.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 
 /**
  * @class
@@ -29,7 +31,9 @@ import optionCss from "./generated/themes/Option.css.js";
 	template: OptionTemplate,
 	styles: [
 		ListItemBase.styles,
-		optionCss,
+		listItemAdditionalTextCss,
+		listItemIconCss,
+		optionBaseCss,
 	],
 })
 class Option extends ListItemBase implements IOption {

@@ -32,6 +32,7 @@ import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -78,7 +79,11 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  */
 @customElement({
 	languageAware: true,
-	styles: [ListItemBase.styles, styles],
+	styles: [
+		ListItemBase.styles,
+		listItemAdditionalTextCss,
+		styles,
+	],
 	dependencies: [
 		Button,
 		RadioButton,

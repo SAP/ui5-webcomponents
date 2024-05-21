@@ -7,7 +7,10 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import {
-	isEnter, isSpace, isTabNext, isTabPrevious,
+	isEnter,
+	isSpace,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -16,7 +19,7 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import styles from "./generated/themes/ListItemBase.css.js";
 import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
-type PressEventDetail = {
+type ListItemBasePressEventDetail = {
 	item: ListItemBase,
 	selected: boolean,
 	key: string,
@@ -149,7 +152,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (isEnter(e as KeyboardEvent)) {
 			e.preventDefault();
 		}
-		this.fireEvent<PressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		this.fireEvent<ListItemBasePressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
@@ -220,5 +223,5 @@ class ListItemBase extends UI5Element implements ITabbable {
 export default ListItemBase;
 
 export type {
-	PressEventDetail,
+	ListItemBasePressEventDetail,
 };

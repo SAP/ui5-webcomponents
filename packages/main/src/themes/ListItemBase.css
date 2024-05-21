@@ -69,6 +69,22 @@
 	background: inherit;
 }
 
+.ui5-li-content {
+	display: flex;
+	align-items: center;
+	flex: auto;
+	overflow: hidden;
+}
+
+.ui5-li-text-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex: auto;
+	min-width: 1px;
+	line-height: normal;
+}
+
 /* focused */
 :host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;

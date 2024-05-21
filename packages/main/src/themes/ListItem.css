@@ -69,11 +69,7 @@
 }
 
 .ui5-li-text-wrapper {
-	display: flex;
 	flex-direction: column;
-	flex: auto;
-	min-width: 1px;
-	line-height: normal;
 }
 
 :host([description]) .ui5-li-text-wrapper {
@@ -108,14 +104,6 @@
 	font-size: var(--sapFontSize);
 }
 
-.ui5-li-additional-text {
-	margin: 0 0.25rem;
-	color: var(--sapNeutralTextColor);
-	font-size: var(--sapFontSize);
-	min-width: 3.75rem;
-	text-align: end;
-}
-
 :host([description]) .ui5-li-additional-text {
 	align-self: flex-end;
 }
@@ -144,13 +132,6 @@
 	min-height: var(--_ui5_list_item_icon_size);
 	color: var(--sapContent_NonInteractiveIconColor);
 	padding-inline-end: var(--_ui5_list_item_icon_padding-inline-end);
-}
-
-.ui5-li-content {
-	display: flex;
-	align-items: center;
-	flex: auto;
-	overflow: hidden;
 }
 
 .ui5-li-detailbtn,

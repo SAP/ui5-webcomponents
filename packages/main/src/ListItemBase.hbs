@@ -15,6 +15,8 @@
 
 {{#*inline "listItemContent"}}
 	<div part="content" id="{{_id}}-content" class="ui5-li-content">
-		<span part="title" class="ui5-li-title"><slot></slot></span>
+		<div class="ui5-li-text-wrapper">
+			<span part="title" class="ui5-li-title"><slot></slot></span>
+		</div>
 	</div>
 {{/inline}}
