@@ -109,6 +109,16 @@ describe("Button general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 6 times");
 	});
 
+	it("tests keyboard shortcuts used to prevent a click event", async () => {
+		const button = await browser.$("#button1");
+		const field = await browser.$("#click-counter");
+
+		await button.keys(["Space", "Shift"]);
+		await button.keys(["Space", "Escape"]);
+
+		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 6 times");
+	});
+
 	it("aria-expanded is properly applied on the button tag", async () => {
 		const button = await browser.$("#button1");
 		const innerButton = await button.shadow$("button");

@@ -1,11 +1,13 @@
 <div class="ui5-form-root" role="form" aria-labelledby="{{ariaLabelledByID}}">
-	<div class="ui5-form-header" part="header">
-		{{#if hasCustomHeader}}
-			<slot name="header"></slot>
-		{{else}}
-			<ui5-title id="{{_id}}-header-text" level="H4">{{ headerText }}</ui5-title>
-		{{/if}}
-	</div>
+	{{#if hasHeader}}
+		<div class="ui5-form-header" part="header">
+			{{#if hasCustomHeader}}
+				<slot name="header"></slot>
+			{{else}}
+				<ui5-title id="{{_id}}-header-text" level="H4">{{ headerText }}</ui5-title>
+			{{/if}}
+		</div>
+	{{/if}}
 
 	<div class="ui5-form-layout" part="layout">
 			{{#if this.hasGroupItems}}
