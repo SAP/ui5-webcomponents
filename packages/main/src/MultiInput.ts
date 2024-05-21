@@ -132,7 +132,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, individualSlots: true })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
@@ -306,12 +306,6 @@ class MultiInput extends Input implements IFormInputElement {
 		if (e.target === inputDomRef) {
 			super._onfocusin(e);
 		}
-	}
-
-	lastItemDeleted() {
-		setTimeout(() => {
-			this.focus();
-		}, 0);
 	}
 
 	onBeforeRendering() {
