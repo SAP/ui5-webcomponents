@@ -69,7 +69,7 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * @public
  */
 type IOption = ListItemBase & {
-	tooltip: string,
+	tooltip?: string,
 	icon?: string | null,
 	value: string,
 	additionalText?: string,
