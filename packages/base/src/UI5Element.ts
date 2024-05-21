@@ -120,6 +120,7 @@ abstract class UI5Element extends HTMLElement {
 	_inDOM: boolean;
 	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
+	_slotAssignedElementsCache: WeakMap<HTMLSlotElement, Array<Node>>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
@@ -149,6 +150,7 @@ abstract class UI5Element extends HTMLElement {
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 		this._doNotSyncAttributes = new Set(); // attributes that are excluded from attributeChangedCallback synchronization
+		this._slotAssignedElementsCache = new WeakMap();
 
 		this._state = { ...ctor.getMetadata().getInitialState() };
 
@@ -369,15 +371,12 @@ abstract class UI5Element extends HTMLElement {
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
 				const childChangeListener = this._getChildChangeListener(slotName);
-
-				if (childChangeListener) {
-					child.attachInvalidate.call(child, childChangeListener);
-				}
+				child.attachInvalidate.call(child, childChangeListener);
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
 			if (child instanceof HTMLSlotElement) {
-				this._attachSlotChange(child, slotName);
+				this._attachSlotChange(child, slotName, !!slotData.invalidateOnChildChange);
 			}
 
 			const propertyName = slotData.propertyName || slotName;
@@ -433,10 +432,7 @@ abstract class UI5Element extends HTMLElement {
 		children.forEach(child => {
 			if (instanceOfUI5Element(child)) {
 				const childChangeListener = this._getChildChangeListener(slotName);
-
-				if (childChangeListener) {
-					child.detachInvalidate.call(child, childChangeListener);
-				}
+				child.detachInvalidate.call(child, childChangeListener);
 			}
 
 			if (child instanceof HTMLSlotElement) {
@@ -613,10 +609,36 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_attachSlotChange(child: HTMLSlotElement, slotName: string) {
+	_attachSlotChange(slot: HTMLSlotElement, slotName: string, invalidateOnChildChange: boolean) {
 		const slotChangeListener = this._getSlotChangeListener(slotName);
 		if (slotChangeListener) {
-			child.addEventListener("slotchange", slotChangeListener);
+			slot.addEventListener("slotchange", (e: Event) => {
+				slotChangeListener.call(slot, e);
+				if (!invalidateOnChildChange) {
+					return;
+				}
+
+				// Detach listeners for children that used to be in this slot
+				const previousChildren = this._slotAssignedElementsCache.get(slot);
+				if (previousChildren) {
+					previousChildren.forEach(child => {
+						if (instanceOfUI5Element(child)) {
+							const childChangeListener = this._getChildChangeListener(slotName);
+							child.detachInvalidate.call(child, childChangeListener);
+						}
+					});
+				}
+
+				// Attach listeners for all children in this slot
+				const newChildren = getSlottedNodesList([slot]);
+				this._slotAssignedElementsCache.set(slot, newChildren);
+				newChildren.forEach(child => {
+					if (instanceOfUI5Element(child)) {
+						const childChangeListener = this._getChildChangeListener(slotName);
+						child.attachInvalidate.call(child, childChangeListener);
+					}
+				});
+			});
 		}
 	}
 
