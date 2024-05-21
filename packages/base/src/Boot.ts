@@ -40,14 +40,14 @@ const boot = async (): Promise<void> => {
 	}
 
 	const bootExecutor = async (resolve: PromiseResolve) => {
+		registerCurrentRuntime();
+
 		if (typeof document === "undefined") {
 			resolve();
 			return;
 		}
 
 		attachThemeRegistered(onThemeRegistered);
-
-		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isOpenUI5Detected() : false;
