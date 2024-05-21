@@ -148,6 +148,11 @@
 		<ui5-li>Option #3</ui5-li>
 	</ui5-list>
 
+	<ui5-list id="inactiveMultiSelect" selection-mode="Multiple">
+		<ui5-li type="Inactive">Option #1</ui5-li>
+		<ui5-li type="Inactive">Option #2</ui5-li>
+	</ui5-list>
+
 	<ui5-list id="default-slot-test" selection-mode="Single">
 		<ui5-li>Option #1</ui5-li>
 		<ui5-li>Option #2</ui5-li>
@@ -435,7 +440,8 @@
 		});
 
 		btnOpenPopup.addEventListener("click", function() {
-			popup.showAt(btnOpenPopup);
+			popup.opener = btnOpenPopup;
+			popup.open = true;
 		});
 
 

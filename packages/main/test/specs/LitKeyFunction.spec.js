@@ -21,7 +21,7 @@ describe("Lit HTML key function for #each", async () => {
 		await firstItem.click();
 
 		// Open the popover with the arrow
-		const icon = await browser.$("#mcb").shadow$("[input-icon]");
+		const icon = await browser.$("#mcb").shadow$(".inputIcon");
 		await icon.click();
 
 		// The first item (<empty>) should not be selected

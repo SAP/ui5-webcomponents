@@ -1,4 +1,12 @@
+#popover-with-notifications {
+    max-width: 27rem;
+    max-height: 40rem;
+}
+
 #popover-with-notifications::part(content) {
     padding: 0;
-    max-width: 400px;
+}
+
+#notificationsPopoverBar::part(bar) {
+    box-shadow: none;
 }

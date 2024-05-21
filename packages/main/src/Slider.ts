@@ -4,6 +4,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
 
@@ -72,10 +73,11 @@ import {
 @customElement({
 	tag: "ui5-slider",
 	languageAware: true,
+	formAssociated: true,
 	template: SliderTemplate,
 	dependencies: [Icon],
 })
-class Slider extends SliderBase {
+class Slider extends SliderBase implements IFormInputElement {
 	/**
 	 * Current value of the slider
 	 * @default 0
@@ -90,6 +92,10 @@ class Slider extends SliderBase {
 	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
+
+	get formFormattedValue() {
+		return this.value.toString();
+	}
 
 	static i18nBundle: I18nBundle;
 

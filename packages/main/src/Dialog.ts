@@ -1,4 +1,3 @@
-import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -190,18 +189,6 @@ class Dialog extends Popup {
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	state!: `${ValueState}`;
 
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	onPhone!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	onDesktop!: boolean;
-
 	_screenResizeHandler: () => void;
 	_dragMouseMoveHandler: (e: MouseEvent) => void;
 	_dragMouseUpHandler: (e: MouseEvent) => void;
@@ -267,22 +254,8 @@ class Dialog extends Popup {
 		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
 	}
 
-	/**
-	 * Shows the dialog.
-	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-	 * @public
-	 * @returns Resolves when the dialog is open
-	 */
-	async show(preventInitialFocus = false): Promise<void> {
-		await super._open(preventInitialFocus);
-	}
-
 	get isModal() {
 		return true;
-	}
-
-	get shouldHideBackdrop() {
-		return false;
 	}
 
 	get _ariaLabelledBy() {
@@ -379,8 +352,6 @@ class Dialog extends Popup {
 		super.onBeforeRendering();
 
 		this._isRTL = this.effectiveDir === "rtl";
-		this.onPhone = isPhone();
-		this.onDesktop = isDesktop();
 	}
 
 	onEnterDOM() {
