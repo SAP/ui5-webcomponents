@@ -39,6 +39,7 @@ import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -394,6 +395,21 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		}
 
 		return selectedDate;
+	}
+
+	getFormat() {
+		debugger;
+		return this._isPattern
+			? DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				pattern: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			})
+			: DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
 	}
 
 	/**
