@@ -2,12 +2,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-import StandardListItem from "./StandardListItem.js";
-import ListItemType from "./types/ListItemType.js";
+import CustomListItem from "./CustomListItem.js";
 import { IButton } from "./Button.js";
-import type { ListItemAccessibilityAttributes as OptionAccessibilityAttributes } from "./ListItem.js";
+import ListItemType from "./types/ListItemType.js";
+import type { ListItemAccessibilityAttributes as CustomOptionAccessibilityAttributes } from "./ListItem.js";
 import HighlightTypes from "./types/HighlightTypes.js";
 import { IOption } from "./Select.js";
 
@@ -16,17 +15,20 @@ import { IOption } from "./Select.js";
  *
  * ### Overview
  *
- * The `ui5-option` component defines the content of an option in the `ui5-select`.
+ * The `ui5-option-custom` component defines a custom content of an option in the `ui5-select`.
+ * A component to be the same way as the standard `ui5-option`.
+ * The component accepts arbitrary HTML content to allow full customization.
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Option.js";`
+ * `import "@ui5/webcomponents/dist/OptionCustom.js";`
  * @constructor
- * @extends StandardListItem
+ * @since 2.0.0
+ * @extends CustomListItem
  * @public
  */
 @customElement({
-	tag: "ui5-option",
+	tag: "ui5-option-custom",
 })
 /**
  * **Note:** The event is inherited and not supported. If used, it won't take any effect.
@@ -34,15 +36,15 @@ import { IOption } from "./Select.js";
  * @deprecated
  */
 @event("detail-click")
-class Option extends StandardListItem implements IOption {
+class OptionCustom extends CustomListItem implements IOption {
 	/**
-	 * Defines the text of the component.
-	 *
-	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * Defines the text, displayed inside the `ui5-select` input filed
+	 * when the option gets selected.
+	 * @default ""
 	 * @public
 	 */
-	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
-	text!: Array<Node>;
+	@property()
+	displayText!: string;
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
@@ -52,6 +54,15 @@ class Option extends StandardListItem implements IOption {
 	 */
 	@property()
 	value!: string;
+
+	/**
+	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+	 * @default false
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	declare iconEnd: boolean;
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -69,7 +80,7 @@ class Option extends StandardListItem implements IOption {
 	 * @deprecated
 	 */
 	@property({ type: Object })
-	declare accessibilityAttributes: OptionAccessibilityAttributes;
+	declare accessibilityAttributes: CustomOptionAccessibilityAttributes;
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -88,42 +99,6 @@ class Option extends StandardListItem implements IOption {
 	 */
 	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
 	declare highlight: `${HighlightTypes}`;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "None"
-	 * @public
-	 * @deprecated
-	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	declare additionalTextState: `${ValueState}`;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default ""
-	 * @public
-	 * @deprecated
-	 */
-	@property()
-	declare description: string;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default false
-	 * @public
-	 * @deprecated
-	 */
-	@property({ type: Boolean })
-	declare iconEnd: boolean;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default ""
-	 * @public
-	 * @deprecated
-	 */
-	@property()
-	declare image: string;
 
 	/**
 	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
@@ -152,18 +127,19 @@ class Option extends StandardListItem implements IOption {
 	declare deleteButton: Array<IButton>;
 
 	/**
-	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 * @public
-	 * @deprecated
 	 */
-	@slot()
-	declare imageContent: Array<HTMLElement>;
+	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
+	content!: Array<Node>;
 
 	get effectiveDisplayText() {
-		return this.textContent || "";
+		return this.displayText || this.textContent || "";
 	}
 }
 
-Option.define();
+OptionCustom.define();
 
-export default Option;
+export default OptionCustom;

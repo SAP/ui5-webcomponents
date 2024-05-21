@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import connectToComponent from "@ui5/webcomponents-base/dist/connectToComponent.js";
 import {
 	isSpace,
 	isUp,
@@ -17,7 +16,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -51,13 +49,12 @@ import {
 	SELECT_ROLE_DESCRIPTION,
 	FORM_SELECTABLE_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
-import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
-import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
+import ListItemBase from "./ListItemBase.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -67,25 +64,19 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
-import type ListItemBase from "./ListItemBase.js";
-import type SelectMenu from "./SelectMenu.js";
-import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
-interface IOption extends UI5Element {
-	selected: boolean,
+type IOption = ListItemBase & {
 	tooltip: string,
 	icon?: string | null,
 	value: string,
 	additionalText?: string,
 	focused?: boolean,
-	text?: Array<Node>,
-	stableDomRef: string,
-	displayText?: string,
-}
+	effectiveDisplayText: string,
+};
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -110,15 +101,10 @@ type SelectLiveChangeEventDetail = {
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With SelectMenu (`ui5-select-menu`) and SelectMenuOption (`ui5-select-menu-option`) web components:
+ * 2. With OptionCustom (`ui5-option-custom`) web component.
  *
- * The SelectMenu can be used as alternative to define the Select's dropdown
- * and can be used via the `menu` property of the Select to reference SelectMenu by its ID.
- * The component gives the possibility to customize the Select's dropdown
- * by slotting entirely custom options (via the SelectMenuOption component) and adding custom styles.
- *
- * **Note:** SelectMenu is a popover and placing it top-level in the HTML page is recommended,
- * because some page styles (for example transitions) can misplace the SelectMenu.
+ * Options with custom content are defined by using the OptionCustom component
+ * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
@@ -133,7 +119,8 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/Option";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/IOption";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -152,12 +139,10 @@ type SelectLiveChangeEventDetail = {
 		SelectPopoverCss,
 	],
 	dependencies: [
-		Option,
 		Label,
 		ResponsivePopover,
 		Popover,
 		List,
-		StandardListItem,
 		Icon,
 		Button,
 	],
@@ -203,20 +188,6 @@ type SelectLiveChangeEventDetail = {
 @event("close")
 class Select extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
-
-	/**
-	 * Defines a reference (ID or DOM element) of component's menu of options
-	 * as alternative to define the select's dropdown.
-	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the menu.
-	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
-	 *
-	 * **Note:** Usage of `ui5-select-menu` is recommended.
-	 * @default undefined
-	 * @public
-	 * @since 1.17.0
-	 */
-	@property({ validator: DOMReference })
-	menu?: HTMLElement | string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -288,12 +259,6 @@ class Select extends UI5Element implements IFormInputElement {
 	/**
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true })
-	_text?: string | null;
-
-	/**
-	 * @private
-	 */
 	@property({ type: Boolean, noAttribute: true })
 	_iconPressed!: boolean;
 
@@ -315,23 +280,13 @@ class Select extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	/**
-	 * @private
-	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_selectedIndex!: number;
-
-	_syncedOptions: Array<IOption>;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
 	_lastSelectedOption: IOption | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
-	selectedItem?: string | null;
 	valueStatePopover?: Popover;
-
-	selectMenu?: SelectMenu;
 
 	/**
 	 * Defines the component options.
@@ -364,7 +319,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * Defines the HTML element that will be displayed in the component input part,
 	 * representing the selected option.
 	 *
-	 * **Note:** If not specified and `ui5-select-menu-option` is used,
+	 * **Note:** If not specified and `ui5-option-custom` is used,
 	 * either the option's `display-text` or its textContent will be displayed.
 	 *
 	 * **Note:** If not specified and `ui5-option` is used,
@@ -374,14 +329,6 @@ class Select extends UI5Element implements IFormInputElement {
 	*/
 	@slot()
 	label!: Array<HTMLElement>;
-
-	_onMenuClick: (e: CustomEvent<SelectMenuOptionClick>) => void;
-	_onMenuClose: () => void;
-	_onMenuOpen: () => void;
-	_onMenuBeforeOpen: () => void;
-	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
-	_attachMenuListeners: (menu: HTMLElement) => void;
-	_detachMenuListeners: (menu: HTMLElement) => void;
 
 	get formValidityMessage() {
 		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
@@ -410,34 +357,16 @@ class Select extends UI5Element implements IFormInputElement {
 	constructor() {
 		super();
 
-		this._syncedOptions = [];
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
 		this._typedChars = "";
 
-		this._onMenuClick = this.onMenuClick.bind(this);
-		this._onMenuClose = this.onMenuClose.bind(this);
-		this._onMenuOpen = this.onMenuOpen.bind(this);
-		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
-		this._onMenuChange = this.onMenuChange.bind(this);
-		this._attachMenuListeners = this.attachMenuListeners.bind(this);
-		this._detachMenuListeners = this.detachMenuListeners.bind(this);
-
 		this._upgradeProperty("value");
 	}
 
 	onBeforeRendering() {
-		const menu = this._getSelectMenu();
-
-		if (menu) {
-			menu.value = this.value;
-			// To cause invalidation when the menu is used for another Select that could have the same value as the previous.
-			// Otherwise, the menu won't re-render.
-			menu.selectId = this.__id;
-		} else {
-			this._syncSelection();
-		}
+		this._ensureSingleSelection();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
@@ -450,8 +379,19 @@ class Select extends UI5Element implements IFormInputElement {
 				this._listWidth = this.responsivePopover.offsetWidth;
 			}
 		}
+	}
 
-		this._attachRealDomRefs();
+	_ensureSingleSelection() {
+		// if no item is selected => select the first one
+		// if multiple items are selected => select the last selected one
+		let selectedIndex = this.options.findLastIndex(option => option.selected);
+		selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
+		for (let i = 0; i < this.options.length; i++) {
+			this.options[i].selected = selectedIndex === i;
+			if (selectedIndex === i) {
+				break;
+			}
+		}
 	}
 
 	_onfocusin() {
@@ -463,12 +403,6 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get _isPickerOpen() {
-		const menu = this._getSelectMenu();
-
-		if (menu) {
-			return menu.open;
-		}
-
 		return !!this.responsivePopover && this.responsivePopover.open;
 	}
 
@@ -492,10 +426,9 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formEvents change liveChange
 	 */
 	set value(newValue: string) {
-		const menu = this._getSelectMenu();
-		const selectOptions = Array.from(menu ? menu.children : this.children) as Array<IOption>;
+		const options = Array.from(this.children) as Array<IOption>;
 
-		selectOptions.forEach(option => {
+		options.forEach(option => {
 			option.selected = !!((option.getAttribute("value") || option.textContent) === newValue);
 		});
 	}
@@ -504,56 +437,21 @@ class Select extends UI5Element implements IFormInputElement {
 		return this.selectedOption?.value || this.selectedOption?.textContent || "";
 	}
 
+	get _selectedIndex() {
+		return this.options.findIndex(option => option.selected);
+	}
+
 	/**
 	 * Currently selected `ui5-option` element.
 	 * @public
 	 * @default undefined
 	 */
 	get selectedOption(): IOption | undefined {
-		return this.selectOptions.find(option => option.selected);
+		return this.options.find(option => option.selected);
 	}
 
-	onMenuClick(e: CustomEvent<SelectMenuOptionClick>) {
-		const optionIndex: number = e.detail.optionIndex;
-		this._handleSelectionChange(optionIndex);
-	}
-
-	onMenuBeforeOpen() {
-		this._beforeOpen();
-	}
-
-	onMenuOpen() {
-		this._afterOpen();
-	}
-
-	onMenuClose() {
-		this._afterClose();
-	}
-
-	onMenuChange(e: CustomEvent<SelectMenuChange>) {
-		this._text = e.detail.text;
-		this._selectedIndex = e.detail.selectedIndex;
-	}
-
-	_toggleSelectMenu() {
-		const menu = this._getSelectMenu();
-
-		if (!menu) {
-			return;
-		}
-
-		if (menu.open) {
-			menu.close();
-		} else {
-			menu.showAt(this, this.offsetWidth);
-		}
-	}
-
-	onExitDOM(): void {
-		const menu = this._getSelectMenu();
-		if (menu) {
-			this._detachMenuListeners(menu);
-		}
+	get text() {
+		return this.selectedOption?.effectiveDisplayText;
 	}
 
 	_toggleRespPopover() {
@@ -562,12 +460,6 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		this._iconPressed = true;
-
-		const menu = this._getSelectMenu();
-		if (menu) {
-			this._toggleSelectMenu();
-			return;
-		}
 
 		this.responsivePopover = this._respPopover();
 		if (this._isPickerOpen) {
@@ -578,104 +470,11 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_attachRealDomRefs() {
-		this.responsivePopover = this._respPopover();
-
-		this.options.forEach(option => {
-			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
-		});
-	}
-
-	_syncSelection() {
-		let lastSelectedOptionIndex = -1,
-			firstEnabledOptionIndex = -1;
-		const options = this.options;
-		const syncOpts = options.map((opt, index) => {
-			if (opt.selected) {
-				lastSelectedOptionIndex = index;
-			}
-			if (firstEnabledOptionIndex === -1) {
-				firstEnabledOptionIndex = index;
-			}
-
-			opt.selected = false;
-			opt.focused = false;
-
-			return {
-				selected: false,
-				focused: false,
-				icon: opt.icon,
-				value: opt.value,
-				textContent: opt.textContent,
-				tooltip: opt.tooltip,
-				additionalText: opt.additionalText,
-				id: opt._id,
-				stableDomRef: opt.stableDomRef,
-			};
-		});
-
-		if (lastSelectedOptionIndex > -1) {
-			syncOpts[lastSelectedOptionIndex].selected = true;
-			syncOpts[lastSelectedOptionIndex].focused = true;
-			options[lastSelectedOptionIndex].selected = true;
-			options[lastSelectedOptionIndex].focused = true;
-			this._text = syncOpts[lastSelectedOptionIndex].textContent;
-			this._selectedIndex = lastSelectedOptionIndex;
-		} else {
-			this._text = "";
-			this._selectedIndex = -1;
-			if (syncOpts[firstEnabledOptionIndex]) {
-				syncOpts[firstEnabledOptionIndex].selected = true;
-				syncOpts[firstEnabledOptionIndex].focused = true;
-				options[firstEnabledOptionIndex].selected = true;
-				options[firstEnabledOptionIndex].focused = true;
-				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = options[firstEnabledOptionIndex].textContent;
-			}
-		}
-
-		this._syncedOptions = syncOpts as Array<IOption>;
-	}
-
-	_getSelectMenu(): SelectMenu | undefined {
-		return connectToComponent({
-			host: this,
-			propName: "menu",
-			onConnect: this._attachMenuListeners,
-			onDisconnect: this._detachMenuListeners,
-		}) as SelectMenu;
-	}
-
-	attachMenuListeners(menu: HTMLElement) {
-		menu.addEventListener("ui5-close", this._onMenuClose);
-		menu.addEventListener("ui5-open", this._onMenuOpen);
-		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
-		// @ts-ignore
-		menu.addEventListener("ui5-option-click", this._onMenuClick);
-		// @ts-ignore
-		menu.addEventListener("ui5-menu-change", this._onMenuChange);
-	}
-
-	detachMenuListeners(menu: HTMLElement) {
-		menu.removeEventListener("ui5-close", this._onMenuClose);
-		menu.removeEventListener("ui5-open", this._onMenuOpen);
-		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
-		// @ts-ignore
-		menu.removeEventListener("ui5-option-click", this._onMenuClick);
-		// @ts-ignore
-		menu.removeEventListener("ui5-menu-change", this._onMenuChange);
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = (isTabNext(e) || isTabPrevious(e));
 
 		if (isTab && this._isPickerOpen) {
-			const menu = this._getSelectMenu();
-			if (menu) {
-				menu.close(true /* preventFocusRestore */);
-			} else {
-				this.responsivePopover.open = false;
-			}
+			this.responsivePopover.open = false;
 		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
@@ -724,7 +523,7 @@ class Select extends UI5Element implements IFormInputElement {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this.selectOptions.indexOf(itemToSelect);
+			const nextIndex = this.options.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -735,13 +534,13 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_searchNextItemByText(text: string) {
-		let orderedOptions = this.selectOptions.slice(0);
+		let orderedOptions = this.options.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
 		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return orderedOptions.find(option => (option.displayText || option.textContent || "").toLowerCase().startsWith(text));
+		return orderedOptions.find(option => option.effectiveDisplayText.toLowerCase().startsWith(text));
 	}
 
 	_handleHomeKey(e: KeyboardEvent) {
@@ -761,7 +560,7 @@ class Select extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		const lastIndex = this.selectOptions.length - 1;
+		const lastIndex = this.options.length - 1;
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
@@ -775,19 +574,23 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_getSelectedItemIndex(item: ListItemBase) {
-		return this.selectOptions.findIndex(option => `${option._id}-li` === item.id);
+	_getItemIndex(item: IOption) {
+		return this.options.indexOf(item);
 	}
 
 	_select(index: number) {
-		this.selectOptions[this._selectedIndex].selected = false;
-
-		if (this._selectedIndex !== index) {
-			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
+		if (index < 0 || index >= this.options.length || this.options.length === 0) {
+			return;
+		}
+		if (this.options[this._selectedIndex]) {
+			this.options[this._selectedIndex].selected = false;
 		}
 
-		this._selectedIndex = index;
-		this.selectOptions[index].selected = true;
+		if (this._selectedIndex !== index) {
+			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
+		}
+
+		this.options[index].selected = true;
 	}
 
 	/**
@@ -795,8 +598,8 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
-		const item = e.detail.item;
-		const selectedItemIndex = this._getSelectedItemIndex(item);
+		const listItem = e.detail.item;
+		const selectedItemIndex = this._getItemIndex(listItem as IOption);
 
 		this._handleSelectionChange(selectedItemIndex);
 	}
@@ -863,7 +666,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options: Array<IOption> = this.selectOptions;
+		const options: Array<IOption> = this.options;
 
 		const previousOption = options[oldIndex];
 		previousOption.selected = false;
@@ -872,8 +675,6 @@ class Select extends UI5Element implements IFormInputElement {
 		const nextOption = options[newIndex];
 		nextOption.selected = true;
 		nextOption.focused = true;
-
-		this._selectedIndex = newIndex;
 
 		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
 
@@ -884,10 +685,6 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_getNextOptionIndex() {
-		const menu = this._getSelectMenu();
-		if (menu) {
-			return this._selectedIndex === (menu.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
-		}
 		return this._selectedIndex === (this.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
 	}
 
@@ -897,7 +694,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
-		this._lastSelectedOption = this.selectOptions[this._selectedIndex];
+		this._lastSelectedOption = this.options[this._selectedIndex];
 	}
 
 	_afterOpen() {
@@ -905,6 +702,13 @@ class Select extends UI5Element implements IFormInputElement {
 		this.fireEvent<CustomEvent>("open");
 		this.itemSelectionAnnounce();
 		this._scrollSelectedItem();
+		this._applyFocusToSelectedItem();
+	}
+
+	_applyFocusToSelectedItem() {
+		this.options.forEach(option => {
+			option.focused = option.selected;
+		});
 	}
 
 	_afterClose() {
@@ -915,19 +719,11 @@ class Select extends UI5Element implements IFormInputElement {
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
-		} else if (this._lastSelectedOption !== this.selectOptions[this._selectedIndex]) {
-			this._fireChangeEvent(this.selectOptions[this._selectedIndex]);
-			this._lastSelectedOption = this.selectOptions[this._selectedIndex];
+		} else if (this._lastSelectedOption !== this.options[this._selectedIndex]) {
+			this._fireChangeEvent(this.options[this._selectedIndex]);
+			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
 		this.fireEvent<CustomEvent>("close");
-	}
-
-	get selectOptions(): Array<IOption> {
-		const menu = this._getSelectMenu();
-		if (menu) {
-			return menu.options;
-		}
-		return this.options;
 	}
 
 	get hasCustomLabel() {
@@ -938,11 +734,9 @@ class Select extends UI5Element implements IFormInputElement {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
-		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
 
 		if (changePrevented) {
-			this.selectedItem = this._lastSelectedOption!.textContent;
 			this._select(this._selectedIndexBeforeOpen);
 		}
 	}
@@ -1002,7 +796,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	get _currentlySelectedOption() {
-		return this.selectOptions[this._selectedIndex];
+		return this.options[this._selectedIndex];
 	}
 
 	get _effectiveTabIndex() {
@@ -1090,7 +884,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	itemSelectionAnnounce() {
 		let text;
-		const optionsCount = this.selectOptions.length;
+		const optionsCount = this.options.length;
 		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
@@ -1137,7 +931,7 @@ Select.define();
 
 export default Select;
 export type {
+	IOption,
 	SelectChangeEventDetail,
 	SelectLiveChangeEventDetail,
-	IOption,
 };

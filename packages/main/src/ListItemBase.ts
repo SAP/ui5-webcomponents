@@ -32,7 +32,7 @@ import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 @event("_forward-before")
 class ListItemBase extends UI5Element implements ITabbable {
 	/**
-	 * Defines the selected state of the `ListItem`.
+	 * Defines the selected state of the component.
 	 * @default false
 	 * @public
 	 */
