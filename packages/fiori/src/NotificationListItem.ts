@@ -563,7 +563,8 @@ class NotificationListItem extends NotificationListItemBase {
 
 	openMenu() {
 		const menu = this.getMenu();
-		menu.showAt(this.menuButtonDOM);
+		menu.opener = this.menuButtonDOM;
+		menu.open = true;
 	}
 
 	getMenu() {
