@@ -138,6 +138,21 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
 
+	it("tests opening popover when opener is outside of the viewport is not allowed", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenAndScroll");
+		const popover = await browser.$("#popoverOpenAndScroll");
+		const closeEventFired = browser.executeAsync((done) => {
+			document.getElementById("popoverOpenAndScroll").addEventListener("ui5-close", done);
+		});
+		
+		await btnOpenPopover.click();
+		await closeEventFired;
+
+		assert.ok(true, "Close event is fired");
+		assert.notOk(await popover.getAttribute("open"), "Popover remains closed.");
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover remains closed.");
+	});
+
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
 		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");

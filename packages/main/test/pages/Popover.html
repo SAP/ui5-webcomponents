@@ -490,6 +490,16 @@ z-index: 1;
 	<br>
 	<br>
 
+	<h2>Open and scroll</h2>
+	<div id="divOpenAndScroll">
+		<div >
+			<ui5-button  id="btnOpenAndScroll">Open and scroll</ui5-button>
+			<ui5-popover id="popoverOpenAndScroll" opener="btnOpenAndScroll">
+				Opened
+			</ui5-popover>
+		</div>
+	</div>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.opener = btn;
@@ -765,6 +775,11 @@ z-index: 1;
 		document.getElementById("btn4-footer-position").addEventListener("click", (e) => {
 			document.getElementById("popover4-footer-position").opener = e.currentTarget;
 			document.getElementById("popover4-footer-position").open = true;
+		});
+
+		document.getElementById("btnOpenAndScroll").addEventListener("click", function () {
+			window.scrollTo(0, 1000);
+			document.getElementById("popoverOpenAndScroll").setAttribute("open", "");
 		});
 
 	</script>
