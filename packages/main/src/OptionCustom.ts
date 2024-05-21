@@ -32,6 +32,7 @@ import optionBaseCss from "./generated/themes/OptionBase.css.js";
 	tag: "ui5-option-custom",
 	template: OptionCustomTemplate,
 	styles: [
+		ListItemBase.styles,
 		optionBaseCss,
 	],
 })
