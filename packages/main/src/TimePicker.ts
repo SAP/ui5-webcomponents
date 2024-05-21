@@ -534,9 +534,9 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			this._togglePicker();
 		}
 
-		const target = e.target as Node;
+		const target = e.target as HTMLElement;
 
-		if ((this._getInput().isEqualNode(target) && this.open) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this._togglePicker();
 		}
 		if (this.open) {
