@@ -116,9 +116,11 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	items!: Array<NotificationListItemBase>
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
+		this.actionable = false;
 	}
 
 	/**
