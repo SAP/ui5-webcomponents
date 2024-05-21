@@ -50,23 +50,6 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 |------------------|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `i18n`, `themes` | `@ui5/webcomponents-fiori/dist/Assets.js` | Theming parameters and translations for the components  <br/><br/> *Automatically imports also:<br/> `@ui5/webcomponents/dist/Assets.js`* |
 
-## Provided features
-
-
-| Affects        | Feature Import                                               | Description                                                                                             |
-|----------------|--------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| `ui5-shellbar` | `@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js` | Support for a better (but bigger in size) animation for the "co-pilot" button in the shellbar component |
-
-### Shellbar CoPilot animation
-
-```js
-import "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js";
-```
-
-By default, the `ui5-shellbar` CoPilot button ships with a simple animation for better performance.
-Importing the module above enables the detailed but more resource-intensive animation instead.
-
-
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
