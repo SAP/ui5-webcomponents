@@ -1,0 +1,13 @@
+{{>include "./ListItemBase.hbs"}}
+
+{{#*inline "listItemContent"}}
+	<div part="content" id="{{_id}}-content" class="ui5-li-content">
+		{{#if displayIconBegin}}
+			<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon" mode="Decorative"></ui5-icon>
+		{{/if}}
+		<span part="title" class="ui5-li-title"><slot></slot></span>
+		{{#if additionalText}}
+			<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
+		{{/if}}
+	</div>
+{{/inline}}

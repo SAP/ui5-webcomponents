@@ -1,32 +1,5 @@
 @import "./InvisibleTextStyles.css";
 
-/* actionable (type="Active" + desktop) */
-:host([actionable]:not([disabled])) {
-	cursor: pointer;
-}
-
-/* selected and hovered */
-:host([selected][actionable]:not([active]):not([data-moving]):hover) {
-	background : var(--sapList_Hover_SelectionBackground);
-}
-
-/* selected and active */
-:host([active][actionable]:not([data-moving])),
-:host([selected][active][actionable]:not([data-moving])) {
-	background: var(--sapList_Active_Background);
-}
-
-/* hovered */
-:host([actionable]:not([active]):not([selected]):hover) {
-	background : var(--sapList_Hover_Background);
-}
-
-/* focused */
-:host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
-:host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
-	outline-color: var(--sapContent_ContrastFocusColor);
-}
-
 /* navigated */
 :host([navigated]) .ui5-li-root .ui5-li-navigated {
 	width: 0.1875rem;
@@ -112,11 +85,6 @@
 .ui5-li-description-info-wrapper {
 	display: flex;
 	justify-content: space-between;
-}
-
-.ui5-li-title {
-	color: var(--sapList_TextColor);
-	font-size: var(--_ui5_list_item_title_size);
 }
 
 .ui5-li-additional-text,

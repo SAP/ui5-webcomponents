@@ -48,12 +48,6 @@ type SelectionRequestEventDetail = {
 	key?: string,
 }
 
-type PressEventDetail = {
-	item: ListItem,
-	selected: boolean,
-	key: string,
-}
-
 type AccInfo = {
 	role: string;
 	ariaExpanded?: boolean;
@@ -96,7 +90,6 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  * @public
  */
 @event("detail-click")
-@event("_press")
 @event("_focused")
 @event("_selection-requested")
 abstract class ListItem extends ListItemBase {
@@ -166,13 +159,6 @@ abstract class ListItem extends ListItemBase {
 	highlight!: `${HighlightTypes}`;
 
 	/**
-	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 * @private
-	*/
-	@property({ type: Boolean })
-	actionable!: boolean;
-
-	/**
 	 * Used to define the role of the list item.
 	 * @private
 	 * @default "ListItem"
@@ -234,6 +220,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
@@ -255,16 +242,8 @@ abstract class ListItem extends ListItemBase {
 		const itemActive = this.type === ListItemType.Active,
 			itemNavigated = this.typeNavigation;
 
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
 		if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
 			this.activate();
-		}
-
-		if (isEnter(e)) {
-			this.fireItemPress(e);
 		}
 
 		if (isF2(e)) {
@@ -278,12 +257,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
+
 		if (isSpace(e) || isEnter(e)) {
 			this.deactivate();
-		}
-
-		if (isSpace(e)) {
-			this.fireItemPress(e);
 		}
 
 		if (this.modeDelete && isDelete(e)) {
@@ -312,13 +289,6 @@ abstract class ListItem extends ListItemBase {
 	_onfocusout() {
 		super._onfocusout();
 		this.deactivate();
-	}
-
-	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
-			return;
-		}
-		this.fireItemPress(e);
 	}
 
 	_ondragstart(e: DragEvent) {
@@ -368,13 +338,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive || this.disabled) {
+		if (this.isInactive) {
 			return;
 		}
-		if (isEnter(e as KeyboardEvent)) {
-			e.preventDefault();
-		}
-		this.fireEvent<PressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		super.fireItemPress(e);
 	}
 
 	get isInactive() {
@@ -510,6 +477,5 @@ export default ListItem;
 export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
-	PressEventDetail,
 	ListItemAccessibilityAttributes,
 };
