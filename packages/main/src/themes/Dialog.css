@@ -75,6 +75,7 @@
 
 .ui5-dialog-value-state-icon {
 	margin-inline-end: 0.5rem;
+	flex-shrink: 0;
 }
 
 :host([state="Error"]) .ui5-dialog-value-state-icon {

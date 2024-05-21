@@ -340,6 +340,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 *
 	 * - The particular effect of this property differs depending on the browser
 	 * and the current language settings, especially for type `Number`.
+	 * - Due to browser constraints, certain keyboard interactions may not be available
+	 * for the 'Number' and 'Email' types.
 	 * - The property is mostly intended to be used with touch devices
 	 * that use different soft keyboard layouts depending on the given input type.
 	 * @default "Text"

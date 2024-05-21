@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.2...v1.24.3) (2024-05-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.24.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v1.24.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* **framework:** Custom setter works when defined in base class and does not include HTMLElement props ([#8793](https://github.com/SAP/ui5-webcomponents/issues/8793)) ([9eb7325](https://github.com/SAP/ui5-webcomponents/commit/9eb7325de7943db8c6545949674fe3130f46c6ee)), closes [#8718](https://github.com/SAP/ui5-webcomponents/issues/8718) [#8643](https://github.com/SAP/ui5-webcomponents/issues/8643)
+* **ui5-multi-combobox:** remove value state header on validation reset ([#8836](https://github.com/SAP/ui5-webcomponents/issues/8836)) ([ae490b6](https://github.com/SAP/ui5-webcomponents/commit/ae490b61e645fa9893aafeac2e28cc459dea5db6)), closes [#8586](https://github.com/SAP/ui5-webcomponents/issues/8586)
+* **ui5-popover:** fix popover going out of the viewport ([#8865](https://github.com/SAP/ui5-webcomponents/issues/8865)) ([e59ac60](https://github.com/SAP/ui5-webcomponents/commit/e59ac60b04086ae60094d0e2b6390b2b374e2342)), closes [#8580](https://github.com/SAP/ui5-webcomponents/issues/8580)
+
+
+
+
+
 # [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
