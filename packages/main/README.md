@@ -98,7 +98,6 @@ import "@ui5/webcomponents/dist/features/<FEATURE-NAME>.js
 |---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | `ui5-color-palette`                               | `@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js`         | Support for "more colors dialog" for the color palette component                                        |
 | `ui5-input`                                       | `@ui5/webcomponents/dist/features/InputSuggestions.js`               | Support for input suggestions while typing                                                              |
-| Multiple (`ui5-input`, `ui5-date-picker`, etc...) | `@ui5/webcomponents/dist/features/InputElementsFormSupport.js`       | Support for using input components in forms                                                             |
 
 ### Color Palette "More Colors" Feature
 
@@ -122,38 +121,6 @@ Since input suggestions may not always be needed, they do not come as part of th
 
 To enable the functionality, import the above module into your app. This will also automatically import `ui5-suggestion-item`
 for your convenience.
-
-### Form Support Feature
-
-```js
-import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";
-```
-
-HTML ```<form>``` only submits a couple of standard HTML elements such as `<input>` and `<textarea>` to name a few.
-
-Web Components that function as inputs, such as UI5's `<ui5-input>`, `<ui5-checkbox>`, `<ui5-textarea>` are therefore
-not submitted by the form out of the box.
-
-Generally, this is not an issue, as very few modern applications submit forms in the classic way.
-
-However, if you need to submit forms, you can import the module above, and it will enrich:
-- `ui5-input`
-- `ui5-textarea`
-- `ui5-checkbox`
-- `ui5-radio-button`
-- `ui5-date-picker`
-- `ui5-select`
-
-with functionality, allowing them to be submitted in forms (provided you set their <code>name</code> attribute) just as
-any standard HTML input element would be.
-
-#### How to submit a form
-
-There are two ways of submitting a form:
-1. The `ui5-button` element will be able to submit the closest ```form``` it's placed in, provided you set its `submits` attribute.
-2. Pressing Enter while a form control is focused.
-(Note: ```ui5-textarea``` is the only exception. If Enter is pressed while ```ui5-textarea``` is focused, it will result in a new line).
-
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)

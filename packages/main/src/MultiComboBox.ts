@@ -765,7 +765,7 @@ class MultiComboBox extends UI5Element {
 
 	_selectItems(matchingItems: IMultiComboBoxItem[]) {
 		this._previouslySelectedItems = this._getSelectedItems();
-debugger;
+
 		matchingItems.forEach(item => {
 			item.selected = true;
 			this.value = "";
@@ -1269,7 +1269,7 @@ debugger;
 	_filterItems(str: string) {
 		const itemsToFilter = this.getItems().filter(item => !item.isGroupItem);
 		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
-debugger;
+
 		// Return the filtered items and their group items
 		return this.getItems().filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
 	}
@@ -1324,7 +1324,7 @@ debugger;
 				items.push(item);
 			}
 		});
-		console.log(items)
+
 		return items;
 	}
 
@@ -1909,7 +1909,7 @@ debugger;
 	get selectAllCheckboxLabel() {
 		const items = this.getItems().filter(item => !item.isGroupItem);
 		const selected = items.filter(item => item.selected);
-		debugger;
+
 		return MultiComboBox.i18nBundle.getText(MCB_SELECTED_ITEMS, selected.length, items.length);
 	}
 

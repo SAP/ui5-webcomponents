@@ -51,6 +51,7 @@ import List from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import StandardListItem from "./StandardListItem.js";
 import Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
@@ -128,8 +129,8 @@ enum ClipboardDataOperation {
  *
  * @constructor
  * @extends sap.ui.webc.base.UI5Element
- * @since 2.0
  * @public
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-tokenizer",
@@ -148,6 +149,7 @@ enum ClipboardDataOperation {
 		StandardListItem,
 		Title,
 		Button,
+		Icon,
 	],
 })
 
@@ -257,6 +259,8 @@ class Tokenizer extends UI5Element {
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the tokenizer.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * **Note:** Used inside MultiInput and MultiComboBox components.
 	 * @private
 	 * @default ""
@@ -512,7 +516,7 @@ class Tokenizer extends UI5Element {
 			if (tokensArray[0].isTruncatable) {
 				const morePopover = this.getPopover();
 
-				morePopover.addEventListener("ui5-after-close", () => {
+				morePopover.addEventListener("ui5-close", () => {
 					this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 				}, {
 					once: true,

@@ -70,7 +70,7 @@
 	>
 		{{#each _filteredItems}}
 			{{#if isGroupItem}}
-				<ui5-li-group header-text="asf" ?focused={{this.focused}}>{{ this.text }}</ui5-li-group-header>
+				<ui5-li-group-header ?focused={{this.focused}}>{{ this.text }}</ui5-li-group-header>
 			{{else}}
 				{{> listItem}}
 			{{/if}}
