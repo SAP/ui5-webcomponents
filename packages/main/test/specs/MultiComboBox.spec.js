@@ -1770,7 +1770,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 		});
 
-		it("Group header keyboard handling", async () => {
+		it ("Group header keyboard handling", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-grouping");
