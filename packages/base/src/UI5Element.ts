@@ -120,7 +120,7 @@ abstract class UI5Element extends HTMLElement {
 	_inDOM: boolean;
 	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
-	_slotAssignedElementsCache: WeakMap<HTMLSlotElement, Array<Node>>;
+	_slotsAssignedNodes: WeakMap<HTMLSlotElement, Array<SlotValue>>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
@@ -150,7 +150,7 @@ abstract class UI5Element extends HTMLElement {
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 		this._doNotSyncAttributes = new Set(); // attributes that are excluded from attributeChangedCallback synchronization
-		this._slotAssignedElementsCache = new WeakMap();
+		this._slotsAssignedNodes = new WeakMap(); // map of all nodes, slotted (directly or transitively) per component slot
 
 		this._state = { ...ctor.getMetadata().getInitialState() };
 
@@ -611,15 +611,12 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_attachSlotChange(slot: HTMLSlotElement, slotName: string, invalidateOnChildChange: boolean) {
 		const slotChangeListener = this._getSlotChangeListener(slotName);
-		if (slotChangeListener) {
-			slot.addEventListener("slotchange", (e: Event) => {
-				slotChangeListener.call(slot, e);
-				if (!invalidateOnChildChange) {
-					return;
-				}
+		slot.addEventListener("slotchange", (e: Event) => {
+			slotChangeListener.call(slot, e);
 
-				// Detach listeners for children that used to be in this slot
-				const previousChildren = this._slotAssignedElementsCache.get(slot);
+			if (invalidateOnChildChange) {
+				// Detach listeners for UI5 Elements that used to be in this slot
+				const previousChildren = this._slotsAssignedNodes.get(slot);
 				if (previousChildren) {
 					previousChildren.forEach(child => {
 						if (instanceOfUI5Element(child)) {
@@ -629,17 +626,17 @@ abstract class UI5Element extends HTMLElement {
 					});
 				}
 
-				// Attach listeners for all children in this slot
+				// Attach listeners for UI5 Elements that are now in this slot
 				const newChildren = getSlottedNodesList([slot]);
-				this._slotAssignedElementsCache.set(slot, newChildren);
+				this._slotsAssignedNodes.set(slot, newChildren);
 				newChildren.forEach(child => {
 					if (instanceOfUI5Element(child)) {
 						const childChangeListener = this._getChildChangeListener(slotName);
 						child.attachInvalidate.call(child, childChangeListener);
 					}
 				});
-			});
-		}
+			}
+		});
 	}
 
 	/**
