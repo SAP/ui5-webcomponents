@@ -9,6 +9,7 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
@@ -39,7 +40,6 @@ import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -398,7 +398,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	}
 
 	getFormat() {
-		debugger;
 		return this._isPattern
 			? DateFormat.getDateTimeInstance({
 				strictParsing: true,

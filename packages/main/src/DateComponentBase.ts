@@ -166,7 +166,6 @@ class DateComponentBase extends UI5Element {
 	}
 
 	getFormat() {
-		debugger;
 		return this._isPattern
 			? DateFormat.getDateInstance({
 				strictParsing: true,
