@@ -495,6 +495,21 @@ describe("Keyboard handling", () => {
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 	});
 
+	it("should focus token last token when caret is at the beginning of the value", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Backspace");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
 	it("should delete value on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
