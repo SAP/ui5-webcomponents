@@ -14,6 +14,33 @@
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
+/* actionable (type="Active" + desktop) */
+:host([actionable]:not([disabled])) {
+	cursor: pointer;
+}
+
+/* selected and hovered */
+:host([selected][actionable]:not([active]):not([data-moving]):hover) {
+	background : var(--sapList_Hover_SelectionBackground);
+}
+
+/* selected and active */
+:host([active][actionable]:not([data-moving])),
+:host([selected][active][actionable]:not([data-moving])) {
+	background: var(--sapList_Active_Background);
+}
+
+/* hovered */
+:host([actionable]:not([active]):not([selected]):hover) {
+	background : var(--sapList_Hover_Background);
+}
+
+/* focused */
+:host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
+:host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
+	outline-color: var(--sapContent_ContrastFocusColor);
+}
+
 :host([has-border]) {
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
@@ -40,6 +67,22 @@
 	padding: var(--_ui5_list_item_base_padding);
 	box-sizing: border-box;
 	background: inherit;
+}
+
+.ui5-li-content {
+	display: flex;
+	align-items: center;
+	flex: auto;
+	overflow: hidden;
+}
+
+.ui5-li-text-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex: auto;
+	min-width: 1px;
+	line-height: normal;
 }
 
 /* focused */
@@ -80,4 +123,9 @@
 	max-width: 100%;
 	font-family: "72override", var(--sapFontFamily);
 	color: var(--sapList_TextColor);
+}
+
+.ui5-li-content .ui5-li-title {
+	color: var(--sapList_TextColor);
+	font-size: var(--_ui5_list_item_title_size);
 }
