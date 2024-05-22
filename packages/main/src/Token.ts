@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
 	isBackSpace,
 	isSpace,
@@ -15,7 +14,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
+import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
@@ -54,9 +53,10 @@ type TokenDeleteEventDetail = {
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
+
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
- * @public
+ * @private
  */
 @event("select")
 
@@ -83,23 +83,23 @@ class Token extends UI5Element implements IToken {
 	text!: string;
 
 	/**
-	 * Defines whether the component is read-only.
-	 *
-	 * **Note:** A read-only component can not be deleted or selected,
-	 * but still provides visual feedback upon user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	readonly!: boolean;
-
-	/**
 	 * Defines whether the component is selected or not.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
+
+	/**
+	 * Defines whether the component is read-only.
+	 *
+	 * **Note:** A read-only component can not be deleted or selected,
+	 * but still provides visual feedback upon user interaction.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
@@ -195,14 +195,6 @@ class Token extends UI5Element implements IToken {
 		return Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
 	}
 
-	get iconURI() {
-		if (getTheme().includes("sap_belize")) {
-			return "sys-cancel";
-		}
-
-		return "decline";
-	}
-
 	get textDom() {
 		return this.getDomRef()?.querySelector(".ui5-token--text");
 	}
@@ -213,6 +205,16 @@ class Token extends UI5Element implements IToken {
 		}
 
 		return Math.ceil(this.textDom.getBoundingClientRect().width) < Math.ceil(this.textDom.scrollWidth);
+	}
+
+	get ariaDescription() {
+		let description = Token.i18nBundle.getText(TOKEN_ARIA_LABEL);
+
+		if (!this.readonly) {
+			description += ` ${Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE)}`;
+		}
+
+		return description;
 	}
 
 	static async onDefine() {

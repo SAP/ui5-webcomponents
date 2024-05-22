@@ -30,6 +30,7 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
+::slotted([ui5-toggle-button][slot="assistant"]),
 ::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
@@ -52,28 +53,26 @@
 	word-spacing: inherit;
 }
 
-.ui5-shellbar-button[icon-only] {
-	color: var(--sapShell_InteractiveTextColor);
-}
-
-.ui5-shellbar-button[icon-only]:hover:not(:active) {
-	color: var(--sapShell_InteractiveTextColor);
-}
-
-
 ::slotted([ui5-button][slot="startButton"]) {
 	margin-inline-start: 0;
 }
 
-::slotted([ui5-button][slot="startButton"]:hover:not([active])),
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover:not(:active),
-.ui5-shellbar-button:hover:not(:active),
-.ui5-shellbar-image-button:hover:not(:active) {
+::slotted([ui5-toggle-button][slot="assistant"]:hover),
+::slotted([ui5-button][slot="startButton"]:hover),
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
+.ui5-shellbar-button:hover,
+.ui5-shellbar-image-button:hover {
 	background: var(--sapShell_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	color: var(--sapShell_TextColor);
 }
 
+::slotted([ui5-toggle-button][slot="assistant"][pressed]),
+::slotted([ui5-toggle-button][slot="assistant"][pressed]:hover:not([active])) {
+	color: var(--sapShell_Assistant_ForegroundColor);
+}
+
+::slotted([ui5-toggle-button][slot="assistant"][active]),
 ::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
@@ -83,7 +82,8 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
+:host([desktop]) .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-within,
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
@@ -217,7 +217,8 @@ slot[name="profile"] {
 	max-height: 2rem;
 }
 
-.ui5-shellbar-logo:focus {
+:host([desktop]) .ui5-shellbar-logo:focus-within,
+.ui5-shellbar-logo:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);

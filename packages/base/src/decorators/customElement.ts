@@ -19,6 +19,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
@@ -36,6 +37,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			formAssociated,
 			shadowRootOptions,
 		 } = tagNameOrComponentSettings;
 
@@ -49,6 +51,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
 		}
+		if (formAssociated) {
+			target.metadata.formAssociated = formAssociated;
+		}
+
 		if (shadowRootOptions) {
 			target.metadata.shadowRootOptions = shadowRootOptions;
 		}
@@ -58,7 +64,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};

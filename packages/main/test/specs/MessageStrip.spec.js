@@ -18,6 +18,50 @@ describe("MessageStrip general interaction", () => {
 	});
 });
 
+describe("API", () => {
+	before(async () => {
+		await browser.url(`test/pages/MessageStrip.html`);
+	});
+
+	it("test design property", async () => {
+		// Arrange
+		const messageStripColorSet1 = await browser.$("#colorSet1ColorScheme1");
+		const messageStripColorSet2 = await browser.$("#colorSet1ColorScheme2");
+		let messageStripDesign1 = await messageStripColorSet1.getProperty("design");
+		let messageStripDesign2 = await messageStripColorSet2.getProperty("design");
+
+		// Assert
+		assert.strictEqual(messageStripDesign1, "ColorSet1", "Design property should be equal to 'ColorSet1'");
+		assert.strictEqual(messageStripDesign2, "ColorSet2", "Design property should be equal to 'ColorSet2'");
+
+		// Act
+		await messageStripColorSet1.setProperty("design", "Information");
+		let messageStripInformation = await messageStripColorSet1.getProperty("design");
+
+		// Assert
+		assert.strictEqual(messageStripInformation, "Information",  "Design property should be changed to 'Information'");
+	});
+
+	it("test colorScheme property", async () => {
+		// Arrange
+		const messageStripWithoutScheme = await browser.$("#defaultColorScheme");
+		const messageStripColorScheme = await browser.$("#colorScheme7");
+		let messageStripDefaultScheme = await messageStripWithoutScheme.getProperty("colorScheme");
+		let messageStripColorScheme7 = await messageStripColorScheme.getProperty("colorScheme");
+
+		// Assert
+		assert.strictEqual(messageStripDefaultScheme, "1", "colorScheme property should be equal to '1' by default");
+		assert.strictEqual(messageStripColorScheme7, "7", "colorScheme property should be equal to '7'");
+
+		// Act
+		await messageStripColorScheme.setProperty("colorScheme", "3");
+		let messageStripColorScheme3 = await messageStripColorScheme.getProperty("colorScheme");
+
+		// Assert
+		assert.strictEqual(messageStripColorScheme3, "3",  "colorScheme property should be equal to '3' by default'");
+	});
+});
+
 describe("ARIA Support", () => {
 	before(async () => {
 		await browser.url(`test/pages/MessageStrip.html`);
@@ -39,16 +83,22 @@ describe("ARIA Support", () => {
 	it("Test hidden text element content", async () => {
 
 		const messageStrip = await browser.$("#messageStrip");
+		const customMessageStrip = await browser.$("#colorSet1ColorScheme1");
 		let invisibleText = await messageStrip.shadow$(".ui5-hidden-text");
+		let customMessageStripInvisibleText = await customMessageStrip.shadow$(".ui5-hidden-text");
 		let resourceBundleText = null;
 
 		resourceBundleText = await browser.executeAsync(done => {
 			const messageStrip = document.getElementById("messageStrip");
 			const msgStripi18nBundle = messageStrip.constructor.i18nBundle;
-			done(`${msgStripi18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MESSAGE_STRIP_INFORMATION)} ${msgStripi18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MESSAGE_STRIP_CLOSABLE)}`);
+			done({
+				information: `${msgStripi18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MESSAGE_STRIP_INFORMATION)} ${msgStripi18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MESSAGE_STRIP_CLOSABLE)}`,
+				custom: `${msgStripi18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MESSAGE_STRIP_CUSTOM)} ${msgStripi18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MESSAGE_STRIP_CLOSABLE)}`,
+			});
 		});
 
-		assert.strictEqual(await invisibleText.getText(), resourceBundleText, "Hidden element content is correct");
+		assert.strictEqual(await invisibleText.getText(), resourceBundleText.information, "Hidden element content is correct");
+		assert.strictEqual(await customMessageStripInvisibleText.getText(), resourceBundleText.custom, "Hidden element content is correct");
 	});
 });
 

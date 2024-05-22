@@ -20,13 +20,13 @@
 	aria-label="{{ariaLabelText}}"
 	title="{{buttonTitle}}"
 	part="button"
-	role="{{buttonAccessibleRole}}"
+	role="{{effectiveAccRole}}"
 >
 	{{#if icon}}
 		<ui5-icon
 			class="ui5-button-icon"
 			name="{{icon}}"
-			accessible-role="{{iconRole}}"
+			mode="{{iconMode}}"
 			part="icon"
 			?show-tooltip={{showIconTooltip}}
 		></ui5-icon>
@@ -37,6 +37,15 @@
 			<slot></slot>
 		</bdi>
 	</span>
+
+	{{#if endIcon}}
+		<ui5-icon
+			class="ui5-button-end-icon"
+			name="{{endIcon}}"
+			mode="{{endIconMode}}"
+			part="endIcon"
+		></ui5-icon>
+	{{/if}}
 
 	{{#if hasButtonType}}
 		<span class="ui5-hidden-text">{{buttonTypeText}}</span>

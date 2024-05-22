@@ -6,7 +6,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isChrome,
+	isSafari,
+	isDesktop,
+	isPhone,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -55,7 +60,7 @@ type PopupBeforeCloseEventDetail = {
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
  *  - Derivatives may call the "blockPageScrolling" and "unblockPageScrolling" static methods to temporarily remove scrollbars on the html element
- *  - Derivatives may call the "open" and "close" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
+ *  - Derivatives may call the "openPopup" and "closePopup" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
  *   - It is in the static area
@@ -90,7 +95,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is opened. **This event does not bubble.**
  * @public
  */
-@event("after-open")
+@event("open")
 
 /**
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
@@ -113,7 +118,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is closed. **This event does not bubble.**
  * @public
  */
-@event("after-close")
+@event("close")
 
 /**
  * Fired whenever the popup content area is scrolled
@@ -174,13 +179,13 @@ abstract class Popup extends UI5Element {
 	mediaRange!: string;
 
 	/**
-	 * @private
+	 * Indicates whether initial focus should be prevented.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	_disableInitialFocus!: boolean;
-
-	@property({ type: Boolean })
-	_blockLayerHidden!: boolean;
+	preventInitialFocus!: boolean;
 
 	/**
 	 * Indicates if the element is the top modal popup
@@ -197,14 +202,25 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>
+	content!: Array<HTMLElement>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onDesktop!: boolean;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
-	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_isOpened!: boolean;
 	_opened!: boolean;
+	_open!: boolean;
 
 	constructor() {
 		super();
@@ -214,6 +230,11 @@ abstract class Popup extends UI5Element {
 		this._getRealDomRef = () => {
 			return this.shadowRoot!.querySelector<HTMLElement>("[root-element]")!;
 		};
+	}
+
+	onBeforeRendering() {
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
 	}
 
 	onAfterRendering() {
@@ -231,7 +252,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	onExitDOM() {
-		if (this.isOpen()) {
+		if (this._opened) {
 			Popup.unblockPageScrolling(this);
 			this._removeOpenedPopup();
 		}
@@ -247,25 +268,61 @@ abstract class Popup extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	set open(value: boolean) {
-		if (this._opened === value) {
+		if (this._open === value) {
 			return;
 		}
 
-		this._opened = value;
+		this._open = value;
 
 		if (value) {
 			this.openPopup();
 		} else {
-			this.close();
+			this.closePopup();
 		}
 	}
 
 	get open() : boolean {
-		return this._opened;
+		return this._open;
 	}
 
 	async openPopup() {
-		await this._open(false);
+		if (this._opened) {
+			return;
+		}
+
+		const prevented = !this.fireEvent("before-open", {}, true, false);
+
+		if (prevented || this._opened) {
+			return;
+		}
+
+		this._opened = true;
+
+		if (this.isModal) {
+			Popup.blockPageScrolling(this);
+		}
+
+		this._focusedElementBeforeOpen = getFocusedElement();
+
+		this._show();
+
+		if (this.getDomRef()) {
+			this._updateMediaRange();
+		}
+
+		this._addOpenedPopup();
+
+		this.open = true;
+
+		// initial focus, if focused element is statically created
+		await this.applyInitialFocus();
+
+		await renderFinished();
+
+		// initial focus, if focused element is dynamically created
+		await this.applyInitialFocus();
+
+		this.fireEvent("open", {}, false, false);
 	}
 
 	_resize() {
@@ -317,7 +374,7 @@ abstract class Popup extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
 		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
-		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.open;
 
 		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
 			e.preventDefault();
@@ -386,11 +443,12 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
+	 * Use this method to focus the element denoted by "initialFocus", if provided,
+	 * or the first focusable element otherwise.
 	 * @protected
 	 */
-	async applyInitialFocus(preventInitialFocus: boolean) {
-		if (!this._disableInitialFocus && !preventInitialFocus) {
+	async applyInitialFocus() {
+		if (!this.preventInitialFocus) {
 			await this.applyFocus();
 		}
 	}
@@ -425,77 +483,8 @@ abstract class Popup extends UI5Element {
 		}
 	}
 
-	/**
-	 * Tells if the component is opened
-	 * @public
-	 */
-	isOpen() : boolean {
-		return this.open;
-	}
-
 	isFocusWithin() {
 		return isFocusedElementWithinNode(this._root);
-	}
-
-	get _getBlockingLayer() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-block-layer")!;
-	}
-
-	/**
-	 * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
-	 * @protected
-	 */
-	async _open(preventInitialFocus: boolean) {
-		if (this._isOpened) {
-			return;
-		}
-
-		const prevented = !this.fireEvent("before-open", {}, true, false);
-
-		if (prevented || this._isOpened) {
-			return;
-		}
-
-		let isRenderFinished = false;
-
-		this._isOpened = true;
-
-		if (this.isModal && !this.shouldHideBackdrop) {
-			if (!this._getBlockingLayer) {
-				// Await render before trying to access the blocking layer
-				await renderFinished();
-				isRenderFinished = true;
-			}
-
-			// create static area item ref for block layer
-			this._getBlockingLayer?.showPopover();
-			this._blockLayerHidden = false;
-			Popup.blockPageScrolling(this);
-		}
-
-		this._focusedElementBeforeOpen = getFocusedElement();
-
-		this._show();
-
-		if (this.getDomRef()) {
-			this._updateMediaRange();
-		}
-
-		this._addOpenedPopup();
-
-		this.open = true;
-
-		// initial focus, if focused element is statically created
-		await this.applyInitialFocus(preventInitialFocus);
-
-		if (!isRenderFinished) {
-			await renderFinished();
-
-			// initial focus, if focused element is dynamically created
-			await this.applyInitialFocus(preventInitialFocus);
-		}
-
-		this.fireEvent("after-open", {}, false, false);
 	}
 
 	_updateMediaRange() {
@@ -512,10 +501,9 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Closes the popup.
-	 * @public
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
-		if (!this._isOpened) {
+	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false): void {
+		if (!this._opened) {
 			return;
 		}
 
@@ -524,11 +512,9 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		this._isOpened = false;
+		this._opened = false;
 
 		if (this.isModal) {
-			this._blockLayerHidden = true;
-			this._getBlockingLayer?.hidePopover();
 			Popup.unblockPageScrolling(this);
 		}
 
@@ -543,7 +529,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {}, false, false);
+		this.fireEvent("close", {}, false, false);
 	}
 
 	/**
@@ -591,12 +577,6 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	abstract get isModal(): boolean
-
-	/**
-	 * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-	 * @protected
-	 */
-	abstract get shouldHideBackdrop(): boolean
 
 	/**
 	 * Return the ID of an element in the shadow DOM that is going to label this popup

@@ -6,6 +6,8 @@
 	@keydown="{{_onkeydown}}"
 	@keyup="{{_onkeyup}}"
 	@click="{{_onclick}}"
+	@dragover="{{_ondrag}}"
+	@drop="{{_ondrop}}"
 >
 	<div class="ui5-file-uploader-mask">
 		{{#unless hideInput}}
@@ -20,22 +22,16 @@
 		{{/unless}}
 		<slot></slot>
 	</div>
-	{{#if _keepInputInShadowDOM}}
-		<input
-			type="file"
-			title="{{titleText}}"
-			accept="{{accept}}"
-			?multiple="{{multiple}}"
-			?disabled="{{disabled}}"
-			@change="{{_onChange}}"
-			aria-hidden="true"
-			tabindex="-1"
-		>
-	{{else}}
-		<slot name="formSupport">
-			{{!-- input for forms will be placed here on IE, Edge and Firefox --}}
-		</slot>
-	{{/if}}
+	<input
+		type="file"
+		title="{{titleText}}"
+		accept="{{accept}}"
+		?multiple="{{multiple}}"
+		?disabled="{{disabled}}"
+		@change="{{_onChange}}"
+		aria-hidden="true"
+		tabindex="-1"
+	>
 </div>
 
 {{>include "./FileUploaderPopover.hbs"}}

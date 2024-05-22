@@ -153,7 +153,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 		const endArrowContainerDOM = await fcl.shadow$(".ui5-fcl-arrow-container-end");
 
 		// assert
-		assert.strictEqual(await startColumnDOM.getAttribute("role"), "complimentary",
+		assert.strictEqual(await startColumnDOM.getAttribute("role"), "complementary",
 			"Start column has the correct custom role.");
 
 		assert.strictEqual(await middleColumnDOM.getAttribute("role"), "main",

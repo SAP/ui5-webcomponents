@@ -23,9 +23,9 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
-import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
-import SideNavigationItem from "./SideNavigationItem.js";
+import SideNavigationItemBase, { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
+import SideNavigationSelectableItemBase, { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
+import SideNavigationItem, { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationGroup from "./SideNavigationGroup.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
@@ -330,7 +330,7 @@ class SideNavigation extends UI5Element {
 
 		const responsivePopover = this.getPicker();
 		responsivePopover.opener = opener;
-		responsivePopover.showAt(opener);
+		responsivePopover.open = true;
 	}
 
 	openOverflowMenu(opener: HTMLElement) {
@@ -338,17 +338,17 @@ class SideNavigation extends UI5Element {
 
 		const menu = this.getOverflowPopover();
 		menu.opener = opener;
-		menu.showAt(opener);
+		menu.open = true;
 	}
 
 	closePicker() {
 		const responsivePopover = this.getPicker();
-		responsivePopover.close();
+		responsivePopover.open = false;
 	}
 
 	closeMenu() {
 		const menu = this.getOverflowPopover();
-		menu.close();
+		menu.open = false;
 	}
 
 	getPickerTree() {
@@ -483,10 +483,10 @@ class SideNavigation extends UI5Element {
 		itemsHeight = overflowItem.offsetHeight;
 
 		const selectedItem = overflowItems.find(item => {
-			return item instanceof SideNavigationSelectableItemBase && item._selected;
+			return isInstanceOfSideNavigationSelectableItemBase(item) && item._selected;
 		});
 
-		if (selectedItem && selectedItem instanceof SideNavigationItemBase) {
+		if (selectedItem && isInstanceOfSideNavigationItemBase(selectedItem)) {
 			const selectedItemDomRef = selectedItem.getDomRef();
 			const { marginTop, marginBottom } = window.getComputedStyle(selectedItemDomRef!);
 
@@ -500,7 +500,7 @@ class SideNavigation extends UI5Element {
 
 			let itemDomRef;
 
-			if (item instanceof SideNavigationItemBase) {
+			if (isInstanceOfSideNavigationItemBase(item)) {
 				itemDomRef = item.getDomRef()!;
 			} else {
 				itemDomRef = item;
@@ -555,7 +555,7 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
+		if (this.collapsed && isInstanceOfSideNavigationItem(item) && item.items.length) {
 			e.preventDefault();
 			this._isOverflow = false;
 
@@ -586,7 +586,7 @@ class SideNavigation extends UI5Element {
 		const result: Array<SideNavigationSelectableItemBase> = [];
 
 		this.overflowItems.forEach(item => {
-			if (item instanceof SideNavigationSelectableItemBase
+			if (isInstanceOfSideNavigationSelectableItemBase(item)
 				&& item.classList.contains(overflowClass)) {
 				 result.push(item);
 			}

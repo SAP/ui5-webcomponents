@@ -6,8 +6,8 @@
 	allow-target-overlap
 	_hide-header
 	hide-arrow
-	@ui5-after-open="{{onResponsivePopoverAfterOpen}}"
-	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
+	@ui5-open="{{onResponsivePopoverAfterOpen}}"
+	@ui5-close="{{onResponsivePopoverAfterClose}}"
 	@wheel="{{_handleWheel}}"
 	@keydown="{{_onkeydown}}"
 >
@@ -35,8 +35,8 @@
 	allow-target-overlap
 	_hide-header
 	hide-arrow
-	@ui5-after-open="{{onInputsPopoverAfterOpen}}"
-	@ui5-after-close="{{onInputsPopoverAfterClose}}"
+	@ui5-open="{{onInputsPopoverAfterOpen}}"
+	@ui5-close="{{onInputsPopoverAfterClose}}"
 	@wheel="{{_handleWheel}}"
 	@keydown="{{_onkeydown}}"
 >

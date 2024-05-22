@@ -9,11 +9,11 @@
     "packages/icons-business-suite",
     "packages/icons-tnt",
     "packages/tools",
-    "packages/playground",
     "packages/website",
-    "packages/create-package"
+    "packages/create-package",
+    "packages/compat"
   ],
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0-rc.3",
   "command": {
     "publish": {
       "allowBranch": "*",
