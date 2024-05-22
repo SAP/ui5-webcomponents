@@ -1,4 +1,3 @@
-
 :not(:defined) {
     visibility: hidden;
 }
@@ -7,29 +6,31 @@ section {
     margin-bottom: 2rem;
 }
 
-.selectMenu-bg {
+.selectCustom-bg {
     background-color: var(--sapBackgroundColor);
 }
 
-.selectMenu-app {
+.selectCustom-app {
     transform: translate(100px, 100px);
 }
 
-.selectMenuOption {
+.selecOptionCustom {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width:100%;
+    width: 100%;
+    height: 100%;
 }
-.selectMenuOption--warning {
+.selecOptionCustom--warning {
     color: yellow;
 }
-.selectMenuOptionIcon--warning {
+.selectCustomIcon--warning {
     color: yellow;
 }
 
 .selectLabel {
     display: flex;
+    height: 100%;
     align-items: center;
     justify-content: space-between;
     padding-inline-end: 0.25rem;
