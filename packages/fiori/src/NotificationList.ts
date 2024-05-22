@@ -60,8 +60,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 })
 
 /**
- * Fired when an item is activated, unless the item's `type` property
- * is set to `Inactive`.
+ * Fired when an item is clicked.
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
@@ -76,10 +75,8 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 })
 
 /**
- * Fired when the `Close` button of any item is clicked
+ * Fired when the `Close` button of any item is clicked.
  *
- * **Note:** This event is only applicable to list items that can be closed (such as notification list items),
- * not to be confused with `item-delete`.
  * @param {HTMLElement} item the item about to be closed.
  * @public
  */
@@ -93,9 +90,8 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 })
 
 /**
- * Fired when the `Toggle` button of any item is clicked.
+ * Fired when an item is toggled.
  *
- * **Note:** This event is only applicable to list items that can be toggled (such as notification group list items).
  * @param {HTMLElement} item the toggled item.
  * @public
  * @since 1.0.0-rc.8
