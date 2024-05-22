@@ -1765,7 +1765,7 @@ describe("MultiComboBox general interaction", () => {
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0];
+			groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0].shadow$("ui5-li-group-header");
 
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 		});
@@ -1783,7 +1783,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("ArrowDown");
 
 
-			groupItem = await popover.$("ui5-list").$$("ui5-li-group-header")[0];
+			groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0].shadow$("ui5-li-group-header");
 			await groupItem.keys("Enter");
 
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
