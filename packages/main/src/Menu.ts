@@ -377,7 +377,6 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireEvent("close", {}, false, true);
-		this._popover.getOpenerHTMLElement(this._popover.opener)?.focus();
 	}
 }
 
