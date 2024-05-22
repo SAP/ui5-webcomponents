@@ -15,8 +15,29 @@
 	@click={{_onclick}}
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}>
-	<slot></slot>
+
+	{{#if icon}}
+		<ui5-icon
+			class="ui5-link-icon"
+			name="{{icon}}"
+			mode="{{iconMode}}"
+			part="icon">
+		</ui5-icon>
+	{{/if}}
+
+	<span class="ui5-link-text">
+		<slot></slot>
+	</span>
 	{{#if hasLinkType}}
 		<span class="ui5-hidden-text">{{linkTypeText}}</span>
+	{{/if}}
+
+	{{#if endIcon}}
+		<ui5-icon
+			class="ui5-link-end-icon"
+			name="{{endIcon}}"
+			mode="{{endIconMode}}"
+			part="endIcon"
+		></ui5-icon>
 	{{/if}}
 </a>
