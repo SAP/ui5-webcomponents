@@ -10,7 +10,6 @@ import NotificationListGroupItem from "./NotificationListGroupItem.js";
 import {
 	NOTIFICATION_LIST_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation";
 
 /**
  * @class

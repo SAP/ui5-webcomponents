@@ -1,5 +1,5 @@
 import {
-	isSpace, isEnter, isDelete, isF10Shift, isEnterShift, isUp, isDown,
+	isSpace, isDelete, isF10Shift, isEnterShift, isUp, isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
