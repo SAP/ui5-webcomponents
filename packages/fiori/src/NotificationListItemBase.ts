@@ -5,6 +5,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 
 /**
  * @class
@@ -64,8 +65,9 @@ class NotificationListItemBase extends ListItemBase {
 	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
-		if (isSpace(e)) {
+		if (isSpace(e) && getEventMark(e) !== "button") {
 			e.preventDefault();
+			return;
 		}
 
 		if (isF2(e)) {
