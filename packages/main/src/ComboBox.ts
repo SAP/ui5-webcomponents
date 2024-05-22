@@ -77,7 +77,7 @@ import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
-import ComboBoxItemGroup from "./ComboBoxItemGroup.js";
+import ComboBoxItemGroup, { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
 import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
@@ -626,7 +626,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_resetItemVisibility() {
 		this.items.forEach(item => {
-			if (item.isGroupItem) {
+			if (isInstanceOfComboBoxItemGroup(item)) {
 				item.items?.forEach(i => {
 					i._isVisible = false;
 				});
@@ -722,7 +722,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const filteredItems: Array<IComboBoxItem> = [];
 
 		this._filteredItems.forEach(item => {
-			if (item.items?.length) {
+			if (isInstanceOfComboBoxItemGroup(item)) {
 				filteredItems.push(...item.items);
 				return;
 			}
@@ -748,7 +748,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const allItems: Array<IComboBoxItem> = [];
 
 		this._filteredItems.forEach(item => {
-			if (item.items?.length) {
+			if (isInstanceOfComboBoxItemGroup(item)) {
 				const groupedItems = [item, ...item.items];
 				allItems.push(...groupedItems);
 				return;
@@ -952,7 +952,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			let focusedItem: IComboBoxItem | undefined;
 
 			this._filteredItems.forEach(item => {
-				if (item?.items?.length && !focusedItem) {
+				if (isInstanceOfComboBoxItemGroup(item) && !focusedItem) {
 					focusedItem = item.items.find(groupItem => groupItem.focused);
 				}
 
@@ -1051,7 +1051,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._resetItemVisibility();
 		this.items.forEach(item => {
-			if (item.items?.length) {
+			if (isInstanceOfComboBoxItemGroup(item)) {
 				filteredGroupItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
 				filteredGroupItems.forEach(i => {
 					i._isVisible = true;
@@ -1075,7 +1075,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		return [...filteredItemGroups, ...filteredItems];
 	}
 
-	_getFirstMatchingItem(current: string): ComboBoxItem | undefined {
+	_getFirstMatchingItem(current: string): IComboBoxItem | void {
 		const currentlyFocusedItem = this.items.find(item => item.focused === true);
 
 		if (currentlyFocusedItem?.isGroupItem) {
@@ -1083,14 +1083,14 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		const matchingItems: Array<ComboBoxItem> = (this._startsWithMatchingItems(current).map(item => (item?.items?.length && item.items[0]) || item) as Array<ComboBoxItem>);
+		const matchingItems: Array<IComboBoxItem> = (this._startsWithMatchingItems(current).map(item => (isInstanceOfComboBoxItemGroup(item) && item.items[0]) || item));
 
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
 	}
 
-	_applyAtomicValueAndSelection(item: ComboBoxItem, filterValue: string, highlightValue: boolean) {
+	_applyAtomicValueAndSelection(item: IComboBoxItem, filterValue: string, highlightValue: boolean) {
 		const value = (item && item.text) || "";
 
 		this.inner.value = value;
@@ -1112,12 +1112,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		});
 
 		this._filteredItems = this._filteredItems.map(item => {
-			if (!item.items) {
+			if (!isInstanceOfComboBoxItemGroup(item)) {
 				item.selected = item === itemToBeSelected;
 				return item;
 			}
 
-			item.items.forEach(groupItem => {
+			item.items?.forEach(groupItem => {
 				groupItem.selected = itemToBeSelected === groupItem;
 			});
 
@@ -1213,7 +1213,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_makeAllVisible(item: IComboBoxItem) {
-		if (item?.items?.length) {
+		if (isInstanceOfComboBoxItemGroup(item)) {
 			item.items.forEach(groupItem => {
 				groupItem._isVisible = true;
 			});
