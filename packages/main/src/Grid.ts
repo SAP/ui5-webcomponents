@@ -22,6 +22,8 @@ import GridNavigation from "./GridNavigation.js";
 import {
 	GRID_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
+import BusyIndicator from "./BusyIndicator.js";
+import GridCell from "./GridCell.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>.
@@ -145,7 +147,7 @@ type GridRowPressEventDetail = {
 	styles: GridStyles,
 	template: GridTemplate,
 	fastNavigation: true,
-	dependencies: [],
+	dependencies: [BusyIndicator, GridRow, GridCell],
 })
 
 /**

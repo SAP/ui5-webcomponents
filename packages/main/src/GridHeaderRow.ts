@@ -33,6 +33,7 @@ import {
 	languageAware: true,
 	styles: [GridRowBase.styles, GridHeaderRowStyles],
 	template: GridHeaderRowTemplate,
+	dependencies: [...GridRowBase.dependencies, GridHeaderCell],
 })
 
 /**

@@ -23,7 +23,7 @@ import RadioButton from "./RadioButton.js";
 	tag: "ui5-grid-row",
 	styles: [GridRowBase.styles, GridRowCss],
 	template: GridRowTemplate,
-	dependencies: [...GridRowBase.dependencies, RadioButton],
+	dependencies: [...GridRowBase.dependencies, RadioButton, GridCell],
 })
 class GridRow extends GridRowBase {
 	/**
