@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.2...v1.24.3) (2024-05-14)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+## [1.24.1](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0...v1.24.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* **ui5-multi-combobox:** remove value state header on validation reset ([#8836](https://github.com/SAP/ui5-webcomponents/issues/8836)) ([ae490b6](https://github.com/SAP/ui5-webcomponents/commit/ae490b61e645fa9893aafeac2e28cc459dea5db6)), closes [#8586](https://github.com/SAP/ui5-webcomponents/issues/8586)
+
+
+
+
+
 # [1.24.0](https://github.com/SAP/ui5-webcomponents/compare/v1.24.0-rc.4...v1.24.0) (2024-04-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization
