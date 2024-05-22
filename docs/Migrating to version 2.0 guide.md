@@ -1212,6 +1212,17 @@ Now use `menu` instead:
     <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
   </ui5-menu>
 ```
+- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification` component.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+ <ui5-li-notification>
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification>
+```
 
 ### ui5-li-notification-group
 | Changed item | Old    | New                                                           | 
@@ -1232,6 +1243,20 @@ now you must use `loading` and `loadingDelay` properties:
 ```html
 <ui5-li-notification-group loading loading-delay="500"></ui5-li-notification-group>
 ```
+- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` component.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+  <ui5-li-notification-group>
+    <ui5-li-notification>
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification-group>
+    <ui5-li-notification>
+```
+
 
 ### ui5-upload-collection
 
