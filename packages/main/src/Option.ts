@@ -23,7 +23,8 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
  *
  * `import "@ui5/webcomponents/dist/Option.js";`
  * @constructor
- * @extends StandardListItem
+ * @extends ListItemBase
+ * @implements {IOption}
  * @public
  */
 @customElement({

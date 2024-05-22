@@ -25,7 +25,8 @@ import optionBaseCss from "./generated/themes/OptionBase.css.js";
  * `import "@ui5/webcomponents/dist/OptionCustom.js";`
  * @constructor
  * @since 2.0.0
- * @extends CustomListItem
+ * @extends ListItemBase
+ * @implements {IOption}
  * @public
  */
 @customElement({
