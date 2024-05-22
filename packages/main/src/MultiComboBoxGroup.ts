@@ -58,7 +58,7 @@ MultiComboBoxGroup.define();
 
 
 const isInstanceOfMultiComboBoxItemGroup = (object: any): object is MultiComboBoxGroup => {
-	return "isGroupItem" in object;
+	return "isGroupItem" in object && object.isGroupItem;
 };
 
 export default MultiComboBoxGroup;

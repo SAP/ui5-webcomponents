@@ -1362,10 +1362,9 @@ debugger;
 	}
 
 	getItems(): Array<IMultiComboBoxItem> {
-		// drill down when we see ui5-li-group and get the items
 		const items: IMultiComboBoxItem[] = [];
 		const slottedItems = this.getSlottedNodes<IMultiComboBoxItem>("items");
-
+debugger;
 		slottedItems.forEach(item => {
 			if (isInstanceOfMultiComboBoxItemGroup(item)) {
 				const groupItems = [item, ...item.items].filter(Boolean);
@@ -1374,7 +1373,7 @@ debugger;
 				items.push(item);
 			}
 		});
-		console.log(items)
+console.log(items)
 		return items;
 	}
 

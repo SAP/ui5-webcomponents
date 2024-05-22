@@ -37,6 +37,8 @@
 					{{/if}}
 				{{/each}}
 			{{else}}
+					{{#if selected}}
+
 				<ui5-token
 					?readonly="{{../readonly}}"
 					class="ui5-multi-combobox-token"
@@ -45,6 +47,8 @@
 					text="{{this.text}}"
 				>
 				</ui5-token>
+					{{/if}}
+
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
