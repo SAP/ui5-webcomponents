@@ -508,7 +508,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		const navItems = list.getEnabledItems();
+		const navItems = list.navigationItems;
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {

@@ -1,0 +1,15 @@
+<ui5-list
+	.accessibleName="{{_accessibleName}}"
+	.noDataText="{{noDataText}}"
+	.growing="{{growing}}"
+	.growingButtonText="{{growingButtonText}}"
+	.loading="{{loading}}"
+	.loadingDelay="{{loadingDelay}}"
+	.customNavigationItems="{{navigationItems}}"
+	@ui5-item-click="{{_onItemClick}}"
+	@ui5-item-close="{{_onItemClose}}"
+	@ui5-item-toggle="{{_onItemToggle}}"
+	@ui5-load-more="{{_onLoadMore}}"
+>
+	<slot></slot>
+</ui5-list>
