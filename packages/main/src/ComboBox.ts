@@ -117,7 +117,7 @@ enum ValueStateIconMapping {
 }
 
 type ComboBoxSelectionChangeEventDetail = {
-	item: ComboBoxItem,
+	item: IComboBoxItem,
 };
 
 /**
@@ -462,7 +462,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const hasNoVisibleItems = !this._filteredItems.length || !this._filteredItems.some(i => i._isVisible);
 
 		// If there is no filtered items matching the value, show all items when the arrow is pressed
-		if (((hasNoVisibleItems && !isPhone) && this.value)) {
+		if (((hasNoVisibleItems && !isPhone()) && this.value)) {
 			this.items.forEach(this._makeAllVisible.bind(this));
 			this._filteredItems = this.items;
 		}

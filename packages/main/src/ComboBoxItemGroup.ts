@@ -63,7 +63,7 @@ class ComboBoxItemGroup extends UI5Element implements IComboBoxItem {
 ComboBoxItemGroup.define();
 
 const isInstanceOfComboBoxItemGroup = (object: any): object is ComboBoxItemGroup => {
-	return "isGroupItem" in object;
+	return object.isGroupItem === true;
 };
 
 export { isInstanceOfComboBoxItemGroup };
