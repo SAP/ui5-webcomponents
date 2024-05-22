@@ -31,10 +31,17 @@ describe("Notification List Item Tests", () => {
 
 		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'none', "The group is collapsed (items are not visible).");
 		// act
-		await thirdGroupRoot.click();
+		await thirdGroup.click(); // expand
+
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is expanded (items are visible).");
+		// act
+		await thirdGroup.click(); // collapse
+
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'none', "The group is collapsed (items are not visible).");
+		// act
 		await thirdGroupRoot.keys("ArrowRight");
 
-		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is collapsed (items are not visible).");
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is expanded (items are visible).");
 		// act
 		await thirdGroupRoot.keys("ArrowLeft");
 
