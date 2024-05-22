@@ -215,6 +215,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// expand
 			if (this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 
@@ -222,6 +223,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// collapse
 			if (!this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 	}
