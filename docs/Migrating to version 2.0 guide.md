@@ -1171,6 +1171,67 @@ shellbar.accessibilityAttributes = {
 };
 ```
 
+### ui5-li-notification
+
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `priority` | `state` |
+| Property     | `busy` | `loading` |
+| Property     | `busyDelay` | `loadingDelay` |
+| Property     | N/A | `importance` |
+| Slot     | `actions` | `menu` |
+
+- The `priority` property of the `ui5-li-notification` is replaced by the new property `state`.
+  If you have previously used the `priority` property:
+```html
+<ui5-li-notification priority="Medium">
+```
+Now use `state` instead:
+```html
+<ui5-li-notification state="Critical">
+```
+ - If you have previously used the `busy`, `busyDelay` properties:
+```html
+<ui5-li-notification busy busy-delay="500"></ui5-li-notification>
+```
+now you must use `loading` and `loadingDelay` properties:
+```html
+<ui5-li-notification loading loading-delay="500"></ui5-li-notification>
+```
+- The `actions` slot of the `ui5-li-notification` is replaced by the new slot `menu`.
+  If you have previously used the `actions` slot:
+```html
+<ui5-li-notification>
+  <ui5-notification-action slot="actions" icon="message-error"	text="Reject">
+  </ui5-notification-action>
+```
+Now use `menu` instead:
+```html
+<ui5-li-notification>
+  <ui5-menu slot="menu">
+    <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+  </ui5-menu>
+```
+
+### ui5-li-notification-group
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `showClose` | N/A (removed) |
+| Property     | `showCounter` | N/A (removed) |
+| Property     | `priority` | N/A (removed) |
+| Property     | `busy` | `loading` |
+| Property     | `busyDelay` | `loadingDelay` |
+| Event     | `close` | N/A (removed) |
+| Slot     | `actions` | N/A (removed) |
+ - Properties "showClose", "showCounter", "priority", event "close" and slot "actions" are removed and there is no alternatives provided. The NotificationGroup no longer shows "Close" button, counter text, priority and actions.
+- If you have previously used the `busy`, `busyDelay` properties:
+```html
+<ui5-li-notification-group busy busy-delay="500"></ui5-li-notification-group>
+```
+now you must use `loading` and `loadingDelay` properties:
+```html
+<ui5-li-notification-group loading loading-delay="500"></ui5-li-notification-group>
+```
 
 ### ui5-upload-collection
 
