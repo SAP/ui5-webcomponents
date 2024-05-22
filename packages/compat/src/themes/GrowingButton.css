@@ -23,9 +23,9 @@
 	box-sizing: border-box;
 }
 
-[growing-button-inner]:focus {
+[growing-button-inner]:focus-visible {
 	outline: var(--_ui5_load_more_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	outline-offset: -0.125rem;
+	outline-offset: -0.25rem;
 	border-color: transparent;
 }
 
@@ -57,7 +57,7 @@
 
 [growing-button-text] {
 	height: var(--_ui5_load_more_text_height);
-	padding: 0.875rem 1rem 0 1rem;
+	padding: 0.4375rem 1rem;
 	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
 }

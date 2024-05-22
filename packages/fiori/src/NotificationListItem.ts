@@ -496,7 +496,9 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	focusSameItemOnNextRow(e: KeyboardEvent) {
-		if (this.focused || (!isUp(e) && !isDown(e))) {
+		const isFocused = document.activeElement === this;
+
+		if (isFocused || (!isUp(e) && !isDown(e))) {
 			return;
 		}
 

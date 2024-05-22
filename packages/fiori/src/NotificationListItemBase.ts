@@ -5,6 +5,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 /**
  * @class
@@ -70,11 +71,15 @@ class NotificationListItemBase extends ListItemBase {
 
 		if (isF2(e)) {
 			e.stopImmediatePropagation();
+
+			const activeElement = getActiveElement();
 			const focusDomRef = this.getHeaderDomRef()!;
-			if (this.focused) {
-				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
 			} else {
-				focusDomRef.focus(); // stop content editing
+				focusDomRef.focus();
 			}
 		}
 	}
