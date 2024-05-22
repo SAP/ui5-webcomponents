@@ -729,7 +729,7 @@ describe("Grouping", () => {
 		assert.ok(await popover.getProperty("open"), "Popover remains open");
 	});
 
-	it ("Pressing enter on a group item should not close the picker", async () => {
+	it ("Grouped items should be filtered and with the correct role attributes", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");

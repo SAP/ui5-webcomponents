@@ -77,7 +77,7 @@ import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
-import ComboBoxGroupItem from "./ComboBoxItemGroup.js";
+import ComboBoxItemGroup from "./ComboBoxItemGroup.js";
 import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
@@ -182,7 +182,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		ListItemGroup,
 		ListItemGroupHeader,
 		Popover,
-		ComboBoxGroupItem,
+		ComboBoxItemGroup,
 		Input,
 		SuggestionItem,
 	],
@@ -456,21 +456,14 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if (this.open && !this._isKeyNavigation) {
 			const items = this._filterItems(this.filterValue);
-
 			this._filteredItems = (items.length && items) || [];
 		}
 
-		if (((!this._filteredItems.length && !isPhone) || !this._filteredItems.some(i => i._isVisible)) && this.value) {
-			this.items.forEach(item => {
-				if (item?.items?.length) {
-					item.items.forEach(i => {
-						i._isVisible = true;
-					});
-				} else {
-					item._isVisible = true;
-				}
-			});
+		const hasNoVisibleItems = !this._filteredItems.length || !this._filteredItems.some(i => i._isVisible);
 
+		// If there is no filtered items matching the value, show all items when the arrow is pressed
+		if (((hasNoVisibleItems && !isPhone) && this.value)) {
+			this.items.forEach(this._makeAllVisible.bind(this));
 			this._filteredItems = this.items;
 		}
 
@@ -631,6 +624,19 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._selectMatchingItem();
 	}
 
+	_resetItemVisibility() {
+		this.items.forEach(item => {
+			if (item.isGroupItem) {
+				item.items?.forEach(i => {
+					i._isVisible = false;
+				});
+				return;
+			}
+
+			item._isVisible = false;
+		});
+	}
+
 	_arrowClick() {
 		this.inner.focus();
 		this._resetFilter();
@@ -737,14 +743,14 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		});
 	}
 
+	// Get groups and items as a flat array for filtering
 	_getItems() {
 		const allItems: Array<IComboBoxItem> = [];
 
 		this._filteredItems.forEach(item => {
-			if (item.isGroupItem && item.items?.length) {
+			if (item.items?.length) {
 				const groupedItems = [item, ...item.items];
 				allItems.push(...groupedItems);
-
 				return;
 			}
 
@@ -1043,19 +1049,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const filteredItems: Array<IComboBoxItem> = [];
 		const filteredItemGroups: Array<IComboBoxItem> = [];
 
-		// Reset item filtration
-		this.items.forEach(item => {
-			if (item.isGroupItem) {
-				item.items?.forEach(i => {
-					i._isVisible = false;
-				});
-				return;
-			}
-
-			item._isVisible = false;
-		});
-
-		// Filter items
+		this._resetItemVisibility();
 		this.items.forEach(item => {
 			if (item.items?.length) {
 				filteredGroupItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
@@ -1216,6 +1210,17 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		} else {
 			this.focus();
 		}
+	}
+
+	_makeAllVisible(item: IComboBoxItem) {
+		if (item?.items?.length) {
+			item.items.forEach(groupItem => {
+				groupItem._isVisible = true;
+			});
+			return;
+		}
+
+		item._isVisible = true;
 	}
 
 	async _scrollToItem(indexOfItem: number, forward: boolean) {
