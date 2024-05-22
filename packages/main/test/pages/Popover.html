@@ -778,8 +778,17 @@ z-index: 1;
 		});
 
 		document.getElementById("btnOpenAndScroll").addEventListener("click", function () {
+			const popover = document.getElementById("popoverOpenAndScroll");
+
+			popover.addEventListener("ui5-close", () => {
+				const closedEventCheck = document.createElement("span");
+				closedEventCheck.classList.add("closeEventCheck");
+				closedEventCheck.textContent = "Close event was fired";
+				document.getElementById("divOpenAndScroll").appendChild(closedEventCheck);
+			});
+
 			window.scrollTo(0, 1000);
-			document.getElementById("popoverOpenAndScroll").setAttribute("open", "");
+			popover.setAttribute("open", "");
 		});
 
 	</script>

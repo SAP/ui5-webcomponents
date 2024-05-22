@@ -141,14 +141,16 @@ describe("Popover general interaction", () => {
 	it("tests opening popover when opener is outside of the viewport is not allowed", async () => {
 		const btnOpenPopover = await browser.$("#btnOpenAndScroll");
 		const popover = await browser.$("#popoverOpenAndScroll");
-		const closeEventFired = browser.executeAsync((done) => {
-			document.getElementById("popoverOpenAndScroll").addEventListener("ui5-close", done);
-		});
-		
-		await btnOpenPopover.click();
-		await closeEventFired;
 
-		assert.ok(true, "Close event is fired");
+		await btnOpenPopover.click();
+		await browser.waitUntil(
+			async () => await browser.$(".closeEventCheck").isExisting(),
+			{
+				timeout: 1000,
+				timeoutMsg: "close event was not fired"
+			}
+		);
+
 		assert.notOk(await popover.getAttribute("open"), "Popover remains closed.");
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover remains closed.");
 	});
@@ -199,6 +201,8 @@ describe("Popover general interaction", () => {
 		await itemBeforeLastItem.scrollIntoView();
 
 		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests modal popover", async () => {
