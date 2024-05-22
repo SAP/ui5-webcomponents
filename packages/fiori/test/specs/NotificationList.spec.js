@@ -298,7 +298,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "collapse arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Collapse", "The aria-label of the icon is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// act
