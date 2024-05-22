@@ -18,7 +18,7 @@ import {
  * The `ui5-grid-header-row` component represents the table headers of a `ui5-grid`.
  *
  * It is tightly coupled to the `ui5-grid` and should therefore be used in the `ui5-grid` only.
- * The header row is placed in the `header-row` slot of the table.
+ * The header row is placed in the `headerRow` slot of the table.
  *
  * ### ES6 Module Import
  *

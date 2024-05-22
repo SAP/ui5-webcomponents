@@ -32,7 +32,7 @@ class GridCell extends GridCellBase {
 		const row = this.parentElement as GridRow;
 		const grid = row.parentElement as Grid;
 		const index = row.cells.indexOf(this);
-		const headerCell = grid.headerRow.cells[index];
+		const headerCell = grid.headerRow[0].cells[index];
 		return headerCell.content[0]?.cloneNode(true);
 	}
 

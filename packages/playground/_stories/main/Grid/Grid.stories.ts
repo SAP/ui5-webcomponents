@@ -22,15 +22,15 @@ let index = 0;
 const Template: UI5StoryArgs<Grid, StoryArgsSlots> = (args) =>
   html`<ui5-grid id="grid-${++index}"
   >
-    ${unsafeHTML(args["header-row"])}
+    ${unsafeHTML(args.headerRow)}
     ${unsafeHTML(args.default)}
     ${unsafeHTML(args.nodata)}
   </ui5-grid>`;
 
 export const Basic = Template.bind({});
 Basic.args = {
-  "header-row": `
-    <ui5-grid-header-row slot="header-row">
+  headerRow: `
+    <ui5-grid-header-row slot="headerRow">
     <ui5-grid-header-cell width="300px">Product</ui5-grid-header-cell>
     <ui5-grid-header-cell>Supplier</ui5-grid-header-cell>
     <ui5-grid-header-cell>Dimensions</ui5-grid-header-cell>
@@ -66,14 +66,14 @@ Basic.args = {
 const PopinTemplate: UI5StoryArgs<Grid, StoryArgsSlots> = (args) =>
 html`<ui5-grid id="grid-popin"
 >
-  ${unsafeHTML(args["header-row"])}
+  ${unsafeHTML(args.headerRow)}
   ${unsafeHTML(args.default)}
 </ui5-grid>`;
 
 export const Popin = PopinTemplate.bind({});
 Popin.args = {
-  "header-row": `
-    <ui5-grid-header-row slot="header-row">
+  headerRow: `
+    <ui5-grid-header-row slot="headerRow">
       <ui5-grid-header-cell id="produtCol" min-width="600px" width="300px"><span>Product</span></ui5-grid-header-cell>
       <ui5-grid-header-cell id="supplierCol" min-width="800px">Supplier</ui5-grid-header-cell>
       <ui5-grid-header-cell id="dimensionsCol" min-width="300px">Dimensions</ui5-grid-header-cell>
@@ -124,8 +124,8 @@ Popin.decorators = [
 
 export const NoData = Template.bind({});
 NoData.args = {
-  "header-row": `
-    <ui5-grid-header-row slot="header-row">
+  headerRow: `
+    <ui5-grid-header-row slot="headerRow">
       <ui5-grid-header-cell id="produtCol" min-width="600px" width="300px"><span>Product</span></ui5-grid-header-cell>
       <ui5-grid-header-cell id="supplierCol" min-width="800px">Supplier</ui5-grid-header-cell>
       <ui5-grid-header-cell id="dimensionsCol" min-width="300px">Dimensions</ui5-grid-header-cell>

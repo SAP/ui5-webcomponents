@@ -199,7 +199,7 @@ class GridSelection extends UI5Element implements IGridFeature {
 		}
 
 		this._grid._invalidate++;
-		this._grid.headerRow._invalidate++;
+		this._grid.headerRow[0]._invalidate++;
 		this._grid.rows.forEach(row => row._invalidate++);
 	}
 }

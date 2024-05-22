@@ -49,8 +49,8 @@ class GridNavigation extends GridExtension {
 
 	_getNavigationItemsOfGrid() {
 		const items = [];
-		if (this._grid.headerRow && !isElementHidden(this._grid.headerRow)) {
-			items.push(this._getNavigationItemsOfRow(this._grid.headerRow));
+		if (this._grid.headerRow[0] && !isElementHidden(this._grid.headerRow[0])) {
+			items.push(this._getNavigationItemsOfRow(this._grid.headerRow[0]));
 			this._gridWalker.setFirstRowPos(1);
 		} else {
 			this._gridWalker.setFirstRowPos(0);

@@ -72,7 +72,7 @@ type GridRowPressEventDetail = {
  * ### Overview
  *
  * The `ui5-grid` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner.
- * To render the `ui5-grid`, you need to define the columns and rows. You can use the provided `ui5-grid-row` and `ui5-grid-column` components for this purpose.
+ * To render the `ui5-grid`, you need to define the columns and rows. You can use the provided `ui5-grid-header-row` and `ui5-grid-row` components for this purpose.
  *
  * ### Features
  *
@@ -111,7 +111,7 @@ type GridRowPressEventDetail = {
  * * <kbd>Down</kbd> - Navigates down
  * * <kbd>Up</kbd> - Navigates up
  * * <kbd>Right</kbd> - Navigates right
- * * <kbd>Left</kbd> - Navigates left. If the focus is on the first cell of the row, the focus is moved to the row.
+ * * <kbd>Left</kbd> - Navigates left, if the focus is on the first cell of the row, the focus is moved to the row.
  * * <kbd>Home</kbd> - Navigates to the first cell of the current row, if the focus is on the first cell, navigates to the corresponding row
  * * <kbd>End</kbd> - Navigates to the last cell of the current row, if the focus is on the last cell, navigates to the corresponding row
  * * <kbd>Page Up</kbd> - Navigates one page up while keeping the focus in same column
@@ -182,8 +182,7 @@ class Grid extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
-	"header-row"!: Array<GridHeaderRow>;
-	get headerRow() { return this["header-row"][0]; }
+	headerRow!: Array<GridHeaderRow>;
 
 	/**
 	 * Defines the custom visualization if there is no data available.
@@ -231,13 +230,13 @@ class Grid extends UI5Element {
 	 * Defines the mode of the <code>ui5-grid</code> overflow behavior.
 	 *
 	 * Available options are:
-	 * * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 * * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
+	 * * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 *
-	 * @default GridOverflowMode.Popin
+	 * @default GridOverflowMode.Scroll
 	 * @public
 	 */
-	@property({ type: GridOverflowMode, defaultValue: GridOverflowMode.Popin })
+	@property({ type: GridOverflowMode, defaultValue: GridOverflowMode.Scroll })
 	overflowMode!: `${GridOverflowMode}`;
 
 	/**
@@ -401,7 +400,7 @@ class Grid extends UI5Element {
 	 * @private
 	 */
 	_refreshPopinState() {
-		this.headerRow.cells.forEach((header, index) => {
+		this.headerRow[0].cells.forEach((header, index) => {
 			this.rows.forEach(row => {
 				const cell = row.cells[index];
 				if (cell && cell._popin !== header._popin) {
@@ -416,7 +415,7 @@ class Grid extends UI5Element {
 	}
 
 	_getPopinOrderedColumns(reverse: boolean) {
-		let headers = [...this.headerRow.cells];
+		let headers = [...this.headerRow[0].cells];
 		headers = headers.reverse(); // reverse the "visual" order
 		headers = headers.sort((a, b) => a.importance - b.importance); // sort by importance (asc)
 		headers.pop(); // remove the most important column, as it will not be popped in
@@ -429,7 +428,7 @@ class Grid extends UI5Element {
 	}
 
 	_setHeaderPopinState(headerCell: GridHeaderCell, inPopin: boolean, popinWidth: number) {
-		const headerIndex = this.headerRow.cells.indexOf(headerCell);
+		const headerIndex = this.headerRow[0].cells.indexOf(headerCell);
 		headerCell._popin = inPopin;
 		headerCell._popinWidth = popinWidth;
 		this.rows.forEach(row => {
@@ -459,7 +458,7 @@ class Grid extends UI5Element {
 
 	get _gridTemplateColumns() {
 		const widths = [];
-		const visibleHeaderCells = this.headerRow._visibleCells as GridHeaderCell[];
+		const visibleHeaderCells = this.headerRow[0]._visibleCells as GridHeaderCell[];
 		if (this._getSelection()?.hasRowSelector()) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
@@ -533,7 +532,7 @@ class Grid extends UI5Element {
 	}
 
 	get _stickyElements() {
-		return [this.headerRow].filter(row => row.sticky);
+		return [this.headerRow[0]].filter(row => row.sticky);
 	}
 }
 
