@@ -25,19 +25,66 @@
 
 	<!-- <div style="height: 300px; overflow: auto;"> -->
 
-	<div style="height: 300px; overflow: auto;">
-		<ui5-grid id="grid" accessible-name-ref="title" no-data-text="No data found" overflow-mode="Scroll" >
-			<ui5-grid-virtualizer id="virtualizer" slot="features"></ui5-grid-virtualizer>
-			<ui5-grid-selection id="selection" selected="0 2" slot="features"></ui5-grid-selection>
-			<ui5-grid-header-row slot="header-row">
-				<ui5-grid-header-cell width="2000px" id="produtCol"><span>Product</span></ui5-grid-header-cell>
-				<ui5-grid-header-cell width="max-content" id="supplierCol">Supplier</ui5-grid-header-cell>
-				<ui5-grid-header-cell width="max-content" id="dimensionsCol">Dimensions</ui5-grid-header-cell>
-				<ui5-grid-header-cell width="max-content" id="weightCol">Weight</ui5-grid-header-cell>
-				<ui5-grid-header-cell width="max-content"  id="priceCol">Price</ui5-grid-header-cell>
-			</ui5-grid-header-row>
-		</ui5-grid>
-	</div>
+	<ui5-grid id="grid" overflow-mode="Popin" sticky-top="50px" accessible-name-ref="title">
+		<ui5-grid-growing id="growing" type="Scroll" slot="features"></ui5-grid-growing>
+		<ui5-grid-selection id="selection" selected="0 2" slot="features"></ui5-grid-selection>
+		<ui5-grid-header-row slot="headerRow">
+			<ui5-grid-header-cell id="produtCol" width="300px"><span>Product</span></ui5-grid-header-cell>
+			<ui5-grid-header-cell id="supplierCol">Supplier</ui5-grid-header-cell>
+			<ui5-grid-header-cell id="dimensionsCol" importance="-1" min-width="300px">Dimensions</ui5-grid-header-cell>
+			<ui5-grid-header-cell id="weightCol" popin-text="Weight">Weight</ui5-grid-header-cell>
+			<ui5-grid-header-cell id="priceCol" min-width="220px">Price</ui5-grid-header-cell>
+		</ui5-grid-header-row>
+		<ui5-grid-row key="0">
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Very Best Screens</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>956</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="1">
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 16</b><br><a href="#">HT-1001</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Smartcards</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-input value="29 x 17 x 3.1 cm" accessible-name-ref="dimensionsCol"></ui5-input></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>1249</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="2" interactive>
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 17</b><br><a href="#">HT-1002</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="3">
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br><a href="#">HT-1003</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="4">
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 19</b><br><a href="#">HT-1004</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="5">
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 20</b><br><a href="#">HT-1005</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="6" interactive>
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 21</b><br><a href="#">HT-1006</a></ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+	</ui5-grid>
 
 	<!-- </div> -->
 
@@ -52,30 +99,16 @@
 			console.log(`${Date.now()}: Row with the key ${e.detail.row.key} is clicked`);
 		});
 
-		const virtualizer = document.getElementById("virtualizer");
-		virtualizer.addEventListener("rangechange", (e) => {
-			/*
- 			if (grid.rows.length) {
-				e.preventDefault();
-				for (let i = e.detail.first; i <= e.detail.last; i++) {
-					const index = i - e.detail.first;
-					const content = grid.rows[index].cells[0];
-					content.querySelector("b").textContent = `Notebook Basic ${i}`;
-					content.querySelector("a").textContent = `HT-100${i}`;
-					grid.rows[index].style.transform = `translateY(${e.detail.top}px)`;
-					grid.rows.setAttribute("")
-				}
-				return;
-			}
-			*/
-
-			grid.rows.forEach(row => row.remove());
-
-			for (let i = e.detail.first; i <= e.detail.last; i++) {
+		const growing = document.getElementById("growing");
+		growing.addEventListener("load-more", (e) => {
+			grid.loading = true;
+			grid.disabled = true;
+			// add 10 more additional rows to the ui5-grid element by utilizing a loop
+			for (let i = 0; i < 10; i++) {
 				const newRow = document.createElement("ui5-grid-row");
-				newRow.setAttribute("key", i);
+				newRow.setAttribute("key", grid.rows.length + i);
 				newRow.innerHTML = `
-					<ui5-grid-cell><ui5-label><b>Notebook Basic ${i}</b><br><a href="#">HT-100${i}</a></ui5-label></ui5-grid-cell>
+					<ui5-grid-cell><ui5-label><b>Notebook Basic ${15 + grid.rows.length + i}</b><br><a href="#">HT-100${grid.rows.length + i}</a></ui5-label></ui5-grid-cell>
 					<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
 					<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
 					<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
@@ -83,6 +116,9 @@
 				`;
 				grid.appendChild(newRow);
 			}
+			setTimeout(() => {
+				grid.loading = false;
+			}, 500);
 		});
 
 		const selection = document.getElementById("selection");

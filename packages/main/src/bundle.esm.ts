@@ -128,7 +128,6 @@ import GridSelection from "./GridSelection.js";
 import GridGrowing from "./GridGrowing.js";
 import GridNavigation from "./GridNavigation.js";
 import GridWalker from "./GridWalker.js";
-import GridVirtualizer from "./GridVirtualizer.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import MultiInput from "./MultiInput.js";
