@@ -373,12 +373,7 @@ abstract class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map<string, number>();
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
-		const allChildrenUpgraded = logicalChildren.map(async (child, idx) => {
-			// For transitively slotted children only await the upgrade, do not execute any of the slotting logic
-			if (!directChildren.includes(child)) {
-				return upgradeElement(child);
-			}
-
+		const allChildrenUpgraded = directChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -426,6 +421,7 @@ abstract class UI5Element extends HTMLElement {
 		});
 
 		await Promise.all(allChildrenUpgraded);
+		await Promise.all(logicalChildren.map(upgradeElement));
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
