@@ -17,6 +17,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
@@ -215,7 +216,7 @@ class Menu extends UI5Element {
 	 * @default ""
 	 * @since 1.10.0
 	 */
-	@property()
+	@property({ converter: DOMReferenceConverter })
 	opener?: HTMLElement | string;
 
 	/**
