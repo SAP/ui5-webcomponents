@@ -377,7 +377,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
-	items!: Array<IComboBoxItem>;
+	items!: Array<ComboBoxItem>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -1195,7 +1195,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_clear() {
-		const selectedItem = this.items.find(item => item.selected) as (ComboBoxItem | undefined);
+		const selectedItem = this.items.find(item => item.selected);
 
 		if (selectedItem?.text === this.value) {
 			this.fireEvent("change");
