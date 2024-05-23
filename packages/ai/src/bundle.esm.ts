@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import testAssets from "@ui5/webcomponents/dist/bundle.esm.js";
 
 // AI assets
 import "./Assets.js";
-import "@ui5/webcomponents-icons/dist/AllIcons.js";
 
 import Button from "./Button.js";
 import ButtonState from "./ButtonState.js";
+
+export default testAssets;
