@@ -21,7 +21,7 @@ import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
@@ -340,10 +340,7 @@ class MultiInput extends Input implements IFormInputElement {
 	}
 
 	get _tokensCountText() {
-		if (!this.tokenizer) {
-			return;
-		}
-		return this.tokenizer._tokensCountText();
+		return getTokensCountText(this.tokens.length);
 	}
 
 	get _tokensCountTextId() {

@@ -1097,21 +1097,6 @@ class Tokenizer extends UI5Element {
 		};
 	}
 
-	_tokensCountText() {
-		const iTokenCount = this._tokens.length;
-
-		const tokenCountMap: TokenCountMapType = {
-			0: TOKENIZER_ARIA_CONTAIN_TOKEN,
-			1: TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
-		};
-
-		if (iTokenCount in tokenCountMap) {
-			return Tokenizer.i18nBundle.getText(tokenCountMap[iTokenCount]);
-		}
-
-		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
-	}
-
 	/**
 	 * @protected
 	 */
@@ -1134,8 +1119,22 @@ class Tokenizer extends UI5Element {
 	}
 }
 
+const getTokensCountText = (iTokenCount: number) => {
+	const tokenCountMap: TokenCountMapType = {
+		0: TOKENIZER_ARIA_CONTAIN_TOKEN,
+		1: TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
+	};
+
+	if (iTokenCount in tokenCountMap) {
+		return Tokenizer.i18nBundle.getText(tokenCountMap[iTokenCount]);
+	}
+
+	return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+};
+
 Tokenizer.define();
 
 export default Tokenizer;
+export { getTokensCountText };
 export { ClipboardDataOperation };
 export type { TokenizerTokenDeleteEventDetail, TokenizerSelectionChangeEventDetail, TokenizerDialogButtonPressDetail };

@@ -59,7 +59,7 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
-import Tokenizer from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -1728,7 +1728,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!isPhone() && (((e.relatedTarget as HTMLElement)?.tagName !== "UI5-STATIC-AREA-ITEM") || !e.relatedTarget)) {
 			this._innerInput.setSelectionRange(0, this.value.length);
 		}
-
 		this._tokenizer.tokens.forEach(token => {
 			token.selected = false;
 		});
@@ -1848,7 +1847,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!this._tokenizer) {
 			return;
 		}
-		return this._tokenizer._tokensCountText();
+		return getTokensCountText(this._tokenizer.tokens.length);
 	}
 
 	get _tokensCountTextId() {
