@@ -357,12 +357,12 @@
 
 		listEvents.addEventListener("ui5-item-click", function (event) {
 			itemClickCounter += 1;
-			itemClickResultField.value = itemClickCounter;
+			itemClickResultField.value = `${itemClickCounter}`;
 		});
 
 		listEvents.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
-			selectionChangeResultField.value = selectionChangeCounter;
+			selectionChangeResultField.value = `${selectionChangeCounter}`;
 			selectionChangeResultFieldRadio.value = event.detail.selectionComponentPressed;
 		});
 
@@ -372,12 +372,12 @@
 
 		listEvents2.addEventListener("ui5-item-click", function (event) {
 			itemClickCounter2 += 1;
-			itemClickResultField2.value = itemClickCounter2;
+			itemClickResultField2.value = `${itemClickCounter2}`;
 		});
 
 		listEvents2.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter2 += 1;
-			selectionChangeResultField2.value = selectionChangeCounter2;
+			selectionChangeResultField2.value = `${selectionChangeCounter2}`;
 		});
 
 
@@ -436,7 +436,7 @@
 			customListItemEventsInput = document.getElementById("customListItemEvents");
 
 		ui5List.addEventListener("ui5-item-click", function(event) {
-			customListItemEventsInput.value = ++customListItemEventsValue;
+			customListItemEventsInput.value = `${++customListItemEventsValue}`;
 		});
 
 		btnOpenPopup.addEventListener("click", function() {
@@ -451,7 +451,7 @@
 		});
 
 		listWithCustomItems.addEventListener("ui5-item-close", function(e) {
-			customListItemSelectResult.value = ++customListItemSelectResult.value
+			customListItemSelectResult.value = `${++customListItemSelectResult.value}`;
 		});
 
 	</script>

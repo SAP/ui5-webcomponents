@@ -140,7 +140,7 @@
 
 		[link, disLink].forEach(function(element) {
 			element.addEventListener("ui5-click", function(event) {
-				input.value = parseInt(input.value) + 1;
+				input.value = `${parseInt(input.value) + 1}`;
 			});
 		});
 

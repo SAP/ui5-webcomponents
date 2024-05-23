@@ -260,7 +260,7 @@
 		[button, disabledButton, disabledButtonIconOnly, disabledButtonWithoutIcon].forEach(function (el) {
 			el.addEventListener("click", function(event) {
 				clickCount += 1;
-				clickCounter.value = clickCount;
+				clickCounter.value = `${clickCount}`;
 			});
 		});
 

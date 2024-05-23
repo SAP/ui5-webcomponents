@@ -571,13 +571,13 @@
 			selectionChangeCounter += 1;
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;
-			callCountInput.value = selectionChangeCounter;
+			callCountInput.value = `${selectionChangeCounter}`;
 		});
 
 		document.getElementById("multi1").addEventListener("ui5-openChange", function (event) {
 			openChangeCounter += 1;
 			eventNameInput.value = "openChange";
-			callCountInput.value = openChangeCounter;
+			callCountInput.value = `${openChangeCounter}`;
 		});
 
 		resetBtn.addEventListener("click", function (event) {

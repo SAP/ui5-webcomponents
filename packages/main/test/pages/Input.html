@@ -593,28 +593,28 @@
 		input.addEventListener("ui5-change", function (event) {
 			labelChange.innerHTML = "Event [change] :: " + event.target.value;
 			changeCounter += 1;
-			inputResult.value = changeCounter;
+			inputResult.value = `${changeCounter}`;
 		});
 
 		input1.addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
-			inputResult.value = changeCounter;
+			inputResult.value = `${changeCounter}`;
 		});
 
 		input2.addEventListener("ui5-input", function (event) {
 			inputCounter += 1;
-			inputLiveChangeResult.value = inputCounter;
+			inputLiveChangeResult.value = `${inputCounter}`;
 		});
 
 
 		var inputChangeResultCounter = 0;
 
 		inputChange.addEventListener("ui5-change", function (event) {
-			inputChangeResult.value = ++inputChangeResultCounter;
+			inputChangeResult.value = `${++inputChangeResultCounter}`;
 		});
 
 		inputChangeWithSuggestions.addEventListener("ui5-change", function (event) {
-			inputChangeResult.value = ++inputChangeResultCounter;
+			inputChangeResult.value = `${++inputChangeResultCounter}`;
 		});
 
 
