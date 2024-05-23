@@ -357,7 +357,6 @@ abstract class UI5Element extends HTMLElement {
 		const slotsMap = ctor.getMetadata().getSlots();
 		const canSlotText = ctor.getMetadata().canSlotText();
 		const directChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<Node>;
-		const logicalChildren = getSlottedNodesList(directChildren); // Includes both direct children and transitively slotted children
 
 		const slotsCachedContentMap = new Map<string, Array<SlotValue>>(); // Store here the content of each slot before the mutation occurred
 		const propertyNameToSlotMap = new Map<string, string>(); // Used for reverse lookup to determine to which slot the property name corresponds
@@ -373,7 +372,7 @@ abstract class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map<string, number>();
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
-		const allChildrenUpgraded = directChildren.map(async (child, idx) => {
+		const directChildrenUpgraded = directChildren.map(async (child, idx) => {
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -420,8 +419,13 @@ abstract class UI5Element extends HTMLElement {
 			}
 		});
 
+		const allChildren = getSlottedNodesList(directChildren); // Includes both direct children and transitively slotted children
+		const indirectChildren = allChildren.filter(child => !directChildren.includes(child));
+		const indirectChildrenUpgraded = indirectChildren.map(upgradeElement);
+
+		const allChildrenUpgraded = directChildrenUpgraded.concat(indirectChildrenUpgraded);
+
 		await Promise.all(allChildrenUpgraded);
-		await Promise.all(logicalChildren.map(upgradeElement));
 
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
