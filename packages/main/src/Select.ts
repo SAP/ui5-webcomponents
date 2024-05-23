@@ -736,6 +736,7 @@ class Select extends UI5Element implements IFormElement {
 
 			if (currentIndex !== this._selectedIndex) {
 				this.itemSelectionAnnounce();
+				this._scrollSelectedItem();
 			}
 		}
 	}
