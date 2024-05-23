@@ -49,11 +49,19 @@ import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"
 ```ts
 import "@ui5/webcomponents/dist/Assets-static.js";
 import "@ui5/webcomponents-icons/dist/Assets-static.js"
+import "@ui5/webcomponents-icons-tnt/dist/Assets-static.js"
+import "@ui5/webcomponents-icons-business-suite/dist/Assets-static.js"
+import "@ui5/webcomponents-localization/dist/Assets-static.js"
+import "@ui5/webcomponents-theming/dist/Assets-static.js"
 ```
 use the dynamic equivalent of it:
 ```ts
 import "@ui5/webcomponents/dist/Assets.js";
-import "@ui5/webcomponents-icons/dist/Assets.js"
+import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
+import "@ui5/webcomponents-icons-business-suite/dist/Assets.js";
+import "@ui5/webcomponents-localization/dist/Assets.js";
+import "@ui5/webcomponents-theming/dist/Assets.js"
 ```
 
 ## Main package (@ui5/webcomponents)
