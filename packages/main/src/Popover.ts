@@ -222,7 +222,6 @@ class Popover extends Popup {
 		super();
 	}
 
-	_openerStorage?: string | HTMLElement;
 	/**
 	 * Defines the ID or DOM Reference of the element at which the popover is shown.
 	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
@@ -235,11 +234,11 @@ class Popover extends Popup {
 		converter: DOMReferenceConverter,
 	})
 	set opener(value: HTMLElement | string) {
-		if (this._openerStorage === value) {
+		if (this._opener === value) {
 			return;
 		}
 
-		this._openerStorage = value;
+		this._opener = value;
 
 		if (value && this.open) {
 			this.openPopup();
@@ -247,7 +246,7 @@ class Popover extends Popup {
 	}
 
 	get opener(): HTMLElement | string | undefined {
-		return this._openerStorage;
+		return this._opener;
 	}
 
 	async openPopup() {
