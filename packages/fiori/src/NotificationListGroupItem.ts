@@ -116,9 +116,11 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	items!: Array<NotificationListItemBase>
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
+		this.actionable = false;
 	}
 
 	/**
@@ -163,6 +165,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get _ariaExpanded() {
 		return !this.collapsed;
+	}
+
+	get _pressable() {
+		return false;
 	}
 
 	get groupCollapsedIcon() {

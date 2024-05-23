@@ -9,6 +9,7 @@ import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElemen
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
@@ -262,6 +263,8 @@ class Popover extends Popup {
 		}
 
 		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+			await renderFinished();
+			this.open = false;
 			this.fireEvent("close", {}, false, false);
 			return;
 		}

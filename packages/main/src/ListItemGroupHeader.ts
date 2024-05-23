@@ -45,6 +45,10 @@ class ListItemGroupHeader extends ListItemBase {
 		return true;
 	}
 
+	get _pressable() {
+		return false;
+	}
+
 	get groupHeaderText() {
 		return ListItemGroupHeader.i18nBundle.getText(GROUP_HEADER_TEXT);
 	}

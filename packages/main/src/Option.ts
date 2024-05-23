@@ -1,15 +1,16 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-
-import StandardListItem from "./StandardListItem.js";
-import { IButton } from "./Button.js";
-import type { ListItemAccessibilityAttributes as OptionAccessibilityAttributes } from "./ListItem.js";
-import HighlightTypes from "./types/HighlightTypes.js";
 import { IOption } from "./Select.js";
-import ListItemType from "./types/ListItemType.js";
+import ListItemBase from "./ListItemBase.js";
+
+// Template
+import OptionTemplate from "./generated/templates/OptionTemplate.lit.js";
+
+// Styles
+import optionBaseCss from "./generated/themes/OptionBase.css.js";
+import listItemIconCss from "./generated/themes/ListItemIcon.css.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 
 /**
  * @class
@@ -22,19 +23,21 @@ import ListItemType from "./types/ListItemType.js";
  *
  * `import "@ui5/webcomponents/dist/Option.js";`
  * @constructor
- * @extends StandardListItem
+ * @extends ListItemBase
+ * @implements {IOption}
  * @public
  */
 @customElement({
 	tag: "ui5-option",
+	template: OptionTemplate,
+	styles: [
+		ListItemBase.styles,
+		listItemAdditionalTextCss,
+		listItemIconCss,
+		optionBaseCss,
+	],
 })
-/**
- * **Note:** The event is inherited and not supported. If used, it won't take any effect.
- * @public
- * @deprecated
- */
-@event("detail-click")
-class Option extends StandardListItem implements IOption {
+class Option extends ListItemBase implements IOption {
 	/**
 	 * Defines the text of the component.
 	 *
@@ -51,113 +54,41 @@ class Option extends StandardListItem implements IOption {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "Active"
+	 * Defines the `icon` source URI.
+	 *
+	 * **Note:**
+	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
+	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
 	 * @public
-	 * @deprecated
 	 */
 	@property()
-	declare type: `${ListItemType}`;
+	icon?: string;
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default {}
+	 * Defines the `additionalText`, displayed in the end of the list item.
+	 * @default undefined
 	 * @public
-	 * @deprecated
-	 */
-	@property({ type: Object })
-	declare accessibilityAttributes: OptionAccessibilityAttributes;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default false
-	 * @public
-	 * @deprecated
-	 */
-	@property({ type: Boolean })
-	declare navigated: boolean;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "None"
-	 * @public
-	 * @deprecated
+	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	declare highlight: `${HighlightTypes}`;
+	additionalText?: string;
 
 	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default "None"
+	 * Defines the text of the tooltip that would be displayed for the list item.
+	 * @default undefined
 	 * @public
-	 * @deprecated
+	 * @since 1.23.0
 	 */
 	@property()
-	declare additionalTextState: `${ValueState}`;
+	tooltip?: string;
 
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default ""
-	 * @public
-	 * @deprecated
-	 */
-	@property()
-	declare description: string;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default false
-	 * @public
-	 * @deprecated
-	 */
-	@property({ type: Boolean })
-	declare iconEnd: boolean;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default ""
-	 * @public
-	 * @deprecated
-	 */
-	@property()
-	declare image: string;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default false
-	 * @public
-	 * @deprecated
-	 */
-	@property({ type: Boolean })
-	declare movable: boolean;
-
-	/**
-	 * **Note:** The property is inherited and not supported. If set, it won't take any effect.
-	 * @default ""
-	 * @public
-	 * @deprecated
-	 */
-	@property()
-	declare accessibleName: string;
-
-	/**
-	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
-	 * @public
-	 * @deprecated
-	 */
-	@slot()
-	declare deleteButton: Array<IButton>;
-
-	/**
-	 * **Note:** The slot is inherited and not supported. If set, it won't take any effect.
-	 * @public
-	 * @deprecated
-	 */
-	@slot()
-	declare imageContent: Array<HTMLElement>;
+	get displayIconBegin(): boolean {
+		return !!this.icon;
+	}
 
 	get effectiveDisplayText() {
 		return this.textContent || "";
