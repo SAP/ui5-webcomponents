@@ -117,7 +117,7 @@ enum ValueStateIconMapping {
 }
 
 type ComboBoxSelectionChangeEventDetail = {
-	item: IComboBoxItem,
+	item: ComboBoxItem,
 };
 
 /**
@@ -377,7 +377,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
-	items!: Array<ComboBoxItem>;
+	items!: Array<IComboBoxItem>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -680,7 +680,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 			if (value !== "" && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
-					item,
+					item: item as ComboBoxItem,
 				});
 			}
 		}
@@ -837,7 +837,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if ((item && !item.selected)) {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
-				item,
+				item: item as ComboBoxItem,
 			});
 		}
 
