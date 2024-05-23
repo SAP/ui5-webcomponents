@@ -1,5 +1,8 @@
 import { assert } from "chai";
 
+const isMacOS = process.platform === 'darwin';
+const keyCtrlToPress = isMacOS ? 'Command' : 'Control';
+
 describe("MultiInput general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
@@ -510,6 +513,40 @@ describe("Keyboard handling", () => {
 		await innerInput.click();
 		await browser.keys("Backspace");
 
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
+	it("should focus token last token when caret is at the beginning of the value", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Backspace");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
+	it("should delete value on backspace", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys([keyCtrlToPress, "a"]);
+		await browser.keys("Backspace");
+
+		// Assert
+		assert.strictEqual(await input.getProperty("value"), "", "Value is deleted on Backspace");
+
+		await browser.keys("Backspace");
+
+		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 	});
 
