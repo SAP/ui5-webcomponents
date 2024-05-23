@@ -107,6 +107,27 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 	} while (proto && proto !== HTMLElement.prototype);
 }
 
+const upgradeElement = async (child: Node) => {
+	if (child instanceof HTMLElement) {
+		const localName = child.localName;
+		const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+
+		if (shouldWaitForCustomElement) {
+			const isDefined = customElements.get(localName);
+			if (!isDefined) {
+				const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
+				let timeoutPromise = elementTimeouts.get(localName);
+				if (!timeoutPromise) {
+					timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
+					elementTimeouts.set(localName, timeoutPromise);
+				}
+				await Promise.race([whenDefinedPromise, timeoutPromise]);
+			}
+			customElements.upgrade(child);
+		}
+	}
+};
+
 /**
  * @class
  * Base class for all UI5 Web Components
@@ -335,7 +356,8 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const slotsMap = ctor.getMetadata().getSlots();
 		const canSlotText = ctor.getMetadata().canSlotText();
-		const domChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<Node>;
+		const directChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<Node>;
+		const logicalChildren = getSlottedNodesList(directChildren); // Includes both direct children and transitively slotted children
 
 		const slotsCachedContentMap = new Map<string, Array<SlotValue>>(); // Store here the content of each slot before the mutation occurred
 		const propertyNameToSlotMap = new Map<string, string>(); // Used for reverse lookup to determine to which slot the property name corresponds
@@ -351,7 +373,12 @@ abstract class UI5Element extends HTMLElement {
 		const autoIncrementMap = new Map<string, number>();
 		const slottedChildrenMap = new Map<string, Array<{child: Node, idx: number }>>();
 
-		const allChildrenUpgraded = domChildren.map(async (child, idx) => {
+		const allChildrenUpgraded = logicalChildren.map(async (child, idx) => {
+			// For transitively slotted children only await the upgrade, do not execute any of the slotting logic
+			if (!directChildren.includes(child)) {
+				return upgradeElement(child);
+			}
+
 			// Determine the type of the child (mainly by the slot attribute)
 			const slotName = getSlotName(child);
 			const slotData = slotsMap[slotName];
@@ -374,24 +401,7 @@ abstract class UI5Element extends HTMLElement {
 			}
 
 			// Await for not-yet-defined custom elements
-			if (child instanceof HTMLElement) {
-				const localName = child.localName;
-				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
-
-				if (shouldWaitForCustomElement) {
-					const isDefined = customElements.get(localName);
-					if (!isDefined) {
-						const whenDefinedPromise = customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
-						let timeoutPromise = elementTimeouts.get(localName);
-						if (!timeoutPromise) {
-							timeoutPromise = new Promise(resolve => setTimeout(resolve, 1000));
-							elementTimeouts.set(localName, timeoutPromise);
-						}
-						await Promise.race([whenDefinedPromise, timeoutPromise]);
-					}
-					customElements.upgrade(child);
-				}
-			}
+			await upgradeElement(child);
 
 			child = (ctor.getMetadata().constructor as typeof UI5ElementMetadata).validateSlotValue(child, slotData);
 
