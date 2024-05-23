@@ -5,7 +5,7 @@
 >
 	{{#if selectedOptionIcon}}
 		<ui5-icon
-			aria-hidden="true"
+			mode="Decorative"
 			class="ui5-select-option-icon"
 			name="{{selectedOptionIcon}}"
 		></ui5-icon>
@@ -31,14 +31,14 @@
 		{{#if hasCustomLabel}}
 			<slot name="label"></slot>
 		{{else}}
-			{{_text}}
+			{{text}}
 		{{/if}}
 	</div>
 
 	{{#unless readonly}}
 		<ui5-icon
 			name="slim-arrow-down"
-			input-icon
+			class="inputIcon"
 			?pressed="{{_iconPressed}}"
 		></ui5-icon>
 	{{/unless}}
@@ -46,7 +46,6 @@
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
-	<slot name="formSupport"></slot>
 </div>
 
 {{>include "./SelectPopover.hbs"}}

@@ -19,6 +19,10 @@
 		<h3 class="header-title">Wrapped Split Buttons</h3>
 	</header>
 
+	<div style="border: 1px solid red; display: inline-block; width: 80px; height: 70px">
+		<ui5-split-button style="width: 100%;" icon="picture">Random Text</ui5-split-button>
+	</div>
+
 	<div style="border: 1px solid red; display: inline-block; width: 80px">
 		<ui5-split-button style="width: 100%" icon="picture">Random Text</ui5-split-button>
 	</div>
@@ -60,8 +64,6 @@
 	</header>
 	<div class="samples-margin">
 		<ui5-split-button id="sbTextIcon" icon="add">Icon</ui5-split-button>
-		<ui5-split-button id="sbTextActiveIcon" active-icon="accept">Active Icon</ui5-split-button>
-		<ui5-split-button id="sbTextIconActiveIcon" icon="add" active-icon="accept">Icon + Active Icon</ui5-split-button>
 		<ui5-split-button icon="text-color"></ui5-split-button>
 	</div>
 
@@ -106,13 +108,9 @@ const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAc
 const menu = document.getElementById("menu");
 
 splitBtn.addEventListener("ui5-arrow-click", function() {
-	if (menu.open) {
-		menu.close();
-		splitBtn.activeArrowButton = false;
-	} else {
-		menu.showAt(splitBtn);
-		splitBtn.activeArrowButton = true;
-	}
+	menu.opener = splitBtn; 
+	menu.open = !menu.open;
+	splitBtn.activeArrowButton = !splitBtn.activeArrowButton;
 });
 
 menu.addEventListener("close", function() {
@@ -130,9 +128,8 @@ menu.addEventListener("close", function() {
 
 
 	splitBtnWithMenuWithAssociatedLastAction.addEventListener("ui5-arrow-click", function() {
-		menuInSplitBtnAssociatedLastAction.open ? 
-			menuInSplitBtnAssociatedLastAction.close() :
-			menuInSplitBtnAssociatedLastAction.showAt(splitBtnWithMenuWithAssociatedLastAction)
+		menuInSplitBtnAssociatedLastAction.opener = splitBtnWithMenuWithAssociatedLastAction; 
+		menuInSplitBtnAssociatedLastAction.menuInSplitBtnAssociatedLastAction = !menu.open;
 	})
 
 	menuInSplitBtnAssociatedLastAction.addEventListener("ui5-item-click", function(event) {

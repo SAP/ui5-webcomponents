@@ -44,7 +44,6 @@
 	box-sizing: border-box;
 	border: var(--_ui5_progress_indicator_bar_border_max);
 	border-radius: var(--_ui5_progress_indicator_bar_border_radius);
-	z-index: 1;
 }
 
 .ui5-progress-indicator-min-value .ui5-progress-indicator-bar,
@@ -99,15 +98,15 @@
 	inset-inline-end: var(--_ui5_progress_indicator_icon_right_position);
 }
 
-:host([value-state="Error"]) .ui5-progress-indicator-icon {
+:host([value-state="Negative"]) .ui5-progress-indicator-icon {
 	color: var(--_ui5_progress_indicator_value_state_error_icon_color);
 }
 
-:host([value-state="Warning"]) .ui5-progress-indicator-icon {
+:host([value-state="Critical"]) .ui5-progress-indicator-icon {
 	color: var(--_ui5_progress_indicator_value_state_warning_icon_color);
 }
 
-:host([value-state="Success"]) .ui5-progress-indicator-icon {
+:host([value-state="Positive"]) .ui5-progress-indicator-icon {
 	color: var(--_ui5_progress_indicator_value_state_success_icon_color);
 }
 
@@ -115,15 +114,15 @@
 	color: var(--_ui5_progress_indicator_value_state_information_icon_color);
 }
 
-:host([value-state="Error"]) .ui5-progress-indicator-bar {
+:host([value-state="Negative"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_error);
 }
 
-:host([value-state="Warning"]) .ui5-progress-indicator-bar {
+:host([value-state="Critical"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_warning);
 }
 
-:host([value-state="Success"]) .ui5-progress-indicator-bar {
+:host([value-state="Positive"]) .ui5-progress-indicator-bar {
 	background: var(--_ui5_progress_indicator_value_state_success);
 }
 
@@ -131,15 +130,15 @@
 	background: var(--_ui5_progress_indicator_value_state_information);
 }
 
-:host([value-state="Error"]) .ui5-progress-indicator-root {
+:host([value-state="Negative"]) .ui5-progress-indicator-root {
 	background: var(--_ui5_progress_indicator_background_error);
 }
 
-:host([value-state="Warning"]) .ui5-progress-indicator-root {
+:host([value-state="Critical"]) .ui5-progress-indicator-root {
 	background: var(--_ui5_progress_indicator_background_warning);
 }
 
-:host([value-state="Success"]) .ui5-progress-indicator-root {
+:host([value-state="Positive"]) .ui5-progress-indicator-root {
 	background: var(--_ui5_progress_indicator_background_success);
 }
 
@@ -147,15 +146,15 @@
 	background: var(--_ui5_progress_indicator_background_information);
 }
 
-:host([value-state="Error"]) .ui5-progress-indicator-remaining-bar {
+:host([value-state="Negative"]) .ui5-progress-indicator-remaining-bar {
 	border-color: var(--_ui5_progress_indicator_border_color_error);
 }
 
-:host([value-state="Warning"]) .ui5-progress-indicator-remaining-bar {
+:host([value-state="Critical"]) .ui5-progress-indicator-remaining-bar {
 	border-color: var(--_ui5_progress_indicator_border_color_warning);
 }
 
-:host([value-state="Success"]) .ui5-progress-indicator-remaining-bar {
+:host([value-state="Positive"]) .ui5-progress-indicator-remaining-bar {
 	border-color: var(--_ui5_progress_indicator_border_color_success);
 }
 
@@ -185,18 +184,18 @@
 	right: 0.0625rem;
 }
 
-:host([value-state="Error"]) .ui5-progress-indicator-remaining-bar::before,
-:host([value-state="Error"]) .ui5-progress-indicator-remaining-bar::after {
+:host([value-state="Negative"]) .ui5-progress-indicator-remaining-bar::before,
+:host([value-state="Negative"]) .ui5-progress-indicator-remaining-bar::after {
 	background: var(--sapProgress_Value_NegativeBackground);
 }
 
-:host([value-state="Warning"]) .ui5-progress-indicator-remaining-bar::before,
-:host([value-state="Warning"]) .ui5-progress-indicator-remaining-bar::after {
+:host([value-state="Critical"]) .ui5-progress-indicator-remaining-bar::before,
+:host([value-state="Critical"]) .ui5-progress-indicator-remaining-bar::after {
 	background: var(--sapProgress_Value_CriticalBackground);
 }
 
-:host([value-state="Success"]) .ui5-progress-indicator-remaining-bar::before,
-:host([value-state="Success"]) .ui5-progress-indicator-remaining-bar::after {
+:host([value-state="Positive"]) .ui5-progress-indicator-remaining-bar::before,
+:host([value-state="Positive"]) .ui5-progress-indicator-remaining-bar::after {
 	background: var(--sapProgress_Value_PositiveBackground);
 }
 

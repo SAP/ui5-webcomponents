@@ -73,7 +73,7 @@
 	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
 	<br>
 	<br>
-	<ui5-button id="multiple-show">Open dialog calling show() multiple times</ui5-button>
+	<ui5-button id="multiple-show">Open dialog calling ".open = true" multiple times</ui5-button>
 
 	<ui5-block-layer></ui5-block-layer>
 
@@ -489,7 +489,7 @@
 			<ui5-label>Dialog states</ui5-label>
 		</div>
 		<ui5-button id="btn-error-state">Dialog with Error State</ui5-button>
-		<ui5-dialog id="dialog-error-state" state="Error">
+		<ui5-dialog id="dialog-error-state" state="Negative">
 			<div slot="header">
 				<ui5-title level="H1">Error</ui5-title>
 			</div>
@@ -504,16 +504,16 @@
 			<span>Hello World!</span>
 		</ui5-dialog>
 
-		<ui5-button id="btn-success-state">Dialog with Success State</ui5-button>
-		<ui5-dialog id="dialog-success-state" state="Success">
+		<ui5-button id="btn-success-state">Dialog with Positive State</ui5-button>
+		<ui5-dialog id="dialog-success-state" state="Positive">
 			<div slot="header">
-				<ui5-title level="H1">Success</ui5-title>
+				<ui5-title level="H1">Positive</ui5-title>
 			</div>
 			<span>Hello World!</span>
 		</ui5-dialog>
 
 		<ui5-button id="btn-warn-state">Dialog with Warning State</ui5-button>
-		<ui5-dialog id="dialog-warn-state" state="Warning">
+		<ui5-dialog id="dialog-warn-state" state="Critical">
 			<div slot="header">
 				<ui5-title level="H1">Warning</ui5-title>
 			</div>
@@ -526,7 +526,7 @@
 			<ui5-label>Dialog roles</ui5-label>
 		</div>
 		<ui5-button id="btn-role-default">Error State, no role set</ui5-button>
-		<ui5-dialog id="dialog-error-no-role" state="Error">
+		<ui5-dialog id="dialog-error-no-role" state="Negative">
 			<div slot="header">
 				<ui5-title level="H1">Error</ui5-title>
 			</div>
@@ -549,10 +549,10 @@
 			<span>Hello World!</span>
 		</ui5-dialog>
 
-		<ui5-button id="btn-role-alert-success-state">Success State, 'AlertDialog' role set</ui5-button>
-		<ui5-dialog id="dialog-success-state-alert-role" state="Success" accessible-role="AlertDialog">
+		<ui5-button id="btn-role-alert-success-state">Positive State, 'AlertDialog' role set</ui5-button>
+		<ui5-dialog id="dialog-success-state-alert-role" state="Positive" accessible-role="AlertDialog">
 			<div slot="header">
-				<ui5-title level="H1">Success</ui5-title>
+				<ui5-title level="H1">Positive</ui5-title>
 			</div>
 			<span>Hello World!</span>
 		</ui5-dialog>
@@ -616,11 +616,11 @@
 			const listContainerDialogCloseBtn = document.getElementById("listContainerDialogCloseBtnId");
 
 			listContainer.addEventListener("ui5-selectionChange", function (event) {
-				listContainerDialog.show();
+				listContainerDialog.open = true;
 			});
 
 			listContainerDialogCloseBtn.addEventListener("click", function (event) {
-				listContainerDialog.close();
+				listContainerDialog.open = false;
 			});
 		</script>
 	</div>
@@ -643,30 +643,30 @@
 		let preventClosing = true;
 
 		btnOpenDialog.addEventListener("click", function () {
-			dialog.show();
+			dialog.open = true;
 		});
 
 		btnOpenDialogWithInput.addEventListener("click", function () {
-			dialogInput.show();
+			dialogInput.open = true;
 		});
 
 		btnCloseDialogWithInput.addEventListener("click", function () {
-			dialogInput.close();
+			dialogInput.open = false;
 		});
 
 		const focusCirBtn = document.getElementById("btn-focus-circ");
 		const focusCircDialog = document.getElementById("focus-circ");
 
 		focusCirBtn.addEventListener("click", function () {
-			focusCircDialog.show();
+			focusCircDialog.open = true;
 		});
 
 		btnOpenDialogNoPaddings.addEventListener("click", function () {
-			window["dialogNoPaddings"].show();
+			window["dialogNoPaddings"].open = true;
 		});
 
 		btnCloseDialog.addEventListener("click", function () {
-			dialog.close();
+			dialog.open = false;
 		});
 
 		btnOpenDialogWithAttr.addEventListener("click", function () {
@@ -674,7 +674,7 @@
 		});
 
 		btnCloseWithMethod.addEventListener("click", function () {
-			dlgAttr.close();
+			dlgAttr.open = false;
 		});
 
 		btnCloseWithAttr.addEventListener("click", function () {
@@ -682,21 +682,21 @@
 		});
 
 		btnCloseDialogNoPaddings.addEventListener("click", function () {
-			window["dialogNoPaddings"].close();
+			window["dialogNoPaddings"].open = false;
 		});
 
 		prevent.addEventListener("click", function () {
-			window["prevent-dialog"].show();
+			window["prevent-dialog"].open = true;
 		});
 
 		message.addEventListener("click", function () {
-			window["msg-dialog"].show();
+			window["msg-dialog"].open = true;
 		});
 
 		window["prevent-dialog"].addEventListener("ui5-beforeClose", function (event) {
 			if (preventClosing) {
 				event.preventDefault();
-				window["confirm-dialog"].show();
+				window["confirm-dialog"].open = true;
 			}
 
 			if (!preventClosing) {
@@ -706,36 +706,40 @@
 
 		yes.addEventListener("click", function (event) {
 			preventClosing = false;
-			window["confirm-dialog"].close();
-			window["prevent-dialog"].close();
+			window["confirm-dialog"].open = false;
+			window["prevent-dialog"].open = false;
 		});
 
 		no.addEventListener("click", function (event) {
-			window["confirm-dialog"].close();
+			window["confirm-dialog"].open = false;
 			preventClosing = true;
 		});
 
-		window["modals-open"].addEventListener("click", function (event) { pop.showAt(event.target) });
+		window["modals-open"].addEventListener("click", function (event) {
+			op.opener = event.target;
+			op.open = true;
+		});
 
 		dangerDialogBtn.addEventListener('click', function (event) {
-			danger.show();
+			danger.open = true;
 		});
 
 		bigDanger.addEventListener('click', function (event) {
-			bigDangerPop.showAt(bigDanger);
+			bigDangerPop.opener = bigDanger;
+			bigDangerPop.open = true;
 		});
 
-		window["empty-open"].addEventListener("click", function () { window["empty-dialog"].show(); });
-		window["wide-open"].addEventListener("click", function () { window["wide-dialog"].show(); });
-		window["wide-open2"].addEventListener("click", function () { window["wide-dialog2"].show(); });
-		window["draggable-open"].addEventListener("click", function () { window["draggable-dialog"].show(); });
-		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].close(); });
-		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].show(); });
-		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].close(); });
-		window["resizable-custom-header-open"].addEventListener("click", function () { window["resizable-dialog-custom-header"].show(); });
-		window["resizable-custom-header-close"].addEventListener("click", function () { window["resizable-dialog-custom-header"].close(); });
-		window["draggable-and-resizable-open"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].show(); });
-		window["draggable-and-resizable-close"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].close(); });
+		window["empty-open"].addEventListener("click", function () { window["empty-dialog"].open = true; });
+		window["wide-open"].addEventListener("click", function () { window["wide-dialog"].open = true; });
+		window["wide-open2"].addEventListener("click", function () { window["wide-dialog2"].open = true; });
+		window["draggable-open"].addEventListener("click", function () { window["draggable-dialog"].open = true; });
+		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].open = false; });
+		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].open = true; });
+		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].open = false; });
+		window["resizable-custom-header-open"].addEventListener("click", function () { window["resizable-dialog-custom-header"].open = true; });
+		window["resizable-custom-header-close"].addEventListener("click", function () { window["resizable-dialog-custom-header"].open = false; });
+		window["draggable-and-resizable-open"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].open = true; });
+		window["draggable-and-resizable-close"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].open = false; });
 
 		window["dynamic-open"].addEventListener("click", function () {
 			var dialog = document.createElement("ui5-dialog"),
@@ -746,7 +750,7 @@
 			button.setAttribute("id", "dynamic-dialog-close-button");
 			button.appendChild(document.createTextNode("Close"));
 			button.addEventListener("click", function () {
-				dialog.close();
+				dialog.open = false;
 			});
 
 			dialog.setAttribute("id", "dynamic-dialog");
@@ -759,52 +763,52 @@
 
 			document.body.appendChild(dialog);
 
-			dialog.show();
+			dialog.open = true;
 		});
 
 		window["multiple-show"].addEventListener("click", function () {
-			dialog.show();
-			dialog.show();
+			dialog.open = true;
+			dialog.open = true;
 		});
 
 		window["btn-acc-name-ref"].addEventListener("click", function () {
-			window["dialog-acc-name-ref"].show();
+			window["dialog-acc-name-ref"].open = true;
 		});
 
 		window["scrolledBtn"].addEventListener("click", function () {
-			window["dialog"].show();
+			window["dialog"].open = true;
 		});
 
 		window["btn-error-state"].addEventListener("click", function () {
-			window["dialog-error-state"].show();
+			window["dialog-error-state"].open = true;
 		});
 
 		window["btn-info-state"].addEventListener("click", function () {
-			window["dialog-info-state"].show();
+			window["dialog-info-state"].open = true;
 		});
 
 		window["btn-success-state"].addEventListener("click", function () {
-			window["dialog-success-state"].show();
+			window["dialog-success-state"].open = true;
 		});
 
 		window["btn-warn-state"].addEventListener("click", function () {
-			window["dialog-warn-state"].show();
+			window["dialog-warn-state"].open = true;
 		});
 
 		window["btn-role-default"].addEventListener("click", function () {
-			window["dialog-error-no-role"].show();
+			window["dialog-error-no-role"].open = true;
 		});
 
 		window["btn-role-alert"].addEventListener("click", function () {
-			window["dialog-no-state-alert-role"].show();
+			window["dialog-no-state-alert-role"].open = true;
 		});
 
 		window["btn-role-none"].addEventListener("click", function () {
-			window["dialog-none-role"].show();
+			window["dialog-none-role"].open = true;
 		});
 
 		window["btn-role-alert-success-state"].addEventListener("click", function () {
-			window["dialog-success-state-alert-role"].show();
+			window["dialog-success-state-alert-role"].open = true;
 		});
 
 		window["dialogOverDialogBtn"].addEventListener("click", function () {
@@ -832,7 +836,7 @@
 		});
 
 		window["closeDialogFocusButton"].addEventListener("click", function () {
-			window["dialogFocus1"].close();
+			window["dialogFocus1"].open = false;
 		});
 
 	</script>

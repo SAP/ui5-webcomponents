@@ -1,6 +1,7 @@
 @import "./FormComponents.css";
 @import "./InvisibleTextStyles.css";
 @import "./InputIcon.css";
+@import "./InputSharedStyles.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
@@ -21,7 +22,7 @@
 	-ms-user-select: none;
 }
 
-:host([value-state="Error"]) {
+:host([value-state="Negative"]) {
 	background-color: var(--sapField_InvalidBackground);
 }
 
@@ -43,28 +44,4 @@
 	letter-spacing: inherit;
 	word-spacing: inherit;
 	margin: inherit;
-}
-
-.ui5-time-picker-input-icon-button {
-	border-left: 0.0625rem solid transparent;
-}
-
-.ui5-time-picker-input-icon-button {
-	border-left: 0.0625rem solid transparent;
-}
-
-.ui5-time-picker-input-icon-button:hover {
-	cursor: pointer;
-	border-left: var(--_ui5_time_picker_border);
-	background: var(--sapButton_Hover_Background);
-}
-
-.ui5-time-picker-input-icon-button:active {
-	background-color: var(--sapButton_Active_Background);
-	color: var(--sapButton_Active_TextColor);
-}
-
-.ui5-time-picker-input-icon-button[pressed] {
-	background-color: var(--sapButton_Active_Background);
-	color: var(--sapButton_Active_TextColor);
 }

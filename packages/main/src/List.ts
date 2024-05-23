@@ -30,12 +30,15 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListItemBase from "./ListItemBase.js";
+import type {
+	ListItemBasePressEventDetail,
+} from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
-	PressEventDetail,
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -55,7 +58,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CheckBox from "./CheckBox.js";
 import RadioButton from "./RadioButton.js";
-import ListItemGroup from "./ListItemGroup.js";
+import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -284,6 +287,52 @@ type ListItemClickEventDetail = {
 		item: { type: HTMLElement },
 	},
 })
+
+/**
+ * Fired when a movable list item is moved over a potential drop target during a dragging operation.
+ *
+ * If the new position is valid, prevent the default action of the event using `preventDefault()`.
+ * @param {object} source Contains information about the moved element under `element` property.
+ * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
+ * @public
+ * @since 2.0.0
+ * @allowPreventDefault
+ */
+
+@event<ListMoveEventDetail>("move-over", {
+	detail: {
+		/**
+		 * @public
+		 */
+		source: { type: Object },
+		/**
+		 * @public
+		 */
+		destination: { type: Object },
+	},
+})
+
+/**
+ * Fired when a movable list item is dropped onto a drop target.
+ *
+ * **Note:** `move` event is fired only if there was a preceding `move-over` with prevented default action.
+ * @param {object} source Contains information about the moved element under `element` property.
+ * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
+ * @public
+ * @allowPreventDefault
+ */
+@event<ListMoveEventDetail>("move", {
+	detail: {
+		/**
+		 * @public
+		 */
+		source: { type: Object },
+		/**
+		 * @public
+		 */
+		destination: { type: Object },
+	},
+})
 class List extends UI5Element {
 	/**
 	 * Defines the component header text.
@@ -399,20 +448,11 @@ class List extends UI5Element {
 	/**
 	 * Defines the accessible role of the component.
 	 * @public
-	 * @default "list"
+	 * @default "List"
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "list" })
-	accessibleRole!: string;
-
-	/**
-	 * Defines the description for the accessible role of the component.
-	 * @protected
-	 * @default undefined
-	 * @since 1.10.0
-	 */
-	@property({ defaultValue: undefined, noAttribute: true })
-	accessibleRoleDescription?: string;
+	@property({ type: ListAccessibleRole, defaultValue: ListAccessibleRole.List })
+	accessibleRole!: `${ListAccessibleRole}`;
 
 	/**
 	 * Defines if the entire list is in view port.
@@ -688,6 +728,10 @@ class List extends UI5Element {
 		};
 	}
 
+	get listAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get classes(): ClassMap {
 		return {
 			root: {
@@ -818,7 +862,7 @@ class List extends UI5Element {
 		const slottedItems = this.getSlottedNodes<ListItemBase>("items");
 
 		slottedItems.forEach(item => {
-			if (item instanceof ListItemGroup) {
+			if (isInstanceOfListItemGroup(item)) {
 				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
 				items.push(...groupItems);
 			} else {
@@ -1090,7 +1134,7 @@ class List extends UI5Element {
 		}
 	}
 
-	onItemPress(e: CustomEvent<PressEventDetail>) {
+	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
 		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
