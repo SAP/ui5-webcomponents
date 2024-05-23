@@ -257,7 +257,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @default 0
 	* @private
 	*/
-	@property()
+	@property({ type: Number })
 	_width = 0;
 
 	/**
@@ -275,7 +275,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @default 1
 	* @private
 	*/
-	@property()
+	@property({ type: Number })
 	_visibleColumns = 1;
 
 	/**
