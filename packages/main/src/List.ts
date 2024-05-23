@@ -32,11 +32,13 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListItemBase from "./ListItemBase.js";
+import type {
+	ListItemBasePressEventDetail,
+} from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
-	PressEventDetail,
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -1133,7 +1135,7 @@ class List extends UI5Element {
 		}
 	}
 
-	onItemPress(e: CustomEvent<PressEventDetail>) {
+	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
 		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
