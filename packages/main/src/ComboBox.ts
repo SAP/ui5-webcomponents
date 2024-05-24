@@ -719,18 +719,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
-		const filteredItems: Array<IComboBoxItem> = [];
-
-		this._filteredItems.forEach(item => {
-			if (isInstanceOfComboBoxItemGroup(item)) {
-				filteredItems.push(...item.items);
-				return;
-			}
-
-			filteredItems.push(item);
-		});
-
-		return Filters.StartsWith(str, filteredItems, "text");
+		const allItems:Array<IComboBoxItem> = this._getItems();
+		return Filters.StartsWith(str, allItems, "text");
 	}
 
 	_clearFocus() {
@@ -819,7 +809,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
-			this.value = isGroupItem ? "" : currentItem.text;
+			this.value = isGroupItem ? nextItem.text : currentItem.text;
 			currentItem.focused = false;
 		}
 
@@ -889,9 +879,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handlePageUp(e: KeyboardEvent, indexOfItem: number) {
+		const allItems = this._getItems();
 		const isProposedIndexValid = indexOfItem - SKIP_ITEMS_SIZE > -1;
 		indexOfItem = isProposedIndexValid ? indexOfItem - SKIP_ITEMS_SIZE : 0;
-		const shouldMoveForward = this._filteredItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = allItems[indexOfItem].isGroupItem && !this.open;
 
 		if (!isProposedIndexValid && this.hasValueStateText && this.open) {
 			this._clearFocus();
@@ -940,6 +931,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_keydown(e: KeyboardEvent) {
 		const isNavKey = isDown(e) || isUp(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e);
 		const picker = this.responsivePopover;
+		const allItems: Array<IComboBoxItem> = this._getItems();
 
 		this._autocomplete = !(isBackSpace(e) || isDelete(e));
 		this._isKeyNavigation = false;
@@ -988,7 +980,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this._resetFilter();
 			this._toggleRespPopover();
 
-			const selectedItem = this._filteredItems.find(item => {
+			const selectedItem = allItems.find(item => {
 				return item.selected;
 			});
 
@@ -1076,14 +1068,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_getFirstMatchingItem(current: string): IComboBoxItem | void {
-		const currentlyFocusedItem = this.items.find(item => item.focused === true);
+		const allItems = this._getItems();
+		const currentlyFocusedItem = allItems.find(item => item.focused === true);
 
 		if (currentlyFocusedItem?.isGroupItem) {
 			this.value = this.filterValue;
 			return;
 		}
 
-		const matchingItems: Array<IComboBoxItem> = (this._startsWithMatchingItems(current).map(item => (isInstanceOfComboBoxItemGroup(item) && item.items[0]) || item));
+		const matchingItems: Array<IComboBoxItem> = (this._startsWithMatchingItems(current).filter(item => !isInstanceOfComboBoxItemGroup(item)));
 
 		if (matchingItems.length) {
 			return matchingItems[0];
@@ -1226,7 +1219,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	async _scrollToItem(indexOfItem: number, forward: boolean) {
 		const picker = await this._getPicker();
 		const list = picker.querySelector(".ui5-combobox-items-list") as List;
-		const listItem = list?.items[indexOfItem];
+		const listItem = list?.listItems[indexOfItem];
 
 		if (listItem) {
 			const pickerRect = picker.getBoundingClientRect();
