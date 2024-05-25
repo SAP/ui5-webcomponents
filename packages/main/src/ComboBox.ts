@@ -94,7 +94,7 @@ const SKIP_ITEMS_SIZE = 10;
 interface IComboBoxItem extends UI5Element {
 	text: string,
 	focused: boolean,
-	isGroupItem: boolean,
+	isGroupItem?: boolean,
 	selected?: boolean,
 	additionalText?: string,
 	stableDomRef: string,
@@ -882,7 +882,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const allItems = this._getItems();
 		const isProposedIndexValid = indexOfItem - SKIP_ITEMS_SIZE > -1;
 		indexOfItem = isProposedIndexValid ? indexOfItem - SKIP_ITEMS_SIZE : 0;
-		const shouldMoveForward = allItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = isInstanceOfComboBoxItemGroup(allItems[indexOfItem]) && !this.open;
 
 		if (!isProposedIndexValid && this.hasValueStateText && this.open) {
 			this._clearFocus();
@@ -901,13 +901,13 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const isProposedIndexValid = indexOfItem + SKIP_ITEMS_SIZE < itemsLength;
 
 		indexOfItem = isProposedIndexValid ? indexOfItem + SKIP_ITEMS_SIZE : itemsLength - 1;
-		const shouldMoveForward = allItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = isInstanceOfComboBoxItemGroup(allItems[indexOfItem]) && !this.open;
 
 		this._handleItemNavigation(e, indexOfItem, shouldMoveForward);
 	}
 
 	_handleHome(e: KeyboardEvent) {
-		const shouldMoveForward = this._filteredItems[0].isGroupItem && !this.open;
+		const shouldMoveForward = isInstanceOfComboBoxItemGroup(this._filteredItems[0]) && !this.open;
 
 		if (this.hasValueStateText && this.open) {
 			this._clearFocus();
