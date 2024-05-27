@@ -299,7 +299,7 @@ class DynamicPage extends UI5Element {
 		}
 
 		const scrollTop = this.scrollContainer!.scrollTop;
-		const currentHeaderSnapped = this._headerSnapped;
+		const lastHeaderSnapped = this._headerSnapped;
 
 		if (this.skipSnapOnScroll) {
 			this.skipSnapOnScroll = false;
@@ -313,7 +313,7 @@ class DynamicPage extends UI5Element {
 			this._headerSnapped = false;
 		}
 
-		if (currentHeaderSnapped !== this._headerSnapped) {
+		if (lastHeaderSnapped !== this._headerSnapped) {
 			this.fireEvent("title-toggle");
 		}
 
