@@ -3,14 +3,6 @@ import { assert } from "chai";
 const isMacOS = process.platform === 'darwin';
 const keyCtrlToPress = isMacOS ? 'Command' : 'Control';
 
-const isListItemFocused = async (listItem) => {
-	return await browser.execute(el => {
-		const pseudoElementStyle = window.getComputedStyle(el, ":after");
-		const hasBorder = pseudoElementStyle.getPropertyValue("border-style") !== "none";
-		return hasBorder;
-	}, listItem);
-};
-
 describe("MultiInput general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
@@ -224,7 +216,6 @@ describe("MultiInput Truncated Token", () => {
 		const tokenizer = await mi.shadow$("ui5-tokenizer");
 		const token = await mi.$("ui5-token");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-		const listItem = await rpo.$("ui5-li").shadow$("li");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 
@@ -233,7 +224,7 @@ describe("MultiInput Truncated Token", () => {
 		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
 		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
-		assert.ok(await isListItemFocused(listItem), "Token's list item is focused");
+		assert.ok(await rpo.$("ui5-li").matches(":focus"), "Token's list item is focused");
 
 		await token.click();
 
@@ -287,8 +278,7 @@ describe("MultiInput Truncated Token", () => {
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-		const listItem = await rpo.$("ui5-li").shadow$("li");
-
+		const listItem = await rpo.$("ui5-li");
 		const token = await mi.$("ui5-token");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
@@ -297,7 +287,7 @@ describe("MultiInput Truncated Token", () => {
 
 		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
-		assert.ok(await isListItemFocused(listItem), "Token's list item is focused");
+		assert.ok(await listItem.matches(":focus"), "Token's list item is focused");
 
 		const deleteIcon = await token.shadow$("ui5-icon");
 

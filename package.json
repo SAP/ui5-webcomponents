@@ -34,24 +34,20 @@
     "dev": "node packages/tools/lib/dev-server/dev-server.js",
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:compat scopeWatch:ai scopeWatch:fiori dev",
     "start:website": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-website start",
-
     "start": "npm-run-all --sequential generate start:all",
     "build": "yarn ci:releasebuild",
     "test": "yarn wsrun --exclude-missing test",
-
     "ci:releasebuild": "npm-run-all --sequential generate ts generateProd generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle",
     "ci:deploy": "DEPOY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
     "ci:deploy:nightly": "DEPLOY_NIGHTLY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",
-
     "ci:test:base": "yarn workspace @ui5/webcomponents-base test",
     "ci:test:main:suite-1": "yarn workspace @ui5/webcomponents test:ssr && yarn workspace @ui5/webcomponents test:suite-1",
     "ci:test:main:suite-2": "yarn workspace @ui5/webcomponents test:suite-2",
     "ci:test:fiori": "yarn workspace @ui5/webcomponents-fiori test:ssr && yarn workspace @ui5/webcomponents-fiori test",
     "ci:test:compat": "yarn workspace @ui5/webcomponents-compat test:ssr && yarn workspace @ui5/webcomponents-compat test",
     "ci:test:ai": "yarn workspace @ui5/webcomponents-ai test:ssr && yarn workspace @ui5/webcomponents-ai test",
-
     "lint": "wsrun --exclude-missing lint",
     "lint:scope": "wsrun --exclude-missing lint:scope",
     "link-all": "wsrun link",
@@ -97,5 +93,6 @@
     "packages/tools",
     "packages/website",
     "packages/create-package"
-  ]
+  ],
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

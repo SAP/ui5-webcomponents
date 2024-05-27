@@ -1,13 +1,5 @@
 import { assert } from "chai";
 
-const isListItemFocused = async (listItem) => {
-	return await browser.execute(el => {
-		const pseudoElementStyle = window.getComputedStyle(el, ":after");
-		const hasBorder = pseudoElementStyle.getPropertyValue("border-style") !== "none";
-		return hasBorder;
-	}, listItem);
-};
-
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
@@ -484,7 +476,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li").shadow$("li");
+			const listItem = await popover.$("ui5-li");
 
 			await icon.click();
 			await mcb.keys("c");
@@ -493,12 +485,12 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.keys("ArrowDown");
 
-			assert.ok(await isListItemFocused(listItem), "The first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The first item is focused");
 			assert.equal(await mcb.getProperty("value"), "c", "The input typeahead is cleared");
 
 			await input.keys("ArrowUp");
 
-			assert.notOk(await isListItemFocused(listItem), "The first item is not focused");
+			assert.notOk(await listItem.matches(":focus"), "The first item is not focused");
 			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
 		});
 
@@ -749,7 +741,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li").shadow$("li");
+			const listItem = await popover.$("ui5-li");
 
 			await icon.click();
 			await input.keys("ArrowDown");
@@ -764,21 +756,21 @@ describe("MultiComboBox general interaction", () => {
 			activeElementHTML = await browser.execute(() => document.activeElement.shadowRoot.activeElement.outerHTML);
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
-			assert.ok(await isListItemFocused(listItem), "The first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The first item is focused");
 			assert.notEqual(await vsHeader.getHTML(), activeElementHTML, "The value state header should not be focused");
 
 			await input.keys("ArrowUp");
 			activeElementHTML = await browser.execute(() => document.activeElement.shadowRoot.activeElement.outerHTML);
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
-			assert.notOk(await isListItemFocused(listItem), "The first item is no longer focused");
+			assert.notOk(await listItem.matches(":focus"), "The first item is no longer focused");
 			assert.strictEqual(await vsHeader.getHTML(), activeElementHTML, "The value state header should be focused");
 
 			await input.keys("ArrowUp");
 			activeElementHTML = await browser.execute(() => document.activeElement.shadowRoot.activeElement.outerHTML);
 
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
-			assert.notOk(await isListItemFocused(listItem), "The first item should not be focused");
+			assert.notOk(await listItem.matches(":focus"), "The first item should not be focused");
 			assert.notEqual(await vsHeader.getHTML(), activeElementHTML, "The value state header or item should not be focused");
 		});
 
@@ -787,18 +779,18 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li").shadow$("li");
+			const listItem = await popover.$("ui5-li");
 
 			await icon.click();
 			await mcb.keys("ArrowDown");
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
-			assert.ok(await isListItemFocused(listItem), "The first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The first item is focused");
 
 			await input.keys("ArrowUp");
 
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
-			assert.notOk(await isListItemFocused(listItem), "The first item is not focused");
+			assert.notOk(await listItem.matches(":focus"), "The first item is not focused");
 		});
 
 		it("should navigate through the items with arrow keys when the picker is closed", async () => {
@@ -919,19 +911,19 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const firstItem = await popover.$("ui5-li").shadow$("li");
-			const lastItem = await popover.$("ui5-li:last-child").shadow$("li");
+			const firstItem = await popover.$("ui5-li");
+			const lastItem = await popover.$("ui5-li:last-child");
 
 			await input.click();
 			await mcb.keys("F4");
 			await mcb.keys("ArrowDown");
 			await mcb.keys(['Control','End']);
 
-			assert.ok(await isListItemFocused(lastItem), "The last item is focused");
+			assert.ok(await lastItem.matches(":focus"), "The last item is focused");
 
 			await mcb.keys(['Control','Home']);
 
-			assert.ok(await isListItemFocused(firstItem), "The first item is focused");
+			assert.ok(await firstItem.matches(":focus"), "The first item is focused");
 		});
 
 		it("should close the picker and focus the next element on TAB", async () => {
@@ -1063,7 +1055,6 @@ describe("MultiComboBox general interaction", () => {
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const listItem = await popover.$("ui5-li");
-			const listItemInner = await listItem.shadow$("li");
 
 			await icon.click();
 			await mcb.keys(["Control", "ArrowDown"]);
@@ -1079,21 +1070,21 @@ describe("MultiComboBox general interaction", () => {
 			activeElementHTML = await browser.execute(() => document.activeElement.shadowRoot.activeElement.outerHTML);
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
-			assert.ok(await isListItemFocused(listItemInner), "The first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The first item is focused");
 			assert.notEqual(activeElementHTML, await vsHeader.getHTML(), "The value state header should not be focused");
 
 			await mcb.keys(["Control", "ArrowUp"]);
 			activeElementHTML = await browser.execute(() => document.activeElement.shadowRoot.activeElement.outerHTML);
 
 			assert.equal(await mcb.getProperty("focused"), false, "The input should not be focused");
-			assert.notOk(await isListItemFocused(listItemInner), "The first item is no longer focused");
+			assert.notOk(await listItem.matches(":focus"), "The first item is no longer focused");
 			assert.equal(activeElementHTML, await vsHeader.getHTML(), "The value state header is focused again");
 
 			await mcb.keys(["Control", "ArrowUp"]);
 			activeElementHTML = await browser.execute(() => document.activeElement.shadowRoot.activeElement.outerHTML);
 
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
-			assert.notOk(await isListItemFocused(listItemInner), "The first item should not be focused");
+			assert.notOk(await listItem.matches(":focus"), "The first item should not be focused");
 			assert.notEqual(activeElementHTML, await vsHeader.getHTML(), "The value state header or item should not be focused");
 			assert.notEqual(activeElementHTML, await listItem.getHTML(), "The value state header or item should not be focused");
 		});
@@ -1260,20 +1251,20 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li").shadow$("li");
-			const listItem2 = await popover.$$("ui5-li")[1].shadow$("li");
+			const listItem = await popover.$("ui5-li");
+			const listItem2 = await popover.$$("ui5-li")[1];
 
 			await mcb.click();
 			await mcb.keys("F4");
 
-			assert.ok(await isListItemFocused(listItem), "The first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The first item is focused");
 
 			await mcb.keys("ArrowDown");
 			await mcb.keys("Space");
 			await mcb.keys("F4");
 			await mcb.keys("F4");
 
-			assert.ok(await isListItemFocused(listItem2), "The second item is focused as it is selected");
+			assert.ok(await listItem2.matches(":focus"), "The second item is focused as it is selected");
 		});
 
 		it("Alt + Down should focus the corresponding item to the token from which the combination is pressed", async () => {
@@ -1282,12 +1273,12 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-items");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-			const listItem = await popover.$$("ui5-li")[3].shadow$("li");
+			const listItem = await popover.$$("ui5-li")[3];
 
 			await tokens[2].click();
 			await tokens[2].keys(["Alt", "ArrowDown"]);
 
-			assert.ok(await isListItemFocused(listItem), "The selected item corresponding to the token is focused");
+			assert.ok(await listItem.matches(":focus"), "The selected item corresponding to the token is focused");
 		});
 
 		it("Alt + Down should focus the first item if no selected items are present", async () => {
@@ -1295,12 +1286,12 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#multi-acv");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li").shadow$("li");
+			const listItem = await popover.$("ui5-li");
 
 			await mcb.click();
 			await mcb.keys(["Alt", "ArrowDown"]);
 
-			assert.ok(await isListItemFocused(listItem), "The first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The first item is focused");
 		});
 
 		it("Alt + Down should not filter items", async () => {
@@ -1314,9 +1305,9 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys(["a", "b"]);
 			await input.keys(["Alt", "ArrowDown"]);
 
-			const listItem = await popover.$("ui5-li").shadow$("li");
+			const listItem = await popover.$("ui5-li");
 
-			assert.ok(await isListItemFocused(listItem), "The items are not filtered and the first item is focused");
+			assert.ok(await listItem.matches(":focus"), "The items are not filtered and the first item is focused");
 		});
 
 		it("Alt + Down should focus the item corresponding to the text value", async () => {
@@ -1331,9 +1322,9 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("ArrowDown");
 			await input.keys(["Alt", "ArrowDown"]);
 
-			const listItem = await popover.$$("ui5-li")[1].shadow$("li");
+			const listItem = await popover.$$("ui5-li")[1];
 
-			assert.ok(await isListItemFocused(listItem), "The second item is focused");
+			assert.ok(await listItem.matches(":focus"), "The second item is focused");
 		});
 
 		it("Backspace deletes token and forwards the focus to the last token without collapsing the tokenizer", async () => {
@@ -1527,7 +1518,7 @@ describe("MultiComboBox general interaction", () => {
 			const token = await mcb.shadow$("ui5-token");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-			const listItem = await rpo.$("ui5-li").shadow$("li");
+			const listItem = await rpo.$("ui5-li");
 
 			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 
@@ -1536,7 +1527,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 			assert.ok(await token.getProperty("selected"), "Token should be selected");
 			assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
-			assert.ok(await isListItemFocused(listItem), "Token's list item is focused");
+			assert.ok(await listItem.matches(":focus"), "Token's list item is focused");
 
 			await token.click();
 
@@ -1764,9 +1755,9 @@ describe("MultiComboBox general interaction", () => {
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			const groupItem = await popover.$("ui5-li-group-header").shadow$("ul");
+			const groupItem = await popover.$("ui5-li-group-header");
 
-			assert.ok(await isListItemFocused(groupItem), "The first group header should be focused");
+			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 		});
 
 		it("Group header keyboard handling", async () => {
@@ -1776,7 +1767,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			let groupItem, groupItemInner;
+			let groupItem;
 
 			await arrow.click();
 			await input.keys("ArrowDown");
@@ -1785,9 +1776,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await groupItem.keys("Enter");
 
-			groupItemInner = await popover.$("ui5-list").$$("ui5-li-group-header")[0].shadow$("ul")
-
-			assert.ok(await isListItemFocused(groupItemInner), "The first group header should be focused");
+			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated");
 
@@ -1795,9 +1784,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await groupItem.keys("Space");
 
-			groupItemInner = await popover.$("ui5-list").$$("ui5-li-group-header")[0].shadow$("ul")
-
-			assert.ok(await isListItemFocused(groupItemInner), "The first group header should be focused");
+			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
 
@@ -1805,9 +1792,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await groupItem.keys("ArrowUp");
 
-			groupItemInner = await popover.$("ui5-list").$$("ui5-li-group-header")[0].shadow$("ul")
-
-			assert.notOk(await isListItemFocused(groupItemInner), "The first group header should not be focused");
+			assert.notOk(await groupItem.matches(":focus"), "The first group header should not be focused");
 			assert.equal(await mcb.getProperty("focused"), true, "The first group header should be focused");
 		});
 

@@ -71,7 +71,7 @@ describe("Deleting tokens", () => {
 
 		assert.ok(await nMoreDialog.getProperty("open"), "Popover should be opened.");
 		assert.strictEqual(await nMoreDialog.$$("ui5-li").length, 3, "3 items should be present");
-		assert.ok(await nMoreDialog.$$("ui5-li")[0].getProperty("focused"), "First item should be focused on open");
+		assert.ok(await nMoreDialog.$$("ui5-li")[0].matches(":focus"), "First item should be focused on open");
 	});
 
 	it("Should NOT fire the ui5-token-delete event when no items are deleted and OK is pressed", async () => {
@@ -121,6 +121,6 @@ describe("Deleting tokens", () => {
 
 		assert.ok(await nMoreDialog.getProperty("open"), "Popover should be opened.");
 		assert.strictEqual(await nMoreDialog.$$("ui5-li").length, 5, "All items should be present");
-		assert.ok(await nMoreDialog.$$("ui5-li")[0].getProperty("focused"), "First item should be focused on open");
+		assert.ok(await nMoreDialog.$$("ui5-li")[0].matches(":focus"), "First item should be focused on open");
 	});
 });
