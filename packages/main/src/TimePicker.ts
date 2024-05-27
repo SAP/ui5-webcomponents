@@ -380,6 +380,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		this._togglePicker();
 	}
 
+	onResponsivePopoverAfterClose() {
+		this.open = false;
+	}
+
 	/**
 	 * Opens the Inputs popover.
 	 * @private
