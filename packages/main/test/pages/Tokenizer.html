@@ -101,6 +101,11 @@
 				<ui5-token text="Denmark"></ui5-token>
 				<ui5-token text="Estonia"></ui5-token>
 			</ui5-tokenizer>
+			<br/>
+			<br/>
+			<ui5-label id="deletedTokensLabel">Event [token-delete] :: N/A</ui5-label>
+			<br/>
+			<ui5-label id="deleteFiredLabel">Event [token-delete] counter :: N/A</ui5-label>
 		</div>
 
 		<h1 class="sample-container-title">Single token</h1>
@@ -174,33 +179,34 @@
 	<script>
 		const deleteTokenizer = document.getElementById("delete-tokenizer");
 		let tokensToShowMoreItemsPress = [];
+		const deletedTokensLabel = document.getElementById("deletedTokensLabel");
+		const deleteFiredLabel = document.getElementById("deleteFiredLabel");
+		let deleteCounter = 0;
 
 		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
 			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItems[0].getAttribute("data-ui5-theme-name"));
 		});
 
 		deleteTokenizer.addEventListener("ui5-token-delete", event => {
-			const token = event.detail?.ref;
-			token && token.remove();
-		});
+			const tokens = event.detail?.tokens;
 
-		deleteTokenizer.addEventListener("show-more-items-press", () => {
-			tokensToShowMoreItemsPress = Array.from(deleteTokenizer.children);
-		});
-
-		deleteTokenizer.addEventListener("dialog-button-press", event => {
-			const confirm = event.detail?.confirm;
-			if (!confirm) {
-				tokensToShowMoreItemsPress.forEach(token => {
-					deleteTokenizer.appendChild(token);
+			if (tokens) {
+				tokens.forEach(token => {
+					token.remove()
 				});
-				tokensToShowMoreItemsPress = [];
+
+				deleteCounter += 1;
+				deletedTokensLabel.innerHTML = "Event [token-delete] :: " + tokens.map(token => token.text).join(", ");
+				deleteFiredLabel.innerHTML = "Event [token-delete] counter :: " + deleteCounter;
 			}
 		});
 
 		document.getElementById("readonly-tokenizer").addEventListener("ui5-token-delete", event => {
-			const token = event.detail?.ref;
-			token && token.remove();
+			const tokens = event.detail?.tokens;
+
+			if (tokens) {
+				tokens.forEach(token => token.remove());
+			}
 		});
 	</script>
 </body>

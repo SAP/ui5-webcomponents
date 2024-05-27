@@ -13,7 +13,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import HighlightTypes from "./types/HighlightTypes.js";
+import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -161,7 +161,7 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.24
 	 */
 	@property()
-	highlight: `${HighlightTypes}` = "None";
+	highlight: `${Highlight}` = "None";
 
 	/**
 	 * Used to define the role of the list item.
@@ -462,7 +462,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get _hasHighlightColor() {
-		return this.highlight !== HighlightTypes.None;
+		return this.highlight !== Highlight.None;
 	}
 
 	get hasConfigurableMode() {

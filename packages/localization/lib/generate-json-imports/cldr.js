@@ -54,7 +54,6 @@ availableLocales.forEach(localeId => registerLocaleDataLoader(localeId, importAn
 const generate = async () => {
 	await fs.mkdir("src/generated/json-imports/", { recursive: true });
 	return Promise.all([
-		fs.writeFile("src/generated/json-imports/LocaleData-static.ts", contentStatic),
 		fs.writeFile("src/generated/json-imports/LocaleData.ts", contentDynamic)
 	]);
 }

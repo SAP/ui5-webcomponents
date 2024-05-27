@@ -506,6 +506,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {

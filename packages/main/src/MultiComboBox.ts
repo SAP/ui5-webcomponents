@@ -58,7 +58,7 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
-import Tokenizer from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
@@ -680,10 +680,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		this._previouslySelectedItems = this._getSelectedItems();
-		const token: Token = e.detail.ref;
-		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"))!;
+		const token: Token[] = e.detail.tokens;
+		const deletingItems = this.items.filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
 
-		deletingItem.selected = false;
+		deletingItems.forEach(item => {
+			item.selected = false;
+		});
+
 		this._deleting = true;
 		this._preventTokenizerToggle = true;
 
@@ -744,7 +747,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_tokenizerFocusIn() {
 		this._tokenizerFocused = true;
 		this.focused = false;
-		this._tokenizer.scrollToEnd();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -1725,7 +1727,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!isPhone() && (((e.relatedTarget as HTMLElement)?.tagName !== "UI5-STATIC-AREA-ITEM") || !e.relatedTarget)) {
 			this._innerInput.setSelectionRange(0, this.value.length);
 		}
-
 		this._tokenizer.tokens.forEach(token => {
 			token.selected = false;
 		});
@@ -1845,7 +1846,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!this._tokenizer) {
 			return;
 		}
-		return this._tokenizer._tokensCountText();
+		return getTokensCountText(this._tokenizer.tokens.length);
 	}
 
 	get _tokensCountTextId() {
