@@ -124,6 +124,7 @@
 
 ::slotted([slot="navigationBar"]) {
     border: none;
+    margin-left: auto; /* goes to the most right when no breadcrumbs are set */
     flex: 0 1;
     padding-left: 0;
     padding-right: 0;
