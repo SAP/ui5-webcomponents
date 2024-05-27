@@ -212,7 +212,7 @@ class DynamicPage extends UI5Element {
 	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this._headerSnapped;
-			this.dynamicPageTitle.toggleAttribute("interactive", this.showHeaderActions);
+			this.dynamicPageTitle.interactive = this.hasHeading;
 		}
 	}
 
@@ -268,7 +268,7 @@ class DynamicPage extends UI5Element {
 		return (this._headerSnapped || this.showHeaderInStickArea);
 	}
 
-	get showHeaderActions() {
+	get hasHeading() {
 		return this.headerArea.length > 0;
 	}
 
@@ -299,6 +299,7 @@ class DynamicPage extends UI5Element {
 		}
 
 		const scrollTop = this.scrollContainer!.scrollTop;
+		const currentHeaderSnapped = this._headerSnapped;
 
 		if (this.skipSnapOnScroll) {
 			this.skipSnapOnScroll = false;
@@ -310,6 +311,10 @@ class DynamicPage extends UI5Element {
 			this._headerSnapped = true;
 		} else {
 			this._headerSnapped = false;
+		}
+
+		if (currentHeaderSnapped !== this._headerSnapped) {
+			this.fireEvent("title-toggle");
 		}
 
 		this.dynamicPageTitle.snapped = this._headerSnapped;
@@ -331,6 +336,9 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onToggleTitle() {
+		if (!this.hasHeading) {
+			return;
+		}
 		this._toggleHeader();
 		this.fireEvent("title-toggle");
 		await renderFinished();

@@ -97,10 +97,18 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	@property({ type: Integer })
+	/**
+	 * Defines the minimum width of the content area.
+	 * @private
+	 */
+	@property({ validator: Integer })
 	minContentWidth?: number;
 
-	@property({ type: Integer })
+	/**
+	 * Defines the minimum width of the actions area.
+	 * @private
+	 */
+	@property({ validator: Integer })
 	minActionsWidth?: number;
 
 	/**
@@ -159,6 +167,12 @@ class DynamicPageTitle extends UI5Element {
 	@slot({ type: HTMLElement })
 	breadcrumbs!: HTMLElement[];
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	interactive!: boolean;
+
 	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
@@ -211,6 +225,10 @@ class DynamicPageTitle extends UI5Element {
 
 	get contentSlotName() {
 		return !this.snapped ? "content" : "snappedContent";
+	}
+
+	get _tabIndex() {
+		return this.interactive ? "0" : undefined;
 	}
 
 	get _headerExpanded() {
