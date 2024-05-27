@@ -62,6 +62,7 @@
 	{{/unless}}
 
 	<ui5-list
+		accessible-role="ListBox"
 		class="ui5-combobox-items-list"
 		separators="None"
 		@ui5-item-click={{_selectItem}}
@@ -71,7 +72,15 @@
 	>
 		{{#each _filteredItems}}
 			{{#if isGroupItem}}
-				<ui5-li-group-header ?focused={{this.focused}}>{{ this.text }}</ui5-li-group-header>
+				{{#if _isVisible}}
+					<ui5-li-group header-text="{{ this.text }}" ?focused={{ this.focused }}>
+						{{#each this.items}}
+							{{#if _isVisible}}
+								{{> listItem}}		
+							{{/if}}			
+						{{/each}}
+					</ui5-li-group>
+				{{/if}}
 			{{else}}
 				{{> listItem}}
 			{{/if}}
@@ -118,6 +127,7 @@
 
 {{#*inline "listItem"}}
 	<ui5-li
+			accessible-role="Option"
 			type="Active"
 			wrapping-type="Normal"
 			additional-text={{this.additionalText}}
