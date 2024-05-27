@@ -26,14 +26,14 @@
 			{{> header-actions}}
 		{{/unless}}
 
-		{{!-- <div class="ui5-dynamic-page-content" part="content"> --}}
+		<div class="ui5-dynamic-page-content" part="content">
 			<div class="ui5-dynamic-page-fit-content" part="fit-content">
 				<slot></slot>
 				{{#if showFooter}}
 					<div class="ui5-dynamic-page-spacer"></div>
 				{{/if}}
 			</div>
-		{{!-- </div> --}}
+		</div>
 	</div>
 
 	<div class="ui5-dynamic-page-footer" part="footer">
