@@ -33,12 +33,14 @@
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}
-			<ui5-li
-				.tokenRef={{this}}
-				wrapping-type="Normal"
-			>
-				{{this.text}}
-			</ui5-li>
+			{{#if _isVisible}}
+				<ui5-li
+					.tokenRef={{this}}
+					wrapping-type="Normal"
+				>
+					{{this.text}}
+				</ui5-li>
+			{{/if}}
 		{{/each}}
 	</ui5-list>
 	{{#if _isPhone}}
