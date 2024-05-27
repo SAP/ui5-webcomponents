@@ -380,16 +380,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		this._togglePicker();
 	}
 
-	onResponsivePopoverAfterClose() {
-		this.open = false;
-	}
-
-	onResponsivePopoverAfterOpen() {
-		this.open = true;
-		const responsivePopover = this._getPopover();
-		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
-	}
-
 	/**
 	 * Opens the Inputs popover.
 	 * @private
