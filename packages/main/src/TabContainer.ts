@@ -48,7 +48,7 @@ import List from "./List.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
-import type CustomListItem from "./CustomListItem.js";
+import CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -180,6 +180,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 		List,
 		ResponsivePopover,
 		DropIndicator,
+		CustomListItem,
 	],
 })
 /**

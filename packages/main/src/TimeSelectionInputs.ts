@@ -11,6 +11,7 @@ import {
 import TimePickerInternals from "./TimePickerInternals.js";
 import Input from "./Input.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
 import InputType from "./types/InputType.js";
 
@@ -51,6 +52,7 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 	dependencies: [
 		Input,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 
