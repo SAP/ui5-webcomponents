@@ -6,7 +6,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if selecting element works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 
@@ -16,7 +15,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -30,7 +28,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -46,7 +43,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[0];
@@ -60,7 +56,6 @@ describe("ColorPalette interactions", () => {
 	});
 
 	it("Test if keyboard navigation on elements works", async () => {
-		await browser.url(`test/pages/ColorPalette.html`);
 		const colorPalette = await browser.$("#cp1");
 		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
 		const item = colorPaletteEntries[9];
@@ -118,5 +113,27 @@ describe("ColorPalette interactions", () => {
 		assert.strictEqual(await colorPaletteRecentColorsWrapperEntries[2].getProperty("value"), "#444444");
 		assert.strictEqual(await colorPaletteRecentColorsWrapperEntries[3].getProperty("value"), "darkblue");
 		assert.strictEqual(await colorPaletteRecentColorsWrapperEntries[4].getProperty("value"), "pink");
+	});
+
+	it("Tests if only one item is selected at a time in the color palette", async () => {
+		const colorPalette = await browser.$("#cp1SelectedTest");
+		const colorPaletteEntries = await colorPalette.$$("ui5-color-palette-item");
+
+		await colorPaletteEntries[0].click();
+		await colorPaletteEntries[1].click();
+
+
+		assert.strictEqual(await colorPaletteEntries[0].getAttribute("selected"), null, "The first item is not selected");
+		assert.strictEqual(await colorPaletteEntries[1].getAttribute("selected"), "true", "The second item is selected");
+	});
+	
+	it("Tests if clicking on selected item, does not deselect it", async () => {
+		const colorPalette = await browser.$("#cp1SelectedTest");
+		const colorPaletteEntries = await colorPalette.$$("ui5-color-palette-item");
+
+		await colorPaletteEntries[0].click();
+		await colorPaletteEntries[0].click();
+
+		assert.strictEqual(await colorPaletteEntries[0].getAttribute("selected"), "true", "The first item is selected");
 	});
 });
