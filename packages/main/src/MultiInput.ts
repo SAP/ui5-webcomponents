@@ -66,6 +66,7 @@ type MultiInputTokenDeleteEventDetail = {
 	styles: [Input.styles, styles],
 	dependencies: [
 		...Input.dependencies,
+		Input,
 		Tokenizer,
 		Token,
 		Icon,
