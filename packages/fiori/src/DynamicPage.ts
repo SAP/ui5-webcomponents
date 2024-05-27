@@ -90,6 +90,9 @@ const SCROLL_THRESHOLD = 10; // px
  * @extends UI5Element
  * @since 2.0.0
  * @public
+ * @csspart content - Used to style the content of the component
+ * @csspart fit-content - Used to style the fit content container of the component.
+ * @csspart footer - Used to style the footer of the component
  */
 @customElement({
 	tag: "ui5-dynamic-page",

@@ -101,7 +101,6 @@
 
 /* Responsive paddings */
 
-:host([media-range="S"]) .ui5-dynamic-page-content,
 :host([media-range="S"]) .ui5-dynamic-page-fit-content {
     padding: var(--_ui5_dynamic_page_content_padding_S);
 }
@@ -114,7 +113,6 @@
     padding: var(--_ui5_dynamic_page_header_padding_S);
 }
 
-:host([media-range="M"]) .ui5-dynamic-page-content,
 :host([media-range="M"]) .ui5-dynamic-page-fit-content {
     padding: var(--_ui5_dynamic_page_content_padding_M);
 }
@@ -127,7 +125,6 @@
     padding: var(--_ui5_dynamic_page_header_padding_M);
 }
 
-:host([media-range="L"]) .ui5-dynamic-page-content,
 :host([media-range="L"]) .ui5-dynamic-page-fit-content {
     padding: var(--_ui5_dynamic_page_content_padding_L);
 }
@@ -140,7 +137,6 @@
     padding: var(--_ui5_dynamic_page_header_padding_L);
 }
 
-:host([media-range="XL"]) .ui5-dynamic-page-content,
 :host([media-range="XL"]) .ui5-dynamic-page-fit-content {
     padding: var(--_ui5_dynamic_page_content_padding_XL);
 }
