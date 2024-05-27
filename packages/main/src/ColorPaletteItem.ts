@@ -54,7 +54,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * Defines the index of the item inside of the ColorPalette.
 	 * @private
 	 */
-	@property()
+	@property({ type: Number })
 	index?: number;
 
 	/**
