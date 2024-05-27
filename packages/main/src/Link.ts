@@ -255,13 +255,6 @@ class Link extends UI5Element implements ITabbable {
 	@property()
 	endIcon!: string;
 
-	/**
-	 * Indicates if the elements has an end icon
-	 * @private
-	 */
-	@property({ type: Boolean })
-	hasEndIcon!: boolean;
-
 	@property({ noAttribute: true })
 	_rel: string | undefined;
 
@@ -290,7 +283,6 @@ class Link extends UI5Element implements ITabbable {
 			&& this._isCrossOrigin();
 
 		this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
-		this.hasEndIcon = !!this.endIcon;
 
 		// Icon only link is not allowed
 		this._ensureNoIconOnlyLink();
@@ -316,19 +308,7 @@ class Link extends UI5Element implements ITabbable {
 		return (this.icon || this.endIcon) && !this.textContent?.trim();
 	}
 
-	get iconMode() {
-		if (!this.icon) {
-			return "";
-		}
-
-		return IconMode.Decorative;
-	}
-
-	get endIconMode() {
-		if (!this.endIcon) {
-			return "";
-		}
-
+	get effectiveIconMode() {
 		return IconMode.Decorative;
 	}
 

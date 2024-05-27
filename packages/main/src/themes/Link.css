@@ -72,7 +72,7 @@
 }
 
 /* For cases when the text wraps, the icon should be displayed at the last row */
-:host([has-end-icon]) .ui5-link-root {
+:host([end-icon]) .ui5-link-root {
 	display: inline-flex;
 	align-items: end;
 }
