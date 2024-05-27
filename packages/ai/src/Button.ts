@@ -115,7 +115,8 @@ class Button extends UI5Element {
 
 	/**
 	 * Defines the key of the current state of the component.
-	 * **Note: ** if nothing is defined, the component will be set initially to the first defined state (if any).
+	 *
+	 * **Note:** if nothing is defined, the component will be set initially to the first defined state (if any).
 	 *
 	 * @default ""
 	 * @public

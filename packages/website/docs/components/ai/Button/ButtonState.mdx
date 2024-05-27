@@ -1,0 +1,65 @@
+---
+slug: ../ButtonState
+sidebar_class_name: newComponentBadge expComponentBadge
+---
+
+:::info
+The Button and ButtonState web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
+:::
+
+
+
+`ui5-ai-button-state` is the item to use for defining states of `ui5-ai-button` components.
+
+### Usage
+
+`ui5-si-button-state` is an abstract element, representing a state of `ui5-ai-button`. It is meant to be used in the `states` slot
+of `ui5-ai-button` and should be used as standalone component.
+
+### ES6 Module Import
+
+`import "@ui5/webcomponents/dist/AiButtonState.js";`
+
+## Properties
+### key
+|             |   |
+|-------------|---|
+| Description | Defines the key of the button state. |
+| Type        | `string`               |
+| Default     | ""                         |
+### nextState
+|             |   |
+|-------------|---|
+| Description | Defines the key of the button state to switch when the button is being pressed. |
+| Type        | `string`               |
+| Default     | ""                         |
+### text
+|             |   |
+|-------------|---|
+| Description | Defines the text of the button in this state. |
+| Type        | `string`               |
+| Default     | ""                         |
+### icon
+|             |   |
+|-------------|---|
+| Description | Defines the icon to be displayed as graphical element within the component before the text. The SAP-icons font provides numerous options.<br />**Example:**<br />See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html). |
+| Type        | `string`               |
+| Default     | ""                         |
+### endIcon
+|             |   |
+|-------------|---|
+| Description | Defines the icon to be displayed as graphical element within the component after the text. The SAP-icons font provides numerous options.<br />**Example:**<br />See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html). |
+| Type        | `string`               |
+| Default     | ""                         |
+
+## Slots
+No slots available for this component.
+
+## Events
+No events available for this component.
+
+## Methods
+No methods available for this component.
+
+## CSS Parts
+No CSS parts available for this component.

@@ -18,20 +18,37 @@
 </head>
 
 <body>
-	<ui5-button icon="ai" end-icon="navigation-down-arrow"></ui5-button>
-
-	<ui5-ai-button id="myAiButton1">
-		<ui5-ai-button-state key="generate" text1="Generate" icon="ai" next-state="generating"></ui5-ai-button-state>
-		<ui5-ai-button-state key="generating" text1="Stop Generation" icon="stop" next-state="revise"></ui5-ai-button-state>
-		<ui5-ai-button-state key="pause" text1="Pause" icon="pause" next-state="generating"></ui5-ai-button-state>
-		<ui5-ai-button-state key="revise" text1="Revise" icon="ai" end-icon="navigation-down-arrow" next-state="generate"></ui5-ai-button-state>
-	</ui5-ai-button>
+	<ui5-title level="H3">Regular AI Button with Menu</ui5-title>
+	<br/>
 
 	<ui5-ai-button id="myAiButton">
 		<ui5-ai-button-state key="generate" text="Generate" icon="ai" next-state="generating"></ui5-ai-button-state>
 		<ui5-ai-button-state key="generating" text="Stop Generation" icon="stop" next-state="generate"></ui5-ai-button-state>
 		<ui5-ai-button-state key="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
 		<ui5-ai-button-state key="pause" text="Pause" icon="pause" next-state="generating"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">AI Button with state change prevention</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButton1">
+		<ui5-ai-button-state key="generate" text="Generate" icon="ai" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="generating" text="Stop Generation" icon="stop" next-state="revise"></ui5-ai-button-state>
+		<ui5-ai-button-state key="pause" text="Pause" icon="pause" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow" next-state="generate"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">Icon-only AI Button</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButton2">
+		<ui5-ai-button-state key="generate" icon="ai" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="generating" icon="stop" next-state="revise"></ui5-ai-button-state>
+		<ui5-ai-button-state key="revise" icon="ai" end-icon="navigation-down-arrow" next-state="generate"></ui5-ai-button-state>
 	</ui5-ai-button>
 
 	<ui5-menu id="menu">
@@ -58,11 +75,11 @@
 	<script>
 		var generationId;
 
-		function startGeneration() {
+		function startGeneration(button) {
 			console.warn("startGeneration");
 			generationId = setTimeout(function() {
 				console.warn("Generation completed");
-				myAiButton.state = "revise";
+				button.state = "revise";
 			}, 3000);
 		}
 
@@ -72,27 +89,37 @@
 		}
 
 		myAiButton.addEventListener("click", function(e) {
-			const aiButton = e.target;
-			if (aiButton.state === "revise") {
-				// menu.showAt(myAiButton);
+			if (myAiButton.state === "revise") {
 				menu.opener = myAiButton;
 				menu.open = true;
-			} else if (e.target.state === "generating") {
-				// e.preventDefault();
-				// stopGeneration();
-				// aiButton.state = "pause";
 			}
 		});
 
 		myAiButton.addEventListener("state-change", function(e) {
 			const state = e.detail.state;
 
-			console.warn(e.detail);
+			if (state === "generate" || state === "pause") {
+				stopGeneration();
+			} else if (state === "generating") {
+				startGeneration(myAiButton);
+			}
+		});
+
+		myAiButton1.addEventListener("click", function(e) {
+			if (e.target.state === "generating") {
+				e.preventDefault();
+				stopGeneration();
+				myAiButton1.state = "pause";
+			}
+		});
+
+		myAiButton1.addEventListener("state-change", function(e) {
+			const state = e.detail.state;
 
 			if (state === "generate" || state === "pause") {
 				stopGeneration();
 			} else if (state === "generating") {
-				startGeneration();
+				startGeneration(myAiButton1);
 			}
 		});
 

@@ -2,6 +2,7 @@ import { cp, readdir, rm } from "fs/promises";
 import path from "path";
 
 await Promise.all([
+    cp("../ai/dist", "local-cdn/local-cdn/ai/dist", {recursive: true}),
     cp("../base/dist", "local-cdn/local-cdn/base/dist", {recursive: true}),
     cp("../main/dist", "local-cdn/local-cdn/main/dist", {recursive: true}),
     cp("../compat/dist", "local-cdn/local-cdn/compat/dist", {recursive: true}),
@@ -13,6 +14,7 @@ await Promise.all([
     cp("../localization/dist", "local-cdn/local-cdn/localization/dist", {recursive: true}),
     cp("../../node_modules/lit-html", "local-cdn/local-cdn/lit-html", {recursive: true}),
 
+    cp("../ai/package.json", "local-cdn/local-cdn/ai/package.json"),
     cp("../base/package.json", "local-cdn/local-cdn/base/package.json"),
     cp("../main/package.json", "local-cdn/local-cdn/main/package.json"),
     cp("../compat/package.json", "local-cdn/local-cdn/compat/package.json"),
