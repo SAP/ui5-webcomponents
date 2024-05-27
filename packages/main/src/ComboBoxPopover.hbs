@@ -54,9 +54,7 @@
 		{{#if hasValueStateText}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{#if open}}
 					{{> valueStateMessage}}
-				{{/if}}
 			</div>
 		{{/if}}
 	{{/if}}
@@ -65,9 +63,7 @@
 		{{#if hasValueStateText}}
 			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} tabindex="0" style="{{styles.suggestionPopoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{#if open}}
 					{{> valueStateMessage}}
-				{{/if}}
 			</div>
 		{{/if}}
 	{{/unless}}
@@ -116,9 +112,7 @@
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-			{{#if valueStateOpen}}
 				{{> valueStateMessage}}
-			{{/if}}
 		</div>
 	</ui5-popover>
 {{/if}}

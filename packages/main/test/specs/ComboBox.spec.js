@@ -1232,6 +1232,7 @@ describe("Keyboard navigation", async () => {
 		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
 	});
 
+	// TODO
 	it ("Should get the physical DOM reference for the cb item", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 

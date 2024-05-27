@@ -473,9 +473,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 
 		const suggestionsPopover = this._getPicker();
-		this.items.forEach(item => {
-			item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
-		});
+		// TODO - maybe refactor this code as it is not working now
+		if (suggestionsPopover) {
+			this.items.forEach(item => {
+				item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
+			});
+		}
 	}
 
 	get iconsCount() {
@@ -490,6 +493,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		if (this.shouldClosePopover() && !isPhone()) {
 			this._clearFocus();
 			this._itemFocused = false;
+		}
+
+		if (this.inner && this.value !== this.inner.value) {
+			this.value = this.inner.value;
 		}
 
 		this.storeResponsivePopoverWidth();
@@ -608,7 +615,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.filterValue = (target as Input).value;
 		this.value = (target as Input).value;
 		this.fireEvent("input");
-		this._selectedItemText = "";
 	}
 
 	_input(e: InputEvent) {
@@ -763,7 +769,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._applyAtomicValueAndSelection(item, filterValue);
 
-		if (value !== "" && !item.selected && (!checkForGroupItem || item.isGroupItem)) {
+		if (value !== "" && !item.selected && (!checkForGroupItem || !item.isGroupItem)) {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item,
 			});
@@ -937,8 +943,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				this.value = this._lastValue || "";
 				this.filterValue = this._lastValue || "";
 			}
-		} else if (!this._selectedItemText) {
-			this.value = this.inner.value;
 		}
 
 		if (isPhone()) {
