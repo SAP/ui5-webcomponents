@@ -115,15 +115,6 @@ const SCROLL_THRESHOLD = 10; // px
 
 class DynamicPage extends UI5Element {
 	/**
-	 * Defines if the header is snapped.
-	 *
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	headerSnapped!: boolean;
-
-	/**
 	 * Defines if the pin button is hidden.
 	 *
 	 * @default false
@@ -190,13 +181,14 @@ class DynamicPage extends UI5Element {
 	@slot({ type: HTMLElement })
 	footerArea!: HTMLElement[];
 
-	@property({ type: Boolean })
-	headerSnappedByInteraction!: boolean;
-
 	static i18nBundle: I18nBundle;
 
 	skipSnapOnScroll = false;
 	showHeaderInStickArea = false;
+
+	@property({ type: Boolean })
+	_headerSnapped!: boolean;
+
 	_updateMediaRange: ResizeObserverCallback;
 
 	constructor() {
@@ -219,8 +211,8 @@ class DynamicPage extends UI5Element {
 
 	onBeforeRendering() {
 		if (this.dynamicPageTitle) {
-			this.dynamicPageTitle.snapped = this.headerSnapped;
-			this.dynamicPageTitle.toggleAttribute("interactive", this.showHeaderActions);
+			this.dynamicPageTitle.snapped = this._headerSnapped;
+			this.dynamicPageTitle.interactive = this.hasHeading;
 		}
 	}
 
@@ -241,25 +233,25 @@ class DynamicPage extends UI5Element {
 	}
 
 	get actionsInTitle(): boolean {
-		return this.headerSnapped || this.showHeaderInStickArea || this.headerPinned;
+		return this._headerSnapped || this.showHeaderInStickArea || this.headerPinned;
 	}
 
 	get headerInTitle(): boolean {
-		return !this.headerSnapped && (this.showHeaderInStickArea || this.headerPinned);
+		return !this._headerSnapped && (this.showHeaderInStickArea || this.headerPinned);
 	}
 
 	get headerInContent(): boolean {
-		return !this.headerSnappedByInteraction && !this.headerInTitle;
+		return !this.showHeaderInStickArea && !this.headerInTitle;
 	}
 
 	get _headerLabel() {
-		return this.headerSnapped
+		return this._headerSnapped
 			? DynamicPage.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_SNAPPED_HEADER)
 			: DynamicPage.i18nBundle.getText(DYNAMIC_PAGE_ARIA_LABEL_EXPANDED_HEADER);
 	}
 
 	get _headerExpanded() {
-		return !this.headerSnapped;
+		return !this._headerSnapped;
 	}
 
 	get _accAttributesForHeaderActions() {
@@ -269,15 +261,32 @@ class DynamicPage extends UI5Element {
 	}
 
 	get headerTabIndex() {
-		return (this.headerSnapped || this.headerSnappedByInteraction) ? -1 : 0;
+		return (this._headerSnapped || this.showHeaderInStickArea) ? -1 : 0;
 	}
 
 	get headerAriaHidden() {
-		return (this.headerSnapped || this.headerSnappedByInteraction);
+		return (this._headerSnapped || this.showHeaderInStickArea);
 	}
 
-	get showHeaderActions() {
+	get hasHeading() {
 		return this.headerArea.length > 0;
+	}
+
+	get headerSnapped(): boolean {
+		return this._headerSnapped;
+	}
+
+	/**
+	 * Defines if the header is snapped.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	set headerSnapped(snapped: boolean) {
+		if (snapped !== this._headerSnapped) {
+			this._toggleHeader();
+		}
 	}
 
 	snapOnScroll() {
@@ -290,22 +299,25 @@ class DynamicPage extends UI5Element {
 		}
 
 		const scrollTop = this.scrollContainer!.scrollTop;
+		const lastHeaderSnapped = this._headerSnapped;
 
 		if (this.skipSnapOnScroll) {
 			this.skipSnapOnScroll = false;
 			return;
 		}
 
-		this.headerSnappedByInteraction = false;
-
 		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
 			this.showHeaderInStickArea = false;
-			this.headerSnapped = true;
+			this._headerSnapped = true;
 		} else {
-			this.headerSnapped = false;
+			this._headerSnapped = false;
 		}
 
-		this.dynamicPageTitle.snapped = this.headerSnapped;
+		if (lastHeaderSnapped !== this._headerSnapped) {
+			this.fireEvent("title-toggle");
+		}
+
+		this.dynamicPageTitle.snapped = this._headerSnapped;
 	}
 
 	async onExpandClick() {
@@ -324,6 +336,9 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onToggleTitle() {
+		if (!this.hasHeading) {
+			return;
+		}
 		this._toggleHeader();
 		this.fireEvent("title-toggle");
 		await renderFinished();
@@ -336,13 +351,12 @@ class DynamicPage extends UI5Element {
 		}
 
 		this.showHeaderInStickArea = !this.showHeaderInStickArea;
-		this.headerSnapped = !this.headerSnapped;
-		this.headerSnappedByInteraction = this.headerSnapped;
+		this._headerSnapped = !this._headerSnapped;
 
 		this.skipSnapOnScroll = true;
 
 		await renderFinished();
-		if (this.headerSnapped && this.scrollContainer!.scrollTop < SCROLL_THRESHOLD) {
+		if (this._headerSnapped && this.scrollContainer!.scrollTop < SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
 		}
 	}

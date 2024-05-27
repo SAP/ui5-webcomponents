@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -97,6 +98,20 @@ class DynamicPageTitle extends UI5Element {
 	focused!: boolean;
 
 	/**
+	 * Defines the minimum width of the content area.
+	 * @private
+	 */
+	@property({ validator: Integer })
+	minContentWidth?: number;
+
+	/**
+	 * Defines the minimum width of the actions area.
+	 * @private
+	 */
+	@property({ validator: Integer })
+	minActionsWidth?: number;
+
+	/**
 	 * Defines the content of the Heading of the Dynamic Page.
 	 *
 	 * @public
@@ -113,28 +128,20 @@ class DynamicPageTitle extends UI5Element {
 	snappedHeading!: HTMLElement[];
 
 	/**
-	 * Defines the heading that is shown only when the header is expanded.
+	 * Defines the bar with actions in the Dynamic page title.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	expandedHeading!: HTMLElement[];
+	actionsBar!: HTMLElement[];
 
 	/**
-	 * Defines the actions in the Dynamic page title.
+	 * Defines the bar with navigation actions in the Dynamic page title.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	actions!: HTMLElement[];
-
-	/**
-	 * Defines the navigation actions in the Dynamic page title.
-	 *
-	 * @public
-	 */
-	@slot({ type: HTMLElement })
-	navigationActions!: Array<Toolbar>;
+	navigationBar!: Array<Toolbar>;
 
 	/**
 	 * Defines the content of the Dynamic page title.
@@ -153,14 +160,6 @@ class DynamicPageTitle extends UI5Element {
 	snappedContent!: HTMLElement[];
 
 	/**
-	 * Defines the content of the title that is shown only when the header is expanded.
-	 *
-	 * @public
-	 */
-	@slot({ type: HTMLElement })
-	expandedContent!: HTMLElement[];
-
-	/**
 	 * Defines the content of the breadcrumbs inside Dynamic Page Title.
 	 *
 	 * @public
@@ -168,11 +167,15 @@ class DynamicPageTitle extends UI5Element {
 	@slot({ type: HTMLElement })
 	breadcrumbs!: HTMLElement[];
 
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	interactive!: boolean;
+
 	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
-	minContentWidth?: number;
-	minActionsWidth?: number;
 
 	constructor() {
 		super();
@@ -201,10 +204,10 @@ class DynamicPageTitle extends UI5Element {
 	get styles() {
 		return {
 			content: {
-				"min-width": `${this.minContentWidth || 0}px`,
+				"min-width": this.minContentWidth ? `${this.minContentWidth || 0}px` : undefined,
 			},
 			actions: {
-				"min-width": `${this.minActionsWidth || 0}px`,
+				"min-width": this.minActionsWidth ? `${this.minActionsWidth || 0}px` : undefined,
 			},
 		};
 	}
@@ -213,22 +216,19 @@ class DynamicPageTitle extends UI5Element {
 		return !!this.content.length;
 	}
 
-	get hasHeading() {
-		return !!this.heading.length;
-	}
-
 	get headingSlotName() {
-		if (this.hasHeading) {
-			return "heading";
-		}
 		if (!this.snapped) {
-			return "expandedHeading";
+			return "heading";
 		}
 		return "snappedHeading";
 	}
 
 	get contentSlotName() {
-		return !this.snapped ? "expandedContent" : "snappedContent";
+		return !this.snapped ? "content" : "snappedContent";
+	}
+
+	get _tabIndex() {
+		return this.interactive ? "0" : undefined;
 	}
 
 	get _headerExpanded() {
@@ -248,11 +248,11 @@ class DynamicPageTitle extends UI5Element {
 
 	prepareLayoutActions() {
 		// all navigation/layout actions should have the NeverOverflow behavior
-		const navigationActions = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationActions']");
-		if (!navigationActions) {
+		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");
+		if (!navigationBar) {
 			return;
 		}
-		navigationActions.items.forEach(action => {
+		navigationBar.items.forEach(action => {
 			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
 		});
 	}
@@ -265,7 +265,7 @@ class DynamicPageTitle extends UI5Element {
 		const slotName = (<HTMLElement>e.target)?.assignedSlot?.name;
 		if (!slotName || slotName === "content") {
 			this.minContentWidth = e.detail.minWidth;
-		} else if (slotName === "actions") {
+		} else if (slotName === "actionsBar") {
 			this.minActionsWidth = e.detail.minWidth;
 		}
 	}

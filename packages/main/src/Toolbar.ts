@@ -388,14 +388,10 @@ class Toolbar extends UI5Element {
 			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
 		});
 
-		if (minWidth && totalWidth > minWidth) {
-			minWidth += this.overflowButtonSize;
-		}
-
 		if (minWidth !== this.minContentWidth) {
 			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
 			this.fireEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
-				minWidth: minWidth + spaceAroundContent,
+				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
 			});
 		}
 

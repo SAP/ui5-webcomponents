@@ -22,8 +22,13 @@ html, body {
 
 .product-info {
     display: flex;
-    gap: 10px;
     flex-wrap: wrap;
+}
+
+.product-info [ui5-avatar],
+.product-info .product-info-cell {
+    margin-right: 2rem;
+    margin-bottom: 1rem; 
 }
 
 .product-info-cell {
@@ -45,4 +50,20 @@ html, body {
 .price {
     font-size: 1.2rem;
     color: var(--sapTextColor);
+}
+
+.snapped-title-heading {
+    display: flex;
+    align-items: center;
+}
+.snapped-title-heading [ui5-avatar] {
+    margin-right: 1rem;
+}
+.snapped-title-heading [ui5-title] {
+    font-family: var(--sapObjectHeader_Title_FontFamily);
+    color: var(--sapObjectHeader_Title_TextColor);
+    padding: 0.3125rem 0 0 0;
+    font-size: var(--sapObjectHeader_Title_SnappedFontSize);
+    text-overflow: ellipsis;
+    min-width: 0;
 }

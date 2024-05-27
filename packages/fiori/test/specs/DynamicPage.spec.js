@@ -87,6 +87,43 @@ describe("API", () => {
     });
 });
 
+describe("Scroll", () => {
+    before(async () => {
+        await browser.url(`test/pages/DynamicPage_test.html`);
+    });
+
+    // this test must be at the end because it messes up with the scroll state
+    it("snaps the header upon scroll", async () => {
+        const dynamicPage = await browser.$("#page");
+        const scrollButton = await browser.$("#scrollDownBtn");
+
+        // Act: scroll to hide the header
+        await dynamicPage.setProperty("skipSnapOnScroll", false);
+        await scrollButton.click();
+
+        assert.strictEqual(await dynamicPage.getProperty("headerSnapped"), true, "The header must be snapped");
+        await browser.waitUntil(async () => (await browser.$("#page").getProperty("headerSnapped")), {
+            timeout: 2000,
+            timeoutMsg: "The header must be snapped."
+        });
+    });
+
+    it("expands the header upon scroll", async () => {
+        const dynamicPage = await browser.$("#page");
+        const scrollButton = await browser.$("#scrollToTopBtn");
+
+        // Act: scroll to show the header
+        await dynamicPage.setProperty("skipSnapOnScroll", false);
+        await scrollButton.click();
+
+        assert.strictEqual(await dynamicPage.getProperty("headerSnapped"), false, "The header must be expanded");
+        await browser.waitUntil(async () => !(await browser.$("#page").getProperty("headerSnapped")), {
+            timeout: 2000,
+            timeoutMsg: "The header must be expanded."
+        });
+    });
+});
+
 describe("Page general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/DynamicPage_test.html`);
@@ -136,31 +173,20 @@ describe("Page general interaction", () => {
         assert.ok(await headerSlot.isExisting(), "Header slot is rendered");
     });
 
-    it("snaps the header upon scroll", async () => {
-        const dynamicPage = await browser.$("#page");
-        const scrollButton = await browser.$("#scrollDownBtn");
-
-        // Act: scroll to hide the header
-        await dynamicPage.setProperty("skipSnapOnScroll", false);
-        await scrollButton.click();
-
-        await browser.waitUntil(async () => (await browser.$("#page").getProperty("headerSnapped")), {
-            timeout: 2000,
-            timeoutMsg: "The header must be snapped."
-        });
-    });
-
     it("expands the header in the sticky area", async () => {
+        const dynamicPage = await browser.$("#page");
+
+        dynamicPage.setProperty("headerSnapped", true);
         const page = await browser.$("#page");
         const expandButton = await page.shadow$("ui5-dynamic-page-header-actions").shadow$(".ui5-dynamic-page-header-action");
 
-        assert.strictEqual(await page.shadow$("slot[name=headerArea]").isExisting(), false, "Header slot is not rendered");
+        assert.strictEqual(await page.getProperty("headerInContent"), false, "Header slot is not rendered");
 
         // act: click to expand the header
         await expandButton.click();
 
         assert.strictEqual(await page.getProperty("headerSnapped"), false, "Header is expanded");
-        assert.ok(await page.shadow$(".ui5-dynamic-page-title-header-wrapper slot[name=headerArea]").isExisting(),
+        assert.ok(await page.shadow$("slot[name=headerArea]").isExisting(),
             "Header slot is rendered in the sticky area");
     });
 
@@ -216,19 +242,20 @@ describe("Page general interaction", () => {
         // act: click to expand
         await title.click();
 
-        assert.strictEqual(await title.getProperty("focused"), true, "title is focused");
         assert.strictEqual(await page.getProperty("headerSnapped"), false, "Header is expanded");
     });
 
     it("snaps the title with click", async () => {
         const page = await browser.$("#page");
         const title = await browser.$("#page ui5-dynamic-page-title");
+        const focusArea = await title.shadow$(".ui5-dynamic-page-title-focus-area");
 
-        // assert initial state
-        assert.strictEqual(await page.getProperty("headerSnapped"), false, "Header is expanded");
+        // ensure initial state
+        await page.setProperty("headerSnapped", false);
 
         // act: click to snap
-        await title.click();
+        // click at random position to avoid clicking of toolbar buttons
+        await focusArea.click({ x: 50, y: 50 });
 
         assert.strictEqual(await page.getProperty("headerSnapped"), true, "Header is snapped");
     });
@@ -423,5 +450,4 @@ describe("ARIA attributes", () => {
         assert.strictEqual(await expandButton.getProperty("title"), "Expand Header",
             "expand button tooltip is correct");
     });
-
 });

@@ -1,7 +1,7 @@
 <div class="ui5-dynamic-page-title-root">
   <span class="ui5-dynamic-page-title-focus-area"
     data-sap-focus-ref
-    tabindex="0"
+    tabindex="{{_tabIndex}}"
     @keydown="{{_onkeydown}}"
     @click="{{onTitleClick}}"
     role="button"
@@ -13,7 +13,7 @@
     <slot name="breadcrumbs"></slot>
 
     {{#if mobileNavigationActions}}
-      <slot name="navigationActions"></slot>
+      <slot name="navigationBar"></slot>
     {{/if}}
   </div>
 
@@ -32,10 +32,10 @@
 
     <div class="ui5-dynamic-page-title--actions"
       style="{{styles.actions}}">
-      <slot name="actions"></slot>
+      <slot name="actionsBar"></slot>
       {{#unless mobileNavigationActions}}
         <div class="ui5-dynamic-page-title--actions-separator"></div>
-        <slot name="navigationActions"></slot>
+        <slot name="navigationBar"></slot>
       {{/unless}}
     </div>
   </div>
