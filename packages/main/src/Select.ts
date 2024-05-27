@@ -71,7 +71,7 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 type IOption = ListItemBase & {
 	tooltip?: string,
 	icon?: string,
-	value: string,
+	value?: string,
 	additionalText?: string,
 	focused?: boolean,
 	effectiveDisplayText: string,
@@ -347,7 +347,7 @@ class Select extends UI5Element implements IFormInputElement {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
-			return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
+			return selectedOption.hasAttribute("value") ? selectedOption.value! : selectedOption.textContent;
 		}
 
 		return "";
