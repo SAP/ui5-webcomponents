@@ -57,6 +57,29 @@ describe("Basic mobile picker rendering and interaction", () => {
 
 		const dialogInput = await browser.$(`#placeholder_test`).shadow$("ui5-responsive-popover").$("[ui5-input]");
 		assert.strictEqual(await dialogInput.getAttribute("placeholder"), await combo.getAttribute("placeholder"), "Correct placeholder shown");
+
+		// close the suggestions
+		await browser.keys("Escape");
+	});
+
+	it("Should open and close the mobile picker with value state", async () => {
+		const comboBoxError = await browser.$("#value-state-error");
+
+		await comboBoxError.scrollIntoView();
+		await comboBoxError.click();
+
+		const dialogInput = await comboBoxError.shadow$("ui5-responsive-popover").$("[ui5-input]").shadow$("input");
+		await dialogInput.click();
+		await dialogInput.keys("A");
+
+		const popover = await comboBoxError.shadow$("ui5-responsive-popover");
+		assert.ok(await popover.hasAttribute("open"), "Suggestions are open");
+
+		// clear the input
+		await dialogInput.keys("Escape");
+		// close the suggestions
+		await browser.keys("Escape");
+		assert.notOk(await popover.hasAttribute("open"), "Suggestions are closed");
 	});
 });
 
@@ -282,4 +305,13 @@ describe("Value state header", () => {
 
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 	});
+});
+
+describe("Suggestions", () => {
+	before(async () => {
+		await browser.url("test/pages/ComboBox.html");
+		await browser.emulateDevice('iPhone X');
+	});
+
+
 });
