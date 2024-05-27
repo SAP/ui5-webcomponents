@@ -741,11 +741,16 @@
 		}
 
 		function handleSelection(event) {
-			const name = event.detail.item.text;
-			const idx = recentItems.indexOf(name);
-			idx > -1 && recentItems.splice(idx, 1);
-			recentItems.unshift(name);
-			recentItems.length > 5 && recentItems.pop();
+			const item = event.detail.item;
+			if (item) {
+				const name = item.text;
+				const idx = recentItems.indexOf(name);
+				idx > -1 && recentItems.splice(idx, 1);
+				recentItems.unshift(name);
+				recentItems.length > 5 && recentItems.pop();
+			} else {
+				recentItems = [];
+			}
 		}
 
 		function handleHistory() {

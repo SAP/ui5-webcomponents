@@ -442,7 +442,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	/**
 	 * Defines whether the suggestions picker is open.
 	 * The picker will not open if the `showSuggestions` property is set to `false`, the input is disabled or the input is readonly.
-	 * The picker will close automatically and `close` event will be fired if the input is not in the view port.
+	 * The picker will close automatically and `close` event will be fired if the input is not in the viewport.
 	 * @default false
 	 * @public
 	 * @since 2.0.0

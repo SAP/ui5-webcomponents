@@ -25,8 +25,7 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Cozy";
 
 		await select.click();
-		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = (await popover.$$("ui5-li"))[0];
+		const firstItem = (await browser.$$("#mySelect ui5-option"))[0];
 
 		await firstItem.click();
 
@@ -42,8 +41,7 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT = "Condensed";
 
 		await select.click();
-		const popover = await select.shadow$("ui5-responsive-popover");
-		const secondItem = (await popover.$$("ui5-li"))[1];
+		const secondItem = (await browser.$$("#selectPrevent ui5-option"))[1];
 
 		await secondItem.click();
 
@@ -60,9 +58,8 @@ describe("Select general interaction", () => {
 
 		await select.click();
 
-		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = await popover.$("ui5-li:last-child");
-		await firstItem.click();
+		const lastItem = await browser.$("#mySelect ui5-option:last-child")
+		await lastItem.click();
 
 		assert.strictEqual(await inputResult.getProperty("value"), "", "Event not fired when already selected item is selected");
 	});
@@ -436,9 +433,7 @@ describe("Select general interaction", () => {
 		await addItemsBtn.click();
 
 		const firstOption = await browser.$("#mySelect ui5-option:first-child");
-		const select = await browser.$("#mySelect");
-		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstListItem = await popover.$("ui5-li:first-child");
+		const firstListItem = (await browser.$("#mySelect ui5-option:first-child"))
 
 		assert.ok(await firstOption.getProperty("selected"), "First option should be selected");
 		assert.ok(await firstListItem.getProperty("selected"), "First list item should be selected");
@@ -493,8 +488,7 @@ describe("Select general interaction", () => {
 		await select.keys("Escape");
 
 		await select.click();
-		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = await popover.$("ui5-li:first-child");
+		const firstItem = await browser.$("#mySelect ui5-option:first-child");
 
 		await firstItem.click();
 
@@ -508,9 +502,8 @@ describe("Select general interaction", () => {
 		const EXPECTED_SELECTION_TEXT2 = "Condensed";
 
 		await select.click();
-		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = (await popover.$$("ui5-li"))[0];
-		const thirdItem = (await popover.$$("ui5-li"))[2];
+		const firstItem = await browser.$("#mySelectEsc ui5-option:first-child");
+		const thirdItem = (await browser.$$("#mySelectEsc ui5-option"))[2];
 
 		await firstItem.click();
 
@@ -584,7 +577,7 @@ describe("Select general interaction", () => {
 	it("Tests that the picker is closed when the selected value is clicked", async () => {
 		const select = await browser.$("#mySelect");
 		const popover = await select.shadow$("ui5-responsive-popover");
-		const firstItem = (await popover.$$("ui5-li"))[0];
+		const firstItem = await browser.$("#mySelect ui5-option:first-child");
 
 		// select the first item
 		await select.click();
@@ -612,37 +605,7 @@ describe("Select general interaction", () => {
 		await select.keys("ArrowDown");
 		await select.keys("ArrowDown");
 
-		const selectedOption = await popover.$("ui5-list").$("ui5-li[selected]");
+		const selectedOption = await browser.$("#warningSelect ui5-option[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
-	});
-});
-
-describe("Attributes propagation", () => {
-	before(async () => {
-		await browser.url(`test/pages/Select.html`);
-	});
-
-	it("propagates additional-text attribute", async () => {
-		const select = await browser.$("#mySelect6");
-		const EXPECTED_ADDITIONAL_TEXT = "DZ",
-			firstOption = await browser.$("#mySelect6 ui5-option:first-child"),
-			firstItem = (await select.shadow$$("ui5-li"))[0];
-
-		assert.strictEqual(await firstOption.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is set");
-		assert.strictEqual(await firstItem.getProperty("additionalText"), EXPECTED_ADDITIONAL_TEXT, "The additional text is correct");
- 	});
-
-	it("Tooltip propagation", async () => {
-		const select = await browser.$("#selectTooltip");
-		const tooltip = "Cozy"
-
-		await select.click();
-
-		const popover = await select.shadow$("[ui5-responsive-popover]");
-		const option = await select.$("[ui5-option]");
-		const listItem = await popover.$("[data-ui5-stable='tooltip-test-option']")
-
-		assert.strictEqual(await option.getProperty("tooltip"), tooltip, "Tooltip is correct");
-		assert.strictEqual(await listItem.getProperty("tooltip"), tooltip, "Tooltip is correctly propagated");
 	});
 });
