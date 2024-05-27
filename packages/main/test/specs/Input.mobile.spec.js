@@ -216,9 +216,9 @@ describe("Property open", () => {
 		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
-
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
 	});
+	
 	it("Suggestions dialog is closed when attribute open is set to false", async () => {
 		const input = await browser.$("#input-suggestions-open");
 		const respPopover = await input.shadow$("ui5-responsive-popover");
