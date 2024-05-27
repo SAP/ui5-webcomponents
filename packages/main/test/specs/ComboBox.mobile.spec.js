@@ -306,12 +306,3 @@ describe("Value state header", () => {
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 	});
 });
-
-describe("Suggestions", () => {
-	before(async () => {
-		await browser.url("test/pages/ComboBox.html");
-		await browser.emulateDevice('iPhone X');
-	});
-
-
-});
