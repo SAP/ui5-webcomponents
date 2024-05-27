@@ -81,8 +81,7 @@ describe("nMore Popover", () => {
 		assert.ok(await lastToken.getProperty("focused"), "Last token should be focused, after Escape key is pressed.");
 	});
 
-	// TODO: Fix this test
-	it.skip("tests [F7] list item navigation", async () => {
+	it("tests [F7] list item navigation", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
 		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
 
@@ -98,13 +97,13 @@ describe("nMore Popover", () => {
 
 		await browser.keys('F7');
 
-		assert.ok(await itemDeleteButton.getProperty("focused"), "Delete button should be focused upon F7 key press.");
+		assert.ok(await itemDeleteButton.matches(":focus"), "Delete button should be focused upon F7 key press.");
 		assert.notOk(await isListItemFocused(await firstListItemInner), "List item should no longer be focused.");
 
 		await browser.keys('F7');
 
-		assert.notOk(await itemDeleteButton.getProperty("focused"), "List item should be focused upon F7 key press.");
-		assert.notOk(await isListItemFocused(await firstListItemInner), "Delete button should no longer be focused.");
+		assert.ok(await isListItemFocused(await firstListItemInner), "List item should be focused upon F7 key press.");
+		assert.notOk(await itemDeleteButton.matches(":focus"), "Delete button should no longer be focused.");
 	});
 });
 
@@ -167,8 +166,7 @@ describe("Single token", () => {
 		await browser.url(`test/pages/Tokenizer.html`);
 	});
 
-	// TODO: Fix this test
-	it.skip("should open popover on click of single token", async () => {
+	it("should open popover on click of single token", async () => {
 		const tokenizer = await browser.$("#single-token-tokenizer");
 		const token = await tokenizer.$("ui5-token");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
@@ -177,7 +175,7 @@ describe("Single token", () => {
 
 		await token.click();
 
-		const listItem = rpo.$("ui5-list").$$("ui5-li")[0].shadow$("li");
+		const listItem = await rpo.$("ui5-li").shadow$("li");
 
 		assert.ok(await rpo.getProperty("open"), "nMore Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");

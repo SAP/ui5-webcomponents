@@ -1,5 +1,13 @@
 import { assert } from "chai";
 
+const isListItemFocused = async (listItem) => {
+	return await browser.execute(el => {
+		const pseudoElementStyle = window.getComputedStyle(el, ":after");
+		const hasBorder = pseudoElementStyle.getPropertyValue("border-style") !== "none";
+		return hasBorder;
+	}, listItem);
+};
+
 describe("Menu interaction", () => {
 	it("Menu opens after button click", async () => {
 		await browser.url(`test/pages/Menu.html`);
@@ -165,10 +173,11 @@ describe("Menu interaction", () => {
 			await openButton.click();
 
 			const menuItem = await browser.$("#menu > ui5-menu-item[text='Preferences']");
+			const menuItemInner = await menuItem.shadow$("li");
 			await menuItem.click();
 
 			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
-			assert.ok(await menuItem.getProperty("focused"), "The menu item is focused");
+			assert.ok(await isListItemFocused(menuItemInner), "The menu item is focused");
 		});
 	});
 
