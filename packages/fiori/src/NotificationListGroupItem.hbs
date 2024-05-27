@@ -17,7 +17,7 @@
 		<ui5-icon
 			name={{groupCollapsedIcon}}
 			show-tooltip="true"
-			accessible-name={{groupCollapsedTooltip}}
+			accessible-name={{toggleIconAccessibleName}}
 			class="ui5-nli-group-toggle-icon"
 			mode="Decorative"
 		></ui5-icon>
@@ -33,13 +33,13 @@
 		<div class="ui5-nli-group-divider"></div>
 	</div>
 
-	<ui5-list
+	<ui5-notification-group-list
 		id="{{_id}}-notificationsList"
 		class="ui5-nli-group-items"
 		role="list"
 		aria-labelledby="{{_id}}-title-text">
 		<slot></slot>
-	</ui5-list>
+	</ui5-notification-group-list>
 
 	{{#if loading}}
 		<ui5-busy-indicator

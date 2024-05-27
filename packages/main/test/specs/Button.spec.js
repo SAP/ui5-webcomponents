@@ -16,10 +16,20 @@ describe("Button general interaction", () => {
 		const button = await browser.$("#button1");
 
 		await button.setAttribute("icon", "add");
-		assert.ok(await button.shadow$("ui5-icon").isExisting(), "icon is present");
+		assert.ok(await button.shadow$(".ui5-button-icon").isExisting(), "icon is present");
 
 		await button.setAttribute("icon", "");
-		assert.notOk(await button.shadow$("ui5-icon").isExisting(),"icon is not present");
+		assert.notOk(await button.shadow$(".ui5-button-icon").isExisting(),"icon is not present");
+	});
+
+	it("tests button's endIcon rendering", async () => {
+		const button = await browser.$("#button1");
+
+		await button.setAttribute("end-icon", "add");
+		assert.ok(await button.shadow$(".ui5-button-end-icon").isExisting(), "endIcon is present");
+
+		await button.setAttribute("end-icon", "");
+		assert.notOk(await button.shadow$(".ui5-button-end-icon").isExisting(),"endIcon is not present");
 	});
 
 	it("tests button's slot rendering", async () => {
@@ -58,7 +68,8 @@ describe("Button general interaction", () => {
 
 		const field = await browser.$("#click-counter");
 		assert.strictEqual(await field.getProperty("value"), "3", "Click should be called 3 times");
-		assert.ok(await nativeButton.hasAttribute("disabled"), )
+		assert.ok(await nativeButton.hasAttribute("disabled"), );
+		assert.notOk(await nativeButton.hasAttribute("tabindex"), "Disabled button doesn't have tabindex attribute");
 	});
 
 	it("tests clicking on disabled button whith Icon", async () => {
@@ -95,6 +106,16 @@ describe("Button general interaction", () => {
 		// don't test space and enter, as wdio always fires a click but the browser not.
 		// await button.keys("Space");
 		// await button.keys("Enter");
+
+		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 6 times");
+	});
+
+	it("tests keyboard shortcuts used to prevent a click event", async () => {
+		const button = await browser.$("#button1");
+		const field = await browser.$("#click-counter");
+
+		await button.keys(["Space", "Shift"]);
+		await button.keys(["Space", "Escape"]);
 
 		assert.strictEqual(await field.getProperty("value"), "6", "click should be called 6 times");
 	});

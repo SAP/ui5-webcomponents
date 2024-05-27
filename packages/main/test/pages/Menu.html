@@ -17,7 +17,7 @@
 	<ui5-menu id="menu" header-text="My ui5-menu">
 		<ui5-menu-item text="New File(selection prevented)" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file - prevent default" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
-		<ui5-menu-item text="Open" icon="open-folder" starts-section loading-delay="100" loading>
+		<ui5-menu-item text="Open" icon="open-folder" accessible-name="Choose platform" starts-section loading-delay="100" loading>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
@@ -61,16 +61,16 @@
 
 	<ui5-button id="btnOpen2">Open Menu</ui5-button> <br/>
 	<ui5-menu id="menu2" header-text="My ui5-menu">
-		<ui5-menu-item text="New Folder" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
+		<ui5-menu-item id="newFolder" text="New Folder" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
 		<ui5-menu-item text="Open" icon="open-folder" starts-section>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K"></ui5-menu-item>
 			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L" disabled></ui5-menu-item>
 		</ui5-menu-item>
-		<ui5-menu-item text="Preferences" icon="action-settings" starts-section disabled></ui5-menu-item>
+		<ui5-menu-item id="preferences" text="Preferences" icon="action-settings" starts-section disabled></ui5-menu-item>
 		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
 
-	<ui5-popover id="detailsPopover" prevent-initial-focus>
+	<ui5-popover id="detailsPopover" initialFocus="detailsLink">
 			<div>
 				<ui5-label for="detailsLink">For more information:</ui5-label>
 			</div>
@@ -83,7 +83,8 @@
 		};
 
 		btnOpen.addEventListener("click", function() {
-			menu.showAt(btnOpen);
+			menu.opener = "btnOpen";
+			menu.open = !menu.open;
 		});
 
 		btnAddOpener.addEventListener("click", function() {
@@ -159,43 +160,22 @@
 		};
 
 		btnOpen2.addEventListener("click", function() {
-			menu2.showAt(btnOpen2);
+			menu2.opener = btnOpen2;
+			menu2.open = !menu2.open;
 		});
 
-		let shouldOpenDetailsPopover = false;
-
-		detailsPopover.addEventListener("ui5-before-close", function() {
-			shouldOpenDetailsPopover = false;
-		});
-
-		detailsPopover.addEventListener("ui5-close", function() {
-			shouldOpenDetailsPopover = true;
-		});
-
-		menu2.addEventListener("ui5-open", function() {
-			shouldOpenDetailsPopover = true;
-		});
-
-		menu2.addEventListener("ui5-close", function() {
-			shouldOpenDetailsPopover = false;
-		});
-
-		menu2.addEventListener("ui5-item-focus", function(event) {
-			const item = event.detail.item;
-			const opener = event.detail.ref;
-
-			if (detailsPopover.open) {
-				detailsPopover.preventFocusRestore = true;
-				detailsPopover.open = false;
-			}
-
-			if (item.disabled && shouldOpenDetailsPopover) {
-				const link = detailsPopover.querySelector("#detailsLink");
-				link.textContent = item.text;
-				detailsPopover.opener = opener;
-				detailsPopover.open = true;
-				link.focus();
-			}
+		menu2.querySelectorAll("& > ui5-menu-item").forEach(function(menuItem) {
+			menuItem.addEventListener("focusin", function(event) {
+				const item = event.target;
+				if (item.id === "newFolder" || item.id === "preferences") {
+					const link = detailsPopover.querySelector("#detailsLink");
+					link.textContent = item.text;
+					detailsPopover.opener = item;
+					detailsPopover.open = true;
+				} else {
+					detailsPopover.open = false;
+				}
+			});
 		});
 
 	</script>
