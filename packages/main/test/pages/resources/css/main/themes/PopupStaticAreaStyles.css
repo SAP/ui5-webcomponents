@@ -1,0 +1,1 @@
+.ui5-block-layer{display:none;position:fixed;background-color:var(--_ui5-v1-24-3_popup_block_layer_background);inset:-500px;outline:none;pointer-events:all;z-index:-1}.ui5-block-layer:not([hidden]){display:inline-block}

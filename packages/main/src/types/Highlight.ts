@@ -1,9 +1,9 @@
 /**
- * Different types of HighlightTypes .
+ * Different types of Highlight .
  *
  * @public
  */
-enum HighlightTypes {
+enum Highlight {
 	/**
 	 * @public
 	 */
@@ -30,4 +30,4 @@ enum HighlightTypes {
 	Information = "Information",
 }
 
-export default HighlightTypes;
+export default Highlight;
