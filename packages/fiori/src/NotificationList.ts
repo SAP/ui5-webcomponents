@@ -12,7 +12,7 @@ import type {
 	ListItemCloseEventDetail,
 } from "@ui5/webcomponents/dist/List.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import NotificationListList from "./NotificationListList.js";
+import NotificationListInternal from "./NotificationListInternal.js";
 
 // Template
 import NotificationListTemplate from "./generated/templates/NotificationListTemplate.lit.js";
@@ -51,7 +51,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 	styles: [],
 	template: NotificationListTemplate,
 	dependencies: [
-		NotificationListList,
+		NotificationListInternal,
 	],
 })
 
@@ -90,7 +90,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  *
  * @param {HTMLElement} item the toggled item.
  * @public
- * @since 1.0.0-rc.8
  */
 @event<NotificationItemToggleEventDetail>("item-toggle", {
 	detail: {
@@ -130,6 +129,14 @@ class NotificationList extends UI5Element {
 	}
 
 	static i18nFioriBundle: I18nBundle;
+
+	getEnabledItems() {
+		return this.innernList?.getEnabledItems() || [];
+	}
+
+	get innernList() {
+		return this.shadowRoot?.querySelector("ui5-notification-list-internal") as NotificationListInternal;
+	}
 
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;

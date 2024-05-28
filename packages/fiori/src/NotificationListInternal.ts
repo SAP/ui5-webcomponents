@@ -12,8 +12,8 @@ import NotificationListGroupItem from "./NotificationListGroupItem.js";
  *
  * @private
  */
-@customElement("ui5-notification-list-list")
-class NotificationListList extends List {
+@customElement("ui5-notification-list-internal")
+class NotificationListInternal extends List {
 	constructor() {
 		super();
 
@@ -37,6 +37,6 @@ class NotificationListList extends List {
 	}
 }
 
-NotificationListList.define();
+NotificationListInternal.define();
 
-export default NotificationListList;
+export default NotificationListInternal;
