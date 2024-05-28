@@ -20,6 +20,7 @@ import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopove
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
@@ -158,6 +159,13 @@ class MenuItem extends ListItem {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
 
+	/**
+	 * Defines the items of this component.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	endContent!: Array<HTMLElement>;
+
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
 	}
@@ -168,6 +176,10 @@ class MenuItem extends ListItem {
 
 	get hasSubmenu() {
 		return !!(this.items.length || this.loading);
+	}
+
+	get hasEndContent() {
+		return !!(this.endContent.length);
 	}
 
 	get hasIcon() {
@@ -267,6 +279,24 @@ class MenuItem extends ListItem {
 
 	_afterPopoverClose() {
 		this.fireEvent("close", {}, false, false);
+	}
+
+	/**
+	 * Prevents menu closing when pressing Enter or Space over components inside the endContent slot.
+	 */
+	async _onkeydown(e: KeyboardEvent): Promise<void> {
+		if ((e.target as Node).nodeName.toLowerCase() === "li") {
+			await super._onkeydown(e);
+		}
+	}
+
+	/**
+	 * Prevents menu closing when pressing Space over components inside the endContent slot.
+	 */
+	_onkeyup(e: KeyboardEvent): void {
+		if ((e.target as Node).nodeName.toLowerCase() === "li" && isSpace(e)) {
+			super._onkeyup(e);
+		}
 	}
 }
 
