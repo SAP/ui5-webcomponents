@@ -159,7 +159,10 @@ class MenuItem extends ListItem {
 	items!: Array<MenuItem>;
 
 	/**
-	 * Defines the items of this component.
+	 * Defines the components that should be displayed at the end of the menu item.
+	 *
+	 * **Note:** It is highly recommended to slot only components of type `ui5-button` (icon-only),
+	 * `ui5-link` or `ui5-icon` that don't take much place and are not layout components.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
