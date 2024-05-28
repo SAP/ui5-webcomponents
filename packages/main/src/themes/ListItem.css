@@ -75,7 +75,7 @@
 	height: 5rem;
 }
 
-:host([_has-image-content]) {
+:host([_has-image]) {
 	height: 5rem;
 }
 
@@ -159,7 +159,7 @@
 }
 
 .ui5-li-img,
-.ui5-li-imgContent {
+.ui5-li-image {
 	min-width: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin-top: var(--_ui5_list_item_img_top_margin);

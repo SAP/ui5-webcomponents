@@ -27,9 +27,9 @@ const Template: UI5StoryArgs<CardHeader, StoryArgsSlots> = (args) => {
 	${unsafeHTML(args.action)}
 	</ui5-card-header>
 		<ui5-list separators="None" style="margin-block-end: 0.75rem;">
-		<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-		<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-		<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+		<ui5-li description="Software Architect">Richard Wilson</ui5-li>
+		<ui5-li description="Visual Designer">Elena Petrova</ui5-li>
+		<ui5-li description="Quality Specialist">John Miller</ui5-li>
 	</ui5-list>
 </ui5-card>
 	`;

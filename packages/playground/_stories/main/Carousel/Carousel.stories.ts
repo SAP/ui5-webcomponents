@@ -73,9 +73,9 @@ MultipleItemsPerPage.args = {
 		<ui5-icon name="group" slot="avatar"></ui5-icon>
 	</ui5-card-header>
 	<ui5-list separators="None">
-		<ui5-li image="../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
-		<ui5-li image="../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-		<ui5-li image="../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+		<ui5-li description="User Researcher">Alain Chevalier</ui5-li>
+		<ui5-li description="Artist">Monique Legrand</ui5-li>
+		<ui5-li description="UX Specialist">Michael Adams</ui5-li>
 	</ui5-list>
 </ui5-card>
 <ui5-card class="medium">
@@ -83,9 +83,9 @@ MultipleItemsPerPage.args = {
 		<ui5-icon name="group" slot="avatar"></ui5-icon>
 	</ui5-card-header>
 	<ui5-list separators="None">
-		<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-		<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-		<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+		<ui5-li description="Software Architect">Richard Wilson</ui5-li>
+		<ui5-li description="Visual Designer">Elena Petrova</ui5-li>
+		<ui5-li description="Quality Specialist">John Miller</ui5-li>
 	</ui5-list>
 </ui5-card>`
 };

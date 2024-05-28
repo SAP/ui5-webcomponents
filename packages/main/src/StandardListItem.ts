@@ -68,7 +68,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
 	 *
-	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
 	 * @default false
 	 * @public
 	 */
@@ -80,10 +79,10 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 *
 	 * **Note:** The `image` would be displayed in the beginning of the list item.
 	 * @default ""
-	 * @public
+	 * @private
 	 */
 	@property()
-	image!: string;
+	imageSrc!: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the list item.
@@ -134,7 +133,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	hasTitle!: boolean;
 
 	@property({ type: Boolean })
-	_hasImageContent!: boolean;
+	_hasImage!: boolean;
 
 	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
@@ -142,22 +141,21 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 *
 	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
 	 * `ui5-li` should be customized in order to fit.
-	 * @since 1.10.0
+	 * @since 2.0.0
 	 * @public
 	 */
 	@slot()
-	imageContent!: Array<HTMLElement>;
+	image!: Array<HTMLElement>;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
-		this._hasImageContent = this.hasImageContent;
+		this._hasImage = this.hasImage;
 	}
 
 	get displayImage(): boolean {
-		return !!this.image;
+		return !!this.imageSrc;
 	}
-
 	get displayIconBegin(): boolean {
 		return !!(this.icon && !this.iconEnd);
 	}
@@ -166,8 +164,8 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 		return !!(this.icon && this.iconEnd);
 	}
 
-	get hasImageContent(): boolean {
-		return !!this.imageContent.length;
+	get hasImage(): boolean {
+		return !!this.image.length;
 	}
 }
 

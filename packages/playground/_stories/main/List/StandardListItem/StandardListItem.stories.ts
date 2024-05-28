@@ -24,7 +24,6 @@ const Template: UI5StoryArgs<StandardListItem, StoryArgsSlots> = (args) => {
     additional-text-state="${ifDefined(args.additionalTextState)}"
     accessible-name="${ifDefined(args.accessibleName)}"
     ?icon-end="${ifDefined(args.iconEnd)}"
-    image="${ifDefined(args.image)}"
     accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"
     ?navigated="${ifDefined(args.navigated)}"
     type="${ifDefined(args.type)}"
@@ -32,7 +31,7 @@ const Template: UI5StoryArgs<StandardListItem, StoryArgsSlots> = (args) => {
 	tooltip="${ifDefined(args.tooltip)}"
   >
     ${unsafeHTML(args.default)}
-    ${unsafeHTML(args.imageContent)}
+    ${unsafeHTML(args.image)}
     ${unsafeHTML(args.deleteButton)}
   </ui5-li>
   </ui5-list>`;

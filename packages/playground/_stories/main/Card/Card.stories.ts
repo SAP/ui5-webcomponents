@@ -63,9 +63,9 @@ export const InteractiveHeader = Template.bind({});
 InteractiveHeader.args = {
 	header: header("This header is interactive", "Click, press Enter or Space", "3 of 6", [], `<ui5-icon name="group" slot="avatar"></ui5-icon>`, true),
 	default: `<ui5-list separators="None" style="margin-block-end: 0.75rem;">
-	<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-	<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-	<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+	<ui5-li description="Software Architect">Richard Wilson</ui5-li>
+	<ui5-li description="Visual Designer">Elena Petrova</ui5-li>
+	<ui5-li description="Quality Specialist">John Miller</ui5-li>
 </ui5-list>`
 };
 InteractiveHeader.decorators = [setWidth("22rem")];
@@ -74,9 +74,9 @@ export const WithList = Template.bind({});
 WithList.args = {
 	header: header("Team Space", "Direct Reports", "3 of 10", ["View All"], `<ui5-icon name="group" slot="avatar"></ui5-icon>`),
 	default: `<ui5-list separators="None" style="margin-block-end: 0.75rem;">
-	<ui5-li image="../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
-	<ui5-li image="../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-	<ui5-li image="../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Isabella Adams</ui5-li>
+	<ui5-li description="User Researcher">Alain Chevalier</ui5-li>
+	<ui5-li description="Artist">Monique Legrand</ui5-li>
+	<ui5-li description="UX Specialist">Isabella Adams</ui5-li>
 </ui5-list>`,
 };
 WithList.decorators = [setWidth("22rem")];
