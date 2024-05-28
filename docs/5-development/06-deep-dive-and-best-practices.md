@@ -171,7 +171,7 @@ class MyComponent extends UI5Element {
 }
 ```
 
-## Property Decorator `@property` <a name="metadata_properties"></a>
+### Properties <a name="metadata_properties"></a>
 
 The properties are defined via `@property` decorator and they are managed state. The framework will create a getter/setter pair on your component's prototype for each property, defined via the `@property` decorator and re-render the component once the property value changes.
 
@@ -352,7 +352,7 @@ However, only metadata-defined properties are managed by the framework: cause in
 Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
 that they will not be managed by the framework.
 
-## Slot Decorator `@slot` <a name="metadata_slots"></a>
+### Slots <a name="metadata_slots"></a>
 
 While *properties* define the objective characteristics of a component, *slots* define the way a component can nest other HTML elements.
 You don't need to define slots for every component - some components are not meant to hold any other HTML elements, and are fully operated by properties and events alone.
@@ -361,7 +361,7 @@ You implement slots by configuring them with the `@slot` decorator, and renderin
 
 You can read more about the `slot` HTML element [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
 
-### Named Slots
+#### Named Slots
 
 For *named* slots you set the name you wish to use for the slot as the key in the `@slot` decorator.
 
@@ -383,7 +383,7 @@ class MyComponent extends UI5Element {
 
 and then in your `.hbs` template you render respectively `<slot name="items"></slot>` and `<slot name="footer"></slot>`.
 
-### Default Slots with accessor
+#### Default Slots with accessor
 
 The `default` slot must be defined with the `"default"` key in the `@slot` decorator (also note the quotes around the `default` key as it is a reserved word):
 
@@ -399,7 +399,7 @@ class MyComponent extends UI5Element {
 
 and then in the `.hbs` template you render `<slot></slot>`.
 
-### Default slot without accessor
+#### Default slot without accessor
 
 In case you don't need an accessor for the `default` slot, but you still need to appear in the public API reference
 ```ts
@@ -416,7 +416,7 @@ class MyComponent extends UI5Element {
 and then in the `.hbs` template you render `<slot></slot>`.
 
 
-### Slot Types
+#### Slot Types
 
 Unlike properties, slots can be of only two types: `HTMLElement` and `Node`.
 
@@ -426,7 +426,7 @@ Unlike properties, slots can be of only two types: `HTMLElement` and `Node`.
 The reason for this restriction is that text nodes in HTML cannot have attributes, hence they cannot be slotted as HTML elements can.
 As a result, text can only go the default slot, hence `Node` is applicable only for default slots.
 
-### Slots are managed state
+#### Slots are managed state
 
 As *properties*, *slots* are not managed state and changes to slots trigger invalidation.
 If children are added/removed/rearranged in any of the above slots, the component will be invalidated (re-rendered).

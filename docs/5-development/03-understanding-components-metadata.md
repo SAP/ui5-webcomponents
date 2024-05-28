@@ -133,7 +133,7 @@ class DemoComponent extends UI5Element {
 | `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML.|
 | `multiple`     | Boolean                      | false     | Indicates whether the property represents a single value or is an array of values of the given type.          |
 | `noAttribute`  | Boolean                      | false     | No attribute equivalent will be created for that property. Always true for properties of type Object.        |
-| `validator`  | Validator type                 | N/A       | The validator of the property. Always true for properties of type Object.        |
+| `validator`  | Validator type                 | N/A       | The validator of the property. For more information on validators see the table below  |
 
 **Note:** The `type` setting is required, except these two cases:
 
@@ -168,6 +168,18 @@ animationDuration!: number;
 |------------|----------------------------------------------------|----------------------------------------------------------------|
 | Integer    | `@ui5/webcomponents-base/dist/types/Integer.js`    | Integer value                                                  |
 | ValueState | `@ui5/webcomponents-base/dist/types/ValueState.js` | Enumeration with: `None`, `Error`, `Warning`, `Success` values |
+
+#### Validators
+
+The `validator` is a custom class that implements `isValid` function that validates the property's value whenever it changes. If value is not valid, the framework will set the proeprty `defaultValue`.
+
+| Type        | Class to Use                                             | Description                             |
+|-------------|----------------------------------------------------------|-----------------------------------------|
+| number      | `Integer`                                                | Validates the prop value to integer     |
+| number      | `Float`                                                  | Validates the prop value to float       |
+| string      | `CSSColor`                                               | Validates the prop value to valid CSS color|
+| string      | `CSSSize`                                                | Validates the prop value to valid CSS size |
+| string or HTMLElement      | `DomReference`                            | Validates the prop value is it's a string or HTMLElement |
 
 ## Slots
 
