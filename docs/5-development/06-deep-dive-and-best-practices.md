@@ -10,7 +10,7 @@ Before you proceed, please make sure you've read the other articles from this se
 as this article will expand on many of the notions introduced there.
 
 ## Table of Contents
- [Metadata Deep Dive](#metadata)
+ [Component metadata](#metadata)
    - [Tag](#metadata_tag) 
    - [Properties](#metadata_properties) 
    - [Slots](#metadata_slots) 
@@ -26,9 +26,9 @@ as this article will expand on many of the notions introduced there.
    - [`onAfterRendering`](#lifecycle_after)
    - [`onEnterDOM` and `onExitDOM`](#lifecycle_dom)
 
-## Metadata Deep Dive <a name="metadata"></a>
+## Component metadata <a name="metadata"></a>
 
-The `static get metadata()` method defines the public API of your component. Among other things, here you define:
+Component metadata referes to the public API of your component. Among other things, it includes:
  - the tag name;
  - what properties/attributes (and of what type) your component supports;
  - what slots your component supports;
@@ -36,23 +36,27 @@ The `static get metadata()` method defines the public API of your component. Amo
 
 ### Tag <a name="metadata_tag"></a>
 
-The tag name must include a `-` as required for any custom element:
+There is a `@customElement` class decorator available that is used just before the component's class and applied to the constructor of the class to describe the component.
+One of the available settings is `tag` and  must include a `-` as required for any custom element:
 
 ```js
-metadata: {
+@customElement({
 	tag: "my-component"
+})
+class MyComponent extends UI5Element {
 }
 ```
+
 and then the usage is:
 
 ```html
 <my-component></my-component>
 ```
 
-The `tag`, as defined in `metadata`, is sometimes also referred to as the "pure tag", meaning it is not suffixed.
+The `tag` is sometimes also referred to as the "pure tag", meaning it is not suffixed.
 See [Scoping](../2-advanced/03-scoping.md) for more on using a suffix with tag names.
 
-Important: The pure tag name of every UI5 Web Component is always set as an **attribute** to the component too.
+**Note:** The pure tag name of every UI5 Web Component is always set as an **attribute** to the component too.
 
 For example, when you create a `ui5-button`
 
@@ -80,7 +84,7 @@ the **attribute** will still be the same (`ui5-button` as opposed to the tag nam
 Therefore, the best practice when developing UI5 Web Components is to write CSS selectors for the shadow roots using
 attribute selectors, instead of tag selectors.
 
-For example, if the `Demo.hbs` file looks like this
+For example, if the `MyComponent.hbs` file looks like this
 
 ```html
 <div class="my-component">
@@ -92,7 +96,7 @@ For example, if the `Demo.hbs` file looks like this
 </div>
 ```
 
-you should not write selectors by tag name for other components in the `Demo.css` file
+you should not write selectors by tag name for other components in the `MyComponent.css` file
 
 ```css
 ui5-button {
@@ -118,21 +122,66 @@ or another type of selector (for example by ID)
 }
 ```
 
-### Properties <a name="metadata_properties"></a>
+#### `languageAware`
 
-#### Properties Are a Managed State
+Defines if the component will re-render when the configured language changes.
+The setting commonly used in components that display built-in texts
+that support i18n as they have to re-render to display the texts in the newly set language.
 
-The framework will create a getter/setter pair on your component's prototype for each property, defined in the metadata.
+```ts
+@customElement({
+	tag: "my-component",
+	languageAware: true,
+})
+class MyComponent extends UI5Element {
+}
+```
 
-For example, after setting this metadata configuration
 
-```js
-metadata: {
-	properties: {
-		text: {
-			type: String
-		}
-	}
+#### `themeAware`
+
+Defines if the component will re-render when the configured theme changes.
+It's used on rare cases when the rendering of the component depends on the theme - for instance, the `Icon` and the `IllustratedMessage`
+should display different icon/illustration.
+
+**Note:** The recommendation is not to write theme-dependant code, and components. Ideally, the CSS variables values should be the only thing that changes across different themes and for that we don't need component re-rendering. The framework loads the proper CSS variables per theme and the browser applies them.
+
+```ts
+@customElement({
+	tag: "my-component",
+	themeAware: true,
+})
+class MyComponent extends UI5Element {
+}
+```
+
+#### `formAssociated`
+
+Defines if the component should support native Form support, leveraging the `ElementInternals` API.
+When set, the framework makese use of the `ElementInternals` API to implments the required interfaces so the component works in a native HTML Form
+as standard HTML input element do.
+It's commonly used in input-type components, such as: Input, ComboBox, MultiComboBox, Select and more.
+
+```ts
+@customElement({
+	tag: "my-component",
+	formAssociated: true,
+})
+class MyComponent extends UI5Element {
+}
+```
+
+## Property Decorator `@property` <a name="metadata_properties"></a>
+
+The properties are defined via `@property` decorator and they are managed state. The framework will create a getter/setter pair on your component's prototype for each property, defined via the `@property` decorator and re-render the component once the property value changes.
+
+```ts
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
+	@property()
+	text!: string;
 }
 ```
 
@@ -153,12 +202,37 @@ same name but in `kebab-case` is supported. Properties of type `Object` have no 
 #### Public vs Private Properties
 
 The framework does not distinguish between *public* and *private* properties. You can treat some properties as private in a sense that you can document them as such and not advertise them to users.
-The usual convention is that private properties start with an `_`, but this is not mandatory. In the end, all properties defined in the metadata, public or private,
-are *component state*, therefore cause the component to be invalidated and subsequently re-rendered, when changed.
+The usual convention is that private properties start with an `_`, but this is not mandatory. In the end, all properties defined with the `@property` decorator, public or private, are *component state*, therefore cause the component to be invalidated and subsequently re-rendered, when changed.
+
+#### Property Types and Property Validators
+
+The `type` and `validator` settings are both available in the `@property` decorator, but one should the one or the other.
+
+The`type` defines the expected type of the property, usually the standard `String`, `Boolean`, `Object` or custom enumarations (`ValueState`, `ButtonDesign`).
+
+The `validator` is a custom class that implements `isValid` function that validates the property's value whenever it changes. If value is not valid, the framework will set the proeprty `defaultValue`.
+
+```ts
+@property({ validator: Integer, defaultValue: 0 })
+width!: number;
+```
+
+If we set a string value to the `width` property
+
+```ts
+this.width = "string vlaue" 
+```
+
+the framework will trigger Integer validation and the width propert will be set to 0 as default value.
+
+```ts
+const width = this.width // 0
+```
 
 #### Property Types and Default Values
 
-The most common types of properties are `String`, `Boolean`, `Object`, `Integer` and `Float`. The last two are custom types provided by the framework that you must import (they do not exist in the browser).
+The most common types of properties are `String`, `Boolean`, `Object` and custom types like `ValueState`, `ButtonDesign`. 
+The last two are custom types (they do not exist in the browser) and often represent enumarations (ValueState: "Negative" | "Positive" | "None", etc.).
 
 Most property types can have a `defaultValue` set. `Boolean` is always `false` by default and `Object` is always `{}` by default, so `defaultValue` is not allowed for these types.
 
@@ -166,32 +240,26 @@ You can also create custom property types by extending `@ui5/webcomponents-base/
 
 #### Properties With `multiple: true`
 
-If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly as
-a property of type `Object` would be (as arrays are technically objects). For example, it will not have an attribute counterpart.
+If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly as a property of type `Object` would be (as arrays are technically objects). For example, it will not have an attribute counterpart.
 
 Example:
-
-```js
-metadata: {
-	properties: {
-		numbers: {
-			type: Integer,
-			multiple: true
-		}
-	}
+```ts
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
+	@property({ validator: Integer, multiple: true })
+	myNumbers!: number;
 }
 ```
 
 ```js
-myComponent.numbers = [1, 2, 3];
+myComponent.myNumbers = [1, 2, 3];
 ```
 
-Properties with `multiple: true` are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
-Their most common use case is as *private* properties for communication between related components. For example, the higher-order "date picker" component
-communicates with its "day picker", "month picker", and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
+**Note:** Properties with `multiple: true` are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript). Their most common use case is as *private* properties for communication between related components. For example, the higher-order "date picker" component communicates with its "day picker", "month picker", and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
 
-If you need to use a property with `multiple: true` as part of your component's public API, that is fine but bear in mind the limitations 
-(no declarative support as with all Objects, so no attribute for this property).
+**Note:** If you need to use a property with `multiple: true` as part of your component's public API, that is fine but bear in mind the limitations (no declarative support as with all Objects, so no attribute for this property).
 
 The alternative would be to use *abstract* items, for example:
 
@@ -203,9 +271,7 @@ The alternative would be to use *abstract* items, for example:
 </my-component>
 ```
 
-Here instead of having a `numbers` property of type `Integer` configured with `multiple: true`, we have a `numbers` slot, and inside this slot we pass abstract items with
-a `value` property of type `Integer`. This is now completely declarative, and is preferable unless the number of items is very large (in which case the 
-solution with the multiple property would likely be better).
+Here instead of having a `numbers` property of validator `Integer` configured with `multiple: true`, we have a `numbers` slot, and inside this slot we pass abstract items with a `value` property of validator `Integer`. This is now completely declarative, and is preferable unless the number of items is very large (in which case the solution with the multiple property would likely be better).
 
 #### Examples
 
@@ -214,34 +280,29 @@ Example of defining properties:
 ```js
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-...
 
-metadata: {
+@customElement({
 	tag: "my-component",
-	properties: {
-		text: {
-			type: String,
-			defaultValue: "Hello"
-		},
-		width: {
-			type: Integer,
-			defaultValue: 1024,
-			noAttribute: true
-		},
-		scale: {
-			type: Float,
-			defaultValue: 0.5
-		}
-		data: {
-			type: Object
-		},
-		/**
-		 * @private
-		 */
-		_isPhone: {
-			type: Boolean
-		}
-	}
+})
+class MyComponent extends UI5Element {
+
+	@proeprty()
+	text!: string;
+
+	@property({ validator: Integer, defaultValue: 1024, noAttribute: true })
+	width!: number;
+
+	@property({ validator: Float, defaultValue: 0.5 })
+	scale!: number;
+
+	@property({ type: Object })
+	data!: object;
+
+	/**
+	 * @private
+	 */
+	@proeprty({ type: Boolean })
+	_isPhone!: boolean;
 }
 ```
 
@@ -291,49 +352,71 @@ However, only metadata-defined properties are managed by the framework: cause in
 Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
 that they will not be managed by the framework.
 
-### Slots <a name="metadata_slots"></a>
+## Slot Decorator `@slot` <a name="metadata_slots"></a>
 
 While *properties* define the objective characteristics of a component, *slots* define the way a component can nest other HTML elements.
 You don't need to define slots for every component - some components are not meant to hold any other HTML elements, and are fully operated by properties and events alone.
 
-You implement slots by configuring them with the `slots` metadata object, and rendering respective `<slot>` elements in your `.hbs` template.
+You implement slots by configuring them with the `@slot` decorator, and rendering respective `<slot>` elements in your `.hbs` template.
 
 You can read more about the `slot` HTML element [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
 
-#### Default Slot and Named Slots
+### Named Slots
 
-For *named* slots you set the name you wish to use for the slot as the key in the `slots` metadata object.
+For *named* slots you set the name you wish to use for the slot as the key in the `@slot` decorator.
 
 Example:
 
-```js
-slots: {
-	items: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
-	}
+```ts
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
+	@slot()
+	items!: HTMLElement;
+
+	@slot()
+	footer!: HTMLElement;
 }
 ```
 
+
 and then in your `.hbs` template you render respectively `<slot name="items"></slot>` and `<slot name="footer"></slot>`.
 
+### Default Slots with accessor
 
-The *default* slot on the other hand must be defined with the `default` key in the `slots` metadata object (also note the quotes around the `default` key as it is a reserved word):
+The `default` slot must be defined with the `"default"` key in the `@slot` decorator (also note the quotes around the `default` key as it is a reserved word):
 
-```js
-slots: {
-	"default": {
-		type: Node,
-	}
+```ts
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<Object>
+}
+```
+
+and then in the `.hbs` template you render `<slot></slot>`.
+
+### Default slot without accessor
+
+In case you don't need an accessor for the `default` slot, but you still need to appear in the public API reference
+```ts
+/*
+ * @slot {Array<Node>} default - Defines the text of the component.
+ */
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
 }
 ```
 
 and then in the `.hbs` template you render `<slot></slot>`.
 
 
-#### Slot Types
+### Slot Types
 
 Unlike properties, slots can be of only two types: `HTMLElement` and `Node`.
 
@@ -343,81 +426,35 @@ Unlike properties, slots can be of only two types: `HTMLElement` and `Node`.
 The reason for this restriction is that text nodes in HTML cannot have attributes, hence they cannot be slotted as HTML elements can.
 As a result, text can only go the default slot, hence `Node` is applicable only for default slots.
 
-#### Are slots a managed state?
+### Slots are managed state
 
-Unlike metadata *properties*, which are always a managed state (see the previous section), *slots* are not managed by the framework by default. 
-Changes to slots do not trigger lifecycle events such as invalidation.
-
-However, you can change this by setting `managedSlots: true` in the `metadata` object. This setting is global and affects all slots for your component.
-
-```js
-managedSlots: true,
-slots:	{
-	items: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
-	}
-}
-```
-
-Now, if children are added/removed/rearranged in any of the above slots, the component will be invalidated.
+As *properties*, *slots* are not managed state and changes to slots trigger invalidation.
+If children are added/removed/rearranged in any of the above slots, the component will be invalidated (re-rendered).
 
 #### Slot Accessors
 
-Additionally, when you set `managedSlots: true`, you get a **read-only** accessor for the children in that slot.
+You can use the slot accessors to get the children in that slot.
 
-Taking the example from above
-```js
-managedSlots: true,
-slots:	{
-	items: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
-	}
+```ts
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
+	@slot()
+	items!: HTMLElement;
+
+	@slot()
+	footer!: HTMLElement;
 }
 ```
-
-you will get the following accessors on your component's instances:
 
 ```js
 const childrenInItems = this.items; // array of all children in the items slot
 const childrenInFooter = this.footer; // array of all children in the footer slot
 ```
 
-Finally, it's possible to define the property name for the accessor of the *default* slot (as using the `default` key is not convenient in Javascript).
-You can do this with the `propertyName` setting:
 
-```js
-managedSlots: true,
-slots: {
-	"default": {
-		type: Node,
-		propertyName: "content"
-	},
-	items: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
-	}
-}
-
-```
-
-```js
-const childrenInDefaultSlot = this.content; // array of all children in the default slot
-const childrenInItems = this.items; // array of all children in the items slot
-const childrenInFooter = this.footer; // array of all children in the footer slot
-```
-
-These getters are helpful if your code needs to analyze/communicate with the children in a certain slot. They are also often used in the `.hbs`
-template where you need, for example, to loop over the items of a component.
-
-#### Individual Slots
+#### `individualSlots`
 
 All children, assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
 Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component.
@@ -427,15 +464,15 @@ The `individualSlots` slot metadata configuration setting (see [Understanding UI
 Example:
 
 ```js
-{
-	managedSlots: true,
-	slots: {
-		"default": {
-			type: HTMLElement,
-			propertyName: "items",
-			individualSlots: true
-		}
-	}
+@customElement({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+	})
+	items!: Array<HTMLElement>
 }
 ```
 
@@ -444,24 +481,21 @@ to have all children belonging to the slot displayed by the browser separately i
 
 For more information on individual slots and how to render them in the `.hbs` template click [here](./04-understanding-hbs-templates.md#slots_individual).
 
-#### The invalidateOnChildChange Setting
+#### `invalidateOnChildChange`
 
 There is one last configuration setting for slots - `invalidateOnChildChange`. When set to `true`, whenever a child in a certain slot is invalidated,
 your component will be invalidated as well.
 
 ```js
-managedSlots: true,
-slots: {
-	"default": {
-		type: HTMLElement,
-		propertyName: "items",
-		invalidateOnChildChange: true
-	},
-}
+@slot({
+	type: HTMLElement,
+	invalidateOnChildChange: true,
+})
+items!: Array<HTMLElement>;
 ```
 
-Now, the component will be invalidated not only when children are added/removed/rearranged, but also when children themselves change. This is very handy
-for components working with abstract items.
+**Note:** Now, the component will be invalidated not only when children are added/removed/rearranged, but also when children themselves change.
+This is very handy for components working with abstract items.
 
 Read more about abstract items and `invalidateOnChildChange` in the [Invalidation](#invalidation) section later in this article.
 
@@ -474,11 +508,11 @@ Any event that you dispatch from your component will reach the application anywa
 
 Here is an example how to fire an event from your component:
 
-1. Declare the event in your `metadata` (optional, but highly recommended for documentation purposes and clarity):
+1. Declare the event in your `@event` decorator 
 
 ```js
-events: {
-	toggle: {}
+@event("toggle")
+class MyPanel extends UI5Element {
 }
 ```
 
@@ -530,17 +564,18 @@ Here's how:
 1. Declare the event in your `metadata` and describe its parameters (again, optional, but good for consistency and documentation purposes):
 
 ```js
-events: {
-	selectionChange: {
+@event("selection-change", {
 		detail: {
 			item: { type: HTMLElement },
 			oldItem: { type: HTMLElement }
 		}
 	}
 }
+class MyItemsList extends UI5Element {
+}
 ```
 
-Here we define a `selectionChange` event which gives the app two pieces of information: `item` (the newly selected item) and `oldItem` (the previously selected item).
+Here we define a `selectionchange` event which gives the app two pieces of information: `item` (the newly selected item) and `oldItem` (the previously selected item).
 Respectively, they will be accessible by the app with `event.detail.item` and `event.detail.oldItem` in the event handler, exactly like it works with native browser events.
 
 2. Pass the data when firing the event:
@@ -640,60 +675,67 @@ our event handlers (`onUI5ButtonClick`, `onUI5InputChange`, etc.) would never be
 ### Wrapping up Metadata <a name="metadata_wrapping_up"></a>
 
 Metadata determines most of your component's API - describe its tag name, properties, slots and events there.
+For example, consider the following component with  metadata:
 
-For example, consider a component with the following metadata:
+```ts
 
-```js
-{
-	tag: "my-demo-component",
-	properties: {
-		text: {
-			type: String,
-			defaultValue: "Hello"
-		},
-		selected: {
-			type: Boolean,
-			noAttribute: true	
-		}
+type MyComponentChangeEventDetail = {
+	newText: string
+}
+
+@customElement({
+	tag: "my-component",
+})
+@event<MyComponentChangeEventDetail>("change", {
+	detail: {
+		newText: { type: String },
 	},
-	managedSlots: true,
-	slots: {
-		"default": {
-			type: Node,
-			propertyName: "items",
-			invalidateOnChildChange: true
-		},
-		"icon": {
-			type: HTMLElement
-		}
-	},
-	events: {
-		change: {
-			detail: {
-				newText: {type: String}
-			}
-		}
-	}
+})
+class MyComponent extends UI5Element {
+
+	@property({ type: String, defaultValue: "Hello" })
+	text!: string;
+
+	@property({ type: Boolean, noAttribute: true })
+	selected!: boolean;
+
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<HTMLElement>;
+
+	@slot()
+	icons!: Array<HTMLElement>;
 }
 ```
 
 This metadata conveys the following:
 
 This component will have the following getters/setters, created for it by the framework:
- - `this.text` (getter/setter, due to the `text` property) with default value of "Hello";
- - `this.selected` (getter/setter, due to the `selected` property) with default value of `false` (all Booleans are `false` by default in HTML and `defaultValue` cannot be configured for them);
- - `this.items` (getter only, due to having `managedSlots: true` and the `propertyName` of the default slot being `items`) - an array of all *Text Nodes and HTML Elements* in the default slot;
- - `this.icon` (getter only, due to having `managedSlots: true` and the `icon` slot) - an array of all HTML elements in the `icon` slot. 
+ - `this.text` - getter/setter, due to the `text` property, with default value of "Hello";
+ - `this.selected` - getter/setter, due to the `selected` property, with default value of `false` (all Booleans are `false` by default in HTML and `defaultValue` cannot be configured for them);
+ - `this.items` - an array of all *Text Nodes and HTML Elements* in the default slot;
+ - `this.icon` - an array of all HTML elements in the `icons` slot. 
 
 The component will have only 1 attribute:
- - `text` due to the `text` property (the other property has `noAttribute: true` set).
+ - `text` due to the `text` property (the `selected` property has `noAttribute: true` set).
 
 When the `text` property changes, the `text` attribute will also be reflected and vice-versa.
 
 The component fires 1 event:
  - `change` with one string parameter: `newText`.
 
-This component will be invalidated whenever any of its properties changes, any of its slots has new/removed/rearranged children, and additionally when any UI5 Web Component in the `default` slot is invalidated. 
+This component will be invalidated whenever any of its properties changes (`text`, `selected`), any of its slots has new/removed/rearranged children.
+
+
+Additionally, in the component class you are expected to fire the event, for example:
+
+```js
+class MyComponent extends HTMLElement {
+	...
+	onInputChange(event) {
+		this.fireEvent("change", { newText });
+	}
+}
+```
 
 In this component's `.hbs` you are expected to render the two slots and to bind an event listener for the event
 
@@ -709,19 +751,6 @@ In this component's `.hbs` you are expected to render the two slots and to bind 
 </div>
 ```
 
-and in the component class you are expected to fire the event, for example:
-
-```js
-class MyDemoComponent extends HTMLElement {
-	...
-	onInputChange(event) {
-		const newText = this.shadowRoot.querySelector(".demo-input").value;
-		this.text = newText;
-		event.stopPropagation();
-		this.fireEvent("change", { newText });
-	}
-}
-```
 
 Whenever the user stops typing in the `<input>` and its `change` event is fired, our component `onInputChange` event handler will be executed.
 There we get the new value of the input, update the `text` metadata property to reflect its new state, stop the input's native `change` event from propagating since we'll be firing our custom event
@@ -772,84 +801,51 @@ again, before having been re-rendered, this will have no downside - it's in the 
 Important: when a component is re-rendered, only the parts of its shadow DOM, dependent on the changed properties/slots are changed, which makes most updates very fast.
 
 A component becomes *invalidated* whenever:
- - a *metadata-defined* **property** changes (not regular properties that, for example, you define in the constructor);
- - children are added/removed/rearranged in any **slot** and the component has `managedSlots: true` set in the metadata object;
- - a slotted child in a **slot** configured with `invalidateOnChildChange: true` is invalidated.
+ - a **property** defined with `@property` decorator changes (not regular properties that, for example, you define in the constructor);
+ - children defined with `@slot` decorator are added/removed/rearranged;
+ - a slotted child is invalidated and `@slot#invalidateOnChildChange: true` is configured.
 
 Changes to properties always cause an invalidation. No specific metadata configuration is needed.
 
 ```js
-properties: {
-	text: {
-		type: String
-	}
+class MyComponent extends UI5Element {
+
+	@property()
+	text!: string;
 }
 ```
 
 Whenever `text` changes, the component will be invalidated.
 
-Changes to slots do not cause an invalidation by default. Most components do not need to render differently based on whether they have any slotted children or not.
-The most common example for this are simple general-purpose containers (completely agnostic of their content).
+Changes to slots (children are added/removed/rearranged) also cause an invalidation by default. 
 
 ```js
-metadata: {
-	slots: {
-		"default": {
-			type: HTMLElement
-		},
-		header: {
-			type: HTMLElement
-		},
-		footer: {
-			type: HTMLElement
-		}
-	}
+class MyComponent extends UI5Element {
+
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<HTMLElement>;
 }
 ```
 
-This component will not invalidate when children are added/removed from any of its slots.
 
-However, some components render differently based on whether they have children or not (e.g. show counters/other UX elements for the number of children, f.e. carousel; or have special styles when empty or have a child in a specific slot, f.e. button with an icon).
-If that is the case for the component you're building, set `managedSlots: true` in your component's metadata. Thus, your component will become invalidated whenever children are added, removed or swap places in any of its slots.
 
-```js
-managedSlots: true,
-slots: {
-	"default": {
-		type: HTMLElement
-	},
-	header: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
-	}
-}
-```
-
-Now that this component has `managedSlots: true`, changes to each slot will trigger an invalidation. Note that the `managedSlots` configuration is global (and not per slot).
-
-And finally, there are components that not only need to render differently based on the number/type of children they have, but they must also get invalidated
-whenever their children change. This holds true for all components that work with abstract items (such as select with options, combo box with combo box items)
-because these abstract items do not have a template (do not render themselves) and therefore rely on their parent to render some DOM for them in its own shadow root. So, when they get invalidated, they must also invalidate their parent.
+There are components that not only need to render differently based on the number/type of children they have, but they must also get invalidated
+whenever their children change.
 
 ```js
-managedSlots: true,
-slots: {
-	"default": {
+class MyComponent extends UI5Element {
+
+	@slot({
+		"default": true
 		type: HTMLElement,
 		invalidateOnChildChange: true
-	},
-	header: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
-	}
+	 })
+	items!: Array<HTMLElement>;
 }
 ```
 
-Only changes to children in the "default" slot will trigger invalidation for this component. Note that `invalidateOnChildChange` is defined per slot (and not globally like `managedSlots`).
+
+**Note:** Only changes to children in the "default" slot will trigger invalidation for this component. Note that `invalidateOnChildChange` is defined per slot.
 Finally, `invalidateOnChildChange` allows for more fine-granular rules when exactly children can invalidate their parents - see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md).
 
 ## Lifecycle Hooks <a name="lifecycle"></a>
@@ -909,25 +905,21 @@ What not to do:
 Let's take for example a component with the following metadata:
 
 ```js
-{
-	properties: {
-		filter: {
-			type: String
-		}
-	},
-	managedSlots: true,
-	slots: {
-		"default": {
-			type: HTMLElement,
-			propertyName: "items",
-			individualSlots: true
-		}
-	}
+class MyComponent extends UI5Element {
+
+	@property()
+	filter!: string;
+
+	@slot({
+		"default": true
+		type: HTMLElement,
+		invalidateOnChildChange: true
+	 })
+	items!: Array<HTMLElement>;
 }
 ```
 
 This component has a `filter` property and a `default` slot that we want to call `items` (thus accessible with `this.items`).
-
 Let's imagine we want to show only the items whose `name` property matches the value of our `filter` property - so we filter the items by name.
 
 ```js
@@ -954,8 +946,7 @@ And finally, in the `.hbs` template we have for example:
 </div>
 ```
 
-We loop over the `_fiteredItems` array that we prepared in `onBeforeRendering` and for each child we render a `slot` based on the child's `_individualSlot` property,
-created automatically by the framework due to the default slot's metadata configuration (`individualSlots: true`).
+We loop over the `_fiteredItems` array that we prepared in `onBeforeRendering` and for each child we render a `slot` based on the child's `_individualSlot` property, created automatically by the framework due to the default slot's configuration (`individualSlots: true`).
 
 The usage of this component would be, for example:
 
@@ -1029,16 +1020,15 @@ Common use cases are:
 
 Probably the best example of these hooks is the usage of the `ResizeHandler` helper class.
 
-The component has a private `_width` property, defined in its metadata:
+The component has a private `_width` property, defined as follows:
 
 ```js
-properties: {
-	/**
-	 * @private
-	 */
-	_width: {
-		type: Integer
-	}
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+
+class MyComponent extends UI5Element {
+
+	@property({ validator: Integer })
+	_width!: number;
 }
 ```
 
@@ -1079,5 +1069,4 @@ class MyComponent extends UI5Element {
 In the `constructor` we bind the `_onResize` method to the component's instance to get a function with the correct context,
 and then in `onEnterDOM` and `onExitDOM` we register/deregister this function with the `ResizeHandler` helper class.
 
-Then, whenever the component resizes, the `ResizeHandler` will trigger the callback, the metadata `_width` property will be updated to a new value in `_onResize`,
-the component will be invalidated, and the template will be executed with the new value of `_width`, respectively `styles`. 
+Then, whenever the component resizes, the `ResizeHandler` will trigger the callback, the metadata `_width` property will be updated to a new value in `_onResize`, the component will be invalidated, and the template will be executed with the new value of `_width`, respectively `styles`. 
