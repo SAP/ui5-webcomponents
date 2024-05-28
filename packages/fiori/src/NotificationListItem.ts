@@ -1,5 +1,5 @@
 import {
-	isSpace, isEnter, isDelete, isF10Shift, isEnterShift,
+	isSpace, isDelete, isF10Shift, isEnterShift, isUp, isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -18,6 +18,7 @@ import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationList from "./NotificationList.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -480,15 +481,46 @@ class NotificationListItem extends NotificationListItemBase {
 		this._showMorePressed = !this._showMorePressed;
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
-
-		if (isEnter(e)) {
-			this.fireItemPress(e);
-		}
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (isF10Shift(e)) {
 			e.preventDefault();
+		}
+
+		this.focusSameItemOnNextRow(e);
+	}
+
+	focusSameItemOnNextRow(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+		if (!target || target.hasAttribute("ui5-menu-item")) {
+			return;
+		}
+
+		if (this.focused || (!isUp(e) && !isDown(e))) {
+			return;
+		}
+
+		e.preventDefault();
+		e.stopImmediatePropagation();
+
+		const list = this.closest("[ui5-notification-list]") as NotificationList;
+		if (!list) {
+			return;
+		}
+
+		const navItems = list.getEnabledItems();
+		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
+		const nextItem = navItems[index] as NotificationListItemBase;
+		if (!nextItem) {
+			return;
+		}
+
+		const sameItemOnNextRow = nextItem.getHeaderDomRef()!.querySelector(`.${target.className}`) as HTMLElement;
+		if (sameItemOnNextRow && sameItemOnNextRow.offsetParent) {
+			sameItemOnNextRow.focus();
+		} else {
+			nextItem.focus();
 		}
 	}
 
@@ -527,7 +559,8 @@ class NotificationListItem extends NotificationListItemBase {
 
 	openMenu() {
 		const menu = this.getMenu();
-		menu.showAt(this.menuButtonDOM);
+		menu.opener = this.menuButtonDOM;
+		menu.open = true;
 	}
 
 	getMenu() {

@@ -1,5 +1,8 @@
 import { assert } from "chai";
 
+const isMacOS = process.platform === 'darwin';
+const keyCtrlToPress = isMacOS ? 'Command' : 'Control';
+
 describe("MultiInput general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
@@ -120,6 +123,27 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await allTokens[3].getProperty("overflows"), `Token 3 should not overflow`);
 		assert.ok(await allTokens[4].getProperty("overflows"), `Token 4 should not overflow`);
 		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
+	});
+
+	it("Should create a token on change event", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+
+		const mi = await browser.$("#suggestion-token");
+		const input = await mi.shadow$("input");
+		const popover = await mi.shadow$("ui5-responsive-popover");
+
+		await input.click();
+		await input.keys("c");
+
+		assert.ok(await popover.getProperty("open"), "Suggestion popover is open");
+		let allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 0, "0 tokens");
+
+		await popover.$("ui5-li-suggestion-item").click();
+
+		allTokens = await mi.$$("ui5-token");
+		assert.notOk(await popover.getProperty("open"), "Suggestion popover is closed");
+		assert.strictEqual(allTokens.length, 1, "a token is added after change");
 	});
 
 	it ("Placeholder", async () => {
@@ -492,6 +516,40 @@ describe("Keyboard handling", () => {
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 	});
 
+	it("should focus token last token when caret is at the beginning of the value", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Backspace");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
+	it("should delete value on backspace", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys([keyCtrlToPress, "a"]);
+		await browser.keys("Backspace");
+
+		// Assert
+		assert.strictEqual(await input.getProperty("value"), "", "Value is deleted on Backspace");
+
+		await browser.keys("Backspace");
+
+		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
 	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
@@ -505,6 +563,28 @@ describe("Keyboard handling", () => {
 		// Assert
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+	});
+
+	it("should change input's value when set in selection change event", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+		const input = $("#suggestion-token");
+		const innerInput = input.shadow$("input");
+
+		await input.scrollIntoView();
+		await innerInput.click();
+		await innerInput.keys('a');
+		await innerInput.keys("Enter");
+
+		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
+		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
+
+		await innerInput.keys("ArrowLeft");
+
+		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
+
+		await innerInput.keys("ArrowRight");
+
+		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
 	});
 
 	it("should text field always when focus in" , async () => {

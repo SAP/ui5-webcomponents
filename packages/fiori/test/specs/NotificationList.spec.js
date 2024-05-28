@@ -31,10 +31,17 @@ describe("Notification List Item Tests", () => {
 
 		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'none', "The group is collapsed (items are not visible).");
 		// act
-		await thirdGroupRoot.click();
+		await thirdGroup.click(); // expand
+
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is expanded (items are visible).");
+		// act
+		await thirdGroup.click(); // collapse
+
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'none', "The group is collapsed (items are not visible).");
+		// act
 		await thirdGroupRoot.keys("ArrowRight");
 
-		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is collapsed (items are not visible).");
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is expanded (items are visible).");
 		// act
 		await thirdGroupRoot.keys("ArrowLeft");
 
@@ -220,7 +227,7 @@ describe("Notification List Item Tests", () => {
 			"The ariaDescribedBy text is correct.");
 		assert.strictEqual(await firstItemRoot.getAttribute("aria-level"), "2",
 			"The ariaLevel text is correct.");
-			
+
 	});
 
 	it("tests List Item ACC invisible texts", async () => {
@@ -298,7 +305,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "collapse arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Collapse", "The aria-label of the icon is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// act
@@ -308,10 +315,142 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "expand arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Expand", "The aria-label of the icon is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// reset
 		await groupItemHeader.click();
 	});
 });
+
+describe("Keyboard navigation", () => {
+	before(async () => {
+		await browser.url(`test/pages/NotificationList_test_page.html`);
+	});
+
+
+	it("Items navigation", async () => {
+		await browser.executeAsync(done => {
+			document.getElementById("nlgi1").focus();
+			done();
+		});
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nli3").isFocused(), "Second group first item is focused.");
+
+		await browser.keys("ArrowUp");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
+
+		await browser.keys("ArrowUp");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
+
+		await browser.keys("ArrowUp");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
+
+		await browser.keys("ArrowUp");
+		assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
+
+		await browser.keys("ArrowLeft");
+		assert.ok(await browser.$("#nlgi2").hasAttribute("collapsed"), "Second group is collapsed.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+
+		await browser.keys("ArrowLeft");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.notOk(await browser.$("#nlgi2").hasAttribute("collapsed"), "Second group is expanded.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+	});
+
+	it("Tab and F2 navigation", async () => {
+		await browser.$("#nli1").click();
+		await browser.keys("Tab");
+
+		let res = await browser.executeAsync(done => {
+			done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
+		});
+
+		assert.ok(res, "'show more' is focused.");
+
+		await browser.keys("Tab");
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
+		});
+
+		assert.ok(res, "'menu button' is focused.");
+
+		await browser.keys("Tab");
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli1").shadowRoot.querySelector("[close-btn]").matches(":focus"));
+		});
+
+		assert.ok(res, "'close button' is focused.");
+
+		await browser.keys("F2");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
+
+		await browser.keys("F2");
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
+		});
+
+		assert.ok(res, "'show more' is focused.");
+	});
+
+	it("Focusing same item on next row", async () => {
+		await browser.$("#nli1").click();
+		await browser.keys("Tab");
+		await browser.keys("ArrowDown");
+
+		let res = await browser.executeAsync(done => {
+			done(document.getElementById("nli2").shadowRoot.querySelector(".ui5-nli-footer-showMore").matches(":focus"));
+		});
+
+		assert.ok(res, "'show more' is focused.");
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+
+		await browser.keys("ArrowUp");
+		await browser.keys("Tab");
+		await browser.keys("Tab");
+
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli2").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
+		});
+
+		assert.ok(res, "'menu button' is focused.");
+
+		await browser.keys("ArrowUp");
+		res = await browser.executeAsync(done => {
+			done(document.getElementById("nli1").shadowRoot.querySelector(".ui5-nli-menu-btn").matches(":focus"));
+		});
+
+		assert.ok(res, "'menu button' is focused.");
+
+		await browser.keys("ArrowUp");
+		assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
+	});
+});
+
