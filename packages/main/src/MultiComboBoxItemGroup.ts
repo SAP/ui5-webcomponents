@@ -7,7 +7,7 @@ import MultiComboBoxItem from "./MultiComboBoxItem.js";
 
 /**
  * @class
- * The `ui5-mcb-group` is type of suggestion item,
+ * The `ui5-mcb-item-group` is type of suggestion item,
  * that can be used to split the `ui5-multi-combobox` suggestions into groups.
  * @constructor
  * @extends UI5Element
@@ -16,8 +16,8 @@ import MultiComboBoxItem from "./MultiComboBoxItem.js";
  * @implements {IMultiComboBoxItem}
  * @since 2.0
  */
-@customElement("ui5-mcb-group")
-class MultiComboBoxGroup extends UI5Element implements IMultiComboBoxItem {
+@customElement("ui5-mcb-item-group")
+class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
 	/**
 	 * Defines the text of the component.
 	 * @default ""
@@ -27,7 +27,7 @@ class MultiComboBoxGroup extends UI5Element implements IMultiComboBoxItem {
 	text!: string;
 
 	/**
-	 * Defines the items of the <code>ui5-mcb-group</code>.
+	 * Defines the items of the <code>ui5-mcb-item-group</code>.
 	 * @public
 	 */
 	@slot({
@@ -54,13 +54,12 @@ class MultiComboBoxGroup extends UI5Element implements IMultiComboBoxItem {
 	}
 }
 
-MultiComboBoxGroup.define();
+MultiComboBoxItemGroup.define();
 
-
-const isInstanceOfMultiComboBoxItemGroup = (object: any): object is MultiComboBoxGroup => {
-	return "isGroupItem" in object && object.isGroupItem;
+const isInstanceOfMultiComboBoxItemGroup = (object: any): object is MultiComboBoxItemGroup => {
+	return "isGroupItem" in object;
 };
 
-export default MultiComboBoxGroup;
+export default MultiComboBoxItemGroup;
 
 export { isInstanceOfMultiComboBoxItemGroup };

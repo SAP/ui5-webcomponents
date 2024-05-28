@@ -57,7 +57,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
-import MultiComboBoxGroup, { isInstanceOfMultiComboBoxItemGroup } from "./MultiComboBoxGroup.js";
+import MultiComboBoxItemGroup, { isInstanceOfMultiComboBoxItemGroup } from "./MultiComboBoxItemGroup.js";
 import ListItemGroup from "./ListItemGroup.js";
 import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
@@ -189,7 +189,7 @@ type MultiComboboxItemWithSelection = {
 	],
 	dependencies: [
 		MultiComboBoxItem,
-		MultiComboBoxGroup,
+		MultiComboBoxItemGroup,
 		Tokenizer,
 		Token,
 		Icon,
@@ -815,7 +815,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_selectItems(matchingItems: IMultiComboBoxItem[]) {
 		this._previouslySelectedItems = this._getSelectedItems();
-debugger;
+
 		matchingItems.forEach(item => {
 			item.selected = true;
 			this.value = "";
@@ -1319,7 +1319,7 @@ debugger;
 	_filterItems(str: string) {
 		const itemsToFilter = this.getItems().filter(item => !item.isGroupItem);
 		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
-debugger;
+
 		// Return the filtered items and their group items
 		return this.getItems().filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
 	}
@@ -1364,7 +1364,7 @@ debugger;
 	getItems(): Array<IMultiComboBoxItem> {
 		const items: IMultiComboBoxItem[] = [];
 		const slottedItems = this.getSlottedNodes<IMultiComboBoxItem>("items");
-debugger;
+
 		slottedItems.forEach(item => {
 			if (isInstanceOfMultiComboBoxItemGroup(item)) {
 				const groupItems = [item, ...item.items].filter(Boolean);
@@ -1373,7 +1373,7 @@ debugger;
 				items.push(item);
 			}
 		});
-console.log(items)
+
 		return items;
 	}
 
@@ -1965,7 +1965,7 @@ console.log(items)
 	get selectAllCheckboxLabel() {
 		const items = this.getItems().filter(item => !item.isGroupItem);
 		const selected = items.filter(item => item.selected);
-		debugger;
+
 		return MultiComboBox.i18nBundle.getText(MCB_SELECTED_ITEMS, selected.length, items.length);
 	}
 
