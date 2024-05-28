@@ -157,7 +157,15 @@ class DynamicPageTitle extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	snappedContent!: HTMLElement[];
+	subheading!: HTMLElement[];
+
+	/**
+	 * Defines the content of the title that is shown only when the header is snapped.
+	 *
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	snappedSubheading!: HTMLElement[];
 
 	/**
 	 * Defines the content of the breadcrumbs inside Dynamic Page Title.
@@ -223,8 +231,8 @@ class DynamicPageTitle extends UI5Element {
 		return "snappedHeading";
 	}
 
-	get contentSlotName() {
-		return !this.snapped ? "content" : "snappedContent";
+	get subheadingSlotName() {
+		return !this.snapped ? "subheading" : "snappedSubheading";
 	}
 
 	get _tabIndex() {

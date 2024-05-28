@@ -62,7 +62,7 @@
 
 /* subheading / expanded & snapped content */
 ::slotted([slot="content"]),
-::slotted([slot="snappedContent"]) {
+::slotted([slot="snappedSubheading"]) {
     color: var(--sapObjectHeader_Subtitle_TextColor);
     font-size: var(--sapFontSize);
     margin-top: var(--_ui5_dynamic_page_title_subheading_margin_top);
