@@ -18,7 +18,7 @@ import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import type NotificationList from "./NotificationList.js";
+import type NotificationListList from "./NotificationListList.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -504,12 +504,12 @@ class NotificationListItem extends NotificationListItemBase {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
-		const list = this.closest("[ui5-notification-list]") as NotificationList;
+		const list = this.closest("[ui5-notification-list-list]") as NotificationListList;
 		if (!list) {
 			return;
 		}
 
-		const navItems = list.navigationItems;
+		const navItems = list.getEnabledItems();
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {

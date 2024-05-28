@@ -499,7 +499,6 @@ class List extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
-	customNavigationItems?: Array<ListItemBase>;
 
 	onItemFocusedBound: (e: CustomEvent) => void;
 	onForwardAfterBound: (e: CustomEvent) => void;
@@ -854,7 +853,7 @@ class List extends UI5Element {
 	}
 
 	getEnabledItems(): Array<ListItemBase> {
-		return this.customNavigationItems || this.getItems().filter(item => item._focusable);
+		return this.getItems().filter(item => item._focusable);
 	}
 
 	getItems(): Array<ListItemBase> {

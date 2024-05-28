@@ -4,19 +4,15 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ListGrowingMode from "@ui5/webcomponents/dist/types/ListGrowingMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import List from "@ui5/webcomponents/dist/List.js";
 import type {
 	ListItemClickEventDetail,
 	ListItemToggleEventDetail,
 	ListItemCloseEventDetail,
 } from "@ui5/webcomponents/dist/List.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import NotificationListGroupItem from "./NotificationListGroupItem.js";
+import NotificationListList from "./NotificationListList.js";
 
 // Template
 import NotificationListTemplate from "./generated/templates/NotificationListTemplate.lit.js";
@@ -55,7 +51,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 	styles: [],
 	template: NotificationListTemplate,
 	dependencies: [
-		List,
+		NotificationListList,
 	],
 })
 
@@ -134,22 +130,6 @@ class NotificationList extends UI5Element {
 	}
 
 	static i18nFioriBundle: I18nBundle;
-
-	get navigationItems(): Array<ListItemBase> {
-		const items = new Array<NotificationListItemBase>();
-
-		this.items.forEach(item => {
-			items.push(item);
-
-			if (item instanceof NotificationListGroupItem && !item.collapsed) {
-				item.items.forEach(subItem => {
-					items.push(subItem);
-				});
-			}
-		});
-
-		return items;
-	}
 
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
