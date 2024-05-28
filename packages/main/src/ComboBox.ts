@@ -76,7 +76,8 @@ import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
-import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
+import ComboBoxItemGroup, { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
+import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -92,10 +93,12 @@ const SKIP_ITEMS_SIZE = 10;
 interface IComboBoxItem extends UI5Element {
 	text: string,
 	focused: boolean,
-	isGroupItem: boolean,
+	isGroupItem?: boolean,
 	selected?: boolean,
 	additionalText?: string,
 	stableDomRef: string,
+	_isVisible?: boolean,
+	items?: Array<IComboBoxItem>
 }
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
@@ -175,9 +178,10 @@ type ComboBoxSelectionChangeEventDetail = {
 		BusyIndicator,
 		Button,
 		StandardListItem,
+		ListItemGroup,
 		ListItemGroupHeader,
 		Popover,
-		ComboBoxGroupItem,
+		ComboBoxItemGroup,
 		Input,
 		SuggestionItem,
 	],
@@ -453,8 +457,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if (this.open && !this._isKeyNavigation) {
 			const items = this._filterItems(this.filterValue);
+			this._filteredItems = (items.length && items) || [];
+		}
 
-			this._filteredItems = items.length ? items : this.items;
+		const hasNoVisibleItems = !this._filteredItems.length || !this._filteredItems.some(i => i._isVisible);
+
+		// If there is no filtered items matching the value, show all items when the arrow is pressed
+		if (((hasNoVisibleItems && !isPhone()) && this.value)) {
+			this.items.forEach(this._makeAllVisible.bind(this));
+			this._filteredItems = this.items;
 		}
 
 		if (this.shouldOpenValueStateMessagePopover) {
@@ -591,6 +602,19 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._selectMatchingItem();
 	}
 
+	_resetItemVisibility() {
+		this.items.forEach(item => {
+			if (isInstanceOfComboBoxItemGroup(item)) {
+				item.items?.forEach(i => {
+					i._isVisible = false;
+				});
+				return;
+			}
+
+			item._isVisible = false;
+		});
+	}
+
 	_arrowClick() {
 		this.inner.focus();
 		this._resetFilter();
@@ -673,36 +697,57 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
-		return Filters.StartsWith(str, this._filteredItems, "text");
+		const allItems:Array<IComboBoxItem> = this._getItems();
+		return Filters.StartsWith(str, allItems, "text");
 	}
 
 	_clearFocus() {
-		this._filteredItems.map(item => {
+		const allItems = this._getItems();
+
+		allItems.map(item => {
 			item.focused = false;
 
 			return item;
 		});
 	}
 
+	// Get groups and items as a flat array for filtering
+	_getItems() {
+		const allItems: Array<IComboBoxItem> = [];
+
+		this._filteredItems.forEach(item => {
+			if (isInstanceOfComboBoxItemGroup(item)) {
+				const groupedItems = [item, ...item.items];
+				allItems.push(...groupedItems);
+				return;
+			}
+
+			allItems.push(item);
+		});
+
+		return allItems;
+	}
+
 	handleNavKeyPress(e: KeyboardEvent) {
+		const allItems = this._getItems();
+
 		if (this.focused && (isHome(e) || isEnd(e)) && this.value) {
 			return;
 		}
 
 		const isOpen = this.open;
-		const currentItem = this._filteredItems.find(item => {
+		const currentItem = allItems.find(item => {
 			return isOpen ? item.focused : item.selected;
 		});
 
-		const indexOfItem = currentItem ? this._filteredItems.indexOf(currentItem) : -1;
-
+		const indexOfItem = currentItem ? allItems.indexOf(currentItem) : -1;
 		e.preventDefault();
 
 		if (this.focused && isOpen && (isUp(e) || isPageUp(e) || isPageDown(e))) {
 			return;
 		}
 
-		if (this._filteredItems.length - 1 === indexOfItem && isDown(e)) {
+		if (allItems.length - 1 === indexOfItem && isDown(e)) {
 			return;
 		}
 
@@ -721,10 +766,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean) {
+		const allItems = this._getItems();
+
 		const isOpen = this.open;
-		const currentItem = this._filteredItems[indexOfItem];
-		const nextItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
+		const currentItem: IComboBoxItem = allItems[indexOfItem];
 		const isGroupItem = currentItem && currentItem.isGroupItem;
+		const nextItem = isForward ? allItems[indexOfItem + 1] : allItems[indexOfItem - 1];
 
 		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
 			return;
@@ -736,6 +783,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this._itemFocused = true;
 			this.value = isGroupItem ? "" : currentItem.text;
 			this.focused = false;
+
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
@@ -751,7 +799,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		if (isGroupItem && isOpen) {
 			return;
 		}
-
 		// autocomplete
 		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false);
 
@@ -769,7 +816,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if (value !== "" && !item.selected && (!checkForGroupItem || !item.isGroupItem)) {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
-				item,
+				item: item as ComboBoxItem,
 			});
 		}
 	}
@@ -819,9 +866,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handlePageUp(e: KeyboardEvent, indexOfItem: number) {
+		const allItems = this._getItems();
 		const isProposedIndexValid = indexOfItem - SKIP_ITEMS_SIZE > -1;
 		indexOfItem = isProposedIndexValid ? indexOfItem - SKIP_ITEMS_SIZE : 0;
-		const shouldMoveForward = this._filteredItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = isInstanceOfComboBoxItemGroup(allItems[indexOfItem]) && !this.open;
 
 		if (!isProposedIndexValid && this.hasValueStateText && this.open) {
 			this._clearFocus();
@@ -835,17 +883,18 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handlePageDown(e: KeyboardEvent, indexOfItem: number) {
-		const itemsLength = this._filteredItems.length;
+		const allItems = this._getItems();
+		const itemsLength = allItems.length;
 		const isProposedIndexValid = indexOfItem + SKIP_ITEMS_SIZE < itemsLength;
 
 		indexOfItem = isProposedIndexValid ? indexOfItem + SKIP_ITEMS_SIZE : itemsLength - 1;
-		const shouldMoveForward = this._filteredItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = isInstanceOfComboBoxItemGroup(allItems[indexOfItem]) && !this.open;
 
 		this._handleItemNavigation(e, indexOfItem, shouldMoveForward);
 	}
 
 	_handleHome(e: KeyboardEvent) {
-		const shouldMoveForward = this._filteredItems[0].isGroupItem && !this.open;
+		const shouldMoveForward = isInstanceOfComboBoxItemGroup(this._filteredItems[0]) && !this.open;
 
 		if (this.hasValueStateText && this.open) {
 			this._clearFocus();
@@ -859,7 +908,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleEnd(e: KeyboardEvent) {
-		this._handleItemNavigation(e, this._filteredItems.length - 1, true /* isForward */);
+		this._handleItemNavigation(e, this._getItems().length - 1, true /* isForward */);
 	}
 
 	_keyup() {
@@ -869,6 +918,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_keydown(e: KeyboardEvent) {
 		const isNavKey = isDown(e) || isUp(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e);
 		const picker = this._getPicker();
+		const allItems: Array<IComboBoxItem> = this._getItems();
 
 		this._autocomplete = !(isBackSpace(e) || isDelete(e));
 		this._isKeyNavigation = false;
@@ -878,8 +928,16 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if (isEnter(e)) {
-			const focusedItem = this._filteredItems.find(item => {
-				return item.focused;
+			let focusedItem: IComboBoxItem | undefined;
+
+			this._filteredItems.forEach(item => {
+				if (isInstanceOfComboBoxItemGroup(item) && !focusedItem) {
+					focusedItem = item.items.find(groupItem => groupItem.focused);
+				}
+
+				if (item.focused) {
+					focusedItem = item;
+				}
 			});
 
 			this._fireChangeEvent();
@@ -909,7 +967,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this._resetFilter();
 			this._toggleRespPopover();
 
-			const selectedItem = this._filteredItems.find(item => {
+			const selectedItem = allItems.find(item => {
 				return item.selected;
 			});
 
@@ -958,46 +1016,54 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_filterItems(str: string) {
-		const itemsToFilter = this.items.filter(item => !item.isGroupItem);
-		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
+		let filteredItem:IComboBoxItem;
+		let filteredGroupItems: Array<IComboBoxItem> = [];
+		const filteredItems: Array<IComboBoxItem> = [];
+		const filteredItemGroups: Array<IComboBoxItem> = [];
 
-		// Return the filtered items and their group items
-		return this.items.filter((item, idx, allItems) => ComboBox._groupItemFilter(item, ++idx, allItems, filteredItems) || filteredItems.indexOf(item) !== -1);
-	}
+		this._resetItemVisibility();
+		this.items.forEach(item => {
+			if (isInstanceOfComboBoxItemGroup(item)) {
+				filteredGroupItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, item.items, "text");
+				filteredGroupItems.forEach(i => {
+					i._isVisible = true;
+				});
 
-	/**
-	 * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
-	 * @private
-	 */
-	static _groupItemFilter(item: IComboBoxItem, idx: number, allItems: Array<IComboBoxItem>, filteredItems: Array<IComboBoxItem>) {
-		if (item.isGroupItem) {
-			let groupHasFilteredItems;
+				if (filteredGroupItems.length) {
+					filteredItemGroups.push(item);
+				}
 
-			while (allItems[idx] && !allItems[idx].isGroupItem && !groupHasFilteredItems) {
-				groupHasFilteredItems = filteredItems.indexOf(allItems[idx]) !== -1;
-				idx++;
+				return;
 			}
 
-			return groupHasFilteredItems;
-		}
+			[filteredItem] = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, [item], "text");
+
+			if (filteredItem) {
+				filteredItem._isVisible = true;
+				filteredItems.push(filteredItem);
+			}
+		});
+
+		return [...filteredItemGroups, ...filteredItems];
 	}
 
-	_getFirstMatchingItem(current: string): ComboBoxItem | undefined {
-		const currentlyFocusedItem = this.items.find(item => item.focused === true);
+	_getFirstMatchingItem(current: string): IComboBoxItem | void {
+		const allItems = this._getItems();
+		const currentlyFocusedItem = allItems.find(item => item.focused === true);
 
 		if (currentlyFocusedItem?.isGroupItem) {
 			this.value = this.filterValue;
 			return;
 		}
 
-		const matchingItems: Array<ComboBoxItem> = (this._startsWithMatchingItems(current).filter(item => !item.isGroupItem) as Array<ComboBoxItem>);
+		const matchingItems: Array<IComboBoxItem> = (this._startsWithMatchingItems(current).filter(item => !isInstanceOfComboBoxItemGroup(item)));
 
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
 	}
 
-	_applyAtomicValueAndSelection(item: ComboBoxItem, filterValue: string) {
+	_applyAtomicValueAndSelection(item: IComboBoxItem, filterValue: string) {
 		const value = (item && item.text) || "";
 
 		this.inner.value = value;
@@ -1008,13 +1074,24 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_selectMatchingItem() {
 		const currentlyFocusedItem = this.items.find(item => item.focused);
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
+		let itemToBeSelected: IComboBoxItem | undefined;
 
-		const itemToBeSelected = this._filteredItems.find(item => {
-			return !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+		this._filteredItems.forEach(item => {
+			if (!shouldSelectionBeCleared && !itemToBeSelected) {
+				itemToBeSelected = ((!item.isGroupItem && (item.text === this.value)) ? item : item?.items?.find(i => i.text === this.value));
+			}
 		});
 
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = item === itemToBeSelected;
+			if (!isInstanceOfComboBoxItemGroup(item)) {
+				item.selected = item === itemToBeSelected;
+				return item;
+			}
+
+			item.items?.forEach(groupItem => {
+				groupItem.selected = itemToBeSelected === groupItem;
+			});
+
 			return item;
 		});
 	}
@@ -1073,9 +1150,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_announceSelectedItem(indexOfItem: number) {
-		const currentItem = this._filteredItems[indexOfItem];
-		const nonGroupItems = this._filteredItems.filter(item => !item.isGroupItem);
-		const currentItemAdditionalText = currentItem.additionalText || "";
+		const allItems = this._getItems();
+		const currentItem = allItems[indexOfItem];
+		const nonGroupItems = allItems.filter(item => !item.isGroupItem);
+		const currentItemAdditionalText = currentItem?.additionalText || "";
 		const isGroupItem = currentItem?.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, nonGroupItems.indexOf(currentItem) + 1, nonGroupItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
@@ -1088,7 +1166,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_clear() {
-		const selectedItem = this.items.find(item => item.selected) as (ComboBoxItem | undefined);
+		const selectedItem = this.items.find(item => item.selected);
 
 		if (selectedItem?.text === this.value) {
 			this.fireEvent("change");
@@ -1105,10 +1183,21 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	_makeAllVisible(item: IComboBoxItem) {
+		if (isInstanceOfComboBoxItemGroup(item)) {
+			item.items.forEach(groupItem => {
+				groupItem._isVisible = true;
+			});
+			return;
+		}
+
+		item._isVisible = true;
+	}
+
 	_scrollToItem(indexOfItem: number, forward: boolean) {
 		const picker = this._getPicker();
 		const list = picker.querySelector(".ui5-combobox-items-list") as List;
-		const listItem = list?.items[indexOfItem];
+		const listItem = list?.listItems[indexOfItem];
 
 		if (listItem) {
 			const pickerRect = picker.getBoundingClientRect();

@@ -243,9 +243,9 @@ describe("Picker filtering", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 8, "All of the items are shown (8)");
+		assert.strictEqual(await dialogList.$$('ui5-li').length, 9, "All of the items are shown (8)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 3, "There are 3 filtered items");
+		assert.strictEqual(await dialogList.$$('ui5-li').length, 4, "There are 4 filtered items");
 	});
 
 	it("Should filter group header list items", async () => {
@@ -259,9 +259,9 @@ describe("Picker filtering", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 3, "All of the group header list items are shown (3)");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 3, "All of the group header list items are shown (3)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is only 1 visible group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 2, "There is only 1 visible group");
 	});
 });
 
