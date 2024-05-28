@@ -152,7 +152,7 @@ class DynamicPageTitle extends UI5Element {
 	content!: HTMLElement[];
 
 	/**
-	 * Defines the content of the title that is shown only when the header is snapped.
+	 * Defines the content of the title that is shown only when the header is not snapped.
 	 *
 	 * @public
 	 */
