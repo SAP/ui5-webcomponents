@@ -54,8 +54,9 @@ class CustomListItem extends ListItem {
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+		const isFocused = document.activeElement === this;
 
-		if (!isTab && !this.focused && !isF2(e)) {
+		if (!isTab && !isFocused && !isF2(e)) {
 			return;
 		}
 
@@ -64,8 +65,9 @@ class CustomListItem extends ListItem {
 
 	_onkeyup(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+		const isFocused = document.activeElement === this;
 
-		if (!isTab && !this.focused) {
+		if (!isTab && !isFocused && !isF2(e)) {
 			return;
 		}
 
