@@ -115,6 +115,9 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (getEventMark(e) === "button") {
+			return;
+		}
 		if (isTabNext(e)) {
 			return this._handleTabNext(e);
 		}
@@ -133,6 +136,9 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		if (getEventMark(e) === "button") {
+			return;
+		}
 		if (isSpace(e)) {
 			this.fireItemPress(e);
 		}

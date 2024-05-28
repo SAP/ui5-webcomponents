@@ -280,24 +280,6 @@ class MenuItem extends ListItem {
 	_afterPopoverClose() {
 		this.fireEvent("close", {}, false, false);
 	}
-
-	/**
-	 * Prevents menu closing when pressing Enter or Space over components inside the endContent slot.
-	 */
-	async _onkeydown(e: KeyboardEvent): Promise<void> {
-		if ((e.target as Node).nodeName.toLowerCase() === "li") {
-			await super._onkeydown(e);
-		}
-	}
-
-	/**
-	 * Prevents menu closing when pressing Space over components inside the endContent slot.
-	 */
-	_onkeyup(e: KeyboardEvent): void {
-		if ((e.target as Node).nodeName.toLowerCase() === "li" && isSpace(e)) {
-			super._onkeyup(e);
-		}
-	}
 }
 
 MenuItem.define();
