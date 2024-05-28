@@ -117,7 +117,7 @@ describe("Panel general interaction", () => {
 	});
 
 	it("tests toggle expand/collapse animation", async () => {
-		const panelWithAnimationIcon = await browser.$("#panel-expandable").shadow$(".ui5-panel-header-button");
+		const panelWithAnimationIcon = await browser.$("#panel-stickyHeader").shadow$(".ui5-panel-header-button");
 		const panelWithoutAnimationIcon = await browser.$("#p1").shadow$(".ui5-panel-header-button");
 
 		assert.ok(await panelWithAnimationIcon.hasClass("ui5-panel-header-button-animated"), "Animation is presented");

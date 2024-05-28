@@ -177,9 +177,24 @@ class ColorPalettePopover extends UI5Element {
 		this.fireEvent("close");
 	}
 
+	onAfterOpen() {
+		const colorPalette = this._colorPalette;
+		if (colorPalette.showDefaultColor && !colorPalette._currentlySelected) {
+			colorPalette.colorPaletteNavigationElements[0].focus();
+		} else if (colorPalette._shouldFocusRecentColors && colorPalette.showRecentColors) {
+			colorPalette.recentColorsElements[0].focus();
+		} else {
+			colorPalette._currentlySelected?.focus();
+		}
+	}
+
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
 		this.fireEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
+	}
+
+	get _colorPalette() {
+		return this.responsivePopover.content[0].querySelector<ColorPalette>("[ui5-color-palette]")!;
 	}
 
 	/**

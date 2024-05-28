@@ -20,8 +20,8 @@ import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,
 	NOTIFICATION_LIST_GROUP_COLLAPSED,
 	NOTIFICATION_LIST_GROUP_EXPANDED,
-	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE,
-	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -133,12 +133,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		});
 	}
 
-	get toggleBtnAccessibleName() {
+	get toggleIconAccessibleName() {
 		if (this.collapsed) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE);
 		}
 
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE);
 	}
 
 	get accInvisibleText() {
@@ -175,12 +175,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
 	}
 
-	get groupCollapsedTooltip() {
-		// eslint-disable-next-line
-		// ToDo: edit and add translation when spec is ready
-		return this.collapsed ? "expand arrow" : "collapse arrow";
-	}
-
 	toggleCollapsed() {
 		this.collapsed = !this.collapsed;
 		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
@@ -195,11 +189,11 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
-		await super._onkeydown(e);
-
 		if (!this.focused) {
 			return;
 		}
+
+		await super._onkeydown(e);
 
 		const space = isSpace(e);
 		const plus = isPlus(e);
@@ -215,6 +209,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// expand
 			if (this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 
@@ -222,6 +217,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// collapse
 			if (!this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 	}

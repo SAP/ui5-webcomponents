@@ -31,10 +31,17 @@ describe("Notification List Item Tests", () => {
 
 		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'none', "The group is collapsed (items are not visible).");
 		// act
-		await thirdGroupRoot.click();
+		await thirdGroup.click(); // expand
+
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is expanded (items are visible).");
+		// act
+		await thirdGroup.click(); // collapse
+
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'none', "The group is collapsed (items are not visible).");
+		// act
 		await thirdGroupRoot.keys("ArrowRight");
 
-		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is collapsed (items are not visible).");
+		assert.strictEqual((await thirdGroupList.getCSSProperty("display")).value, 'block', "The group is expanded (items are visible).");
 		// act
 		await thirdGroupRoot.keys("ArrowLeft");
 
@@ -298,7 +305,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "collapse arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Collapse", "The aria-label of the icon is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// act
@@ -308,7 +315,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "expand arrow", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Expand", "The aria-label of the icon is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// reset
@@ -351,6 +358,29 @@ describe("Keyboard navigation", () => {
 
 		await browser.keys("ArrowUp");
 		assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nli1").isFocused(), "First item is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
+
+		await browser.keys("ArrowLeft");
+		assert.ok(await browser.$("#nlgi2").hasAttribute("collapsed"), "Second group is collapsed.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+
+		await browser.keys("ArrowLeft");
+		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
+
+		await browser.keys("ArrowRight");
+		assert.notOk(await browser.$("#nlgi2").hasAttribute("collapsed"), "Second group is expanded.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
 	});
 
 	it("Tab and F2 navigation", async () => {
