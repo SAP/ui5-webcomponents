@@ -118,6 +118,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 			return this._handleTabPrevious(e);
 		}
 
+		if (getEventMark(e) === "button") {
+			return;
+		}
+
 		if (isSpace(e)) {
 			e.preventDefault();
 		}

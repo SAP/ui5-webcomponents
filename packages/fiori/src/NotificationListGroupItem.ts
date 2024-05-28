@@ -189,12 +189,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
-		await super._onkeydown(e);
-
 		const isFocused = document.activeElement === this;
 		if (!isFocused) {
 			return;
 		}
+
+		await super._onkeydown(e);
 
 		const space = isSpace(e);
 		const plus = isPlus(e);
@@ -210,6 +210,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// expand
 			if (this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 
@@ -217,6 +218,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// collapse
 			if (!this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 	}
