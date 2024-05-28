@@ -1040,7 +1040,7 @@ describe("Keyboard navigation", async () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
-		let listItem, prevListItem;
+		let prevListItem;
 
 		await input.click();
 		await input.keys("ArrowDown");
@@ -1068,6 +1068,28 @@ describe("Keyboard navigation", async () => {
 		prevListItem = await popover.$("ui5-list").$$("ui5-li")[5];
 
 		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
+	});
+
+	it ("Navigates back and forward through items in multiple groups", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#value-state-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$(".inputIcon");
+
+		await input.click();
+
+		for (let i = 0; i < 5; i++) {
+			await input.keys("ArrowDown");
+		}
+
+		assert.equal(await combo.getProperty("value"), "Bahrain", "The value is updated with the first suggestion item of the second group");
+
+		for (let i = 0; i < 4; i++) {
+			await input.keys("ArrowUp");
+		}
+
+		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is updated with the first suggestion item of the first group");
 	});
 
 	it ("Should focus the next/previous focusable element on TAB/SHIFT+TAB",  async () => {
@@ -1143,6 +1165,36 @@ describe("Keyboard navigation", async () => {
 		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
 	});
 
+	it ("Should select previous item when the last suggestion is selected and the picker is closed",  async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+
+		await combo.click();
+		await combo.keys("PageDown");
+		await combo.keys("PageDown");
+		await combo.keys("ArrowUp");
+
+		assert.strictEqual(await combo.getProperty("value"), "Albania", "The value is updated correctly");
+	});
+
+	it ("Should keep the value from the selected items after closing the picker",  async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$(".inputIcon");
+
+		await arrow.click();
+		await combo.keys("ArrowDown");
+		await combo.keys("ArrowDown");
+
+		assert.strictEqual(await combo.getProperty("value"), "Algeria", "The value is updated correctly");
+
+		await combo.keys("F4");
+
+		assert.strictEqual(await combo.getProperty("value"), "Algeria", "The value remains in the input field after picker is closed");
+	});
+
 	it ("Should select first matching item",  async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -1216,7 +1268,7 @@ describe("Keyboard navigation", async () => {
 				!isElementBelowViewport &&
 				!isElementLeftOfViewport &&
 				!isElementRightOfViewport
-		);
+			);
 
 			done(isListItemInVisibleArea);
 		});
@@ -1245,12 +1297,64 @@ describe("Keyboard navigation", async () => {
 				!isElementBelowViewport &&
 				!isElementLeftOfViewport &&
 				!isElementRightOfViewport
-		);
+			);
 
 			done(isListItemInVisibleArea);
 		});
 
 		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
+
+		await input.keys("Home");
+
+		let isFirstItemInVisibleArea = await browser.executeAsync(async done => {
+			const combobox = document.getElementById("combo-grouping");
+			const picker = await combobox._getPicker();
+			const firstListItem = picker.querySelector(".ui5-combobox-items-list ui5-li-group:first-child ui5-li:first-child");
+			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+			const firstItemBoundingClientRect = firstListItem.getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isFirstItemAboveViewport = firstItemBoundingClientRect.bottom < scrollableRect.top;
+			const isFirstItemBelowViewport = firstItemBoundingClientRect.top > scrollableRect.bottom;
+			const isFirstItemLeftOfViewport = firstItemBoundingClientRect.right < scrollableRect.left;
+			const isFirstItemRightOfViewport = firstItemBoundingClientRect.left > scrollableRect.right;
+
+			const isFirstItemInVisibleArea =  (
+				!isFirstItemAboveViewport &&
+				!isFirstItemBelowViewport &&
+				!isFirstItemLeftOfViewport &&
+				!isFirstItemRightOfViewport
+			);
+
+			done(isFirstItemInVisibleArea);
+			});
+
+		assert.ok(isFirstItemInVisibleArea, "The first item should be displayed in the viewport");
+
+		let isLastItemInVisibleArea = await browser.executeAsync(async done => {
+			const combobox = document.getElementById("combo-grouping");
+			const picker = await combobox._getPicker();
+			const lastListItem = picker.querySelector(".ui5-combobox-items-list ui5-li-group:first-child ui5-li:first-child");
+			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+			const lastItemBoundingClientRect = lastListItem.getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isLastItemAboveViewport = lastItemBoundingClientRect.bottom < scrollableRect.top;
+			const isLastItemBelowViewport = lastItemBoundingClientRect.top > scrollableRect.bottom;
+			const isLastItemLeftOfViewport = lastItemBoundingClientRect.right < scrollableRect.left;
+			const isLastItemRightOfViewport = lastItemBoundingClientRect.left > scrollableRect.right;
+
+			const isLastItemInVisibleArea =  (
+				!isLastItemAboveViewport &&
+				!isLastItemBelowViewport &&
+				!isLastItemLeftOfViewport &&
+				!isLastItemRightOfViewport
+			);
+
+			done(isLastItemInVisibleArea);
+			});
+
+		assert.ok(isLastItemInVisibleArea, "The first item should be displayed in the viewport");
 	});
 
 	it ("Should get the physical DOM reference for the cb item", async () => {
