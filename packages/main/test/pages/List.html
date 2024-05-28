@@ -14,6 +14,32 @@
 </head>
 
 <body class="list1auto">
+	<div id="host">
+		<template shadowrootmode="open">
+		   <span>I'm in the shadow DOM</span>
+		   <ui5-list header-text="API: CustomListItem" selection-mode="SingleEnd">
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+		   </ui5-list>
+		</template>
+	</div>
+
 	<ui5-title>List growing="Scroll"</ui5-title>
 	<label class="list2auto">new items loaded:</label>
 	<label id="result" class="list2auto"> 0 times: 0</label>

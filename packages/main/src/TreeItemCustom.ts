@@ -52,9 +52,8 @@ class TreeItemCustom extends TreeItemBase {
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
-		const isFocused = document.activeElement === this;
 
-		if (!isTab && !isFocused && !isF2(e)) {
+		if (!isTab && !isF2(e)) {
 			return;
 		}
 
@@ -63,9 +62,8 @@ class TreeItemCustom extends TreeItemBase {
 
 	_onkeyup(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
-		const isFocused = document.activeElement === this;
 
-		if (!isTab && !isFocused && !isF2(e)) {
+		if (!isTab && !isF2(e)) {
 			return;
 		}
 
