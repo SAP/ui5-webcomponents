@@ -298,7 +298,7 @@ describe("Notification List Item Tests", () => {
 		var btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
 		var btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
 
-		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'More button. Show the full text', "The aria-label is correct.");
+		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'More button. Show the full texts', "The aria-label is correct.");
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("role"), 'button', "The role is correct.");
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-expanded"), 'false', "The aria-expanded is correct.");
 
@@ -309,7 +309,7 @@ describe("Notification List Item Tests", () => {
 		btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
 		btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
 
-		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'Less button. Show the text with truncation', "The aria-label is correct.");
+		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'Less button. Show the texts with truncation', "The aria-label is correct.");
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("role"), 'button', "The role is correct.");
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-expanded"), 'true', "The aria-expanded is correct.");
 	});
@@ -359,7 +359,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "true", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Expand/Collapse", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("title"), "Expand/Collapse", "The title of the header is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// act
@@ -369,7 +369,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-expanded"), "false", "The aria-expanded value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("aria-controls"), groupItemsList2ID, "The aria-controls value is correct.");
 		assert.strictEqual(await groupItemHeader.getAttribute("role"), "button", "The tooltip value is correct.");
-		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-label"), "Expand/Collapse", "The aria-label of the icon is correct.");
+		assert.strictEqual(await groupItemHeader.getAttribute("title"), "Expand/Collapse", "The title of the header is correct.");
 		assert.strictEqual(await groupItemHeaderIcon.getAttribute("aria-hidden"), "true", "The aria-hidden of the icon is correct.");
 
 		// reset

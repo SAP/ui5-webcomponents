@@ -13,11 +13,12 @@
 		@keydown="{{_onkeydown}}"
 		role="button"
 		aria-expanded="{{_ariaExpanded}}"
-		aria-controls="{{_id}}-notificationsList">
+		aria-controls="{{_id}}-notificationsList"
+		title="{{toggleIconAccessibleName}}">
 		<ui5-icon
 			name={{groupCollapsedIcon}}
-			show-tooltip="true"
-			accessible-name={{toggleIconAccessibleName}}
+			{{!-- show-tooltip="true"
+			accessible-name={{toggleIconAccessibleName}} --}}
 			class="ui5-nli-group-toggle-icon"
 			mode="Decorative"
 		></ui5-icon>
