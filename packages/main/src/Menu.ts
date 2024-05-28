@@ -335,7 +335,7 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if ((e.target as Node).nodeName.toLowerCase() !=="ui5-menu-item") {
+		if ((e.target as Node).nodeName.toLowerCase() !== "ui5-menu-item") {
 			return;
 		}
 

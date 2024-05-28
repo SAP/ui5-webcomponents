@@ -5,6 +5,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
@@ -20,7 +21,6 @@ import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopove
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
