@@ -15,11 +15,13 @@ as this article will expand on many of the notions introduced there.
    - [Properties](#metadata_properties) 
    - [Slots](#metadata_slots) 
    - [Events](#metadata_events) 
-   - [Wrapping up metadata](#metadata_wrapping_up) 
+   - [Wrapping up metadata](#metadata_wrapping_up)
+
  [Understanding rendering](#rendering)
    - [What is rendering?](#rendering_def)
    - [Physical and logical components](#rendering_physical_logical)
    - [What is invalidation?](#invalidation)
+
  [Lifecycle hooks](#lifecycle)
    - [`constructor`](#lifecycle_constructor)
    - [`onBeforeRendering`](#lifecycle_before)
