@@ -17,6 +17,7 @@ import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
+import { IMenuItem } from "./Menu.js";
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
@@ -52,7 +53,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 	styles: [ListItem.styles, menuItemCss],
 	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
 })
-class MenuItem extends ListItem {
+class MenuItem extends ListItem implements IMenuItem {
 	static async onDefine() {
 		MenuItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -88,14 +89,6 @@ class MenuItem extends ListItem {
 	 */
 	@property()
 	icon!: string;
-
-	/**
-	 * Defines whether a visual separator should be rendered before the item.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	startsSection!: boolean;
 
 	/**
 	 * Defines whether `ui5-menu-item` is in disabled state.
@@ -196,6 +189,10 @@ class MenuItem extends ListItem {
 
 	get labelClose() {
 		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
+	}
+
+	get isSeparator() {
+		return false;
 	}
 
 	onBeforeRendering() {

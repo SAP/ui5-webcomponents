@@ -1,0 +1,13 @@
+:host {
+	height: 0.125rem;
+	border-top: 1px solid var(--sapGroup_ContentBorderColor);
+	cursor: default;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+:host([actionable]:not([disabled])) {
+	cursor: default;
+}
