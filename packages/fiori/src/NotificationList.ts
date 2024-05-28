@@ -129,46 +129,6 @@ class NotificationList extends UI5Element {
 	@property()
 	noDataText!: string;
 
-	/**
-	 * Defines whether the component will have growing capability either by pressing a `More` button,
-	 * or via user scroll. In both cases `load-more` event is fired.
-	 *
-	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
-	 * on IE the component will fallback to `growing="Button"`.
-	 * @default "None"
-	 * @public
-	 */
-	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
-	growing!: `${ListGrowingMode}`;
-
-	/**
-	 * Defines the text that will be displayed inside the growing button.
-	 *
-	 * **Note:** If not specified a built-in text will be displayed.
-	 *
-	 * **Note:** This property takes effect if the `growing` property is set to the `Button`.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	growingButtonText!: string;
-
-	/**
-	 * Defines if the component would display a loading indicator over the list.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	loading!: boolean;
-
-	/**
-	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
-	 * @default 1000
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
-
 	get _accessibleName() {
 		return NotificationList.i18nFioriBundle.getText(NOTIFICATION_LIST_ACCESSIBLE_NAME);
 	}
