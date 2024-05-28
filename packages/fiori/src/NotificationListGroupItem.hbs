@@ -30,6 +30,10 @@
 			{{titleText}}
 		</div>
 
+		{{#if isLoading}}
+			<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
+		{{/if}}
+
 		<div class="ui5-nli-group-divider"></div>
 	</div>
 

@@ -11,7 +11,7 @@ import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 
-var notificationList = document.querySelector("ui5-list");
+var notificationList = document.querySelector("ui5-notification-list");
 
 notificationList.addEventListener("item-close", e => {
     var visibleItems = 0;

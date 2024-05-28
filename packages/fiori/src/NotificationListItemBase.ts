@@ -6,6 +6,11 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
+// Texts
+import {
+	NOTIFICATION_LIST_ITEM_LOADING,
+} from "./generated/i18n/i18n-defaults.js";
+
 /**
  * @class
  *
@@ -56,6 +61,14 @@ class NotificationListItemBase extends ListItemBase {
 
 	get hasTitleText() {
 		return !!this.titleText.length;
+	}
+
+	get loadingText() {
+		return NotificationListItemBase.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOADING);
+	}
+
+	get isLoading() {
+		return this.loading;
 	}
 
 	/**
