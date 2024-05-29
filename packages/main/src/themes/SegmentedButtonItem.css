@@ -62,14 +62,6 @@
 	flex-shrink: 0;
 }
 
-:host([icon-end]) .ui5-segmented-button-item-root {
-	flex-direction: row-reverse;
-}
-
-:host([icon-end]) .ui5-segmented-button-item-icon {
-	margin-inline-start: var(--_ui5_button_base_icon_margin);
-}
-
 :host([icon-only]) .ui5-segmented-button-item-root {
 	min-width: auto;
 	padding: 0;

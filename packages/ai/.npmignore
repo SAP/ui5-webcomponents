@@ -1,0 +1,8 @@
+src/generated
+src/**/*.ts
+node_modules/
+test/
+.eslintrc.cjs
+.eslintignore
+main.*js
+config/

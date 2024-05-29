@@ -216,7 +216,6 @@ class TreeItemBase extends ListItem {
 	items!: Array<TreeItemBase>;
 
 	onBeforeRendering() {
-		this.actionable = false;
 		this.showToggleButton = this.requiresToggleButton;
 	}
 

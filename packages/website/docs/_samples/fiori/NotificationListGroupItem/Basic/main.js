@@ -2,6 +2,7 @@ import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/Menu.js";
 
+import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 
@@ -17,7 +18,7 @@ notificationList.addEventListener("item-close", e => {
 
     // hide the closed Notification item
     e.detail.item.hidden = true;
-    
+
     Array.from(e.detail.item.parentElement.childNodes).forEach((element) => {
         if (element.nodeName === "UI5-LI-NOTIFICATION" && !element.hidden) {
             visibleItems++;

@@ -4,7 +4,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isSpace,
+	isEnter,
+	isEscape,
+	isShift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -134,12 +139,20 @@ class Button extends UI5Element implements IButton, IFormElement {
 	icon!: string;
 
 	/**
-	 * Defines whether the icon should be displayed after the component text.
-	 * @default false
+	 * Defines the icon, displayed as graphical element within the component after the button text.
+	 *
+	 * **Note:** It is highly recommended to use `endIcon` property only together with `icon` and/or `text` properties.
+	 * Usage of `endIcon` only should be avoided.
+	 *
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
 	 * @public
 	 */
-	@property({ type: Boolean })
-	iconEnd!: boolean;
+	@property()
+	endIcon!: string;
 
 	/**
 	 * When set to `true`, the component will
@@ -247,6 +260,13 @@ class Button extends UI5Element implements IButton, IFormElement {
 	hasIcon!: boolean;
 
 	/**
+	 * Indicates if the elements has a slotted end icon
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasEndIcon!: boolean;
+
+	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
@@ -279,6 +299,9 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 */
 	@property({ type: Boolean })
 	_isTouch!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_cancelAction!: boolean;
 
 	/**
 	 * Defines the text of the component.
@@ -333,8 +356,9 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	async onBeforeRendering() {
-		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
+		this.hasEndIcon = !!this.endIcon;
+		this.iconOnly = this.isIconOnly;
 
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
@@ -388,14 +412,21 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		this._cancelAction = isShift(e) || isEscape(e);
 		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
+		} else if (this._cancelAction) {
+			this._setActiveState(false);
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		if (this._cancelAction) {
+			e.preventDefault();
+		}
+
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
 				this._setActiveState(false);
@@ -447,6 +478,14 @@ class Button extends UI5Element implements IButton, IFormElement {
 		return IconMode.Decorative;
 	}
 
+	get endIconMode() {
+		if (!this.endIcon) {
+			return "";
+		}
+
+		return IconMode.Decorative;
+	}
+
 	get isIconOnly() {
 		return !willShowContent(this.text);
 	}
@@ -468,6 +507,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {

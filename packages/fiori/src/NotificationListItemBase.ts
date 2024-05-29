@@ -1,10 +1,13 @@
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 
 /**
  * @class
@@ -61,17 +64,33 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Event handlers
 	 */
-
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
-		if (getEventMark(e) === "button") {
+		if (isSpace(e) && getEventMark(e) !== "button") {
+			e.preventDefault();
 			return;
 		}
 
-		if (isSpace(e)) {
-			e.preventDefault();
+		if (isF2(e)) {
+			e.stopImmediatePropagation();
+			const focusDomRef = this.getHeaderDomRef()!;
+			if (this.focused) {
+				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+			} else {
+				focusDomRef.focus(); // stop content editing
+			}
 		}
+	}
+
+	getHeaderDomRef() {
+		return this.getFocusDomRef();
+	}
+
+	shouldForwardTabAfter() {
+		const aContent = getTabbableElements(this.getHeaderDomRef()!);
+
+		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
 	}
 
 	static async onDefine() {

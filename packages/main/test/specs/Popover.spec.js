@@ -138,10 +138,26 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
 
+	it("tests opening popover when opener is outside of the viewport is not allowed", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenAndScroll");
+		const popover = await browser.$("#popoverOpenAndScroll");
+
+		await btnOpenPopover.click();
+		await browser.waitUntil(
+			async () => await browser.$(".closeEventCheck").isExisting(),
+			{
+				timeout: 1000,
+				timeoutMsg: "close event was not fired"
+			}
+		);
+
+		assert.notOk(await popover.getAttribute("open"), "Popover remains closed.");
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover remains closed.");
+	});
+
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.$$("ui5-li");
+		const items = await await browser.$$("#many-items ui5-option")
 
 		await manyItemsSelect.click();
 
@@ -152,8 +168,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 2", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.$$("ui5-li");
+		const items = await await browser.$$("#many-items ui5-option")
 		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
@@ -184,6 +199,8 @@ describe("Popover general interaction", () => {
 		await itemBeforeLastItem.scrollIntoView();
 
 		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests modal popover", async () => {
