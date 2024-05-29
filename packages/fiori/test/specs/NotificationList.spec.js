@@ -418,8 +418,7 @@ describe("Keyboard navigation", () => {
 		assert.ok(res, "'show more' is focused.");
 	});
 
-	// TODO: Fix after implementing focus styles in NotificationListItem
-	it.skip("Focusing same item on next row", async () => {
+	it("Focusing same item on next row", async () => {
 		await browser.$("#nli1").click();
 		await browser.keys("Tab");
 		await browser.keys("ArrowDown");

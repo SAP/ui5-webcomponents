@@ -497,8 +497,8 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		const isFocused = this.matches(":focus");
-		if (isFocused || (!isUp(e) && !isDown(e))) {
+		const isFocusWithin = this.matches(":focus-within");
+		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
 			return;
 		}
 
