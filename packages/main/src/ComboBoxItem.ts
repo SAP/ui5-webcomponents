@@ -32,6 +32,13 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	additionalText = "";
 
 	/**
+	 * Indicates whether the item is filtered
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible!: boolean;
+
+	/**
 	 * Indicates whether the item is focssed
 	 * @protected
 	 */
@@ -44,14 +51,6 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 */
 	@property({ type: Boolean })
 	selected = false;
-
-	/**
-	 * Used to avoid tag name checks
-	 * @protected
-	 */
-	get isGroupItem(): boolean {
-		return false;
-	}
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

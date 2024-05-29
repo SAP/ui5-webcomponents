@@ -33,6 +33,7 @@
 		</div>
 		<div id="myInput-change-result"></div>
 		<div id="myInput-selection-change-result"></div>
+		<div id="myInput-open-picker"></div>
 	</div>
 
 	<div class="sapUiSizeCompact">
@@ -424,7 +425,7 @@
 		<br />
 	</div>
 
-	<h3>Input with openPicker() on focusin</h3>
+	<h3>Input with open suggestions on focusin</h3>
 	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
 		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
@@ -475,6 +476,14 @@
 
 	<span id="input-selection-change-count"></span>
 	<span id="input-selection-change-value"></span>
+
+	<br />
+	<h3>Input - open suggestions picker</h3>
+	<ui5-input id="input-suggestions-open" show-suggestions>
+		<ui5-suggestion-item text ="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text ="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text ="Condensed"></ui5-suggestion-item>
+	</ui5-input>
 
 	<br />
 
@@ -596,6 +605,14 @@
 			inputResult.value = `${changeCounter}`;
 		});
 
+		input.addEventListener("ui5-open", () => {
+			document.getElementById("myInput-open-picker").innerHTML = "Open";
+		});
+
+		input.addEventListener("ui5-close", () => {
+			document.getElementById("myInput-open-picker").innerHTML = "Close";
+		});
+
 		input1.addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
 			inputResult.value = `${changeCounter}`;
@@ -667,7 +684,10 @@
 		openPickerInput.addEventListener("input", handleSuggestions);
 		openPickerInput.addEventListener("selection-change", handleSelection);
 		openPickerInput.addEventListener("click", handleHistory);
-		openPickerInput.addEventListener("focus", handleHistory);
+		openPickerInput.addEventListener("focus", () => {
+			handleHistory();
+			openPickerInput.open = true;
+		});
 
 		function handleSuggestions() {
 			fetch('https://dummyjson.com/users?select=firstName,lastName&limit=100')
@@ -721,16 +741,20 @@
 		}
 
 		function handleSelection(event) {
-			const name = event.detail.item.text;
-			const idx = recentItems.indexOf(name);
-			idx > -1 && recentItems.splice(idx, 1);
-			recentItems.unshift(name);
-			recentItems.length > 5 && recentItems.pop();
+			const item = event.detail.item;
+			if (item) {
+				const name = item.text;
+				const idx = recentItems.indexOf(name);
+				idx > -1 && recentItems.splice(idx, 1);
+				recentItems.unshift(name);
+				recentItems.length > 5 && recentItems.pop();
+			} else {
+				recentItems = [];
+			}
 		}
 
 		function handleHistory() {
 			handleSuggestions();
-			openPickerInput.openPicker();
 		}
 
 		document.getElementById("clear-button").addEventListener("click", event => {
