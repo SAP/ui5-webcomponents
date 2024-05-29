@@ -206,7 +206,7 @@
 
 	select.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
-		inputResult.value = counter;
+		inputResult.value = `${counter}`;
 	});
 
 	select.addEventListener("change", function(e) {
@@ -215,17 +215,17 @@
 
 	select.addEventListener("ui5-open", function(e) {
 		++counterOpen;
-		inputResultOpen.value = counterOpen;
+		inputResultOpen.value = `${counterOpen}`;
 	});
 
 	select.addEventListener("ui5-close", function(e) {
 		++counterClose;
-		inputResultClose.value = counterClose
+		inputResultClose.value = `${counterClose}`;
 	});
 
 	select2.addEventListener("ui5-change", function(e) {
 		++counter;
-		inputResult.value = counter;
+		inputResult.value = `${counter}`;
 	});
 
 	// Input with Suggestions
