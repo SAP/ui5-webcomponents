@@ -493,26 +493,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	onAfterRendering() {
-		if (this.shouldClosePopover() && !isPhone()) {
-			this._clearFocus();
-			this._itemFocused = false;
-		}
-
 		if (this.inner && this.value !== this.inner.value) {
 			this.value = this.inner.value;
 		}
 
 		this.storeResponsivePopoverWidth();
 
-		const suggestionsPopover = this._getPicker();
-
 		this.items.forEach(item => {
-			item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
+			item._getRealDomRef = () => this._getPicker().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 		});
-	}
-
-	shouldClosePopover(): boolean {
-		return this._getPicker()?.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
 	}
 
 	_focusin(e: FocusEvent) {
@@ -524,7 +513,18 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_focusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = toBeFocused?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+		// const focusedOutToValueStateMessage = toBeFocused?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+
+		/* TODO: This is used when we clik on a link inside value state message to prevent the popup from closing
+		but it breaks tabbing between inputs with value state messages
+		*/
+		// if (this._getPicker().contains(toBeFocused)
+		// 	|| this.getSlottedNodes("valueStateMessage").some(el => el.contains(toBeFocused))
+		// 	|| focusedOutToValueStateMessage) {
+		// 	e.stopImmediatePropagation();
+		// 	return;
+		// }
+
 		const clearIconWrapper = this.shadowRoot!.querySelector(".ui5-input-clear-icon-wrapper");
 		const focusedOutToClearIcon = clearIconWrapper === toBeFocused || clearIconWrapper?.contains(toBeFocused);
 
@@ -534,11 +534,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._fireChangeEvent();
 
-		if (focusedOutToValueStateMessage) {
-			e.stopImmediatePropagation();
-			return;
-		}
-
 		if (!(this.getDomRef()!.contains(toBeFocused)) && (this._getPicker() !== e.relatedTarget)) {
 			this.focused = false;
 		}
@@ -546,7 +541,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_beforeOpenPopover() {
 		if (isPhone()) {
-			this.inner.value = this.value;
+			this._getPicker()!.querySelector<HTMLInputElement>("[ui5-input]")!.value = this.value;
 		}
 	}
 
@@ -768,18 +763,17 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean) {
 		const allItems = this._getItems();
 
-		const isOpen = this.open;
 		const currentItem: IComboBoxItem = allItems[indexOfItem];
 		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const nextItem = isForward ? allItems[indexOfItem + 1] : allItems[indexOfItem - 1];
 
-		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
+		if ((!this.open) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
 			return;
 		}
 
 		this._clearFocus();
 
-		if (isOpen) {
+		if (this.open) {
 			this._itemFocused = true;
 			this.value = isGroupItem ? "" : currentItem.text;
 			this.focused = false;
@@ -796,7 +790,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._announceSelectedItem(indexOfItem);
 		this._scrollToItem(indexOfItem, isForward);
 
-		if (isGroupItem && isOpen) {
+		if (isGroupItem && this.open) {
 			return;
 		}
 		// autocomplete
@@ -917,7 +911,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_keydown(e: KeyboardEvent) {
 		const isNavKey = isDown(e) || isUp(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e);
-		const picker = this._getPicker();
 		const allItems: Array<IComboBoxItem> = this._getItems();
 
 		this._autocomplete = !(isBackSpace(e) || isDelete(e));
@@ -942,7 +935,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 			this._fireChangeEvent();
 
-			if (picker?.open && !focusedItem?.isGroupItem) {
+			if (this.open && !focusedItem?.isGroupItem) {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);

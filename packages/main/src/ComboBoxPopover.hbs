@@ -41,7 +41,7 @@
 					value-state="{{valueState}}"
 					?show-clear-icon="{{showClearIcon}}"
 					?no-typeahead="{{noTypeahead}}"
-					.openOnMobile={{openOnMobile}}
+					.open={{openOnMobile}}
 				>
 					{{#each _filteredItems}}
 						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
@@ -110,6 +110,7 @@
 		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
+		tabindex="-1"
 		class="ui5-valuestatemessage-popover"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		placement="Bottom"
