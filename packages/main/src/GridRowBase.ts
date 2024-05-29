@@ -19,6 +19,7 @@ import {
  * @constructor
  * @abstract
  * @extends UI5Element
+ * @since 2.0
  * @public
  */
 @customElement({

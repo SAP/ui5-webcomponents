@@ -12,6 +12,7 @@ import GridCellBaseStyles from "./generated/themes/GridCellBase.css.js";
  * @constructor
  * @abstract
  * @extends UI5Element
+ * @since 2.0
  * @public
  */
 @customElement({

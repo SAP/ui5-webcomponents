@@ -21,6 +21,7 @@ import GridHeaderCellStyles from "./generated/themes/GridHeaderCell.css.js";
  *
  * @constructor
  * @extends GridCellBase
+ * @since 2.0
  * @public
  */
 @customElement({

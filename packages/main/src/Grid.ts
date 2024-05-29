@@ -59,11 +59,11 @@ interface IGridGrowing extends IGridFeature {
 }
 
 /**
- * Fired when an interactive row is pressed.
- * @param {GridRow} row The pressed row instance
+ * Fired when an interactive row is clicked.
+ * @param {GridRow} row The clicked row instance
  * @public
  */
-type GridRowPressEventDetail = {
+type GridRowClickEventDetail = {
 	row: GridRow,
 };
 
@@ -138,6 +138,7 @@ type GridRowPressEventDetail = {
  *
  * @constructor
  * @extends UI5Element
+ * @since 2.0
  * @public
  */
 @customElement({
@@ -150,12 +151,12 @@ type GridRowPressEventDetail = {
 })
 
 /**
- * Fired when an interactive row is pressed.
+ * Fired when an interactive row is clicked.
  *
  * @param {GridRow} row The row instance
  * @public
  */
-@event<GridRowPressEventDetail>("row-click", {
+@event<GridRowClickEventDetail>("row-click", {
 	detail: {
 		/**
 		 * @public
@@ -190,7 +191,7 @@ class Grid extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	nodata!: Array<HTMLElement>;
 
 	/**
@@ -234,7 +235,7 @@ class Grid extends UI5Element {
 	 * * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
 	 * * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 *
-	 * @default GridOverflowMode.Scroll
+	 * @default "Scroll"
 	 * @public
 	 */
 	@property({ type: GridOverflowMode, defaultValue: GridOverflowMode.Scroll })
@@ -446,7 +447,7 @@ class Grid extends UI5Element {
 	}
 
 	_onRowPress(row: GridRow) {
-		this.fireEvent<GridRowPressEventDetail>("row-click", { row });
+		this.fireEvent<GridRowClickEventDetail>("row-click", { row });
 	}
 
 	get styles() {
@@ -544,5 +545,5 @@ export default Grid;
 export type {
 	IGridFeature,
 	IGridGrowing,
-	GridRowPressEventDetail,
+	GridRowClickEventDetail,
 };

@@ -1,1 +1,0 @@
-:host{display:grid;grid-template-columns:subgrid;grid-column:1 / -1;border-bottom:1px solid var(--sapList_HeaderBorderColor);background-color:var(--sapList_HeaderBackground);font:var(--sapFontSize) var(--sapFontSemiboldDuplexFamily);font-weight:400;color:var(--sapList_HeaderTextColor)}

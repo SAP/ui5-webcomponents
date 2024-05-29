@@ -20,6 +20,7 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
  *
  * @constructor
  * @extends UI5Element
+ * @since 2.0
  * @public
  */
 @customElement({

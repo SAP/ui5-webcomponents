@@ -17,6 +17,7 @@ import RadioButton from "./RadioButton.js";
  *
  * @constructor
  * @extends GridRowBase
+ * @since 2.0
  * @public
  */
 @customElement({

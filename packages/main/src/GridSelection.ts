@@ -39,6 +39,7 @@ import GridRowBase from "./GridRowBase.js";
  *
  * @constructor
  * @extends UI5Element
+ * @since 2.0
  * @public
  */
 @customElement({ tag: "ui5-grid-selection" })

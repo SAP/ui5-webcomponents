@@ -26,6 +26,7 @@ import {
  *
  * @constructor
  * @extends GridRowBase
+ * @since 2.0
  * @public
  */
 @customElement({

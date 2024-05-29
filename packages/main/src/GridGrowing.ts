@@ -51,6 +51,7 @@ import {
  *
  * @constructor
  * @extends UI5Element
+ * @since 2.0
  * @public
  */
 @customElement({
@@ -74,7 +75,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	 * Available options are:
 	 * * Button - Shows a More button at the bottom of the grid, pressing it will load more rows.
 	 * * Scroll - The rows are loaded automatically by scrolling to the bottom of the grid. If the grid is not scrollable, this option is the same as the Button.
-	 * @default GridGrowingMode.Button
+	 * @default "Button"
 	 * @public
 	 */
 	@property({ type: GridGrowingMode, defaultValue: GridGrowingMode.Button })
@@ -90,7 +91,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	 * @default ""
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	growingText!: string;
 
 	/**
@@ -100,7 +101,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	 * @default ""
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	growingSubText!: string;
 
 	/**
