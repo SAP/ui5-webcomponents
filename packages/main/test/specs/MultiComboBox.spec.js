@@ -1751,11 +1751,12 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
+			let groupItem;
 
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0].shadow$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 		});
@@ -1772,14 +1773,15 @@ describe("MultiComboBox general interaction", () => {
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0].shadow$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
+
 			await groupItem.keys("Enter");
 
 			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated");
 
-			groupItem = await popover.$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			await groupItem.keys("Space");
 
@@ -1787,7 +1789,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
 
-			groupItem = await popover.$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			await groupItem.keys("ArrowUp");
 
