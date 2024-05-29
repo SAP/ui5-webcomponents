@@ -1,0 +1,28 @@
+<div class="ai-prompt-input-wrapper">
+	{{#if label}}
+		<ui5-label for="input">{{label}}</ui5-label>
+	{{/if}}
+
+	<div class="ai-prompt-input-form-wrapper">
+		<div class="ai-prompt-inner-input-wrapper">
+			<ui5-input
+				id="input"
+				.value="{{value}}"
+				placeholder="{{placeholder}}"
+				value-state="{{valueState}}"
+				?show-clear-icon={{showClearIcon}}
+				?disabled="{{disabled}}"
+				@ui5-input="{{_onInnerInput}}"
+			>
+				<slot slot="valueStateMessage" name="valueStateMessage"></slot>
+				<slot slot="valueStateContent" name="valueStateContent"></slot>
+				<slot name="suggestionItems"></slot>
+			</ui5-input>
+
+			{{#if maxlength}}
+				<ui5-label class="ai-prompt-input-counter">{{_charactersLeft}} characters left</ui5-label>
+			{{/if}}
+		</div>
+		<ui5-button ?disabled={{_submitButtonDisabled}} class="ai-prompt-input-button" design="Emphasized" icon="paper-plane"></ui5-button>
+	</div>
+</div>

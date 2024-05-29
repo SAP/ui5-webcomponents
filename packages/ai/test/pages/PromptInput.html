@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-input</title>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<style>
+		ai-prompt-input {
+			display: inline-block;
+			margin-top: 1rem;
+		}
+
+		.body {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+		}
+
+		.vs-wrapper {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: .5rem;
+		}
+
+		.icons-group {
+			display: flex;
+    	align-items: center;
+		}
+
+		.icons-group > ui5-icon {
+			width: .75rem;
+			margin-right: 2px;
+		}
+
+		.icons-group > ui5-label {
+			font-size: .75rem;
+		}
+
+		.icons-group > ui5-label:not(:last-child){
+			margin-right: .5rem;
+		}
+
+		.token-sample-container {
+			width: 270px;
+		}
+
+		ui5-badge {
+			margin-top: .25rem;
+		}
+	</style>
+
+</head>
+
+<body class="body sapUiSizeCompact">
+	<ai-prompt-input></ai-prompt-input>
+	<ai-prompt-input value="Typed in text"></ai-prompt-input>
+	<ai-prompt-input value="Typed in text" disabled></ai-prompt-input>
+	<ai-prompt-input placeholder="Ask my anything..."></ai-prompt-input>
+	<ai-prompt-input show-clear-icon placeholder="Ask my anything..." label="User prompt:"></ai-prompt-input>
+	<ai-prompt-input show-clear-icon placeholder="Ask my anything..." label="User prompt:" maxlength="180"></ai-prompt-input>
+	
+	<hr>
+	<ai-prompt-input value-state="Error" show-clear-icon placeholder="Ask my anything..." label="User prompt:" maxlength="180">
+	</ai-prompt-input>
+
+	<ai-prompt-input value-state="Error" show-clear-icon placeholder="Ask my anything..." label="User prompt:" maxlength="180">
+	</ai-prompt-input>
+
+	<ai-prompt-input label="Let me suggest you" show-clear-icon maxlength="180" >
+	</ai-prompt-input>
+
+</body>
+</html>
