@@ -182,9 +182,9 @@ describe("Menu interaction", () => {
 			const lockButton = await endContent[0];
 			await lockButton.click();
 
-			assert.equal(endContent.length, 3, "The menu item has 3 components in the 'endContent' slot");
-			assert.ok(menuItem.disabled, "The menu item is disabled");
-			assert.ok(menu.open, "The menu remains open");
+			assert.equal(await endContent.length, 3, "The menu item has 3 components in the 'endContent' slot");
+			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
+			assert.ok(await menu.getProperty("open"), "The menu remains open");
 		});
 	});
 
