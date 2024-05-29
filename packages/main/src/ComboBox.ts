@@ -513,18 +513,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_focusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
-		// const focusedOutToValueStateMessage = toBeFocused?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
-
-		/* TODO: This is used when we clik on a link inside value state message to prevent the popup from closing
-		but it breaks tabbing between inputs with value state messages
-		*/
-		// if (this._getPicker().contains(toBeFocused)
-		// 	|| this.getSlottedNodes("valueStateMessage").some(el => el.contains(toBeFocused))
-		// 	|| focusedOutToValueStateMessage) {
-		// 	e.stopImmediatePropagation();
-		// 	return;
-		// }
-
 		const clearIconWrapper = this.shadowRoot!.querySelector(".ui5-input-clear-icon-wrapper");
 		const focusedOutToClearIcon = clearIconWrapper === toBeFocused || clearIconWrapper?.contains(toBeFocused);
 
@@ -533,6 +521,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this._fireChangeEvent();
+
+		if ((this.open && this._getPicker().contains(toBeFocused)) ||
+			(this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused))) {
+			e.stopImmediatePropagation();
+			return;
+		}
 
 		if (!(this.getDomRef()!.contains(toBeFocused)) && (this._getPicker() !== e.relatedTarget)) {
 			this.focused = false;
@@ -964,11 +958,14 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				return item.selected;
 			});
 
-			if (selectedItem && this.open) {
+			// The poperty this.open has already been set by _toggleRespPopover, but the popover may not be actually opened yet.
+			const isAlreadyOpen = this._getPicker().open;
+
+			if (selectedItem && isAlreadyOpen) {
 				this._itemFocused = true;
 				selectedItem.focused = true;
 				this.focused = false;
-			} else if (this.open && this._filteredItems.length) {
+			} else if (isAlreadyOpen && this._filteredItems.length) {
 				// If no item is selected, select the first one on "Show" (F4, Alt+Up/Down)
 				this._handleItemNavigation(e, 0, true /* isForward */);
 			} else {
