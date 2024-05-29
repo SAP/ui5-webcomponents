@@ -189,6 +189,11 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		const isFocused = document.activeElement === this;
+		if (!isFocused) {
+			return;
+		}
+
 		await super._onkeydown(e);
 
 		const space = isSpace(e);
