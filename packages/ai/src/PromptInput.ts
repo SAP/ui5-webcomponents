@@ -24,7 +24,6 @@ import PromptInputTemplate from "./generated/templates/PromptInputTemplate.lit.j
 // Styles
 import PromptInputCss from "./generated/themes/PromptInput.css.js";
 
-
 type ExceededText = {
 	exceededText?: string;
 	leftCharactersCount?: number;
@@ -36,7 +35,7 @@ type ExceededText = {
  * ### Overview
  *
  * The `ui5-ai-prompt-input` component allows the user to write custom instructions in natural language, so that AI is guided to generate content tailored to user needs.
- * 
+ *
  * **Note:** The web component is in an experimental state
  *
  * ### ES6 Module Import
