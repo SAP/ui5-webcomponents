@@ -497,7 +497,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		const isFocused = document.activeElement === this;
+		const isFocused = this.matches(":focus");
 		if (isFocused || (!isUp(e) && !isDown(e))) {
 			return;
 		}
