@@ -741,6 +741,32 @@ describe("Input general interaction", () => {
 		assert.ok(await helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
 	});
 
+	it("fires open event when suggestions picker is opened on typing", async () => {
+		await browser.url(`test/pages/Input.html`);
+		const input = await browser.$("#myInput");
+		await input.click();
+		await input.keys("a");
+
+		const popover = await input.shadow$("ui5-responsive-popover");
+
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+		assert.strictEqual( await $("#myInput-open-picker").getHTML(false), "Open", "The open event is fired");
+	});
+
+	it("fires close event when suggestions picker is closed", async () => {
+		await browser.url(`test/pages/Input.html`);
+		const input = await browser.$("#myInput");
+		await input.click();
+		await input.keys("a");
+
+		const popover = await input.shadow$("ui5-responsive-popover");
+		const listItem = await popover.$("ui5-li-suggestion-item");
+		await listItem.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "The popover is not visible");
+		assert.strictEqual( await $("#myInput-open-picker").getHTML(false), "Close", "The close event is fired");
+	});
+
 	it("Should open suggestions popover when ui5-input is the first focusable element within a dialog", async () => {
 		await browser.url(`test/pages/Input.html`);
 		const input = await browser.$("#inputInDialog");
@@ -971,7 +997,7 @@ describe("Input general interaction", () => {
 		assert.ok(await input.getProperty("_effectiveShowClearIcon"), "Clear icon should be shown");
 	});
 
-	it("Should open suggestions popover if openPicker() is called on focusin", async () => {
+	it("Should open suggestions popover if open is set on focusin", async () => {
 		const input = await browser.$("#openPickerInput");
 		const popover = await input.shadow$("ui5-responsive-popover");
 
@@ -1052,7 +1078,7 @@ describe("Input general interaction", () => {
 		await input.scrollIntoView();
 
 		await browser.execute(() =>{
-			document.getElementById("change-event-value").openPicker();
+			document.getElementById("change-event-value").open = true;
 		});
 
 		const listItem = await input.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
@@ -1563,5 +1589,36 @@ describe("Selection-change event", () => {
 
 		assert.strictEqual(await selectionChangeCount.getText(), "2", "Selection-change event was fired twice");
 		assert.strictEqual(await selectionChangeValue.getText(), "", "Selection-change event was fired with null arguments");
+	});
+});
+
+describe("Property open", () => {
+	before( async () => {
+		await browser.url(`test/pages/Input.html`);
+	}),
+	it("Suggestions picker is open when attribute open is set to true", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		await input.scrollIntoView();
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = true;
+		});
+
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+
+	it("Suggestions picker is closed when attribute open is set to false", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = false;
+		});
+
+		assert.strictEqual(await respPopover.getProperty("open"), false, "Suggestions popover is closed");
 	});
 });

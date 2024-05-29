@@ -1,5 +1,5 @@
 import {
-	isSpace, isEnter, isDelete, isF10Shift, isEnterShift, isUp, isDown,
+	isSpace, isDelete, isF10Shift, isEnterShift, isUp, isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -153,12 +153,12 @@ const ICON_PER_STATUS_DESIGN = {
  */
 @event<NotificationListItemCloseEventDetail>("close", {
 	detail: {
-	   /**
-		* @public
-		*/
-	   item: {
-		   type: HTMLElement,
-	   },
+		/**
+		 * @public
+		 */
+		item: {
+			type: HTMLElement,
+		},
 	},
 })
 
@@ -484,10 +484,6 @@ class NotificationListItem extends NotificationListItemBase {
 	async _onkeydown(e: KeyboardEvent) {
 		await super._onkeydown(e);
 
-		if (isEnter(e)) {
-			this.fireItemPress(e);
-		}
-
 		if (isF10Shift(e)) {
 			e.preventDefault();
 		}
@@ -496,7 +492,13 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	focusSameItemOnNextRow(e: KeyboardEvent) {
-		if (this.focused || (!isUp(e) && !isDown(e))) {
+		const target = e.target as HTMLElement;
+		if (!target || target.hasAttribute("ui5-menu-item")) {
+			return;
+		}
+
+		const isFocusWithin = this.matches(":focus-within");
+		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
 			return;
 		}
 
@@ -512,11 +514,6 @@ class NotificationListItem extends NotificationListItemBase {
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {
-			return;
-		}
-
-		const target = e.target as HTMLElement;
-		if (!target) {
 			return;
 		}
 

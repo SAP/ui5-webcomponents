@@ -197,3 +197,36 @@ describe("Value state header", () => {
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
 	});
 });
+
+describe("Property open", () => {
+	before(async () => {
+		await browser.url("test/pages/Input.html");
+		await browser.emulateDevice('iPhone X');
+	});
+
+	it("Suggestions dialog is open when attribute open is true", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		await input.scrollIntoView();
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = true;
+		});
+
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+	
+	it("Suggestions dialog is closed when attribute open is set to false", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = false;
+		});
+
+		assert.strictEqual(await respPopover.getProperty("open"), false, "Suggestions popover is closed");
+	});
+});

@@ -175,12 +175,12 @@
 /* highlight */
 .ui5-li-highlight {
 	position: absolute;
-    width: 0.375rem;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    border-inline-end: 0.0625rem solid var(--ui5-listitem-background-color);
-    box-sizing: border-box;
+	width: 0.375rem;
+	bottom: 0;
+	left: 0;
+	top: 0;
+	border-inline-end: 0.0625rem solid var(--ui5-listitem-background-color);
+	box-sizing: border-box;
 }
 
 :host([highlight="Negative"]) .ui5-li-highlight {
