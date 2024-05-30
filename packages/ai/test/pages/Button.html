@@ -45,7 +45,7 @@
 	<ui5-title level="H3">Icon-only AI Button</ui5-title>
 	<br/>
 
-	<ui5-ai-button id="myAiButton2">
+	<ui5-ai-button id="myAiButton2" state="revise">
 		<ui5-ai-button-state key="generate" icon="ai" next-state="generating"></ui5-ai-button-state>
 		<ui5-ai-button-state key="generating" icon="stop" next-state="revise"></ui5-ai-button-state>
 		<ui5-ai-button-state key="revise" icon="ai" end-icon="navigation-down-arrow" next-state="generate"></ui5-ai-button-state>
@@ -109,7 +109,7 @@
 			if (e.target.state === "generating") {
 				e.preventDefault();
 				stopGeneration();
-				myAiButton.state = "pause";
+				myAiButton1.state = "pause";
 			}
 		});
 
@@ -126,7 +126,7 @@
 		menu.addEventListener("item-click", function(evt) {
 			if (evt.detail.text === "Regenerate") {
 				myAiButton.state = "generating";
-				startGeneration();
+				startGeneration(myAiButton);
 			}
 		});
 

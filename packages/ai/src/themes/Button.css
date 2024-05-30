@@ -59,7 +59,6 @@
 :host([fade-mid]) ::part(icon) {
 	opacity: 0;
 	transform: translateY(1rem);
-/*	transition: opacity 0.05s ease-in-out 0.025s, transform 0.10s ease-in-out 0s; */
 }
 
 :host([fade-mid]) .ui5-ai-button-text,
