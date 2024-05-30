@@ -100,13 +100,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 	},
 })
 
-/**
- * Fired when the user scrolls to the bottom of the list.
- *
- * **Note:** The event is fired when the `growing='Scroll'` property is enabled.
- * @public
- */
-@event("load-more")
 class NotificationList extends UI5Element {
 	/**
 	 * Defines the items of the component.
@@ -131,10 +124,10 @@ class NotificationList extends UI5Element {
 	static i18nFioriBundle: I18nBundle;
 
 	getEnabledItems() {
-		return this.innernList?.getEnabledItems() || [];
+		return this.innerList?.getEnabledItems() || [];
 	}
 
-	get innernList() {
+	get innerList() {
 		return this.shadowRoot?.querySelector("ui5-notification-list-internal") as NotificationListInternal;
 	}
 
