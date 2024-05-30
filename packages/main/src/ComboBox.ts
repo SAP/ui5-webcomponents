@@ -522,8 +522,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._fireChangeEvent();
 
-		if ((this.open && this._getPicker().contains(toBeFocused)) ||
-			(this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused))) {
+		if ((this.open && this._getPicker().contains(toBeFocused)) || (this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused))) {
 			e.stopImmediatePropagation();
 			return;
 		}
