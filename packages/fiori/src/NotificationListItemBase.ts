@@ -3,12 +3,16 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+
+// Texts
+import {
+	NOTIFICATION_LIST_ITEM_LOADING,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -62,10 +66,12 @@ class NotificationListItemBase extends ListItemBase {
 		return !!this.titleText.length;
 	}
 
-	onEnterDOM() {
-		if (isDesktop()) {
-			this.setAttribute("desktop", "");
-		}
+	get loadingText() {
+		return NotificationListItemBase.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOADING);
+	}
+
+	get isLoading() {
+		return this.loading;
 	}
 
 	/**
