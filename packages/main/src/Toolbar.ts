@@ -38,6 +38,10 @@ import {
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 
+type ToolbarMinWidthChangeEventDetail = {
+	minWidth: number,
+};
+
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
 }
@@ -136,6 +140,7 @@ class Toolbar extends UI5Element {
 	_onInteract!: EventListener;
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
+	minContentWidth = 0;
 	popoverOpen = false;
 	itemsWidthMeasured = false;
 
@@ -370,15 +375,27 @@ class Toolbar extends UI5Element {
 	}
 
 	storeItemsWidth() {
-		let totalWidth = 0;
+		let totalWidth = 0,
+			minWidth = 0;
 
 		this.items.forEach((item: ToolbarItem) => {
 			const itemWidth = this.getItemWidth(item);
 			totalWidth += itemWidth;
+			if (item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow) {
+				minWidth += itemWidth;
+			}
 			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
 		});
 
+		if (minWidth !== this.minContentWidth) {
+			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
+			this.fireEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
+				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
+			});
+		}
+
 		this.itemsWidth = totalWidth;
+		this.minContentWidth = minWidth;
 	}
 
 	distributeItems(overflowSpace = 0) {
@@ -582,3 +599,6 @@ class Toolbar extends UI5Element {
 Toolbar.define();
 
 export default Toolbar;
+export type {
+	ToolbarMinWidthChangeEventDetail,
+};

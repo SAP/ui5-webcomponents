@@ -186,8 +186,6 @@
 	<ui5-notification-list id="ACCtestGroup">
 
 		<ui5-li-notification-group
-			show-close
-			show-counter
 			title-text="Today"
 		>
 			<ui5-li-notification
@@ -229,8 +227,6 @@
 			</ui5-li-notification>
 		</ui5-li-notification-group>
 		<ui5-li-notification-group
-			show-close
-			show-counter
 			title-text="Yesterday"
 			collapsed="true"
 		>
@@ -266,6 +262,32 @@
 				<span slot="footnotes">Office</span>
 				<span slot="footnotes">3 Days</span>
 
+			</ui5-li-notification>
+		</ui5-li-notification-group>
+
+		<ui5-li-notification-group
+			loading
+			title-text="Last week"
+		>
+			<ui5-li-notification
+				importance="Important"
+				loading
+				title-text="Message 1"
+				state="Positive"
+				importance="Important"
+			>
+				Text with details.
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+				<span slot="footnotes">Office</span>
+				<span slot="footnotes">3 Days</span>
+
+				<ui5-notification-action icon="accept" text="Accept-deprecated" slot="actions"></ui5-notification-action>
+
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
 			</ui5-li-notification>
 		</ui5-li-notification-group>
 	</ui5-notification-list>

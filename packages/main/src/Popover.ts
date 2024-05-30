@@ -369,11 +369,7 @@ class Popover extends Popup {
 		this._show();
 	}
 
-	_show() {
-		if (!this._opener) {
-			return;
-		}
-
+	async _show() {
 		super._show();
 
 		if (!this._opened) {
@@ -402,6 +398,7 @@ class Popover extends Popup {
 		}
 
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
+			await this._waitForDomRef();
 			return this.closePopup();
 		}
 

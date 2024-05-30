@@ -5,8 +5,13 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+
+// Texts
+import {
+	NOTIFICATION_LIST_ITEM_LOADING,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -60,6 +65,14 @@ class NotificationListItemBase extends ListItemBase {
 		return !!this.titleText?.length;
 	}
 
+	get loadingText() {
+		return NotificationListItemBase.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOADING);
+	}
+
+	get isLoading() {
+		return this.loading;
+	}
+
 	/**
 	 * Event handlers
 	 */
@@ -73,11 +86,15 @@ class NotificationListItemBase extends ListItemBase {
 
 		if (isF2(e)) {
 			e.stopImmediatePropagation();
+
+			const activeElement = getActiveElement();
 			const focusDomRef = this.getHeaderDomRef()!;
-			if (this.focused) {
-				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
 			} else {
-				focusDomRef.focus(); // stop content editing
+				focusDomRef.focus();
 			}
 		}
 	}

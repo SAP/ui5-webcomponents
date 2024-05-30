@@ -19,7 +19,7 @@ import "@ui5/webcomponents-icons/dist/accept.js";
 
 var shellbar = document.querySelector("ui5-shellbar");
 var notificationsPopover = document.querySelector("ui5-popover");
-var notificationList = document.querySelector("ui5-list");
+var notificationList = document.querySelector("ui5-notification-list");
 
 notificationList.addEventListener("item-close", e => {
     var visibleItems = 0;

@@ -292,7 +292,8 @@
 		});
 
 		function showMenu(target) {
-			menu.showAt(target);
+			menu.opener = target;
+			menu.open = true;
 		}
 
 		menuButtonText.addEventListener("click", function(event) {

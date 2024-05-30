@@ -11,7 +11,15 @@ async function getResourceBundleTexts(keys) {
 		done(texts);
 
 	}, keys);
-}
+};
+
+const isListItemFocused = async (listItem) => {
+	return await browser.execute(el => {
+		const pseudoElementStyle = window.getComputedStyle(el, ":after");
+		const hasBorder = pseudoElementStyle.getPropertyValue("border-style") !== "none";
+		return hasBorder;
+	}, listItem);
+};
 
 describe("General interaction", () => {
 	before(async () => {
@@ -62,11 +70,11 @@ describe("nMore Popover", () => {
 		await nMoreLabel.click();
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
+		const firstListItem = await rpo.$("ui5-list ui5-li");
 
 		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
 		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened upon click of nMore label.");
-		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+		assert.ok(await firstListItem.matches(":focus"), "First list item should be focused, upon Popover open.");
 
 		await browser.keys('Escape');
 
@@ -80,20 +88,21 @@ describe("nMore Popover", () => {
 		await nMoreLabel.click();
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-		const firstListItem = await rpo.$("ui5-list").$$("ui5-li")[0];
+		const firstListItem = await rpo.$("ui5-list ui5-li");
 		const itemDeleteButton = await firstListItem.shadow$('ui5-button');
 
 		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened upon click of nMore label.");
-		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+		assert.ok(await firstListItem.matches(":focus"), "First list item should be focused, upon Popover open.");
 
 		await browser.keys('F7');
 
-		assert.notOk(await firstListItem.getProperty("focused"), "List item should no longer be focused.");
+		assert.ok(await itemDeleteButton.matches(":focus"), "Delete button should be focused upon F7 key press.");
+		assert.notOk(await isListItemFocused(firstListItem), "List item should no longer be focused.");
 
 		await browser.keys('F7');
 
-		assert.notOk(await itemDeleteButton.getProperty("focused"), "List item should be focused upon F7 key press.");
-		assert.ok(await firstListItem.getProperty("focused"), "Delete button should no longer be focused.");
+		assert.notOk(await itemDeleteButton.matches(":focus"), "Delete button should no longer be focused.");
+		assert.ok(await firstListItem.matches(":focus"), "List item should be focused upon F7 key press.");
 	});
 
 	it("tests item deletion via mouse", async () => {
@@ -108,11 +117,11 @@ describe("nMore Popover", () => {
 		const firstlistItemDeleteButton = await firstListItem.shadow$('.ui5-li-deletebtn ui5-button');
 
 		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened upon click of nMore label.");
-		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+		assert.ok(await firstListItem.matches(":focus"), "First list item should be focused, upon Popover open.");
 
 		await firstlistItemDeleteButton.click();
 
-		assert.ok(await secondListItem.getProperty("focused"), "Second list item should be focused, after first item deletion.");
+		assert.ok(await secondListItem.matches(":focus"), "Second list item should be focused, after first item deletion.");
 	});
 
 	it("tests item deletion via keyboard", async () => {
@@ -126,11 +135,11 @@ describe("nMore Popover", () => {
 		const secondListItem = await rpo.$$("ui5-li")[1];
 
 		assert.ok(await rpo.getProperty("open"), "nMore Popover should be opened upon click of nMore label.");
-		assert.ok(await firstListItem.getProperty("focused"), "First list item should be focused, upon Popover open.");
+		assert.ok(await firstListItem.matches(":focus"), "First list item should be focused, upon Popover open.");
 
 		await browser.keys('Delete');
 
-		assert.ok(await secondListItem.getProperty("focused"), "Second list item should be focused, after first item deletion.");
+		assert.ok(await secondListItem.matches(":focus"), "Second list item should be focused, after first item deletion.");
 	});
 });
 
@@ -194,7 +203,7 @@ describe("Single token", () => {
 	});
 
 	it("should open popover on click of single token", async () => {
-		const tokenizer = await $("#single-token-tokenizer");
+		const tokenizer = await browser.$("#single-token-tokenizer");
 		const token = await tokenizer.$("ui5-token");
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
 
@@ -202,10 +211,12 @@ describe("Single token", () => {
 
 		await token.click();
 
+		const listItem = await rpo.$("ui5-list ui5-li");
+
 		assert.ok(await rpo.getProperty("open"), "nMore Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
 		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
-		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+		assert.ok(await listItem.matches(":focus"), "Token's list item is focused");
 
 		await token.click();
 

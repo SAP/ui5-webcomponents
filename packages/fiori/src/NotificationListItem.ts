@@ -31,7 +31,6 @@ import "@ui5/webcomponents-icons/dist/message-warning.js";
 
 // Texts
 import {
-	NOTIFICATION_LIST_ITEM_TXT,
 	NOTIFICATION_LIST_ITEM_READ,
 	NOTIFICATION_LIST_ITEM_UNREAD,
 	NOTIFICATION_LIST_ITEM_SHOW_MORE,
@@ -41,6 +40,8 @@ import {
 	NOTIFICATION_LIST_ITEM_NEGATIVE_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_CRITICAL_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_FULL,
+	NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_TRUNCATE,
 	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_IMPORTANT_TXT,
 } from "./generated/i18n/i18n-defaults.js";
@@ -153,12 +154,12 @@ const ICON_PER_STATUS_DESIGN = {
  */
 @event<NotificationListItemCloseEventDetail>("close", {
 	detail: {
-	   /**
-		* @public
-		*/
-	   item: {
-		   type: HTMLElement,
-	   },
+		/**
+		 * @public
+		 */
+		item: {
+			type: HTMLElement,
+		},
 	},
 })
 
@@ -313,6 +314,10 @@ class NotificationListItem extends NotificationListItemBase {
 		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE);
 	}
 
+	get moreLinkAccessibleName() {
+		return this._showMorePressed ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_TRUNCATE) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_FULL);
+	}
+
 	get closeBtnAccessibleName() {
 		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE);
 	}
@@ -374,9 +379,19 @@ class NotificationListItem extends NotificationListItemBase {
 		const id = this._id;
 		const ids = [];
 
+		if (this.hasImportance) {
+			ids.push(`${id}-importance`);
+		}
+
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
 		}
+
+		if (this.isLoading) {
+			ids.push(`${id}-loading`);
+		}
+
+		ids.push(`${id}-read`);
 
 		if (this.hasDesc) {
 			ids.push(`${id}-description`);
@@ -387,11 +402,6 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		return ids.join(" ");
-	}
-
-	get ariaDescribedBy() {
-		const id = this._id;
-		return `${id}-invisibleText`;
 	}
 
 	get itemClasses() {
@@ -445,18 +455,22 @@ class NotificationListItem extends NotificationListItemBase {
 		return "";
 	}
 
-	get accInvisibleText() {
-		const notificationText = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readText = this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
-		const importanceText = this.importanceText;
-
-		return `${notificationText} ${importanceText} ${readText}`;
+	get readText() {
+		return this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 	}
 
-	get accInfo() {
+	get accInfoButton() {
 		return {
 			accessibilityAttributes: {
 				hasPopup: "menu",
+			},
+		};
+	}
+
+	get accInfoLink() {
+		return {
+			accessibilityAttributes: {
+				expanded: this._showMorePressed,
 			},
 		};
 	}
@@ -497,7 +511,8 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		if (this.focused || (!isUp(e) && !isDown(e))) {
+		const isFocusWithin = this.matches(":focus-within");
+		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
 			return;
 		}
 
