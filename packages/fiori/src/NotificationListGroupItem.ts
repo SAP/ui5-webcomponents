@@ -21,7 +21,6 @@ import {
 	NOTIFICATION_LIST_GROUP_COLLAPSED,
 	NOTIFICATION_LIST_GROUP_EXPANDED,
 	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE,
-	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -134,10 +133,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get toggleIconAccessibleName() {
-		if (this.collapsed) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE);
-		}
-
 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE);
 	}
 
@@ -159,8 +154,17 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
+		const ids = [];
 
-		return this.hasTitleText ? `${id}-title-text` : "";
+		if (this.isLoading) {
+			ids.push(`${id}-loading`);
+		}
+
+		if (this.hasTitleText) {
+			ids.push(`${id}-title-text`);
+		}
+
+		return ids.join(" ");
 	}
 
 	get _ariaExpanded() {
