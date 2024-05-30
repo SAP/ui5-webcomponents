@@ -24,9 +24,9 @@
 {{/inline}}
 
 {{#*inline "imageBegin"}}
-	{{#if hasImageContent}}
-		<div class="ui5-li-imgContent" >
-			<slot name="imageContent"></slot>
+	{{#if hasImage}}
+		<div class="ui5-li-image" >
+			<slot name="image"></slot>
 		</div>
 	{{else}}
 		{{#if displayImage}}
