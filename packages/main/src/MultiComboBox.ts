@@ -105,7 +105,9 @@ import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
-import Input, { InputEventDetail } from "./Input.js";
+import Input from "./Input.js";
+import type { InputEventDetail } from "./Input.js";
+import SuggestionItem from "./SuggestionItem.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-multi-combobox` as items
@@ -185,6 +187,7 @@ type MultiComboboxItemWithSelection = {
 		MultiComboBoxGroupItem,
 		Tokenizer,
 		Token,
+		Input,
 		Icon,
 		ResponsivePopover,
 		Popover,
@@ -194,6 +197,7 @@ type MultiComboboxItemWithSelection = {
 		ToggleButton,
 		Button,
 		CheckBox,
+		SuggestionItem,
 	],
 })
 /**

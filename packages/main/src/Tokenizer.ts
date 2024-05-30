@@ -43,6 +43,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import StandardListItem from "./StandardListItem.js";
 import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
@@ -105,6 +106,7 @@ enum ClipboardDataOperation {
 		StandardListItem,
 		Title,
 		Button,
+		Icon,
 	],
 })
 
