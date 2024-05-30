@@ -139,7 +139,7 @@ describe("MultiInput general interaction", () => {
 		let allTokens = await mi.$$("ui5-token");
 		assert.strictEqual(allTokens.length, 0, "0 tokens");
 
-		await popover.$("ui5-li-suggestion-item").click();
+		await mi.$("ui5-suggestion-item").click();
 
 		allTokens = await mi.$$("ui5-token");
 		assert.notOk(await popover.getProperty("open"), "Suggestion popover is closed");
@@ -177,7 +177,7 @@ describe("MultiInput general interaction", () => {
 		mi.scrollIntoView();
 		await valueHelpIcon.click();
 
-		const listItem = await mi.shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+		const listItem = await mi.$("ui5-suggestion-item");
 
 		await listItem.click();
 

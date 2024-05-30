@@ -2,19 +2,15 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-// @ts-ignore
-import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
-import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
 import ListItemGroupHeader from "../ListItemGroupHeader.js";
-import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -22,7 +18,8 @@ import {
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
-import type { IInputSuggestionItem } from "../Input.js";
+import SuggestionItemGroup from "../SuggestionItemGroup.js";
+import SuggestionItemCustom from "../SuggestionItemCustom.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;
@@ -31,12 +28,10 @@ interface SuggestionComponent extends UI5Element {
 	value: string;
 	typedInValue: string;
 	hasValueStateMessage: boolean;
-	suggestionItems: Array<IInputSuggestionItem>;
+	suggestionItems: Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>;
 	open: boolean;
-	onItemMouseOver: (e: MouseEvent) => void;
-	onItemMouseOut: (e: MouseEvent) => void;
-	onItemSelected: (pressedItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) => void;
-	onItemSelect: (item: SuggestionListItem) => void;
+	onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
+	onItemSelect: (item: SuggestionItem | SuggestionItemGroup) => void;
 }
 
 type InputSuggestion = {
@@ -52,12 +47,11 @@ type InputSuggestion = {
 }
 
 type SuggestionsAccInfo = {
-	isGroup: boolean,
-	currentPos: number;
-	listSize: number;
+	isGroup: boolean;
+	currentPos?: number;
+	listSize?: number;
 	itemText: string;
-	description: string;
-	additionalText: string;
+	additionalText?: string;
 }
 
 /**
@@ -76,9 +70,6 @@ class Suggestions {
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
 	attachedAfterClose?: boolean;
-	fnOnSuggestionItemPress: (e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>) => void;
-	fnOnSuggestionItemMouseOver: (e: MouseEvent) => void;
-	fnOnSuggestionItemMouseOut: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
 	static SCROLL_STEP = 60;
 
@@ -95,40 +86,9 @@ class Suggestions {
 		// Defines, if the suggestions should highlight.
 		this.highlight = highlight;
 
-		// Press and Focus handlers
-		this.fnOnSuggestionItemPress = this.onItemPress.bind(this);
-		this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
-		this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
-
 		// An integer value to store the currently selected item position,
 		// that changes due to user interaction.
 		this.selectedItemIndex = -1;
-	}
-
-	/* Public methods */
-	defaultSlotProperties(hightlightValue: string) {
-		const inputSuggestionItems = this._getComponent().suggestionItems;
-		const highlight = this.highlight && !!hightlightValue;
-		const suggestions: Array<InputSuggestion> = [];
-
-		inputSuggestionItems.map((suggestion: IInputSuggestionItem, idx: number) => {
-			const text = highlight ? this.getHighlightedText(suggestion, hightlightValue) : this.getRowText(suggestion);
-			const description = highlight ? this.getHighlightedDesc(suggestion, hightlightValue) : this.getRowDesc(suggestion);
-
-			return suggestions.push({
-				text,
-				description,
-				image: suggestion.image || undefined,
-				icon: suggestion.icon || undefined,
-				type: suggestion.type || undefined,
-				additionalText: suggestion.additionalText || undefined,
-				additionalTextState: suggestion.additionalTextState,
-				groupItem: suggestion.groupItem,
-				key: idx,
-			});
-		});
-
-		return suggestions;
 	}
 
 	onUp(e: KeyboardEvent) {
@@ -146,7 +106,7 @@ class Suggestions {
 	onSpace(e: KeyboardEvent) {
 		if (this._isItemOnTarget()) {
 			e.preventDefault();
-			this.onItemSelected(null, true /* keyboardUsed */);
+			this.onItemSelected(this._selectedItem, true /* keyboardUsed */);
 			return true;
 		}
 		return false;
@@ -159,7 +119,7 @@ class Suggestions {
 		}
 
 		if (this._isItemOnTarget()) {
-			this.onItemSelected(null, true /* keyboardUsed */);
+			this.onItemSelected(this._selectedItem, true /* keyboardUsed */);
 			return true;
 		}
 
@@ -226,7 +186,7 @@ class Suggestions {
 
 	onTab() {
 		if (this._isItemOnTarget()) {
-			this.onItemSelected(null, true);
+			this.onItemSelected(this._selectedItem, true);
 			return true;
 		}
 		return false;
@@ -236,19 +196,19 @@ class Suggestions {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
-			this.open();
+			this._getComponent().open = true;
 		} else {
 			this.close(options.preventFocusRestore);
 		}
 	}
 
+	get _selectedItem() {
+		return this._getNonGroupItems().find(item => item.selected) as SuggestionItem | null;
+	}
+
 	_isScrollable() {
 		const sc = this._getScrollContainer();
 		return sc.offsetHeight < sc.scrollHeight;
-	}
-
-	open() {
-		this._getComponent().open = true;
 	}
 
 	close(preventFocusRestore = false) {
@@ -268,44 +228,29 @@ class Suggestions {
 		this.selectedItemIndex = pos;
 	}
 
-	/* Interface methods */
-	onItemMouseOver(e: MouseEvent) {
-		this._getComponent().onItemMouseOver(e);
-	}
-
-	onItemMouseOut(e: MouseEvent) {
-		this._getComponent().onItemMouseOut(e);
-	}
-
-	onItemSelected(selectedItem: SuggestionListItem | null, keyboardUsed: boolean) {
-		const allItems = this._getItems();
-		const item = selectedItem || allItems[this.selectedItemIndex];
+	onItemSelected(selectedItem: SuggestionItem | null, keyboardUsed: boolean) {
+		const item = selectedItem;
 		const nonGroupItems = this._getNonGroupItems();
 
-		this.selectedItemIndex = allItems.indexOf(item);
-
-		this.accInfo = {
-			isGroup: item.groupItem,
-			currentPos: nonGroupItems.indexOf(item) + 1,
-			listSize: nonGroupItems.length,
-			itemText: this._getRealItems()[this.selectedItemIndex].text,
-			description: this._getRealItems()[this.selectedItemIndex].description,
-			additionalText: this._getRealItems()[this.selectedItemIndex].additionalText,
-		};
-
-		// If the item is "Inactive", prevent selection with SPACE or ENTER
-		// to have consistency with the way "Inactive" items behave in the ui5-list
-		if (item.type === "Inactive" || item.groupItem) {
+		if (!item) {
 			return;
 		}
 
-		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], item, keyboardUsed);
+		this.accInfo = {
+			isGroup: item.hasAttribute("ui5-suggestion-item-group"),
+			currentPos: nonGroupItems.indexOf(item) + 1,
+			listSize: nonGroupItems.length,
+			itemText: item.text,
+			additionalText: item.additionalText,
+		};
+
+		this._getComponent().onItemSelected(item, keyboardUsed);
 		item.selected = false;
 		item.focused = false;
 		this._getComponent().open = false;
 	}
 
-	onItemSelect(item: SuggestionListItem) {
+	onItemSelect(item: SuggestionItem | SuggestionItemGroup) {
 		this._getComponent().onItemSelect(item);
 	}
 
@@ -328,7 +273,7 @@ class Suggestions {
 			pressedItem = (e.detail as ListSelectionChangeEventDetail).selectedItems[0];
 		}
 
-		this.onItemSelected(pressedItem as SuggestionListItem, false /* keyboardUsed */);
+		this.onItemSelected(pressedItem as SuggestionItem, false /* keyboardUsed */);
 	}
 
 	_onOpen() {
@@ -356,7 +301,7 @@ class Suggestions {
 			return false;
 		}
 
-		return (items[this.selectedItemIndex].groupItem || items[this.selectedItemIndex].type === "Inactive");
+		return items[this.selectedItemIndex].hasAttribute("ui5-suggestion-item-group");
 	}
 
 	isOpened() {
@@ -406,7 +351,10 @@ class Suggestions {
 			this.selectedItemIndex = 0;
 
 			items[0].focused = false;
-			items[0].selected = false;
+
+			if (items[0].hasAttribute("ui5-suggestion-item")) {
+				(items[0] as SuggestionItem).selected = false;
+			}
 
 			return;
 		}
@@ -424,7 +372,10 @@ class Suggestions {
 		}
 
 		if (previousSelectedIdx - 1 < 0) {
-			items[previousSelectedIdx].selected = false;
+			if (items[previousSelectedIdx].hasAttribute("ui5-suggestion-item")) {
+				(items[previousSelectedIdx] as SuggestionItem).selected = false;
+			}
+
 			items[previousSelectedIdx].focused = false;
 
 			this.component.focused = true;
@@ -441,6 +392,7 @@ class Suggestions {
 		const currentItem = items[nextIdx];
 		const previousItem = items[previousIdx];
 		const nonGroupItems = this._getNonGroupItems();
+		const isGroupItem = currentItem.hasAttribute("ui5-suggestion-item-group");
 
 		if (!currentItem) {
 			return;
@@ -450,24 +402,30 @@ class Suggestions {
 		this._clearValueStateFocus();
 
 		this.accInfo = {
-			isGroup: currentItem.groupItem,
-			currentPos: nonGroupItems.indexOf(currentItem) + 1,
-			listSize: nonGroupItems.length,
-			itemText: this._getRealItems()[this.selectedItemIndex].text,
-			description: this._getRealItems()[items.indexOf(currentItem)].description,
-			additionalText: this._getRealItems()[items.indexOf(currentItem)].additionalText,
+			isGroup: isGroupItem,
+			currentPos: items.indexOf(currentItem) + 1,
+			// @ts-ignore
+			itemText: this._getItems()[this.selectedItemIndex].text,
 		};
 
+		if (currentItem.hasAttribute("ui5-suggestion-item")) {
+			this.accInfo.additionalText = (currentItem as SuggestionItem).additionalText;
+			this.accInfo.currentPos = nonGroupItems.indexOf(currentItem as SuggestionItem) + 1;
+			this.accInfo.listSize = nonGroupItems.length;
+		}
+
 		if (previousItem) {
-			previousItem.selected = false;
 			previousItem.focused = false;
+		}
+		if (previousItem?.hasAttribute("ui5-suggestion-item")) {
+			(previousItem as SuggestionItem).selected = false;
 		}
 
 		if (currentItem) {
 			currentItem.focused = true;
 
-			if (currentItem.type === "Active") {
-				currentItem.selected = true;
+			if (!isGroupItem) {
+				(currentItem as SuggestionItem).selected = true;
 			}
 
 			if (this.handleFocus) {
@@ -476,15 +434,18 @@ class Suggestions {
 		}
 
 		this.component.hasSuggestionItemSelected = true;
+		// @ts-ignore
 		this.onItemSelect(currentItem);
 
+		// @ts-ignore
 		if (!this._isItemIntoView(currentItem)) {
+			// @ts-ignore
 			this._scrollItemIntoView(currentItem);
 		}
 	}
 
 	_deselectItems() {
-		const items = this._getItems();
+		const items = this._getNonGroupItems();
 		items.forEach(item => {
 			item.selected = false;
 			item.focused = false;
@@ -499,7 +460,7 @@ class Suggestions {
 		}
 	}
 
-	_isItemIntoView(item: SuggestionListItem) {
+	_isItemIntoView(item: SuggestionItem | SuggestionItemGroup) {
 		const rectItem = item.getDomRef()!.getBoundingClientRect();
 		const rectInput = this._getComponent().getDomRef()!.getBoundingClientRect();
 		const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
@@ -507,7 +468,7 @@ class Suggestions {
 		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
 	}
 
-	_scrollItemIntoView(item: SuggestionListItem) {
+	_scrollItemIntoView(item: SuggestionItem | SuggestionItemGroup) {
 		const pos = item.getDomRef()!.offsetTop;
 		const scrollContainer = this._getScrollContainer();
 		scrollContainer.scrollTop = pos;
@@ -521,12 +482,23 @@ class Suggestions {
 		return this._scrollContainer;
 	}
 
-	_getItems(): Array<SuggestionListItem> {
-		return [...this._getList()!.items] as Array<SuggestionListItem> || [];
+	_getItems(): Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom> {
+		const items = this._getComponent().getSlottedNodes<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>("suggestionItems");
+
+		return items.reduce((acc, item) => {
+			if (item.hasAttribute("ui5-suggestion-item-group")) {
+				acc.push(item);
+				(item as SuggestionItemGroup).items.forEach(groupItem => acc.push(groupItem as SuggestionItem));
+			} else {
+				acc.push(item);
+			}
+
+			return acc;
+		}, [] as Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>);
 	}
 
-	_getNonGroupItems(): Array<SuggestionListItem> {
-		return this._getItems().filter(item => !item.groupItem);
+	_getNonGroupItems(): Array<SuggestionItem> {
+		return this._getItems().filter(item => !item.hasAttribute("ui5-suggestion-item-group")) as Array<SuggestionItem>;
 	}
 
 	_getComponent(): SuggestionComponent {
@@ -541,10 +513,6 @@ class Suggestions {
 		return this._getList()?.offsetWidth;
 	}
 
-	_getRealItems() {
-		return this._getComponent().getSlottedNodes<SuggestionItem>(this.slotName);
-	}
-
 	_getPicker() {
 		return this._getComponent().shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
@@ -554,36 +522,17 @@ class Suggestions {
 			return "";
 		}
 
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
-		const groupItemText = Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
+		if (this.accInfo.isGroup) {
+			return `${Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER)} ${this.accInfo.itemText}`;
+		}
 
-		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
-	}
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos || 0, this.accInfo.listSize || 0);
 
-	getRowText(suggestion: IInputSuggestionItem) {
-		return this.sanitizeText(suggestion.text || suggestion.textContent || "");
-	}
-
-	getRowDesc(suggestion: IInputSuggestionItem) {
-		return this.sanitizeText(suggestion.description || "");
-	}
-
-	getHighlightedText(suggestion: IInputSuggestionItem, input: string) {
-		const text = suggestion.text || suggestion.textContent || "";
-		return this.hightlightInput(text, input);
-	}
-
-	getHighlightedDesc(suggestion: IInputSuggestionItem, input: string) {
-		const text = suggestion.description || "";
-		return this.hightlightInput(text, input);
+		return `${this.accInfo.additionalText} ${itemPositionText}`;
 	}
 
 	hightlightInput(text: string, input: string) {
 		return generateHighlightedMarkup(text, input);
-	}
-
-	sanitizeText(text: string) {
-		return encodeXML(text) as string;
 	}
 
 	get _hasValueState() {
@@ -604,7 +553,7 @@ class Suggestions {
 		this.component._isValueStateFocused = false;
 	}
 
-	_clearSelectedSuggestionAndAccInfo() {
+	_clearSelectedSuggestionAndaccInfo() {
 		this.accInfo = undefined;
 		this.selectedItemIndex = 0;
 	}
@@ -612,9 +561,8 @@ class Suggestions {
 	static get dependencies() {
 		return [
 			SuggestionItem,
-			SuggestionGroupItem,
+			SuggestionItemGroup,
 			List,
-			SuggestionListItem,
 			ListItemGroupHeader,
 			Button,
 			Icon,

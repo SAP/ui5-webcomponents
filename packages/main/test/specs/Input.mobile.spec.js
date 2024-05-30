@@ -84,9 +84,8 @@ describe("Eventing", () => {
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys(sTypedText);
 
-		const suggestionItem = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item")[2];
+		const suggestionItem = await input.$$("ui5-suggestion-item")[2];
 		await suggestionItem.click();
-
 
 		const selectedKey = await browser.$("#myLabelSelectionChange").getText();
 		assert.strictEqual(selectedKey.split(" :: ")[1], sExpectedSelectedKey, "Selection change event property was correct");
@@ -166,17 +165,16 @@ describe("Picker filtering", () => {
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		const dialogList = await input.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-suggestion-item').length, 0, "There are no filtered items initially");
+		assert.strictEqual(await input.$$('ui5-suggestion-item').length, 0, "There are no filtered items initially");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-suggestion-item').length, 4, "There are 4 filtered items");
+		assert.strictEqual(await input.$$('ui5-suggestion-item').length, 4, "There are 4 filtered items");
 	});
 
 	it("Should filter group header list items", async () => {
-		const dialogList = await browser.$("#myInput").shadow$("ui5-responsive-popover").$('ui5-list')
+		const input = await browser.$("#myInput");
 
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is 1 filtered group header");
+		assert.strictEqual(await input.$$('ui5-suggestion-item-group').length, 1, "There is 1 filtered group header");
 	});
 });
 

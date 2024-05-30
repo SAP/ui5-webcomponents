@@ -315,6 +315,10 @@ class MultiInput extends Input implements IFormInputElement {
 		if (!insideDOM && !insideShadowDom) {
 			this.tokenizer.expanded = false;
 		}
+
+		if (this.contains(relatedTarget) && relatedTarget.hasAttribute("ui5-token")) {
+			this.focused = false;
+		}
 	}
 
 	/**

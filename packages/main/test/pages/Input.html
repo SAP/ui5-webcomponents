@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -15,17 +16,13 @@
 
 <body class="input1auto">
 	<h3> Input with suggestions: type 'a'</h3>
-	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelInputChange">Event [input] :: N/A</ui5-label><br/>
-	<ui5-label id="myLabelSelectionChange">Event [selectionChange] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br />
+	<ui5-label id="myLabelInputChange">Event [input] :: N/A</ui5-label><br />
+	<ui5-label id="myLabelSelectionChange">Event [selectionChange] :: N/A</ui5-label><br />
 
 	<div>
 		<h3>Input in Cozy</h3>
-		<ui5-input id="myInput"
-			class="input2auto"
-			show-suggestions
-			placeholder="Search for a country ..."
-		>
+		<ui5-input id="myInput" class="input2auto" show-suggestions placeholder="Search for a country ...">
 		</ui5-input>
 
 		<div>
@@ -38,34 +35,47 @@
 
 	<div class="sapUiSizeCompact">
 		<h3>Input in Compact</h3>
-		<ui5-input id="inputCompact"
-			class="input2auto"
-			show-suggestions
-			placeholder="Search for a country ...">
+		<ui5-input id="inputCompact" class="input2auto" show-suggestions placeholder="Search for a country ...">
 		</ui5-input>
 	</div>
 
-	<br/>
-	<br/>
+		<div>
+			<h3>Custom Suggestions</h3>
+
+			<ui5-input>
+				<ui5-suggestion-item-custom show-suggestions text="Custom suggestion">
+					<div>Custom suggestion</div>
+				</ui5-suggestion-item-custom>
+			</ui5-input>
+		</div>
+
+	<br />
+	<br />
+
+	<br />
+	<br />
 	<h3>Input suggestions with ui5-li</h3>
 	<ui5-input id="myInput2" show-suggestions class="input3auto">
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li type="Inactive">Inactive Compact</ui5-li>
-		<ui5-li type="Inactive">Inactive Condensed</ui5-li>
-	</ui5-input>
-	<br/>
-	<br/>
-	<h3>Input suggestions with grouping</h3>
-	<ui5-input id="myInputGrouping" show-suggestions class="input3auto">
-		<ui5-suggestion-group-item text="Content Density"></ui5-suggestion-group-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-group-item text="Themes"></ui5-suggestion-group-item>
-		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
-		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+	</ui5-input>
+	<br />
+	<br />
+	<h3>Input suggestions with grouping</h3>
+	<ui5-input id="myInputGrouping" show-suggestions class="input3auto">
+		<ui5-suggestion-item-group header-text="Content Density">
+			<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		</ui5-suggestion-item-group>
+
+		<ui5-suggestion-item-group header-text="Themes">
+			<ui5-suggestion-item text="Quartz"></ui5-suggestion-item>
+			<ui5-suggestion-item text="HCB"></ui5-suggestion-item>
+		</ui5-suggestion-item-group>
 	</ui5-input>
 
 	<h3>Input suggestions with highlighing</h3>
@@ -95,39 +105,33 @@
 	<ui5-input id="input1" value-state="Critical" placeholder="Warning state ..."></ui5-input>
 
 	<h3>Input with valueState and Dynamic suggestions</h3>
-	<ui5-input id="inputError"
-		class="input2auto"
-		show-suggestions
-		value-state="Negative"
+	<ui5-input id="inputError" class="input2auto" show-suggestions value-state="Negative"
 		placeholder="Search for a country ...">
-	<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
-	</ui5-input>
-
-	<h3>Input with long suggestions with valueState and ui5-li</h3>
-	<ui5-input id="long-sugg" show-suggestions class="input2auto" value-state="Information">
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
 	</ui5-input>
 
 	<h3>Input with disabled autocomplete (type-ahead)</h3>
 	<ui5-input id="input-disabled-autocomplete" show-suggestions no-typeahead="true">
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>CozyTwo</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-suggestion-item>Cozy</ui5-suggestion-item>
+		<ui5-suggestion-item>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text
+			used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text
+			used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text
+			used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text
+			used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a
+			list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a
+			list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a
+			list item -2.</ui5-suggestion-item>
+		<ui5-suggestion-item>Condensed</ui5-suggestion-item>
+		<ui5-suggestion-item>CozyTwo</ui5-suggestion-item>
+		<ui5-suggestion-item>Compact</ui5-suggestion-item>
+		<ui5-suggestion-item>Condensed</ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Input with disabled autocomplete and preventable suggestion select</h3>
 	<ui5-input id="input-prevent-suggestion-select" show-suggestions no-typeahead="true">
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-suggestion-item>Cozy</ui5-suggestion-item>
+		<ui5-suggestion-item>Compact</ui5-suggestion-item>
+		<ui5-suggestion-item>Condensed</ui5-suggestion-item>
 	</ui5-input>
 
 	<h3> 'change' event result</h3>
@@ -138,7 +142,9 @@
 
 	<h3> Test 'input' event</h3>
 	<ui5-input id="input2" value-state="Negative" placeholder="Negative state ...">
-		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an
+			information message. Extra long text used as an information message - 2. Extra long text used as an information
+			message - 3.</div>
 	</ui5-input>
 	<h3> 'input' test result</h3>
 	<ui5-input id="inputLiveChangeResult"></ui5-input>
@@ -184,7 +190,7 @@
 	<ui5-input id="input-email" type="Email" name="my-input-email"></ui5-input>
 
 	<h3> Input type 'Tel'</h3>
-	<ui5-input id="input-tel" maxlength="10" type="Tel"  name="my-input-tel"></ui5-input>
+	<ui5-input id="input-tel" maxlength="10" type="Tel" name="my-input-tel"></ui5-input>
 
 	<h3> Input type 'URL'</h3>
 	<ui5-input id="input-url" type="URL"></ui5-input>
@@ -200,21 +206,13 @@
 
 	<h3> Inputs alignment</h3>
 	<ui5-button>Press</ui5-button>
-	<ui5-date-picker  id='dp5'
-			placeholder='Delivery Date...'
-			title='Delivery Date!'>
+	<ui5-date-picker id='dp5' placeholder='Delivery Date...' title='Delivery Date!'>
 	</ui5-date-picker>
 
-	<ui5-date-picker id='dp5'
-			placeholder='Delivery Date...'
-			value-state="Negative"
-			title='Delivery Date!'>
+	<ui5-date-picker id='dp5' placeholder='Delivery Date...' value-state="Negative" title='Delivery Date!'>
 	</ui5-date-picker>
 
-	<ui5-date-picker
-			placeholder='Delivery Date...'
-			value-state="Information"
-			title='Delivery Date!'>
+	<ui5-date-picker placeholder='Delivery Date...' value-state="Information" title='Delivery Date!'>
 	</ui5-date-picker>
 
 	<ui5-select id="mySelect2">
@@ -223,7 +221,7 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
-	<ui5-input  value="input" value-state="Negative"></ui5-input>
+	<ui5-input value="input" value-state="Negative"></ui5-input>
 
 	<ui5-select id="mySelect2" value-state="Negative">
 		<ui5-option>Cozy</ui5-option>
@@ -253,57 +251,57 @@
 
 	<h3> Test scroll pos</h3>
 	<ui5-input id="scrollInput" show-suggestions>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 	</ui5-input>
 	<br><br>
 	<ui5-input id="scrollResult"></ui5-input>
@@ -316,25 +314,26 @@
 
 	<h3>Input suggestions with highlighing and XSS test</h3>
 	<ui5-input show-suggestions class="input3auto">
-		<ui5-suggestion-item text="<script>alert('XSS')</script>" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="<script>alert('XSS')</script>"
+			description="Administrative Support"></ui5-suggestion-item>
 		<ui5-suggestion-item text="Aanya Sing" description="<b onmouseover=alert('XSS')></b>">
 		</ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Test width of suggestions popover</h3>
 	<ui5-input id="suggestionsPopoverWidth" show-suggestions class="input6auto">
-		<ui5-li>Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</ui5-li>
+		<ui5-suggestion-item>Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Input in a Dialog</h3>
 	<ui5-button id="btnOpenDialog">Open Dialog</ui5-button>
 	<ui5-dialog id="dialog">
 		<ui5-input id="inputInDialog" show-suggestions class="input3auto">
-			<ui5-li>Cozy</ui5-li>
-			<ui5-li>Compact</ui5-li>
-			<ui5-li>Condensed</ui5-li>
-			<ui5-li type="Inactive">Inactive Compact</ui5-li>
-			<ui5-li type="Inactive">Inactive Condensed</ui5-li>
+			<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Inactive Compact"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Inactive Condensed"></ui5-suggestion-item>
 		</ui5-input>
 	</ui5-dialog>
 
@@ -343,9 +342,9 @@
 
 	<h3>Input with suggestions: clear value on selection change</h3>
 	<ui5-input id="change-event-value" show-suggestions>
-		<ui5-li>Cozy</ui5-li>
-		<ui5-li>Compact</ui5-li>
-		<ui5-li>Condensed</ui5-li>
+		<ui5-suggestion-item>Cozy</ui5-suggestion-item>
+		<ui5-suggestion-item>Compact</ui5-suggestion-item>
+		<ui5-suggestion-item>Condensed</ui5-suggestion-item>
 	</ui5-input>
 	<link rel="stylesheet" type="text/css" href="./styles/Input.css">
 
@@ -404,7 +403,8 @@
 		<br />
 		<br />
 		<span class="sapUiSizeCompact">
-			<ui5-input id="clear-input-compact" show-clear-icon placeholder="Type to show clear icon..." value="test"></ui5-input>
+			<ui5-input id="clear-input-compact" show-clear-icon placeholder="Type to show clear icon..."
+				value="test"></ui5-input>
 			<br>
 			<button id="clear-icon-readonly-toggle">Toggle readonly</button>
 			<br>
@@ -431,10 +431,22 @@
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
 	</ui5-input>
 
+	<br>
+	<br>
+
+	<h3>Input with openPicker() on focusin</h3>
+	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto"
+		placeholder="Click to show recent values...">
+		<ui5-suggestion-item-group header-text="Recent Items">
+			<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+		</ui5-suggestion-item-group>
+	</ui5-input>
+
 	<h3>Input - showing wrapping</h3>
 	<ui5-input show-suggestions id="input-change-wrapping">
 		<ui5-suggestion-item text="Item that does not wrap"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"></ui5-suggestion-item>
+		<ui5-suggestion-item
+			text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Input - change event handling</h3>
@@ -467,9 +479,9 @@
 	<br>
 
 	<Ui5-input id="input-selection-change" show-suggestions>
-		<ui5-suggestion-item text ="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item text ="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item text ="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 	</Ui5-input>
 
 	<br />
@@ -501,7 +513,7 @@
 			}, 1000);
 		});
 
-		document.getElementById("submit-input").addEventListener("keypress", function(event) {
+		document.getElementById("submit-input").addEventListener("keypress", function (event) {
 			if (event.key === 'Enter') {
 				var formToSubmit = document.getElementById("submit-form");
 				var submitEvent = new Event('submit');
@@ -519,7 +531,7 @@
 			}
 		});
 
-		document.getElementById("submit-form").addEventListener("submit", function(event) {
+		document.getElementById("submit-form").addEventListener("submit", function (event) {
 			event.preventDefault();
 			alert("Submitted");
 		});
@@ -527,7 +539,74 @@
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.open = true;
 		});
-		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+		var sap_database_entries = [
+			{
+				"key": "A",
+				"text": "A",
+				"items": [
+					{ "key": "Afg", "text": "Afghanistan" },
+					{ "key": "Arg", "text": "Argentina" },
+					{ "key": "Alb", "text": "Albania" },
+					{ "key": "Arm", "text": "Armenia" },
+					{ "key": "Alg", "text": "Algeria" },
+					{ "key": "And", "text": "Andorra" },
+					{ "key": "Ang", "text": "Angola" },
+					{ "key": "Ast", "text": "Austria" },
+					{ "key": "Aus", "text": "Australia" },
+					{ "key": "Aze", "text": "Azerbaijan" },
+					{ "key": "Aruba", "text": "Aruba" },
+					{ "key": "Antigua", "text": "Antigua and Barbuda" }
+				]
+			},
+			{
+				"key": "B",
+				"text": "B",
+				"items": [
+					{ "key": "Bel", "text": "Belarus" },
+					{ "key": "Bel", "text": "Belgium" },
+					{ "key": "Bg", "text": "Bulgaria" },
+					{ "key": "Bra", "text": "Brazil" }
+				]
+			},
+			{
+				"key": "C",
+				"text": "C",
+				"items": [
+					{ "key": "Ch", "text": "China" },
+					{ "key": "Cub", "text": "Cuba" },
+					{ "key": "Chil", "text": "Chili" }
+				]
+			},
+			{
+				"key": "L",
+				"text": "L",
+				"items": [
+					{ "key": "Lat", "text": "Latvia" },
+					{ "key": "Lit", "text": "Litva" }
+				]
+			},
+			{
+				"key": "P",
+				"text": "P",
+				"items": [
+					{ "key": "Prt", "text": "Portugal" }
+				]
+			},
+			{
+				"key": "S",
+				"text": "S",
+				"items": [
+					{ "key": "Sen", "text": "Senegal" },
+					{ "key": "Ser", "text": "Serbia" },
+					{ "key": "Sey", "text": "Seychelles" },
+					{ "key": "Sierra", "text": "Sierra Leone" },
+					{ "key": "Sgp", "text": "Singapore" },
+					{ "key": "Sint", "text": "Sint Maarten" },
+					{ "key": "Slv", "text": "Slovakia" },
+					{ "key": "Slo", "text": "Slovenia" }
+				]
+			}
+		];
 
 		var input = document.getElementById('myInput');
 		var inputChangeWithSuggestions = document.getElementById('inputChange-Suggestions');
@@ -559,23 +638,27 @@
 				input.removeChild(input.lastChild);
 			}
 
-			suggestionItems.forEach(function(item, idx) {
+			suggestionItems.forEach(function (item, idx) {
 				let suggestion;
-				const groupItem = item.text.length === 1;
+				const groupItem = item.items.length;
 
 				if (groupItem) {
-					suggestion = document.createElement("ui5-suggestion-group-item");
+					suggestion = document.createElement("ui5-suggestion-item-group");
 					suggestion.id = item.key;
-					suggestion.text = item.text;
+					suggestion.headerText = item.text;
+					item.items.forEach(function (subItem) {
+						const suggestionItem = document.createElement("ui5-suggestion-item");
+						suggestionItem.id = subItem.key;
+						suggestionItem.text = subItem.text;
+						suggestion.appendChild(suggestionItem);
+					});
+
 					input.appendChild(suggestion);
 				} else {
 					suggestion = document.createElement("ui5-suggestion-item");
 					suggestion.id = item.key;
-					suggestion.icon = "world";
-					suggestion.description = "travel the world";
 					suggestion.text = item.text
 					suggestion.additionalText = "explore";
-					suggestion.additionalTextState = "Positive";
 					input.appendChild(suggestion);
 				}
 			});
@@ -651,6 +734,7 @@
 			const oXSSItem = document.createElement("ui5-suggestion-item");
 
 			oXSSItem.text = `Canada<<img src="xss" onerror="document.getElementById('xss-result').innerText = 'XSS FOUND'">`
+
 			document.getElementById("xss-input").appendChild(oXSSItem);
 		});
 
@@ -692,7 +776,7 @@
 		function handleSuggestions() {
 			fetch('https://dummyjson.com/users?select=firstName,lastName&limit=100')
 				.then(res => res.json())
-				.then(({users}) => {
+				.then(({ users }) => {
 					var value = openPickerInput.value;
 					var suggestionItems = [];
 
@@ -700,7 +784,7 @@
 						openPickerInput.removeChild(child);
 					});
 
-					const recentItemsGroup = document.createElement("ui5-suggestion-group-item");
+					const recentItemsGroup = document.createElement("ui5-suggestion-item-group");
 					recentItemsGroup.text = "Recent items";
 					openPickerInput.appendChild(recentItemsGroup);
 
@@ -719,14 +803,14 @@
 					}
 
 					if (value) {
-						let currentItems = Array.from(openPickerInput.children).map(({text}) => text);
+						let currentItems = Array.from(openPickerInput.children).map(({ text }) => text);
 						suggestionItems = users
 							.map(({ firstName, lastName }) => `${firstName} ${lastName}`)
 							.filter(item => item.toUpperCase().indexOf(value.toUpperCase()) === 0 && !currentItems.includes(item));
 					}
 
 					if (suggestionItems.length) {
-						const suggestionsGroup = document.createElement("ui5-suggestion-group-item");
+						const suggestionsGroup = document.createElement("ui5-suggestion-item-group");
 						suggestionsGroup.text = "Suggestions";
 						openPickerInput.appendChild(suggestionsGroup);
 
@@ -795,4 +879,5 @@
 		});
 	</script>
 </body>
+
 </html>
