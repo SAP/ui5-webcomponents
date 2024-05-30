@@ -1761,6 +1761,21 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 		});
 
+		it("Tests group item focusability with keyboard", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-grouping");
+			const input = await mcb.shadow$("#ui5-multi-combobox-input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+
+			await input.click();
+			await input.keys("F4");
+
+			let firstItem = await popover.$("ui5-list").$("ui5-li");
+
+			assert.ok(await firstItem.matches(":focus"), "The first group header should be focused");
+		});
+
 		it("Group header keyboard handling", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 

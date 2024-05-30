@@ -898,7 +898,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		} else if (focusedToken && e.target === focusedToken) {
 			this._itemToFocus = items.find(item => item.text === focusedToken.text);
 		} else {
-			this._itemToFocus = items[0];
+			this._itemToFocus = items.find(item => isInstanceOfMultiComboBoxItem(item));
 		}
 	}
 
