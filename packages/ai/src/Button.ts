@@ -169,14 +169,14 @@ class Button extends UI5Element {
 		}
 
 		if (this.state && this._currentStateObject && !Object.keys(this._currentStateObject).length) {
-			this._currentStateObject = this._findStateByKey(this.state!);
+			this._currentStateObject = this._findStateByKey(this.state);
 		}
 
 		const currentStateKey = this._currentStateObject?.key || "";
 
 		if (!this.state) {
 			this.state = this.states.length ? this.states[0].key : "";
-			this._currentStateObject = this._findStateByKey(this.state!);
+			this._currentStateObject = this._findStateByKey(this.state);
 		}
 
 		if (!this._currentStateObject) {
