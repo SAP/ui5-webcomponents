@@ -274,6 +274,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		ResizeHandler.register(this, this._onResizeBound);
 	}
 
