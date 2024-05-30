@@ -425,6 +425,14 @@ describe("Popover general interaction", () => {
 
 		assert.strictEqual(await result.getText(), "No uncaught errors", "There is no error.");
 	});
+
+	it("tests if the popover is a part of the tab chain", async () => {
+		await browser.$("#input1").scrollIntoView();
+		await browser.$("#input1").click();
+		await browser.keys("Tab");
+
+		assert.ok(await browser.$("#input2").isFocused(), "next input is focused");
+	});
 });
 
 describe("Acc", () => {
