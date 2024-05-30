@@ -9,11 +9,11 @@
 }
 
 /*TODO after li is implemented*/
-:host([focused]) .ui5-nli-focusable {
+.ui5-nli-focusable:focus {
 	outline: none;
 }
 
-:host([focused]) .ui5-nli-focusable:not(.ui5-nli-group-root)::after {
+.ui5-nli-focusable:focus:not(.ui5-nli-group-root)::after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;

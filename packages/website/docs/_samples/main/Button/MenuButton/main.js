@@ -29,7 +29,8 @@ myMenu.addEventListener("close", function() {
 
 function openMenu(menu, opener) {
 	opener.accessibilityAttributes.expanded = true;
-	menu.showAt(opener);
+	menu.opener = opener;
+	menu.open = true;
 }
 
 function closeMenu(opener) {

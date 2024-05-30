@@ -153,12 +153,12 @@ const ICON_PER_STATUS_DESIGN = {
  */
 @event<NotificationListItemCloseEventDetail>("close", {
 	detail: {
-	   /**
-		* @public
-		*/
-	   item: {
-		   type: HTMLElement,
-	   },
+		/**
+		 * @public
+		 */
+		item: {
+			type: HTMLElement,
+		},
 	},
 })
 
@@ -497,7 +497,8 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		if (this.focused || (!isUp(e) && !isDown(e))) {
+		const isFocusWithin = this.matches(":focus-within");
+		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
 			return;
 		}
 

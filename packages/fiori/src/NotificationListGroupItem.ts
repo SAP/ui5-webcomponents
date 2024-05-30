@@ -189,7 +189,8 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
-		if (!this.focused) {
+		const isFocused = this.matches(":focus");
+		if (!isFocused) {
 			return;
 		}
 
