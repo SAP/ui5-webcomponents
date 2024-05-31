@@ -21,7 +21,6 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
-import IconMode from "./types/IconMode.js";
 import Icon from "./Icon.js";
 
 type LinkClickEventDetail = {
@@ -229,9 +228,10 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines the icon, displayed as graphical element within the component before the link's text.
 	 * The SAP-icons font provides numerous options.
 	 *
-	 * **Note:** We recommend using аn icon in the beginning or the end only. Using two icons is discouraged.
+	 * **Note:** Usage of icon-only link is not supported, the link must always have a text.
 	 *
-	 * Example:
+	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
+	 *
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @since 2.0.0
@@ -244,9 +244,10 @@ class Link extends UI5Element implements ITabbable {
 	 * Defines the icon, displayed as graphical element within the component after the link's text.
 	 * The SAP-icons font provides numerous options.
 	 *
-	 * **Note:** We recommend using аn icon in the beginning or the end only. Using two icons is discouraged.
+	 * **Note:** Usage of icon-only link is not supported, the link must always have a text.
 	 *
-	 * Example:
+	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
+	 *
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default ""
 	 * @since 2.0.0
@@ -283,9 +284,6 @@ class Link extends UI5Element implements ITabbable {
 			&& this._isCrossOrigin();
 
 		this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
-
-		// Icon only link is not allowed
-		this._ensureNoIconOnlyLink();
 	}
 
 	_isCrossOrigin() {
@@ -296,20 +294,6 @@ class Link extends UI5Element implements ITabbable {
 		return !(this._dummyAnchor.hostname === loc.hostname
 			&& this._dummyAnchor.port === loc.port
 			&& this._dummyAnchor.protocol === loc.protocol);
-	}
-
-	_ensureNoIconOnlyLink() {
-		if (this._isIconOnly) {
-			throw new Error("Icon only links are not supported.");
-		}
-	}
-
-	get _isIconOnly() {
-		return (this.icon || this.endIcon) && !this.textContent?.trim();
-	}
-
-	get effectiveIconMode() {
-		return IconMode.Decorative;
 	}
 
 	get effectiveTabIndex() {
