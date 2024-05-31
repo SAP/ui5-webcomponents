@@ -390,23 +390,11 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	onResponsivePopoverAfterClose() {
 		this.open = false;
-		const isEventPrevented = !this.fireEvent("close", {}, true);
-
-		if (isEventPrevented) {
-			return;
-		}
-
-		this.fireEvent("close", {}, true);
+		this.fireEvent("close");
 	}
 
 	onResponsivePopoverAfterOpen() {
-		const isEventPrevented = !this.fireEvent("open", {}, true);
-
-		if (isEventPrevented) {
-			return;
-		}
-
-		this.fireEvent("open", {}, true);
+		this.fireEvent("open");
 	}
 
 	/**
