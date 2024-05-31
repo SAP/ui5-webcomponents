@@ -83,3 +83,12 @@ ui5-date-picker,
 	background: transparent;
 }
 
+#divOpenAndScroll {
+    height: 300px;
+    overflow: auto;
+    border: 1px solid red;
+}
+
+#divOpenAndScroll > div {
+    height: 2000px;
+}

@@ -15,9 +15,9 @@
     "importsNotUsedAsValues": "preserve",
     "ignoreDeprecations": "5.0",
     "paths": {
-      "@ui5/webcomponents-base/dist/*": ["../base/src/*"],
-      "@ui5/webcomponents/dist/*": ["../main/src/*"],
-      "@ui5/webcomponents-theming/dist/*": ["../theming/src/*"],
+        "@ui5/webcomponents-base/dist/*": ["../base/src/*"],
+        "@ui5/webcomponents/dist/*": ["../main/src/*"],
+        "@ui5/webcomponents-theming/dist/*": ["../theming/src/*"],
     },
   },
   "references": [

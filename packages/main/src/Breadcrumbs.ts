@@ -7,6 +7,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isSpace,
@@ -213,7 +214,9 @@ class Breadcrumbs extends UI5Element {
 		this._preprocessItems();
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
+		await renderFinished();
+
 		this._cacheWidths();
 		this._updateOverflow();
 	}
