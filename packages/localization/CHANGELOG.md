@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.3...v1.24.4) (2024-05-31)
+
+
+### Bug Fixes
+
+* register runtime in SSR usage ([#9013](https://github.com/SAP/ui5-webcomponents/issues/9013)) ([#9014](https://github.com/SAP/ui5-webcomponents/issues/9014)) ([099e50d](https://github.com/SAP/ui5-webcomponents/commit/099e50d05d74273aa59b6eccbaaaa1095c587434)), closes [#8886](https://github.com/SAP/ui5-webcomponents/issues/8886)
+* **ui5-calendar:** respect component level calendarType in week calculation ([#9043](https://github.com/SAP/ui5-webcomponents/issues/9043)) ([8fb9067](https://github.com/SAP/ui5-webcomponents/commit/8fb9067188eb953d9baacc68d7bebe36f61d70e6)), closes [#6835](https://github.com/SAP/ui5-webcomponents/issues/6835)
+
+
+
+
+
 ## [1.24.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.2...v1.24.3) (2024-05-14)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization
