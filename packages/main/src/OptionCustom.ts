@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { IOption } from "./Select.js";
 import ListItemBase from "./ListItemBase.js";
 
@@ -72,6 +72,12 @@ class OptionCustom extends ListItemBase implements IOption {
 	 */
 	@property({ type: String })
 	tooltip!: string;
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";
