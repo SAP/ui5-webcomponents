@@ -167,7 +167,7 @@ class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
-	 * **Note:** for option "None" the text won't wrap and the words will be broken based on hyphenation.
+	 * **Note:** By default the text will wrap. If "None" is set - the text will truncate.
 	 * @default "Normal"
 	 * @public
 	 */
