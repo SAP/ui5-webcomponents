@@ -216,11 +216,18 @@ type MultiComboboxItemWithSelection = {
 @event("input")
 
 /**
- * Fired when the dropdown is opened or closed.
- * @since 1.0.0-rc.5
+ * Fired when the dropdown is opened.
+ * @since 2.0.0
  * @public
  */
-@event("open-change")
+@event("open")
+
+/**
+ * Fired when the dropdown is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 
 /**
  * Fired when selection is changed by user interaction.
@@ -1358,7 +1365,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_toggle() {
 		this._open = !this._open;
-		this.fireEvent("open-change");
+		// Fire event for the new state
+		if (this._open) {
+			this.fireEvent("open");
+		} else {
+			this.fireEvent("close");
+		}
 	}
 
 	_getSelectedItems(): Array<MultiComboBoxItem> {

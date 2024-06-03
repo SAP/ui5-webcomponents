@@ -63,14 +63,14 @@ describe("MultiComboBox general interaction", () => {
 			await resetBtn.click();
 			await icon.click();
 			assert.ok(await mcb.getProperty("open"), "MultiComboBox should be opened");
-			assert.strictEqual(await eventInput.getValue(), "openChange", "openChange should be called");
+			assert.strictEqual(await eventInput.getValue(), "open", "open should be called");
 			assert.strictEqual(await callCountInput.getValue(), "1", "Event should be called once");
 
 			await icon.click();
 			assert.notOk(await mcb.getProperty("open"), "MultiComboBox should be closed");
 
-			assert.strictEqual(await eventInput.getValue(), "openChange", "openChange should be called");
-			assert.strictEqual(await callCountInput.getValue(), "2", "Event should be called once");
+			assert.strictEqual(await eventInput.getValue(), "close", "close should be called");
+			assert.strictEqual(await callCountInput.getValue(), "1", "Event should be called once");
 
 			await resetBtn.click();
 		});
