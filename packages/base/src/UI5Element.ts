@@ -1118,7 +1118,7 @@ abstract class UI5Element extends HTMLElement {
 				}
 
 				const propertyName = slotData.propertyName || slotName;
-				Object.defineProperty(proto, propertyName, {
+				const definition: PropertyDescriptor = {
 					get(this: UI5Element) {
 						if (this._state[propertyName] !== undefined) {
 							return this._state[propertyName];
@@ -1128,7 +1128,9 @@ abstract class UI5Element extends HTMLElement {
 					set() {
 						throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
 					},
-				});
+				};
+				Object.defineProperty(proto, propertyName, definition);
+				Object.defineProperty(proto, kebabToCamelCase(propertyName), definition);
 			}
 		}
 	}
