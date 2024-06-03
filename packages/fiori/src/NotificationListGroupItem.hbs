@@ -1,7 +1,6 @@
 <li
 	class="ui5-nli-group-root ui5-nli-focusable"
 	@focusin="{{_onfocusin}}"
-	@focusout="{{_onfocusout}}"
 	@keydown="{{_onkeydown}}"
 	tabindex="{{forcedTabIndex}}"
 	aria-labelledby="{{ariaLabelledBy}}"
@@ -13,11 +12,10 @@
 		@keydown="{{_onkeydown}}"
 		role="button"
 		aria-expanded="{{_ariaExpanded}}"
-		aria-controls="{{_id}}-notificationsList">
+		aria-controls="{{_id}}-notificationsList"
+		title="{{toggleIconAccessibleName}}">
 		<ui5-icon
 			name={{groupCollapsedIcon}}
-			show-tooltip="true"
-			accessible-name={{toggleIconAccessibleName}}
 			class="ui5-nli-group-toggle-icon"
 			mode="Decorative"
 		></ui5-icon>
@@ -29,6 +27,10 @@
 			aria-level="2">
 			{{titleText}}
 		</div>
+
+		{{#if isLoading}}
+			<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
+		{{/if}}
 
 		<div class="ui5-nli-group-divider"></div>
 	</div>
