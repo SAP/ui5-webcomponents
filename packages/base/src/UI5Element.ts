@@ -420,8 +420,7 @@ abstract class UI5Element extends HTMLElement {
 		// Distribute the child in the _state object, keeping the Light DOM order,
 		// not the order elements are defined.
 		slottedChildrenMap.forEach((children, propertyName) => {
-			const sortedChildren = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
-			this._state[propertyName] = sortedChildren;
+			this._state[propertyName] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
 			this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 		});
 
