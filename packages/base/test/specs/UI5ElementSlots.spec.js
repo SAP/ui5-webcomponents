@@ -38,16 +38,19 @@ describe("Slots work properly", () => {
 		const otherCount = (await browser.$("#withContent").getProperty("other")).length;
 		const namedCount = (await browser.$("#withContent").getProperty("items")).length;
 
-		await browser("#o1").setAttribute("slot", ""); // move to default slot
-		await browser("#o2").setAttribute("slot", "named"); // move to "named" slot (with accessor "items")
+		const o1 = await browser.$("#o1");
+		await o1.setAttribute("slot", ""); // move to default slot
+
+		const o2  = await browser.$("#o2");
+		await o2.setAttribute("slot", "named"); // move to "named" slot (with accessor "items")
 
 		const newDefaultCount = (await browser.$("#withContent").getProperty("default")).length;
 		const newOtherCount = (await browser.$("#withContent").getProperty("other")).length;
 		const newNamedCount = (await browser.$("#withContent").getProperty("items")).length;
 
-		assert.ok(newDefaultCount === defaultCount + 1, "One more element in default accessor");
-		assert.ok(newOtherCount === newOtherCount - 2, "Two less elements in other accessor");
-		assert.ok(newNamedCount === newNamedCount + 1, "One more element in items accessor");
+		assert.strictEqual(newDefaultCount, defaultCount + 1, "One more element in default accessor");
+		assert.strictEqual(newOtherCount, newOtherCount - 2, "Two less elements in other accessor");
+		assert.strictEqual(newNamedCount, newNamedCount + 1, "One more element in items accessor");
 	});
 
 });
