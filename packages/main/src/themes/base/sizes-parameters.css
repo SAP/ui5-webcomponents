@@ -70,6 +70,7 @@
 	--_ui5_list_item_img_hn_margin: 0.75rem;
 	--_ui5_list_item_dropdown_base_height: 2.5rem;
 	--_ui5_list_item_base_height: var(--sapElement_LineHeight);
+	--_ui5_list_item_base_padding: 0 1rem;
 	--_ui5_list_item_icon_size: 1.125rem;
 	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
@@ -78,6 +79,11 @@
 	--_ui5_list_busy_row_height: 3rem;
 	--_ui5_month_picker_item_height: 3rem;
 	--_ui5_list_buttons_left_space: 0.125rem;
+
+	/* Form */
+	--_ui5_form_item_min_height: 2.813rem;
+	--_ui5_form_item_padding:  0.65rem;
+	--_ui5-form-group-heading-height: 2.75rem;
 
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.75rem;
@@ -142,6 +148,9 @@
 	--_ui5-toolbar-separator-height: 2rem;
 	--_ui5-toolbar-height: 2.75rem;
 	--_ui5_toolbar_overflow_padding: 0.25rem 0.5rem;
+
+	/* DynamicPageTitle */
+	--_ui5_dynamic_page_title_actions_separator_height: var(--_ui5-toolbar-separator-height);
 }
 
 [data-ui5-compact-size],
@@ -238,6 +247,11 @@
 	--_ui5_dialog_content_min_height: 2.5rem;
 	--_ui5_dialog_footer_height: 2.5rem;
 
+	/* Form */
+	--_ui5_form_item_min_height: 2rem;
+	--_ui5_form_item_padding:  0.25rem;
+	--_ui5-form-group-heading-height: 2rem;
+
 	/* Input */
 	--_ui5_input_height: var(--sapElement_Compact_Height);
 	--_ui5_input_inner_padding: 0 0.5rem;
@@ -264,6 +278,7 @@
 	--_ui5_list_no_data_font_size: var(--sapFontSize);
 	--_ui5_list_item_dropdown_base_height: 2rem;
 	--_ui5_list_item_base_height: 2rem;
+	--_ui5_list_item_base_padding: 0 1rem;
 	--_ui5_list_item_icon_size: 1rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
 	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
@@ -352,4 +367,7 @@
 	--_ui5-toolbar-separator-height: 1.5rem;
 	--_ui5-toolbar-height: 2rem;
 	--_ui5_toolbar_overflow_padding: 0.1875rem 0.375rem;
+
+	/* DynamicPageTitle */
+	--_ui5_dynamic_page_title_actions_separator_height: var(--_ui5-toolbar-separator-height);
 }

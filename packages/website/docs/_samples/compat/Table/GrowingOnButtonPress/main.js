@@ -1,3 +1,4 @@
+import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents-compat/dist/Table.js";
 import "@ui5/webcomponents-compat/dist/TableRow.js";
 import "@ui5/webcomponents-compat/dist/TableColumn.js";
@@ -19,11 +20,11 @@ const loadMore = () => {
 		endSliceIndex = sliceIndex + rows;
 		const result = products.slice(sliceIndex, endSliceIndex).map((product, index) => {
 			return "<ui5-table-row  id=roll-" + index + ">" +
-				"<ui5-table-cell><span>" + product.name +"</span></ui5-table-cell>" +
-				"<ui5-table-cell><span>" + product.supplierName + "</span></ui5-table-cell>" +
-				"<ui5-table-cell><span>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</span></ui5-table-cell>" +
-				"<ui5-table-cell><span><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
-				"<ui5-table-cell><span><b> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
+				"<ui5-table-cell><ui5-text>" + product.name +"</ui5-text></ui5-table-cell>" +
+				"<ui5-table-cell><ui5-text>" + product.supplierName + "</ui5-text></ui5-table-cell>" +
+				"<ui5-table-cell><ui5-text>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</ui5-text></ui5-table-cell>" +
+				"<ui5-table-cell><ui5-text><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</ui5-text></ui5-table-cell>" +
+				"<ui5-table-cell><ui5-text><b> " + product.price + "</b>" + product.currencyCode + "</ui5-text></ui5-table-cell></ui5-table-row>";
 		}).join("");
 		sliceIndex += rows;
 		growingTable.insertAdjacentHTML('beforeend', result);

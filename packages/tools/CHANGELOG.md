@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Features
+
+* **ui5-input:** allow custom icon styling ([#8881](https://github.com/SAP/ui5-webcomponents/issues/8881)) ([cf9f1c2](https://github.com/SAP/ui5-webcomponents/commit/cf9f1c28c93b9fa6c8663ce24d3c5e6d1ff4cc4e)), closes [#8182](https://github.com/SAP/ui5-webcomponents/issues/8182) [#6132](https://github.com/SAP/ui5-webcomponents/issues/6132)
+
+
+
+
+
 # [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
 
 

@@ -49,11 +49,19 @@ import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"
 ```ts
 import "@ui5/webcomponents/dist/Assets-static.js";
 import "@ui5/webcomponents-icons/dist/Assets-static.js"
+import "@ui5/webcomponents-icons-tnt/dist/Assets-static.js"
+import "@ui5/webcomponents-icons-business-suite/dist/Assets-static.js"
+import "@ui5/webcomponents-localization/dist/Assets-static.js"
+import "@ui5/webcomponents-theming/dist/Assets-static.js"
 ```
 use the dynamic equivalent of it:
 ```ts
 import "@ui5/webcomponents/dist/Assets.js";
-import "@ui5/webcomponents-icons/dist/Assets.js"
+import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
+import "@ui5/webcomponents-icons-business-suite/dist/Assets.js";
+import "@ui5/webcomponents-localization/dist/Assets.js";
+import "@ui5/webcomponents-theming/dist/Assets.js"
 ```
 
 ## Main package (@ui5/webcomponents)
@@ -600,6 +608,9 @@ it will no longer work for the component. Instead, do not render disabled option
 | Property                     | `horizontalAlign` | values have changed, f.e. `Left` to `Start` | 
 | Property                     | `placementType` | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
+| Event        | after-open  | open  | 
+| Event        | after-close  | close  | 
+
 
 - The `Left` and `Right` options have been renamed. If you previously used them to set the placement or the alignment of the popover:
 ```html
@@ -624,6 +635,23 @@ Now use `placement` instead:
 ```
 ```js
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+```
+
+- The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
+If you previously used the events like:
+
+```ts
+poover.addEventListener("after-open", (event) => {
+});
+poover.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+poover.addEventListener("open", (event) => {
+});
+poover.addEventListener("close", (event) => {
+});
 ```
 
 ### ui5-progress-indicator
@@ -976,6 +1004,24 @@ Now you have to use it like:
 <ui5-tree-item additional-text-state="Success"></ui5-tree-item>
 ```
 
+### ui5-toast
+
+| Changed item | Old          | New    | 
+|--------------|--------------|--------|
+| Event        | after-close  | close  | 
+
+- The event `after-close`  has been renamed to `close`. If you previously used it like:
+
+```ts
+toast.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+toast.addEventListener("close", (event) => {
+});
+```
+
 
 ## Fiori package (@ui5/webcomponents-fiori)
 
@@ -1131,6 +1177,92 @@ shellbar.accessibilityAttributes = {
       name: "Custom logo title"
     },
 };
+```
+
+### ui5-li-notification
+
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `priority` | `state` |
+| Property     | `busy` | `loading` |
+| Property     | `busyDelay` | `loadingDelay` |
+| Property     | N/A | `importance` |
+| Slot     | `actions` | `menu` |
+
+- The `priority` property of the `ui5-li-notification` is replaced by the new property `state`.
+  If you have previously used the `priority` property:
+```html
+<ui5-li-notification priority="Medium">
+```
+Now use `state` instead:
+```html
+<ui5-li-notification state="Critical">
+```
+ - If you have previously used the `busy`, `busyDelay` properties:
+```html
+<ui5-li-notification busy busy-delay="500"></ui5-li-notification>
+```
+now you must use `loading` and `loadingDelay` properties:
+```html
+<ui5-li-notification loading loading-delay="500"></ui5-li-notification>
+```
+- The `actions` slot of the `ui5-li-notification` is replaced by the new slot `menu`.
+  If you have previously used the `actions` slot:
+```html
+<ui5-li-notification>
+  <ui5-notification-action slot="actions" icon="message-error"	text="Reject">
+  </ui5-notification-action>
+```
+Now use `menu` instead:
+```html
+<ui5-li-notification>
+  <ui5-menu slot="menu">
+    <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+  </ui5-menu>
+```
+- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification` component.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+ <ui5-li-notification>
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification>
+```
+
+### ui5-li-notification-group
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `showClose` | N/A (removed) |
+| Property     | `showCounter` | N/A (removed) |
+| Property     | `priority` | N/A (removed) |
+| Property     | `busy` | `loading` |
+| Property     | `busyDelay` | `loadingDelay` |
+| Event     | `close` | N/A (removed) |
+| Slot     | `actions` | N/A (removed) |
+ - Properties "showClose", "showCounter", "priority", event "close" and slot "actions" are removed and there is no alternatives provided. The NotificationGroup no longer shows "Close" button, counter text, priority and actions.
+- If you have previously used the `busy`, `busyDelay` properties:
+```html
+<ui5-li-notification-group busy busy-delay="500"></ui5-li-notification-group>
+```
+now you must use `loading` and `loadingDelay` properties:
+```html
+<ui5-li-notification-group loading loading-delay="500"></ui5-li-notification-group>
+```
+- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` component.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+  <ui5-li-notification-group>
+    <ui5-li-notification>
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification-group>
+    <ui5-li-notification>
 ```
 
 

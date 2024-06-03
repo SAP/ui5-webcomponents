@@ -1,5 +1,5 @@
 import {
-	isSpace, isEnter, isDelete, isF10Shift, isEnterShift,
+	isSpace, isDelete, isF10Shift, isEnterShift, isUp, isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -18,6 +18,7 @@ import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationList from "./NotificationList.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
@@ -30,7 +31,6 @@ import "@ui5/webcomponents-icons/dist/message-warning.js";
 
 // Texts
 import {
-	NOTIFICATION_LIST_ITEM_TXT,
 	NOTIFICATION_LIST_ITEM_READ,
 	NOTIFICATION_LIST_ITEM_UNREAD,
 	NOTIFICATION_LIST_ITEM_SHOW_MORE,
@@ -40,6 +40,8 @@ import {
 	NOTIFICATION_LIST_ITEM_NEGATIVE_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_CRITICAL_STATUS_TXT,
 	NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE,
+	NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_FULL,
+	NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_TRUNCATE,
 	NOTIFICATION_LIST_ITEM_CLOSE_BTN_TITLE,
 	NOTIFICATION_LIST_ITEM_IMPORTANT_TXT,
 } from "./generated/i18n/i18n-defaults.js";
@@ -152,12 +154,12 @@ const ICON_PER_STATUS_DESIGN = {
  */
 @event<NotificationListItemCloseEventDetail>("close", {
 	detail: {
-	   /**
-		* @public
-		*/
-	   item: {
-		   type: HTMLElement,
-	   },
+		/**
+		 * @public
+		 */
+		item: {
+			type: HTMLElement,
+		},
 	},
 })
 
@@ -273,6 +275,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		ResizeHandler.register(this, this._onResizeBound);
 	}
 
@@ -310,6 +313,10 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get menuBtnAccessibleName() {
 		return NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MENU_BTN_TITLE);
+	}
+
+	get moreLinkAccessibleName() {
+		return this._showMorePressed ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_TRUNCATE) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MORE_LINK_LABEL_FULL);
 	}
 
 	get closeBtnAccessibleName() {
@@ -373,9 +380,19 @@ class NotificationListItem extends NotificationListItemBase {
 		const id = this._id;
 		const ids = [];
 
+		if (this.hasImportance) {
+			ids.push(`${id}-importance`);
+		}
+
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
 		}
+
+		if (this.isLoading) {
+			ids.push(`${id}-loading`);
+		}
+
+		ids.push(`${id}-read`);
 
 		if (this.hasDesc) {
 			ids.push(`${id}-description`);
@@ -386,11 +403,6 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		return ids.join(" ");
-	}
-
-	get ariaDescribedBy() {
-		const id = this._id;
-		return `${id}-invisibleText`;
 	}
 
 	get itemClasses() {
@@ -444,18 +456,22 @@ class NotificationListItem extends NotificationListItemBase {
 		return "";
 	}
 
-	get accInvisibleText() {
-		const notificationText = NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_TXT);
-		const readText = this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
-		const importanceText = this.importanceText;
-
-		return `${notificationText} ${importanceText} ${readText}`;
+	get readText() {
+		return this.read ? NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ) : NotificationListItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
 	}
 
-	get accInfo() {
+	get accInfoButton() {
 		return {
 			accessibilityAttributes: {
 				hasPopup: "menu",
+			},
+		};
+	}
+
+	get accInfoLink() {
+		return {
+			accessibilityAttributes: {
+				expanded: this._showMorePressed,
 			},
 		};
 	}
@@ -480,15 +496,47 @@ class NotificationListItem extends NotificationListItemBase {
 		this._showMorePressed = !this._showMorePressed;
 	}
 
-	_onkeydown(e: KeyboardEvent) {
-		super._onkeydown(e);
-
-		if (isEnter(e)) {
-			this.fireItemPress(e);
-		}
+	async _onkeydown(e: KeyboardEvent) {
+		await super._onkeydown(e);
 
 		if (isF10Shift(e)) {
 			e.preventDefault();
+		}
+
+		this.focusSameItemOnNextRow(e);
+	}
+
+	focusSameItemOnNextRow(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+		if (!target || target.hasAttribute("ui5-menu-item")) {
+			return;
+		}
+
+		const isFocusWithin = this.matches(":focus-within");
+		if (!isFocusWithin || (!isUp(e) && !isDown(e))) {
+			return;
+		}
+
+		e.preventDefault();
+		e.stopImmediatePropagation();
+
+		const list = this.closest("[ui5-notification-list]") as NotificationList;
+		if (!list) {
+			return;
+		}
+
+		const navItems = list.getEnabledItems();
+		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
+		const nextItem = navItems[index] as NotificationListItemBase;
+		if (!nextItem) {
+			return;
+		}
+
+		const sameItemOnNextRow = nextItem.getHeaderDomRef()!.querySelector(`.${target.className}`) as HTMLElement;
+		if (sameItemOnNextRow && sameItemOnNextRow.offsetParent) {
+			sameItemOnNextRow.focus();
+		} else {
+			nextItem.focus();
 		}
 	}
 
@@ -527,7 +575,8 @@ class NotificationListItem extends NotificationListItemBase {
 
 	openMenu() {
 		const menu = this.getMenu();
-		menu.showAt(this.menuButtonDOM);
+		menu.opener = this.menuButtonDOM;
+		menu.open = true;
 	}
 
 	getMenu() {

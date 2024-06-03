@@ -9,6 +9,7 @@ import "@ui5/webcomponents-icons/dist/action-settings.js"
 import "@ui5/webcomponents-icons/dist/sort.js"
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 
@@ -18,14 +19,14 @@ import "@ui5/webcomponents-icons/dist/accept.js";
 
 var shellbar = document.querySelector("ui5-shellbar");
 var notificationsPopover = document.querySelector("ui5-popover");
-var notificationList = document.querySelector("ui5-list");
+var notificationList = document.querySelector("ui5-notification-list");
 
 notificationList.addEventListener("item-close", e => {
     var visibleItems = 0;
 
     // hide the closed Notification item
     e.detail.item.hidden = true;
-    
+
     Array.from(e.detail.item.parentElement.childNodes).forEach((element) => {
         if (element.nodeName === "UI5-LI-NOTIFICATION" && !element.hidden) {
             visibleItems++;

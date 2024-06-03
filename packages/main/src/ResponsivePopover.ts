@@ -86,16 +86,14 @@ class ResponsivePopover extends Popover {
 	async openPopup() {
 		if (!isPhone()) {
 			await super.openPopup();
-		} else {
-			await this._dialog.openPopup();
+		} else if (this._dialog) {
+			this._dialog.open = true;
 		}
 	}
 
-	_show() {
+	async _show() {
 		if (!isPhone()) {
-			super._show();
-		} else {
-			this.style.display = "contents";
+			return super._show();
 		}
 	}
 

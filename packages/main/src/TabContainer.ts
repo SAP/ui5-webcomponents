@@ -51,6 +51,7 @@ import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
 import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
+import CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -172,6 +173,7 @@ interface ITab extends UI5Element {
 		List,
 		ResponsivePopover,
 		DropIndicator,
+		CustomListItem,
 	],
 })
 /**
@@ -432,7 +434,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this.responsivePopover?.open) {
-			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner(this.responsivePopover._opener!));
+			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner(this.responsivePopover.opener as HTMLElement));
 
 			if (popoverItems.length) {
 				this._setPopoverItems(popoverItems);

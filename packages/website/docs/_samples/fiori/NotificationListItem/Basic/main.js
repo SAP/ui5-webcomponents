@@ -3,10 +3,10 @@ import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/Toast.js";
 
-
+import "@ui5/webcomponents-fiori/dist/NotificationList.js";
 import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 
-var notificationList = document.querySelector("ui5-list");
+var notificationList = document.querySelector("ui5-notification-list");
 
 notificationList.addEventListener("item-close", e => {
     e.detail.item.hidden = true;

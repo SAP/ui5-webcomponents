@@ -1,6 +1,6 @@
 # Understanding UI5 Web Components Metadata
 
-Metadata is a JavaScript object, containing information about the public interface of a UI5 Web Component (tag name, properties, etc.).
+Metadata describes the public interface of a UI5 Web Component (tag name, properties, etc.).
 
 *Disclaimer: The information below is for UI5 Web Components development only. It is experimental and may change.*
 
@@ -10,11 +10,87 @@ Defines the HTML tag for the Web Component.
 
 #### Example:
 
-```json
-{
-	"tag": "ui5-my-element",
-}
+```ts
+@customElements({
+	tag: "my-component",
+})
+class MyComponent extends UI5Element {};
 ``` 
+
+
+
+## Language-aware components
+
+The `languageAware` metadata setting determines if the component should be re-rendered whenever the language changes.
+
+```ts
+@customElement({
+	tag: "my-component",
+	languageAware: true,
+})
+class MyComponent extends UI5Element {
+}
+```
+
+You should use this setting if your component has translatable texts, therefore needs to be re-rendered when the app
+changes the language.
+
+## Theme-aware components
+
+The `themeAware`  setting determines if the component should re-render whenever the theme changes.
+
+```ts
+@customElement({
+	tag: "my-component",
+	themeAware: true,
+})
+class MyComponent extends UI5Element {
+}
+```
+
+**Important: You should almost never use this setting.**
+
+Normally components are built in such a way that their structure
+is exactly the same for all themes and whenever the theme changes *only CSS Variables are changed* and the component itself
+does not need to be re-rendered - the browser automatically updates the styles when CSS Variables get new values.
+
+However, there are some very rare cases where a component must behave differently (opposed to just look differently) based on the theme.
+For example, the `ui5-icon` component must show different versions of the icons based on the theme. Use the `themeAware` setting
+in these exceptional cases to guarantee that your component will be re-rendered on theme change.
+
+
+## Form-associated components
+
+The `formAssociated` setting defines if the component should support native Form support.
+When set, the framework makese use of the `ElementInternals` API to implements the required interfaces to make component working in a native HTML Form
+as standard HTML input element do.
+It's commonly used in input-type components, such as: Input, ComboBox, MultiComboBox, Select and more.
+
+```ts
+@customElement({
+	tag: "my-component",
+	formAssociated: true,
+})
+class MyComponent extends UI5Element {
+}
+```
+
+## Components in fast navigation groups
+
+The F6 Navigation feature allows users to navigate quickly between groups of DOM elements using keyboard shortcuts.
+The `fastNavigation` setting defines whether this control supports F6 fast navigation.
+When the setting is enabled, the framework will set the `data-sap-ui-fastnavgroup` attribute on the component root element to construct fast navigation group.
+When the focus is on the component and the `F6` key is pressed, the focus goes to the first focusable element of the next group, skipping other focusable elements inside the current component. Commonly used by container-type of compoennts like: Tabale, List, Wizard, ShellBar, Panel and more.
+
+```ts
+@customElement({
+	tag: "my-component",
+	fastNavigation: true,
+})
+class MyComponent extends UI5Element {
+}
+```
+
 
 ## Properties / Attributes
 
@@ -25,41 +101,56 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 
 #### Example
 
-```json
-{
-	"properties": {
-		"message": {
-			"type": String,
-			"defaultValue": "Hello",
-		},
-		"shown": {
-			"type": Boolean,
-			"noAttribute": true,
-		},
-		"settings": {
-			"type": Object,
-		},
-		"nums": {
-			"type": Integer,
-			"multiple": true,
-		},
-		"animationDuration": {
-			"type": Integer,
-		},
-	},
-}
-```
+```ts
+@customElements({
+	tag: "my-component",
+})
+class DemoComponent extends UI5Element {
 
-#### Property configuration settings
+	@property({ type: String, defaultValue: "Hello" })
+	message!: string;
+
+	@property({ type: Boolean, "noAttribute": true })
+	shown!: boolean;
+
+	@property({ type: Object })
+	settings!: object;
+
+	@property({ validator: Integer })
+	animationDuration!: number;
+
+	@property({ validator: Integer,  "multiple": true })
+	nums!: Array<number>;
+};
+``` 
+
+
+#### @property configuration settings
 
 | Setting        | Type                         | Default   | Description                                                                                                   |
 |----------------|------------------------------|-----------|---------------------------------------------------------------------------------------------------------------|
-| `type`         | Property type                | N/A       | The type of the property. For more information on types see the table below.                                  |
+| `type`         | Property type                | String    | The type of the property. For more information on types see the table below.                                  |
 | `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML.|
 | `multiple`     | Boolean                      | false     | Indicates whether the property represents a single value or is an array of values of the given type.          |
 | `noAttribute`  | Boolean                      | false     | No attribute equivalent will be created for that property. Always true for properties of type Object.        |
+| `validator`  | Validator type                 | N/A       | The validator of the property. For more information on validators see the table below  |
 
-The `type` setting is required.
+**Note:** The `type` setting is required, except these two cases:
+
+- `string` properties (type: String is considered default)
+
+```ts
+@property()
+name!: string;
+``` 
+
+- `validator` is provided:
+
+```ts
+@property({ validator: Integer })
+animationDuration!: number;
+```
+
 
 #### Types
 
@@ -78,28 +169,39 @@ The `type` setting is required.
 | Integer    | `@ui5/webcomponents-base/dist/types/Integer.js`    | Integer value                                                  |
 | ValueState | `@ui5/webcomponents-base/dist/types/ValueState.js` | Enumeration with: `None`, `Error`, `Warning`, `Success` values |
 
+#### Validators
+
+The `validator` is a custom class that implements `isValid` function that validates the property's value whenever it changes. If value is not valid, the framework will set the proeprty `defaultValue`.
+
+| Type        | Class to Use                                             | Description                             |
+|-------------|----------------------------------------------------------|-----------------------------------------|
+| number      | `Integer`                                                | Validates the prop value to integer     |
+| number      | `Float`                                                  | Validates the prop value to float       |
+| string      | `CSSColor`                                               | Validates the prop value to valid CSS color|
+| string      | `CSSSize`                                                | Validates the prop value to valid CSS size |
+| string or HTMLElement      | `DomReference`                            | Validates the prop value is it's a string or HTMLElement |
+
 ## Slots
 
 Defines the `slots` that will be provided by this UI5 Web Component.
 
+
 #### Example
 
-```json
-{
-	"slots": {
-		"default": {
-			"type": Node,
-		},
-		"footer": {
-			"type": HTMLElement,
-		},
-		"rows": {
-			"type": HTMLElement,
-			"individualSlots": true,
-		}
-	}
+
+ ```js
+class MyComponent extends UI5Element {
+	@slot({ type: Node, "default": true })
+	content!: Array<Node>;
+
+	@slot()
+	rows!: Array<HTMLElement>;
+
+	@slot()
+	footer!: Array<HTMLElement>;
 }
 ```
+
 
 #### Slot configuration settings
 
@@ -113,7 +215,7 @@ Defines the `slots` that will be provided by this UI5 Web Component.
 `*` The `type` setting is required.
 
 `**` 
-**Important:** `invalidateOnChildChange` is not meant to be used with standard DOM Elements and is not to be confused with `MutationObserver`-like functionality. 
+**Note:** `invalidateOnChildChange` is not meant to be used with standard DOM Elements and is not to be confused with `MutationObserver`-like functionality. 
 It rather targets the use case of components that slot abstract items (`UI5Element` instances without a template) and require to be invalidated in turn whenever these items are invalidated.  
 
 The `invalidateOnChildChange` setting can be either a `Boolean` (`true` meaning invalidate the component on any change of a child in this slot) or an `Object` with `properties` and `slots` fields. They in turn can be either of
@@ -121,83 +223,52 @@ type `Boolean` (`true` meaning invalidate on any property change or any slot cha
 
 Examples:
 
- - In the following example, since `invalidateOnChildChange` is not used (`false` by default), the component will be invalidated whenever children are added/removed in the `tabs` slot,
- but not whenever a child in that slot changes.
- ```json
-{
-	managedSlots: true,
-	slots: {
-		"default": {
-			"type": "HTMLElement",
-			"propertyName": "tabs",
-		}
-	}
+ - In the following example, since `invalidateOnChildChange` is not used (`false` by default), the component will be invalidated whenever children are added/removed in the `tabs` slot, but not whenever a child in that slot changes.
+
+ ```js
+class MyComponent extends UI5Element {
+	@slot()
+	tabs!: Array<HTMLElement>;
 }
 ```
 
  - Setting `invalidateOnChildChange` to `true` means: invalidate the component whenever a child in the `tabs` slot gets invalidated, regardless of the reason.
- ```json
-{
-	managedSlots: true,
-	slots: {
-		"default": {
-			"type": "HTMLElement",
-			"propertyName": "tabs",
-			"invalidateOnChildChange": true
-		}
-	}
+
+```js
+class MyComponent extends UI5Element {
+	@slot({ type: HTMLElement, invalidateOnChildChange: "true" })
+	tabs!: Array<HTMLElement>;
 }
 ```
 
- - The example below results in exactly the same behavior as the one above, but it uses the more explicit `Object` format:
- ```json
-{
-	managedSlots: true,
-	slots: {
-		"default": {
-			"type": "HTMLElement",
-			"propertyName": "tabs",
-			"invalidateOnChildChange": {
-				"properties": true,
-				"slots": true
-			}
-		}
-	}
-}
-```
 
- - The following example uses the `Object` format again and means: invalidate the component whenever the children in this slot are invalidated due to property changes, but not due 
- to slot changes. Here `"slots": false` is added for completeness (as `false` is the default value for both `properties` and `slots`)
- ```json
-{
-	managedSlots: true,
-	slots: {
-		"default": {
-			"type": "HTMLElement",
-			"propertyName": "tabs",
-			"invalidateOnChildChange": {
-				"properties": true,
-				"slots": false
-			}
+ - The following example uses the `Object` format again and means: invalidate the component whenever the children in this slot are invalidated due to property changes, but not due to slot changes. Here `"slots": false` is added for completeness (as `false` is the default value for both `properties` and `slots`)
+
+```js
+class MyComponent extends UI5Element {
+	@slot({ 
+		type: HTMLElement,
+		invalidateOnChildChange: {
+			"properties": true,
+			"slots": false
 		}
-	}
+	})
+	tabs!: Array<HTMLElement>;
 }
 ```
 
  - The final example shows the most complex format of `invalidateOnChildChange` which allows to define which slots or properties in the children inside that slot lead to invalidation of the component:
- ```json
-{
-	managedSlots: true,
-	slots: {
-		"default": {
-			"type": "HTMLElement",
-			"propertyName": "tabs",
-			"invalidateOnChildChange": {
-				"properties": ["text", "selected", "disabled"],
-				"slots": ["default"]
-			}
+
+ ```js
+class MyComponent extends UI5Element {
+	@slot({ 
+		type: HTMLElement,
+		invalidateOnChildChange: {
+			"properties": ["text", "selected", "disabled"],
+			"slots": ["default"]
 		}
-	}
+	})
+	tabs!: Array<HTMLElement>;
 }
 ```
 
@@ -206,75 +277,27 @@ Notes:
  - All HTML text nodes will be assigned to the `default` slot, as they cannot have a `slot` attribute.
  - For all slots the Web Component will have a property created, with the name of the slot, to hold a list of all children assigned to this slot.
  For example, if you have a slot named "rows", "this.rows" will be an array, holding references to all children with `slot="rows"`, or no slot, if rows was default.
- - For the `default` slot you can provide a `propertyName` setting. 
- For example, if your default slot has a `propertyName: "items"`, then "this.items" will hold all children that were assigned to the default slot.
- 
- #### Allowed slot types
+ - For the `default` slot you can provide an accessor. In the following example, `this.items` will hold all children that were assigned to the default slot.
+
+```ts
+ @slot({ 
+	type: HTMLElement
+	"default": true,
+})
+items!: Array<HTMLElement>;
+```
+
+
+ #### Slot types
 
 | Type        | Description                               |
 |-------------|-------------------------------------------|
 | Node        | Accepts both Text nodes and HTML Elements |
 | HTMLElement | Accepts HTML Elements only                |
 
-## Managed slots
 
-Determines whether the framework should manage the slots of this UI5 Web Component. 
+## Slots and Component Invalidation
 
-This setting is useful for UI5 Web Components that don't just slot children, but additionally base their own 
-rendering on the presence/absence/type of children.
-
-```json
-{
-	"managedSlots": true
-}
-```
-
-When `managedSlots` is set to `true`:
  - The framework will invalidate this UI5 Web Component, whenever its children are added/removed/rearranged (and additionally when invalidated, if `invalidateOnChildChange` is set).
  - If any of this UI5 Web Component's children are custom elements, the framework will await until they are all
  defined and upgraded, before rendering the component for the first time.
- - The framework will create properties for each slot on this UI5 Web Component's instances for easier access
- to the slotted children. For example, if there are `header`, `content` and `footer` slots, there will be
- respectively `header`, `content` and `footer` properties of type `Array` holding the slotted children for each slot.
- **Note:** You can use the `propertyName` metadata entity, described above, to modify these. 
- 
- In essence, set this to `true` if the UI5 Web Component you're developing should be aware of its children
- for the purposes of its own state management and rendering (contrary to just displaying them).
- 
- An example of a component that would benefit from `managedSlots` is a Tab Container that monitors its children (Tabs)
- in order to display a link on its Tab Strip for each Tab child. Therefore, it would need to be invalidated whenever
- Tabs are added/removed, in order to update its own state and visualization.
-
-## Language-aware components
-
-The `languageAware` metadata setting determines if the component should be re-rendered whenever the language changes.
-
-```json
-{
-	"languageAware": true
-}
-```
-
-You should use this setting if your component has translatable texts, therefore needs to be re-rendered when the app
-changes the language.
-
-## Theme-aware components
-
-The `themeAware` metadata setting determines if the component should re-render whenever the theme changes.
-
-```json
-{
-	"themeAware": true
-}
-```
-
-**Important: You should almost never use this setting.**
-
-Normally components are built in such a way that their structure
-is exactly the same for all themes and whenever the theme changes *only CSS Variables are changed* and the component itself
-does not need to be re-rendered - the browser automatically updates the styles when CSS Variables get new values.
-
-However, there are some very rare cases where a component must behave differently (opposed to just look differently) based on the theme.
-For example, the `ui5-icon` component must show different versions of the icons based on the theme. Use the `themeAware` setting
-in these exceptional cases to guarantee that your component will be re-rendered on theme change.
-
