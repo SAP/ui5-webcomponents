@@ -175,6 +175,9 @@ abstract class UI5Element extends HTMLElement {
 		}
 	}
 
+	/**
+	 * Note: this "slotchange" listener is for slots, rendered in the component's shadow root
+	 */
 	_onShadowRootSlotChange(e: Event) {
 		const targetShadowRoot = (e.target as Node)?.getRootNode();
 		if (targetShadowRoot === this.shadowRoot) { // only for slotchange events that originate from the component's shadow root
@@ -710,6 +713,7 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Whenever a slot element is slotted inside a UI5 Web Component, its slotchange event invalidates the component
+	 * Note: this "slotchange" listener is for slots that are children of the component (in the light dom, as opposed to slots rendered by the component in the shadow root)
 	 *
 	 * @param slotName the name of the slot, where the slot element (whose slotchange event we're listening to) is
 	 * @private
