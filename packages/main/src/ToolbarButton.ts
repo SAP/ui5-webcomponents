@@ -76,12 +76,20 @@ class ToolbarButton extends ToolbarItem {
 	icon!: string;
 
 	/**
-	 * Defines whether the icon should be displayed after the component text.
-	 * @default false
+	 * Defines the icon, displayed as graphical element within the component after the button text.
+	 *
+	 * **Note:** It is highly recommended to use `endIcon` property only together with `icon` and/or `text` properties.
+	 * Usage of `endIcon` only should be avoided.
+	 *
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
 	 * @public
 	 */
-	@property({ type: Boolean })
-	iconEnd!: boolean;
+	@property()
+	endIcon!: string;
 
 	/**
 	 * Defines the tooltip of the component.

@@ -20,8 +20,7 @@ import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,
 	NOTIFICATION_LIST_GROUP_COLLAPSED,
 	NOTIFICATION_LIST_GROUP_EXPANDED,
-	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE,
-	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE,
+	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -116,9 +115,11 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	items!: Array<NotificationListItemBase>
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
+		this.actionable = false;
 	}
 
 	/**
@@ -131,12 +132,8 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		});
 	}
 
-	get toggleBtnAccessibleName() {
-		if (this.collapsed) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
-		}
-
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
+	get toggleIconAccessibleName() {
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE);
 	}
 
 	get accInvisibleText() {
@@ -157,22 +154,29 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
+		const ids = [];
 
-		return this.hasTitleText ? `${id}-title-text` : "";
+		if (this.isLoading) {
+			ids.push(`${id}-loading`);
+		}
+
+		if (this.hasTitleText) {
+			ids.push(`${id}-title-text`);
+		}
+
+		return ids.join(" ");
 	}
 
 	get _ariaExpanded() {
 		return !this.collapsed;
 	}
 
-	get groupCollapsedIcon() {
-		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
+	get _pressable() {
+		return false;
 	}
 
-	get groupCollapsedTooltip() {
-		// eslint-disable-next-line
-		// ToDo: edit and add translation when spec is ready
-		return this.collapsed ? "expand arrow" : "collapse arrow";
+	get groupCollapsedIcon() {
+		return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
 	}
 
 	toggleCollapsed() {
@@ -189,11 +193,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
-		await super._onkeydown(e);
-
-		if (!this.focused) {
+		const isFocused = this.matches(":focus");
+		if (!isFocused) {
 			return;
 		}
+
+		await super._onkeydown(e);
 
 		const space = isSpace(e);
 		const plus = isPlus(e);
@@ -209,6 +214,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// expand
 			if (this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 
@@ -216,6 +222,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 			// collapse
 			if (!this.collapsed) {
 				this.toggleCollapsed();
+				e.stopImmediatePropagation();
 			}
 		}
 	}

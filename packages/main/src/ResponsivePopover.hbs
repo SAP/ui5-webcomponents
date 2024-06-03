@@ -12,6 +12,7 @@
 		@ui5-before-close="{{_propagateDialogEvent}}"
 		@ui5-close="{{_afterDialogClose}}"
 		exportparts="content, header, footer"
+		.open={{open}}
 	>
 		{{!-- forward slot header to inner dialog slot header --}}
 		{{#unless _hideHeader}}
