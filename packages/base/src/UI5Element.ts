@@ -159,10 +159,26 @@ abstract class UI5Element extends HTMLElement {
 		this._state = { ...ctor.getMetadata().getInitialState() };
 
 		this._upgradeAllProperties();
+		this._initShadowRoot();
+	}
 
+	_initShadowRoot() {
+		const ctor = this.constructor as typeof UI5Element;
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
 			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+
+			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
+			if (slotsAreManaged) {
+				this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+			}
+		}
+	}
+
+	_onShadowRootSlotChange(e: Event) {
+		const targetShadowRoot = (e.target as Node)?.getRootNode();
+		if (targetShadowRoot === this.shadowRoot) { // only for slotchange events that originate from the component's shadow root
+			this._processChildren();
 		}
 	}
 
