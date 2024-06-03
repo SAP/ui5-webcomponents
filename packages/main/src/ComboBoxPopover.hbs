@@ -10,6 +10,7 @@
 	@ui5-before-open="{{_beforeOpenPopover}}"
 	@ui5-open={{_afterOpenPopover}}
 	@ui5-close={{_afterClosePopover}}
+	@keydown={{_handlePopoverKeydown}}
 	.open={{open}}
 	.opener={{this}}
 >
@@ -60,7 +61,7 @@
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateText}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} tabindex="0" style="{{styles.suggestionPopoverHeader}}">
+			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} style="{{styles.suggestionPopoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
 					{{> valueStateMessage}}
 			</div>
@@ -142,7 +143,6 @@
 			wrapping-type="Normal"
 			additional-text={{this.additionalText}}
 			group-name={{this.groupName}}
-			._tabIndex={{itemTabIndex}}
 			.mappedItem={{this}}
 			?selected={{this.selected}}
 			?focused={{this.focused}}

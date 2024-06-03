@@ -371,9 +371,19 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean, noAttribute: true })
 	_effectiveShowClearIcon!: boolean;
 
+	/**
+	 * Indicates whether the value state message popover is open.
+	 * @private
+	 * @since 2.0.0
+	 */
 	@property({ type: Boolean, noAttribute: true })
 	valueStateOpen!: boolean;
 
+	/**
+	 * Indicates whether the items picker is open.
+	 * @private
+	 * @since 2.0.0
+	 */
 	@property({ type: Boolean, noAttribute: true })
 	open!: boolean;
 
@@ -474,9 +484,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this.valueStateOpen = false;
 		}
 
-		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
-			this.valueStateOpen = false;
-		}
+		// if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
+		// 	this.valueStateOpen = false;
+		// }
 
 		this._selectMatchingItem();
 		this._initialRendering = false;
@@ -502,6 +512,14 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.items.forEach(item => {
 			item._getRealDomRef = () => this._getPicker().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 		});
+
+		// Remove tabindex from the value state message links
+		this.valueStateMessage.forEach(item => {
+			item.querySelectorAll("a").forEach(
+				link => {
+					link.tabIndex = -1;
+				});
+		});
 	}
 
 	_focusin(e: FocusEvent) {
@@ -522,7 +540,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._fireChangeEvent();
 
-		if ((this.open && this._getPicker().contains(toBeFocused)) || (this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused))) {
+		const focusedOutToItemsPicker = this.open && this._getPicker().contains(toBeFocused);
+		const focusedOutToValueState = this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused);
+
+		if (focusedOutToItemsPicker || focusedOutToValueState) {
 			e.stopImmediatePropagation();
 			return;
 		}
@@ -534,7 +555,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_beforeOpenPopover() {
 		if (isPhone()) {
-			this._getPicker()!.querySelector<HTMLInputElement>("[ui5-input]")!.value = this.value;
+			this._getPickerInput().value = this.value;
 		}
 	}
 
@@ -547,6 +568,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._iconPressed = false;
 		this._filteredItems = this.items;
 		this.filterValue = "";
+		this._selectedItemText = "";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -583,6 +605,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		return this.shadowRoot!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
+	_getItemsList(): List {
+		return this._getPicker().querySelector(".ui5-combobox-items-list") as List;
+	}
+
 	_resetFilter() {
 		this._userTypedValue = "";
 		this.inner.setSelectionRange(0, this.value.length);
@@ -616,7 +642,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_handleMobileKeydown(e: KeyboardEvent) {
 		if (isEscape(e)) {
-			this._closeRespPopover(null, true);
+			this.value = this._lastValue || "";
+			this.filterValue = this._lastValue || "";
+			this._closeRespPopover();
 		}
 	}
 
@@ -957,19 +985,26 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				return item.selected;
 			});
 
-			// The poperty this.open has already been set by _toggleRespPopover, but the popover may not be actually opened yet.
-			const isAlreadyOpen = this._getPicker().open;
-
-			if (selectedItem && isAlreadyOpen) {
+			if (selectedItem && this.open) {
 				this._itemFocused = true;
 				selectedItem.focused = true;
 				this.focused = false;
-			} else if (isAlreadyOpen && this._filteredItems.length) {
+			} else if (this.open && this._filteredItems.length && !this.value.length) {
 				// If no item is selected, select the first one on "Show" (F4, Alt+Up/Down)
 				this._handleItemNavigation(e, 0, true /* isForward */);
 			} else {
 				this.focused = true;
 			}
+		}
+	}
+
+	_handlePopoverKeydown(e: KeyboardEvent) {
+		if (isTabNext(e)) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			this._closeRespPopover();
+			this.focused = false;
+			this.blur();
 		}
 	}
 
@@ -979,8 +1014,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_closeRespPopover(e?: Event | null, resetInputValue: boolean = false) {
-		if ((e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn")) || resetInputValue) {
+	_closeRespPopover(e?: Event | null) {
+		if ((e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn"))) {
 			if (this._selectedItemText) {
 				this.value = this._selectedItemText;
 				this.filterValue = this._selectedItemText;
@@ -1185,7 +1220,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_scrollToItem(indexOfItem: number, forward: boolean) {
 		const picker = this._getPicker();
-		const list = picker.querySelector(".ui5-combobox-items-list") as List;
+		const list = this._getItemsList();
 		const listItem = list?.listItems[indexOfItem];
 
 		if (listItem) {
@@ -1216,14 +1251,17 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get inner(): HTMLInputElement {
-		const picker = this._getPicker();
 		return (isPhone() && this.open)
-			? picker.querySelector<HTMLInputElement>("[ui5-input]")!.shadowRoot!.querySelector("input")!
+			? this._getPickerInput().shadowRoot!.querySelector("input")!
 			: this.shadowRoot!.querySelector<HTMLInputElement>("[inner-input]")!;
 	}
 
 	_getPicker() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	_getPickerInput() {
+		return this._getPicker()!.querySelector<HTMLInputElement>("[ui5-input]")!;
 	}
 
 	get openOnMobile() {

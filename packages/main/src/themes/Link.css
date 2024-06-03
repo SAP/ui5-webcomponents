@@ -13,8 +13,8 @@
 	outline: none;
 	text-decoration: var(--_ui5_link_text_decoration);
 	text-shadow: var(--sapContent_TextShadow);
-	white-space: nowrap;
-	overflow-wrap: normal;
+	white-space: normal;
+	overflow-wrap: break-word;
 }
 
 :host(:hover) {
@@ -53,9 +53,9 @@
 	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
-:host([wrapping-type="Normal"]) {
-	white-space: normal;
-	overflow-wrap: break-word;
+:host([wrapping-type="None"]) {
+	white-space: nowrap;
+	overflow-wrap: normal;
 }
 
 .ui5-link-root {
