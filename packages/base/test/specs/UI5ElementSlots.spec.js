@@ -49,8 +49,8 @@ describe("Slots work properly", () => {
 		const newNamedCount = (await browser.$("#withContent").getProperty("items")).length;
 
 		assert.strictEqual(newDefaultCount, defaultCount + 1, "One more element in default accessor");
-		assert.strictEqual(newOtherCount, newOtherCount - 2, "Two less elements in other accessor");
-		assert.strictEqual(newNamedCount, newNamedCount + 1, "One more element in items accessor");
+		assert.strictEqual(newOtherCount, otherCount - 2, "Two less elements in other accessor");
+		assert.strictEqual(newNamedCount, namedCount + 1, "One more element in items accessor");
 	});
 
 });
