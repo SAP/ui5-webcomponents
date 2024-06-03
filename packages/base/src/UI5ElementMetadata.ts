@@ -1,5 +1,5 @@
 import DataType from "./types/DataType.js";
-import { camelToKebabCase } from "./util/StringHelper.js";
+import { camelToKebabCase, kebabToCamelCase } from "./util/StringHelper.js";
 import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 
@@ -105,6 +105,7 @@ class UI5ElementMetadata {
 			for (const [slotName, slotData] of Object.entries<Slot>(slots)) { // eslint-disable-line
 				const propertyName = slotData.propertyName || slotName;
 				initialState[propertyName] = [];
+				initialState[kebabToCamelCase(propertyName)] = initialState[propertyName];
 			}
 		}
 
