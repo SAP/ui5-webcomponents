@@ -33,4 +33,21 @@ describe("Slots work properly", () => {
 		assert.strictEqual((await browser.$$("#withContent>[slot=individual-2]")).length, 1, "The slot of the second child became individual-2");
 	});
 
+	it("Tests that changing the slot attribute of children redistributes them across slot accessors", async () => {
+		const defaultCount = (await browser.$("#withContent").getProperty("default")).length;
+		const otherCount = (await browser.$("#withContent").getProperty("other")).length;
+		const namedCount = (await browser.$("#withContent").getProperty("items")).length;
+
+		await browser("#o1").setAttribute("slot", ""); // move to default slot
+		await browser("#o2").setAttribute("slot", "named"); // move to "named" slot (with accessor "items")
+
+		const newDefaultCount = (await browser.$("#withContent").getProperty("default")).length;
+		const newOtherCount = (await browser.$("#withContent").getProperty("other")).length;
+		const newNamedCount = (await browser.$("#withContent").getProperty("items")).length;
+
+		assert.ok(newDefaultCount === defaultCount + 1, "One more element in default accessor");
+		assert.ok(newOtherCount === newOtherCount - 2, "Two less elements in other accessor");
+		assert.ok(newNamedCount === newNamedCount + 1, "One more element in items accessor");
+	});
+
 });
