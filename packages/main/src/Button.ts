@@ -426,6 +426,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 		if (this._cancelAction) {
 			e.preventDefault();
 		}
+		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
