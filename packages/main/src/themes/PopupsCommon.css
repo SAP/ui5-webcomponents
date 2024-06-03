@@ -81,7 +81,7 @@
     display: none;
 }
 
-:host([disable-scrolling]) .ui5-popup-content {
+:host([no-scrolling]) .ui5-popup-content {
     overflow: hidden;
 }
 

@@ -40,14 +40,14 @@ const boot = async (): Promise<void> => {
 	}
 
 	const bootExecutor = async (resolve: PromiseResolve) => {
+		registerCurrentRuntime();
+
 		if (typeof document === "undefined") {
 			resolve();
 			return;
 		}
 
 		attachThemeRegistered(onThemeRegistered);
-
-		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isOpenUI5Detected() : false;
@@ -84,9 +84,8 @@ const boot = async (): Promise<void> => {
  * @param { string } theme
  */
 const onThemeRegistered = (theme: string) => {
-	const currentTheme = getTheme();
-	if (booted && theme === currentTheme) {
-		applyTheme(currentTheme);
+	if (booted && theme === getTheme()) { // getTheme should only be called if "booted" is true
+		applyTheme(getTheme());
 	}
 };
 

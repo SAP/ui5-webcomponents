@@ -13,8 +13,8 @@
 	outline: none;
 	text-decoration: var(--_ui5_link_text_decoration);
 	text-shadow: var(--sapContent_TextShadow);
-	white-space: nowrap;
-	overflow-wrap: normal;
+	white-space: normal;
+	overflow-wrap: break-word;
 }
 
 :host(:hover) {
@@ -53,9 +53,9 @@
 	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
-:host([wrapping-type="Normal"]) {
-	white-space: normal;
-	overflow-wrap: break-word;
+:host([wrapping-type="None"]) {
+	white-space: nowrap;
+	overflow-wrap: normal;
 }
 
 .ui5-link-root {
@@ -72,14 +72,14 @@
 }
 
 :host .ui5-link-root {
-	border: var(--_ui5_link_border);
+	outline-offset: -0.0625rem;
 	border-radius: var(--_ui5_link_focus_border-radius);
 }
 
 :host([focused]) .ui5-link-root,
 :host([design="Subtle"][focused]) .ui5-link-root {
 	background-color: var(--_ui5_link_focus_background_color);
-	border: var(--_ui5_link_border_focus);
+	outline: var(--_ui5_link_outline);
 	border-radius: var(--_ui5_link_focus_border-radius);
 	text-shadow: none;
 }

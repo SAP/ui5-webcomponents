@@ -1,9 +1,28 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type Menu from "./Menu.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import ListItem from "./ListItem.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import PopoverPlacement from "./types/PopoverPlacement.js";
+import List from "./List.js";
+import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
+import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
+import {
+	MENU_BACK_BUTTON_ARIA_LABEL,
+	MENU_CLOSE_BUTTON_ARIA_LABEL,
+} from "./generated/i18n/i18n-defaults.js";
+import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
+
+// Styles
+import menuItemCss from "./generated/themes/MenuItem.css.js";
+
+type MenuBeforeOpenEventDetail = { item?: MenuItem };
+type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
 /**
  * @class
@@ -15,21 +34,29 @@ import type Menu from "./Menu.js";
  *
  * ### Usage
  *
- * `ui5-menu-item` is an abstract element, representing a node in a `ui5-menu`. The menu itself is rendered as a list,
- * and each `ui5-menu-item` is represented by a list item (`ui5-li`) in that list. Therefore, you should only use
+ * `ui5-menu-item` represents a node in a `ui5-menu`. The menu itself is rendered as a list,
+ * and each `ui5-menu-item` is represented by a list item in that list. Therefore, you should only use
  * `ui5-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
  *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends ListItem
  * @since 1.3.0
  * @public
  */
-@customElement("ui5-menu-item")
-class MenuItem extends UI5Element {
+@customElement({
+	tag: "ui5-menu-item",
+	template: MenuItemTemplate,
+	styles: [ListItem.styles, menuItemCss],
+	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
+})
+class MenuItem extends ListItem {
+	static async onDefine() {
+		MenuItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
 	/**
 	 * Defines the text of the tree item.
 	 * @default ""
@@ -41,7 +68,11 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
-	 * **Note:** The additional text would not be displayed if the item has a submenu.
+	 * **Note:** The additional text will not be displayed if there are items added in `items` slot or there are
+	 * components added to `endContent` slot.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -81,7 +112,7 @@ class MenuItem extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
 	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
 	 * @default false
@@ -89,16 +120,16 @@ class MenuItem extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 * @default 1000
 	 * @public
 	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
+	loadingDelay!: number;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -119,57 +150,162 @@ class MenuItem extends UI5Element {
 	tooltip!: string;
 
 	/**
-	 * Indicates whether any of the element siblings have children items.
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithChildren!: boolean;
-
-	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_siblingsWithIcon!: boolean;
 
 	/**
-	 * Defines whether the submenu closing must be prevented
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_preventSubMenuClose!: boolean;
-
-	/**
-	 * Stores Menu object with submenu items
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_subMenu?: Menu;
-
-	/**
 	 * Defines the items of this component.
+	 *
+	 * **Note:** If there are items added to this slot, an arrow will be displayed at the end
+	 * of the item in order to indicate that there are items added. In that case components added
+	 * to `endContent` slot or `additionalText` content will not be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
 
+	/**
+	 * Defines the components that should be displayed at the end of the menu item.
+	 *
+	 * **Note:** It is highly recommended to slot only components of type `ui5-button`,`ui5-link`
+	 * or `ui5-icon` in order to preserve the intended design. If there are components added to this slot,
+	 * and there is text set in `additionalText`, it will not be displayed. If there are items added to `items` slot,
+	 * nether `additionalText` nor components added to this slot would be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 * @public
+	 * @since 2.0.0
+	 */
+	@slot({ type: HTMLElement })
+	endContent!: Array<HTMLElement>;
+
+	get placement(): `${PopoverPlacement}` {
+		return this.isRtl ? "Start" : "End";
+	}
+
+	get isRtl() {
+		return this.effectiveDir === "rtl";
+	}
+
 	get hasSubmenu() {
-		return !!(this.items.length || this.busy);
+		return !!(this.items.length || this.loading);
 	}
 
-	get hasDummyIcon() {
-		return this._siblingsWithIcon && !this.icon;
+	get hasEndContent() {
+		return !!(this.endContent.length);
 	}
 
-	get subMenuOpened() {
-		return !!this._subMenu?._popover?.isOpen();
+	get hasIcon() {
+		return !!this.icon;
 	}
 
-	get _additionalText() {
-		return this.hasSubmenu ? "" : this.additionalText;
+	get isSubMenuOpen() {
+		return this._popover?.open;
 	}
 
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
+	}
+
+	get menuHeaderTextPhone() {
+		return this.text;
+	}
+
+	get isPhone() {
+		return isPhone();
+	}
+
+	get labelBack() {
+		return MenuItem.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL);
+	}
+
+	get labelClose() {
+		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
+	}
+
+	onBeforeRendering() {
+		const siblingsWithIcon = this.items.some(item => !!item.icon);
+
+		this.items.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
+	}
+
+	get _focusable() {
+		return true;
+	}
+
+	get _accInfo() {
+		const accInfoSettings = {
+			role: "menuitem",
+			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
+		};
+
+		return { ...super._accInfo, ...accInfoSettings };
+	}
+
+	get _popover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	_closeAll() {
+		if (this._popover) {
+			this._popover.open = false;
+		}
+		this.selected = false;
+		this.fireEvent("close-menu", {});
+	}
+
+	_close() {
+		if (this._popover) {
+			this._popover.open = false;
+		}
+		this.selected = false;
+	}
+
+	_beforePopoverOpen(e: CustomEvent) {
+		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
+
+		if (prevented) {
+			e.preventDefault();
+		}
+	}
+
+	_afterPopoverOpen() {
+		this.items[0]?.focus();
+		this.fireEvent("open", {}, false, false);
+	}
+
+	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
+
+		if (prevented) {
+			e.preventDefault();
+			return;
+		}
+
+		this.selected = false;
+		if (e.detail.escPressed) {
+			this.focus();
+		}
+	}
+
+	_afterPopoverClose() {
+		this.fireEvent("close", {}, false, false);
 	}
 }
 
 MenuItem.define();
 
 export default MenuItem;
+
+export type {
+	MenuBeforeCloseEventDetail,
+	MenuBeforeOpenEventDetail,
+};

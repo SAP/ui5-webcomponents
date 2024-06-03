@@ -11,7 +11,7 @@ import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
-import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
+import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
@@ -114,7 +114,7 @@ type VSDInternalSettings = {
 		Label,
 		List,
 		StandardListItem,
-		GroupHeaderListItem,
+		ListItemGroup,
 		SegmentedButton,
 		SegmentedButtonItem,
 	],
@@ -514,13 +514,13 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.show(true);
+		this._dialog.open = true;
 
 		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
-		const mode: ViewSettingsDialogMode = e.detail.selectedItem.getAttribute("mode");
+		const mode: ViewSettingsDialogMode = e.detail.selectedItems[0].getAttribute("mode");
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
@@ -556,7 +556,9 @@ class ViewSettingsDialog extends UI5Element {
 	 * Closes the dialog.
 	 */
 	close() {
-		this._dialog && this._dialog.close();
+		if (this._dialog) {
+			this._dialog.open = false;
+		}
 	}
 
 	/**
@@ -701,7 +703,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	setConfirmedSettings(settings: VSDSettings): void {
-		if (settings && this._dialog && !this._dialog.isOpen()) {
+		if (settings && this._dialog && !this._dialog.open) {
 			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {

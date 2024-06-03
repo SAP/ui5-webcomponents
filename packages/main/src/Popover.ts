@@ -9,6 +9,7 @@ import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUti
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
@@ -139,15 +140,6 @@ class Popover extends Popup {
 	modal!: boolean;
 
 	/**
-	 * Defines whether the block layer will be shown if modal property is set to true.
-	 * @default false
-	 * @public
-	 * @since 1.0.0-rc.10
-	 */
-	@property({ type: Boolean })
-	hideBackdrop!: boolean;
-
-	/**
 	 * Determines whether the component arrow is hidden.
 	 * @default false
 	 * @public
@@ -214,7 +206,7 @@ class Popover extends Popup {
 	@slot({ type: HTMLElement })
 	footer!: Array<HTMLElement>;
 
-	_opener?: HTMLElement;
+	_opener?: HTMLElement | string;
 	_openerRect?: DOMRect;
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
@@ -231,13 +223,15 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Defines the ID or DOM Reference of the element that the popover is shown at
+	 * Defines the ID or DOM Reference of the element at which the popover is shown.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
 	 * @default undefined
 	 * @since 1.2.0
 	 */
 	@property({ validator: DOMReference })
-	set opener(value: HTMLElement) {
+	set opener(value: HTMLElement | string) {
 		if (this._opener === value) {
 			return;
 		}
@@ -249,32 +243,32 @@ class Popover extends Popup {
 		}
 	}
 
-	get opener(): HTMLElement | undefined {
+	get opener(): HTMLElement | string | undefined {
 		return this._opener;
 	}
 
 	async openPopup() {
-		let opener;
-
-		if (this.opener instanceof HTMLElement) {
-			opener = this.opener;
-		} else if (typeof this.opener === "string") {
-			const rootNode = this.getRootNode();
-			if (rootNode instanceof Document) {
-				opener = rootNode.getElementById(this.opener);
-			}
-
-			if (!opener) {
-				opener = document.getElementById(this.opener);
-			}
+		if (this._opened) {
+			return;
 		}
+
+		const opener = this.getOpenerHTMLElement(this.opener);
 
 		if (!opener) {
 			console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
 			return;
 		}
 
-		await this.showAt(opener);
+		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+			await renderFinished();
+			this.open = false;
+			this.fireEvent("close", {}, false, false);
+			return;
+		}
+
+		this._openerRect = opener.getBoundingClientRect();
+
+		await super.openPopup();
 	}
 
 	isOpenerClicked(e: MouseEvent) {
@@ -293,24 +287,6 @@ class Popover extends Popup {
 	}
 
 	/**
-	 * Shows the popover.
-	 * @param opener the element that the popover is shown at
-	 * @param [preventInitialFocus=false] prevents applying the focus inside the popover
-	 * @public
-	 * @returns Resolved when the popover is open
-	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
-		if (!opener || this._isOpened) {
-			return;
-		}
-
-		this._opener = opener;
-		this._openerRect = opener.getBoundingClientRect();
-
-		await super._open(preventInitialFocus);
-	}
-
-	/**
 	 * Override for the _addOpenedPopup hook, which would otherwise just call addOpenedPopup(this)
 	 * @private
 	 */
@@ -326,6 +302,19 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
+	getOpenerHTMLElement(opener: HTMLElement | string | undefined): HTMLElement | null | undefined {
+		if (opener === undefined || opener instanceof HTMLElement) {
+			return opener;
+		}
+
+		const rootNode = this.getRootNode();
+
+		if (rootNode instanceof Document) {
+			return rootNode.getElementById(opener);
+		}
+		return document.getElementById(opener);
+	}
+
 	shouldCloseDueToOverflow(placement: `${PopoverPlacement}`, openerRect: DOMRect): boolean {
 		const threshold = 32;
 		const limits = {
@@ -335,12 +324,13 @@ class Popover extends Popup {
 			"Bottom": openerRect.bottom,
 		};
 
-		const closedPopupParent = getClosedPopupParent(this._opener!);
+		const opener = this.getOpenerHTMLElement(this.opener);
+		const closedPopupParent = getClosedPopupParent(opener!);
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if ((closedPopupParent as Popover).showAt) {
-			const contentRect = (closedPopupParent as Popover).contentDOM.getBoundingClientRect();
+		if (closedPopupParent instanceof Popover) {
+			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
 		}
@@ -377,10 +367,10 @@ class Popover extends Popup {
 		this._show();
 	}
 
-	_show() {
+	async _show() {
 		super._show();
 
-		if (!this._isOpened) {
+		if (!this._opened) {
 			this._showOutsideViewport();
 		}
 
@@ -392,9 +382,9 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.isOpen()) {
+		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = this._opener!.getBoundingClientRect();
+			this._openerRect = this.getOpenerHTMLElement(this.opener)!.getBoundingClientRect();
 		}
 
 		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin() && this._oldPlacement) {
@@ -406,7 +396,8 @@ class Popover extends Popup {
 		}
 
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
-			return this.close();
+			await this._waitForDomRef();
+			return this.closePopup();
 		}
 
 		this._oldPlacement = placement;
@@ -759,10 +750,6 @@ class Popover extends Popup {
 		return this.modal;
 	}
 
-	get shouldHideBackdrop() { // Required by Popup.js
-		return this.hideBackdrop;
-	}
-
 	get _ariaLabelledBy() { // Required by Popup.js
 		if (!this._ariaLabel && this._displayHeader) {
 			return "ui5-popup-header";
@@ -821,7 +808,7 @@ class Popover extends Popup {
 }
 
 const instanceOfPopover = (object: any): object is Popover => {
-	return "showAt" in object;
+	return "opener" in object;
 };
 
 Popover.define();

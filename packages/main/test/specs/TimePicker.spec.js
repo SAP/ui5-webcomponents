@@ -68,18 +68,7 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("123123123");
 		await browser.keys("Enter");
 
-		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
-	});
-
-	it("tests valueStateMessage slot", async () => {
-		const timepicker = await browser.$("#timepickerValueStateMessage");
-
-		await timepicker.click();
-
-		const input = await timepicker.shadow$("ui5-input");
-		const slot = await input.shadow$("ui5-popover").$("#customValueStateMessage");
-
-		assert.notOk(slot.error, "Value State message slot is working");
+		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is on error");
 	});
 
 	it("tests change event", async () => {
@@ -223,4 +212,25 @@ describe("TimePicker general interaction", () => {
 		// assert that the value in the input is different than the string 'now'
 		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "now", "the value is not 'now'");
 	});
+
+	it("opening time picker's value-help, sets the 'open' property to true", async () => {
+		const timepicker = await browser.$("#timepicker");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
+
+		// act
+		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+
+		assert.strictEqual(await timepicker.getProperty("open"), true, "The timepicker's open property is set to true");
+		assert.strictEqual(await timepickerPopover.getProperty("open"), true, "The popover is opened");
+	})
+
+	it("setting time picker's open property to true, opens the value-help", async () => {
+		const timepicker = await browser.$("#timepicker");
+		const timepickerPopover = await timepicker.shadow$("ui5-responsive-popover");
+
+		// act
+		await timepicker.setProperty("open", true);
+
+		assert.strictEqual(await timepickerPopover.getProperty("open"), true, "The popover is opened");
+	})
 });

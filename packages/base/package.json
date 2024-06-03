@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0-rc.4",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -16,6 +16,7 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git",
     "directory": "packages/base"
   },
+  "types": "./dist",
   "exports": {
     "./dist/ssr-dom.js": {
       "browser": "./dist/ssr-dom.js",
@@ -23,7 +24,11 @@
       "default": "./dist/ssr-dom.js"
     },
     ".": "./index.js",
-    "./dist/*": "./dist/*",
+    "./dist/*": {
+      "production": "./dist/prod/*",
+      "development": "./dist/*",
+      "default": "./dist/*"
+    },
     "./package.json": "./package.json",
     "./bundle.esm.js": "./bundle.esm.js",
     "./*": "./dist/*"
@@ -35,6 +40,7 @@
     "build": "nps build",
     "generate": "nps generate",
     "generateAPI": "nps generateAPI",
+    "generateProd": "nps generateProd",
     "bundle": "nps build.bundle",
     "test": "nps test",
     "prepublishOnly": "tsc -b"
@@ -45,8 +51,8 @@
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.5",
-    "@ui5/webcomponents-tools": "2.0.0-rc.1",
-    "chromedriver": "^122.0.6",
+    "@ui5/webcomponents-tools": "2.0.0-rc.4",
+    "chromedriver": "^125.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",

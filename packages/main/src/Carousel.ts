@@ -56,7 +56,7 @@ type CarouselNavigateEventDetail = {
  *
  * There are several ways to perform navigation:
  *
- * - on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.
+ * - on desktop - the user can navigate using the navigation arrows or with keyboard shortcuts.
  * - on mobile - the user can use swipe gestures.
  *
  * ### Usage
@@ -110,7 +110,7 @@ type CarouselNavigateEventDetail = {
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
- * based on the `items-per-page-l`, `items-per-page-m` and `items-per-page-s` properties.
+ * based on the `items-per-page` property.
  * @param {Integer} selectedIndex the current selected index
  * @public
  * @since 1.0.0-rc.7
@@ -152,28 +152,19 @@ class Carousel extends UI5Element {
 	cyclic!: boolean;
 
 	/**
-	 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-	 * @default 1
+	 * Defines the number of items per page depending on the carousel width.
+	 *
+	 * - 'S' for screens smaller than 600 pixels.
+	 * - 'M' for screens greater than or equal to 600 pixels and smaller than 1024 pixels.
+	 * - 'L' for screens greater than or equal to 1024 pixels and smaller than 1440 pixels.
+	 * - 'XL' for screens greater than or equal to 1440 pixels.
+	 *
+	 * One item per page is shown by default.
+	 * @default "S1 M1 L1 XL1"
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageS!: number;
-
-	/**
-	 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-	 * @default 1
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageM!: number;
-
-	/**
-	 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-	 * @default 1
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	itemsPerPageL!: number;
+	@property({ type: String, defaultValue: "S1 M1 L1 XL1" })
+	itemsPerPage!: string;
 
 	/**
 	 * Defines the visibility of the navigation arrows.
@@ -549,19 +540,41 @@ class Carousel extends UI5Element {
 	}
 
 	get effectiveItemsPerPage(): number {
+		const itemsPerPageArray = this.itemsPerPage.split(" ");
+		let itemsPerPageSizeS = 1,
+			itemsPerPageSizeM = 1,
+			itemsPerPageSizeL = 1,
+			itemsPerPageSizeXL = 1;
+
+		itemsPerPageArray.forEach(element => {
+			if (element.startsWith("S")) {
+				itemsPerPageSizeS = Number(element.slice(1)) || 1;
+			} else if (element.startsWith("M")) {
+				itemsPerPageSizeM = Number(element.slice(1)) || 1;
+			} else if (element.startsWith("L")) {
+				itemsPerPageSizeL = Number(element.slice(1)) || 1;
+			} else if (element.startsWith("XL")) {
+				itemsPerPageSizeXL = Number(element.slice(2)) || 1;
+			}
+		});
+
 		if (!this._width) {
-			return this.itemsPerPageL;
+			return itemsPerPageSizeL;
 		}
 
-		if (this._width <= 640) {
-			return this.itemsPerPageS;
+		if (this._width < 600) {
+			return itemsPerPageSizeS;
 		}
 
-		if (this._width <= 1024) {
-			return this.itemsPerPageM;
+		if (this._width >= 600 && this._width < 1024) {
+			return itemsPerPageSizeM;
 		}
 
-		return this.itemsPerPageL;
+		if (this._width >= 1024 && this._width < 1440) {
+			return itemsPerPageSizeL;
+		}
+
+		return itemsPerPageSizeXL;
 	}
 
 	isItemInViewport(index: number): boolean {

@@ -1,91 +1,53 @@
 <li
 	class="ui5-nli-group-root ui5-nli-focusable"
 	@focusin="{{_onfocusin}}"
-	@focusout="{{_onfocusout}}"
 	@keydown="{{_onkeydown}}"
-	role="listitem"
 	tabindex="{{forcedTabIndex}}"
-	aria-expanded="{{_ariaExpanded}}"
 	aria-labelledby="{{ariaLabelledBy}}"
+	aria-description="{{accInvisibleText}}"
+	aria-level="1"
 >
-	<div class="ui5-nli-group-header">
-		<ui5-button
-			icon={{groupCollapsedIcon}}
-			design="Transparent"
-			@click="{{_onBtnToggleClick}}"
-			class="ui5-nli-group-toggle-btn"
-			tooltip="{{toggleBtnAccessibleName}}"
-			aria-label="{{toggleBtnAccessibleName}}"
-		></ui5-button>
-
-		{{#if hasPriority}}
-			<ui5-icon
-				class="ui5-prio-icon ui5-prio-icon--{{priorityIcon}}"
-				name="{{priorityIcon}}">
-			</ui5-icon>
-		{{/if}}
-
-		<div id="{{_id}}-title-text" class="ui5-nli-group-title-text" part="title-text">
+	<div class="ui5-nli-group-header"
+		@click="{{_onHeaderToggleClick}}"
+		@keydown="{{_onkeydown}}"
+		role="button"
+		aria-expanded="{{_ariaExpanded}}"
+		aria-controls="{{_id}}-notificationsList"
+		title="{{toggleIconAccessibleName}}">
+		<ui5-icon
+			name={{groupCollapsedIcon}}
+			class="ui5-nli-group-toggle-icon"
+			mode="Decorative"
+		></ui5-icon>
+		<div
+			id="{{_id}}-title-text"
+			class="ui5-nli-group-title-text"
+			part="title-text"
+			role="heading"
+			aria-level="2">
 			{{titleText}}
 		</div>
 
-		{{#if showCounter}}
-			<span class="ui5-nli-group-counter">({{itemsCount}})</span>
+		{{#if isLoading}}
+			<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
 		{{/if}}
 
 		<div class="ui5-nli-group-divider"></div>
-
-		{{#unless collapsed}}
-			{{#if showOverflow}}
-				<ui5-button
-					icon="overflow"
-					design="Transparent"
-					@click="{{_onBtnOverflowClick}}"
-					class="ui5-nli-overflow-btn"
-					tooltip="{{overflowBtnAccessibleName}}"
-					aria-label="{{overflowBtnAccessibleName}}"
-				></ui5-button>
-			{{else}}
-				{{#each standardActions}}
-					<ui5-button
-						icon="{{this.icon}}"
-						class="ui5-nli-action"
-						?disabled="{{this.disabled}}"
-						design="{{this.design}}"
-						@click="{{this.press}}"
-						data-ui5-external-action-item-id="{{this.refItemid}}"
-					>
-						{{this.text}}
-					</ui5-button>
-				{{/each}}
-			{{/if}}
-		{{/unless}}
-
-		{{#if showClose}}
-			<ui5-button
-				icon="decline"
-				design="Transparent"
-				@click="{{_onBtnCloseClick}}"
-				tooltip="{{closeBtnAccessibleName}}"
-				aria-label="{{closeBtnAccessibleName}}"
-				close-btn
-			></ui5-button>
-		{{/if}}
-
-		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
 	</div>
 
-	<ui5-list class="ui5-nli-group-items">
+	<ui5-notification-group-list
+		id="{{_id}}-notificationsList"
+		class="ui5-nli-group-items"
+		role="list"
+		aria-labelledby="{{_id}}-title-text">
 		<slot></slot>
-	</ui5-list>
+	</ui5-notification-group-list>
 
-	{{#if busy}}
+	{{#if loading}}
 		<ui5-busy-indicator
-				delay="{{busyDelay}}"
+				delay="{{loadingDelay}}"
 				active
-				class="ui5-nli-busy"
+				class="ui5-nli-loading"
 		></ui5-busy-indicator>
 	{{/if}}
 </li>
-
-{{>include "./NotificationOverflowActionsPopover.hbs"}}

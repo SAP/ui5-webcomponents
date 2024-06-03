@@ -354,7 +354,7 @@ Examples:
 
 ```handlebars
 {{#if hasText}}
-	<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
+	<label class="ui5-tag-text"><bdi><slot></slot></bdi></label>
 {{/if}}
 ```
 
@@ -866,15 +866,11 @@ Here's an example:
 In `Demo.js` (metadata object):
 
 ```js
-{
-	slots: {
-		"default": {
-			type: HTMLElement,
-			propertyName: "items",
-			individualSlots: true
-		}
-	}
-}
+@slot({
+	type: HTMLElement,
+	individualSlots: true,
+})
+items!: Array<HTMLElement>
 ```
 
 Since `propertyName` is set to `items`, the children of the default slot will be accessible on the web component instance with `this.items`;

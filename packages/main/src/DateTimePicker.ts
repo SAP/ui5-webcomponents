@@ -6,8 +6,10 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
@@ -126,7 +128,7 @@ type PreviewValues = {
 		TimeSelectionClocks,
 	],
 })
-class DateTimePicker extends DatePicker {
+class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * Defines the visibility of the time view in `phoneMode`.
 	 * For more information, see the `phoneMode` property.
@@ -185,19 +187,18 @@ class DateTimePicker extends DatePicker {
 	}
 
 	/**
-	 * PUBLIC METHODS
+	 * @override
+	 * @private
 	 */
+	_togglePicker() {
+		super._togglePicker();
 
-	/**
-	 * Opens the picker.
-	 * @public
-	 */
-	async openPicker(): Promise<void> {
-		await super.openPicker();
-		this._previewValues = {
-			...this._previewValues,
-			timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
-		};
+		if (this.open) {
+			this._previewValues = {
+				...this._previewValues,
+				timeSelectionValue: this.value || this.getFormat().format(UI5Date.getInstance()),
+			};
+		}
 	}
 
 	/**
@@ -341,7 +342,7 @@ class DateTimePicker extends DatePicker {
 			this._updateValueAndFireEvents(value, true, ["change", "value-changed"]);
 		}
 
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -349,7 +350,7 @@ class DateTimePicker extends DatePicker {
 	 * that would disregard the user selection.
 	 */
 	_cancelClick() {
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -394,6 +395,20 @@ class DateTimePicker extends DatePicker {
 		}
 
 		return selectedDate;
+	}
+
+	getFormat() {
+		return this._isPattern
+			? DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				pattern: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			})
+			: DateFormat.getDateTimeInstance({
+				strictParsing: true,
+				style: this._formatPattern,
+				calendarType: this._primaryCalendarType,
+			});
 	}
 
 	/**
