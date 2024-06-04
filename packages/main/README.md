@@ -43,7 +43,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Label                    | `ui5-label`                 | `import "@ui5/webcomponents/dist/Label.js";`               |
 | Link                     | `ui5-link`                  | `import "@ui5/webcomponents/dist/Link.js";`                |
 | List                     | `ui5-list`                  | `import "@ui5/webcomponents/dist/List.js";`                |
-| List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
+| List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/ListItemStandard.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
 | List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
 | Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |

@@ -10,7 +10,7 @@ import ListItemGroupTemplate from "./generated/templates/ListItemGroupTemplate.l
 
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 /**
@@ -34,7 +34,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
-	dependencies: [StandardListItem, ListItemGroupHeader],
+	dependencies: [ListItemStandard, ListItemGroupHeader],
 })
 class ListItemGroup extends UI5Element {
 	/**

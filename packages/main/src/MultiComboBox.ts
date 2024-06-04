@@ -68,7 +68,7 @@ import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import ToggleButton from "./ToggleButton.js";
 import * as Filters from "./Filters.js";
 import Button from "./Button.js";
@@ -195,7 +195,7 @@ type MultiComboboxItemWithSelection = {
 		ResponsivePopover,
 		Popover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroupHeader,
 		ToggleButton,
 		Button,
