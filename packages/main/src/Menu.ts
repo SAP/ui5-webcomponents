@@ -259,12 +259,11 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const siblingsWithIcon = this.items.filter((item): item is MenuItem => !item.isSeparator).some(menuItem => !!menuItem.icon);
+		const menuItems = this._filterMenuItems(this.items);
+		const siblingsWithIcon = menuItems.some(menuItem => !!menuItem.icon);
 
-		this.items.forEach(item => {
-			if (!item.isSeparator) {
-				(item as MenuItem)._siblingsWithIcon = siblingsWithIcon;
-			}
+		menuItems.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
 
@@ -289,7 +288,7 @@ class Menu extends UI5Element {
 
 	_closeItemSubMenu(item: MenuItem) {
 		if (item && item._popover) {
-			const openedSibling = item.items.find(menuItem => !menuItem.isSeparator && menuItem._popover && menuItem._popover.open);
+			const openedSibling = this._filterMenuItems(item.items).find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -318,9 +317,9 @@ class Menu extends UI5Element {
 
 		this._timeout = setTimeout(() => {
 			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && opener.items.find(menuItem => !menuItem.isSeparator && (menuItem as MenuItem)._popover && (menuItem as MenuItem)._popover.open);
+			const openedSibling = opener && this._filterMenuItems(opener.items).find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
-				this._closeItemSubMenu(openedSibling as MenuItem);
+				this._closeItemSubMenu(openedSibling);
 			}
 
 			this._openItemSubMenu(item);
@@ -373,7 +372,10 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		this.items[0]?.focus();
+		const menuItems = this._filterMenuItems(this.items);
+		if (menuItems) {
+			menuItems[0].focus();
+		}
 		this.fireEvent("open", {}, false, true);
 	}
 
@@ -389,6 +391,10 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireEvent("close", {}, false, true);
+	}
+
+	_filterMenuItems(items: Array<IMenuItem>): Array<MenuItem> {
+		return items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 }
 

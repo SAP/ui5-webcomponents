@@ -36,7 +36,7 @@ class MenuSeparator extends ListItem implements IMenuItem {
 	/**
 	 * @override
 	 */
-	get isInactive(): boolean {
+	get isInactive() {
 		return true;
 	}
 }
