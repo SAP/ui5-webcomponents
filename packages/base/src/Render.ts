@@ -3,7 +3,7 @@ import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 import type UI5Element from "./UI5Element.js";
-import { PromiseResolve, Timeout } from "./types.js";
+import { PromiseResolve } from "./types.js";
 
 type BeforeComponentRenderCallback = (webComponent: UI5Element) => void;
 
@@ -14,8 +14,6 @@ const invalidatedWebComponents = new RenderQueue(); // Queue for invalidated web
 
 let renderTaskPromise: Promise<void> | undefined,
 	renderTaskPromiseResolve: PromiseResolve | undefined;
-
-let mutationObserverTimer: Timeout | undefined;
 
 let queuePromise: Promise<void> | null;
 
@@ -72,14 +70,11 @@ const scheduleRenderTask = async () => {
 				resolve();
 
 				// Wait for Mutation observer before the render task is considered finished
-				if (!mutationObserverTimer) {
-					mutationObserverTimer = setTimeout(() => {
-						mutationObserverTimer = undefined;
-						if (invalidatedWebComponents.isEmpty()) {
-							_resolveTaskPromise();
-						}
-					}, 200);
-				}
+				Promise.resolve().then(() => {
+					if (invalidatedWebComponents.isEmpty()) {
+						_resolveTaskPromise();
+					}
+				});
 			});
 		});
 	}
