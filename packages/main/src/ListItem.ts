@@ -73,7 +73,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 /**
  * @class
  * A class to serve as a base
- * for the `ListItemStandard` and `CustomListItem` classes.
+ * for the `ListItemStandard` and `ListItemCustom` classes.
  * @constructor
  * @abstract
  * @extends ListItemBase

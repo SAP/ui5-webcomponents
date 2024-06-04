@@ -152,7 +152,7 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/ListItemStandard.js";` (for `ui5-li`)
  *
- * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
+ * `import "@ui5/webcomponents/dist/ListItemCustom.js";` (for `ui5-li-custom`)
  *
  * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor

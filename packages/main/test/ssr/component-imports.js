@@ -70,7 +70,7 @@ import TreeItemCustom from "../../dist/TreeItemCustom.js";
 import List from "../../dist/List.js";
 // console.log({List})
 import ListItemStandard from "../../dist/ListItemStandard.js";
-import CustomListItem from "../../dist/CustomListItem.js";
+import ListItemCustom from "../../dist/ListItemCustom.js";
 import ListItemGroupHeader from "../../dist/ListItemGroupHeader.js";
 
 // Features
