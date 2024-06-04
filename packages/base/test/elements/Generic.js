@@ -45,6 +45,8 @@ const metadata = {
 
 class Generic extends UI5Element {
 	constructor () {
+		super();
+
 		this.defaultValueProp = "Hello";
 	}
 
