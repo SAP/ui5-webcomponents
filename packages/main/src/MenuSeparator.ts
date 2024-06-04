@@ -12,6 +12,7 @@ import { IMenuItem } from "./Menu.js";
  * @extends UI5Element
  * @abstract
  * @public
+ * @since 2.0
  */
 @customElement({
 	tag: "ui5-menu-separator",
@@ -24,8 +25,11 @@ import { IMenuItem } from "./Menu.js";
 class MenuSeparator extends ListItem implements IMenuItem {
 	/**
 	 * Defines if the item is a separator.
+	 * @default true
+	 * @public
+	 * @since 2.0
 	 */
-	get isSeparator() {
+	get isSeparator(): boolean {
 		return true;
 	}
 

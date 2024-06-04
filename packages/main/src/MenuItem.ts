@@ -193,8 +193,11 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines if the item is a separator.
+	 * @default false
+	 * @public
+	 * @since 2.0
 	 */
-	get isSeparator() {
+	get isSeparator(): boolean {
 		return false;
 	}
 
