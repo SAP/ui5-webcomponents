@@ -162,7 +162,7 @@ class ResponsivePopover extends Popover {
 
 	_afterDialogClose(e: CustomEvent) {
 		this._opened = false;
-		this.open = false;
+		this.open = true;
 		this._propagateDialogEvent(e);
 	}
 
