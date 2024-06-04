@@ -67,7 +67,11 @@ class MenuItem extends ListItem {
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
-	 * **Note:** The additional text would not be displayed if the item has a submenu.
+	 * **Note:** The additional text will not be displayed if there are items added in `items` slot or there are
+	 * components added to `endContent` slot.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
@@ -152,10 +156,33 @@ class MenuItem extends ListItem {
 
 	/**
 	 * Defines the items of this component.
+	 *
+	 * **Note:** If there are items added to this slot, an arrow will be displayed at the end
+	 * of the item in order to indicate that there are items added. In that case components added
+	 * to `endContent` slot or `additionalText` content will not be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
+
+	/**
+	 * Defines the components that should be displayed at the end of the menu item.
+	 *
+	 * **Note:** It is highly recommended to slot only components of type `ui5-button`,`ui5-link`
+	 * or `ui5-icon` in order to preserve the intended design. If there are components added to this slot,
+	 * and there is text set in `additionalText`, it will not be displayed. If there are items added to `items` slot,
+	 * nether `additionalText` nor components added to this slot would be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 * @public
+	 * @since 2.0.0
+	 */
+	@slot({ type: HTMLElement })
+	endContent!: Array<HTMLElement>;
 
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
@@ -167,6 +194,10 @@ class MenuItem extends ListItem {
 
 	get hasSubmenu() {
 		return !!(this.items.length || this.loading);
+	}
+
+	get hasEndContent() {
+		return !!(this.endContent.length);
 	}
 
 	get hasIcon() {

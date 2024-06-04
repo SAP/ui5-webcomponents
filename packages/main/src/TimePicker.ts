@@ -187,6 +187,18 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 		},
 	},
 })
+/**
+ * Fired after the value-help dialog of the component is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the value-help dialog of the component is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 class TimePicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a formatted time value.
@@ -380,6 +392,11 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	onResponsivePopoverAfterClose() {
 		this.open = false;
+		this.fireEvent("close");
+	}
+
+	onResponsivePopoverAfterOpen() {
+		this.fireEvent("open");
 	}
 
 	/**

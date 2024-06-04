@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { IOption } from "./Select.js";
 import ListItemBase from "./ListItemBase.js";
+import Icon from "./Icon.js";
 
 // Template
 import OptionTemplate from "./generated/templates/OptionTemplate.lit.js";
@@ -36,6 +37,9 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 		listItemAdditionalTextCss,
 		listItemIconCss,
 		optionBaseCss,
+	],
+	dependencies: [
+		Icon,
 	],
 })
 class Option extends ListItemBase implements IOption {
