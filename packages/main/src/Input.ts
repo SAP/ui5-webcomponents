@@ -28,7 +28,6 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -253,7 +252,7 @@ type InputSuggestionScrollEventDetail = {
 		/**
 	 	* @public
 	 	*/
-		scrollTop: { type: Integer },
+		scrollTop: { type: Number },
 		/**
 	 	* @public
 	 	*/

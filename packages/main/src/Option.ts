@@ -55,7 +55,7 @@ class Option extends ListItemBase implements IOption {
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

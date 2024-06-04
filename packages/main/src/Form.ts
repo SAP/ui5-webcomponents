@@ -1,9 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 // Template
 import FormTemplate from "./generated/templates/FormTemplate.lit.js";
@@ -151,8 +150,8 @@ class Form extends UI5Element {
 	 * @default "S1 M1 L2 XL2"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "S1 M1 L2 XL2" })
-	layout!: string;
+	@property()
+	layout = "S1 M1 L2 XL2"
 
 	/**
 	 * Defines the width proportion of the labels and fields of a FormItem by breakpoint.
@@ -166,19 +165,19 @@ class Form extends UI5Element {
 	 * @default "S12 M4 L4 XL4"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "S12 M4 L4 XL4" })
-	labelSpan!: string;
+	@property()
+	labelSpan = "S12 M4 L4 XL4";
 
 	/**
 	 * Defines the header text of the component.
 	 *
 	 * **Note:** The property gets overridden by the `header` slot.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the vertical spacing between form items.
@@ -190,8 +189,8 @@ class Form extends UI5Element {
 	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: `${FormItemSpacing}`;
+	@property()
+	itemSpacing: `${FormItemSpacing}` = "Normal";
 
 	/**
 	 * Defines the component header area.
@@ -220,25 +219,25 @@ class Form extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	columnsS!: number;
-	@property({ validator: Integer, defaultValue: 12 })
-	labelSpanS!: number;
+	@property({ type: Number })
+	columnsS = 1;
+	@property({ type: Number })
+	labelSpanS = 12
 
-	@property({ validator: Integer, defaultValue: 1 })
-	columnsM!: number;
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanM!: number;
+	@property({ type: Number })
+	columnsM = 1;
+	@property({ type: Number })
+	labelSpanM = 4;
 
-	@property({ validator: Integer, defaultValue: 2 })
-	columnsL!: number;
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanL!: number;
+	@property({ type: Number })
+	columnsL = 2;
+	@property({ type: Number })
+	labelSpanL = 4;
 
-	@property({ validator: Integer, defaultValue: 2 })
-	columnsXl!: number;
-	@property({ validator: Integer, defaultValue: 4 })
-	labelSpanXl!: number;
+	@property({ type: Number })
+	columnsXl = 2;
+	@property({ type: Number })
+	labelSpanXl = 4;
 
 	onBeforeRendering() {
 		// Parse the layout and set it to the FormGroups/FormItems.
@@ -425,7 +424,7 @@ class Form extends UI5Element {
 				:host([columns-${step.toLocaleLowerCase()}="${cols}"]) .ui5-form-layout {
 					grid-template-columns: repeat(${cols}, 1fr);
 				}
-				
+
 				.ui5-form-column-span${step}-${cols},
 				.ui5-form-item-span-${cols} {
 					grid-column: span ${cols};

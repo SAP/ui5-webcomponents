@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -79,7 +79,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	pinned!: boolean;
+	pinned = false;
 
 	/**
 	 * Defines whether the pin button is hidden.
@@ -88,7 +88,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hidePinButton!: boolean;
+	hidePinButton = false;
 
 	/**
 	 * Defines whether the header is snapped.
@@ -97,7 +97,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	snapped!: boolean;
+	snapped = false;
 
 	/**
 	 * Contains attributes to be added to HTML to gain accessibility.
@@ -106,7 +106,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { controls: string };
+	accessibilityAttributes: { controls?: string } = {};
 
 	static i18nBundle: I18nBundle;
 

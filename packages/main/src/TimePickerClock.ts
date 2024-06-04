@@ -5,8 +5,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-
 // Template
 import TimePickerClockTemplate from "./generated/templates/TimePickerClockTemplate.lit.js";
 
@@ -101,7 +99,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 		/**
 		 * @public
 		 */
-		value: { type: Integer },
+		value: { type: Number },
 		/**
 		 * @public
 		 */

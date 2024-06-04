@@ -21,7 +21,6 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
@@ -146,7 +145,6 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 abstract class UI5Element extends HTMLElement {
 	__id?: string;
 	_suppressInvalidation: boolean;
-	_rendering = false;
 	_changedState: Array<ChangeInfo>;
 	_invalidationEventProvider: EventProvider<InvalidationInfo, void>;
 	_componentStateFinalizedEventProvider: EventProvider<void, void>;
@@ -574,29 +572,8 @@ abstract class UI5Element extends HTMLElement {
 		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
 			const propData = properties[nameInCamelCase];
 
-			// new decorator
-			if (propData.hasInitializer) {
-				const converter = propData.converter ?? defaultConverter;
-				newPropertyValue = converter.fromAttribute(newValue, propData.type);
-
-				(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
-
-				return;
-			}
-			const propertyType = propData.type;
-			let propertyValidator = propData.validator as typeof DataType;
-
-			if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-				propertyValidator = propertyType as typeof DataType;
-			}
-
-			if (propertyValidator) {
-				newPropertyValue = propertyValidator.attributeToProperty(newValue);
-			} else if (propertyType === Boolean) {
-				newPropertyValue = newValue !== null;
-			} else {
-				newPropertyValue = newValue as string;
-			}
+			const converter = propData.converter ?? defaultConverter;
+			newPropertyValue = converter.fromAttribute(newValue, propData.type);
 
 			(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
 		}
@@ -625,43 +602,8 @@ abstract class UI5Element extends HTMLElement {
 		if (!ctor.getMetadata().hasAttribute(name)) {
 			return;
 		}
-		const properties = ctor.getMetadata().getProperties();
-		const propData = properties[name];
 
-		if (propData.hasInitializer) {
-			this._updateAttributeV2(name, newValue);
-			return;
-		}
-
-		const propertyType = propData.type;
-		let propertyValidator = propData.validator as typeof DataType;
-		const attrName = camelToKebabCase(name);
-		const attrValue = this.getAttribute(attrName);
-
-		if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-			propertyValidator = propertyType as typeof DataType;
-		}
-
-		if (propertyValidator) {
-			const newAttrValue = propertyValidator.propertyToAttribute(newValue);
-			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
-				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
-				this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
-				this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
-			} else {
-				this.setAttribute(attrName, newAttrValue);
-			}
-		} else if (propertyType === Boolean) {
-			if (newValue === true && attrValue === null) {
-				this.setAttribute(attrName, "");
-			} else if (newValue === false && attrValue !== null) {
-				this.removeAttribute(attrName);
-			}
-		} else if (typeof newValue !== "object") {
-			if (attrValue !== newValue) {
-				this.setAttribute(attrName, newValue as string);
-			}
-		} // else { return; } // old object handling
+		this._updateAttributeV2(name, newValue);
 	}
 
 	/**
@@ -834,11 +776,6 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const props = ctor.getMetadata().getProperties();
 		for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
-			if (!propData.hasInitializer) {
-				// old style property without initializer - don't update it here, it will be updated
-				// in the property setter for compatibility
-				continue; // eslint-disable-line no-continue
-			}
 			this._updateAttribute(prop, (this as unknown as Record<string, PropertyValue>)[prop]);
 		}
 	}
@@ -859,7 +796,6 @@ abstract class UI5Element extends HTMLElement {
 		}
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
-		// this._rendering = true;
 
 		this.onBeforeRendering();
 		this.updateAttributes();
@@ -869,7 +805,6 @@ abstract class UI5Element extends HTMLElement {
 
 		// resume normal invalidation handling
 		this._suppressInvalidation = false;
-		this._rendering = false;
 
 		// Update the shadow root with the render result
 		/*
@@ -1126,22 +1061,6 @@ abstract class UI5Element extends HTMLElement {
 				console.warn(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 			}
 
-			if (propData.type === Boolean && propData.defaultValue) {
-				throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
-			}
-
-			if (propData.type === Array && !propData.hasInitializer) {
-				throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
-			}
-
-			if (propData.type === Object && propData.defaultValue) {
-				throw new Error(`Cannot set a default value for property "${prop}". All properties of type "Object" are empty objects by default.`);
-			}
-
-			if (propData.multiple && propData.defaultValue) {
-				throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
-			}
-
 			const descriptor = getPropertyDescriptor(proto, prop);
 			// if the decorator is on a setter, proxy the new setter to it
 			let origSet: (v: any) => void;
@@ -1162,51 +1081,17 @@ abstract class UI5Element extends HTMLElement {
 					if (origGet) {
 						return origGet.call(this);
 					}
-					if (this._state[prop] !== undefined) {
-						return this._state[prop];
-					}
-
-					const propDefaultValue = propData.defaultValue;
-
-					if (propData.type === Boolean) {
-						return false;
-					} else if (propData.type === String) {  // eslint-disable-line
-						return propDefaultValue;
-					} else if (propData.multiple) { // eslint-disable-line
-						return [];
-					} else {
-						return propDefaultValue;
-					}
+					return this._state[prop];
 				},
 
 				set(this: UI5Element, value: PropertyValue) {
-					let isDifferent;
 					const ctor = this.constructor as typeof UI5Element;
-					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
 					const oldState = origGet ? origGet.call(this) : this._state[prop];
 
-					if (!propData.hasInitializer) {
-						value = metadataCtor.validatePropertyValue(value, propData);
-						const propertyType = propData.type;
-						let propertyValidator = propData.validator as typeof DataType;
-
-						if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-							propertyValidator = propertyType as typeof DataType;
-						}
-
-						if (propertyValidator) {
-							isDifferent = !propertyValidator.valuesAreEqual(oldState, value);
-						} else if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
-							isDifferent = !arraysAreEqual(oldState, value);
-						} else {
-							isDifferent = oldState !== value;
-						}
-					} else {
-						// if both values are NaN, this check will say they are different, ensure one of them is not NaN
-						// console.log({oldState, value})
-						// isDifferent = oldState !== value && !(Number.isNaN(oldState) && Number.isNaN(value));
-						isDifferent = oldState !== value;
-					}
+					// TODO (verify): if both values are NaN, this check will say they are different, ensure one of them is not NaN
+					// console.log({oldState, value})
+					// isDifferent = oldState !== value && !(Number.isNaN(oldState) && Number.isNaN(value));
+					const isDifferent = oldState !== value;
 
 					if (isDifferent) {
 						// if the decorator is on a setter, use it for storage
@@ -1224,13 +1109,6 @@ abstract class UI5Element extends HTMLElement {
 
 						if (ctor.getMetadata().isFormAssociated()) {
 							setFormValue(this as unknown as IFormInputElement);
-						}
-
-						// todo
-						if (!propData.hasInitializer || this._rendering) {
-							// old style properties with default value, update the attribute here
-							// new style properties while rendering - safe to update here, it's not the constructor
-							this._updateAttribute(prop, value);
 						}
 					}
 				},

@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type FormItem from "./FormItem.js";
@@ -37,11 +36,11 @@ class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines header text of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines column span of the component,
@@ -50,7 +49,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: undefined })
+	@property({ type: Number })
 	columnSpan?: number;
 
 	/**
@@ -66,23 +65,22 @@ class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	colsS!: number;
+	@property({ type: Number })
+	colsS = 1;
 
-	@property({ validator: Integer, defaultValue: 1 })
-	colsM!: number;
+	@property({ type: Number })
+	colsM = 1;
 
-	@property({ validator: Integer, defaultValue: 1 })
-	colsL!: number;
+	@property({ type: Number })
+	colsL = 1;
 
-	@property({ validator: Integer, defaultValue: 1 })
-	colsXl!: number;
+	@property({ type: Number })
+	colsXl = 1;
 
-	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: `${FormItemSpacing}`;
+	@property()
+	itemSpacing: `${FormItemSpacing}` = "Normal";
 
-	@property({ type: String, defaultValue: "S12 M4 L4 XL4" })
-	labelSpan!: string;
+	labelSpan = "S12 M4 L4 XL4";
 
 	onBeforeRendering() {
 		this.processFormItems();

@@ -20,6 +20,8 @@ import type {
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 
+const DEFAULT_DELIMITER = "-";
+
 /**
  * @class
  *
@@ -66,7 +68,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	delimiter = "-";
+	delimiter = DEFAULT_DELIMITER;
 
 	 /**
 	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
@@ -295,8 +297,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	}
 
 	get _effectiveDelimiter(): string {
-		const ctor = this.constructor as typeof DateRangePicker;
-		return this.delimiter || (ctor.getMetadata().getProperties().delimiter.defaultValue) as string;
+		return this.delimiter || DEFAULT_DELIMITER;
 	}
 
 	_splitValueByDelimiter(value: string) {

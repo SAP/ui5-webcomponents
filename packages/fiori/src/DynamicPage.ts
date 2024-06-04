@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -124,7 +124,7 @@ class DynamicPage extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hidePinButton!: boolean;
+	hidePinButton = false;
 
 	/**
 	 * Defines if the header is pinned.
@@ -133,7 +133,7 @@ class DynamicPage extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	headerPinned!: boolean;
+	headerPinned = false;
 
 	/**
 	 * Defines if the footer is shown.
@@ -142,7 +142,7 @@ class DynamicPage extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showFooter!: boolean;
+	showFooter = false;
 
 	/**
 	 * Defines the current media query size.
@@ -150,7 +150,7 @@ class DynamicPage extends UI5Element {
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange?: string;
 
 	/**
 	 * Defines the content of the Dynamic Page.
@@ -190,7 +190,7 @@ class DynamicPage extends UI5Element {
 	showHeaderInStickArea = false;
 
 	@property({ type: Boolean })
-	_headerSnapped!: boolean;
+	_headerSnapped = false;
 
 	_updateMediaRange: ResizeObserverCallback;
 
