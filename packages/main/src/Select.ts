@@ -257,6 +257,17 @@ class Select extends UI5Element implements IFormInputElement {
 	accessibleNameRef!: string;
 
 	/**
+	 * Defines the maximum height of the Select's dropdown/popover in px.
+	 *
+ 	 * **Note:** If omitted, the maximum height will be calculated automatically so the popover spans through
+	 * the remaining visible part of the viewport.
+	 * @default undefined
+	 * @public
+	 */
+	@property({ validator: Integer })
+	popoverMaxHeight?: number;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
