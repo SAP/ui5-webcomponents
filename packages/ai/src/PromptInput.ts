@@ -5,7 +5,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 
 /**
  * @class
@@ -38,7 +38,7 @@ class PromptInput extends UI5Element {
 	 * @default ""
 	 */
 	@property()
-	value!: string;
+	value = "";
 }
 
 PromptInput.define();

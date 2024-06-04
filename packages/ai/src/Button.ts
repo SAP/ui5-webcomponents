@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Deps
@@ -56,13 +56,13 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	@property()
-	icon!: string;
+	icon?: string;
 
 	@property()
-	endIcon!: string;
+	endIcon?: string;
 }
 
 Button.define();
