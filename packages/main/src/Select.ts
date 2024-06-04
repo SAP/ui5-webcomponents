@@ -124,6 +124,7 @@ type SelectLiveChangeEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart popover - Used to style the popover element
  * @since 0.8.0
  */
 @customElement({
@@ -255,17 +256,6 @@ class Select extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	accessibleNameRef!: string;
-
-	/**
-	 * Defines the maximum height of the Select's dropdown/popover in px.
-	 *
- 	 * **Note:** If omitted, the maximum height will be calculated automatically so the popover spans through
-	 * the remaining visible part of the viewport.
-	 * @default undefined
-	 * @public
-	 */
-	@property({ validator: Integer })
-	popoverMaxHeight?: number;
 
 	/**
 	 * @private

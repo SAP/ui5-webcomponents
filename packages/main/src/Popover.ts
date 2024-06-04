@@ -186,17 +186,6 @@ class Popover extends Popup {
 	@property({ type: PopoverPlacement, defaultValue: PopoverPlacement.End })
 	actualPlacement!: `${PopoverPlacement}`;
 
-	/**
-	 * Defines the maximum height of the popover in px.
-	 *
- 	 * **Note:** If omitted, the maximum height will be calculated automatically so the popover spans through
-	 * the remaining visible part of the viewport.
-	 * @default undefined
-	 * @public
-	 */
-	@property({ validator: Integer })
-	maxHeight?: number;
-
 	@property({ validator: Integer, noAttribute: true })
 	_maxHeight?: number;
 
@@ -585,9 +574,6 @@ class Popover extends Popup {
 		}
 
 		this._maxHeight = Math.round(maxHeight - Popover.VIEWPORT_MARGIN);
-		if (this.maxHeight && this.maxHeight < this._maxHeight) {
-			this._maxHeight = this.maxHeight;
-		}
 		this._maxWidth = Math.round(maxWidth - Popover.VIEWPORT_MARGIN);
 
 		if (this._left === undefined || Math.abs(this._left - left) > 1.5) {

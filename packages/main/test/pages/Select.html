@@ -14,6 +14,11 @@
 
 
 <link rel="stylesheet" type="text/css" href="./styles/Select.css">
+<style>
+	#selectPopoverMaxHeight[ui5-select]::part(popover) {
+		max-height: 120px;
+	}
+</style>
 </head>
 
 <body class="select1auto">
@@ -178,39 +183,8 @@
 	</section>
 
 	<section>
-		<h2>Popover Max Height prop (200px)</h2>
-		<ui5-select id="selectPopoverMaxHeight" popover-max-height="200">
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
-			<ui5-option>Compact</ui5-option>
+		<h2>popover max-height changed with 'popover' part (120px)</h2>
+		<ui5-select id="selectPopoverMaxHeight">
 			<ui5-option>Compact</ui5-option>
 			<ui5-option>Compact</ui5-option>
 			<ui5-option>Compact</ui5-option>
