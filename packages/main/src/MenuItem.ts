@@ -191,14 +191,17 @@ class MenuItem extends ListItem implements IMenuItem {
 		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
 	}
 
+	/**
+	 * Defines if the item is a separator.
+	 */
 	get isSeparator() {
 		return false;
 	}
 
 	onBeforeRendering() {
-		const siblingsWithIcon = this.items.some(item => !!item.icon);
+		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
 
-		this.items.forEach(item => {
+		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
@@ -218,6 +221,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get _popover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	get _menuItems() {
+		return this.items.filter(item => !item.isSeparator);
 	}
 
 	_closeAll() {

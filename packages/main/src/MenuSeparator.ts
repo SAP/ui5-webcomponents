@@ -22,6 +22,9 @@ import { IMenuItem } from "./Menu.js";
 	],
 })
 class MenuSeparator extends ListItem implements IMenuItem {
+	/**
+	 * Defines if the item is a separator.
+	 */
 	get isSeparator() {
 		return true;
 	}

@@ -258,11 +258,14 @@ class Menu extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	onBeforeRendering() {
-		const menuItems = this._filterMenuItems(this.items);
-		const siblingsWithIcon = menuItems.some(menuItem => !!menuItem.icon);
+	get _menuItems() {
+		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
 
-		menuItems.forEach(item => {
+	onBeforeRendering() {
+		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+
+		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
@@ -288,7 +291,7 @@ class Menu extends UI5Element {
 
 	_closeItemSubMenu(item: MenuItem) {
 		if (item && item._popover) {
-			const openedSibling = this._filterMenuItems(item.items).find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -317,7 +320,7 @@ class Menu extends UI5Element {
 
 		this._timeout = setTimeout(() => {
 			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && this._filterMenuItems(opener.items).find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -372,7 +375,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		const menuItems = this._filterMenuItems(this.items);
+		const menuItems = this._menuItems;
 		if (menuItems) {
 			menuItems[0].focus();
 		}
@@ -391,10 +394,6 @@ class Menu extends UI5Element {
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireEvent("close", {}, false, true);
-	}
-
-	_filterMenuItems(items: Array<IMenuItem>): Array<MenuItem> {
-		return items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 }
 
