@@ -691,11 +691,11 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
-			"ariaLabel": this.accessibleNameText,
+			"ariaLabel": this.labelReferenceText,
 		};
 	}
 
-	get accessibleNameText() {
+	get labelReferenceText() {
 		const externalLabelText = getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : "";
 		const effectiveLabelText = getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : "";
 		return `${externalLabelText} ${effectiveLabelText}`.trim();

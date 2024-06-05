@@ -331,11 +331,11 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
-			"ariaLabel": this.accessibleNameText,
+			"ariaLabel": this.labelReferenceText,
 		};
 	}
 
-	get accessibleNameText() {
+	get labelReferenceText() {
 		return getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : "";
 	}
 
