@@ -525,7 +525,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get ariaDescribedbyText() {
-		return this.hasButtonType ? "ui5-button-hiddenText-type" : "";
+		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
 	}
 
 	get _isSubmit() {
