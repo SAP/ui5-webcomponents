@@ -59,9 +59,13 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  *
  * `ui5-menu` component represents a hierarchical menu structure.
  *
- * ### Usage
+ * ### Structure
  *
- * `ui5-menu` contains `ui5-menu-item` components.
+ * The `ui5-menu` can hold two types of entities:
+ *
+ * - `ui5-menu-item` components
+ * - `ui5-menu-separator` - used to separate menu items with a line
+ *
  * An arbitrary hierarchy structure can be represented by recursively nesting menu items.
  *
  * ### Keyboard Handling
@@ -376,7 +380,7 @@ class Menu extends UI5Element {
 	_afterPopoverOpen() {
 		this.open = true;
 		const menuItems = this._menuItems;
-		if (menuItems) {
+		if (menuItems.length) {
 			menuItems[0].focus();
 		}
 		this.fireEvent("open", {}, false, true);
