@@ -127,6 +127,9 @@ type PopupBeforeCloseEventDetail = {
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
+	 *
+	 * **Note:** If an element with `autofocus` attribute is added inside the component,
+	 * `initialFocus` won't take effect.
 	 * @default ""
 	 * @public
 	 */
@@ -453,6 +456,11 @@ abstract class Popup extends UI5Element {
 	 * @returns Promise that resolves when the focus is applied
 	 */
 	async applyFocus(): Promise<void> {
+		// do nothing if the standard HTML autofocus is used
+		if (this.querySelector("[autofocus]")) {
+			return;
+		}
+
 		await this._waitForDomRef();
 
 		if (this.getRootNode() === this) {
