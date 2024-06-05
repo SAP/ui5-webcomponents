@@ -10,7 +10,10 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -688,8 +691,12 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
-			"ariaLabel": getEffectiveAriaLabelText(this),
+			"ariaLabel": this.accessibleNameText,
 		};
+	}
+
+	get accessibleNameText() {
+		return `${getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : ""} ${getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : ""}`.trim();
 	}
 
 	get openIconTitle() {

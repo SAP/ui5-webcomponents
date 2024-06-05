@@ -15,6 +15,10 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
 	isShow,
 	isPageUp,
 	isPageDown,
@@ -330,7 +334,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
+			"ariaLabel": this.accessibleNameText,
 		};
+	}
+
+	get accessibleNameText() {
+		return `${getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : ""} ${getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : ""}`.trim();
 	}
 
 	/**

@@ -8,8 +8,9 @@
 	allow-target-overlap
 	_hide-header
 	hide-arrow
-	@ui5-close="{{onResponsivePopoverAfterClose}}"
-	@ui5-open="{{onResponsivePopoverAfterOpen}}"
+	accessible-name="{{accessibleNameText}}"
+	@ui5-after-open="{{onResponsivePopoverAfterOpen}}"
+	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
 	@wheel="{{_handleWheel}}"
 	@keydown="{{_onkeydown}}"
 >
