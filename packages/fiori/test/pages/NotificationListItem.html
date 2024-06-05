@@ -24,6 +24,7 @@
 			state="Positive"
 			importance="Important"
 			title-text="When 'priority' and 'state' are set at the same time - we need to see the status icon Success (Positive) from the 'state'"
+			wrapping-type="None"
 		>Notification with several actions.
 
 			<ui5-avatar size="XS" slot="avatar" shape="Square" initials="JS"></ui5-avatar>
@@ -46,6 +47,7 @@
 			show-close
 			priority="Medium"
 			title-text="When 'priority' (deprecated) is set to 'Medium' we shouldn't see it"
+			wrapping-type="None"
 		>Notification with one action.
 
 			<ui5-avatar size="XS" slot="avatar">
@@ -65,6 +67,7 @@
 			show-close
 			state="Information"
 			title-text="When 'state' is set to 'Information' we need to see it"
+			wrapping-type="None"
 		>Notification with Menu and Notification actions (deprecated) - overflow button should open Menu with 4 options
 
 			<ui5-avatar size="XS" slot="avatar">
@@ -112,6 +115,7 @@
 			loading
 			show-close
 			title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			wrapping-type="None"
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 
@@ -133,6 +137,7 @@
 			show-close
 			state="Negative"
 			title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+			wrapping-type="None"
 		>
 			And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
 			<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
@@ -148,6 +153,7 @@
 		<ui5-li-notification
 			title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
 			state="Critical"
+			wrapping-type="None"
 			>
 				Short description
 			<ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
@@ -162,7 +168,7 @@
 			</ui5-menu>
 		</ui5-li-notification>
 
-		<ui5-li-notification title-text="New order (#2523)">
+		<ui5-li-notification title-text="New order (#2523)" wrapping-type="None">
 			<div>And with a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.</div>
 
 			<span slot="footnotes">John SMith</span>

@@ -515,3 +515,34 @@ describe("Keyboard navigation", () => {
 	});
 });
 
+
+describe("Wrapping", () => {
+	before(async () => {
+		await browser.url(`test/pages/NotificationList_test_page.html`);
+	});
+
+	it("tests if title and description texts wrap - default wrappingType", async () => {
+		const notificationTitle = await browser.$("#nli3").shadow$(".ui5-nli-title-text");
+		const notificationDescription = await browser.$("#nli3").shadow$(".ui5-nli-description");
+
+		assert.strictEqual((await notificationTitle.getCSSProperty("overflow")).value, "visible", "notification title is wrapped");
+		assert.strictEqual((await notificationDescription.getCSSProperty("overflow")).value, "visible", "notification description is wrapped");
+	});
+
+	it("tests if title and description texts wrap - wrappingType Normal", async () => {
+		const notificationTitle = await browser.$("#nli5").shadow$(".ui5-nli-title-text");
+		const notificationDescription = await browser.$("#nli5").shadow$(".ui5-nli-description");
+
+		assert.strictEqual((await notificationTitle.getCSSProperty("overflow")).value, "visible", "notification title is wrapped");
+		assert.strictEqual((await notificationDescription.getCSSProperty("overflow")).value, "visible", "notification description is wrapped");
+	});
+
+	it("tests if title and description texts wrap - wrappingType None", async () => {
+		const notificationTitle = await browser.$("#nli3a").shadow$(".ui5-nli-title-text");
+		const notificationDescription = await browser.$("#nli3a").shadow$(".ui5-nli-description");
+
+		assert.strictEqual((await notificationTitle.getCSSProperty("overflow")).value, "hidden", "notification title is truncated");
+		assert.strictEqual((await notificationDescription.getCSSProperty("overflow")).value, "hidden", "notification description is truncated");
+	});
+});
+

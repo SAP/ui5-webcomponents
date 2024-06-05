@@ -166,15 +166,15 @@ const ICON_PER_STATUS_DESIGN = {
 class NotificationListItem extends NotificationListItemBase {
 	/**
 	* Defines if the `titleText` and `description` should wrap,
-	* they truncate by default.
+	* they wrap by default.
 	*
-	* **Note:** by default the `titleText` and `description`,
-	* and a `ShowMore/Less` button would be displayed.
-	* @default "None"
+	* **Note:** when the property is set ot "None" and the texts truncate
+	* a `More/Less` button would be displayed.
+	* @default "Normal"
 	* @public
 	* @since 1.0.0-rc.15
 	*/
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
 	wrappingType!: `${WrappingType}`;
 
 	/**
