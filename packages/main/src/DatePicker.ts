@@ -696,7 +696,9 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	get accessibleNameText() {
-		return `${getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : ""} ${getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : ""}`.trim();
+		const externalLabelText = getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : "";
+		const effectiveLabelText = getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : "";
+		return `${externalLabelText} ${effectiveLabelText}`.trim();
 	}
 
 	get openIconTitle() {

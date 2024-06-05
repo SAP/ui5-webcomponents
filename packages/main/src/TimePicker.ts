@@ -14,10 +14,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; //
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import {
-	getEffectiveAriaLabelText,
-	getAssociatedLabelForTexts,
-} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	isShow,
 	isPageUp,
@@ -339,7 +336,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	get accessibleNameText() {
-		return `${getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : ""} ${getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : ""}`.trim();
+		return getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : "";
 	}
 
 	/**
