@@ -63,21 +63,21 @@ describe("Wrapping", async () => {
 		await browser.url(`test/pages/Tag.html`);
 	});
 
-	it("tests that tag txt wraps - default wrappingType", async () => {
+	it("tests if tag text wraps - default wrappingType", async () => {
 		const tag = await browser.$("#tagWithWrappingDefault").shadow$(".ui5-tag-root");
 
 		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "normal", "tag label is wrapped");
 	});
 
-	it("tests that tag txt wraps - wrappingType Normal", async () => {
+	it("tests if tag text wraps - wrappingType Normal", async () => {
 		const tag = await browser.$("#tagWithWrappingNormal").shadow$(".ui5-tag-root");
 
 		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "normal", "tag label is wrapped");
 	});
 
-	it("tests that tag txt wraps - wrappingType None", async () => {
+	it("tests if tag text wraps - wrappingType None", async () => {
 		const tag = await browser.$("#tagWithWrappingNone").shadow$(".ui5-tag-root");
 
-		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "nowrap", "tag label is wrapped");
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "nowrap", "tag label is truncated");
 	});
 });
