@@ -484,10 +484,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this.valueStateOpen = false;
 		}
 
-		// if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
-		// 	this.valueStateOpen = false;
-		// }
-
 		this._selectMatchingItem();
 		this._initialRendering = false;
 
@@ -518,7 +514,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			item.querySelectorAll("a").forEach(
 				link => {
 					link.tabIndex = -1;
-				});
+				},
+			);
 		});
 	}
 
@@ -595,6 +592,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		if (this.open && !this._listWidth) {
 			this._listWidth = this._getPicker().offsetWidth;
 		}
+	}
+
+	_handleValueStatePopoverFocusout() {
+		this.focused = false;
 	}
 
 	_handleValueStatePopoverAfterClose() {
@@ -1006,6 +1007,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this.focused = false;
 			this.blur();
 		}
+	}
+
+	_handlePopoverFocusout() {
+		this.focused = false;
 	}
 
 	_click() {

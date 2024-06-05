@@ -11,6 +11,7 @@
 	@ui5-open={{_afterOpenPopover}}
 	@ui5-close={{_afterClosePopover}}
 	@keydown={{_handlePopoverKeydown}}
+	@focusout={{_handlePopoverFocusout}}
 	.open={{open}}
 	.opener={{this}}
 >
@@ -118,6 +119,7 @@
 		.opener="{{this}}"
 		.open="{{valueStateOpen}}"
 		@ui5-close="{{_handleValueStatePopoverAfterClose}}"
+		@focusout={{_handleValueStatePopoverFocusout}}
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
