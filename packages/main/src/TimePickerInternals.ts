@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -11,6 +12,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; //
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import SegmentedButton from "./SegmentedButton.js";
 import {
 	getHoursConfigByFormat,
@@ -32,7 +34,7 @@ type TimePickerComponentIndexMap = {
 
 type TimeSelectionPeriodProperties = {
 	label: string,
-	pressed: boolean,
+	selected: boolean,
 }
 
 type TimeSelectionChangeEventDetail = {
@@ -80,7 +82,7 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
  * @private
  */
 @customElement({
-	tag: "ui5-time-picker-internals",
+	renderer: litRender,
 })
 
 /**
@@ -220,11 +222,11 @@ class TimePickerInternals extends UI5Element {
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : new Date();
+		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : UI5Date.getInstance();
 	}
 
 	get validDateValue() {
-		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : UI5Date.getInstance();
 	}
 
 	get periodsArray() {
@@ -419,7 +421,7 @@ class TimePickerInternals extends UI5Element {
 			this.periodsArray.forEach(item => {
 				this._periods.push({
 					"label": item,
-					"pressed": this._period === item,
+					"selected": this._period === item,
 				});
 			});
 		}
@@ -497,8 +499,6 @@ class TimePickerInternals extends UI5Element {
 	 */
 	_setExactMatch() {}
 }
-
-TimePickerInternals.define();
 
 export default TimePickerInternals;
 export type {

@@ -23,12 +23,12 @@
 				<slot name="startOverflowButton"></slot>
 			{{else}}
 				<ui5-button
-					icon="{{overflowMenuIcon}}"
+					end-icon="{{overflowMenuIcon}}"
 					data-ui5-stable="overflow-start"
 					tabindex="-1"
 					tooltip="{{overflowMenuTitle}}"
-					aria-haspopup="menu"
-					icon-end>{{this._startOverflowText}}</ui5-button>
+					.accessibilityAttributes="{{overflowBtnAccessibilityAttributes}}"
+				>{{this._startOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
 
@@ -56,12 +56,12 @@
 				<slot name="overflowButton"></slot>
 			{{else}}
 				<ui5-button
-					icon="{{overflowMenuIcon}}"
+					end-icon="{{overflowMenuIcon}}"
 					data-ui5-stable="overflow-end"
 					tabindex="-1"
 					tooltip="{{overflowMenuTitle}}"
-					aria-haspopup="menu"
-					icon-end>{{this._endOverflowText}}</ui5-button>
+					.accessibilityAttributes="{{overflowBtnAccessibilityAttributes}}"
+				>{{this._endOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
 

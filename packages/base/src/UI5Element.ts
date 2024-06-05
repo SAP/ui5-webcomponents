@@ -27,7 +27,7 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import executeTemplate from "./renderer/executeTemplate.js";
+import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type {
 	AccessibilityInfo,
@@ -35,7 +35,10 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
+import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 
+const DEV_MODE = true;
 let autoId = 0;
 
 const elementTimeouts = new Map<string, Promise<void>>();
@@ -101,7 +104,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 		}
 		// go up the prototype chain
 		proto = Object.getPrototypeOf(proto);
-	} while (proto);
+	} while (proto && proto !== HTMLElement.prototype);
 }
 
 /**
@@ -120,10 +123,12 @@ abstract class UI5Element extends HTMLElement {
 	_inDOM: boolean;
 	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
+	_slotsAssignedNodes: WeakMap<HTMLSlotElement, Array<SlotValue>>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
+	_internals?: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -149,13 +154,15 @@ abstract class UI5Element extends HTMLElement {
 		});
 		this._domRefReadyPromise._deferredResolve = deferredResolve;
 		this._doNotSyncAttributes = new Set(); // attributes that are excluded from attributeChangedCallback synchronization
+		this._slotsAssignedNodes = new WeakMap(); // map of all nodes, slotted (directly or transitively) per component slot
 
 		this._state = { ...ctor.getMetadata().getInitialState() };
 
 		this._upgradeAllProperties();
 
 		if (ctor._needsShadowDOM()) {
-			this.attachShadow({ mode: "open" });
+			const defaultOptions = { mode: "open" } as ShadowRootInit;
+			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
 		}
 	}
 
@@ -183,6 +190,29 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	async connectedCallback() {
+		if (DEV_MODE) {
+			const rootNode = this.getRootNode();
+			// when an element is connected, check if it exists in the `dependencies` of the parent
+			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
+				const klass = rootNode.host.constructor as typeof UI5Element;
+				const hasDependency = getTagsToScope(rootNode.host).includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
+				if (!hasDependency) {
+					// eslint-disable-next-line no-console
+					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
+				}
+			}
+		}
+
+		if (DEV_MODE) {
+			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
+			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
+				if (Object.hasOwn(this, prop)) {
+					// eslint-disable-next-line no-console
+					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} has a property [${prop}] that is shadowed by the instance. Updates to this property will not invalidate the component. Possible reason is TS target ES2022 or TS useDefineForClassFields`);
+				}
+			}
+		}
+
 		const ctor = this.constructor as typeof UI5Element;
 
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
@@ -228,6 +258,8 @@ abstract class UI5Element extends HTMLElement {
 			this.onExitDOM();
 			this._fullyConnected = false;
 		}
+
+		this._domRefReadyPromise._deferredResolve!();
 
 		cancelRender(this);
 	}
@@ -366,15 +398,12 @@ abstract class UI5Element extends HTMLElement {
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
 				const childChangeListener = this._getChildChangeListener(slotName);
-
-				if (childChangeListener) {
-					child.attachInvalidate.call(child, childChangeListener);
-				}
+				child.attachInvalidate.call(child, childChangeListener);
 			}
 
 			// Listen for the slotchange event if the child is a slot itself
 			if (child instanceof HTMLSlotElement) {
-				this._attachSlotChange(child, slotName);
+				this._attachSlotChange(child, slotName, !!slotData.invalidateOnChildChange);
 			}
 
 			const propertyName = slotData.propertyName || slotName;
@@ -404,7 +433,12 @@ abstract class UI5Element extends HTMLElement {
 					name: propertyNameToSlotMap.get(propertyName)!,
 					reason: "children",
 				});
+
 				invalidated = true;
+
+				if (ctor.getMetadata().isFormAssociated()) {
+					setFormValue(this as unknown as IFormInputElement);
+				}
 			}
 		}
 
@@ -430,10 +464,7 @@ abstract class UI5Element extends HTMLElement {
 		children.forEach(child => {
 			if (instanceOfUI5Element(child)) {
 				const childChangeListener = this._getChildChangeListener(slotName);
-
-				if (childChangeListener) {
-					child.detachInvalidate.call(child, childChangeListener);
-				}
+				child.detachInvalidate.call(child, childChangeListener);
 			}
 
 			if (child instanceof HTMLSlotElement) {
@@ -518,6 +549,20 @@ abstract class UI5Element extends HTMLElement {
 
 			(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
 		}
+	}
+
+	formAssociatedCallback() {
+		const ctor = this.constructor as typeof UI5Element;
+
+		if (!ctor.getMetadata().isFormAssociated()) {
+			return;
+		}
+
+		attachFormElementInternals(this);
+	}
+
+	static get formAssociated() {
+		return this.getMetadata().isFormAssociated();
 	}
 
 	/**
@@ -610,11 +655,34 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_attachSlotChange(child: HTMLSlotElement, slotName: string) {
+	_attachSlotChange(slot: HTMLSlotElement, slotName: string, invalidateOnChildChange: boolean) {
 		const slotChangeListener = this._getSlotChangeListener(slotName);
-		if (slotChangeListener) {
-			child.addEventListener("slotchange", slotChangeListener);
-		}
+		slot.addEventListener("slotchange", (e: Event) => {
+			slotChangeListener.call(slot, e);
+
+			if (invalidateOnChildChange) {
+				// Detach listeners for UI5 Elements that used to be in this slot
+				const previousChildren = this._slotsAssignedNodes.get(slot);
+				if (previousChildren) {
+					previousChildren.forEach(child => {
+						if (instanceOfUI5Element(child)) {
+							const childChangeListener = this._getChildChangeListener(slotName);
+							child.detachInvalidate.call(child, childChangeListener);
+						}
+					});
+				}
+
+				// Attach listeners for UI5 Elements that are now in this slot
+				const newChildren = getSlottedNodesList([slot]);
+				this._slotsAssignedNodes.set(slot, newChildren);
+				newChildren.forEach(child => {
+					if (instanceOfUI5Element(child)) {
+						const childChangeListener = this._getChildChangeListener(slotName);
+						child.attachInvalidate.call(child, childChangeListener);
+					}
+				});
+			}
+		});
 	}
 
 	/**
@@ -998,7 +1066,6 @@ abstract class UI5Element extends HTMLElement {
 					let isDifferent;
 					const ctor = this.constructor as typeof UI5Element;
 					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
-
 					value = metadataCtor.validatePropertyValue(value, propData);
 					const propertyType = propData.type;
 					let propertyValidator = propData.validator as typeof DataType;
@@ -1029,6 +1096,10 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
+
+						if (ctor.getMetadata().isFormAssociated()) {
+							setFormValue(this as unknown as IFormInputElement);
+						}
 						this._updateAttribute(prop, value);
 					}
 				},
@@ -1160,6 +1231,11 @@ abstract class UI5Element extends HTMLElement {
 		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
+
+	get validity() { return this._internals?.validity; }
+	get validationMessage() { return this._internals?.validationMessage; }
+	checkValidity() { return this._internals?.checkValidity(); }
+	reportValidity() { return this._internals?.reportValidity(); }
 }
 
 /**

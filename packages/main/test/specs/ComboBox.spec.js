@@ -6,33 +6,33 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
 
 		await arrow.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 	});
 
 	it ("Should close the popover when clicking on the arrow second time", async () => {
 		const combo = await $("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 
 		await arrow.click();
 
-		assert.notOk(await popover.getProperty("opened"), "Popover should not be displayed")
+		assert.notOk(await popover.getProperty("open"), "Popover should not be displayed")
 	});
 
 	it ("Items filtration", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -64,7 +64,7 @@ describe("General interaction", () => {
 		await input.click();
 		await input.keys("b");
 
-		await browser.waitUntil(() => popover.getProperty("opened"), {
+		await browser.waitUntil(() => popover.getProperty("open"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -113,7 +113,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -145,15 +145,15 @@ describe("General interaction", () => {
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// assert
-		assert.strictEqual(listItems.length, 0, "Items should be 0");
-		assert.notOk(await popover.getProperty("opened"), "Popover should close");
+		assert.notOk(listItems.some(item => item._isVisible), "Rendered items should be 0");
+		assert.notOk(await popover.getProperty("open"), "Popover should close");
 	});
 
 	it ("Should close popover on item click / change event", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo2");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -163,24 +163,24 @@ describe("General interaction", () => {
 		await input.keys("b");
 
 		// assert
-		assert.ok(await popover.getProperty("opened"), "Popover should be opened");
+		assert.ok(await popover.getProperty("open"), "Popover should be opened");
 
 		// act
 		await input.keys("Enter");
 
 		// assert
-		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
+		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
 
 		// act
 		await arrow.click();
 
-		assert.ok(await popover.getProperty("opened"), "Popover should be displayed")
+		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 		await listItems[0].click();
 
 		// assert
-		assert.notOk(await popover.getProperty("opened"), "Popover should be closed");
+		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
 	});
 
 	it ("Tests change event", async () => {
@@ -218,7 +218,7 @@ describe("General interaction", () => {
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#change-cb");
 		const placeholder = await browser.$("#change-placeholder");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		await arrow.click();
 
@@ -243,10 +243,10 @@ describe("General interaction", () => {
 		const counter = await browser.$("#change-count");
 		const combo = await browser.$("#value-state-error");
 		const placeholder = await browser.$("#change-placeholder");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		await browser.executeAsync(done => {
-			document.querySelector("[value-state='Error']").addEventListener("ui5-change", function(event) {
+			document.querySelector("[value-state='Negative']").addEventListener("ui5-change", function(event) {
 				document.getElementById("change-placeholder").innerHTML = event.target.value;
 				document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
 			});
@@ -357,6 +357,46 @@ describe("General interaction", () => {
 		assert.strictEqual(await combo.getProperty("value"), "Algeria", "Value should be restored to the last confirmed one");
 	});
 
+	it ("Tests change event on open picker and item navigation", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const counter = await browser.$("#change-count");
+		const combo = await browser.$("#change-cb");
+		const arrow = await combo.shadow$(".inputIcon");
+		const input = await combo.shadow$("[inner-input]");
+
+		await arrow.click();
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on item navigation.");
+
+		const popover = await combo.shadow$("ui5-responsive-popover");
+		await (await popover.$("ui5-list").$$("ui5-li"))[0].click();
+
+		assert.strictEqual(await counter.getText(), "1", "Change event should be fired on item selection.");
+	});
+
+	it ("Tests change event on closed picker and item navigation", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const counter = await browser.$("#change-count");
+		const combo = await browser.$("#change-cb");
+		const input = await combo.shadow$("[inner-input]");
+
+		await input.click();
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on inline item navigation.");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on inline item navigation.");
+
+		await input.keys("Enter");
+
+		assert.strictEqual(await counter.getText(), "1", "Change event should be fired on item selection.");
+	});
+
 	it ("Tests change event after type and item select", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -372,7 +412,7 @@ describe("General interaction", () => {
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		await (await popover.$("ui5-list").$$("ui5-li"))[0].click();
 
-		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should be empty");
+		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should correspond to item.");
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 	});
 
@@ -409,7 +449,7 @@ describe("General interaction", () => {
 	it ("Tests Combo with contains filter", async () => {
 		const combo = await browser.$("#contains-cb");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -436,7 +476,7 @@ describe("General interaction", () => {
 	it ("Tests Combo with startswith filter", async () => {
 		const combo = await browser.$("#startswith-cb");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -453,13 +493,13 @@ describe("General interaction", () => {
 
 		await input.keys("a");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
-		assert.notOk(popover.opened, "Popover should be closed when no match");
+		assert.notOk(popover.open, "Popover should be closed when no match");
 	});
 
 	it ("Tests selection-change event and its parameters", async () => {
 		const combo = await browser.$("#combo");
 		const label = await browser.$("#selection-change-event-result");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -476,7 +516,7 @@ describe("General interaction", () => {
 	it ("Tests selection-change event when type text after selection", async () => {
 		const combo = await browser.$("#combo");
 		let label = await browser.$("#selection-change-event-result");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItems = await popover.$("ui5-list").$$("ui5-li");
 
@@ -493,7 +533,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		assert.notOk(await combo.getProperty("focused"), "property focused should be false");
 
@@ -517,7 +557,7 @@ describe("General interaction", () => {
 
 	it ("Tests Combo with two-column layout", async () => {
 		const combo = await browser.$("#combobox-two-column-layout");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		const listItem = await popover.$("ui5-list").$$("ui5-li")[0];
 
@@ -540,7 +580,7 @@ describe("General interaction", () => {
 
 		const cb = await $("#dynamic-items");
 		const btn = await $("#add-items-btn");
-		const arrow = await cb.shadow$("[input-icon]");
+		const arrow = await cb.shadow$(".inputIcon");
 
 		await btn.click();
 		await arrow.click();
@@ -591,7 +631,7 @@ describe("General interaction", () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const cb = await $("#combo");
-		const arrow = await cb.shadow$("[input-icon]");
+		const arrow = await cb.shadow$(".inputIcon");
 		const input = cb.shadow$("input");
 
 		await input.click();
@@ -613,19 +653,23 @@ describe("Grouping", () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		let popover = await combo.shadow$("ui5-responsive-popover");
-		let groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
-		let listItems = await popover.$("ui5-list").$$("ui5-li");
+		let listItems;
+		let groupItems;
 
 		await arrow.click();
+
+		groupItems = await popover.$("ui5-list").$$("ui5-li-group");
+		listItems = await popover.$("ui5-list").$$("ui5-li-group ui5-li");
+
 		assert.strictEqual(groupItems.length, 4, "Group items should be 4");
 		assert.strictEqual(listItems.length, 13, "Items should be 13");
 
 		await input.keys("c");
 
 		popover = await combo.shadow$("ui5-responsive-popover");
-		groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
+		groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
@@ -637,14 +681,14 @@ describe("Grouping", () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem;
 
 		await arrow.click();
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 		assert.ok(await groupItem.getProperty("focused"),  "The first group header should be focused");
 	});
@@ -652,7 +696,6 @@ describe("Grouping", () => {
 	it ("Tests input value while group item is focused", async () => {
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem;
 
@@ -664,7 +707,7 @@ describe("Grouping", () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[1];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-group")[1];
 
 		assert.ok(await groupItem.getProperty("focused"),  "The second group header should be focused");
 		assert.strictEqual(await combo.getProperty("filterValue"), "a", "Filter value should be the initial one");
@@ -685,6 +728,24 @@ describe("Grouping", () => {
 
 		assert.ok(await popover.getProperty("open"), "Popover remains open");
 	});
+
+	it ("Grouped items should be filtered and with the correct role attributes", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const popover = await combo.shadow$("ui5-responsive-popover");
+		const list = await popover.$("ui5-list");
+		const listItem = await list.$("ui5-li");
+
+		await input.click();
+		await input.keys("a");
+
+		assert.ok(await listItem, "The filtered item is shown");
+		assert.strictEqual(await list.getAttribute("accessible-role"), "ListBox", "The list item has the correct role attribute");
+		assert.strictEqual(await listItem.getAttribute("accessible-role"), "Option", "The list item has the correct role attribute");
+		assert.strictEqual(await list.$$("ui5-li").length, 5, "Group items are filtered correctly");
+	});
 });
 
 describe("Accessibility", async () => {
@@ -693,7 +754,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "List item 1 of 11";
@@ -716,7 +777,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#value-state-error-text");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "Please choose a country";
@@ -734,7 +795,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combobox-two-column-layout");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "DZ List item 1 of 10";
@@ -757,7 +818,7 @@ describe("Accessibility", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "Group Header A";
@@ -858,6 +919,15 @@ describe("Accessibility", async () => {
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error"), true, "Displayed value state message text is correct");
 	});
+
+	it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo");
+		const innerInput = await combo.shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
+	});
 });
 
 describe("Keyboard navigation", async () => {
@@ -866,14 +936,14 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let groupItem, listItem;
 
 		await arrow.click();
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$$("ui5-li-group")[0];
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 
@@ -883,7 +953,7 @@ describe("Keyboard navigation", async () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
-		listItem = await popover.$("ui5-list").$$("ui5-li")[0];
+		listItem = await popover.$("ui5-list").$("ui5-li-group ui5-li");
 
 		assert.strictEqual(await listItem.getProperty("focused"), true, "The first list item after the group header should be focused");
 
@@ -897,7 +967,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let valueStateHeader, groupItem;
 
@@ -918,7 +988,7 @@ describe("Keyboard navigation", async () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
-		groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
+		groupItem = await popover.$("ui5-list").$("ui5-li-group");
 
 		assert.strictEqual(await groupItem.getProperty("focused"), true, "The first group header should be focused");
 	});
@@ -928,7 +998,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		let listItem, prevListItem;
 
@@ -968,9 +1038,9 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#value-state-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
-		let listItem, prevListItem;
+		let prevListItem;
 
 		await input.click();
 		await input.keys("ArrowDown");
@@ -1000,11 +1070,33 @@ describe("Keyboard navigation", async () => {
 		assert.strictEqual(await prevListItem.getProperty("focused"), false, "The previously focused item is no longer focused");
 	});
 
+	it ("Navigates back and forward through items in multiple groups", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#value-state-grouping");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const arrow = await combo.shadow$(".inputIcon");
+
+		await input.click();
+
+		for (let i = 0; i < 5; i++) {
+			await input.keys("ArrowDown");
+		}
+
+		assert.equal(await combo.getProperty("value"), "Bahrain", "The value is updated with the first suggestion item of the second group");
+
+		for (let i = 0; i < 4; i++) {
+			await input.keys("ArrowUp");
+		}
+
+		assert.strictEqual(await combo.getProperty("value"), "Argentina", "The value is updated with the first suggestion item of the first group");
+	});
+
 	it ("Should focus the next/previous focusable element on TAB/SHIFT+TAB",  async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
 		const combo = await browser.$("#combo-grouping");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		const prevCombo = await browser.$("#value-state-grouping");
 		const nextCombo = await browser.$("#combobox-two-column-layout");
@@ -1025,7 +1117,7 @@ describe("Keyboard navigation", async () => {
 
 		const comboBox = await browser.$("#combo2");
 		const input = await comboBox.shadow$("#ui5-combobox-input");
-		const pickerIcon = await comboBox.shadow$("[input-icon]");
+		const pickerIcon = await comboBox.shadow$(".inputIcon");
 		const respPopover = await comboBox.shadow$("ui5-responsive-popover");
 		let listItem;
 
@@ -1073,6 +1165,36 @@ describe("Keyboard navigation", async () => {
 		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
 	});
 
+	it ("Should select previous item when the last suggestion is selected and the picker is closed",  async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+
+		await combo.click();
+		await combo.keys("PageDown");
+		await combo.keys("PageDown");
+		await combo.keys("ArrowUp");
+
+		assert.strictEqual(await combo.getProperty("value"), "Albania", "The value is updated correctly");
+	});
+
+	it ("Should keep the value from the selected items after closing the picker",  async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$(".inputIcon");
+
+		await arrow.click();
+		await combo.keys("ArrowDown");
+		await combo.keys("ArrowDown");
+
+		assert.strictEqual(await combo.getProperty("value"), "Algeria", "The value is updated correctly");
+
+		await combo.keys("F4");
+
+		assert.strictEqual(await combo.getProperty("value"), "Algeria", "The value remains in the input field after picker is closed");
+	});
+
 	it ("Should select first matching item",  async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -1084,7 +1206,7 @@ describe("Keyboard navigation", async () => {
 		await input.click();
 		await input.keys("A");
 
-		await browser.waitUntil(() => popover.getProperty("opened"), {
+		await browser.waitUntil(() => popover.getProperty("open"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1107,7 +1229,7 @@ describe("Keyboard navigation", async () => {
 		await input.click();
 		await input.keys("b");
 
-		await browser.waitUntil(() => popover.getProperty("opened"), {
+		await browser.waitUntil(() => popover.getProperty("open"), {
 			timeout: 200,
 			timeoutMsg: "Popover should be displayed"
 		});
@@ -1121,7 +1243,7 @@ describe("Keyboard navigation", async () => {
 
 		const combo = await browser.$("#combo-grouping");
 		const input = await combo.shadow$("#ui5-combobox-input");
-		const arrow = await combo.shadow$("[input-icon]");
+		const arrow = await combo.shadow$(".inputIcon");
 
 		await combo.scrollIntoView();
 
@@ -1131,7 +1253,7 @@ describe("Keyboard navigation", async () => {
 		let isInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");
 			const picker = await combobox._getPicker();
-			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li:last-child");
+			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li-group:last-child ui5-li:last-child");
 			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
 			const elementRect = listItem.getBoundingClientRect();
 
@@ -1146,7 +1268,7 @@ describe("Keyboard navigation", async () => {
 				!isElementBelowViewport &&
 				!isElementLeftOfViewport &&
 				!isElementRightOfViewport
-		);
+			);
 
 			done(isListItemInVisibleArea);
 		});
@@ -1160,7 +1282,7 @@ describe("Keyboard navigation", async () => {
 		isInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");
 			const picker = await combobox._getPicker();
-			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li:last-child");
+			const listItem = picker.querySelector(".ui5-combobox-items-list ui5-li-group:last-child ui5-li:last-child");
 			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
 			const elementRect = listItem.getBoundingClientRect();
 
@@ -1175,11 +1297,74 @@ describe("Keyboard navigation", async () => {
 				!isElementBelowViewport &&
 				!isElementLeftOfViewport &&
 				!isElementRightOfViewport
-		);
+			);
 
 			done(isListItemInVisibleArea);
 		});
 
 		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
+
+		await input.keys("Home");
+
+		let isFirstItemInVisibleArea = await browser.executeAsync(async done => {
+			const combobox = document.getElementById("combo-grouping");
+			const picker = await combobox._getPicker();
+			const firstListItem = picker.querySelector(".ui5-combobox-items-list ui5-li-group:first-child ui5-li:first-child");
+			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+			const firstItemBoundingClientRect = firstListItem.getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isFirstItemAboveViewport = firstItemBoundingClientRect.bottom < scrollableRect.top;
+			const isFirstItemBelowViewport = firstItemBoundingClientRect.top > scrollableRect.bottom;
+			const isFirstItemLeftOfViewport = firstItemBoundingClientRect.right < scrollableRect.left;
+			const isFirstItemRightOfViewport = firstItemBoundingClientRect.left > scrollableRect.right;
+
+			const isFirstItemInVisibleArea =  (
+				!isFirstItemAboveViewport &&
+				!isFirstItemBelowViewport &&
+				!isFirstItemLeftOfViewport &&
+				!isFirstItemRightOfViewport
+			);
+
+			done(isFirstItemInVisibleArea);
+			});
+
+		assert.ok(isFirstItemInVisibleArea, "The first item should be displayed in the viewport");
+
+		let isLastItemInVisibleArea = await browser.executeAsync(async done => {
+			const combobox = document.getElementById("combo-grouping");
+			const picker = await combobox._getPicker();
+			const lastListItem = picker.querySelector(".ui5-combobox-items-list ui5-li-group:first-child ui5-li:first-child");
+			const scrollableRect = picker.shadowRoot.querySelector(".ui5-popup-content").getBoundingClientRect();
+			const lastItemBoundingClientRect = lastListItem.getBoundingClientRect();
+
+			// Check if the element is within the visible area
+			const isLastItemAboveViewport = lastItemBoundingClientRect.bottom < scrollableRect.top;
+			const isLastItemBelowViewport = lastItemBoundingClientRect.top > scrollableRect.bottom;
+			const isLastItemLeftOfViewport = lastItemBoundingClientRect.right < scrollableRect.left;
+			const isLastItemRightOfViewport = lastItemBoundingClientRect.left > scrollableRect.right;
+
+			const isLastItemInVisibleArea =  (
+				!isLastItemAboveViewport &&
+				!isLastItemBelowViewport &&
+				!isLastItemLeftOfViewport &&
+				!isLastItemRightOfViewport
+			);
+
+			done(isLastItemInVisibleArea);
+			});
+
+		assert.ok(isLastItemInVisibleArea, "The first item should be displayed in the viewport");
 	});
+
+	it ("Should get the physical DOM reference for the cb item", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const cbItemDomRef = await browser.executeAsync(done => {
+			return done(document.getElementById("cbi").getDomRef());
+		});
+
+		assert.ok(cbItemDomRef, "ComboBoxItem's DOM reference exists");
+	});
+
 });

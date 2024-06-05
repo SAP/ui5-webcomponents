@@ -19,7 +19,6 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	white-space: nowrap;
 	max-width: 100%;
 	vertical-align: bottom;
 	-webkit-margin-before: 0;
@@ -30,9 +29,17 @@
 	cursor: inherit;
 }
 
-:host([wrapping-type="Normal"]) .ui5-title-root,
-:host([wrapping-type="Normal"]) ::slotted(*) {
+:host {
 	white-space: pre-line;
+}
+
+:host([wrapping-type="None"]) {
+	white-space: nowrap;
+}
+
+.ui5-title-root,
+:host ::slotted(*) {
+	white-space: inherit;
 }
 
 ::slotted(*) {

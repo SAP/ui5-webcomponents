@@ -148,6 +148,10 @@
   fill: var(--ifm-navbar-link-hover-color);
 }
 
+.dropdown__link svg {
+  display: none;
+}
+
 code {
   overflow-wrap: anywhere;
 }
@@ -188,4 +192,37 @@ code {
   .navbar__search-input {
     width: 8rem;
   }
+}
+
+.newComponentBadge,
+.expComponentBadge {
+  position: relative;
+}
+
+.expComponentBadge:before {
+  color: #fff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 3.25rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  content: "Experimental";
+  background: #a100c2;
+  pointer-events: none;
+}
+
+.newComponentBadge:after {
+  color: #fff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  content: "New";
+  background: #334eff;
+  pointer-events: none;
 }

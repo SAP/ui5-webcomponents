@@ -62,15 +62,16 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
-	it("tests popover is closed after click outside of it after multiple 'showAt'", async () => {
+	it("tests popover is closed after click outside of it after multiple 'open = true'", async () => {
 		await browser.executeAsync((done) => {
 			const btn = document.getElementById("btn");
 			const popover = document.getElementById("pop");
 
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
-			popover.showAt(btn);
+			popover.opener = btn;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
+			popover.open = true;
 
 			done();
 		});
@@ -113,7 +114,7 @@ describe("Popover general interaction", () => {
 		await browser.pause(500);
 
 		// assert - the popover remains open, although opener is not visible
-		assert.strictEqual(await popover.getProperty("opened"), true,
+		assert.strictEqual(await popover.getProperty("open"), true,
 			"Popover remains open.");
 		assert.strictEqual(await popover.isDisplayedInViewport(), true,
 			"Popover remains open.");
@@ -139,8 +140,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.$$("ui5-li");
+		const items = await await browser.$$("#many-items ui5-option")
 
 		await manyItemsSelect.click();
 
@@ -151,8 +151,7 @@ describe("Popover general interaction", () => {
 
 	it("tests if overflown content can be reached by scrolling 2", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
-		const popover = await manyItemsSelect.shadow$("ui5-responsive-popover");
-		const items = await popover.$$("ui5-li");
+		const items = await await browser.$$("#many-items ui5-option")
 		const itemBeforeLastItem = items[items.length - 2];
 
 		await itemBeforeLastItem.scrollIntoView();
@@ -183,6 +182,8 @@ describe("Popover general interaction", () => {
 		await itemBeforeLastItem.scrollIntoView();
 
 		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests modal popover", async () => {
@@ -222,7 +223,7 @@ describe("Popover general interaction", () => {
 
 		await btnOpenPopover.click();
 
-		assert.ok(await focusedButton.getProperty("focused"), "The button is focused.");
+		assert.ok(await focusedButton.matches(":focus"), "The button is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -233,17 +234,17 @@ describe("Popover general interaction", () => {
 
 		await btn.click();
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// list
 		await browser.keys("Tab");
 
-		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// button
 		await browser.keys("Tab");
 
-		assert.notOk(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.notOk(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// select
 		await browser.keys("Tab");
@@ -254,7 +255,7 @@ describe("Popover general interaction", () => {
 		// goes to first focusable again
 		await browser.keys("Tab");
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -265,7 +266,7 @@ describe("Popover general interaction", () => {
 
 		await btn.click();
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		// footer button
 		await browser.keys(["Shift", "Tab"]);
@@ -282,7 +283,7 @@ describe("Popover general interaction", () => {
 		// header button
 		await browser.keys(["Shift", "Tab"]);
 
-		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+		assert.ok(await ff.matches(":focus"), "The first focusable element is focused.");
 
 		await browser.keys("Escape");
 	});
@@ -365,6 +366,20 @@ describe("Popover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 
+	it("tests clicking on an iframe inside a shadow root closes the popover", async () => {
+		const btnOpenPopover = await browser.$("#btn");
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#pop");
+		const iframe = await browser.$("#host").shadow$("#clickThisIframeInsideShadowRoot");
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		await iframe.click();
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+	});
+
 	it("Test initial focus when content is provided after the header and footer", async () => {
 		const listContainerItem = await browser.$("#popoverFocusButton");
 		await listContainerItem.scrollIntoView();
@@ -385,6 +400,8 @@ describe("Popover general interaction", () => {
 	it("tests initial focus when the popover is removed from the DOM in the meantime", async () => {
 		const createAndRemovePopover = await browser.$("#createAndRemove");
 		const result = await browser.$("#createAndRemoveResult");
+
+		await createAndRemovePopover.scrollIntoView();
 
 		await createAndRemovePopover.click();
 		await result.waitForDisplayed({ timeout: 3000 })

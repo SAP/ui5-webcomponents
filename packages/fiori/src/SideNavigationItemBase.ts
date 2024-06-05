@@ -40,12 +40,14 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines the tooltip of the component.
+	 *
+	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
 	 * @default ""
-	 * @private
-	 * @since 1.0.0-rc.16
+	 * @public
+	 * @since 2.0.0
 	 */
 	@property()
-	title!: string;
+	tooltip!: string;
 
 	@property({ defaultValue: "-1", noAttribute: true })
 	forcedTabIndex!: string;
@@ -65,7 +67,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get _tooltip() {
-		return this.title || undefined;
+		return this.tooltip || undefined;
 	}
 
 	get classesArray() {
@@ -113,6 +115,15 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 		return element?.slot === "fixedItems";
 	}
+
+	get isSideNavigationItemBase() {
+		return true;
+	}
 }
 
+const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigationItemBase => {
+	return "isSideNavigationItemBase" in object;
+};
+
 export default SideNavigationItemBase;
+export { isInstanceOfSideNavigationItemBase };

@@ -5,7 +5,10 @@
     .noDataText="{{noDataText}}"
     .accessibleRole="{{_role}}"
     .accessibleName="{{_label}}"
-	.accessibleRoleDescription="{{accessibleRoleDescription}}"
+	@dragenter="{{_ondragenter}}"
+	@dragover="{{_ondragover}}"
+	@drop="{{_ondrop}}"
+	@dragleave="{{_ondragleave}}"
     @ui5-item-click="{{_onListItemClick}}"
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-item-focused="{{_onListItemFocus}}"
@@ -22,4 +25,8 @@
 	{{/if}}
 
     <slot></slot>
+	<ui5-drop-indicator
+	orientation="Horizontal"
+	.ownerReference="{{this}}"
+	></ui5-drop-indicator>
 </ui5-tree-list>

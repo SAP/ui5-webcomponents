@@ -45,7 +45,7 @@ describe("General API", () => {
 	it("should wrap the text of the link", async () => {
 		const wrappingLabel = await browser.$("#wrapping-link");
 		const truncatingLabel = await browser.$("#non-wrapping-link");
-		const LINK_HEIGHT = 20; // It's 20px in sap_horizon, previously 18px in sap_fiori_3
+		const LINK_HEIGHT = 16;
 
 		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
 		assert.strictEqual((await truncatingLabel.getSize()).height, LINK_HEIGHT, "The truncated label should be single line.");
@@ -87,9 +87,10 @@ describe("General API", () => {
 	});
 
 	it("setting accessible-name applied on the host element is reflected on the anchor tag", async () => {
-		const link = await browser.$("#linkAccName");
+		const linkShadow = await browser.$("#linkAccName").shadow$("a");
 
-		assert.strictEqual(await link.shadow$("a").getAttribute("aria-label"), "more info", "Attribute is reflected");
+		assert.strictEqual(await linkShadow.getAttribute("aria-label"), "more info", "aria-label attribute is set");
+		assert.strictEqual(await linkShadow.getAttribute("title"), "more info", "title attribute is set");
 	});
 
 

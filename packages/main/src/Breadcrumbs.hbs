@@ -8,8 +8,9 @@
 		<li class="ui5-breadcrumbs-dropdown-arrow-link-wrapper" ?hidden="{{_isOverflowEmpty}}">
 			<ui5-link @ui5-click="{{_openRespPopover}}"
 				accessible-role="button"
-				aria-label="{{_dropdownArrowAccessibleNameText}}"
-				aria-haspopup="{{_ariaHasPopup}}">
+				accessible-name="{{_dropdownArrowAccessibleNameText}}"
+				.accessibilityAttributes="{{linkAccessibilityAttributes}}"
+				wrapping-type="None">
 				<ui5-icon name="slim-arrow-down" title="{{_dropdownArrowAccessibleNameText}}"></ui5-icon>
 			</ui5-link>
 		</li>
@@ -24,7 +25,8 @@
 				id="{{this._id}}-link"
 				design="{{this._linkDesign}}"
 				accessible-name="{{this._accessibleNameText}}"
-				data-ui5-stable="{{this.stableDomRef}}">
+				data-ui5-stable="{{this.stableDomRef}}"
+				wrapping-type="None">
 				{{this.innerText}}
 			</ui5-link>
 

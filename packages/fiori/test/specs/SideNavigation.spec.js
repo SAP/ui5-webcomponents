@@ -101,11 +101,11 @@ describe("Component Behavior", () => {
 			});
 
 			// items
-			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("tooltip"), "Tooltip is set to root item");
 			assert.notOk(itemsTitles[1], "No tooltip");
 
 			// sub items
-			assert.strictEqual(itemsTitles[2], await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.strictEqual(itemsTitles[2], await browser.$("#item21").getAttribute("tooltip"), "Tooltip is set to root item");
 			assert.notOk(itemsTitles[3], "No tooltip");
 		});
 
@@ -117,7 +117,7 @@ describe("Component Behavior", () => {
 				done(result);
 			});
 
-			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("title"), "Title is set as tooltip to root item");
+			assert.strictEqual(itemsTitles[0], await browser.$("#item1").getAttribute("tooltip"), "Tooltip is set to root item");
 			assert.notOk(itemsTitles[1], "No tooltip");
 
 			await browser.$("#item2").click();
@@ -128,7 +128,7 @@ describe("Component Behavior", () => {
 			});
 
 			assert.notOk(popoverItemsTitles[0], "No tooltip");
-			assert.strictEqual(popoverItemsTitles[1], await browser.$("#item21").getAttribute("title"), "Title is set as tooltip to sub item");
+			assert.strictEqual(popoverItemsTitles[1], await browser.$("#item21").getAttribute("tooltip"), "Tooltip is set to root item");
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);
@@ -196,9 +196,12 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
 			assert.notExists(await items[0].getAttribute("aria-roledescription"),"Role description of the SideNavigation tree item is not set");
+			assert.strictEqual(await items[0].getAttribute("aria-selected"), "false", "'aria-selected' is set explicitly");
 
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree is correctly set");
 			assert.notExists(await items[1].getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+
+			assert.strictEqual(await items[3].getAttribute("aria-selected"), "true", "'aria-selected' is set explicitly");
 
 			// fixed items
 			assert.strictEqual(await sideNavigationFixedTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation fixed tree element is correctly set");

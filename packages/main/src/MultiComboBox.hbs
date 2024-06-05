@@ -7,12 +7,12 @@
 	{{/if}}
 
 	<ui5-tokenizer slot="_beginContent"
-		show-more
 		prevent-popover-open
+		hide-popover-arrow
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
 		@ui5-show-more-items-press="{{_showFilteredItems}}"
-		.morePopoverOpener={{morePopoverOpener}}
+		.opener={{morePopoverOpener}}
 		.popoverMinWidth={{_inputWidth}}
 		@ui5-token-delete="{{_tokenDelete}}"
 		@ui5-before-more-popover-open="{{handleBeforeTokenizerPopoverOpen}}"
@@ -52,7 +52,7 @@
 		@focusout={{inputFocusOut}}
 		@paste={{_handlePaste}}
 		role="combobox"
-		aria-haspopup="listbox"
+		aria-haspopup="dialog"
 		aria-expanded="{{open}}"
 		aria-autocomplete="both"
 		aria-describedby="{{ariaDescribedByText}}"
@@ -62,7 +62,7 @@
 	/>
 
 	{{#if _effectiveShowClearIcon}}
-		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper" input-icon tabindex="-1" @mousedown={{_iconMouseDown}}>
+		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper inputIcon" tabindex="-1" @mousedown={{_iconMouseDown}}>
 			<ui5-icon tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 		</div>
 	{{/if}}
@@ -73,7 +73,7 @@
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
-			input-icon
+			class="inputIcon"
 			slot="icon"
 			tabindex="-1"
 			@click="{{togglePopoverByDropdownIcon}}"

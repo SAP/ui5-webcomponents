@@ -44,13 +44,3 @@
 .ui5-menu-back-button {
 	margin-right: 1rem;
 }
-
-.ui5-menu-rp[sub-menu] {
-	margin-top: 0.25rem;
-	margin-inline: var(--_ui5_menu_submenu_margin_offset);
-}
-
-.ui5-menu-rp[sub-menu][actual-placement="Start"] {
-	margin-top: 0.25rem;
-	margin-inline: var(--_ui5_menu_submenu_placement_type_left_margin_offset);
-}

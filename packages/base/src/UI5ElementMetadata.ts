@@ -41,6 +41,8 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
+	formAssociated?: boolean,
+	shadowRootOptions?: Partial<ShadowRootInit>
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -271,6 +273,17 @@ class UI5ElementMetadata {
 	 */
 	 isThemeAware(): boolean {
 		return !!this.metadata.themeAware;
+	}
+
+	getShadowRootOptions(): Partial<ShadowRootInit> {
+		return this.metadata.shadowRootOptions || {};
+	}
+
+	/**
+	 * Determines whether this UI5 Element has any theme dependant carachteristics.
+	 */
+	 isFormAssociated(): boolean {
+		return !!this.metadata.formAssociated;
 	}
 
 	/**

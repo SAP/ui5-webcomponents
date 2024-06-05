@@ -100,20 +100,20 @@
 		// Attaching click listeners to the buttons which show the toasts
 		document.querySelectorAll("ui5-button").forEach(function(button){
 			button.addEventListener('click', function () {
-				document.querySelector("#" + button.id.replace("BtnShow", "")).show();
+				document.querySelector("#" + button.id.replace("BtnShow", "")).open = true;
 			});
 		});
 
 		btnDialog.addEventListener('click', function () {
-			dialog.show();
+			dialog.open = true;
 		});
 
 		btnDialog2.addEventListener('click', function () {
-			dialog.close();
+			dialog.open = false;
 		});
 
 		btnToastInDialog.addEventListener('click', function () {
-			toastInDialog.show();
+			toastInDialog.open = true;
 		});
 
 	</script>

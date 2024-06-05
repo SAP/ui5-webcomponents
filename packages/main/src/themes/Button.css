@@ -58,20 +58,17 @@
 	color: var(--sapButton_Hover_TextColor);
 }
 
-.ui5-button-icon {
+.ui5-button-icon,
+.ui5-button-end-icon {
 	color: inherit;
 	flex-shrink: 0;
 }
 
-:host([icon-end]) .ui5-button-root {
-	flex-direction: row-reverse;
-}
-
-:host([icon-end]) .ui5-button-icon {
+.ui5-button-end-icon {
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([icon-only]) .ui5-button-root {
+:host([icon-only]:not([has-end-icon])) .ui5-button-root {
 	min-width: auto;
 	padding: 0;
 }
@@ -88,11 +85,11 @@
 	text-overflow: inherit;
 }
 
-:host([has-icon]:not([icon-end])) .ui5-button-text {
+:host([has-icon]:not(:empty)) .ui5-button-text {
 	margin-inline-start: var(--_ui5_button_base_icon_margin);
 }
 
-:host([has-icon][icon-end]) .ui5-button-text {
+:host([has-end-icon]:not([has-icon]):empty) .ui5-button-end-icon {
 	margin-inline-start: 0;
 }
 
@@ -102,7 +99,7 @@
 	cursor: default;
 }
 
-:host([has-icon]:not([icon-only])) .ui5-button-text{
+:host([has-icon]:not([icon-only]):not([has-end-icon])) .ui5-button-text{
 	/* calculating the minimum width by removing the icon size  */
 	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
 }
@@ -110,9 +107,12 @@
 	pointer-events: none;
 }
 
-:host([focused]:not([active])) .ui5-button-root:after,
-:host([focused][active][design="Emphasized"]) .ui5-button-root:after,
-:host([focused][active]) .ui5-button-root:before {
+:host([desktop]:not([active])) .ui5-button-root:focus-within:after,
+:host(:not([active])) .ui5-button-root:focus-visible:after,
+:host([desktop][active][design="Emphasized"]) .ui5-button-root:focus-within:after,
+:host([active][design="Emphasized"]) .ui5-button-root:focus-visible:after,
+:host([desktop][active]) .ui5-button-root:focus-within:before,
+:host([active]) .ui5-button-root:focus-visible:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -124,15 +124,18 @@
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
-:host([focused][active]) .ui5-button-root:before {
+:host([desktop][active]) .ui5-button-root:focus-within:before,
+:host([active]) .ui5-button-root:focus-visible:before {
 	border-color: var(--_ui5_button_pressed_focused_border_color);
 }
 
-:host([design="Emphasized"][focused]) .ui5-button-root:after {
+:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:after,
+:host([design="Emphasized"]) .ui5-button-root:focus-visible:after {
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 }
 
-:host([design="Emphasized"][focused]) .ui5-button-root:before {
+:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:before,
+:host([design="Emphasized"]) .ui5-button-root:focus-visible:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -245,13 +248,15 @@ bdi {
 	color: var(--sapButton_Emphasized_Active_TextColor);
 }
 
-:host([design="Emphasized"][focused]) .ui5-button-root:after {
+:host([design="Emphasized"][desktop]) .ui5-button-root:focus-within:after,
+:host([design="Emphasized"]) .ui5-button-root:focus-visible:after {
 	border-color: var(--_ui5_button_emphasized_focused_border_color);
 	outline: none;
 }
 
 /* Belize related */
-:host([design="Emphasized"][focused][active]:not([non-interactive])) .ui5-button-root:after {
+:host([design="Emphasized"][desktop][active]:not([non-interactive])) .ui5-button-root:focus-within:after,
+:host([design="Emphasized"][active]:not([non-interactive])) .ui5-button-root:focus-visible:after  {
 	border-color: var(--_ui5_button_emphasized_focused_active_border_color);
 }
 
@@ -276,18 +281,22 @@ bdi {
 }
 
 /* SegmentedButton and ToggleButton */
-:host([ui5-segmented-button-item][active][focused]) .ui5-button-root:after,
-:host([pressed][focused]) .ui5-button-root:after {
+:host([ui5-segmented-button-item][active][desktop]) .ui5-button-root:focus-within:after,
+:host([ui5-segmented-button-item][active]) .ui5-button-root:focus-visible:after,
+:host([pressed][desktop]) .ui5-button-root:focus-within:after,
+:host([pressed]) .ui5-button-root:focus-visible:after {
 	border-color: var(--_ui5_button_pressed_focused_border_color);
 	outline: none;
 }
 
-:host([ui5-segmented-button-item][focused]:not(:last-child)) .ui5-button-root:after {
+:host([ui5-segmented-button-item][desktop]:not(:last-child)) .ui5-button-root:focus-within:after,
+:host([ui5-segmented-button-item]:not(:last-child)) .ui5-button-root:focus-visible:after  {
 	border-top-right-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-right-radius: var(--_ui5_button_focused_inner_border_radius);
 }
 
-:host([ui5-segmented-button-item][focused]:not(:first-child)) .ui5-button-root:after {
+:host([ui5-segmented-button-item][desktop]:not(:first-child)) .ui5-button-root:focus-within:after,
+:host([ui5-segmented-button-item]:not(:first-child)) .ui5-button-root:focus-visible:after {
 	border-top-left-radius: var(--_ui5_button_focused_inner_border_radius);
 	border-bottom-left-radius: var(--_ui5_button_focused_inner_border_radius);
 }

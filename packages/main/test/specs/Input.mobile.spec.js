@@ -76,25 +76,26 @@ describe("Eventing", () => {
 		const input = await browser.$("#myInput");
 		const sExpectedSelectedKey = "Bg";
 		const sChangeText = "Bulgaria";
+		const sTypedText = "b";
 
 		await input.scrollIntoView();
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		await dialogInput.keys("b");
+		await dialogInput.keys(sTypedText);
 
 		const suggestionItem = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item")[2];
 		await suggestionItem.click();
 
 
-		const selectedKey = await browser.$("#myLabel").getText();
-		assert.strictEqual(selectedKey.split(" :: ")[1], sExpectedSelectedKey, "Selected key event property was correct");
+		const selectedKey = await browser.$("#myLabelSelectionChange").getText();
+		assert.strictEqual(selectedKey.split(" :: ")[1], sExpectedSelectedKey, "Selection change event property was correct");
 
 		const change = await browser.$("#myLabelChange").getText();
 		assert.strictEqual(change.split(" :: ")[1], sChangeText, "Change event property was correct");
 
-		const liveChange = await browser.$("#myLabelLiveChange").getText();
-		assert.strictEqual(liveChange.split(" :: ")[1], sChangeText, "liveChange event property was correct");
+		const inputChange = await browser.$("#myLabelInputChange").getText();
+		assert.strictEqual(inputChange.split(" :: ")[1], sTypedText, "Input event property was correct");
 	});
 });
 
@@ -175,7 +176,7 @@ describe("Picker filtering", () => {
 	it("Should filter group header list items", async () => {
 		const dialogList = await browser.$("#myInput").shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-groupheader').length, 1, "There is 1 filtered group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is 1 filtered group header");
 	});
 });
 
@@ -194,5 +195,38 @@ describe("Value state header", () => {
 		const dialogStateHeader = await input.shadow$("ui5-responsive-popover").$(".ui5-valuestatemessage-header");
 
 		assert.strictEqual(await dialogStateHeader.isDisplayed(), true, "The value state header is shown");
+	});
+});
+
+describe("Property open", () => {
+	before(async () => {
+		await browser.url("test/pages/Input.html");
+		await browser.emulateDevice('iPhone X');
+	});
+
+	it("Suggestions dialog is open when attribute open is true", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		await input.scrollIntoView();
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = true;
+		});
+
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+
+		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
+		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");
+	});
+	
+	it("Suggestions dialog is closed when attribute open is set to false", async () => {
+		const input = await browser.$("#input-suggestions-open");
+		const respPopover = await input.shadow$("ui5-responsive-popover");
+
+		await browser.execute(() =>{
+			document.querySelector("#input-suggestions-open").open = false;
+		});
+
+		assert.strictEqual(await respPopover.getProperty("open"), false, "Suggestions popover is closed");
 	});
 });

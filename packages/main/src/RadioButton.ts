@@ -1,15 +1,14 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isSpace,
 	isEnter,
@@ -21,8 +20,6 @@ import {
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 import WrappingType from "./types/WrappingType.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
-import type FormSupport from "./features/InputElementsFormSupport.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -33,7 +30,7 @@ import {
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
-	RADIO_BUTTON_GROUP_REQUIRED,
+	FORM_SELECTABLE_REQUIRED2,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -76,6 +73,7 @@ let activeRadio: RadioButton;
 @customElement({
 	tag: "ui5-radio-button",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: RadioButtonTemplate,
 	styles: radioButtonCss,
@@ -88,7 +86,7 @@ let activeRadio: RadioButton;
  */
 @event("change")
 
-class RadioButton extends UI5Element implements IFormElement {
+class RadioButton extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -151,21 +149,15 @@ class RadioButton extends UI5Element implements IFormElement {
 	valueState!: `${ValueState}`;
 
 	/**
-	 * Defines the name of the component.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
 	 * Radio buttons with the same `name` will form a radio button group.
 	 *
-	 * **Note:**
-	 * The selection can be changed with `ARROW_UP/DOWN` and `ARROW_LEFT/RIGHT` keys between radio buttons in same group.
+	 * **Note:** By this name the component will be identified upon submission in an HTML form.
 	 *
-	 * **Note:**
-	 * Only one radio button can be selected per group.
+	 * **Note:** The selection can be changed with `ARROW_UP/DOWN` and `ARROW_LEFT/RIGHT` keys between radio buttons in same group.
 	 *
-	 * **Important:** For the `name` property to have effect when submitting forms, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form.
+	 * **Note:** Only one radio button can be selected per group.
 	 * @default ""
 	 * @public
 	 */
@@ -176,9 +168,6 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * Defines the form value of the component.
 	 * When a form with a radio button group is submitted, the group's value
 	 * will be the value of the currently selected radio button.
-	 *
-	 * **Important:** For the `value` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
 	 * @default ""
 	 * @public
 	 */
@@ -189,10 +178,10 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * Defines whether the component text wraps when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 * @default "None"
+	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
 	wrappingType!: `${WrappingType}`;
 
 	/**
@@ -225,28 +214,39 @@ class RadioButton extends UI5Element implements IFormElement {
 	active!: boolean;
 
 	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
+	 * Defines if the component is selected in specific group
+	 * @default false
 	 * @private
 	 */
-	@slot()
-	formSupport!: Array<HTMLElement>;
+	@property({ type: Boolean, noAttribute: true })
+	_groupChecked!: boolean;
+	@property({ type: Boolean, noAttribute: true })
+	_groupRequired!: boolean;
 
 	_deactivate: () => void;
 	_name!: string;
 	_checked!: boolean;
-	_internals: ElementInternals;
 
-	static get formAssociated() {
-		return true;
+	get formValidityMessage() {
+		return RadioButton.i18nBundle.getText(FORM_SELECTABLE_REQUIRED2);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this._groupRequired && !this._groupChecked };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue() {
+		return this.checked ? (this.value || "on") : null;
 	}
 
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
-
-		this._internals = this.attachInternals();
 
 		this._deactivate = () => {
 			if (activeRadio) {
@@ -264,10 +264,8 @@ class RadioButton extends UI5Element implements IFormElement {
 		RadioButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	onBeforeRendering() {
+	onAfterRendering() {
 		this.syncGroup();
-
-		this._enableFormSupport();
 	}
 
 	onEnterDOM() {
@@ -310,32 +308,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 		this._name = this.name;
 		this._checked = this.checked;
-	}
-
-	_enableFormSupport() {
-		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-
-		if (formSupport) {
-			this._setFormValue();
-		} else if (this.value) {
-			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-	}
-
-	_setFormValue() {
-		this._internals.setFormValue(this.checked ? this.value : null);
-	}
-
-	_resetFormValidity() {
-		this._internals.setValidity({});
-	}
-
-	_invalidateForm() {
-		this._internals.setValidity(
-			{ valueMissing: true },
-			this.radioButtonGroupRequiredText,
-			this.shadowRoot!.firstElementChild as HTMLElement,
-		);
 	}
 
 	_onclick() {
@@ -452,21 +424,17 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	get valueStateText() {
 		switch (this.valueState) {
-		case ValueState.Error:
+		case ValueState.Negative:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_ERROR);
-		case ValueState.Warning:
+		case ValueState.Critical:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_WARNING);
-		case ValueState.Success:
+		case ValueState.Positive:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS);
 		case ValueState.Information:
 			return RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION);
 		default:
 			return "";
 		}
-	}
-
-	get radioButtonGroupRequiredText(): string {
-		return RadioButton.i18nBundle.getText(RADIO_BUTTON_GROUP_REQUIRED);
 	}
 
 	get effectiveTabIndex() {
