@@ -119,7 +119,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("aria-describedby properly applied on the button tag", async () => {
-		const button = await browser.$("#button-with-slot");
+		const button = await browser.$("#button1");
 		const innerButton = await button.shadow$("button");
 		const invisibleButtonType = await innerButton.$$("span")[1];
 
