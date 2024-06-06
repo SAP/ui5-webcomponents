@@ -487,9 +487,21 @@ z-index: 1;
 		<div>Content</div>
 		<div slot="footer">Footer</div>
 	</ui5-popover>
-	<br>
-	<br>
 
+	<h2>Inputs with value state</h2>
+	<div>
+		<input id="input1"
+			   onfocusin="popoverForInput.open = true"
+			   onfocusout="popoverForInput.open = false">
+		<ui5-popover opener="input1" id="popoverForInput"
+					 prevent-focus-restore
+					 prevent-initial-focus>
+			some text
+		</ui5-popover>
+		<br>
+		<input id="input2">
+		<br>
+	</div>
 	<h2>Open and scroll</h2>
 	<div id="divOpenAndScroll">
 		<div >
@@ -499,7 +511,8 @@ z-index: 1;
 			</ui5-popover>
 		</div>
 	</div>
-
+	<br>
+	<br>
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.opener = btn;

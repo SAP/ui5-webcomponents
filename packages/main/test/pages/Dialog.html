@@ -600,6 +600,14 @@
 	</ui5-dialog>
 	<br>
 	<br>
+	<ui5-button id="btnDialogAutofocus">Dialog with autofocus</ui5-button>
+	<ui5-dialog header-text="Dialog" id="dialogAutofocus">
+		Some Dialog
+		<input />
+		<ui5-button autofocus id="btnDialogAutofocusClose">Close</ui5-button>
+	</ui5-dialog>
+	<br>
+	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
 		<ui5-list id="listContainerId" selection-mode="Single">
@@ -837,6 +845,14 @@
 
 		window["closeDialogFocusButton"].addEventListener("click", function () {
 			window["dialogFocus1"].open = false;
+		});
+
+		window["btnDialogAutofocus"].addEventListener("click", function () {
+			window["dialogAutofocus"].open = true;
+		});
+
+		window["btnDialogAutofocusClose"].addEventListener("click", function () {
+			window["dialogAutofocus"].open = false;
 		});
 
 	</script>

@@ -20,6 +20,8 @@
 			>
 			</ui5-icon>
 		</div>
+	{{else if hasEndContent}}
+		<slot name="endContent"></slot>
 	{{else if additionalText}}
 		<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
 	{{/if}}

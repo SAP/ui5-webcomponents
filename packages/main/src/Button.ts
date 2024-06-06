@@ -426,6 +426,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 		if (this._cancelAction) {
 			e.preventDefault();
 		}
+		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
@@ -526,6 +527,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescribedbyText() {
+		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
 	}
 
 	get _isSubmit() {
