@@ -10,10 +10,7 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import {
-	getEffectiveAriaLabelText,
-	getAssociatedLabelForTexts,
-} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -41,6 +38,7 @@ import {
 	DATEPICKER_DATE_DESCRIPTION,
 	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
+	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -691,14 +689,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
-			"ariaLabel": this.labelReferenceText || undefined,
+			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
-	}
-
-	get labelReferenceText() {
-		const externalLabelText = getAssociatedLabelForTexts(this) ? getAssociatedLabelForTexts(this) : "";
-		const effectiveLabelText = getEffectiveAriaLabelText(this) ? getEffectiveAriaLabelText(this) : "";
-		return `${externalLabelText} ${effectiveLabelText}`.trim();
 	}
 
 	get openIconTitle() {
@@ -711,6 +703,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	get dateAriaDescription() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
