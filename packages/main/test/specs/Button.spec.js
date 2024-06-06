@@ -139,6 +139,14 @@ describe("Button general interaction", () => {
 		assert.strictEqual(await innerButton.getAttribute("aria-controls"), "registration-dialog", "Attribute is reflected");
 	});
 
+	it("aria-describedby properly applied on the button tag", async () => {
+		const button = await browser.$("#button-with-slot");
+		const innerButton = await button.shadow$("button");
+		const invisibleButtonType = await innerButton.$$("span")[1];
+
+		assert.strictEqual(await innerButton.getAttribute("aria-describedby"), await invisibleButtonType.getAttribute("id"), "Attribute is reflected");
+	});
+
 	it("tests button with text icon role", async () => {
 		const button = await browser.$("#attentionIconButton");
 		const icon = await button.shadow$("ui5-icon");
