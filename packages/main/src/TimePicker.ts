@@ -331,7 +331,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
-			"ariaLabel": this.labelReferenceText,
+			"ariaLabel": this.labelReferenceText || undefined,
 		};
 	}
 

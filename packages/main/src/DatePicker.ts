@@ -691,7 +691,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
-			"ariaLabel": this.labelReferenceText,
+			"ariaLabel": this.labelReferenceText || undefined,
 		};
 	}
 
