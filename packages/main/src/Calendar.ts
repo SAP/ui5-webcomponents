@@ -30,7 +30,7 @@ import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
-import type SpecialCalendarDate from "./SpecialCalendarDate.js";
+import SpecialCalendarDate from "./SpecialCalendarDate.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 
 // Default calendar for bundling
@@ -172,6 +172,7 @@ type SpecialCalendarDateT = {
 	template: CalendarTemplate,
 	styles: calendarCSS,
 	dependencies: [
+		SpecialCalendarDate,
 		CalendarDate,
 		CalendarDateRange,
 		CalendarHeader,
