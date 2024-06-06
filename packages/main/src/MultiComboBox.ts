@@ -103,8 +103,9 @@ import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
-import Input, { InputEventDetail } from "./Input.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import Input from "./Input.js";
+import type { InputEventDetail } from "./Input.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import SuggestionItem from "./SuggestionItem.js";
 
 /**
