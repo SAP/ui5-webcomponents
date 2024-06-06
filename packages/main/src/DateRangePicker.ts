@@ -194,10 +194,16 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
 	}
 
+	/**
+	 * @override
+	 */
 	get dateAriaDescription() {
 		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
 	}
 
+	/**
+	 * @override
+	 */
 	get pickerAccessibleName() {
 		return DateRangePicker.i18nBundle.getText(DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
