@@ -17,6 +17,9 @@ import NotificationListInternal from "./NotificationListInternal.js";
 // Template
 import NotificationListTemplate from "./generated/templates/NotificationListTemplate.lit.js";
 
+// Styles
+import NotificationListCss from "./generated/themes/NotificationList.css.js";
+
 // Texts
 import {
 	NOTIFICATION_LIST_ACCESSIBLE_NAME,
@@ -48,7 +51,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 	tag: "ui5-notification-list",
 	renderer: litRender,
 	languageAware: true,
-	styles: [],
+	styles: [NotificationListCss],
 	template: NotificationListTemplate,
 	dependencies: [
 		NotificationListInternal,
