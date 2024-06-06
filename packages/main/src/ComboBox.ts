@@ -508,15 +508,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.items.forEach(item => {
 			item._getRealDomRef = () => this._getPicker().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 		});
-
-		// Remove tabindex from the value state message links
-		this.valueStateMessage.forEach(item => {
-			item.querySelectorAll("a").forEach(
-				link => {
-					link.tabIndex = -1;
-				},
-			);
-		});
 	}
 
 	_focusin(e: FocusEvent) {
@@ -973,6 +964,22 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if ((isTabNext(e) || isTabPrevious(e)) && this.open) {
+			if (this._isValueStateFocused && this.valueStateMessageText.length) {
+				const hasLinkInsideValueStateMessages = this.valueStateMessage.find(item => item.querySelectorAll("a").length > 0);
+				if (hasLinkInsideValueStateMessages) {
+					e.stopImmediatePropagation();
+					e.preventDefault();
+					this._isValueStateFocused = false;
+					// Focus the first link inside the value state message if visual focus is on the message and the user presses tab
+					setTimeout(() => {
+						const firstLink = this._getPicker().querySelector("*[slot='header']")!.querySelector("*[slot='valueStateMessage']")!.querySelector("a")!;
+						firstLink.tabIndex = 0;
+						firstLink.focus();
+					}, 100);
+					return;
+				}
+			}
+
 			this._closeRespPopover();
 		}
 
@@ -991,8 +998,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				selectedItem.focused = true;
 				this.focused = false;
 			} else if (this.open && this._filteredItems.length && !this.value.length) {
-				// If no item is selected, select the first one on "Show" (F4, Alt+Up/Down)
-				this._handleItemNavigation(e, 0, true /* isForward */);
+				// If no item is selected, select the first non-group item on "Show" (F4, Alt+Up/Down)
+				const firstNonGroupItem = this._getItems().findIndex(item => item._isVisible && !item.isGroupItem);
+				this._handleItemNavigation(e, firstNonGroupItem, true /* isForward */);
 			} else {
 				this.focused = true;
 			}
