@@ -33,6 +33,15 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
 })
 class CustomListItem extends ListItem {
 	/**
+	 * Defines whether the item is movable.
+	 * @default false
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	movable!: boolean;
+
+	/**
 	 * Defines the text alternative of the component.
 	 *
 	 * **Note**: If not provided a default text alternative will be set, if present.
@@ -45,8 +54,9 @@ class CustomListItem extends ListItem {
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+		const isFocused = this.matches(":focus");
 
-		if (!isTab && !this.focused && !isF2(e)) {
+		if (!isTab && !isFocused && !isF2(e)) {
 			return;
 		}
 
@@ -55,8 +65,9 @@ class CustomListItem extends ListItem {
 
 	_onkeyup(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+		const isFocused = this.matches(":focus");
 
-		if (!isTab && !this.focused) {
+		if (!isTab && !isFocused && !isF2(e)) {
 			return;
 		}
 

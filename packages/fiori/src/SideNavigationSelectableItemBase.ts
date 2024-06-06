@@ -162,12 +162,23 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	}
 
 	_activate(e: KeyboardEvent | PointerEvent) {
+		e.stopPropagation();
+
 		if (this.isOverflow) {
 			this.fireEvent("click");
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
 	}
+
+	get isSideNavigationSelectableItemBase() {
+		return true;
+	}
 }
 
+const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is SideNavigationSelectableItemBase => {
+	return "isSideNavigationSelectableItemBase" in object;
+};
+
 export default SideNavigationSelectableItemBase;
+export { isInstanceOfSideNavigationSelectableItemBase };

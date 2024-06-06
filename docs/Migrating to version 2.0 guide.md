@@ -49,14 +49,38 @@ import { setPreloadLinks } from "@ui5/webcomponents-base/dist/CSP.js"
 ```ts
 import "@ui5/webcomponents/dist/Assets-static.js";
 import "@ui5/webcomponents-icons/dist/Assets-static.js"
+import "@ui5/webcomponents-icons-tnt/dist/Assets-static.js"
+import "@ui5/webcomponents-icons-business-suite/dist/Assets-static.js"
+import "@ui5/webcomponents-localization/dist/Assets-static.js"
+import "@ui5/webcomponents-theming/dist/Assets-static.js"
 ```
 use the dynamic equivalent of it:
 ```ts
 import "@ui5/webcomponents/dist/Assets.js";
-import "@ui5/webcomponents-icons/dist/Assets.js"
+import "@ui5/webcomponents-icons/dist/Assets.js";
+import "@ui5/webcomponents-icons-tnt/dist/Assets.js";
+import "@ui5/webcomponents-icons-business-suite/dist/Assets.js";
+import "@ui5/webcomponents-localization/dist/Assets.js";
+import "@ui5/webcomponents-theming/dist/Assets.js"
 ```
 
 ## Main package (@ui5/webcomponents)
+
+### ui5-badge
+
+| Changed item                  | Old               | New          | 
+|-------------------------------|-------------------|--------------|
+| tag                      | `ui5-badge` | `ui5-tag` | 
+
+- The Badge `ui5-badge` has been renamed to Tag `ui5-tag`. If you have previously used the `ui5-badge`:
+```html
+<ui5-badge></ui5-badge>
+```
+Now use `ui5-tag` instead:
+```html
+<ui5-tag></ui5-tag>
+```
+
 
 ### ui5-breadcrumbs
 
@@ -74,7 +98,6 @@ Now use  `separators`  instead:
 ```html
 <ui5-breadcrumbs separators="Slash">
 ```
-
 
 ### ui5-busy-indicator
 
@@ -204,6 +227,291 @@ Now you have to use it like this:
 <ui5-color-picker value="red"></ui5-color-picker>
 ```
 
+
+### ui5-checkbox
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-checkbox value-state="Error"></ui5-checkbox>
+<ui5-checkbox value-state="Warning"></ui5-checkbox>
+<ui5-checkbox value-state="Success"></ui5-checkbox>
+```
+Now you have to use it like:
+```html
+<ui5-checkbox value-state="Negative"></ui5-checkbox>
+<ui5-checkbox value-state="Critical"></ui5-checkbox>
+<ui5-checkbox value-state="Positive"></ui5-checkbox>
+```
+
+### ui5-combobox
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-combobox value-state="Error"></ui5-combobox>
+<ui5-combobox value-state="Warning"></ui5-combobox>
+<ui5-combobox value-state="Success"></ui5-combobox>
+```
+Now you have to use it like:
+```html
+<ui5-combobox value-state="Negative"></ui5-combobox>
+<ui5-combobox value-state="Critical"></ui5-combobox>
+<ui5-combobox value-state="Success"></ui5-combobox>
+```
+
+
+### ui5-date-picker
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-date-picker value-state="Error"></ui5-date-picker>
+<ui5-date-picker value-state="Warning"></ui5-date-picker>
+<ui5-date-picker value-state="Success"></ui5-date-picker>
+```
+Now you have to use it like:
+```html
+<ui5-date-picker value-state="Negative"></date-picker>
+<ui5-date-picker value-state="Critical"></date-picker>
+<ui5-date-picker value-state="Success"></ui5-date-picker>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const datePicker = document.getElementById("exampleID");
+datePicker.openPicker();
+datePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const datePicker = document.getElementById("exampleID");
+datePicker.open = true;
+datePicker.open = false;
+```
+
+### ui5-date-time-picker
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-datetime-picker value-state="Error"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Warning"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
+```
+Now you have to use it like:
+```html
+<ui5-datetime-picker value-state="Negative"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Critical"></ui5-datetime-picker>
+<ui5-datetime-picker value-state="Success"></ui5-datetime-picker>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const datetimePicker = document.getElementById("exampleID");
+datetimePicker.openPicker();
+datetimePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const datetimePicker = document.getElementById("exampleID");
+datetimePicker.open = true;
+datetimePicker.open = false;
+```
+
+### ui5-daterange-picker
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-daterange-picker value-state="Error"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Warning"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Success"></ui5-daterange-picker>
+```
+Now you have to use it like:
+```html
+<ui5-daterange-picker value-state="Negative"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Critical"></ui5-daterange-picker>
+<ui5-daterange-picker value-state="Success"></ui5-daterange-picker>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| method     | openPicker, closePicker, isOpen| open | 
+
+ - The methods `openPicker()`, `closePicker()` and `isOpen()` are replaced by `open` property. 
+
+If you previously used `openPicker()`, `closePicker()` or `isOpen`:
+```ts
+const dateRangePicker = document.getElementById("exampleID");
+dateRangePicker.openPicker();
+dateRangePicker.closePicker();
+```
+
+Now use the `open` property respectively: 
+```ts
+const dateRangePicker = document.getElementById("exampleID");
+dateRangePicker.open = true;
+dateRangePicker.open = false;
+```
+
+### ui5-dialog
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-dialog state="Error"></ui5-dialog>
+<ui5-dialog state="Warning"></ui5-dialog>
+<ui5-dialog state="Success"></ui5-dialog>
+```
+Now you have to use it like:
+```html
+<ui5-dialog state="Negative"></ui5-dialog>
+<ui5-dialog state="Critical"></ui5-dialog>
+<ui5-dialog state="Success"></ui5-dialog>
+```
+
+### ui5-file-uploader
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-file-uploader value-state="Error"></ui5-file-uploader>
+<ui5-file-uploader value-state="Warning"></ui5-file-uploader>
+<ui5-file-uploader value-state="Success"></ui5-file-uploader>
+```
+Now you have to use it like:
+```html
+<ui5-file-uploader value-state="Negative"></ui5-file-uploader>
+<ui5-file-uploader value-state="Critical"></ui5-file-uploader>
+<ui5-file-uploader value-state="Success"></ui5-file-uploader>
+```
+
+### ui5-input
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-input value-state="Error"></ui5-input>
+<ui5-input value-state="Warning"></ui5-input>
+<ui5-input value-state="Success"></ui5-input>
+```
+Now you have to use it like:
+```html
+<ui5-input value-state="Negative"></ui5-input>
+<ui5-input value-state="Critical"></ui5-input>
+<ui5-input value-state="Success"></ui5-input>
+```
+
+### ui5-multi-input
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-multi-input value-state="Error"></ui5-multi-input>
+<ui5-multi-input value-state="Warning"></ui5-multi-input>
+<ui5-multi-input value-state="Success"></ui5-multi-input>
+```
+Now you have to use it like:
+```html
+<ui5-multi-input value-state="Negative"></ui5-multi-input>
+<ui5-multi-input value-state="Critical"></ui5-multi-input>
+<ui5-multi-input value-state="Success"></ui5-multi-input>
+```
+
+### ui5-message-strip
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | design="Warning" | design="Critical" | 
+
+- The property values `Warning`  are renamed to `Critical`. If you previously used it like:
+```html
+<ui5-message-strip design="Warning"></ui5-message-strip>
+```
+Now you have to use it like:
+```html
+<ui5-message-strip design="Critical"></ui5-message-strip>
+```
+
+### ui5-li
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | highlight="Error/Warning/Success" | highlight="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-li highlight="Warning"></ui5-li>
+<ui5-li highlight="Warning"></ui5-li>
+<ui5-li highlight="Success"></ui5-li>
+```
+Now you have to use it like:
+```html
+<ui5-li highlight="Critical"></ui5-li>
+<ui5-li highlight="Critical"></ui5-li>
+<ui5-li highlight="Success"></ui5-li>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | additionalTextState="Error/Warning/Success" | additional-text-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-li additional-text-state="Warning"></ui5-li>
+<ui5-li additional-text-state="Warning"></ui5-li>
+<ui5-li additional-text-state="Success"></ui5-li>
+```
+Now you have to use it like:
+```html
+<ui5-li additional-text-state="Critical"></ui5-li>
+<ui5-li additional-text-state="Critical"></ui5-li>
+<ui5-li additional-text-state="Success"></ui5-li>
+```
+
 ### ui5-list
 
 | Changed item | Old       | New                                                                  | 
@@ -232,6 +540,23 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 <ui5-list selection-mode="Multiple">
 ```
 
+### ui5-message-strip
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | design="Warning" | design="Critical" | 
+
+- The property values `Warning`  are renamed to `Critical`. If you previously used it like:
+```html
+<ui5-message-strip design="Warning"></ui5-message-strip>
+```
+Now you have to use it like:
+```html
+<ui5-message-strip design="Critical"></ui5-message-strip>
+```
+
+
+
 ### ui5-multi-combobox
 
 | Changed item                 | Old        | New           | 
@@ -243,6 +568,24 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
   `<ui5-multi-combobox allow-custom-values></ui5-multi-combobox>`
   Now use noValidation instead:
   `<ui5-multi-combobox no-validation></ui5-multi-combobox>`
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Warning"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Success"></ui5-multi-combobox>
+```
+Now you have to use it like:
+```html
+<ui5-multi-combobox value-state="Negative"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Critical"></ui5-multi-combobox>
+<ui5-multi-combobox value-state="Success"></ui5-multi-combobox>
+```
 
 
 ### ui5-option
@@ -265,6 +608,9 @@ it will no longer work for the component. Instead, do not render disabled option
 | Property                     | `horizontalAlign` | values have changed, f.e. `Left` to `Start` | 
 | Property                     | `placementType` | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
+| Event        | after-open  | open  | 
+| Event        | after-close  | close  | 
+
 
 - The `Left` and `Right` options have been renamed. If you previously used them to set the placement or the alignment of the popover:
 ```html
@@ -291,6 +637,23 @@ Now use `placement` instead:
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
 ```
 
+- The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
+If you previously used the events like:
+
+```ts
+poover.addEventListener("after-open", (event) => {
+});
+poover.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+poover.addEventListener("open", (event) => {
+});
+poover.addEventListener("close", (event) => {
+});
+```
+
 ### ui5-progress-indicator
 
 | Changed item | Old       | New          | 
@@ -302,6 +665,163 @@ If you have previously used the `disabled` property, it won't take effect:
 ```html
 <ui5-progress-indicator disabled value="60"></ui5-progress-indicator>
 ```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-rogress-indicator value-state="Error"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Warning"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Success"></ui5-rogress-indicator>
+```
+Now you have to use it like:
+```html
+<ui5-rogress-indicator value-state="Negative"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Critical"></ui5-rogress-indicator>
+<ui5-rogress-indicator value-state="Success"></ui5-rogress-indicator>
+```
+
+### ui5-radio-button
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-radio-button value-state="Error"></ui5-radio-button>
+<ui5-radio-button value-state="Warning"></ui5-radio-button>
+<ui5-radio-button value-state="Success"></ui5-radio-button>
+```
+Now you have to use it like:
+```html
+<ui5-radio-button value-state="Negative"></ui5-radio-button>
+<ui5-radio-button value-state="Critical"></ui5-radio-button>
+<ui5-radio-button value-state="Success"></ui5-radio-button>
+```
+
+### ui5-select
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-select value-state="Error"></ui5-select>
+<ui5-select value-state="Warning"></ui5-select>
+<ui5-select value-state="Success"></ui5-select>
+```
+Now you have to use it like:
+```html
+<ui5-select value-state="Negative"></ui5-select>
+<ui5-select value-state="Critical"></ui5-select>
+<ui5-select value-state="Success"></ui5-select>
+```
+
+### ui5-segmented-button
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | mode | selectionMode | 
+| Readonly Property     | selectedItem | selectedItems | 
+
+- The property `mode` has been renamed to `selectionMode`. The selection modes are renamed from `SingleSelect` and `MultiSelect` to `Single` and `Multiple`. 
+
+If you previously used it as follows:
+```html
+<ui5-segmented-button mode="SingleSelect"></ui5-segmented-button>
+<ui5-segmented-button mode="MultiSelect"></ui5-segmented-button>
+```
+Now you have to use:
+```html
+<ui5-segmented-button selection-mode="Single"></ui5-segmented-button>
+<ui5-segmented-button selection-mode="Multiple"><ui5-segmented-button>
+```
+- The read-only getter `selectedItem` has been replaced by `selectedItems` as multiple items can be selected.
+
+### ui5-segmented-button-item
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | pressed | selected | 
+| Property     | design | ---- | 
+| Property     | iconEnd | ---- | 
+| Property     | submits | ---- | 
+| Property     | type | ---- | 
+| Property     | accessibilityAttributes | ---- | 
+| Property     | accessibleRole | ---- | 
+
+- The property `pressed` has been renamed to `selected`.
+
+If you previously used it as follows:
+```html
+<ui5-segmented-button id="segButton1">
+	  <ui5-segmented-button-item>Item 1</ui5-segmented-button-item>
+	  <ui5-segmented-button-item pressed>Item 2</ui5-segmented-button-item>
+</ui5-segmented-button>
+```
+Now you have to use it as follows:
+```html
+<ui5-segmented-button id="segButton1">
+	  <ui5-segmented-button-item>Item 1</ui5-segmented-button-item>
+	  <ui5-segmented-button-item selected>Item 2</ui5-segmented-button-item>
+</ui5-segmented-button>
+```
+
+- The property `design` has been inherited but never had effect and it's now removed.
+- The property `iconEnd` has been inherited but never had effect and it's now removed.
+- The property `submits` has been inherited but never had effect and it's now removed.
+- The property `type` has been inherited but never had effect and it's now removed.
+- The property `accessibilityAttributes` has been inherited but never had effect and it's now removed.
+- The property `accessibleRole` has been inherited but never had effect and it's now removed.
+
+### ui5-step-input
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-step-input value-state="Error"></ui5-step-input>
+<ui5-step-input value-state="Warning"></ui5-step-input>
+<ui5-step-input value-state="Success"></ui5-step-input>
+```
+Now you have to use it like:
+```html
+<ui5-step-input value-state="Negative"></ui5-step-input>
+<ui5-step-input value-state="Critical"></ui5-step-input>
+<ui5-step-input value-state="Success"></ui5-step-input>
+```
+
+### ui5-time-picker
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-time-picker value-state="Error"></ui5-time-picker>
+<ui5-time-picker value-state="Warning"></ui5-time-picker>
+<ui5-time-picker value-state="Success"></ui5-time-picker>
+```
+Now you have to use it like:
+```html
+<ui5-time-picker value-state="Negative"></ui5-time-picker>
+<ui5-time-picker value-state="Critical"></ui5-time-picker>
+<ui5-time-picker value-state="Success"></ui5-time-picker>
+```
+
+
+
 
 ### ui5-tab-container
 
@@ -388,6 +908,46 @@ someTabSeparator.getDomRefInStrip();
 
  - The `growingMaxLines` property has been renamed to `growingMaxRows`.
 
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | value-state="Error/Warning/Success" | value-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-textarea value-state="Error"></ui5-textarea>
+<ui5-textarea value-state="Warning"></ui5-textarea>
+<ui5-textarea value-state="Success"></ui5-textarea>
+```
+Now you have to use it like:
+```html
+<ui5-textarea value-state="Negative"></ui5-textarea>
+<ui5-textarea value-state="Critical"></ui5-textarea>
+<ui5-textarea value-state="Success"></ui5-textarea>
+```
+
+### ui5-title
+
+| Changed item  | Old   | New | 
+|---------------|-------|-----|
+| `wrappingType` default value | `None` | `Normal` |
+
+- The defualt value of the wrappingType property has been changed from `None` to `Normal`.
+
+Previously long texts would truncate if there is not enough space:
+```html
+<ui5-title>some very very very long title</ui5-title> <!-- text will truncate if there is not enough space -->
+```
+
+Now, long texts would wrap:
+```html
+<ui5-title>some very very very long title</ui5-title> <!-- text will wrap if there is not enough space -->
+```
+And you need to set `wrapping-type="None"` explicitly to make it truncate as before:
+```html
+<ui5-title wrapping-type="None">some very very very long title</ui5-title> <!-- will truncate the text -->
+```
+
+
 ### ui5-tree
 
 | Changed item | Old       | New                                                                  | 
@@ -406,6 +966,62 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 <ui5-tree selection-mode="Multiple">
 
 ```
+
+### ui5-tree-item
+
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | highlight="Error/Warning/Success" | highlight="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-tree-item highlight="Error"></ui5-tree-item>
+<ui5-tree-item highlight="Warning"></ui5-tree-item>
+<ui5-tree-item highlight="Success"></ui5-tree-item>
+```
+Now you have to use it like:
+```html
+<ui5-tree-item highlight="Negative"></ui5-tree-item>
+<ui5-tree-item highlight="Critical"></ui5-tree-item>
+<ui5-tree-item highlight="Success"></ui5-tree-item>
+```
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| Property     | additional-text-state="Error/Warning/Success" | additional-text-state="Negative/Critical/Positive" | 
+
+- The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
+```html
+<ui5-tree-item additional-text-state="Error"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Warning"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Success"></ui5-tree-item>
+```
+Now you have to use it like:
+```html
+<ui5-tree-item additional-text-state="Negative"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Critical"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Success"></ui5-tree-item>
+```
+
+### ui5-toast
+
+| Changed item | Old          | New    | 
+|--------------|--------------|--------|
+| Event        | after-close  | close  | 
+
+- The event `after-close`  has been renamed to `close`. If you previously used it like:
+
+```ts
+toast.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+toast.addEventListener("close", (event) => {
+});
+```
+
 
 ## Fiori package (@ui5/webcomponents-fiori)
 
@@ -447,6 +1063,75 @@ d.open = false;
 
 instead.
 
+
+
+### ui5-flexible-column-layout
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `accessibilityTexts` | removed |
+| Property     | `accessibilityRoles` | removed |
+
+- The `accessibilityTexts` and `accessibilityRoles` properties of the `ui5-flexible-column-layout` are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+fcl.accessibilityTexts = {
+    startColumnAccessibleName: "Products list",
+    midColumnAccessibleName: "Product information",
+    endColumnAccessibleName: "Product detailed information",
+    startArrowLeftText: "Collapse products list",
+    startArrowRightText: "Expand products list",
+    endArrowLeftText: "Expand product detailed information",
+    endArrowRightText: "Collapse product detailed information",
+    startArrowContainerAccessibleName: "Start Arrow Container",
+    endArrowContainerAccessibleName: "End Arrow Container",
+}
+
+fclAccRoles.accessibilityRoles = {
+    startColumnRole: "complementary",
+    startArrowContainerRole: "navigation",
+    midColumnRole: "main",
+    endArrowContainerRole: "navigation",
+    endColumnRole: "complementary".
+}
+```
+
+Now use `accessibilityAttributes` instead:
+```js
+fcl.accessibilityAttributes = {
+    startColumn: {
+      role: "complementary"
+      name: "Products list",
+    },
+    midColumn: {
+      role: "complementary"
+      name: "Product information",
+    },
+    endColumn: {
+      role: "complementary"
+      name: "Product detailed information",
+    },
+    startArrowLeft:  {
+      name: "Collapse products list",
+    },
+    startArrowRight: {
+      name: "Expand products list",
+    },
+    endArrowLeft: {
+      name: "Expand product detailed information",
+    },
+    endArrowRight:  {
+      name: "Collapse product detailed information",
+    },
+    startArrowContainer: {
+      role: "navigation"
+      name: "Start Arrow Container",
+    },
+    endArrowContainer: {
+      role: "navigation"
+      name: "End Arrow Container",
+    },
+};
+```
+
 ### ui5-illustrated-message
 
 | Changed item | Old    | New                                                           | 
@@ -462,6 +1147,124 @@ Now use `design` instead:
 ```html
 <ui5-illustrated-message design="Dialog">
 ```
+
+
+### ui5-shellbar
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `accessibilityTexts` | removed |
+| Property     | `accessibilityRoles` | removed |
+
+- The `accessibilityTexts` and `accessibilityRoles` properties of the `ui5-shellbar` are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+shellbar.accessibilityTexts = {
+    profileButtonTitle: "John Dow",
+    logoTitle: "Custom logo title",
+}
+
+shellbar.accessibilityRoles = {
+		logoRole: "link"
+};
+```
+Now use `accessibilityAttributes` instead:
+```js
+shellbar.accessibilityAttributes = {
+    profile: {
+      name:  "John Dow",
+    },
+    logo: {
+      role: "link"
+      name: "Custom logo title"
+    },
+};
+```
+
+### ui5-li-notification
+
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `priority` | `state` |
+| Property     | `busy` | `loading` |
+| Property     | `busyDelay` | `loadingDelay` |
+| Property     | N/A | `importance` |
+| Slot     | `actions` | `menu` |
+
+- The `priority` property of the `ui5-li-notification` is replaced by the new property `state`.
+  If you have previously used the `priority` property:
+```html
+<ui5-li-notification priority="Medium">
+```
+Now use `state` instead:
+```html
+<ui5-li-notification state="Critical">
+```
+ - If you have previously used the `busy`, `busyDelay` properties:
+```html
+<ui5-li-notification busy busy-delay="500"></ui5-li-notification>
+```
+now you must use `loading` and `loadingDelay` properties:
+```html
+<ui5-li-notification loading loading-delay="500"></ui5-li-notification>
+```
+- The `actions` slot of the `ui5-li-notification` is replaced by the new slot `menu`.
+  If you have previously used the `actions` slot:
+```html
+<ui5-li-notification>
+  <ui5-notification-action slot="actions" icon="message-error"	text="Reject">
+  </ui5-notification-action>
+```
+Now use `menu` instead:
+```html
+<ui5-li-notification>
+  <ui5-menu slot="menu">
+    <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+  </ui5-menu>
+```
+- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification` component.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+ <ui5-li-notification>
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification>
+```
+
+### ui5-li-notification-group
+| Changed item | Old    | New                                                           | 
+|--------------|--------|---------------------------------------------------------------|
+| Property     | `showClose` | N/A (removed) |
+| Property     | `showCounter` | N/A (removed) |
+| Property     | `priority` | N/A (removed) |
+| Property     | `busy` | `loading` |
+| Property     | `busyDelay` | `loadingDelay` |
+| Event     | `close` | N/A (removed) |
+| Slot     | `actions` | N/A (removed) |
+ - Properties "showClose", "showCounter", "priority", event "close" and slot "actions" are removed and there is no alternatives provided. The NotificationGroup no longer shows "Close" button, counter text, priority and actions.
+- If you have previously used the `busy`, `busyDelay` properties:
+```html
+<ui5-li-notification-group busy busy-delay="500"></ui5-li-notification-group>
+```
+now you must use `loading` and `loadingDelay` properties:
+```html
+<ui5-li-notification-group loading loading-delay="500"></ui5-li-notification-group>
+```
+- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` component.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+  <ui5-li-notification-group>
+    <ui5-li-notification>
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification-group>
+    <ui5-li-notification>
+```
+
 
 ### ui5-upload-collection
 

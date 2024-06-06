@@ -24,6 +24,7 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
@@ -62,6 +63,7 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 		TimePickerClock,
 		ToggleSpinButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 
@@ -212,8 +214,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 			// A/P selects AM/PM segmented button item
 			const buttonAmPm = this._buttonAmPm();
 			if (buttonAmPm) {
-				buttonAmPm.items[0].pressed = isKeyA(evt);
-				buttonAmPm.items[1].pressed = isKeyP(evt);
+				buttonAmPm.items[0].selected = isKeyA(evt);
+				buttonAmPm.items[1].selected = isKeyP(evt);
 				const period = isKeyA(evt) ? buttonAmPm.items[0].textContent : buttonAmPm.items[1].textContent;
 				period && this._calculatePeriodChange(period);
 			}

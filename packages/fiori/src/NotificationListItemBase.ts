@@ -1,37 +1,19 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import type Popover from "@ui5/webcomponents/dist/Popover.js";
-import type NotificationAction from "./NotificationAction.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
-// Icons
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/message-success.js";
-import "@ui5/webcomponents-icons/dist/message-error.js";
-import "@ui5/webcomponents-icons/dist/message-warning.js";
-import "@ui5/webcomponents-icons/dist/overflow.js";
-
-/**
- * Defines the icons corresponding to the notification's priority.
- */
-const ICON_PER_PRIORITY = {
-	[Priority.High]: "message-error",
-	[Priority.Medium]: "message-warning",
-	[Priority.Low]: "message-success",
-	[Priority.None]: "",
-};
-
-type NotificationListItemBaseCloseEventDetail = {
-	item: HTMLElement,
-};
+// Texts
+import {
+	NOTIFICATION_LIST_ITEM_LOADING,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -42,23 +24,6 @@ type NotificationListItemBaseCloseEventDetail = {
  * @since 1.0.0-rc.8
  * @public
  */
-@customElement()
-
-/**
- * Fired when the `Close` button is pressed.
- * @param {HTMLElement} item the closed item.
- * @public
- */
-@event<NotificationListItemBaseCloseEventDetail>("close", {
-	 detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
-})
 class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the `titleText` of the item.
@@ -67,22 +32,6 @@ class NotificationListItemBase extends ListItemBase {
 	 */
 	@property()
 	titleText!: string;
-
-	/**
-	 * Defines the `priority` of the item.
-	 * @default "None"
-	 * @public
-	 */
-	@property({ type: Priority, defaultValue: Priority.None })
-	priority!: `${Priority}`;
-
-	/**
-	 * Defines if the `close` button would be displayed.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	showClose!: boolean;
 
 	/**
 	 * Defines if the `notification` is new or has been already read.
@@ -102,7 +51,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	busy!: boolean;
+	loading!: boolean;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
@@ -110,16 +59,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
-	busyDelay!: number;
-
-	/**
-	 * Defines the actions, displayed in the top-right area.
-	 *
-	 * **Note:** use the `ui5-notification-action` component.
-	 * @public
-	 */
-	@slot()
-	actions!: Array<NotificationAction>
+	loadingDelay!: number;
 
 	static i18nFioriBundle: I18nBundle;
 
@@ -127,99 +67,54 @@ class NotificationListItemBase extends ListItemBase {
 		return !!this.titleText.length;
 	}
 
-	get hasPriority() {
-		return this.priority !== Priority.None;
+	get loadingText() {
+		return NotificationListItemBase.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOADING);
 	}
 
-	get priorityIcon() {
-		return ICON_PER_PRIORITY[this.priority];
+	get isLoading() {
+		return this.loading;
 	}
 
-	get overflowButtonDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-overflow-btn")!;
-	}
-
-	get showOverflow() {
-		return !!this.overflowActions.length;
-	}
-
-	get overflowActions() {
-		if (this.actions.length <= 1) {
-			return [];
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
 		}
-
-		return this.actionsInfo;
-	}
-
-	get standardActions() {
-		if (this.actions.length > 1) {
-			return [];
-		}
-
-		return this.actionsInfo;
-	}
-
-	get actionsInfo() {
-		return this.actions.map(action => {
-			return {
-				icon: action.icon,
-				text: action.text,
-				press: this._onCustomActionClick.bind(this),
-				refItemid: action._id,
-				disabled: action.disabled ? true : undefined,
-				design: action.design,
-			};
-		});
 	}
 
 	/**
 	 * Event handlers
 	 */
-	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemBaseCloseEventDetail>("close", { item: this });
-	}
-
-	_onBtnOverflowClick() {
-		this.openOverflow();
-	}
-
-	_onCustomActionClick(e: MouseEvent) {
-		const refItemId = (e.target as Element).getAttribute("data-ui5-external-action-item-id");
-
-		if (refItemId) {
-			this.getActionByID(refItemId)!.fireClickEvent(e);
-			this.closeOverflow();
-		}
-	}
-
-	_onkeydown(e: KeyboardEvent) {
+	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
-		if (getEventMark(e) === "button") {
+		if (isSpace(e) && getEventMark(e) !== "button") {
+			e.preventDefault();
 			return;
 		}
 
-		if (isSpace(e)) {
-			e.preventDefault();
+		if (isF2(e)) {
+			e.stopImmediatePropagation();
+
+			const activeElement = getActiveElement();
+			const focusDomRef = this.getHeaderDomRef()!;
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
+			} else {
+				focusDomRef.focus();
+			}
 		}
 	}
 
-	getActionByID(id: string) {
-		return this.actions.find(action => action._id === id);
+	getHeaderDomRef() {
+		return this.getFocusDomRef();
 	}
 
-	openOverflow() {
-		const overflowPopover = this.getOverflowPopover();
-		overflowPopover.showAt(this.overflowButtonDOM);
-	}
+	shouldForwardTabAfter() {
+		const aContent = getTabbableElements(this.getHeaderDomRef()!);
 
-	closeOverflow() {
-		const overflowPopover = this.getOverflowPopover();
-		overflowPopover.close();
-	}
-
-	getOverflowPopover() {
-		return this.shadowRoot!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
+		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
 	}
 
 	static async onDefine() {
@@ -228,6 +123,3 @@ class NotificationListItemBase extends ListItemBase {
 }
 
 export default NotificationListItemBase;
-export type {
-	NotificationListItemBaseCloseEventDetail,
-};

@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -123,13 +124,6 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	private active!: boolean;
 
 	/**
-	 * Indicates whether the element is focused.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	private focused!: boolean;
-
-	/**
 	 * Used to set the selected state of the component. Only one selected in a sequence.
 	 * **Note:** Set by the `ProductSwitch`
 	 */
@@ -146,6 +140,10 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this._deactivate);
+
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -185,12 +183,9 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 
 	_onfocusout() {
 		this.active = false;
-		this.focused = false;
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.focused = true;
-
 		this.fireEvent("_focused", e);
 	}
 

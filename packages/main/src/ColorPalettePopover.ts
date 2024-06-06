@@ -134,6 +134,8 @@ class ColorPalettePopover extends UI5Element {
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
 	 * @default undefined
 	 * @since 1.21.0
@@ -175,9 +177,24 @@ class ColorPalettePopover extends UI5Element {
 		this.fireEvent("close");
 	}
 
+	onAfterOpen() {
+		const colorPalette = this._colorPalette;
+		if (colorPalette.showDefaultColor && !colorPalette._currentlySelected) {
+			colorPalette.colorPaletteNavigationElements[0].focus();
+		} else if (colorPalette._shouldFocusRecentColors && colorPalette.showRecentColors) {
+			colorPalette.recentColorsElements[0].focus();
+		} else {
+			colorPalette._currentlySelected?.focus();
+		}
+	}
+
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
 		this.fireEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
+	}
+
+	get _colorPalette() {
+		return this.responsivePopover.content[0].querySelector<ColorPalette>("[ui5-color-palette]")!;
 	}
 
 	/**

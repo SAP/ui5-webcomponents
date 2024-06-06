@@ -5,14 +5,15 @@ import * as defaultFioriTexts from "./generated/i18n/i18n-defaults.js";
 // FIORI assets
 import "./Assets.js";
 
-// FIORI features
-import "./features/CoPilotAnimation.js";
-
 // FIORI illustrations
 import "./illustrations/AllIllustrations.js";
 
 // FIORI components
 import BarcodeScannerDialog from "./BarcodeScannerDialog.js";
+import DynamicPage from "./DynamicPage.js";
+import DynamicPageHeader from "./DynamicPageHeader.js";
+import DynamicPageTitle from "./DynamicPageTitle.js";
+import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 import DynamicSideContent from "./DynamicSideContent.js";
 import FilterItem from "./FilterItem.js";
 import FilterItemOption from "./FilterItemOption.js";
@@ -20,9 +21,9 @@ import FlexibleColumnLayout from "./FlexibleColumnLayout.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import MediaGallery from "./MediaGallery.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
-import NotificationAction from "./NotificationAction.js";
 import NotificationListGroupItem from "./NotificationListGroupItem.js";
 import NotificationListItem from "./NotificationListItem.js";
+import NotificationList from "./NotificationList.js";
 import Page from "./Page.js";
 import ProductSwitch from "./ProductSwitch.js";
 import ProductSwitchItem from "./ProductSwitchItem.js";

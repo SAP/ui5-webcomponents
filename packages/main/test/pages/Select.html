@@ -14,6 +14,11 @@
 
 
 <link rel="stylesheet" type="text/css" href="./styles/Select.css">
+<style>
+	#selectPopoverMaxHeight[ui5-select]::part(popover) {
+		max-height: 120px;
+	}
+</style>
 </head>
 
 <body class="select1auto">
@@ -25,8 +30,8 @@
 	<h2>Content size</h2>
 	<ui5-label id="lblResult"></ui5-label>
 	<ui5-select id="mySelect">
-		<ui5-option id="firstOption" selected>Cozy</ui5-option>
-		<ui5-option selected>Compact</ui5-option>
+		<ui5-option id="firstOption">Cozy</ui5-option>
+		<ui5-option>Compact</ui5-option>
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
@@ -37,36 +42,36 @@
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
-	<h2>Error Select</h2>
-	<ui5-select id="errorSelect" value-state="Error">
+	<h2>Negative Select</h2>
+	<ui5-select id="errorSelect" value-state="Negative">
 		<ui5-option selected>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Warning Select</h2>
-	<ui5-select id="warningSelect" value-state="Warning">
+	<ui5-select id="warningSelect" value-state="Critical">
 		<ui5-option>This option has text bigger than ui5-select's width</ui5-option>
 		<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 
 	</ui5-select>
 
-	<h2>Success Select</h2>
-	<ui5-select id="successSelect" value-state="Success">
+	<h2>Positive Select</h2>
+	<ui5-select id="successSelect" value-state="Positive">
 		<ui5-option selected>Cozy</ui5-option>
 		<ui5-option selected>Compact</ui5-option>
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
-	<h2>Success Select</h2>
+	<h2>Information Select</h2>
 	<ui5-select id="infoSelect" value-state="Information">
-		<ui5-option selected>Cozy</ui5-option>
-		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option>Compact</ui5-option>
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
 	<h2>Disabled Select</h2>
-	<ui5-select id="mySelect4" disabled value-state="Success"></ui5-select>
+	<ui5-select id="mySelect4" disabled value-state="Positive"></ui5-select>
 
 	<h2>Readonly Select</h2>
 	<ui5-select id="mySelectReadOnly" readonly>
@@ -75,6 +80,12 @@
 		<ui5-option>Condensed</ui5-option>
 	</ui5-select>
 
+	<h2>Select with tooltip for each option</h2>
+	<ui5-select id="selectTooltip">
+		<ui5-option tooltip="Cozy" stable-dom-ref="tooltip-test-option">Cozy</ui5-option>
+		<ui5-option tooltip="Compact">Compact</ui5-option>
+		<ui5-option selected tooltip="Condensed">Condensed</ui5-option>
+	</ui5-select>
 
 	<h2> Input with suggestions</h2>
 	<ui5-input id="myInput" show-suggestions placeholder="Search for a country ..."></ui5-input>
@@ -118,14 +129,14 @@
 		<span id="infoText">info text</span>
 		<div>
 			<ui5-select id="textAreaAriaLabel" accessible-name="Hello World">
-				<ui5-option selected>First</ui5-option>
-				<ui5-option selected>Second</ui5-option>
+				<ui5-option>First</ui5-option>
+				<ui5-option>Second</ui5-option>
 				<ui5-option selected>Third</ui5-option>
 			</ui5-select>
 
 			<ui5-select id="textAreaAriaLabelledBy" accessible-name-ref="infoText">
-				<ui5-option selected>One</ui5-option>
-				<ui5-option selected>Two</ui5-option>
+				<ui5-option>One</ui5-option>
+				<ui5-option>Two</ui5-option>
 				<ui5-option selected>Three</ui5-option>
 			</ui5-select>
 		</div>
@@ -135,8 +146,8 @@
 		<h3>Select in Compact</h3>
 		<div>
 			<ui5-select>
-				<ui5-option selected>Cozy</ui5-option>
-				<ui5-option selected>Compact</ui5-option>
+				<ui5-option>Cozy</ui5-option>
+				<ui5-option>Compact</ui5-option>
 				<ui5-option selected>Condensed</ui5-option>
 			</ui5-select>
 		</div>
@@ -171,6 +182,58 @@
 		<ui5-button id="btnSetInvalidValue">select.value = "NAN"</ui5-button>
 	</section>
 
+	<section>
+		<h2>popover max-height changed with 'popover' part (120px)</h2>
+		<ui5-select id="selectPopoverMaxHeight">
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option>Compact</ui5-option>
+			<ui5-option selected>Condensed</ui5-option>
+		</ui5-select>
+	</section>
 </body>
 <script>
 	var countries =  [{ key: "Aus", text: "Australia" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }];
@@ -250,7 +313,7 @@
 	btn.addEventListener("click", function(event) {
 		var hcb = event.target.pressed;
 		var styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
-		var theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
+		var theme = hcb ? "sap_horizon_hcb" : "sap_horizon";
 
 		document.body.setAttribute("style", styles);
 		var Conf = window["sap-ui-webcomponents-bundle"].configuration;

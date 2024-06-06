@@ -29,6 +29,13 @@
 	--_ui5_daypicker_two_calendar_item_selected_focus_margin_bottom: 0;
 	--_ui5_daypicker_two_calendar_item_selected_focus_padding_right: 0.4375rem;
 
+	/* CalendarLegend */
+	--_ui5-calendar-legend-item-root-focus-offset: -0.125rem;
+
+	/* Calendar Legend Item */
+	--_ui5-calendar-legend-item-box-margin: 0.25rem;
+	--_ui5-calendar-legend-item-box-inner-margin: 0.5rem;
+
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
 	 --_ui5_color-palette-item-hover-height: 2.375rem;
@@ -63,6 +70,7 @@
 	--_ui5_list_item_img_hn_margin: 0.75rem;
 	--_ui5_list_item_dropdown_base_height: 2.5rem;
 	--_ui5_list_item_base_height: var(--sapElement_LineHeight);
+	--_ui5_list_item_base_padding: 0 1rem;
 	--_ui5_list_item_icon_size: 1.125rem;
 	--_ui5_list_item_icon_padding-inline-end: 0.5rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
@@ -72,11 +80,13 @@
 	--_ui5_month_picker_item_height: 3rem;
 	--_ui5_list_buttons_left_space: 0.125rem;
 
+	/* Form */
+	--_ui5_form_item_min_height: 2.813rem;
+	--_ui5_form_item_padding:  0.65rem;
+	--_ui5-form-group-heading-height: 2.75rem;
+
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.75rem;
-
-	/* Notifications */
-	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
 
 	--_ui5_year_picker_item_height: 3rem;
 	--_ui5_tokenizer_padding: 0.25rem;
@@ -118,16 +128,6 @@
 	/* Side Navigation */
 	--ui5_side_navigation_item_height: 2.75rem;
 
-	/* Table */
-
-	--_ui5_load_more_text_height: 2.75rem;
-	--_ui5_load_more_text_font_size: var(--sapFontMediumSize);
-	--_ui5_load_more_desc_padding:  0.375rem 2rem 0.875rem 2rem;
-	--ui5_table_header_row_height: 2.75rem;
-	--ui5_table_row_height: 2.75rem;
-	--ui5_table_focus_outline_offset: -0.125rem;
-	--ui5_table_group_row_height: 2rem;
-
 	/* Tree */
 	--_ui5-tree-indent-step: 1.5rem;
 	--_ui5-tree-toggle-box-width: 2.75rem;
@@ -148,6 +148,9 @@
 	--_ui5-toolbar-separator-height: 2rem;
 	--_ui5-toolbar-height: 2.75rem;
 	--_ui5_toolbar_overflow_padding: 0.25rem 0.5rem;
+
+	/* DynamicPageTitle */
+	--_ui5_dynamic_page_title_actions_separator_height: var(--_ui5-toolbar-separator-height);
 }
 
 [data-ui5-compact-size],
@@ -175,7 +178,6 @@
 	--_ui5-calendar-legend-root-width: 16.75rem;
 
 	/* Calendar Legend Item */
-	--_ui5-calendar-legend-item-box-margin: 0.125rem 0.5rem 0.125rem 0.125rem;
 	--_ui5-calendar-legend-item-root-focus-margin: -0.125rem;
 
 	/* CheckBox */
@@ -245,6 +247,11 @@
 	--_ui5_dialog_content_min_height: 2.5rem;
 	--_ui5_dialog_footer_height: 2.5rem;
 
+	/* Form */
+	--_ui5_form_item_min_height: 2rem;
+	--_ui5_form_item_padding:  0.25rem;
+	--_ui5-form-group-heading-height: 2rem;
+
 	/* Input */
 	--_ui5_input_height: var(--sapElement_Compact_Height);
 	--_ui5_input_inner_padding: 0 0.5rem;
@@ -256,9 +263,6 @@
 	/* Menu */
 	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;
 	--_ui5_menu_item_submenu_icon_right: 0.75rem;
-
-	/* Notifications */
-	--_ui5-notification-overflow-popover-padding: 0.25rem 0.5rem;
 
 	/* Popup subclasses */
 	--_ui5_popup_default_header_height: 2.5rem;
@@ -274,6 +278,7 @@
 	--_ui5_list_no_data_font_size: var(--sapFontSize);
 	--_ui5_list_item_dropdown_base_height: 2rem;
 	--_ui5_list_item_base_height: 2rem;
+	--_ui5_list_item_base_padding: 0 1rem;
 	--_ui5_list_item_icon_size: 1rem;
 	--_ui5_list_item_selection_btn_margin_top: calc(-1 * var(--_ui5_checkbox_wrapper_padding));
 	--_ui5_list_item_content_vertical_offset: calc((var(--_ui5_list_item_base_height) - var(--_ui5_list_item_title_size)) / 2);
@@ -340,13 +345,6 @@
 	--_ui5_step_input_min_width: 6rem;
 	--_ui5_step_input_padding: 2rem;
 
-	/* Table */
-	--_ui5_load_more_text_height: 2.625rem;
-	--_ui5_load_more_text_font_size: var(--sapFontSize);
-	--_ui5_load_more_desc_padding: 0 2rem 0.875rem 2rem;
-	--ui5_table_header_row_height: 2rem;
-	--ui5_table_row_height: 2rem;
-
 	/* Tree */
 	--_ui5-tree-indent-step: 0.5rem;
 	--_ui5-tree-toggle-box-width: 2rem;
@@ -369,4 +367,7 @@
 	--_ui5-toolbar-separator-height: 1.5rem;
 	--_ui5-toolbar-height: 2rem;
 	--_ui5_toolbar_overflow_padding: 0.1875rem 0.375rem;
+
+	/* DynamicPageTitle */
+	--_ui5_dynamic_page_title_actions_separator_height: var(--_ui5-toolbar-separator-height);
 }

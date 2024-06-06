@@ -16,16 +16,19 @@
 	cursor: inherit;
 }
 
-:host([wrapping-type="Normal"]) .ui5-label-root {
+:host {
 	white-space: normal;
 }
 
-:host(:not([wrapping-type="Normal"])) .ui5-label-root {
-	display: inline-flex;
+:host([wrapping-type="None"]) {
 	white-space: nowrap;
 }
 
-:host(:not([wrapping-type="Normal"])) .ui5-label-text-wrapper {
+:host([wrapping-type="None"]) .ui5-label-root {
+	display: inline-flex;
+}
+
+:host([wrapping-type="None"]) .ui5-label-text-wrapper {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	display: inline-block;

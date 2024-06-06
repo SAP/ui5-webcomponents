@@ -549,7 +549,7 @@ describe("List Tests", () => {
 		await item1.click();
 		await item1.keys("ArrowDown");
 
-		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
+		assert.ok(await item3.isFocused(), "disabled item is skipped");
 	});
 
 	it('should include selected state text', async () => {
@@ -634,7 +634,7 @@ describe("List Tests", () => {
 
 	it("Tests the highlight property", async () => {
 		const listItem = await browser.$("#highlight ui5-li:nth-child(1)");
-		const initialValueState = "Error";
+		const initialValueState = "Negative";
 		let highlightValue = await listItem.getProperty("highlight");
 
 		assert.strictEqual(highlightValue, initialValueState, "Highlight property is correctly set to the list item.");

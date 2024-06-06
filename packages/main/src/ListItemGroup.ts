@@ -26,7 +26,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-li-group",
@@ -65,6 +65,13 @@ class ListItemGroup extends UI5Element {
 	items!: Array<ListItemBase>;
 
 	/**
+	 * Indicates whether the header is focused
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	/**
 	* Defines the header of the component.
 	*
 	* **Note:** Using this slot, the default header text of group and the value of `headerText` property will be overwritten.
@@ -84,8 +91,17 @@ class ListItemGroup extends UI5Element {
 	get hasFormattedHeader(): boolean {
 		return !!this.header.length;
 	}
+
+	get isListItemGroup() {
+		return true;
+	}
 }
 
 ListItemGroup.define();
 
+const isInstanceOfListItemGroup = (object: any): object is ListItemGroup => {
+	return "isListItemGroup" in object;
+};
+
 export default ListItemGroup;
+export { isInstanceOfListItemGroup };
