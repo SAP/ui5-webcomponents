@@ -9,7 +9,7 @@
 		<slot name="startColumn" aria-hidden="{{_accAttributes.columns.middle.ariaHidden}}"></slot>
 	</div>
 
-	<div role="{{accStartSeparatorRole}}" title={{accStartSeparatorText}} class="ui5-fcl-separator ui5-fcl-separator-start" style="{{styles.arrowsContainer.start}}" tabindex="{{startSeparatorTabIndex}}"
+	<div role="{{accStartSeparatorRole}}" title={{accStartSeparatorText}} class="ui5-fcl-separator ui5-fcl-separator-start" style="{{styles.separator.start}}" tabindex="{{startSeparatorTabIndex}}"
 		@mousedown="{{onSeparatorPress}}" @touchstart="{{onSeparatorPress}}" @keydown="{{_onkeydown}}" @keyup="{{_onkeyup}}">
 		{{> startArrow}}
 	</div>
@@ -24,7 +24,7 @@
 		<slot name="midColumn" aria-hidden="{{_accAttributes.columns.middle.ariaHidden}}"></slot>
 	</div>
 
-	<div role="{{accEndSeparatorRole}}" title="{{accEndSeparatorText}}" class="ui5-fcl-separator ui5-fcl-separator-end" style="{{styles.arrowsContainer.end}}" tabindex="{{endSeparatorTabIndex}}"
+	<div role="{{accEndSeparatorRole}}" title="{{accEndSeparatorText}}" class="ui5-fcl-separator ui5-fcl-separator-end" style="{{styles.separator.end}}" tabindex="{{endSeparatorTabIndex}}"
 		@mousedown="{{onSeparatorPress}}" @touchstart="{{onSeparatorPress}}" @keydown="{{_onkeydown}}" @keyup="{{_onkeyup}}">
 		{{> endArrow}}
 	</div>
@@ -44,7 +44,7 @@
 	<ui5-icon
 		class="ui5-fcl-grip ui5-fcl-grip--start"
 		name="vertical-grip"
-		style="{{styles.arrows.start}}"
+		style="{{styles.grip.start}}"
 	></ui5-icon>
 {{/inline}}
 
@@ -52,7 +52,7 @@
 {{#*inline "endArrow"}}
 	<ui5-icon
 		class="ui5-fcl-grip ui5-fcl-grip--end"
-		style="{{styles.arrows.end}}"
+		style="{{styles.grip.end}}"
 		name="vertical-grip"
 	></ui5-icon>
 {{/inline}}

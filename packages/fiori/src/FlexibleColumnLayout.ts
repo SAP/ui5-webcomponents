@@ -13,9 +13,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isLeft,
@@ -30,8 +28,6 @@ import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
 	getLayoutsByMedia,
-	getNextLayoutByStartArrow,
-	getNextLayoutByEndArrow,
 } from "./fcl-utils/FCLLayout.js";
 
 // Texts
@@ -84,6 +80,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	endColumnVisible: boolean,
 	arrowUsed: boolean,
 	arrowsUsed: boolean,
+	columnsResize: boolean,
 	resize: boolean,
 };
 
@@ -109,18 +106,6 @@ type FCLAccessibilityAttributes = {
 		role: FCLAccessibilityRoles,
 		name: string,
 	},
-	startArrowLeft?: {
-		name: string,
-	},
-	startArrowRight?: {
-		name: string,
-	},
-	endArrowLeft?: {
-		name: string,
-	},
-	endArrowRight?: {
-		name: string,
-	},
 }
 
 type UserDefinedColumnLayouts = {
@@ -138,7 +123,7 @@ type UserDefinedColumnLayouts = {
  * ### Overview
  *
  * The `FlexibleColumnLayout` implements the list-detail-detail paradigm by displaying up to three pages in separate columns.
- * There are several possible layouts that can be changed either with the component API, or by pressing the arrows, displayed between the columns.
+ * There are several possible layouts that can be changed either with the component API, or by dragging the column separators.
  *
  * ### Usage
  *
@@ -155,7 +140,13 @@ type UserDefinedColumnLayouts = {
  *
  * #### Basic Navigation
  *
- * - [Space] / [Enter] or [Return] - If focus is on the layout toggle button (arrow button), once activated, it triggers the associated action (such as expand/collapse the column).
+ * When a solumn separator is focused,  the following keyboard
+ * shortcuts allow the user to resize the columns and change the layout:
+ *
+ * - [Shift] + [Left] or [Shift] + [Right] - Moves the separator to the left or right, which resizes the columns accordingly.
+ * - [Left] or [Right] - Moves the separator to the left or right with a bigger step, which resizes the columns accordingly.
+ * - [Home] - Moves the separator to the start position.
+ * - [End] - Moves the separator to the end position.
  * - This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
@@ -179,11 +170,11 @@ type UserDefinedColumnLayouts = {
 	renderer: litRender,
 	styles: FlexibleColumnLayoutCss,
 	template: FlexibleColumnLayoutTemplate,
-	dependencies: [Button],
+	dependencies: [Icon],
 })
 
 /**
- * Fired when the layout changes via user interaction by clicking the arrows
+ * Fired when the layout changes via user interaction by dragging the separators
  * or by changing the component size due to resizing.
  * @param {FCLLayout} layout The current layout
  * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
@@ -191,7 +182,8 @@ type UserDefinedColumnLayouts = {
  * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
  * @param {boolean} endColumnVisible Indicates if the end column is currently visible
  * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
- * @param {boolean} resize Indicates if the layout is changed via resizing
+ * @param {boolean} columnsResize Indicates if the layout is changed by dragging the column separators
+ * @param {boolean} resize Indicates if the layout is changed via resizing the entire component
  * @public
  */
 @event<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
@@ -220,6 +212,10 @@ type UserDefinedColumnLayouts = {
 		* @public
 		*/
 		arrowsUsed: { type: Boolean },
+		/**
+		 * @public
+		*/
+		columnsResize: { type: Boolean },
 		/**
 		 * @public
 		*/
@@ -266,10 +262,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*  - **endColumn**: `endColumn.role` and `endColumn.name`.
 	*  - **startSeparator**: `startSeparator.role` and `startSeparator.name`.
 	*  - **endSeparator**: `endSeparator.role` and `endSeparator.name`.
-	*  - **startArrowLeft**: `startArrowLeft.name`.
-	*  - **startArrowRight**: `startArrowRight.name`.
-	*  - **endArrowLeft**: `endArrowLeft.name`.
-	*  - **endArrowRight**: `endArrowRight.name`.
 	*
 	* The accessibility attributes support the following values:
 	*
@@ -422,7 +414,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	updateLayout() {
 		this._width = this.widthDOM;
-		this._columnLayout = this.nextColumnLayout(this.layout);
+		this._columnLayout = this.nextColumnLayout(this.effectiveLayout);
 		this._visibleColumns = this.calcVisibleColumns(this._columnLayout);
 		this.toggleColumns();
 	}
@@ -492,20 +484,6 @@ class FlexibleColumnLayout extends UI5Element {
 		(e.target as HTMLElement).classList.add("ui5-fcl-column--hidden");
 	}
 
-	nextLayout(layout: `${FCLLayout}`, arrowsInfo: { start: boolean, end: boolean }) {
-		if (!arrowsInfo) {
-			return;
-		}
-
-		if (arrowsInfo.start) {
-			return getNextLayoutByStartArrow()[layout as keyof typeof getNextLayoutByStartArrow];
-		}
-
-		if (arrowsInfo.end) {
-			return getNextLayoutByEndArrow()[layout as keyof typeof getNextLayoutByEndArrow];
-		}
-	}
-
 	nextColumnLayout(layout: `${FCLLayout}`) {
 		let userDefinedLayout;
 		if (this.media !== MEDIA.PHONE) {
@@ -518,22 +496,23 @@ class FlexibleColumnLayout extends UI5Element {
 		return colLayout.filter(colWidth => !this._isColumnHidden(colWidth)).length;
 	}
 
-	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
+	fireLayoutChange(separatorUsed: boolean, resize: boolean) {
 		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
-			arrowUsed, // for backwards compatibility
-			arrowsUsed: arrowUsed, // as documented
+			arrowUsed: separatorUsed, // for backwards compatibility
+			arrowsUsed: separatorUsed, // as documented
+			columnsResize: separatorUsed,
 			resize,
 		});
 	}
 
 	onSeparatorPress(e: TouchEvent | MouseEvent) {
 		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-separator") as HTMLElement;
-		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartArrow) {
+		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
 			return;
 		}
 
@@ -694,7 +673,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 		// apply the new size
 		columnLayoutInPx[columnToResize] = newSize;
-		columnLayoutInPx[COLUMN.MID] = this._width
+		columnLayoutInPx[COLUMN.MID] = this._availableWidthForColumns
 			- columnLayoutInPx[COLUMN.START]
 			- columnLayoutInPx[COLUMN.END];
 
@@ -801,7 +780,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return width;
 		}
 		const parsedValue = parseFloat(width),
-			totalWidth = this._width;
+			totalWidth = this._availableWidthForColumns;
 
 		if (width.endsWith("%")) {
 			return (totalWidth / 100) * parsedValue;
@@ -816,14 +795,14 @@ class FlexibleColumnLayout extends UI5Element {
 		if (pxWidth === 0) {
 			return "0px";
 		}
-		return `${(pxWidth / this._width) * 100}%`;
+		return `${(pxWidth / this._availableWidthForColumns) * 100}%`;
 	}
 
-	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, layoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {
+	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, fclLayoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {
 		const isStartSeparator = separator === this.startSeparatorDOM,
 			separatorName = isStartSeparator ? "start" : "end",
-			moved = (options: any) => {
-				return options.from === layoutBeforeMove
+			moved = (options: {separator: "start" | "end", from: FCLLayout, forward: boolean}) => {
+				return options.from === fclLayoutBeforeMove
 				&& options.separator === separatorName
 				&& options.forward === isStartToEndDirection;
 			},
@@ -865,7 +844,7 @@ class FlexibleColumnLayout extends UI5Element {
 			separator: "start",
 			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
 			forward: false,
-		}) && startColumnPercentWidth < 33) {
+		}) && !isTablet && startColumnPercentWidth < 33) {
 			return FCLLayout.ThreeColumnsMidExpanded;
 		}
 
@@ -925,11 +904,18 @@ class FlexibleColumnLayout extends UI5Element {
 			return FCLLayout.ThreeColumnsMidExpanded;
 		}
 
-		return layoutBeforeMove; // no layout change
+		return fclLayoutBeforeMove; // no layout change
 	}
 
-	getColumnsVisibilityHash(layout: FCLLayout): string {
-		return this.nextColumnLayout(layout).map(width => (this.convertColumnWidthToPixels(width) ? 1 : 0)).join();
+	get _availableWidthForColumns() {
+		let width = this._width;
+		if (this.showStartSeparator) {
+			width -= this.startSeparatorDOM.offsetWidth;
+		}
+		if (this.showEndSeparator) {
+			width -= this.endSeparatorDOM.offsetWidth;
+		}
+		return width;
 	}
 
 	/**
@@ -950,6 +936,12 @@ class FlexibleColumnLayout extends UI5Element {
 	get columnLayout(): FlexibleColumnLayoutColumnLayout | undefined {
 		return this._columnLayout;
 	}
+
+	/* set columnLayout(newColumnLayout: FlexibleColumnLayoutColumnLayout) {
+		const media = this.media as MEDIA.TABLET | MEDIA.DESKTOP;
+		// TODO: first check if valid for media and layout
+		this._userDefinedColumnLayouts[media][this.layout] = newColumnLayout;
+	} */
 
 	/**
 	* Returns if the `start` column is visible.
@@ -1028,7 +1020,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get styles() {
 		return {
-			arrowsContainer: {
+			separator: {
 				start: {
 					display: this.showStartSeparator ? "flex" : "none",
 				},
@@ -1036,12 +1028,12 @@ class FlexibleColumnLayout extends UI5Element {
 					display: this.showEndSeparator ? "flex" : "none",
 				},
 			},
-			arrows: {
+			grip: {
 				start: {
-					display: this.showStartArrow ? "inline-block" : "none",
+					display: this.showStartSeparatorGrip ? "inline-block" : "none",
 				},
 				end: {
-					display: this.showEndArrow ? "inline-block" : "none",
+					display: this.showEndSeparatorGrip ? "inline-block" : "none",
 				},
 			},
 		};
@@ -1060,30 +1052,30 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartSeparator() {
-		return this.effectiveArrowsInfo[0].separator || this.startArrowVisibility;
+		return this.effectiveSeparatorsInfo[0].separator || this.startSeparatorGripVisibility;
 	}
 
 	get showEndSeparator() {
-		return this.effectiveArrowsInfo[1].separator || this.endArrowVisibility;
+		return this.effectiveSeparatorsInfo[1].separator || this.endSeparatorGripVisibility;
 	}
 
-	get showStartArrow() {
-		return this.hideArrows ? false : this.startArrowVisibility;
+	get showStartSeparatorGrip() {
+		return this.hideArrows ? false : this.startSeparatorGripVisibility;
 	}
 
-	get showEndArrow() {
-		return this.hideArrows ? false : this.endArrowVisibility;
+	get showEndSeparatorGrip() {
+		return this.hideArrows ? false : this.endSeparatorGripVisibility;
 	}
 
-	get startArrowVisibility() {
-		return this.effectiveArrowsInfo[0].visible;
+	get startSeparatorGripVisibility() {
+		return this.effectiveSeparatorsInfo[0].visible;
 	}
 
-	get endArrowVisibility() {
-		return this.effectiveArrowsInfo[1].visible;
+	get endSeparatorGripVisibility() {
+		return this.effectiveSeparatorsInfo[1].visible;
 	}
 
-	get effectiveArrowsInfo() {
+	get effectiveSeparatorsInfo() {
 		return this._effectiveLayoutsByMedia[this.media][this.effectiveLayout].arrows;
 	}
 
@@ -1100,13 +1092,13 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get startSeparatorTabIndex() {
-		if (this.showStartArrow) {
+		if (this.showStartSeparatorGrip) {
 			return 0;
 		}
 	}
 
 	get endSeparatorTabIndex() {
-		if (this.showEndArrow) {
+		if (this.showEndSeparatorGrip) {
 			return 0;
 		}
 		return -1;
@@ -1154,7 +1146,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get accStartSeparatorText() {
 		let name = this.accessibilityAttributes.startSeparator?.name;
-		if (!name && this.showStartArrow) {
+		if (!name && this.showStartSeparatorGrip) {
 			name = FlexibleColumnLayout.i18nBundle.getText(FCL_START_SEPARATOR_TOOLTIP);
 		}
 		return name;

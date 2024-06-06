@@ -214,30 +214,8 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 	};
 };
 
-const getNextLayoutByStartArrow = () => {
-	return {
-		"TwoColumnsStartExpanded": "TwoColumnsMidExpanded",
-		"TwoColumnsMidExpanded": "TwoColumnsStartExpanded",
-		"ThreeColumnsMidExpanded": "ThreeColumnsMidExpandedEndHidden",
-		"ThreeColumnsEndExpanded": "ThreeColumnsStartExpandedEndHidden",
-		"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpandedEndHidden",
-		"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsStartExpandedEndHidden",
-	};
-};
-
-const getNextLayoutByEndArrow = () => {
-	return {
-		"ThreeColumnsMidExpanded": "ThreeColumnsEndExpanded",
-		"ThreeColumnsEndExpanded": "ThreeColumnsMidExpanded",
-		"ThreeColumnsStartExpandedEndHidden": "ThreeColumnsMidExpanded",
-		"ThreeColumnsMidExpandedEndHidden": "ThreeColumnsMidExpanded",
-	};
-};
-
 export {
 	getLayoutsByMedia,
-	getNextLayoutByStartArrow,
-	getNextLayoutByEndArrow,
 };
 
 export type {
