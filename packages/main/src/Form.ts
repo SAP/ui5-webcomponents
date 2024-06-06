@@ -130,6 +130,7 @@ type ItemsInfo = {
  *
  * @public
  * @since 2.0.0
+ * @extends UI5Element
  */
 @customElement({
 	tag: "ui5-form",
