@@ -167,8 +167,8 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	* Defines if the `titleText` and `description` should wrap when there is not enough space.
 	* The possible values are:
-	* - "Normal" (default) - the texts should wrap.
-	* - "None" – the texts should truncate, and a `More/Less` button should be displayed.
+	* - `Normal` (default) - the texts should wrap.
+	* - `None` – the texts should truncate, and a `More/Less` button should be displayed.
 	* @default "Normal"
 	* @public
 	* @since 1.0.0-rc.15
