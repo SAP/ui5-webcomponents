@@ -508,15 +508,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.items.forEach(item => {
 			item._getRealDomRef = () => this._getPicker().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 		});
-
-		// Remove tabindex from the value state message links
-		this.valueStateMessage.forEach(item => {
-			item.querySelectorAll("a").forEach(
-				link => {
-					link.tabIndex = -1;
-				},
-			);
-		});
 	}
 
 	_focusin(e: FocusEvent) {
@@ -991,8 +982,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				selectedItem.focused = true;
 				this.focused = false;
 			} else if (this.open && this._filteredItems.length && !this.value.length) {
-				// If no item is selected, select the first one on "Show" (F4, Alt+Up/Down)
-				this._handleItemNavigation(e, 0, true /* isForward */);
+				// If no item is selected, select the first non-group item on "Show" (F4, Alt+Up/Down)
+				const firstNonGroupItem = this._getItems().findIndex(item => item._isVisible && !item.isGroupItem);
+				this._handleItemNavigation(e, firstNonGroupItem, true /* isForward */);
 			} else {
 				this.focused = true;
 			}
