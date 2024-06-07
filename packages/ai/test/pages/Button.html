@@ -1,22 +1,132 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta charset="utf-8" />
-	<title>AI Button Web Component</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<script data-config type="application/json">
-		{
-			"language": "EN"
-		}
+	<meta charset="utf-8">
+
+	<title>AI Button</title>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
 </head>
 
 <body>
-	<ui5-ai-button icon="da" end-icon="slim-arrow-down">Generate</ui5-ai-button>
-</body>
+	<ui5-title level="H3">Regular AI Button with Menu</ui5-title>
+	<br/>
 
+	<ui5-ai-button id="myAiButton">
+		<ui5-ai-button-state key="generate" text="Generate" icon="ai" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="generating" text="Stop Generation" icon="stop" next-state="generate"></ui5-ai-button-state>
+		<ui5-ai-button-state key="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+		<ui5-ai-button-state key="pause" text="Pause" icon="pause" next-state="generating"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">AI Button with state change prevention</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButton1">
+		<ui5-ai-button-state key="generate" text="Generate" icon="ai" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="generating" text="Stop Generation" icon="stop" next-state="revise"></ui5-ai-button-state>
+		<ui5-ai-button-state key="pause" text="Pause" icon="pause" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow" next-state="generate"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">Icon-only AI Button</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButton2" state="revise">
+		<ui5-ai-button-state key="generate" icon="ai" next-state="generating"></ui5-ai-button-state>
+		<ui5-ai-button-state key="generating" icon="stop" next-state="revise"></ui5-ai-button-state>
+		<ui5-ai-button-state key="revise" icon="ai" end-icon="navigation-down-arrow" next-state="generate"></ui5-ai-button-state>
+	</ui5-ai-button>
+
+	<ui5-menu id="menu">
+		<ui5-menu-item text="Regenerate"></ui5-menu-item>
+		<ui5-menu-item text="Fix Spelling & Grammar" starts-section></ui5-menu-item>
+		<ui5-menu-item text="Change Tone">
+			<ui5-menu-item text="Option 1"></ui5-menu-item>
+			<ui5-menu-item text="Option 2"></ui5-menu-item>
+			<ui5-menu-item text="Option 3"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Text Length">
+			<ui5-menu-item text="Short"></ui5-menu-item>
+			<ui5-menu-item text="Medium"></ui5-menu-item>
+			<ui5-menu-item text="Long"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Bulleted List"></ui5-menu-item>
+		<ui5-menu-item text="Translate">
+			<ui5-menu-item text="English"></ui5-menu-item>
+			<ui5-menu-item text="German"></ui5-menu-item>
+			<ui5-menu-item text="Spanish"></ui5-menu-item>
+		</ui5-menu-item>
+	</ui5-menu>
+
+	<script>
+		var generationId;
+
+		function startGeneration(button) {
+			console.warn("startGeneration");
+			generationId = setTimeout(function() {
+				console.warn("Generation completed");
+				button.state = "revise";
+			}, 3000);
+		}
+
+		function stopGeneration() {
+			console.warn("stopGeneration");
+			clearTimeout(generationId);
+		}
+
+		myAiButton.addEventListener("click", function(e) {
+			if (myAiButton.state === "revise") {
+				menu.opener = myAiButton;
+				menu.open = true;
+			}
+		});
+
+		myAiButton.addEventListener("state-change", function(e) {
+			const state = e.detail.state;
+
+			if (state === "generate" || state === "pause") {
+				stopGeneration();
+			} else if (state === "generating") {
+				startGeneration(myAiButton);
+			}
+		});
+
+		myAiButton1.addEventListener("click", function(e) {
+			if (e.target.state === "generating") {
+				e.preventDefault();
+				stopGeneration();
+				myAiButton1.state = "pause";
+			}
+		});
+
+		myAiButton1.addEventListener("state-change", function(e) {
+			const state = e.detail.state;
+
+			if (state === "generate" || state === "pause") {
+				stopGeneration();
+			} else if (state === "generating") {
+				startGeneration(myAiButton1);
+			}
+		});
+
+		menu.addEventListener("item-click", function(evt) {
+			if (evt.detail.text === "Regenerate") {
+				myAiButton.state = "generating";
+				startGeneration(myAiButton);
+			}
+		});
+
+	</script>
+
+</body>
 </html>

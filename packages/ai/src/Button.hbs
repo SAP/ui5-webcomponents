@@ -1,3 +1,16 @@
-<ui5-button icon="{{icon}}" end-icon="{{endIcon}}">
-	<slot></slot>
+<ui5-button
+	class="ui5-ai-button-inner"
+	design="{{design}}"
+	?disabled="{{disabled}}"
+	.icon={{_stateIcon}}
+	.endIcon={{_stateEndIcon}}
+   	@click={{_onclick}}
+>
+	{{#if _hasText}}
+		<div class="ui5-ai-button-text">{{_stateText}}</div>
+	{{/if}}
 </ui5-button>
+
+<div class="ui5-ai-button-hidden">
+	<ui5-button></ui5-button>
+</div>
