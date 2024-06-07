@@ -4,7 +4,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	padding: 0 var(--_ui5-toolbar-padding-left) 0 var(--_ui5-toolbar-padding-right);
 	box-sizing: border-box;
 	border-bottom: 0.0625rem solid var(--sapGroup_ContentBorderColor);
 }
@@ -19,6 +18,15 @@
 	display: inherit;
 	align-items: inherit;
 	justify-content: inherit;
+	padding: 0 var(--_ui5-toolbar-padding-left) 0 var(--_ui5-toolbar-padding-right);
+}
+
+.ui5-tb-items.ui5-tb-items-design-transparent {
+	background-color: transparent;
+}
+
+.ui5-tb-items.ui5-tb-items-design-solid {
+	background-color: var(--sapList_HeaderBackground);
 }
 
 .ui5-tb-items-full-width {
