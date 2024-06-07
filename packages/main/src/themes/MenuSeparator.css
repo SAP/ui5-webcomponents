@@ -10,3 +10,8 @@
 :host([actionable]:not([disabled])) {
 	cursor: default;
 }
+
+:host([actionable][active]:not([data-moving])) .ui5-li-root,
+:host([actionable]:not([active],[selected]):hover) .ui5-li-root {
+	background-color: var(--sapList_Background);
+}
