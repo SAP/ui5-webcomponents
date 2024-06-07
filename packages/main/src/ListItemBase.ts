@@ -106,12 +106,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 			return;
 		}
 
-		this.focused = true;
 		this.fireEvent("_focused", e);
-	}
-
-	_onfocusout() {
-		this.focused = false;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -121,6 +116,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 		if (isTabPrevious(e)) {
 			return this._handleTabPrevious(e);
+		}
+
+		if (getEventMark(e) === "button") {
+			return;
 		}
 
 		if (isSpace(e)) {
@@ -133,6 +132,9 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		if (getEventMark(e) === "button") {
+			return;
+		}
 		if (isSpace(e)) {
 			this.fireItemPress(e);
 		}
@@ -171,19 +173,19 @@ class ListItemBase extends UI5Element implements ITabbable {
 		}
 	}
 
-	/*
-	* Determines if th current list item either has no tabbable content or
-	* [Tab] is performed onto the last tabbale content item.
-	*/
+	/**
+	 * Determines if th current list item either has no tabbable content or
+	 * [Tab] is performed onto the last tabbale content item.
+	 */
 	shouldForwardTabAfter() {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);
 
 		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
 	}
 
-	/*
-	* Determines if the current list item is target of [SHIFT+TAB].
-	*/
+	/**
+	 * Determines if the current list item is target of [SHIFT+TAB].
+	 */
 	shouldForwardTabBefore(target: HTMLElement) {
 		return this.getFocusDomRef() === target;
 	}

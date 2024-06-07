@@ -1,8 +1,8 @@
-name: Deploy Website [on push]
+name: Deploy Website [auto]
 
 on:
-  push:
-    branches: [ release-2.0 ]
+  schedule:
+  - cron: "00 00 * * *"
 
 jobs:
   deploy:
@@ -34,5 +34,5 @@ jobs:
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: packages/website/build # The folder the action should deploy.
-        target-folder: v2
+        target-folder: nightly
         clean: true

@@ -48,8 +48,7 @@
 	--_ui5_color-palette-item-hover-margin: 0.0625rem;
 	--_ui5_color-palette-row-height: 7.5rem;
 	--_ui5_color-palette-button-height: 2rem;
-	--_ui5_color-palette-item-before-focus-offset: -0.25rem;
-	--_ui5_color-palette-item-after-focus-offset: -0.125rem;
+	--_ui5_color-palette-item-before-focus-inset: -0.25rem;
 	--_ui5_color_picker_slider_container_margin_top: -9px;
 
 	/* DayPicker */

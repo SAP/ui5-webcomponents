@@ -13,3 +13,7 @@
 @import "../base/Wizard-parameters.css";
 @import "./WizardTab-parameters.css";
 @import "./ShellBar-parameters.css";
+@import "../base/DynamicPage-parameters.css";
+@import "./DynamicPageTitle-parameters.css";
+@import "../base/DynamicPageHeader-parameters.css";
+@import "../sap_fiori_3/DynamicPageHeaderActions-parameters.css";

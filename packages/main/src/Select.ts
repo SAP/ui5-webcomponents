@@ -119,11 +119,12 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/IOption";` (comes with `ui5-select`)
- * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/Option";`
+ * `import "@ui5/webcomponents/dist/OptionCustom";`
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart popover - Used to style the popover element
  * @since 0.8.0
  */
 @customElement({
@@ -529,6 +530,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 			if (currentIndex !== this._selectedIndex) {
 				this.itemSelectionAnnounce();
+				this._scrollSelectedItem();
 			}
 		}
 	}
