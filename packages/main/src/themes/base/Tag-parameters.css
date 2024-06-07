@@ -1,11 +1,8 @@
 :root {
 	--_ui5-tag-height: 1rem;
-	--_ui5-tag-border: 0.0625em solid;
-	--_ui5-tag-border-radius: 0.5rem;
 	--_ui5-tag-padding-inline: 0.3125em;
 	--_ui5-tag-padding-inline-icon-only: 0.1875rem;
 	--_ui5-tag-text-transform: uppercase;
-	--_ui5-tag-icon-height: 0.75em;
 	--_ui5-tag-icon-width: 0.75rem;
 	--_ui5-tag-icon-gap: 0.125rem;
 	--_ui5-tag-font-size: var(--sapFontSmallSize);
@@ -102,12 +99,6 @@
 	--ui5-tag-set2-color-scheme-9-background: var(--sapIndicationColor_9b);
 	--ui5-tag-set2-color-scheme-9-border: var(--sapIndicationColor_9b_BorderColor);
 
-	--ui5-tag-set2-color-scheme-9-hover-background: var(--sapIndicationColor_9b_Hover_Background);
-
-	--ui5-tag-set2-color-scheme-9-active-color: var(--sapIndicationColor_9_Active_TextColor);
-	--ui5-tag-set2-color-scheme-9-active-background: var(--sapIndicationColor_9_Active_Background);
-	--ui5-tag-set2-color-scheme-9-active-border: var(--sapIndicationColor_9_Active_BorderColor);
-
 	--ui5-tag-set2-color-scheme-10-color: var(--sapIndicationColor_10);
 	--ui5-tag-set2-color-scheme-10-background: var(--sapIndicationColor_10b);
 	--ui5-tag-set2-color-scheme-10-border: var(--sapIndicationColor_10b_BorderColor);
@@ -124,7 +115,7 @@
 	--_ui5-tag-font-size_size_l: 1.25rem;
 	--_ui5-tag-icon_min_width_size_l: 1.25rem;
 	--_ui5-tag-icon_min_height_size_l:1.25rem
-	--_ui5-tag-icon_height_size_l:1.25rem;
+	--_ui5-tag-icon_height_size_l: 1.25rem;
 	--_ui5-tag-text_padding_size_l: 0.125rem 0.25rem;
 	--_ui5-tag-text-height_size_l: 1.5rem;
 }

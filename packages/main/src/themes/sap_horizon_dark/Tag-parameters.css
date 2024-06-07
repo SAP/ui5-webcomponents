@@ -2,12 +2,9 @@
 
 :root {
 	--_ui5-tag-height: 1.375rem;
-	--_ui5-tag-border: none;
-	--_ui5-tag-border-radius: 0.25rem;
 	--_ui5-tag-padding-inline: 0.375em;
 	--_ui5-tag-padding-inline-icon-only: 0.313rem;
 	--_ui5-tag-text-transform: none;
-	--_ui5-tag-icon-height: 1rem;
 	--_ui5-tag-icon-gap: 0.25rem;
 	--_ui5-tag-font-size: var(--sapFontSize);
 	--_ui5-tag-font: var(--sapFontSemiboldDuplexFamily);
