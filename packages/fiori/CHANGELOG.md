@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* **ui5-notification-list:** improved accessibility ([#9070](https://github.com/SAP/ui5-webcomponents/issues/9070)) ([5e62d4a](https://github.com/SAP/ui5-webcomponents/commit/5e62d4af792d7043f931b0f8f894d36a85f18395))
+* **ui5-shellbar:** improved samples accessibility ([#8847](https://github.com/SAP/ui5-webcomponents/issues/8847)) ([7563e7d](https://github.com/SAP/ui5-webcomponents/commit/7563e7d942d06865d8fcc44d9f4dc1e1d6179e97)), closes [#8821](https://github.com/SAP/ui5-webcomponents/issues/8821)
+
+
+### Code Refactoring
+
+* **ui5-link:** wrap text by default ([#9006](https://github.com/SAP/ui5-webcomponents/issues/9006)) ([1924b54](https://github.com/SAP/ui5-webcomponents/commit/1924b5457f22c428527f8be3fbdd46d9d5d7ffed))
+
+
+### BREAKING CHANGES
+
+* **ui5-link:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+```
+
+
+
+
+
 # [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
 
 
