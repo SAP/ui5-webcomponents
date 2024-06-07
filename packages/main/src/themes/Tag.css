@@ -82,11 +82,15 @@
 ::slotted([ui5-icon]) {
 	width: var(--_ui5-tag-icon-width);
 	min-width: var(--_ui5-tag-icon-width);
-	height: var(--_ui5-tag-height);
-	min-height: var(--_ui5-tag-height);
+	height: var(--_ui5-tag-icon-height);
 	color: inherit;
 	pointer-events: none;
 	align-self: flex-start;
+}
+
+:host([_is-tag-design]) [ui5-icon],
+:host([_is-tag-design]) ::slotted([ui5-icon]) {
+	height: calc(var(--_ui5-tag-height) - 2px); /* remove width of the border since tag root is with box-sizing:border-box*/
 }
 
 :host([wrapping-type="None"]) [ui5-icon],
