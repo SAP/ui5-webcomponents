@@ -146,10 +146,12 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines the items of this component.
+	 *
+	 * **Note:** Use `ui5-menu-item` and `ui5-menu-separator` for their intended design.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<MenuItem>;
+	items!: Array<IMenuItem>;
 
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
@@ -227,7 +229,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _menuItems() {
-		return this.items.filter(item => !item.isSeparator);
+		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
 	_closeAll() {

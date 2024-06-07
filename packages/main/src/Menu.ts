@@ -379,10 +379,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		const menuItems = this._menuItems;
-		if (menuItems.length) {
-			menuItems[0].focus();
-		}
+		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
 
