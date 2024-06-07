@@ -8,6 +8,7 @@ import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import "@ui5/webcomponents-icons/dist/arrow-right.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
@@ -197,7 +198,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	_onclick = (e: PointerEvent) => {
 		if (!this.sideNavCollapsed
 			&& this.wholeItemToggleable
-			&& e.pointerType === "mouse") {
+			&& isDesktop()) {
 			e.preventDefault();
 			e.stopPropagation();
 			this.expanded = !this.expanded;
