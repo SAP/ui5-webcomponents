@@ -124,6 +124,7 @@ type SelectLiveChangeEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart popover - Used to style the popover element
  * @since 0.8.0
  */
 @customElement({

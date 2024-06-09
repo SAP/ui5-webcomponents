@@ -56,13 +56,13 @@ const BREAKPOINTS = {
 	"TABLET": 1023,
 } as const;
 
-const COLUMN_MIN_WIDTH = 312;
-
 const COLUMN = {
 	START: 0,
 	MID: 1,
 	END: 2,
 } as const;
+
+const COLUMN_MIN_WIDTH = 312;
 
 type SeparatorMovementSession = {
 	separator: HTMLElement,
