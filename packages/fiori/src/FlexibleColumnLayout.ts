@@ -1052,11 +1052,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartSeparator() {
-		return this.effectiveSeparatorsInfo[0].separator || this.startSeparatorGripVisibility;
+		return this.effectiveSeparatorsInfo[0].visible;
 	}
 
 	get showEndSeparator() {
-		return this.effectiveSeparatorsInfo[1].separator || this.endSeparatorGripVisibility;
+		return this.effectiveSeparatorsInfo[1].visible;
 	}
 
 	get showStartSeparatorGrip() {
@@ -1068,15 +1068,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get startSeparatorGripVisibility() {
-		return this.effectiveSeparatorsInfo[0].visible;
+		return this.effectiveSeparatorsInfo[0].gripVisible;
 	}
 
 	get endSeparatorGripVisibility() {
-		return this.effectiveSeparatorsInfo[1].visible;
+		return this.effectiveSeparatorsInfo[1].gripVisible;
 	}
 
 	get effectiveSeparatorsInfo() {
-		return this._effectiveLayoutsByMedia[this.media][this.effectiveLayout].arrows;
+		return this._effectiveLayoutsByMedia[this.media][this.effectiveLayout].separators;
 	}
 
 	get effectiveLayout() {
