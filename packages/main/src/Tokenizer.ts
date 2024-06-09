@@ -129,7 +129,7 @@ enum ClipboardDataOperation {
  * `import "@ui5/webcomponents/dist/Tokenizer.js";`
  *
  * @constructor
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  * @since 2.0.0
  */
