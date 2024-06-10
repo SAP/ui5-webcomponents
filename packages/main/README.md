@@ -50,7 +50,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
-| Multi ComboBox Group Item| `ui5-mcb-group-item`        | comes with `ui5-multi-combobox`                            |
+| Multi ComboBox Item Group| `ui5-mcb-item-group`        | comes with `ui5-multi-combobox`                            |
 | Multi Input              | `ui5-multi-input`           | `import "@ui5/webcomponents/dist/MultiInput.js";`          |
 | Panel                    | `ui5-panel`                 | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`               | `import "@ui5/webcomponents/dist/Popover.js";`             |
@@ -85,7 +85,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 `import "@ui5/webcomponents/dist/Assets.js";`
 
 | Assets | Module | Notes
-|------------|-----------|----------- 
+|------------|-----------|-----------
 | `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br/><br/> *Automatically imports also:<br/> `@ui5/webcomponents-localization/dist/Assets.js` <br/> and <br/> `@ui5/webcomponents-theming/dist/Assets.js`*
 
 ## Provided features

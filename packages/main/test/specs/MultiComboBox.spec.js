@@ -1721,7 +1721,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
 			let popover = await mcb.shadow$("ui5-responsive-popover");
-			let groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
+			let groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 			let listItems = await popover.$("ui5-list").$$("ui5-li");
 
 			await arrow.click();
@@ -1732,7 +1732,7 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("B");
 
 			popover = await mcb.shadow$("ui5-responsive-popover");
-			groupItems = await popover.$("ui5-list").$$("ui5-li-group-header");
+			groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 			listItems = await popover.$("ui5-list").$$("ui5-li");
 
 			assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
@@ -1751,13 +1751,29 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
+			let groupItem;
 
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			const groupItem = await popover.$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
+		});
+
+		it("Tests group item focusability with keyboard", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-grouping");
+			const input = await mcb.shadow$("#ui5-multi-combobox-input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+
+			await input.click();
+			await input.keys("F4");
+
+			let firstItem = await popover.$("ui5-list").$("ui5-li");
+
+			assert.ok(await firstItem.matches(":focus"), "The first group header should be focused");
 		});
 
 		it("Group header keyboard handling", async () => {
@@ -1772,7 +1788,7 @@ describe("MultiComboBox general interaction", () => {
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			await groupItem.keys("Enter");
 
@@ -1780,7 +1796,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated");
 
-			groupItem = await popover.$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			await groupItem.keys("Space");
 
@@ -1788,7 +1804,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
 
-			groupItem = await popover.$("ui5-li-group-header");
+			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
 
 			await groupItem.keys("ArrowUp");
 
