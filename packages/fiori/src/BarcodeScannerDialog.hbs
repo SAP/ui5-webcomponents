@@ -4,12 +4,16 @@
 	@ui5-before-open={{_startReader}}
 	@ui5-before-close={{_fireCloseEvent}}
 	@ui5-close={{_resetReader}}>
+
 	<div class="ui5-barcode-scanner-dialog-video-wrapper">
 		<video class="ui5-barcode-scanner-dialog-video"></video>
+		<div class="ui5-barcode-scanner-dialog-capture-region"></div>
 	</div>
+
 	<div slot="footer" class="ui5-barcode-scanner-dialog-footer">
 		<ui5-button design="Transparent" @click={{_closeDialog}}>{{_cancelButtonText}}</ui5-button>
 	</div>
+
 	<ui5-busy-indicator
 		?active={{loading}}
 		size="L"

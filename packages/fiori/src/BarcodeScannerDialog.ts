@@ -10,6 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { Result, Exception } from "@zxing/library/esm5/index.js";
+import type ResultPoint from "@zxing/library/esm5/core/ResultPoint.js";
 
 // Texts
 import {
@@ -209,6 +210,10 @@ class BarcodeScannerDialog extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
+	_getCaptureRegion() {
+		return this.shadowRoot!.querySelector<HTMLDivElement>(".ui5-barcode-scanner-dialog-capture-region")!;
+	}
+
 	_closeDialog() {
 		this.open = false;
 	}
@@ -230,19 +235,64 @@ class BarcodeScannerDialog extends UI5Element {
 
 	_decodeFromCamera() {
 		const videoElement = this._getVideoElement();
-		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
-			this.loading = false;
-			if (result) {
-				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
-					{
-						text: result.getText(),
-						rawBytes: result.getRawBytes(),
-					});
-			}
-			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
-			}
-		}).catch((err: Error) => this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
+
+		try {
+			this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
+				this.loading = false;
+
+				if (result) {
+					this._handleDecodeSuccess(result, videoElement);
+				} else if (err && !(err instanceof NotFoundException)) {
+					this._handleDecodeError(err);
+				}
+			});
+		} catch (err) {
+			this._handleDecodeError(err);
+		}
+	}
+
+	_isWithinCenteredRegion(point: ResultPoint, scaleX: number, scaleY: number, videoRect: DOMRect, captureRegionRect: DOMRect) {
+		const pointX = videoRect.left + point.getX() * scaleX;
+		const pointY = videoRect.top + point.getY() * scaleY;
+
+		return (
+			pointX >= captureRegionRect.left
+			&& pointX <= captureRegionRect.right
+			&& pointY >= captureRegionRect.top
+			&& pointY <= captureRegionRect.bottom
+		);
+	}
+
+	_handleDecodeSuccess(result: Result, videoElement: HTMLVideoElement) {
+		const points = result.getResultPoints();
+		const videoRect = videoElement.getBoundingClientRect();
+		const captureRegionRect = this._getCaptureRegion().getBoundingClientRect();
+
+		// These factors transform the point coordinates from the video element's coordinate system
+		// to the screen coordinate system.
+		const scaleX = videoRect.width / videoElement.videoWidth;
+		const scaleY = videoRect.height / videoElement.videoHeight;
+
+		const isPointWithinRegion = (point: ResultPoint) => this._isWithinCenteredRegion(point, scaleX, scaleY, videoRect, captureRegionRect);
+
+		if (points.every(isPointWithinRegion)) {
+			this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
+				text: result.getText(),
+				rawBytes: result.getRawBytes(),
+			});
+		}
+	}
+
+	_handleDecodeError(err: unknown) {
+		let errorMessage: string;
+
+		if (err instanceof Error) {
+			errorMessage = err.message;
+		} else {
+			errorMessage = "An unknown error occurred";
+		}
+
+		this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: errorMessage });
 	}
 
 	get _cancelButtonText() {
