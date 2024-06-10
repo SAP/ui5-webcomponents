@@ -1,22 +1,17 @@
 /**
  * Defines the available toolbar designs.
  * @public
+ * @since 2.0.0
  */
 enum ToolbarDesign {
-	/**
-	 * The toolbar can be inserted into other controls and if the design is `Auto` then it inherits the design from parent control.
-	 * @public
-	 */
-	Auto = "Auto",
-
     /**
-	 * The toolbar has a solid background. Its content will be rendered in a standard way.
+	 * The toolbar and its content will be displayed with solid background.
 	 * @public
 	 */
 	Solid = "Solid",
 
 	/**
-	 * The toolbar and its content will be displayed transparent.
+	 * The toolbar and its content will be displayed with transparent background.
 	 * @public
 	 */
 	Transparent = "Transparent",

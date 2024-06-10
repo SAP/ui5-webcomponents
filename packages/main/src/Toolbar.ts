@@ -132,10 +132,10 @@ class Toolbar extends UI5Element {
 	/**
 	 * Defines the toolbar design.
 	 * @public
-	 * @default "Auto"
+	 * @default "Solid"
 	 * @since 2.0.0
 	 */
-	@property({ type: ToolbarDesign, defaultValue: ToolbarDesign.Auto })
+	@property({ type: ToolbarDesign, defaultValue: ToolbarDesign.Solid })
 	design!: `${ToolbarDesign}`;
 
 	/**
@@ -154,7 +154,6 @@ class Toolbar extends UI5Element {
 	minContentWidth = 0;
 	popoverOpen = false;
 	itemsWidthMeasured = false;
-	_sAutoDesign = ToolbarDesign.Auto;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
@@ -232,12 +231,10 @@ class Toolbar extends UI5Element {
 	}
 
 	get classes() {
-		const activeDesignClass = `ui5-tb-items-design-${this.getActiveDesign().toLowerCase()}`;
 		return {
 			items: {
 				"ui5-tb-items": true,
 				"ui5-tb-items-full-width": this.hasFlexibleSpacers,
-				[activeDesignClass]: true,
 			},
 			overflow: {
 				"ui5-overflow-list--alignleft": this.hasItemWithText,
@@ -607,26 +604,6 @@ class Toolbar extends UI5Element {
 
 	getRegisteredToolbarItemByID(id: string): HTMLElement | null {
 		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
-	}
-
-	/*
-	 * Design property setter.
-	 * Second parameter can be used to define auto design context.
-	 * **Note:** When the second parameter is used, Toolbar does not rerender. This should be done by the setter.
-	 */
-
-	setDesign(sDesign: ToolbarDesign, bSetAutoDesign: boolean) {
-		if (bSetAutoDesign) {
-			this._sAutoDesign = sDesign;
-			return this;
-		}
-	}
-
-	/**
-	 * Returns the currently applied design property of the Toolbar.
-	 */
-	getActiveDesign() {
-		return this.design !== ToolbarDesign.Auto ? this.design : this._sAutoDesign;
 	}
 }
 
