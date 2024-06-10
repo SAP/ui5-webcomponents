@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import {
 	CAL_LEGEND_TODAY_TEXT,

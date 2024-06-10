@@ -17,9 +17,9 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/information.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 import TagDesign from "./types/TagDesign.js";
-import TagSize from "./types/TagSize.js";
+import type TagSize from "./types/TagSize.js";
 // Template
 import TagTemplate from "./generated/templates/TagTemplate.lit.js";
 

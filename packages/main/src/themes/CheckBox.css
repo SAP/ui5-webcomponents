@@ -61,7 +61,7 @@
 	align-self: center;
 }
 
-:host([desktop][wrapping-type="Normal"]) .ui5-checkbox-root:focus-within::before,
+:host([desktop][wrapping-type="Normal"]) .ui5-checkbox-root:focus::before,
 :host([wrapping-type="Normal"]) .ui5-checkbox-root:focus-visible::before {
 	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
 }
@@ -133,7 +133,7 @@
 }
 
 /* focused */
-:host([desktop]) .ui5-checkbox-root:focus-within::before,
+:host([desktop]) .ui5-checkbox-root:focus::before,
 .ui5-checkbox-root:focus-visible::before {
 	display: var(--_ui5_checkbox_focus_outline_display);
 	content: "";
@@ -148,7 +148,7 @@
 	padding-inline-end: var(--_ui5_checkbox_right_focus_distance);
 }
 
-:host([text]) .ui5-checkbox-root:focus-within::before,
+:host([text]) .ui5-checkbox-root:focus::before,
 :host([text]) .ui5-checkbox-root:focus-visible::before {
 	inset-inline-end: 0;
 }

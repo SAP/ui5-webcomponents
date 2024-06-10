@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import BarDesign from "./types/BarDesign.js";
+import type BarDesign from "./types/BarDesign.js";
 
 // Template
 import BarTemplate from "./generated/templates/BarTemplate.lit.js";

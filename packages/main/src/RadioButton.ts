@@ -19,7 +19,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -178,11 +178,11 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * Defines whether the component text wraps when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 * @default "None"
+	 * @default "Normal"
 	 * @public
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "None";
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the accessible ARIA name of the component.

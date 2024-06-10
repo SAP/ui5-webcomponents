@@ -12,8 +12,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
-import WrappingType from "./types/WrappingType.js";
-import LinkAccessibleRole from "./types/LinkAccessibleRole.js";
+import type WrappingType from "./types/WrappingType.js";
+import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 

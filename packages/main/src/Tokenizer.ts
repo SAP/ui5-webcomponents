@@ -13,7 +13,8 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import {
 	isSpace,
@@ -52,8 +53,8 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import StandardListItem from "./StandardListItem.js";
-import Token from "./Token.js";
+import ListItemStandard from "./ListItemStandard.js";
+import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
@@ -74,7 +75,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-import ListItem from "./ListItem.js";
+import type ListItem from "./ListItem.js";
 
 type TokenCountMapType = { [x: number]: I18nText };
 
@@ -128,7 +129,7 @@ enum ClipboardDataOperation {
  * `import "@ui5/webcomponents/dist/Tokenizer.js";`
  *
  * @constructor
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  * @since 2.0.0
  */
@@ -146,7 +147,7 @@ enum ClipboardDataOperation {
 	dependencies: [
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Title,
 		Button,
 		Icon,

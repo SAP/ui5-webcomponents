@@ -11,7 +11,7 @@ import FormTemplate from "./generated/templates/FormTemplate.lit.js";
 import FormCss from "./generated/themes/Form.css.js";
 
 import Title from "./Title.js";
-import FormItemSpacing from "./types/FormItemSpacing.js";
+import type FormItemSpacing from "./types/FormItemSpacing.js";
 import type FormGroup from "./FormGroup.js";
 
 const additionalStylesMap = new Map<string, string>();
@@ -129,6 +129,7 @@ type ItemsInfo = {
  *
  * @public
  * @since 2.0.0
+ * @extends UI5Element
  */
 @customElement({
 	tag: "ui5-form",

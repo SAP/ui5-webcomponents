@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type FormItem from "./FormItem.js";
 import type { IFormItem } from "./Form.js";
-import FormItemSpacing from "./types/FormItemSpacing.js";
+import type FormItemSpacing from "./types/FormItemSpacing.js";
 
 /**
  * @class
@@ -30,6 +30,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  *
  * @public
  * @since 2.0.0
+ * @extends UI5Element
  */
 @customElement("ui5-form-group")
 class FormGroup extends UI5Element implements IFormItem {

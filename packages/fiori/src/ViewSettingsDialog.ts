@@ -14,7 +14,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
@@ -113,7 +113,7 @@ type VSDInternalSettings = {
 		Dialog,
 		Label,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroup,
 		SegmentedButton,
 		SegmentedButtonItem,

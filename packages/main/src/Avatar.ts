@@ -23,9 +23,9 @@ import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 import AvatarCss from "./generated/themes/Avatar.css.js";
 
 import Icon from "./Icon.js";
-import AvatarSize from "./types/AvatarSize.js";
-import AvatarShape from "./types/AvatarShape.js";
-import AvatarColorScheme from "./types/AvatarColorScheme.js";
+import type AvatarSize from "./types/AvatarSize.js";
+import type AvatarShape from "./types/AvatarShape.js";
+import type AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";

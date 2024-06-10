@@ -69,13 +69,27 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
 	currClass.description = normalizeDescription(classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description);
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
-		.map(tag => getReference(ts, normalizeTagType(tag.type), classNode, moduleDoc.path))
+		.map(tag => {
+			const correctInterfaceDescription = classNode?.heritageClauses?.some(heritageClause => {
+				return heritageClause?.types?.some(type => type.expression?.text === normalizeTagType(tag.type));
+			});
+
+			if (!correctInterfaceDescription) {
+				logDocumentationError(moduleDoc.path, `@interface {${tag.type}} tag is used, but the class doesn't implement the corresponding interface`)
+			}
+
+			return getReference(ts, normalizeTagType(tag.type), classNode, moduleDoc.path)
+		})
 		.filter(Boolean);
 
 
 	if (hasTag(classParsedJsDoc, "extends")) {
 		const superclassTag = findTag(classParsedJsDoc, "extends");
 		currClass.superclass = getReference(ts, superclassTag.name, classNode, moduleDoc.path);
+
+		if (classNode?.heritageClauses?.[0]?.types?.[0]?.expression?.text !== superclassTag.name) {
+			logDocumentationError(moduleDoc.path, `@extends ${superclassTag.name} is used, but the class doesn't extend the corresponding superclass`)
+		}
 
 		if (currClass.superclass?.name === "UI5Element") {
 			currClass.customElement = true;

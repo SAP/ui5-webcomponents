@@ -30,7 +30,7 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
-import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
+import type ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -73,7 +73,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 /**
  * @class
  * A class to serve as a base
- * for the `StandardListItem` and `CustomListItem` classes.
+ * for the `ListItemStandard` and `ListItemCustom` classes.
  * @constructor
  * @abstract
  * @extends ListItemBase
@@ -192,7 +192,7 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase, StandardListItem
+	// used in template, implemented in TreeItemBase, ListItemStandard
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
@@ -305,8 +305,14 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer) {
+			return;
+		}
+
 		if (e.target === this._listItem) {
 			this.setAttribute("data-moving", "");
+			e.dataTransfer.dropEffect = "move";
+			e.dataTransfer.effectAllowed = "move";
 		}
 	}
 

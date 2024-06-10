@@ -11,7 +11,7 @@ import FormItemTemplate from "./generated/templates/FormItemTemplate.lit.js";
 import FormItemCss from "./generated/themes/FormItem.css.js";
 
 import type { IFormItem } from "./Form.js";
-import FormItemSpacing from "./types/FormItemSpacing.js";
+import type FormItemSpacing from "./types/FormItemSpacing.js";
 
 /**
  * @class
@@ -36,6 +36,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  * @constructor
  * @public
  * @since 2.0.0
+ * @extends UI5Element
  */
 @customElement({
 	tag: "ui5-form-item",

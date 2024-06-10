@@ -7,7 +7,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
-import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
+import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
 import PageTemplate from "./generated/templates/PageTemplate.lit.js";

@@ -2,7 +2,8 @@
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
-import UI5ElementMetadata, {
+import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import type {
 	Slot,
 	SlotValue,
 	State,

@@ -14,7 +14,7 @@ import TreeItem from "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import TreeList from "./TreeList.js";
-import ListSelectionMode from "./types/ListSelectionMode.js";
+import type ListSelectionMode from "./types/ListSelectionMode.js";
 import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type {
 	TreeItemBaseToggleEventDetail,

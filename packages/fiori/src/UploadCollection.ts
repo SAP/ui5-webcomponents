@@ -30,7 +30,7 @@ import {
 } from "./upload-utils/UploadCollectionBodyDnD.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
-import UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
+import type UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";

@@ -16,7 +16,7 @@ import "@ui5/webcomponents-icons/dist/tri-state.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,

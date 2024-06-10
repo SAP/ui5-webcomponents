@@ -14,8 +14,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import TitleLevel from "./types/TitleLevel.js";
-import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
+import type TitleLevel from "./types/TitleLevel.js";
+import type PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
 import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";

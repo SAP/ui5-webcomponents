@@ -9,7 +9,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import type BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
 

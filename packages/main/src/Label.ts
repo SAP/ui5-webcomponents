@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 // Template

@@ -18,7 +18,7 @@ import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/Focu
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
-import WizardContentLayout from "./types/WizardContentLayout.js";
+import type WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
 import {

@@ -2,8 +2,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Button from "./Button.js";
-import type { ButtonAccessibilityAttributes as ToolbarAccessibilityAttributes } from "./Button.js";
-import ButtonDesign from "./types/ButtonDesign.js";
+import type { ButtonAccessibilityAttributes } from "./Button.js";
+import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import type { IEventOptions } from "./ToolbarItem.js";
@@ -13,6 +13,8 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
 import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
+
+type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
 /**
  * @class
@@ -134,7 +136,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: ToolbarAccessibilityAttributes = {};
+	accessibilityAttributes: ToolbarButtonAccessibilityAttributes = {};
 
 	/**
 	 * Button text
@@ -187,5 +189,5 @@ ToolbarButton.define();
 export default ToolbarButton;
 
 export type {
-	ToolbarAccessibilityAttributes,
+	ToolbarButtonAccessibilityAttributes,
 };

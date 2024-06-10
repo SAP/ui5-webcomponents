@@ -75,13 +75,14 @@ import List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import ComboBoxItemGroup, { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
 import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
-import ComboBoxFilter from "./types/ComboBoxFilter.js";
+import type ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import Input, { InputEventDetail } from "./Input.js";
+import Input from "./Input.js";
+import type { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
 
 const SKIP_ITEMS_SIZE = 10;
@@ -104,7 +105,7 @@ interface IComboBoxItem extends UI5Element {
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 
-type ComboBoxListItem = StandardListItem & {
+type ComboBoxListItem = ListItemStandard & {
 	mappedItem: ComboBoxItem
 };
 
@@ -177,7 +178,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		List,
 		BusyIndicator,
 		Button,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroup,
 		ListItemGroupHeader,
 		Popover,

@@ -29,8 +29,8 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
-import ListAccessibleRole from "./types/ListAccessibleRole.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListAccessibleRole from "./types/ListAccessibleRole.js";
+import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
 } from "./ListItemBase.js";
@@ -55,8 +55,8 @@ import {
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
 } from "./generated/i18n/i18n-defaults.js";
-import CheckBox from "./CheckBox.js";
-import RadioButton from "./RadioButton.js";
+import type CheckBox from "./CheckBox.js";
+import type RadioButton from "./RadioButton.js";
 import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
@@ -149,9 +149,9 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/List.js";`
  *
- * `import "@ui5/webcomponents/dist/StandardListItem.js";` (for `ui5-li`)
+ * `import "@ui5/webcomponents/dist/ListItemStandard.js";` (for `ui5-li`)
  *
- * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
+ * `import "@ui5/webcomponents/dist/ListItemCustom.js";` (for `ui5-li-custom`)
  *
  * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor

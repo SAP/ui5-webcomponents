@@ -1,4 +1,5 @@
-import UI5Element, { ChangeInfo } from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
+import type { ChangeInfo } from "../UI5Element.js";
 
 type InvalidateCallback = (changeInfo: ChangeInfo) => void;
 type MutationCallback = () => void;

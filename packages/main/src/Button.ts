@@ -28,7 +28,7 @@ import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/Inp
 import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 import IconMode from "./types/IconMode.js";
@@ -425,7 +425,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 		if (this._cancelAction) {
 			e.preventDefault();
 		}
-		markEvent(e, "button");
+
+		if (isSpace(e)) {
+			markEvent(e, "button");
+		}
 
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
@@ -526,6 +529,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescribedbyText() {
+		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
 	}
 
 	get _isSubmit() {

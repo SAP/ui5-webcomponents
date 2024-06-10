@@ -30,8 +30,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
-import BorderDesign from "./types/BorderDesign.js";
+import type BackgroundDesign from "./types/BackgroundDesign.js";
+import type BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";

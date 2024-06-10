@@ -19,7 +19,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
-import BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
+import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
@@ -32,7 +32,7 @@ import type { LinkClickEventDetail } from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -92,7 +92,7 @@ type BreadcrumbsItemClickEventDetail = {
 		Link,
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Icon,
 		Button,
 	],
