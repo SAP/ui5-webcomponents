@@ -937,12 +937,6 @@ class FlexibleColumnLayout extends UI5Element {
 		return this._columnLayout;
 	}
 
-	/* set columnLayout(newColumnLayout: FlexibleColumnLayoutColumnLayout) {
-		const media = this.media as MEDIA.TABLET | MEDIA.DESKTOP;
-		// TODO: first check if valid for media and layout
-		this._userDefinedColumnLayouts[media][this.layout] = newColumnLayout;
-	} */
-
 	/**
 	* Returns if the `start` column is visible.
 	* @default true

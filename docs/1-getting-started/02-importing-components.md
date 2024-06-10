@@ -33,7 +33,7 @@ For example:
 import "@ui5/webcomponents/dist/Button.js"; // ui5-button
 import "@ui5/webcomponents/dist/Input.js"; // ui5-input
 import "@ui5/webcomponents/dist/List.js"; // ui5-list
-import "@ui5/webcomponents/dist/StandardListItem.js"; // ui5-li
+import "@ui5/webcomponents/dist/ListItemStandard.js"; // ui5-li
 
 import "@ui5/webcomponents-fiori/dist/Wizard.js"; // ui5-wizard
 ```
@@ -53,4 +53,4 @@ For example:
 ```
 
 **Note:** For most components the name of the module (f.e. `Button.js`, `Icon.js`) coincides with the name of the tag (`ui5-button`, `ui5-icon`), 
-whereas for others this is not the case (f.e. `StandardListItem.js` and `ui5-li`). Always consult the documentation when in doubt.
+whereas for others this is not the case (f.e. `ListItemStandard.js` and `ui5-li`). Always consult the documentation when in doubt.

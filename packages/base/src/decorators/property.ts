@@ -1,5 +1,5 @@
 import type UI5Element from "../UI5Element.js";
-import { Property } from "../UI5ElementMetadata.js";
+import type { Property } from "../UI5ElementMetadata.js";
 
 /**
  * Returns a property decorator.

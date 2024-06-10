@@ -1,6 +1,6 @@
 import getSharedResource from "./getSharedResource.js";
 import { getCurrentRuntimeIndex, compareRuntimes, getAllRuntimes } from "./Runtimes.js";
-import { Timeout } from "./types.js";
+import type { Timeout } from "./types.js";
 
 const Tags = getSharedResource<Map<string, number>>("Tags", new Map());
 const Definitions = new Set<string>();
