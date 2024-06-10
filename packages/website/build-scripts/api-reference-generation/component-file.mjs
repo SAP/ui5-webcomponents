@@ -252,9 +252,15 @@ const parseDeclaration = (declaration, packageName) => {
         return "";
     }
 
-    let sections = [
-        parseDeclarationDescription(declaration.description)
-    ]
+    let sections = [];
+
+    if (declaration._ui5experimental) {
+        sections.push(`:::info
+${experimentalText(declaration)}
+:::`)
+    }
+
+    sections.push(parseDeclarationDescription(declaration.description))
 
     if (packageName === "main") {
         sections.unshift(`---
@@ -279,7 +285,14 @@ ${declaration._implementations.map(_implementation => `| ${_implementation.split
 
     }
 
-    return sections.join("\n\n")
+    let fileContent = sections.join("\n\n");
+
+    if (declaration._ui5experimental) {
+        fileContent = addExperimentalClassName(fileContent, declaration);
+    }
+
+
+    return fileContent;
 }
 
 
@@ -344,7 +357,6 @@ ${fileContent}`
     const hasExperimentalClass = classLine?.includes(experimentalCssClass);
 
     if (classLine && !hasExperimentalClass) {
-        console.log(1);
         frontMatterLines[classLineIndex] = `${classLine} ${experimentalCssClass}`;
     } else if (!classLine) {
        frontMatterLines.splice(frontMatterLines.length - 1, 0, `sidebar_class_name: ${experimentalCssClass}`);

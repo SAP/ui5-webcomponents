@@ -27,6 +27,7 @@ const StepColumn = {
 /**
  * Interface for components that can be slotted inside `ui5-form` as items.
  * @public
+ * @experimental
  * @since 2.0.0
  */
 interface IFormItem extends HTMLElement {
