@@ -14,7 +14,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 	renderer?: Renderer,
 	styles?: Styles,
 	template?: Template,
-	childrenTemplate?: Template,
 	dependencies?: Array<typeof UI5Element>,
 	languageAware?: boolean,
 	themeAware?: boolean,
