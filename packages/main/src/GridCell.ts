@@ -19,7 +19,7 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
  * `import @ui5/webcomponents/dist/GridCell.js;`
  *
  * @constructor
- * @extends UI5Element
+ * @extends GridCellBase
  * @since 2.0
  * @public
  */
