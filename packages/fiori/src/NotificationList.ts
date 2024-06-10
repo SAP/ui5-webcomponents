@@ -11,7 +11,7 @@ import type {
 	ListItemToggleEventDetail,
 	ListItemCloseEventDetail,
 } from "@ui5/webcomponents/dist/List.js";
-import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationListItemBase from "./NotificationListItemBase.js";
 import NotificationListInternal from "./NotificationListInternal.js";
 
 // Template
