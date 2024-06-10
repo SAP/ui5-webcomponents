@@ -120,6 +120,8 @@ import FormItem from "./FormItem.js";
 import FormGroup from "./FormGroup.js";
 import FileUploader from "./FileUploader.js";
 import Grid from "./Grid.js";
+import GridHeaderCell from "./GridHeaderCell.js";
+import GridHeaderRow from "./GridHeaderRow.js";
 import GridGrowing from "./GridGrowing.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
