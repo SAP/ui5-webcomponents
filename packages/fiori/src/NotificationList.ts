@@ -128,7 +128,7 @@ class NotificationList extends UI5Element {
 	}
 
 	get innerList() {
-		return this.shadowRoot?.querySelector("ui5-notification-list-internal") as NotificationListInternal;
+		return this.shadowRoot?.querySelector("[ui5-notification-list-internal]") as NotificationListInternal;
 	}
 
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
