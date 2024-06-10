@@ -1,21 +1,21 @@
-import "@ui5/webcomponents/Avatar.js";
-import "@ui5/webcomponents/List.js";
-import "@ui5/webcomponents/Popover.js";
-import "@ui5/webcomponents/Title.js";
-import "@ui5/webcomponents/Button.js";
-import "@ui5/webcomponents/Menu.js";
-import "@ui5/webcomponents/Bar.js";
-import "@ui5/webcomponents-icons/action-settings.js"
-import "@ui5/webcomponents-icons/sort.js"
+import "@ui5/webcomponents/dist/Avatar.js";
+import "@ui5/webcomponents/dist/List.js";
+import "@ui5/webcomponents/dist/Popover.js";
+import "@ui5/webcomponents/dist/Title.js";
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Menu.js";
+import "@ui5/webcomponents/dist/Bar.js";
+import "@ui5/webcomponents-icons/dist/action-settings.js"
+import "@ui5/webcomponents-icons/dist/sort.js"
 
-import "@ui5/webcomponents-fiori/ShellBar.js";
-import "@ui5/webcomponents-fiori/NotificationList.js";
-import "@ui5/webcomponents-fiori/NotificationListGroupItem.js";
-import "@ui5/webcomponents-fiori/NotificationListItem.js";
+import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/NotificationList.js";
+import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";
+import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
 
-import "@ui5/webcomponents-icons/employee.js";
-import "@ui5/webcomponents-icons/message-error.js";
-import "@ui5/webcomponents-icons/accept.js";
+import "@ui5/webcomponents-icons/dist/employee.js";
+import "@ui5/webcomponents-icons/dist/message-error.js";
+import "@ui5/webcomponents-icons/dist/accept.js";
 
 var shellbar = document.querySelector("ui5-shellbar");
 var notificationsPopover = document.querySelector("ui5-popover");
