@@ -82,7 +82,8 @@ import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import Input, { InputEventDetail } from "./Input.js";
+import Input from "./Input.js";
+import type { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
 
 const SKIP_ITEMS_SIZE = 10;
