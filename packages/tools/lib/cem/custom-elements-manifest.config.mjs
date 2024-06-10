@@ -4,6 +4,7 @@ import path from "path";
 import fs from 'fs';
 import {
 	getDeprecatedStatus,
+	getExperimentalStatus,
 	getSinceStatus,
 	getPrivacyStatus,
 	getReference,
@@ -64,6 +65,7 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass.customElement = !!customElementDecorator || className === "UI5Element" || undefined;
 	currClass.kind = "class";
 	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
+	currClass._ui5experimental = getExperimentalStatus(classParsedJsDoc);
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
 	currClass._ui5privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
