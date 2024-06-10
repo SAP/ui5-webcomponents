@@ -3,9 +3,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
-import Grid, { IGridFeature } from "./Grid.js";
-import GridRow from "./GridRow.js";
-import GridRowBase from "./GridRowBase.js";
+import type Grid from "./Grid.js";
+import type { IGridFeature } from "./Grid.js";
+import type GridRow from "./GridRow.js";
+import type GridRowBase from "./GridRowBase.js";
 
 /**
  * @class

@@ -3,9 +3,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import GridCellBase from "./GridCellBase.js";
+import type GridCellBase from "./GridCellBase.js";
 import GridRowBaseCss from "./generated/themes/GridRowBase.css.js";
 import Grid from "./Grid.js";
 import CheckBox from "./CheckBox.js";

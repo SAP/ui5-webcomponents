@@ -12,7 +12,7 @@ import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClick
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import Grid from "./Grid.js";
+import type Grid from "./Grid.js";
 import GridRowBase from "./GridRowBase.js";
 import GridCellBase from "./GridCellBase.js";
 import GridExtension from "./GridExtension.js";

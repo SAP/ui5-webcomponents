@@ -2,8 +2,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import GridCellTemplate from "./generated/templates/GridCellTemplate.lit.js";
 import GridCellStyles from "./generated/themes/GridCell.css.js";
 import GridCellBase from "./GridCellBase.js";
-import GridRow from "./GridRow.js";
-import Grid from "./Grid.js";
+import type GridRow from "./GridRow.js";
+import type Grid from "./Grid.js";
 import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 /**

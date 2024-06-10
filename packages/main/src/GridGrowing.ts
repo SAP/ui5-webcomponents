@@ -3,13 +3,16 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
-import Grid, { IGridGrowing } from "./Grid.js";
+import type Grid from "./Grid.js";
+import type { IGridGrowing } from "./Grid.js";
 import GridGrowingMode from "./types/GridGrowingMode.js";
 import GridGrowingTemplate from "./generated/templates/GridGrowingTemplate.lit.js";
 import GridGrowingCss from "./generated/themes/GridGrowing.css.js";
