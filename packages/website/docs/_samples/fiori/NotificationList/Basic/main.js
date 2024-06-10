@@ -1,10 +1,10 @@
-import "@ui5/webcomponents/dist/Avatar.js";
-import "@ui5/webcomponents/dist/List.js";
-import "@ui5/webcomponents/dist/Menu.js";
-import "@ui5/webcomponents/dist/Toast.js";
+import "@ui5/webcomponents/Avatar.js";
+import "@ui5/webcomponents/List.js";
+import "@ui5/webcomponents/Menu.js";
+import "@ui5/webcomponents/Toast.js";
 
-import "@ui5/webcomponents-fiori/dist/NotificationList.js";
-import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
+import "@ui5/webcomponents-fiori/NotificationList.js";
+import "@ui5/webcomponents-fiori/NotificationListItem.js";
 
 var notificationList = document.querySelector("ui5-notification-list");
 
