@@ -513,6 +513,9 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
+		e.dataTransfer.dropEffect = "move";
+		e.dataTransfer.effectAllowed = "move";
+
 		this._setDraggedElement!((e.target as TabInStrip).realTabReference);
 	}
 
