@@ -58,7 +58,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/NotificationList.js";``
+ * `import "@ui5/webcomponents-fiori/dist/NotificationList.js";``
  * @constructor
  * @extends UI5Element
  * @since 2.0

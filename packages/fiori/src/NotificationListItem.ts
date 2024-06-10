@@ -121,7 +121,7 @@ const ICON_PER_STATUS_DESIGN = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/NotificationListItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";`
  *
  * @constructor
  * @extends NotificationListItemBase
