@@ -171,8 +171,8 @@ import TreeItem from "./TreeItem.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import List from "./List.js";
 // console.log({List})
-import StandardListItem from "./StandardListItem.js";
-import CustomListItem from "./CustomListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
+import ListItemCustom from "./ListItemCustom.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ListItemGroup from "./ListItemGroup.js";
 
