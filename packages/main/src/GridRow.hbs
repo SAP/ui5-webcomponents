@@ -3,14 +3,13 @@
     {{#if _isMultiSelect}}
         <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_isSelected}}"
-            @ui5-change="{{_informSelectionChange}}"
             accessible-name="{{_i18nRowSelector}}"
         ></ui5-checkbox>
     {{else}}
         <ui5-radio-button id="selection-component" tabindex="-1"
             name="{{_gridId}}"
             ?checked="{{_isSelected}}"
-            @ui5-change="{{_informSelectionChange}}"
+            @ui5-change="{{_informSelectionChange}}" <!--Required because of special radio button behaviour-->
             accessible-name="{{_i18nRowSelector}}"
         ></ui5-radio-button>
     {{/if}}

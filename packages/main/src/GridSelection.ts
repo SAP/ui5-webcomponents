@@ -1,6 +1,7 @@
 import {
 	isUpShift,
 	isShift,
+	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -11,6 +12,7 @@ import GridSelectionMode from "./types/GridSelectionMode.js";
 import Grid, { IGridFeature } from "./Grid.js";
 import GridRow from "./GridRow.js";
 import GridRowBase from "./GridRowBase.js";
+import GridHeaderRow from "./GridHeaderRow.js";
 
 /**
  * @class
@@ -182,8 +184,8 @@ class GridSelection extends UI5Element implements IGridFeature {
 	}
 
 	_informRowSelectionChange(row: GridRow) {
-		const isRowSelected = this.isMultiSelect() ? this.isSelected(row) : true;
-		this._selectRow(row, !isRowSelected);
+		const isRowSelected = this.isMultiSelect() ? !this.isSelected(row) : true;
+		this._selectRow(row, isRowSelected);
 		this.fireEvent("change");
 	}
 
@@ -235,13 +237,24 @@ class GridSelection extends UI5Element implements IGridFeature {
 			// If no range selection is active, start one
 			this._startRangeSelection(focusedElement as GridRow);
 		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-			e.preventDefault();
-			this._handleRangeSelection(e, focusedElement as GridRow, isUpShift(e));
+			const change = isUpShift(e) ? -1 : 1;
+			this._handleRangeSelection(focusedElement as GridRow, change);
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent, eventTarget: HTMLElement) {
-		if (!this.isMultiSelect() || !this._grid) {
+		if (!this._grid) {
+			return;
+		}
+
+		if (isSpace(e)) {
+			// Handle selection when SPACE pressed
+			if (this._isHeaderSelector(e)) {
+				this._informHeaderRowSelectionChange();
+			} else if (this._isSelectionCheckbox(e)) {
+				const row = this._findRowInPath(e.composedPath());
+				this._informRowSelectionChange(row);
+			}
 			return;
 		}
 
@@ -256,41 +269,34 @@ class GridSelection extends UI5Element implements IGridFeature {
 			return;
 		}
 
-		if (!this._isSelectionCheckbox(e) || !this.isMultiSelect()) {
+		if (this._isHeaderSelector(e)) {
+			this._informHeaderRowSelectionChange();
 			this._stopRangeSelection();
 			return;
 		}
 
-		if (e.shiftKey) {
-			if (!this._rangeSelection) {
-				return;
-			}
+		if (!this._isSelectionCheckbox(e)) {
+			this._stopRangeSelection();
+			return;
+		}
 
+		const row = this._findRowInPath(e.composedPath());
+
+		if (e.shiftKey && this._rangeSelection?.isMouse) {
 			const startRow = this._rangeSelection.rows[0];
-			const endRow = this._findRowInPath(e.composedPath());
 			const startIndex = this._grid?.rows.indexOf(startRow);
-			const endIndex = this._grid?.rows.indexOf(endRow);
+			const endIndex = this._grid?.rows.indexOf(row);
 
 			if (startIndex === -1 || endIndex === -1 || startIndex === undefined || endIndex === undefined
-				|| endRow.key === startRow.key || endRow.key === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].key) {
+				|| row.key === startRow.key || row.key === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].key) {
 				return;
 			}
 
-			this._grid?.rows.slice(Math.min(startIndex, endIndex), Math.max(startIndex, endIndex) + 1).forEach(row => {
-				if (!this._rangeSelection?.rows.includes(row)) {
-					this._rangeSelection?.rows.push(row);
-				}
-				// Workaround required due to bug, where the checkbox stays unchecked, but the row is selected.
-				// Even invalidation does not change the state of the checkbox. Maybe an issue with lit's 'intelligent' rendering?
-				row.shadowRoot?.querySelector("#selection-component")?.setAttribute("checked", "");
-				this._selectRow(row, this._rangeSelection!.state);
-			});
-			this.fireEvent("change");
-		} else {
-			const row = this._findRowInPath(e.composedPath());
-			if (row) {
-				this._startRangeSelection(row, true);
-			}
+			const change = endIndex - startIndex;
+			this._handleRangeSelection(row, change);
+		} else if (row) {
+			this.informSelectionChange(row);
+			this._startRangeSelection(row, true);
 		}
 	}
 
@@ -319,20 +325,42 @@ class GridSelection extends UI5Element implements IGridFeature {
 	 * @param e keyboard event
 	 * @param row focused row
 	 */
-	_handleRangeSelection(e: KeyboardEvent, row: GridRow, isUp: boolean) {
+	_handleRangeSelection(targetRow: GridRow, change: number) {
 		if (!this._rangeSelection) {
 			return;
 		}
 
+		const isUp = change > 0;
+		let selectionChanged = false;
 		this._rangeSelection.isUp ??= isUp;
-		if (isUp !== this._rangeSelection.isUp) {
+		if (isUp !== this._rangeSelection.isUp && !this._rangeSelection.isMouse) {
+			// Only reverse selection for keyboard
+			if (this.isSelected(targetRow)) {
+				selectionChanged = true;
+			}
 			// Changing direction "reverse" the selection
 			this._reverseRangeSelection();
 		} else {
-			this._rangeSelection.rows.push(row);
-			this._selectRow(row, this._rangeSelection.state);
-			this._fireEvent("change");
+			const endIndex = this._grid!.rows.indexOf(targetRow);
+			const startIndex = endIndex - change;
+
+			this._grid?.rows.slice(Math.min(startIndex, endIndex), Math.max(startIndex, endIndex) + 1).forEach(row => {
+				if (!this._rangeSelection?.rows.includes(row)) {
+					this._rangeSelection?.rows.push(row);
+				}
+
+				if (this.isSelected(row) !== this._rangeSelection!.state) {
+					selectionChanged = true;
+				}
+
+				// Workaround required due to bug with mouse, where the checkbox stays unchecked, but the row is selected.
+				// Even invalidation does not change the state of the checkbox. Maybe an issue with lit's 'intelligent' rendering?
+				this._rangeSelection?.isMouse && row.shadowRoot?.querySelector("#selection-component")?.setAttribute("checked", "");
+				this._selectRow(row, this._rangeSelection!.state);
+			});
 		}
+
+		selectionChanged && this._fireEvent("change");
 	}
 
 	_stopRangeSelection() {
@@ -343,7 +371,6 @@ class GridSelection extends UI5Element implements IGridFeature {
 		const row = this._rangeSelection?.rows.pop();
 		if (row) {
 			this._selectRow(row, false);
-			this._fireEvent("change");
 		}
 
 		if (this._rangeSelection?.rows.length === 1) {
@@ -353,6 +380,10 @@ class GridSelection extends UI5Element implements IGridFeature {
 
 	_isSelectionCheckbox(e: Event) {
 		return e.composedPath().some((el: EventTarget) => (el as HTMLElement).id === "selection-component");
+	}
+
+	_isHeaderSelector(e: Event) {
+		return this._isSelectionCheckbox(e) && e.composedPath().some((el: EventTarget) => el instanceof GridHeaderRow);
 	}
 
 	_findRowInPath(composedPath: Array<EventTarget>) {
