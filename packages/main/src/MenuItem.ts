@@ -44,6 +44,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
  * @extends ListItem
+ * @implements {IMenuItem}
  * @since 1.3.0
  * @public
  */

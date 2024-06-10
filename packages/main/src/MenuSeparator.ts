@@ -9,8 +9,8 @@ import { IMenuItem } from "./Menu.js";
  * @class
  * The `ui5-menu-separator` represents a horizontal line to separate menu items inside a `ui5-menu`.
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends ListItem
+ * @implements {IMenuItem}
  * @public
  * @since 2.0
  */
