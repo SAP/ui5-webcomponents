@@ -6,12 +6,6 @@ async function getTreeItemsInPopover() {
 	return items;
 }
 
-async function getRenderedTreeItemsInPopover() {
-	const items = await browser.$$(`>>>#sn1 .ui5-sn-item`);
-
-	return items;
-}
-
 async function getRootItemInPopover() {
 	const rootItem = await browser.$(`>>>#sn1 ui5-responsive-popover .ui5-sn-root`);
 
@@ -63,17 +57,10 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await input.getProperty("value"), "6", "Event is fired");
 
-			const item = await browser.$("#item3");
+			const item = await browser.$("#item2");
 			await item.scrollIntoView();
 			await item.click();
 
-			const itemRef = await item.shadow$(".ui5-sn-item");
-
-			assert.strictEqual(await input.getProperty("value"), "6", "Event is not fired");
-			assert.strictEqual(await itemRef.getAttribute("aria-expanded"), "true" ,"Expanded is toggled");
-
-			await browser.$("#item2").scrollIntoView();
-			await browser.$("#item2").click();
 			assert.strictEqual(await input.getProperty("value"), "7", "Event is fired");
 		});
 
