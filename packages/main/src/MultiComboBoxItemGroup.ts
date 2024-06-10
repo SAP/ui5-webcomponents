@@ -3,7 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { IMultiComboBoxItem } from "./MultiComboBox.js";
-import MultiComboBoxItem from "./MultiComboBoxItem.js";
+import type MultiComboBoxItem from "./MultiComboBoxItem.js";
 
 /**
  * @class
