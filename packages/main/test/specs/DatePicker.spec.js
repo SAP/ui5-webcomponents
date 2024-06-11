@@ -1395,4 +1395,15 @@ describe("Date Picker Tests", () => {
 		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
 		assert.equal(currentPicker, "day", "calendar is opened on days");
 	});
+
+	it("picker popover should have accessible name", async () => {
+		datepicker.id = "#dp";
+		await datepicker.openPicker();
+
+		const popover = await datepicker.getPopover();
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date", "Picker popover has an accessible name");
+
+		await datepicker.closePicker();
+	});
 });

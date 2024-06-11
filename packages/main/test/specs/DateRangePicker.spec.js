@@ -264,4 +264,16 @@ describe("DateRangePicker general interaction", () => {
 
 		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Error", "Min and max dates are set correctly");
 	});
+
+	it("picker popover should have accessible name", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+		await daterangepicker.click();
+		await browser.keys("F4");
+
+		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
+	});
 });
