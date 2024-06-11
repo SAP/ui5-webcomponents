@@ -5,11 +5,6 @@ type LayoutConfiguration = {
 	[device in MEDIA]: {
 		[layoutName in FCLLayout]: {
 			layout: Array<string>;
-			arrows?: Array<{
-				visible: boolean;
-				dir: null | string;
-				separator?: boolean;
-			}>;
 			separators: Array<{
 				visible: boolean;
 				gripVisible?: boolean;

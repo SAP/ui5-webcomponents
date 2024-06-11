@@ -78,10 +78,8 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	startColumnVisible: boolean,
 	midColumnVisible: boolean,
 	endColumnVisible: boolean,
-	arrowUsed: boolean,
-	arrowsUsed: boolean,
-	columnsResize: boolean,
-	resize: boolean,
+	columnsResized: boolean,
+	topElementResized: boolean,
 };
 
 type FCLAccessibilityRoles = Extract<Lowercase<AriaLandmarkRole>, "none" | "complementary" | "contentinfo" | "main" | "region">
@@ -181,9 +179,8 @@ type UserDefinedColumnLayouts = {
  * @param {boolean} startColumnVisible Indicates if the start column is currently visible
  * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
  * @param {boolean} endColumnVisible Indicates if the end column is currently visible
- * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
- * @param {boolean} columnsResize Indicates if the layout is changed by dragging the column separators
- * @param {boolean} resize Indicates if the layout is changed via resizing the entire component
+ * @param {boolean} columnsResized Indicates if the layout is changed by dragging the column separators
+ * @param {boolean} topElementResized Indicates if the layout is changed via resizing the entire component
  * @public
  */
 @event<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
@@ -209,21 +206,13 @@ type UserDefinedColumnLayouts = {
 		*/
 		endColumnVisible: { type: Boolean },
 		/**
-		* @public
+		 * @public
 		*/
-		arrowsUsed: { type: Boolean },
+		columnsResized: { type: Boolean },
 		/**
 		 * @public
 		*/
-		columnsResize: { type: Boolean },
-		/**
-		 * @public
-		*/
-		resize: { type: Boolean },
-		/**
-		 * @private
-		*/
-		arrowUsed: { type: Boolean },
+		topElementResized: { type: Boolean },
 	},
 })
 class FlexibleColumnLayout extends UI5Element {
@@ -242,14 +231,13 @@ class FlexibleColumnLayout extends UI5Element {
 	layout!: `${FCLLayout}`;
 
 	/**
-	* Defines the visibility of the arrows,
-	* used for expanding and shrinking the columns.
+	* Specifies if the user is allowed to change the columns layout by dragging the separator between the columns.
 	* @default false
 	* @public
 	* @since 1.0.0-rc.15
 	*/
 	@property({ type: Boolean })
-	hideArrows!: boolean;
+	disableInteractiveResize!: boolean;
 
 	/**
 	* Defines additional accessibility attributes on different areas of the component.
@@ -496,17 +484,15 @@ class FlexibleColumnLayout extends UI5Element {
 		return colLayout.filter(colWidth => !this._isColumnHidden(colWidth)).length;
 	}
 
-	fireLayoutChange(separatorUsed: boolean, resize: boolean) {
+	fireLayoutChange(separatorUsed: boolean, topElementResized: boolean) {
 		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
-			arrowUsed: separatorUsed, // for backwards compatibility
-			arrowsUsed: separatorUsed, // as documented
-			columnsResize: separatorUsed,
-			resize,
+			columnsResized: separatorUsed,
+			topElementResized,
 		});
 	}
 
@@ -1054,11 +1040,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartSeparatorGrip() {
-		return this.hideArrows ? false : this.startSeparatorGripVisibility;
+		return this.disableInteractiveResize ? false : this.startSeparatorGripVisibility;
 	}
 
 	get showEndSeparatorGrip() {
-		return this.hideArrows ? false : this.endSeparatorGripVisibility;
+		return this.disableInteractiveResize ? false : this.endSeparatorGripVisibility;
 	}
 
 	get startSeparatorGripVisibility() {
