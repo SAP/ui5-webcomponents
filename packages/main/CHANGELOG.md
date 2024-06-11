@@ -3,6 +3,279 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* **ui5-button:** adjust screen reader announcement order ([#8997](https://github.com/SAP/ui5-webcomponents/issues/8997)) ([2d9a16b](https://github.com/SAP/ui5-webcomponents/commit/2d9a16b403d9457382eeb5d0d913b463e4c52c6a))
+* **ui5-calendar:** adjust accessibility semantics ([#9102](https://github.com/SAP/ui5-webcomponents/issues/9102)) ([06891a1](https://github.com/SAP/ui5-webcomponents/commit/06891a1369bf3b92e144953e8ddec58b10ef17d8)), closes [#9068](https://github.com/SAP/ui5-webcomponents/issues/9068) [#9069](https://github.com/SAP/ui5-webcomponents/issues/9069)
+* **ui5-date:** remove circular dependency ([#9137](https://github.com/SAP/ui5-webcomponents/issues/9137)) ([9c8d12e](https://github.com/SAP/ui5-webcomponents/commit/9c8d12e79860d2203e1719248b4222101a8d0410))
+* **ui5-input, ui5-combobox, ui5-multi-combobox:** prevent native input autocomplete ([#9130](https://github.com/SAP/ui5-webcomponents/issues/9130)) ([5d8dbbd](https://github.com/SAP/ui5-webcomponents/commit/5d8dbbdf0129165a11d6f9e44e4458f1c54b8fb7))
+* **ui5-option-custom:** show focus outline ([#9101](https://github.com/SAP/ui5-webcomponents/issues/9101)) ([bf8366e](https://github.com/SAP/ui5-webcomponents/commit/bf8366eb6c8f52e15de249f32cfb8213e016370c))
+* **ui5-popup:** initialFocus won't work if 'autofocus' is set ([#8956](https://github.com/SAP/ui5-webcomponents/issues/8956)) ([2c9f775](https://github.com/SAP/ui5-webcomponents/commit/2c9f7757c9378732c1231651bdc8a39004a22a60))
+* **ui5-popup:** remove popup from the tab chain ([#8955](https://github.com/SAP/ui5-webcomponents/issues/8955)) ([aedcdb9](https://github.com/SAP/ui5-webcomponents/commit/aedcdb934358cebef3d0544c44e6a8a9d437531d)), closes [#9094](https://github.com/SAP/ui5-webcomponents/issues/9094)
+
+
+### Code Refactoring
+
+* **ui5-link:** wrap text by default ([#9006](https://github.com/SAP/ui5-webcomponents/issues/9006)) ([1924b54](https://github.com/SAP/ui5-webcomponents/commit/1924b5457f22c428527f8be3fbdd46d9d5d7ffed))
+* **ui5-radio-button:** wrap text by default ([#9117](https://github.com/SAP/ui5-webcomponents/issues/9117)) ([b8d7bac](https://github.com/SAP/ui5-webcomponents/commit/b8d7bac56c783825cf9354e020730e0d6a87a2b4))
+
+
+### Features
+
+* **ui5-menu-item:** add endContent slot ([dc3cfde](https://github.com/SAP/ui5-webcomponents/commit/dc3cfde6483e9d4200ed9b4c1772872836233842)), closes [#6350](https://github.com/SAP/ui5-webcomponents/issues/6350)
+* **ui5-select:** introduced 'popover' part ([#9120](https://github.com/SAP/ui5-webcomponents/issues/9120)) ([3c03e17](https://github.com/SAP/ui5-webcomponents/commit/3c03e17288b58d8a5a5771085ff20a20cbfae783)), closes [#4503](https://github.com/SAP/ui5-webcomponents/issues/4503)
+* **ui5-time-picker:** introduce `open` and `close` events ([#9093](https://github.com/SAP/ui5-webcomponents/issues/9093)) ([bf2d0aa](https://github.com/SAP/ui5-webcomponents/commit/bf2d0aaaf3856c61b3a658e57dd581a904c82cbf))
+
+
+### BREAKING CHANGES
+
+* **ui5-radio-button:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-link:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+```
+
+
+
+
+
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Bug Fixes
+
+* **ui5-button:** add keyboard shortcut to cancel the button's action ([c2d9c85](https://github.com/SAP/ui5-webcomponents/commit/c2d9c8563ab35dba4a6a062704336df846d7e948)), closes [#6782](https://github.com/SAP/ui5-webcomponents/issues/6782)
+* **ui5-button:** adjust ui5-button menu button samples to use open/opener ([974ff8c](https://github.com/SAP/ui5-webcomponents/commit/974ff8c4e3582f6a18621100a9fb6ae8b2f47dbd))
+* **ui5-button:** remove tabindex from disabled button ([#8957](https://github.com/SAP/ui5-webcomponents/issues/8957)) ([041f573](https://github.com/SAP/ui5-webcomponents/commit/041f57323fcaeaa6fc5aec7299e673ead6aece0e)), closes [#8852](https://github.com/SAP/ui5-webcomponents/issues/8852)
+* **ui5-calendar-legend:** align visual design to meet WCAG 2.2 requirements ([0860a3e](https://github.com/SAP/ui5-webcomponents/commit/0860a3e53547d9aa9158611b4c6164cd7ded4324))
+* **ui5-calendar:** change the show month/year private event names ([#8960](https://github.com/SAP/ui5-webcomponents/issues/8960)) ([c981459](https://github.com/SAP/ui5-webcomponents/commit/c981459612298ca49eaf1faa688329c04d7462a1)), closes [#8893](https://github.com/SAP/ui5-webcomponents/issues/8893)
+* **ui5-calendar:** respect component level calendarType in week calculation ([#8971](https://github.com/SAP/ui5-webcomponents/issues/8971)) ([69b8003](https://github.com/SAP/ui5-webcomponents/commit/69b8003c93ab724e722a841e1a25bb2236c44110))
+* **ui5-calendar:** switch to two column layout on Islamic or Persian secondary calendar type ([#8453](https://github.com/SAP/ui5-webcomponents/issues/8453)) ([1b172eb](https://github.com/SAP/ui5-webcomponents/commit/1b172eb3f6bd6f9aa541cce87e1c21036f58ec16))
+* **ui5-date-picker:** adjust failing tests ([#9039](https://github.com/SAP/ui5-webcomponents/issues/9039)) ([7232039](https://github.com/SAP/ui5-webcomponents/commit/72320391a69fa92a27d0b83d1abbd7dfd57d1cde)), closes [#9033](https://github.com/SAP/ui5-webcomponents/issues/9033) [#9034](https://github.com/SAP/ui5-webcomponents/issues/9034)
+* **ui5-date-picker:** display initial view properly ([#8910](https://github.com/SAP/ui5-webcomponents/issues/8910)) ([e570031](https://github.com/SAP/ui5-webcomponents/commit/e570031c7986b4f9005c8628fdd87cac0c7fcd94)), closes [#8893](https://github.com/SAP/ui5-webcomponents/issues/8893)
+* **ui5-datetime-picker:** change dateformat to datetime instance ([#9024](https://github.com/SAP/ui5-webcomponents/issues/9024)) ([e5051ea](https://github.com/SAP/ui5-webcomponents/commit/e5051ea70af8c470f53788a7b13a2fb3f8c3f123))
+* **ui5-multi-input:** delete selected value on BACKSPACE ([#8982](https://github.com/SAP/ui5-webcomponents/issues/8982)) ([d773532](https://github.com/SAP/ui5-webcomponents/commit/d773532f5826e98f217768206e1d7bbcd57e7c27))
+* **ui5-multiinput:** restore and adjust unit tests ([#8933](https://github.com/SAP/ui5-webcomponents/issues/8933)) ([70dc2a6](https://github.com/SAP/ui5-webcomponents/commit/70dc2a628c8cf49291d3d19054bda03b3a4f1caf))
+* **ui5-notification-list:** fix keyboard issues ([#9040](https://github.com/SAP/ui5-webcomponents/issues/9040)) ([f1c0635](https://github.com/SAP/ui5-webcomponents/commit/f1c0635d6d2b94e94b7ecc311bb49480db1fae6d))
+* **ui5-panel:** fix failing tests ([#9044](https://github.com/SAP/ui5-webcomponents/issues/9044)) ([aeb7d42](https://github.com/SAP/ui5-webcomponents/commit/aeb7d42d668245332a30242747361cd25af0107c))
+* **ui5-popover:** correct placement in RTL direction ([#9009](https://github.com/SAP/ui5-webcomponents/issues/9009)) ([36fa85e](https://github.com/SAP/ui5-webcomponents/commit/36fa85eb3a33861062aa6b8cfe548c593a7dc6d8))
+* **ui5-popover:** fix auto close when click on iframe inside a shadow root ([#8961](https://github.com/SAP/ui5-webcomponents/issues/8961)) ([5c2f5f6](https://github.com/SAP/ui5-webcomponents/commit/5c2f5f694b70df68dc512d2e58d2fac49dd552e6))
+* **ui5-popover:** fix infinite open/show loop ([#9055](https://github.com/SAP/ui5-webcomponents/issues/9055)) ([a142caf](https://github.com/SAP/ui5-webcomponents/commit/a142caf730011443e5c3ca7000d5cd8a19e6253e)), closes [#9031](https://github.com/SAP/ui5-webcomponents/issues/9031)
+* **ui5-popover:** prevent runtime error when opener is outside the viewport ([#9017](https://github.com/SAP/ui5-webcomponents/issues/9017)) ([9212aa8](https://github.com/SAP/ui5-webcomponents/commit/9212aa85f38be1282a90d937c05746f2558c02e7))
+* **ui5-responsive-popover:** fix initially focused input going out of the viewport on iPhone ([#8945](https://github.com/SAP/ui5-webcomponents/issues/8945)) ([7ff177c](https://github.com/SAP/ui5-webcomponents/commit/7ff177cd233bfdc6707499622200702c17043782))
+* **ui5-segmented-button-item:** align sizes to spec ([#8972](https://github.com/SAP/ui5-webcomponents/issues/8972)) ([0eefe5f](https://github.com/SAP/ui5-webcomponents/commit/0eefe5f5d83f0c318445eebf1ea4fff5a8370a63)), closes [#7357](https://github.com/SAP/ui5-webcomponents/issues/7357)
+* **ui5-select:** popover scrolls to typed item ([#9053](https://github.com/SAP/ui5-webcomponents/issues/9053)) ([70bbd7f](https://github.com/SAP/ui5-webcomponents/commit/70bbd7f118c8c1a1c331605aa77b231bc2c80901)), closes [#8987](https://github.com/SAP/ui5-webcomponents/issues/8987)
+* **ui5-side-navigation:** menu in collapsed mode width is not longer stretched unnecessary ([#8940](https://github.com/SAP/ui5-webcomponents/issues/8940)) ([30c0530](https://github.com/SAP/ui5-webcomponents/commit/30c053046d1bfbbcb880a5dd10f3f177fdbfbec7))
+* **ui5-side-navigation:** overflow menu items are now displayed ([#8948](https://github.com/SAP/ui5-webcomponents/issues/8948)) ([bcb3008](https://github.com/SAP/ui5-webcomponents/commit/bcb3008187fb0e66d7ddeb6bb048857382d414a2))
+* **ui5-tag:** add colors for Quartz high contrast themes for Set 2 ([#8952](https://github.com/SAP/ui5-webcomponents/issues/8952)) ([92b3cf8](https://github.com/SAP/ui5-webcomponents/commit/92b3cf820754cb45053430de5b172e34fa698106))
+* **ui5-time-picker:** remove box shadow ([#8951](https://github.com/SAP/ui5-webcomponents/issues/8951)) ([7c7170d](https://github.com/SAP/ui5-webcomponents/commit/7c7170d4a7d5f7b1f76aa9670baac498b954a425)), closes [#8932](https://github.com/SAP/ui5-webcomponents/issues/8932)
+
+
+### Code Refactoring
+
+* **ui5-input:** replace openPicker method with public property open ([#8950](https://github.com/SAP/ui5-webcomponents/issues/8950)) ([3e2b32e](https://github.com/SAP/ui5-webcomponents/commit/3e2b32e9e34812e1258ec8dbcf3b23260b803bb6))
+* **ui5-list:** refactored HighlightTypes ([#9061](https://github.com/SAP/ui5-webcomponents/issues/9061)) ([2510224](https://github.com/SAP/ui5-webcomponents/commit/251022448cc7b74a8cdf0c5bb3e822ddc180faf8)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-option:** make options physical elements ([#8903](https://github.com/SAP/ui5-webcomponents/issues/8903)) ([8d6fac7](https://github.com/SAP/ui5-webcomponents/commit/8d6fac75151fd3f42f58ec29cc8f27d0383114d2)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7887](https://github.com/SAP/ui5-webcomponents/issues/7887)
+* **ui5-popover:** remove hideBackdrop property ([#8947](https://github.com/SAP/ui5-webcomponents/issues/8947)) ([f628fbc](https://github.com/SAP/ui5-webcomponents/commit/f628fbc8df403344629f4b608512fda38d6ee674)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-popup:** rename after-open and after-close events to 'open' and 'close' ([#8946](https://github.com/SAP/ui5-webcomponents/issues/8946)) ([912167d](https://github.com/SAP/ui5-webcomponents/commit/912167d18cd5e365a03513defc570da5bf372715)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-toast:** rename event `after-close` to `close` ([#8967](https://github.com/SAP/ui5-webcomponents/issues/8967)) ([d05839d](https://github.com/SAP/ui5-webcomponents/commit/d05839d9efa1102c11d5790d8049caeb96a9696c))
+
+
+### Features
+
+* **ui5-*:** integrate element internals in input components ([#8685](https://github.com/SAP/ui5-webcomponents/issues/8685)) ([c8e68d5](https://github.com/SAP/ui5-webcomponents/commit/c8e68d59e51c6ab56328062ac8bce7889b30062d)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-button:** add second (end) icon ([2e97c03](https://github.com/SAP/ui5-webcomponents/commit/2e97c03fc8f9d00c7d9bdd8c1ceb63bac13b7e32))
+* **ui5-color-palette-item:** introduce selected state ([#8554](https://github.com/SAP/ui5-webcomponents/issues/8554)) ([b0f8a30](https://github.com/SAP/ui5-webcomponents/commit/b0f8a30dac10f4b1931cf3a7105f7998f2fb4dc7))
+* **ui5-combobox:** introduce nested grouping of items ([#8926](https://github.com/SAP/ui5-webcomponents/issues/8926)) ([92fe765](https://github.com/SAP/ui5-webcomponents/commit/92fe765f87039d210c6fe0ba5d6d3cc3884ba871))
+* **ui5-date-range:** introduce new calendar date type ([#8804](https://github.com/SAP/ui5-webcomponents/issues/8804)) ([ffe14a5](https://github.com/SAP/ui5-webcomponents/commit/ffe14a534ee7a50a58e033c6bbbad5213fe7e14f)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-dynamic-page:** introduce new component ([#7899](https://github.com/SAP/ui5-webcomponents/issues/7899)) ([3752ce7](https://github.com/SAP/ui5-webcomponents/commit/3752ce701fe915fa0b02ba2b114c40bf3b7d9123))
+* **ui5-form:** introduce Form web component ([#8281](https://github.com/SAP/ui5-webcomponents/issues/8281)) ([8d72042](https://github.com/SAP/ui5-webcomponents/commit/8d720429d9ad416f73f42c08ab9aa0e892e24ddb)), closes [#7854](https://github.com/SAP/ui5-webcomponents/issues/7854)
+* **ui5-input:** add input type search ([#8980](https://github.com/SAP/ui5-webcomponents/issues/8980)) ([410ba3f](https://github.com/SAP/ui5-webcomponents/commit/410ba3ff7c49eaa46a8e0c4d756897c42a11aadc)), closes [#7641](https://github.com/SAP/ui5-webcomponents/issues/7641)
+* **ui5-input:** allow custom icon styling ([#8881](https://github.com/SAP/ui5-webcomponents/issues/8881)) ([cf9f1c2](https://github.com/SAP/ui5-webcomponents/commit/cf9f1c28c93b9fa6c8663ce24d3c5e6d1ff4cc4e)), closes [#8182](https://github.com/SAP/ui5-webcomponents/issues/8182) [#6132](https://github.com/SAP/ui5-webcomponents/issues/6132)
+* **ui5-li-notification:** implement new design ([#8426](https://github.com/SAP/ui5-webcomponents/issues/8426)) ([e451cdc](https://github.com/SAP/ui5-webcomponents/commit/e451cdc3709553dcb780f637463dc1b29e8f2971))
+* **ui5-list,ui5-tree:** make drag&drop feature public ([#8904](https://github.com/SAP/ui5-webcomponents/issues/8904)) ([60b8038](https://github.com/SAP/ui5-webcomponents/commit/60b8038b0731bbf5a3222bc757fcc710d213b7d2))
+* **ui5-time-picker:** introduce `open` property ([#9001](https://github.com/SAP/ui5-webcomponents/issues/9001)) ([1c1cea6](https://github.com/SAP/ui5-webcomponents/commit/1c1cea6afd6cca85516dd42a70de12be7554b05e))
+* **ui5-toolbar-button:** add second (end) icon ([#9048](https://github.com/SAP/ui5-webcomponents/issues/9048)) ([6688814](https://github.com/SAP/ui5-webcomponents/commit/6688814c0bea49fe1522deea79a2b754ce8f6f60))
+
+
+### BREAKING CHANGES
+
+* **ui5-input:** Remove openPicker method and replace it with public property open
+
+Before the ui5-input suggestions popover could be opened by calling `openPicker()` :
+```js
+const input = document.getElementById("exampleID");
+input.openPicker();
+```
+
+Now the suggestions popover is opened by setting the `open` property to true:
+```js
+const input = document.getElementById("exampleID");
+input.open = true;
+```
+
+* refactor(ui5-input): fix spacing in input.mobile.spec.js
+* **ui5-combobox:** The ui5-cb-group-item component is removed. Groups can now be created with the ui5-cb-item-group.
+* **ui5-list:** `Highlight` enum should be imported differently.
+Before: 
+```js
+import HighlightTypes from "@ui5/webcomponents-base/dist/types/HighlightTypes.js";
+```
+
+Now:
+```js
+import Highlight from "@ui5/webcomponents-base/dist/types/Highlight.js";
+```
+* **ui5-toolbar-button:** iconEnd property is changed from boolean to string type and now can accept name for second/end icon.
+
+Before:
+
+`<ui5-toolbar-button icon="home" icon-end>Button</ui5-toolbar-button>`
+
+Now:
+
+`<ui5-toolbar-button end-icon="home">Button</ui5-toolbar-button>`
+
+or 
+
+`<ui5-toolbar-button icon="employee" end-icon="home">Button</ui5-toolbar-button>`
+* **ui5-option:** The ui5-select-menu and ui5-select-menu-option components are removed. Custom options can now be created using the ui5-option-custom, directly placed inside the default slot of the ui5-select
+
+SelectMenu & SelectMenuOption
+Changed item	Old	New
+SelectMenu	ui5-select-menu	removed
+SelectMenuOption	ui5-select-menu-option	ui5-option-custom
+If you have previously used the ui5-select-menu and ui5-select-menu-option:
+
+<ui5-select menu="selectMenu"></ui5-select>
+
+<ui5-select-menu id="selectMenu">
+    <ui5-select-menu-option>
+        <div class="optionContent">custom</div>
+    </ui5-select-menu-option>
+</ui5-select-menu>
+Now use just ui5-select and ui5-option-custom instead:
+
+<ui5-select>
+    <ui5-option-custom>
+        <div class="optionContent">custom</div>
+    </ui5-option-custom>
+</ui5-select>
+Select
+Changed item	Old	New
+property	menu	removed
+The menu property of the ui5-select is removed.
+* **ui5-button:** iconEnd property is changed from boolean to string type and now can accept name for second/end icon.
+
+Before:
+
+`<ui5-button icon="home" icon-end>Button</ui5-button>`
+
+Now:
+
+`<ui5-button end-icon="home">Button</ui5-button>`
+
+or 
+
+`<ui5-button icon="employee" end-icon="home">Button</ui5-button>`
+* **ui5-toast:** The `after-close`  event has been renamed to `close`. If you previously used it like:
+```ts
+toast.addEventListener("after-close", (event) => {
+});
+```
+Now you have to use it like:
+```ts
+toast.addEventListener("close", (event) => {
+});
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-*:** The `features/InputElementsFormSupport.js` feature has been deleted and now, form elements works natively in form elements.
+* **ui5-date-range:** dates slot in a calendar now works with a ui5-date-range when selection-mode="Range"
+
+Previously date ranges were declared as follows:
+
+<ui5-calendar selection-mode="Range">
+        <ui5-date value="Jan 20, 2021"></ui5-date>
+        <ui5-date value="Jan 30, 2021"></ui5-date>
+</ui5-calendar>
+
+Now they are declared using a ui5-date-range:
+
+<ui5-calendar selection-mode="Range">
+	<ui5-date-range start-value="Jan 20, 2021" end-value="Jan 30, 2021"></ui5-date-range>
+</ui5-calendar>
+* **ui5-popup:** Event names `after-close` and `after-open` are now named `close` and `open`.
+Previously the application developers could subscribe to the events as follows:
+```ts
+popup.addEventListener("after-open", function() {
+	//...
+});
+popup.addEventListener("after-close", function() {
+	//...
+});
+```
+
+Now the application developers should include the ui5-bar as follows:
+```ts
+popup.addEventListener("open", function() {
+	//...
+});
+
+popup.addEventListener("close", function() {
+	//...
+});
+
+```
+* **ui5-popover:** Property `hideBackdrop` is removed.
+
+Previously the application developers could define a modal popover without visible backdrop as follows:
+
+```
+<ui5-popover modal hide-backdrop>
+```
+Now the application developers can use the standard [`::backdrop` CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
+
+
+```
+
+<style>
+.transparentBackdrop::backdrop {
+  background: transparent;
+}
+</style>
+
+...
+
+<ui5-popover modal class="transparentBackdrop">
+```
+
+
+
+
+
 # [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
 
 

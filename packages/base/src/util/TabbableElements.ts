@@ -35,18 +35,8 @@ const getTabbables = (nodes: Array<Node>, tabbables?: Array<HTMLElement>): Array
 			return;
 		}
 
-		let currentElement = currentNode as HTMLElement;
+		const currentElement = currentNode as HTMLElement;
 		if (currentElement.hasAttribute("data-sap-no-tab-ref")) {
-			return;
-		}
-
-		if (currentElement.shadowRoot) {
-			// get the root node of the ShadowDom (1st none style tag)
-			const children = currentElement.shadowRoot.children;
-			currentElement = Array.from(children).find(node => node.tagName !== "STYLE") as HTMLElement;
-		}
-
-		if (!currentElement) {
 			return;
 		}
 
@@ -57,7 +47,8 @@ const getTabbables = (nodes: Array<Node>, tabbables?: Array<HTMLElement>): Array
 		if (currentElement.tagName === "SLOT") {
 			getTabbables((currentElement as HTMLSlotElement).assignedNodes() as Array<HTMLElement>, tabbableElements);
 		} else {
-			getTabbables([...currentElement.children], tabbableElements);
+			const children = currentElement.shadowRoot ? currentElement.shadowRoot.children : currentElement.children;
+			getTabbables([...children], tabbableElements);
 		}
 	});
 

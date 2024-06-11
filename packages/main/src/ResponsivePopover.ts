@@ -91,9 +91,9 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
-	_show() {
+	async _show() {
 		if (!isPhone()) {
-			super._show();
+			return super._show();
 		}
 	}
 

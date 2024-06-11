@@ -176,7 +176,7 @@ The `accessibilityAttributes` property is currently supported in:
 * [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
 * [ToggleButton](https://sap.github.io/ui5-webcomponents/nightly/components/ToggleButton/)
 * [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
-* List Items (for example [StandardListItem](https://sap.github.io/ui5-webcomponents/nightly/components/StandardListItem/))
+* List Items (for example [ListItemStandard](https://sap.github.io/ui5-webcomponents/nightly/components/ListItemStandard/))
 
 `accessibilityAttributes` is also supported for composite components, where the application can enrich the accessibility of elements inside the component. For a more detailed information check the documentation of the property in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)

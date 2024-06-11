@@ -168,7 +168,23 @@ describe("Menu interaction", () => {
 			await menuItem.click();
 
 			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
-			assert.ok(await menuItem.getProperty("focused"), "The menu item is focused");
+			assert.ok(await menuItem.matches(":focus"), "The menu item is focused");
+		});
+
+		it("Add endContent to a menu item", async () => {
+			await browser.url(`test/pages/Menu.html`);
+			const openButton = await browser.$("#btnOpenEndContent");
+			await openButton.click();
+
+			const menu = await browser.$("#menuEndContent");
+			const menuItem = await browser.$("#menuEndContent > ui5-menu-item[text='New File']");
+			const endContent = await menuItem.$$("[ui5-button]");
+			const lockButton = await endContent[0];
+			await lockButton.click();
+
+			assert.equal(await endContent.length, 3, "The menu item has 3 components in the 'endContent' slot");
+			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
+			assert.ok(await menu.getProperty("open"), "The menu remains open");
 		});
 	});
 

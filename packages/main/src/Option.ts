@@ -1,8 +1,10 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { IOption } from "./Select.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import type { IOption } from "./Select.js";
 import ListItemBase from "./ListItemBase.js";
+import Icon from "./Icon.js";
 
 // Template
 import OptionTemplate from "./generated/templates/OptionTemplate.lit.js";
@@ -35,6 +37,9 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 		listItemAdditionalTextCss,
 		listItemIconCss,
 		optionBaseCss,
+	],
+	dependencies: [
+		Icon,
 	],
 })
 class Option extends ListItemBase implements IOption {
@@ -85,6 +90,12 @@ class Option extends ListItemBase implements IOption {
 	 */
 	@property({ type: String, defaultValue: "" })
 	tooltip!: string;
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
 
 	get displayIconBegin(): boolean {
 		return !!this.icon;
