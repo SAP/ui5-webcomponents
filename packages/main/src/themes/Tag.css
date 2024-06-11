@@ -24,7 +24,7 @@
 	padding: 0 0.25rem;
 	border: 0.0625rem solid;
 	border-radius: var(--sapButton_BorderCornerRadius);
-	white-space: nowrap;
+	white-space: normal;
 	font-size: inherit;
 	font-family: inherit;
 	font-weight: inherit;
@@ -75,11 +75,6 @@
 	color: inherit;
 	pointer-events: none;
 	align-self: flex-start;
-}
-
-:host([_is-tag-design]) [ui5-icon],
-:host([_is-tag-design]) ::slotted([ui5-icon]) {
-	height: calc(var(--_ui5-tag-height) - 2px); /* remove width of the border since tag root is with box-sizing:border-box*/
 }
 
 :host([wrapping-type="None"]) [ui5-icon],

@@ -53,4 +53,4 @@
 
 		set2Content.insertAdjacentHTML("beforeend", "<br><br>");
 	});
-}
+})();
