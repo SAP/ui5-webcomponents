@@ -11,50 +11,50 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import GridTemplate from "./generated/templates/GridTemplate.lit.js";
-import GridStyles from "./generated/themes/Grid.css.js";
-import GridRow from "./GridRow.js";
-import type GridHeaderRow from "./GridHeaderRow.js";
-import type GridHeaderCell from "./GridHeaderCell.js";
-import GridExtension from "./GridExtension.js";
-import GridSelection from "./GridSelection.js";
-import GridOverflowMode from "./types/GridOverflowMode.js";
-import GridNavigation from "./GridNavigation.js";
+import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import TableStyles from "./generated/themes/Table.css.js";
+import TableRow from "./TableRow.js";
+import type TableHeaderRow from "./TableHeaderRow.js";
+import type TableHeaderCell from "./TableHeaderCell.js";
+import TableExtension from "./TableExtension.js";
+import TableSelection from "./TableSelection.js";
+import TableOverflowMode from "./types/TableOverflowMode.js";
+import TableNavigation from "./TableNavigation.js";
 import {
-	GRID_NO_DATA,
+	TABLE_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
-import GridCell from "./GridCell.js";
+import TableCell from "./TableCell.js";
 
 /**
- * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>.
+ * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
  *
  * @public
  */
-interface IGridFeature extends UI5Element {
+interface ITableFeature extends UI5Element {
 	/**
-	 * Called when the grid is activated.
-	 * @param grid grid instance
+	 * Called when the table is activated.
+	 * @param table table instance
 	 */
-	onGridActivate(grid: Grid): void;
+	onTableActivate(table: Table): void;
 	/**
-	 * Called when the grid finished rendering.
+	 * Called when the table finished rendering.
 	 */
-	onGridRendered?(): void;
+	onTableRendered?(): void;
 }
 
 /**
- * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-grid</code>
+ * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>
  * and provide growing/data loading functionality.
  * @public
  */
-interface IGridGrowing extends IGridFeature {
+interface ITableGrowing extends ITableFeature {
 	/**
 	 * Called when the table needs to load more data.
 	 */
 	loadMore(): void;
 	/**
-	 * Determines whether the table has a growing control, that should be rendered in the grid.
+	 * Determines whether the table has a growing control, that should be rendered in the table.
 	 */
 	hasGrowingComponent(): boolean;
 	_individualSlot?: string;
@@ -62,11 +62,11 @@ interface IGridGrowing extends IGridFeature {
 
 /**
  * Fired when an interactive row is clicked.
- * @param {GridRow} row The clicked row instance
+ * @param {TableRow} row The clicked row instance
  * @public
  */
-type GridRowClickEventDetail = {
-	row: GridRow,
+type TableRowClickEventDetail = {
+	row: TableRow,
 };
 
 /**
@@ -74,18 +74,18 @@ type GridRowClickEventDetail = {
  *
  * ### Overview
  *
- * The `ui5-grid` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner.
- * To render the `ui5-grid`, you need to define the columns and rows. You can use the provided `ui5-grid-header-row` and `ui5-grid-row` components for this purpose.
+ * The `ui5-table` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner.
+ * To render the `ui5-table`, you need to define the columns and rows. You can use the provided `ui5-table-header-row` and `ui5-table-row` components for this purpose.
  *
  * ### Features
  *
- * The `ui5-grid` can be enhanced in its functionalities by applying different features.
+ * The `ui5-table` can be enhanced in its functionalities by applying different features.
  * Features can be slotted into the `features` slot, to enable them in the component.
  *
  * The following features are currently available:
  *
- * * [GridSelection](../GridSelection) - adds selection capabilities to the table
- * * [GridGrowing](../GridGrowing) - provides growing capabilities to load more data
+ * * [TableSelection](../TableSelection) - adds selection capabilities to the table
+ * * [TableGrowing](../TableGrowing) - provides growing capabilities to load more data
  *
  * ### Keyboard Handling
  *
@@ -93,7 +93,7 @@ type GridRowClickEventDetail = {
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
- * Furthermore, you can interact with `ui5-grid` via the following keys:
+ * Furthermore, you can interact with `ui5-table` via the following keys:
  *
  * If the focus is on a row, the following keyboard shortcuts are available:
  * * <kbd>Down</kbd> - Navigates down
@@ -107,7 +107,7 @@ type GridRowClickEventDetail = {
  * * <kbd>Page Down</kbd> - Navigates one page down, if the focus is on the last row, navigates to the growing button
  * * <kbd>F2</kbd> - Focuses the first tabbable element in the row
  * * <kbd>F7</kbd> - If focus position is remembered, moves focus to the corresponding focus position row, otherwise to the first tabbable element within the row
- * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the grid
+ * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the table
 
  *
  * If the focus is on a cell, the following keyboard shortcuts are available:
@@ -122,7 +122,7 @@ type GridRowClickEventDetail = {
  * * <kbd>F2</kbd> - Toggles the focus between the first tabbable cell content and the cell
  * * <kbd>Enter</kbd> - Focuses the first tabbable cell content
  * * <kbd>F7</kbd> - If the focus is on an interactive element inside a row, moves focus to the corresponding row and remembers the focus position of the element within the row
- * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the grid
+ * * <kbd>[Shift]Tab</kbd> - Move focus to the element in the tab chain outside the table
 
  *
  * If the focus is on an interactive cell content, the following keyboard shortcuts are available:
@@ -132,11 +132,11 @@ type GridRowClickEventDetail = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Grid.js";`\
- * `import "@ui5/webcomponents/dist/GridRow.js";` (`ui5-grid-row`)\
- * `import "@ui5/webcomponents/dist/GridCell.js";` (`ui5-grid-cell`)\
- * `import "@ui5/webcomponents/dist/GridHeaderRow.js";` (`ui5-grid-header-row`)\
- * `import "@ui5/webcomponents/dist/GridHeaderCell.js";` (`ui5-grid-header-cell`)
+ * `import "@ui5/webcomponents/dist/Table.js";`\
+ * `import "@ui5/webcomponents/dist/TableRow.js";` (`ui5-table-row`)\
+ * `import "@ui5/webcomponents/dist/TableCell.js";` (`ui5-table-cell`)\
+ * `import "@ui5/webcomponents/dist/TableHeaderRow.js";` (`ui5-table-header-row`)\
+ * `import "@ui5/webcomponents/dist/TableHeaderCell.js";` (`ui5-table-header-cell`)
  *
  * @constructor
  * @extends UI5Element
@@ -144,49 +144,49 @@ type GridRowClickEventDetail = {
  * @public
  */
 @customElement({
-	tag: "ui5-grid",
+	tag: "ui5-table",
 	renderer: litRender,
-	styles: GridStyles,
-	template: GridTemplate,
+	styles: TableStyles,
+	template: TableTemplate,
 	fastNavigation: true,
-	dependencies: [BusyIndicator, GridCell],
+	dependencies: [BusyIndicator, TableCell],
 })
 
 /**
  * Fired when an interactive row is clicked.
  *
- * @param {GridRow} row The row instance
+ * @param {TableRow} row The row instance
  * @public
  */
-@event<GridRowClickEventDetail>("row-click", {
+@event<TableRowClickEventDetail>("row-click", {
 	detail: {
 		/**
 		 * @public
 		 */
-		row: { type: GridRow },
+		row: { type: TableRow },
 	},
 })
 
-class Grid extends UI5Element {
+class Table extends UI5Element {
 	/**
 	 * Defines the rows of the component.
 	 *
-	 * Note: Use <code>ui5-grid-row</code> for the intended design.
+	 * Note: Use <code>ui5-table-row</code> for the intended design.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	rows!: Array<GridRow>;
+	rows!: Array<TableRow>;
 
 	/**
 	 * Defines the header row of the component.
 	 *
-	 * Note: Use <code>ui5-grid-header-row</code> for the intended design.
+	 * Note: Use <code>ui5-table-header-row</code> for the intended design.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
-	headerRow!: Array<GridHeaderRow>;
+	headerRow!: Array<TableHeaderRow>;
 
 	/**
 	 * Defines the custom visualization if there is no data available.
@@ -201,7 +201,7 @@ class Grid extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	features!: Array<IGridFeature>;
+	features!: Array<ITableFeature>;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -231,7 +231,7 @@ class Grid extends UI5Element {
 	noDataText!: string;
 
 	/**
-	 * Defines the mode of the <code>ui5-grid</code> overflow behavior.
+	 * Defines the mode of the <code>ui5-table</code> overflow behavior.
 	 *
 	 * Available options are:
 	 * * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
@@ -240,8 +240,8 @@ class Grid extends UI5Element {
 	 * @default "Scroll"
 	 * @public
 	 */
-	@property({ type: GridOverflowMode, defaultValue: GridOverflowMode.Scroll })
-	overflowMode!: `${GridOverflowMode}`;
+	@property({ type: TableOverflowMode, defaultValue: TableOverflowMode.Scroll })
+	overflowMode!: `${TableOverflowMode}`;
 
 	/**
 	 * Defines if the loading indicator should be shown.
@@ -264,14 +264,14 @@ class Grid extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
-		Grid.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_events = ["keydown", "keyup", "click", "focusin", "focusout"];
 	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
-	_gridNavigation?: GridNavigation;
-	_poppedIn: Array<{col: GridHeaderCell, width: float}>;
+	_tableNavigation?: TableNavigation;
+	_poppedIn: Array<{col: TableHeaderCell, width: float}>;
 	_containerWidth: number;
 
 	constructor() {
@@ -283,18 +283,18 @@ class Grid extends UI5Element {
 	}
 
 	onEnterDOM() {
-		if (this.overflowMode === GridOverflowMode.Popin) {
+		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
-		this.features.forEach(feature => feature.onGridActivate(this));
-		this._gridNavigation = new GridNavigation(this);
+		this.features.forEach(feature => feature.onTableActivate(this));
+		this._tableNavigation = new TableNavigation(this);
 	}
 
 	onExitDOM() {
-		this._gridNavigation = undefined;
+		this._tableNavigation = undefined;
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
-		if (this.overflowMode === GridOverflowMode.Popin) {
+		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}
 	}
@@ -304,23 +304,23 @@ class Grid extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		this.features.forEach(feature => feature.onGridRendered?.());
+		this.features.forEach(feature => feature.onTableRendered?.());
 	}
 
 	_getFeature<Klass>(klass: any): Klass | undefined {
 		return this.features.find(feature => feature instanceof klass) as Klass;
 	}
 
-	_getSelection(): GridSelection | undefined {
-		return this._getFeature(GridSelection);
+	_getSelection(): TableSelection | undefined {
+		return this._getFeature(TableSelection);
 	}
 
 	_onEvent(e: Event) {
 		const composedPath = e.composedPath();
 		const eventOrigin = composedPath[0] as HTMLElement;
-		const elements = [this._gridNavigation, ...composedPath, ...this.features];
+		const elements = [this._tableNavigation, ...composedPath, ...this.features];
 		elements.forEach(element => {
-			if (element instanceof GridExtension || (element instanceof HTMLElement && element.localName.includes("ui5-grid"))) {
+			if (element instanceof TableExtension || (element instanceof HTMLElement && element.localName.includes("ui5-table"))) {
 				const eventHandlerName = `_on${e.type}` as keyof typeof element;
 				const eventHandler = element[eventHandlerName] as (e?: Event, eventOrigin?: HTMLElement) => void;
 				if (typeof eventHandler === "function") {
@@ -331,7 +331,7 @@ class Grid extends UI5Element {
 	}
 
 	_onResize() {
-		const { clientWidth, scrollWidth } = this._gridElement;
+		const { clientWidth, scrollWidth } = this._tableElement;
 
 		if (scrollWidth > clientWidth) {
 			// Overflow Handling: Move columns into the popin until overflow is resolved
@@ -374,7 +374,7 @@ class Grid extends UI5Element {
 
 		// Find the sticky element that is closest to the focused element
 		const target = e.target as HTMLElement;
-		const element = target.closest("ui5-grid-cell, ui5-grid-row") as HTMLElement ?? target;
+		const element = target.closest("ui5-table-cell, ui5-table-row") as HTMLElement ?? target;
 		const elementRect = element.getBoundingClientRect();
 		const stickyBottom = stickyElements.reduce((min, stickyElement) => {
 			const stickyRect = stickyElement.getBoundingClientRect();
@@ -431,7 +431,7 @@ class Grid extends UI5Element {
 		return headers;
 	}
 
-	_setHeaderPopinState(headerCell: GridHeaderCell, inPopin: boolean, popinWidth: number) {
+	_setHeaderPopinState(headerCell: TableHeaderCell, inPopin: boolean, popinWidth: number) {
 		const headerIndex = this.headerRow[0].cells.indexOf(headerCell);
 		headerCell._popin = inPopin;
 		headerCell._popinWidth = popinWidth;
@@ -441,20 +441,20 @@ class Grid extends UI5Element {
 	}
 
 	_isFeature(feature: any) {
-		return Boolean(feature.onGridActivate && feature.onGridRendered);
+		return Boolean(feature.onTableActivate && feature.onTableRendered);
 	}
 
 	_isGrowingFeature(feature: any) {
 		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
 	}
 
-	_onRowPress(row: GridRow) {
-		this.fireEvent<GridRowClickEventDetail>("row-click", { row });
+	_onRowPress(row: TableRow) {
+		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
 	get styles() {
 		return {
-			grid: {
+			table: {
 				"grid-template-columns": this._gridTemplateColumns,
 			},
 		};
@@ -462,7 +462,7 @@ class Grid extends UI5Element {
 
 	get _gridTemplateColumns() {
 		const widths = [];
-		const visibleHeaderCells = this.headerRow[0]._visibleCells as GridHeaderCell[];
+		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
 		if (this._getSelection()?.hasRowSelector()) {
 			widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
 		}
@@ -476,16 +476,16 @@ class Grid extends UI5Element {
 		return widths.join(" ");
 	}
 
-	get _gridOverflowX() {
-		return (this.overflowMode === GridOverflowMode.Popin) ? "hidden" : "auto";
+	get _tableOverflowX() {
+		return (this.overflowMode === TableOverflowMode.Popin) ? "hidden" : "auto";
 	}
 
-	get _gridOverflowY() {
+	get _tableOverflowY() {
 		return "auto";
 	}
 
 	get _nodataRow() {
-		return this.shadowRoot!.getElementById("nodata-row") as GridRow;
+		return this.shadowRoot!.getElementById("nodata-row") as TableRow;
 	}
 
 	get _beforeElement() {
@@ -496,12 +496,12 @@ class Grid extends UI5Element {
 		return this.shadowRoot!.getElementById("after") as HTMLElement;
 	}
 
-	get _gridElement() {
-		return this.shadowRoot!.getElementById("grid") as HTMLElement;
+	get _tableElement() {
+		return this.shadowRoot!.getElementById("table") as HTMLElement;
 	}
 
 	get _effectiveNoDataText() {
-		return this.noDataText || Grid.i18nBundle.getText(GRID_NO_DATA);
+		return this.noDataText || Table.i18nBundle.getText(TABLE_NO_DATA);
 	}
 
 	get _ariaLabel() {
@@ -518,7 +518,7 @@ class Grid extends UI5Element {
 	}
 
 	get _growing() {
-		return this.features.find(feature => this._isGrowingFeature(feature)) as IGridGrowing;
+		return this.features.find(feature => this._isGrowingFeature(feature)) as ITableGrowing;
 	}
 
 	// TODO: Could be moved to UI5Element. TBD
@@ -540,12 +540,12 @@ class Grid extends UI5Element {
 	}
 }
 
-Grid.define();
+Table.define();
 
-export default Grid;
+export default Table;
 
 export type {
-	IGridFeature,
-	IGridGrowing,
-	GridRowClickEventDetail,
+	ITableFeature,
+	ITableGrowing,
+	TableRowClickEventDetail,
 };

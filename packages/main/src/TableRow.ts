@@ -4,10 +4,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isIOS, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import GridRowTemplate from "./generated/templates/GridRowTemplate.lit.js";
-import GridRowBase from "./GridRowBase.js";
-import GridRowCss from "./generated/themes/GridRow.css.js";
-import GridCell from "./GridCell.js";
+import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import TableRowBase from "./TableRowBase.js";
+import TableRowCss from "./generated/themes/TableRow.css.js";
+import TableCell from "./TableCell.js";
 import RadioButton from "./RadioButton.js";
 
 /**
@@ -16,21 +16,21 @@ import RadioButton from "./RadioButton.js";
  * ### Overview
  *
  * @constructor
- * @extends GridRowBase
+ * @extends TableRowBase
  * @since 2.0
  * @public
  */
 @customElement({
-	tag: "ui5-grid-row",
-	styles: [GridRowBase.styles, GridRowCss],
-	template: GridRowTemplate,
-	dependencies: [...GridRowBase.dependencies, RadioButton, GridCell],
+	tag: "ui5-table-row",
+	styles: [TableRowBase.styles, TableRowCss],
+	template: TableRowTemplate,
+	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell],
 })
-class GridRow extends GridRowBase {
+class TableRow extends TableRowBase {
 	/**
 	 * Defines the cells of the component.
 	 *
-	 * **Note:** Use `ui5-grid-cell` for the intended design.
+	 * **Note:** Use `ui5-table-cell` for the intended design.
 	 *
 	 * @public
 	 */
@@ -43,7 +43,7 @@ class GridRow extends GridRowBase {
 			slots: false,
 		},
 	})
-	cells!: Array<GridCell>;
+	cells!: Array<TableCell>;
 
 	/**
 	 * Unique identifier of the component.
@@ -90,13 +90,13 @@ class GridRow extends GridRowBase {
 
 		if (eventOrigin === this && this._isInteractive && isEnter(e)) {
 			this.toggleAttribute("_active", true);
-			this._grid?._onRowPress(this);
+			this._table?._onRowPress(this);
 		}
 	}
 
 	_onclick() {
 		if (this._isInteractive && this === getActiveElement()) {
-			this._grid?._onRowPress(this);
+			this._table?._onRowPress(this);
 		}
 	}
 
@@ -113,6 +113,6 @@ class GridRow extends GridRowBase {
 	}
 }
 
-GridRow.define();
+TableRow.define();
 
-export default GridRow;
+export default TableRow;

@@ -8,7 +8,7 @@
     display: none;
 }
 
-#grid {
+#table {
     display: grid;
     grid-auto-rows: minmax(min-content, auto);
     background: var(--sapList_Background);

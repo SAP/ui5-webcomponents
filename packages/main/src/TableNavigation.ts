@@ -12,58 +12,58 @@ import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClick
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import type Grid from "./Grid.js";
-import GridRowBase from "./GridRowBase.js";
-import GridCellBase from "./GridCellBase.js";
-import GridExtension from "./GridExtension.js";
+import type Table from "./Table.js";
+import TableRowBase from "./TableRowBase.js";
+import TableCellBase from "./TableCellBase.js";
+import TableExtension from "./TableExtension.js";
 import GridWalker from "./GridWalker.js";
 
 /**
- * Handles the keyboard navigation for the ui5-grid.
+ * Handles the keyboard navigation for the ui5-table.
  *
  * @class
  * @private
  */
-class GridNavigation extends GridExtension {
-	_grid: Grid;
+class TableNavigation extends TableExtension {
+	_table: Table;
 	_gridWalker: GridWalker;
 	_colPosition: number = 0;
 	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
 	_lastFocusedItem?: HTMLElement;
 
-	constructor(grid: Grid) {
+	constructor(table: Table) {
 		super();
-		this._grid = grid;
+		this._table = table;
 		this._gridWalker = new GridWalker();
 		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
 	}
 
-	_getNavigationItemsOfRow(row: GridRowBase) {
+	_getNavigationItemsOfRow(row: TableRowBase) {
 		return [row, ...row.shadowRoot!.children].map(element => {
 			return element.localName === "slot" ? (element as HTMLSlotElement).assignedElements() : element;
 		}).flat().filter(element => {
-			return element.localName.includes("ui5-grid-") && !element.hasAttribute("excluded-from-navigation");
+			return element.localName.includes("ui5-table-") && !element.hasAttribute("excluded-from-navigation");
 		}) as HTMLElement[];
 	}
 
 	_getNavigationItemsOfGrid() {
 		const items = [];
-		if (this._grid.headerRow[0] && !isElementHidden(this._grid.headerRow[0])) {
-			items.push(this._getNavigationItemsOfRow(this._grid.headerRow[0]));
+		if (this._table.headerRow[0] && !isElementHidden(this._table.headerRow[0])) {
+			items.push(this._getNavigationItemsOfRow(this._table.headerRow[0]));
 			this._gridWalker.setFirstRowPos(1);
 		} else {
 			this._gridWalker.setFirstRowPos(0);
 		}
 
-		if (this._grid.rows.length) {
-			this._grid.rows.forEach(row => items.push(this._getNavigationItemsOfRow(row)));
+		if (this._table.rows.length) {
+			this._table.rows.forEach(row => items.push(this._getNavigationItemsOfRow(row)));
 		} else {
-			items.push(this._getNavigationItemsOfRow(this._grid._nodataRow));
+			items.push(this._getNavigationItemsOfRow(this._table._nodataRow));
 		}
 
-		if (this._grid._shouldRenderGrowing) {
-			items.push([this._grid._growing.getFocusDomRef()]);
+		if (this._table._shouldRenderGrowing) {
+			items.push([this._table._growing.getFocusDomRef()]);
 			this._gridWalker.setLastRowPos(-1);
 		} else {
 			this._gridWalker.setLastRowPos(0);
@@ -118,7 +118,7 @@ class GridNavigation extends GridExtension {
 	}
 
 	_handleEnter(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (eventOrigin instanceof GridCellBase) {
+		if (eventOrigin instanceof TableCellBase) {
 			this._handleF2(e, eventOrigin);
 		}
 	}
@@ -134,7 +134,7 @@ class GridNavigation extends GridExtension {
 	}
 
 	_handleF7(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (eventOrigin instanceof GridRowBase) {
+		if (eventOrigin instanceof TableRowBase) {
 			this._gridWalker.setColPos(this._colPosition);
 			let elementToFocus = this._gridWalker.getCurrent() as HTMLElement;
 			if (this._tabPosition > -1) {
@@ -155,14 +155,14 @@ class GridNavigation extends GridExtension {
 
 	_handleTab(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if (this._isEventFromCurrentItem(e)) {
-			this._focusElement(e.shiftKey ? this._grid._beforeElement : this._grid._afterElement);
+			this._focusElement(e.shiftKey ? this._table._beforeElement : this._table._afterElement);
 		} else {
-			const tabbables = getTabbableElements(this._grid._gridElement);
+			const tabbables = getTabbableElements(this._table._tableElement);
 			if (e.shiftKey && tabbables[0] === eventOrigin) {
-				this._focusElement(this._grid._beforeElement);
+				this._focusElement(this._table._beforeElement);
 			}
 			if (!e.shiftKey && tabbables[tabbables.length - 1] === eventOrigin) {
-				this._focusElement(this._grid._afterElement);
+				this._focusElement(this._table._afterElement);
 			}
 		}
 	}
@@ -201,7 +201,7 @@ class GridNavigation extends GridExtension {
 			this._gridWalker.setCurrent(eventOrigin);
 		}
 
-		const keydownHandlerName = `_handle${e.code}` as keyof GridNavigation;
+		const keydownHandlerName = `_handle${e.code}` as keyof TableNavigation;
 		const keydownHandler = this[keydownHandlerName] as (e: KeyboardEvent, eventOrigin: HTMLElement) => void | false;
 		if (typeof keydownHandler === "function" && keydownHandler.call(this, e, eventOrigin) === undefined) {
 			return;
@@ -212,9 +212,9 @@ class GridNavigation extends GridExtension {
 		}
 
 		if (isLeft(e)) {
-			this._gridWalker[this._grid.effectiveDir === "rtl" ? "right" : "left"]();
+			this._gridWalker[this._table.effectiveDir === "rtl" ? "right" : "left"]();
 		} else if (isRight(e)) {
-			this._gridWalker[this._grid.effectiveDir === "rtl" ? "left" : "right"]();
+			this._gridWalker[this._table.effectiveDir === "rtl" ? "left" : "right"]();
 		} else if (isUp(e)) {
 			this._gridWalker.up();
 		} else if (isDown(e)) {
@@ -271,7 +271,7 @@ class GridNavigation extends GridExtension {
 			return;
 		}
 
-		if (eventOrigin === this._grid._beforeElement || eventOrigin === this._grid._afterElement) {
+		if (eventOrigin === this._table._beforeElement || eventOrigin === this._table._afterElement) {
 			this._gridWalker.setColPos(0);
 			this._focusCurrentItem();
 		} else if (eventOrigin !== this._lastFocusedItem && this._getNavigationItemsOfGrid().flat().includes(eventOrigin)) {
@@ -280,4 +280,4 @@ class GridNavigation extends GridExtension {
 	}
 }
 
-export default GridNavigation;
+export default TableNavigation;

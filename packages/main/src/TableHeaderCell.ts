@@ -1,35 +1,35 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import GridCellBase from "./GridCellBase.js";
-import GridHeaderCellTemplate from "./generated/templates/GridHeaderCellTemplate.lit.js";
-import GridHeaderCellStyles from "./generated/themes/GridHeaderCell.css.js";
+import TableCellBase from "./TableCellBase.js";
+import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
+import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
 
 /**
  * @class
  *
  * ### Overview
  *
- * The `ui5-grid-header-cell` component represents a column in the `ui5-grid`.
+ * The `ui5-table-header-cell` component represents a column in the `ui5-table`.
  *
- * As it is tightly coupled to the `ui5-grid`, it should only be used in the `ui5-grid-header-row`
+ * As it is tightly coupled to the `ui5-table`, it should only be used in the `ui5-table-header-row`
  * to ensure correct layout and design.
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/GridHeaderCell.js";`
+ * `import "@ui5/webcomponents/dist/TableHeaderCell.js";`
  *
  * @constructor
- * @extends GridCellBase
+ * @extends TableCellBase
  * @since 2.0
  * @public
  */
 @customElement({
-	tag: "ui5-grid-header-cell",
-	styles: [GridCellBase.styles, GridHeaderCellStyles],
-	template: GridHeaderCellTemplate,
+	tag: "ui5-table-header-cell",
+	styles: [TableCellBase.styles, TableHeaderCellStyles],
+	template: TableHeaderCellTemplate,
 })
-class GridHeaderCell extends GridCellBase {
+class TableHeaderCell extends TableCellBase {
 	/**
 	 * Defines the width of column.
 	 *
@@ -86,6 +86,6 @@ class GridHeaderCell extends GridCellBase {
 	}
 }
 
-GridHeaderCell.define();
+TableHeaderCell.define();
 
-export default GridHeaderCell;
+export default TableHeaderCell;

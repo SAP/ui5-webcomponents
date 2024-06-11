@@ -1,9 +1,9 @@
 /**
- * Column mode of the &lt;ui5-grid&gt; component.
+ * Column mode of the &lt;ui5-table&gt; component.
  *
  * @public
  */
-enum GridOverflowMode {
+enum TableOverflowMode {
 	/**
 	 * Shows a scrollbar, when the table cannot fit all columns.
 	 * @public
@@ -17,4 +17,4 @@ enum GridOverflowMode {
 	Popin = "Popin"
 }
 
-export default GridOverflowMode;
+export default TableOverflowMode;

@@ -11,14 +11,14 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
-import type Grid from "./Grid.js";
-import type { IGridGrowing } from "./Grid.js";
-import GridGrowingMode from "./types/GridGrowingMode.js";
-import GridGrowingTemplate from "./generated/templates/GridGrowingTemplate.lit.js";
-import GridGrowingCss from "./generated/themes/GridGrowing.css.js";
+import type Table from "./Table.js";
+import type { ITableGrowing } from "./Table.js";
+import TableGrowingMode from "./types/TableGrowingMode.js";
+import TableGrowingTemplate from "./generated/templates/TableGrowingTemplate.lit.js";
+import TableGrowingCss from "./generated/themes/TableGrowing.css.js";
 import {
-	GRID_MORE,
-	GRID_MORE_DESCRIPTION,
+	TABLE_MORE,
+	TABLE_MORE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // The documentation should be similar to the Table.ts class documentation!
@@ -29,28 +29,28 @@ import {
  *
  * ### Overview
  *
- * The `ui5-grid-growing` component is used inside the `ui5-grid` to add a growing/data loading functionalities
- * to the grid.
+ * The `ui5-table-growing` component is used inside the `ui5-table` to add a growing/data loading functionalities
+ * to the table.
  *
  * The component offers two options:
  * * Button - a More button is displayed, clicking it will load more data.
- * * Scroll - additional data is loaded automatically when the user scrolls to the end of the grid.
+ * * Scroll - additional data is loaded automatically when the user scrolls to the end of the table.
  *
  * ### Usage
  *
- * The `ui5-grid-growing` component is only used inside the `ui5-grid` component as a feature.
- * It has to be slotted inside the `ui5-grid` in the `features` slot.
+ * The `ui5-table-growing` component is only used inside the `ui5-table` component as a feature.
+ * It has to be slotted inside the `ui5-table` in the `features` slot.
  * The component is not intended to be used as a standalone component.
  *
  * ```html
- * <ui5-grid>
- * 	<ui5-grid-growing type="Button" growing-text="More" slot="features"></ui5-grid-growing>
- * </ui5-grid>
+ * <ui5-table>
+ * 	<ui5-table-growing type="Button" growing-text="More" slot="features"></ui5-table-growing>
+ * </ui5-table>
  * ```
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/GridGrowing.js";`
+ * `import "@ui5/webcomponents/dist/TableGrowing.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -58,31 +58,31 @@ import {
  * @public
  */
 @customElement({
-	tag: "ui5-grid-growing",
+	tag: "ui5-table-growing",
 	renderer: litRender,
-	template: GridGrowingTemplate,
-	styles: GridGrowingCss,
+	template: TableGrowingTemplate,
+	styles: TableGrowingCss,
 })
 
 /**
- * Fired when the growing button is pressed or the user scrolls to the end of the grid.
+ * Fired when the growing button is pressed or the user scrolls to the end of the table.
  *
  * @public
  */
 @event("load-more")
 
-class GridGrowing extends UI5Element implements IGridGrowing {
+class TableGrowing extends UI5Element implements ITableGrowing {
 	/**
-	 * Defines the mode of the <code>ui5-grid</code> growing.
+	 * Defines the mode of the <code>ui5-table</code> growing.
 	 *
 	 * Available options are:
-	 * * Button - Shows a More button at the bottom of the grid, pressing it will load more rows.
-	 * * Scroll - The rows are loaded automatically by scrolling to the bottom of the grid. If the grid is not scrollable, this option is the same as the Button.
+	 * * Button - Shows a More button at the bottom of the table, pressing it will load more rows.
+	 * * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable, this option is the same as the Button.
 	 * @default "Button"
 	 * @public
 	 */
-	@property({ type: GridGrowingMode, defaultValue: GridGrowingMode.Button })
-	type!: `${GridGrowingMode}`;
+	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.Button })
+	type!: `${TableGrowingMode}`;
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
@@ -121,7 +121,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	@property({ type: Boolean })
 	_activeState?: boolean;
 
-	_grid?: Grid;
+	_table?: Table;
 	_observer?: IntersectionObserver;
 	_individualSlot?: string;
 	_currentLastRow?: HTMLElement;
@@ -130,18 +130,18 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
-		GridGrowing.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		TableGrowing.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	onGridActivate(grid: Grid): void {
-		this._grid = grid;
+	onTableActivate(table: Table): void {
+		this._table = table;
 		this._shouldFocusRow = false;
 		if (this._hasScrollToLoad()) {
-			this._observeGridEnd();
+			this._observeTableEnd();
 		}
 	}
 
-	onGridRendered(): void {
+	onTableRendered(): void {
 		// Focus the first row after growing, when the growing button is used
 		if (this._shouldFocusRow) {
 			this._shouldFocusRow = false;
@@ -151,7 +151,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 				focusRow ||= this.getFocusDomRef() as HTMLElement;
 			}
 
-			focusRow ||= this._grid?.rows[0] as HTMLElement;
+			focusRow ||= this._table?.rows[0] as HTMLElement;
 
 			focusRow?.focus();
 		}
@@ -161,12 +161,12 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 		}
 
 		if (this._hasScrollToLoad()) {
-			this._observeGridEnd();
+			this._observeTableEnd();
 		}
 	}
 
 	onExitDOM(): void {
-		this._grid = undefined;
+		this._table = undefined;
 		this._observer?.disconnect();
 		this._observer = undefined;
 		this._currentLastRow = undefined;
@@ -176,25 +176,25 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 		this._observer?.disconnect();
 		this._observer = undefined;
 		this._currentLastRow = undefined;
-		this._invalidateGrid();
+		this._invalidateTable();
 	}
 
 	hasGrowingComponent(): boolean {
 		if (this._hasScrollToLoad()) {
-			return !(this._grid && this._grid._scrollContainer.scrollHeight > this._grid._scrollContainer.clientHeight) ?? true;
+			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight) ?? true;
 		}
 
-		return this.type === GridGrowingMode.Button && !this.disabled;
+		return this.type === TableGrowingMode.Button && !this.disabled;
 	}
 
 	/**
-	 * An event handler that can be used by the Grid to notify the GridGrowing that
-	 * the Grid is growing either by pressing the load more button or by scrolling to the end of the grid.
+	 * An event handler that can be used by the Table to notify the TableGrowing that
+	 * the Table is growing either by pressing the load more button or by scrolling to the end of the table.
 	 */
 	loadMore(): void {
-		// remembers the last row. only do this when the grid has a growing component rendered.
-		if (this._grid && this.hasGrowingComponent()) {
-			this._currentLastRow = this._grid.rows[this._grid.rows.length - 1];
+		// remembers the last row. only do this when the table has a growing component rendered.
+		if (this._table && this.hasGrowingComponent()) {
+			this._currentLastRow = this._table.rows[this._table.rows.length - 1];
 		}
 		this._shouldFocusRow = true;
 
@@ -202,19 +202,19 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	}
 
 	_hasScrollToLoad() {
-		return this.type === GridGrowingMode.Scroll;
+		return this.type === TableGrowingMode.Scroll;
 	}
 
 	/**
-	 * Observes the end of the grid.
+	 * Observes the end of the table.
 	 * @private
 	 */
-	_observeGridEnd(): void {
-		if (!this._grid) {
+	_observeTableEnd(): void {
+		if (!this._table) {
 			return;
 		}
 
-		const lastElement = this._grid.shadowRoot?.querySelector("#table-end-row");
+		const lastElement = this._table.shadowRoot?.querySelector("#table-end-row");
 		if (lastElement) {
 			this._getIntersectionObserver().observe(lastElement);
 		}
@@ -222,7 +222,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 
 	/**
 	 * Returns the IntersectionObserver instance. If it does not exist, it will be created.
-	 * The observer will call the loadMore function when the end of the grid is reached.
+	 * The observer will call the loadMore function when the end of the table is reached.
 	 * @private
 	 */
 	_getIntersectionObserver(): IntersectionObserver {
@@ -242,11 +242,11 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 		}
 	}
 
-	_invalidateGrid() {
-		if (!this._grid) {
+	_invalidateTable() {
+		if (!this._table) {
 			return;
 		}
-		this._grid._invalidate++;
+		this._table._invalidate++;
 	}
 
 	/**
@@ -279,11 +279,11 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	}
 
 	get _growingButtonText() {
-		return this.growingText || GridGrowing.i18nBundle.getText(GRID_MORE);
+		return this.growingText || TableGrowing.i18nBundle.getText(TABLE_MORE);
 	}
 
 	get _growingButtonDescription() {
-		return GridGrowing.i18nBundle.getText(GRID_MORE_DESCRIPTION);
+		return TableGrowing.i18nBundle.getText(TABLE_MORE_DESCRIPTION);
 	}
 
 	get _hasGrowingButton() {
@@ -291,6 +291,6 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	}
 }
 
-GridGrowing.define();
+TableGrowing.define();
 
-export default GridGrowing;
+export default TableGrowing;

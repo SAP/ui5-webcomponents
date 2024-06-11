@@ -1,9 +1,9 @@
 /**
- * Growing mode of the &lt;ui5-grid&gt; component.
+ * Growing mode of the &lt;ui5-table&gt; component.
  *
  * @public
  */
-enum GridGrowingMode {
+enum TableGrowingMode {
 	/**
 	 * Renders a growing button, which can be pressed to load more data.
 	 * @public
@@ -17,4 +17,4 @@ enum GridGrowingMode {
 	Scroll = "Scroll",
 }
 
-export default GridGrowingMode;
+export default TableGrowingMode;

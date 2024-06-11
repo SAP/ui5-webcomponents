@@ -1,4 +1,4 @@
-<div id="before" role="none" tabindex="0" ui5-grid-dummy-focus-area></div>
+<div id="before" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
 
 {{#if loading}}
     <!-- TODO: Change to loading indicator -->
@@ -11,23 +11,23 @@
     ></ui5-busy-indicator>
 {{/if}}
 
-<div id="grid" role="grid"
-    style="{{styles.grid}}"
+<div id="table" role="grid"
+    style="{{styles.table}}"
     aria-label="{{_ariaLabel}}"
     aria-multiselectable="{{_ariaMultiSelectable}}"
 >
     <slot name="headerRow"></slot>
     <slot></slot>
     {{#unless rows.length}}
-        <ui5-grid-row id="nodata-row">
-            <ui5-grid-cell id="nodata-cell" excluded-from-navigation>
+        <ui5-table-row id="nodata-row">
+            <ui5-table-cell id="nodata-cell" excluded-from-navigation>
             {{#if nodata.length}}
                 <slot name="nodata"></slot>
             {{else}}
                 {{_effectiveNoDataText}}
             {{/if}}
-            </ui5-grid-cell>
-        </ui5-grid-row>
+            </ui5-table-cell>
+        </ui5-table-row>
     {{/unless}}
 
     {{#if _shouldRenderGrowing}}
@@ -38,16 +38,16 @@
 
     {{> tableEndRow}}
 </div>
-<div id="after" role="none" tabindex="0" ui5-grid-dummy-focus-area></div>
+<div id="after" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
 
 {{#*inline "growingRow"}}
-    <ui5-grid-row id="growing-row">
-        <ui5-grid-cell id="growing-cell">
+    <ui5-table-row id="growing-row">
+        <ui5-table-cell id="growing-cell">
             <!-- The growing button is a div filling the cell -->
             <!-- It has a growing text at the top and a growingSubText at the bottom -->
             <slot name="{{_growing._individualSlot}}"></slot>
-        </ui5-grid-cell>
-    </ui5-grid-row>
+        </ui5-table-cell>
+    </ui5-table-row>
 {{/inline}}
 
 {{#*inline "tableEndRow"}}

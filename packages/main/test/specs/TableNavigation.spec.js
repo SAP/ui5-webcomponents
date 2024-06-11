@@ -1,13 +1,13 @@
 import { assert } from "chai";
 
-describe("Grid - Keyboard Navigation", async () => {
+describe("Table - Keyboard Navigation", async () => {
 	before(async () => {
-		await browser.url("test/pages/GridNavigation.html");
+		await browser.url("test/pages/TableNavigation.html");
 	});
 
 	it("should navigate on rows", async () => {
-		const grid = await browser.$("#grid0");
-		const rows = await grid.$$("ui5-grid-header-row,ui5-grid-row");
+		const table = await browser.$("#table0");
+		const rows = await table.$$("ui5-table-header-row,ui5-table-row");
 		const growing = await browser.$("#growing");
 		const rowsLength = rows.length;
 
@@ -59,13 +59,13 @@ describe("Grid - Keyboard Navigation", async () => {
 	});
 
 	it("should navigate on cells", async () => {
-		const grid = await browser.$("#grid0");
-		const rows = await grid.$$("ui5-grid-header-row,ui5-grid-row");
+		const table = await browser.$("#table0");
+		const rows = await table.$$("ui5-table-header-row,ui5-table-row");
 		const growing = await browser.$("#growing");
 
 		const rowCells = [];
 		for (const row of rows) {
-			const cells = await row.$$("ui5-grid-header-cell,ui5-grid-cell");
+			const cells = await row.$$("ui5-table-header-cell,ui5-table-cell");
 			rowCells.push(cells);
 		}
 
@@ -143,19 +143,19 @@ describe("Grid - Keyboard Navigation", async () => {
 	});
 
 	it("should handle F2/F7/Enter/Tab/Up/Down", async () => {
-		const grid = await browser.$("#grid0");
-		const rows = await grid.$$("ui5-grid-header-row,ui5-grid-row");
-		const row0Link = await grid.$("#row0-link");
-		const row1Input = await grid.$("#row1-input");
-		const row1Button = await grid.$("#row1-button");
-		const row2Input = await grid.$("#row2-input");
-		const row2Button = await grid.$("#row2-button");
-		const beforeGrid = await browser.$("#before-grid1");
-		const afterGrid = await browser.$("#after-grid1");
+		const table = await browser.$("#table0");
+		const rows = await table.$$("ui5-table-header-row,ui5-table-row");
+		const row0Link = await table.$("#row0-link");
+		const row1Input = await table.$("#row1-input");
+		const row1Button = await table.$("#row1-button");
+		const row2Input = await table.$("#row2-input");
+		const row2Button = await table.$("#row2-button");
+		const beforeTable = await browser.$("#before-table1");
+		const afterTable = await browser.$("#after-table1");
 
 		const rowCells = [];
 		for (const row of rows) {
-			const cells = await row.$$("ui5-grid-header-cell,ui5-grid-cell");
+			const cells = await row.$$("ui5-table-header-cell,ui5-table-cell");
 			rowCells.push(cells);
 		}
 
@@ -204,7 +204,7 @@ describe("Grid - Keyboard Navigation", async () => {
 		assert.ok(await getCell(1, 0).isFocused(), `ArrowDown: Row1 Cell0 is focused.`);
 
 		await browser.keys("Tab");
-		assert.ok(await afterGrid.isFocused(), `Tab: After grid is focused.`);
+		assert.ok(await afterTable.isFocused(), `Tab: After table is focused.`);
 
 		await browser.keys(["Shift", "Tab"]);
 		assert.ok(await rows[1].isFocused(), `ShiftTab: Row1 is focused.`);
@@ -249,7 +249,7 @@ describe("Grid - Keyboard Navigation", async () => {
 		assert.ok(await getCell(2, 2).isFocused(), `F7: Row2 Cell2 is focused.`);
 
 		await browser.keys(["Shift", "Tab"]);
-		assert.ok(await beforeGrid.isFocused(), `ShiftTab: Before grid is focused.`);
+		assert.ok(await beforeTable.isFocused(), `ShiftTab: Before table is focused.`);
 
 		await browser.keys("Tab");
 		assert.ok(await rows[2].isFocused(), `Tab: Row2 is focused.`);
@@ -257,7 +257,7 @@ describe("Grid - Keyboard Navigation", async () => {
 
 	it("should should work correctly for interactive rows", async () => {
 		const row = await browser.$("#interactive-row");
-		const input = await browser.$("#before-grid1");
+		const input = await browser.$("#before-table1");
 		const rowButton = await browser.$("#row2-button");
 		const anotherRow = await browser.$("#notinteractive-row");
 
@@ -288,20 +288,20 @@ describe("Grid - Keyboard Navigation", async () => {
 });
 
 
-describe("Grid - Keyboard Navigation with Fixed Headers", async() => {
+describe("Table - Keyboard Navigation with Fixed Headers", async() => {
 	before(async() => {
-		await browser.url("test/pages/GridFixedHeader.html");
+		await browser.url("test/pages/TableFixedHeader.html");
 	});
 
 	it("scrollable container - focused row should always be below the header", async() => {
-		const grid = await browser.$("#grid0");
+		const table = await browser.$("#table0");
 		const lastRow = await browser.$("#row-21");
 
 		await lastRow.scrollIntoView();
 		await lastRow.click();
 		assert.ok(await lastRow.isFocused(), `Click: Row 21 (last row) is focused.`);
 
-		const headerRow = await grid.$("ui5-grid-header-row");
+		const headerRow = await table.$("ui5-table-header-row");
 
 		// Scroll to the top one by one
 		for (let i = 20; i > 0; i--) {
@@ -317,14 +317,14 @@ describe("Grid - Keyboard Navigation with Fixed Headers", async() => {
 	});
 
 	it("scrollable table - focused row should always be below the header", async() => {
-		const grid = await browser.$("#grid1");
+		const table = await browser.$("#table1");
 		const lastRow = await browser.$("#row-21-1");
 
 		await lastRow.scrollIntoView();
 		await lastRow.click();
 		assert.ok(await lastRow.isFocused(), `Click: Row 21 (last row) is focused.`);
 
-		const headerRow = await grid.$("ui5-grid-header-row");
+		const headerRow = await table.$("ui5-table-header-row");
 
 		// Scroll to the top one by one
 		for (let i = 20; i > 0; i--) {
@@ -340,14 +340,14 @@ describe("Grid - Keyboard Navigation with Fixed Headers", async() => {
 	});
 
 	it("body as scroll container - focused row should always be below the header", async() => {
-		const grid = await browser.$("#grid2");
+		const table = await browser.$("#table2");
 		const lastRow = await browser.$("#row-100-2");
 
 		await lastRow.scrollIntoView();
 		await lastRow.click();
 		assert.ok(await lastRow.isFocused(), `Click: Row 100 (last row) is focused.`);
 
-		const headerRow = await grid.$("ui5-grid-header-row");
+		const headerRow = await table.$("ui5-table-header-row");
 
 		// Scroll to the top one by one
 		for (let i = 99; i > 0; i--) {

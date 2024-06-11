@@ -5,11 +5,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import GridCellBaseStyles from "./generated/themes/GridCellBase.css.js";
+import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
 
 /**
  * @class
- * A class to serve as a foundation for the `GridCell` and `GridHeaderCell` classes.
+ * A class to serve as a foundation for the `TableCell` and `TableHeaderCell` classes.
  * @constructor
  * @abstract
  * @extends UI5Element
@@ -18,9 +18,9 @@ import GridCellBaseStyles from "./generated/themes/GridCellBase.css.js";
  */
 @customElement({
 	renderer: litRender,
-	styles: GridCellBaseStyles,
+	styles: TableCellBaseStyles,
 })
-abstract class GridCellBase extends UI5Element {
+abstract class TableCellBase extends UI5Element {
 	/**
 	 * Defines the content of the component.
 	 * @public
@@ -35,7 +35,7 @@ abstract class GridCellBase extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
-		GridCellBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		TableCellBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onBeforeRendering() {
@@ -51,4 +51,4 @@ abstract class GridCellBase extends UI5Element {
 	}
 }
 
-export default GridCellBase;
+export default TableCellBase;

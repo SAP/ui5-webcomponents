@@ -6,17 +6,17 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import type GridCellBase from "./GridCellBase.js";
-import GridRowBaseCss from "./generated/themes/GridRowBase.css.js";
-import Grid from "./Grid.js";
+import type TableCellBase from "./TableCellBase.js";
+import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
+import Table from "./Table.js";
 import CheckBox from "./CheckBox.js";
 import {
-	GRID_ROW_SELECTOR,
+	TABLE_ROW_SELECTOR,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
- * A class to serve as a foundation for the `GridRow` and `GridHeaderRow` classes.
+ * A class to serve as a foundation for the `TableRow` and `TableHeaderRow` classes.
  * @constructor
  * @abstract
  * @extends UI5Element
@@ -25,18 +25,18 @@ import {
  */
 @customElement({
 	renderer: litRender,
-	styles: GridRowBaseCss,
+	styles: TableRowBaseCss,
 	dependencies: [CheckBox],
 })
-abstract class GridRowBase extends UI5Element {
-	cells!: Array<GridCellBase>;
+abstract class TableRowBase extends UI5Element {
+	cells!: Array<TableCellBase>;
 
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
-		GridRowBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		TableRowBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onEnterDOM() {
@@ -60,7 +60,7 @@ abstract class GridRowBase extends UI5Element {
 	}
 
 	_informSelectionChange() {
-		this._gridSelection?.informSelectionChange(this);
+		this._tableSelection?.informSelectionChange(this);
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
@@ -70,33 +70,33 @@ abstract class GridRowBase extends UI5Element {
 		}
 	}
 
-	get _grid(): Grid | undefined {
-		const grid = this.parentElement;
-		return grid instanceof Grid ? grid : undefined;
+	get _table(): Table | undefined {
+		const table = this.parentElement;
+		return table instanceof Table ? table : undefined;
 	}
 
-	get _gridId() {
-		return this._grid?._id;
+	get _tableId() {
+		return this._table?._id;
 	}
 
-	get _gridSelection() {
-		return this._grid?._getSelection();
+	get _tableSelection() {
+		return this._table?._getSelection();
 	}
 
 	get _isSelected() {
-		return this._gridSelection?.isSelected(this);
+		return this._tableSelection?.isSelected(this);
 	}
 
 	get _isSelectable() {
-		return this._gridSelection?.isSelectable();
+		return this._tableSelection?.isSelectable();
 	}
 
 	get _isMultiSelect() {
-		return this._gridSelection?.isMultiSelect();
+		return this._tableSelection?.isMultiSelect();
 	}
 
 	get _hasRowSelector() {
-		return this._gridSelection?.hasRowSelector();
+		return this._tableSelection?.hasRowSelector();
 	}
 
 	get _selectionCell() {
@@ -112,8 +112,8 @@ abstract class GridRowBase extends UI5Element {
 	}
 
 	get _i18nRowSelector(): string {
-		return GridRowBase.i18nBundle.getText(GRID_ROW_SELECTOR);
+		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
 	}
 }
 
-export default GridRowBase;
+export default TableRowBase;
