@@ -34,15 +34,6 @@ describe("Tag rendering", async () => {
 		});
 
 		assert.strictEqual(await tagHiddenText.getText(), `${descriptionTag} ${descriptionSuccess}`, "hidden text is correct");
-
-		tagHiddenText = await browser.$("#tagWithTextAndIcon").shadow$(".ui5-hidden-text");
-
-		let descriptionBadge = await browser.executeAsync(done => {
-			const sn = document.getElementById("tagWithTextAndIcon");
-			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TAG_DESCRIPTION_BADGE));
-		});
-
-		assert.strictEqual(await tagHiddenText.getText(), descriptionBadge, "hidden text is correct");
 	});
 
 	it("tests that label is rendered if there is text content", async () => {

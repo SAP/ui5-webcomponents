@@ -1,4 +1,4 @@
-import DataType from "./types/DataType.js";
+import type DataType from "./types/DataType.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";

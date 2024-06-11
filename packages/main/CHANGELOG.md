@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* **ui5-button:** adjust screen reader announcement order ([#8997](https://github.com/SAP/ui5-webcomponents/issues/8997)) ([2d9a16b](https://github.com/SAP/ui5-webcomponents/commit/2d9a16b403d9457382eeb5d0d913b463e4c52c6a))
+* **ui5-calendar:** adjust accessibility semantics ([#9102](https://github.com/SAP/ui5-webcomponents/issues/9102)) ([06891a1](https://github.com/SAP/ui5-webcomponents/commit/06891a1369bf3b92e144953e8ddec58b10ef17d8)), closes [#9068](https://github.com/SAP/ui5-webcomponents/issues/9068) [#9069](https://github.com/SAP/ui5-webcomponents/issues/9069)
+* **ui5-date:** remove circular dependency ([#9137](https://github.com/SAP/ui5-webcomponents/issues/9137)) ([9c8d12e](https://github.com/SAP/ui5-webcomponents/commit/9c8d12e79860d2203e1719248b4222101a8d0410))
+* **ui5-input, ui5-combobox, ui5-multi-combobox:** prevent native input autocomplete ([#9130](https://github.com/SAP/ui5-webcomponents/issues/9130)) ([5d8dbbd](https://github.com/SAP/ui5-webcomponents/commit/5d8dbbdf0129165a11d6f9e44e4458f1c54b8fb7))
+* **ui5-option-custom:** show focus outline ([#9101](https://github.com/SAP/ui5-webcomponents/issues/9101)) ([bf8366e](https://github.com/SAP/ui5-webcomponents/commit/bf8366eb6c8f52e15de249f32cfb8213e016370c))
+* **ui5-popup:** initialFocus won't work if 'autofocus' is set ([#8956](https://github.com/SAP/ui5-webcomponents/issues/8956)) ([2c9f775](https://github.com/SAP/ui5-webcomponents/commit/2c9f7757c9378732c1231651bdc8a39004a22a60))
+* **ui5-popup:** remove popup from the tab chain ([#8955](https://github.com/SAP/ui5-webcomponents/issues/8955)) ([aedcdb9](https://github.com/SAP/ui5-webcomponents/commit/aedcdb934358cebef3d0544c44e6a8a9d437531d)), closes [#9094](https://github.com/SAP/ui5-webcomponents/issues/9094)
+
+
+### Code Refactoring
+
+* **ui5-link:** wrap text by default ([#9006](https://github.com/SAP/ui5-webcomponents/issues/9006)) ([1924b54](https://github.com/SAP/ui5-webcomponents/commit/1924b5457f22c428527f8be3fbdd46d9d5d7ffed))
+* **ui5-radio-button:** wrap text by default ([#9117](https://github.com/SAP/ui5-webcomponents/issues/9117)) ([b8d7bac](https://github.com/SAP/ui5-webcomponents/commit/b8d7bac56c783825cf9354e020730e0d6a87a2b4))
+
+
+### Features
+
+* **ui5-menu-item:** add endContent slot ([dc3cfde](https://github.com/SAP/ui5-webcomponents/commit/dc3cfde6483e9d4200ed9b4c1772872836233842)), closes [#6350](https://github.com/SAP/ui5-webcomponents/issues/6350)
+* **ui5-select:** introduced 'popover' part ([#9120](https://github.com/SAP/ui5-webcomponents/issues/9120)) ([3c03e17](https://github.com/SAP/ui5-webcomponents/commit/3c03e17288b58d8a5a5771085ff20a20cbfae783)), closes [#4503](https://github.com/SAP/ui5-webcomponents/issues/4503)
+* **ui5-time-picker:** introduce `open` and `close` events ([#9093](https://github.com/SAP/ui5-webcomponents/issues/9093)) ([bf2d0aa](https://github.com/SAP/ui5-webcomponents/commit/bf2d0aaaf3856c61b3a658e57dd581a904c82cbf))
+
+
+### BREAKING CHANGES
+
+* **ui5-radio-button:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-link:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+```
+
+
+
+
+
 # [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
 
 

@@ -2,7 +2,8 @@
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
-import UI5ElementMetadata, {
+import UI5ElementMetadata from "./UI5ElementMetadata.js";
+import type {
 	Slot,
 	SlotValue,
 	State,
@@ -21,7 +22,7 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import DataType from "./types/DataType.js";
+import type DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
@@ -863,8 +864,9 @@ abstract class UI5Element extends HTMLElement {
 		await this._waitForDomRef();
 
 		const focusDomRef = this.getFocusDomRef();
-
-		if (focusDomRef && typeof focusDomRef.focus === "function") {
+		if (focusDomRef === this) {
+			HTMLElement.prototype.focus.call(this, focusOptions);
+		} else if (focusDomRef && typeof focusDomRef.focus === "function") {
 			focusDomRef.focus(focusOptions);
 		}
 	}

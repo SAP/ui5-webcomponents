@@ -24,6 +24,11 @@ const StepColumn = {
 	"XL": 6,
 };
 
+/**
+ * Interface for components that can be slotted inside `ui5-form` as items.
+ * @public
+ * @since 2.0.0
+ */
 interface IFormItem extends HTMLElement {
 	labelSpan: string
 	itemSpacing: `${FormItemSpacing}`;
@@ -130,6 +135,7 @@ type ItemsInfo = {
  *
  * @public
  * @since 2.0.0
+ * @extends UI5Element
  */
 @customElement({
 	tag: "ui5-form",

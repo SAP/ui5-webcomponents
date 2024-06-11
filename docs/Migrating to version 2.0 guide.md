@@ -477,6 +477,21 @@ Now you have to use it like:
 ```
 
 ### ui5-li
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| class     | StandardListItem | ListItemStandard | 
+
+If you previously imported the class as follows:
+```ts
+import StandardListItem from "@ui5/webcomponents/StandardListItem.js";
+```
+
+now you must change the import to:
+
+```ts
+import ListItemStandard from "@ui5/webcomponents/ListItemStandard.js";
+```
+
 
 | Changed item | Old     | New     | 
 |--------------|---------|---------|
@@ -510,6 +525,24 @@ Now you have to use it like:
 <ui5-li additional-text-state="Critical"></ui5-li>
 <ui5-li additional-text-state="Critical"></ui5-li>
 <ui5-li additional-text-state="Success"></ui5-li>
+```
+
+
+### ui5-li-custom
+
+| Changed item | Old     | New     | 
+|--------------|---------|---------|
+| class     | CustomListItem | ListItemCustom | 
+
+If you previously imported the class as follows:
+```ts
+import CustomListItem from "@ui5/webcomponents/CustomListItem.js";
+```
+
+now you must change the import to:
+
+```ts
+import ListItemCustom from "@ui5/webcomponents/ListItemCustom.js";
 ```
 
 ### ui5-list

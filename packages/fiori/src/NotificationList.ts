@@ -11,11 +11,14 @@ import type {
 	ListItemToggleEventDetail,
 	ListItemCloseEventDetail,
 } from "@ui5/webcomponents/dist/List.js";
-import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationListItemBase from "./NotificationListItemBase.js";
 import NotificationListInternal from "./NotificationListInternal.js";
 
 // Template
 import NotificationListTemplate from "./generated/templates/NotificationListTemplate.lit.js";
+
+// Styles
+import NotificationListCss from "./generated/themes/NotificationList.css.js";
 
 // Texts
 import {
@@ -48,7 +51,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 	tag: "ui5-notification-list",
 	renderer: litRender,
 	languageAware: true,
-	styles: [],
+	styles: [NotificationListCss],
 	template: NotificationListTemplate,
 	dependencies: [
 		NotificationListInternal,
