@@ -9,18 +9,17 @@ function initializeTags() {
 		"7",
 		"8",
 		"9",
-		"10"
+		"10",
 	];
 
 	const designTypes = [
 		"Set1",
 		"Set2",
-		"Set3",
 		"None",
 		"Positive",
 		"Critical",
 		"Negative",
-		"Information"
+		"Information",
 	];
 
 	const clickEvent = (e) => {
@@ -53,16 +52,5 @@ function initializeTags() {
 		set2Content.insertAdjacentHTML("beforeend", `<ui5-tag design="Set2" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 2 - Value - ${value}</ui5-tag>`);
 
 		set2Content.insertAdjacentHTML("beforeend", "<br><br>");
-	});
-
-	const set3Content = document.querySelector("#set3Content");
-	colorSchemes.forEach((value) => {
-		set3Content.insertAdjacentHTML("beforeend", `<ui5-tag design="Set3" color-scheme="${value}">Set 3 - Value - ${value}</ui5-tag>`);
-		set3Content.insertAdjacentHTML("beforeend", `<ui5-tag design="Set3" color-scheme="${value}">Set 3 - Value - ${value}</ui5-tag>`);
-
-		set3Content.insertAdjacentHTML("beforeend", `<ui5-tag design="Set3" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 3 - Value - ${value}</ui5-tag>`);
-		set3Content.insertAdjacentHTML("beforeend", `<ui5-tag design="Set3" color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Set 3 - Value - ${value}</ui5-tag>`);
-
-		set3Content.insertAdjacentHTML("beforeend", "<br><br>");
 	});
 }
