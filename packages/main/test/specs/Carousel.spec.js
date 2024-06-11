@@ -100,6 +100,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(await pageIndicatorDot1.getAttribute("aria-label"), PAGE_INDICATOR_ARIA_LABEL1, "The aria-label of page indicator is correct.");
 		assert.strictEqual(await pageIndicatorDot2.getAttribute("aria-label"), PAGE_INDICATOR_ARIA_LABEL2, "The aria-label of page indicator is correct.");
 
+		const carouselItem1 = await carousel.shadow$(".ui5-carousel-item:first-child");
 		const carouselItem3 = await carousel.shadow$(".ui5-carousel-item:nth-child(3)");
 		const carouselItem4 = await carousel.shadow$(".ui5-carousel-item:nth-child(4)");
 		const CAROUSEL_ITEM3_POS = "3";
@@ -107,6 +108,10 @@ describe("Carousel general interaction", () => {
 		const SETSIZE = "8";
 
 		// assert: check random carousel items ARIA
+		assert.strictEqual(await carouselItem1.getAttribute("aria-hidden"), false, "aria-hidden of carousel item is correct.");
+		assert.strictEqual(await carouselItem1.getAttribute("aria-selected"), true, "aria-selected of carousel item is correct.");
+		assert.strictEqual(await carouselItem3.getAttribute("aria-hidden"), true, "aria-hidden of carousel item is correct.");
+		assert.strictEqual(await carouselItem3.getAttribute("aria-selected"), false, "aria-selected of carousel item is correct.");
 		assert.strictEqual(await carouselItem3.getAttribute("aria-posinset"), CAROUSEL_ITEM3_POS, "The aria-posinset of carousel item is correct.");
 		assert.strictEqual(await carouselItem4.getAttribute("aria-posinset"), CAROUSEL_ITEM4_POS, "The aria-posinset of carousel item is correct.");
 		assert.strictEqual(await carouselItem3.getAttribute("aria-setsize"), SETSIZE, "The aria-setsize of carousel item  is correct.");
