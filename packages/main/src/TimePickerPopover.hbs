@@ -3,11 +3,13 @@
 	class="ui5-time-picker-popover"
 	placement="Bottom"
 	horizontal-align="Start"
+	.opener={{this}}
+	?open="{{open}}"
 	allow-target-overlap
 	_hide-header
 	hide-arrow
-	@ui5-after-open="{{onResponsivePopoverAfterOpen}}"
-	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
+	@ui5-close="{{onResponsivePopoverAfterClose}}"
+	@ui5-open="{{onResponsivePopoverAfterOpen}}"
 	@wheel="{{_handleWheel}}"
 	@keydown="{{_onkeydown}}"
 >
@@ -22,7 +24,7 @@
 
 	<div slot="footer" class="ui5-time-picker-footer">
 		<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
-		<ui5-button id="close" design="Transparent" @click="{{closePicker}}">{{cancelButtonLabel}}</ui5-button>
+		<ui5-button id="close" design="Transparent" @click="{{_togglePicker}}">{{cancelButtonLabel}}</ui5-button>
 	</div>
 </ui5-responsive-popover>
 
@@ -35,8 +37,8 @@
 	allow-target-overlap
 	_hide-header
 	hide-arrow
-	@ui5-after-open="{{onInputsPopoverAfterOpen}}"
-	@ui5-after-close="{{onInputsPopoverAfterClose}}"
+	@ui5-open="{{onInputsPopoverAfterOpen}}"
+	@ui5-close="{{onInputsPopoverAfterClose}}"
 	@wheel="{{_handleWheel}}"
 	@keydown="{{_onkeydown}}"
 >

@@ -421,7 +421,15 @@
 				list.appendChild(li);
 			});
 
-			document.getElementById("dialog").show();
+			document.getElementById("dialog").open = true;
+		});
+
+		document.getElementById("suggestion-token").addEventListener("ui5-change", function (event) {
+			var text = event.target.value;
+
+			addTokenToMI(createTokenFromText(text), "suggestion-token");
+
+			event.target.value = "";
 		});
 
 		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {
@@ -435,9 +443,13 @@
 
 		const handleTokenDelete = (event) => {
 			var mi = event.target;
-			mi.removeChild(event.detail.token);
+
+			event.detail.tokens.forEach(token => {
+				mi.removeChild(token);
+			});
 		}
 
+		document.getElementById("token-unique").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("two-tokens").addEventListener("ui5-token-delete", handleTokenDelete);
 		document.getElementById("readonly-mi").addEventListener("ui5-token-delete", handleTokenDelete);
@@ -448,7 +460,7 @@
 			const eventTargetText = document.getElementById("event-target-text");
 
 			eventType.value = event.type;
-			eventTargetText.value = event.detail.token.text;
+			eventTargetText.value = event.detail.tokens.map(token => token.text).join(', ');
 
 			if (!eventCount.value || isNaN(eventCount.value)) {
 				eventCount.value = 1;
@@ -457,11 +469,6 @@
 			}
 		}
 		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);
-
-		document.getElementById("token-unique").addEventListener("ui5-token-delete", function (event) {
-				const token = event.detail?.token;
-				token && token.remove();
-			});
 
 		document.getElementById("token-unique").addEventListener("ui5-paste", function (event) {
 			event.preventDefault();
@@ -513,7 +520,7 @@
 		document
 			.getElementById("token-unique")
 			.addEventListener("ui5-value-help-trigger", function (event) {
-				event.target.openPicker();
+				event.target.open = true;
 			});
 
 		document.getElementById("add-single-token").addEventListener("click", event => {

@@ -3,13 +3,13 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
-	min-width: calc(var(--_ui5_segmented_btn_items_count) * 2.5rem);
+	min-width: calc(var(--_ui5_segmented_btn_items_count) * var(--_ui5_button_base_min_width));
 }
 
 .ui5-segmented-button-root {
 	width: inherit;
 	display: grid;
-	grid-template-columns: repeat(var(--_ui5_segmented_btn_items_count), minmax(2.5rem, 1fr));
+	grid-template-columns: repeat(var(--_ui5_segmented_btn_items_count), minmax(var(--_ui5_button_base_min_width), 1fr));
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
@@ -22,7 +22,6 @@
 	border-color: var(--_ui5_segmented_btn_border_color);
 	background-color: var(--_ui5_segmented_btn_background_color);
 	height: var(--_ui5_button_base_height);
-	min-width: 2.5rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;

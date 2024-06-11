@@ -94,7 +94,7 @@
 				list.appendChild(li);
 			});
 
-			document.getElementById("dialog").show();
+			document.getElementById("dialog").open = true;
 		});
 
 		document.getElementById("suggestion-token").addEventListener("ui5-selection-change", function (event) {
@@ -113,7 +113,9 @@
 		document.getElementById("suggestion-token").addEventListener("ui5-token-delete", function (event) {
 			var mi = event.target;
 
-			mi.removeChild(event.detail.token);
+			event.detail.tokens.forEach(token => {
+				mi.removeChild(token);
+			});
 		});
 
 		document.getElementById("token-creation").addEventListener("ui5-change", function (event) {
@@ -123,7 +125,11 @@
 		});
 
 		document.getElementById("token-creation").addEventListener("ui5-token-delete", function (event) {
-			event.target.removeChild(event.detail.token);
+			var mi = event.target;
+
+			event.detail.tokens.forEach(token => {
+				mi.removeChild(token);
+			});
 		});
 
 		document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
@@ -151,7 +157,10 @@
 		});
 
 		document.getElementById("token-unique").addEventListener("ui5-token-delete", function (event) {
-			event.target.removeChild(event.detail.token);
+			var mi = event.target;
+			event.detail.tokens.forEach(token => {
+				mi.removeChild(token);
+			});
 		});
 	</script>
 </body>

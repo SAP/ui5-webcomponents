@@ -3,12 +3,12 @@
 	horizontal-align="Start"
 	class="{{classes.popover}}"
 	hide-arrow
-	_disable-initial-focus
+	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
-	@ui5-after-close={{_afterClosePicker}}
+	@ui5-close={{_afterClosePicker}}
 	@ui5-before-open={{_beforeOpen}}
-	@ui5-after-open={{_afterOpenPicker}}
+	@ui5-open={{_afterOpenPicker}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
@@ -73,7 +73,13 @@
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group-header data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-group-header>
+					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+						{{#each this.items}}
+							{{#if _isVisible}}
+								{{> listItem}}
+							{{/if}}
+						{{/each}}
+					</ui5-li-group>
 				{{else}}
 					{{> listItem}}
 				{{/if}}
@@ -83,7 +89,13 @@
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group-header data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-group-header>
+					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+						{{#each this.items}}
+							{{#if _isVisible}}
+								{{> listItem}}
+							{{/if}}
+						{{/each}}
+					</ui5-li-group>
 				{{else}}
 					{{> listItem}}
 				{{/if}}
@@ -104,7 +116,7 @@
 {{#if shouldDisplayOnlyValueStateMessage}}
 	<ui5-popover
 		skip-registry-update
-		_disable-initial-focus
+		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
 		class="ui5-valuestatemessage-popover"

@@ -3,6 +3,196 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** fix grouping sample ([#9085](https://github.com/SAP/ui5-webcomponents/issues/9085)) ([2c160d3](https://github.com/SAP/ui5-webcomponents/commit/2c160d31bbc6d7328dc8073582ec6a63415513e8))
+* **ui5-notification-list:** improved accessibility ([#9070](https://github.com/SAP/ui5-webcomponents/issues/9070)) ([5e62d4a](https://github.com/SAP/ui5-webcomponents/commit/5e62d4af792d7043f931b0f8f894d36a85f18395))
+
+
+### Code Refactoring
+
+* **ui5-link:** wrap text by default ([#9006](https://github.com/SAP/ui5-webcomponents/issues/9006)) ([1924b54](https://github.com/SAP/ui5-webcomponents/commit/1924b5457f22c428527f8be3fbdd46d9d5d7ffed))
+* **ui5-radio-button:** wrap text by default ([#9117](https://github.com/SAP/ui5-webcomponents/issues/9117)) ([b8d7bac](https://github.com/SAP/ui5-webcomponents/commit/b8d7bac56c783825cf9354e020730e0d6a87a2b4))
+
+
+### Features
+
+* **ui5-menu-item:** add endContent slot ([dc3cfde](https://github.com/SAP/ui5-webcomponents/commit/dc3cfde6483e9d4200ed9b4c1772872836233842)), closes [#6350](https://github.com/SAP/ui5-webcomponents/issues/6350)
+
+
+### BREAKING CHANGES
+
+* **ui5-radio-button:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-link:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+```
+
+
+
+
+
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Bug Fixes
+
+* **ui5-button:** adjust ui5-button menu button samples to use open/opener ([974ff8c](https://github.com/SAP/ui5-webcomponents/commit/974ff8c4e3582f6a18621100a9fb6ae8b2f47dbd))
+* **ui5-notification:** implement keyboard navigation spec ([#8975](https://github.com/SAP/ui5-webcomponents/issues/8975)) ([d68c883](https://github.com/SAP/ui5-webcomponents/commit/d68c883f527e57f75bdad5a7a421b3ab8e4efbb0))
+
+
+### Code Refactoring
+
+* **ui5-option:** make options physical elements ([#8903](https://github.com/SAP/ui5-webcomponents/issues/8903)) ([8d6fac7](https://github.com/SAP/ui5-webcomponents/commit/8d6fac75151fd3f42f58ec29cc8f27d0383114d2)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7887](https://github.com/SAP/ui5-webcomponents/issues/7887)
+* **ui5-shellbar:** introducing assistant slot ([#8963](https://github.com/SAP/ui5-webcomponents/issues/8963)) ([2a8c252](https://github.com/SAP/ui5-webcomponents/commit/2a8c252ecf67fce81d5ac7b2a7d949c058de9d17)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7887](https://github.com/SAP/ui5-webcomponents/issues/7887)
+
+
+### Features
+
+* **ui5-button:** add second (end) icon ([2e97c03](https://github.com/SAP/ui5-webcomponents/commit/2e97c03fc8f9d00c7d9bdd8c1ceb63bac13b7e32))
+* **ui5-dynamic-page:** introduce new component ([#7899](https://github.com/SAP/ui5-webcomponents/issues/7899)) ([3752ce7](https://github.com/SAP/ui5-webcomponents/commit/3752ce701fe915fa0b02ba2b114c40bf3b7d9123))
+* **ui5-form:** introduce Form web component ([#8281](https://github.com/SAP/ui5-webcomponents/issues/8281)) ([8d72042](https://github.com/SAP/ui5-webcomponents/commit/8d720429d9ad416f73f42c08ab9aa0e892e24ddb)), closes [#7854](https://github.com/SAP/ui5-webcomponents/issues/7854)
+* **ui5-input:** allow custom icon styling ([#8881](https://github.com/SAP/ui5-webcomponents/issues/8881)) ([cf9f1c2](https://github.com/SAP/ui5-webcomponents/commit/cf9f1c28c93b9fa6c8663ce24d3c5e6d1ff4cc4e)), closes [#8182](https://github.com/SAP/ui5-webcomponents/issues/8182) [#6132](https://github.com/SAP/ui5-webcomponents/issues/6132)
+* **ui5-li-notification:** implement new design ([#8426](https://github.com/SAP/ui5-webcomponents/issues/8426)) ([e451cdc](https://github.com/SAP/ui5-webcomponents/commit/e451cdc3709553dcb780f637463dc1b29e8f2971))
+* **ui5-list,ui5-tree:** make drag&drop feature public ([#8904](https://github.com/SAP/ui5-webcomponents/issues/8904)) ([60b8038](https://github.com/SAP/ui5-webcomponents/commit/60b8038b0731bbf5a3222bc757fcc710d213b7d2))
+
+
+### BREAKING CHANGES
+
+* **ui5-notification:** Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` and `ui5-li-notification` components.
+
+Previously the application developers were defining notifications in this way:
+
+```
+<ui5-list>
+        <ui5-li-notification-group title-text="Group Title" >
+            <ui5-li-notification..
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+
+```
+<ui5-notification-list>
+        <ui5-li-notification-group title-text="Group Title" >
+            <ui5-li-notification..
+```
+* **ui5-shellbar:** 1. The `showCoPilot` property of the `ui5-shellbar` is removed.
+
+If you have previously used the `showCoPilot` property:
+```html
+<ui5-shellbar show-co-pilot></ui5-shellbar>
+```
+it will no longer work for the component.
+
+2. The `CoPilotAnimation` feature of the `ui5-shellbar` is removed.
+
+If you have previously used the `CoPilotAnimation` feature:
+```js
+import CoPilotAnimation from "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"
+```
+it will no longer work for the component.
+
+3. The `copilotDomRef` getter of the `ui5-shellbar` is removed.
+
+If you have previously used the `copilotDomRef` public getter:
+```js
+shellbar.copilotDomRef
+```
+
+it will no longer work for the component.
+
+ 4. The `co-pilot-click` event of the `ui5-shellbar` is removed.
+If you have previously used the `co-pilot-click` public event:
+```js
+shellbar.addEventListener("ui5-co-pilot-click", function(event) {
+	...
+});
+```
+
+it will no longer work for the component.
+
+You can achieve similar functionality with the new slot:
+
+HTML:
+```html
+<ui5-shellbar>
+  <ui5-toggle-button id="assistant" icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
+</ui5-shellbar>
+```
+
+JavaScript:
+```js
+assistant.addEventListener("click", function (event) {
+	const toggleButton = event.target;
+	toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
+});
+
+```
+* **ui5-option:** The ui5-select-menu and ui5-select-menu-option components are removed. Custom options can now be created using the ui5-option-custom, directly placed inside the default slot of the ui5-select
+
+SelectMenu & SelectMenuOption
+Changed item	Old	New
+SelectMenu	ui5-select-menu	removed
+SelectMenuOption	ui5-select-menu-option	ui5-option-custom
+If you have previously used the ui5-select-menu and ui5-select-menu-option:
+
+<ui5-select menu="selectMenu"></ui5-select>
+
+<ui5-select-menu id="selectMenu">
+    <ui5-select-menu-option>
+        <div class="optionContent">custom</div>
+    </ui5-select-menu-option>
+</ui5-select-menu>
+Now use just ui5-select and ui5-option-custom instead:
+
+<ui5-select>
+    <ui5-option-custom>
+        <div class="optionContent">custom</div>
+    </ui5-option-custom>
+</ui5-select>
+Select
+Changed item	Old	New
+property	menu	removed
+The menu property of the ui5-select is removed.
+* **ui5-button:** iconEnd property is changed from boolean to string type and now can accept name for second/end icon.
+
+Before:
+
+`<ui5-button icon="home" icon-end>Button</ui5-button>`
+
+Now:
+
+`<ui5-button end-icon="home">Button</ui5-button>`
+
+or 
+
+`<ui5-button icon="employee" end-icon="home">Button</ui5-button>`
+
+
+
+
+
 # [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
 
 

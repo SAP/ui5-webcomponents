@@ -1,4 +1,4 @@
-import DataType from "./types/DataType.js";
+import type DataType from "./types/DataType.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
@@ -41,6 +41,7 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
+	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
 };
 
@@ -276,6 +277,13 @@ class UI5ElementMetadata {
 
 	getShadowRootOptions(): Partial<ShadowRootInit> {
 		return this.metadata.shadowRootOptions || {};
+	}
+
+	/**
+	 * Determines whether this UI5 Element has any theme dependant carachteristics.
+	 */
+	 isFormAssociated(): boolean {
+		return !!this.metadata.formAssociated;
 	}
 
 	/**

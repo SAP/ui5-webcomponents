@@ -7,6 +7,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isSpace,
@@ -32,7 +33,7 @@ import type { LinkClickEventDetail } from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -92,7 +93,7 @@ type BreadcrumbsItemClickEventDetail = {
 		Link,
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Icon,
 		Button,
 	],
@@ -213,7 +214,9 @@ class Breadcrumbs extends UI5Element {
 		this._preprocessItems();
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
+		await renderFinished();
+
 		this._cacheWidths();
 		this._updateOverflow();
 	}
@@ -322,7 +325,7 @@ class Breadcrumbs extends UI5Element {
 
 		// if overflow was emptied while picker was open => close redundant popup
 		if (this._isOverflowEmpty && this._isPickerOpen) {
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 
 		// if the last focused link has done into the overflow =>
@@ -383,7 +386,7 @@ class Breadcrumbs extends UI5Element {
 
 		if (this.fireEvent("item-click", { item }, true)) {
 			window.open(item.href, item.target || "_self", "noopener,noreferrer");
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 	}
 
@@ -402,12 +405,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this.responsivePopover && this.responsivePopover.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
 	_openRespPopover() {
 		this.responsivePopover = this._respPopover();
-		this.responsivePopover.showAt(this._dropdownArrowLink);
+		this.responsivePopover.opener = this._dropdownArrowLink;
+		this.responsivePopover.open = true;
 	}
 
 	_isItemVisible(item: BreadcrumbsItem) {

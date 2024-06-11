@@ -14,7 +14,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
@@ -113,7 +113,7 @@ type VSDInternalSettings = {
 		Dialog,
 		Label,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroup,
 		SegmentedButton,
 		SegmentedButtonItem,
@@ -514,7 +514,7 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.show(true);
+		this._dialog.open = true;
 
 		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
 	}
@@ -556,7 +556,9 @@ class ViewSettingsDialog extends UI5Element {
 	 * Closes the dialog.
 	 */
 	close() {
-		this._dialog && this._dialog.close();
+		if (this._dialog) {
+			this._dialog.open = false;
+		}
 	}
 
 	/**
@@ -701,7 +703,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	setConfirmedSettings(settings: VSDSettings): void {
-		if (settings && this._dialog && !this._dialog.isOpen()) {
+		if (settings && this._dialog && !this._dialog.open) {
 			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {

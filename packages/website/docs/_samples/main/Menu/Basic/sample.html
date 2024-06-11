@@ -11,9 +11,9 @@
 <body style="background-color: var(--sapBackgroundColor); height: 350px">
     <!-- playground-fold-end -->
 
-    <ui5-button id="btnOpenBasic" icon="slim-arrow-down" icon-end>Open Menu</ui5-button> <br>
+    <ui5-button id="btnOpenBasic" end-icon="slim-arrow-down">Open Menu</ui5-button> <br>
 
-    <ui5-menu header-text="Basic Menu with Items" id="menuBasic">
+    <ui5-menu header-text="Basic Menu with Items" id="menuBasic" opener="btnOpenBasic">
         <ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
         <ui5-menu-item text="New Folder" icon="add-folder" disabled></ui5-menu-item>
         <ui5-menu-item text="Open" icon="open-folder" starts-section></ui5-menu-item>

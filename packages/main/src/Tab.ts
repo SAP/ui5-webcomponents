@@ -28,7 +28,7 @@ import TabContainer from "./TabContainer.js";
 import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
+import ListItemCustom from "./ListItemCustom.js";
 
 // Templates
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
@@ -52,7 +52,7 @@ interface TabInStrip extends HTMLElement {
 	realTabReference: Tab;
 }
 
-interface TabInOverflow extends CustomListItem {
+interface TabInOverflow extends ListItemCustom {
 	realTabReference: Tab;
 }
 
@@ -76,7 +76,7 @@ interface TabInOverflow extends CustomListItem {
 	dependencies: [
 		Icon,
 		Button,
-		CustomListItem,
+		ListItemCustom,
 	],
 })
 class Tab extends UI5Element implements ITabbable, ITab {

@@ -15,12 +15,13 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
@@ -37,7 +38,7 @@ interface IToken extends HTMLElement, ITabbable {
 }
 
 type MultiInputTokenDeleteEventDetail = {
-	token: IToken;
+	tokens: Token[];
 }
 
 /**
@@ -63,14 +64,18 @@ type MultiInputTokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-multi-input",
 	renderer: litRender,
+	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
-	dependencies: [
-		...Input.dependencies,
-		Tokenizer,
-		Token,
-		Icon,
-	],
+	get dependencies() {
+		return [
+			...Input.dependencies,
+			Input,
+			Tokenizer,
+			Token,
+			Icon,
+		];
+	},
 })
 /**
  * Fired when the value help icon is pressed
@@ -80,8 +85,8 @@ type MultiInputTokenDeleteEventDetail = {
 @event("value-help-trigger")
 
 /**
- * Fired when a token is about to be deleted.
- * @param {HTMLElement} token deleted token.
+ * Fired when tokens are being deleted.
+ * @param {Array} tokens An array containing the deleted tokens.
  * @public
  */
 @event<MultiInputTokenDeleteEventDetail>("token-delete", {
@@ -89,11 +94,11 @@ type MultiInputTokenDeleteEventDetail = {
 		/**
 		 * @public
 		 */
-		token: { type: HTMLElement },
+		tokens: { type: Array },
 	},
 })
 
-class MultiInput extends Input {
+class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
@@ -112,14 +117,50 @@ class MultiInput extends Input {
 	tokenizerAvailable!: boolean;
 
 	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * **Note:** When the component is used inside a form element,
+	 * the value is sent as the first element in the form data, even if it's empty.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	declare name: string;
+
+	/**
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot()
+	@slot({ type: HTMLElement, individualSlots: true })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
+
+	get formValidity(): ValidityStateFlags {
+		const tokens = (this.tokens || []);
+
+		return { valueMissing: this.required && !this.value && !tokens.length };
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		const tokens = (this.tokens || []);
+
+		if (tokens.length) {
+			const formData = new FormData();
+
+			formData.append(this.name, this.value);
+
+			for (let i = 0; i < tokens.length; i++) {
+				formData.append(this.name, tokens[i].text);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();
@@ -135,7 +176,7 @@ class MultiInput extends Input {
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
-		const focusedToken = e.detail.ref;
+		const deletedTokens = e.detail.tokens;
 		const selectedTokens = this.tokens.filter(token => token.selected);
 		const shouldFocusInput = this.tokens.length - 1 === 0 || this.tokens.length === selectedTokens.length;
 
@@ -143,22 +184,13 @@ class MultiInput extends Input {
 			return;
 		}
 
-		if (focusedToken) {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token: focusedToken });
+		if (deletedTokens) {
+			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
+
 			if (shouldFocusInput) {
 				this.focus();
 			}
-
-			return;
 		}
-
-		if (selectedTokens.indexOf(focusedToken) === -1) {
-			selectedTokens.push(focusedToken);
-		}
-
-		selectedTokens.forEach(token => {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
-		});
 	}
 
 	valueHelpMouseDown(e: MouseEvent) {
@@ -203,9 +235,14 @@ class MultiInput extends Input {
 			return this._focusFirstToken(e);
 		}
 
-		if (isLeft(e) || isBackSpace(e)) {
+		if (isLeft(e)) {
 			this._skipOpenSuggestions = true;
 			return this._handleLeft(e);
+		}
+
+		if (isBackSpace(e)) {
+			this._skipOpenSuggestions = true;
+			return this._handleBackspace(e);
 		}
 
 		this._skipOpenSuggestions = false;
@@ -236,6 +273,21 @@ class MultiInput extends Input {
 
 		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
 		if (((cursorPosition === null && !this.value) || cursorPosition === 0) && lastToken) {
+			e.preventDefault();
+			lastToken.focus();
+			this.tokenizer._itemNav.setCurrentItem(lastToken);
+		}
+	}
+
+	_handleBackspace(e: KeyboardEvent) {
+		const cursorPosition = this.getDomRef()!.querySelector(`input`)!.selectionStart;
+		const selectionEnd = this.getDomRef()!.querySelector(`input`)!.selectionEnd;
+		const isValueSelected = cursorPosition === 0 && selectionEnd === this.value.length;
+		const tokens = this.tokens;
+		const lastToken = tokens.length && tokens[tokens.length - 1];
+
+		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
+		if ((!this.value || (this.value && cursorPosition === 0 && !isValueSelected)) && lastToken) {
 			e.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
@@ -276,12 +328,6 @@ class MultiInput extends Input {
 		}
 	}
 
-	lastItemDeleted() {
-		setTimeout(() => {
-			this.focus();
-		}, 0);
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
@@ -314,10 +360,7 @@ class MultiInput extends Input {
 	}
 
 	get _tokensCountText() {
-		if (!this.tokenizer) {
-			return;
-		}
-		return this.tokenizer._tokensCountText();
+		return getTokensCountText(this.tokens.length);
 	}
 
 	get _tokensCountTextId() {

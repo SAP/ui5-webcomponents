@@ -549,7 +549,7 @@ describe("List Tests", () => {
 		await item1.click();
 		await item1.keys("ArrowDown");
 
-		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
+		assert.ok(await item3.isFocused(), "disabled item is skipped");
 	});
 
 	it('should include selected state text', async () => {

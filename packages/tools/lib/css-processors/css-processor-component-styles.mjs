@@ -29,6 +29,7 @@ let componentStylesPlugin = {
 const config = {
     entryPoints: inputFiles,
     outdir: 'dist',
+    bundle: true,
     outbase: 'src',
     loader: {
         ".module.css": "global-css"

@@ -312,7 +312,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
 				week.unshift({
-					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData),
+					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType),
 					isHidden: this.shouldHideWeekNumbers,
 				});
 			}
@@ -411,8 +411,11 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			return timestamp === this.selectedDates[0];
 		}
 
-		// Multiple, Range
-		return this.selectedDates.includes(timestamp);
+		if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			return this.selectedDates.includes(timestamp);
+		}
+
+		return timestamp === this.selectedDates[0] || timestamp === this.selectedDates[this.selectedDates.length - 1];
 	}
 
 	/**
@@ -432,7 +435,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 
 		// Two dates selected - stable range
-		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[this.selectedDates.length - 1]);
 	}
 
 	/**

@@ -3,17 +3,19 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import HighlightTypes from "./types/HighlightTypes.js";
+import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -32,6 +34,7 @@ import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -46,12 +49,6 @@ type SelectionRequestEventDetail = {
 	selectionComponentPressed: boolean,
 	selected?: boolean,
 	key?: string,
-}
-
-type PressEventDetail = {
-	item: ListItem,
-	selected: boolean,
-	key: string,
 }
 
 type AccInfo = {
@@ -76,7 +73,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 /**
  * @class
  * A class to serve as a base
- * for the `StandardListItem` and `CustomListItem` classes.
+ * for the `ListItemStandard` and `ListItemCustom` classes.
  * @constructor
  * @abstract
  * @extends ListItemBase
@@ -84,7 +81,11 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  */
 @customElement({
 	languageAware: true,
-	styles: [ListItemBase.styles, styles],
+	styles: [
+		ListItemBase.styles,
+		listItemAdditionalTextCss,
+		styles,
+	],
 	dependencies: [
 		Button,
 		RadioButton,
@@ -96,7 +97,6 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  * @public
  */
 @event("detail-click")
-@event("_press")
 @event("_focused")
 @event("_selection-requested")
 abstract class ListItem extends ListItemBase {
@@ -162,15 +162,8 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 * @since 1.24
 	 */
-	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
-	highlight!: `${HighlightTypes}`;
-
-	/**
-	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 * @private
-	*/
-	@property({ type: Boolean })
-	actionable!: boolean;
+	@property({ type: Highlight, defaultValue: Highlight.None })
+	highlight!: `${Highlight}`;
 
 	/**
 	 * Used to define the role of the list item.
@@ -199,7 +192,7 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase, StandardListItem
+	// used in template, implemented in TreeItemBase, ListItemStandard
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
@@ -234,6 +227,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
@@ -241,6 +235,10 @@ abstract class ListItem extends ListItemBase {
 		document.addEventListener("mouseup", this.deactivate);
 		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
+
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onExitDOM() {
@@ -255,35 +253,28 @@ abstract class ListItem extends ListItemBase {
 		const itemActive = this.type === ListItemType.Active,
 			itemNavigated = this.typeNavigation;
 
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
 		if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
 			this.activate();
 		}
 
-		if (isEnter(e)) {
-			this.fireItemPress(e);
-		}
-
 		if (isF2(e)) {
+			const activeElement = getActiveElement();
 			const focusDomRef = this.getFocusDomRef()!;
-			if (this.focused) {
-				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
 			} else {
-				focusDomRef.focus(); // stop content editing
+				focusDomRef.focus();
 			}
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
+
 		if (isSpace(e) || isEnter(e)) {
 			this.deactivate();
-		}
-
-		if (isSpace(e)) {
-			this.fireItemPress(e);
 		}
 
 		if (this.modeDelete && isDelete(e)) {
@@ -310,20 +301,18 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_onfocusout() {
-		super._onfocusout();
 		this.deactivate();
 	}
 
-	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer) {
 			return;
 		}
-		this.fireItemPress(e);
-	}
 
-	_ondragstart(e: DragEvent) {
 		if (e.target === this._listItem) {
 			this.setAttribute("data-moving", "");
+			e.dataTransfer.dropEffect = "move";
+			e.dataTransfer.effectAllowed = "move";
 		}
 	}
 
@@ -333,7 +322,7 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	/*
+	/**
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
@@ -368,13 +357,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive || this.disabled) {
+		if (this.isInactive) {
 			return;
 		}
-		if (isEnter(e as KeyboardEvent)) {
-			e.preventDefault();
-		}
-		this.fireEvent<PressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		super.fireItemPress(e);
 	}
 
 	get isInactive() {
@@ -490,7 +476,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get _hasHighlightColor() {
-		return this.highlight !== HighlightTypes.None;
+		return this.highlight !== Highlight.None;
 	}
 
 	get hasConfigurableMode() {
@@ -510,6 +496,5 @@ export default ListItem;
 export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
-	PressEventDetail,
 	ListItemAccessibilityAttributes,
 };

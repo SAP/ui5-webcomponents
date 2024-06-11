@@ -1,4 +1,5 @@
 const dns = require("node:dns");
+const assert = require("chai").assert;
 
 exports.config = {
 	//
@@ -309,8 +310,17 @@ exports.config = {
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
 	 * @param {Object} test test details
 	 */
-	// afterTest: function (test) {
-	// },
+	afterTest: async function (test, context) {
+		// fetch the browser logs and fail the test if there are `console.error` messages with the `[UI5-FWK]` marker
+		const logs = await browser.getLogs('browser');
+		const severeLogs = logs
+			.filter(l => l.level === "SEVERE" && l.message.includes("[UI5-FWK]"))
+			.map(l => l.message);
+		assert.equal(severeLogs.length, 0, `[${test.title}]\n\n    ${severeLogs.join("\n    ")}`)
+		if (severeLogs.length) {
+			test.callback(new Error('Framework errors detected.'))
+		}
+	},
 	/**
 	 * Hook that gets executed after the suite has ended
 	 * @param {Object} suite suite details

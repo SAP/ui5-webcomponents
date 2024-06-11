@@ -3,14 +3,14 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListItemBase from "./ListItemBase.js";
 
 // Template
 import ListItemGroupTemplate from "./generated/templates/ListItemGroupTemplate.lit.js";
 
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 /**
@@ -26,7 +26,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-li-group",
@@ -34,7 +34,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
-	dependencies: [StandardListItem, ListItemGroupHeader],
+	dependencies: [ListItemStandard, ListItemGroupHeader],
 })
 class ListItemGroup extends UI5Element {
 	/**
@@ -63,6 +63,13 @@ class ListItemGroup extends UI5Element {
 		type: HTMLElement,
 	})
 	items!: Array<ListItemBase>;
+
+	/**
+	 * Indicates whether the header is focused
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	* Defines the header of the component.
