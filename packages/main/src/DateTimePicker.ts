@@ -31,6 +31,7 @@ import {
 	DATETIME_DESCRIPTION,
 	DATETIME_PICKER_DATE_BUTTON,
 	DATETIME_PICKER_TIME_BUTTON,
+	DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -276,8 +277,18 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		return super.phone || this._phoneMode;
 	}
 
+	/**
+	 * @override
+	 */
 	get dateAriaDescription() {
 		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
+	}
+
+	/**
+	 * @override
+	 */
+	get pickerAccessibleName() {
+		return DateTimePicker.i18nBundle.getText(DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
