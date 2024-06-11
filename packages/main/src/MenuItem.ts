@@ -225,12 +225,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
 	}
 
-	/**
-	 * Defines if the item is a separator.
-	 * @default false
-	 * @public
-	 * @since 2.0
-	 */
 	get isSeparator(): boolean {
 		return false;
 	}

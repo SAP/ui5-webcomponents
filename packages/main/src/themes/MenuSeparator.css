@@ -1,17 +1,4 @@
-:host {
-	height: 0.125rem;
+[ui5-li-custom].ui5-menu-separator {
+	min-height: 0.125rem;
 	border-top: 1px solid var(--sapGroup_ContentBorderColor);
-	cursor: default;
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
-}
-
-:host([actionable]:not([disabled])) {
-	cursor: default;
-}
-
-:host([actionable][active]:not([data-moving])) .ui5-li-root,
-:host([actionable]:not([active],[selected]):hover) .ui5-li-root {
-	background-color: var(--sapList_Background);
 }
