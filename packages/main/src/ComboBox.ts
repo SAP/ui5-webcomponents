@@ -801,7 +801,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._clearFocus();
 
-		if (!isOpen) {
+		if (isOpen) {
 			this._itemFocused = true;
 			this.value = isGroupItem ? "" : currentItem.text;
 			this.focused = false;
@@ -984,11 +984,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				return item.selected;
 			});
 
-			if (selectedItem && !this.open) {
+			if (selectedItem && this.open) {
 				this._itemFocused = true;
 				selectedItem.focused = true;
 				this.focused = false;
-			} else if (!this.open && this._filteredItems.length) {
+			} else if (this.open && this._filteredItems.length) {
 				// If no item is selected, select the first one on "Show" (F4, Alt+Up/Down)
 				this._handleItemNavigation(e, 0, true /* isForward */);
 			} else {
