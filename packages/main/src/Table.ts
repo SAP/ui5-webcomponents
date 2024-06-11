@@ -149,7 +149,7 @@ type TableRowClickEventDetail = {
 	styles: TableStyles,
 	template: TableTemplate,
 	fastNavigation: true,
-	dependencies: [BusyIndicator, TableCell],
+	dependencies: [BusyIndicator, TableCell, TableRow],
 })
 
 /**
@@ -300,6 +300,7 @@ class Table extends UI5Element {
 	}
 
 	onBeforeRendering(): void {
+		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
 	}
 
