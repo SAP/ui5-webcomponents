@@ -149,7 +149,11 @@ type TableRowClickEventDetail = {
 	styles: TableStyles,
 	template: TableTemplate,
 	fastNavigation: true,
-	dependencies: [BusyIndicator, TableCell, TableRow],
+	dependencies: [
+		BusyIndicator,
+		TableCell,
+		TableRow,
+	],
 })
 
 /**
@@ -252,7 +256,7 @@ class Table extends UI5Element {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, defaultValue: false })
+	@property({ type: Boolean })
 	loading!: boolean;
 
 	/**
