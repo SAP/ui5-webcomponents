@@ -10,6 +10,7 @@ type OpenUI5Popup = {
 		_closed: (...args: any[]) => void,
 		getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING",
 		getContent: () => Element, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
+		onFocusEvent: (e: FocusEvent) => void,
 	}
 };
 
@@ -55,6 +56,18 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 	};
 };
 
+const patchFocusEvent = (Popup: OpenUI5Popup) => {
+	const _onFocusEvent = Popup.prototype.onFocusEvent;
+	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
+		const target = e.target as HTMLElement;
+		if (target.closest("[ui5-popover],[ui5-dialog]")) {
+			return;
+		}
+
+		_onFocusEvent.call(this, e);
+	};
+};
+
 const createGlobalStyles = () => {
 	const stylesheet = new CSSStyleSheet();
 	stylesheet.replaceSync(`.sapMPopup-CTX:popover-open { inset: unset; }`);
@@ -65,6 +78,7 @@ const patchPopup = (Popup: OpenUI5Popup) => {
 	patchOpen(Popup); // Popup.prototype.open
 	patchClosed(Popup); // Popup.prototype._closed
 	createGlobalStyles(); // Ensures correct popover positioning by OpenUI5 (otherwise 0,0 is the center of the screen)
+	patchFocusEvent(Popup);// Popup.prototype.onFocusEvent
 };
 
 export default patchPopup;
