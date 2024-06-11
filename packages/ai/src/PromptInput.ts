@@ -8,7 +8,9 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Input, { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import "@ui5/webcomponents-icons/dist/paper-plane.js";
+import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import {
@@ -23,12 +25,6 @@ import PromptInputTemplate from "./generated/templates/PromptInputTemplate.lit.j
 
 // Styles
 import PromptInputCss from "./generated/themes/PromptInput.css.js";
-
-type ExceededText = {
-	exceededText?: string;
-	leftCharactersCount?: number;
-	calcedMaxLength?: number;
-};
 
 /**
  * @class
@@ -62,7 +58,7 @@ type ExceededText = {
  * Fired when the input operation has finished by pressing Enter
  * or AI button is clicked.
  *
- * @since 2.0.0-rc.1
+ * @since 2.0.0
  * @public
  */
 @event("submit")
@@ -71,7 +67,7 @@ type ExceededText = {
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
  *
- * @since 2.0.0-rc.1
+ * @since 2.0.0
  * @public
  */
 @event("input")
@@ -80,7 +76,7 @@ type ExceededText = {
  * Fired when the input operation has finished by pressing Enter
  * or on focusout.
  *
- * @since 2.0.0-rc.1
+ * @since 2.0.0
  * @public
  */
 @event("change")
@@ -89,7 +85,7 @@ class PromptInput extends UI5Element {
 	 * Defines the value of the component.
 	 *
 	 * @default ""
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
@@ -99,7 +95,7 @@ class PromptInput extends UI5Element {
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
 	 * @default ""
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
@@ -109,7 +105,7 @@ class PromptInput extends UI5Element {
 	 * Defines the label of the input field.
 	 *
 	 * @default ""
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
@@ -119,7 +115,7 @@ class PromptInput extends UI5Element {
 	 * Defines whether the clear icon of the input will be shown.
 	 * @default false
 	 * @public
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	showClearIcon!: boolean;
@@ -134,7 +130,7 @@ class PromptInput extends UI5Element {
 	 * paste and the counter below the component displays their number.
 	 * @default false
 	 * @public
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	showExceededText!: boolean;
@@ -145,7 +141,7 @@ class PromptInput extends UI5Element {
 	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
@@ -157,7 +153,7 @@ class PromptInput extends UI5Element {
 	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	readonly!: boolean;
@@ -166,7 +162,7 @@ class PromptInput extends UI5Element {
 	 * Sets the maximum number of characters available in the input field.
 	 *
 	 * @default undefined
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property({ validator: Integer })
@@ -175,14 +171,11 @@ class PromptInput extends UI5Element {
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	valueState!: `${ValueState}`;
-
-	@property({ validator: Integer })
-	_charactersLeft?: number;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -193,7 +186,7 @@ class PromptInput extends UI5Element {
 	 * **Note:** The `valueStateMessage` would be displayed,
 	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 *
-	 * @since 2.0.0-rc.1
+	 * @since 2.0.0
 	 * @public
 	 */
 	@slot({
@@ -202,23 +195,19 @@ class PromptInput extends UI5Element {
 	})
 	valueStateMessage!: Array<HTMLElement>;
 
-	_isEnter?: boolean;
-	_exceededTextProps!: ExceededText;
-
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
-		PromptInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		PromptInput.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
 	}
 
 	constructor() {
 		super();
-		this._isEnter = false;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
-			this._isEnter = true;
+			this.fireEvent("submit");
 		}
 	}
 
@@ -230,49 +219,31 @@ class PromptInput extends UI5Element {
 
 	_onInnerChange() {
 		this.fireEvent("change");
-
-		if (this._isEnter) {
-			this.fireEvent("submit");
-
-			this._isEnter = false;
-		}
 	}
 
 	_onButtonClick() {
 		this.fireEvent("submit");
 	}
 
-	onBeforeRendering(): void {
-		this._exceededTextProps = this._calcExceededText();
-		if (this.maxlength) {
-			this._charactersLeft = this.maxlength - this.value.length;
-		}
-	}
-
-	_calcExceededText() {
-		let calcedMaxLength,
-			exceededText,
-			leftCharactersCount;
-
+	get _exceededText() {
 		if (this.showExceededText) {
+			let leftCharactersCount;
 			const maxLength = this.maxlength;
 
-			if (maxLength !== null && maxLength !== undefined) {
+			if (maxLength !== undefined) {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
-					exceededText = PromptInput.i18nBundle.getText(PROMPT_INPUT_CHARACTERS_LEFT, leftCharactersCount);
-				} else {
-					exceededText = PromptInput.i18nBundle.getText(PROMPT_INPUT_CHARACTERS_EXCEEDED, Math.abs(leftCharactersCount));
+					return PromptInput.i18nBundle.getText(PROMPT_INPUT_CHARACTERS_LEFT, leftCharactersCount);
 				}
-			}
-		} else {
-			calcedMaxLength = this.maxlength;
-		}
 
-		return {
-			exceededText, leftCharactersCount, calcedMaxLength,
-		};
+				return PromptInput.i18nBundle.getText(PROMPT_INPUT_CHARACTERS_EXCEEDED, Math.abs(leftCharactersCount));
+			}
+		}
+	}
+
+	get _maxLenght() {
+		return this.maxlength || undefined;
 	}
 
 	get _submitButtonDisabled() {

@@ -11,7 +11,6 @@
 				placeholder="{{placeholder}}"
 				value-state="{{valueState}}"
 				?show-clear-icon={{showClearIcon}}
-				maxlength="{{_exceededTextProps.calcedMaxLength}}"
 				?disabled="{{disabled}}"
 				?readonly="{{readonly}}"
 				@keydown="{{_onkeydown}}"
@@ -19,12 +18,12 @@
 				@ui5-change="{{_onInnerChange}}"
 			>
 				{{#if valueStateMessage.length}}
-            		<slot name="valueStateMessage" slot="valueStateMessage"></slot>
-        		{{/if}}
+					<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+				{{/if}}
 			</ui5-input>
 
 			{{#if showExceededText}}
-				<ui5-label class="ai-prompt-input-counter">{{_exceededTextProps.exceededText}}</ui5-label>
+				<ui5-label class="ai-prompt-input-counter">{{_exceededText}}</ui5-label>
 			{{/if}}
 		</div>
 		<ui5-button ?disabled={{_submitButtonDisabled}} class="ai-prompt-input-button" design="Emphasized" icon="paper-plane" @click="{{_onButtonClick}}"></ui5-button>
