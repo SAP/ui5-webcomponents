@@ -427,8 +427,9 @@
 
 	<h3>Input with open suggestions on focusin</h3>
 	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
-		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
-		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+		<ui5-suggestion-item-group header-text="Recent Items">
+			<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+		</ui5-suggestion-item-group>
 	</ui5-input>
 
 	<br>
@@ -623,13 +624,22 @@
 		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 
 
-		var suggest = function (event) {
-			var input = event.target;
-			var value = input.value;
-			var suggestionItems = [];
+		let suggest = function (event) {
+			let input = event.target;
+			let value = input.value;
+			let items = [], filteredItems = [];
+
+			sap_database_entries.forEach(item => {
+			if (item.items.length) {
+				items.push(...item.items);
+				return;
+			}
+
+			items.push(item);
+		});
 
 			if (value) {
-				suggestionItems = sap_database_entries.filter(function (item) {
+				filteredItems = items.filter(function (item) {
 					return item.text.toUpperCase().indexOf(value.toUpperCase()) === 0;
 				});
 			}
@@ -638,9 +648,13 @@
 				input.removeChild(input.lastChild);
 			}
 
-			suggestionItems.forEach(function (item, idx) {
+			sap_database_entries.forEach(function (item, idx) {
+				if (!filteredItems || (filteredItems.indexOf(item) === -1 && !item.items?.some(groupItem => filteredItems.indexOf(groupItem) !== -1))) {
+					return;
+				}
+
 				let suggestion;
-				const groupItem = item.items.length;
+				const groupItem = item.items?.length;
 
 				if (groupItem) {
 					suggestion = document.createElement("ui5-suggestion-item-group");

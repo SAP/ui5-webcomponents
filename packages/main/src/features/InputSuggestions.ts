@@ -36,9 +36,6 @@ interface SuggestionComponent extends UI5Element {
 
 type InputSuggestion = {
 	text: string;
-	description?: string;
-	image?: string;
-	icon?: string;
 	type?: `${ListItemType}`;
 	additionalText?: string;
 	additionalTextState?: `${ValueState}`;
@@ -405,7 +402,7 @@ class Suggestions {
 			isGroup: isGroupItem,
 			currentPos: items.indexOf(currentItem) + 1,
 			// @ts-ignore
-			itemText: this._getItems()[this.selectedItemIndex].text,
+			itemText: isGroupItem ? this._getItems()[this.selectedItemIndex].headerText : this._getItems()[this.selectedItemIndex].text,
 		};
 
 		if (currentItem.hasAttribute("ui5-suggestion-item")) {

@@ -743,7 +743,7 @@ describe("Input general interaction", () => {
 		await input.keys("a");
 
 		const popover = await input.shadow$("ui5-responsive-popover");
-		const listItem = await popover.$("ui5-li-suggestion-item");
+		const listItem = await popover.$("ui5-suggestion-item-group ui5-suggestion-item").shadow$("li");
 		await listItem.click();
 
 		assert.notOk(await popover.isDisplayedInViewport(), "The popover is not visible");
@@ -828,7 +828,7 @@ describe("Input general interaction", () => {
 		await inputWithGroupsInnerInput.keys("ArrowDown");
 
 		//assert
-		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "Group Header A", "Group item announcement should not contain the position and total coout.");
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "Group Header A", "Group item announcement should not contain the position and total count.");
 
 		//act
 		await inputWithGroupsInnerInput.keys("ArrowDown");
@@ -1407,7 +1407,7 @@ describe("XSS tests for suggestions", () => {
 
 		await input.keys("a");
 
-		const listItems = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item");
+		const listItems = await input.shadow$("ui5-responsive-popover").$$("ui5-suggestion-item");
 		const expected = [
 			"",
 			"<b></b>",
@@ -1576,7 +1576,7 @@ describe("Property open", () => {
 		});
 
 		const respPopover = await input.shadow$("ui5-responsive-popover");
-		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-suggestion-item");
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");

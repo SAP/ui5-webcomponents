@@ -1105,6 +1105,22 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
+	_getItems() {
+		const suggestionItems: SuggestionItem[] | SuggestionItemGroup = [];
+
+		this.suggestionItems.forEach(item => {
+			if (item.hasAttribute("ui5-suggestion-item-group")) {
+				const groupedItems = [...(item as SuggestionItemGroup).items as SuggestionItem[]];
+				suggestionItems.push(...groupedItems);
+				return;
+			}
+
+			suggestionItems.push(item as SuggestionItem);
+		});
+
+		return suggestionItems;
+	}
+
 	_handleSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this.Suggestions?.onItemPress(e);
 	}
@@ -1541,7 +1557,18 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions!.isOpened())) {
-			const nonGroupItems = this.suggestionItems.filter(item => !item.hasAttribute("ui5-suggestion-item-group"));
+			const nonGroupItems: SuggestionItem[] = [];
+
+			this.suggestionItems.forEach(item => {
+				if (item.hasAttribute("ui5-suggestion-item-group")) {
+					const groupedItems = [...(item as SuggestionItemGroup).items as SuggestionItem[]];
+					nonGroupItems.push(...groupedItems);
+					return;
+				}
+
+				nonGroupItems.push(item as SuggestionItem);
+			});
+			this.suggestionItems.filter(item => !item.hasAttribute("ui5-suggestion-item-group"));
 
 			switch (nonGroupItems.length) {
 			case 0:
