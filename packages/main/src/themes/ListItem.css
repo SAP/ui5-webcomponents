@@ -91,11 +91,11 @@
 	text-overflow: ellipsis;
 }
 
-:host([wrapping-type="Normal"]) {
+:host(:not([wrapping-type="None"])) {
 	height: auto;
 }
 
-:host([wrapping-type="Normal"]) .ui5-li-content {
+:host(:not([wrapping-type="None"])) .ui5-li-content {
 	margin: var(--_ui5_list_item_content_vertical_offset) 0;
 }
 

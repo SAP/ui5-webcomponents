@@ -125,14 +125,14 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	declare accessibleName: string;
 
 	/**
-	 * Defines if the text of the component should wrap, they truncate by default.
+	 * Defines if the text of the component should truncate, they wrap by default.
 	 *
 	 * **Note:** this property takes affect only if text node is provided to default slot of the component
-	 * @default "None"
-	 * @private
+	 * @default "Normal"
+	 * @public
 	 * @since 1.5.0
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
 	wrappingType!: `${WrappingType}`;
 
 	/**
