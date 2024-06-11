@@ -56,7 +56,9 @@
 		{{/if}}
 
 		{{> selectAllWrapper}}
-	{{else}}
+	{{/if}}
+
+	{{#unless _isPhone}}
 		{{#if hasValueStateMessage}}
 			{{#unless shouldDisplayOnlyValueStateMessage}}
 				<div slot="header" @keydown="{{_onListHeaderKeydown}}" tabindex="0" class="ui5-responsive-popover-header {{classes.popoverValueState}}" style={{styles.popoverValueStateMessage}}>
@@ -67,7 +69,7 @@
 		{{/if}}
 
 		{{> selectAllWrapper}}
-	{{/if}}
+	{{/unless}}
 
 	{{#if filterSelected}}
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">

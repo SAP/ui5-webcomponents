@@ -621,7 +621,7 @@ describe("MultiComboBox general interaction", () => {
 
 			// select Item 5
 			await browser.keys("ArrowDown");
-			await browser.keys("Enter");
+			await browser.keys("Space");
 			await browser.keys("Tab");
 
 			assert.strictEqual(await spanRef.getText(), "Selected items count: 5");
@@ -1449,10 +1449,12 @@ describe("MultiComboBox general interaction", () => {
 
 		it("Should not open value state message when component is in readonly state", async () => {
 			const mcb = await browser.$("#readonly-value-state-mcb");
-			const popover = await mcb.shadow$("ui5-popover");
 
 			await mcb.click();
-			assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
+
+			const popover = await mcb.shadow$("ui5-popover");
+
+			assert.notOk(await popover.isExisting(), "Popover with valueStateMessage should not exists.");
 		});
 
 		it("Should apply correct text to the tokens overflow indicator", async () => {
@@ -1671,7 +1673,7 @@ describe("MultiComboBox general interaction", () => {
 
 			let popover = await mCbWarning.shadow$("ui5-popover");
 
-			await mCbWarning.click();
+			await (await (await mCbWarning).shadow$("#ui5-multi-combobox-input")).click();
 
 			let ariaHiddenText = await mCbWarning.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			let valueStateText = await popover.$("div").getHTML(false);
@@ -1680,7 +1682,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
 
 			await mCbWarning.keys("Escape");
-			await mCbError.click();
+			await (await (await mCbError).shadow$("#ui5-multi-combobox-input")).click();
 
 			popover = await mCbError.shadow$("ui5-popover");
 
@@ -1691,7 +1693,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(valueStateText.includes("Invalid entry"), true, "Displayed value state message text is correct");
 
 			await mCbError.keys("Escape");
-			await mCbSuccess.click();
+			await (await (await mCbSuccess).shadow$("#ui5-multi-combobox-input")).click();
 
 			ariaHiddenText = await mCbSuccess.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
@@ -1701,15 +1703,17 @@ describe("MultiComboBox general interaction", () => {
 		it("Value state type should be added to the screen readers custom value states announcement", async () => {
 			const mCbInformation = await browser.$("#mcb-information");
 
-			await mCbInformation.click();
+			await (await (await mCbInformation).shadow$("#ui5-multi-combobox-input")).click();
 			await mCbInformation.keys("a");
 
-			const popoverHeader = await mCbInformation.shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
-			const valueStateText = await popoverHeader.$("div").getHTML(false);
 			const ariaHiddenText = await mCbInformation.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
-			assert.strictEqual(valueStateText.includes("Extra long text used as an information message"), true, "Displayed value state message text is correct");
+			assert.strictEqual(ariaHiddenText.includes("Extra long text used as an information message"), true, "Hidden screen reader text is correct");
+
+			const popover = await mCbInformation.shadow$("[ui5-popover]");
+
+			assert.exists(await popover.$("slot[name='valueStateMessage']"), "Value state message is displayed");
 		});
 	});
 
