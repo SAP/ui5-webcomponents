@@ -26,6 +26,10 @@ const getEffectiveIllustrationName = (name: string): string => {
 		return name.replace("Tnt", "tnt/");
 	}
 
+	if (name.startsWith("Custom")) {
+		return name.replace("Custom", "customSet/");
+	}
+
 	if (name.includes("/")) {
 		return name;
 	}
@@ -460,7 +464,7 @@ class IllustratedMessage extends UI5Element {
 	isValidIllustration(currentIllustration: string): boolean {
 		currentIllustration = currentIllustration.startsWith("tnt/") ? currentIllustration.replace("tnt/", "Tnt") : currentIllustration.replace("fiori/", "");
 
-		return currentIllustration in IllustrationMessageType;
+		return currentIllustration in IllustrationMessageType || currentIllustration.startsWith("customSet/");
 	}
 }
 
