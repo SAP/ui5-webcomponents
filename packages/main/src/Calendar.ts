@@ -52,6 +52,12 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
+/**
+ * Interface for components that may be slotted inside a `ui5-calendar`.
+ *
+ * **Note:** Use directly with `ui5-calendar-date` or `ui5-calendar-date-range`. Implementing the interface does not guarantee that the class can work as a calendar date selection type.
+ * @public
+ */
 interface ICalendarSelectedDates extends UI5Element {
 	value?: string,
 	startValue?: string,

@@ -11,6 +11,7 @@ import type { ICalendarSelectedDates } from "./Calendar.js";
  * The `ui5-date-range` component defines a range of dates to be used inside `ui5-calendar`
  * @constructor
  * @extends UI5Element
+ * @implements {ICalendarSelectedDates}
  * @abstract
  * @public
  * @since 2.0
