@@ -71,13 +71,6 @@ class GridHeaderRow extends GridRowBase {
 	@property({ type: Boolean })
 	sticky!: boolean;
 
-	onBeforeRendering() {
-		super.onBeforeRendering();
-		if (this._grid) {
-			this.style.top = this._grid.stickyTop;
-		}
-	}
-
 	isHeaderRow() {
 		return true;
 	}

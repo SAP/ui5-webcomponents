@@ -10,7 +10,7 @@
 
 :host([sticky]) {
     position: sticky;
-    top: 0;
+    top: var(--ui5_grid_sticky_top, 0);
     z-index: 1;
 }
 
