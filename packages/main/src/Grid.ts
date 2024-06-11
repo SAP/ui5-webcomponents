@@ -149,7 +149,11 @@ type GridRowClickEventDetail = {
 	styles: GridStyles,
 	template: GridTemplate,
 	fastNavigation: true,
-	dependencies: [BusyIndicator, GridCell],
+	dependencies: [
+		BusyIndicator,
+		GridCell,
+		GridRow,
+	],
 })
 
 /**
