@@ -68,7 +68,7 @@ import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import ToggleButton from "./ToggleButton.js";
 import * as Filters from "./Filters.js";
 import Button from "./Button.js";
@@ -198,7 +198,7 @@ type MultiComboboxItemWithSelection = {
 		ResponsivePopover,
 		Popover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroup,
 		ToggleButton,
 		Button,
@@ -219,11 +219,18 @@ type MultiComboboxItemWithSelection = {
 @event("input")
 
 /**
- * Fired when the dropdown is opened or closed.
- * @since 1.0.0-rc.5
+ * Fired when the dropdown is opened.
+ * @since 2.0.0
  * @public
  */
-@event("open-change")
+@event("open")
+
+/**
+ * Fired when the dropdown is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 
 /**
  * Fired when selection is changed by user interaction.
@@ -1362,7 +1369,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_toggle() {
 		this._open = !this._open;
-		this.fireEvent("open-change");
+		// Fire event for the new state
+		if (this._open) {
+			this.fireEvent("open");
+		} else {
+			this.fireEvent("close");
+		}
 	}
 
 	/**

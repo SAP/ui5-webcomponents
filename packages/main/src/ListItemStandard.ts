@@ -7,7 +7,7 @@ import type { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
 import WrappingType from "./types/WrappingType.js";
-import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
+import ListItemStandardTemplate from "./generated/templates/ListItemStandardTemplate.lit.js";
 
 /**
  * @class
@@ -36,14 +36,14 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  */
 @customElement({
 	tag: "ui5-li",
-	template: StandardListItemTemplate,
+	template: ListItemStandardTemplate,
 	dependencies: [
 		...ListItem.dependencies,
 		Icon,
 		Avatar,
 	],
 })
-class StandardListItem extends ListItem implements IAccessibleListItem {
+class ListItemStandard extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @default ""
@@ -180,6 +180,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	}
 }
 
-StandardListItem.define();
+ListItemStandard.define();
 
-export default StandardListItem;
+export default ListItemStandard;

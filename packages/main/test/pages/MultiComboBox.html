@@ -567,7 +567,8 @@
 		var callCountInput = document.getElementById("events-call-count");
 		var resetBtn = document.getElementById("reset-btn");
 		var selectionChangeCounter = 0;
-		var openChangeCounter = 0;
+		var openCounter = 0;
+		var closeCounter = 0;
 		const multiComboBox = document.querySelector("#mcb-prevent");
 
 		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
@@ -577,10 +578,16 @@
 			callCountInput.value = selectionChangeCounter;
 		});
 
-		document.getElementById("multi1").addEventListener("ui5-openChange", function (event) {
-			openChangeCounter += 1;
-			eventNameInput.value = "openChange";
-			callCountInput.value = openChangeCounter;
+		document.getElementById("multi1").addEventListener("ui5-open", function (event) {
+			openCounter += 1;
+			eventNameInput.value = "open";
+			callCountInput.value = openCounter;
+		});
+
+		document.getElementById("multi1").addEventListener("ui5-close", function (event) {
+			closeCounter += 1;
+			eventNameInput.value = "close";
+			callCountInput.value = closeCounter;
 		});
 
 		resetBtn.addEventListener("click", function (event) {
@@ -588,7 +595,8 @@
 			eventParamsInput.value = "";
 			callCountInput.value = "";
 			selectionChangeCounter = 0;
-			openChangeCounter = 0;
+			openCounter = 0;
+			closeCounter = 0;
 		});
 
 		// Placeholders test

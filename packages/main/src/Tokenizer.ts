@@ -54,7 +54,7 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
@@ -148,7 +148,7 @@ enum ClipboardDataOperation {
 	dependencies: [
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Title,
 		Button,
 		Icon,
