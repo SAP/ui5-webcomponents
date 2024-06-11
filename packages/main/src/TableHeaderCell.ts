@@ -40,7 +40,7 @@ class TableHeaderCell extends TableCellBase {
 	width!: string;
 
 	/**
- * Defines the minimum width of the column.
+ 	 * Defines the minimum width of the column.
 	 *
 	 * If the table is in `Popin` mode, the column will move into the popin when
 	 * when the minimum width does not fit anymore.

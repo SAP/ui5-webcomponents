@@ -15,6 +15,12 @@ import RadioButton from "./RadioButton.js";
  *
  * ### Overview
  *
+ * The `ui5-table-row` component represents a row in the `ui5-table`.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/TableRow.js";`
+ *
  * @constructor
  * @extends TableRowBase
  * @since 2.0

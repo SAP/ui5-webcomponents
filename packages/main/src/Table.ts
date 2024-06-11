@@ -234,8 +234,10 @@ class Table extends UI5Element {
 	 * Defines the mode of the <code>ui5-table</code> overflow behavior.
 	 *
 	 * Available options are:
-	 * * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
-	 * * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
+	 *
+	 * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
+	 *
+	 * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
 	 *
 	 * @default "Scroll"
 	 * @public

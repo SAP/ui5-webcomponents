@@ -76,8 +76,10 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * Defines the mode of the <code>ui5-table</code> growing.
 	 *
 	 * Available options are:
-	 * * Button - Shows a More button at the bottom of the table, pressing it will load more rows.
-	 * * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable, this option is the same as the Button.
+	 *
+	 * Button - Shows a More button at the bottom of the table, pressing it will load more rows.
+	 *
+	 * Scroll - The rows are loaded automatically by scrolling to the bottom of the table. If the table is not scrollable, this option is the same as the Button.
 	 * @default "Button"
 	 * @public
 	 */
@@ -86,7 +88,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
-	 * Has no effect when type is set to Scroll.
+	 * Has no effect when type is set to `Scroll`.
 	 *
 	 * **Note:** When not provided and the type is set to Button, a default text is displayed, corresponding to the
 	 * current language.
