@@ -165,7 +165,7 @@
 			<ui5-button icon="feeder-arrow">Next</ui5-button>
 			<ui5-button design="Positive">Approve</ui5-button>
 			<ui5-button design="Negative">Decline</ui5-button>
-			<ui5-button icon="download" icon-end>Download</ui5-button>
+			<ui5-button end-icon="download">Download</ui5-button>
 			<ui5-button icon="download">Activate</ui5-button>
 		</section>
 
@@ -236,7 +236,7 @@
 			<ui5-radio-button id="myRb6" value-state="Critical" checked text="warning"></ui5-radio-button>
 			<ui5-radio-button id="myRb7" value-state="Negative" checked text="error"></ui5-radio-button>
 			<ui5-radio-button id="myRb6" value-state="Critical" text="warning"></ui5-radio-button>
-			<ui5-radio-button id="myRb7" value-state="Negative" text="error long text should truncate"></ui5-radio-button>
+			<ui5-radio-button id="myRb7" wrapping-type="None" value-state="Negative" text="error long text should truncate"></ui5-radio-button>
 		</section>
 
 		<section class="row row-centered">
@@ -501,8 +501,8 @@
 		</section>
 
 		<section class="row row-centered">
-			<ui5-label>This is a long long even longer text defined via the ui5-label and it truncates by default</ui5-label>
-			<ui5-label wrapping-type="Normal">This is a long long even longer text defined via the ui5-label, but this one wraps</ui5-label>
+			<ui5-label>This is a long long even longer text defined via the ui5-label and it wraps by default</ui5-label>
+			<ui5-label wrapping-type="None">This is a long long even longer text defined via the ui5-label, but it's truncated</ui5-label>
 		</section>
 	</div>
 	<script src="./kitchen-scripts.js" type="module"></script>

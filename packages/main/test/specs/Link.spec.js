@@ -139,4 +139,11 @@ describe("General API", () => {
 		assert.strictEqual(await result.getText(), 'SHIFT:' + await link.getText(), "label for pressed link is correct");
 	});
 
+	it("links have icons", async() => {
+		const linkWithIcon = await browser.$("#linkWithIcon");
+		const linkWithEndIcon = await browser.$("#linkWithEndIcon");
+
+		assert.ok(await linkWithIcon.shadow$("ui5-icon"), "Link have icon.");
+		assert.ok(await linkWithEndIcon.shadow$("ui5-icon"), "Link have end icon.");
+	})
 });

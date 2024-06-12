@@ -12,12 +12,7 @@
 		}
 	</script>
 
-	<script>// delete Document.prototype.adoptedStyleSheets;</script>
-
-
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-
-
 	<script src="./modules/LabelPageCustomElement.js" type="module" defer></script>
 	<script src="./modules/LabelPage.js" type="module" defer></script>
 	<link rel="stylesheet" type="text/css" href="./styles/Label.css">
@@ -45,19 +40,20 @@
 
 		<h2>Required labels</h2>
 		<ui5-label id="required-label" required>Required</ui5-label><span>native span</span>
-		<ui5-label id="required-label-2" required show-colon>Required semi-colon</ui5-label><span>native span</span>
-		<ui5-label class="label2auto" id="required-label-3" required show-colon wrapping-type="Normal">Required semi-colon wrapped</ui5-label><span>native span</span>
+		<ui5-label class="label2auto" id="required-label-3" required show-colon>Required semi-colon</ui5-label><span>native span</span>
+		<ui5-label class="label2auto" id="required-label-2" required show-colon wrapping-type="None">Required semi-colon truncated</ui5-label><span>native span</span>
 	</section>
 
 	<section class="group vertical more-space">
 		<h2>Wrapping</h2>
 		<ui5-label class="label3auto" id="wrapping-label-1">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label class="label3auto" id="wrapping-label-2" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
-		<ui5-label class="label3auto" id="wrapping-label" wrapping-type="Normal">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label class="label3auto" id="wrapping-label-3" wrapping-type="Normal" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label class="label2auto" id="truncated-label" required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label class="label2auto" id="truncated-label-2" show-colon required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-		<ui5-label class="label2auto" id="truncated-label-3" show-colon required wrapping-type="Normal">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label class="label3auto" id="wrapping-label-3" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label class="label3auto" id="wrapping-label-4" show-colon required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label class="label2auto" id="truncated-label-1" wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label class="label2auto" id="truncated-label-2" show-colon wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label class="label2auto" id="truncated-label-3" required wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
+		<ui5-label class="label2auto" id="truncated-label-4" show-colon required wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<div>
 			<ui5-label class="label4auto" id="wrapping-label-4" wrapping-type="Normal">Must be right-aligned using `text-align: right` and wrapping-type="Normal".</ui5-label>
 		</div>
@@ -70,46 +66,46 @@
 	<section class="group">
 		<h2>label + input</h2>
 		<div class="label5auto">
-			<ui5-label id="label-for-ui5-input" for="form-ui5-input" class="label2auto" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-label id="label-for-ui5-input" for="form-ui5-input" class="label2auto" required wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<ui5-input class="label6auto" id="form-ui5-input"></ui5-input>
 		</div>
 
 		<br>
 
 		<div class="label5auto">
-			<ui5-label id="label-for-native-input" for="native-input" class="label2auto" show-colon wrapping-type="Normal" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-label id="label-for-native-input" for="native-input" class="label2auto" show-colon required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<input class="label6auto" id="native-input"/>
 		</div>
 
 		<br>
 
 		<div class="label5auto">
-			<ui5-label id="label-for-ui5-textarea" for="ui5-textarea" class="label2auto" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-label id="label-for-ui5-textarea" for="ui5-textarea" class="label2auto" show-colon wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<ui5-textarea class="label6auto" id="ui5-textarea"></ui5-textarea>
 		</div>
 
 		<br>
 
 		<div class="label5auto">
-			<ui5-label id="label-for-native-textarea" for="native-textarea" class="label2auto" required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-label id="label-for-native-textarea" for="native-textarea" class="label2auto" required wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<textarea class="label6auto" id="native-textarea"></textarea>
 		</div>
 
 		<br>
 
 		<div class="label5auto">
-			<ui5-label id="label-for-ui5-datepicker" for="ui5-datepicker" class="label2auto" show-colon required>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+			<ui5-label id="label-for-ui5-datepicker" for="ui5-datepicker" class="label2auto" show-colon required wrapping-type="None">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 			<ui5-date-picker class="label6auto" id="ui5-datepicker"></ui5-date-picker>
 		</div>
 	</section>
 
 	<section class="group">
-		<h2>Label in CustomListItem</h2>
+		<h2>Label in ListItemCustom</h2>
 		<ui5-list>
 			<ui5-li-custom>
 				<div class="label7auto">
-					<ui5-label class="label3auto"> Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
-					<ui5-label wrapping-type="Normal" class="label3auto">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+					<ui5-label wrapping-type="None" class="label3auto"> Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
+					<ui5-label class="label3auto">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 				</div>
 			</ui5-li-custom>
 		</ui5-list>
@@ -117,34 +113,34 @@
 
 	<section class="group vertical label3auto">
 		<h2>Italic Label</h2>
-		<ui5-label class="label8auto">Short labelH</ui5-label>
-		<ui5-label class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required class="label8auto">Short labelH</ui5-label>
-		<ui5-label required class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label show-colon class="label8auto">Short labelH</ui5-label>
-		<ui5-label show-colon class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required show-colon class="label8auto">Short labelH</ui5-label>
-		<ui5-label required show-colon class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label wrapping-type="Normal" class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" show-colon class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required show-colon class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="None" class="label8auto">Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="None" required class="label8auto">Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" required class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="None" show-colon class="label8auto">Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" show-colon class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="None" required show-colon class="label8auto">Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" required show-colon class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label required class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label show-colon class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label required show-colon class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
 	</section>
 
 	<section class="group vertical label3auto">
 		<h2>Standard Label</h2>
-		<ui5-label>Short labelH</ui5-label>
-		<ui5-label>Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required>Short labelH</ui5-label>
-		<ui5-label required>Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label show-colon>Short labelH</ui5-label>
-		<ui5-label show-colon>Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required show-colon>Short labelH</ui5-label>
-		<ui5-label required show-colon>Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label wrapping-type="Normal">Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required>Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" show-colon>Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required show-colon>Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="None">Short labelH</ui5-label>
+		<ui5-label wrapping-type="None">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="None" required>Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" required>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="None" show-colon>Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" show-colon>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="None" required show-colon>Short labelH</ui5-label>
+		<ui5-label wrapping-type="None" required show-colon>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label>Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label required>Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label show-colon>Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label required show-colon>Long label - Reprehenderit amet cillum temporH</ui5-label>
 	</section>
 
 	<section class="group">
@@ -153,7 +149,10 @@
 	</section>
 	<div>
 		<ui5-label>Short labelH</ui5-label>
-		<ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label>
+		<ui5-label>Short labelH</ui5-label>
+		<ui5-label>Short labelH</ui5-label>
+		<ui5-label>Short labelH</ui5-label>
+		<ui5-label>Short labelH</ui5-label>
 	</div>
 
 	<section class="group" id="differentLanguages">
@@ -167,19 +166,19 @@
 			<ui5-option id="zh-Hant">zh-Hant (Traditional Chinese)</ui5-option>
 		</ui5-select>
 		<div>
-			<ui5-label show-colon></ui5-label>
+			<ui5-label wrapping-type="None" show-colon></ui5-label>
 			<ui5-input></ui5-input>
 		</div>
 		<div>
-			<ui5-label show-colon required></ui5-label>
+			<ui5-label wrapping-type="None" show-colon required></ui5-label>
 			<ui5-input></ui5-input>
 		</div>
 		<div>
-			<ui5-label show-colon class="width50px"></ui5-label>
+			<ui5-label wrapping-type="None" show-colon class="width50px"></ui5-label>
 			<ui5-input></ui5-input>
 		</div>
 		<div>
-			<ui5-label show-colon required class="width50px"></ui5-label>
+			<ui5-label wrapping-type="None" show-colon required class="width50px"></ui5-label>
 			<ui5-input></ui5-input>
 		</div>
 	</section>

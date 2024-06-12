@@ -11,22 +11,23 @@ import {
 	isRightCtrl,
 	isHome,
 	isEnd,
+	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
 import type {
-	InputSuggestionItemSelectEventDetail as MultiInputSuggestionItemSelectEventDetail,
-	InputSuggestionItemPreviewEventDetail as MultiInputSuggestionItemPreviewEventDetail,
+	InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail,
 } from "./Input.js";
 
 interface IToken extends HTMLElement, ITabbable {
@@ -37,7 +38,7 @@ interface IToken extends HTMLElement, ITabbable {
 }
 
 type MultiInputTokenDeleteEventDetail = {
-	token: IToken;
+	tokens: Token[];
 }
 
 /**
@@ -49,7 +50,8 @@ type MultiInputTokenDeleteEventDetail = {
  * Fiori Guidelines say that user should create tokens when:
  *
  * - Type a value in the input and press enter or focus out the input field (`change` event is fired)
- * - Select a value from the suggestion list (`suggestion-item-select` event is fired)
+ * - Move between suggestion items (`selection-change` event is fired)
+ * - Clicking on a suggestion item (`selection-change` event is fired if the clicked item is different than the current value. Also `change` event is fired )
  *
  * ### ES6 Module Import
  *
@@ -62,14 +64,18 @@ type MultiInputTokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-multi-input",
 	renderer: litRender,
+	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
-	dependencies: [
-		...Input.dependencies,
-		Tokenizer,
-		Token,
-		Icon,
-	],
+	get dependencies() {
+		return [
+			...Input.dependencies,
+			Input,
+			Tokenizer,
+			Token,
+			Icon,
+		];
+	},
 })
 /**
  * Fired when the value help icon is pressed
@@ -79,8 +85,8 @@ type MultiInputTokenDeleteEventDetail = {
 @event("value-help-trigger")
 
 /**
- * Fired when a token is about to be deleted.
- * @param {HTMLElement} token deleted token.
+ * Fired when tokens are being deleted.
+ * @param {Array} tokens An array containing the deleted tokens.
  * @public
  */
 @event<MultiInputTokenDeleteEventDetail>("token-delete", {
@@ -88,11 +94,11 @@ type MultiInputTokenDeleteEventDetail = {
 		/**
 		 * @public
 		 */
-		token: { type: HTMLElement },
+		tokens: { type: Array },
 	},
 })
 
-class MultiInput extends Input {
+class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
@@ -103,14 +109,6 @@ class MultiInput extends Input {
 	showValueHelpIcon!: boolean;
 
 	/**
-	 * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-	 * @default false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	expandedTokenizer!: boolean;
-
-	/**
 	 * Indicates whether the tokenizer has tokens
 	 * @default false
 	 * @private
@@ -119,14 +117,50 @@ class MultiInput extends Input {
 	tokenizerAvailable!: boolean;
 
 	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * **Note:** When the component is used inside a form element,
+	 * the value is sent as the first element in the form data, even if it's empty.
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	declare name: string;
+
+	/**
 	 * Defines the component tokens.
 	 * @public
 	 */
-	@slot()
+	@slot({ type: HTMLElement, individualSlots: true })
 	tokens!: Array<IToken>;
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
+
+	get formValidity(): ValidityStateFlags {
+		const tokens = (this.tokens || []);
+
+		return { valueMissing: this.required && !this.value && !tokens.length };
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		const tokens = (this.tokens || []);
+
+		if (tokens.length) {
+			const formData = new FormData();
+
+			formData.append(this.name, this.value);
+
+			for (let i = 0; i < tokens.length; i++) {
+				formData.append(this.name, tokens[i].text);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();
@@ -141,13 +175,8 @@ class MultiInput extends Input {
 		this.fireEvent("value-help-trigger");
 	}
 
-	showMorePress() {
-		this.expandedTokenizer = false;
-		this.focus();
-	}
-
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
-		const focusedToken = e.detail.ref;
+		const deletedTokens = e.detail.tokens;
 		const selectedTokens = this.tokens.filter(token => token.selected);
 		const shouldFocusInput = this.tokens.length - 1 === 0 || this.tokens.length === selectedTokens.length;
 
@@ -155,28 +184,19 @@ class MultiInput extends Input {
 			return;
 		}
 
-		if (focusedToken) {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token: focusedToken });
+		if (deletedTokens) {
+			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
+
 			if (shouldFocusInput) {
 				this.focus();
 			}
-
-			return;
 		}
-
-		if (selectedTokens.indexOf(focusedToken) === -1) {
-			selectedTokens.push(focusedToken);
-		}
-
-		selectedTokens.forEach(token => {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
-		});
 	}
 
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
 		this.closeValueStatePopover();
-		this.tokenizer.closeMorePopover();
+		this.tokenizer.open = false;
 		this._valueHelpIconPressed = true;
 		target.focus();
 	}
@@ -185,10 +205,6 @@ class MultiInput extends Input {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
-		}
-
-		if (e.relatedTarget === this.nativeInput) {
-			this.tokenizer.closeMorePopover();
 		}
 	}
 
@@ -199,11 +215,11 @@ class MultiInput extends Input {
 	}
 
 	innerFocusIn() {
-		this.expandedTokenizer = true;
+		this.tokenizer.expanded = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
 
-		this.tokenizer._getTokens().forEach(token => {
+		this.tokens.forEach(token => {
 			token.selected = false;
 		});
 	}
@@ -213,17 +229,20 @@ class MultiInput extends Input {
 
 		const target = e.target as HTMLInputElement;
 		const isHomeInBeginning = isHome(e) && target.selectionStart === 0;
-		const isCtrl: boolean = e.metaKey || e.ctrlKey;
-		const tokens = this.tokens;
 
 		if (isHomeInBeginning) {
 			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
 			return this._focusFirstToken(e);
 		}
 
-		if (isLeft(e) || isBackSpace(e)) {
+		if (isLeft(e)) {
 			this._skipOpenSuggestions = true;
 			return this._handleLeft(e);
+		}
+
+		if (isBackSpace(e)) {
+			this._skipOpenSuggestions = true;
+			return this._handleBackspace(e);
 		}
 
 		this._skipOpenSuggestions = false;
@@ -231,20 +250,11 @@ class MultiInput extends Input {
 		if (isShow(e)) {
 			this.valueHelpPress();
 		}
-
-		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
-			e.preventDefault();
-			this.closeValueStatePopover();
-			this.tokenizer.openMorePopover();
-		}
 	}
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
-		const isCtrl = !!(e.metaKey || e.ctrlKey);
-		const tokens = this.tokens;
-
-		if (isRight(e) || isEnd(e) || rightCtrl) {
+		if (isRight(e) || isDown(e) || isEnd(e) || rightCtrl) {
 			e.preventDefault();
 			const lastTokenIndex = this.tokens.length - 1;
 
@@ -252,36 +262,7 @@ class MultiInput extends Input {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
-			} else if (rightCtrl) {
-				e.preventDefault();
-				return this.tokenizer._handleArrowCtrl(e, e.target as Token, this.tokens, true);
 			}
-		}
-
-		if (isCtrl && ["c", "x"].includes(e.key.toLowerCase())) {
-			e.preventDefault();
-
-			const isCut = e.key.toLowerCase() === "x";
-			const selectedTokens = tokens.filter(token => token.selected);
-
-			if (isCut) {
-				const cutResult = this.tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
-
-				selectedTokens.forEach(token => {
-					this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
-				});
-
-				this.focus();
-
-				return cutResult;
-			}
-
-			return this.tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
-		}
-
-		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
-			e.preventDefault();
-			this.tokenizer.openMorePopover();
 		}
 	}
 
@@ -292,6 +273,21 @@ class MultiInput extends Input {
 
 		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
 		if (((cursorPosition === null && !this.value) || cursorPosition === 0) && lastToken) {
+			e.preventDefault();
+			lastToken.focus();
+			this.tokenizer._itemNav.setCurrentItem(lastToken);
+		}
+	}
+
+	_handleBackspace(e: KeyboardEvent) {
+		const cursorPosition = this.getDomRef()!.querySelector(`input`)!.selectionStart;
+		const selectionEnd = this.getDomRef()!.querySelector(`input`)!.selectionEnd;
+		const isValueSelected = cursorPosition === 0 && selectionEnd === this.value.length;
+		const tokens = this.tokens;
+		const lastToken = tokens.length && tokens[tokens.length - 1];
+
+		// selectionStart property applies only to inputs of types text, search, URL, tel, and password
+		if ((!this.value || (this.value && cursorPosition === 0 && !isValueSelected)) && lastToken) {
 			e.preventDefault();
 			lastToken.focus();
 			this.tokenizer._itemNav.setCurrentItem(lastToken);
@@ -317,10 +313,7 @@ class MultiInput extends Input {
 		const insideShadowDom = this.shadowRoot!.contains(relatedTarget);
 
 		if (!insideDOM && !insideShadowDom) {
-			this.expandedTokenizer = false;
-
-			// we need to reset tabindex setting by tokenizer
-			this.tokenizer._itemNav._currentIndex = -1;
+			this.tokenizer.expanded = false;
 		}
 	}
 
@@ -335,17 +328,23 @@ class MultiInput extends Input {
 		}
 	}
 
-	lastItemDeleted() {
-		setTimeout(() => {
-			this.focus();
-		}, 0);
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+	}
+
+	onAfterRendering() {
+		super.onAfterRendering();
+
+		this.tokenizer.preventInitialFocus = true;
+
+		if (this.tokenizer.expanded) {
+			this.tokenizer.scrollToEnd();
+		} else {
+			this.tokenizer.scrollToStart();
+		}
 	}
 
 	get iconsCount() {
@@ -356,11 +355,12 @@ class MultiInput extends Input {
 		return this.shadowRoot!.querySelector<Tokenizer>("[ui5-tokenizer]")!;
 	}
 
+	get tokenizerExpanded() {
+		return this.tokenizer && this.tokenizer.expanded;
+	}
+
 	get _tokensCountText() {
-		if (!this.tokenizer) {
-			return;
-		}
-		return this.tokenizer._tokensCountText();
+		return getTokensCountText(this.tokens.length);
 	}
 
 	get _tokensCountTextId() {
@@ -372,7 +372,7 @@ class MultiInput extends Input {
 	 * @protected
 	 */
 	get _placeholder() {
-		if (this.tokenizer && this.tokenizer._tokens.length) {
+		if (this.tokens.length) {
 			return "";
 		}
 
@@ -403,7 +403,7 @@ class MultiInput extends Input {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer._isOpen;
+		return this.hasValueStateMessage && !this.readonly && !this.open && this.focused && !this.tokenizer.open;
 	}
 }
 
@@ -413,6 +413,5 @@ export default MultiInput;
 export type {
 	IToken,
 	MultiInputTokenDeleteEventDetail,
-	MultiInputSuggestionItemSelectEventDetail,
-	MultiInputSuggestionItemPreviewEventDetail,
+	MultiInputSelectionChangeEventDetail,
 };

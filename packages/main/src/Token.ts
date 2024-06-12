@@ -14,7 +14,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
+import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
@@ -53,9 +53,10 @@ type TokenDeleteEventDetail = {
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
+
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
- * @public
+ * @private
  */
 @event("select")
 
@@ -82,23 +83,23 @@ class Token extends UI5Element implements IToken {
 	text!: string;
 
 	/**
-	 * Defines whether the component is read-only.
-	 *
-	 * **Note:** A read-only component can not be deleted or selected,
-	 * but still provides visual feedback upon user interaction.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	readonly!: boolean;
-
-	/**
 	 * Defines whether the component is selected or not.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
+
+	/**
+	 * Defines whether the component is read-only.
+	 *
+	 * **Note:** A read-only component can not be deleted or selected,
+	 * but still provides visual feedback upon user interaction.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
 
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
@@ -134,6 +135,13 @@ class Token extends UI5Element implements IToken {
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
 	forcedTabIndex!: string;
+
+	/**
+	 * Indicates whether the token is visible or not.
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible!: boolean;
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
@@ -194,10 +202,6 @@ class Token extends UI5Element implements IToken {
 		return Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE);
 	}
 
-	get iconURI() {
-		return "decline";
-	}
-
 	get textDom() {
 		return this.getDomRef()?.querySelector(".ui5-token--text");
 	}
@@ -208,6 +212,16 @@ class Token extends UI5Element implements IToken {
 		}
 
 		return Math.ceil(this.textDom.getBoundingClientRect().width) < Math.ceil(this.textDom.scrollWidth);
+	}
+
+	get ariaDescription() {
+		let description = Token.i18nBundle.getText(TOKEN_ARIA_LABEL);
+
+		if (!this.readonly) {
+			description += ` ${Token.i18nBundle.getText(TOKEN_ARIA_DELETABLE)}`;
+		}
+
+		return description;
 	}
 
 	static async onDefine() {

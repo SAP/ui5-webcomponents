@@ -28,6 +28,7 @@
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			aria-label="{{accInfo.input.ariaLabel}}"
 			aria-required="{{required}}"
+			autocomplete="off"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
 			@keydown="{{_onkeydown}}"
@@ -41,7 +42,7 @@
 		/>
 
 		{{#if _effectiveShowClearIcon}}
-			<div @click={{_clear}} @mousedown={{_iconMouseDown}} class="ui5-input-clear-icon-wrapper" input-icon tabindex="-1">
+			<div @click={{_clear}} @mousedown={{_iconMouseDown}} class="ui5-input-clear-icon-wrapper inputIcon" tabindex="-1">
 				<ui5-icon tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 			</div>
 		{{/if}}
@@ -72,8 +73,6 @@
 			<span id="valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 		{{/if}}
 	</div>
-
-	<slot name="formSupport"></slot>
 </div>
 
 

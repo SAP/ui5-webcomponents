@@ -11,9 +11,9 @@
 <body style="background-color: var(--sapBackgroundColor); height: 350px">
     <!-- playground-fold-end -->
 
-    <ui5-button id="btnOpenAdditionalText" icon="slim-arrow-down" icon-end>Open Menu</ui5-button> <br>
+    <ui5-button id="btnOpenAdditionalText" end-icon="slim-arrow-down">Open Menu</ui5-button> <br>
 
-    <ui5-menu id="menuAdditionalText">
+    <ui5-menu id="menuAdditionalText" opener="btnOpenAdditionalText">
         <ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
         <ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
         <ui5-menu-item text="Open" icon="open-folder" starts-section></ui5-menu-item>

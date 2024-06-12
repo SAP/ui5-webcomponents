@@ -16,6 +16,7 @@
 @import "./DayPicker-parameters.css";
 @import "../base/Dialog-parameters.css";
 @import "../base/FileUploader-parameters.css";
+@import "../base/Grid-parameters.css";
 @import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "../base/InputIcon-parameters.css";
@@ -52,5 +53,5 @@
 @import "./MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "../base/StepInput-parameters.css";
-@import "../base/sizes-parameters.css";
 @import "../base/rtl-parameters.css";
+@import "./sizes-parameters.css";

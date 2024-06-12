@@ -1,0 +1,51 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+<!-- playground-fold-end -->
+	<ui5-toast id="message"></ui5-toast>
+	<ui5-grid id="grid">
+<!-- playground-fold -->
+		<ui5-grid-header-row slot="headerRow">
+			<ui5-grid-header-cell id="produtCol" width="300px"><span>Product</span></ui5-grid-header-cell>
+			<ui5-grid-header-cell id="supplierCol" width="200px">Supplier</ui5-grid-header-cell>
+			<ui5-grid-header-cell id="dimensionsCol" width="300px">Dimensions</ui5-grid-header-cell>
+			<ui5-grid-header-cell id="weightCol" width="100px">Weight</ui5-grid-header-cell>
+			<ui5-grid-header-cell id="priceCol" width="220px">Price</ui5-grid-header-cell>
+		</ui5-grid-header-row>
+<!-- playground-fold-end -->
+		<ui5-grid-row key="a" interactive>
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 15</b><br>HT-1000</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Very Best Screens</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>956</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="b">
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 17</b><br>HT-1001</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Smartcards</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>29 x 17 x 3.1 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>1249</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+		<ui5-grid-row key="c" interactive>
+			<ui5-grid-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>Technocom</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-grid-cell>
+			<ui5-grid-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-grid-cell>
+		</ui5-grid-row>
+	</ui5-grid>
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

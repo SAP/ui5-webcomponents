@@ -8,7 +8,7 @@ import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generat
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
-import ResponsivePopover from "../ResponsivePopover.js";
+import type ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
@@ -35,8 +35,8 @@ interface SuggestionComponent extends UI5Element {
 	open: boolean;
 	onItemMouseOver: (e: MouseEvent) => void;
 	onItemMouseOut: (e: MouseEvent) => void;
-	onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
-	onItemPreviewed: (item: SuggestionListItem) => void;
+	onItemSelected: (pressedItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) => void;
+	onItemSelect: (item: SuggestionListItem) => void;
 }
 
 type InputSuggestion = {
@@ -255,7 +255,9 @@ class Suggestions {
 		const selectedItem = this._getItems() && this._getItems()[this.selectedItemIndex];
 
 		this._getComponent().open = false;
-		this._getPicker().close(false, false, preventFocusRestore);
+		const picker = this._getPicker();
+		picker.preventFocusRestore = preventFocusRestore;
+		picker.open = false;
 
 		if (selectedItem && selectedItem.focused) {
 			selectedItem.focused = false;
@@ -297,14 +299,14 @@ class Suggestions {
 			return;
 		}
 
-		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
+		this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], item, keyboardUsed);
 		item.selected = false;
 		item.focused = false;
 		this._getComponent().open = false;
 	}
 
-	onItemPreviewed(item: SuggestionListItem) {
-		this._getComponent().onItemPreviewed(item);
+	onItemSelect(item: SuggestionListItem) {
+		this._getComponent().onItemSelect(item);
 	}
 
 	/* Private methods */
@@ -474,7 +476,7 @@ class Suggestions {
 		}
 
 		this.component.hasSuggestionItemSelected = true;
-		this.onItemPreviewed(currentItem);
+		this.onItemSelect(currentItem);
 
 		if (!this._isItemIntoView(currentItem)) {
 			this._scrollItemIntoView(currentItem);

@@ -22,9 +22,12 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	@property({ type: Boolean })
 	declare selected: boolean;
 
-	get stableDomRef() {
-		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
-	}
+	/**
+	 * Defines whether the item is filtered
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible!: boolean;
 
 	get isMultiComboBoxItem() {
 		return true;

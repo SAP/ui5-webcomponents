@@ -59,8 +59,16 @@
 
 	<section class="group">
 		<h2>Wrapping link</h2>
-		<ui5-link class="link2auto" id="wrapping-link" wrapping-type="Normal">Eu enim consectetur do amet elit.</ui5-link>
-		<ui5-link class="link2auto" id="non-wrapping-link">Eu enim consectetur do amet elit.</ui5-link>
+		<ui5-link class="link2auto" id="wrapping-link">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</ui5-link>
+		<ui5-link class="link2auto" id="non-wrapping-link" wrapping-type="None">Eu enim consectetur do amet elit Lorem ipsum dolor, sit amet consectetur adipisicing elit.</ui5-link>
+	</section>
+
+	<section class="group">
+		<h2>Links with icon and end-icon</h2>
+		<ui5-link id="wrapping-link" wrapping-type="Normal" icon="employee">View employee profile</ui5-link> <br>
+		<ui5-link id="linkWithIcon" design="Subtle" icon="employee">View employee profile</ui5-link> <br> <br>
+		<ui5-link id="non-wrapping-link" end-icon="cloud">Weather today</ui5-link> <br>
+		<ui5-link class="link2auto" id="linkWithEndIcon" end-icon="cloud" wrapping-type="None">Weather today</ui5-link>
 	</section>
 
 	<section class="group">
@@ -145,15 +153,15 @@
 		});
 
 		signInLink.addEventListener("ui5-click", function(event) {
-			singInDialog.show();
+			singInDialog.open = true;
 		});
 
 		signInLink.accessibilityAttributes = {
-			hasPopup: "Dialog"
+			hasPopup: "dialog"
 		};
 
 		closeSignInDialogButton.addEventListener("ui5-click", function(event) {
-			singInDialog.close();
+			singInDialog.open = false;
 		});
 
 		linkClickPreventDefault.addEventListener("ui5-click", function(event) {

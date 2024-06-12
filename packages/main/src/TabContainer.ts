@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -51,6 +51,7 @@ import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
 import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
+import ListItemCustom from "./ListItemCustom.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -172,6 +173,7 @@ interface ITab extends UI5Element {
 		List,
 		ResponsivePopover,
 		DropIndicator,
+		ListItemCustom,
 	],
 })
 /**
@@ -432,7 +434,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this.responsivePopover?.open) {
-			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner(this.responsivePopover._opener!));
+			const popoverItems = this._getPopoverItemsFor(this._getPopoverOwner(this.responsivePopover.opener as HTMLElement));
 
 			if (popoverItems.length) {
 				this._setPopoverItems(popoverItems);
@@ -510,6 +512,9 @@ class TabContainer extends UI5Element {
 		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 			return;
 		}
+
+		e.dataTransfer.dropEffect = "move";
+		e.dataTransfer.effectAllowed = "move";
 
 		this._setDraggedElement!((e.target as TabInStrip).realTabReference);
 	}
@@ -732,7 +737,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_findTabInOverflow(realTab: ITab) {
-		if (!this.responsivePopover!.isOpen()) {
+		if (!this.responsivePopover!.open) {
 			return undefined;
 		}
 
@@ -1277,7 +1282,7 @@ class TabContainer extends UI5Element {
 	async _togglePopover(opener: HTMLElement, setInitialFocus = false) {
 		this.responsivePopover = await this._respPopover();
 
-		if (this.responsivePopover.isOpen()) {
+		if (this.responsivePopover.open) {
 			this._closePopover();
 		} else {
 			await this._showPopoverAt(opener, setInitialFocus);
@@ -1294,7 +1299,9 @@ class TabContainer extends UI5Element {
 		}
 
 		if (this._hasScheduledPopoverOpen) {
-			await this.responsivePopover.showAt(opener, preventInitialFocus);
+			this.responsivePopover.preventInitialFocus = preventInitialFocus;
+			this.responsivePopover.opener = opener;
+			this.responsivePopover.open = true;
 		}
 	}
 
@@ -1337,7 +1344,9 @@ class TabContainer extends UI5Element {
 
 	_closePopover() {
 		this._hasScheduledPopoverOpen = false;
-		this.responsivePopover?.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
 	get dropIndicatorDOM(): DropIndicator | null {
@@ -1416,6 +1425,12 @@ class TabContainer extends UI5Element {
 
 	get accInvisibleText() {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_SUBTABS_DESCRIPTION);
+	}
+
+	get overflowBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
 	}
 
 	get tablistAriaDescribedById() {

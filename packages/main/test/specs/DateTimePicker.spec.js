@@ -1,22 +1,22 @@
 import { assert } from "chai";
 
-const openPickerById = async (id, options) => {
+const openPickerById = async (id) => {
 	await browser.$(`#${id}`).scrollIntoView();
 
-	return browser.executeAsync((id, options, done) => {
-		done(document.querySelector(`[id="${id}"]`).openPicker(options));
-	}, id, options);
+	return browser.executeAsync((id, done) => {
+		done(document.querySelector(`[id="${id}"]`).open = true);
+	}, id);
 };
 
-const closePickerById = id => {
+const closePickerById = async (id) => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`[id="${id}"]`).closePicker());
+		done(document.querySelector(`[id="${id}"]`).open = false);
 	}, id);
 };
 
 const isPickerOpen = id => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`[id="${id}"]`).isOpen());
+		done(document.querySelector(`[id="${id}"]`).open);
 	}, id);
 };
 
@@ -287,6 +287,16 @@ describe("DateTimePicker general interaction", () => {
 		// assert
 		assert.strictEqual(await prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The previous button is disabled.");
 		assert.strictEqual(await nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The next button is disabled.");
+	});
+
+	it("picker popover should have accessible name", async () => {
+		await openPickerById("dt1");
+
+		const popover = await getPicker("dt1");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date and Time", "Picker popover has an accessible name");
+
+		await closePickerById("dt1");
 	});
 
 	// TO DO: Create new testing page test secondary calendar type behaviour.

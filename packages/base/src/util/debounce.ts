@@ -1,4 +1,4 @@
-import { Timeout } from "../types.js";
+import type { Timeout } from "../types.js";
 
 /**
  * Delays function execution by given threshold.

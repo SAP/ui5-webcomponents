@@ -2,12 +2,15 @@
 	id="{{_id}}-navigation-menu-rp"
 	class="ui5-menu-rp ui5-navigation-menu"
 	vertical-align="Center"
-	?sub-menu={{_isSubMenu}}
+	.opener={{opener}}
+	?open={{open}}
+	prevent-initial-focus
+	prevent-focus-restore
 	@ui5-before-open={{_beforePopoverOpen}}
-	@ui5-after-open={{_afterPopoverOpen}}
+	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
-	@ui5-after-close={{_afterPopoverClose}}
-    accessible-name-ref="{{_id}}-navigationMenuPopoverText"
+	@ui5-close={{_afterPopoverClose}}
+	accessible-name-ref="{{_id}}-navigationMenuPopoverText"
 >
 <span id="{{_id}}-navigationMenuPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 {{#if isPhone}}
@@ -15,28 +18,18 @@
 		slot="header"
 		class="ui5-menu-dialog-header"
 	>
-	{{#if isSubMenuOpened}}
-		<ui5-button
-			icon="nav-back"
-			class="ui5-menu-back-button"
-			design="Transparent"
-			aria-label="{{labelBack}}"
-			@click={{_navigateBack}}
-		>
-		</ui5-button>
-	{{/if}}
 		<div
 			class="ui5-menu-dialog-title"
 		>
 			<div>
-				{{menuHeaderTextPhone}}
+				{{headerText}}
 			</div>
 		</div>
 		<ui5-button
 			icon="decline"
 			design="Transparent"
 			aria-label="{{labelClose}}"
-			@click={{close}}
+			@click={{_close}}
 		>
 		</ui5-button>
 	</div>
@@ -45,7 +38,7 @@
 		id="{{_id}}-menu-main"
         class="ui5-navigation-menu-main"
 	>
-	{{#if _currentItems.length}}
+	{{#if items.length}}
 		<ui5-list
 			accessible-role="Tree"
 			id="{{_id}}-menu-list"
@@ -54,98 +47,18 @@
 			loading-delay="{{loadingDelay}}"
 			separators="None"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_loadingMouseOver}}"
+			@ui5-close-menu={{_close}}
+			@keydown={{_itemKeyDown}}
 		>
-		{{#each _currentItems}}
-			{{#if this.item.href}}
-				<ui5-li
-					.associatedItem="{{this.item}}"
-					id="{{../_id}}-menu-item-{{@index}}"
-					.icon="{{this.item.icon}}"
-					accessible-name={{this.item.ariaLabelledByText}}
-					accessible-role="None"
-					.additionalText="{{this.item._additionalText}}"
-					.ariaHasPopup={{this.ariaHasPopup}}
-					?disabled={{this.item.disabled}}
-					?starts-section={{this.item.startsSection}}
-					?selected={{this.item.subMenuOpened}}
-					?is-phone={{../isPhone}}
-					@mouseover={{../_itemMouseOver}}
-					@mouseout={{../_itemMouseOut}}
-					@keydown={{../_itemKeyDown}}
-					class="ui5-menu-item ui5-navigation-menu-item">
-						<a role="treeitem"
-						   href="{{this.item.href}}"
-						   target="{{this.item.target}}">
-							{{#if this.item.hasDummyIcon}}
-								<div class="ui5-menu-item-dummy-icon"></div>
-							{{/if}}
-							{{this.item.text}}
-						 	{{#if this.item.hasSubmenu}}
-								<ui5-icon
-									part="icon"
-									name="slim-arrow-right"
-									class="ui5-menu-item-icon-end"
-								></ui5-icon>
-							{{else if this.item._siblingsWithChildren}}
-								<div class="ui5-menu-item-no-icon-end"></div>
-							{{/if}}
-							{{#if this.item.isExternalLink}}
-								<ui5-icon class="ui5-sn-item-external-link-icon"
-										  name="arrow-right"
-								></ui5-icon>
-							{{/if}}
-						</a>
-					</ui5-li>
-				{{else}}
-				<ui5-li
-					.associatedItem="{{this.item}}"
-					class="ui5-menu-item ui5-navigation-menu-item"
-					id="{{../_id}}-menu-item-{{@index}}"
-					.icon="{{this.item.icon}}"
-					accessible-name={{this.item.ariaLabelledByText}}
-					accessible-role="TreeItem"
-					.additionalText="{{this.item._additionalText}}"
-					.ariaHasPopup={{this.ariaHasPopup}}
-					?disabled={{this.item.disabled}}
-					?starts-section={{this.item.startsSection}}
-					?selected={{this.item.subMenuOpened}}
-					?is-phone={{../isPhone}}
-					@mouseover={{../_itemMouseOver}}
-					@mouseout={{../_itemMouseOut}}
-					@keydown={{../_itemKeyDown}}
-				>
-				{{#if this.item.hasDummyIcon}}
-					<div class="ui5-menu-item-dummy-icon"></div>
-				{{/if}}
-				{{this.item.text}}
-				{{#if this.item.hasSubmenu}}
-					<ui5-icon
-						part="icon"
-						name="slim-arrow-right"
-						class="ui5-menu-item-icon-end"
-					>
-					</ui5-icon>
-				{{else if this.item._siblingsWithChildren}}
-					<div class="ui5-menu-item-no-icon-end"></div>
-				{{/if}}
-				</ui5-li>
-			{{/if}}
-		{{/each}}
+			<slot></slot>
 		</ui5-list>
 	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
 			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}
 	</div>
 </ui5-responsive-popover>
-
-<div
-	class="ui5-menu-submenus"
->
-</div>
