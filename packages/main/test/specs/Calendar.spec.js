@@ -422,4 +422,13 @@ describe("Calendar general interaction", () => {
 
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});
+
+	it("Special date respects format-pattern given to the calendar", async  () => {
+		const calendar = await browser.$("#calendar3");
+		const dayPickerRoot = await calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-root");
+
+		const specialDate = await dayPickerRoot.$$(`div[special-day]`);
+
+		assert.strictEqual(specialDate.length, 1, "Special date is rendered");
+	});
 });
