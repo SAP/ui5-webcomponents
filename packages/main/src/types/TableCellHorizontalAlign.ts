@@ -12,7 +12,7 @@ enum TableCellHorizontalAlign {
     /**
      * @public
      */
-    Begin = "Start",
+    Start = "Start",
 
     /**
      * @public
