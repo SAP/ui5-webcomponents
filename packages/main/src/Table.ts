@@ -206,7 +206,7 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: true, slots: true } })
 	headerRow!: Array<TableHeaderRow>;
 
 	/**
@@ -344,6 +344,7 @@ class Table extends UI5Element {
 
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
+		this._refreshAlignment();
 	}
 
 	onAfterRendering(): void {
@@ -425,6 +426,17 @@ class Table extends UI5Element {
 		});
 	}
 
+	_refreshAlignment() {
+		this.headerRow[0].cells.forEach((header, index) => {
+			this.rows.forEach(row => {
+				const cell = row.cells[index];
+				if (cell && cell.hAlign !== header.hAlign) {
+					cell.hAlign = header.hAlign;
+				}
+			});
+		});
+	}
+
 	_onGrow() {
 		this._growing?.loadMore();
 	}
@@ -464,11 +476,17 @@ class Table extends UI5Element {
 	}
 
 	get styles() {
-		return {
+		const tableStyle = {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
 			},
-		};
+		} as any;
+
+		this.headerRow[0].cells.forEach(headerCell => {
+			tableStyle.table[`--h-align-${(headerCell as any)._individualSlot}`] = headerCell.hAlign;
+		});
+
+		return tableStyle;
 	}
 
 	get _gridTemplateColumns() {

@@ -6,6 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
+import TableCellAlign from "./types/TableCellAlign.js";
 
 /**
  * @class
@@ -31,6 +32,9 @@ abstract class TableCellBase extends UI5Element {
 	@property({ type: Boolean })
 	_popin = false;
 
+	@property()
+    hAlign?: `${TableCellAlign}` = TableCellAlign.Begin;
+
 	protected ariaRole: string = "gridcell";
 
 	static i18nBundle: I18nBundle;
@@ -47,6 +51,11 @@ abstract class TableCellBase extends UI5Element {
 			this.removeAttribute("role");
 		} else {
 			this.setAttribute("role", this.ariaRole);
+		}
+		if (this.hAlign) {
+			this.style.justifyContent = this.hAlign;
+		} else {
+			this.style.justifyContent = `var(--h-align-${(this as any)._individualSlot})`;
 		}
 	}
 
