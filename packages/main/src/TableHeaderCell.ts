@@ -90,7 +90,7 @@ class TableHeaderCell extends TableCellBase {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
-		this.style.justifyContent = `var(--h-align-${(this as any)._individualSlot})`;
+		this.style.justifyContent = `var(--horizontal-align-${(this as any)._individualSlot})`;
 	}
 }
 

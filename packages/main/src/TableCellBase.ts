@@ -38,7 +38,7 @@ abstract class TableCellBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-    hAlign?: `${TableCellHorizontalAlign}`;
+    horizontalAlign?: `${TableCellHorizontalAlign}`;
 
 	protected ariaRole: string = "gridcell";
 

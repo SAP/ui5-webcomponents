@@ -33,10 +33,10 @@ import TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 class TableCell extends TableCellBase {
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		if (this.hAlign && Object.values(TableCellHorizontalAlign).includes(this.hAlign as TableCellHorizontalAlign)) {
-			this.style.justifyContent = this.hAlign;
+		if (this.horizontalAlign && Object.values(TableCellHorizontalAlign).includes(this.horizontalAlign as TableCellHorizontalAlign)) {
+			this.style.justifyContent = this.horizontalAlign;
 		} else {
-			this.style.justifyContent = `var(--h-align-${(this as any)._individualSlot})`;
+			this.style.justifyContent = `var(--horizontal-align-${(this as any)._individualSlot})`;
 		}
 	}
 
