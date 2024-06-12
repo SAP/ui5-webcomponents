@@ -69,8 +69,8 @@ import TreeItem from "../../dist/TreeItem.js";
 import TreeItemCustom from "../../dist/TreeItemCustom.js";
 import List from "../../dist/List.js";
 // console.log({List})
-import StandardListItem from "../../dist/StandardListItem.js";
-import CustomListItem from "../../dist/CustomListItem.js";
+import ListItemStandard from "../../dist/ListItemStandard.js";
+import ListItemCustom from "../../dist/ListItemCustom.js";
 import ListItemGroupHeader from "../../dist/ListItemGroupHeader.js";
 
 // Features

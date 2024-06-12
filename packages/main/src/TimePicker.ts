@@ -43,6 +43,7 @@ import {
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
+	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -187,6 +188,18 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 		},
 	},
 })
+/**
+ * Fired after the value-help dialog of the component is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the value-help dialog of the component is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 class TimePicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a formatted time value.
@@ -314,6 +327,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 
+	get pickerAccessibleName() {
+		return TimePicker.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
+	}
+
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
@@ -380,6 +397,11 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	onResponsivePopoverAfterClose() {
 		this.open = false;
+		this.fireEvent("close");
+	}
+
+	onResponsivePopoverAfterOpen() {
+		this.fireEvent("open");
 	}
 
 	/**

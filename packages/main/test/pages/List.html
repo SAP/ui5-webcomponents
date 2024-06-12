@@ -14,35 +14,6 @@
 </head>
 
 <body class="list1auto">
-
-	<div id="host">
-		<template shadowrootmode="open">
-		   <span>I'm in the shadow DOM</span>
-		   <ui5-list header-text="API: CustomListItem" selection-mode="SingleEnd">
-			  <ui5-li-custom>
-				 <div class="list5auto">
-					<ui5-button>Press me</ui5-button>
-					<ui5-link>Go to SAP</ui5-link>
-				 </div>
-			  </ui5-li-custom>
-			  <ui5-li-custom>
-				 <div class="list5auto">
-					<ui5-button>Press me</ui5-button>
-					<ui5-link>Go to SAP</ui5-link>
-				 </div>
-			  </ui5-li-custom>
-			  <ui5-li-custom>
-				 <div class="list5auto">
-					<ui5-button>Press me</ui5-button>
-					<ui5-link>Go to SAP</ui5-link>
-				 </div>
-			  </ui5-li-custom>
-		   </ui5-list>
-		</template>
-	</div>
-
-	<br>
-
 	<ui5-title>List growing="Scroll"</ui5-title>
 	<label class="list2auto">new items loaded:</label>
 	<label id="result" class="list2auto"> 0 times: 0</label>
@@ -266,7 +237,7 @@
 
 	<ui5-list header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 
-	<ui5-list header-text="API: CustomListItem" selection-mode="SingleEnd">
+	<ui5-list header-text="API: ListItemCustom" selection-mode="SingleEnd">
 		<ui5-li-custom>
 			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
@@ -361,6 +332,34 @@
 		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Negative" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Negative" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 	</ui5-list>
+
+	<br>
+
+	<div id="host">
+		<template shadowrootmode="open">
+		   <span>I'm in the shadow DOM</span>
+		   <ui5-list header-text="API: ListItemCustom" selection-mode="SingleEnd">
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+		   </ui5-list>
+		</template>
+	</div>
 
 	<script>
 		'use strict';
