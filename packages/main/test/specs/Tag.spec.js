@@ -48,3 +48,27 @@ describe("Tag rendering", async () => {
 		assert.notOk(await tagLabel.isExisting(), "tag label tag shouldn't be rendered.");
 	});
 });
+
+describe("Wrapping", async () => {
+	before(async () => {
+		await browser.url(`test/pages/Tag.html`);
+	});
+
+	it("tests if tag text wraps - default wrappingType", async () => {
+		const tag = await browser.$("#tagWithWrappingDefault").shadow$(".ui5-tag-root");
+
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "normal", "tag label is wrapped");
+	});
+
+	it("tests if tag text wraps - wrappingType Normal", async () => {
+		const tag = await browser.$("#tagWithWrappingNormal").shadow$(".ui5-tag-root");
+
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "normal", "tag label is wrapped");
+	});
+
+	it("tests if tag text wraps - wrappingType None", async () => {
+		const tag = await browser.$("#tagWithWrappingNone").shadow$(".ui5-tag-root");
+
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "nowrap", "tag label is truncated");
+	});
+});

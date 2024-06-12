@@ -149,7 +149,11 @@ type GridRowClickEventDetail = {
 	styles: GridStyles,
 	template: GridTemplate,
 	fastNavigation: true,
-	dependencies: [BusyIndicator, GridCell],
+	dependencies: [
+		BusyIndicator,
+		GridCell,
+		GridRow,
+	],
 })
 
 /**
@@ -250,7 +254,7 @@ class Grid extends UI5Element {
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, defaultValue: false })
+	@property({ type: Boolean })
 	loading!: boolean;
 
 	/**
@@ -300,6 +304,7 @@ class Grid extends UI5Element {
 	}
 
 	onBeforeRendering(): void {
+		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
 	}
 
