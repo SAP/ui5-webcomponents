@@ -993,11 +993,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_handlePopoverKeydown(e: KeyboardEvent) {
 		if (isTabNext(e)) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
 			this._closeRespPopover();
-			this.focused = false;
-			this.blur();
 		}
 	}
 
