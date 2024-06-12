@@ -34,7 +34,7 @@ abstract class TableCellBase extends UI5Element {
 
 	/**
 	 * Determines the horizontal alignment of table cells.
-	 * Note: All values valid for justify-content can be used not just the ones inside the enum.
+	 * @default "Start"
 	 * @public
 	 */
 	@property()
@@ -56,11 +56,6 @@ abstract class TableCellBase extends UI5Element {
 			this.removeAttribute("role");
 		} else {
 			this.setAttribute("role", this.ariaRole);
-		}
-		if (this.hAlign) {
-			this.style.justifyContent = this.hAlign;
-		} else {
-			this.style.justifyContent = `var(--h-align-${(this as any)._individualSlot})`;
 		}
 	}
 

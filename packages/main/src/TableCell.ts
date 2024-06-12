@@ -5,6 +5,7 @@ import TableCellBase from "./TableCellBase.js";
 import type TableRow from "./TableRow.js";
 import type Table from "./Table.js";
 import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
+import TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 
 /**
  * @class
@@ -30,6 +31,15 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 	template: TableCellTemplate,
 })
 class TableCell extends TableCellBase {
+	onBeforeRendering() {
+		super.onBeforeRendering();
+		if (this.hAlign && Object.values(TableCellHorizontalAlign).includes(this.hAlign as TableCellHorizontalAlign)) {
+			this.style.justifyContent = this.hAlign;
+		} else {
+			this.style.justifyContent = `var(--h-align-${(this as any)._individualSlot})`;
+		}
+	}
+
 	get _popinHeader() {
 		const row = this.parentElement as TableRow;
 		const table = row.parentElement as Table;

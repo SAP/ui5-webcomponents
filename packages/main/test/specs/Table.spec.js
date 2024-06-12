@@ -148,12 +148,58 @@ describe("Table - Horizontal alignment of cells", async () => {
 
 		const index = 0;
 		const headerCell = headerCells[index];
-		const alignment = "left";
+		const alignment = "normal";
 		assert.equal(await headerCell.getAttribute("id"), "productCol", "Correct cell");
 		assert.equal(await headerCell.getAttribute("h-Align"), undefined, "hAlign not set");
 
 		const justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		const style = await headerCell.getAttribute("style");
+  		const justifyContentHeaderCellUncomputed = style.match(/justify-content: ([^;]+)/)[1];
+		const cssVariable = "var(--h-align-default-1)";
 		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+		assert.equal(justifyContentHeaderCellUncomputed, cssVariable, "hAlign not set");
+
+		const tableRows = await table.$$("ui5-table-row");
+		for (const row of tableRows) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[3].getCSSProperty("justify-content");
+
+			assert.equal(justifyContent.value, alignment, "justify-content correctly set.");
+		}
+	});
+
+	it("horizontal alignment if hAlign is set to a value not defined in TableCellHorizontalAlign", async () => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+
+		const index = 0;
+		const headerCell = headerCells[index];
+		assert.equal(await headerCell.getAttribute("id"), "productCol", "Correct cell");
+
+		let alignment = "right";
+		await headerCell.setAttribute("h-Align", "Right");
+
+		let justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		let style = await headerCell.getAttribute("style");
+  		let justifyContentHeaderCellUncomputed = style.match(/justify-content: ([^;]+)/)[1];
+		const cssVariable = "var(--h-align-default-1)";
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+		assert.equal(justifyContentHeaderCellUncomputed, cssVariable, "hAlign set to css variable");
+
+		alignment = "normal";
+		let hAlign = "valueNotDefinedInEnum";
+		await headerCell.setAttribute("h-Align", hAlign);
+
+		assert.equal(await headerCell.getAttribute("h-Align"), hAlign, "hAlign correctly set");
+		justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+		style = await headerCell.getAttribute("style");
+		justifyContentHeaderCellUncomputed = style.match(/justify-content: ([^;]+)/)[1];
+		assert.equal(justifyContentHeaderCellUncomputed, cssVariable, "hAlign set to css variable");
 
 		const tableRows = await table.$$("ui5-table-row");
 		for (const row of tableRows) {
@@ -214,7 +260,7 @@ describe("Table - Horizontal alignment of cells", async () => {
 
 		// update the values
 		alignment = "left";
-		await headerCell.setAttribute("h-Align", alignment);
+		await headerCell.setAttribute("h-Align", "Left");
 		hAlign = await headerCell.getAttribute("h-Align");
 		justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
 
@@ -260,7 +306,7 @@ describe("Table - Horizontal alignment of cells", async () => {
 		assert.equal(justifyContentCell.value, alignment, "justify-content of the cell matches the headerCell");
 
 		const customAlignmentCell = "left"; // alignment used for a single cell
-		await cell.setAttribute("h-Align", customAlignmentCell);
+		await cell.setAttribute("h-Align", "Left");
 		hAlignCell = await cell.getAttribute("h-Align");
 		assert.notEqual(hAlignCell, null, "hAlign property of the cell is set now.");
 
@@ -304,7 +350,7 @@ describe("Table - Horizontal alignment of cells", async () => {
 		assert.equal(justifyContentCell.value, alignment, "justify-content value matches headerCell alignment");
 
 		const customAlignmentCell = "left"; // alignment used for a single cell
-		await cell.setAttribute("h-Align", customAlignmentCell);
+		await cell.setAttribute("h-Align", "Left");
 		hAlignCell = await cell.getAttribute("h-Align");
 
 		assert.notEqual(hAlignCell, null, "hAlign property of the cell is set now.");
@@ -313,7 +359,7 @@ describe("Table - Horizontal alignment of cells", async () => {
 		assert.equal(justifyContentCell.value, customAlignmentCell, "justify-content of cell adjusted correctly.");
 
 		alignment = "right"
-		await headerCell.setAttribute("h-Align", alignment);
+		await headerCell.setAttribute("h-Align", "Right");
 		hAlignCell = await cell.getAttribute("h-Align");
 		justifyContent = await headerCell.getCSSProperty("justify-content");
 
