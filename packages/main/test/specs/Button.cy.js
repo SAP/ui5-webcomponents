@@ -12,7 +12,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button's icon rendering", () => {
-		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`)
+		cy.mount(html`<ui5-button>Action Bar Button</ui5-button>`)
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -24,7 +24,7 @@ describe("Button general interaction", () => {
 
 		cy.get("@button")
 			.shadow()
-			.find("[ui5-icon]")
+			.find(".ui5-button-icon")
 			.should("exist", "icon is present");
 
 		cy.get("@button")
@@ -34,8 +34,35 @@ describe("Button general interaction", () => {
 
 		cy.get("@button")
 			.shadow()
-			.find("[ui5-icon]")
+			.find(".ui5-button-icon")
 			.should("not.exist", "icon is not present");
+	});
+
+	it("tests button's endIon rendering", () => {
+		cy.mount(html`<ui5-button>Action Bar Button</ui5-button>`)
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("@button")
+			.then($button => {
+				$button.attr("end-icon", "add");
+			});
+
+		cy.get("@button")
+			.shadow()
+			.find(".ui5-button-end-icon")
+			.should("exist", "endIon is present");
+
+		cy.get("@button")
+			.then($button => {
+				$button.attr("end-icon", "");
+			});
+
+		cy.get("@button")
+			.shadow()
+			.find(".ui5-button-end-icon")
+			.should("not.exist", "endIon is not present");
 	});
 
 	it("tests click event", () => {
@@ -52,14 +79,33 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.realClick()
 
-		cy.get("@button")
-			.realPress("Space");
+		cy.realPress("Space");
 
-		cy.get("@button")
-			.realPress("Enter");
+		cy.realPress("Enter");
 
 		cy.get("@clicked")
 			.should("have.been.calledThrice");
+	});
+
+	it("tests keyboard shortcuts used to prevent a click event", () => {
+		cy.mount(html`<ui5-button>Text</ui5-button>`)
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("@button")
+			.realClick();
+
+		cy.get("@button")
+			.then((button) => {
+				button.get(0).addEventListener('click', cy.stub().as('clicked'))
+			})
+
+		cy.realPress(["Space", "Shift"])
+		cy.realPress(["Space", "Escape"])
+
+		cy.get("@clicked")
+			.should("not.been.called")
 	});
 
 	it("aria-expanded is properly applied on the button tag", () => {
@@ -153,7 +199,13 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
+			.as("nativeButton");
+
+		cy.get("@nativeButton")
 			.should("have.attr", "disabled");
+
+		cy.get("@nativeButton")
+			.should("not.have.attr", "tabindex");
 	});
 
 	it("tests clicking on disabled button with Icon", () => {
@@ -195,7 +247,26 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("[ui5-icon]")
-			.should("have.attr", "accessible-role", "presentation", "icon has proper role");
+			.should("have.attr", "mode", "Decorative", "icon has proper role");
+	});
+
+	it("aria-describedby properly applied on the button tag", () => {
+		const hiddenTextTypeId = "ui5-button-hiddenText-type";
+
+		cy.mount(html`<ui5-button design="Attention">Content</ui5-button>`)
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get("@button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-describedby", hiddenTextTypeId);
+
+		cy.get("@button")
+			.shadow()
+			.find(`span[id="${hiddenTextTypeId}"]`)
+			.should("exist");
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {
