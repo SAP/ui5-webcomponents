@@ -230,8 +230,6 @@ class Button extends UI5Element {
 	_onclick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
 
-		const currentState = this.state;
-
 		if (!this.fireEvent("click", {}, true)) {
 			e.preventDefault();
 		}
