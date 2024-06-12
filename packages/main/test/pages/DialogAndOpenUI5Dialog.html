@@ -29,7 +29,7 @@
 				sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
 					new Dialog({
 						title: "OpenUI5 Dialog",
-						content: new Button({
+						content: new Button("openUI5DialogButton", {
 							text: "Open WebC Dialog",
 							press: function() {
 								document.getElementById("newDialog1").open = true;
@@ -50,7 +50,7 @@
 	</ui5-dialog>
 
 	<ui5-dialog id="newDialog1" header-text="This is an WebC Dialog 2">
-		<ui5-button>Some button</ui5-button>
+		<ui5-button id="someButton">Some button</ui5-button>
 	</ui5-dialog>
 </body>
 </html>

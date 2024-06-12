@@ -57,14 +57,13 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 };
 
 const patchFocusEvent = (Popup: OpenUI5Popup) => {
-	const _onFocusEvent = Popup.prototype.onFocusEvent;
+	const origFocusEvent = Popup.prototype.onFocusEvent;
 	Popup.prototype.onFocusEvent = function onFocusEvent(e: FocusEvent) {
+		const isTypeFocus = e.type === "focus" || e.type === "activate";
 		const target = e.target as HTMLElement;
-		if (target.closest("[ui5-popover],[ui5-dialog]")) {
-			return;
+		if (!isTypeFocus || !target.closest("[ui5-popover],[ui5-dialog]")) {
+			origFocusEvent.call(this, e);
 		}
-
-		_onFocusEvent.call(this, e);
 	};
 };
 
