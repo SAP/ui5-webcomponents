@@ -30,20 +30,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  */
 class ButtonState extends UI5Element {
 	/**
-	 * Defines the key of the button state.
+	 * Defines the name of the button state.
 	 * @default ""
 	 * @public
 	 */
 	@property()
-	key!: string;
-
-	/**
-	 * Defines the key of the button state to switch when the button is being pressed.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	nextState!: string;
+	name!: string;
 
 	/**
 	 * Defines the text of the button in this state.

@@ -15,10 +15,10 @@ import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
 
-type ButtonStateChangeEventDetail = {
-	previousState?: string;
-	state?: string;
-};
+// Animation durations constants
+const AI_BUTTON_FADE_OUT_DURATION = 180;
+const AI_BUTTON_FADE_IN_DURATION = 60;
+const AI_BUTTON_FADE_RESET_DURATION = 160;
 
 /**
  * @class
@@ -32,12 +32,11 @@ type ButtonStateChangeEventDetail = {
  * ### Usage
  *
  * For the `ui5-ai-button` UI, you can define one or more states of the button by placing `ai-button-state` components in its default slot.
- * Each state have a key that identifies it and can have text, icon, end icon, next state and hasPopup type defined (in any combination) depending on the state purpose.
+ * Each state have a name that identifies it and can have text, icon and end icon defined (in any combination) depending on the state purpose.
  *
- * You can choose from a set of predefined designs that offer different styling to correspond to the triggered action.
+ * You can choose from a set of predefined designs (the same as for regular `ui5-button` component) that allow different styling to correspond to the triggered action.
  *
- * You can set the `ui5-ai-button` as enabled or disabled. An enabled `ui5-ai-button` can be pressed by clicking or tapping it. On press `ui5-ai-button` changes its state to the next one (if defined).
- * the mouse cursor. A disabled `ui5-ai-button` appears inactive and cannot be pressed.
+ * `ui5-ai-button` can be activated by clicking or tapping it. The state can be changed in `click` event handler.
  *
  * ### ES6 Module Import
  *
@@ -62,34 +61,9 @@ type ButtonStateChangeEventDetail = {
 /**
  * Fired when the component is activated either with a
  * mouse/tap or by using the Enter or Space key.
- *
- * **Note:** The event will not be fired if the `disabled`
- * property is set to `true`.
- *
- * @allowPreventDefault
  * @public
  */
 @event("click")
-
-/**
- * Fired whenever the active state of the component changes.
- *
- * @param {String} previousState the previous state key.
- * @param {String} state the newly changed state key.
- * @public
- */
-@event<ButtonStateChangeEventDetail>("state-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		previousState: { type: String },
-		/**
-		 * @public
-		 */
-		state: { type: String },
-	},
-})
 
 /**
  * @experimental
@@ -114,7 +88,7 @@ class Button extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Defines the key of the current state of the component.
+	 * Defines the current state of the component.
 	 *
 	 * **Note:** if nothing is defined, the component will be set initially to the first defined state (if any).
 	 *
@@ -169,21 +143,21 @@ class Button extends UI5Element {
 		}
 
 		if (this.state && this._currentStateObject && !Object.keys(this._currentStateObject).length) {
-			this._currentStateObject = this._findStateByKey(this.state);
+			this._currentStateObject = this._findStateByName(this.state);
 		}
 
-		const currentStateKey = this._currentStateObject?.key || "";
+		const currentStateName = this._currentStateObject?.name || "";
 
 		if (!this.state) {
-			this.state = this.states.length ? this.states[0].key : "";
-			this._currentStateObject = this._findStateByKey(this.state);
+			this.state = this.states.length ? this.states[0].name : "";
+			this._currentStateObject = this._findStateByName(this.state);
 		}
 
 		if (!this._currentStateObject) {
 			this._throwMissingStateError();
 		}
 
-		if (currentStateKey !== "" && currentStateKey !== this.state) {
+		if (currentStateName !== "" && currentStateName !== this.state) {
 			this._fadeOut();
 		}
 	}
@@ -194,10 +168,10 @@ class Button extends UI5Element {
 	 */
 	async _fadeOut(): Promise<void> {
 		const button = this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
-		const newStateObject = this._findStateByKey(this.state!);
+		const newStateObject = this._findStateByName(this.state!);
 		if (button && newStateObject) {
 			const buttonWidth = (button as HTMLElement).offsetWidth;
-			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden [ui5-button]") as MainButton;
+			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as MainButton;
 			button.style.width = `${buttonWidth}px`;
 			hiddenButton.icon = newStateObject.icon;
 			hiddenButton.endIcon = newStateObject.endIcon;
@@ -212,7 +186,7 @@ class Button extends UI5Element {
 				this.fadeMid = true;
 				this._currentStateObject = newStateObject;
 				this._fadeIn();
-			}, 180);
+			}, AI_BUTTON_FADE_OUT_DURATION);
 		} else {
 			this._throwMissingStateError();
 		}
@@ -226,7 +200,7 @@ class Button extends UI5Element {
 		setTimeout(() => {
 			this.fadeIn = true;
 			this._resetFade();
-		}, 60);
+		}, AI_BUTTON_FADE_IN_DURATION);
 	}
 
 	/**
@@ -238,15 +212,15 @@ class Button extends UI5Element {
 			this.fadeOut = false;
 			this.fadeMid = false;
 			this.fadeIn = false;
-		}, 160);
+		}, AI_BUTTON_FADE_RESET_DURATION);
 	}
 
 	/**
 	 * Returns the current state object.
 	 * @private
 	 */
-	_findStateByKey(key: string): ButtonState | undefined {
-		return this.states.find(state => state.key === key);
+	_findStateByName(name: string): ButtonState | undefined {
+		return this.states.find(state => state.name === name);
 	}
 
 	/**
@@ -256,23 +230,13 @@ class Button extends UI5Element {
 	_onclick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
 
-		if (this.disabled) {
-			return;
-		}
-
 		const currentState = this.state;
 
 		if (!this.fireEvent("click", {}, true)) {
 			e.preventDefault();
-		} else if (this.state === currentState && this._currentStateObject?.nextState) {
-			this.state = this._currentStateObject?.nextState;
 		}
-		if (this.state === currentState) {
-			return;
-		}
-		if (this._findStateByKey(this.state!)) {
-			this.fireEvent<ButtonStateChangeEventDetail>("state-change", { previousState: currentState, state: this.state });
-		} else {
+
+		if (!this._findStateByName(this.state!)) {
 			this._throwMissingStateError();
 		}
 	}
@@ -282,7 +246,7 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	_throwMissingStateError(): void {
-		throw new Error(`State with key="${this.state}" doesn't exist!`);
+		throw new Error(`State with name="${this.state}" doesn't exist!`);
 	}
 
 	get _stateIconOnly() {
@@ -308,4 +272,3 @@ class Button extends UI5Element {
 
 Button.define();
 export default Button;
-export type { ButtonStateChangeEventDetail };
