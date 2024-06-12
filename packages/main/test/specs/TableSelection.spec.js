@@ -20,17 +20,17 @@ async function clearSelection() {
 
 describe("Mode - None", async () => {
 	before(async () => {
-		await browser.url("test/pages/GridSelection.html");
+		await browser.url("test/pages/TableSelection.html");
 		await changeMode("None");
 	});
 
 	it("selection should be not active", async () => {
-		const grid = await browser.$("#grid0");
-		const headerRow = await grid.$("ui5-grid-header-row");
-		const row = await grid.$('ui5-grid-row[key="0"]');
+		const table = await browser.$("#table0");
+		const headerRow = await table.$("ui5-table-header-row");
+		const row = await table.$('ui5-table-row[key="0"]');
 		const selection = await browser.$("#selection");
 
-		assert.ok(await grid.isExisting(), "Grid exists");
+		assert.ok(await table.isExisting(), "Table exists");
 		assert.ok(await headerRow.isExisting(), "Header row exists");
 		assert.ok(await row.isExisting(), "Row exists");
 
@@ -124,7 +124,7 @@ const testConfig = {
 Object.entries(testConfig).forEach(([mode, testConfig]) => {
 	describe(`Mode - ${mode}`, async () => {
 		before(async () => {
-			await browser.url("test/pages/GridSelection.html");
+			await browser.url("test/pages/TableSelection.html");
 			await changeMode(testConfig.config.mode);
 		});
 
@@ -133,11 +133,11 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		});
 
 		it("Correct boxes are shown", async () => {
-			const grid = await browser.$("#grid0");
-			const headerRow = await grid.$("ui5-grid-header-row");
-			const row = await grid.$('ui5-grid-row[key="0"]');
+			const table = await browser.$("#table0");
+			const headerRow = await table.$("ui5-table-header-row");
+			const row = await table.$('ui5-table-row[key="0"]');
 	
-			assert.ok(await grid.isExisting(), "Grid exists");
+			assert.ok(await table.isExisting(), "Table exists");
 			assert.ok(await headerRow.isExisting(), "Header row exists");
 			assert.ok(await row.isExisting(), "Row exists");
 	
@@ -149,10 +149,10 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		});
 
 		it("select row via SPACE", async () => {
-			const grid = await browser.$("#grid0");
+			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await grid.$('ui5-grid-row[key="0"]');
-			const row4 = await grid.$('ui5-grid-row[key="4"]');
+			const row0 = await table.$('ui5-table-row[key="0"]');
+			const row4 = await table.$('ui5-table-row[key="4"]');
 	
 			await row0.click();
 			await row0.keys("Space");
@@ -167,9 +167,9 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		});
 
 		it("select row via arrows (radio focus)", async () => {
-			const grid = await browser.$("#grid0");
+			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await grid.$('ui5-grid-row[key="0"]');
+			const row0 = await table.$('ui5-table-row[key="0"]');
 			
 			const checkbox0 = await row0.shadow$("#selection-component");
 			await checkbox0.click();
@@ -187,10 +187,10 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		});
 
 		it("select row via mouse", async () => {
-			const grid = await browser.$("#grid0");
+			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await grid.$('ui5-grid-row[key="0"]');
-			const row4 = await grid.$('ui5-grid-row[key="4"]');
+			const row0 = await table.$('ui5-table-row[key="0"]');
+			const row4 = await table.$('ui5-table-row[key="4"]');
 	
 			const checkbox0 = await row0.shadow$("#selection-component");
 			await checkbox0.click();
@@ -206,10 +206,10 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		});
 
 		it("range selection with mouse", async () => {
-			const grid = await browser.$("#grid0");
+			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await grid.$('ui5-grid-row[key="0"]');
-			const row4 = await grid.$('ui5-grid-row[key="4"]');
+			const row0 = await table.$('ui5-table-row[key="0"]');
+			const row4 = await table.$('ui5-table-row[key="4"]');
 	
 			const checkbox0 = await row0.shadow$("#selection-component");
 			const checkbox4 = await row4.shadow$("#selection-component");
@@ -231,9 +231,9 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		});
 
 		it("range selection with keyboard", async () => {
-			const grid = await browser.$("#grid0");
+			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await grid.$('ui5-grid-row[key="0"]');
+			const row0 = await table.$('ui5-table-row[key="0"]');
 	
 			await row0.click();
 			await row0.keys("Space");
