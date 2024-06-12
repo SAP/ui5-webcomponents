@@ -3,7 +3,6 @@
 	--_ui5-tag-padding-inline: 0.3125em;
 	--_ui5-tag-padding-inline-icon-only: 0.1875rem;
 	--_ui5-tag-text-transform: uppercase;
-	--_ui5-tag-icon-height: calc(var(--_ui5-tag-height) - 0.125rem); /* remove width of the border since tag root is with box-sizing:border-box*/
 	--_ui5-tag-icon-width: 0.75rem;
 	--_ui5-tag-icon-gap: 0.125rem;
 	--_ui5-tag-font-size: var(--sapFontSmallSize);

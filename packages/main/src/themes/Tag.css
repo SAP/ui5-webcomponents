@@ -71,7 +71,7 @@
 ::slotted([ui5-icon]) {
 	width: var(--_ui5-tag-icon-width);
 	min-width: var(--_ui5-tag-icon-width);
-	height: var(--_ui5-tag-icon-height);
+	height:  calc(var(--_ui5-tag-height) - 0.125rem); /* remove width of the border since tag root is with box-sizing:border-box*/
 	color: inherit;
 	pointer-events: none;
 	align-self: flex-start;
