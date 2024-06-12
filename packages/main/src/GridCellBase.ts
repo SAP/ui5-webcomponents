@@ -31,6 +31,9 @@ abstract class GridCellBase extends UI5Element {
 	@property({ type: Boolean })
 	_popin!: boolean;
 
+	@property({ type: String, defaultValue: "Left" })
+	hAlign!: string;
+
 	protected ariaRole: string = "gridcell";
 
 	static i18nBundle: I18nBundle;

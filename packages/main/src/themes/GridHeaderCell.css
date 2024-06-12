@@ -1,6 +1,7 @@
 :host {
     font-family: var(--sapFontSemiboldDuplexFamily);
     color: var(--sapList_HeaderTextColor);
+    justify-content: var(--_ui5-grid-cell-base-hAlign);
 }
 
 :host(:empty) {

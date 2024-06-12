@@ -19,3 +19,22 @@
     width: auto;
     min-width: auto;
 }
+:host([h-align="left"]) {
+    --_ui5-grid-cell-base-hAlign: left;
+}
+
+:host([h-align="right"]) {
+    --_ui5-grid-cell-base-hAlign: right;
+}
+
+:host([h-align="middle"]) {
+    --_ui5-grid-cell-base-hAlign: center;
+}
+
+:host([h-align="end"]) {
+    --_ui5-grid-cell-base-hAlign: end;
+}
+
+:host([h-align="center"]) {
+    --_ui5-grid-cell-base-hAlign: center;
+}

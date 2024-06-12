@@ -306,6 +306,7 @@ class Grid extends UI5Element {
 	onBeforeRendering(): void {
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
+		this._refreshAlignment();
 	}
 
 	onAfterRendering(): void {
@@ -414,6 +415,17 @@ class Grid extends UI5Element {
 				const cell = row.cells[index];
 				if (cell && cell._popin !== header._popin) {
 					cell._popin = header._popin;
+				}
+			});
+		});
+	}
+
+	_refreshAlignment() {
+		this.headerRow[0].cells.forEach((header, index) => {
+			this.rows.forEach(row => {
+				const cell = row.cells[index];
+				if (cell && cell.hAlign !== header.hAlign) {
+					cell.hAlign = header.hAlign;
 				}
 			});
 		});

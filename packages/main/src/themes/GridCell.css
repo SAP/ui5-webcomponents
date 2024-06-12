@@ -1,3 +1,7 @@
+:host {
+    justify-content: var(--_ui5-grid-cell-base-hAlign, left);
+}
+
 :host([_popin]) {
     padding-inline-start: 0;
     padding-inline-end: 0;
