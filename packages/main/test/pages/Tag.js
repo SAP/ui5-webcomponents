@@ -1,4 +1,4 @@
-function initializeTags() {
+(function initializeTags() {
 	const colorSchemes = [
 		"1",
 		"2",
@@ -53,4 +53,4 @@ function initializeTags() {
 
 		set2Content.insertAdjacentHTML("beforeend", "<br><br>");
 	});
-}
+})();

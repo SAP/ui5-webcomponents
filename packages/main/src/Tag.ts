@@ -120,12 +120,12 @@ class Tag extends UI5Element {
 	 *
 	 * **Note:** For option "Normal" the text will wrap and the
 	 * words will not be broken based on hyphenation.
-	 * @default "None"
+	 * @default "Normal"
 	 * @public
 	 * @since 1.22.0
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "None";
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines predefined size of the component.
