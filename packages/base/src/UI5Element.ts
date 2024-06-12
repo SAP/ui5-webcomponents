@@ -166,6 +166,11 @@ abstract class UI5Element extends HTMLElement {
 	static renderer: Renderer;
 	initializedProperties: Map<string, unknown>;
 
+	// used to differentiate whether a setter is called from the constructor (from an initializer) or later
+	// setters from the constructor should not set attributes, this is delegated after the first rendering but is async
+	// setters after the constructor can set attributes synchronously for more convinient development
+	_rendered = false;
+
 	constructor() {
 		super();
 
@@ -799,7 +804,7 @@ abstract class UI5Element extends HTMLElement {
 		this._suppressInvalidation = true;
 
 		this.onBeforeRendering();
-		if (!this._fullyConnected) {
+		if (!this._rendered) {
 			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
 			this.updateAttributes();
 		}
@@ -837,6 +842,7 @@ abstract class UI5Element extends HTMLElement {
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
+		this._rendered = true;
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		if (hasIndividualSlots) {
@@ -1112,8 +1118,8 @@ abstract class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 
-						if (this._fullyConnected) {
-							// is connected so it is not the constructor - can set the attribute synchronously
+						if (this._rendered) {
+							// is already rendered so it is not the constructor - can set the attribute synchronously
 							this._updateAttribute(prop, value);
 						}
 
