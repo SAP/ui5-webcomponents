@@ -101,21 +101,13 @@ class Token extends UI5Element implements IToken {
 	@property({ type: Boolean })
 	readonly = false;
 
-	overflowsStorage = false;
 	/**
 	 * Set by the tokenizer when a token is in the "more" area (overflowing)
 	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
-	set overflows(value: boolean) {
-		// TODO: should work with async attribute setting
-		this.toggleAttribute("overflows", value);
-		this.overflowsStorage = value;
-	}
-	get overflows() {
-		return this.overflowsStorage;
-	}
+	overflows = false;
 
 	@property({ type: Boolean })
 	singleToken = false;

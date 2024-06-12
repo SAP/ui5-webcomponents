@@ -159,7 +159,7 @@ class Breadcrumbs extends UI5Element {
 	 * @default 0
 	 * @private
 	 */
-	@property({ type: Number })
+	@property({ type: Number, noAttribute: true })
 	_overflowSize = 0;
 
 	/**

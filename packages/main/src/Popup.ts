@@ -283,9 +283,6 @@ abstract class Popup extends UI5Element {
 		} else {
 			this.closePopup();
 		}
-
-		// (TODO: change rendering) update synchronously as it hides the popup and is necessary for correct focusing
-		this.toggleAttribute("open", value);
 	}
 
 	get open() : boolean {

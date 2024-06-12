@@ -799,7 +799,10 @@ abstract class UI5Element extends HTMLElement {
 		this._suppressInvalidation = true;
 
 		this.onBeforeRendering();
-		this.updateAttributes();
+		if (!this._fullyConnected) {
+			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+			this.updateAttributes();
+		}
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
 		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
@@ -1107,6 +1110,11 @@ abstract class UI5Element extends HTMLElement {
 							newValue: value,
 							oldValue: oldState,
 						});
+
+						if (this._fullyConnected) {
+							// is connected so it is not the constructor - can set the attribute synchronously
+							this._updateAttribute(prop, value);
+						}
 
 						if (ctor.getMetadata().isFormAssociated()) {
 							setFormValue(this as unknown as IFormInputElement);

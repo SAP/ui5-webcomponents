@@ -169,7 +169,6 @@ class RatingIndicator extends UI5Element {
 	/**
 	 * @private
 	 */
-	// TODO object and array
 	@property({ type: Array })
 	_stars: Array<Star> = [];
 

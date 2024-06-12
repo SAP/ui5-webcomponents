@@ -120,20 +120,7 @@ class Toast extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	set open(value: boolean) {
-		if (this._opened === value) {
-			return;
-		}
-
-		this.toggleAttribute("open", value);
-		this._opened = value;
-	}
-
-	get open() : boolean {
-		return this._opened;
-	}
-
-	_opened = false;
+	open = false;
 
 	/**
 	 * Indicates whether the component is hovered.

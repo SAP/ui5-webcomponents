@@ -363,8 +363,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean, noAttribute: true })
 	_iconPressed = false;
 
-	@property({ type: Array, noAttribute: true })
-	_filteredItems!: Array<IComboBoxItem>;
+	@property({ type: Array })
+	_filteredItems: Array<IComboBoxItem> = [];
 
 	@property({ type: Number, noAttribute: true })
 	_listWidth?: number;
@@ -401,15 +401,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	@slot()
 	icon!: Array<IIcon>;
 
-	_initialRendering: boolean;
-	_itemFocused: boolean;
+	_initialRendering = true;
+	_itemFocused = false;
 	// used only for Safari fix (check onAfterRendering)
-	_autocomplete: boolean;
-	_isKeyNavigation: boolean;
-	_selectionPerformed: boolean;
+	_autocomplete = false;
+	_isKeyNavigation = false;
+	_selectionPerformed = false;
 	_lastValue: string;
-	_selectedItemText: string;
-	_userTypedValue: string;
+	_selectedItemText = "";
+	_userTypedValue = "";
 	responsivePopover?: ResponsivePopover;
 	valueStatePopover?: Popover;
 	static i18nBundle: I18nBundle;
@@ -433,16 +433,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	constructor() {
 		super();
 
-		this._filteredItems = [];
-		this._initialRendering = true;
-		this._itemFocused = false;
-		this._autocomplete = false;
-		this._isKeyNavigation = false;
 		// when an initial value is set it should be considered as a _lastValue
 		this._lastValue = this.getAttribute("value") || "";
-		this._selectionPerformed = false;
-		this._selectedItemText = "";
-		this._userTypedValue = "";
 	}
 
 	async onBeforeRendering() {
