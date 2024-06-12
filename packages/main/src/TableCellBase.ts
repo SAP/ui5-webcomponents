@@ -6,7 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
-import TableCellAlign from "./types/TableCellAlign.js";
+import type TableCellAlign from "./types/TableCellAlign.js";
 
 /**
  * @class
@@ -33,7 +33,7 @@ abstract class TableCellBase extends UI5Element {
 	_popin = false;
 
 	@property()
-    hAlign?: `${TableCellAlign}` = TableCellAlign.Begin;
+    hAlign?: `${TableCellAlign}`;
 
 	protected ariaRole: string = "gridcell";
 
