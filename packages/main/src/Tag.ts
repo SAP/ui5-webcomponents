@@ -24,7 +24,6 @@ import type TagSize from "./types/TagSize.js";
 import TagTemplate from "./generated/templates/TagTemplate.lit.js";
 
 import {
-	TAG_DESCRIPTION_BADGE,
 	TAG_DESCRIPTION_TAG,
 	TAG_ROLE_DESCRIPTION,
 	TAG_ERROR,
@@ -109,8 +108,6 @@ class Tag extends UI5Element {
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
 	 *
-	 * **Note:** The tag cannot be `interactive`
-	 * when `design` property is `TagDesign.Set3`
 	 * @default false
 	 * @public
 	 * @since 1.22.0
@@ -154,13 +151,6 @@ class Tag extends UI5Element {
 	_iconOnly = false;
 
 	/**
-	 * Defines if the tag has "Tag" design type.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_isTagDesign = false;
-
-	/**
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -191,7 +181,6 @@ class Tag extends UI5Element {
 	onBeforeRendering() {
 		this._hasIcon = this.hasIcon || !!this._semanticIconName;
 		this._iconOnly = this.iconOnly;
-		this._isTagDesign = this.design !== TagDesign.Set3;
 	}
 
 	get _roleDescription() {
@@ -232,10 +221,6 @@ class Tag extends UI5Element {
 	get tagDescription() {
 		if (this.interactive) {
 			return undefined;
-		}
-
-		if (this.design === TagDesign.Set3) {
-			return Tag.i18nBundle.getText(TAG_DESCRIPTION_BADGE);
 		}
 
 		const valueState = this._valueState;
