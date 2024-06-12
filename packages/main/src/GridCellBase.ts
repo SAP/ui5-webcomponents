@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import GridCellBaseStyles from "./generated/themes/GridCellBase.css.js";
@@ -29,7 +29,7 @@ abstract class GridCellBase extends UI5Element {
 	content!: Array<Node>;
 
 	@property({ type: Boolean })
-	_popin!: boolean;
+	_popin = false;
 
 	protected ariaRole: string = "gridcell";
 

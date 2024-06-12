@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -10,7 +10,6 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import GridTemplate from "./generated/templates/GridTemplate.lit.js";
 import GridStyles from "./generated/themes/Grid.css.js";
 import GridRow from "./GridRow.js";
@@ -210,29 +209,29 @@ class Grid extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Identifies the element (or elements) that labels the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the text to be displayed when there are no rows in the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the mode of the <code>ui5-grid</code> overflow behavior.
@@ -244,8 +243,8 @@ class Grid extends UI5Element {
 	 * @default "Scroll"
 	 * @public
 	 */
-	@property({ type: GridOverflowMode, defaultValue: GridOverflowMode.Scroll })
-	overflowMode!: `${GridOverflowMode}`;
+	@property()
+	overflowMode: `${GridOverflowMode}` = "Scroll";
 
 	/**
 	 * Defines if the loading indicator should be shown.
@@ -255,16 +254,16 @@ class Grid extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
 	 */
-	@property({ type: String, defaultValue: "0" })
-	stickyTop!: string;
+	@property()
+	stickyTop = "0";
 
-	@property({ type: Integer, defaultValue: 0, noAttribute: true })
-	_invalidate!: number;
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -81,8 +81,8 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	 * @default "Button"
 	 * @public
 	 */
-	@property({ type: GridGrowingMode, defaultValue: GridGrowingMode.Button })
-	type!: `${GridGrowingMode}`;
+	@property()
+	type: `${GridGrowingMode}` = "Button";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
@@ -91,27 +91,27 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	 * **Note:** When not provided and the type is set to Button, a default text is displayed, corresponding to the
 	 * current language.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingText!: string;
+	growingText?: string;
 
 	/**
 	 * Defines the text that will be displayed below the `growingText` inside the growing button.
 	 * Has no effect when type is set to Scroll.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingSubText!: string;
+	growingSubText?: string;
 
 	/**
 	 * Disables the growing feature.
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the active state of the growing button.
@@ -119,7 +119,7 @@ class GridGrowing extends UI5Element implements IGridGrowing {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_activeState?: boolean;
+	_activeState = false;
 
 	_grid?: Grid;
 	_observer?: IntersectionObserver;

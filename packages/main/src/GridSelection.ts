@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import GridSelectionMode from "./types/GridSelectionMode.js";
 import type Grid from "./Grid.js";
@@ -59,8 +59,8 @@ class GridSelection extends UI5Element implements IGridFeature {
 	 * @default "Multiple"
 	 * @public
 	 */
-	@property({ type: GridSelectionMode, defaultValue: GridSelectionMode.Multiple })
-	mode!: `${GridSelectionMode}`;
+	@property()
+	mode: `${GridSelectionMode}` = "Multiple";
 
 	/**
 	 * Defines the selected rows separated by a space.
@@ -69,7 +69,7 @@ class GridSelection extends UI5Element implements IGridFeature {
 	 * @public
 	 */
 	@property()
-	selected!: string;
+	selected = "";
 
 	_grid?: Grid;
 
