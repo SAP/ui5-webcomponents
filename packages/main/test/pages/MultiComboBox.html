@@ -363,21 +363,24 @@
 
 		<br>
 		<ui5-multi-combobox id="mcb-grouping" no-validation placeholder="Select a country">
-			<ui5-mcb-group-item text="Asia"></ui5-mcb-group-item>
-			<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
-			<ui5-mcb-item text="China"></ui5-mcb-item>
-			<ui5-mcb-item text="India"></ui5-mcb-item>
-			<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
-			<ui5-mcb-group-item text="Europe"></ui5-mcb-group-item>
-			<ui5-mcb-item text="Austria"></ui5-mcb-item>
-			<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
-			<ui5-mcb-item text="Germany"></ui5-mcb-item>
-			<ui5-mcb-item text="Italy"></ui5-mcb-item>
-			<ui5-mcb-group-item text="North America"></ui5-mcb-group-item>
-			<ui5-mcb-item text="Canada"></ui5-mcb-item>
-			<ui5-mcb-item text="Granada"></ui5-mcb-item>
-			<ui5-mcb-item text="Haiti"></ui5-mcb-item>
-			<ui5-mcb-item text="United States"></ui5-mcb-item>
+			<ui5-mcb-item-group text="Asia">
+				<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+				<ui5-mcb-item text="China"></ui5-mcb-item>
+				<ui5-mcb-item text="India"></ui5-mcb-item>
+				<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
+			</ui5-mcb-item-group>
+			<ui5-mcb-item-group text="Europe">
+				<ui5-mcb-item text="Austria"></ui5-mcb-item>
+				<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+				<ui5-mcb-item text="Germany"></ui5-mcb-item>
+				<ui5-mcb-item text="Italy"></ui5-mcb-item>
+			</ui5-mcb-item-group>
+			<ui5-mcb-item-group text="North America">
+				<ui5-mcb-item text="Canada"></ui5-mcb-item>
+				<ui5-mcb-item text="Granada"></ui5-mcb-item>
+				<ui5-mcb-item text="Haiti"></ui5-mcb-item>
+				<ui5-mcb-item text="United States"></ui5-mcb-item>
+			</ui5-mcb-item-group>
 		</ui5-multi-combobox>
 		<span>SelectionChange events emitted:</span>
 		<span id="selection-change-events-fired"></span>
@@ -564,7 +567,8 @@
 		var callCountInput = document.getElementById("events-call-count");
 		var resetBtn = document.getElementById("reset-btn");
 		var selectionChangeCounter = 0;
-		var openChangeCounter = 0;
+		var openCounter = 0;
+		var closeCounter = 0;
 		const multiComboBox = document.querySelector("#mcb-prevent");
 
 		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
@@ -574,10 +578,16 @@
 			callCountInput.value = selectionChangeCounter;
 		});
 
-		document.getElementById("multi1").addEventListener("ui5-openChange", function (event) {
-			openChangeCounter += 1;
-			eventNameInput.value = "openChange";
-			callCountInput.value = openChangeCounter;
+		document.getElementById("multi1").addEventListener("ui5-open", function (event) {
+			openCounter += 1;
+			eventNameInput.value = "open";
+			callCountInput.value = openCounter;
+		});
+
+		document.getElementById("multi1").addEventListener("ui5-close", function (event) {
+			closeCounter += 1;
+			eventNameInput.value = "close";
+			callCountInput.value = closeCounter;
 		});
 
 		resetBtn.addEventListener("click", function (event) {
@@ -585,7 +595,8 @@
 			eventParamsInput.value = "";
 			callCountInput.value = "";
 			selectionChangeCounter = 0;
-			openChangeCounter = 0;
+			openCounter = 0;
+			closeCounter = 0;
 		});
 
 		// Placeholders test

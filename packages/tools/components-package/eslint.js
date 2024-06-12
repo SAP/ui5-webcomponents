@@ -19,6 +19,7 @@ const overrides = tsMode ? [{
 	},
 	rules: {
 		"no-shadow": "off",
+		"@typescript-eslint/consistent-type-imports": "error",
 		"@typescript-eslint/no-shadow": ["error"],
 		"@typescript-eslint/no-unsafe-member-access": "off",
 		"@typescript-eslint/no-floating-promises": "off",

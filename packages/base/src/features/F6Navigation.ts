@@ -170,7 +170,7 @@ class F6Navigation {
 	}
 
 	deepActive(root: DocumentOrShadowRoot): Element | null {
-		if (root.activeElement && root.activeElement.shadowRoot) {
+		if (root?.activeElement?.shadowRoot?.activeElement) {
 			return this.deepActive(root.activeElement.shadowRoot);
 		}
 

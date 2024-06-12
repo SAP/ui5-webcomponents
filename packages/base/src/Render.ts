@@ -3,7 +3,7 @@ import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 import type UI5Element from "./UI5Element.js";
-import { PromiseResolve } from "./types.js";
+import type { PromiseResolve } from "./types.js";
 
 type BeforeComponentRenderCallback = (webComponent: UI5Element) => void;
 

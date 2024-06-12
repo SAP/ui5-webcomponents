@@ -149,6 +149,8 @@
 	--_ui5-toolbar-height: 2.75rem;
 	--_ui5_toolbar_overflow_padding: 0.25rem 0.5rem;
 
+	/* Grid */
+	--_ui5_grid_cell_padding: 0.25rem 0.5rem;
 	/* DynamicPageTitle */
 	--_ui5_dynamic_page_title_actions_separator_height: var(--_ui5-toolbar-separator-height);
 }

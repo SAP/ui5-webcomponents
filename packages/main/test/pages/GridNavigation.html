@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Test Page - Grid Navigation</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+<body>
+	<div class="section">
+		<input id="before-grid1" type="number" value="0">
+		<ui5-grid id="grid0">
+			<ui5-grid-growing id="growing" type="Button" slot="features"></ui5-grid-growing>
+			<ui5-grid-header-row slot="headerRow">
+				<ui5-grid-header-cell><a id="row0-link" href="test.html">Link</a></ui5-grid-header-cell>
+				<ui5-grid-header-cell>Header2</ui5-grid-header-cell>
+				<ui5-grid-header-cell>Header3</ui5-grid-header-cell>
+				<ui5-grid-header-cell>Header4</ui5-grid-header-cell>
+			</ui5-grid-header-row>
+			<ui5-grid-row>
+				<ui5-grid-cell>Row1Cell0</ui5-grid-cell>
+				<ui5-grid-cell><input id="row1-input"></ui5-grid-cell>
+				<ui5-grid-cell><button id="row1-button">Button 1</button></ui5-grid-cell>
+				<ui5-grid-cell>Row1Cell3</ui5-grid-cell>
+			</ui5-grid-row>
+			<ui5-grid-row id="interactive-row" interactive>
+				<ui5-grid-cell>Row2Cell0</ui5-grid-cell>
+				<ui5-grid-cell><input id="row2-input"></ui5-grid-cell>
+				<ui5-grid-cell><button id="row2-button">Button 2</button></ui5-grid-cell>
+				<ui5-grid-cell>Row2Cell3</ui5-grid-cell>
+			</ui5-grid-row>
+			<ui5-grid-row id="notinteractive-row"> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell> Here the grid structure is broken. There is only one cell in row 5. </ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+			<ui5-grid-row> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> <ui5-grid-cell></ui5-grid-cell> </ui5-grid-row>
+		</ui5-grid>
+		<input id="after-grid1">
+	</div>
+	<script>
+		const grid = document.getElementById("grid0");
+		const input = document.getElementById("before-grid1");
+		grid.addEventListener("ui5-row-click", () => {
+			input.valueAsNumber++;
+		});
+	</script>
+</body>
+</html>

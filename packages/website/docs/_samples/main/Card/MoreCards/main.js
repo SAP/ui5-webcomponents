@@ -1,7 +1,7 @@
 import "@ui5/webcomponents/dist/Card.js";
 import "@ui5/webcomponents/dist/CardHeader.js";
 import "@ui5/webcomponents/dist/List.js";
-import "@ui5/webcomponents/dist/StandardListItem.js";
+import "@ui5/webcomponents/dist/ListItemStandard.js";
 import "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents/dist/Text.js";
