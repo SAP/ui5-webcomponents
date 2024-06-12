@@ -3,31 +3,31 @@
  *
  * @public
  */
-enum TableCellAlign {
+enum TableCellHorizontalAlign {
     /**
      * @public
      */
-    Left = "left",
+    Left = "Left",
 
     /**
      * @public
      */
-    Begin = "start",
+    Begin = "Start",
 
     /**
      * @public
      */
-    Right = "right",
+    Right = "Right",
 
     /**
      * @public
      */
-    End = "end",
+    End = "End",
 
     /**
      * @public
      */
-    Center = "center",
+    Center = "Center",
 }
 
-export default TableCellAlign;
+export default TableCellHorizontalAlign;

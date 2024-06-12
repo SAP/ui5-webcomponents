@@ -25,6 +25,7 @@ import {
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -206,7 +207,7 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: true, slots: true } })
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
 	headerRow!: Array<TableHeaderRow>;
 
 	/**
@@ -471,7 +472,7 @@ class Table extends UI5Element {
 		} as any;
 
 		this.headerRow[0].cells.forEach(headerCell => {
-			tableStyle.table[`--h-align-${(headerCell as any)._individualSlot}`] = headerCell.hAlign;
+			tableStyle.table[`--h-align-${(headerCell as any)._individualSlot}`] = headerCell.hAlign || TableCellHorizontalAlign.Left;
 		});
 
 		return tableStyle;

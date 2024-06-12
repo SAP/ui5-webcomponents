@@ -133,6 +133,202 @@ describe("Table - Popin Mode", async () => {
 	});
 });
 
+describe("Table - Horizontal alignment of cells", async () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/HAlignTable.html`);
+	});
+
+	it("default alignment when hAlign is not set", async () => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+
+		const index = 0;
+		const headerCell = headerCells[index];
+		const alignment = "left";
+		assert.equal(await headerCell.getAttribute("id"), "productCol", "Correct cell");
+		assert.equal(await headerCell.getAttribute("h-Align"), undefined, "hAlign not set");
+
+		const justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+
+		const tableRows = await table.$$("ui5-table-row");
+		for (const row of tableRows) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[3].getCSSProperty("justify-content");
+
+			assert.equal(justifyContent.value, alignment, "justify-content correctly set.");
+		}
+	});
+
+	it("cells have same alignment as their headerCell", async () => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+
+		const cellIndex = 1; // second row is supplier row
+		const headerCell = headerCells[cellIndex];
+		const id = await headerCell.getAttribute("id");
+		const hAlign = await headerCell.getAttribute("h-Align");
+		assert.equal(id, "supplierCol", "Correct cell");
+		assert.ok(hAlign, "hAlign set");
+
+		const alignment = `center`; // alignment set to center in table example
+		const justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+
+		const tableRows = await table.$$("ui5-table-row");
+		for (const row of tableRows) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[cellIndex].getCSSProperty("justify-content");
+
+			assert.equal(justifyContent.value, alignment, "justify-content correctly set.");
+		}
+	});
+
+	it("on changing the h-alignment of the headerCell, the h-alignment of subsequent cells must change as well", async () => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+
+		// test setup
+		const cellIndex = 1; // second row is supplier row
+		const headerCell = headerCells[cellIndex];
+		const id = await headerCell.getAttribute("id");
+		let hAlign = await headerCell.getAttribute("h-Align");
+		assert.equal(id, "supplierCol", "Correct cell");
+		assert.ok(hAlign, "hAlign set");
+
+		let alignment = `center`; // alignment set to center in table example
+		let justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+
+		// update the values
+		alignment = "left";
+		await headerCell.setAttribute("h-Align", alignment);
+		hAlign = await headerCell.getAttribute("h-Align");
+		justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+
+		assert.equal(id, "supplierCol", "Correct cell");
+		assert.ok(hAlign, "hAlign set");
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content value updated.");
+
+		const tableRows = await table.$$("ui5-table-row");
+		for (const row of tableRows) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[cellIndex].getCSSProperty("justify-content");
+
+			assert.equal(justifyContent.value, alignment, "justify-content correctly set.");
+		}
+	});
+
+	it("on changing the h-alignment of a cell, the h-alignment of other cells must not change", async () => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+
+		const cellIndex = 1; // second row is supplier row
+		const headerCell = headerCells[cellIndex];
+		const id = await headerCell.getAttribute("id");
+		const hAlign = await headerCell.getAttribute("h-Align");
+		assert.equal(id, "supplierCol", "Correct cell");
+		assert.ok(hAlign, "hAlign set");
+
+		const alignment = `center`; // alignment set to center in table example
+		const justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content value of the headerCell is correct.");
+
+		const tableRows = await table.$$("ui5-table-row");
+		const rowWithChangedCell = 0;
+		const cell = await tableRows[rowWithChangedCell].$$("ui5-table-cell")[cellIndex];
+		let hAlignCell = await cell.getAttribute("h-Align");
+		assert.equal(hAlignCell, null, "hAlign property of the cell is not set.");
+
+		let justifyContentCell = await cell.getCSSProperty("justify-content");
+		assert.equal(justifyContentCell.value, alignment, "justify-content of the cell matches the headerCell");
+
+		const customAlignmentCell = "left"; // alignment used for a single cell
+		await cell.setAttribute("h-Align", customAlignmentCell);
+		hAlignCell = await cell.getAttribute("h-Align");
+		assert.notEqual(hAlignCell, null, "hAlign property of the cell is set now.");
+
+		justifyContentCell = await cell.getCSSProperty("justify-content");
+		assert.equal(justifyContentCell.value, customAlignmentCell, "justify-content was changed and now matches the custom cell alignment value.");
+
+		for (const [index, row] of tableRows.entries()) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[cellIndex].getCSSProperty("justify-content");
+
+			// the alignment of every cell but the changed one still has to match the headerCell alignment
+			assert.equal(justifyContent.value, index === rowWithChangedCell ? customAlignmentCell : alignment, "justify-content correctly set.");
+		}
+	});
+
+	it("the h-alignment of a cell differs from the others, on changing the h-alignment of the headerCell, the h-alignment of other cells must change as well except of this one custom aligned cell", async () => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+
+		const cellIndex = 1; // second row is supplier row
+		const headerCell = headerCells[cellIndex];
+		const id = await headerCell.getAttribute("id");
+		const hAlign = await headerCell.getAttribute("h-Align");
+		assert.equal(id, "supplierCol", "Correct cell");
+		assert.ok(hAlign, "hAlign set");
+
+		let alignment = "center"; // alignment set to center in table example
+		let justifyContent = await headerCell.getCSSProperty("justify-content");
+		assert.equal(justifyContent.value, alignment, "justify-content correctly set.");
+
+		const tableRows = await table.$$("ui5-table-row");
+		const rowWithChangedCell = 0;
+		const cell = await tableRows[rowWithChangedCell].$$("ui5-table-cell")[cellIndex];
+		let justifyContentCell = await cell.getCSSProperty("justify-content");
+		let hAlignCell = await cell.getAttribute("h-Align");
+		assert.equal(hAlignCell, null, "hAlign property of the cell is not set.");
+		assert.equal(justifyContentCell.value, alignment, "justify-content value matches headerCell alignment");
+
+		const customAlignmentCell = "left"; // alignment used for a single cell
+		await cell.setAttribute("h-Align", customAlignmentCell);
+		hAlignCell = await cell.getAttribute("h-Align");
+
+		assert.notEqual(hAlignCell, null, "hAlign property of the cell is set now.");
+
+		justifyContentCell = await cell.getCSSProperty("justify-content");
+		assert.equal(justifyContentCell.value, customAlignmentCell, "justify-content of cell adjusted correctly.");
+
+		alignment = "right"
+		await headerCell.setAttribute("h-Align", alignment);
+		hAlignCell = await cell.getAttribute("h-Align");
+		justifyContent = await headerCell.getCSSProperty("justify-content");
+
+		assert.ok(hAlign, "hAlign set");
+		assert.equal(justifyContent.value, alignment, "justify-content of headerCell changed correctly.");
+
+		for (const [index, row] of tableRows.entries()) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[cellIndex].getCSSProperty("justify-content");
+
+			assert.equal(justifyContent.value, index === rowWithChangedCell ? customAlignmentCell : alignment, "justify-content correctly set.");
+		}
+	});
+});
+
 // Tests for the fixed header, whether it is shown correctly and behaves as expected
 describe("Table - Fixed Header", async () => {
 	before(async () => {
