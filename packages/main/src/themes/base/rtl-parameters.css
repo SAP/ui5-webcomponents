@@ -1,4 +1,4 @@
-:root, [dir="ltr"] {
+:root, :dir(ltr) {
 	--_ui5_rotation_90deg: rotate(90deg);
 	--_ui5_rotation_minus_90deg: rotate(-90deg);
 
@@ -22,7 +22,7 @@
 	--_ui5-shellbar-notification-btn-count-offset: -0.125rem;
 }
 
-[dir="rtl"] {
+:dir(rtl) {
 	--_ui5_icon_transform_scale: scale(-1, 1);
 	--_ui5_panel_toggle_btn_rotation: var(--_ui5_rotation_minus_90deg);
 	--_ui5_li_notification_group_toggle_btn_rotation: var(--_ui5_rotation_minus_90deg);
