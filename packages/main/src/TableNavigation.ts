@@ -41,6 +41,9 @@ class TableNavigation extends TableExtension {
 		this._gridWalker = new GridWalker();
 		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
 		this._onKeyDownCaptureBound = this._onKeyDownCapture.bind(this);
+
+		// we register the keydown handler on the table element at the capturing phase since the
+		// busy indicator stops the propagation of the keydown event and it never reaches the table
 		this._table.addEventListener("keydown", this._onKeyDownCaptureBound, { capture: true });
 	}
 
