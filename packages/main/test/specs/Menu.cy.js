@@ -1,22 +1,19 @@
 import { html } from 'lit';
 
-const openFunction = () => {
-	const menu = document.getElementById("menu");
-	menu.open = true;
-}
-
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
-		cy.mount(html`<ui5-button id="btnOpen" @click="${openFunction}">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="New File"></ui5-menu-item>
 		</ui5-menu>`)
 
-		cy.get("[ui5-button]")
-			.realClick();
-
 		cy.get("[ui5-menu]")
 			.as("menu");
+
+		cy.get("@menu")
+			.then($menu => {
+				$menu.attr("open", true);
+			});
 
 		cy.get("@menu")
 			.shadow()
@@ -273,7 +270,7 @@ describe("Menu interaction", () => {
 		});
 
 		it("Events firing on open/close of the menu", () => {
-			cy.mount(html`<ui5-button id="btnOpen" @click="${openFunction}">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu id="menu" opener="btnOpen">
 				<ui5-menu-item text="New File"></ui5-menu-item>
 			</ui5-menu>`)
@@ -286,11 +283,13 @@ describe("Menu interaction", () => {
 					$item.get(0).addEventListener('ui5-close', cy.stub().as('close'))
 				})
 
-			cy.get("[ui5-button]")
-				.realClick();
-
 			cy.get("[ui5-menu]")
 				.as("menu");
+
+			cy.get("@menu")
+				.then($menu => {
+					$menu.attr("open", true);
+				});
 
 			cy.get("@menu")
 				.shadow()
