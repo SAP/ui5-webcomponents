@@ -1,12 +1,19 @@
 <ui5-responsive-popover
 	class="{{classes.popover}}"
+	tabindex="-1"
 	hide-arrow
+	prevent-focus-restore
+	prevent-initial-focus
 	placement="Bottom"
 	horizontal-align="Start"
-	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
+	@ui5-before-open="{{_beforeOpenPopover}}"
 	@ui5-open={{_afterOpenPopover}}
 	@ui5-close={{_afterClosePopover}}
+	@keydown={{_handlePopoverKeydown}}
+	@focusout={{_handlePopoverFocusout}}
+	.open={{open}}
+	.opener={{this}}
 >
 	<ui5-busy-indicator
 		?active={{loading}}
@@ -29,13 +36,14 @@
 
 			<div class="row">
 				<ui5-input
-					.value="{{value}}"
+					@keydown="{{_handleMobileKeydown}}"
 					@ui5-input="{{_handleMobileInput}}"
 					@ui5-change="{{_inputChange}}"
 					placeholder="{{placeholder}}"
 					value-state="{{valueState}}"
 					?show-clear-icon="{{showClearIcon}}"
 					?no-typeahead="{{noTypeahead}}"
+					.open={{openOnMobile}}
 				>
 					{{#each _filteredItems}}
 						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>
@@ -47,16 +55,16 @@
 		{{#if hasValueStateText}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
+					{{> valueStateMessage}}
 			</div>
 		{{/if}}
 	{{/if}}
 
 	{{#unless _isPhone}}
 		{{#if hasValueStateText}}
-			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} tabindex="0" style="{{styles.suggestionPopoverHeader}}">
+			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} style="{{styles.suggestionPopoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-				{{> valueStateMessage}}
+					{{> valueStateMessage}}
 			</div>
 		{{/if}}
 	{{/unless}}
@@ -76,8 +84,8 @@
 					<ui5-li-group header-text="{{ this.text }}" ?focused={{ this.focused }}>
 						{{#each this.items}}
 							{{#if _isVisible}}
-								{{> listItem}}		
-							{{/if}}			
+								{{> listItem}}
+							{{/if}}
 						{{/each}}
 					</ui5-li-group>
 				{{/if}}
@@ -104,13 +112,18 @@
 		prevent-initial-focus
 		prevent-focus-restore
 		hide-arrow
+		tabindex="-1"
 		class="ui5-valuestatemessage-popover"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		placement="Bottom"
+		.opener="{{this}}"
+		.open="{{valueStateOpen}}"
+		@ui5-close="{{_handleValueStatePopoverAfterClose}}"
+		@focusout={{_handleValueStatePopoverFocusout}}
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
-			{{> valueStateMessage}}
+				{{> valueStateMessage}}
 		</div>
 	</ui5-popover>
 {{/if}}
@@ -132,7 +145,6 @@
 			wrapping-type="Normal"
 			additional-text={{this.additionalText}}
 			group-name={{this.groupName}}
-			._tabIndex={{itemTabIndex}}
 			.mappedItem={{this}}
 			?selected={{this.selected}}
 			?focused={{this.focused}}
