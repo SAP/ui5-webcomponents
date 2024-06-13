@@ -9,7 +9,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 // @ts-ignore
-// import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
+import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 
 import {
 	isPhone,
@@ -637,13 +637,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 			this.suggestionItems.forEach(item => {
 				if (item.hasAttribute("ui5-suggestion-item")) {
-					// @ts-ignore
-					// eslint-disable-next-line
-					(item as SuggestionItem).markupText = (this.Suggestions?.hightlightInput(item.text, this.typedInValue) || item.text);
+					(item as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((item as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
 				} else if (item.hasAttribute("ui5-suggestion-item-group")) {
 					(item as SuggestionItemGroup).items.forEach(nestedItem => {
-						// @ts-ignore
-						(nestedItem as SuggestionItem).markupText = this.Suggestions?.hightlightInput((nestedItem as SuggestionItem).text, this.typedInValue) || item.text;
+						(nestedItem as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((nestedItem as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
 					});
 				}
 			});

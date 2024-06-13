@@ -743,7 +743,7 @@ describe("Input general interaction", () => {
 		await input.keys("a");
 
 		const popover = await input.shadow$("ui5-responsive-popover");
-		const listItem = await popover.$("ui5-suggestion-item-group ui5-suggestion-item").shadow$("li");
+		const listItem = await input.$("ui5-suggestion-item-group ui5-suggestion-item");
 		await listItem.click();
 
 		assert.notOk(await popover.isDisplayedInViewport(), "The popover is not visible");
@@ -837,7 +837,7 @@ describe("Input general interaction", () => {
 
 		//assert
 		assert.ok(announcementText.includes("List item 1 of 12"), "The total count announcement and position of items should exclude group items.");
-		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "explore List item 1 of 12", "The additional text and description are announced");
+		assert.strictEqual(await inputWithGroupsAnnouncement.getText(), "explore List item 1 of 12", "The additional text is announced");
 		await inputWithGroupsInnerInput.keys("Backspace");
 
 		// Close suggestions to not intercept the click in the input below for the last test
@@ -1564,19 +1564,20 @@ describe("Selection-change event", () => {
 });
 
 describe("Property open", () => {
-	before( async () => {
+	before(async () => {
 		await browser.url(`test/pages/Input.html`);
-	}),
+	});
+
 	it("Suggestions picker is open when attribute open is set to true", async () => {
 		const input = await browser.$("#input-suggestions-open");
 		await input.scrollIntoView();
 
-		await browser.execute(() =>{
+		await browser.execute(() => {
 			document.querySelector("#input-suggestions-open").open = true;
 		});
 
 		const respPopover = await input.shadow$("ui5-responsive-popover");
-		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-suggestion-item");
+		const suggestionItems = await input.$$("ui5-suggestion-item");
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");

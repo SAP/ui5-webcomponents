@@ -442,9 +442,12 @@ class Suggestions {
 	}
 
 	_deselectItems() {
-		const items = this._getNonGroupItems();
+		const items = this._getItems();
 		items.forEach(item => {
-			item.selected = false;
+			if (item.hasAttribute("ui5-suggestion-item")) {
+				(item as SuggestionItem).selected = false;
+			}
+
 			item.focused = false;
 		});
 	}
