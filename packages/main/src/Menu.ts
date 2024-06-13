@@ -40,6 +40,12 @@ import menuCss from "./generated/themes/Menu.css.js";
 
 const MENU_OPEN_DELAY = 300;
 
+/**
+ * Interface for components that may be slotted inside a `ui5-menu`.
+ *
+ * **Note:** Use with `ui5-menu-item` or `ui5-menu-separator`. Implementing the interface does not guarantee that any other classes can work with the `ui5-menu`.
+ * @public
+ */
 interface IMenuItem extends UI5Element {
 	isSeparator: boolean;
 }
