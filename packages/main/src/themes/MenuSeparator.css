@@ -1,6 +1,6 @@
 :host {
 	min-height: 0.125rem;
-	border-top: 1px solid var(--sapGroup_ContentBorderColor);
+	border-top: 0.0625rem solid var(--sapGroup_ContentBorderColor);
 }
 
 .ui5-menu-separator {
