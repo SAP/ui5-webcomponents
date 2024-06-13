@@ -1,5 +1,3 @@
-// OpenUI5's Element.js subset
-
 type OpenUI5Popup = {
 	setInitialZIndex: (zIndex: number) => void,
 	getNextZIndex: () => number,
