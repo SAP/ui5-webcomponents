@@ -162,6 +162,12 @@ class Button extends UI5Element {
 		}
 	}
 
+	onAfterRendering(): void {
+		if (!this._findStateByName(this.state!) && this._currentStateObject) {
+			this.state = this._currentStateObject.name;
+		}
+	}
+
 	/**
 	 * Starts the fade-out animation.
 	 * @private
@@ -229,14 +235,7 @@ class Button extends UI5Element {
 	 */
 	_onclick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
-
-		if (!this.fireEvent("click", {}, true)) {
-			e.preventDefault();
-		}
-
-		if (!this._findStateByName(this.state!)) {
-			this._throwMissingStateError();
-		}
+		this.fireEvent("click");
 	}
 
 	/**
