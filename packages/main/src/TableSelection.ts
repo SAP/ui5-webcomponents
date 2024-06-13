@@ -9,10 +9,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import TableSelectionMode from "./types/TableSelectionMode.js";
+import { isInstanceOfTableRow } from "./TableRow.js";
+import { isInstanceOfTableHeaderRow } from "./TableHeaderRow.js";
 import type Table from "./Table.js";
 import type { ITableFeature } from "./Table.js";
-import TableRow from "./TableRow.js";
-import TableHeaderRow from "./TableHeaderRow.js";
+import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
 
 /**
@@ -229,7 +230,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return;
 		}
 
-		if (!(focusedElement instanceof TableRow) && !this._rangeSelection?.isMouse) {
+		if (!(isInstanceOfTableRow(focusedElement)) && !this._rangeSelection?.isMouse) {
 			this._stopRangeSelection();
 			return;
 		}
@@ -259,7 +260,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return;
 		}
 
-		if (!(eventTarget instanceof TableRow) || !this._rangeSelection || isShift(e)) {
+		if (!(isInstanceOfTableRow(eventTarget)) || !this._rangeSelection || isShift(e)) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
 			!this._isSelectionCheckbox(e) && this._stopRangeSelection();
 		}
@@ -322,9 +323,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	/**
-	 * Handles the keyboard range selection.
-	 * @param e keyboard event
-	 * @param row focused row
+	 * Handles the range selection
+	 * @param targetRow row that is currently focused
+	 * @param change indicates direction
+	 * @private
 	 */
 	_handleRangeSelection(targetRow: TableRow, change: number) {
 		if (!this._rangeSelection) {
@@ -384,11 +386,11 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	_isHeaderSelector(e: Event) {
-		return this._isSelectionCheckbox(e) && e.composedPath().some((el: EventTarget) => el instanceof TableHeaderRow);
+		return this._isSelectionCheckbox(e) && e.composedPath().some((el: EventTarget) => isInstanceOfTableHeaderRow(el));
 	}
 
 	_findRowInPath(composedPath: Array<EventTarget>) {
-		return composedPath.find((el: EventTarget) => el instanceof TableRow) as TableRow;
+		return composedPath.find((el: EventTarget) => isInstanceOfTableRow(el)) as TableRow;
 	}
 }
 
