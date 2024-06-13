@@ -1,6 +1,8 @@
 :host {
-	height: var(--_ui5_list_item_base_height);
 	box-sizing: border-box;
+	height: var(--_ui5_list_item_base_height);
+	background-color: var(--ui5-listitem-background-color);
+	border-bottom: 0.0625rem solid transparent;
 }
 
 :host(:not([hidden])) {
@@ -17,29 +19,29 @@
 	cursor: pointer;
 }
 
-:host([has-border]) .ui5-li-root {
+:host([has-border]) {
 	border-bottom: var(--ui5-listitem-border-bottom);
 }
 
 /* selected */
-:host([selected]) .ui5-li-root {
+:host([selected]) {
 	background-color: var(--sapList_SelectionBackgroundColor);
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
 /* hovered */
-:host([actionable]:not([active], [selected]):hover) .ui5-li-root {
+:host([actionable]:not([active], [selected]):hover) {
 	background-color: var(--sapList_Hover_Background);
 }
 
 /* selected and hovered */
-:host([actionable][selected]:not([active], [data-moving]):hover) .ui5-li-root {
+:host([actionable][selected]:not([active], [data-moving]):hover) {
 	background-color: var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */
-:host([active][actionable]:not([data-moving])) .ui5-li-root,
-:host([active][actionable][selected]:not([data-moving])) .ui5-li-root {
+:host([active][actionable]:not([data-moving])),
+:host([active][actionable][selected]:not([data-moving])) {
 	background-color: var(--sapList_Active_Background);
 }
 
@@ -65,8 +67,7 @@
 	height: 100%;
 	padding: var(--_ui5_list_item_base_padding);
 	box-sizing: border-box;
-	background-color: var(--ui5-listitem-background-color);
-	border-bottom: 0.0625rem solid transparent;
+	background-color: inherit;
 }
 
 .ui5-li-root.ui5-li--focusable {

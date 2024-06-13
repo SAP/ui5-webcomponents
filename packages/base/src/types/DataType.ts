@@ -1,4 +1,4 @@
-import { PropertyValue } from "../UI5ElementMetadata.js";
+import type { PropertyValue } from "../UI5ElementMetadata.js";
 
 /**
  * @class

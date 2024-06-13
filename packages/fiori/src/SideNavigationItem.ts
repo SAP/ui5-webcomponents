@@ -72,18 +72,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
-	/**
-	 * Defines whether clicking the whole item or only pressing the icon will show/hide the sub items (if present).
-	 * If set to true, clicking the whole item will toggle the sub items, and it won't fire the `click` event.
-	 * By default, only clicking the arrow icon will toggle the sub items.
-	 *
-	 * @public
-	 * @default false
-	 * @since 1.0.0-rc.11
-	 */
-	@property({ type: Boolean })
-	wholeItemToggleable!: boolean;
-
 	get overflowItems() : Array<HTMLElement> {
 		return [this];
 	}
@@ -195,15 +183,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onclick = (e: PointerEvent) => {
-		if (!this.sideNavCollapsed
-			&& this.wholeItemToggleable
-			&& e.pointerType === "mouse") {
-			e.preventDefault();
-			e.stopPropagation();
-			this.expanded = !this.expanded;
-			return;
-		}
-
 		super._onclick(e);
 	}
 

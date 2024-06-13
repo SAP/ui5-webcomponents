@@ -58,7 +58,7 @@ import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import { StartsWith } from "./Filters.js";
@@ -88,7 +88,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import SuggestionItemGroup from "./SuggestionItemGroup.js";
+import type SuggestionItemGroup from "./SuggestionItemGroup.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`

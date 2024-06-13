@@ -233,4 +233,16 @@ describe("TimePicker general interaction", () => {
 
 		assert.strictEqual(await timepickerPopover.getProperty("open"), true, "The popover is opened");
 	})
+
+	it("picker popover should have accessible name", async () => {
+		const timepicker = await browser.$("#timepicker");
+		await timepicker.click();
+		await browser.keys("F4");
+
+		const popover = await timepicker.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Time", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
+	});
 });

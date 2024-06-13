@@ -1,4 +1,5 @@
-import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -25,9 +26,10 @@ import ToolbarCss from "./generated/themes/Toolbar.css.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarAlign from "./types/ToolbarAlign.js";
+import ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import {
@@ -127,6 +129,15 @@ class Toolbar extends UI5Element {
 	 */
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
+
+	/**
+	 * Defines the toolbar design.
+	 * @public
+	 * @default "Solid"
+	 * @since 2.0.0
+	 */
+	@property({ type: ToolbarDesign, defaultValue: ToolbarDesign.Solid })
+	design!: `${ToolbarDesign}`;
 
 	/**
 	 * Defines the items of the component.

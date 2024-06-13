@@ -21,6 +21,7 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
+import Icon from "./Icon.js";
 
 type LinkClickEventDetail = {
 	altKey: boolean;
@@ -65,6 +66,8 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart icon - Used to style the provided icon within the link
+ * @csspart endIcon - Used to style the provided endIcon within the link
  * @slot {Array<Node>} default - Defines the text of the component.
  *
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -75,6 +78,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 	renderer: litRender,
 	template: LinkTemplate,
 	styles: linkCss,
+	dependencies: [Icon],
 })
 /**
  * Fired when the component is triggered either with a mouse/tap
@@ -219,6 +223,38 @@ class Link extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Object })
 	accessibilityAttributes!: LinkAccessibilityAttributes;
+
+	/**
+	 * Defines the icon, displayed as graphical element within the component before the link's text.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * **Note:** Usage of icon-only link is not supported, the link must always have a text.
+	 *
+	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
+	 *
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
+	 * @since 2.0.0
+	 * @public
+	 */
+	@property()
+	icon!: string;
+
+	/**
+	 * Defines the icon, displayed as graphical element within the component after the link's text.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * **Note:** Usage of icon-only link is not supported, the link must always have a text.
+	 *
+	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
+	 *
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default ""
+	 * @since 2.0.0
+	 * @public
+	 */
+	@property()
+	endIcon!: string;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;

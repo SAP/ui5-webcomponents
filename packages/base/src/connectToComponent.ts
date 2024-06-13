@@ -1,6 +1,6 @@
 import type UI5Element from "./UI5Element.js";
 import { renderDeferred } from "./Render.js";
-import { Interval } from "./types.js";
+import type { Interval } from "./types.js";
 
 const MISSING_ELEMENT_POLL_TIMEOUT = 500; // how often to poll for not-yet-in-DOM friend elements
 const connections = new Map<string, HTMLElement>();

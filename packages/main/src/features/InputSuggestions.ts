@@ -6,7 +6,7 @@ import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generat
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
-import ResponsivePopover from "../ResponsivePopover.js";
+import type ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
@@ -19,7 +19,7 @@ import {
 import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
 import SuggestionItemGroup from "../SuggestionItemGroup.js";
-import SuggestionItemCustom from "../SuggestionItemCustom.js";
+import type SuggestionItemCustom from "../SuggestionItemCustom.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;
