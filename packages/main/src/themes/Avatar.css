@@ -263,10 +263,6 @@
 
 	--_ui5-tag-height: 1.125rem;
 	--_ui5-tag-border-radius: 50%;
-
-	--ui5-tag-color-scheme-1-background: var(--sapButton_Emphasized_Background);
-	--ui5-tag-color-scheme-1-color: var(--sapButton_Emphasized_TextColor);
-	--ui5-tag-color-scheme-1-border: var(--sapButton_Emphasized_BorderColor);
 }
 
 :host([_size="L"]) ::slotted([slot="badge"]),
