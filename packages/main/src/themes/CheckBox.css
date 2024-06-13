@@ -230,7 +230,7 @@
 	font-size: inherit;
 }
 
-:host([wrapping-type="None"]) .ui5-checkbox-root .ui5-checkbox-label {
+.ui5-checkbox-root .ui5-checkbox-label {
 	margin-inline-start: var(--_ui5_checkbox_label_offset);
 	cursor: inherit;
 	text-overflow: ellipsis;
