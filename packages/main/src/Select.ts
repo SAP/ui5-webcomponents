@@ -280,10 +280,10 @@ class Select extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean })
 	focused = false;
 
-	_selectedIndexBeforeOpen: number;
-	_escapePressed: boolean;
-	_lastSelectedOption: IOption | null;
-	_typedChars: string;
+	_selectedIndexBeforeOpen = -1;
+	_escapePressed = false;
+	_lastSelectedOption: IOption | null = null;;
+	_typedChars = "";
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	valueStatePopover?: Popover;
@@ -354,17 +354,6 @@ class Select extends UI5Element implements IFormInputElement {
 		return "";
 	}
 
-	constructor() {
-		super();
-
-		this._selectedIndexBeforeOpen = -1;
-		this._escapePressed = false;
-		this._lastSelectedOption = null;
-		this._typedChars = "";
-
-		this._upgradeProperty("value");
-	}
-
 	onBeforeRendering() {
 		this._ensureSingleSelection();
 
@@ -425,6 +414,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
+	@property()
 	set value(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
 

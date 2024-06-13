@@ -230,9 +230,7 @@ class Popover extends Popup {
 	 * @default undefined
 	 * @since 1.2.0
 	 */
-	@property({
-		converter: DOMReferenceConverter,
-	})
+	@property({ converter: DOMReferenceConverter })
 	set opener(value: HTMLElement | string) {
 		if (this._opener === value) {
 			return;

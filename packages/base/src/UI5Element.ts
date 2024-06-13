@@ -203,8 +203,6 @@ abstract class UI5Element extends HTMLElement {
 			}
 		});
 
-		this._upgradeAllProperties();
-
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
 			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
@@ -251,7 +249,7 @@ abstract class UI5Element extends HTMLElement {
 		if (DEV_MODE) {
 			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
-				if (Object.hasOwn(this, prop)) {
+				if (Object.hasOwn(this, prop) && !this.initializedProperties.has(prop)) {
 					// eslint-disable-next-line no-console
 					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} has a property [${prop}] that is shadowed by the instance. Updates to this property will not invalidate the component. Possible reason is TS target ES2022 or TS useDefineForClassFields`);
 				}
@@ -651,25 +649,6 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * @private
-	 */
-	_upgradeProperty(this: Record<string, any>, propertyName: string) {
-		if (this.hasOwnProperty(propertyName)) { // eslint-disable-line
-			const value = this[propertyName];
-			delete this[propertyName];
-			this[propertyName] = value;
-		}
-	}
-
-	/**
-	 * @private
-	 */
-	_upgradeAllProperties() {
-		const allProps = (this.constructor as typeof UI5Element).getMetadata().getPropertiesList();
-		allProps.forEach(this._upgradeProperty.bind(this));
-	}
-
-	/**
 	 * Returns a singleton event listener for the "change" event of a child in a given slot
 	 *
 	 * @param slotName the name of the slot, where the child is
@@ -794,8 +773,10 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
 
+		// restore properties that were initialized before `define` by calling the setter
 		if (this.initializedProperties.size > 0) {
 			Array.from(this.initializedProperties.entries()).forEach(([prop, value]) => {
+				delete (this as Record<string, unknown>)[prop];
 				(this as Record<string, unknown>)[prop] = value;
 			});
 			this.initializedProperties.clear();

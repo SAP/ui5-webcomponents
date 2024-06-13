@@ -22,6 +22,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -138,7 +139,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @default undefined
 	 * @since 1.21.0
 	 */
-	@property()
+	@property({ converter: DOMReferenceConverter })
 	opener?: HTMLElement | string;
 
 	/**
