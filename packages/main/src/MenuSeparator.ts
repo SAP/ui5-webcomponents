@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import menuSeparatorTemplate from "./generated/templates/MenuSeparatorTemplate.lit.js";
 import menuSeparatorCss from "./generated/themes/MenuSeparator.css.js";
-import { IMenuItem } from "./Menu.js";
+import type { IMenuItem } from "./Menu.js";
 /**
  * @class
  * The `ui5-menu-separator` represents a horizontal line to separate menu items inside a `ui5-menu`.
