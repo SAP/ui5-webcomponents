@@ -2,6 +2,10 @@
 	display: inline-block;
 }
 
+:host([disabled]) {
+	pointer-events: none;
+}
+
 .ui5-ai-button-text {
 	display: inline-block;
 }
