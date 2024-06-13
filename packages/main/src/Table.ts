@@ -260,6 +260,14 @@ class Table extends UI5Element {
 	loading!: boolean;
 
 	/**
+     * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
+     * @default 1000
+     * @public
+     */
+	@property({ validator: Integer, defaultValue: 1000 })
+	loadingDelay!: number;
+
+	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
 	 */
 	@property({ type: String, defaultValue: "0" })
@@ -505,6 +513,10 @@ class Table extends UI5Element {
 
 	get _tableElement() {
 		return this.shadowRoot!.getElementById("table") as HTMLElement;
+	}
+
+	get _loadingElement() {
+		return this.shadowRoot!.getElementById("loading") as HTMLElement;
 	}
 
 	get _effectiveNoDataText() {

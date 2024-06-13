@@ -1,5 +1,6 @@
 :host {
 	display: block;
+    position: relative;
     color: var(--sapList_TextColor);
     font: var(--sapFontSize) var(--sapFontFamily);
 }
@@ -33,9 +34,9 @@
     box-sizing: border-box;
 }
 
-#busy-indicator {
+#loading {
     position: absolute;
-    z-index: 1;
     inset: 0;
     height: 100%;
+    z-index: 1;
 }

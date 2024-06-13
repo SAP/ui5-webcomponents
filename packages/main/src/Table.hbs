@@ -1,16 +1,5 @@
 <div id="before" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
 
-{{#if loading}}
-    <!-- TODO: Change to loading indicator -->
-    <ui5-busy-indicator
-        id="busy-indicator"
-        delay="50"
-        class="ui5-table-busy-ind"
-        active
-        data-sap-focus-ref
-    ></ui5-busy-indicator>
-{{/if}}
-
 <div id="table" role="grid"
     style="{{styles.table}}"
     aria-label="{{_ariaLabel}}"
@@ -38,6 +27,11 @@
 
     {{> tableEndRow}}
 </div>
+
+{{#if loading}}
+    <ui5-busy-indicator id="loading" delay="{{loadingDelay}}" active data-sap-focus-ref></ui5-busy-indicator>
+{{/if}}
+
 <div id="after" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
 
 {{#*inline "growingRow"}}
