@@ -1083,11 +1083,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_startsWithMatchingItems(str: string): Array<IInputSuggestionItem> {
-		// @ts-ignore
-		const textProp = this.suggestionItems[0].text ? "text" : "textContent";
-
-		// @ts-ignore
-		return StartsWith(str, this.suggestionItems, textProp);
+		return StartsWith(str, Array.from(this.querySelectorAll("[ui5-suggestion-item]")), "text");
 	}
 
 	_getFirstMatchingItem(current: string) {
