@@ -536,7 +536,6 @@ class Carousel extends UI5Element {
 				},
 				classes: visible ? "" : "ui5-carousel-item--hidden",
 				selected: visible,
-				hidden: !visible,
 			};
 		});
 	}

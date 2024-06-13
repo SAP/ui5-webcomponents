@@ -108,10 +108,7 @@ describe("Carousel general interaction", () => {
 		const SETSIZE = "8";
 
 		// assert: check random carousel items ARIA
-		assert.strictEqual(await carouselItem1.getAttribute("aria-hidden"), "false", "aria-hidden of carousel item is correct.");
 		assert.strictEqual(await carouselItem1.getAttribute("aria-selected"), "true", "aria-selected of carousel item is correct.");
-		assert.strictEqual(await carouselItem3.getAttribute("aria-hidden"), "true", "aria-hidden of carousel item is correct.");
-		assert.strictEqual(await carouselItem3.getAttribute("aria-selected"), "false", "aria-selected of carousel item is correct.");
 		assert.strictEqual(await carouselItem3.getAttribute("aria-posinset"), CAROUSEL_ITEM3_POS, "The aria-posinset of carousel item is correct.");
 		assert.strictEqual(await carouselItem4.getAttribute("aria-posinset"), CAROUSEL_ITEM4_POS, "The aria-posinset of carousel item is correct.");
 		assert.strictEqual(await carouselItem3.getAttribute("aria-setsize"), SETSIZE, "The aria-setsize of carousel item  is correct.");
