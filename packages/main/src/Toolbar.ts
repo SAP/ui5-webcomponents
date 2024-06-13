@@ -25,6 +25,7 @@ import ToolbarCss from "./generated/themes/Toolbar.css.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import type ToolbarAlign from "./types/ToolbarAlign.js";
+import type ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 import type ToolbarItem from "./ToolbarItem.js";
@@ -127,6 +128,15 @@ class Toolbar extends UI5Element {
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the toolbar design.
+	 * @public
+	 * @default "Solid"
+	 * @since 2.0.0
+	 */
+	@property()
+	design: `${ToolbarDesign}` = "Solid"
 
 	/**
 	 * Defines the items of the component.
