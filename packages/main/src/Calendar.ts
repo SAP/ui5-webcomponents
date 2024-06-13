@@ -681,7 +681,7 @@ class Calendar extends CalendarPart {
 	get accInfo() {
 		return {
 			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._headerMonthButtonText}, ${this.secondaryCalendarTypeButtonText}` : `${this._headerMonthButtonText}`,
+				? `${this._headerMonthButtonText}, ${this.secondaryCalendarTypeButtonText?.monthButtonText}` : `${this._headerMonthButtonText}`,
 		};
 	}
 
@@ -693,8 +693,10 @@ class Calendar extends CalendarPart {
 		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_BUTTON);
 	}
 
-	get secondMonthButtonText () {
-		return this.secondaryCalendarTypeButtonText?.monthButtonText;
+	get secondMonthButtonText() {
+		const secondMonthButtonText = this.secondaryCalendarTypeButtonText?.monthButtonText as string;
+
+		return secondMonthButtonText;
 	}
 
 	onMonthButtonKeyDown(e: KeyboardEvent) {
