@@ -9,7 +9,7 @@ import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate
  * @class
  * The `ui5-suggestion-item` represents the suggestion item of the `ui5-input`.
  * @constructor
- * @extends UI5Element
+ * @extends ListItemBase
  * @abstract
  * @implements { IInputSuggestionItem }
  * @public

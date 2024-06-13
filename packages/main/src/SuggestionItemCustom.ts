@@ -8,7 +8,7 @@ import ListItemCustom from "./ListItemCustom.js";
  * The `ui5-suggestion-item-custom` is type of suggestion item,
  * that can be used to split the `ui5-input` suggestions into groups.
  * @constructor
- * @extends UI5Element
+ * @extends ListItemCustom
  * @abstract
  * @public
  * @implements { IInputSuggestionItem }
