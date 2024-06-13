@@ -134,6 +134,8 @@ type UserDefinedColumnLayouts = {
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
  *
+ * **Note:** When the component displays more than one column, the minimal width of each column is 312px. Consequently, when the user drags a column separator to resize the columns, the minimal allowed width of any resized column is 312px.
+ *
  * ### Keyboard Handling
  *
  * #### Basic Navigation
@@ -234,7 +236,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* Specifies if the user is allowed to change the columns layout by dragging the separator between the columns.
 	* @default false
 	* @public
-	* @since 1.0.0-rc.15
+	* @since 2.0.0
 	*/
 	@property({ type: Boolean })
 	disableInteractiveResize!: boolean;
@@ -567,9 +569,10 @@ class FlexibleColumnLayout extends UI5Element {
 
 	exitSeparatorMovementSession() {
 		const movedSeparator = this.separatorMovementSession!.separator;
+		const hasAnimation = getAnimationMode() !== AnimationMode.None;
 
 		this.detachMoveListeners();
-		this.toggleSideAnimations(movedSeparator, true);
+		this.toggleSideAnimations(movedSeparator, hasAnimation); // restore animations for side columns
 
 		movedSeparator.focus();
 		this.separatorMovementSession = null;
@@ -625,7 +628,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 		if (isStartSeparator) {
 			selectedColumnToResize = COLUMN.START;
-			// move in direction start-to-end expans start column
+			// move in direction start-to-end expands start column
 			columnWidthDelta = offsetX;
 		} else {
 			selectedColumnToResize = COLUMN.END;

@@ -11,7 +11,7 @@
 
 	<div role="{{accStartSeparatorRole}}" title={{accStartSeparatorText}} class="ui5-fcl-separator ui5-fcl-separator-start" style="{{styles.separator.start}}" tabindex="{{startSeparatorTabIndex}}"
 		@mousedown="{{onSeparatorPress}}" @touchstart="{{onSeparatorPress}}" @keydown="{{_onkeydown}}" @keyup="{{_onkeyup}}">
-		{{> startArrow}}
+		{{> gripStart}}
 	</div>
 
 	<div
@@ -26,7 +26,7 @@
 
 	<div role="{{accEndSeparatorRole}}" title="{{accEndSeparatorText}}" class="ui5-fcl-separator ui5-fcl-separator-end" style="{{styles.separator.end}}" tabindex="{{endSeparatorTabIndex}}"
 		@mousedown="{{onSeparatorPress}}" @touchstart="{{onSeparatorPress}}" @keydown="{{_onkeydown}}" @keyup="{{_onkeyup}}">
-		{{> endArrow}}
+		{{> gripEnd}}
 	</div>
 
 	<div
@@ -40,7 +40,7 @@
 	</div>
 </div>
 
-{{#*inline "startArrow"}}
+{{#*inline "gripStart"}}
 	<ui5-icon
 		class="ui5-fcl-grip ui5-fcl-grip--start"
 		name="vertical-grip"
@@ -49,7 +49,7 @@
 {{/inline}}
 
 
-{{#*inline "endArrow"}}
+{{#*inline "gripEnd"}}
 	<ui5-icon
 		class="ui5-fcl-grip ui5-fcl-grip--end"
 		style="{{styles.grip.end}}"
