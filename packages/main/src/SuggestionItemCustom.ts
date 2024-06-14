@@ -6,10 +6,12 @@ import ListItemCustom from "./ListItemCustom.js";
 /**
  * @class
  * The `ui5-suggestion-item-custom` is type of suggestion item,
- * that can be used to split the `ui5-input` suggestions into groups.
+ * that can be used to place suggestion items with custom content in the input.
+ * The text property is considered only for autocomplete.
+ * In case the user needs highlighting functionality, check "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js"
+ *
  * @constructor
  * @extends ListItemCustom
- * @abstract
  * @public
  * @implements { IInputSuggestionItem }
  * @since 2.0.0

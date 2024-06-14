@@ -1,7 +1,0 @@
-:host {
-	cursor: default !important;
-}
-
-:host(:hover) {
-	background: initial !important;
-}

@@ -42,9 +42,19 @@
 		<div>
 			<h3>Custom Suggestions</h3>
 
-			<ui5-input>
-				<ui5-suggestion-item-custom show-suggestions text="Custom suggestion">
-					<div>Custom suggestion</div>
+			<ui5-input show-suggestions>
+				<ui5-suggestion-item-custom text="China">
+					<div class="custom-item-content-wrapper">
+						<ui5-icon name="world"></ui5-icon>
+						<div class="titles-wrapper">
+							<ui5-text>China</ui5-text>
+							<ui5-text>Travel the world</ui5-text>
+						</div>
+
+						<div class="status">
+							<ui5-text>explore</ui5-text>
+						</div>
+					</div>
 				</ui5-suggestion-item-custom>
 			</ui5-input>
 		</div>

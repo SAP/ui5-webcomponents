@@ -482,23 +482,17 @@ class Suggestions {
 		return this._scrollContainer;
 	}
 
+	/**
+	 * Returns the items in 1D array.
+	 *
+	 * @returns {Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>}
+	 */
 	_getItems(): Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom> {
-		const items = this._getComponent().getSlottedNodes<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>("suggestionItems");
-
-		return items.reduce((acc, item) => {
-			if (item.hasAttribute("ui5-suggestion-item-group")) {
-				acc.push(item);
-				(item as SuggestionItemGroup).items.forEach(groupItem => acc.push(groupItem as SuggestionItem));
-			} else {
-				acc.push(item);
-			}
-
-			return acc;
-		}, [] as Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>);
+		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
 	}
 
 	_getNonGroupItems(): Array<SuggestionItem> {
-		return this._getItems().filter(item => !item.hasAttribute("ui5-suggestion-item-group")) as Array<SuggestionItem>;
+		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]"));
 	}
 
 	_getComponent(): SuggestionComponent {

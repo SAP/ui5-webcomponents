@@ -56,6 +56,7 @@ import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
+import SuggestionItemCustom from "./SuggestionItemCustom.js";
 import MultiInput from "./MultiInput.js";
 import Label from "./Label.js";
 import Link from "./Link.js";

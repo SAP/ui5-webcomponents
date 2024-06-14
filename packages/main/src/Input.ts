@@ -1083,7 +1083,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_startsWithMatchingItems(str: string): Array<IInputSuggestionItem> {
-		return StartsWith(str, Array.from(this.querySelectorAll("[ui5-suggestion-item]")), "text");
+		return StartsWith(str, Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]")), "text");
 	}
 
 	_getFirstMatchingItem(current: string) {
@@ -1096,22 +1096,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		if (matchingItems.length) {
 			return matchingItems[0];
 		}
-	}
-
-	_getItems() {
-		const suggestionItems: SuggestionItem[] | SuggestionItemGroup = [];
-
-		this.suggestionItems.forEach(item => {
-			if (item.hasAttribute("ui5-suggestion-item-group")) {
-				const groupedItems = [...(item as SuggestionItemGroup).items as SuggestionItem[]];
-				suggestionItems.push(...groupedItems);
-				return;
-			}
-
-			suggestionItems.push(item as SuggestionItem);
-		});
-
-		return suggestionItems;
 	}
 
 	_handleSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
