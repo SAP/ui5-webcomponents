@@ -15,11 +15,6 @@ import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
 
-// Animation durations constants
-const AI_BUTTON_FADE_OUT_DURATION = 180;
-const AI_BUTTON_FADE_IN_DURATION = 60;
-const AI_BUTTON_FADE_RESET_DURATION = 160;
-
 /**
  * @class
  *
@@ -90,7 +85,7 @@ class Button extends UI5Element {
 	/**
 	 * Defines the current state of the component.
 	 *
-	 * **Note:** if nothing is defined, the component will be set initially to the first defined state (if any).
+	 * **Note:** If nothing is defined, the component will be set initially to the first defined state (if any).
 	 *
 	 * @default ""
 	 * @public
@@ -173,10 +168,13 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	async _fadeOut(): Promise<void> {
+		const fadeOutDuration = 180;
+
 		const button = this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
 		const newStateObject = this._findStateByName(this.state!);
+
 		if (button && newStateObject) {
-			const buttonWidth = (button as HTMLElement).offsetWidth;
+			const buttonWidth = button.offsetWidth;
 			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as MainButton;
 			button.style.width = `${buttonWidth}px`;
 			hiddenButton.icon = newStateObject.icon;
@@ -184,7 +182,7 @@ class Button extends UI5Element {
 			hiddenButton.textContent = newStateObject.text;
 
 			await renderFinished();
-			const hiddenButtonWidth = (hiddenButton as HTMLElement).offsetWidth;
+			const hiddenButtonWidth = hiddenButton.offsetWidth;
 			this.fadeOut = true;
 			button.style.width = `${hiddenButtonWidth}px`;
 
@@ -192,7 +190,7 @@ class Button extends UI5Element {
 				this.fadeMid = true;
 				this._currentStateObject = newStateObject;
 				this._fadeIn();
-			}, AI_BUTTON_FADE_OUT_DURATION);
+			}, fadeOutDuration);
 		} else {
 			this._throwMissingStateError();
 		}
@@ -203,10 +201,12 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	_fadeIn(): void {
+		const fadeInDuration = 60;
+
 		setTimeout(() => {
 			this.fadeIn = true;
 			this._resetFade();
-		}, AI_BUTTON_FADE_IN_DURATION);
+		}, fadeInDuration);
 	}
 
 	/**
@@ -214,11 +214,13 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	_resetFade(): void {
+		const fadeResetDuration = 160;
+
 		setTimeout(() => {
 			this.fadeOut = false;
 			this.fadeMid = false;
 			this.fadeIn = false;
-		}, AI_BUTTON_FADE_RESET_DURATION);
+		}, fadeResetDuration);
 	}
 
 	/**
