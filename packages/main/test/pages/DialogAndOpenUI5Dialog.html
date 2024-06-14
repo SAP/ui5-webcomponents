@@ -17,8 +17,36 @@
 	<script src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
 			id="sap-ui-bootstrap"
 			data-sap-ui-libs="sap.m"
+			data-sap-ui-oninit="onOpenUI5Init"
 			data-sap-ui-compatVersion="edge"></script>
 	<script>
+		function onOpenUI5Init() {
+			sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
+				new Button("openUI5Button", {
+					text: "Open OpenUI5 Dialog",
+					press: function () {
+						new Dialog({
+							title: "OpenUI5 Dialog",
+							content: [
+								new Button({
+									text: "Focus stop"
+								}),
+								new Button("openResPopoverButton", {
+									text: "Open WebC Responsive Popover",
+									press: function () {
+										document.getElementById("respPopover").open = true;
+									}
+								})
+							],
+							afterClose: function () {
+								this.destroy();
+							}
+						}).open();
+					}
+				}).placeAt("content");
+			});
+		}
+
 		function init() {
 			document.getElementById("myButton").addEventListener("click", function() {
 				document.getElementById("dialog1").open = true;
@@ -58,5 +86,11 @@
 	<ui5-dialog id="newDialog1" header-text="This is an WebC Dialog 2">
 		<ui5-button id="someButton">Some button</ui5-button>
 	</ui5-dialog>
+	<div id="content"></div>
+	<ui5-responsive-popover id="respPopover"
+							opener="openResPopoverButton"
+							header-text="This is an WebC Responsive Popover">
+		<ui5-button>Some button</ui5-button>
+	</ui5-responsive-popover>
 </body>
 </html>
