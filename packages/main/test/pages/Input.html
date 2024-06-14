@@ -682,45 +682,22 @@
 		const suggestCustom = function (event) {
 			let input = event.target;
 			let value = input.value;
+			const generateHighlightedMarkup = window["sap-ui-webcomponents-bundle"].generateHighlightedMarkup;
+
+			input.innerHTML = "";
 			const data = [];
 			sap_database_entries.forEach(item => {
 				if (item.text.toUpperCase().startsWith(value.toUpperCase())) {
 					data.push(item);
-
-					if (item.items.forEach(subitem => {
-						if (subitem.text.toUpperCase().startsWith(value.toUpperCase())) {
-							data.push(subitem);
-						}
-					}))
+				} else {
+					item.items.filter(subItem => subItem.text.toUpperCase().startsWith(value.toUpperCase())).forEach(subItem => {
+						data.push(subItem);
+					});
 				}
 			});
 
-			debugger;
 
-			sap_database_entries.forEach(item => {
-				if (item.items.length) {
-					items.push(...item.items);
-					return;
-				}
-
-				items.push(item);
-			});
-
-			if (value) {
-				filteredItems = items.filter(function (item) {
-					return item.text.toUpperCase().indexOf(value.toUpperCase()) === 0;
-				});
-			}
-
-			while (input.lastChild && input.lastChild !== input.valueStateMessage[0]) {
-				input.removeChild(input.lastChild);
-			}
-
-			sap_database_entries.forEach(function (item, idx) {
-				if (!filteredItems || (filteredItems.indexOf(item) === -1 && !item.items?.some(groupItem => filteredItems.indexOf(groupItem) !== -1))) {
-					return;
-				}
-
+			data.forEach(function (item, idx) {
 				let suggestion;
 				const groupItem = item.items?.length;
 
@@ -734,7 +711,7 @@
 						suggestionItem.innerHTML = `<div class="custom-item-content-wrapper">
 						<ui5-icon name="world"></ui5-icon>
 						<div class="titles-wrapper">
-							<ui5-text>${subItem.text}</ui5-text>
+							<ui5-text>${generateHighlightedMarkup(subItem.text, value)}</ui5-text>
 							<ui5-text>Travel the world</ui5-text>
 						</div>
 
@@ -752,7 +729,7 @@
 					suggestion.innerHTML = `<div class="custom-item-content-wrapper">
 						<ui5-icon name="world"></ui5-icon>
 						<div class="titles-wrapper">
-							<ui5-text>${item.text}</ui5-text>
+							<ui5-text>${generateHighlightedMarkup(item.text, value)}</ui5-text>
 							<ui5-text>Travel the world</ui5-text>
 						</div>
 
