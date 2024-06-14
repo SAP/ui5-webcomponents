@@ -1,6 +1,6 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { IInputSuggestionItem } from "./Input.js";
+import type { IInputSuggestionItemSelectable } from "./Input.js";
 import ListItemCustom from "./ListItemCustom.js";
 
 /**
@@ -19,7 +19,7 @@ import ListItemCustom from "./ListItemCustom.js";
 @customElement({
 	tag: "ui5-suggestion-item-custom",
 })
-class SuggestionItemCustom extends ListItemCustom implements IInputSuggestionItem {
+class SuggestionItemCustom extends ListItemCustom implements IInputSuggestionItemSelectable {
 	/**
 	 * Defines the text of the `ui5-suggestion-item-custom`.
 	 * @default ""

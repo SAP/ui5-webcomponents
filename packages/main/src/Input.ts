@@ -88,15 +88,20 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import type SuggestionItemGroup from "./SuggestionItemGroup.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
  * @public
  */
 interface IInputSuggestionItem extends UI5Element {
-	text: string;
+	focused: boolean;
 	additionalText?: string;
+	items?: IInputSuggestionItem[];
+}
+
+interface IInputSuggestionItemSelectable extends IInputSuggestionItem {
+	text: string;
+	selected: boolean;
 }
 
 type NativeInputAttributes = {
@@ -135,7 +140,7 @@ type InputEventDetail = {
 }
 
 type InputSelectionChangeEventDetail = {
-	item: SuggestionItem | SuggestionItemGroup | null;
+	item: IInputSuggestionItem | null;
 }
 
 type InputSuggestionScrollEventDetail = {
@@ -510,7 +515,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	suggestionItems!: Array<SuggestionItem | SuggestionItemGroup>;
+	suggestionItems!: Array<IInputSuggestionItem>;
 
 	/**
 	 * Defines the icon to be displayed in the component.
@@ -639,7 +644,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				if (item.hasAttribute("ui5-suggestion-item")) {
 					(item as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((item as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
 				} else if (item.hasAttribute("ui5-suggestion-item-group")) {
-					(item as SuggestionItemGroup).items.forEach(nestedItem => {
+					item.items?.forEach(nestedItem => {
 						(nestedItem as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((nestedItem as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
 					});
 				}
@@ -795,25 +800,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handleEnter(e: KeyboardEvent) {
+		// if a group item is focused, this is false
 		const suggestionItemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
-
 		const innerInput = this.getInputDOMRefSync()!;
-		// Check for autocompleted item
-		const matchingItem = this.suggestionItems.find(item => {
-			// @ts-ignore
-			return (item.text && item.text === this.value) || (item.textContent === this.value);
+		const matchingItem = this._selectableItems.find(item => {
+			return item.text === this.value;
 		});
 
 		if (matchingItem) {
-			// @ts-ignore
-			const itemText = matchingItem.text ? matchingItem.text : (matchingItem.textContent || "");
+			const itemText = matchingItem.text;
 
-			// @ts-ignore
-			// eslint-disable-next-line
 			innerInput.setSelectionRange(itemText.length, itemText.length);
 			if (!suggestionItemPressed) {
 				this.fireSelectionChange(matchingItem, true);
-				// @ts-ignore
 				this.acceptSuggestion(matchingItem, true);
 				this.open = false;
 			}
@@ -1082,11 +1081,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.isTyping = true;
 	}
 
-	_startsWithMatchingItems(str: string): Array<IInputSuggestionItem> {
+	_startsWithMatchingItems(str: string): Array<IInputSuggestionItemSelectable> {
 		return StartsWith(str, Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]")), "text");
 	}
 
-	_getFirstMatchingItem(current: string) {
+	_getFirstMatchingItem(current: string): IInputSuggestionItemSelectable | undefined {
 		if (!this.suggestionItems.length) {
 			return;
 		}
@@ -1102,7 +1101,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.Suggestions?.onItemPress(e);
 	}
 
-	_handleTypeAhead(item: IInputSuggestionItem) {
+	_handleTypeAhead(item: IInputSuggestionItemSelectable) {
 		const value = item.text ? item.text : item.textContent || "";
 
 		this._innerValue = value;
@@ -1198,7 +1197,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	acceptSuggestion(item: IInputSuggestionItem, keyboardUsed: boolean) {
+	acceptSuggestion(item: IInputSuggestionItemSelectable, keyboardUsed: boolean) {
 		if (item.hasAttribute("ui5-suggestion-item-group")) {
 			return;
 		}
@@ -1234,9 +1233,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Updates the input value on item select.
 	 * @param item The item that is on select
 	 */
-	updateValueOnSelect(item: SuggestionItem | SuggestionItemGroup) {
-		const nonSelectable = item.hasAttribute("ui5-suggestion-item-group");
-		const itemValue = nonSelectable ? this.valueBeforeSelectionStart : ((item as IInputSuggestionItem).text);
+	updateValueOnSelect(item: IInputSuggestionItem) {
+		const itemValue = item.hasAttribute("ui5-suggestion-item-group") ? this.valueBeforeSelectionStart : (item as IInputSuggestionItemSelectable).text;
 
 		this.value = itemValue;
 		this._performTextSelection = true;
@@ -1318,7 +1316,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		e.preventDefault();
 	}
 
-	onItemSelected(suggestionItem: SuggestionItem, keyboardUsed: boolean) {
+	onItemSelected(suggestionItem: IInputSuggestionItemSelectable, keyboardUsed: boolean) {
 		const shouldFireSelectionChange = !keyboardUsed && !suggestionItem?.focused && this.valueBeforeItemSelection !== suggestionItem.text;
 
 		if (shouldFireSelectionChange) {
@@ -1332,12 +1330,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.Suggestions?.onItemPress(e);
 	}
 
-	onItemSelect(item: SuggestionItem | SuggestionItemGroup) {
+	onItemSelect(item: IInputSuggestionItem) {
 		this.valueBeforeItemSelection = this.value;
 		this.updateValueOnSelect(item);
 		this.announceSelectedItem();
 
 		this.fireSelectionChange(item, true);
+	}
+
+	get _flattenItems(): Array<IInputSuggestionItem> {
+		return Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
+	}
+
+	get _selectableItems(): Array<IInputSuggestionItemSelectable> {
+		return Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]"));
 	}
 
 	get valueStateTypeMappings() {
@@ -1366,7 +1372,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	fireSelectionChange(item: SuggestionItem | SuggestionItemGroup | null, isValueFromSuggestions: boolean) {
+	fireSelectionChange(item: IInputSuggestionItem | null, isValueFromSuggestions: boolean) {
 		if (this.Suggestions) {
 			this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item });
 			this._isLatestValueFromSuggestions = isValueFromSuggestions;
@@ -1534,18 +1540,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions!.isOpened())) {
-			const nonGroupItems: SuggestionItem[] = [];
-
-			this.suggestionItems.forEach(item => {
-				if (item.hasAttribute("ui5-suggestion-item-group")) {
-					const groupedItems = [...(item as SuggestionItemGroup).items as SuggestionItem[]];
-					nonGroupItems.push(...groupedItems);
-					return;
-				}
-
-				nonGroupItems.push(item as SuggestionItem);
-			});
-			this.suggestionItems.filter(item => !item.hasAttribute("ui5-suggestion-item-group"));
+			const nonGroupItems = this._selectableItems;
 
 			switch (nonGroupItems.length) {
 			case 0:
@@ -1668,6 +1663,7 @@ Input.define();
 export default Input;
 export type {
 	IInputSuggestionItem,
+	IInputSuggestionItemSelectable,
 	InputSuggestionScrollEventDetail,
 	InputSelectionChangeEventDetail,
 	InputEventDetail,

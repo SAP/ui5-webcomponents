@@ -3,7 +3,6 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
@@ -16,10 +15,9 @@ import {
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
 } from "../generated/i18n/i18n-defaults.js";
-import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
 import SuggestionItemGroup from "../SuggestionItemGroup.js";
-import type SuggestionItemCustom from "../SuggestionItemCustom.js";
+import type { IInputSuggestionItem, IInputSuggestionItemSelectable } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;
@@ -28,19 +26,10 @@ interface SuggestionComponent extends UI5Element {
 	value: string;
 	typedInValue: string;
 	hasValueStateMessage: boolean;
-	suggestionItems: Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>;
+	suggestionItems: Array<IInputSuggestionItem>;
 	open: boolean;
-	onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
-	onItemSelect: (item: SuggestionItem | SuggestionItemGroup) => void;
-}
-
-type InputSuggestion = {
-	text: string;
-	type?: `${ListItemType}`;
-	additionalText?: string;
-	additionalTextState?: `${ValueState}`;
-	groupItem: boolean;
-	key: number;
+	onItemSelected: (pressedItem: IInputSuggestionItemSelectable, keyboardUsed: boolean) => void;
+	onItemSelect: (item: IInputSuggestionItem) => void;
 }
 
 type SuggestionsAccInfo = {
@@ -110,7 +99,7 @@ class Suggestions {
 	}
 
 	onEnter(e: KeyboardEvent) {
-		if (this._isGroupOrInactiveItem) {
+		if (this._isGroupItem) {
 			e.preventDefault();
 			return false;
 		}
@@ -225,7 +214,7 @@ class Suggestions {
 		this.selectedItemIndex = pos;
 	}
 
-	onItemSelected(selectedItem: SuggestionItem | null, keyboardUsed: boolean) {
+	onItemSelected(selectedItem: IInputSuggestionItemSelectable | null, keyboardUsed: boolean) {
 		const item = selectedItem;
 		const nonGroupItems = this._getNonGroupItems();
 
@@ -247,7 +236,7 @@ class Suggestions {
 		this._getComponent().open = false;
 	}
 
-	onItemSelect(item: SuggestionItem | SuggestionItemGroup) {
+	onItemSelect(item: IInputSuggestionItem) {
 		this._getComponent().onItemSelect(item);
 	}
 
@@ -288,10 +277,10 @@ class Suggestions {
 	}
 
 	_isItemOnTarget() {
-		return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1 && !this._isGroupOrInactiveItem;
+		return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1 && !this._isGroupItem;
 	}
 
-	get _isGroupOrInactiveItem() {
+	get _isGroupItem() {
 		const items = this._getItems();
 
 		if (!items || !items[this.selectedItemIndex]) {
@@ -398,31 +387,32 @@ class Suggestions {
 		this.component.focused = false;
 		this._clearValueStateFocus();
 
+		const selectedItem = this._getItems()[this.selectedItemIndex];
+
 		this.accInfo = {
 			isGroup: isGroupItem,
 			currentPos: items.indexOf(currentItem) + 1,
-			// @ts-ignore
-			itemText: isGroupItem ? this._getItems()[this.selectedItemIndex].headerText : this._getItems()[this.selectedItemIndex].text,
+			itemText: isGroupItem ? (selectedItem as SuggestionItemGroup).headerText : (selectedItem as IInputSuggestionItemSelectable).text,
 		};
 
-		if (currentItem.hasAttribute("ui5-suggestion-item")) {
-			this.accInfo.additionalText = (currentItem as SuggestionItem).additionalText;
-			this.accInfo.currentPos = nonGroupItems.indexOf(currentItem as SuggestionItem) + 1;
+		if (currentItem.hasAttribute("ui5-suggestion-item") || currentItem.hasAttribute("ui5-suggestion-item-custom")) {
+			this.accInfo.additionalText = (currentItem as IInputSuggestionItemSelectable).additionalText;
+			this.accInfo.currentPos = nonGroupItems.indexOf(currentItem as IInputSuggestionItemSelectable) + 1;
 			this.accInfo.listSize = nonGroupItems.length;
 		}
 
 		if (previousItem) {
 			previousItem.focused = false;
 		}
-		if (previousItem?.hasAttribute("ui5-suggestion-item")) {
-			(previousItem as SuggestionItem).selected = false;
+		if (previousItem?.hasAttribute("ui5-suggestion-item") || previousItem?.hasAttribute("ui5-suggestion-item-custom")) {
+			(previousItem as IInputSuggestionItemSelectable).selected = false;
 		}
 
 		if (currentItem) {
 			currentItem.focused = true;
 
 			if (!isGroupItem) {
-				(currentItem as SuggestionItem).selected = true;
+				(currentItem as IInputSuggestionItemSelectable).selected = true;
 			}
 
 			if (this.handleFocus) {
@@ -431,12 +421,9 @@ class Suggestions {
 		}
 
 		this.component.hasSuggestionItemSelected = true;
-		// @ts-ignore
 		this.onItemSelect(currentItem);
 
-		// @ts-ignore
 		if (!this._isItemIntoView(currentItem)) {
-			// @ts-ignore
 			this._scrollItemIntoView(currentItem);
 		}
 	}
@@ -460,7 +447,7 @@ class Suggestions {
 		}
 	}
 
-	_isItemIntoView(item: SuggestionItem | SuggestionItemGroup) {
+	_isItemIntoView(item: IInputSuggestionItem) {
 		const rectItem = item.getDomRef()!.getBoundingClientRect();
 		const rectInput = this._getComponent().getDomRef()!.getBoundingClientRect();
 		const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
@@ -468,7 +455,7 @@ class Suggestions {
 		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
 	}
 
-	_scrollItemIntoView(item: SuggestionItem | SuggestionItemGroup) {
+	_scrollItemIntoView(item: IInputSuggestionItem) {
 		const pos = item.getDomRef()!.offsetTop;
 		const scrollContainer = this._getScrollContainer();
 		scrollContainer.scrollTop = pos;
@@ -485,13 +472,13 @@ class Suggestions {
 	/**
 	 * Returns the items in 1D array.
 	 *
-	 * @returns {Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom>}
+	 * @returns {Array<IInputSuggestionItem>}
 	 */
-	_getItems(): Array<SuggestionItem | SuggestionItemGroup | SuggestionItemCustom> {
+	_getItems(): Array<IInputSuggestionItem> {
 		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
 	}
 
-	_getNonGroupItems(): Array<SuggestionItem> {
+	_getNonGroupItems(): Array<IInputSuggestionItemSelectable> {
 		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]"));
 	}
 
@@ -575,5 +562,4 @@ export default Suggestions;
 
 export type {
 	SuggestionComponent,
-	InputSuggestion,
 };
