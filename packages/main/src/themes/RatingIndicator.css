@@ -54,6 +54,7 @@
 	position: relative;
 	width: var(--_ui5_rating_indicator_item_width);
 	height: var(--_ui5_rating_indicator_item_height);
+	font-size: max(24px, 100%);
 }
 
 .ui5-rating-indicator-item:not(:last-child) {

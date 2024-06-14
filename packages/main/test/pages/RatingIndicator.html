@@ -19,6 +19,10 @@
 
 <body class="ratingindicator1auto">
 
+	<ui5-button id="btnToggle">Toggle 'Compact'</ui5-button>
+	<br />
+	<br />
+
 	<ui5-rating-indicator id="rating-indicator1" accessible-name="Hello World"></ui5-rating-indicator>
 	<br>
 	<br>
@@ -42,6 +46,8 @@
 	<br>
 
 	<ui5-rating-indicator id="rating-indicator1" value="3.7"></ui5-rating-indicator>
+	<br />
+	<ui5-rating-indicator id="rating-indicator-test" value="3.7" readonly></ui5-rating-indicator>
 	<br>
 	<br>
 	<br>
@@ -109,6 +115,11 @@
 		ratingIndicator4.addEventListener("ui5-change", event => {
 			changeEventInput.value = ++changeCount;
 		});
+
+		document.getElementById("btnToggle").addEventListener("click",  () => {
+			document.getElementsByTagName("body")[0].classList.toggle("sapUiSizeCompact");
+		});
+
 	</script>
 </body>
 
