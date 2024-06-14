@@ -32,6 +32,7 @@ import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import HasPopup from "./types/HasPopup.js";
 import {
 	DATEPICKER_OPEN_ICON_TITLE,
 	DATEPICKER_DATE_DESCRIPTION,
@@ -686,6 +687,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
+			"ariaHasPopup": HasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
