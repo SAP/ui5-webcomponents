@@ -12,7 +12,7 @@ import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate
  * @constructor
  * @extends ListItemBase
  * @abstract
- * @implements { IInputSuggestionItem }
+ * @implements { IInputSuggestionItemSelectable }
  * @public
  */
 @customElement({

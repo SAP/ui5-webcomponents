@@ -13,7 +13,7 @@ import ListItemCustom from "./ListItemCustom.js";
  * @constructor
  * @extends ListItemCustom
  * @public
- * @implements { IInputSuggestionItem }
+ * @implements { IInputSuggestionItemSelectable }
  * @since 2.0.0
  */
 @customElement({

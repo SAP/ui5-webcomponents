@@ -41,11 +41,13 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	width: 100%;
 }
 
 .titles-wrapper {
 	margin-inline-start: 1rem;
 	margin-inline-end: 1rem;
+	width: 10rem;
 }
 
 .status ui5-text {

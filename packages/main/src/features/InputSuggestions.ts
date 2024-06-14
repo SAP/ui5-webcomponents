@@ -472,7 +472,6 @@ class Suggestions {
 	/**
 	 * Returns the items in 1D array.
 	 *
-	 * @returns {Array<IInputSuggestionItem>}
 	 */
 	_getItems(): Array<IInputSuggestionItem> {
 		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
