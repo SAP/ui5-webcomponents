@@ -52,7 +52,7 @@
 	height: 5rem;
 }
 
-:host([image]) .ui5-li-content {
+:host([image][wrapping-type="None"]) .ui5-li-content {
 	height: 3rem;
 }
 
@@ -84,7 +84,7 @@
 }
 
 .ui5-li-additional-text,
-:host(:not([wrapping-type="Normal"])) .ui5-li-title,
+:host([wrapping-type="None"]) .ui5-li-title,
 .ui5-li-desc {
 	white-space: nowrap;
 	overflow: hidden;

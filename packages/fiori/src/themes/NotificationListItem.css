@@ -1,14 +1,14 @@
 @import "./NotificationListItemBase.css";
 @import "./NotificationStateIcon.css";
 
-:host(:not([wrapping-type="Normal"])) .ui5-nli-title-text {
+:host([wrapping-type="None"]) .ui5-nli-title-text {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
 
-:host(:not([wrapping-type="Normal"])) .ui5-nli-description {
+:host([wrapping-type="None"]) .ui5-nli-description {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
