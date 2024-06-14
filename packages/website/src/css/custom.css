@@ -213,7 +213,7 @@ code {
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
   font-size: 0.75rem;
-  content: "Experimental";
+  content: "exp";
   background: #a100c2;
   pointer-events: none;
 }
@@ -227,7 +227,7 @@ code {
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
   font-size: 0.75rem;
-  content: "New";
+  content: "new";
   background: #334eff;
   pointer-events: none;
 }
