@@ -234,7 +234,8 @@ describe("TimePicker general interaction", () => {
 		await timepicker.click();
 		await browser.keys("F4");
 
-		const popover = await timepicker.shadow$("ui5-responsive-popover");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Time", "Picker popover has an accessible name");
 
