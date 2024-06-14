@@ -270,7 +270,8 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.click();
 		await browser.keys("F4");
 
-		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker3");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
 
