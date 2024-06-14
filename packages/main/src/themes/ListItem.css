@@ -40,15 +40,15 @@
 }
 
 /* [ui5-li]: item with title and description */
-:host([has-title][description]) {
+:host([has-title][description][wrapping-type="None"]) {
 	height: 5rem;
 }
 
-:host([has-title][image]) {
+:host([has-title][image][wrapping-type="None"]) {
 	height: 5rem;
 }
 
-:host([_has-image-content]) {
+:host([_has-image-content][wrapping-type="None"]) {
 	height: 5rem;
 }
 
