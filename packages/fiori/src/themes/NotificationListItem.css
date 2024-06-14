@@ -159,6 +159,10 @@
 	margin-inline: 0.5rem;
 }
 
+.ui5-nli-footnotes {
+	display: flex;
+}
+
 .ui5-nli-footer-showMore {
 	margin-inline-start: 1rem;
 }
