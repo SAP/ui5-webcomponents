@@ -16,13 +16,6 @@ enum TagDesign {
 	Set2 = "Set2",
 
 	/**
-	 * Set3 of generic indication colors that are
-	 * intended for industry-specific use cases. Used in SAP BTP design system.
-	 * @public
-	 */
-	Set3 = "Set3",
-
-	/**
 	 * Neutral design
 	 * @public
 	 */

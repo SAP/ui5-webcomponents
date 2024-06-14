@@ -57,7 +57,7 @@ import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type ListItemType from "./types/ListItemType.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import { StartsWith } from "./Filters.js";
@@ -656,7 +656,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		const hasItems = !!this.suggestionItems.length;
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot!.querySelector("input") === getActiveElement();
-
 		if (this.shouldDisplayOnlyValueStateMessage) {
 			this.openValueStatePopover();
 		} else {

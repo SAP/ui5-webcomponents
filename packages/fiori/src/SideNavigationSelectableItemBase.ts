@@ -17,7 +17,7 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * Base class for the navigation items that support actions.
  *
  * @constructor
- * @extends UI5Element
+ * @extends SideNavigationItemBase
  * @abstract
  * @public
  * @since 1.24.0

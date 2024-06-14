@@ -1,7 +1,7 @@
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/Input.js";
-import "@ui5/webcomponents/dist/StandardListItem.js";
+import "@ui5/webcomponents/dist/ListItemStandard.js";
 import "@ui5/webcomponents/dist/Popover.js";
 import "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents/dist/ToggleButton.js";
