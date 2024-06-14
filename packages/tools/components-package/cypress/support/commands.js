@@ -38,12 +38,4 @@
 
 import "cypress-real-events";
 
-
-Cypress.Commands.add('ui5ElementGetStaticAreaItem', { prevSubject: 'element' }, (subject) => {
-    return cy.wrap(subject)
-        .invoke("get", 0)
-        .invoke("getStaticAreaItemDomRef")
-        .then($el => {
-            return cy.wrap($el);
-        })
-});
+import "./Menu.commands.js";

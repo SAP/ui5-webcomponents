@@ -8,17 +8,7 @@ describe("Menu interaction", () => {
 		</ui5-menu>`)
 
 		cy.get("[ui5-menu]")
-			.as("menu");
-
-		cy.get("@menu")
-			.then($menu => {
-				$menu.attr("open", true);
-			});
-
-		cy.get("@menu")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
+			.ui5MenuOpen({ opener: "btnOpen" });
 	});
 
 	it("Menu opens after button click", () => {
@@ -28,16 +18,7 @@ describe("Menu interaction", () => {
 		</ui5-menu>`)
 
 		cy.get("[ui5-menu]")
-			.as("menu")
-			.then($menu => {
-				$menu.attr("open", true);
-				$menu.attr("opener", "btnOpen");
-			});
-
-		cy.get("@menu")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
+			.ui5MenuOpen({ opener: "btnOpen" });
 	});
 
 	it("Menu icons appearance", () => {
@@ -77,15 +58,12 @@ describe("Menu interaction", () => {
 		</ui5-menu>`)
 
 		cy.get("[ui5-menu]")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
+			.ui5MenuOpened();
 
-		cy.get("[ui5-menu-item][text='Item 1.0']")
-			.as("item");
-
-		cy.get("@item")
-			.realClick();
+			
+			cy.get("[ui5-menu-item][text='Item 1.0']")
+			.as("item")
+			.ui5MenuItemClick();
 
 		cy.get("@item")
 			.shadow()
@@ -100,6 +78,9 @@ describe("Menu interaction", () => {
 			<ui5-menu-item text="Item 2" disabled></ui5-menu-item>
 		</ui5-menu>`)
 
+		cy.get("[ui5-menu]")
+			.ui5MenuOpened();
+
 		cy.get("[ui5-menu] > [ui5-menu-item]")
 			.as("items");
 
@@ -109,7 +90,7 @@ describe("Menu interaction", () => {
 
 		cy.get("@items")
 			.eq(1)
-			.realClick()
+			.ui5MenuItemClick()
 			.should("be.focused")
 			.and("have.attr", "disabled")
 	});
@@ -123,12 +104,8 @@ describe("Menu interaction", () => {
 		</ui5-menu>`)
 
 		cy.get("[ui5-menu]")
-			.as("menu");
-
-		cy.get("@menu")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
+			.as("menu")
+			.ui5MenuOpened();
 
 		cy.get("@menu")
 			.find("[ui5-button]")
@@ -141,9 +118,7 @@ describe("Menu interaction", () => {
 			.realClick();
 
 		cy.get("@menu")
-			.shadow()
-			.find("[ui5-responsive-popover]")
-			.should("have.attr", "open");
+			.ui5MenuOpened();
 
 		cy.get("@clicked")
 			.should("have.been.calledOnce");
@@ -157,11 +132,14 @@ describe("Menu interaction", () => {
 			</ui5-menu-item>
 		</ui5-menu>`)
 
+		cy.get("[ui5-menu]")
+			.ui5MenuOpened();
+
 		cy.get("[ui5-menu] > [ui5-menu-item]")
-		.shadow()
-		.find("[ui5-list]")
-		.should("have.attr", "loading-delay", "500")
-		.and("have.attr", "loading")
+			.shadow()
+			.find("[ui5-list]")
+			.should("have.attr", "loading-delay", "500")
+			.and("have.attr", "loading")
 	});
 
 	it("Menu and Menu items busy indication - without items", () => {
@@ -171,10 +149,10 @@ describe("Menu interaction", () => {
 		</ui5-menu>`)
 
 		cy.get("[ui5-menu] > [ui5-menu-item]")
-		.shadow()
-		.find("[ui5-busy-indicator]")
-		.should("have.attr", "delay", "500")
-		.and("have.attr", "active")
+			.shadow()
+			.find("[ui5-busy-indicator]")
+			.should("have.attr", "delay", "500")
+			.and("have.attr", "active")
 	});
 
 	describe("Event firing", () => {
@@ -184,16 +162,16 @@ describe("Menu interaction", () => {
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`)
 
-			cy.get("[ui5-menu-item]:focus")
-				.as("item");
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 
 			cy.get("[ui5-menu]")
 				.then(($item) => {
 					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
 
-			cy.get("@item")
-				.realClick();
+			cy.get("[ui5-menu-item]")
+				.ui5MenuItemClick();
 
 			cy.get("@clicked")
 				.should("have.been.calledOnce");
@@ -205,15 +183,16 @@ describe("Menu interaction", () => {
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`)
 
-			cy.get("[ui5-menu-item]:focus")
-				.as("item");
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 
 			cy.get("[ui5-menu]")
-				.then(($item) => {
-					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
+				.then(($menu) => {
+					$menu.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
 
-			cy.realPress("Space");
+			cy.get("[ui5-menu-item]")
+				.ui5MenuItemPress("Space");
 
 			cy.get("@clicked")
 				.should("have.been.calledOnce");
@@ -225,16 +204,16 @@ describe("Menu interaction", () => {
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`)
 
-			cy.get("[ui5-menu-item]:focus")
-				.as("item");
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 
 			cy.get("[ui5-menu]")
 				.then(($item) => {
 					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
 
-			cy.get("@item")
-				.realPress("Enter");
+			cy.get("[ui5-menu-item]")
+				.ui5MenuItemPress("Enter");
 
 			cy.get("@clicked")
 				.should("have.been.calledOnce");
@@ -246,6 +225,9 @@ describe("Menu interaction", () => {
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`)
 
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
+
 			cy.get("[ui5-menu-item]:focus")
 				.as("item");
 
@@ -255,7 +237,7 @@ describe("Menu interaction", () => {
 				})
 
 			cy.get("@item")
-				.realClick();
+				.ui5MenuItemClick();
 
 			cy.get("[ui5-menu]")
 				.as("menu");
@@ -263,10 +245,8 @@ describe("Menu interaction", () => {
 			cy.get("@clicked")
 				.should("have.been.calledOnce");
 
-			cy.get("@menu")
-				.shadow()
-				.find("[ui5-responsive-popover]")
-				.should("have.attr", "open");
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 		});
 
 		it("Events firing on open/close of the menu", () => {
@@ -284,17 +264,8 @@ describe("Menu interaction", () => {
 				})
 
 			cy.get("[ui5-menu]")
-				.as("menu");
-
-			cy.get("@menu")
-				.then($menu => {
-					$menu.attr("open", true);
-				});
-
-			cy.get("@menu")
-				.shadow()
-				.find("[ui5-responsive-popover]")
-				.should("have.attr", "open");
+				.as("menu")
+				.ui5MenuOpen();
 
 			cy.get("@beforeOpen")
 				.should("have.been.calledOnce");
@@ -308,7 +279,11 @@ describe("Menu interaction", () => {
 			cy.get("@close")
 				.should("have.not.been.calledOnce");
 
-			cy.realPress("Escape")
+			cy.get("@menu")
+				.ui5MenuOpened();
+
+			cy.get("[ui5-menu-item]:focus")
+				.ui5MenuItemClick();
 
 			cy.get("@beforeOpen")
 				.should("have.been.calledOnce");
@@ -321,6 +296,9 @@ describe("Menu interaction", () => {
 
 			cy.get("@close")
 				.should("have.been.calledOnce");
+
+			cy.get("@menu")
+				.should("not.have.attr", "open");
 		});
 
 	})
