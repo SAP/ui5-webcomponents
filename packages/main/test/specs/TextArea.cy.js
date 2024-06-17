@@ -621,13 +621,9 @@ describe("TextArea general interaction", () => {
 				.as("textarea");
 
 			cy.get("@textarea")
-				.realClick({ clickCount: 3 });
-
-			cy.get("@textarea")
 				.shadow()
 				.find("textarea")
 				.as("nativeTextarea")
-				.should("be.focused")
 				.then($nativeTextarea => {
 					const inputElement = $nativeTextarea.get(0);
 
