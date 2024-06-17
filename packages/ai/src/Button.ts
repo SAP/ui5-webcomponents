@@ -195,9 +195,7 @@ class Button extends UI5Element {
 				this._currentStateObject = newStateObject;
 				this._fadeIn();
 			}, fadeOutDuration);
-		} /*else {
-			this._throwMissingStateError();
-		}*/
+		}
 	}
 
 	/**
@@ -249,7 +247,7 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	_throwMissingStateError(): void {
-		// throw new Error(`State with name="${this.state}" doesn't exist!`);
+		// eslint-disable-next-line no-console
 		console.error(`State with name="${this.state}" doesn't exist!`);
 	}
 
