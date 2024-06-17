@@ -689,8 +689,10 @@ class FlexibleColumnLayout extends UI5Element {
 		} else if (isRightShift(e)) {
 			step = stepSize;
 		} else if (isHome(e)) {
+			e.preventDefault();
 			step = isRTL ? bigStepSize : -bigStepSize;
 		} else if (isEnd(e)) {
+			e.preventDefault();
 			step = isRTL ? -bigStepSize : bigStepSize;
 		}
 
@@ -841,7 +843,8 @@ class FlexibleColumnLayout extends UI5Element {
 			separator: "end",
 			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
 			forward: false,
-		}) && ((newColumnWidths.end >= COLUMN_MIN_WIDTH))) {
+			// ceil before comparing to avoid floating point precision issues
+		}) && ((Math.ceil(newColumnWidths.end) >= COLUMN_MIN_WIDTH))) {
 			return FCLLayout.ThreeColumnsMidExpanded;
 		}
 
@@ -881,7 +884,8 @@ class FlexibleColumnLayout extends UI5Element {
 			separator: "start",
 			from: FCLLayout.ThreeColumnsMidExpanded,
 			forward: true,
-		}) && isTablet && ((startColumnPxWidth >= COLUMN_MIN_WIDTH) /* || isResizeEnd */)) {
+			// ceil before comparing to avoid floating point precision issues
+		}) && isTablet && (Math.ceil(startColumnPxWidth) >= COLUMN_MIN_WIDTH)) {
 			return FCLLayout.ThreeColumnsMidExpandedEndHidden;
 		}
 
@@ -889,7 +893,8 @@ class FlexibleColumnLayout extends UI5Element {
 			separator: "end",
 			from: FCLLayout.ThreeColumnsMidExpandedEndHidden,
 			forward: false,
-		}) && isTablet && ((newColumnWidths.end >= COLUMN_MIN_WIDTH) /* || isResizeEnd */)) {
+			// ceil before comparing to avoid floating point precision issues
+		}) && isTablet && (Math.ceil(newColumnWidths.end) >= COLUMN_MIN_WIDTH)) {
 			return FCLLayout.ThreeColumnsMidExpanded;
 		}
 
