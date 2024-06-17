@@ -33,4 +33,14 @@ describe("API", () => {
 		const input = await fileUploader.shadow$("input");
 		assert.strictEqual(await input.getProperty("accept"), ".txt,.docx", "Native input is has the rignt accept property.");
 	});
+
+	it("Input not focusable", async () => {
+		const openDialogButton = await browser.$("#open-dialog-btn");
+
+		await openDialogButton.click();
+		const dialog = await browser.$("#dialog");
+		const fileUploader = await dialog.$("ui5-file-uploader");
+
+		assert.notOk(await fileUploader.isFocused(), "Uploader isn't focusable");
+	});
 });

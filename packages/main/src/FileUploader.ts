@@ -221,6 +221,13 @@ class FileUploader extends UI5Element implements IFormElement {
 		this._internals = this.attachInternals && this.attachInternals();
 	}
 
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		return this.content[0];
+	}
+
 	_onmouseover() {
 		this.content.forEach(item => {
 			item.classList.add("ui5_hovered");
