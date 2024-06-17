@@ -2,5 +2,5 @@
 
 :root {
 	--_ui5_busy_indicator_color: var(--sapContent_BusyColor);
-	--_ui5_busy_indicator_block_layer: rgba(0, 0, 0, 0.3); /* --sapBlockLayer_Background with 0.3 opacity*/
+	--_ui5_busy_indicator_block_layer: color-mix(in oklch, transparent, var(--sapBlockLayer_Background) 30%);
 }

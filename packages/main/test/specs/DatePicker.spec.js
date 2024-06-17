@@ -822,14 +822,20 @@ describe("Date Picker Tests", () => {
 	it("Months are disabled when out of range", async () => {
 		datepicker.id = "#dp33";
 
+		const input = await datepicker.getInput();
+		await input.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Jan 8, 2100");
+		await root.keys("Enter");
+
 		await datepicker.openPicker();
 
 		const btnMonth = await datepicker.getBtnMonth();
 		await btnMonth.click();
+
 		let displayedMonth = await datepicker.getDisplayedMonth(10);
 		assert.ok(await displayedMonth.hasClass("ui5-mp-item--disabled"), "Months out of range are disabled");
 
-		const root = await datepicker.getRoot();
 		await root.keys("ArrowDown");
 
 		displayedMonth = await datepicker.getDisplayedMonth(0);

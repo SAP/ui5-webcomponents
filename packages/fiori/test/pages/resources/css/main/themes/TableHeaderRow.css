@@ -1,0 +1,1 @@
+:host{background:var(--sapList_HeaderBackground);grid-template-rows:var(--_ui5-v2-0-0-rc-5_list_item_base_height);border-bottom:var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor)}:host([hidden]){display:none}:host([sticky]){position:sticky;top:var(--ui5-v2-0-0-rc-5_grid_sticky_top, 0);z-index:1}#popin-cell{padding:0;width:0}

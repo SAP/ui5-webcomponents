@@ -1,0 +1,1 @@
+:host{font-family:var(--sapFontSemiboldDuplexFamily);color:var(--sapList_HeaderTextColor)}:host(:empty){padding:0}

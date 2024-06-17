@@ -89,7 +89,7 @@
 	flex-direction: column;
 }
 
-:host([_is-over-component]) .ui5-busy-indicator-busy-area {
+:host(:not(:empty)) .ui5-busy-indicator-busy-area {
 	background-color: var(--_ui5_busy_indicator_block_layer);
 }
 
