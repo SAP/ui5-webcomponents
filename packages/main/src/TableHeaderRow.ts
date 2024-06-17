@@ -78,7 +78,7 @@ class TableHeaderRow extends TableRowBase {
 		}
 	}
 
-	isHeaderRow() {
+	isHeaderRow(): boolean {
 		return true;
 	}
 
@@ -97,15 +97,8 @@ class TableHeaderRow extends TableRowBase {
 	get _i18nRowPopin() {
 		return TableRowBase.i18nBundle.getText(TABLE_ROW_POPIN);
 	}
-
-	get isTableHeaderRow() {
-		return true;
-	}
 }
 
 TableHeaderRow.define();
 
-const isInstanceOfTableHeaderRow = (obj: any): obj is TableHeaderRow => "isTableHeaderRow" in obj;
-
 export default TableHeaderRow;
-export { isInstanceOfTableHeaderRow };

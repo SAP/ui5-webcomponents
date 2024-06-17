@@ -89,7 +89,6 @@ class TableRow extends TableRowBase {
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		super._onkeydown(e, eventOrigin);
 		if (e.defaultPrevented) {
 			return;
 		}
@@ -117,16 +116,8 @@ class TableRow extends TableRowBase {
 	get _isInteractive() {
 		return this.interactive;
 	}
-
-	get isTableRow() {
-		return true;
-	}
 }
 
 TableRow.define();
 
-const isInstanceOfTableRow = (obj: any): obj is TableRow => "isTableRow" in obj;
-
 export default TableRow;
-
-export { isInstanceOfTableRow };

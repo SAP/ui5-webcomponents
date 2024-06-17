@@ -9,8 +9,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import TableSelectionMode from "./types/TableSelectionMode.js";
-import { isInstanceOfTableRow } from "./TableRow.js";
-import { isInstanceOfTableHeaderRow } from "./TableHeaderRow.js";
+import { isInstanceOfTableRow, isInstanceOfTableHeaderRow } from "./TableRowBase.js";
 import type Table from "./Table.js";
 import type { ITableFeature } from "./Table.js";
 import type TableRow from "./TableRow.js";
@@ -80,7 +79,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	selected!: string;
 
 	_table?: Table;
-	_rangeSelection?: {state: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean} | null;
+	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean} | null;
 
 	onTableActivate(table: Table) {
 		this._table = table;
@@ -174,14 +173,14 @@ class TableSelection extends UI5Element implements ITableFeature {
 		this.selectedAsArray = [...selectedSet];
 	}
 
-	_selectRow(row: TableRow, state: boolean) {
+	_selectRow(row: TableRow, selected: boolean) {
 		const rowIdentifier = this.getRowIdentifier(row);
 		if (this.mode === TableSelectionMode.Multiple) {
 			const selectedSet = this.selectedAsSet;
-			selectedSet[state ? "add" : "delete"](rowIdentifier);
+			selectedSet[selected ? "add" : "delete"](rowIdentifier);
 			this.selectedAsSet = selectedSet;
 		} else {
-			this.selected = state ? rowIdentifier : "";
+			this.selected = selected ? rowIdentifier : "";
 		}
 	}
 
@@ -225,12 +224,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		const focusedElement = getActiveElement(); // Assumption: The focused element is always the "next" row after navigation.
 
-		if (focusedElement === null) {
-			this._stopRangeSelection();
-			return;
-		}
-
-		if (!(isInstanceOfTableRow(focusedElement)) && !this._rangeSelection?.isMouse) {
+		if (!isInstanceOfTableRow(focusedElement) && !this._rangeSelection?.isMouse) {
 			this._stopRangeSelection();
 			return;
 		}
@@ -244,7 +238,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent, eventTarget: HTMLElement) {
+	_onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement) {
 		if (!this._table) {
 			return;
 		}
@@ -256,11 +250,13 @@ class TableSelection extends UI5Element implements ITableFeature {
 			} else if (this._isSelectionCheckbox(e)) {
 				const row = this._findRowInPath(e.composedPath());
 				this._informRowSelectionChange(row);
+			} else if (isInstanceOfTableRow(eventOrigin) || isInstanceOfTableHeaderRow(eventOrigin)) {
+				this._informRowSelectionChange(eventOrigin as TableRow);
 			}
 			return;
 		}
 
-		if (!(isInstanceOfTableRow(eventTarget)) || !this._rangeSelection || isShift(e)) {
+		if (!(isInstanceOfTableRow(eventOrigin)) || !this._rangeSelection || isShift(e)) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
 			!this._isSelectionCheckbox(e) && this._stopRangeSelection();
 		}
@@ -308,14 +304,14 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @private
 	 */
 	_startRangeSelection(row: TableRow, isMouse = false) {
-		const state = this.isSelected(row);
-		if (isMouse && !state) {
+		const selected = this.isSelected(row);
+		if (isMouse && !selected) {
 			// Do not initiate range selection if the row is not selected
 			return;
 		}
 
 		this._rangeSelection = {
-			state,
+			selected,
 			isUp: null,
 			rows: [row],
 			isMouse,
@@ -334,33 +330,35 @@ class TableSelection extends UI5Element implements ITableFeature {
 		}
 
 		const isUp = change > 0;
-		let selectionChanged = false;
 		this._rangeSelection.isUp ??= isUp;
-		if (isUp !== this._rangeSelection.isUp && !this._rangeSelection.isMouse) {
-			// Only reverse selection for keyboard
-			if (this.isSelected(targetRow)) {
-				selectionChanged = true;
-			}
-			// Changing direction "reverse" the selection
+
+		const shouldReverseSelection = isUp !== this._rangeSelection.isUp && !this._rangeSelection.isMouse;
+		let selectionChanged = shouldReverseSelection && this.isSelected(targetRow);
+
+		if (shouldReverseSelection) {
 			this._reverseRangeSelection();
 		} else {
-			const endIndex = this._table!.rows.indexOf(targetRow);
-			const startIndex = endIndex - change;
+			const rowIndex = this._table!.rows.indexOf(targetRow);
+			const [startIndex, endIndex] = [rowIndex, rowIndex - change].sort((a, b) => a - b);
 
-			this._table?.rows.slice(Math.min(startIndex, endIndex), Math.max(startIndex, endIndex) + 1).forEach(row => {
-				if (!this._rangeSelection?.rows.includes(row)) {
+			selectionChanged = this._table?.rows.slice(startIndex, endIndex + 1).reduce((changed, row) => {
+				const isRowNotInSelection = !this._rangeSelection?.rows.includes(row);
+				const isRowSelectionDifferent = this.isSelected(row) !== this._rangeSelection!.selected;
+
+				if (isRowNotInSelection) {
 					this._rangeSelection?.rows.push(row);
-				}
-
-				if (this.isSelected(row) !== this._rangeSelection!.state) {
-					selectionChanged = true;
 				}
 
 				// Workaround required due to bug with mouse, where the checkbox stays unchecked, but the row is selected.
 				// Even invalidation does not change the state of the checkbox. Maybe an issue with lit's 'intelligent' rendering?
-				this._rangeSelection?.isMouse && row.shadowRoot?.querySelector("#selection-component")?.setAttribute("checked", "");
-				this._selectRow(row, this._rangeSelection!.state);
-			});
+				if (this._rangeSelection?.isMouse) {
+					row.shadowRoot?.querySelector("#selection-component")?.setAttribute("checked", "");
+				}
+
+				this._selectRow(row, this._rangeSelection!.selected);
+
+				return changed || isRowSelectionDifferent;
+			}, selectionChanged) || false;
 		}
 
 		selectionChanged && this._fireEvent("change");
@@ -382,7 +380,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	_isSelectionCheckbox(e: Event) {
-		return e.composedPath().some((el: EventTarget) => (el as HTMLElement).id === "selection-component");
+		return e.composedPath().some((el: EventTarget) => (el as HTMLElement).hasAttribute?.("data-ui5-table-selection-component"));
 	}
 
 	_isHeaderSelector(e: Event) {

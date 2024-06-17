@@ -5,7 +5,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type TableCellBase from "./TableCellBase.js";
 import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
 import Table from "./Table.js";
@@ -55,19 +54,12 @@ abstract class TableRowBase extends UI5Element {
 		return this;
 	}
 
-	isHeaderRow() {
-		return false;
-	}
-
 	_informSelectionChange() {
 		this._tableSelection?.informSelectionChange(this);
 	}
 
-	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if ((eventOrigin === this && this._isSelectable && isSpace(e)) || (eventOrigin === this._selectionCell && (isSpace(e) || isEnter(e)))) {
-			this._informSelectionChange();
-			e.preventDefault();
-		}
+	isHeaderRow(): boolean {
+		return false;
 	}
 
 	get _table(): Table | undefined {
@@ -117,3 +109,8 @@ abstract class TableRowBase extends UI5Element {
 }
 
 export default TableRowBase;
+
+const isInstanceOfTableHeaderRow = (obj: any) => "isHeaderRow" in obj && obj.isHeaderRow() as boolean;
+const isInstanceOfTableRow = (obj: any) => "isHeaderRow" in obj && !obj.isHeaderRow() as boolean;
+
+export { isInstanceOfTableHeaderRow, isInstanceOfTableRow };
