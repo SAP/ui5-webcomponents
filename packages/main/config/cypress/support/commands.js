@@ -36,4 +36,4 @@
 //   }
 // }
 
-import "cypress-real-events";
+import "../../../test/specs/commands/Menu.commands.js";

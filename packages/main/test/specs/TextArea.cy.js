@@ -1,5 +1,4 @@
 import { html } from 'lit';
-// import "../../src/bundle.esm.ts";
 
 describe("TextArea general interaction", () => {
 	describe("Attribute propagation", () => {
