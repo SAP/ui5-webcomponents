@@ -51,7 +51,7 @@ import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
 import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
-import CustomListItem from "./CustomListItem.js";
+import ListItemCustom from "./ListItemCustom.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -173,7 +173,7 @@ interface ITab extends UI5Element {
 		List,
 		ResponsivePopover,
 		DropIndicator,
-		CustomListItem,
+		ListItemCustom,
 	],
 })
 /**
@@ -512,6 +512,9 @@ class TabContainer extends UI5Element {
 		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 			return;
 		}
+
+		e.dataTransfer.dropEffect = "move";
+		e.dataTransfer.effectAllowed = "move";
 
 		this._setDraggedElement!((e.target as TabInStrip).realTabReference);
 	}

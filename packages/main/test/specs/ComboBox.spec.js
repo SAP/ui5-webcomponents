@@ -1219,6 +1219,125 @@ describe("Keyboard navigation", async () => {
 		assert.notOk(await listItems[1].getProperty("selected"), "List Item should not be selected");
 	});
 
+	it("Should select the matching item when input has matching value and F4 is pressed", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		const value = await input.getProperty("value");
+
+		await comboBox.click();
+		await comboBox.keys("F4");
+
+		const popover = await comboBox.shadow$("ui5-responsive-popover");
+		const selectedListItem = await popover.$("ui5-list").$("ui5-li[selected]");
+
+		assert.strictEqual(await selectedListItem.shadow$(".ui5-li-title").getText(), value, "Selected item is correct.");
+	});
+
+	it("Should not select an item when input value does not match any item and F4 is pressed", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+
+		await input.click();
+		await input.keys("test");
+
+		await comboBox.keys("F4");
+
+		const popover = await comboBox.shadow$("ui5-responsive-popover");
+		const selectedListItems = await popover.$("ui5-list").$$("ui5-li[selected]");
+
+		assert.strictEqual(selectedListItems.length, 0, "No item selected.");
+	});
+
+	it("Should select the first non-group item when input value is empty and F4 is pressed (no grouping)", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo2");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		let value = await input.getProperty("value");
+
+		assert.strictEqual(value, "", "Default value should be empty.");
+
+		await input.click();
+		await comboBox.keys("F4");
+
+		const popover = await comboBox.shadow$("ui5-responsive-popover");
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
+
+		value = await input.getProperty("value");
+		assert.strictEqual(value, firstListItemText, "First item is selected.");
+	});
+
+	it("Should select the first non-group item when input value is empty and F4 is pressed (with grouping)", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo-grouping");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		let value = await input.getProperty("value");
+
+		assert.strictEqual(value, "", "Default value should be empty.");
+
+		await input.click();
+		await comboBox.keys("F4");
+
+		const popover = await comboBox.shadow$("ui5-responsive-popover");
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
+
+		value = await input.getProperty("value");
+		assert.strictEqual(value, firstListItemText, "First non-group item is selected.");
+	});
+
+	it("Switching focus between combo-boxes on 'Tab' should close the value state message of the previously focused combo-box", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox1 = await browser.$("#value-state-error");
+		const comboBox2 = await browser.$("#vs-warning-default");
+
+		await comboBox1.click();
+
+		const valueState1 = await comboBox1.shadow$("ui5-popover");
+		const valueState2 = await comboBox2.shadow$("ui5-popover");
+
+		assert.ok(await valueState1.getProperty("open"), "Combo-box in focus should have open value state message.");
+		assert.notOk(await valueState2.isExisting(), "Combo-box not in focus should not have value state message.");
+
+		await comboBox1.keys("Tab");
+
+		assert.ok(await valueState2.getProperty("open"), "Combo-box in focus should have open value state message.");
+		assert.notOk(await valueState1.isExisting(), "Combo-box not in focus should not have value state message.");
+	});
+
+	it("Value state message of type 'Information' is opened on focusing the combo-box", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#vs-information-default");
+		await comboBox.click();
+
+		const valueState = await comboBox.shadow$("ui5-popover");
+
+		assert.ok(await valueState.isExisting(), "Value state message exists.");
+		assert.ok(await valueState.getProperty("open"), "Combo-box in focus should have open value state message.");
+	});
+
+	it("Pressing a link inside value state message popover and pressing 'Tab' after that closes the popover", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#value-state-error");
+		await comboBox.click();
+
+		const valueState = await comboBox.shadow$("ui5-popover");
+
+		await valueState.$("a").click();
+		await comboBox.keys("Tab");
+
+		assert.notOk(await valueState.isExisting(), "Value state message is closed.");
+	});
+
 	it ("Tests disabled autocomplete(type-ahead)", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 

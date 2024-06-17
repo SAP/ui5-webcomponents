@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** fix grouping sample ([#9085](https://github.com/SAP/ui5-webcomponents/issues/9085)) ([2c160d3](https://github.com/SAP/ui5-webcomponents/commit/2c160d31bbc6d7328dc8073582ec6a63415513e8))
+* **ui5-notification-list:** improved accessibility ([#9070](https://github.com/SAP/ui5-webcomponents/issues/9070)) ([5e62d4a](https://github.com/SAP/ui5-webcomponents/commit/5e62d4af792d7043f931b0f8f894d36a85f18395))
+
+
+### Code Refactoring
+
+* **ui5-link:** wrap text by default ([#9006](https://github.com/SAP/ui5-webcomponents/issues/9006)) ([1924b54](https://github.com/SAP/ui5-webcomponents/commit/1924b5457f22c428527f8be3fbdd46d9d5d7ffed))
+* **ui5-radio-button:** wrap text by default ([#9117](https://github.com/SAP/ui5-webcomponents/issues/9117)) ([b8d7bac](https://github.com/SAP/ui5-webcomponents/commit/b8d7bac56c783825cf9354e020730e0d6a87a2b4))
+
+
+### Features
+
+* **ui5-menu-item:** add endContent slot ([dc3cfde](https://github.com/SAP/ui5-webcomponents/commit/dc3cfde6483e9d4200ed9b4c1772872836233842)), closes [#6350](https://github.com/SAP/ui5-webcomponents/issues/6350)
+
+
+### BREAKING CHANGES
+
+* **ui5-radio-button:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+<!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+* **ui5-link:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+```
+
+
+
+
+
 # [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
 
 

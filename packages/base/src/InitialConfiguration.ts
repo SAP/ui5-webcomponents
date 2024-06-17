@@ -5,7 +5,7 @@ import validateThemeRoot from "./validateThemeRoot.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
-import CalendarType from "./types/CalendarType.js";
+import type CalendarType from "./types/CalendarType.js";
 
 let initialized = false;
 
