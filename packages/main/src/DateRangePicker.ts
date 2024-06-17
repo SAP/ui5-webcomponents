@@ -5,7 +5,10 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
-import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATERANGE_DESCRIPTION,
+	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
@@ -191,8 +194,18 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
 	}
 
+	/**
+	 * @override
+	 */
 	get dateAriaDescription() {
 		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
+	}
+
+	/**
+	 * @override
+	 */
+	get pickerAccessibleName() {
+		return DateRangePicker.i18nBundle.getText(DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**

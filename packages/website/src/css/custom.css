@@ -173,6 +173,11 @@ code {
   margin: 0 auto;
 }
 
+/* Make top level menu items bold (main,fiori,etc.) */
+.theme-doc-sidebar-item-category-level-1.menu__list-item > .menu__list-item-collapsible > a[href*="components"] {
+  font-weight: bold;
+}
+
 @media (max-width: 996px) {
   .navbar__title {
     font-size: 0.875rem;
@@ -208,7 +213,7 @@ code {
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
   font-size: 0.75rem;
-  content: "Experimental";
+  content: "exp";
   background: #a100c2;
   pointer-events: none;
 }
@@ -222,7 +227,7 @@ code {
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
   font-size: 0.75rem;
-  content: "New";
+  content: "new";
   background: #334eff;
   pointer-events: none;
 }
