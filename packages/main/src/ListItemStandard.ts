@@ -130,7 +130,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * **Note:** this property takes affect only if text node is provided to default slot of the component
 	 * @default "Normal"
 	 * @public
-	 * @since 1.5.0
+	 * @since 2.0.0
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
 	wrappingType!: `${WrappingType}`;
