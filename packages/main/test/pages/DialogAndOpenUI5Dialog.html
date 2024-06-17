@@ -21,9 +21,28 @@
 			data-sap-ui-compatVersion="edge"></script>
 	<script>
 		function onOpenUI5Init() {
-			sap.ui.require(["sap/m/Button"], (Button) => {
+			sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
 				new Button("openUI5Button", {
-					text: "OpenUI5 Button"
+					text: "Open OpenUI5 Dialog",
+					press: function () {
+						new Dialog({
+							title: "OpenUI5 Dialog",
+							content: [
+								new Button({
+									text: "Focus stop"
+								}),
+								new Button("openResPopoverButton", {
+									text: "Open WebC Responsive Popover",
+									press: function () {
+										document.getElementById("respPopover").open = true;
+									}
+								})
+							],
+							afterClose: function () {
+								this.destroy();
+							}
+						}).open();
+					}
 				}).placeAt("content");
 			});
 		}
@@ -37,12 +56,20 @@
 				sap.ui.require(["sap/m/Button", "sap/m/Dialog"], (Button, Dialog) => {
 					new Dialog({
 						title: "OpenUI5 Dialog",
-						content: new Button("openUI5DialogButton", {
-							text: "Open WebC Dialog",
-							press: function() {
-								document.getElementById("newDialog1").open = true;
-							}
-						})
+						content: [
+							new Button({
+								text: "Focus stop"
+							}),
+							new Button("openUI5DialogButton", {
+								text: "Open WebC Dialog",
+								press: function () {
+									document.getElementById("newDialog1").open = true;
+								}
+							})
+						],
+						afterClose: function () {
+							this.destroy();
+						}
 					}).open();
 				});
 			});
@@ -56,10 +83,14 @@
 <ui5-dialog id="dialog1" header-text="This is an WebC Dialog 1">
 	<ui5-button id="dialogButton">Open UI5 dialog</ui5-button>
 </ui5-dialog>
-
 <ui5-dialog id="newDialog1" header-text="This is an WebC Dialog 2">
 	<ui5-button id="someButton">Some button</ui5-button>
 </ui5-dialog>
 <div id="content"></div>
+<ui5-responsive-popover id="respPopover"
+						opener="openResPopoverButton"
+						header-text="This is an WebC Responsive Popover">
+	<ui5-button>Some button</ui5-button>
+</ui5-responsive-popover>
 </body>
 </html>
