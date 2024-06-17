@@ -155,6 +155,12 @@ class MessageStrip extends UI5Element {
 		this.fireEvent("close");
 	}
 
+	onBeforeRendering() {
+		if (this.designClasses === DesignClassesMapping.ColorSet1 || this.designClasses === DesignClassesMapping.ColorSet2) {
+			this.hideIcon = this.icon.length === 0;
+		}
+	}
+
 	static async onDefine() {
 		MessageStrip.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
