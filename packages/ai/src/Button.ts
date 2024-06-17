@@ -129,7 +129,7 @@ class Button extends UI5Element {
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use `ui5-ai-button-state` components in order to preserve the intended design.
 	 * @public
 	 */
-	@slot({ type: ButtonState, "default": true })
+	@slot({ type: HTMLElement, "default": true })
 	states!: Array<ButtonState>;
 
 	onBeforeRendering(): void {
@@ -137,7 +137,7 @@ class Button extends UI5Element {
 			return;
 		}
 
-		if (this.state && this._currentStateObject && !Object.keys(this._currentStateObject).length) {
+		if (this.state && this._currentStateObject && !this._currentStateObject.name) {
 			this._currentStateObject = this._findStateByName(this.state);
 		}
 
@@ -153,7 +153,11 @@ class Button extends UI5Element {
 		}
 
 		if (currentStateName !== "" && currentStateName !== this.state) {
-			this._fadeOut();
+			if (this._findStateByName(this.state)) {
+				this._fadeOut();
+			} else {
+				this._throwMissingStateError();
+			}
 		}
 	}
 
@@ -191,9 +195,9 @@ class Button extends UI5Element {
 				this._currentStateObject = newStateObject;
 				this._fadeIn();
 			}, fadeOutDuration);
-		} else {
+		} /*else {
 			this._throwMissingStateError();
-		}
+		}*/
 	}
 
 	/**
@@ -245,7 +249,8 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	_throwMissingStateError(): void {
-		throw new Error(`State with name="${this.state}" doesn't exist!`);
+		// throw new Error(`State with name="${this.state}" doesn't exist!`);
+		console.error(`State with name="${this.state}" doesn't exist!`);
 	}
 
 	get _stateIconOnly() {
