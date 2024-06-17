@@ -610,10 +610,12 @@ describe("TextArea general interaction", () => {
 				.should("have.text", "Value State Error Custom message");
 		});
 
-		it.only("Should revert the DOM value, when escape is pressed", () => {
+		it("Should select all exceeded characters on paste", () => {
 			const text = "Text longer then twenty characters";
+			const maxlength = 20;
+			const expectedSelectionRange = text.length - maxlength;
 
-			cy.mount(html`<ui5-textarea value="${text}" maxlength="20" show-exceeded-text></ui5-textarea>`)
+			cy.mount(html`<ui5-textarea value="${text}" maxlength="${maxlength}" show-exceeded-text></ui5-textarea>`)
 
 			cy.get("[ui5-textarea]")
 				.as("textarea");
@@ -622,22 +624,31 @@ describe("TextArea general interaction", () => {
 				.realClick({ clickCount: 3 });
 
 			cy.get("@textarea")
-				.realPress(["Meta", "A"])
-				.realPress(["Meta", "X"])
-				.realPress(["Meta", "V"])
-
-			cy.get("@textarea")
 				.shadow()
 				.find("textarea")
+				.as("nativeTextarea")
+				.should("be.focused")
+				.then($nativeTextarea => {
+					const inputElement = $nativeTextarea.get(0);
+
+					const inputEvent = new InputEvent('input', {
+						inputType: 'insertFromPaste',
+						data: text
+					});
+
+					inputElement.dispatchEvent(inputEvent);
+				})
+
+			cy.get("@nativeTextarea")
 				.then(textarea => {
 					return textarea.get(0).selectionEnd - textarea.get(0).selectionStart
 				})
-				.should("be.equal", 14)
+				.should("be.equal", expectedSelectionRange)
 
 			cy.get("@textarea")
 				.shadow()
 				.find(".ui5-textarea-exceeded-text")
-				.should("contain.text", "14 characters over limit");
+				.should("contain.text", `${expectedSelectionRange} characters over limit`);
 		});
 	});
 
