@@ -250,6 +250,7 @@ abstract class UI5Element extends HTMLElement {
 			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
 				if (Object.hasOwn(this, prop) && !this.initializedProperties.has(prop)) {
+					// initialized properties should not trigger this error as they will be reassigned, only property initializers will trigger this in case unsupported TS mode
 					// eslint-disable-next-line no-console
 					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} has a property [${prop}] that is shadowed by the instance. Updates to this property will not invalidate the component. Possible reason is TS target ES2022 or TS useDefineForClassFields`);
 				}
