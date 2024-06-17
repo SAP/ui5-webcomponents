@@ -5,7 +5,7 @@ import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import menuSeparatorTemplate from "./generated/templates/MenuSeparatorTemplate.lit.js";
 import menuSeparatorCss from "./generated/themes/MenuSeparator.css.js";
 import ListItemBase from "./ListItemBase.js";
-import CustomListItem from "./CustomListItem.js";
+import ListItemCustom from "./ListItemCustom.js";
 import type { IMenuItem } from "./Menu.js";
 /**
  * @class
@@ -22,7 +22,7 @@ import type { IMenuItem } from "./Menu.js";
 	styles: [menuSeparatorCss],
 	template: menuSeparatorTemplate,
 	dependencies: [
-		CustomListItem,
+		ListItemCustom,
 	],
 })
 
