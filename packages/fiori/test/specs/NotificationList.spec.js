@@ -223,21 +223,21 @@ describe("Notification List Item Tests", () => {
 		const titleTextId = `${await firstItem.getProperty("_id")}-title-text`;
 		const readId = `${await firstItem.getProperty("_id")}-read`;
 		const descriptionId = `${await firstItem.getProperty("_id")}-description`;
-		const footerId = `${await firstItem.getProperty("_id")}-footer`;
+		const footerId = `${await firstItem.getProperty("_id")}-footnotes`;
 		const EXPECTED_ARIA_LABELLED_BY = `${titleTextId} ${readId} ${descriptionId} ${footerId}`;
 
 		const importantId3 = `${await thirdItem.getProperty("_id")}-importance`;
 		const titleTextId3 = `${await thirdItem.getProperty("_id")}-title-text`;
 		const readId3 = `${await thirdItem.getProperty("_id")}-read`;
 		const descriptionId3 = `${await thirdItem.getProperty("_id")}-description`;
-		const footerId3 = `${await thirdItem.getProperty("_id")}-footer`;
+		const footerId3 = `${await thirdItem.getProperty("_id")}-footnotes`;
 		const EXPECTED_ARIA_LABELLED_BY3 = `${importantId3} ${titleTextId3} ${readId3} ${descriptionId3} ${footerId3}`;
 
 		const loadingId4 = `${await loadingItem.getProperty("_id")}-loading`;
 		const titleTextId4 = `${await loadingItem.getProperty("_id")}-title-text`;
 		const readId4 = `${await loadingItem.getProperty("_id")}-read`;
 		const descriptionId4 = `${await loadingItem.getProperty("_id")}-description`;
-		const footerId4 = `${await loadingItem.getProperty("_id")}-footer`;
+		const footerId4 = `${await loadingItem.getProperty("_id")}-footnotes`;
 		const EXPECTED_ARIA_LABELLED_BY4 = `${titleTextId4} ${loadingId4} ${readId4} ${descriptionId4} ${footerId4}`;
 
 		// assert

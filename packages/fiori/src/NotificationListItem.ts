@@ -399,7 +399,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (this.hasFootNotes) {
-			ids.push(`${id}-footer`);
+			ids.push(`${id}-footnotes`);
 		}
 
 		return ids.join(" ");
