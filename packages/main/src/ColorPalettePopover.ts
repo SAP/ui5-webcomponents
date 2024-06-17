@@ -6,6 +6,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
 // Styles
@@ -22,7 +23,6 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
-import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
