@@ -6,6 +6,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isEnter,
 	isSpace,
@@ -95,6 +96,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Boolean })
 	actionable!: boolean;
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+	}
 
 	onBeforeRendering(): void {
 		this.actionable = true;
