@@ -102,3 +102,18 @@ describe("ARIA Support", () => {
 	});
 });
 
+describe("Change properties dynamically", () => {
+	before(async () => {
+		await browser.url(`test/pages/MessageStrip.html`);
+	});
+
+	it("Message strip is rendered ", async () => {
+		const messageStrip = await browser.$("#ms");
+		const btn = await browser.$("#btn");
+
+		await btn.click();
+
+		assert.strictEqual(await messageStrip.shadow$(".ui5-message-strip-icon").isExisting(), false, "Message strip does not rendere icon");
+	});
+});
+
