@@ -107,7 +107,7 @@
 	height: 100%;
 }
 
-.ui5-dp-item.ui5-dp-item--weeekend {
+.ui5-dp-item.ui5-dp-item--weekend {
 	background: var(--sapLegend_NonWorkingBackground);
 }
 
@@ -117,7 +117,7 @@
 }
 
 
-.ui5-dp-item.ui5-dp-item--weeekend:hover {
+.ui5-dp-item.ui5-dp-item--weekend:hover {
 	background: var(--sapList_Hover_Background);
 	filter: var(--_ui5_daypicker_item_weeekend_filter);
 }
@@ -129,7 +129,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--othermonth:hover,
-.ui5-dp-item.ui5-dp-item--weeekend.ui5-dp-item--othermonth:hover {
+.ui5-dp-item.ui5-dp-item--weekend.ui5-dp-item--othermonth:hover {
 	color: var(--_ui5_daypicker_item_othermonth_hover_color);
 	background: var(--sapList_Hover_Background);
 }
@@ -327,6 +327,11 @@
 	border-end-end-radius: var(--_ui5_daypicker_special_day_border_bottom_radius);
 	border-end-start-radius: var(--_ui5_daypicker_special_day_border_bottom_radius);
 	border-block-start: var(--_ui5_daypicker_special_day_border_top);
+}
+
+.ui5-dp-specialday.NonWorking,
+.ui5-dp-specialday.Working {
+	border-block-start: none;
 }
 
 .ui5-dp-item--selected .ui5-dp-specialday {
