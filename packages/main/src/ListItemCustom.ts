@@ -1,7 +1,7 @@
 import { isTabNext, isTabPrevious, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ListItem from "./ListItem.js";
 import ListItemCustomTemplate from "./generated/templates/ListItemCustomTemplate.lit.js";
 

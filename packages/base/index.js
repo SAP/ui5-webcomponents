@@ -30,7 +30,7 @@ import {
 // decorators/
 import customElement from "./dist/decorators/customElement.js";
 import event from "./dist/decorators/event.js";
-import property from "./dist/decorators/property-v2.js";
+import property from "./dist/decorators/property.js";
 import slot from "./dist/decorators/slot.js";
 
 // delegate/

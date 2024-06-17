@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import AccessorBase from "./AccessorBase.js";
 import customElement from "../../dist/decorators/customElement.js";
-import property from "../../dist/decorators/property-v2.js";
+import property from "../../dist/decorators/property.js";
 import litRender, { html } from "../../dist/renderer/LitRenderer.js";
 let Accessor = class Accessor extends AccessorBase {
     constructor() {
@@ -31,7 +31,7 @@ export default Accessor;
 /*
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 @customElement({

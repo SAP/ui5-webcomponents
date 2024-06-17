@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TreeItemBase from "./TreeItemBase.js";
 // Template
 import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";

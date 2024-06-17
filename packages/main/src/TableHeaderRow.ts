@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TableRowBase from "./TableRowBase.js";
 import TableHeaderRowTemplate from "./generated/templates/TableHeaderRowTemplate.lit.js";
 import TableHeaderRowStyles from "./generated/themes/TableHeaderRow.css.js";

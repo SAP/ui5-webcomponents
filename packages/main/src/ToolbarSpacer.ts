@@ -1,4 +1,4 @@
-import property from "@ui5/webcomponents-base/dist/decorators/property-v2.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
 
