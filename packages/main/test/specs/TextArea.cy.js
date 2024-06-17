@@ -609,6 +609,36 @@ describe("TextArea general interaction", () => {
 				.find(".ui5-hidden-text")
 				.should("have.text", "Value State Error Custom message");
 		});
+
+		it.only("Should revert the DOM value, when escape is pressed", () => {
+			const text = "Text longer then twenty characters";
+
+			cy.mount(html`<ui5-textarea value="${text}" maxlength="20" show-exceeded-text></ui5-textarea>`)
+
+			cy.get("[ui5-textarea]")
+				.as("textarea");
+
+			cy.get("@textarea")
+				.realClick({ clickCount: 3 });
+
+			cy.get("@textarea")
+				.realPress(["Meta", "A"])
+				.realPress(["Meta", "X"])
+				.realPress(["Meta", "V"])
+
+			cy.get("@textarea")
+				.shadow()
+				.find("textarea")
+				.then(textarea => {
+					return textarea.get(0).selectionEnd - textarea.get(0).selectionStart
+				})
+				.should("be.equal", 14)
+
+			cy.get("@textarea")
+				.shadow()
+				.find(".ui5-textarea-exceeded-text")
+				.should("contain.text", "14 characters over limit");
+		});
 	});
 
 	describe("selection events", () => {

@@ -226,12 +226,13 @@ describe("Menu interaction", () => {
 			</ui5-menu>`)
 
 			cy.get("[ui5-menu]")
+				.as("menu")
 				.ui5MenuOpened();
 
 			cy.get("[ui5-menu-item]:focus")
 				.as("item");
 
-			cy.get("[ui5-menu]")
+			cy.get("@menu")
 				.then(($item) => {
 					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
@@ -239,13 +240,10 @@ describe("Menu interaction", () => {
 			cy.get("@item")
 				.ui5MenuItemClick();
 
-			cy.get("[ui5-menu]")
-				.as("menu");
-
 			cy.get("@clicked")
 				.should("have.been.calledOnce");
 
-			cy.get("[ui5-menu]")
+			cy.get("@menu")
 				.ui5MenuOpened();
 		});
 
