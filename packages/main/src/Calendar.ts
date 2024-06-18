@@ -693,7 +693,9 @@ class Calendar extends CalendarPart {
 	}
 
 	get secondMonthButtonText() {
-		return this.secondaryCalendarTypeButtonText?.monthButtonText;
+		const secondMonthButtonText = this.secondaryCalendarTypeButtonText?.monthButtonText as string;
+
+		return secondMonthButtonText;
 	}
 
 	onMonthButtonKeyDown(e: KeyboardEvent) {
