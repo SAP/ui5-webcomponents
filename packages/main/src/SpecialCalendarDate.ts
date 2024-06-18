@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import CalendarDate from "./CalendarDate.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
