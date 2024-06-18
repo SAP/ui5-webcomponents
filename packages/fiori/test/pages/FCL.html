@@ -21,7 +21,7 @@
 	<ui5-toggle-button id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-toggle-button><br>
 	<ui5-input id="layoutChangeRes" placeholder="layout..." class="fcl2auto"></ui5-input><br>
 	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." class="fcl2auto"></ui5-input><br>
-	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." class="fcl2auto"></ui5-input><br>
+	<ui5-input id="layoutChangeRes3" placeholder="resize or separator movement..." class="fcl2auto"></ui5-input><br>
 	<ui5-input id="layoutChangeRes4" placeholder="change counter..." class="fcl2auto"></ui5-input><br>
 	<div>
 		<ui5-label show-colon>Switch RTL: </ui5-label>
@@ -194,11 +194,11 @@
 
 	<!-- ex2 -->
 	<br><br>
-	<ui5-title class="sectionTitle">List-Detail: Detail expanded + disable-interactive-resize</ui5-title>
+	<ui5-title class="sectionTitle">List-Detail: Detail expanded + disable-resizing</ui5-title>
 	<ui5-toggle-button id="switchBtn2" class="testButton">Set to TwoColumnsMidExpanded</ui5-toggle-button>
 	<br><br>
 
-	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" disable-interactive-resize>
+	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" disable-resizing>
 			<!-- start column -->
 			<div class="fcl4auto" slot="startColumn">
 				<div class="fcl5auto">
@@ -721,7 +721,7 @@
 			"startColumnVisible :: " + e.detail.startColumnVisible
 			+ ", midColumnVisible :: " + e.detail.midColumnVisible
 			+ ", endColumnVisible :: " + e.detail.endColumnVisible;
-			layoutChangeRes3.value = "separatorsUsed :: " + e.detail.separatorsUsed + ", resizing :: " + e.detail.resize;
+			layoutChangeRes3.value = "separatorsUsed :: " + e.detail.separatorsUsed + ", resizing :: " + e.detail.resized;
 			layoutChangeRes4.value = ++counter;
 
 		});

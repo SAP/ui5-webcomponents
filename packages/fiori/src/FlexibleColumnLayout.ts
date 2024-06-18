@@ -79,7 +79,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	midColumnVisible: boolean,
 	endColumnVisible: boolean,
 	separatorsUsed: boolean,
-	topElementResized: boolean,
+	resized: boolean,
 };
 
 type FCLAccessibilityRoles = Extract<Lowercase<AriaLandmarkRole>, "none" | "complementary" | "contentinfo" | "main" | "region">
@@ -181,8 +181,8 @@ type UserDefinedColumnLayouts = {
  * @param {boolean} startColumnVisible Indicates if the start column is currently visible
  * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
  * @param {boolean} endColumnVisible Indicates if the end column is currently visible
- * @param {boolean} separatorsUsed Indicates if the layout is changed by dragging the column separators
- * @param {boolean} topElementResized Indicates if the layout is changed via resizing the entire component
+ * @param {boolean} separatorsUsed Indicates if the layout was changed by dragging the column separators
+ * @param {boolean} resized Indicates if the layout was changed by resizing the entire component
  * @public
  */
 @event<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
@@ -214,7 +214,7 @@ type UserDefinedColumnLayouts = {
 		/**
 		 * @public
 		*/
-		topElementResized: { type: Boolean },
+		resized: { type: Boolean },
 	},
 })
 class FlexibleColumnLayout extends UI5Element {
@@ -239,7 +239,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @since 2.0.0
 	*/
 	@property({ type: Boolean })
-	disableInteractiveResize!: boolean;
+	disableResizing!: boolean;
 
 	/**
 	* Defines additional accessibility attributes on different areas of the component.
@@ -486,7 +486,7 @@ class FlexibleColumnLayout extends UI5Element {
 		return colLayout.filter(colWidth => !this._isColumnHidden(colWidth)).length;
 	}
 
-	fireLayoutChange(separatorUsed: boolean, topElementResized: boolean) {
+	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
 		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
@@ -494,7 +494,7 @@ class FlexibleColumnLayout extends UI5Element {
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
 			separatorsUsed: separatorUsed,
-			topElementResized,
+			resized,
 		});
 	}
 
@@ -1048,11 +1048,11 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get showStartSeparatorGrip() {
-		return this.disableInteractiveResize ? false : this.startSeparatorGripVisibility;
+		return this.disableResizing ? false : this.startSeparatorGripVisibility;
 	}
 
 	get showEndSeparatorGrip() {
-		return this.disableInteractiveResize ? false : this.endSeparatorGripVisibility;
+		return this.disableResizing ? false : this.endSeparatorGripVisibility;
 	}
 
 	get startSeparatorGripVisibility() {
