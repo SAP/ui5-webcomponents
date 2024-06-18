@@ -33,7 +33,12 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATEPICKER_OPEN_ICON_TITLE,
+	DATEPICKER_DATE_DESCRIPTION,
+	INPUT_SUGGESTIONS_TITLE,
+	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -698,6 +703,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	get dateAriaDescription() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
