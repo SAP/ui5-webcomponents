@@ -68,7 +68,8 @@ describe("Button general interaction", () => {
 
 		const field = await browser.$("#click-counter");
 		assert.strictEqual(await field.getProperty("value"), "3", "Click should be called 3 times");
-		assert.ok(await nativeButton.hasAttribute("disabled"), )
+		assert.ok(await nativeButton.hasAttribute("disabled"), );
+		assert.notOk(await nativeButton.hasAttribute("tabindex"), "Disabled button doesn't have tabindex attribute");
 	});
 
 	it("tests clicking on disabled button whith Icon", async () => {
@@ -136,6 +137,14 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(await innerButton.getAttribute("aria-haspopup"), "dialog", "Attribute is reflected");
 		assert.strictEqual(await innerButton.getAttribute("aria-controls"), "registration-dialog", "Attribute is reflected");
+	});
+
+	it("aria-describedby properly applied on the button tag", async () => {
+		const button = await browser.$("#button-with-slot");
+		const innerButton = await button.shadow$("button");
+		const invisibleButtonType = await innerButton.$$("span")[1];
+
+		assert.strictEqual(await innerButton.getAttribute("aria-describedby"), await invisibleButtonType.getAttribute("id"), "Attribute is reflected");
 	});
 
 	it("tests button with text icon role", async () => {

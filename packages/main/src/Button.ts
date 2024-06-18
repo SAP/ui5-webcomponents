@@ -427,6 +427,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 			e.preventDefault();
 		}
 
+		if (isSpace(e)) {
+			markEvent(e, "button");
+		}
+
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
 				this._setActiveState(false);
@@ -507,6 +511,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {
@@ -522,6 +530,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescribedbyText() {
+		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
 	}
 
 	get _isSubmit() {

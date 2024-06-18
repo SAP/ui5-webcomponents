@@ -10,6 +10,10 @@ import "./illustrations/AllIllustrations.js";
 
 // FIORI components
 import BarcodeScannerDialog from "./BarcodeScannerDialog.js";
+import DynamicPage from "./DynamicPage.js";
+import DynamicPageHeader from "./DynamicPageHeader.js";
+import DynamicPageTitle from "./DynamicPageTitle.js";
+import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 import DynamicSideContent from "./DynamicSideContent.js";
 import FilterItem from "./FilterItem.js";
 import FilterItemOption from "./FilterItemOption.js";

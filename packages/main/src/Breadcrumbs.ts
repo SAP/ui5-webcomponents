@@ -7,6 +7,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isSpace,
@@ -32,7 +33,7 @@ import type { LinkClickEventDetail } from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -92,7 +93,7 @@ type BreadcrumbsItemClickEventDetail = {
 		Link,
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Icon,
 		Button,
 	],
@@ -213,7 +214,9 @@ class Breadcrumbs extends UI5Element {
 		this._preprocessItems();
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
+		await renderFinished();
+
 		this._cacheWidths();
 		this._updateOverflow();
 	}

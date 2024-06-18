@@ -6,6 +6,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -14,7 +15,8 @@ import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
 	isSpaceCtrl,
@@ -52,8 +54,8 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import StandardListItem from "./StandardListItem.js";
-import Token from "./Token.js";
+import ListItemStandard from "./ListItemStandard.js";
+import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
@@ -74,16 +76,16 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-import ListItem from "./ListItem.js";
+import type ListItem from "./ListItem.js";
 
 type TokenCountMapType = { [x: number]: I18nText };
 
 type TokenizerTokenDeleteEventDetail = {
-	ref: Token;
+	tokens: Token[];
 }
 
 type TokenizerSelectionChangeEventDetail = {
-	selectedTokens: Token[];
+	tokens: Token[];
 }
 
 type TokenizerDialogButtonPressDetail = {
@@ -128,7 +130,7 @@ enum ClipboardDataOperation {
  * `import "@ui5/webcomponents/dist/Tokenizer.js";`
  *
  * @constructor
- * @extends sap.ui.webc.base.UI5Element
+ * @extends UI5Element
  * @public
  * @since 2.0.0
  */
@@ -146,7 +148,7 @@ enum ClipboardDataOperation {
 	dependencies: [
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Title,
 		Button,
 		Icon,
@@ -154,44 +156,34 @@ enum ClipboardDataOperation {
 })
 
 /**
- * Fired when a token is deleted (delete icon, delete or backspace is pressed)
- *
- * @param {HTMLElement} ref DOM ref of the token to be deleted.
+ * Fired when tokens are being deleted (delete icon, delete or backspace is pressed)
+ * @param {Array} tokens An array containing the deleted tokens.
  * @public
  */
 @event<TokenizerTokenDeleteEventDetail>("token-delete", {
 	detail: {
-		ref: { type: HTMLElement },
+		/**
+		* @public
+		*/
+		tokens: { type: Array },
 	},
 })
 
 /**
  * Fired when token selection is changed by user interaction
  *
- * @param {Array<Token>} selectedTokens An array of the selected items.
+ * @param {Array<Token>} tokens An array of the selected items.
  * @public
  */
 @event<TokenizerSelectionChangeEventDetail>("selection-change", {
 	detail: {
-		selectedTokens: { type: Array },
-	},
-})
-
-/**
- * Fired when a dialog button is pressed.
- *
- * @param {Boolean} confirm Indicates if the action is confirm.
- * @public
- */
-@event<TokenizerDialogButtonPressDetail>("dialog-button-press", {
-	detail: {
-		confirm: { type: Boolean },
+		tokens: { type: Array },
 	},
 })
 
 /**
  * Fired when nMore link is pressed.
- * @public
+ * @private
  */
 @event("show-more-items-press")
 
@@ -309,7 +301,15 @@ class Tokenizer extends UI5Element {
 	@property({ validator: Integer })
 	_tokensCount!: number;
 
-	@slot({ type: HTMLElement, "default": true, individualSlots: true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: ["_isVisible"],
+			slots: false,
+		},
+	})
 	tokens!: Array<Token>;
 
 	static i18nBundle: I18nBundle;
@@ -322,6 +322,7 @@ class Tokenizer extends UI5Element {
 	_skipTabIndex!: boolean;
 	_previousToken!: Token | null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
+	_deletedDialogItems!: Token[];
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -339,6 +340,7 @@ class Tokenizer extends UI5Element {
 
 		this._scrollEnablement = new ScrollEnablement(this);
 		this._tokenDeleting = false;
+		this._deletedDialogItems = [];
 	}
 
 	onBeforeRendering() {
@@ -439,16 +441,12 @@ class Tokenizer extends UI5Element {
 
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
-			this.open = !this._tokens.length;
+			this.open = false;
 
 			return;
 		}
 
-		if (this._selectedTokens.length) {
-			this._selectedTokens.forEach(token => this.deleteToken(token, e.detail.backSpace));
-		} else {
-			this.deleteToken(target, e.detail.backSpace);
-		}
+		this.deleteToken(target, e.detail.backSpace);
 	}
 
 	_tokenClickDelete(e: CustomEvent<TokenDeleteEventDetail>, token: Token) {
@@ -461,7 +459,7 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this._tokenDeleting = true;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] || [target] });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -495,7 +493,15 @@ class Tokenizer extends UI5Element {
 
 		if (notSelectedTokens.length > 1) {
 			while (nextToken && nextToken.selected) {
-				nextToken = forwardFocusToPrevious ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+				nextTokenIndex = forwardFocusToPrevious ? --nextTokenIndex : ++nextTokenIndex;
+
+				if (nextTokenIndex < 0) {
+					nextToken = notSelectedTokens[0];
+				}
+
+				if (nextTokenIndex > notSelectedTokens.length) {
+					nextToken = notSelectedTokens[notSelectedTokens.length - 1];
+				}
 			}
 		} else {
 			nextToken = notSelectedTokens[0];
@@ -504,41 +510,43 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this._tokenDeleting = true;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+
+		if (this._selectedTokens.length) {
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._selectedTokens });
+		} else {
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
+		}
 	}
 
-	itemDelete(e: CustomEvent) {
+	async itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 		const tokensArray = this._tokens;
 
 		// delay the token deletion in order to close the popover before removing token of the DOM
 		if (tokensArray.length === 1) {
-			if (tokensArray[0].isTruncatable) {
-				const morePopover = this.getPopover();
+			const morePopover = this.getPopover();
 
-				morePopover.addEventListener("ui5-close", () => {
-					this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
-				}, {
-					once: true,
-				});
-				return;
-			}
-
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+			morePopover.addEventListener("ui5-close", () => {
+				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
+			}, {
+				once: true,
+			});
 			this.open = false;
 		} else {
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
-
+			if (isPhone()) {
+				token._isVisible = false;
+				this._deletedDialogItems.push(token as Token);
+			} else {
+				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
+			}
 			const currentListItem = e.detail.item as ListItem;
-			const nextListItem = currentListItem.nextElementSibling;
-			const preciousListItem = currentListItem.previousElementSibling;
+			const nextListItem = currentListItem.nextElementSibling as ListItem;
+			const previousListItem = currentListItem.previousElementSibling as ListItem;
+			const focusItem = nextListItem || previousListItem;
 
-			if (nextListItem) {
-				const nextListItemIcon = nextListItem.shadowRoot!.querySelector<HTMLElement>("[part=delete-button]")!;
-				nextListItemIcon.focus();
-			} else if (preciousListItem) {
-				const previousListItemIcon = preciousListItem.shadowRoot!.querySelector<HTMLElement>("[part=delete-button]")!;
-				previousListItemIcon.focus();
+			if (focusItem) {
+				await renderFinished();
+				focusItem.focus();
 			}
 		}
 	}
@@ -559,6 +567,15 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleBeforeOpen() {
+		this._tokens.forEach(token => {
+			token._isVisible = true;
+		});
+
+		const list = this._getList();
+		const firstListItem = list.querySelectorAll("[ui5-li]")[0]! as ListItem;
+
+		list._itemNavigation.setCurrentItem(firstListItem);
+
 		this.fireEvent("before-more-popover-open");
 	}
 
@@ -566,13 +583,20 @@ class Tokenizer extends UI5Element {
 		this.open = false;
 		this._preventCollapse = false;
 		this._focusedElementBeforeOpen = null;
+
+		this._tokens.forEach(token => {
+			token._isVisible = true;
+		});
 	}
 
 	handleDialogButtonPress(e: MouseEvent) {
 		const isOkButton = (e.target as HTMLElement).hasAttribute("data-ui5-tokenizer-dialog-ok-button");
 		const confirm = !!isOkButton;
 
-		this.fireEvent("dialog-button-press", { confirm });
+		if (confirm && this._deletedDialogItems.length) {
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._deletedDialogItems });
+		}
+
 		this.open = false;
 	}
 
@@ -584,11 +608,12 @@ class Tokenizer extends UI5Element {
 
 			const isCut = e.key.toLowerCase() === "x" || isDeleteShift(e);
 			const selectedTokens = this._tokens.filter(token => token.selected);
+			const focusedToken = selectedTokens.find(token => token.focused);
 
 			if (isCut) {
 				const cutResult = this._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
 
-				selectedTokens.forEach(token => this.deleteToken(token));
+				focusedToken && this.deleteToken(focusedToken);
 
 				return cutResult;
 			}
@@ -710,7 +735,7 @@ class Tokenizer extends UI5Element {
 
 		if (selectedTokensChanged) {
 			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-				selectedTokens: this._selectedTokens,
+				tokens: this._selectedTokens,
 			});
 		}
 
@@ -731,7 +756,7 @@ class Tokenizer extends UI5Element {
 
 		if (selectedTokensChanged) {
 			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-				selectedTokens: this._selectedTokens,
+				tokens: this._selectedTokens,
 			});
 		}
 
@@ -789,7 +814,7 @@ class Tokenizer extends UI5Element {
 
 		if (selectedTokensChanged) {
 			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-				selectedTokens: this._selectedTokens,
+				tokens: this._selectedTokens,
 			});
 		}
 
@@ -801,7 +826,7 @@ class Tokenizer extends UI5Element {
 	_click(e: MouseEvent) {
 		if (e.metaKey || e.ctrlKey) {
 			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-				selectedTokens: this._selectedTokens,
+				tokens: this._selectedTokens,
 			});
 			return;
 		}
@@ -834,7 +859,7 @@ class Tokenizer extends UI5Element {
 			}
 
 			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-				selectedTokens: this._selectedTokens,
+				tokens: this._selectedTokens,
 			});
 
 			return;
@@ -883,7 +908,7 @@ class Tokenizer extends UI5Element {
 		tokens.forEach(token => { token.selected = !tokensAreSelected; });
 
 		this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-			selectedTokens: this._selectedTokens,
+			tokens: this._selectedTokens,
 		});
 	}
 
@@ -900,7 +925,7 @@ class Tokenizer extends UI5Element {
 			});
 
 			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
-				selectedTokens: this._selectedTokens,
+				tokens: this._selectedTokens,
 			});
 		}
 	}
@@ -962,6 +987,10 @@ class Tokenizer extends UI5Element {
 		} else if (tokenRect.right > tokenContainerRect.right) {
 			this._scrollEnablement.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
 		}
+	}
+
+	_getList() {
+		return this.getPopover().querySelector<List>("[ui5-list]")!;
 	}
 
 	get _tokens() {
@@ -1069,21 +1098,6 @@ class Tokenizer extends UI5Element {
 		};
 	}
 
-	_tokensCountText() {
-		const iTokenCount = this._tokens.length;
-
-		const tokenCountMap: TokenCountMapType = {
-			0: TOKENIZER_ARIA_CONTAIN_TOKEN,
-			1: TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
-		};
-
-		if (iTokenCount in tokenCountMap) {
-			return Tokenizer.i18nBundle.getText(tokenCountMap[iTokenCount]);
-		}
-
-		return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
-	}
-
 	/**
 	 * @protected
 	 */
@@ -1106,8 +1120,22 @@ class Tokenizer extends UI5Element {
 	}
 }
 
+const getTokensCountText = (iTokenCount: number) => {
+	const tokenCountMap: TokenCountMapType = {
+		0: TOKENIZER_ARIA_CONTAIN_TOKEN,
+		1: TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
+	};
+
+	if (iTokenCount in tokenCountMap) {
+		return Tokenizer.i18nBundle.getText(tokenCountMap[iTokenCount]);
+	}
+
+	return Tokenizer.i18nBundle.getText(TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS, iTokenCount);
+};
+
 Tokenizer.define();
 
 export default Tokenizer;
+export { getTokensCountText };
 export { ClipboardDataOperation };
 export type { TokenizerTokenDeleteEventDetail, TokenizerSelectionChangeEventDetail, TokenizerDialogButtonPressDetail };

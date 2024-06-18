@@ -54,7 +54,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListItemBase from "./ListItemBase.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -71,7 +71,7 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  */
 type IOption = ListItemBase & {
 	tooltip: string,
-	icon?: string | null,
+	icon?: string,
 	value: string,
 	additionalText?: string,
 	focused?: boolean,
@@ -119,11 +119,12 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/IOption";` (comes with `ui5-select`)
- * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/Option";`
+ * `import "@ui5/webcomponents/dist/OptionCustom";`
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart popover - Used to style the popover element
  * @since 0.8.0
  */
 @customElement({
@@ -529,6 +530,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 			if (currentIndex !== this._selectedIndex) {
 				this.itemSelectionAnnounce();
+				this._scrollSelectedItem();
 			}
 		}
 	}

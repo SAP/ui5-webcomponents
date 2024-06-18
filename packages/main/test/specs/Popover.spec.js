@@ -182,6 +182,8 @@ describe("Popover general interaction", () => {
 		await itemBeforeLastItem.scrollIntoView();
 
 		assert.ok(await itemBeforeLastItem.isDisplayedInViewport(), "Last item is displayed after scrolling");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests modal popover", async () => {
@@ -405,6 +407,14 @@ describe("Popover general interaction", () => {
 		await result.waitForDisplayed({ timeout: 3000 })
 
 		assert.strictEqual(await result.getText(), "No uncaught errors", "There is no error.");
+	});
+
+	it("tests if the popover is a part of the tab chain", async () => {
+		await browser.$("#input1").scrollIntoView();
+		await browser.$("#input1").click();
+		await browser.keys("Tab");
+
+		assert.ok(await browser.$("#input2").isFocused(), "next input is focused");
 	});
 });
 

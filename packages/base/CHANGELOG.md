@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Bug Fixes
+
+* register runtime in SSR usage ([#9013](https://github.com/SAP/ui5-webcomponents/issues/9013)) ([54db283](https://github.com/SAP/ui5-webcomponents/commit/54db283ac71c8aec34f7ce0fe7ac787838aab021))
+* **ui5-*:** Make setAnimationMode() properly change modes ([#8965](https://github.com/SAP/ui5-webcomponents/issues/8965)) ([9f5d276](https://github.com/SAP/ui5-webcomponents/commit/9f5d2760a8cfa95ce3212480e28e7b7a6ea2d8a9)), closes [#8964](https://github.com/SAP/ui5-webcomponents/issues/8964)
+
+
+### Features
+
+* **ui5-*:** integrate element internals in input components ([#8685](https://github.com/SAP/ui5-webcomponents/issues/8685)) ([c8e68d5](https://github.com/SAP/ui5-webcomponents/commit/c8e68d59e51c6ab56328062ac8bce7889b30062d)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-li-notification:** implement new design ([#8426](https://github.com/SAP/ui5-webcomponents/issues/8426)) ([e451cdc](https://github.com/SAP/ui5-webcomponents/commit/e451cdc3709553dcb780f637463dc1b29e8f2971))
+* **UI5Element:** invalidateOnChildChange works for slots ([#9021](https://github.com/SAP/ui5-webcomponents/issues/9021)) ([ec3ead7](https://github.com/SAP/ui5-webcomponents/commit/ec3ead7743993aaad6cb70faff9edf4bae4ef0f9))
+
+
+### BREAKING CHANGES
+
+* **ui5-*:** The `features/InputElementsFormSupport.js` feature has been deleted and now, form elements works natively in form elements.
+
+
+
+
+
 # [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
 
 

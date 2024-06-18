@@ -11,12 +11,13 @@
 @import "./Carousel-parameters.css";
 @import "./Card-parameters.css";
 @import "./CheckBox-parameters.css";
-@import "../base/ColorPalette-parameters.css";
+@import "./ColorPalette-parameters.css";
 @import "./ColorPicker-parameters.css";
 @import "./DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
+@import "../base/Table-parameters.css";
 @import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
