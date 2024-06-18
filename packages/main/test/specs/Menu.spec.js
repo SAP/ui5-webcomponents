@@ -169,6 +169,16 @@ describe("Menu interaction", () => {
 
 			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
 			assert.ok(await menuItem.getProperty("focused"), "The menu item is focused");
+
+			await browser.keys("Escape");
+		});
+
+		it("Focus restored to the menu opener", async () => {
+			const openButton = await browser.$("#btnOpen");
+			await openButton.click();
+
+			await browser.keys("Escape");
+			assert.ok(await openButton.isFocused(), "The oepener button recevied focus");
 		});
 	});
 
