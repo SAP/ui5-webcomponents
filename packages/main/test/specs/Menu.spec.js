@@ -168,7 +168,7 @@ describe("Menu interaction", () => {
 			await menuItem.click();
 
 			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
-			assert.ok(await menuItem.getProperty("focused"), "The menu item is focused");
+			assert.ok(await menuItem.matches(":focus"), "The menu item is focused");
 
 			await browser.keys("Escape");
 		});
