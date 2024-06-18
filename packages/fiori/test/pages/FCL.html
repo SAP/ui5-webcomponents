@@ -194,11 +194,11 @@
 
 	<!-- ex2 -->
 	<br><br>
-	<ui5-title class="sectionTitle">List-Detail: Detail expanded + hide-arrows</ui5-title>
+	<ui5-title class="sectionTitle">List-Detail: Detail expanded + disable-interactive-resize</ui5-title>
 	<ui5-toggle-button id="switchBtn2" class="testButton">Set to TwoColumnsMidExpanded</ui5-toggle-button>
 	<br><br>
 
-	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" hide-arrows>
+	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" disable-interactive-resize>
 			<!-- start column -->
 			<div class="fcl4auto" slot="startColumn">
 				<div class="fcl5auto">
@@ -721,7 +721,7 @@
 			"startColumnVisible :: " + e.detail.startColumnVisible
 			+ ", midColumnVisible :: " + e.detail.midColumnVisible
 			+ ", endColumnVisible :: " + e.detail.endColumnVisible;
-			layoutChangeRes3.value = "arrowsUsed :: " + e.detail.arrowUsed + ", resizing :: " + e.detail.resize;
+			layoutChangeRes3.value = "separatorsUsed :: " + e.detail.separatorsUsed + ", resizing :: " + e.detail.resize;
 			layoutChangeRes4.value = ++counter;
 
 		});

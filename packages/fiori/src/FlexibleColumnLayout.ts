@@ -78,7 +78,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	startColumnVisible: boolean,
 	midColumnVisible: boolean,
 	endColumnVisible: boolean,
-	columnsResized: boolean,
+	separatorsUsed: boolean,
 	topElementResized: boolean,
 };
 
@@ -181,7 +181,7 @@ type UserDefinedColumnLayouts = {
  * @param {boolean} startColumnVisible Indicates if the start column is currently visible
  * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
  * @param {boolean} endColumnVisible Indicates if the end column is currently visible
- * @param {boolean} columnsResized Indicates if the layout is changed by dragging the column separators
+ * @param {boolean} separatorsUsed Indicates if the layout is changed by dragging the column separators
  * @param {boolean} topElementResized Indicates if the layout is changed via resizing the entire component
  * @public
  */
@@ -210,7 +210,7 @@ type UserDefinedColumnLayouts = {
 		/**
 		 * @public
 		*/
-		columnsResized: { type: Boolean },
+		separatorsUsed: { type: Boolean },
 		/**
 		 * @public
 		*/
@@ -493,7 +493,7 @@ class FlexibleColumnLayout extends UI5Element {
 			startColumnVisible: this.startColumnVisible,
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
-			columnsResized: separatorUsed,
+			separatorsUsed: separatorUsed,
 			topElementResized,
 		});
 	}
