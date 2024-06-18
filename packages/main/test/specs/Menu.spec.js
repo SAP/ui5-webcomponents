@@ -195,7 +195,6 @@ describe("Menu interaction", () => {
 
 			await browser.keys("Escape");
 			assert.ok(await openButton.isFocused(), "The oepener button recevied focus");
-			assert.ok(await menuItem.matches(":focus"), "The menu item is focused");
 		});
 	});
 
