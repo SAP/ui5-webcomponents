@@ -22,7 +22,6 @@ import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
-// import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import type { DayPickerChangeEventDetail } from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -681,7 +680,7 @@ class Calendar extends CalendarPart {
 	get accInfo() {
 		return {
 			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._headerMonthButtonText}, ${this.secondaryCalendarTypeButtonText?.monthButtonText}` : `${this._headerMonthButtonText}`,
+				? `${this._headerMonthButtonText}, ${this.secondMonthButtonText}` : `${this._headerMonthButtonText}`,
 		};
 	}
 
@@ -694,9 +693,7 @@ class Calendar extends CalendarPart {
 	}
 
 	get secondMonthButtonText() {
-		const secondMonthButtonText = this.secondaryCalendarTypeButtonText?.monthButtonText as string;
-
-		return secondMonthButtonText;
+		return this.secondaryCalendarTypeButtonText?.monthButtonText;
 	}
 
 	onMonthButtonKeyDown(e: KeyboardEvent) {
