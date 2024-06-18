@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
+
+
+### Bug Fixes
+
+* **framework:** set dataTransfer.effectAllowed only for UI5 elements ([#9150](https://github.com/SAP/ui5-webcomponents/issues/9150)) ([b03f70c](https://github.com/SAP/ui5-webcomponents/commit/b03f70c3f46f726b33da7b167da5d7b787585413)), closes [#9136](https://github.com/SAP/ui5-webcomponents/issues/9136)
+
+
+
+
+
 ## [1.24.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.3...v1.24.4) (2024-05-31)
 
 

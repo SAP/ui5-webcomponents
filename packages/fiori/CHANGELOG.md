@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation-item:** wholeItemToggleable works in Firefox ([#9153](https://github.com/SAP/ui5-webcomponents/issues/9153)) ([65cf1e1](https://github.com/SAP/ui5-webcomponents/commit/65cf1e127217bed557c3f05224250faff045379b)), closes [#9057](https://github.com/SAP/ui5-webcomponents/issues/9057)
+
+
+
+
+
 ## [1.24.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.3...v1.24.4) (2024-05-31)
 
 

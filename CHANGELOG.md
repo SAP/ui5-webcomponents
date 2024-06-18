@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
+
+
+### Bug Fixes
+
+* **framework:** set dataTransfer.effectAllowed only for UI5 elements ([#9150](https://github.com/SAP/ui5-webcomponents/issues/9150)) ([b03f70c](https://github.com/SAP/ui5-webcomponents/commit/b03f70c3f46f726b33da7b167da5d7b787585413)), closes [#9136](https://github.com/SAP/ui5-webcomponents/issues/9136)
+* rearrange RTL related variables ([#9211](https://github.com/SAP/ui5-webcomponents/issues/9211)) ([1cc31c3](https://github.com/SAP/ui5-webcomponents/commit/1cc31c33d0f4430092ab5bf94d15c9e4b55cb5f2))
+* **ui5-busy-indicator:** add block layer ([#9233](https://github.com/SAP/ui5-webcomponents/issues/9233)) ([da2c979](https://github.com/SAP/ui5-webcomponents/commit/da2c979265ce4a563322451a456d7a1570f3fe46)), closes [#9079](https://github.com/SAP/ui5-webcomponents/issues/9079)
+* **ui5-button:** add keyboard shortcut to cancel the button's action ([#9018](https://github.com/SAP/ui5-webcomponents/issues/9018)) ([c6f6665](https://github.com/SAP/ui5-webcomponents/commit/c6f66652cfd8c54f96bbdbdafadb78a45512c302)), closes [#6782](https://github.com/SAP/ui5-webcomponents/issues/6782)
+* **ui5-button:** adjust screen reader announcement order ([#8997](https://github.com/SAP/ui5-webcomponents/issues/8997)) ([#9127](https://github.com/SAP/ui5-webcomponents/issues/9127)) ([bfa1269](https://github.com/SAP/ui5-webcomponents/commit/bfa1269064ca2d13cb2dcb8d7a00aca690588edc)), closes [#8976](https://github.com/SAP/ui5-webcomponents/issues/8976)
+* **ui5-calendar:** adjust accessibility semantics ([#9125](https://github.com/SAP/ui5-webcomponents/issues/9125)) ([f899378](https://github.com/SAP/ui5-webcomponents/commit/f899378b3021c6bc95231e7554de89aac7223f62)), closes [#9102](https://github.com/SAP/ui5-webcomponents/issues/9102) [#9068](https://github.com/SAP/ui5-webcomponents/issues/9068) [#9069](https://github.com/SAP/ui5-webcomponents/issues/9069)
+* **ui5-date-picker:** provide accessible name to the popover ([#8693](https://github.com/SAP/ui5-webcomponents/issues/8693)) ([#9221](https://github.com/SAP/ui5-webcomponents/issues/9221)) ([e53dd2d](https://github.com/SAP/ui5-webcomponents/commit/e53dd2dd77651812a6699d97bc67ec19177a1dae)), closes [#8598](https://github.com/SAP/ui5-webcomponents/issues/8598) [#9189](https://github.com/SAP/ui5-webcomponents/issues/9189)
+* **ui5-side-navigation-item:** wholeItemToggleable works in Firefox ([#9153](https://github.com/SAP/ui5-webcomponents/issues/9153)) ([65cf1e1](https://github.com/SAP/ui5-webcomponents/commit/65cf1e127217bed557c3f05224250faff045379b)), closes [#9057](https://github.com/SAP/ui5-webcomponents/issues/9057)
+* **ui5-time-picker:** remove box shadow ([#8998](https://github.com/SAP/ui5-webcomponents/issues/8998)) ([1046e81](https://github.com/SAP/ui5-webcomponents/commit/1046e81baf0b72964b26c8bd094efed41b95c19b)), closes [#8932](https://github.com/SAP/ui5-webcomponents/issues/8932)
+* **ui5-tree-item:** ensure correct cursor style ([#9151](https://github.com/SAP/ui5-webcomponents/issues/9151)) ([7984b1d](https://github.com/SAP/ui5-webcomponents/commit/7984b1d1290df74c1218dd0dc4beeefd543b9ddb)), closes [#9146](https://github.com/SAP/ui5-webcomponents/issues/9146)
+
+
+
+
+
 ## [1.24.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.3...v1.24.4) (2024-05-31)
 
 
