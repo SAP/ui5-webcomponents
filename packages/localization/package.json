@@ -33,7 +33,7 @@
     "@babel/generator": "^7.23.6",
     "@babel/parser": "^7.23.6",
     "@openui5/sap.ui.core": "1.120.5",
-    "@ui5/webcomponents-tools": "1.24.3",
+    "@ui5/webcomponents-tools": "1.24.5",
     "babel-plugin-amd-to-esm": "^2.0.3",
     "chromedriver": "^124.0.4",
     "estree-walk": "^2.2.0",

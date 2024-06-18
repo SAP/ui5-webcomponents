@@ -31,6 +31,6 @@
     "@ui5/webcomponents-base": "1.24.5"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.24.3"
+    "@ui5/webcomponents-tools": "1.24.5"
   }
 }
