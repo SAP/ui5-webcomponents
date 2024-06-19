@@ -174,7 +174,7 @@ code {
 }
 
 /* Make top level menu items bold (main,fiori,etc.) */
-.theme-doc-sidebar-item-category-level-1.menu__list-item > .menu__list-item-collapsible > a[href*="components"] {
+.theme-doc-sidebar-item-category-level-1.menu__list-item > .menu__list-item-collapsible > a[href*="\/components"] {
   font-weight: bold;
 }
 

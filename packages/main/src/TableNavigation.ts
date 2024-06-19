@@ -7,6 +7,8 @@ import {
 	isPageDown,
 	isHome,
 	isEnd,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClickable.js";
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
@@ -31,12 +33,18 @@ class TableNavigation extends TableExtension {
 	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
 	_lastFocusedItem?: HTMLElement;
+	_onKeyDownCaptureBound: (e: KeyboardEvent) => void;
 
 	constructor(table: Table) {
 		super();
 		this._table = table;
 		this._gridWalker = new GridWalker();
 		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
+		this._onKeyDownCaptureBound = this._onKeyDownCapture.bind(this);
+
+		// we register the keydown handler on the table element at the capturing phase since the
+		// busy indicator stops the propagation of the keydown event and it never reaches the table
+		this._table.addEventListener("keydown", this._onKeyDownCaptureBound, { capture: true });
 	}
 
 	_getNavigationItemsOfRow(row: TableRowBase) {
@@ -272,10 +280,25 @@ class TableNavigation extends TableExtension {
 		}
 
 		if (eventOrigin === this._table._beforeElement || eventOrigin === this._table._afterElement) {
-			this._gridWalker.setColPos(0);
-			this._focusCurrentItem();
+			if (this._table.loading) {
+				this._table._loadingElement.focus();
+			} else {
+				this._gridWalker.setColPos(0);
+				this._focusCurrentItem();
+			}
 		} else if (eventOrigin !== this._lastFocusedItem && this._getNavigationItemsOfGrid().flat().includes(eventOrigin)) {
 			this._lastFocusedItem = eventOrigin;
+		}
+	}
+
+	_onKeyDownCapture(e: KeyboardEvent) {
+		if (!this._table.loading) {
+			return;
+		}
+
+		if (isTabNext(e) || isTabPrevious(e)) {
+			this._focusElement(e.shiftKey ? this._table._beforeElement : this._table._afterElement);
+			e.stopImmediatePropagation();
 		}
 	}
 }

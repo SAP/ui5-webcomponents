@@ -201,6 +201,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.getFocusDomRefAsync();
 	}
 
+	/**
+	 * @override
+	 */
+	getFocusDomRef(): HTMLElement | undefined {
+		return this.content[0];
+	}
+
 	get formFormattedValue() {
 		if (this.files && this.name) {
 			const formData = new FormData();
