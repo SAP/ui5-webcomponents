@@ -7,8 +7,9 @@ when creating/updating UI5 Web Components.
 
  - Do I **change public properties** without user interaction? 
     
-Public properties belong to the application. Usually applications bind properties to a model.
-If we change properties arbitrarily, the application model may get out of sync.
+Public properties belong to the application. Usually applications bind components' properties to a model.
+If a component changes its own public properties arbitrarily, the application model may get out of sync. Public properties
+may only be changed internally upon user interaction (in combination with firing an event).
 
  - Have I set **noAttribute** for private properties that are not used for CSS?
 
@@ -26,20 +27,39 @@ if you have a `priority` enum with values `Normal` (default) and `Important`, do
 
  - Do I **fire an event** upon every user interaction? 
 
-When the user interacts with a component, leading to changes to the component state, an event
-must always be fired to notify the application of said changes, so that it can update its models.
+When the user interacts with a component, an event
+must always be fired to notify the application of state changes, so that it can update its models.
 
  - Do I **allow the application to prevent** the default behavior of my events?
 
 Sometimes it makes sense to allow the application to call `preventDefault()` on en event. In other cases,
-this is not necessary. Consider your particular use case carefully.
+this is not necessary. Consider what is logical in your particular use case.
 
-## Scoping-friendy code
+## CSS
 
- - Do I have **hard-coded** tag names in my CSS or TS files?
+ - Did I put **overstyling-relevant CSS properties on the host**?
+
+It's best to style the `:host` (rather than the shadow root) as much as possible (especially for paddings, margins, borders, etc.)
+so that apps can overstyle the component (in reasonable measure).
+
+## Scoping-friendly/multiple-framework-instance friendly code
+
+ - Do I have **hard-coded** tag names in my `.css` or `.ts` files?
 
 Having CSS such as `ui5-button.accept-btn { color: green; }` is not scoping-friendly, because tag names
-may vary. Use the attribute notation: `[ui5-button].accept-btn { color: green; }` instead. Similarly,
-if you have code such as `this.shadowRoot.querySelector("ui5-popover")`, change it to `this.shadowRoot.querySelector("[ui5-popover]")`.
+may vary. Use the attribute notation: `[ui5-button].accept-btn { color: green; }` instead.
 
- - Do I have in my template components that are not described in **dependencies**?
+Similarly, if you have code such as `this.shadowRoot.querySelector("ui5-popover")`,
+change it to `this.shadowRoot.querySelector("[ui5-popover]")`.
+
+ - Do I have in my templates components that are not described in **dependencies**?
+
+All components used in the `.hbs` files of your component must be added to the `dependencies` metadata setting
+so that the compiler can scope them when converting the template to lit-html code.
+
+ - Have I used **instanceof** checks for UI5 Elements?
+
+Checks such as `btn instanceof Button` or `el instanceof UI5Element` are not safe,
+because when multiple versions of UI5 Web Components are on the same HTML page, the first to boot will upgrade
+all tags, and `instanceof` checks will only work with the first framework's classes and fail for all others.
+Therefore, you must use *duck-typing* instead of hard `instanceof` checks.
