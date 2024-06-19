@@ -274,7 +274,7 @@ describe("DateRangePicker general interaction", () => {
 		await browser.keys("Escape");
 	});
 
-	it("Change event fired once", async () => {
+	it("Selected days: accessibility semantics", async () => {
 		const daterangepicker = await browser.$("#daterange-picker3");
 
 		await daterangepicker.click();
@@ -288,9 +288,9 @@ describe("DateRangePicker general interaction", () => {
 		const dayInBetween = await days[15];
 		const endSelectionDay = await days[20];
 
-		assert.strictEqual(await startSelectionDay.getAttribute("aria-selected", "true"), "The start day has selected semantics");
-		assert.strictEqual(await dayInBetween.getAttribute("aria-selected", "true"), "The day in between has selected semantics");
-		assert.strictEqual(await endSelectionDay.getAttribute("aria-selected", "true"), "The end day has selected semantics");
+		assert.strictEqual(await startSelectionDay.getAttribute("aria-selected", "true"), "true", "The start day has selected semantics");
+		assert.strictEqual(await dayInBetween.getAttribute("aria-selected", "true"), "true", "The day in between has selected semantics");
+		assert.strictEqual(await endSelectionDay.getAttribute("aria-selected", "true"), "true", "The end day has selected semantics");
 
 		await browser.keys("Escape");
 	});
