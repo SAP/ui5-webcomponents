@@ -17,10 +17,7 @@ describe("Table - loading", async () => {
 		assert.ok(await before.isFocused(), "The input before the table1 is focused.");
 
 		await before.keys("Tab");
-		let res = await browser.executeAsync(done => {
-			done(document.getElementById("table1").shadowRoot.querySelector("#loading").matches(":focus"));
-		});
-		assert.ok(res, "Busy indicator is focused");
+		assert.ok(await loading.matches(":focus"), "Busy indicator is focused");
 
 		await browser.keys("Tab");
 		assert.ok(await after.isFocused(), "The input after the table1 is focused.");
