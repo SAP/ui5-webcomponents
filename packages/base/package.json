@@ -43,6 +43,7 @@
     "generateProd": "nps generateProd",
     "bundle": "nps build.bundle",
     "test": "nps test",
+    "test:cypress": "nps test.test-open",
     "prepublishOnly": "tsc -b"
   },
   "dependencies": {

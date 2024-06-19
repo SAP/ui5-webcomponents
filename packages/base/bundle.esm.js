@@ -1,4 +1,3 @@
-import { registerThemePropertiesLoader } from "./dist/AssetRegistry.js";
 import EventProvider from "./dist/EventProvider.js";
 
 // ESM bundle targets browsers with native support
@@ -20,11 +19,11 @@ import "./test/assets/Themes.js";
 import { renderFinished } from "./dist/Render.js";
 
 // used for tests - to register a custom theme
-window.registerThemePropertiesLoader = registerThemePropertiesLoader;
 
 // i18n
 import { registerI18nLoader, getI18nBundle } from "./dist/i18nBundle.js";
 import parseProperties from "./dist/PropertiesFileFormat.js";
+import { forceInitConfiguration } from "./dist/InitialConfiguration.js";
 
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./dist/config/AnimationMode.js";
@@ -38,8 +37,17 @@ import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Ic
 import applyDirection from "./dist/locale/applyDirection.js";
 import { getCurrentRuntimeIndex } from "./dist/Runtimes.js";
 import LegacyDateFormats from "./dist/features/LegacyDateFormats.js";
+import { boot, attachBoot } from "./dist/Boot.js";
+import { registerThemePropertiesLoader } from "./dist/AssetRegistry.js";
+import { hasStyle } from "./dist/ManagedStyles.js";
+
+// attachBoot (no longer triggers "boot")
+attachBoot(() => {
+    console.log("Listener1: after framework booted!")
+})
 
 window["sap-ui-webcomponents-bundle"] = {
+	forceInitConfiguration,
 	configuration : {
 		getAnimationMode,
 		getLanguage,
@@ -62,4 +70,16 @@ window["sap-ui-webcomponents-bundle"] = {
 	renderFinished,
 	applyDirection,
 	EventProvider,
+	boot,
+	hasStyle,
+	registerThemePropertiesLoader,
+    registerThemeProps: async () => {
+        registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", () => {
+            return {
+                content: `:root{ --customCol: #fff; --customBg: #000; }`,
+                packageName: "",
+                fileName: "",
+            };
+        });
+    },
 };
