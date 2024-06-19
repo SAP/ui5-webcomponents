@@ -9,17 +9,19 @@ import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dis
 import CalendarDateComponent from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
+	isEnter,
 	isF4,
 	isF4Shift,
+	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
-import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import type { DayPickerChangeEventDetail } from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -32,6 +34,7 @@ import CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
 import SpecialCalendarDate from "./SpecialCalendarDate.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
+import Icon from "./Icon.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -41,6 +44,8 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
+import CalendarHeaderCss from "./generated/themes/CalendarHeader.css.js";
+import { CALENDAR_HEADER_NEXT_BUTTON, CALENDAR_HEADER_PREVIOUS_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 interface ICalendarPicker {
 	_showPreviousPage: () => void,
@@ -170,16 +175,16 @@ type SpecialCalendarDateT = {
 	tag: "ui5-calendar",
 	fastNavigation: true,
 	template: CalendarTemplate,
-	styles: calendarCSS,
+	styles: [calendarCSS, CalendarHeaderCss],
 	dependencies: [
 		SpecialCalendarDate,
 		CalendarDate,
 		CalendarDateRange,
-		CalendarHeader,
 		DayPicker,
 		MonthPicker,
 		YearPicker,
 		CalendarLegend,
+		Icon,
 	],
 })
 /**
@@ -299,6 +304,10 @@ class Calendar extends CalendarPart {
 		super();
 
 		this._valueIsProcessed = false;
+	}
+
+	static async onDefine() {
+		Calendar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -482,18 +491,26 @@ class Calendar extends CalendarPart {
 	 * The user clicked the "month" button in the header
 	 */
 	onHeaderShowMonthPress(e: CustomEvent) {
+		this.showMonth();
+		this.fireEvent("show-month-view", e);
+	}
+
+	showMonth() {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
-		this.fireEvent("show-month-view", e);
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
 	onHeaderShowYearPress(e: CustomEvent) {
+		this.showYear();
+		this.fireEvent("show-year-view", e);
+	}
+
+	showYear() {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
-		this.fireEvent("show-year-view", e);
 	}
 
 	get _currentPickerDOM() {
@@ -645,6 +662,97 @@ class Calendar extends CalendarPart {
 
 	get _specialDates() {
 		return this.getSlottedNodes<SpecialCalendarDate>("specialDates");
+	}
+
+	get classes() {
+		return {
+			prevButton: {
+				"ui5-calheader-arrowbtn": true,
+				"ui5-calheader-arrowbtn-disabled": this._previousButtonDisabled,
+			},
+			nextButton: {
+				"ui5-calheader-arrowbtn": true,
+				"ui5-calheader-arrowbtn-disabled": this._nextButtonDisabled,
+			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			ariaLabelMonthButton: this.hasSecondaryCalendarType
+				? `${this._headerMonthButtonText}, ${this.secondMonthButtonText}` : `${this._headerMonthButtonText}`,
+		};
+	}
+
+	get headerPreviousButtonText() {
+		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
+	}
+
+	get headerNextButtonText() {
+		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_BUTTON);
+	}
+
+	get secondMonthButtonText() {
+		const secondMonthButtonText = this.secondaryCalendarTypeButtonText?.monthButtonText as string;
+
+		return secondMonthButtonText;
+	}
+
+	onMonthButtonKeyDown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this.showMonth();
+			this.fireEvent("show-month-view", e);
+		}
+	}
+
+	onMonthButtonKeyUp(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+			this.showMonth();
+			this.fireEvent("show-month-view", e);
+		}
+	}
+
+	onYearButtonKeyDown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this.showYear();
+			this.fireEvent("show-year-view", e);
+		}
+	}
+
+	onYearButtonKeyUp(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this.showYear();
+			this.fireEvent("show-year-view", e);
+		}
+	}
+
+	onPrevButtonClick(e: MouseEvent) {
+		if (this._previousButtonDisabled) {
+			e.preventDefault();
+			return;
+		}
+
+		this.onHeaderPreviousPress();
+		e.preventDefault();
+	}
+
+	onNextButtonClick(e: MouseEvent) {
+		if (this._nextButtonDisabled) {
+			e.preventDefault();
+			return;
+		}
+
+		this.onHeaderNextPress();
+		e.preventDefault();
 	}
 
 	/**
