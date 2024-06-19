@@ -19,11 +19,11 @@ class CalendarDate extends UI5Element implements ICalendarSelectedDates {
 	/**
 	 * The date formatted according to the `formatPattern` property
 	 * of the `ui5-calendar` that hosts the component.
-	 * @default undefined
+	 * @default ""
 	 * @public
 	 */
 	@property()
-	value?: string;
+	value = "";
 }
 
 CalendarDate.define();

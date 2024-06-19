@@ -263,8 +263,8 @@ class Table extends UI5Element {
      * @default 1000
      * @public
      */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
