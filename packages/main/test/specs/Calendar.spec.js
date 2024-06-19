@@ -431,4 +431,16 @@ describe("Calendar general interaction", () => {
 
 		assert.strictEqual(specialDate.length, 1, "Special date is rendered");
 	});
+
+	it("Calendar header buttons visibility", async  () => {
+		const calendarHeader = await browser.$("#calendar1").shadow$(".ui5-calheader");
+		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
+		const yearButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`);
+
+		await monthButton.click();
+		assert.ok(monthButton.hasAttribute("hidden"), "The month button is hidden");
+
+		await yearButton.click();
+		assert.ok(yearButton.hasAttribute("hidden"), "The month button is hidden");
+	});
 });
