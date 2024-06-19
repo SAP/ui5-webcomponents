@@ -18,6 +18,7 @@ import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
@@ -201,6 +202,26 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	sortDescending!: boolean;
+
+	/**
+	 * Defines the ID or DOM Reference of the element at which the menu is shown.
+	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
+	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
+	 * @public
+	 * @default ""
+	 * @since 1.10.0
+	 */
+	@property({ validator: DOMReference, defaultValue: "" })
+	opener!: HTMLElement | string;
+
+	/**
+	 * Indicates if the menu is open
+	 * @public
+	 * @default false
+	 * @since 1.10.0
+	 */
+	@property({ type: Boolean })
+	open!:boolean;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
@@ -496,9 +517,8 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Shows the dialog.
-	 * @public
 	 */
-	show(): void {
+	beforeDialogOpen(): void {
 		if (!this._dialog) {
 			this._sortOrder = this._sortOrderListDomRef;
 			this._sortBy = this._sortByList;
@@ -514,9 +534,12 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.open = true;
+	}
 
-		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
+	afterDialogOpen(): void {
+		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+
+		this._focusRecentlyUsedControl();
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
@@ -553,15 +576,6 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Closes the dialog.
-	 */
-	close() {
-		if (this._dialog) {
-			this._dialog.open = false;
-		}
-	}
-
-	/**
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
@@ -579,7 +593,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Stores current settings as confirmed and fires `confirm` event.
 	 */
 	_confirmSettings() {
-		this.close();
+		this.open = false;
 		this._confirmedSettings = this._currentSettings;
 
 		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
@@ -592,7 +606,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._confirmedSettings);
 
 		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
-		this.close();
+		this.open = false;
 	}
 
 	get eventsParams() {
