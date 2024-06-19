@@ -252,9 +252,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	get navigatableItems() {
-		return this.getSlottedNodes<SegmentedButtonItem>("items").filter( item => {
+		return this.getSlottedNodes<SegmentedButtonItem>("items").filter(item => {
 			return !item.disabled;
-		})
+		});
 	}
 
 	get ariaDescribedBy() {
