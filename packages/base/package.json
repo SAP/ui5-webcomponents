@@ -56,7 +56,6 @@
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",
-    "eslint": "^7.22.0",
     "mkdirp": "^1.0.4",
     "replace-in-file": "^6.3.5",
     "resolve": "^1.20.0",
