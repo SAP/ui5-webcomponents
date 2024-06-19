@@ -24,7 +24,21 @@
 		?expanded="{{_tokenizerExpanded}}"
 	>
 		{{#each items}}
-			{{#if this.selected}}
+			{{#if isGroupItem}}
+				{{#each this.items}}
+					{{#if selected}}
+						<ui5-token
+							?readonly="{{../readonly}}"
+							class="ui5-multi-combobox-token"
+							data-ui5-id="{{this._id}}"
+							part="token-{{@index}}"
+							text="{{this.text}}"
+						>
+					{{/if}}
+				{{/each}}
+			{{else}}
+					{{#if selected}}
+
 				<ui5-token
 					?readonly="{{../readonly}}"
 					class="ui5-multi-combobox-token"
@@ -33,6 +47,8 @@
 					text="{{this.text}}"
 				>
 				</ui5-token>
+					{{/if}}
+
 			{{/if}}
 		{{/each}}
 	</ui5-tokenizer>
@@ -58,11 +74,12 @@
 		aria-describedby="{{ariaDescribedByText}}"
 		aria-required="{{required}}"
 		aria-label="{{ariaLabelText}}"
+		autocomplete="off"
 		data-sap-focus-ref
 	/>
 
 	{{#if _effectiveShowClearIcon}}
-		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper" input-icon tabindex="-1" @mousedown={{_iconMouseDown}}>
+		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper inputIcon" tabindex="-1" @mousedown={{_iconMouseDown}}>
 			<ui5-icon tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 		</div>
 	{{/if}}
@@ -73,7 +90,7 @@
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
-			input-icon
+			class="inputIcon"
 			slot="icon"
 			tabindex="-1"
 			@click="{{togglePopoverByDropdownIcon}}"

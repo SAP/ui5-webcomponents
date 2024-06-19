@@ -281,12 +281,22 @@ describe("DateTimePicker general interaction", () => {
 		const picker = await getPicker("dtMinMaxDatesISO");
 
 		// get header navigation buttons
-		const prevButton = await picker.$("ui5-calendar").shadow$("ui5-calendar-header").shadow$("div[data-ui5-cal-header-btn-prev]");
-		const nextButton = await picker.$("ui5-calendar").shadow$("ui5-calendar-header").shadow$("div[data-ui5-cal-header-btn-next]");
+		const prevButton = await picker.$("ui5-calendar").shadow$(".ui5-calheader").shadow$("div[data-ui5-cal-header-btn-prev]");
+		const nextButton = await picker.$("ui5-calendar").shadow$(".ui5-calheader").shadow$("div[data-ui5-cal-header-btn-next]");
 
 		// assert
 		assert.strictEqual(await prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The previous button is disabled.");
 		assert.strictEqual(await nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The next button is disabled.");
+	});
+
+	it("picker popover should have accessible name", async () => {
+		await openPickerById("dt1");
+
+		const popover = await getPicker("dt1");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date and Time", "Picker popover has an accessible name");
+
+		await closePickerById("dt1");
 	});
 
 	// TO DO: Create new testing page test secondary calendar type behaviour.

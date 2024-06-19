@@ -397,7 +397,10 @@ describe("List Tests", () => {
 
 		await btn.click();
 
-		await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
+		await browser.waitUntil(async () => {
+			const value = await loadMoreResult.getValue();
+			return value === "1";
+		}, {
 			timeout: 5000,
 			timeoutMsg: "The event loadMore must be fired"
 		});
@@ -549,7 +552,7 @@ describe("List Tests", () => {
 		await item1.click();
 		await item1.keys("ArrowDown");
 
-		assert.ok(await item3.getProperty("focused"), "disabled item is skipped");
+		assert.ok(await item3.isFocused(), "disabled item is skipped");
 	});
 
 	it('should include selected state text', async () => {

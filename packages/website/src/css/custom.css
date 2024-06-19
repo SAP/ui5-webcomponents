@@ -173,6 +173,11 @@ code {
   margin: 0 auto;
 }
 
+/* Make top level menu items bold (main,fiori,etc.) */
+.theme-doc-sidebar-item-category-level-1.menu__list-item > .menu__list-item-collapsible > a[href*="\/components"] {
+  font-weight: bold;
+}
+
 @media (max-width: 996px) {
   .navbar__title {
     font-size: 0.875rem;
@@ -194,14 +199,27 @@ code {
   }
 }
 
-.newComponentBadge {
+.newComponentBadge,
+.expComponentBadge {
   position: relative;
 }
 
-.newComponentBadge:after {
-  content: "New";
+.expComponentBadge:before {
   color: #fff;
-  background: #334eff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 3.25rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  content: "exp";
+  background: #a100c2;
+  pointer-events: none;
+}
+
+.newComponentBadge:after {
+  color: #fff;
   position: absolute;
   top: 0.25rem;
   inset-inline-end: 1rem;
@@ -209,4 +227,7 @@ code {
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
   font-size: 0.75rem;
+  content: "new";
+  background: #334eff;
+  pointer-events: none;
 }

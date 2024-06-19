@@ -3,6 +3,223 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
+
+
+### Bug Fixes
+
+* **ui5-barcode-scanner-dialog:** properly fire 'close' event ([#9193](https://github.com/SAP/ui5-webcomponents/issues/9193)) ([db099f1](https://github.com/SAP/ui5-webcomponents/commit/db099f120353d86ccb04de554b483228bff73325)), closes [#9177](https://github.com/SAP/ui5-webcomponents/issues/9177)
+* **ui5-li-notification:** enhance accessibility ([#9192](https://github.com/SAP/ui5-webcomponents/issues/9192)) ([cc34cea](https://github.com/SAP/ui5-webcomponents/commit/cc34cea9d06babbcb44a1edd21e99becf637c64f)), closes [#9161](https://github.com/SAP/ui5-webcomponents/issues/9161)
+* **ui5-notification-list:** change host to display:block ([#9139](https://github.com/SAP/ui5-webcomponents/issues/9139)) ([efb4791](https://github.com/SAP/ui5-webcomponents/commit/efb4791e529860e2a996136719c5bbbb98d5603f))
+* **ui5-shellbar:** add tooltip for shellbar items ([#9143](https://github.com/SAP/ui5-webcomponents/issues/9143)) ([c39c18a](https://github.com/SAP/ui5-webcomponents/commit/c39c18a8d4f6b1b858f72680d830c40f189d7eab))
+* **ui5-side-navigation:** group name is announced one time by screen … ([#9207](https://github.com/SAP/ui5-webcomponents/issues/9207)) ([4f18dfd](https://github.com/SAP/ui5-webcomponents/commit/4f18dfdf844dee248744692913284304641e83cb))
+
+
+### Code Refactoring
+
+* **ui5-li, ui5-li-custom:** rename classes ([#9158](https://github.com/SAP/ui5-webcomponents/issues/9158)) ([8f5b679](https://github.com/SAP/ui5-webcomponents/commit/8f5b67901a429196252f52980c10a04f7d43fe0b))
+* **ui5-side-navigation-item:** remove wholeItemToggleable property ([#9164](https://github.com/SAP/ui5-webcomponents/issues/9164)) ([37b2181](https://github.com/SAP/ui5-webcomponents/commit/37b2181eb79dfccae8b39069bb068062e37a5a2b)), closes [#9057](https://github.com/SAP/ui5-webcomponents/issues/9057)
+* **ui5-tag:** wrap text by default ([#9126](https://github.com/SAP/ui5-webcomponents/issues/9126)) ([96704b8](https://github.com/SAP/ui5-webcomponents/commit/96704b8e893a777206c00efbc57282e56429d687))
+
+
+### BREAKING CHANGES
+
+* **ui5-side-navigation-item:** the `wholeItemToggleAble` poperty of `ui5-side-navigation-item` is now remomoved.
+The functionality of clicking the whole item to show/hide the sub items (if present) will
+be introduced soon with new property name and enhanced accessibility and keyboard handling.
+* **ui5-tag:** `wrapping-type` property default value has changed from `None` to `Normal`. Before:
+```html
+<ui5-tag>In Process</ui5-tag><!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-tag>In Process</ui5-tag><!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+
+* refactor(ui5-tag): fix test texsts
+
+* refactor(ui5-tag): fix height of the tags to be the same
+
+No matter if the tag is with wrapping-type="None" or wrapping-type="Normal"
+the height when there is only one line of text should be the same.
+
+* refactor(ui5-tag): merge adjustments and code review comments
+
+* refactor(ui5-tag): fix height
+* **ui5-li, ui5-li-custom:** `StandardListItem` has been renamed to `ListItemStandard`, and `CustomListItem` has been renamed to `ListItemCustom`.
+If you previously imported the classes as follows:
+```ts
+import StandardListItem from "@ui5/webcomponents/StandardListItem.js";
+import CustomListItem from "@ui5/webcomponents/CustomListItem.js";
+```
+now you must change imports to:
+```ts
+import ListItemStandard from "@ui5/webcomponents/ListItemStandard.js";
+import ListItemCustom from "@ui5/webcomponents/ListItemCustom.js";
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+
+
+
+
+
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* **ui5-notification-list:** improved accessibility ([#9070](https://github.com/SAP/ui5-webcomponents/issues/9070)) ([5e62d4a](https://github.com/SAP/ui5-webcomponents/commit/5e62d4af792d7043f931b0f8f894d36a85f18395))
+* **ui5-shellbar:** improved samples accessibility ([#8847](https://github.com/SAP/ui5-webcomponents/issues/8847)) ([7563e7d](https://github.com/SAP/ui5-webcomponents/commit/7563e7d942d06865d8fcc44d9f4dc1e1d6179e97)), closes [#8821](https://github.com/SAP/ui5-webcomponents/issues/8821)
+
+
+### Code Refactoring
+
+* **ui5-link:** wrap text by default ([#9006](https://github.com/SAP/ui5-webcomponents/issues/9006)) ([1924b54](https://github.com/SAP/ui5-webcomponents/commit/1924b5457f22c428527f8be3fbdd46d9d5d7ffed))
+
+
+### BREAKING CHANGES
+
+* **ui5-link:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+```
+
+
+
+
+
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-mesasge:** update subtitle color ([#8986](https://github.com/SAP/ui5-webcomponents/issues/8986)) ([c9a5120](https://github.com/SAP/ui5-webcomponents/commit/c9a5120912d22980e25adbb042d308fee5201487)), closes [#8984](https://github.com/SAP/ui5-webcomponents/issues/8984)
+* **ui5-notification-list:** fix keyboard issues ([#9040](https://github.com/SAP/ui5-webcomponents/issues/9040)) ([f1c0635](https://github.com/SAP/ui5-webcomponents/commit/f1c0635d6d2b94e94b7ecc311bb49480db1fae6d))
+* **ui5-notification:** implement keyboard navigation spec ([#8975](https://github.com/SAP/ui5-webcomponents/issues/8975)) ([d68c883](https://github.com/SAP/ui5-webcomponents/commit/d68c883f527e57f75bdad5a7a421b3ab8e4efbb0))
+* **ui5-side-navigation-item:** "selected" is no longer announced on every focused item ([#9008](https://github.com/SAP/ui5-webcomponents/issues/9008)) ([8cd3f83](https://github.com/SAP/ui5-webcomponents/commit/8cd3f83e2fcc31d57ebcdd38ee2ceff36150e1d1))
+* **ui5-side-navigation-item:** click event is no longer fired twice ([#8944](https://github.com/SAP/ui5-webcomponents/issues/8944)) ([0dd36ca](https://github.com/SAP/ui5-webcomponents/commit/0dd36ca4b84c3b73fbb9c9cd44cee3d7b6e97d2a))
+
+
+### Code Refactoring
+
+* **ui5-popup:** rename after-open and after-close events to 'open' and 'close' ([#8946](https://github.com/SAP/ui5-webcomponents/issues/8946)) ([912167d](https://github.com/SAP/ui5-webcomponents/commit/912167d18cd5e365a03513defc570da5bf372715)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-shellbar:** introducing assistant slot ([#8963](https://github.com/SAP/ui5-webcomponents/issues/8963)) ([2a8c252](https://github.com/SAP/ui5-webcomponents/commit/2a8c252ecf67fce81d5ac7b2a7d949c058de9d17)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7887](https://github.com/SAP/ui5-webcomponents/issues/7887)
+
+
+### Features
+
+* **ui5-dynamic-page:** introduce new component ([#7899](https://github.com/SAP/ui5-webcomponents/issues/7899)) ([3752ce7](https://github.com/SAP/ui5-webcomponents/commit/3752ce701fe915fa0b02ba2b114c40bf3b7d9123))
+* **ui5-li-notification-group:** enhance 'Expand'/'Collapse' tooltip ([#9042](https://github.com/SAP/ui5-webcomponents/issues/9042)) ([08b81c7](https://github.com/SAP/ui5-webcomponents/commit/08b81c7bd852a50f735ab8621cb3e0de69c25497))
+* **ui5-li-notification:** implement new design ([#8426](https://github.com/SAP/ui5-webcomponents/issues/8426)) ([e451cdc](https://github.com/SAP/ui5-webcomponents/commit/e451cdc3709553dcb780f637463dc1b29e8f2971))
+
+
+### BREAKING CHANGES
+
+* **ui5-notification:** Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` and `ui5-li-notification` components.
+
+Previously the application developers were defining notifications in this way:
+
+```
+<ui5-list>
+        <ui5-li-notification-group title-text="Group Title" >
+            <ui5-li-notification..
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+
+```
+<ui5-notification-list>
+        <ui5-li-notification-group title-text="Group Title" >
+            <ui5-li-notification..
+```
+* **ui5-shellbar:** 1. The `showCoPilot` property of the `ui5-shellbar` is removed.
+
+If you have previously used the `showCoPilot` property:
+```html
+<ui5-shellbar show-co-pilot></ui5-shellbar>
+```
+it will no longer work for the component.
+
+2. The `CoPilotAnimation` feature of the `ui5-shellbar` is removed.
+
+If you have previously used the `CoPilotAnimation` feature:
+```js
+import CoPilotAnimation from "@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"
+```
+it will no longer work for the component.
+
+3. The `copilotDomRef` getter of the `ui5-shellbar` is removed.
+
+If you have previously used the `copilotDomRef` public getter:
+```js
+shellbar.copilotDomRef
+```
+
+it will no longer work for the component.
+
+ 4. The `co-pilot-click` event of the `ui5-shellbar` is removed.
+If you have previously used the `co-pilot-click` public event:
+```js
+shellbar.addEventListener("ui5-co-pilot-click", function(event) {
+	...
+});
+```
+
+it will no longer work for the component.
+
+You can achieve similar functionality with the new slot:
+
+HTML:
+```html
+<ui5-shellbar>
+  <ui5-toggle-button id="assistant" icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
+</ui5-shellbar>
+```
+
+JavaScript:
+```js
+assistant.addEventListener("click", function (event) {
+	const toggleButton = event.target;
+	toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
+});
+
+```
+* **ui5-popup:** Event names `after-close` and `after-open` are now named `close` and `open`.
+Previously the application developers could subscribe to the events as follows:
+```ts
+popup.addEventListener("after-open", function() {
+	//...
+});
+popup.addEventListener("after-close", function() {
+	//...
+});
+```
+
+Now the application developers should include the ui5-bar as follows:
+```ts
+popup.addEventListener("open", function() {
+	//...
+});
+
+popup.addEventListener("close", function() {
+	//...
+});
+
+```
+
+
+
+
+
 # [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
 
 

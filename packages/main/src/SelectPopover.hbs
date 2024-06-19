@@ -2,6 +2,7 @@
 	<ui5-responsive-popover
 		hide-arrow
 		prevent-initial-focus
+		part="popover"
 		placement="Bottom"
 		class="ui5-select-popover {{classes.popover}}"
 		horizontal-align="Start"
@@ -40,31 +41,19 @@
 		{{/unless}}
 
 		<ui5-list
-			selection-mode="SingleAuto"
+			mode="SingleAuto"
 			separators="None"
 			@mousedown="{{_itemMousedown}}"
 			@ui5-item-click="{{_handleItemPress}}"
 		>
-			{{#each _syncedOptions}}
-				<ui5-li
-					id="{{this.id}}-li"
-					icon="{{this.icon}}"
-					?selected="{{this.selected}}"
-					?focused="{{this._focused}}"
-					tooltip="{{this.tooltip}}"
-					additional-text="{{this.additionalText}}"
-					?aria-selected="{{this.selected}}"
-					data-ui5-stable="{{this.stableDomRef}}"
-				>
-					{{this.textContent}}
-				</ui5-li>
-			{{/each}}
+			<slot></slot>
 		</ui5-list>
 	</ui5-responsive-popover>
 {{/if}}
 
 {{#if shouldOpenValueStateMessagePopover}}
 	<ui5-popover
+		part="popover"
 		skip-registry-update
 		prevent-initial-focus
 		prevent-focus-restore

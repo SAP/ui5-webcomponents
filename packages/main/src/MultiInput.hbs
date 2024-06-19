@@ -12,7 +12,9 @@
 		@ui5-token-delete={{tokenDelete}}
 		@focusout="{{_tokenizerFocusOut}}"
 	>
-		<slot name="tokens"></slot>
+		{{#each tokens}}
+			<slot name="{{this._individualSlot}}"></slot>
+		{{/each}}
 	</ui5-tokenizer>
 {{/inline}}
 
@@ -23,7 +25,7 @@
 			@click={{valueHelpPress}}
 			@mousedown={{valueHelpMouseDown}}
 			@mouseup={{valueHelpMouseUp}}
-			input-icon
+			class="inputIcon"
 			name="value-help"
 		></ui5-icon>
 	{{/if}}

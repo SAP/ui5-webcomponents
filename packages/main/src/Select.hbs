@@ -31,14 +31,14 @@
 		{{#if hasCustomLabel}}
 			<slot name="label"></slot>
 		{{else}}
-			{{_text}}
+			{{text}}
 		{{/if}}
 	</div>
 
 	{{#unless readonly}}
 		<ui5-icon
 			name="slim-arrow-down"
-			input-icon
+			class="inputIcon"
 			?pressed="{{_iconPressed}}"
 		></ui5-icon>
 	{{/unless}}

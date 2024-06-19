@@ -26,9 +26,9 @@
 		</ui5-li-group>
 
 		<ui5-li-group header-text="Discounted Items">
-			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Negative">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
 			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
-			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Critical">DVD set</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Required" additional-text-state="Critical">DVD set</ui5-li>
 		</ui5-li-group>
 
 		<ui5-li-group header-text="Discounted Items">
@@ -61,9 +61,9 @@
 		</ui5-li-group>
 
 		<ui5-li-group header-text="Discounted Items">
-			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Reuqired" additional-text-state="Negative">HP Monitor 24</ui5-li>
+			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
 			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
-			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Reuqired" additional-text-state="Critical">DVD set</ui5-li>
+			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Required" additional-text-state="Critical">DVD set</ui5-li>
 		</ui5-li-group>
 
 		<ui5-li-group header-text="Discounted Items">
@@ -237,7 +237,7 @@
 
 	<ui5-list header-text="API: noDataText" separators="None" no-data-text="No Data Available"></ui5-list>
 
-	<ui5-list header-text="API: CustomListItem" selection-mode="SingleEnd">
+	<ui5-list header-text="API: ListItemCustom" selection-mode="SingleEnd">
 		<ui5-li-custom>
 			<div class="list5auto">
 				<ui5-button>Press me</ui5-button>
@@ -332,6 +332,34 @@
 		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Negative" additional-text="Lorem ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 		<ui5-li image="./img/woman_avatar_5.png" additional-text-state="Negative" additional-text="Lorem ipsum" description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</ui5-li>
 	</ui5-list>
+
+	<br>
+
+	<div id="host">
+		<template shadowrootmode="open">
+		   <span>I'm in the shadow DOM</span>
+		   <ui5-list header-text="API: ListItemCustom" selection-mode="SingleEnd">
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+			  <ui5-li-custom>
+				 <div class="list5auto">
+					<ui5-button>Press me</ui5-button>
+					<ui5-link>Go to SAP</ui5-link>
+				 </div>
+			  </ui5-li-custom>
+		   </ui5-list>
+		</template>
+	</div>
 
 	<script>
 		'use strict';

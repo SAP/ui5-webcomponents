@@ -57,7 +57,7 @@ import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type ListItemType from "./types/ListItemType.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import { StartsWith } from "./Filters.js";
@@ -260,6 +260,20 @@ type InputSuggestionScrollEventDetail = {
 		scrollContainer: { type: HTMLElement },
 	},
 })
+
+/**
+ * Fired when the suggestions picker is open.
+ * @public
+ * @since 2.0.0
+ */
+@event("open")
+
+/**
+ * Fired when the suggestions picker is closed.
+ * @public
+ * @since 2.0.0
+ */
+@event("close")
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	/**
 	 * Defines whether the component is in disabled state.
@@ -426,6 +440,17 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	showClearIcon!: boolean;
 
 	/**
+	 * Defines whether the suggestions picker is open.
+	 * The picker will not open if the `showSuggestions` property is set to `false`, the input is disabled or the input is readonly.
+	 * The picker will close automatically and `close` event will be fired if the input is not in the viewport.
+	 * @default false
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
 	 * Defines whether the clear icon is visible.
 	 * @default false
 	 * @private
@@ -441,20 +466,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	focused!: boolean;
 
 	@property({ type: Boolean })
-	openOnMobile!: boolean;
-
-	@property({ type: Boolean })
-	open!: boolean;
-
-	@property({ type: Boolean })
 	valueStateOpen!: boolean;
-
-	/**
-	 * Determines whether to manually show the suggestions popover
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_forceOpen!: boolean;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
@@ -644,19 +656,18 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		const hasItems = !!this.suggestionItems.length;
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot!.querySelector("input") === getActiveElement();
-
 		if (this.shouldDisplayOnlyValueStateMessage) {
 			this.openValueStatePopover();
 		} else {
 			this.closeValueStatePopover();
 		}
 
-		if (this._isPhone) {
-			this.open = this.openOnMobile;
-		} else if (this._forceOpen) {
-			this.open = true;
-		} else {
-			this.open = hasValue && hasItems && isFocused && this.isTyping;
+		const preventOpenPicker = this.disabled || this.readonly;
+
+		if (preventOpenPicker) {
+			this.open = false;
+		} else if (!this._isPhone) {
+			this.open = hasItems && (this.open || (hasValue && isFocused && this.isTyping));
 		}
 
 		const value = this.value;
@@ -928,7 +939,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this.lastConfirmedValue = "";
 		this.isTyping = false;
-		this._forceOpen = false;
 	}
 
 	_clearPopoverFocusAndSelection() {
@@ -946,7 +956,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_click() {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
-			this.openOnMobile = true;
+			this.open = true;
 		}
 	}
 
@@ -1103,7 +1113,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_closePicker() {
 		this.open = false;
-		this.openOnMobile = false;
 	}
 
 	_afterOpenPicker() {
@@ -1124,10 +1133,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			this.focused = false;
 		}
 
-		this.openOnMobile = false;
 		this.open = false;
 		this.isTyping = false;
-		this._forceOpen = false;
 
 		if (this.hasSuggestionItemSelected) {
 			this.focus();
@@ -1154,10 +1161,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handlePickerAfterOpen() {
 		this.Suggestions?._onOpen();
+		this.fireEvent("open", null, false, false);
 	}
 
 	_handlePickerAfterClose() {
 		this.Suggestions?._onClose();
+		this.fireEvent("close", null, false, false);
 	}
 
 	openValueStatePopover() {
@@ -1174,19 +1183,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_getValueStatePopover() {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
-	}
-
-	/**
-	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-	 * @public
-	 * @since 1.3.0
-	 */
-	openPicker() : void {
-		if (!this.suggestionItems.length || this.disabled || this.readonly) {
-			return;
-		}
-
-		this._forceOpen = true;
 	}
 
 	enableSuggestions() {
@@ -1232,8 +1228,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.valueBeforeSelectionStart = "";
 
 		this.isTyping = false;
-		this.openOnMobile = false;
-		this._forceOpen = false;
+		this.open = false;
 	}
 
 	/**
@@ -1387,7 +1382,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	announceSelectedItem() {
 		const invisibleText = this.shadowRoot!.querySelector(`#selectionText`)!;
 
-		invisibleText.textContent = this.itemSelectionAnnounce;
+		if (invisibleText) {
+			invisibleText.textContent = this.itemSelectionAnnounce;
+		}
 	}
 
 	fireSelectionChange(item: IInputSuggestionItem | null, targetRef: SuggestionListItem | null, isValueFromSuggestions: boolean) {

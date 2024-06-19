@@ -6,7 +6,11 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isChrome,
+	isDesktop,
+	isPhone,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -123,6 +127,9 @@ type PopupBeforeCloseEventDetail = {
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
+	 *
+	 * **Note:** If an element with `autofocus` attribute is added inside the component,
+	 * `initialFocus` won't take effect.
 	 * @default ""
 	 * @public
 	 */
@@ -177,7 +184,7 @@ abstract class Popup extends UI5Element {
 	 * Indicates whether initial focus should be prevented.
 	 * @public
 	 * @default false
-	 * @since 2.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	preventInitialFocus!: boolean;
@@ -197,7 +204,19 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>
+	content!: Array<HTMLElement>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onDesktop!: boolean;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
@@ -215,6 +234,11 @@ abstract class Popup extends UI5Element {
 		};
 	}
 
+	onBeforeRendering() {
+		this.onPhone = isPhone();
+		this.onDesktop = isDesktop();
+	}
+
 	onAfterRendering() {
 		renderFinished().then(() => {
 			this._updateMediaRange();
@@ -227,6 +251,8 @@ abstract class Popup extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+
+		this.tabIndex = -1;
 	}
 
 	onExitDOM() {
@@ -368,10 +394,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (!isSafari()) { // Remove when adopting native dialog
-			this._root.removeAttribute("tabindex");
-		}
-
 		if (this.shadowRoot!.contains(e.target as HTMLElement)) {
 			this._shouldFocusRoot = true;
 		} else {
@@ -380,10 +402,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmouseup() {
-		if (!isSafari()) { // Remove when adopting native dialog
-			this._root.tabIndex = -1;
-		}
-
 		if (this._shouldFocusRoot) {
 			if (isChrome()) {
 				this._root.focus();
@@ -438,6 +456,11 @@ abstract class Popup extends UI5Element {
 	 * @returns Promise that resolves when the focus is applied
 	 */
 	async applyFocus(): Promise<void> {
+		// do nothing if the standard HTML autofocus is used
+		if (this.querySelector("[autofocus]")) {
+			return;
+		}
+
 		await this._waitForDomRef();
 
 		if (this.getRootNode() === this) {
@@ -454,9 +477,6 @@ abstract class Popup extends UI5Element {
 		element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
-			if (element === this._root) {
-				element.tabIndex = -1;
-			}
 			element.focus();
 		}
 	}

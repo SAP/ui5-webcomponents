@@ -1,0 +1,66 @@
+---
+slug: ../../Table
+sidebar_class_name: newComponentBadge expComponentBadge
+---
+
+import Basic from "../../../_samples/main/Table/Basic/Basic.md";
+import Popin from "../../../_samples/main/Table/Popin/Popin.md";
+import Scroll from "../../../_samples/main/Table/ScrollMode/Scroll.md";
+import StickyHeader from "../../../_samples/main/Table/StickyHeader/StickyHeader.md";
+import StickyHeaderContainer from "../../../_samples/main/Table/StickyHeaderContainer/StickyHeaderContainer.md";
+import NoDataSlot from "../../../_samples/main/Table/NoDataSlot/NoDataSlot.md";
+import Interactive from "../../../_samples/main/Table/Interactive/Interactive.md";
+
+:::info
+This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
+Currently, it's considered experimental as its API is subject to change.
+This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
+For compatibility reasons, we moved the previous Tabple implementation to the **@ui5/webcomponents-compat** package
+and will be maintained until the new Table is experimental.
+:::
+
+<%COMPONENT_OVERVIEW%>
+
+## Basic Sample
+<Basic />
+
+<%COMPONENT_METADATA%>
+
+## Base Functionalities
+
+### Overflow Mode
+
+The table provides two horizontal overflow modes: Scroll (default) or Popin.
+
+#### Scroll Mode
+
+<Scroll />
+
+#### Popin Mode
+
+<Popin />
+
+### Sticky Header Row
+
+Enable a sticky header by utilizing the properties `sticky` and `sticky-top` of the `ui5-table-header-row`.
+
+#### Sticky Behavior with scrollable table
+
+<StickyHeader />
+
+#### Sticky Behavior with scrollable container
+
+<StickyHeaderContainer />
+
+### No Data
+
+You can provide an illustration or a custom text, that is shown when the table has no data using the `nodata` slot.
+
+<NoDataSlot />
+
+### Interactive Rows
+
+Create an interactive table by marking `ui5-table-row` components as `interactive`. Pressing on an interactive row
+will fire the `row-click` event.
+
+<Interactive />

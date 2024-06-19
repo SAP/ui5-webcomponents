@@ -1,5 +1,8 @@
 import { assert } from "chai";
 
+const isMacOS = process.platform === 'darwin';
+const keyCtrlToPress = isMacOS ? 'Command' : 'Control';
+
 describe("MultiInput general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiInput.html`);
@@ -16,7 +19,7 @@ describe("MultiInput general interaction", () => {
 		assert.notOk(await basicTokenizer.getProperty("expanded"), "Tokenizer should not be expanded");
 	});
 
-	it ("tests opening of tokenizer Popover", async () => {
+	it("tests opening of tokenizer Popover", async () => {
 		const tokenizer = await browser.$("#basic-overflow").shadow$("ui5-tokenizer");
 		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
 
@@ -27,7 +30,7 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 	});
 
-	it ("fires value-help-trigger on icon press", async () => {
+	it("fires value-help-trigger on icon press", async () => {
 		await browser.url(`test/pages/MultiInput.html`);
 
 		const label = await browser.$("#basic-event-listener");
@@ -44,7 +47,7 @@ describe("MultiInput general interaction", () => {
 
 	});
 
-	it ("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", async () => {
+	it("fires value-help-trigger with F4 and Alt/Option + ArrowUp/Down", async () => {
 		const eventCounter = await browser.$("#value-help-trigger-counter");
 		const multiInputInner = await browser.$("#multi-with-value-help-icon").shadow$(".ui5-input-inner");
 
@@ -62,7 +65,7 @@ describe("MultiInput general interaction", () => {
 		assert.strictEqual(await eventCounter.getProperty("value"), "2", "value help press event is fired");
 	});
 
-	it ("adds a token to multi input", async () => {
+	it("adds a token to multi input", async () => {
 		const mi = await browser.$("#single-token");
 		const btn = await browser.$("#add-to-single");
 
@@ -80,7 +83,7 @@ describe("MultiInput general interaction", () => {
 		assert.notOk(await allTokens[1].getProperty("overflows"), "Token should not overflow");
 	});
 
-	it ("adds multiple tokens to multi input", async () => {
+	it("adds multiple tokens to multi input", async () => {
 		const mi = await browser.$("#no-tokens2");
 		const btn = await browser.$("#add-multiple-tokens");
 
@@ -94,7 +97,7 @@ describe("MultiInput general interaction", () => {
 		assert.notOk(await allTokens[1].getProperty("overflows"), "Token 2 should not overflow");
 	});
 
-	it ("adds an overflowing token to multi input", async () => {
+	it("adds an overflowing token to multi input", async () => {
 		const mi = await browser.$("#multiple-token");
 		const btn = await browser.$("#add-to-multiple");
 
@@ -120,6 +123,27 @@ describe("MultiInput general interaction", () => {
 		assert.ok(await allTokens[3].getProperty("overflows"), `Token 3 should not overflow`);
 		assert.ok(await allTokens[4].getProperty("overflows"), `Token 4 should not overflow`);
 		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
+	});
+
+	it("Should create a token on change event", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+
+		const mi = await browser.$("#suggestion-token");
+		const input = await mi.shadow$("input");
+		const popover = await mi.shadow$("ui5-responsive-popover");
+
+		await input.click();
+		await input.keys("c");
+
+		assert.ok(await popover.getProperty("open"), "Suggestion popover is open");
+		let allTokens = await mi.$$("ui5-token");
+		assert.strictEqual(allTokens.length, 0, "0 tokens");
+
+		await popover.$("ui5-li-suggestion-item").click();
+
+		allTokens = await mi.$$("ui5-token");
+		assert.notOk(await popover.getProperty("open"), "Suggestion popover is closed");
+		assert.strictEqual(allTokens.length, 1, "a token is added after change");
 	});
 
 	it ("Placeholder", async () => {
@@ -200,7 +224,7 @@ describe("MultiInput Truncated Token", () => {
 		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
 		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
-		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+		assert.ok(await rpo.$("ui5-li").matches(":focus"), "Token's list item is focused");
 
 		await token.click();
 
@@ -254,7 +278,7 @@ describe("MultiInput Truncated Token", () => {
 		await inner.keys("Enter");
 
 		const rpo = await tokenizer.shadow$("ui5-responsive-popover");
-
+		const listItem = await rpo.$("ui5-li");
 		const token = await mi.$("ui5-token");
 
 		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
@@ -263,7 +287,7 @@ describe("MultiInput Truncated Token", () => {
 
 		assert.ok(await rpo.getProperty("open"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
-		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+		assert.ok(await listItem.matches(":focus"), "Token's list item is focused");
 
 		const deleteIcon = await token.shadow$("ui5-icon");
 
@@ -287,7 +311,7 @@ describe("MultiInput Truncated Token", () => {
 });
 
 describe("ARIA attributes", () => {
-	it ("aria-describedby value according to the tokens count", async () => {
+	it("aria-describedby value according to the tokens count", async () => {
 		const mi = await browser.$("#no-tokens");
 		const innerInput = await mi.shadow$("input");
 		const btn = await browser.$("#add-tokens");
@@ -323,7 +347,7 @@ describe("ARIA attributes", () => {
 		assert.strictEqual(await invisibleText.getText(), "Contains 2 tokens", "aria-describedby text is correct");
 	});
 
-	it ("aria-describedby value according to the tokens and suggestions count", async () => {
+	it("aria-describedby value according to the tokens and suggestions count", async () => {
 		const mi = await browser.$("#suggestion-token");
 		const innerInput = await mi.shadow$("input");
 		const tokensCountITextId = `hiddenText-nMore`;
@@ -339,7 +363,7 @@ describe("ARIA attributes", () => {
 		assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby attribute contains multiple references");
 	});
 
-	it ("aria-roledescription is set properly", async () => {
+	it("aria-roledescription is set properly", async () => {
 		const mi = await browser.$("#no-tokens");
 		const innerInput = await mi.shadow$("input");
 
@@ -461,7 +485,7 @@ describe("Keyboard handling", () => {
 		assert.strictEqual(await firstToken.getProperty("focused"), true, "The first token is focused");
 	});
 
-	it ("Should focus the input when all tokens are deleted", async () => {
+	it("Should focus the input when all tokens are deleted", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
 
@@ -492,6 +516,40 @@ describe("Keyboard handling", () => {
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 	});
 
+	it("should focus token last token when caret is at the beginning of the value", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("ArrowLeft");
+		await browser.keys("Backspace");
+
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
+	it("should delete value on backspace", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+		const lastToken = await browser.$("#two-tokens ui5-token#secondToken");
+
+		// Act
+		await innerInput.click();
+		await browser.keys([keyCtrlToPress, "a"]);
+		await browser.keys("Backspace");
+
+		// Assert
+		assert.strictEqual(await input.getProperty("value"), "", "Value is deleted on Backspace");
+
+		await browser.keys("Backspace");
+
+		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
+	});
+
 	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");
@@ -505,6 +563,28 @@ describe("Keyboard handling", () => {
 		// Assert
 		assert.ok(await lastToken.getProperty("focused"), "The last token is focused on Backspace");
 		assert.notOk(await input.getProperty("focused"), "The input loses focus on Backspace");
+	});
+
+	it("should change input's value when set in selection change event", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+		const input = $("#suggestion-token");
+		const innerInput = input.shadow$("input");
+
+		await input.scrollIntoView();
+		await innerInput.click();
+		await innerInput.keys('a');
+		await innerInput.keys("Enter");
+
+		assert.strictEqual(await input.getProperty("value"), "", "value should be cleared in event handler");
+		assert.strictEqual(await innerInput.getProperty("value"), "", "inner value should be cleared in event handler");
+
+		await innerInput.keys("ArrowLeft");
+
+		assert.isNotOk(await input.getProperty("focused"), "focused property has been removed from input");
+
+		await innerInput.keys("ArrowRight");
+
+		assert.isOk(await input.getProperty("focused"), "focused property has been set to the input");
 	});
 
 	it("should text field always when focus in" , async () => {

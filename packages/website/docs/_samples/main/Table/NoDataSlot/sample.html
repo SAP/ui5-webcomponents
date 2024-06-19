@@ -1,0 +1,30 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+<!-- playground-fold-end -->
+	<ui5-table id="table" overflow-mode="Popin">
+		<ui5-illustrated-message slot="nodata" name="NoData"></ui5-illustrated-message>
+<!-- playground-fold -->		
+		<ui5-table-header-row slot="headerRow">
+			<ui5-table-header-cell id="produtCol" width="300px"><span>Product</span></ui5-table-header-cell>
+			<ui5-table-header-cell id="supplierCol" width="200px">Supplier</ui5-table-header-cell>
+			<ui5-table-header-cell id="dimensionsCol" width="300px">Dimensions</ui5-table-header-cell>
+			<ui5-table-header-cell id="weightCol" width="100px">Weight</ui5-table-header-cell>
+			<ui5-table-header-cell id="priceCol" width="220px">Price</ui5-table-header-cell>
+		</ui5-table-header-row>
+<!-- playground-fold-end -->
+	</ui5-table>
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

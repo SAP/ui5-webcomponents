@@ -44,7 +44,6 @@ The Invisible Messaging service is designed to be used both internally in the co
 * `InvisibleMessageMode.Polite` - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
 
 According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message as early as possible in the application. Then, you should specify the text that has to be announced by the screen reader and the live region mode using the `announce` method.
-Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/nightly/components/MessageStrip/).
 
 
 ### **Keyboard Handling**
@@ -67,20 +66,18 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 
 
 | UI5 Web Components Property | HTML Attribute                                    | Description                                                                                                                                                                                         |
-| --------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accessibleName`            | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
-| `accessibleNameRef`         | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
-| `accessibleRole`            | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |
-| `accessibilityTexts`        | `aria-label`                                      | An object of strings that define several additional accessibility texts for further customization.                                                                                                  |
-| `accessibilityAttributes`   | `aria-expanded`, `aria-haspopup`, `aria-controls` | An object of strings that defines several additional accessibility attribute values for customization depending on the use case.                                                                    |
-| `accessibilityRoles`        | `role`                                            | An object of strings that define several additional accessibility roles for further customization.                                                                                                  |
-| `required`                  | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
-| `readonly`                  | `aria-readonly`                                   | Defines whether the component is read-only.                                                                                                                                                         |
-| `disabled`                  | `aria-disabled`                                   | Defines whether the component is disabled.                                                                                                                                                          |
-| `checked`                   | `aria-checked`                                    | Defines whether the component is checked.                                                                                                                                                           |
-| `level`, `headerLevel`      | `aria-level`                                      | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
-| `interactive`               | `tabindex`                                        | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
-| `tooltip`                   | `title`                                           | Defines the tooltip of the component.
+| ------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accessibleName`               | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
+| `accessibleNameRef`            | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
+| `accessibleRole`               | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |                                                                          
+| `accessibilityAttributes`      | `aria-expanded`, `aria-haspopup`, `aria-controls`, etc. | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. <br/> For composite components the object provides a way to enrich the accessibility of the different elements inside the component (for example in the `ui5-shellbar`).                                                                   |                                                                                          |
+| `required`                     | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
+| `readonly`                     | `aria-readonly`                                   | Defines whether the component is read-only.                                                                                                                                                         |
+| `disabled`                     | `aria-disabled`                                   | Defines whether the component is disabled.                                                                                                                                                          |
+| `checked`                      | `aria-checked`                                    | Defines whether the component is checked.                                                                                                                                                           |
+| `level`, `headerLevel`         | `aria-level`                                      | Defines the heading level of a title. Available options are: "H6" to "H1".                                                                                                                          |
+| `interactive`                  | `tabindex`                                        | Defines if the component is interactive (focusable and pressable).                                                                                                                                  |
+| `tooltip`                      | `title`                                           | Defines the tooltip of the component.
 
 ### accessibleName
 
@@ -96,20 +93,8 @@ Will result in the shadow DOM as:
 <input role="combobox" aria-label="Enter value" ... >
 ```
 
-The `accessible-name` property is currently supported in:
-* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/components/Dialog/), [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
-* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/), [RadioButton](https://sap.github.io/ui5-webcomponents/nightly/components/RadioButton/))
-* [Panel](https://sap.github.io/ui5-webcomponents/nightly/components/Panel/)
-* [Breadcrumbs](https://sap.github.io/ui5-webcomponents/nightly/components/Breadcrumbs/)
-* [Button](https://sap.github.io/ui5-webcomponents/nightly/components/Button/)
-* [Icon](https://sap.github.io/ui5-webcomponents/nightly/components/Icon/)
-* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
-* [CheckBox](https://sap.github.io/ui5-webcomponents/nightly/components/CheckBox/)
-* [Rating Indicator](https://sap.github.io/ui5-webcomponents/nightly/components/RatingIndicator/)
-* [Slider](https://sap.github.io/ui5-webcomponents/nightly/components/Slider/), [Range Slider](https://sap.github.io/ui5-webcomponents/nightly/components/RangeSlider/)
-* [Table](https://sap.github.io/ui5-webcomponents/nightly/components/compat/Table/)
-* [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
-* [Card](https://sap.github.io/ui5-webcomponents/nightly/components/Card/)
+The `accessibleName` property is currently supported in most of the available components.
+Additionally `headerAccessibleName` is available for [ListItemGroup](https://sap.github.io/ui5-webcomponents/nightly/components/ListItemGroup/) component, which gives the possibility to add accessible name to the groups headers in a list.
 
 ---
 
@@ -126,49 +111,36 @@ Will result in the shadow DOM as:
 <input aria-label="Date of birth" ... >
 ```
 
-The `accessible-name-ref` property is currently supported in:
-* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/components/Dialog/), [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
-* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/), [RadioButton](https://sap.github.io/ui5-webcomponents/nightly/components/RadioButton/))
-* [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
-* [Button](https://sap.github.io/ui5-webcomponents/nightly/components/Button/)
-* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
-* [CheckBox](https://sap.github.io/ui5-webcomponents/nightly/components/CheckBox/)
-* [Table](https://sap.github.io/ui5-webcomponents/nightly/components/compat/Table/)
-* [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
-* [Card](https://sap.github.io/ui5-webcomponents/nightly/components/Card/)
+The `accessibleNameRef` property is currently supported in most of the available components.
 
 ---
 
-### accessibilityTexts
-
-This property accepts `object` with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/).
+### accessibleRole
 
 Setting the property on the custom element as:
 ```html
-<ui5-flexible-column-layout id="component">...</ui5-flexible-column-layout>
-
-<script>
-    const component = document.getElemetnById("component");
-    component.accessibilityTexts = {
-        startColumnAccessibleName: "Products list",
-    };
-</script>
+<ui5-panel accessible-role="Complementary">
+    ...
+</ui5-panel>
 ```
 
 Will result in the shadow DOM as:
 ```html
-<div role="region" aria-labelledby="component-startColumnText" ... >
-    ...
-    <span id="component-startColumnText" class="ui5-hidden-text" ... >
-        Products list
-    </span>
+<div role="complementary" ... >
     ...
 </div>
 ```
 
-The `accessibilityTexts` property is currently supported in:
-* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
-* [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
+The `accessible-role` property is currently supported in:
+* [Panel](https://sap.github.io/ui5-webcomponents/nightly/components/Panel/)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
+* [Icon](https://sap.github.io/ui5-webcomponents/nightly/components/Icon/)
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
+* [ResponsivePopover](https://sap.github.io/ui5-webcomponents/nightly/components/ResponsivePopover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
+* [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
+* [Button](https://sap.github.io/ui5-webcomponents/nightly/components/Button/)
+* [ToggleButton](https://sap.github.io/ui5-webcomponents/nightly/components/ToggleButton/)
 
 ---
 
@@ -198,65 +170,20 @@ Will result in the shadow DOM as:
 ```
 
 The `accessibilityAttributes` property is currently supported in:
+* [Avatar](https://sap.github.io/ui5-webcomponents/nightly/components/Avatar/)
+* [AvatarGroup](https://sap.github.io/ui5-webcomponents/nightly/components/AvatarGroup/)
 * [Button](https://sap.github.io/ui5-webcomponents/nightly/components/Button/)
 * [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
+* [ToggleButton](https://sap.github.io/ui5-webcomponents/nightly/components/ToggleButton/)
+* [Link](https://sap.github.io/ui5-webcomponents/nightly/components/Link/)
+* List Items (for example [ListItemStandard](https://sap.github.io/ui5-webcomponents/nightly/components/ListItemStandard/))
 
----
-
-### accessibilityRoles
-
-This property accepts `object` with property values for different parts of the `FlexibleColumnLayout` elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/).
-
-Setting the property on the custom element as:
-```html
-<ui5-flexible-column-layout id="component">...</ui5-flexible-column-layout>
-
-<script>
-    const component = document.getElemetnById("component");
-    component.accessibilityRoles = {
-        startColumnRole: "complementary",
-    };
-</script>
-```
-
-Results in the shadow DOM as:
-```html
-<div role="complementary" ... >
-    ...
-</div>
-```
-
-The `accessibilityRoles` property is currently supported in:
+`accessibilityAttributes` is also supported for composite components, where the application can enrich the accessibility of elements inside the component. For a more detailed information check the documentation of the property in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
 
 ---
 
-### accessibleRole
-
-Setting the property on the custom element as:
-```html
-<ui5-panel accessible-role="Complementary">
-    ...
-</ui5-panel>
-```
-
-Will result in the shadow DOM as:
-```html
-<div role="complementary" ... >
-    ...
-</div>
-```
-
-The `accessible-role` property is currently supported in:
-* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/nightly/components/Input/), [RadioButton](https://sap.github.io/ui5-webcomponents/nightly/components/RadioButton/))
-* [Panel](https://sap.github.io/ui5-webcomponents/nightly/components/Panel/)
-* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
-* [Icon](https://sap.github.io/ui5-webcomponents/nightly/components/Icon/)
-* [Popover](https://sap.github.io/ui5-webcomponents/nightly/components/Popover/)
-* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/components/Dialog/)
-
----
 
 ### level, headerLevel
 
@@ -292,7 +219,53 @@ The `header-level` property is currently supported in:
 
 Setting the property on the custom element as:
 ```html
-<ui5-icon interactive></ui5-icon>
+<ui5-avatar interactive></ui5-avatar>
+```
+
+Will result in the shadow DOM as:
+```html
+<div tabindex="0" role="button" ... ></div>
+```
+
+The `interactive` property is currently supported in:
+* [Avatar](https://sap.github.io/ui5-webcomponents/nightly/components/Avatar/)
+
+---
+
+
+### tooltip
+
+Setting the property on the custom element as:
+```html
+<ui5-button icon="sap-icon://edit" tooltip="Edit"></ui5-button>
+```
+
+Will result in the shadow DOM as:
+```html
+<button title="Edit" ... ></button>
+```
+
+*Note: Do not set `title` attribute directly on custom element as this could result in repetitive speech output or incorrect accessibility tree mapping.*
+
+---
+
+### Icon Modes
+
+The `ui5-icon` component has a `mode` property, which provides additional accessibility depending on the mode.
+
+Setting the property to "Decorative":
+```html
+<ui5-icon mode="Decorative"></ui5-icon>
+```
+
+Will result in the shadow DOM as:
+```html
+<svg role="presentation" aria-hidden="true" ... ></svg>
+```
+
+Setting the property to "Interactive":
+```html
+<ui5-icon mode="Interactive"></ui5-icon>
 ```
 
 Will result in the shadow DOM as:
@@ -300,9 +273,15 @@ Will result in the shadow DOM as:
 <svg tabindex="0" role="button" ... ></svg>
 ```
 
-The `interactive` property is currently supported in:
-* [Avatar](https://sap.github.io/ui5-webcomponents/nightly/components/Avatar/)
-* [Icon](https://sap.github.io/ui5-webcomponents/nightly/components/Icon/)
+Setting the property to "Image":
+```html
+<ui5-icon mode="Image"></ui5-icon>
+```
+
+Will result in the shadow DOM as:
+```html
+<svg role="img" ... ></svg>
+```
 
 ---
 
@@ -310,7 +289,7 @@ The `interactive` property is currently supported in:
 
 UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards. All screen readers that follow those standards should work fine. Nevertheless, there are deviations in the interpretation depending on the combination of browser and screen reader. UI5 Web Components focus on compliance with the standards by performing automated checks for accessibility and manual tests with reference testing environments.
 
-For Screen Reader Support, we recommend using JAWS 2021 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA implementation following the WCAG standards.
+For Screen Reader Support, we recommend using JAWS 2024 + Chrome (latest), and for HTML/ARIA validation the recommended testing tool is Access Assistant. UI5 Web Components support other environments to the extent of providing a valid HTML and ARIA implementation following the WCAG standards.
 
 Please note that reference testing environments may change over time to reflect changes in the usage of different browsers, their maintenance period, and increased accessibility compliance.
 
@@ -318,7 +297,7 @@ When reporting issues with different testing environments, please ensure that th
 
 In order to process the issues correctly, we would like to have the following information provided:
 * Issue description
-* Reference to the suspected violated accessibility requirement (e.g. Web Content Accessibility Guidelines, WCAG 2.0, BITV 2.0, EN 301 549)
+* Reference to the suspected violated accessibility requirement (e.g. Web Content Accessibility Guidelines WCAG 2.2, BITV 2.0, EN 301 549)
 * Isolated example
 * Steps to reproduce
 * UI5 Web Components version
@@ -328,4 +307,4 @@ In order to process the issues correctly, we would like to have the following in
 
 ## Note
 
-Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the SAPUI5 High Contrast theme and you are using browser different from Chrome and Edge, this may cause conflicts and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
+Have in mind that UI5 Web Components is optimized for the High Contrast mode of Windows when using Chrome and Edge. If you have enabled both the Windows High Contrast setting and the UI5 High Contrast theme and you are using browser different from Chrome and Edge, this may cause conflicts and deficiencies in the theme can occur. In such cases, please switch off the Windows High Contrast setting or use different browser.
