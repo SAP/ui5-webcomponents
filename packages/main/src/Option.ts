@@ -90,6 +90,14 @@ class Option extends ListItemBase implements IOption {
 	@property({ type: String, defaultValue: "" })
 	tooltip!: string;
 
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected!: boolean;
+
 	get displayIconBegin(): boolean {
 		return !!this.icon;
 	}
