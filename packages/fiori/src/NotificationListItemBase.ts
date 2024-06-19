@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -73,12 +72,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	get isLoading() {
 		return this.loading;
-	}
-
-	onEnterDOM() {
-		if (isDesktop()) {
-			this.setAttribute("desktop", "");
-		}
 	}
 
 	/**

@@ -414,7 +414,7 @@ class Calendar extends CalendarPart {
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
 		validSpecialDates.forEach(date => {
-			const dateFromValue = UI5Date.getInstance(date.value);
+			const dateFromValue = this.getFormat().parse(date.value) as Date | UI5Date;
 			const timestamp = dateFromValue.getTime();
 
 			if (!uniqueDates.has(timestamp)) {
