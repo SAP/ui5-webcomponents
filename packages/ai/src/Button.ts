@@ -85,8 +85,6 @@ class Button extends UI5Element {
 	/**
 	 * Defines the current state of the component.
 	 *
-	 * **Note:** If nothing is defined, the component will be set initially to the first defined state (if any).
-	 *
 	 * @default ""
 	 * @public
 	 */
@@ -94,7 +92,7 @@ class Button extends UI5Element {
 	state?: string;
 
 	/**
-	 * Keeps the current state of the component.
+	 * Keeps the current state object of the component.
 	 * @private
 	 */
 	@property({ type: Object })
@@ -137,33 +135,14 @@ class Button extends UI5Element {
 			return;
 		}
 
-		if (this.state && this._currentStateObject && !this._currentStateObject.name) {
-			this._currentStateObject = this._findStateByName(this.state);
+		if (!this._currentStateObject!.name) {
+			this._currentStateObject = this._effectiveStateObject;
 		}
 
 		const currentStateName = this._currentStateObject?.name || "";
 
-		if (!this.state) {
-			this.state = this.states.length ? this.states[0].name : "";
-			this._currentStateObject = this._findStateByName(this.state);
-		}
-
-		if (!this._currentStateObject) {
-			this._throwMissingStateError();
-		}
-
-		if (currentStateName !== "" && currentStateName !== this.state) {
-			if (this._findStateByName(this.state)) {
-				this._fadeOut();
-			} else {
-				this._throwMissingStateError();
-			}
-		}
-	}
-
-	onAfterRendering(): void {
-		if (!this._findStateByName(this.state!) && this._currentStateObject) {
-			this.state = this._currentStateObject.name;
+		if (currentStateName !== "" && currentStateName !== this._effectiveState) {
+			this._fadeOut();
 		}
 	}
 
@@ -175,9 +154,12 @@ class Button extends UI5Element {
 		const fadeOutDuration = 180;
 
 		const button = this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
-		const newStateObject = this._findStateByName(this.state!);
+		const newStateObject = this._effectiveStateObject;
 
-		if (button && newStateObject) {
+		if (!newStateObject) {
+			// eslint-disable-next-line no-console
+			console.warn(`State with name="${this.state}" doesn't exist!`);
+		} else if (button) {
 			const buttonWidth = button.offsetWidth;
 			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as MainButton;
 			button.style.width = `${buttonWidth}px`;
@@ -226,14 +208,6 @@ class Button extends UI5Element {
 	}
 
 	/**
-	 * Returns the current state object.
-	 * @private
-	 */
-	_findStateByName(name: string): ButtonState | undefined {
-		return this.states.find(state => state.name === name);
-	}
-
-	/**
 	 * Handles the click event.
 	 * @private
 	 */
@@ -242,13 +216,12 @@ class Button extends UI5Element {
 		this.fireEvent("click");
 	}
 
-	/**
-	 * Throws an error when the current state is missing.
-	 * @private
-	 */
-	_throwMissingStateError(): void {
-		// eslint-disable-next-line no-console
-		console.error(`State with name="${this.state}" doesn't exist!`);
+	get _effectiveState() {
+		return this.state || (this.states.length && this.states[0].name) || "";
+	}
+
+	get _effectiveStateObject() {
+		return this.states.find(state => state.name === this._effectiveState);
 	}
 
 	get _stateIconOnly() {
