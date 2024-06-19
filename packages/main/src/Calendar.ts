@@ -280,7 +280,8 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * Defines the selected date or dates (depending on the `selectionMode` property)
-	 * for this calendar as instances of `ui5-date`.
+	 * for this calendar as instances of `ui5-date` or `ui5-date-range`.
+	 * Use `ui5-date` for single or multiple selection, and `ui5-date-range` for range selection.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
