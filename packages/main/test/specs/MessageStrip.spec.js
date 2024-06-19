@@ -60,6 +60,15 @@ describe("API", () => {
 		// Assert
 		assert.strictEqual(messageStripColorScheme3, "3",  "colorScheme property should be equal to '3' by default'");
 	});
+
+	it("Message strip is rendered without icon when design changes from default to a specific color set and scheme", async () => {
+		const messageStrip = await browser.$("#ms");
+		const btn = await browser.$("#btn");
+
+		await btn.click();
+
+		assert.strictEqual(await messageStrip.shadow$(".ui5-message-strip-icon").isExisting(), false, "Message strip does not render icon");
+	});
 });
 
 describe("ARIA Support", () => {
@@ -101,19 +110,3 @@ describe("ARIA Support", () => {
 		assert.strictEqual(await customMessageStripInvisibleText.getText(), resourceBundleText.custom, "Hidden element content is correct");
 	});
 });
-
-describe("Change properties dynamically", () => {
-	before(async () => {
-		await browser.url(`test/pages/MessageStrip.html`);
-	});
-
-	it("Message strip is rendered ", async () => {
-		const messageStrip = await browser.$("#ms");
-		const btn = await browser.$("#btn");
-
-		await btn.click();
-
-		assert.strictEqual(await messageStrip.shadow$(".ui5-message-strip-icon").isExisting(), false, "Message strip does not rendere icon");
-	});
-});
-
