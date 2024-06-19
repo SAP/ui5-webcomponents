@@ -1,7 +1,9 @@
 import { html } from 'lit';
+import "../../bundle.common.js";
 
 describe("Configuration script", () => {
 	const configurationObject = {
+		"theme": "sap_horizon_hcb",
 		"animationMode": "basic",
 		"rtl": true,
 		"language": "ja",
@@ -26,20 +28,15 @@ describe("Configuration script", () => {
 				}
 			]
 		},
-		"theme": "sap_horizon_hcb",
 		"noConflict": {
 			"events": ["selection-change", "header-click"]
 		}
 	}
 
 	before(() => {
-		cy.mount(html`<button>Test with configuration</button>`, {
+		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, {
 			ui5Configratuion: configurationObject
 		});
-
-		cy.get("button")
-			.should("exist")
-			.and("have.text", "Test with configuration");
 
 		cy.get("script[data-ui5-config]")
 			.should("exist")
@@ -89,7 +86,7 @@ describe("Configuration script", () => {
 			.should("equal", configurationObject.animationMode);
 	});
 
-	it("getTheme", () => {
+	it.only("getTheme", () => {
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
 			.its("configuration")

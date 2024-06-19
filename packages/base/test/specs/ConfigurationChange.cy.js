@@ -1,3 +1,5 @@
+import "../../bundle.common.js";
+
 describe("Some configuration options can be changed at runtime", () => {
 	it("Tests that theme can be changed", () => {
 		const newTheme = 'sap_horizon_hcb';

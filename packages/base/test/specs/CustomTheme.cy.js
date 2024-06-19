@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import "../../bundle.esm.js";
 
 describe("Custom themes can be registered", () => {
 	it("Tests that theme parameters are changed on theme change", () => {
