@@ -1,50 +1,23 @@
 const fs = require("fs");
 const path = require("path");
+const globals = require("globals");
+const js = require("@eslint/js");
+const airBnbConfig = require("eslint-config-airbnb-base");
+const  tseslint = require("typescript-eslint");
+const tsParser = require("@typescript-eslint/parser");
+const { FlatCompat } = require("@eslint/eslintrc");
+const { fixupConfigRules } = require("@eslint/compat");
+
+const compat = new FlatCompat();
 const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
-/**
- * Typescript Rules
- */
-const overrides = tsMode ? [{
-	files: ["*.ts"],
-	parser: "@typescript-eslint/parser",
-	plugins: ["@typescript-eslint"],
-	extends: [
-		"plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking"
-	],
-	parserOptions: {
-	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
-	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
-	},
-	rules: {
-		"no-shadow": "off",
-		"@typescript-eslint/consistent-type-imports": "error",
-		"@typescript-eslint/no-shadow": ["error"],
-		"@typescript-eslint/no-unsafe-member-access": "off",
-		"@typescript-eslint/no-floating-promises": "off",
-		"@typescript-eslint/no-explicit-any": "off",
-		"@typescript-eslint/no-unsafe-assignment": "off",
-		"@typescript-eslint/ban-ts-comment": "off",
-		"@typescript-eslint/no-unsafe-call": "off",
-		"@typescript-eslint/no-non-null-assertion": "off",
-		"@typescript-eslint/no-empty-function": "off",
-		"@typescript-eslint/no-empty-interface": "off",
-		"lines-between-class-members": "off",
-	}
-}] : [];
-
-module.exports = {
-	"env": {
-		"browser": true,
-		"es6": true
-	},
-	"root": true,
-	"extends": "airbnb-base",
-	overrides,
-	"parserOptions": {
+const ui5config = {
+	"languageOptions": {
 		"ecmaVersion": 2018,
-		"sourceType": "module"
+		"sourceType": "module",
+		"globals": {
+			...globals.browser
+		}
 	},
 	"rules": {
 		"comma-dangle": [2, "always-multiline"], // difference from openui5
@@ -166,3 +139,43 @@ module.exports = {
 		"no-use-before-define": 0
 	}
 };
+
+/**
+ * Typescript Rules
+ */
+const ui5TsConfig = tsMode ? [
+	...tseslint.configs.recommended,
+	{
+		files: ["*.ts"], // TODO: limiting to .ts files causes an exception
+		languageOptions: {
+			parser: tsParser, // TODO: works even without this, is it coming from configs.recommendedTypeChecked?
+			parserOptions: {
+				project: ["./tsconfig.json", "./packages/*/tsconfig.json"],
+				// TODO: Should be migrated as described in https://typescript-eslint.io/blog/announcing-typescript-eslint-v8-beta/#tooling-breaking-changes
+				//   EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
+			}
+		},
+		rules: {
+			"no-shadow": "off",
+			"@typescript-eslint/consistent-type-imports": "error",
+			"@typescript-eslint/no-shadow": ["error"],
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-floating-promises": "off",
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-unsafe-assignment": "off",
+			"@typescript-eslint/ban-ts-comment": "off",
+			"@typescript-eslint/no-unsafe-call": "off",
+			"@typescript-eslint/no-non-null-assertion": "off",
+			"@typescript-eslint/no-empty-function": "off",
+			"@typescript-eslint/no-empty-interface": "off",
+			"lines-between-class-members": "off",
+		}
+	}
+]: [];
+
+module.exports = [
+	// Workaround until airBnbConfig becomes flat (adds ESlint 9.0 support)
+	...fixupConfigRules(compat.config(airBnbConfig)),
+	...ui5TsConfig,
+	ui5config
+]

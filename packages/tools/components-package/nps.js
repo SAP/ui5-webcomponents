@@ -60,7 +60,7 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: 'rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
-		lint: `eslint . ${eslintConfig}`,
+		lint: `set TIMING=1 && eslint . --config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
 			default: `${tsCrossEnv} nps prepare.all`,

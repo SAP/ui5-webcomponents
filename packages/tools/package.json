@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@custom-elements-manifest/analyzer": "^0.8.4",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
     "@wdio/cli": "^7.19.7",
     "@wdio/dot-reporter": "^7.19.7",
     "@wdio/local-runner": "^7.19.7",
@@ -42,9 +42,9 @@
     "cross-env": "^7.0.3",
     "custom-element-jet-brains-integration": "^1.4.4",
     "escodegen": "^2.0.0",
-    "eslint": "^7.22.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint": "9.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "esprima": "^4.0.1",
     "getopts": "^2.3.0",
     "glob": "^7.1.6",
@@ -64,6 +64,7 @@
     "resolve": "^1.20.0",
     "rimraf": "^3.0.2",
     "slash": "3.0.0",
+    "typescript-eslint": "^7.13.1",
     "vite": "^4.4.9",
     "wdio-chromedriver-service": "^7.3.2"
   },
@@ -77,7 +78,11 @@
     }
   },
   "devDependencies": {
+    "@eslint/compat": "^1.1.0",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.5.0",
     "esbuild": "^0.19.9",
+    "globals": "^15.6.0",
     "yargs": "^17.5.1"
   }
 }
