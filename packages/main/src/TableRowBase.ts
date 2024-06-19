@@ -115,6 +115,10 @@ abstract class TableRowBase extends UI5Element {
 	get _i18nRowSelector(): string {
 		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
 	}
+
+	get isTableRowBase() {
+		return true;
+	}
 }
 
 export default TableRowBase;
