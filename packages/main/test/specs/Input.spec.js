@@ -535,6 +535,16 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await input.getSize('width'), await listItem.getSize('width'), "Suggestions' popover width is minimum the size of the input");
 	});
 
+	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
+		const input = await $("#input-disabled-autocomplete");
+		const listItem = await input.$("ui5-suggestion-item");
+
+		await input.click();
+		await input.keys("a");
+
+		assert.strictEqual(await listItem.getSize('width'), 640, "Suggestions popover's width is maximum 40rem if the input isn't wider than that");
+	});
+
 	it("Input's maxlength property is set correctly", async () => {
 		const input5 = await browser.$("#input-tel");
 		const inputShadowRef = await browser.$("#input-tel").shadow$("input");

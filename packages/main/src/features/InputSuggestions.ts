@@ -9,7 +9,7 @@ import type ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
-import ListItemGroupHeader from "../ListItemGroupHeader.js";
+import type ListItemGroupHeader from "../ListItemGroupHeader.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -424,7 +424,8 @@ class Suggestions {
 		this.onItemSelect(currentItem);
 
 		if (!this._isItemIntoView(currentItem)) {
-			this._scrollItemIntoView(currentItem);
+			const itemRef = this._isGroupItem ? (currentItem.shadowRoot!.querySelector("[ui5-li-group-header]") as ListItemGroupHeader)! : currentItem;
+			this._scrollItemIntoView(itemRef);
 		}
 	}
 
@@ -456,9 +457,11 @@ class Suggestions {
 	}
 
 	_scrollItemIntoView(item: IInputSuggestionItem) {
-		const pos = item.getDomRef()!.offsetTop;
-		const scrollContainer = this._getScrollContainer();
-		scrollContainer.scrollTop = pos;
+		item.scrollIntoView({
+			behavior: "auto",
+			block: "nearest",
+			inline: "nearest",
+		});
 	}
 
 	_getScrollContainer() {
@@ -543,7 +546,6 @@ class Suggestions {
 			SuggestionItem,
 			SuggestionItemGroup,
 			List,
-			ListItemGroupHeader,
 			Button,
 			Icon,
 		];

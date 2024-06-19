@@ -645,7 +645,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 					(item as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((item as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
 				} else if (item.hasAttribute("ui5-suggestion-item-group")) {
 					item.items?.forEach(nestedItem => {
-						(nestedItem as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((nestedItem as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
+						(nestedItem as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((nestedItem as SuggestionItem).text), this.typedInValue) : encodeXML((nestedItem as SuggestionItem).text || "");
 					});
 				}
 			});

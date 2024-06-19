@@ -6,6 +6,8 @@ import type { IInputSuggestionItemSelectable } from "./Input.js";
 import ListItemBase from "./ListItemBase.js";
 import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate.lit.js";
 
+import styles from "./generated/themes/SuggestionItem.css.js";
+
 /**
  * @class
  * The `ui5-suggestion-item` represents the suggestion item of the `ui5-input`.
@@ -18,6 +20,7 @@ import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate
 @customElement({
 	tag: "ui5-suggestion-item",
 	template: SuggestionItemTemplate,
+	styles: [ListItemBase.styles, styles],
 })
 class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelectable {
 	/**
