@@ -18,7 +18,6 @@ import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
