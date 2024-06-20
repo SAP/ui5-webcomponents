@@ -218,7 +218,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Indicates if the dialog is open.
 	 * @public
 	 * @default false
-	 * @since 1.10.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	open!:boolean;
