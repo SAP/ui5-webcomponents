@@ -9,50 +9,43 @@
 >
 	{{#if loading}}
 		<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
-		<ui5-busy-indicator
-				delay="{{loadingDelay}}"
-				active
-				class="ui5-nli-loading"
-				inert
-		>
-			{{> content}}
-		</ui5-busy-indicator>
-	{{else}}
-		{{> content}}
 	{{/if}}
-</li>
-
-{{#*inline "content"}}
-	<div class="ui5-nli-group-content-wrapper">
-		<div class="ui5-nli-group-header"
-			@click="{{_onHeaderToggleClick}}"
-			@keydown="{{_onkeydown}}"
-			role="button"
-			aria-expanded="{{_ariaExpanded}}"
-			aria-controls="{{_id}}-notificationsList"
-			title="{{toggleIconAccessibleName}}">
-			<ui5-icon
-				name={{groupCollapsedIcon}}
-				class="ui5-nli-group-toggle-icon"
-				mode="Decorative"
-			></ui5-icon>
-			<div
-				id="{{_id}}-title-text"
-				class="ui5-nli-group-title-text"
-				part="title-text"
-				role="heading"
-				aria-level="2">
-				{{titleText}}
+	<ui5-busy-indicator
+			delay="{{loadingDelay}}"
+			?active="{{loading}}"
+			?inert="{{loading}}"
+			class="ui5-nli-loading"
+	>
+		<div class="ui5-nli-group-content-wrapper">
+			<div class="ui5-nli-group-header"
+				@click="{{_onHeaderToggleClick}}"
+				@keydown="{{_onkeydown}}"
+				role="button"
+				aria-expanded="{{_ariaExpanded}}"
+				aria-controls="{{_id}}-notificationsList"
+				title="{{toggleIconAccessibleName}}">
+				<ui5-icon
+					name={{groupCollapsedIcon}}
+					class="ui5-nli-group-toggle-icon"
+					mode="Decorative"
+				></ui5-icon>
+				<div
+					id="{{_id}}-title-text"
+					class="ui5-nli-group-title-text"
+					part="title-text"
+					role="heading"
+					aria-level="2">
+					{{titleText}}
+				</div>
+				<div class="ui5-nli-group-divider"></div>
 			</div>
-			<div class="ui5-nli-group-divider"></div>
+			<ui5-notification-group-list
+				id="{{_id}}-notificationsList"
+				class="ui5-nli-group-items"
+				role="list"
+				aria-labelledby="{{_id}}-title-text">
+				<slot></slot>
+			</ui5-notification-group-list>
 		</div>
-
-		<ui5-notification-group-list
-			id="{{_id}}-notificationsList"
-			class="ui5-nli-group-items"
-			role="list"
-			aria-labelledby="{{_id}}-title-text">
-			<slot></slot>
-		</ui5-notification-group-list>
-	</div>
-{{/inline}}
+	</ui5-busy-indicator>
+</li>
