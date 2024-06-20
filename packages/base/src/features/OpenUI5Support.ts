@@ -3,11 +3,8 @@ import { setTheme } from "../config/Theme.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
-
-type OpenUI5Popup = {
-	setInitialZIndex: (zIndex: number) => void,
-	getNextZIndex: () => number,
-};
+import patchPopup from "./patchPopup.js";
+import type { OpenUI5Popup } from "./patchPopup.js";
 
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
@@ -106,6 +103,7 @@ class OpenUI5Support {
 					}
 					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
 						Popup.setInitialZIndex(getCurrentZIndex());
+						patchPopup(Popup);
 						resolve();
 					});
 				};
