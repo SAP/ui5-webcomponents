@@ -5,7 +5,7 @@ when creating/updating UI5 Web Components.
 
 ## Properties
 
- - [!WARNING] Do I **change public properties** without user interaction?
+ - Do I **change public properties** without user interaction?
     
 Public properties belong to the application. Usually applications bind components' properties to a model.
 If a component changes its own public properties arbitrarily, the application model may get out of sync. Public properties
