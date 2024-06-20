@@ -9,12 +9,15 @@ src/components/Editor/ui5-autocomplete.json
 /docs/components/fiori
 /docs/components/main
 /docs/components/compat
+/docs/components/ai
 /docs/docs/
 /docs/samples/**/*.mdx
 /local-cdn
 /icons
 /icons-tnt
 /icons-business-suite
+static/packages
+static/assets
 
 # Generated files
 .docusaurus

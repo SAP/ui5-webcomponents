@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -42,12 +43,12 @@ import {
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
+	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
-import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 type TimePickerChangeInputEventDetail = {
@@ -123,12 +124,12 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 @customElement({
 	tag: "ui5-time-picker",
 	languageAware: true,
+	formAssociated: true,
 	renderer: litRender,
 	template: TimePickerTemplate,
 	styles: [
 		TimePickerCss,
 		ResponsivePopoverCommonCss,
-		PopoverCss,
 		TimePickerPopoverCss,
 	],
 	dependencies: [
@@ -187,7 +188,19 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 		},
 	},
 })
-class TimePicker extends UI5Element {
+/**
+ * Fired after the value-help dialog of the component is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the value-help dialog of the component is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
+class TimePicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a formatted time value.
 	 * @default undefined
@@ -195,8 +208,19 @@ class TimePicker extends UI5Element {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property({ type: String, defaultValue: undefined })
 	value?: string;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default ""
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property()
+	name!: string;
 
 	/**
 	 * Defines the value state of the component.
@@ -247,8 +271,14 @@ class TimePicker extends UI5Element {
 	@property()
 	formatPattern!: string;
 
-	@property({ type: Boolean, noAttribute: true })
-	_isPickerOpen!: boolean;
+	/**
+	 * Defines the open or closed state of the popover.
+	 * @public
+	 * @default false
+	 * @since 2.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
 
 	@property({ type: Boolean, noAttribute: true })
 	_isInputsPopoverOpen!: boolean;
@@ -277,14 +307,28 @@ class TimePicker extends UI5Element {
 		]);
 	}
 
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value || "";
+	}
+
 	onBeforeRendering() {
 		if (this.value) {
 			this.value = this.normalizeValue(this.value) || this.value;
 		}
+
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
 	}
 
 	get dateAriaDescription() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return TimePicker.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	get accInfo() {
@@ -342,57 +386,22 @@ class TimePicker extends UI5Element {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
-	/**
-	 * Opens the picker.
-	 * @public
-	 * @returns Resolves when the picker is open
-	 */
-	openPicker(): void {
-		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
-		const responsivePopover = this._getPopover();
-		responsivePopover.showAt(this);
-	}
-
-	/**
-	 * Closes the picker
-	 * @public
-	 * @returns Resolves when the picker is closed
-	 */
-	closePicker(): void {
-		const responsivePopover = this._getPopover();
-		responsivePopover.close();
-		this._isPickerOpen = false;
-	}
-
-	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
-		} else if (this._canOpenPicker()) {
-			this.openPicker();
-		}
-	}
-
-	/**
-	 * Checks if the picker is open
-	 * @public
-	 */
-	isOpen(): boolean {
-		return !!this._isPickerOpen;
+	_togglePicker() {
+		this.open = !this.open;
 	}
 
 	submitPickers() {
 		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	onResponsivePopoverAfterClose() {
-		this._isPickerOpen = false;
+		this.open = false;
+		this.fireEvent("close");
 	}
 
 	onResponsivePopoverAfterOpen() {
-		this._isPickerOpen = true;
-		const responsivePopover = this._getPopover();
-		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
+		this.fireEvent("open");
 	}
 
 	/**
@@ -403,7 +412,8 @@ class TimePicker extends UI5Element {
 	openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
 		const popover = this._getInputsPopover();
-		popover.showAt(this);
+		popover.opener = this;
+		popover.open = true;
 		this._isInputsPopoverOpen = true;
 	}
 
@@ -414,7 +424,7 @@ class TimePicker extends UI5Element {
 	 */
 	closeInputsPopover() {
 		const popover = this._getInputsPopover();
-		popover.close();
+		popover.open = false;
 	}
 
 	toggleInputsPopover() {
@@ -447,9 +457,9 @@ class TimePicker extends UI5Element {
 		this._isInputsPopoverOpen = false;
 	}
 
-	_handleInputClick(evt: MouseEvent) {
-		const target = evt.target as HTMLElement;
-		if (this._isPickerOpen) {
+	_handleInputClick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		if (this.open) {
 			return;
 		}
 
@@ -535,15 +545,15 @@ class TimePicker extends UI5Element {
 		}
 		if (isShow(e)) {
 			e.preventDefault();
-			this.togglePicker();
+			this._togglePicker();
 		}
 
-		const target = e.target as Node;
+		const target = e.target as HTMLElement;
 
-		if ((this._getInput().isEqualNode(target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-			this.closePicker();
+		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+			this._togglePicker();
 		}
-		if (this.isOpen()) {
+		if (this.open) {
 			return;
 		}
 		if (isPageUpShiftCtrl(e)) {
@@ -654,20 +664,20 @@ class TimePicker extends UI5Element {
 		setTimeout(() => { this._getInput().readonly = false; }, 0);
 	}
 
-	_onfocusin(evt: FocusEvent) {
+	_onfocusin(e: FocusEvent) {
 		if (this._isPhone) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
 				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
-			evt.preventDefault();
+			e.preventDefault();
 		}
 	}
 
-	_oninput(evt: CustomEvent) {
+	_oninput(e: CustomEvent) {
 		if (this._isPhone) {
-			evt.preventDefault();
+			e.preventDefault();
 		}
 	}
 

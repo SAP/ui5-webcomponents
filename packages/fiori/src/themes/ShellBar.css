@@ -30,6 +30,7 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
+::slotted([ui5-toggle-button][slot="assistant"]),
 ::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
@@ -56,6 +57,7 @@
 	margin-inline-start: 0;
 }
 
+::slotted([ui5-toggle-button][slot="assistant"]:hover),
 ::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
@@ -65,6 +67,12 @@
 	color: var(--sapShell_TextColor);
 }
 
+::slotted([ui5-toggle-button][slot="assistant"][pressed]),
+::slotted([ui5-toggle-button][slot="assistant"][pressed]:hover:not([active])) {
+	color: var(--sapShell_Assistant_ForegroundColor);
+}
+
+::slotted([ui5-toggle-button][slot="assistant"][active]),
 ::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
@@ -74,7 +82,7 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
-:host([desktop]) .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-within,
+:host([desktop]) .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus,
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_outline_offset);
@@ -209,7 +217,7 @@ slot[name="profile"] {
 	max-height: 2rem;
 }
 
-:host([desktop]) .ui5-shellbar-logo:focus-within,
+:host([desktop]) .ui5-shellbar-logo:focus,
 .ui5-shellbar-logo:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
@@ -454,7 +462,6 @@ slot[name="profile"] {
 	box-shadow: var(--_ui5_shellbar_search_field_box_shadow_hover);
 }
 
-/* Todo: modify this selector after ui5-input is updated */
 ::slotted([ui5-input][focused]) {
 	outline: var(--_ui5_shellbar_search_field_outline_focused);
 }

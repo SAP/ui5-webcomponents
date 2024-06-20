@@ -6,7 +6,7 @@ One of the core principles of Web Components is the encapsulation. The HTML and 
 
 
 ## Styles on Tag Level
-We designed some components such as Title, Label, Badge, Button, Input, and a few more in such a way that it is possible to set styles/classes on the custom elements that will take effect.
+We designed some components such as Title, Label, Tag, Button, Input, and a few more in such a way that it is possible to set styles/classes on the custom elements that will take effect.
 
 <b>For example:</b>
 ```css

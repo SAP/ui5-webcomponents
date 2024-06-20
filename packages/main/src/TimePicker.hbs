@@ -33,10 +33,9 @@
 			name="{{openIconName}}"
 			tabindex="-1"
 			show-tooltip
-			@click="{{togglePicker}}"
-			input-icon
-			?pressed="{{_isPickerOpen}}"
-			class="ui5-time-picker-input-icon-button"
+			@click="{{_togglePicker}}"
+			?pressed="{{open}}"
+			class="ui5-time-picker-input-icon-button inputIcon"
 		></ui5-icon>
 	{{/unless}}
 	</ui5-input>

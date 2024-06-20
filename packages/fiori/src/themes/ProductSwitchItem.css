@@ -4,25 +4,24 @@
 	margin: .25rem;
 	border-radius: .25rem;
 	box-sizing: border-box;
-	background:var(--sapList_Background);
+	background: var(--sapList_Background);
 }
 
-:host([selected]) {
+:host([selected]) .ui5-product-switch-item-root {
 	background: var(--sapList_SelectionBackgroundColor);
 	border: 0.125rem solid var(--sapList_SelectionBorderColor);
 }
 
-:host(:hover) {
-	background:var(--sapList_Hover_Background);
+:host(:hover) .ui5-product-switch-item-root {
+	background :var(--sapList_Hover_Background);
 }
 
-:host([selected]:hover) {
+:host([selected]:hover) .ui5-product-switch-item-root {
 	background: var(--sapList_Hover_SelectionBackground);
 }
 
-
-:host([active]),
-:host([selected][active])  {
+:host([active]) .ui5-product-switch-item-root,
+:host([selected][active]) .ui5-product-switch-item-root {
 	background: var(--sapList_Active_Background);
 }
 
@@ -32,12 +31,14 @@
 	color:var(--sapList_Active_TextColor);
 }
 
-:host([focused]) {
+:host([desktop]) .ui5-product-switch-item-root:focus,
+.ui5-product-switch-item-root:focus-visible {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset:var(--_ui5_product_switch_item_outline_offset)
 }
 
-:host([active][focused]) {
+:host([desktop][active]) .ui5-product-switch-item-root:focus,
+:host([active]) .ui5-product-switch-item-root:focus-visible {
 	outline-color: var(--_ui5_product_switch_item_active_outline_color);
 }
 
@@ -154,25 +155,4 @@
 		font-size: var(--sapFontSize);
 		padding-top: .75rem;
 	}
-}
-
-[ui5-product-switch-item][focused] {
-	outline: none;
-	position: relative;
-}
-
-[ui5-product-switch-item][focused] .ui5-product-switch-item-root::after {
-	content: "";
-	position: absolute;
-	border-color: var(--_ui5_product_switch_item_outline_color);
-	border-width: var(--_ui5_product_switch_item_outline_width);
-	border-style: dotted;
-	top: var(--_ui5_product_switch_item_outline_offset_positive);
-	bottom:  var(--_ui5_product_switch_item_outline_offset_positive);
-	left:  var(--_ui5_product_switch_item_outline_offset_positive);
-	right:  var(--_ui5_product_switch_item_outline_offset_positive);
-}
-
-[ui5-product-switch-item][active][focused] .ui5-product-switch-item-root::after {
-	border-color: var(--_ui5_product_switch_item_active_outline_color);
 }

@@ -3,6 +3,210 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
+
+
+### Bug Fixes
+
+* **framework:** set dataTransfer.effectAllowed only for UI5 elements ([#9136](https://github.com/SAP/ui5-webcomponents/issues/9136)) ([28f6a2d](https://github.com/SAP/ui5-webcomponents/commit/28f6a2d25c2d0c49ace86a0be4fdfb9026f94be2))
+* **ui5-dialog:** fix focusing when dialog is open from OpenUI5 dialog ([#9183](https://github.com/SAP/ui5-webcomponents/issues/9183)) ([d067e13](https://github.com/SAP/ui5-webcomponents/commit/d067e139d8674413369a3e8b078ce6ca67415e90))
+
+
+### Features
+
+* **ui5-grid:** implementing new grid component ([#8362](https://github.com/SAP/ui5-webcomponents/issues/8362)) ([04d291d](https://github.com/SAP/ui5-webcomponents/commit/04d291dc368b884d9001e875441c54cf56e21d1a))
+
+
+
+
+
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
+
+
+### Bug Fixes
+
+* register runtime in SSR usage ([#9013](https://github.com/SAP/ui5-webcomponents/issues/9013)) ([54db283](https://github.com/SAP/ui5-webcomponents/commit/54db283ac71c8aec34f7ce0fe7ac787838aab021))
+* **ui5-*:** Make setAnimationMode() properly change modes ([#8965](https://github.com/SAP/ui5-webcomponents/issues/8965)) ([9f5d276](https://github.com/SAP/ui5-webcomponents/commit/9f5d2760a8cfa95ce3212480e28e7b7a6ea2d8a9)), closes [#8964](https://github.com/SAP/ui5-webcomponents/issues/8964)
+
+
+### Features
+
+* **ui5-*:** integrate element internals in input components ([#8685](https://github.com/SAP/ui5-webcomponents/issues/8685)) ([c8e68d5](https://github.com/SAP/ui5-webcomponents/commit/c8e68d59e51c6ab56328062ac8bce7889b30062d)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-li-notification:** implement new design ([#8426](https://github.com/SAP/ui5-webcomponents/issues/8426)) ([e451cdc](https://github.com/SAP/ui5-webcomponents/commit/e451cdc3709553dcb780f637463dc1b29e8f2971))
+* **UI5Element:** invalidateOnChildChange works for slots ([#9021](https://github.com/SAP/ui5-webcomponents/issues/9021)) ([ec3ead7](https://github.com/SAP/ui5-webcomponents/commit/ec3ead7743993aaad6cb70faff9edf4bae4ef0f9))
+
+
+### BREAKING CHANGES
+
+* **ui5-*:** The `features/InputElementsFormSupport.js` feature has been deleted and now, form elements works natively in form elements.
+
+
+
+
+
+# [2.0.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.2...v2.0.0-rc.3) (2024-05-10)
+
+
+### chore
+
+* **Icons:** make pathData async ([#8785](https://github.com/SAP/ui5-webcomponents/issues/8785)) ([0549dc9](https://github.com/SAP/ui5-webcomponents/commit/0549dc95edae139f7a4f9efbbc7170922b3ab6cb))
+
+
+### Code Refactoring
+
+* rename ValueState values ([#8864](https://github.com/SAP/ui5-webcomponents/issues/8864)) ([ef9304d](https://github.com/SAP/ui5-webcomponents/commit/ef9304da4b1446178b1b2bfa737d9867461cc4bc))
+* **theming:** remove Belize theme ([#8519](https://github.com/SAP/ui5-webcomponents/issues/8519)) ([990313f](https://github.com/SAP/ui5-webcomponents/commit/990313fc8e429a491f4d6e67306d3df2703e54fe)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-*:** use unified API to define a11y attributes via `accessibilityAttributes` ([#8810](https://github.com/SAP/ui5-webcomponents/issues/8810)) ([49d587c](https://github.com/SAP/ui5-webcomponents/commit/49d587c73120a5511a34e61be949018605f49acd))
+
+
+### BREAKING CHANGES
+
+* **ui5-*:** FlexibleLayout's `accessibilityTexts` and `accessibilityRoles` properties are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+fcl.accessibilityTexts = {
+    startColumnAccessibleName: "Products list",
+    midColumnAccessibleName: "Product information",
+    endColumnAccessibleName: "Product detailed information",
+    startArrowLeftText: "Collapse products list",
+    startArrowRightText: "Expand products list",
+    endArrowLeftText: "Expand product detailed information",
+    endArrowRightText: "Collapse product detailed information",
+    startArrowContainerAccessibleName: "Start Arrow Container",
+    endArrowContainerAccessibleName: "End Arrow Container",
+}
+
+fcl.accessibilityRoles = {
+    startColumnRole: "complementary",
+    startArrowContainerRole: "navigation",
+    midColumnRole: "main",
+    endArrowContainerRole: "navigation",
+    endColumnRole: "complementary".
+}
+```
+Now use `accessibilityAttributes` instead:
+```js
+fcl.accessibilityAttributes = {
+    startColumn: {
+      role: "complementary",
+      name: "Products list",
+    },
+    midColumn: {
+      role: "main",
+      name: "Product information",
+    },
+    endColumn: {
+      role: "complementary",
+      name: "Product detailed information",
+    },
+    startArrowLeft:  {
+      name: "Collapse products list",
+    },
+    startArrowRight: {
+      name: "Expand products list",
+    },
+    endArrowLeft: {
+      name: "Expand product detailed information",
+    },
+    endArrowRight:  {
+      name: "Collapse product detailed information",
+    },
+    startArrowContainer: {
+      role: "navigation",
+      name: "Start Arrow Container",
+    },
+    endArrowContainer: {
+      role: "navigation",
+      name: "End Arrow Container",
+    },
+};
+```
+
+ShellBar's `accessibilityTexts` and `accessibilityRoles` properties are removed. If you have previously used the `accessibilityTexts` or `accessibilityRoles` properties:
+```js
+shellbar.accessibilityTexts = {
+    profileButtonTitle: "John Dow",
+    logoTitle: "Custom logo title",
+}
+
+shellbar.accessibilityRoles = {
+    logoRole: "link"
+};
+```
+Now use `accessibilityAttributes` instead:
+```js
+shellbar.accessibilityAttributes = {
+  profile: {
+    name:  "John Dow",
+  },
+  logo: {
+    role: "link"
+    name: "Custom logo title"
+  },
+};
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+
+				
+* If you previously used ValueState.Warning, ValueState.Error or ValueState.Success, start using ValueState.Critical, ValueState.Negative and ValueState.Positive respectively. 
+All components with valueState property are also affected. For example:
+```html
+<ui5-input value-state="Success"></ui5-input>
+<ui5-input value-state="Warning"></ui5-input>
+<ui5-input value-state="Error"></ui5-input>
+```
+```html
+<ui5-input value-state="Positive"></ui5-input>
+<ui5-input value-state="Critical"></ui5-input>
+<ui5-input value-state="Negative"></ui5-input>
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+* **theming:** Remove SAP Belize theme
+* **Icons:** UI5 Web Components Icons now export `getPathData` (function) instead of `pathData` (string)
+
+If you used icons like this:
+
+```js
+import "@ui5/webcomponents-icons/dist/accept.js";
+```
+
+or like this:
+
+```js
+import accept from "@ui5/webcomponents-icons/dist/accept.js";
+```
+
+**there is no change and no adaptations are required**.
+
+In the rare case you imported `pathData` from icons, for example:
+
+```js
+import { pathData, ltr, accData } from "@ui5/webcomponents-icons/dist/accept.js";
+console.log(pathData); // String containing the SVG path
+```
+
+you must change your code to, for example:
+
+```js
+import { getPathData, ltr, accData } from "@ui5/webcomponents-icons/dist/accept.js";
+getPathData().then(pathData => {
+  console.log(pathData); // String containing the SVG path
+});
+```
+
+
+
+
+
 # [2.0.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2024-04-18)
 
 

@@ -23,8 +23,10 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import SideNavigationItemBase, { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
-import SideNavigationSelectableItemBase, { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
+import type SideNavigationItemBase from "./SideNavigationItemBase.js";
+import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
+import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem, { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationGroup from "./SideNavigationGroup.js";
@@ -330,7 +332,7 @@ class SideNavigation extends UI5Element {
 
 		const responsivePopover = this.getPicker();
 		responsivePopover.opener = opener;
-		responsivePopover.showAt(opener);
+		responsivePopover.open = true;
 	}
 
 	openOverflowMenu(opener: HTMLElement) {
@@ -338,17 +340,17 @@ class SideNavigation extends UI5Element {
 
 		const menu = this.getOverflowPopover();
 		menu.opener = opener;
-		menu.showAt(opener);
+		menu.open = true;
 	}
 
 	closePicker() {
 		const responsivePopover = this.getPicker();
-		responsivePopover.close();
+		responsivePopover.open = false;
 	}
 
 	closeMenu() {
 		const menu = this.getOverflowPopover();
-		menu.close();
+		menu.open = false;
 	}
 
 	getPickerTree() {

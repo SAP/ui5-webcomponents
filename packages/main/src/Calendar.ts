@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -8,16 +9,19 @@ import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dis
 import CalendarDateComponent from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
+	isEnter,
 	isF4,
 	isF4Shift,
+	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarDate from "./CalendarDate.js";
+import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
-import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
 import type { DayPickerChangeEventDetail } from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
@@ -30,6 +34,7 @@ import CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
 import SpecialCalendarDate from "./SpecialCalendarDate.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
+import Icon from "./Icon.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -39,6 +44,8 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
+import CalendarHeaderCss from "./generated/themes/CalendarHeader.css.js";
+import { CALENDAR_HEADER_NEXT_BUTTON, CALENDAR_HEADER_PREVIOUS_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 interface ICalendarPicker {
 	_showPreviousPage: () => void,
@@ -48,6 +55,12 @@ interface ICalendarPicker {
 	_autoFocus?: boolean,
 	_firstYear?: number,
 	_lastYear?: number,
+}
+
+interface ICalendarSelectedDates extends UI5Element {
+	value?: string,
+	startValue?: string,
+	endValue?: string
 }
 
 type CalendarSelectionChangeEventDetail = {
@@ -162,14 +175,16 @@ type SpecialCalendarDateT = {
 	tag: "ui5-calendar",
 	fastNavigation: true,
 	template: CalendarTemplate,
-	styles: calendarCSS,
+	styles: [calendarCSS, CalendarHeaderCss],
 	dependencies: [
+		SpecialCalendarDate,
 		CalendarDate,
-		CalendarHeader,
+		CalendarDateRange,
 		DayPicker,
 		MonthPicker,
 		YearPicker,
 		CalendarLegend,
+		Icon,
 	],
 })
 /**
@@ -197,8 +212,8 @@ type SpecialCalendarDateT = {
 	},
 })
 
-@event("show-month-press")
-@event("show-year-press")
+@event("show-month-view")
+@event("show-year-view")
 class Calendar extends CalendarPart {
 	/**
 	 * Defines the type of selection used in the calendar component.
@@ -268,7 +283,7 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	dates!: Array<CalendarDate>;
+	dates!: Array<ICalendarSelectedDates>;
 
 	/**
 	 * Defines the special dates, visually emphasized in the calendar.
@@ -285,41 +300,97 @@ class Calendar extends CalendarPart {
 	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
 	_selectedItemType!: `${CalendarLegendItemType}`;
 
-	/**
-	 * @private
-	 */
-	get _selectedDatesTimestamps(): Array<number> {
-		return this.dates.map(date => {
-			const value = date.value;
-			const validValue = value && !!this.getFormat().parse(value);
-			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
-		}).filter((date): date is number => !!date);
-	}
-
 	constructor() {
 		super();
 
 		this._valueIsProcessed = false;
 	}
 
+	static async onDefine() {
+		Calendar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	/**
+	 * @private
+	 */
+	get _selectedDatesTimestamps(): Array<number> {
+		let selectedDates: Array<number> = [];
+
+		if (this.selectionMode === CalendarSelectionMode.Range) {
+			const range = this.dates.find(date => date.hasAttribute("ui5-date-range"));
+			const startDate = range && range.startValue && this.getFormat().parse(range.startValue, true) as Date;
+			const endDate = range && range.endValue && this.getFormat().parse(range.endValue, true) as Date;
+
+			if (startDate) {
+				selectedDates.push(startDate.getTime() / 1000);
+			}
+
+			if (endDate) {
+				selectedDates.push(endDate.getTime() / 1000);
+			}
+		} else {
+			selectedDates = this.dates
+				.filter(dateElement => {
+					return dateElement.hasAttribute("ui5-date")
+						&& dateElement.value
+						&& this._isValidCalendarDate(dateElement.value)
+						&& this._getTimeStampFromString(dateElement.value);
+				})
+				.map(dateElement => Number(this._getTimeStampFromString(dateElement.value!)) / 1000);
+		}
+
+		return selectedDates;
+	}
+
 	/**
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true)); // Format as UTC
-		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
+		const selectedUTCDates = selectedDates.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000), true));
 
-		// Remove all elements for dates that are no longer selected
-		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
-			this.removeChild(dateElement);
-		});
+		if (this.selectionMode === CalendarSelectionMode.Range) {
+			// Create tags for the selected dates that don't already exist in DOM
+			if (selectedUTCDates.length) {
+				let dateRange = this.dates.find(dateElement => dateElement.hasAttribute("ui5-date-range") && dateElement.startValue === selectedUTCDates[0]);
+				if (!dateRange) {
+					dateRange = document.createElement(CalendarDateRange.getMetadata().getTag()) as CalendarDateRange;
+					dateRange.startValue = selectedUTCDates[0];
+					this.appendChild(dateRange);
+				} else {
+					dateRange.endValue = selectedUTCDates[1];
+				}
+				// Remove all elements for dates that are no longer selected
+				this.dates
+					.filter(dateElement => {
+						return dateElement.hasAttribute("ui5-date")
+							|| (dateRange && dateElement.startValue !== dateRange.startValue);
+					})
+					.forEach(dateElement => {
+						this.removeChild(dateElement);
+					});
+			}
+		} else {
+			const valuesInDOM = this._selectedDatesTimestamps.map(timestamp => this.getFormat().format(UI5Date.getInstance(timestamp * 1000)));
 
-		// Create tags for the selected dates that don't already exist in DOM
-		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
-			const dateElement = document.createElement(CalendarDate.getMetadata().getTag()) as CalendarDate;
-			dateElement.value = value;
-			this.appendChild(dateElement);
-		});
+			// Remove all elements for dates that are no longer selected
+			this.dates
+				.filter(dateElement => {
+					return dateElement.hasAttribute("ui5-date-range")
+						|| (dateElement.hasAttribute("ui5-date") && !selectedUTCDates.includes(dateElement.value!));
+				})
+				.forEach(dateElement => {
+					this.removeChild(dateElement);
+				});
+
+			// Create tags for the selected dates that don't already exist in DOM
+			selectedUTCDates
+				.filter(value => !valuesInDOM.includes(value))
+				.forEach(value => {
+					const dateElement = document.createElement(CalendarDate.getMetadata().getTag()) as CalendarDate;
+					dateElement.value = value;
+					this.appendChild(dateElement);
+				});
+		}
 	}
 
 	_isValidCalendarDate(dateString: string): boolean {
@@ -343,7 +414,7 @@ class Calendar extends CalendarPart {
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
 		validSpecialDates.forEach(date => {
-			const dateFromValue = UI5Date.getInstance(date.value);
+			const dateFromValue = this.getFormat().parse(date.value) as Date | UI5Date;
 			const timestamp = dateFromValue.getTime();
 
 			if (!uniqueDates.has(timestamp)) {
@@ -420,18 +491,26 @@ class Calendar extends CalendarPart {
 	 * The user clicked the "month" button in the header
 	 */
 	onHeaderShowMonthPress(e: CustomEvent) {
+		this.showMonth();
+		this.fireEvent("show-month-view", e);
+	}
+
+	showMonth() {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
-		this.fireEvent("show-month-press", e);
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
 	onHeaderShowYearPress(e: CustomEvent) {
+		this.showYear();
+		this.fireEvent("show-year-view", e);
+	}
+
+	showYear() {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
-		this.fireEvent("show-year-press", e);
 	}
 
 	get _currentPickerDOM() {
@@ -568,10 +647,12 @@ class Calendar extends CalendarPart {
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
+			this.fireEvent("show-month-view", e);
 		}
 
 		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
+			this.fireEvent("show-year-view", e);
 		}
 	}
 
@@ -581,6 +662,97 @@ class Calendar extends CalendarPart {
 
 	get _specialDates() {
 		return this.getSlottedNodes<SpecialCalendarDate>("specialDates");
+	}
+
+	get classes() {
+		return {
+			prevButton: {
+				"ui5-calheader-arrowbtn": true,
+				"ui5-calheader-arrowbtn-disabled": this._previousButtonDisabled,
+			},
+			nextButton: {
+				"ui5-calheader-arrowbtn": true,
+				"ui5-calheader-arrowbtn-disabled": this._nextButtonDisabled,
+			},
+		};
+	}
+
+	get accInfo() {
+		return {
+			ariaLabelMonthButton: this.hasSecondaryCalendarType
+				? `${this._headerMonthButtonText}, ${this.secondMonthButtonText}` : `${this._headerMonthButtonText}`,
+		};
+	}
+
+	get headerPreviousButtonText() {
+		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
+	}
+
+	get headerNextButtonText() {
+		return Calendar.i18nBundle?.getText(CALENDAR_HEADER_NEXT_BUTTON);
+	}
+
+	get secondMonthButtonText() {
+		const secondMonthButtonText = this.secondaryCalendarTypeButtonText?.monthButtonText as string;
+
+		return secondMonthButtonText;
+	}
+
+	onMonthButtonKeyDown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this.showMonth();
+			this.fireEvent("show-month-view", e);
+		}
+	}
+
+	onMonthButtonKeyUp(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+			this.showMonth();
+			this.fireEvent("show-month-view", e);
+		}
+	}
+
+	onYearButtonKeyDown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this.showYear();
+			this.fireEvent("show-year-view", e);
+		}
+	}
+
+	onYearButtonKeyUp(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this.showYear();
+			this.fireEvent("show-year-view", e);
+		}
+	}
+
+	onPrevButtonClick(e: MouseEvent) {
+		if (this._previousButtonDisabled) {
+			e.preventDefault();
+			return;
+		}
+
+		this.onHeaderPreviousPress();
+		e.preventDefault();
+	}
+
+	onNextButtonClick(e: MouseEvent) {
+		if (this._nextButtonDisabled) {
+			e.preventDefault();
+			return;
+		}
+
+		this.onHeaderNextPress();
+		e.preventDefault();
 	}
 
 	/**
@@ -593,7 +765,7 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * Creates instances of `ui5-date` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
+	 * Creates instances of `ui5-date` or `ui5-date-range` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
 	 * @protected
 	 * @deprecated
 	 * @param selectedDates Array of UTC timestamps
@@ -608,6 +780,7 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
+	ICalendarSelectedDates,
 	CalendarSelectionChangeEventDetail,
 	SpecialCalendarDateT,
 };

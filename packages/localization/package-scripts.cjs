@@ -5,7 +5,7 @@ const amdToES6 = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/index.js"
 const noRequire = resolve.sync("@ui5/webcomponents-tools/lib/amd-to-es6/no-remaining-require.js");
 
 const scripts = {
-	clean: "rimraf dist",
+	clean: "rimraf src/generated && rimraf dist",
 	lint: "eslint .",
 	generate: "nps clean copy.used-modules copy.cldr copy.overlay build.amd-to-es6 build.jsonImports",
 	build: {

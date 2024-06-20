@@ -32,8 +32,8 @@
 		class="shellbar-example"
 		primary-title="Product Title"
 		secondary-title="Second Title"
-		show-co-pilot
 	>
+		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
 	</ui5-shellbar>
 
@@ -51,7 +51,7 @@
 	<script>
 		sbAccAttr.accessibilityAttributes = {
 			notifications: {
-				ariaHasPopup: "Dialog"
+				hasPopup: "dialog"
 			},
 		};
 	</script>
@@ -107,8 +107,9 @@
 			notifications-count="99+"
 			show-notifications
 			show-product-switch
-			show-co-pilot
 	>
+
+		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 
 		<ui5-avatar slot="profile">
 			<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
@@ -148,18 +149,18 @@
 		</div>
 	</section>
 
-	<ui5-popover id="popover" placement="Bottom">
+	<ui5-popover id="popover" placement="Bottom" accessible-role="None">
 		<div class="popover-header">
 			<ui5-title class="shellbar2auto">John Doe</ui5-title>
 		</div>
 
 		<div class="popover-content">
-			<ui5-list separators="None" >
-				<ui5-li icon="sys-find">App Finder</ui5-li>
-				<ui5-li icon="settings">Settings</ui5-li>
-				<ui5-li icon="edit">Edit Home Page</ui5-li>
-				<ui5-li icon="sys-help">Help</ui5-li>
-				<ui5-li icon="log">Sign out</ui5-li>
+			<ui5-list accessible-role="menu" separators="None" >
+				<ui5-li accessible-role="menuitem" icon="sys-find">App Finder</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="settings">Settings</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="edit">Edit Home Page</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="sys-help">Help</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="log">Sign out</ui5-li>
 			</ui5-list>
 		</div>
 	</ui5-popover>
@@ -240,19 +241,29 @@
 	</ui5-shellbar>
 
 	<script>
-		mySearch.addEventListener("ui5-suggestion-item-select", function (event) {
+
+		[...document.querySelectorAll("ui5-toggle-button")].forEach(el => {
+			el.addEventListener("click", event => {
+				const toggleButton = event.target;
+				toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
+			});
+		});
+
+		mySearch.addEventListener("ui5-selection-change", function (event) {
 			console.log(event);
 		});
 
 		shellbar.addEventListener("ui5-profile-click", function(event) {
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 			window["press-input"].value = "Profile";
 		});
 
 		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			window["press-input"].value = "Notifications";
 			event.preventDefault();
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 		});
 
 		shellbar.addEventListener("ui5-product-switch-click", function(event) {
@@ -266,10 +277,6 @@
 
 		shellbarWithLogoClick.addEventListener("ui5-logo-click", function(event) {
 			window["press-input2"].value = shellbarWithLogoClick.primaryTitle.replace(/\s/g, "");
-		});
-
-		shellbar.addEventListener("ui5-co-pilot-click", function(event) {
-			window["press-input"].value = "CoPilot";
 		});
 
 		shellbar.addEventListener("ui5-search-button-click", function(event) {
@@ -287,12 +294,14 @@
 
 		shelbarCompact.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 		});
 
 		shelbarCompact.addEventListener("ui5-product-switch-click", function(event) {
 			event.preventDefault();
-			popover.showAt(event.detail.targetRef);
+			popover.opener = event.detail.targetRef;
+			popover.open = true;
 		});
 
 		menuItemsSB.addEventListener("ui5-menu-item-click", function(event) {
@@ -312,7 +321,8 @@
 			currenItem.addEventListener("ui5-click", function(event) {
 				event.preventDefault();
 				window["press-input"].value = event.target.id;
-				window["custom-item-popover"].showAt(event.detail.targetRef);
+				window["custom-item-popover"].opener = event.detail.targetRef;
+				window["custom-item-popover"].open = true;
 			});
 		});
 
@@ -324,13 +334,19 @@
 			});
 		});
 
-		sbAcc.accessibilityTexts = {
-			profileButtonTitle: "John Dow",
-			logoTitle: "Custom logo title",
+		sbAcc.accessibilityAttributes = {
+			profile: {
+				name:  "John Dow",
+			},
+			logo: {
+				name: "Custom logo title"
+			},
 		};
 
-		sb.accessibilityRoles = {
-			logoRole: "link"
+		sb.accessibilityAttributes = {
+			logo: {
+				role: "link"
+			},
 		};
 
 		sb.addEventListener("ui5-search-button-click", function(event) {

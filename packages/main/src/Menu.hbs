@@ -2,43 +2,36 @@
 	id="{{_id}}-menu-rp"
 	class="ui5-menu-rp"
 	horizontal-align="Start"
-	placement={{placement}}
-	vertical-align={{verticalAlign}}
+	placement="Bottom"
+	vertical-align="Bottom"
+	.opener={{opener}}
+	?open={{open}}
+	prevent-initial-focus
+	prevent-focus-restore
 	hide-arrow
 	allow-target-overlap
-	?sub-menu={{_isSubMenu}}
 	@ui5-before-open={{_beforePopoverOpen}}
-	@ui5-after-open={{_afterPopoverOpen}}
+	@ui5-open={{_afterPopoverOpen}}
 	@ui5-before-close={{_beforePopoverClose}}
-	@ui5-after-close={{_afterPopoverClose}}
+	@ui5-close={{_afterPopoverClose}}
 >
 {{#if isPhone}}
 	<div
 		slot="header"
 		class="ui5-menu-dialog-header"
 	>
-	{{#if isSubMenuOpened}}
-		<ui5-button
-			icon="nav-back"
-			class="ui5-menu-back-button"
-			design="Transparent"
-			aria-label="{{labelBack}}"
-			@click={{_navigateBack}}
-		>
-		</ui5-button>
-	{{/if}}
 		<div
 			class="ui5-menu-dialog-title"
 		>
 			<div>
-				{{menuHeaderTextPhone}}
+				{{headerText}}
 			</div>
 		</div>
 		<ui5-button
 			icon="decline"
 			design="Transparent"
 			aria-label="{{labelClose}}"
-			@click={{_closeAll}}
+			@click={{_close}}
 		>
 		</ui5-button>
 	</div>
@@ -46,7 +39,7 @@
 	<div
 		id="{{_id}}-menu-main"
 	>
-	{{#if _currentItems.length}}
+	{{#if items.length}}
 		<ui5-list
 			id="{{_id}}-menu-list"
 			selection-mode="None"
@@ -55,44 +48,19 @@
 			separators="None"
 			accessible-role="Menu"
 			@ui5-item-click={{_itemClick}}
-			@mouseover="{{_loadingMouseOver}}"
+			@ui5-close-menu={{_close}}
+			@mouseover={{_itemMouseOver}}
+			@keydown={{_itemKeyDown}}
 		>
-		{{#each _currentItems}}
-			<ui5-menu-li
-				.associatedItem="{{this.item}}"
-				class="ui5-menu-item"
-				id="{{../_id}}-menu-item-{{@index}}"
-				.icon="{{this.item.icon}}"
-				accessible-name={{this.item.ariaLabelledByText}}
-				accessible-role="MenuItem"
-				.additionalText="{{this.item._additionalText}}"
-				tooltip="{{this.item.tooltip}}"
-				selected="{{this.item.subMenuOpened}}"
-				?disabled={{this.item.disabled}}
-				?starts-section={{this.item.startsSection}}
-				?selected={{this.item.subMenuOpened}}
-				?is-phone={{../isPhone}}
-				@mouseover={{../_itemMouseOver}}
-				@mouseout={{../_itemMouseOut}}
-				@keydown={{../_itemKeyDown}}
-				@_focused={{../_onfocusin}}
-			>
-			</ui5-menu-li>
-		{{/each}}
+			<slot></slot>
 		</ui5-list>
 	{{else if loading}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
 			delay="{{loadingDelay}}"
 			class="ui5-menu-busy-indicator"
-			@mouseover="{{_loadingMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}
 	</div>
 </ui5-responsive-popover>
-
-<div
-	class="ui5-menu-submenus"
->
-</div>

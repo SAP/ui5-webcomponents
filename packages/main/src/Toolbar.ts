@@ -1,4 +1,5 @@
-import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -13,6 +14,7 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -24,10 +26,10 @@ import ToolbarCss from "./generated/themes/Toolbar.css.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarAlign from "./types/ToolbarAlign.js";
+import ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
-import HasPopup from "./types/HasPopup.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import {
@@ -38,6 +40,10 @@ import {
 
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+
+type ToolbarMinWidthChangeEventDetail = {
+	minWidth: number,
+};
 
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
@@ -125,6 +131,15 @@ class Toolbar extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
+	 * Defines the toolbar design.
+	 * @public
+	 * @default "Solid"
+	 * @since 2.0.0
+	 */
+	@property({ type: ToolbarDesign, defaultValue: ToolbarDesign.Solid })
+	design!: `${ToolbarDesign}`;
+
+	/**
 	 * Defines the items of the component.
      *
      * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
@@ -137,6 +152,7 @@ class Toolbar extends UI5Element {
 	_onInteract!: EventListener;
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
+	minContentWidth = 0;
 	popoverOpen = false;
 	itemsWidthMeasured = false;
 
@@ -263,7 +279,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: HasPopup.Menu.toLowerCase(),
+					hasPopup: AriaHasPopup.Menu.toLowerCase(),
 				},
 			},
 		};
@@ -324,18 +340,19 @@ class Toolbar extends UI5Element {
 	 */
 	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
-		return overflowPopover!.isOpen();
+		return overflowPopover!.open;
 	}
 
 	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.showAt(this.overflowButtonDOM!);
+		overflowPopover!.opener = this.overflowButtonDOM!;
+		overflowPopover!.open = true;
 		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.close();
+		overflowPopover!.open = false;
 	}
 
 	toggleOverflow() {
@@ -370,15 +387,27 @@ class Toolbar extends UI5Element {
 	}
 
 	storeItemsWidth() {
-		let totalWidth = 0;
+		let totalWidth = 0,
+			minWidth = 0;
 
 		this.items.forEach((item: ToolbarItem) => {
 			const itemWidth = this.getItemWidth(item);
 			totalWidth += itemWidth;
+			if (item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow) {
+				minWidth += itemWidth;
+			}
 			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
 		});
 
+		if (minWidth !== this.minContentWidth) {
+			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
+			this.fireEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
+				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
+			});
+		}
+
 		this.itemsWidth = totalWidth;
+		this.minContentWidth = minWidth;
 	}
 
 	distributeItems(overflowSpace = 0) {
@@ -486,9 +515,10 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			const eventType: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
-			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
+			const eventType = e.type;
+			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
+			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
+			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
 				return;
@@ -581,3 +611,6 @@ class Toolbar extends UI5Element {
 Toolbar.define();
 
 export default Toolbar;
+export type {
+	ToolbarMinWidthChangeEventDetail,
+};

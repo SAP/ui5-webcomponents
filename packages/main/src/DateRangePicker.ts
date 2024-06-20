@@ -1,15 +1,21 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
-import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATERANGE_DESCRIPTION,
+	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
+import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
@@ -52,8 +58,10 @@ import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 @customElement({
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
+	template: DateRangePickerTemplate,
+	dependencies: [...DatePicker.dependencies, CalendarDateRange],
 })
-class DateRangePicker extends DatePicker {
+class DateRangePicker extends DatePicker implements IFormInputElement {
 	 /**
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
@@ -71,6 +79,22 @@ class DateRangePicker extends DatePicker {
 	_tempValue!: string;
 
 	private _prevDelimiter: string | null;
+
+	get formFormattedValue() {
+		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);
+
+		if (values.length) {
+			const formData = new FormData();
+
+			for (let i = 0; i < values.length; i++) {
+				formData.append(this.name, values[i]);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();
@@ -155,6 +179,14 @@ class DateRangePicker extends DatePicker {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();
 	}
 
+	get startValue(): string {
+		return this._calendarSelectedDates[0] || "";
+	}
+
+	get endValue(): string {
+		return this._calendarSelectedDates[1] || "";
+	}
+
 	/**
 	 * @override
 	 */
@@ -162,8 +194,18 @@ class DateRangePicker extends DatePicker {
 		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
 	}
 
+	/**
+	 * @override
+	 */
 	get dateAriaDescription() {
 		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
+	}
+
+	/**
+	 * @override
+	 */
+	get pickerAccessibleName() {
+		return DateRangePicker.i18nBundle.getText(DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
@@ -229,7 +271,7 @@ class DateRangePicker extends DatePicker {
 		}
 		const newValue = this._buildValue(event.detail.selectedDates[0], event.detail.selectedDates[1]); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**

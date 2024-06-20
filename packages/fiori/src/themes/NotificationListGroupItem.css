@@ -1,9 +1,5 @@
 @import "./NotificationListItemBase.css";
-@import "./NotificationPrioIcon.css";
-
-:host {
-	--_ui5-notification_item-border-raius: 0px;
-}
+@import "./NotificationStateIcon.css";
 
 :host([collapsed]) .ui5-nli-group-items {
 	display: none;
@@ -22,42 +18,53 @@
 }
 
 .ui5-nli-group-header {
+	height: 2.75rem;
+	position: relative;
 	background: var(--sapList_GroupHeaderBackground);
 	display: flex;
 	align-items: center;
-	padding-block: 0.75rem 0.25rem;
-	padding-inline: 0.75rem 0.5rem;
+	margin-block: var(--_ui5-notification_group_header-margin);
+	padding-inline: var(--_ui5-notification_group_header-padding);
 	width: 100%;
-	border-bottom: 0.0625rem solid var(--sapList_GroupHeaderBorderColor);
+	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
-	cursor: default;
+	cursor: pointer;
 }
 
-.ui5-nli-group-toggle-btn {
-	margin-inline-end: 0.75rem;
-	cursor: pointer;
+/* The focus is on the whole group but should be visualized on the Group Header */
+:host([desktop]) .ui5-nli-focusable.ui5-nli-group-root:focus .ui5-nli-group-header::before,
+.ui5-nli-focusable.ui5-nli-group-root:focus-visible .ui5-nli-group-header::before {
+	content: "";
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+.ui5-nli-group-toggle-icon {
+	min-width: 1rem;
+	min-height: 1rem;
+	margin-inline: 0.5rem;
+	color: var(--sapContent_IconColor);
 }
 
 .ui5-nli-group-title-text {
 	color: var(--sapGroup_TitleTextColor);
 	font-family: "72override", var(--sapFontFamily);
-	font-size: var(--sapFontHeader6Size);
+	font-size: var(--sapFontHeader5Size);
 	font-weight: bold;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	line-height: 2rem;
+	margin-inline-start:  0.75rem;
 }
 
 .ui5-nli-group-divider {
 	flex: 1;
-}
-
-.ui5-nli-group-counter {
-	margin-inline-start: 0.25rem;
-	margin-inline-end: 1rem;
-	color: var(--sapList_TableGroupHeaderTextColor);
-	font-size: var(--sapFontHeader6Size);
-	font-family: "72override", var(--sapFontHeaderFamily);
 }
 
 /* fix for blue background color on tap (touchscreen devices) */

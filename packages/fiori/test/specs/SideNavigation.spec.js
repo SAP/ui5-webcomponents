@@ -6,12 +6,6 @@ async function getTreeItemsInPopover() {
 	return items;
 }
 
-async function getRenderedTreeItemsInPopover() {
-	const items = await browser.$$(`>>>#sn1 .ui5-sn-item`);
-
-	return items;
-}
-
 async function getRootItemInPopover() {
 	const rootItem = await browser.$(`>>>#sn1 ui5-responsive-popover .ui5-sn-root`);
 
@@ -63,17 +57,10 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await input.getProperty("value"), "6", "Event is fired");
 
-			const item = await browser.$("#item3");
+			const item = await browser.$("#item2");
 			await item.scrollIntoView();
 			await item.click();
 
-			const itemRef = await item.shadow$(".ui5-sn-item");
-
-			assert.strictEqual(await input.getProperty("value"), "6", "Event is not fired");
-			assert.strictEqual(await itemRef.getAttribute("aria-expanded"), "true" ,"Expanded is toggled");
-
-			await browser.$("#item2").scrollIntoView();
-			await browser.$("#item2").click();
 			assert.strictEqual(await input.getProperty("value"), "7", "Event is fired");
 		});
 
@@ -196,9 +183,12 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
 			assert.notExists(await items[0].getAttribute("aria-roledescription"),"Role description of the SideNavigation tree item is not set");
+			assert.strictEqual(await items[0].getAttribute("aria-selected"), "false", "'aria-selected' is set explicitly");
 
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree is correctly set");
 			assert.notExists(await items[1].getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+
+			assert.strictEqual(await items[3].getAttribute("aria-selected"), "true", "'aria-selected' is set explicitly");
 
 			// fixed items
 			assert.strictEqual(await sideNavigationFixedTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation fixed tree element is correctly set");

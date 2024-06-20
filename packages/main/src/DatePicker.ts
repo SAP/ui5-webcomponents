@@ -1,16 +1,18 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isPageUp,
 	isPageDown,
@@ -26,14 +28,18 @@ import {
 	isF6Next,
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import HasPopup from "./types/HasPopup.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATEPICKER_OPEN_ICON_TITLE,
+	DATEPICKER_DATE_DESCRIPTION,
+	INPUT_SUGGESTIONS_TITLE,
+	FORM_TEXTFIELD_REQUIRED,
+	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -43,6 +49,7 @@ import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
+import IconMode from "./types/IconMode.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
 
 // default calendar for bundling
@@ -152,6 +159,7 @@ type DatePickerInputEventDetail = {
 @customElement({
 	tag: "ui5-date-picker",
 	languageAware: true,
+	formAssociated: true,
 	template: DatePickerTemplate,
 	styles: [
 		datePickerCss,
@@ -238,7 +246,7 @@ type DatePickerInputEventDetail = {
 		},
 	},
 })
-class DatePicker extends DateComponentBase implements IFormElement {
+class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * Defines a formatted date value.
 	 * @default ""
@@ -295,14 +303,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	placeholder?: string;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * **Important:** For the `name` property to have effect, you must add the following import to your project:
-	 * `import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`
-	 *
-	 * **Note:** When set, a native `input` HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * @default ""
 	 * @public
 	 */
@@ -322,6 +325,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	hideWeekNumbers!: boolean;
 
 	/**
+	 * Defines the open or closed state of the popover.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
 	 * Defines the aria-label attribute for the component.
 	 * @default ""
 	 * @public
@@ -338,9 +350,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 */
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
-
-	@property({ type: Boolean, noAttribute: true })
-	_isPickerOpen!: boolean;
 
 	@property({ type: Object })
 	_respPopoverConfig!: object;
@@ -363,25 +372,31 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	@slot({ type: HTMLElement })
 	valueStateMessage!: Array<HTMLElement>;
 
-	/**
-	 * The slot is used to render native `input` HTML element within Light DOM to enable form submit,
-	 * when `name` property is set.
-	 * @private
-	 */
-	@slot({ type: HTMLElement })
-	formSupport!: Array<HTMLElement>;
-
 	responsivePopover?: ResponsivePopover;
 
-	FormSupport?: typeof FormSupportT;
-
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value;
+	}
 
 	/**
 	 * @protected
 	 */
 	onResponsivePopoverAfterClose() {
-		this._isPickerOpen = false;
+		this.open = false;
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
 		} else {
@@ -389,9 +404,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 	}
 
-	onBeforeRendering() {
-		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
+	onResponsivePopoverBeforeOpen() {
+		this._calendarCurrentPicker = this.firstPicker;
+	}
 
+	onBeforeRendering() {
 		["minDate", "maxDate"].forEach((prop: string) => {
 			const propValue = this[prop as keyof DatePicker] as string;
 
@@ -399,12 +416,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 				console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
 			}
 		});
-
-		if (this.FormSupport) {
-			this.FormSupport.syncNativeHiddenInput(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 
 		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
@@ -449,7 +460,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		if (isShow(e)) {
 			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
-			if (this.isOpen()) {
+			if (this.open) {
 				if (!isF4(e)) {
 					this._toggleAndFocusInput();
 				}
@@ -457,18 +468,18 @@ class DatePicker extends DateComponentBase implements IFormElement {
 				this._toggleAndFocusInput();
 			}
 		}
-
-		if ((this._getInput().isEqualNode(e.target as Node) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-			this.closePicker();
+		const target = e.target as HTMLElement;
+		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+			this._togglePicker();
 		}
 
-		if (this.isOpen()) {
+		if (this.open) {
 			return;
 		}
 
 		if (isEnter(e)) {
-			if (this.FormSupport) {
-				this.FormSupport.triggerFormSubmit(this);
+			if (this._internals?.form) {
+				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
@@ -555,11 +566,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 	}
 
-	_toggleAndFocusInput() {
-		this.togglePicker();
-		this._getInput().focus();
-	}
-
 	_getInput(): Input {
 		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
@@ -600,7 +606,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_click(e: MouseEvent) {
 		if (isPhone()) {
-			this.responsivePopover!.showAt(this);
+			this.responsivePopover!.opener = this;
+			this.responsivePopover!.open = true;
 			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -680,7 +687,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": HasPopup.Grid.toLowerCase(),
+			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
@@ -696,6 +703,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	get dateAriaDescription() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
@@ -726,8 +737,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Defines whether the value help icon is hidden
 	 * @private
 	 */
-	get _ariaHidden() {
-		return isDesktop();
+	get _iconMode() {
+		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
 	}
 
 	_respPopover() {
@@ -765,7 +776,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -793,42 +804,13 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return this.getFormat().format(date);
 	}
 
-	/**
-	 * Closes the picker.
-	 * @public
-	 */
-	closePicker(): void {
-		this.responsivePopover!.close();
+	_togglePicker(): void {
+		this.open = !this.open;
 	}
 
-	/**
-	 * Opens the picker.
-	 * @public
-	 * @returns Resolves when the picker is open
-	 */
-	async openPicker(): Promise<void> {
-		this._isPickerOpen = true;
-		this._calendarCurrentPicker = this.firstPicker;
-		this.responsivePopover = this._respPopover();
-
-		await this.responsivePopover.showAt(this);
-	}
-
-	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
-		} else if (this._canOpenPicker()) {
-			this.openPicker();
-		}
-	}
-
-	/**
-	 * Checks if the picker is open.
-	 * @public
-	 * @returns true if the picker is open, false otherwise
-	 */
-	isOpen(): boolean {
-		return !!this._isPickerOpen;
+	_toggleAndFocusInput() {
+		this._togglePicker();
+		this._getInput().focus();
 	}
 
 	/**
