@@ -524,6 +524,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	/**
 	 * Defines the icon to be displayed in the component.
+	 *
+	 * **Note:** It is recommended to hide the icon when the component is in readonly state
 	 * @public
 	 */
 	@slot()

@@ -79,14 +79,8 @@
 	/>
 
 	{{#if _effectiveShowClearIcon}}
-		<div class="ui5-input-clear-icon-wrapper">
-				<ui5-icon
-				class="ui5-input-clear-icon"
-				name="decline"
-				accessible-name="{{clearIconAccessibleName}}"
-				@click={{_clear}}
-				@mousedown={{_iconMouseDown}}
-			></ui5-icon>
+		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper" tabindex="-1" @mousedown={{_iconMouseDown}}>
+			<ui5-icon tabindex="-1" class="inputIcon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 		</div>
 	{{/if}}
 
@@ -96,6 +90,7 @@
 
 	{{#unless readonly}}
 		<ui5-icon name="slim-arrow-down"
+			class="inputIcon"
 			slot="icon"
 			tabindex="-1"
 			@click="{{togglePopoverByDropdownIcon}}"
