@@ -70,6 +70,9 @@ type Locale = {
 
 class OpenUI5Support {
 	static isAtLeastVersion116() {
+		if (!window.sap.ui!.version) {
+			return true; // sap.ui.version will be removed in newer OpenUI5 versions
+		}
 		const version = window.sap.ui!.version as string;
 		const parts = version.split(".");
 		if (!parts || parts.length < 2) {
