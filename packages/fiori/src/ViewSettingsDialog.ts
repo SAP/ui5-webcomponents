@@ -216,17 +216,6 @@ class ViewSettingsDialog extends UI5Element {
 	sortDescending!: boolean;
 
 	/**
-	 * Defines the ID or DOM Reference of the element at which the dialog is shown.
-	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
-	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
-	 * @public
-	 * @default ""
-	 * @since 1.10.0
-	 */
-	@property({ validator: DOMReference, defaultValue: "" })
-	opener!: HTMLElement | string;
-
-	/**
 	 * Indicates if the dialog is open.
 	 * @public
 	 * @default false
