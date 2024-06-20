@@ -552,7 +552,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
 
 		this._focusRecentlyUsedControl();
-		
+
 		this.fireEvent("open");
 	}
 
