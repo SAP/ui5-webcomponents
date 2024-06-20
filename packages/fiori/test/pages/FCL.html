@@ -21,8 +21,12 @@
 	<ui5-toggle-button id="switchBtn1" class="testButton">Set to ThreeColumnsMidExpanded</ui5-toggle-button><br>
 	<ui5-input id="layoutChangeRes" placeholder="layout..." class="fcl2auto"></ui5-input><br>
 	<ui5-input id="layoutChangeRes2" placeholder="columns visibility..." class="fcl2auto"></ui5-input><br>
-	<ui5-input id="layoutChangeRes3" placeholder="resize or arrow click..." class="fcl2auto"></ui5-input><br>
+	<ui5-input id="layoutChangeRes3" placeholder="resize or separator movement..." class="fcl2auto"></ui5-input><br>
 	<ui5-input id="layoutChangeRes4" placeholder="change counter..." class="fcl2auto"></ui5-input><br>
+	<div>
+		<ui5-label show-colon>Switch RTL: </ui5-label>
+		<ui5-switch id="swRTL"></ui5-switch>
+	</div>
 	<br><br>
 
 	<ui5-flexible-column-layout id="fcl1" class="fcl3auto" layout="TwoColumnsStartExpanded">
@@ -190,11 +194,11 @@
 
 	<!-- ex2 -->
 	<br><br>
-	<ui5-title class="sectionTitle">List-Detail: Detail expanded + hide-arrows</ui5-title>
+	<ui5-title class="sectionTitle">List-Detail: Detail expanded + disable-resizing</ui5-title>
 	<ui5-toggle-button id="switchBtn2" class="testButton">Set to TwoColumnsMidExpanded</ui5-toggle-button>
 	<br><br>
 
-	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" hide-arrows>
+	<ui5-flexible-column-layout id="fcl2" layout="TwoColumnsMidExpanded" disable-resizing>
 			<!-- start column -->
 			<div class="fcl4auto" slot="startColumn">
 				<div class="fcl5auto">
@@ -683,23 +687,11 @@
 			endColumn: {
 				name: "Product detailed information",
 			},
-			startArrowLeft:  {
-				name: "Collapse products list",
+			startSeparator: {
+				name: "Start Draggable Splitter",
 			},
-			startArrowRight: {
-				name: "Expand products list",
-			},
-			endArrowLeft: {
-				name: "Expand product detailed information",
-			},
-			endArrowRight:  {
-				name: "Collapse product detailed information",
-			},
-			startArrowContainer: {
-				name: "Start Arrow Container",
-			},
-			endArrowContainer: {
-				name: "End Arrow Container",
+			endSeparator: {
+				name: "End Draggable Splitter",
 			},
 		};
 
@@ -707,13 +699,13 @@
 			startColumn: {
 				role: "complementary"
 			},
-			startArrowContainer: {
+			startSeparator: {
 				role: "navigation"
 			},
 			midColumn:{
 				role: "main"
 			},
-			endArrowContainer: {
+			endSeparator: {
 				role: "navigation"
 			},
 			endColumn: {
@@ -729,7 +721,7 @@
 			"startColumnVisible :: " + e.detail.startColumnVisible
 			+ ", midColumnVisible :: " + e.detail.midColumnVisible
 			+ ", endColumnVisible :: " + e.detail.endColumnVisible;
-			layoutChangeRes3.value = "arrowsUsed :: " + e.detail.arrowUsed + ", resizing :: " + e.detail.resize;
+			layoutChangeRes3.value = "separatorsUsed :: " + e.detail.separatorsUsed + ", resizing :: " + e.detail.resized;
 			layoutChangeRes4.value = `${++counter}`;
 
 		});
@@ -986,6 +978,20 @@
 		function getStep(idx) {
 			return Array.from(wiz.children)[idx];
 		}
+
+		// Utility function to change RTL and apply the changes
+		function setDir(dir) {
+			document.body.dir = dir;
+			window['sap-ui-webcomponents-bundle'].applyDirection();
+		}
+
+		document.getElementById("swRTL").addEventListener("ui5-change", (e) => {
+			if (e.target.checked) {
+				setDir("rtl");
+			} else {
+				setDir("ltr");
+			}
+		});
 	</script>
 </body>
 </html>
