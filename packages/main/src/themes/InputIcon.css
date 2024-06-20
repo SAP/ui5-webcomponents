@@ -1,5 +1,4 @@
 .inputIcon,
-::slotted([ui5-icon][slot="actions"]),
 ::slotted([ui5-icon][slot="icon"]) {
 	color: var(--_ui5_input_icon_color);
 	cursor: pointer;
@@ -12,7 +11,7 @@
 }
 
 .inputIcon:hover,
-::slotted([ui5-icon][slot="actions"]:hover) {
+::slotted([ui5-icon][slot="icon"]:hover) {
 	background: var(--_ui5_input_icon_hover_bg);
 	box-shadow: var(--_ui5_input_icon_box_shadow);
 	border-inline-start: var(--_ui5_select_hover_icon_left_border);
@@ -20,7 +19,7 @@
 }
 
 .inputIcon:is(:active, [pressed]),
-::slotted([ui5-icon][slot="actions"]:is(:active, [pressed])) {
+::slotted([ui5-icon][slot="icon"]:is(:active, [pressed])) {
 	background-color: var(--sapField_BackgroundStyle);
 	box-shadow: var(--_ui5_input_icon_box_shadow);
 	border-inline-start: var(--_ui5_select_hover_icon_left_border);
@@ -37,69 +36,63 @@
 }
 
 :host([value-state="Negative"]) .inputIcon:hover,
-:host([value-state="Negative"]) ::slotted([ui5-icon][slot="actions"]:hover) {
+:host([value-state="Negative"]) ::slotted([ui5-icon][slot="icon"]:hover) {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 }
 
 :host([value-state="Critical"]) .inputIcon:hover,
-:host([value-state="Critical"]) ::slotted([ui5-icon][slot="actions"]:hover) {
+:host([value-state="Critical"]) ::slotted([ui5-icon][slot="icon"]:hover) {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 }
 
 :host([value-state="Information"]) .inputIcon:hover,
-:host([value-state="Information"]) ::slotted([ui5-icon][slot="actions"]:hover) {
+:host([value-state="Information"]) ::slotted([ui5-icon][slot="icon"]:hover) {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 }
 
 :host([value-state="Positive"]) .inputIcon:hover,
-:host([value-state="Positive"]) ::slotted([ui5-icon][slot="actions"]:hover) {
+:host([value-state="Positive"]) ::slotted([ui5-icon][slot="icon"]:hover) {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 
 :host([value-state="Negative"]) .inputIcon:is(:active, [pressed]),
-:host([value-state="Negative"]) ::slotted([ui5-icon][slot="actions"]:is(:active, [pressed])) {
+:host([value-state="Negative"]) ::slotted([ui5-icon][slot="icon"]:is(:active, [pressed])) {
 	box-shadow: var(--_ui5_input_error_icon_box_shadow);
 	color: var(--_ui5_input_icon_error_pressed_color);
 }
 
 :host([value-state="Critical"]) .inputIcon:is(:active, [pressed]),
-:host([value-state="Critical"]) ::slotted([ui5-icon][slot="actions"]:is(:active, [pressed])) {
+:host([value-state="Critical"]) ::slotted([ui5-icon][slot="icon"]:is(:active, [pressed])) {
 	box-shadow: var(--_ui5_input_warning_icon_box_shadow);
 	color: var(--_ui5_input_icon_warning_pressed_color);
 }
 
 :host([value-state="Information"]) .inputIcon:is(:active, [pressed]),
-:host([value-state="Information"]) ::slotted([ui5-icon][slot="actions"]:is(:active, [pressed])) {
+:host([value-state="Information"]) ::slotted([ui5-icon][slot="icon"]:is(:active, [pressed])) {
 	box-shadow: var(--_ui5_input_information_icon_box_shadow);
 	color: var(--_ui5_input_icon_information_pressed_color);
 }
 
 :host([value-state="Positive"]) .inputIcon:is(:active, [pressed]),
-:host([value-state="Positive"]) ::slotted([ui5-icon][slot="actions"]:is(:active, [pressed])) {
+:host([value-state="Positive"]) ::slotted([ui5-icon][slot="icon"]:is(:active, [pressed])) {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 	color: var(--_ui5_input_icon_success_pressed_color);
 }
 
 :host([value-state="Negative"][focused]) .inputIcon,
-/* :host([value-state="Negative"][focused]) ::slotted([ui5-icon][slot="icon"]), */
-:host([value-state="Negative"][focused]) ::slotted([ui5-icon][slot="actions"]),
+:host([value-state="Negative"][focused]) ::slotted([ui5-icon][slot="icon"]),
 :host([value-state="Critical"][focused]) .inputIcon,
-/* :host([value-state="Critical"][focused]) ::slotted([ui5-icon][slot="icon"]), */
-:host([value-state="Critical"][focused]) ::slotted([ui5-icon][slot="actions"]),
+:host([value-state="Critical"][focused]) ::slotted([ui5-icon][slot="icon"]),
 :host([value-state="Information"][focused]) .inputIcon,
-/* :host([value-state="Information"][focused]) ::slotted([ui5-icon][slot="icon"]), */
-:host([value-state="Information"][focused]) ::slotted([ui5-icon][slot="actions"]) {
+:host([value-state="Information"][focused]) ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_information_error_warning_custom_focused_icon_padding);
 }
 
 :host([value-state="Negative"]) .inputIcon,
-/* :host([value-state="Negative"]) ::slotted([ui5-icon][slot="icon"]), */
-:host([value-state="Negative"]) ::slotted([ui5-icon][slot="actions"]),
+:host([value-state="Negative"]) ::slotted([ui5-icon][slot="icon"]),
 :host([value-state="Critical"]) .inputIcon,
-/* :host([value-state="Critical"]) ::slotted([ui5-icon][slot="icon"]), */
-:host([value-state="Critical"]) ::slotted([ui5-icon][slot="actions"]),
+:host([value-state="Critical"]) ::slotted([ui5-icon][slot="icon"]),
 :host([value-state="Information"]) .inputIcon,
-/* :host([value-state="Information"]) ::slotted([ui5-icon][slot="icon"]), */
-:host([value-state="Information"]) ::slotted([ui5-icon][slot="actions"]) {
+:host([value-state="Information"]) ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_information_error_warning_custom_icon_padding);
 }

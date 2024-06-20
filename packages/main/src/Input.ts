@@ -524,23 +524,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	/**
 	 * Defines the icon to be displayed in the component.
-	 *
-	 * **Note:** These icons are used to display icon at the end of component without
-	 * and they are meant to only have decorative state.
 	 * @public
 	 */
 	@slot()
 	icon!: Array<IIcon>;
-
-	/**
-	 * Defines the actionable icons displayed in the component.
-	 *
-	 * **Note:** Icons used in the slot will be visually enhanced for interaction state (hover, active).
-	 * @public
-	 * @since 2.0.0
-	 */
-	@slot()
-	actions!: Array<IIcon>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -1490,7 +1477,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get iconsCount(): number {
-		const slottedIconsCount = this.icon.length + this.actions.length;
+		const slottedIconsCount = this.icon.length;
 		const clearIconCount = Number(this._effectiveShowClearIcon) ?? 0;
 		return slottedIconsCount + clearIconCount;
 	}
