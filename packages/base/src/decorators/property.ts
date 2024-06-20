@@ -8,8 +8,6 @@ import type { Property } from "../UI5ElementMetadata.js";
  * @returns { PropertyDecorator }
  */
 const property = (propData?: Property): PropertyDecorator => {
-	propData ??= {};
-	// TODO: old version
 	return (target: any, propertyKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
 

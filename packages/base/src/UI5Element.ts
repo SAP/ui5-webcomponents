@@ -608,23 +608,9 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		this._updateAttributeV2(name, newValue);
-	}
-
-	/**
-	 * TODO(v2) rename to _updateAttribute
-	 * @private
-	 */
-	_updateAttributeV2(name: string, newValue: PropertyValue) {
-		const ctor = this.constructor as typeof UI5Element;
-
-		if (!ctor.getMetadata().hasAttribute(name)) {
-			return;
-		}
 		const properties = ctor.getMetadata().getProperties();
 		const propData = properties[name];
 		const attrName = camelToKebabCase(name);
-		// const attrValue = this.getAttribute(attrName);
 		const converter = propData.converter || defaultConverter;
 
 		if (DEV_MODE) {
@@ -1081,11 +1067,7 @@ abstract class UI5Element extends HTMLElement {
 					const ctor = this.constructor as typeof UI5Element;
 					const oldState = origGet ? origGet.call(this) : this._state[prop];
 
-					// TODO (verify): if both values are NaN, this check will say they are different, ensure one of them is not NaN
-					// console.log({oldState, value})
-					// isDifferent = oldState !== value && !(Number.isNaN(oldState) && Number.isNaN(value));
 					const isDifferent = oldState !== value;
-
 					if (isDifferent) {
 						// if the decorator is on a setter, use it for storage
 						if (origSet) {
