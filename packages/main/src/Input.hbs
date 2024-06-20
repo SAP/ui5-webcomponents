@@ -43,7 +43,13 @@
 
 		{{#if _effectiveShowClearIcon}}
 			<div class="ui5-input-clear-icon-wrapper">
-				<ui5-icon class="ui5-input-clear-icon inputIcon" name="decline" @click={{_clear}} @mousedown={{_iconMouseDown}} accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
+				<ui5-icon
+					class="ui5-input-clear-icon inputIcon"
+					name="decline"
+					@click={{_clear}}
+					@mousedown={{_iconMouseDown}}
+					accessible-name="{{clearIconAccessibleName}}"
+				></ui5-icon>
 			</div>
 		{{/if}}
 
