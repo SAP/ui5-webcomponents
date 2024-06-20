@@ -23,7 +23,3 @@
 	left: 0;
 	pointer-events: none;
 }
-
-:host([loading])  {
-	opacity: 0.6;
-}

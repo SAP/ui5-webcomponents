@@ -82,10 +82,13 @@
 }
 
 .ui5-nli-content-wrapper {
+	width: 100%;
 	display: flex;
 	flex-direction: row-reverse;
 	padding-inline: var(--_ui5-notification_item-root-padding-inline);
 	padding-block: 1rem;
+	position: relative;
+	box-sizing: border-box;
 }
 
 .ui5-nli-content {
@@ -198,5 +201,6 @@
 }
 
 [ui5-busy-indicator] {
+	width: 100%;
 	border-radius: var(--_ui5-notification_item-border-radius);
 }
