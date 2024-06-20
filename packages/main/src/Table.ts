@@ -557,6 +557,10 @@ class Table extends UI5Element {
 	get _stickyElements() {
 		return [this.headerRow[0]].filter(row => row.sticky);
 	}
+
+	get isTable() {
+		return true;
+	}
 }
 
 Table.define();
