@@ -16,7 +16,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -460,7 +460,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	openPopover() {
 		this.valueStatePopover = this._getPopover();
 		if (this.valueStatePopover) {
-			this.valueStatePopover.opener = this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!;
+			this.valueStatePopover.opener = this.shadowRoot!.querySelector<HTMLElement>(".ui5-textarea-root .ui5-textarea-wrapper")!;
 			this.valueStatePopover.open = true;
 		}
 	}

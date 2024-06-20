@@ -5,3 +5,4 @@ import "@ui5/webcomponents-compat/dist/TableColumn.js";
 import "@ui5/webcomponents-compat/dist/TableRow.js";
 import "@ui5/webcomponents-compat/dist/TableCell.js";
 import "@ui5/webcomponents/dist/Label.js";
+import "@ui5/webcomponents/dist/Text.js";

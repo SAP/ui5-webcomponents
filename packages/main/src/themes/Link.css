@@ -13,8 +13,8 @@
 	outline: none;
 	text-decoration: var(--_ui5_link_text_decoration);
 	text-shadow: var(--sapContent_TextShadow);
-	white-space: nowrap;
-	overflow-wrap: normal;
+	white-space: normal;
+	overflow-wrap: break-word;
 }
 
 :host(:hover) {
@@ -53,9 +53,9 @@
 	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
-:host([wrapping-type="Normal"]) {
-	white-space: normal;
-	overflow-wrap: break-word;
+:host([wrapping-type="None"]) {
+	white-space: nowrap;
+	overflow-wrap: normal;
 }
 
 .ui5-link-root {
@@ -71,9 +71,36 @@
 	color: inherit;
 }
 
+/* For cases when the text wraps, the icon should be displayed at the last row */
+:host([end-icon]) .ui5-link-root {
+	display: inline-flex;
+	align-items: end;
+}
+
 :host .ui5-link-root {
 	outline-offset: -0.0625rem;
 	border-radius: var(--_ui5_link_focus_border-radius);
+}
+
+.ui5-link-icon, 
+.ui5-link-end-icon {
+	color: inherit;
+	flex-shrink: 0;
+}
+
+.ui5-link-icon {
+	float: inline-start;
+	margin-inline-end: 0.125rem;
+}
+
+.ui5-link-end-icon {
+	float: inline-end;
+	margin-inline-start: 0.125rem;
+}
+
+.ui5-link-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 :host([focused]) .ui5-link-root,

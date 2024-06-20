@@ -4,7 +4,7 @@ import patchPopup from "./patchPopup.js";
 import type { OpenUI5Popup } from "./patchPopup.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
-import { CLDRData } from "../asset-registries/LocaleData.js";
+import type { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
 
 type OpenUI5Core = {
@@ -68,6 +68,9 @@ type Locale = {
 
 class OpenUI5Support {
 	static isAtLeastVersion116() {
+		if (!window.sap.ui!.version) {
+			return true; // sap.ui.version will be removed in newer OpenUI5 versions
+		}
 		const version = window.sap.ui!.version as string;
 		const parts = version.split(".");
 		if (!parts || parts.length < 2) {

@@ -32,7 +32,8 @@
 }
 
 /* The focus is on the whole group but should be visualized on the Group Header */
-:host([focused]) .ui5-nli-focusable.ui5-nli-group-root .ui5-nli-group-header::before {
+:host([desktop]) .ui5-nli-focusable.ui5-nli-group-root:focus .ui5-nli-group-header::before,
+.ui5-nli-focusable.ui5-nli-group-root:focus-visible .ui5-nli-group-header::before {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;

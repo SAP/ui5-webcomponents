@@ -83,6 +83,7 @@
 			   tabindex="{{effectiveTabIndex}}"
 			   aria-expanded="{{_expanded}}"
 			   aria-current="{{_ariaCurrent}}"
+			   aria-selected="{{selected}}"
 			   title="{{_tooltip}}"
 			   aria-owns="{{_groupId}}"
 			   href="{{_href}}"
@@ -118,6 +119,7 @@
 				 tabindex="{{effectiveTabIndex}}"
 				 aria-expanded="{{_expanded}}"
 				 aria-current="{{_ariaCurrent}}"
+				 aria-selected="{{selected}}"
 				 title="{{_tooltip}}"
 				 aria-owns="{{_groupId}}"
 			>
@@ -144,7 +146,6 @@
 		{{#if items.length}}
 			<ul id="{{_groupId}}"
 				class="ui5-sn-item-ul"
-				aria-label="{{text}}"
 				role="group"
 			>
 				<slot></slot>

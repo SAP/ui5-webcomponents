@@ -8,7 +8,7 @@ import { registerCurrentRuntime } from "./Runtimes.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
-import { PromiseResolve } from "./types.js";
+import type { PromiseResolve } from "./types.js";
 import { attachThemeRegistered } from "./theming/ThemeRegistered.js";
 
 let booted = false;
@@ -40,14 +40,14 @@ const boot = async (): Promise<void> => {
 	}
 
 	const bootExecutor = async (resolve: PromiseResolve) => {
+		registerCurrentRuntime();
+
 		if (typeof document === "undefined") {
 			resolve();
 			return;
 		}
 
 		attachThemeRegistered(onThemeRegistered);
-
-		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isOpenUI5Detected() : false;

@@ -209,7 +209,7 @@ describe("DateRangePicker general interaction", () => {
 	it("Month is not changed in multiselect mode", async () => {
 		await browser.url(`test/pages/DateRangePicker.html`);
 		const daterangepicker = await browser.$("#daterange-picker1");
-		const calendarHeader = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`ui5-calendar-header`);
+		const calendarHeader = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`.ui5-calheader`);
 		const dayPicker = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const dayOne = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[15];
 		const nextButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
@@ -260,5 +260,17 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("Enter");
 
 		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Negative", "Min and max dates are set correctly");
+	});
+
+	it("picker popover should have accessible name", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+		await daterangepicker.click();
+		await browser.keys("F4");
+
+		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
 	});
 });

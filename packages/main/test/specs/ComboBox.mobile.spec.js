@@ -57,6 +57,29 @@ describe("Basic mobile picker rendering and interaction", () => {
 
 		const dialogInput = await browser.$(`#placeholder_test`).shadow$("ui5-responsive-popover").$("[ui5-input]");
 		assert.strictEqual(await dialogInput.getAttribute("placeholder"), await combo.getAttribute("placeholder"), "Correct placeholder shown");
+
+		// close the suggestions
+		await browser.keys("Escape");
+	});
+
+	it("Should open and close the mobile picker with value state", async () => {
+		const comboBoxError = await browser.$("#value-state-error");
+
+		await comboBoxError.scrollIntoView();
+		await comboBoxError.click();
+
+		const dialogInput = await comboBoxError.shadow$("ui5-responsive-popover").$("[ui5-input]").shadow$("input");
+		await dialogInput.click();
+		await dialogInput.keys("A");
+
+		const popover = await comboBoxError.shadow$("ui5-responsive-popover");
+		assert.ok(await popover.hasAttribute("open"), "Suggestions are open");
+
+		// clear the input
+		await dialogInput.keys("Escape");
+		// close the suggestions
+		await browser.keys("Escape");
+		assert.notOk(await popover.hasAttribute("open"), "Suggestions are closed");
 	});
 });
 
@@ -243,9 +266,9 @@ describe("Picker filtering", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 8, "All of the items are shown (8)");
+		assert.strictEqual(await dialogList.$$('ui5-li').length, 9, "All of the items are shown (8)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li').length, 3, "There are 3 filtered items");
+		assert.strictEqual(await dialogList.$$('ui5-li').length, 4, "There are 4 filtered items");
 	});
 
 	it("Should filter group header list items", async () => {
@@ -259,9 +282,9 @@ describe("Picker filtering", () => {
 		const dialogInput = await combo.shadow$("ui5-responsive-popover").$("[ui5-input]");
 		const dialogList = await combo.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 3, "All of the group header list items are shown (3)");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 3, "All of the group header list items are shown (3)");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is only 1 visible group header");
+		assert.strictEqual(await dialogList.$$('ui5-li-group').length, 2, "There is only 1 visible group");
 	});
 });
 

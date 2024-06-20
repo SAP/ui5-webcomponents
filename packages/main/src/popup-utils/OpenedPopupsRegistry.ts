@@ -1,6 +1,6 @@
 import getSharedResource from "@ui5/webcomponents-base/dist/getSharedResource.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
-import Popup from "../Popup.js";
+import type Popup from "../Popup.js";
 
 type RegisteredPopup = {
 	instance: Popup;

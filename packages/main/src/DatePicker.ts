@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -38,6 +38,7 @@ import {
 	DATEPICKER_DATE_DESCRIPTION,
 	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
+	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -702,6 +703,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	get dateAriaDescription() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
