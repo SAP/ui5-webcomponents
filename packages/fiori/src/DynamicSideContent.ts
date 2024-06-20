@@ -397,7 +397,7 @@ class DynamicSideContent extends UI5Element {
 	_resizeContents() {
 		let mainSize!: string,
 			sideSize!: string,
-			sideVisible!: boolean;
+			sideVisible = false;
 
 		// initial set contents sizes
 		switch (this.breakpoint) {

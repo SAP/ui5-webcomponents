@@ -174,7 +174,7 @@ class ColorPalette extends UI5Element {
 	_recentColors: Array<string>;
 	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
 	_currentlySelected?: ColorPaletteItem;
-	_shouldFocusRecentColors!: boolean;
+	_shouldFocusRecentColors = false;
 
 	static i18nBundle: I18nBundle;
 

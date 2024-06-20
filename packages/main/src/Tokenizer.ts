@@ -276,7 +276,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventInitialFocus!: boolean;
+	preventInitialFocus = false;
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
@@ -294,7 +294,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hidePopoverArrow!: boolean;
+	hidePopoverArrow = false;
 
 	@property({ type: Number })
 	_nMoreCount = 0;
@@ -318,10 +318,10 @@ class Tokenizer extends UI5Element {
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
-	_tokenDeleting!: boolean;
-	_preventCollapse!: boolean;
-	_skipTabIndex!: boolean;
-	_previousToken!: Token | null;
+	_tokenDeleting = false;
+	_preventCollapse = false;
+	_skipTabIndex = false;
+	_previousToken: Token | null = null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_deletedDialogItems!: Token[];
 
@@ -340,7 +340,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this._tokenDeleting = false;
 		this._deletedDialogItems = [];
 	}
 

@@ -200,7 +200,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	@property()
 	_tabIndex?: string;
@@ -219,13 +219,13 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_groupChecked!: boolean;
+	_groupChecked = false;
 	@property({ type: Boolean, noAttribute: true })
-	_groupRequired!: boolean;
+	_groupRequired = false;
 
 	_deactivate: () => void;
-	_name!: string;
-	_checked!: boolean;
+	_name = "";
+	_checked = false;
 
 	get formValidityMessage() {
 		return RadioButton.i18nBundle.getText(FORM_SELECTABLE_REQUIRED2);

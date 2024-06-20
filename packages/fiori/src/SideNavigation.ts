@@ -188,7 +188,7 @@ class SideNavigation extends UI5Element {
 	@property({ type: Array })
 	_menuPopoverItems: Array<HTMLElement> = [];
 
-	_isOverflow!: boolean;
+	_isOverflow = false;;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
 
@@ -196,7 +196,7 @@ class SideNavigation extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	isTouchDevice!: boolean;
+	isTouchDevice = false;;
 
 	static i18nBundle: I18nBundle;
 

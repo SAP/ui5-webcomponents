@@ -228,12 +228,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
@@ -377,7 +377,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	valueStateOpen!: boolean;
+	valueStateOpen = false;
 
 	/**
 	 * Indicates whether the items picker is open.
@@ -385,7 +385,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Defines the component items.

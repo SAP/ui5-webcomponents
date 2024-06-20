@@ -275,7 +275,7 @@ class Wizard extends UI5Element {
 	_groupedTabs: Array<WizardTab> = [];
 
 	@property()
-	_breakpoint!: string
+	_breakpoint?: string
 
 	/**
 	 * Defines the steps.

@@ -220,7 +220,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name = "";
 
 	/**
 	 * Defines the value state of the component.

@@ -356,7 +356,7 @@ class ShellBar extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	withLogo!: boolean;
+	withLogo = false;
 
 	@property({ type: Object })
 	_itemsInfo!: Array<IShelBarItemInfo>;

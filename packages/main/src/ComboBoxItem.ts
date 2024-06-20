@@ -36,7 +36,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_isVisible!: boolean;
+	_isVisible = false;
 
 	/**
 	 * Indicates whether the item is focssed

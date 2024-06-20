@@ -196,7 +196,7 @@ class IllustratedMessage extends UI5Element {
 	* @private
 	*/
 	@property()
-	media!: string;
+	media?: string;
 
 	/**
 	* Defines the title of the component.

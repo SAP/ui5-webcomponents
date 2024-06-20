@@ -407,7 +407,7 @@ class Form extends UI5Element {
 
 		if (!additionalStylesMap.has(key)) {
 			let containerQuery;
-			let supporedColumnsNumber!: number;
+			let supporedColumnsNumber = StepColumn.S;
 			let stepSpanCSS = "";
 			let cols = colsNumber;
 

@@ -233,12 +233,12 @@ class Link extends UI5Element implements ITabbable {
 	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
 	 *
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the link's text.
@@ -249,12 +249,12 @@ class Link extends UI5Element implements ITabbable {
 	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
 	 *
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
-	endIcon!: string;
+	endIcon?: string;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;

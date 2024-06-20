@@ -66,7 +66,7 @@ abstract class SliderBase extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name = "";
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).

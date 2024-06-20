@@ -118,7 +118,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * **Note:** Set by the `ProductSwitch`
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the component tabindex.

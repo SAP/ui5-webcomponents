@@ -101,12 +101,12 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the HEX code of the currently selected color

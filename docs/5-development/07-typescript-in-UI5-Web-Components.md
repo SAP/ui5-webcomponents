@@ -106,11 +106,11 @@ The fields are explained in detail in the [Deep Dive and Best Practices](./06-de
  *
  * @name sap.ui.webc.main.Menu.prototype.headerText
  * @type {string}
- * @defaultvalue ""
+ * @defaultvalue undefined
  * @public
  */
 @property()
-headerText!: string;
+headerText?: string
 ```
 
 **Example:** "Properties with enumerated values" - we use `enum` for both the TypeScript class member and the property metadata in the decorator
@@ -128,7 +128,7 @@ headerText!: string;
 design!: ButtonDesign;
 ```
 
-**Example:** Use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility) 
+**Example:** Use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility)
 
 ```ts
 /**
@@ -162,17 +162,17 @@ Use `?` for all metadata properties that may be `undefined` or `null`, and `!` f
 are always `false` by default
 ```ts
 @property({ type: Boolean })
-interactive!: boolean;
+interactive = false;
 ```
 - `String` properties are always defined with `!` as they
 are `empty string` by default, unless you specifically set `defaultValue: undefined` (then use `?`)
 ```ts
 @property()
-text!: string;
+text?: string;
 ```
 
 ```ts
-@property({ defaultValue: undefined })
+@property()
 target?: string;
 ```
 
@@ -244,7 +244,7 @@ After:
 items!: Array<SomeItem>
 ```
 
-Use the `propertyName` as the class member, set `"default": true` in the 
+Use the `propertyName` as the class member, set `"default": true` in the
 decorator definition, and use `prototype.default` as the JSDoc `@name`.
 
 #### Named slot
@@ -391,7 +391,7 @@ Example:
 ```ts
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 ```
-Using the keyword `"event"` as a parameter for our handlers leads to a collision between the parameter and the `@event` decorator. 
+Using the keyword `"event"` as a parameter for our handlers leads to a collision between the parameter and the `@event` decorator.
 <br/>
 ```ts
 // Before ( which would lead to a name collision now )
@@ -423,7 +423,7 @@ When creating classes, initialize **all** class members directly in the construc
 Example:
 
 ```ts
-// Before 
+// Before
 
 class UI5Element extends HTMLElement {
 	constructor() {
@@ -465,7 +465,7 @@ To enhance the quality and readability of our code, we should establish specific
 ```ts
 // File: DayPicker.ts
 
-// The pattern is 
+// The pattern is
 // <<WebComponentName><EventName><EventDetail>>
 
 type DayPickerChangeEventDetail = {
@@ -511,7 +511,7 @@ Example:
 ```ts
 // File: ColorConvension.ts
 
-// Instead of 
+// Instead of
 
 const CSSColors = {
 	aliceblue: "f0f8ff",
@@ -520,7 +520,7 @@ const CSSColors = {
 	aquamarine: "7fffd4",
 }
 
-// We’ll use 
+// We’ll use
 
 enum CSSColors {
 	aliceblue = "f0f8ff",
@@ -604,7 +604,7 @@ import I18nBundle, { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dis
 ```
 ```ts
 
-// Should be split into 
+// Should be split into
 
 // Named export (function) called into the component class
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -657,7 +657,7 @@ Generics in TypeScript help us with the creation of classes, functions, and othe
 Generic functions have been added to the `UI5Element`, and a common approach for using built-in generics has been established.
 Our first generic function is the `fireEvent` function, which uses generics to describe the event details and to check that all necessary details have been provided. The types used to describe the details provide helpful information to consumers of the event as explained above.
 
-For example: 
+For example:
 
 ```ts
 fireEvent<EventDetail>("click")

@@ -264,7 +264,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasEndIcon!: boolean;
+	hasEndIcon = false;
 
 	/**
 	 * Indicates if the element is focusable
@@ -301,7 +301,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	_isTouch = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_cancelAction!: boolean;
+	_cancelAction = false;
 
 	/**
 	 * Defines the text of the component.

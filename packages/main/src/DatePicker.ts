@@ -331,7 +331,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Defines the aria-label attribute for the component.

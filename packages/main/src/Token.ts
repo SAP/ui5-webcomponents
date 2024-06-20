@@ -141,7 +141,7 @@ class Token extends UI5Element implements IToken {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_isVisible!: boolean;
+	_isVisible = false
 
 	/**
 	 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.

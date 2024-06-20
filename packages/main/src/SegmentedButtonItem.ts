@@ -111,7 +111,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @private
 	 */
 	@property({ type: Boolean })
-	iconOnly!: boolean;
+	iconOnly = false;
 
 	/**
 	 * Indicates if the element is focusable

@@ -264,7 +264,7 @@ class Calendar extends CalendarPart {
 	@property({ noAttribute: true })
 	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
-	_valueIsProcessed!: boolean
+	_valueIsProcessed = false;
 
 	/**
 	 * Defines the calendar legend of the component.

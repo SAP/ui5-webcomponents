@@ -113,7 +113,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	endValue = 100;
 
 	@property({ type: Boolean })
-	rangePressed!: boolean;
+	rangePressed = false;
 
 	_startValueInitial?: number;
 	_endValueInitial?: number;

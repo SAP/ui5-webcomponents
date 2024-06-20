@@ -189,7 +189,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_forcedMixedMode?: boolean;
 	_getElementInStrip?: () => HTMLElement | undefined;
 	_getElementInOverflow?: () => HTMLElement | undefined;
-	_individualSlot!: string;
+	_individualSlot?: string;
 	_forcedPosinset?: number;
 	_forcedSetsize?: number;
 	_forcedStyleInOverflow?: Record<string, any>;

@@ -54,7 +54,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.

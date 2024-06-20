@@ -144,7 +144,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @default ""
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the width of the button.

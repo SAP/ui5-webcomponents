@@ -39,7 +39,7 @@ class ListItemCustom extends ListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	/**
 	 * Defines the text alternative of the component.

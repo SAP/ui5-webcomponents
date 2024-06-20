@@ -69,7 +69,7 @@ class ListItemGroup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	* Defines the header of the component.

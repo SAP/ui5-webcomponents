@@ -210,19 +210,19 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone!: boolean;
+	onPhone = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onDesktop!: boolean;
+	onDesktop = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_opened!: boolean;
-	_open!: boolean;
+	_opened = false;
+	_open = false;
 
 	constructor() {
 		super();

@@ -447,7 +447,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Defines whether the clear icon is visible.

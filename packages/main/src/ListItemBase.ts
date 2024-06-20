@@ -95,7 +95,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	actionable!: boolean;
+	actionable = false;
 
 	onEnterDOM() {
 		if (isDesktop()) {
