@@ -118,13 +118,6 @@ class BusyIndicator extends UI5Element {
 	@property({ type: Boolean })
 	_isBusy!: boolean;
 
-	/**
-	 * Defines if the busy indicator is over component (default slot is used).
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_isOverComponent!: boolean;
-
 	_keydownHandler: (e: KeyboardEvent) => void;
 	_preventEventHandler: (e: KeyboardEvent) => void;
 	_busyTimeoutId?: Timeout;
@@ -201,10 +194,6 @@ class BusyIndicator extends UI5Element {
 			}
 			this._isBusy = false;
 		}
-	}
-
-	onAfterRendering() {
-		this._isOverComponent = this.shadowRoot!.querySelector("slot")!.assignedElements().length > 0;
 	}
 
 	_handleKeydown(e: KeyboardEvent) {
