@@ -5,7 +5,7 @@ when creating/updating UI5 Web Components.
 
 ## Properties
 
- - Do I **change public properties** without user interaction? 
+ - [!WARNING] Do I **change public properties** without user interaction?
     
 Public properties belong to the application. Usually applications bind components' properties to a model.
 If a component changes its own public properties arbitrarily, the application model may get out of sync. Public properties
@@ -45,10 +45,6 @@ use it with `fireEvent`, and finally, export it as a named type export.
 ## CSS
 
  - Did I put all **overstyling-relevant CSS properties on the host**?
-
-## Lifecycle
-
- - 
 
 It's best to style the `:host` (rather than the shadow root) as much as possible (especially for paddings, margins, borders, etc.)
 so that apps can overstyle the component (in reasonable measure).
