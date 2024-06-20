@@ -196,3 +196,7 @@
 	bottom: var(--_ui5-notification_item-focus-offset);
 	left: var(--_ui5-notification_item-focus-offset);
 }
+
+[ui5-busy-indicator] {
+	border-radius: var(--_ui5-notification_item-border-radius);
+}

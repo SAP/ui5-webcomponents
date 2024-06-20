@@ -380,7 +380,7 @@ class NotificationListItem extends NotificationListItemBase {
 		const id = this._id;
 
 		if (this.loading) {
-			return null;
+			return `${id}-loading`;
 		}
 
 		const ids = [];
@@ -391,10 +391,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
-		}
-
-		if (this.isLoading) {
-			ids.push(`${id}-loading`);
 		}
 
 		ids.push(`${id}-read`);

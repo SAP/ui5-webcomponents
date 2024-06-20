@@ -6,9 +6,9 @@
 	aria-labelledby="{{ariaLabelledBy}}"
 	aria-description="{{accInvisibleText}}"
 	aria-level="1"
-	aria-busy="{{loading}}"
 >
 	{{#if loading}}
+		<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
 		<ui5-busy-indicator
 				delay="{{loadingDelay}}"
 				active
@@ -43,11 +43,6 @@
 				aria-level="2">
 				{{titleText}}
 			</div>
-
-			{{#if isLoading}}
-				<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
-			{{/if}}
-
 			<div class="ui5-nli-group-divider"></div>
 		</div>
 
