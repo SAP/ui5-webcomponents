@@ -75,3 +75,15 @@ Checks such as `btn instanceof Button` or `el instanceof UI5Element` are not saf
 because when multiple versions of UI5 Web Components are on the same HTML page, the first to boot will upgrade
 all tags, and `instanceof` checks will only work with the first framework's classes and fail for all others.
 Therefore, you must use *duck-typing* instead of hard `instanceof` checks.
+
+## Testing
+
+ - Are my tests **reloading the page unnecessarily**?
+
+Calling `await browser.url()` too often just to "reset" your test setup is suboptimal and makes the
+whole build slower in the long run. Try to add new assertions to existing tests whenever it makes sense.
+
+ - Are my tests **really testing my code**?
+
+Tests that verify things such as "setting a property creates a corresponding attribute" actually test the framework,
+and not the component that is being developed, and are therefore not necessary.
