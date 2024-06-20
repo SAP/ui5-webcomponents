@@ -194,6 +194,18 @@ type VSDInternalSettings = {
  * @public
  */
 @event("before-open")
+/**
+ * Fired after the dialog is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the dialog is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -540,6 +552,12 @@ class ViewSettingsDialog extends UI5Element {
 		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
 
 		this._focusRecentlyUsedControl();
+		
+		this.fireEvent("open");
+	}
+
+	afterDialogClose(): void {
+		this.fireEvent("close");
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
