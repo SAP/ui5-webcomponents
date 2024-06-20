@@ -140,7 +140,7 @@ type UserDefinedColumnLayouts = {
  *
  * #### Basic Navigation
  *
- * When a solumn separator is focused,  the following keyboard
+ * When a column separator is focused,  the following keyboard
  * shortcuts allow the user to resize the columns and change the layout:
  *
  * - [Shift] + [Left] or [Shift] + [Right] - Moves the separator to the left or right, which resizes the columns accordingly.
