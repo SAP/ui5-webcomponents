@@ -49,6 +49,10 @@ abstract class TableCellBase extends UI5Element {
 	getFocusDomRef() {
 		return this;
 	}
+
+	isTableCellBase() {
+		return true;
+	}
 }
 
 export default TableCellBase;
