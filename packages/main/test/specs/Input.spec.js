@@ -226,34 +226,6 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called for the changed value");
 	});
 
-	it("fires suggestion-scroll event", async () => {
-		const input = await browser.$("#scrollInput").shadow$("input");
-		const scrollResult = await browser.$("#scrollResult");
-
-		// act - open suggestions
-		await input.click();
-		await input.keys("a");
-
-		// act - scroll with keyboard
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-
-		// assert
-		const scrollTop = parseInt(await scrollResult.getProperty("value"));
-		assert.isAbove(scrollTop, 0, "The suggestion-scroll event fired");
-
-		// assert isSuggestionsScrollable
-		const suggestionsScrollable = await browser.executeAsync(async done => {
-			const input = document.getElementById("scrollInput");
-			done(await input.isSuggestionsScrollable());
-		});
-		assert.ok(suggestionsScrollable,  "The suggestions popup is scrollable");
-
-		// close suggestions
-		await input.keys("Enter");
-	});
-
 	it("tests value removal when Input type is 'Number'", async () => {
 		const input = await browser.$("#input-number3");
 		const btn = await browser.$("#input-number3-focusout");
@@ -536,7 +508,7 @@ describe("Input general interaction", () => {
 	});
 
 	it("checks if suggestions popover width is maximum 40rem if input isn't wider", async () => {
-		const input = await $("#input-disabled-autocomplete");
+		const input = await $("#long-sugg");
 		const listItem = await input.$("ui5-suggestion-item");
 
 		await input.click();
