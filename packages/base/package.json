@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-base",
-  "version": "2.0.0-rc.5",
+  "version": "2.0.0-rc.6",
   "description": "UI5 Web Components: webcomponents.base",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.5",
-    "@ui5/webcomponents-tools": "2.0.0-rc.5",
+    "@ui5/webcomponents-tools": "2.0.0-rc.6",
     "chromedriver": "^125.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",

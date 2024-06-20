@@ -4,7 +4,7 @@
 		class="{{classes.prevButton}}"
 		role="button"
 		@mousedown={{onPrevButtonClick}}
-		title="{{_prevButtonText}}"
+		title="{{headerPreviousButtonText}}"
 	>
 		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-left"></ui5-icon>
 	</div>
@@ -13,32 +13,31 @@
 		<div
 			data-ui5-cal-header-btn-month
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
-			?hidden="{{isMonthButtonHidden}}"
+			?hidden="{{_isHeaderMonthButtonHidden}}"
 			tabindex="0"
 			role="button"
 			aria-label="{{accInfo.ariaLabelMonthButton}}"
-			@click={{onMonthButtonClick}}
+			@click={{onHeaderShowMonthPress}}
 			@keydown={{onMonthButtonKeyDown}}
 			@keyup={{onMonthButtonKeyUp}}
 		>
-			<span>{{_monthButtonText}}</span>
+			<span>{{_headerMonthButtonText}}</span>
 			{{#if hasSecondaryCalendarType}}
-				<span class="ui5-calheader-btn-sectext">{{_secondMonthButtonText}}</span>
+				<span class="ui5-calheader-btn-sectext">{{secondMonthButtonText}}</span>
 			{{/if}}
 		</div>
 		<div
 			data-ui5-cal-header-btn-year
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
-			?hidden="{{isYearButtonHidden}}"
 			tabindex="0"
 			role="button"
-			@click={{onYearButtonClick}}
+			@click={{onHeaderShowYearPress}}
 			@keydown={{onYearButtonKeyDown}}
 			@keyup={{onYearButtonKeyUp}}
 		>
-			<span>{{_yearButtonText}}</span>
+			<span>{{_headerYearButtonText}}</span>
 			{{#if hasSecondaryCalendarType}}
-				<span class="ui5-calheader-btn-sectext">{{_yearButtonTextSecType}}</span>
+				<span class="ui5-calheader-btn-sectext">{{_headerYearButtonTextSecType}}</span>
 			{{/if}}
 		</div>
 	</div>
@@ -48,7 +47,7 @@
 		class="{{classes.nextButton}}"
 		role="button"
 		@mousedown={{onNextButtonClick}}
-		title={{_nextButtonText}}
+		title={{headerNextButtonText}}
 	>
 		<ui5-icon class="ui5-calheader-arrowicon" name="slim-arrow-right"></ui5-icon>
 	</div>
