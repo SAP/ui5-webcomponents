@@ -16,12 +16,13 @@ describe("Table - loading", async () => {
 		await before.click();
 		assert.ok(await before.isFocused(), "The input before the table1 is focused.");
 
+		// ui5-busy-indicator has a setTimeout using the delay property and this is not awaited automatically by the test
+		// let the busy indicator render before pressing tab
+		await browser.pause(100);
 		await before.keys("Tab");
+
 		const res = await browser.executeAsync(done => {
-			// ui5-busy-indicator has a setTimeout using the delay property and this is not awaited automatically by the test
-			setTimeout(() => {
-				done(document.getElementById("table1").shadowRoot.querySelector("#loading").matches(":focus"));
-			}, 100);
+			done(document.getElementById("table1").shadowRoot.querySelector("#loading").matches(":focus"));
 		});
 		assert.ok(res, "Busy indicator is focused");
 
