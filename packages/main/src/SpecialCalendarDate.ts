@@ -24,14 +24,14 @@ class SpecialCalendarDate extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 	/**
 	 * Defines the type of the special date.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
-	type!: `${CalendarLegendItemType}`;
+	@property()
+	type: `${CalendarLegendItemType}` = "None";
 }
 
 SpecialCalendarDate.define();

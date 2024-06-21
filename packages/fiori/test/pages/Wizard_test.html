@@ -334,7 +334,7 @@
 		var counter = 0;
 		wiz.addEventListener("ui5-step-change", function (event) {
 			console.log(event.detail.step);
-			inpStepChangeCounter.value = ++counter;
+			inpStepChangeCounter.value = `${++counter}`;
 			inpStepChangeCause.value = !event.detail.withScroll;
 		});
 

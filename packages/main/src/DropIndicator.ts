@@ -39,16 +39,16 @@ class DropIndicator extends UI5Element {
 	 * @public
 	 * @default null
 	 */
-	@property({ type: Object, defaultValue: null })
-	targetReference!: HTMLElement | null;
+	@property({ type: Object })
+	targetReference: HTMLElement | null = null;
 
 	/**
 	 * Owner of the indicator and the target.
 	 * @public
 	 * @default null
 	 */
-	@property({ type: Object, defaultValue: null })
-	ownerReference!: HTMLElement | null;
+	@property({ type: Object })
+	ownerReference: HTMLElement | null = null;
 
 	/**
 	 * Placement of the indicator relative to the target.
@@ -56,8 +56,8 @@ class DropIndicator extends UI5Element {
 	 * @default "Before"
 	 * @public
 	 */
-	@property({ type: MovePlacement, defaultValue: MovePlacement.Before })
-	placement!: `${MovePlacement}`;
+	@property()
+	placement: `${MovePlacement}` = "Before";
 
 	/**
 	 * Orientation of the indicator.
@@ -65,8 +65,8 @@ class DropIndicator extends UI5Element {
 	 * @default "Vertical"
 	 * @public
 	 */
-	@property({ type: Orientation, defaultValue: Orientation.Vertical })
-	orientation!: `${Orientation}`;
+	@property()
+	orientation: `${Orientation}` = "Vertical";
 
 	get _positionProperty() {
 		if (this.orientation === Orientation.Vertical) {

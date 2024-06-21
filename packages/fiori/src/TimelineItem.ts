@@ -51,19 +51,19 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * SAP-icons font provides numerous options.
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the name of the item, displayed before the `title-text`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines if the `name` is clickable.
@@ -71,41 +71,41 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	nameClickable!: boolean;
+	nameClickable = false;
 
 	/**
 	 * Defines the title text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	 * Defines the subtitle text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex?: string;
 
 	/**
 	 * Defines the items orientation.
 	 * @default "Vertical"
 	 * @private
 	 */
-	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
-	layout!: `${TimelineLayout}`;
+	@property()
+	layout: `${TimelineLayout}` = "Vertical";
 
 	/**
 	 * Defines the indicator line width.
 	 * @private
 	 */
 	@property()
-	forcedLineWidth!: string;
+	forcedLineWidth?: string;
 
 	constructor() {
 		super();
