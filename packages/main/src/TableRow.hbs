@@ -1,5 +1,5 @@
 {{#if _hasRowSelector}}
-    <ui5-table-cell id="selection-cell" aria-selected="{{_isSelected}}">
+    <ui5-table-cell id="selection-cell" aria-selected="{{_isSelected}}" fixed>
     {{#if _isMultiSelect}}
         <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_isSelected}}"

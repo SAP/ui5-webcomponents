@@ -273,6 +273,17 @@ class Table extends UI5Element {
 	@property({ type: String, defaultValue: "0" })
 	stickyTop!: string;
 
+	/**
+	 * Defines the height of the component.
+	 *
+	 * Note: When using sticky headers, make sure that the height of the table is defined.
+	 *
+	 * @default "auto"
+	 * @public
+	 */
+	@property({ type: String, defaultValue: "auto" })
+	height!: string;
+
 	@property({ type: Integer, defaultValue: 0, noAttribute: true })
 	_invalidate!: number;
 
@@ -471,6 +482,8 @@ class Table extends UI5Element {
 		return {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
+				"height": this.height,
+				"overflow-x": this._tableOverflowX,
 			},
 		};
 	}

@@ -23,14 +23,12 @@
 			label-interval="0"></ui5-slider>
 	</ui5-bar>
 
-	<!-- <div style="height: 300px; overflow: auto;"> -->
-
-	<ui5-table id="table" overflow-mode="Popin" sticky-top="50px" accessible-name-ref="title">
+	<ui5-table id="table" overflow-mode="Scroll" height="500px" sticky-top="0px" accessible-name-ref="title">
 		<ui5-table-growing id="growing" type="Scroll" slot="features"></ui5-table-growing>
 		<ui5-table-selection id="selection" selected="0 2" slot="features"></ui5-table-selection>
-		<ui5-table-header-row slot="headerRow">
+		<ui5-table-header-row slot="headerRow" sticky>
 			<ui5-table-header-cell id="produtCol" width="300px"><span>Product</span></ui5-table-header-cell>
-			<ui5-table-header-cell id="supplierCol">Supplier</ui5-table-header-cell>
+			<ui5-table-header-cell id="supplierCol" width="400px">Supplier</ui5-table-header-cell>
 			<ui5-table-header-cell id="dimensionsCol" importance="-1" min-width="300px">Dimensions</ui5-table-header-cell>
 			<ui5-table-header-cell id="weightCol" popin-text="Weight">Weight</ui5-table-header-cell>
 			<ui5-table-header-cell id="priceCol" min-width="220px">Price</ui5-table-header-cell>
@@ -85,8 +83,6 @@
 			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
 	</ui5-table>
-
-	<!-- </div> -->
 
 	<ui5-input value="after table" data-sap-ui-fastnavgroup="true"></ui5-input>
 	<script>
