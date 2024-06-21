@@ -8,7 +8,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	isChrome,
-	isSafari,
 	isDesktop,
 	isPhone,
 } from "@ui5/webcomponents-base/dist/Device.js";
@@ -128,11 +127,14 @@ type PopupBeforeCloseEventDetail = {
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
-	 * @default ""
+	 *
+	 * **Note:** If an element with `autofocus` attribute is added inside the component,
+	 * `initialFocus` won't take effect.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initialFocus!: string;
+	initialFocus?: string;
 
 	/**
 	 * Defines if the focus should be returned to the previously focused element,
@@ -142,7 +144,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: Boolean })
-	preventFocusRestore!: boolean;
+	preventFocusRestore = false;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -150,17 +152,17 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Allows setting a custom role.
@@ -168,15 +170,15 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.10.0
 	 */
-	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: `${PopupAccessibleRole}`;
+	@property()
+	accessibleRole: `${PopupAccessibleRole}` = "Dialog";
 
 	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange?: string;
 
 	/**
 	 * Indicates whether initial focus should be prevented.
@@ -185,7 +187,7 @@ abstract class Popup extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	preventInitialFocus!: boolean;
+	preventInitialFocus = false;
 
 	/**
 	 * Indicates if the element is the top modal popup
@@ -195,7 +197,7 @@ abstract class Popup extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	isTopModalPopup!: boolean;
+	isTopModalPopup = false;
 
 	/**
 	 * Defines the content of the Popup.
@@ -208,19 +210,19 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone!: boolean;
+	onPhone = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onDesktop!: boolean;
+	onDesktop = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_opened!: boolean;
-	_open!: boolean;
+	_opened = false;
+	_open = false;
 
 	constructor() {
 		super();
@@ -249,6 +251,8 @@ abstract class Popup extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+
+		this.tabIndex = -1;
 	}
 
 	onExitDOM() {
@@ -390,10 +394,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (!isSafari()) { // Remove when adopting native dialog
-			this._root.removeAttribute("tabindex");
-		}
-
 		if (this.shadowRoot!.contains(e.target as HTMLElement)) {
 			this._shouldFocusRoot = true;
 		} else {
@@ -402,10 +402,6 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmouseup() {
-		if (!isSafari()) { // Remove when adopting native dialog
-			this._root.tabIndex = -1;
-		}
-
 		if (this._shouldFocusRoot) {
 			if (isChrome()) {
 				this._root.focus();
@@ -460,6 +456,11 @@ abstract class Popup extends UI5Element {
 	 * @returns Promise that resolves when the focus is applied
 	 */
 	async applyFocus(): Promise<void> {
+		// do nothing if the standard HTML autofocus is used
+		if (this.querySelector("[autofocus]")) {
+			return;
+		}
+
 		await this._waitForDomRef();
 
 		if (this.getRootNode() === this) {
@@ -476,9 +477,6 @@ abstract class Popup extends UI5Element {
 		element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
-			if (element === this._root) {
-				element.tabIndex = -1;
-			}
 			element.focus();
 		}
 	}

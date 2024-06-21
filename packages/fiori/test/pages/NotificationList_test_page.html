@@ -74,6 +74,7 @@
 
 				<ui5-li-notification
 					id="nli2"
+					read
 					show-close
 					title-text="New order #2202"
 					state="Critical"
@@ -168,6 +169,32 @@
 					</ui5-menu>
 				</ui5-li-notification>
 			</ui5-li-notification-group>
+
+			<ui5-li-notification-group
+			id="nlgi4"
+			title-text="Collapsed loading"
+			collapsed
+			loading
+		>
+			<ui5-li-notification
+				id="nli5"
+				wrapping-type="Normal"
+				show-close
+				title-text="New payment #2900"
+				state="Negative"
+			>
+				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+
+				<span slot="footnotes">Office Notifications</span>
+				<span slot="footnotes">3 Days</span>
+
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
+			</ui5-li-notification>
+		</ui5-li-notification-group>
 		</ui5-notification-list>
 	</div>
 	<br >
@@ -188,11 +215,11 @@
 
 		var counter = 0;
 		acceptBtn.addEventListener("ui5-click", function(event) {
-			customActionInput.value = ++counter;
+			customActionInput.value = `${++counter}`;
 		});
 
 		menuWithActions.addEventListener("ui5-item-click", function(event) {
-			customActionInput.value = ++counter;
+			customActionInput.value = `${++counter}`;
 		});
 	</script>
 </body>

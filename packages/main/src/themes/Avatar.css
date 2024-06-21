@@ -24,7 +24,7 @@
 	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
 }
 
-:host([interactive][desktop]:not([hidden])) .ui5-avatar-root:focus-within,
+:host([interactive][desktop]:not([hidden])) .ui5-avatar-root:focus,
 :host([interactive]:not([hidden])) .ui5-avatar-root:focus-visible {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
@@ -263,10 +263,6 @@
 
 	--_ui5-tag-height: 1.125rem;
 	--_ui5-tag-border-radius: 50%;
-
-	--ui5-tag-color-scheme-1-background: var(--sapButton_Emphasized_Background);
-	--ui5-tag-color-scheme-1-color: var(--sapButton_Emphasized_TextColor);
-	--ui5-tag-color-scheme-1-border: var(--sapButton_Emphasized_BorderColor);
 }
 
 :host([_size="L"]) ::slotted([slot="badge"]),

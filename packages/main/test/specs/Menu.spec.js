@@ -31,16 +31,17 @@ describe("Menu interaction", () => {
 	it("Top level menu items appearance", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-		const menuItems = await browser.$$("#menu > ui5-menu-item");
+		const menuItems = await browser.$$("#menu > *");
 
 		await openButton.click();
 
-		assert.strictEqual(await menuItems.length, 7, "There are proper count of menu items in the top level menu");
+		assert.strictEqual(await menuItems.length, 9, "There are proper count of menu items in the top level menu");
+		assert.strictEqual(await menuItems[0].getAttribute("ui5-menu-item"), "", "The first list item is a menu item");
 		assert.strictEqual(await menuItems[0].getAttribute("additional-text"), "Ctrl+Alt+Shift+N", "The first list item has proper additional text set");
 		assert.strictEqual(await menuItems[1].getAttribute("disabled"), "true", "The second list item is disabled");
-		assert.strictEqual(await menuItems[2].getAttribute("starts-section"), "", "The third list item has separator addded");
-		assert.ok(await menuItems[3].$(".ui5-menu-item-icon-end"), "The third list item has sub-items and must have arrow right icon after the text");
-		assert.ok(await menuItems[4].$(".ui5-menu-item-dummy-icon"), "The fourth list item has no icon and has dummy div instead of icon");
+		assert.strictEqual(await menuItems[2].getAttribute("ui5-menu-separator"), "", "The third list item is a menu separator");
+		assert.ok(await menuItems[3].$(".ui5-menu-item-icon-end"), "The fourth list item has sub-items and must have arrow right icon after the text");
+		assert.ok(await menuItems[4].$(".ui5-menu-item-dummy-icon"), "The fifth list item has no icon and has dummy div instead of icon");
 	});
 
 	it("Sub-menu creation, opening, closing and destroying", async () => {
@@ -169,6 +170,22 @@ describe("Menu interaction", () => {
 
 			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
 			assert.ok(await menuItem.matches(":focus"), "The menu item is focused");
+		});
+
+		it("Add endContent to a menu item", async () => {
+			await browser.url(`test/pages/Menu.html`);
+			const openButton = await browser.$("#btnOpenEndContent");
+			await openButton.click();
+
+			const menu = await browser.$("#menuEndContent");
+			const menuItem = await browser.$("#menuEndContent > ui5-menu-item[text='New File']");
+			const endContent = await menuItem.$$("[ui5-button]");
+			const lockButton = await endContent[0];
+			await lockButton.click();
+
+			assert.equal(await endContent.length, 3, "The menu item has 3 components in the 'endContent' slot");
+			assert.ok(await menuItem.getProperty("disabled"), "The menu item is disabled");
+			assert.ok(await menu.getProperty("open"), "The menu remains open");
 		});
 	});
 

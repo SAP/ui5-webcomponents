@@ -138,23 +138,6 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover remains opened.");
 	});
 
-	it("tests opening popover when opener is outside of the viewport is not allowed", async () => {
-		const btnOpenPopover = await browser.$("#btnOpenAndScroll");
-		const popover = await browser.$("#popoverOpenAndScroll");
-
-		await btnOpenPopover.click();
-		await browser.waitUntil(
-			async () => await browser.$(".closeEventCheck").isExisting(),
-			{
-				timeout: 1000,
-				timeoutMsg: "close event was not fired"
-			}
-		);
-
-		assert.notOk(await popover.getAttribute("open"), "Popover remains closed.");
-		assert.notOk(await popover.isDisplayedInViewport(), "Popover remains closed.");
-	});
-
 	it("tests if overflown content can be reached by scrolling 1", async () => {
 		const manyItemsSelect = await browser.$("#many-items");
 		const items = await await browser.$$("#many-items ui5-option")
@@ -424,6 +407,14 @@ describe("Popover general interaction", () => {
 		await result.waitForDisplayed({ timeout: 3000 })
 
 		assert.strictEqual(await result.getText(), "No uncaught errors", "There is no error.");
+	});
+
+	it("tests if the popover is a part of the tab chain", async () => {
+		await browser.$("#input1").scrollIntoView();
+		await browser.$("#input1").click();
+		await browser.keys("Tab");
+
+		assert.ok(await browser.$("#input2").isFocused(), "next input is focused");
 	});
 });
 

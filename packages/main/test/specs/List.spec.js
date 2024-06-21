@@ -397,7 +397,10 @@ describe("List Tests", () => {
 
 		await btn.click();
 
-		await browser.waitUntil(async () => await loadMoreResult.getProperty("value") === "1", {
+		await browser.waitUntil(async () => {
+			const value = await loadMoreResult.getValue();
+			return value === "1";
+		}, {
 			timeout: 5000,
 			timeoutMsg: "The event loadMore must be fired"
 		});

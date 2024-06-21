@@ -1,8 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
-import { IOption } from "./Select.js";
+import type { IOption } from "./Select.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
@@ -41,20 +40,20 @@ class OptionCustom extends ListItemBase implements IOption {
 	/**
 	 * Defines the text, displayed inside the `ui5-select` input filed
 	 * when the option gets selected.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	displayText!: string;
+	displayText?: string;
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the `name` property of `ui5-select`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value?: string;
 
 	/**
 	 * Defines the text of the component.
@@ -67,11 +66,11 @@ class OptionCustom extends ListItemBase implements IOption {
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
-	@property({ type: String })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";

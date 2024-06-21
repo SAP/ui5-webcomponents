@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -38,6 +38,7 @@ import {
 	DATEPICKER_DATE_DESCRIPTION,
 	INPUT_SUGGESTIONS_TITLE,
 	FORM_TEXTFIELD_REQUIRED,
+	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -254,15 +255,15 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value!: string
+	value = "";
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None"
 
 	/**
 	 * Defines whether the component is required.
@@ -271,7 +272,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Determines whether the component is displayed as disabled.
@@ -279,7 +280,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as read-only.
@@ -287,7 +288,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -298,7 +299,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	placeholder?: string;
 
 	/**
@@ -309,7 +310,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -321,7 +322,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
 
 	/**
 	 * Defines the open or closed state of the popover.
@@ -330,7 +331,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Defines the aria-label attribute for the component.
@@ -339,7 +340,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -347,14 +348,14 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	@property({ type: Object })
-	_respPopoverConfig!: object;
+	_respPopoverConfig?: object;
 
-	@property({ defaultValue: "day" })
-	_calendarCurrentPicker!: string;
+	@property()
+	_calendarCurrentPicker = "day";
 
 	liveValue?: string;
 
@@ -702,6 +703,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	get dateAriaDescription() {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**

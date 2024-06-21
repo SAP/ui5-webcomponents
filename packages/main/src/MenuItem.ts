@@ -1,13 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import PopoverPlacement from "./types/PopoverPlacement.js";
+import type PopoverPlacement from "./types/PopoverPlacement.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -17,6 +16,7 @@ import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
+import type { IMenuItem } from "./Menu.js";
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
@@ -43,6 +43,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
  * @extends ListItem
+ * @implements {IMenuItem}
  * @since 1.3.0
  * @public
  */
@@ -52,7 +53,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 	styles: [ListItem.styles, menuItemCss],
 	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
 })
-class MenuItem extends ListItem {
+class MenuItem extends ListItem implements IMenuItem {
 	static async onDefine() {
 		MenuItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -63,18 +64,22 @@ class MenuItem extends ListItem {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
 	 *
-	 * **Note:** The additional text would not be displayed if the item has a submenu.
+	 * **Note:** The additional text will not be displayed if there are items added in `items` slot or there are
+	 * components added to `endContent` slot.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @default ""
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText!: string;
+	additionalText = "";
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -83,19 +88,11 @@ class MenuItem extends ListItem {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
-
-	/**
-	 * Defines whether a visual separator should be rendered before the item.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	startsSection!: boolean;
+	icon?: string;
 
 	/**
 	 * Defines whether `ui5-menu-item` is in disabled state.
@@ -105,7 +102,7 @@ class MenuItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -116,7 +113,7 @@ class MenuItem extends ListItem {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -124,8 +121,8 @@ class MenuItem extends ListItem {
 	 * @public
 	 * @since 1.13.0
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -134,29 +131,54 @@ class MenuItem extends ListItem {
 	 * @since 1.7.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName = "";
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithIcon!: boolean;
+	_siblingsWithIcon = false;
 
 	/**
 	 * Defines the items of this component.
+	 *
+	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
+	 *
+	 * If there are items added to this slot, an arrow will be displayed at the end
+	 * of the item in order to indicate that there are items added. In that case components added
+	 * to `endContent` slot or `additionalText` content will not be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<MenuItem>;
+	items!: Array<IMenuItem>;
+
+	/**
+	 * Defines the components that should be displayed at the end of the menu item.
+	 *
+	 * **Note:** It is highly recommended to slot only components of type `ui5-button`,`ui5-link`
+	 * or `ui5-icon` in order to preserve the intended design. If there are components added to this slot,
+	 * and there is text set in `additionalText`, it will not be displayed. If there are items added to `items` slot,
+	 * nether `additionalText` nor components added to this slot would be displayed.
+	 *
+	 * The priority of what will be displayed at the end of the menu item is as follows:
+	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
+	 * @public
+	 * @since 2.0.0
+	 */
+	@slot({ type: HTMLElement })
+	endContent!: Array<HTMLElement>;
 
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
@@ -168,6 +190,10 @@ class MenuItem extends ListItem {
 
 	get hasSubmenu() {
 		return !!(this.items.length || this.loading);
+	}
+
+	get hasEndContent() {
+		return !!(this.endContent.length);
 	}
 
 	get hasIcon() {
@@ -198,10 +224,14 @@ class MenuItem extends ListItem {
 		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
 	}
 
-	onBeforeRendering() {
-		const siblingsWithIcon = this.items.some(item => !!item.icon);
+	get isSeparator(): boolean {
+		return false;
+	}
 
-		this.items.forEach(item => {
+	onBeforeRendering() {
+		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+
+		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
@@ -221,6 +251,10 @@ class MenuItem extends ListItem {
 
 	get _popover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	get _menuItems() {
+		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
 	_closeAll() {

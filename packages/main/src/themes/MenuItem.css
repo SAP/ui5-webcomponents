@@ -77,12 +77,8 @@
 	padding: var(--_ui5_menu_item_padding);
 }
 
-:host([starts-section]) {
-	border-top: 1px solid var(--sapGroup_ContentBorderColor);
-}
-
 :host::part(content) {
-	padding-inline-end: 0.5rem;
+	padding-inline-end: 0.25rem;
 }
 
 .ui5-menu-item-submenu-icon {

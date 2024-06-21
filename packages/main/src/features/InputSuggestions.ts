@@ -8,7 +8,7 @@ import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generat
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
-import ResponsivePopover from "../ResponsivePopover.js";
+import type ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
@@ -557,7 +557,11 @@ class Suggestions {
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 		const groupItemText = Suggestions.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
-		return this.accInfo.isGroup ? `${groupItemText} ${this.accInfo.itemText}` : `${this.accInfo.description} ${this.accInfo.additionalText} ${itemPositionText}`;
+		if (this.accInfo.isGroup) {
+			return [groupItemText, this.accInfo.itemText].filter(Boolean).join(" ");
+		}
+
+		return [this.accInfo.description, this.accInfo.additionalText, itemPositionText].filter(Boolean).join(" ");
 	}
 
 	getRowText(suggestion: IInputSuggestionItem) {

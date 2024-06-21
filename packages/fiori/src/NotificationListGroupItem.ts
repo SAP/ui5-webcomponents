@@ -21,7 +21,6 @@ import {
 	NOTIFICATION_LIST_GROUP_COLLAPSED,
 	NOTIFICATION_LIST_GROUP_EXPANDED,
 	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE,
-	NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Templates
@@ -52,15 +51,6 @@ type NotificationListGroupItemToggleEventDetail = {
  *
  * ### Keyboard Handling
  * The `ui5-li-notification-group` provides advanced keyboard handling.
- *
- * #### Basic Navigation
- * When a list is focused, the user can use the following keyboard shortcuts in order to navigate:
- *
- * - [Up] or [Down] - navigates up or down the items
- * - [Home] - navigates to the first item
- * - [End] - navigates to the last item
- *
- * #### Fast Navigation
  * This component provides fast navigation when the header is focused using the following keyboard shortcuts:
  *
  * - [Space] - toggles expand / collapse of the group
@@ -71,7 +61,7 @@ type NotificationListGroupItemToggleEventDetail = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/NotificationListGroupItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";`
  * @constructor
  * @extends NotificationListItemBase
  * @since 1.0.0-rc.8
@@ -105,7 +95,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Defines the items of the `ui5-li-notification-group`,
@@ -134,10 +124,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	get toggleIconAccessibleName() {
-		if (this.collapsed) {
-			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE);
-		}
-
 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE);
 	}
 
@@ -159,8 +145,17 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
+		const ids = [];
 
-		return this.hasTitleText ? `${id}-title-text` : "";
+		if (this.isLoading) {
+			ids.push(`${id}-loading`);
+		}
+
+		if (this.hasTitleText) {
+			ids.push(`${id}-title-text`);
+		}
+
+		return ids.join(" ");
 	}
 
 	get _ariaExpanded() {

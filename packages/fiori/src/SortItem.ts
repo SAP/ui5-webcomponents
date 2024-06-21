@@ -27,7 +27,7 @@ class SortItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines if the component is selected.
@@ -35,7 +35,7 @@ class SortItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 }
 
 SortItem.define();

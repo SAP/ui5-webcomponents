@@ -8,12 +8,12 @@
 	cursor: pointer;
 }
 
-/*TODO after li is implemented*/
 .ui5-nli-focusable:focus {
 	outline: none;
 }
 
-.ui5-nli-focusable:focus:not(.ui5-nli-group-root)::after {
+:host([desktop]) .ui5-nli-focusable:focus:not(.ui5-nli-group-root)::after,
+.ui5-nli-focusable:focus-visible:not(.ui5-nli-group-root)::after {
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;

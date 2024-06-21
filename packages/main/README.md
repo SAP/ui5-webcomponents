@@ -43,14 +43,14 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Label                    | `ui5-label`                 | `import "@ui5/webcomponents/dist/Label.js";`               |
 | Link                     | `ui5-link`                  | `import "@ui5/webcomponents/dist/Link.js";`                |
 | List                     | `ui5-list`                  | `import "@ui5/webcomponents/dist/List.js";`                |
-| List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/StandardListItem.js";`    |
-| List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/CustomListItem.js";`      |
+| List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/ListItemStandard.js";`    |
+| List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/ListItemCustom.js";`      |
 | List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
 | Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
-| Multi ComboBox Group Item| `ui5-mcb-group-item`        | comes with `ui5-multi-combobox`                            |
+| Multi ComboBox Item Group| `ui5-mcb-item-group`        | comes with `ui5-multi-combobox`                            |
 | Multi Input              | `ui5-multi-input`           | `import "@ui5/webcomponents/dist/MultiInput.js";`          |
 | Panel                    | `ui5-panel`                 | `import "@ui5/webcomponents/dist/Panel.js";`               |
 | Popover                  | `ui5-popover`               | `import "@ui5/webcomponents/dist/Popover.js";`             |
@@ -85,7 +85,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 `import "@ui5/webcomponents/dist/Assets.js";`
 
 | Assets | Module | Notes
-|------------|-----------|----------- 
+|------------|-----------|-----------
 | `i18n`, `themes` | `@ui5/webcomponents/dist/Assets.js` | Theming parameters and translations for the components  <br/><br/> *Automatically imports also:<br/> `@ui5/webcomponents-localization/dist/Assets.js` <br/> and <br/> `@ui5/webcomponents-theming/dist/Assets.js`*
 
 ## Provided features
@@ -125,7 +125,7 @@ for your convenience.
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
+- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/play/)
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
