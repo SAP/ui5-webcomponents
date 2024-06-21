@@ -26,6 +26,7 @@ import List from "./List.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
+import MenuSeparator from "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -38,6 +39,16 @@ import {
 import menuCss from "./generated/themes/Menu.css.js";
 
 const MENU_OPEN_DELAY = 300;
+
+/**
+ * Interface for components that may be slotted inside a `ui5-menu`.
+ *
+ * **Note:** Use with `ui5-menu-item` or `ui5-menu-separator`. Implementing the interface does not guarantee that any other classes can work with the `ui5-menu`.
+ * @public
+ */
+interface IMenuItem extends UI5Element {
+	isSeparator: boolean;
+}
 
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -54,9 +65,13 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  *
  * `ui5-menu` component represents a hierarchical menu structure.
  *
- * ### Usage
+ * ### Structure
  *
- * `ui5-menu` contains `ui5-menu-item` components.
+ * The `ui5-menu` can hold two types of entities:
+ *
+ * - `ui5-menu-item` components
+ * - `ui5-menu-separator` - used to separate menu items with a line
+ *
  * An arbitrary hierarchy structure can be represented by recursively nesting menu items.
  *
  * ### Keyboard Handling
@@ -89,6 +104,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 		Button,
 		List,
 		MenuItem,
+		MenuSeparator,
 		Icon,
 		BusyIndicator,
 	],
@@ -223,11 +239,11 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the items of this component.
 	 *
-	 * **Note:** Use `ui5-menu-item` for the intended design.
+	 * **Note:** Use `ui5-menu-item` and `ui5-menu-separator` for their intended design.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<MenuItem>;
+	items!: Array<IMenuItem>;
 
 	static i18nBundle: I18nBundle;
 	_timeout?: Timeout;
@@ -252,10 +268,14 @@ class Menu extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	onBeforeRendering() {
-		const siblingsWithIcon = this.items.some(item => !!item.icon);
+	get _menuItems() {
+		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
 
-		this.items.forEach(item => {
+	onBeforeRendering() {
+		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+
+		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
@@ -281,7 +301,7 @@ class Menu extends UI5Element {
 
 	_closeItemSubMenu(item: MenuItem) {
 		if (item && item._popover) {
-			const openedSibling = item.items.find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -296,10 +316,12 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			item.focus();
+			if (item.hasAttribute("ui5-menu-item")) {
+				item.focus();
 
-			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item);
+				// Opens submenu with 300ms delay
+				this._startOpenTimeout(item);
+			}
 		}
 	}
 
@@ -308,7 +330,7 @@ class Menu extends UI5Element {
 
 		this._timeout = setTimeout(() => {
 			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && opener.items.find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -367,7 +389,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		this.items[0]?.focus();
+		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
 
@@ -393,4 +415,5 @@ export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
+	IMenuItem,
 };
