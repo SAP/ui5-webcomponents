@@ -226,8 +226,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering() {
-		super.onBeforeRendering();
-		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
+		this.nonActionable = !(this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	onEnterDOM() {

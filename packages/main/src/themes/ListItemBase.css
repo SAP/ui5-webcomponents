@@ -15,7 +15,7 @@
 }
 
 /* actionable (type="Active" + desktop) */
-:host([actionable]:not([disabled])) {
+:host(:not([non-actionable]):not([disabled])) {
 	cursor: pointer;
 }
 
@@ -30,18 +30,18 @@
 }
 
 /* hovered */
-:host([actionable]:not([active], [selected]):hover) {
+:host(:not([non-actionable]):not([active], [selected]):hover) {
 	background-color: var(--sapList_Hover_Background);
 }
 
 /* selected and hovered */
-:host([actionable][selected]:not([active], [data-moving]):hover) {
+:host(:not([non-actionable])[selected]:not([active], [data-moving]):hover) {
 	background-color: var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */
-:host([active][actionable]:not([data-moving])),
-:host([active][actionable][selected]:not([data-moving])) {
+:host([active]:not([non-actionable]):not([data-moving])),
+:host([active]:not([non-actionable])[selected]:not([data-moving])) {
 	background-color: var(--sapList_Active_Background);
 }
 

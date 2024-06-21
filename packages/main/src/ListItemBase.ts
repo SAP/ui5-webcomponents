@@ -95,16 +95,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	actionable = false;
+	nonActionable = false;
 
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-	}
-
-	onBeforeRendering(): void {
-		this.actionable = true;
 	}
 
 	_onfocusin(e: FocusEvent) {

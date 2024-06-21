@@ -62,11 +62,11 @@
 	cursor: pointer;
 }
 
-:host([actionable]) .ui5-li-tree-toggle-icon {
+:host(:not([non-actionable])) .ui5-li-tree-toggle-icon {
 	color: var(--sapButton_TextColor);
 }
 
-:host([active][actionable]) .ui5-li-tree-toggle-icon {
+:host([active]:not([non-actionable])) .ui5-li-tree-toggle-icon {
 	color: var(--sapList_Active_TextColor);
 }
 

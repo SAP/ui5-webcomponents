@@ -40,7 +40,7 @@
 	height: var(--ui5_upload_collection_thumbnail_size);
 }
 
-:host([actionable]) ::slotted([ui5-icon][slot="thumbnail"]) {
+:host(:not([non-actionable])) ::slotted([ui5-icon][slot="thumbnail"]) {
 	color: var(--sapContent_IconColor);
 }
 
@@ -173,8 +173,8 @@
 	justify-content: space-between;
 }
 
-:host([active][actionable]) ::slotted([ui5-icon][slot="thumbnail"]),
-:host([active][actionable]) .ui5-uci-file-name,
-:host([active][actionable]) .ui5-uci-description {
+:host([active]:not([non-actionable])) ::slotted([ui5-icon][slot="thumbnail"]),
+:host([active]:not([non-actionable])) .ui5-uci-file-name,
+:host([active]:not([non-actionable])) .ui5-uci-description {
 	color: var(--sapList_Active_TextColor);
 }
