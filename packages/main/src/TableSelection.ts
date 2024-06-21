@@ -59,8 +59,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @default "Multiple"
 	 * @public
 	 */
-	@property({ type: TableSelectionMode, defaultValue: TableSelectionMode.Multiple })
-	mode!: `${TableSelectionMode}`;
+	@property()
+	mode: `${TableSelectionMode}` = "Multiple";
 
 	/**
 	 * Defines the selected rows separated by a space.
@@ -69,7 +69,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @public
 	 */
 	@property()
-	selected!: string;
+	selected = "";
 
 	_table?: Table;
 

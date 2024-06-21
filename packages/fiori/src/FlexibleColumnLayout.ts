@@ -6,9 +6,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import type AriaLandmarkRole from "@ui5/webcomponents-base/dist/types/AriaLandmarkRole.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -229,8 +227,8 @@ class FlexibleColumnLayout extends UI5Element {
 	* @default "OneColumn"
 	* @public
 	*/
-	@property({ type: FCLLayout, defaultValue: FCLLayout.OneColumn })
-	layout!: `${FCLLayout}`;
+	@property()
+	layout: `${FCLLayout}` = "OneColumn";
 
 	/**
 	* Specifies if the user is allowed to change the columns layout by dragging the separator between the columns.
@@ -239,7 +237,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @since 2.0.0
 	*/
 	@property({ type: Boolean })
-	disableResizing!: boolean;
+	disableResizing = false;
 
 	/**
 	* Defines additional accessibility attributes on different areas of the component.
@@ -266,15 +264,15 @@ class FlexibleColumnLayout extends UI5Element {
 	* @since 2.0.0
 	*/
 	@property({ type: Object })
-	accessibilityAttributes!: FCLAccessibilityAttributes;
+	accessibilityAttributes: FCLAccessibilityAttributes = {};
 
 	/**
 	* Defines the component width in px.
 	* @default 0
 	* @private
 	*/
-	@property({ validator: Float, defaultValue: 0 })
-	_width!: number;
+	@property({ type: Number })
+	_width = 0;
 
 	/**
 	* Defines the effective columns layout,
@@ -283,7 +281,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @default undefined
 	* @private
 	*/
-	@property({ type: Object, defaultValue: undefined })
+	@property({ type: Array })
 	_columnLayout?: FlexibleColumnLayoutColumnLayout;
 
 	/**
@@ -291,14 +289,14 @@ class FlexibleColumnLayout extends UI5Element {
 	* @default 1
 	* @private
 	*/
-	@property({ validator: Integer, defaultValue: 0 })
-	_visibleColumns!: number;
+	@property({ type: Number })
+	_visibleColumns = 1;
 
 	/**
 	* Allows the user to replace the whole layouts configuration
 	* @private
 	*/
-	@property({ type: Object, defaultValue: undefined })
+	@property({ type: Object })
 	_layoutsConfiguration?: LayoutConfiguration;
 
 	/**

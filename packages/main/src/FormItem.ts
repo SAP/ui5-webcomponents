@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 // Template
 import FormItemTemplate from "./generated/templates/FormItemTemplate.lit.js";
@@ -12,7 +11,7 @@ import FormItemTemplate from "./generated/templates/FormItemTemplate.lit.js";
 import FormItemCss from "./generated/themes/FormItem.css.js";
 
 import type { IFormItem } from "./Form.js";
-import FormItemSpacing from "./types/FormItemSpacing.js";
+import type FormItemSpacing from "./types/FormItemSpacing.js";
 
 /**
  * @class
@@ -59,7 +58,7 @@ class FormItem extends UI5Element implements IFormItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: undefined })
+	@property({ type: Number })
 	columnSpan?: number;
 
 	/**
@@ -84,14 +83,14 @@ class FormItem extends UI5Element implements IFormItem {
 	/**
 	 * @private
 	 */
-	@property({ type: String, defaultValue: "S12 M4 L4 XL4" })
-	labelSpan!: string;
+	@property()
+	labelSpan = "S12 M4 L4 XL4";
 
 	/**
 	 * @private
 	 */
-	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: `${FormItemSpacing}`;
+	@property()
+	itemSpacing: `${FormItemSpacing}` = "Normal"
 
 	get isGroup() {
 		return false;

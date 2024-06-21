@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TitleLevel from "./types/TitleLevel.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 
 // Template
 import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
@@ -44,8 +44,8 @@ class Title extends UI5Element {
 	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
-	wrappingType!: `${WrappingType}`
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the component level.
@@ -53,8 +53,8 @@ class Title extends UI5Element {
 	 * @default "H2"
 	 * @public
 	 */
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	level!: `${TitleLevel}`;
+	@property()
+	level: `${TitleLevel}` = "H2";
 
 	get h1() {
 		return this.level === TitleLevel.H1;

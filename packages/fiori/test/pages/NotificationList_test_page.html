@@ -215,11 +215,11 @@
 
 		var counter = 0;
 		acceptBtn.addEventListener("ui5-click", function(event) {
-			customActionInput.value = ++counter;
+			customActionInput.value = `${++counter}`;
 		});
 
 		menuWithActions.addEventListener("ui5-item-click", function(event) {
-			customActionInput.value = ++counter;
+			customActionInput.value = `${++counter}`;
 		});
 	</script>
 </body>

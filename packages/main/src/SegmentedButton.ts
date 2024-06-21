@@ -84,7 +84,7 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 * @since 1.0.3
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -93,8 +93,8 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 * @since 1.14.0
 	 */
-	@property({ type: SegmentedButtonSelectionMode, defaultValue: SegmentedButtonSelectionMode.Single })
-	selectionMode!: `${SegmentedButtonSelectionMode}`;
+	@property()
+	selectionMode: `${SegmentedButtonSelectionMode}` = "Single";
 
 	/**
 	 * Defines the items of `ui5-segmented-button`.

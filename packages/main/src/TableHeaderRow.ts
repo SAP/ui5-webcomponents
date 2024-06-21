@@ -69,7 +69,7 @@ class TableHeaderRow extends TableRowBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	sticky!: boolean;
+	sticky = false;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

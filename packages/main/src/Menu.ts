@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import {
 	isLeft,
 	isRight,
@@ -18,7 +17,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
@@ -192,11 +191,11 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Indicates if the menu is open
@@ -205,7 +204,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	open!:boolean;
+	open = false;
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
@@ -214,7 +213,7 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
@@ -222,8 +221,8 @@ class Menu extends UI5Element {
 	 * @public
 	 * @since 1.13.0
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the ID or DOM Reference of the element at which the menu is shown.
@@ -233,8 +232,8 @@ class Menu extends UI5Element {
 	 * @default ""
 	 * @since 1.10.0
 	 */
-	@property({ validator: DOMReference, defaultValue: "" })
-	opener!: HTMLElement | string;
+	@property({ converter: DOMReferenceConverter })
+	opener?: HTMLElement | string;
 
 	/**
 	 * Defines the items of this component.

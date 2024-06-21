@@ -41,7 +41,7 @@ class TreeItemCustom extends TreeItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hideSelectionElement!: boolean;
+	hideSelectionElement = false;
 
 	/**
 	 * Defines the content of the `ui5-tree-item`.

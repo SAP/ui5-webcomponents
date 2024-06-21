@@ -69,7 +69,7 @@
 	<script>
 		var counter = 0;
 		messageStrip.addEventListener("ui5-close", function() {
-			inputField.value = ++counter;
+			inputField.value = `${++counter}`;
 		});
 
 		const mStrip = document.getElementById('ms');

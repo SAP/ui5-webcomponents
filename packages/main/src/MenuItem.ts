@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
@@ -65,7 +64,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
@@ -80,7 +79,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText!: string;
+	additionalText = "";
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -89,11 +88,11 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether `ui5-menu-item` is in disabled state.
@@ -103,7 +102,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -114,7 +113,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -122,8 +121,8 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 * @since 1.13.0
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -132,22 +131,22 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 1.7.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName = "";
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithIcon!: boolean;
+	_siblingsWithIcon = false;
 
 	/**
 	 * Defines the items of this component.
