@@ -123,7 +123,7 @@ class SegmentedButton extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
+			getItemsCallback: () => this.navigatableItems,
 		});
 		this.hasPreviouslyFocusedItem = false;
 	}
@@ -249,6 +249,12 @@ class SegmentedButton extends UI5Element {
 	 */
 	get selectedItems(): Array<ISegmentedButtonItem> {
 		return this.items.filter(item => item.selected);
+	}
+
+	get navigatableItems() {
+		return this.getSlottedNodes<SegmentedButtonItem>("items").filter(item => {
+			return !item.disabled;
+		});
 	}
 
 	get ariaDescribedBy() {
