@@ -6,9 +6,12 @@
 	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
-	@ui5-close={{_afterClosePicker}}
+	@ui5-close={{_afterClose}}
 	@ui5-before-open={{_beforeOpen}}
-	@ui5-open={{_afterOpenPicker}}
+	@ui5-before-close={{_beforeClose}}
+	@ui5-open={{_afterOpen}}
+	.open={{open}}
+	.opener={{this}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
@@ -121,6 +124,8 @@
 		placement="Bottom"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		tabindex="-1"
+		.open="{{valueStateOpen}}"
+		.opener="{{this}}"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
