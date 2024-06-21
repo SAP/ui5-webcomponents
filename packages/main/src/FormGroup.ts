@@ -31,6 +31,7 @@ import type FormItemSpacing from "./types/FormItemSpacing.js";
  * @public
  * @implements {IFormItem}
  * @since 2.0.0
+ * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  * @extends UI5Element
  */
 @customElement("ui5-form-group")
