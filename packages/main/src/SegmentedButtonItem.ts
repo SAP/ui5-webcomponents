@@ -162,7 +162,12 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		super();
 	}
 
-	_onclick() {
+	_onclick(e: MouseEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
 		this.selected = !this.selected;
 	}
 
@@ -183,6 +188,10 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {
