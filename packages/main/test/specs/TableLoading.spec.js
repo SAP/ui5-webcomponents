@@ -16,7 +16,11 @@ describe("Table - loading", async () => {
 		await before.click();
 		assert.ok(await before.isFocused(), "The input before the table1 is focused.");
 
+
+		// let the busy indicator render before pressing tab
+		await browser.pause(100);
 		await before.keys("Tab");
+
 		const res = await browser.executeAsync(done => {
 			// ui5-busy-indicator has a setTimeout using the delay property and this is not awaited automatically by the test
 			setTimeout(() => {
