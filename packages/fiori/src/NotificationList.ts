@@ -131,11 +131,11 @@ class NotificationList extends UI5Element {
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	get _accessibleName() {
 		return NotificationList.i18nFioriBundle.getText(NOTIFICATION_LIST_ACCESSIBLE_NAME);

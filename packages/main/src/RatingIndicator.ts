@@ -17,8 +17,6 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 	RATING_INDICATOR_TOOLTIP_TEXT,
@@ -99,8 +97,8 @@ class RatingIndicator extends UI5Element {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value: number = 0;
 
 	/**
 	 * The number of displayed rating symbols.
@@ -108,8 +106,8 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ validator: Integer, defaultValue: 5 })
-	max!: number;
+	@property({ type: Number })
+	max: number = 5;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -119,7 +117,7 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -130,7 +128,7 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -139,7 +137,7 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -147,8 +145,8 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 * @since 1.15.0
 	 */
-	 @property({ defaultValue: "" })
-	 accessibleNameRef!: string;
+	 @property()
+	 accessibleNameRef?: string;
 
 	 /**
 	 * Defines whether the component is required.
@@ -157,28 +155,28 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.15.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.19.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	_stars!: Array<Star>;
+	@property({ type: Array })
+	_stars: Array<Star> = [];
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_focused!: boolean;
+	_focused = false;
 
 	_liveValue?: number;
 

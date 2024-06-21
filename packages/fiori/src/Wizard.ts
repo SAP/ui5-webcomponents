@@ -9,7 +9,6 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -19,7 +18,7 @@ import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/Focu
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
-import WizardContentLayout from "./types/WizardContentLayout.js";
+import type WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
 import {
@@ -82,9 +81,9 @@ type AccessibilityInformation = {
 }
 
 type StepInfo = {
-	icon: string,
-	titleText: string,
-	subtitleText: string,
+	icon?: string,
+	titleText?: string,
+	subtitleText?: string,
 	number: number,
 	selected: boolean,
 	disabled: boolean,
@@ -234,14 +233,14 @@ class Wizard extends UI5Element {
 	 * @since 1.14.0
 	 * @default "MultipleSteps"
 	 */
-	@property({ type: WizardContentLayout, defaultValue: WizardContentLayout.MultipleSteps })
-	contentLayout!: WizardContentLayout
+	@property()
+	contentLayout: `${WizardContentLayout}` = "MultipleSteps";
 
 	/**
 	 * Defines the width of the `ui5-wizard`.
 	 * @private
 	 */
-	@property({ validator: Float })
+	@property({ type: Number })
 	width?: number
 
 	/**
@@ -258,21 +257,25 @@ class Wizard extends UI5Element {
 	 * @default 0.7
 	 * @since 1.0.0-rc.13
 	 */
-	@property({ validator: Float, defaultValue: STEP_SWITCH_THRESHOLDS.DEFAULT })
-	stepSwitchThreshold!: number;
+	@property({ type: Number })
+	stepSwitchThreshold = STEP_SWITCH_THRESHOLDS.DEFAULT;
 
 	/**
 	 * Defines the height of the `ui5-wizard` content.
 	 * @private
 	 */
-	@property({ validator: Float })
+	@property({ type: Number })
 	contentHeight?: number;
 
-	@property({ type: Object, multiple: true })
-	_groupedTabs!: Array<WizardTab>
+	/**
+	 * Stores references to the grouped steps.
+	 * @private
+	 */
+	@property({ type: Array })
+	_groupedTabs: Array<WizardTab> = [];
 
 	@property()
-	_breakpoint!: string
+	_breakpoint?: string
 
 	/**
 	 * Defines the steps.
@@ -307,9 +310,6 @@ class Wizard extends UI5Element {
 		// Stores the scroll offsets of the steps,
 		// e.g. the steps' starting point.
 		this.stepScrollOffsets = [];
-
-		// Stores references to the grouped steps.
-		this._groupedTabs = [];
 
 		// Keeps track of the currently selected step index.
 		this.selectedStepIndex = 0;

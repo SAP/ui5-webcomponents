@@ -2,13 +2,13 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type TableCellBase from "./TableCellBase.js";
 import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
-import Table from "./Table.js";
+import type Table from "./Table.js";
 import CheckBox from "./CheckBox.js";
+import { isInstanceOfTable } from "./TableUtils.js";
 import {
 	TABLE_ROW_SELECTOR,
 } from "./generated/i18n/i18n-defaults.js";
@@ -30,8 +30,8 @@ import {
 abstract class TableRowBase extends UI5Element {
 	cells!: Array<TableCellBase>;
 
-	@property({ type: Integer, defaultValue: 0, noAttribute: true })
-	_invalidate!: number;
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
@@ -63,8 +63,8 @@ abstract class TableRowBase extends UI5Element {
 	}
 
 	get _table(): Table | undefined {
-		const table = this.parentElement;
-		return table instanceof Table ? table : undefined;
+		const element = this.parentElement;
+		return isInstanceOfTable(element) ? element : undefined;
 	}
 
 	get _tableId() {
@@ -105,6 +105,10 @@ abstract class TableRowBase extends UI5Element {
 
 	get _i18nRowSelector(): string {
 		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
+	}
+
+	get isTableRowBase() {
+		return true;
 	}
 }
 

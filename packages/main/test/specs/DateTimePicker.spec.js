@@ -281,8 +281,8 @@ describe("DateTimePicker general interaction", () => {
 		const picker = await getPicker("dtMinMaxDatesISO");
 
 		// get header navigation buttons
-		const prevButton = await picker.$("ui5-calendar").shadow$("ui5-calendar-header").shadow$("div[data-ui5-cal-header-btn-prev]");
-		const nextButton = await picker.$("ui5-calendar").shadow$("ui5-calendar-header").shadow$("div[data-ui5-cal-header-btn-next]");
+		const prevButton = await picker.$("ui5-calendar").shadow$(".ui5-calheader").shadow$("div[data-ui5-cal-header-btn-prev]");
+		const nextButton = await picker.$("ui5-calendar").shadow$(".ui5-calheader").shadow$("div[data-ui5-cal-header-btn-next]");
 
 		// assert
 		assert.strictEqual(await prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The previous button is disabled.");

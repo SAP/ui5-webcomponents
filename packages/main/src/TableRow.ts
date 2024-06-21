@@ -58,7 +58,7 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property()
-	key!: string;
+	key = "";
 
 	/**
 	 * Defines the interactive state of the row.
@@ -67,7 +67,7 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	static async onDefine() {
 		await super.onDefine();

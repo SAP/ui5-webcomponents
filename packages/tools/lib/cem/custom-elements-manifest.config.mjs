@@ -4,6 +4,7 @@ import path from "path";
 import fs from 'fs';
 import {
 	getDeprecatedStatus,
+	getExperimentalStatus,
 	getSinceStatus,
 	getPrivacyStatus,
 	getReference,
@@ -64,6 +65,7 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass.customElement = !!customElementDecorator || className === "UI5Element" || undefined;
 	currClass.kind = "class";
 	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
+	currClass._ui5experimental = getExperimentalStatus(classParsedJsDoc);
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
 	currClass._ui5privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
@@ -193,6 +195,9 @@ function processClass(ts, classNode, moduleDoc) {
 					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isPropertyDeclaration(m) && m.name?.text === member.name);
 					const attributeValue = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramMember), tsProgramMember);
 
+					if (attributeValue === "boolean" && member.default === "true") {
+						logDocumentationError(moduleDoc.path, `Boolean properties must be initialzed to false. [${member.name}] property of class [${className}] is intialized to \`true\``)
+					}
 					currClass.attributes.push({
 						description: member.description,
 						name: toKebabCase(member.name),
@@ -307,6 +312,7 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 		kind: "interface",
 		name: interfaceName,
 		description: normalizeDescription(interfaceParsedJsDoc?.description),
+		_ui5experimental: getExperimentalStatus(interfaceParsedJsDoc),
 		_ui5privacy: getPrivacyStatus(interfaceParsedJsDoc),
 		_ui5since: getSinceStatus(interfaceParsedJsDoc),
 		deprecated: getDeprecatedStatus(interfaceParsedJsDoc),
@@ -327,6 +333,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 		kind: "enum",
 		name: enumName,
 		description: normalizeDescription(enumJSdoc?.comment),
+		_ui5experimental: getExperimentalStatus(enumParsedJsDoc),
 		_ui5privacy: getPrivacyStatus(enumParsedJsDoc),
 		_ui5since: getSinceStatus(enumParsedJsDoc),
 		deprecated: getDeprecatedStatus(enumParsedJsDoc) || undefined,

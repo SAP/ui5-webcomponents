@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
+
+
+### Code Refactoring
+
+* **ui5-checkbox:** wrap text by default ([#9165](https://github.com/SAP/ui5-webcomponents/issues/9165)) ([ba1c583](https://github.com/SAP/ui5-webcomponents/commit/ba1c583f01c38f11fd815c2d26ea4ef5c0024ea1))
+* **ui5-li, ui5-li-custom:** rename classes ([#9158](https://github.com/SAP/ui5-webcomponents/issues/9158)) ([8f5b679](https://github.com/SAP/ui5-webcomponents/commit/8f5b67901a429196252f52980c10a04f7d43fe0b))
+* **ui5-tag:** wrap text by default ([#9126](https://github.com/SAP/ui5-webcomponents/issues/9126)) ([96704b8](https://github.com/SAP/ui5-webcomponents/commit/96704b8e893a777206c00efbc57282e56429d687))
+
+
+### Features
+
+* **ui5-ai-prompt-input:** initial (experimental) implementation ([#9078](https://github.com/SAP/ui5-webcomponents/issues/9078)) ([9dcdfdb](https://github.com/SAP/ui5-webcomponents/commit/9dcdfdbcf78eda087099e12301ad91e624038a17))
+* **ui5-grid:** implementing new grid component ([#8362](https://github.com/SAP/ui5-webcomponents/issues/8362)) ([04d291d](https://github.com/SAP/ui5-webcomponents/commit/04d291dc368b884d9001e875441c54cf56e21d1a))
+* **ui5-link:** introduce `icon` and `endIcon` properties ([#9036](https://github.com/SAP/ui5-webcomponents/issues/9036)) ([06318cb](https://github.com/SAP/ui5-webcomponents/commit/06318cbcf39736dbf64c99e0cca21ddd27eed459))
+
+
+### BREAKING CHANGES
+
+* **ui5-checkbox:** `wrapping-type` property default value has changed from `None` to `Normal`.
+Before: 
+```html
+<ui5-checkbox text=Some very very very very long text"></ui5-checkbox><!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-checkbox text=Some very very very very long text"></ui5-checkbox> <!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461, https://github.com/SAP/ui5-webcomponents/issues/7887
+* **ui5-tag:** `wrapping-type` property default value has changed from `None` to `Normal`. Before:
+```html
+<ui5-tag>In Process</ui5-tag><!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-tag>In Process</ui5-tag><!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+
+* refactor(ui5-tag): fix test texsts
+
+* refactor(ui5-tag): fix height of the tags to be the same
+
+No matter if the tag is with wrapping-type="None" or wrapping-type="Normal"
+the height when there is only one line of text should be the same.
+
+* refactor(ui5-tag): merge adjustments and code review comments
+
+* refactor(ui5-tag): fix height
+* **ui5-li, ui5-li-custom:** `StandardListItem` has been renamed to `ListItemStandard`, and `CustomListItem` has been renamed to `ListItemCustom`.
+If you previously imported the classes as follows:
+```ts
+import StandardListItem from "@ui5/webcomponents/StandardListItem.js";
+import CustomListItem from "@ui5/webcomponents/CustomListItem.js";
+```
+now you must change imports to:
+```ts
+import ListItemStandard from "@ui5/webcomponents/ListItemStandard.js";
+import ListItemCustom from "@ui5/webcomponents/ListItemCustom.js";
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+
+
+
+
+
 # [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
 
 

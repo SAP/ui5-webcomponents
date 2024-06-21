@@ -9,16 +9,18 @@ import {
 	isPageDown,
 	isHome,
 	isEnd,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import isElementClickable from "@ui5/webcomponents-base/dist/util/isElementClickable.js";
 import isElementHidden from "@ui5/webcomponents-base/dist/util/isElementHidden.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import type Table from "./Table.js";
-import TableRowBase from "./TableRowBase.js";
-import TableCellBase from "./TableCellBase.js";
+import type TableRowBase from "./TableRowBase.js";
 import TableExtension from "./TableExtension.js";
 import GridWalker from "./GridWalker.js";
+import { isInstanceOfTableCellBase, isInstanceOfTableRowBase } from "./TableUtils.js";
 
 /**
  * Handles the keyboard navigation for the ui5-table.
@@ -33,12 +35,18 @@ class TableNavigation extends TableExtension {
 	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
 	_lastFocusedItem?: HTMLElement;
+	_onKeyDownCaptureBound: (e: KeyboardEvent) => void;
 
 	constructor(table: Table) {
 		super();
 		this._table = table;
 		this._gridWalker = new GridWalker();
 		this._gridWalker.setGrid(this._getNavigationItemsOfGrid());
+		this._onKeyDownCaptureBound = this._onKeyDownCapture.bind(this);
+
+		// we register the keydown handler on the table element at the capturing phase since the
+		// busy indicator stops the propagation of the keydown event and it never reaches the table
+		this._table.addEventListener("keydown", this._onKeyDownCaptureBound, { capture: true });
 	}
 
 	_getNavigationItemsOfRow(row: TableRowBase) {
@@ -120,7 +128,7 @@ class TableNavigation extends TableExtension {
 	}
 
 	_handleEnter(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (eventOrigin instanceof TableCellBase) {
+		if (isInstanceOfTableCellBase(eventOrigin)) {
 			this._handleF2(e, eventOrigin);
 		}
 	}
@@ -136,7 +144,7 @@ class TableNavigation extends TableExtension {
 	}
 
 	_handleF7(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (eventOrigin instanceof TableRowBase) {
+		if (isInstanceOfTableRowBase(eventOrigin)) {
 			this._gridWalker.setColPos(this._colPosition);
 			let elementToFocus = this._gridWalker.getCurrent() as HTMLElement;
 			if (this._tabPosition > -1) {
@@ -274,10 +282,25 @@ class TableNavigation extends TableExtension {
 		}
 
 		if (eventOrigin === this._table._beforeElement || eventOrigin === this._table._afterElement) {
-			this._gridWalker.setColPos(0);
-			this._focusCurrentItem();
+			if (this._table.loading) {
+				this._table._loadingElement.focus();
+			} else {
+				this._gridWalker.setColPos(0);
+				this._focusCurrentItem();
+			}
 		} else if (eventOrigin !== this._lastFocusedItem && this._getNavigationItemsOfGrid().flat().includes(eventOrigin)) {
 			this._lastFocusedItem = eventOrigin;
+		}
+	}
+
+	_onKeyDownCapture(e: KeyboardEvent) {
+		if (!this._table.loading) {
+			return;
+		}
+
+		if (isTabNext(e) || isTabPrevious(e)) {
+			this._focusElement(e.shiftKey ? this._table._beforeElement : this._table._afterElement);
+			e.stopImmediatePropagation();
 		}
 	}
 }
