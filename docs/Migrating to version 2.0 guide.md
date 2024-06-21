@@ -68,9 +68,11 @@ import "@ui5/webcomponents-theming/dist/Assets.js"
 
 ### ui5-badge
 
-| Changed item                  | Old               | New          | 
-|-------------------------------|-------------------|--------------|
-| tag                      | `ui5-badge` | `ui5-tag` | 
+| Changed item           | Old               | New                                | 
+|------------------------|-------------------|------------------------------------|
+| tag                    | `ui5-badge` | `ui5-tag`                          | 
+| `design` default value | `Set3` | `Neutral`                          |
+| property      | `design` | no longer accepts `Set3` as value  |
 
 - The Badge `ui5-badge` has been renamed to Tag `ui5-tag`. If you have previously used the `ui5-badge`:
 ```html
@@ -81,6 +83,7 @@ Now use `ui5-tag` instead:
 <ui5-tag></ui5-tag>
 ```
 
+- The `design1` property has new default value `Neutral` instead of `Set3`
 
 ### ui5-breadcrumbs
 
@@ -704,7 +707,8 @@ it will no longer work for the component. Instead, do not render disabled option
 | Property                     | `placementType`        | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
 | Method                       | `isOpen`, `close`, `showAt`    | `open` property |
-| Property                     | N/A                    | `preventInitialFocus` property |    
+| Property                     | N/A                    | `preventInitialFocus` property |
+| Property                     | `hideBackdrop`          | N/A (removed) |
 | Event                        | after-open             | open  | 
 | Event                        | after-close            | close  | 
 
@@ -780,6 +784,28 @@ Now:
 popover.preventInitalFocus = true;
 popover.opener = opener;
 popover.open = true;
+```
+
+- Property `hideBackdrop` is removed.
+
+Previously the application developers could define a modal popover without visible backdrop as follows:
+
+```html
+<ui5-popover modal hide-backdrop>
+```
+Now the application developers can use the standard [`::backdrop` CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
+
+
+```html
+<style>
+.transparentBackdrop::backdrop {
+  background: transparent;
+}
+</style>
+
+...
+
+<ui5-popover modal class="transparentBackdrop">
 ```
 
 - The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
@@ -1002,6 +1028,8 @@ now use the `overflowButton` slot:
 	<ui5-button slot="overflowButton" id="endOverflowButton">End</ui5-button>
 </ui5-tabcontainer>
 ```
+
+ - The display CSS property of the component is changed from `inline-block` to `block`.   
 
  - You can no longer import and implement the `ITab` interface. TabContainer is designed to work only with Tab and TabSeparator classes, so the interface was obsolete.
 
@@ -1323,6 +1351,14 @@ shellbar.accessibilityAttributes = {
     },
 };
 ```
+
+### ui5-side-navigation-item
+| Changed item | Old    | New           | 
+|--------------|--------|---------------|
+| Property     | `wholeItemToggleable` | N/A (removed) |
+
+-  `wholeItemToggleable` property is now removed. The functionality of clicking the whole item to show/hide the sub items is no longer available.
+- The collapsing/expanding of the item can still be done by pressing the icon.
 
 ### ui5-li-notification
 
