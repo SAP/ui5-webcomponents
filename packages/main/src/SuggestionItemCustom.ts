@@ -26,7 +26,7 @@ class SuggestionItemCustom extends ListItemCustom implements IInputSuggestionIte
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 }
 
 SuggestionItemCustom.define();
