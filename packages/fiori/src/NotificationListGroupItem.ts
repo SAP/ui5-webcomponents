@@ -95,7 +95,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Defines the items of the `ui5-li-notification-group`,

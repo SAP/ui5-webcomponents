@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -13,10 +12,10 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import {
 	isSpace,
 	isSpaceCtrl,
@@ -133,6 +132,7 @@ enum ClipboardDataOperation {
  * @extends UI5Element
  * @public
  * @since 2.0.0
+ * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  */
 @customElement({
 	tag: "ui5-tokenizer",
@@ -203,7 +203,7 @@ class Tokenizer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -213,14 +213,14 @@ class Tokenizer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -228,7 +228,7 @@ class Tokenizer extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleNameRef?: string;
 
 	/**
@@ -238,7 +238,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Indicates if the nMore popover is open
@@ -247,7 +247,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
@@ -257,15 +257,17 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 * @default ""
 	 */
-	@property({ validator: DOMReference, defaultValue: "" })
-	opener!: HTMLElement;
+	@property({
+		converter: DOMReferenceConverter,
+	})
+	opener?: HTMLElement;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
 	 * **Note:** Used inside MultiInput and MultiComboBox components.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	popoverMinWidth?: number;
 
 	/**
@@ -275,7 +277,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventInitialFocus!: boolean;
+	preventInitialFocus = false;
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
@@ -284,7 +286,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventPopoverOpen!: boolean;
+	preventPopoverOpen = false;
 
 	/**
 	 * Hides the popover arrow.
@@ -293,13 +295,13 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hidePopoverArrow!: boolean;
+	hidePopoverArrow = false;
 
-	@property({ validator: Integer })
-	_nMoreCount!: number;
+	@property({ type: Number })
+	_nMoreCount = 0;
 
-	@property({ validator: Integer })
-	_tokensCount!: number;
+	@property({ type: Number })
+	_tokensCount = 0;
 
 	@slot({
 		type: HTMLElement,
@@ -317,10 +319,10 @@ class Tokenizer extends UI5Element {
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
-	_tokenDeleting!: boolean;
-	_preventCollapse!: boolean;
-	_skipTabIndex!: boolean;
-	_previousToken!: Token | null;
+	_tokenDeleting = false;
+	_preventCollapse = false;
+	_skipTabIndex = false;
+	_previousToken: Token | null = null;
 	_focusedElementBeforeOpen?: HTMLElement | null;
 	_deletedDialogItems!: Token[];
 
@@ -339,7 +341,6 @@ class Tokenizer extends UI5Element {
 		});
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this._tokenDeleting = false;
 		this._deletedDialogItems = [];
 	}
 
@@ -998,7 +999,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get morePopoverOpener(): HTMLElement {
-		return Object.keys(this.opener).length === 0 ? this : this.opener;
+		// return this.opener ? this : this.opener;
+		if (this.opener) {
+			return this.opener;
+		}
+		return this;
 	}
 
 	get _nMoreText() {

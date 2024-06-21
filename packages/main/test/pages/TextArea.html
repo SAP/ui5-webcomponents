@@ -207,12 +207,12 @@
 
 		document.getElementById('textarea-change').addEventListener("ui5-change", function (event) {
 			changeCounter += 1;
-			document.getElementById('changeResult').value = changeCounter;
+			document.getElementById('changeResult').value = `${changeCounter}`;
 		});
 
 		document.getElementById('textarea-input').addEventListener("ui5-input", function (event) {
 			inputCounter += 1;
-			document.getElementById('inputResult').value = inputCounter;
+			document.getElementById('inputResult').value = `${inputCounter}`;
 		});
 	</script>
 

@@ -174,16 +174,16 @@ class NotificationListItem extends NotificationListItemBase {
 	* @public
 	* @since 1.0.0-rc.15
 	*/
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Defines the status indicator of the item.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: `${ValueState}`;
+	@property()
+	state: `${ValueState}` = "None"
 
 	/**
 	 * Defines if the `Close` button would be displayed.
@@ -191,15 +191,15 @@ class NotificationListItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showClose!: boolean;
+	showClose = false;
 
 	/**
 	 * Defines the `Important` label of the item.
 	 * @default "Standard"
 	 * @public
 	 */
-	@property({ type: NotificationListItemImportance, defaultValue: NotificationListItemImportance.Standard })
-	importance!: `${NotificationListItemImportance}`;
+	@property()
+	importance: `${NotificationListItemImportance}` = "Standard";
 
 	/**
 	* Defines the state of the `titleText` and `description`,
@@ -207,14 +207,14 @@ class NotificationListItem extends NotificationListItemBase {
 	* @private
 	*/
 	@property({ type: Boolean })
-	_showMorePressed!: boolean;
+	_showMorePressed = false;
 
 	/**
 	* Defines the visibility of the `showMore` button.
 	* @private
 	*/
 	@property({ type: Boolean })
-	_showMore!: boolean;
+	_showMore = false;
 
 	/**
 	* Defines the avatar, displayed in the `ui5-li-notification`.

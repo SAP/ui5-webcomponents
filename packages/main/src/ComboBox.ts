@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone, isAndroid } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
@@ -79,7 +78,7 @@ import ListItemStandard from "./ListItemStandard.js";
 import ComboBoxItemGroup, { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
 import ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
-import ComboBoxFilter from "./types/ComboBoxFilter.js";
+import type ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import type { InputEventDetail } from "./Input.js";
@@ -223,18 +222,18 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines whether the value will be autocompleted to match an item
@@ -243,7 +242,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
-	noTypeahead!: boolean;
+	noTypeahead = false;
 
 	/**
 	 * Defines the "live" value of the component.
@@ -255,16 +254,16 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property()
-	filterValue!: string;
+	filterValue = ""
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -274,15 +273,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is read-only.
@@ -293,7 +292,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -301,7 +300,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Indicates whether a loading indicator should be shown in the picker.
@@ -309,15 +308,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the filter type of the component.
 	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
-	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
-	filter!: `${ComboBoxFilter}`;
+	@property()
+	filter: `${ComboBoxFilter}` = "StartsWithPerTerm";
 
 	/**
 	 * Defines whether the clear icon of the combobox will be shown.
@@ -326,21 +325,21 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.20.1
 	 */
 	@property({ type: Boolean })
-	showClearIcon!: boolean;
+	showClearIcon = false;
 
 	/**
 	 * Indicates whether the input is focssed
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isValueStateFocused!: boolean;
+	_isValueStateFocused = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -349,7 +348,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component
@@ -358,19 +357,19 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed!: boolean;
+	_iconPressed = false;
 
-	@property({ type: Object, noAttribute: true, multiple: true })
-	_filteredItems!: Array<IComboBoxItem>;
+	@property({ type: Array })
+	_filteredItems: Array<IComboBoxItem> = [];
 
-	@property({ validator: Integer, noAttribute: true })
-	_listWidth!: number;
+	@property({ type: Number, noAttribute: true })
+	_listWidth?: number;
 
 	@property({ type: Boolean, noAttribute: true })
-	_effectiveShowClearIcon!: boolean;
+	_effectiveShowClearIcon = false
 
 	/**
 	 * Indicates whether the value state message popover is open.
@@ -378,7 +377,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	valueStateOpen!: boolean;
+	valueStateOpen = false;
 
 	/**
 	 * Indicates whether the items picker is open.
@@ -386,7 +385,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Defines the component items.
@@ -417,15 +416,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	@slot()
 	icon!: Array<IIcon>;
 
-	_initialRendering: boolean;
-	_itemFocused: boolean;
+	_initialRendering = true;
+	_itemFocused = false;
 	// used only for Safari fix (check onAfterRendering)
-	_autocomplete: boolean;
-	_isKeyNavigation: boolean;
-	_selectionPerformed: boolean;
+	_autocomplete = false;
+	_isKeyNavigation = false;
+	_selectionPerformed = false;
 	_lastValue: string;
-	_selectedItemText: string;
-	_userTypedValue: string;
+	_selectedItemText = "";
+	_userTypedValue = "";
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -447,16 +446,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	constructor() {
 		super();
 
-		this._filteredItems = [];
-		this._initialRendering = true;
-		this._itemFocused = false;
-		this._autocomplete = false;
-		this._isKeyNavigation = false;
 		// when an initial value is set it should be considered as a _lastValue
 		this._lastValue = this.getAttribute("value") || "";
-		this._selectionPerformed = false;
-		this._selectedItemText = "";
-		this._userTypedValue = "";
 	}
 
 	onBeforeRendering() {

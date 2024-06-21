@@ -69,8 +69,8 @@ class Button extends UI5Element {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design?: `${ButtonDesign}`;
+	@property()
+	design?: `${ButtonDesign}` = "Default"
 
 	/**
 	 * Defines whether the component is disabled.
@@ -80,12 +80,12 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the current state of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -104,7 +104,7 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	fadeOut!: boolean;
+	fadeOut = false;
 
 	/**
 	 * Initiates button fade middle phase.
@@ -112,7 +112,7 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	fadeMid!: boolean;
+	fadeMid = false;
 
 	/**
 	 * Initiates button elements fade-in phase.
@@ -120,7 +120,7 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	fadeIn!: boolean;
+	fadeIn = false;
 
 	/**
 	 * Defines the available states of the component.

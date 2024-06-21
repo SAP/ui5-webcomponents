@@ -77,19 +77,10 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual(await slider.getProperty("value"), 1, "The current value should be 'stepified' by 7");
 	});
 
-	it("If step property is not a valid number its value should fallback to 1", async () => {
-		const slider = await browser.$("#slider-tickmarks-labels");
-
-		await slider.setProperty("step", 2);
-		await slider.setProperty("step", "String value");
-		await slider.click();
-
-		assert.strictEqual(await slider.getProperty("step"), 1, "Step property should be set to its defaut value");
-		assert.strictEqual(await slider.getProperty("value"), 0, "The current value should be 'stepified' by 1");
-	});
-
 	it("If the step property or the labelInterval are changed, the tickmarks and labels must be updated also", async () => {
 		const slider = await browser.$("#slider-tickmarks-labels");
+
+		await slider.setProperty("step", 1);
 
 		assert.strictEqual((await slider.getProperty("_labels")).length, 21, "Labels must be 21 - 1 for every 2 tickmarks (and steps)");
 

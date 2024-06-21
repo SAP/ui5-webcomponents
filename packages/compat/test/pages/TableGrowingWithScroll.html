@@ -785,7 +785,7 @@
 			table.busy = true;
 
 			++loadMoreTracker;
-			inputLoadMoreCounter.value = loadMoreTracker - 1;
+			inputLoadMoreCounter.value = `${loadMoreTracker - 1}`;
 
 			if (timeoutTracker) {
 				clearTimeout(timeoutTracker);
@@ -800,7 +800,7 @@
 		table.addEventListener("ui5-load-more", loadMore);
 		tableInitialScroll.addEventListener("ui5-load-more", () => {
 			++loadMoreInitialTracker;
-			document.getElementById("inputLoadMoreInitialCounter").value = loadMoreInitialTracker - 1;
+			document.getElementById("inputLoadMoreInitialCounter").value = `${loadMoreInitialTracker - 1}`;
 		});
 
 		btnScroll.addEventListener("click", function() {
