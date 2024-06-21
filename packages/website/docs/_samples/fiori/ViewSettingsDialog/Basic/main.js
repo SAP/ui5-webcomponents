@@ -9,7 +9,7 @@ var vsdResults = document.getElementById("vsdResults");
 
 btnOpenDialog1.addEventListener("click", function () {
     vsdResults.innerHTML = "";
-    vsd1.show();
+    vsd1.open = true;
 });
 
 vsd1.addEventListener("confirm", function (evt) {
