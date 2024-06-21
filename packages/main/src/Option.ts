@@ -96,7 +96,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	get displayIconBegin(): boolean {
 		return !!this.icon;
