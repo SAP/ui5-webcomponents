@@ -175,9 +175,11 @@ Now use `additionalText` instead:
 
 ### ui5-carousel
 
-| Changed item | Old       | New                      | 
-|--------------|-----------|--------------------------|
-| Property     | `pageIndicatorStyle`  | `pageIndicatorType` | 
+| Changed item | Old                                                        | New                    | 
+|--------------|------------------------------------------------------------|------------------------|
+| Property     | `pageIndicatorStyle`                                       | `pageIndicatorType` |
+| Property     | `items-per-page-s`, `items-per-page-m`, `items-per-page-l` | `items-per-page` |
+
 
 - The `pageIndicatorStyle` no longer exists. If you previously used it like:
 ```html
@@ -186,6 +188,19 @@ Now use `additionalText` instead:
 Now you should use `pageIndicatorType` instead:
 ```html
 <ui5-carousel page-indicator-type="Numeric"></ui5-carousel>
+```
+
+Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are removed with a single `items-per-page` property and adds additional size `XL`
+
+If previously you have used:
+```html
+<ui5-carousel items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
+```
+
+Now use:
+
+```html
+<ui5-carousel items-per-page="S3 M3 L3 XL3">
 ```
 
 ### ui5-color-palette-popover
@@ -387,9 +402,12 @@ dateRangePicker.open = false;
 
 ### ui5-dialog
 
-| Changed item | Old     | New     | 
-|--------------|---------|---------|
-| Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" | 
+| Changed item | Old                           | New                                | 
+|--------------|-------------------------------|------------------------------------|
+| Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" |
+| Method       | isOpen, close                 | `open` property                    |
+| Method       | show                          | `open` property                    |
+| Method       | N/A                           | `preventInitialFocus` property                    |
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
@@ -402,6 +420,51 @@ Now you have to use it like:
 <ui5-dialog state="Negative"></ui5-dialog>
 <ui5-dialog state="Critical"></ui5-dialog>
 <ui5-dialog state="Success"></ui5-dialog>
+```
+
+- `isOpen` and `close` methods are no longer present. Now `open` property can be used instead.
+
+Previously:
+
+```ts
+let isOpen = dialog.isOpen();
+dialog.close();
+```
+
+Now:
+
+```ts
+let isOpen = dialog.open;
+dialog.open = false;
+```
+
+- `show` method is no longer present.
+
+Previously:
+
+```ts
+dialog.show();
+```
+
+Now:
+
+```ts
+dialog.open = true;
+```
+
+- parameter `preventInitialFocus` from method `show` is added as a property.
+
+Previously:
+
+```ts
+dialog.show(true);
+```
+
+Now:
+
+```ts
+dialog.preventInitalFocus = true;
+dialog.open = true;
 ```
 
 ### ui5-file-uploader
@@ -636,13 +699,17 @@ it will no longer work for the component. Instead, do not render disabled option
 
 ### ui5-popover
 
-| Changed item                 | Old               | New                                     | 
-|------------------------------|-------------------|-----------------------------------------|
-| Property                     | `horizontalAlign` | values have changed, f.e. `Left` to `Start` | 
-| Property                     | `placementType` | `placement` | 
+| Changed item                 | Old                    | New                                     | 
+|------------------------------|------------------------|-----------------------------------------|
+| Property                     | `horizontalAlign`      | values have changed, f.e. `Left` to `Start` | 
+| Property                     | `placementType`        | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
-| Event        | after-open  | open  | 
-| Event        | after-close  | close  | 
+| Method                       | `isOpen`               | `open` property |
+| Method                       | `close`                | `open` property |
+| Method                       | `showAt`               | `open` property |
+| Property                     | N/A                    | `preventInitialFocus` property |    
+| Event                        | after-open             | open  | 
+| Event                        | after-close            | close  | 
 
 
 - The `Left` and `Right` options have been renamed. If you previously used them to set the placement or the alignment of the popover:
@@ -668,6 +735,54 @@ Now use `placement` instead:
 ```
 ```js
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
+```
+
+- `isOpen` and `close` methods are no longer present. Now `open` property can be used instead.
+
+Previously:
+
+```ts
+let isOpen = popover.isOpen();
+popover.close();
+```
+
+Now:
+
+```ts
+let isOpen = popover.open;
+popover.open = false;
+```
+
+
+- `showAt` method is no longer present.
+
+Previously:
+
+```ts
+popover.showAt(opener);
+```
+
+Now:
+
+```ts
+popover.opener = opener;
+popover.open = true;
+```
+
+- parameter `preventInitialFocus` from method `showAt` is added as a property.
+
+Previously:
+
+```ts
+popover.showAt(opener, true);
+```
+
+Now:
+
+```ts
+popover.preventInitalFocus = true;
+popover.opener = opener;
+popover.open = true;
 ```
 
 - The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
