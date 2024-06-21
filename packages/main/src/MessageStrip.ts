@@ -98,11 +98,8 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({
-		type: MessageStripDesign,
-		defaultValue: MessageStripDesign.Information,
-	})
-	design!: `${MessageStripDesign}`;
+	@property()
+	design: `${MessageStripDesign}` = "Information";
 
 	/**
 	 * Defines the color scheme of the component.
@@ -113,8 +110,8 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 * @since 2.0.0
 	 */
-	@property({ defaultValue: "1" })
-	colorScheme!: string;
+	@property()
+	colorScheme = "1"
 
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
@@ -127,7 +124,7 @@ class MessageStrip extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	hideIcon!: boolean;
+	hideIcon = false
 
 	/**
 	 * Defines whether the MessageStrip renders close button.
@@ -135,7 +132,7 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideCloseButton!: boolean;
+	hideCloseButton = false;
 
 	/**
 	 * Defines the content to be displayed as graphical element within the component.

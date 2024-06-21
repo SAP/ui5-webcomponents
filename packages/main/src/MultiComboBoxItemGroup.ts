@@ -24,7 +24,7 @@ class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the items of the <code>ui5-mcb-item-group</code>.

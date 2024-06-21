@@ -22,7 +22,7 @@ const property = (propData?: Property): PropertyDecorator => {
 
 		const propsMetadata = metadata.properties;
 		if (!propsMetadata[propertyKey as string]) {
-			propsMetadata[propertyKey as string] = propData || { type: String };
+			propsMetadata[propertyKey as string] = propData ?? {};
 		}
 	};
 };

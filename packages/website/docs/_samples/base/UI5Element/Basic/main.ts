@@ -17,8 +17,8 @@ const styles = `
     renderer: litRender,
 })
 export class MyElement extends UI5Element {
-    @property({ type: Integer, defaultValue: 0})
-    count!: number;
+    @property({ type: Number })
+    count = 0;
 
     render() {
         return html `

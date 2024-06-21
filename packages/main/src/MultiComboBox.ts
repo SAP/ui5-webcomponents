@@ -35,7 +35,6 @@ import {
 	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -100,7 +99,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
-import ComboBoxFilter from "./types/ComboBoxFilter.js";
+import type ComboBoxFilter from "./types/ComboBoxFilter.js";
 import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input from "./Input.js";
@@ -258,7 +257,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -271,7 +270,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
@@ -280,7 +279,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.4.0
 	 */
 	@property({ type: Boolean })
-	noTypeahead!: boolean;
+	noTypeahead = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
@@ -289,7 +288,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder = "";
 
 	/**
 	 * Defines if the user input will be prevented, if no matching item has been found
@@ -297,7 +296,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	noValidation!: boolean;
+	noValidation = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -307,15 +306,15 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is read-only.
@@ -326,7 +325,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -335,15 +334,15 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.5
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines the filter type of the component.
 	 * @default "StartsWithPerTerm"
 	 * @public
 	 */
-	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
-	filter!: `${ComboBoxFilter}`;
+	@property()
+	filter: `${ComboBoxFilter}` = "StartsWithPerTerm";
 
 	/**
 	 * Defines whether the clear icon of the multi-combobox will be shown.
@@ -352,25 +351,25 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.20.1
 	 */
 	@property({ type: Boolean })
-	showClearIcon!: boolean;
+	showClearIcon = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Determines if the select all checkbox is visible on top of suggestions.
@@ -378,18 +377,17 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showSelectAll!: boolean;
+	showSelectAll = false;
 
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	_effectiveValueState!: `${ValueState}`;
-
+	@property()
+	_effectiveValueState: `${ValueState}` = "None";
 	/**
 	 * Indicates whether the value state message popover is open.
 	 * @private
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	valueStateOpen!: boolean;
+	valueStateOpen = false;
 
 	/**
 	 * Indicates whether the items picker is open.
@@ -397,53 +395,53 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	open!: boolean;
+	open = false;
 
 	@property()
-	_valueBeforeOpen!: string;
+	_valueBeforeOpen = this.value;
 
-	@property({ type: Object, noAttribute: true, multiple: true })
+	@property({ type: Array })
 	_filteredItems!: Array<IMultiComboBoxItem>;
 
-	@property({ type: Object, noAttribute: true, multiple: true })
+	@property({ type: Array })
 	_previouslySelectedItems!: Array<IMultiComboBoxItem>;
 
 	@property({ type: Boolean })
-	filterSelected!: boolean;
+	filterSelected = false;
 
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_tokenizerFocused!: boolean;
+	_tokenizerFocused = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed!: boolean;
+	_iconPressed = false;
 
-	@property({ validator: Integer, noAttribute: true })
-	_inputWidth!: number;
+	@property({ type: Number, noAttribute: true })
+	_inputWidth = 0;
 
-	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_listWidth!: number;
-
-	@property({ type: Boolean, noAttribute: true })
-	_performingSelectionTwice!: boolean;
+	@property({ type: Number, noAttribute: true })
+	_listWidth = 0;
 
 	@property({ type: Boolean, noAttribute: true })
-	_allSelected!: boolean;
+	_performingSelectionTwice = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_effectiveShowClearIcon!: boolean;
+	_allSelected = false;
 
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	_dialogInputValueState!: `${ValueState}`;
+	@property({ type: Boolean, noAttribute: true })
+	_effectiveShowClearIcon = false;
+
+	@property()
+	_dialogInputValueState: `${ValueState}` = "None";
 
 	/**
 	 * Indicates whether the tokenizer has tokens
 	 * @private
 	 */
 	@property({ type: Boolean })
-	tokenizerAvailable!: boolean;
+	tokenizerAvailable = false;
 
 	/**
 	 * Defines the component items.
@@ -512,7 +510,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	get formFormattedValue(): FormData | string | null {
 		const selectedItems = (this.items || []).filter(item => item.selected);
 
-		if (selectedItems.length) {
+		if (selectedItems.length && this.name) {
 			const formData = new FormData();
 
 			formData.append(this.name, this.value);
