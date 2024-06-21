@@ -190,7 +190,7 @@ Now you should use `pageIndicatorType` instead:
 <ui5-carousel page-indicator-type="Numeric"></ui5-carousel>
 ```
 
-Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are removed with a single `items-per-page` property and adds additional size `XL`
+- Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are removed with a single `items-per-page` property and adds additional size `XL`
 
 If previously you have used:
 ```html
@@ -405,9 +405,8 @@ dateRangePicker.open = false;
 | Changed item | Old                           | New                                | 
 |--------------|-------------------------------|------------------------------------|
 | Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" |
-| Method       | isOpen, close                 | `open` property                    |
-| Method       | show                          | `open` property                    |
-| Method       | N/A                           | `preventInitialFocus` property                    |
+| Method       | isOpen, close, show           | `open` property                    |
+| Property     | N/A                           | `preventInitialFocus` property                    |
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
@@ -438,7 +437,7 @@ let isOpen = dialog.open;
 dialog.open = false;
 ```
 
-- `show` method is no longer present.
+- `show` method is no longer present. `open` property can be used instead.
 
 Previously:
 
@@ -704,9 +703,7 @@ it will no longer work for the component. Instead, do not render disabled option
 | Property                     | `horizontalAlign`      | values have changed, f.e. `Left` to `Start` | 
 | Property                     | `placementType`        | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
-| Method                       | `isOpen`               | `open` property |
-| Method                       | `close`                | `open` property |
-| Method                       | `showAt`               | `open` property |
+| Method                       | `isOpen`, `close`, `showAt`    | `open` property |
 | Property                     | N/A                    | `preventInitialFocus` property |    
 | Event                        | after-open             | open  | 
 | Event                        | after-close            | close  | 
@@ -789,16 +786,16 @@ popover.open = true;
 If you previously used the events like:
 
 ```ts
-poover.addEventListener("after-open", (event) => {
+popover.addEventListener("after-open", (event) => {
 });
-poover.addEventListener("after-close", (event) => {
+popover.addEventListener("after-close", (event) => {
 });
 ```
 Now you have to use it like:
 ```ts
-poover.addEventListener("open", (event) => {
+popover.addEventListener("open", (event) => {
 });
-poover.addEventListener("close", (event) => {
+popover.addEventListener("close", (event) => {
 });
 ```
 
