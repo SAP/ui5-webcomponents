@@ -163,12 +163,12 @@ describe("Menu interaction", () => {
 			</ui5-menu>`)
 
 			cy.get("[ui5-menu]")
-				.ui5MenuOpened();
-
-			cy.get("[ui5-menu]")
 				.then(($item) => {
 					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 
 			cy.get("[ui5-menu-item]")
 				.ui5MenuItemClick();
@@ -184,12 +184,12 @@ describe("Menu interaction", () => {
 			</ui5-menu>`)
 
 			cy.get("[ui5-menu]")
-				.ui5MenuOpened();
-
-			cy.get("[ui5-menu]")
 				.then(($menu) => {
 					$menu.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 
 			cy.get("[ui5-menu-item]")
 				.ui5MenuItemPress("Space");
@@ -205,12 +205,12 @@ describe("Menu interaction", () => {
 			</ui5-menu>`)
 
 			cy.get("[ui5-menu]")
-				.ui5MenuOpened();
-
-			cy.get("[ui5-menu]")
 				.then(($item) => {
 					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
 				})
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
 
 			cy.get("[ui5-menu-item]")
 				.ui5MenuItemPress("Enter");
@@ -227,15 +227,15 @@ describe("Menu interaction", () => {
 
 			cy.get("[ui5-menu]")
 				.as("menu")
+				.then(($item) => {
+					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
+				})
+
+			cy.get("@menu")
 				.ui5MenuOpened();
 
 			cy.get("[ui5-menu-item]:focus")
 				.as("item");
-
-			cy.get("@menu")
-				.then(($item) => {
-					$item.get(0).addEventListener('ui5-item-click', cy.stub().as('clicked'))
-				})
 
 			cy.get("@item")
 				.ui5MenuItemClick();

@@ -14,6 +14,11 @@ describe("Table - loading", () => {
 	</ui5-table>
 	<input id="after">`)
 
+		cy.get("[ui5-table]")
+			.shadow()
+			.find("#loading")
+			.should("exist");
+
 		cy.get("#before")
 			.realClick();
 

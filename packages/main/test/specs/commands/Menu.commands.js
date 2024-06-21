@@ -43,9 +43,8 @@ Cypress.Commands.add('ui5MenuItemClick', { prevSubject: 'element' }, (subject) =
 });
 
 Cypress.Commands.add('ui5MenuItemPress', { prevSubject: 'element' }, (subject, keys) => {
-	cy.wrap(subject)
-		.as("item")
-		.should("be.focused")
+	cy.get(subject)
+		.should("have.focused")
 		.and("be.visible");
 
 	cy.realPress(keys);

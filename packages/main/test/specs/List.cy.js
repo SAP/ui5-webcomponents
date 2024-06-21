@@ -23,7 +23,8 @@ describe("List Tests", async () => {
 			})
 			.shadow()
 			.find(".ui5-list-scroll-container")
-			.scrollTo('bottom')
+			.as("scrollContainer")
+			.scrollTo('bottom', { duration: 100 })
 
 		cy.get("@loadMore")
 			.should("have.been.calledOnce");
