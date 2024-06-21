@@ -83,7 +83,7 @@ Now use `ui5-tag` instead:
 <ui5-tag></ui5-tag>
 ```
 
-- The `design1` property has new default value `Neutral` instead of `Set3`
+- The `design` property has new default value `Neutral` instead of `Set3`. `Set3` is no longer a valid value for the `design` property. 
 
 ### ui5-breadcrumbs
 
@@ -427,14 +427,11 @@ Now you have to use it like:
 - `isOpen` and `close` methods are no longer present. Now `open` property can be used instead.
 
 Previously:
-
 ```ts
 let isOpen = dialog.isOpen();
 dialog.close();
 ```
-
 Now:
-
 ```ts
 let isOpen = dialog.open;
 dialog.open = false;
@@ -443,13 +440,10 @@ dialog.open = false;
 - `show` method is no longer present. `open` property can be used instead.
 
 Previously:
-
 ```ts
 dialog.show();
 ```
-
 Now:
-
 ```ts
 dialog.open = true;
 ```
@@ -457,13 +451,10 @@ dialog.open = true;
 - parameter `preventInitialFocus` from method `show` is added as a property.
 
 Previously:
-
 ```ts
 dialog.show(true);
 ```
-
 Now:
-
 ```ts
 dialog.preventInitalFocus = true;
 dialog.open = true;
@@ -741,30 +732,23 @@ import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js"
 - `isOpen` and `close` methods are no longer present. Now `open` property can be used instead.
 
 Previously:
-
 ```ts
 let isOpen = popover.isOpen();
 popover.close();
 ```
-
 Now:
-
 ```ts
 let isOpen = popover.open;
 popover.open = false;
 ```
 
-
 - `showAt` method is no longer present.
 
 Previously:
-
 ```ts
 popover.showAt(opener);
 ```
-
 Now:
-
 ```ts
 popover.opener = opener;
 popover.open = true;
@@ -773,13 +757,10 @@ popover.open = true;
 - parameter `preventInitialFocus` from method `showAt` is added as a property.
 
 Previously:
-
 ```ts
 popover.showAt(opener, true);
 ```
-
 Now:
-
 ```ts
 popover.preventInitalFocus = true;
 popover.opener = opener;
@@ -789,13 +770,10 @@ popover.open = true;
 - Property `hideBackdrop` is removed.
 
 Previously the application developers could define a modal popover without visible backdrop as follows:
-
 ```html
 <ui5-popover modal hide-backdrop>
 ```
 Now the application developers can use the standard [`::backdrop` CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
-
-
 ```html
 <style>
 .transparentBackdrop::backdrop {
@@ -1360,6 +1338,22 @@ shellbar.accessibilityAttributes = {
 -  `wholeItemToggleable` property is now removed. The functionality of clicking the whole item to show/hide the sub items is no longer available.
 - The collapsing/expanding of the item can still be done by pressing the icon.
 
+### ui5-notification-list
+
+- Instead of `ui5-list`, the new `ui5-notification-list` component should be used as a container for `ui5-li-notification` and `ui5-li-notification-group` components.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+ <ui5-li-notification>
+...
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification>
+...
+```
+
 ### ui5-li-notification
 
 | Changed item | Old    | New                                                           | 
@@ -1401,17 +1395,6 @@ Now use `menu` instead:
     <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
   </ui5-menu>
 ```
-- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification` component.
-  Previously the application developers were defining notifications in this way:
-```html
-<ui5-list>
- <ui5-li-notification>
-```
-To support accessibility, developers should now use the `ui5-notification-list` as seen below:
-```html
-<ui5-notification-list>
-  <ui5-li-notification>
-```
 
 ### ui5-li-notification-group
 | Changed item | Old    | New                                                           | 
@@ -1432,20 +1415,6 @@ now you must use `loading` and `loadingDelay` properties:
 ```html
 <ui5-li-notification-group loading loading-delay="500"></ui5-li-notification-group>
 ```
-- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` component.
-  Previously the application developers were defining notifications in this way:
-```html
-<ui5-list>
-  <ui5-li-notification-group>
-    <ui5-li-notification>
-```
-To support accessibility, developers should now use the `ui5-notification-list` as seen below:
-```html
-<ui5-notification-list>
-  <ui5-li-notification-group>
-    <ui5-li-notification>
-```
-
 
 ### ui5-upload-collection
 
