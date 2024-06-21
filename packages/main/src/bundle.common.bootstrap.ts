@@ -55,7 +55,6 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { forceInitConfiguration } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 
 import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/util/HTMLSanitizer.js";
 
@@ -87,7 +86,6 @@ ignoreCustomElements("app-");
 ignoreCustomElements("my-");
 
 const testAssets = {
-	forceInitConfiguration,
 	configuration: {
 		getAnimationMode,
 		setAnimationMode,

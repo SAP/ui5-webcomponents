@@ -1,4 +1,5 @@
-import { boot, attachBoot } from "../../dist/Boot.js";
+import { attachBoot } from "../../dist/Boot.js";
+import { boot } from "../../dist/Boot.js";
 import { registerThemePropertiesLoader } from "../../dist/AssetRegistry.js";
 import { hasStyle } from "../../dist/ManagedStyles.js";
 

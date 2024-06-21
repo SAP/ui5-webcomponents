@@ -194,16 +194,6 @@ const initConfiguration = () => {
 		return;
 	}
 
-	forceInitConfiguration();
-
-	initialized = true;
-};
-
-/**
- * Internaly exposed method to enable configurations in tests.
- * @private
- */
-const forceInitConfiguration = () => {
 	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
 
@@ -212,6 +202,8 @@ const forceInitConfiguration = () => {
 
 	// 3. If OpenUI5 is detected, it has the highest priority
 	applyOpenUI5Configuration();
+
+	initialized = true;
 };
 
 export {
@@ -225,5 +217,4 @@ export {
 	getSecondaryCalendarType,
 	getTimezone,
 	getFormatSettings,
-	forceInitConfiguration,
 };
