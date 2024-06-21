@@ -193,6 +193,18 @@ type VSDInternalSettings = {
  * @public
  */
 @event("before-open")
+/**
+ * Fired after the dialog is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the dialog is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -201,6 +213,15 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	sortDescending = false;
+
+	/**
+	 * Indicates if the dialog is open.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	open = false;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
@@ -491,9 +512,8 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Shows the dialog.
-	 * @public
 	 */
-	show(): void {
+	beforeDialogOpen(): void {
 		if (!this._dialog) {
 			this._sortOrder = this._sortOrderListDomRef;
 			this._sortBy = this._sortByList;
@@ -509,9 +529,18 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.open = true;
+	}
 
-		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
+	afterDialogOpen(): void {
+		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+
+		this._focusRecentlyUsedControl();
+
+		this.fireEvent("open");
+	}
+
+	afterDialogClose(): void {
+		this.fireEvent("close");
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
@@ -548,15 +577,6 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Closes the dialog.
-	 */
-	close() {
-		if (this._dialog) {
-			this._dialog.open = false;
-		}
-	}
-
-	/**
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
@@ -574,7 +594,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Stores current settings as confirmed and fires `confirm` event.
 	 */
 	_confirmSettings() {
-		this.close();
+		this.open = false;
 		this._confirmedSettings = this._currentSettings;
 
 		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
@@ -587,7 +607,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._confirmedSettings);
 
 		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
-		this.close();
+		this.open = false;
 	}
 
 	get eventsParams() {
