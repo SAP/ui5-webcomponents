@@ -43,6 +43,11 @@ No properties available for this component.`
 | Type        | ${processType(property.type)}               |
 | Default     | ${property.default}                         |`
 
+
+        if (property.readonly) {
+            propertyResult += `\n| Readonly | true |`
+        }
+
         if (property._ui5since) {
             propertyResult += `\n| Since | ${property._ui5since} |`
         }
@@ -252,9 +257,15 @@ const parseDeclaration = (declaration, packageName) => {
         return "";
     }
 
-    let sections = [
-        parseDeclarationDescription(declaration.description)
-    ]
+    let sections = [];
+
+    if (declaration._ui5experimental) {
+        sections.push(`:::info
+${experimentalText(declaration)}
+:::`)
+    }
+
+    sections.push(parseDeclarationDescription(declaration.description))
 
     if (packageName === "main") {
         sections.unshift(`---
@@ -279,7 +290,22 @@ ${declaration._implementations.map(_implementation => `| ${_implementation.split
 
     }
 
-    return sections.join("\n\n")
+    let fileContent = sections.join("\n\n");
+
+    if (declaration._ui5experimental) {
+        fileContent = addExperimentalClassName(fileContent, declaration);
+    }
+
+
+    return fileContent;
+}
+
+
+
+const experimentalText = declaration => {
+    return typeof declaration._ui5experimental === "boolean" ? 
+        "The following entity is available under an experimental flag and its API and behavior are subject to change."
+        : declaration._ui5experimental;
 }
 
 
@@ -288,7 +314,17 @@ const parseComponentDeclaration = (declaration, fileContent) => {
         return "";
     }
 
-    fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", parseDeclarationDescription(declaration.description))
+    if (declaration._ui5experimental) {
+        fileContent = addExperimentalClassName(fileContent, declaration);
+
+        fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", `:::info
+${experimentalText(declaration)}
+:::
+
+${parseDeclarationDescription(declaration.description)}`)
+    } else {
+        fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", parseDeclarationDescription(declaration.description))
+    }
 
     const metadataSections = [
         "field",
@@ -301,6 +337,37 @@ const parseComponentDeclaration = (declaration, fileContent) => {
     fileContent = fileContent.replace("<%COMPONENT_METADATA%>", metadataSections.join("\n\n"));
 
     return fileContent
+}
+
+const experimentalCssClass = "expComponentBadge";
+
+const addExperimentalClassName = (fileContent, declaration) => {
+    if (!declaration._ui5experimental) {
+        return fileContent;
+    }
+
+    const frontMatter = fileContent.match(/^---\n(?:.+\n)*---/);
+
+    if (!frontMatter) {
+        return `---
+sidebar_class_name: ${experimentalCssClass}
+---
+
+${fileContent}`
+    }
+
+    const frontMatterLines = frontMatter[0].split("\n");
+    const classLineIndex = frontMatterLines.findIndex(line => line.startsWith("sidebar_class_name"))
+    const classLine = classLineIndex !== -1 ? frontMatterLines[classLineIndex] : undefined;
+    const hasExperimentalClass = classLine?.includes(experimentalCssClass);
+
+    if (classLine && !hasExperimentalClass) {
+        frontMatterLines[classLineIndex] = `${classLine} ${experimentalCssClass}`;
+    } else if (!classLine) {
+       frontMatterLines.splice(frontMatterLines.length - 1, 0, `sidebar_class_name: ${experimentalCssClass}`);
+    }
+
+    return fileContent.replace(frontMatter[0], frontMatterLines.join("\n"));
 }
 
 export {

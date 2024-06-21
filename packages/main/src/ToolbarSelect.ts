@@ -2,8 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
@@ -75,7 +74,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: CSSSize })
+	@property()
 	width?: string;
 
 	/**
@@ -95,8 +94,8 @@ class ToolbarSelect extends ToolbarItem {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -106,23 +105,23 @@ class ToolbarSelect extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	_onEvent: EventListener
 

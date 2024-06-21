@@ -21,8 +21,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -138,15 +136,15 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value = 0;
 
 	/**
 	 * Defines a minimum value of the component.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Float })
+	@property({ type: Number })
 	min?: number;
 
 	/**
@@ -154,7 +152,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Float })
+	@property({ type: Number })
 	max?: number;
 
 	/**
@@ -162,16 +160,16 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default 1
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 1 })
-	step!: number;
+	@property({ type: Number })
+	step: number = 1;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is required.
@@ -179,7 +177,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Determines whether the component is displayed as disabled.
@@ -187,7 +185,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as read-only.
@@ -195,7 +193,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -206,74 +204,74 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	placeholder?: string;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Determines the number of digits after the decimal point of the component.
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	valuePrecision!: number;
+	@property({ type: Number })
+	valuePrecision = 0;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
-	@property({ type: Boolean, noAttribute: true })
-	_decIconDisabled!: boolean;
+	@property({ noAttribute: true })
+	_decIconDisabled = false;
 
-	@property({ type: Boolean, noAttribute: true })
-	_incIconDisabled!: boolean;
+	@property({ noAttribute: true })
+	_incIconDisabled = false;
 
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
-	@property({ type: Boolean, noAttribute: true })
-	_inputFocused!: boolean;
+	@property({ noAttribute: true })
+	_inputFocused = false;
 
-	@property({ validator: Float, noAttribute: true })
-	_previousValue!: number;
+	@property({ noAttribute: true })
+	_previousValue: number = this.value;
 
-	@property({ validator: Float, noAttribute: true })
-	_waitTimeout!: number;
+	@property({ noAttribute: true })
+	_waitTimeout: number = INITIAL_WAIT_TIMEOUT;
 
-	@property({ validator: Float, noAttribute: true })
-	_speed!: number;
+	@property({ noAttribute: true })
+	_speed: number = INITIAL_SPEED;
 
-	@property({ type: Boolean, noAttribute: true })
-	_btnDown!: boolean;
+	@property({ noAttribute: true })
+	_btnDown?: boolean;
 
-	@property({ validator: Integer, noAttribute: true })
-	_spinTimeoutId!: Timeout;
+	@property({ noAttribute: true })
+	_spinTimeoutId?: Timeout;
 
-	@property({ type: Boolean, noAttribute: true })
-	_spinStarted!: boolean;
+	@property({ noAttribute: true })
+	_spinStarted = false;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -342,7 +340,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 			return this.value.toFixed(this.valuePrecision);
 		}
 
-		if (this.value === Number(this.input.value)) { // For the cases where the number is fractional and is ending with 0s.
+		if (this.input && this.value === Number(this.input.value)) { // For the cases where the number is fractional and is ending with 0s.
 			return this.input.value;
 		}
 

@@ -2,7 +2,7 @@
 @import "../base/AvatarGroup-parameters.css";
 @import "./Tag-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
-@import "../base/BusyIndicator-parameters.css";
+@import "./BusyIndicator-parameters.css";
 @import "./Button-parameters.css";
 @import "../base/CalendarLegend-parameters.css";
 @import "../base/CalendarLegendItem-parameters.css";
@@ -16,7 +16,7 @@
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
-@import "../base/Grid-parameters.css";
+@import "../base/Table-parameters.css";
 @import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "../base/InputIcon-parameters.css";

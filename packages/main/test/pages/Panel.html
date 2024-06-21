@@ -24,10 +24,10 @@
 			panel1.addEventListener("ui5-toggle", function (event) {
 				console.log(event);
 				event.target.headerText = event.target.collapsed ? "Click to expand!" : "Click to collapse!";
-				field1.value = parseInt(field1.value) + 1;
+				field1.value = `${parseInt(field1.value) + 1}`;
 			});
 			panel2.addEventListener("ui5-toggle", function (event) {
-				field2.value = parseInt(field2.value) + 1;
+				field2.value = `${parseInt(field2.value) + 1}`;
 			});
 
 			var button = document.getElementById("b1");

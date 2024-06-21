@@ -56,13 +56,13 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	@property()
-	icon!: string;
+	icon?: string;
 
 	@property()
-	endIcon!: string;
+	endIcon?: string;
 }
 
 Button.define();

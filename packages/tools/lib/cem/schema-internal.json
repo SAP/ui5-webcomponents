@@ -46,6 +46,12 @@
     "ClassDeclaration": {
       "additionalProperties": false,
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -123,6 +129,12 @@
     "EnumDeclaration": {
       "additionalProperties": false,
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -187,6 +199,12 @@
     "InterfaceDeclaration": {
       "additionalProperties": false,
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -453,6 +471,12 @@
       "additionalProperties": false,
       "description": "A description of a custom element class.\n\nCustom elements are JavaScript classes, so this extends from\n`ClassDeclaration` and adds custom-element-specific features like\nattributes, events, and slots.\n\nNote that `tagName` in this interface is optional. Tag names are not\nneccessarily part of a custom element class, but belong to the definition\n(often called the \"registration\") or the `customElements.define()` call.\n\nBecause classes and tag names can only be registered once, there's a\none-to-one relationship between classes and tag names. For ease of use,\nwe allow the tag name here.\n\nSome packages define and register custom elements in separate modules. In\nthese cases one `Module` should contain the `CustomElement` without a\ntagName, and another `Module` should contain the\n`CustomElementExport`.",
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -618,6 +642,12 @@
       "additionalProperties": false,
       "description": "A class mixin that also adds custom element related properties.",
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -827,6 +857,12 @@
     "FunctionDeclaration": {
       "additionalProperties": false,
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -1007,6 +1043,12 @@
       "additionalProperties": false,
       "description": "A description of a class mixin.\n\nMixins are functions which generate a new subclass of a given superclass.\nThis interfaces describes the class and custom element features that\nare added by the mixin. As such, it extends the CustomElement interface and\nClassLike interface.\n\nSince mixins are functions, it also extends the FunctionLike interface. This\nmeans a mixin is callable, and has parameters and a return type.\n\nThe return type is often hard or impossible to accurately describe in type\nsystems like TypeScript. It requires generics and an `extends` operator\nthat TypeScript lacks. Therefore it's recommended that the return type is\nleft empty. The most common form of a mixin function takes a single\nargument, so consumers of this interface should assume that the return type\nis the single argument subclassed by this declaration.\n\nA mixin should not have a superclass. If a mixins composes other mixins,\nthey should be listed in the `mixins` field.\n\nSee [this article]{@link https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/}\nfor more information on the classmixin pattern in JavaScript.",
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },
@@ -1275,6 +1317,12 @@
     "VariableDeclaration": {
       "additionalProperties": false,
       "properties": {
+        "_ui5experimental": {
+          "type": [
+            "string",
+            "boolean"
+          ]
+        },
         "_ui5package": {
           "type": "string"
         },

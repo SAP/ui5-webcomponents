@@ -23,14 +23,14 @@ class ComboBoxItemGroup extends UI5Element implements IComboBoxItem {
 		 * @public
 		 */
 		@property()
-		text!: string;
+		text = "";
 
 		/**
 		 * Indicates whether the item is focused
 		 * @protected
 		 */
 		@property({ type: Boolean })
-		focused!: boolean;
+		focused = false
 
 		/**
 		 * Defines the items of the <code>ui5-cb-item-group</code>.
