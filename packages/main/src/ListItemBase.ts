@@ -51,7 +51,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines whether the item is movable.
@@ -60,17 +60,17 @@ class ListItemBase extends UI5Element implements ITabbable {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	/**
 	* Defines if the list item should display its bottom border.
 	* @private
 	*/
 	@property({ type: Boolean })
-	hasBorder!: boolean;
+	hasBorder = false;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property()
+	forcedTabIndex?: string;
 
 	/**
 	* Defines whether `ui5-li` is in disabled state.
@@ -81,21 +81,21 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* @since 1.0.0-rc.12
 	*/
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Indicates if the element is on focus
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	actionable!: boolean;
+	actionable = false;
 
 	onEnterDOM() {
 		if (isDesktop()) {

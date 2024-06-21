@@ -4,9 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { IColorPaletteItem } from "./ColorPalette.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
@@ -42,7 +40,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	value?: string;
 
 	/**
@@ -56,20 +54,20 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1";
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	index?: number;
 
 	/**
@@ -77,14 +75,14 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone!: boolean;
+	onPhone = false;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	_disabled!: boolean;
+	_disabled = false;
 
 	static i18nBundle: I18nBundle;
 

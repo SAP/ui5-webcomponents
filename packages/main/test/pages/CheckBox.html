@@ -95,7 +95,7 @@
 		[checkBox1, checkBox2, displayOnlyCb].forEach(function(el) {
 			el.addEventListener("ui5-change", function(event) {
 				counter += 1;
-				input.value = counter;
+				input.value = `${counter}`;
 			});
 		});
 

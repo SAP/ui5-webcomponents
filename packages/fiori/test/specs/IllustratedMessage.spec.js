@@ -5,29 +5,6 @@ describe("IllustratedMessage 'design' property", () => {
 		await browser.url(`test/pages/IllustratedMessage.html`);
 	});
 
-	it("should return correct design", async () => {
-		// Arrange
-		const illustratedMsg = await browser.$("#illustratedMsg2");
-		let illustratedMsgDesign = await illustratedMsg.getProperty("design");
-
-		// Assert
-		assert.strictEqual(illustratedMsgDesign, "Auto", "'design' should be equal to 'Auto' by default");
-
-		// Act
-		await illustratedMsg.setProperty("design", "Base");
-		illustratedMsgDesign = await illustratedMsg.getProperty("design");
-
-		// Assert
-		assert.strictEqual(illustratedMsgDesign, "Base", "'design' should be equal to 'Base'");
-
-		// Act
-		await illustratedMsg.setProperty("design", "Invalid");
-		illustratedMsgDesign = await illustratedMsg.getProperty("design");
-
-		// Assert
-		assert.strictEqual(illustratedMsgDesign, "Auto", "'design' should be equal to 'Auto' when invalid value is passed");
-	});
-
 	it("should show up properly, when in panel and it expand/collapse", async () => {
 		// Arrange
 		const illustratedMsg = await browser.$("#illustratedMsg4");

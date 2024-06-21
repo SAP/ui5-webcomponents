@@ -575,19 +575,19 @@
 			selectionChangeCounter += 1;
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;
-			callCountInput.value = selectionChangeCounter;
+			callCountInput.value = `${selectionChangeCounter}`;
 		});
 
 		document.getElementById("multi1").addEventListener("ui5-open", function (event) {
 			openCounter += 1;
 			eventNameInput.value = "open";
-			callCountInput.value = openCounter;
+			callCountInput.value = `${openCounter}`;
 		});
 
 		document.getElementById("multi1").addEventListener("ui5-close", function (event) {
 			closeCounter += 1;
 			eventNameInput.value = "close";
-			callCountInput.value = closeCounter;
+			callCountInput.value = `${closeCounter}`;
 		});
 
 		resetBtn.addEventListener("click", function (event) {

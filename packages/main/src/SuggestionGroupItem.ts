@@ -26,7 +26,7 @@ class SuggestionGroupItem extends UI5Element implements IInputSuggestionItem {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Indicates the "grouping" nature of the component

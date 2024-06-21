@@ -29,7 +29,7 @@ abstract class TableCellBase extends UI5Element {
 	content!: Array<Node>;
 
 	@property({ type: Boolean })
-	_popin!: boolean;
+	_popin = false;
 
 	protected ariaRole: string = "gridcell";
 
@@ -48,6 +48,10 @@ abstract class TableCellBase extends UI5Element {
 
 	getFocusDomRef() {
 		return this;
+	}
+
+	isTableCellBase() {
+		return true;
 	}
 }
 

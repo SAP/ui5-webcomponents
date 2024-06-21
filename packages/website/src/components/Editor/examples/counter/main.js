@@ -8,8 +8,8 @@ import { customElement, property } from "@ui5/webcomponents-base/dist/decorators
   renderer: litRender,
 })
 export class MyCounter extends UI5Element {
-  @property({ validator: Integer, defaultValue: 0 })
-  count!: number;
+  @property({ type: Number })
+  count = 0;
 
   render() {
     return html \`<div>
