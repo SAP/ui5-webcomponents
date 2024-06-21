@@ -16,7 +16,6 @@ describe("Table - loading", async () => {
 		await before.click();
 		assert.ok(await before.isFocused(), "The input before the table1 is focused.");
 
-
 		// let the busy indicator render before pressing tab
 		await browser.pause(100);
 		await before.keys("Tab");
