@@ -7,7 +7,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import MainButton from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import ButtonState from "./ButtonState.js";
 
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
@@ -135,7 +135,7 @@ class Button extends UI5Element {
 			return;
 		}
 
-		if (!this._currentStateObject!.name) {
+		if (!this._currentStateObject?.name) {
 			this._currentStateObject = this._effectiveStateObject;
 		}
 
