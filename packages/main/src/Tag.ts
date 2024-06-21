@@ -17,9 +17,9 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/information.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 import TagDesign from "./types/TagDesign.js";
-import TagSize from "./types/TagSize.js";
+import type TagSize from "./types/TagSize.js";
 // Template
 import TagTemplate from "./generated/templates/TagTemplate.lit.js";
 
@@ -83,8 +83,8 @@ class Tag extends UI5Element {
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ defaultValue: TagDesign.Neutral })
-	design!: `${TagDesign}`;
+	@property()
+	design: `${TagDesign}` = "Neutral"
 
 	/**
 	 * Defines the color scheme of the component.
@@ -93,8 +93,8 @@ class Tag extends UI5Element {
 	 * @default "1"
 	 * @public
 	 */
-	@property({ defaultValue: "1" })
-	colorScheme!: string;
+	@property()
+	colorScheme = "1";
 
 	/**
 	 * Defines if the default state icon is shown.
@@ -103,7 +103,7 @@ class Tag extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
-	hideStateIcon!: boolean;
+	hideStateIcon = false;
 
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
@@ -113,7 +113,7 @@ class Tag extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -124,8 +124,8 @@ class Tag extends UI5Element {
 	 * @public
 	 * @since 1.22.0
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines predefined size of the component.
@@ -133,22 +133,22 @@ class Tag extends UI5Element {
 	 * @public
 	 * @since 2.0.0
 	 */
-	@property({ type: TagSize, defaultValue: TagSize.S })
-	size!: `${TagSize}`;
+	@property()
+	size: `${TagSize}` = "S";
 
 	/**
 	 * Defines if the tag has an icon.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hasIcon!: boolean;
+	_hasIcon = false;
 
 	/**
 	 * Defines if the tag has only an icon (and no text).
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_iconOnly!: boolean;
+	_iconOnly = false;
 
 	/**
 	 * Defines the text of the component.

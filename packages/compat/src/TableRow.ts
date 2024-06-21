@@ -102,8 +102,8 @@ class TableRow extends UI5Element implements ITableRow {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ type: TableRowType, defaultValue: TableRowType.Inactive })
-	type!: `${TableRowType}`;
+	@property()
+	type: `${TableRowType}` = "Inactive";
 
 	/**
 	 * Defines the row's selected state.
@@ -112,7 +112,7 @@ class TableRow extends UI5Element implements ITableRow {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Indicates if the table row is navigated.
@@ -121,7 +121,7 @@ class TableRow extends UI5Element implements ITableRow {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	navigated!: boolean;
+	navigated = false;
 
 	/**
 	 * Defines the mode of the row (None, SingleSelect, MultiSelect).
@@ -129,8 +129,8 @@ class TableRow extends UI5Element implements ITableRow {
 	 * @since 2.0.0
 	 * @private
 	 */
-	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: `${TableMode}`;
+	@property()
+	mode: `${TableMode}` = "None";
 
 	/**
 	 * Indicates if the table row is active.
@@ -139,19 +139,19 @@ class TableRow extends UI5Element implements ITableRow {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
-	@property({ type: Object, multiple: true })
-	_columnsInfo!: Array<TableColumnInfo>;
+	@property({ type: Array })
+	_columnsInfo?: Array<TableColumnInfo>;
 
-	@property({ defaultValue: "-1" })
-	forcedTabIndex!: string;
+	@property()
+	forcedTabIndex?: string;
 
 	@property({ type: Boolean })
-	forcedBusy!: boolean;
+	forcedBusy = false;
 
-	@property({ defaultValue: "", noAttribute: true })
-	forcedAriaPosition!: string;
+	@property({ noAttribute: true })
+	forcedAriaPosition?: string;
 
 	/**
 	 * Defines the cells of the component.
@@ -311,13 +311,13 @@ class TableRow extends UI5Element implements ITableRow {
 	}
 
 	get shouldPopin() {
-		return this._columnsInfo.filter(el => {
+		return this._columnsInfo?.filter(el => {
 			return el.demandPopin || !el.visible;
 		}).length;
 	}
 
 	get allColumnsPoppedIn() {
-		return this._columnsInfo.every(el => el.demandPopin && !el.visible);
+		return this._columnsInfo?.every(el => el.demandPopin && !el.visible);
 	}
 
 	onBeforeRendering() {
@@ -333,7 +333,7 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 
 		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
-		this._columnsInfo.forEach((info, index) => {
+		this._columnsInfo?.forEach((info, index) => {
 			const cell = this.cells[index];
 			const popinDisplay = info.popinDisplay === TableColumnPopinDisplay.Inline;
 
@@ -419,7 +419,7 @@ class TableRow extends UI5Element implements ITableRow {
 	}
 
 	getColumnTextByIdx(index: number): string {
-		const columnInfo: TableColumnInfo = this._columnsInfo[index];
+		const columnInfo: TableColumnInfo | undefined = this._columnsInfo?.[index];
 
 		if (!columnInfo) {
 			return "";

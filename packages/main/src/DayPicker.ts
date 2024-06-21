@@ -28,7 +28,6 @@ import {
 	isPageDownAlt,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
@@ -124,12 +123,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @default []
 	 * @public
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the day picker component.
@@ -141,8 +136,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @default "Single"
 	 * @public
 	 */
-	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: `${CalendarSelectionMode}`;
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -154,29 +149,23 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
 
 	/**
 	 * @private
 	 */
-	@property({
-		type: Object,
-		multiple: true,
-	})
-	_weeks!: Array<Week>;
+	@property({ type: Array })
+	_weeks: Array<Week> = [];
 
-	@property({
-		type: Object,
-		multiple: true,
-	})
-	_dayNames!: Array<DayName>;
+	@property({ type: Array })
+	_dayNames: Array<DayName> = [];
 
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
@@ -189,8 +178,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * Array of special calendar dates (if such are passed) from the calendar.
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	specialCalendarDates!: Array<SpecialCalendarDateT>;
+	@property({ type: Array })
+	specialCalendarDates: Array<SpecialCalendarDateT> = [];
 
 	_autoFocus?: boolean;
 
