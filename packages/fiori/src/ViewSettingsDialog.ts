@@ -221,7 +221,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open!:boolean;
+	open = false;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
