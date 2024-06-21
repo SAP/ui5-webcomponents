@@ -2,12 +2,13 @@
     <ui5-table-header-cell id="selection-cell"
         aria-selected="{{_isSelected}}"
         aria-label="{{_i18nSelection}}"
-        data-ui5-table-selection-component
+        ui5-table-selection-component
     >
     {{#if _isMultiSelect}}
         <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_isSelected}}"
             accessible-name="{{_i18nRowSelector}}"
+            @ui5-change="{{_informSelectionChange}}"
         ></ui5-checkbox>
     {{/if}}
     </ui5-table-header-cell>

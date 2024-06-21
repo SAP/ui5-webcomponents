@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -40,6 +41,7 @@ abstract class TableRowBase extends UI5Element {
 
 	onEnterDOM() {
 		this.setAttribute("role", "row");
+		this.toggleAttribute("ui5-table-row-base", true);
 	}
 
 	onBeforeRendering() {
@@ -60,6 +62,13 @@ abstract class TableRowBase extends UI5Element {
 
 	isHeaderRow(): boolean {
 		return false;
+	}
+
+	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
+		if ((eventOrigin === this && this._isSelectable && isSpace(e)) || (eventOrigin === this._selectionCell && (isSpace(e) || isEnter(e)))) {
+			this._informSelectionChange();
+			e.preventDefault();
+		}
 	}
 
 	get _table(): Table | undefined {
@@ -114,7 +123,8 @@ abstract class TableRowBase extends UI5Element {
 
 export default TableRowBase;
 
-const isInstanceOfTableHeaderRow = (obj: any) => "isHeaderRow" in obj && obj.isHeaderRow() as boolean;
-const isInstanceOfTableRow = (obj: any) => "isHeaderRow" in obj && !obj.isHeaderRow() as boolean;
+const isInstanceOfTableRowBase = (obj: any) => obj instanceof HTMLElement && obj.hasAttribute("ui5-table-row-base");
+const isInstanceOfTableHeaderRow = (obj: any) => obj instanceof HTMLElement && obj.hasAttribute("ui5-table-header-row");
+const isInstanceOfTableRow = (obj: any) => obj instanceof HTMLElement && obj.hasAttribute("ui5-table-row");
 
-export { isInstanceOfTableHeaderRow, isInstanceOfTableRow };
+export { isInstanceOfTableRowBase, isInstanceOfTableHeaderRow, isInstanceOfTableRow };

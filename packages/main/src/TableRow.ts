@@ -89,6 +89,7 @@ class TableRow extends TableRowBase {
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
+		super._onkeydown(e, eventOrigin);
 		if (e.defaultPrevented) {
 			return;
 		}

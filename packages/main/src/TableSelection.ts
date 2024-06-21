@@ -1,7 +1,6 @@
 import {
 	isUpShift,
 	isShift,
-	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -79,7 +78,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	selected = "";
 
 	_table?: Table;
-	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean} | null;
+	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
 	onTableActivate(table: Table) {
 		this._table = table;
@@ -150,6 +149,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	informSelectionChange(row: TableRowBase) {
+		if (this._rangeSelection?.isMouse && this._rangeSelection.shiftPressed) {
+			return;
+		}
+
 		if (row.isHeaderRow()) {
 			this._informHeaderRowSelectionChange();
 		} else {
@@ -224,7 +227,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		const focusedElement = getActiveElement(); // Assumption: The focused element is always the "next" row after navigation.
 
-		if (!isInstanceOfTableRow(focusedElement) && !this._rangeSelection?.isMouse) {
+		if (!(isInstanceOfTableRow(focusedElement) || this._rangeSelection?.isMouse || focusedElement?.hasAttribute("ui5-growing-row"))) {
 			this._stopRangeSelection();
 			return;
 		}
@@ -236,6 +239,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 			const change = isUpShift(e) ? -1 : 1;
 			this._handleRangeSelection(focusedElement as TableRow, change);
 		}
+
+		if (this._rangeSelection) {
+			this._rangeSelection.shiftPressed = e.shiftKey;
+		}
 	}
 
 	_onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement) {
@@ -243,22 +250,13 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return;
 		}
 
-		if (isSpace(e)) {
-			// Handle selection when SPACE pressed
-			if (this._isHeaderSelector(e)) {
-				this._informHeaderRowSelectionChange();
-			} else if (this._isSelectionCheckbox(e)) {
-				const row = this._findRowInPath(e.composedPath());
-				this._informRowSelectionChange(row);
-			} else if (isInstanceOfTableRow(eventOrigin) || isInstanceOfTableHeaderRow(eventOrigin)) {
-				this._informRowSelectionChange(eventOrigin as TableRow);
-			}
-			return;
-		}
-
 		if (!(isInstanceOfTableRow(eventOrigin)) || !this._rangeSelection || isShift(e)) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
 			!this._isSelectionCheckbox(e) && this._stopRangeSelection();
+		}
+
+		if (this._rangeSelection) {
+			this._rangeSelection.shiftPressed = e.shiftKey;
 		}
 	}
 
@@ -282,18 +280,16 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 		if (e.shiftKey && this._rangeSelection?.isMouse) {
 			const startRow = this._rangeSelection.rows[0];
-			const startIndex = this._table?.rows.indexOf(startRow);
-			const endIndex = this._table?.rows.indexOf(row);
+			const startIndex = this._table.rows.indexOf(startRow);
+			const endIndex = this._table.rows.indexOf(row);
 
-			if (startIndex === -1 || endIndex === -1 || startIndex === undefined || endIndex === undefined
-				|| row.key === startRow.key || row.key === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].key) {
+			if (startIndex === -1 || endIndex === -1 || row.key === startRow.key || row.key === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].key) {
 				return;
 			}
 
 			const change = endIndex - startIndex;
 			this._handleRangeSelection(row, change);
 		} else if (row) {
-			this.informSelectionChange(row);
 			this._startRangeSelection(row, true);
 		}
 	}
@@ -315,6 +311,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			isUp: null,
 			rows: [row],
 			isMouse,
+			shiftPressed: false,
 		};
 	}
 
@@ -347,12 +344,6 @@ class TableSelection extends UI5Element implements ITableFeature {
 
 				if (isRowNotInSelection) {
 					this._rangeSelection?.rows.push(row);
-				}
-
-				// Workaround required due to bug with mouse, where the checkbox stays unchecked, but the row is selected.
-				// Even invalidation does not change the state of the checkbox. Maybe an issue with lit's 'intelligent' rendering?
-				if (this._rangeSelection?.isMouse) {
-					row.shadowRoot?.querySelector("#selection-component")?.setAttribute("checked", "");
 				}
 
 				this._selectRow(row, this._rangeSelection!.selected);
