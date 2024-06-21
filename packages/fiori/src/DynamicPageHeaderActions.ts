@@ -79,7 +79,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	pinned!: boolean;
+	pinned = false;
 
 	/**
 	 * Defines whether the pin button is hidden.
@@ -88,7 +88,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hidePinButton!: boolean;
+	hidePinButton = false;
 
 	/**
 	 * Defines whether the header is snapped.
@@ -97,7 +97,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	snapped!: boolean;
+	snapped = false;
 
 	/**
 	 * Contains attributes to be added to HTML to gain accessibility.
@@ -106,7 +106,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: { controls: string };
+	accessibilityAttributes: { controls?: string } = {};
 
 	static i18nBundle: I18nBundle;
 

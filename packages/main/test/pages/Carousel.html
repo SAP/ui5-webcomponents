@@ -675,7 +675,7 @@
 	var counter = 0;
 	carousel8.addEventListener("ui5-navigate", function (event) {
 		result.value = event.detail.selectedIndex;
-		resultCounter.value = ++counter;
+		resultCounter.value = `${++counter}`;
 	});
 
 	var visibleItems = document.getElementById("visible-items");

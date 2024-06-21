@@ -173,7 +173,7 @@
 	<script>
 		var counter = 0;
 		dt1.addEventListener("ui5-change", function(event) {
-			input1.value = ++counter;
+			input1.value = `${++counter}`;
 			input2.value = "{ value: " + event.detail.value + " , valid: " + event.detail.valid + " }";
 		});
 
@@ -183,7 +183,7 @@
 
 		var counter2 = 0;
 		dt2.addEventListener("ui5-change", function(event) {
-			input3.value = ++counter2;
+			input3.value = `${++counter2}`;
 			input4.value = "{ value: " + dt2.value + " , valid: " + event.detail.valid + " }";
 		});
 

@@ -11,9 +11,9 @@ enum FCLLayout {
 
 	/**
 	 *
-	 * Desktop: 67 - 33 - -- Start (expanded) and Mid columns are displayed
-	 * Tablet:  67 - 33 - -- Start (expanded) and Mid columns are displayed
-	 * Phone:   -- 100 --  only the Mid column is displayed
+	 * Desktop: Defaults to 67 - 33 - -- percent widths of columns. Start (expanded) and Mid columns are displayed.
+	 * Tablet:  Defaults to 67 - 33 - -- percent widths of columns. Start (expanded) and Mid columns are displayed.
+	 * Phone:   Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
 	 *
 	 * Use to display both a list and a detail page when the user should focus on the list page.
 	 * @public
@@ -21,9 +21,9 @@ enum FCLLayout {
 	TwoColumnsStartExpanded = "TwoColumnsStartExpanded",
 
 	/**
-	 * Desktop: 33 - 67 - --  Start and Mid (expanded) columns are displayed
-	 * Tablet:  33 - 67 - --  Start and Mid (expanded) columns are displayed
-	 * Phone:   -- 100 --   only the Mid column is displayed
+	 * Desktop: Defaults to 33 - 67 - -- percent widths of columns. Start and Mid (expanded) columns are displayed
+	 * Tablet:  Defaults to 33 - 67 - -- percent widths of columns. Start and Mid (expanded) columns are displayed
+	 * Phone:   Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
 	 *
 	 * Use to display both a list and a detail page when the user should focus on the detail page.
 	 * @public
@@ -31,9 +31,9 @@ enum FCLLayout {
 	TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
 
 	/**
-	 * Desktop: 25 - 50 - 25 Start, Mid (expanded) and End columns are displayed
-	 * Tablet:  0 - 67 - 33  Mid (expanded) and End columns are displayed, Start is accessible by a layout arrow
-	 * Phone:   -- -- 100  only the End column is displayed
+	 * Desktop: Defaults to 25 - 50 - 25 percent widths of columns. Start, Mid (expanded) and End columns are displayed
+	 * Tablet:  Defaults to 0 - 67 - 33 percent widths of columns. Mid (expanded) and End columns are displayed, Start is accessible by dragging the columns-separator
+	 * Phone:   Fixed -- -- 100 percent widths of columns, only the End column is displayed
 	 *
 	 * Use to display all three pages (list, detail, detail-detail) when the user should focus on the detail.
 	 * @public
@@ -41,9 +41,9 @@ enum FCLLayout {
 	ThreeColumnsMidExpanded = "ThreeColumnsMidExpanded",
 
 	/**
-	 * Desktop: 25 - 25 - 50 Start, Mid and End (expanded) columns are displayed
-	 * Tablet:  0 - 33 - 67  Mid and End (expanded) columns are displayed, Start is accessible by layout arrows
-	 * Phone:   -- -- 100  (only the End column is displayed)
+	 * Desktop: Defaults to 25 - 25 - 50 percent widths of columns. Start, Mid and End (expanded) columns are displayed
+	 * Tablet:  Defaults to 0 - 33 - 67 percent widths of columns. Mid and End (expanded) columns are displayed, Start is accessible by dragging the columns-separator
+	 * Phone:   Fixed -- -- 100 percent widths of columns (only the End column is displayed)
 	 *
 	 * Use to display all three pages (list, detail, detail-detail) when the user should focus on the detail-detail.
 	 * @public
@@ -51,31 +51,31 @@ enum FCLLayout {
 	ThreeColumnsEndExpanded = "ThreeColumnsEndExpanded",
 
 	/**
-	 * Desktop: 67 - 33 - 0  Start (expanded) and Mid columns are displayed, End is accessible by layout arrows
-	 * Tablet:  67 - 33 - 0  Start (expanded) and Mid columns are displayed, End is accessible by layout arrows
-	 * Phone:   -- -- 100  only the End column is displayed
+	 * Desktop: Defaults to 67 - 33 - 0 percent widths of columns. Start (expanded) and Mid columns are displayed, End is accessible by dragging the columns-separator
+	 * Tablet:  Defaults to 67 - 33 - 0 percent widths of columns. Start (expanded) and Mid columns are displayed, End is accessible by dragging the columns-separator
+	 * Phone:   Fixed -- -- 100 percent widths of columns, only the End column is displayed
 	 *
 	 * Use to display the list and detail pages when the user should focus on the list.
-	 * The detail-detail is still loaded and easily accessible with layout arrows.
+	 * The detail-detail is still loaded and easily accessible by dragging the columns-separator
 	 * @public
 	 */
 	ThreeColumnsStartExpandedEndHidden = "ThreeColumnsStartExpandedEndHidden",
 
 	/**
-	 * Desktop: 33 - 67 - 0  Start and Mid (expanded) columns are displayed, End is accessible by a layout arrow
-	 * Tablet:  33 - 67 - 0  Start and Mid (expanded) columns are displayed, End is accessible by a layout arrow
-	 * Phone:   -- -- 100  only the End column is displayed
+	 * Desktop: Defaults to 33 - 67 - 0 percent widths of columns. Start and Mid (expanded) columns are displayed, End is accessible by dragging the columns-separator
+	 * Tablet:  Defaults to 33 - 67 - 0 percent widths of columns. Start and Mid (expanded) columns are displayed, End is accessible by dragging the columns-separator
+	 * Phone:   Fixed -- -- 100 percent widths of columns, only the End column is displayed
 	 *
 	 * Use to display the list and detail pages when the user should focus on the detail.
-	 * The detail-detail is still loaded and easily accessible with a layout arrow.
+	 * The detail-detail is still loaded and easily accessible by dragging the columns-separator
 	 * @public
 	 */
 	ThreeColumnsMidExpandedEndHidden = "ThreeColumnsMidExpandedEndHidden",
 
 	/**
-	 * Desktop: -- 100 --  only the Mid column is displayed
-	 * Tablet:  -- 100 --  only the Mid column is displayed
-	 * Phone:   -- 100 --  only the Mid column is displayed
+	 * Desktop: Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
+	 * Tablet:  Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
+	 * Phone:   Fixed -- 100 -- percent widths of columns, only the Mid column is displayed
 	 *
 	 * Use to display a detail page only, when the user should focus entirely on it.
 	 * @public
@@ -83,9 +83,9 @@ enum FCLLayout {
 	MidColumnFullScreen = "MidColumnFullScreen",
 
 	/**
-	 * Desktop: -- -- 100  only the End column is displayed
-	 * Tablet:  -- -- 100  only the End column is displayed
-	 * Phone:   -- -- 100  only the End column is displayed
+	 * Desktop: Fixed -- -- 100 percent widths of columns, only the End column is displayed
+	 * Tablet:  Fixed -- -- 100 percent widths of columns, only the End column is displayed
+	 * Phone:   Fixed -- -- 100 percent widths of columns, only the End column is displayed
 	 *
 	 * Use to display a detail-detail page only, when the user should focus entirely on it.
 	 * @public

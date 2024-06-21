@@ -58,10 +58,10 @@ describe("Properties and attributes convert to each other", () => {
 		assert.strictEqual(await el.getAttribute("no-attribute-prop"), null, "Attribute not there");
 	});
 
-	it("Tests that properties with default values do not automatically set attributes", async () => {
+	it("Tests that properties with default values do automatically set attributes", async () => {
 		const el = await browser.$("#gen");
 
-		assert.strictEqual(await el.getAttribute("default-value-prop"), null, "Attribute not there for defaultValueProp");
+		assert.strictEqual(await el.getAttribute("default-value-prop"), "Hello", "Attribute is there for defaultValueProp");
 	});
 
 });

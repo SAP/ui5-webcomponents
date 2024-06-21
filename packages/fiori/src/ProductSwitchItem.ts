@@ -50,33 +50,23 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 @event("click")
 @event("_focused")
 class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
-	constructor() {
-		super();
-
-		this._deactivate = () => {
-			if (this.active) {
-				this.active = false;
-			}
-		};
-	}
-
 	/**
 	 * Defines the title of the component.
-	 * @default ""
+	 * @default undefined
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	 * Defines the subtitle of the component.
-	 * @default ""
+	 * @default undefined
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
 	/**
 	 * Defines the icon to be displayed as a graphical element within the component.
@@ -86,11 +76,11 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * `<ui5-product-switch-item icon="palette">`
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines a target where the `targetSrc` content must be open.
@@ -105,38 +95,48 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	 * @default "_self"
 	 * @public
 	 */
-	@property({ defaultValue: "_self" })
-	target!: string;
+	@property()
+	target = "_self";
 
 	/**
 	 * Defines the component target URI. Supports standard hyperlink behavior.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	targetSrc!: string;
+	targetSrc?: string;
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	private active!: boolean;
+	private active = false;
 
 	/**
 	 * Used to set the selected state of the component. Only one selected in a sequence.
 	 * **Note:** Set by the `ProductSwitch`
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the component tabindex.
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex?: string;
 
 	_deactivate: () => void;
+
+	constructor() {
+		super();
+
+		this._deactivate = () => {
+			if (this.active) {
+				this.active = false;
+			}
+		};
+	}
 
 	onEnterDOM() {
 		document.addEventListener("mouseup", this._deactivate);

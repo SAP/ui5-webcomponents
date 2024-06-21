@@ -12,8 +12,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
-import WrappingType from "./types/WrappingType.js";
-import LinkAccessibleRole from "./types/LinkAccessibleRole.js";
+import type WrappingType from "./types/WrappingType.js";
+import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 
@@ -21,6 +21,7 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
+import Icon from "./Icon.js";
 
 type LinkClickEventDetail = {
 	altKey: boolean;
@@ -65,6 +66,8 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart icon - Used to style the provided icon within the link
+ * @csspart endIcon - Used to style the provided endIcon within the link
  * @slot {Array<Node>} default - Defines the text of the component.
  *
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -75,6 +78,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 	renderer: litRender,
 	template: LinkTemplate,
 	styles: linkCss,
+	dependencies: [Icon],
 })
 /**
  * Fired when the component is triggered either with a mouse/tap
@@ -115,26 +119,26 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the tooltip of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	 @property()
-	 tooltip!: string;
+	 tooltip?: string;
 
 	/**
 	 * Defines the component href.
 	 *
 	 * **Note:** Standard hyperlink behavior is supported.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	href!: string;
+	href?: string;
 
 	/**
 	 * Defines the component target.
@@ -148,11 +152,11 @@ class Link extends UI5Element implements ITabbable {
 	 * - `_search`
 	 *
 	 * **This property must only be used when the `href` property is set.**
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	target!: string;
+	target?: string;
 
 	/**
 	 * Defines the component design.
@@ -161,8 +165,8 @@ class Link extends UI5Element implements ITabbable {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: LinkDesign, defaultValue: LinkDesign.Default })
-	design!: `${LinkDesign}`;
+	@property()
+	design: `${LinkDesign}` = "Default";
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -171,37 +175,37 @@ class Link extends UI5Element implements ITabbable {
 	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the ARIA role of the component.
 	 *
 	 * **Note:** Use the <code>LinkAccessibleRole.Button</code> role in cases when navigation is not expected to occur and the href property is not defined.
-	 * @default "link"
+	 * @default "Link"
 	 * @public
 	 * @since 1.9.0
 	 */
-	@property({ type: LinkAccessibleRole, defaultValue: LinkAccessibleRole.Link })
-	accessibleRole!: `${LinkAccessibleRole}`;
+	@property()
+	accessibleRole: `${LinkAccessibleRole}` = "Link";
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -218,20 +222,52 @@ class Link extends UI5Element implements ITabbable {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: LinkAccessibilityAttributes;
+	accessibilityAttributes: LinkAccessibilityAttributes = {};
+
+	/**
+	 * Defines the icon, displayed as graphical element within the component before the link's text.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * **Note:** Usage of icon-only link is not supported, the link must always have a text.
+	 *
+	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
+	 *
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @since 2.0.0
+	 * @public
+	 */
+	@property()
+	icon?: string;
+
+	/**
+	 * Defines the icon, displayed as graphical element within the component after the link's text.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * **Note:** Usage of icon-only link is not supported, the link must always have a text.
+	 *
+	 * **Note:** We recommend using аn icon in the beginning or the end only, and with text.
+	 *
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @since 2.0.0
+	 * @public
+	 */
+	@property()
+	endIcon?: string;
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
 
 	@property({ noAttribute: true })
-	forcedTabIndex!: string;
+	forcedTabIndex?: string;
 
 	/**
 	 * Indicates if the element is on focus.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean
+	focused = false;
 
 	_dummyAnchor: HTMLAnchorElement;
 
@@ -245,15 +281,14 @@ class Link extends UI5Element implements ITabbable {
 	onBeforeRendering() {
 		const needsNoReferrer = this.target !== "_self"
 			&& this.href
-			&& this._isCrossOrigin();
+			&& this._isCrossOrigin(this.href);
 
 		this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
 	}
 
-	_isCrossOrigin() {
+	_isCrossOrigin(href: string) {
 		const loc = window.location;
-
-		this._dummyAnchor.href = this.href;
+		this._dummyAnchor.href = href;
 
 		return !(this._dummyAnchor.hostname === loc.hostname
 			&& this._dummyAnchor.port === loc.port

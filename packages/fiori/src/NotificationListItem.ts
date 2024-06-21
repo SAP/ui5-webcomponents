@@ -114,14 +114,14 @@ const ICON_PER_STATUS_DESIGN = {
  * - [Delete] - close an item (trigger "item-close" event)
  *
  * #### Fast Navigation
- * This component provides a fast navigation using the the following keyboard shortcuts:
+ * This component provides a fast navigation using the following keyboard shortcuts:
  *
  * - [Shift] + [Enter] - 'More'/'Less' link will be triggered
  * - [Shift] + [F10] - 'Menu' (Actions) button will be triggered (clicked)
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/NotificationListItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/NotificationListItem.js";`
  *
  * @constructor
  * @extends NotificationListItemBase
@@ -174,16 +174,16 @@ class NotificationListItem extends NotificationListItemBase {
 	* @public
 	* @since 1.0.0-rc.15
 	*/
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Defines the status indicator of the item.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: `${ValueState}`;
+	@property()
+	state: `${ValueState}` = "None"
 
 	/**
 	 * Defines if the `Close` button would be displayed.
@@ -191,15 +191,15 @@ class NotificationListItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showClose!: boolean;
+	showClose = false;
 
 	/**
 	 * Defines the `Important` label of the item.
 	 * @default "Standard"
 	 * @public
 	 */
-	@property({ type: NotificationListItemImportance, defaultValue: NotificationListItemImportance.Standard })
-	importance!: `${NotificationListItemImportance}`;
+	@property()
+	importance: `${NotificationListItemImportance}` = "Standard";
 
 	/**
 	* Defines the state of the `titleText` and `description`,
@@ -207,14 +207,14 @@ class NotificationListItem extends NotificationListItemBase {
 	* @private
 	*/
 	@property({ type: Boolean })
-	_showMorePressed!: boolean;
+	_showMorePressed = false;
 
 	/**
 	* Defines the visibility of the `showMore` button.
 	* @private
 	*/
 	@property({ type: Boolean })
-	_showMore!: boolean;
+	_showMore = false;
 
 	/**
 	* Defines the avatar, displayed in the `ui5-li-notification`.
@@ -399,7 +399,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (this.hasFootNotes) {
-			ids.push(`${id}-footer`);
+			ids.push(`${id}-footnotes`);
 		}
 
 		return ids.join(" ");

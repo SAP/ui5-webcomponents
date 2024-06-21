@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
+
+
+### Bug Fixes
+
+* **ui5-barcode-scanner-dialog:** properly fire 'close' event ([#9193](https://github.com/SAP/ui5-webcomponents/issues/9193)) ([db099f1](https://github.com/SAP/ui5-webcomponents/commit/db099f120353d86ccb04de554b483228bff73325)), closes [#9177](https://github.com/SAP/ui5-webcomponents/issues/9177)
+* **ui5-li-notification:** enhance accessibility ([#9192](https://github.com/SAP/ui5-webcomponents/issues/9192)) ([cc34cea](https://github.com/SAP/ui5-webcomponents/commit/cc34cea9d06babbcb44a1edd21e99becf637c64f)), closes [#9161](https://github.com/SAP/ui5-webcomponents/issues/9161)
+* **ui5-notification-list:** change host to display:block ([#9139](https://github.com/SAP/ui5-webcomponents/issues/9139)) ([efb4791](https://github.com/SAP/ui5-webcomponents/commit/efb4791e529860e2a996136719c5bbbb98d5603f))
+* **ui5-shellbar:** add tooltip for shellbar items ([#9143](https://github.com/SAP/ui5-webcomponents/issues/9143)) ([c39c18a](https://github.com/SAP/ui5-webcomponents/commit/c39c18a8d4f6b1b858f72680d830c40f189d7eab))
+* **ui5-side-navigation:** group name is announced one time by screen … ([#9207](https://github.com/SAP/ui5-webcomponents/issues/9207)) ([4f18dfd](https://github.com/SAP/ui5-webcomponents/commit/4f18dfdf844dee248744692913284304641e83cb))
+
+
+### Code Refactoring
+
+* **ui5-li, ui5-li-custom:** rename classes ([#9158](https://github.com/SAP/ui5-webcomponents/issues/9158)) ([8f5b679](https://github.com/SAP/ui5-webcomponents/commit/8f5b67901a429196252f52980c10a04f7d43fe0b))
+* **ui5-side-navigation-item:** remove wholeItemToggleable property ([#9164](https://github.com/SAP/ui5-webcomponents/issues/9164)) ([37b2181](https://github.com/SAP/ui5-webcomponents/commit/37b2181eb79dfccae8b39069bb068062e37a5a2b)), closes [#9057](https://github.com/SAP/ui5-webcomponents/issues/9057)
+* **ui5-tag:** wrap text by default ([#9126](https://github.com/SAP/ui5-webcomponents/issues/9126)) ([96704b8](https://github.com/SAP/ui5-webcomponents/commit/96704b8e893a777206c00efbc57282e56429d687))
+
+
+### BREAKING CHANGES
+
+* **ui5-side-navigation-item:** the `wholeItemToggleAble` poperty of `ui5-side-navigation-item` is now remomoved.
+The functionality of clicking the whole item to show/hide the sub items (if present) will
+be introduced soon with new property name and enhanced accessibility and keyboard handling.
+* **ui5-tag:** `wrapping-type` property default value has changed from `None` to `Normal`. Before:
+```html
+<ui5-tag>In Process</ui5-tag><!-- would truncate the text if there is not enough space -->
+```
+
+Now:
+```html
+<ui5-tag>In Process</ui5-tag><!-- would let the text wrap if there is not enough space -->
+```
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461
+
+* refactor(ui5-tag): fix test texsts
+
+* refactor(ui5-tag): fix height of the tags to be the same
+
+No matter if the tag is with wrapping-type="None" or wrapping-type="Normal"
+the height when there is only one line of text should be the same.
+
+* refactor(ui5-tag): merge adjustments and code review comments
+
+* refactor(ui5-tag): fix height
+* **ui5-li, ui5-li-custom:** `StandardListItem` has been renamed to `ListItemStandard`, and `CustomListItem` has been renamed to `ListItemCustom`.
+If you previously imported the classes as follows:
+```ts
+import StandardListItem from "@ui5/webcomponents/StandardListItem.js";
+import CustomListItem from "@ui5/webcomponents/CustomListItem.js";
+```
+now you must change imports to:
+```ts
+import ListItemStandard from "@ui5/webcomponents/ListItemStandard.js";
+import ListItemCustom from "@ui5/webcomponents/ListItemCustom.js";
+```
+
+Related to: https://github.com/SAP/ui5-webcomponents/issues/8461
+
+
+
+
+
 # [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
 
 
