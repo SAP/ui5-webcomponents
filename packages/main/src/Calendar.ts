@@ -33,7 +33,7 @@ import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
 import SpecialCalendarDate from "./SpecialCalendarDate.js";
-import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
+import type CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import Icon from "./Icon.js";
 
 // Default calendar for bundling
@@ -225,11 +225,8 @@ class Calendar extends CalendarPart {
 	 * @default "Single"
 	 * @public
 	 */
-	@property({
-		type: CalendarSelectionMode,
-		defaultValue: CalendarSelectionMode.Single,
-	})
-	selectionMode!: `${CalendarSelectionMode}`;
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -240,34 +237,34 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
 
 	/**
 	 * Which picker is currently visible to the user: day/month/year
 	 * @private
 	 */
-	@property({ defaultValue: "day" })
-	_currentPicker!: string;
+	@property()
+	_currentPicker: "day" | "month" | "year" = "day"
 
 	@property({ type: Boolean })
-	_previousButtonDisabled!: boolean;
+	_previousButtonDisabled = false;
 
 	@property({ type: Boolean })
-	_nextButtonDisabled!: boolean;
+	_nextButtonDisabled = false;
 
 	@property()
-	_headerMonthButtonText!: string;
+	_headerMonthButtonText?: string;
 
 	@property()
-	_headerYearButtonText!: string;
+	_headerYearButtonText?: string;
 
 	@property()
-	_headerYearButtonTextSecType!: string;
+	_headerYearButtonTextSecType?: string;
 
-	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
-	_pickersMode!: CalendarPickersMode;
+	@property({ noAttribute: true })
+	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
-	_valueIsProcessed!: boolean
+	_valueIsProcessed = false;
 
 	/**
 	 * Defines the calendar legend of the component.
@@ -297,8 +294,8 @@ class Calendar extends CalendarPart {
 	 * Defines the selected item type of the calendar legend item (if such exists).
 	 * @private
 	 */
-	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
-	_selectedItemType!: `${CalendarLegendItemType}`;
+	@property()
+	_selectedItemType: `${CalendarLegendItemType}` = "None";
 
 	constructor() {
 		super();

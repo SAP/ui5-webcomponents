@@ -2,11 +2,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
@@ -89,16 +88,16 @@ class TreeItemBase extends ListItem {
 	 * @protected
 	 * @default 1
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	level!: number;
+	@property({ type: Number })
+	level = 1;
 
 	/**
 	 * If set, an icon will be displayed before the text of the tree list item.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the tree list item should display an expand/collapse button.
@@ -106,7 +105,7 @@ class TreeItemBase extends ListItem {
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	showToggleButton!: boolean;
+	showToggleButton = false;
 
 	/**
 	 * Defines whether the tree list item will show a collapse or expand icon inside its toggle button.
@@ -114,7 +113,7 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Defines whether the item is movable.
@@ -142,7 +141,7 @@ class TreeItemBase extends ListItem {
 	* @since 1.1.0
 	*/
 	@property({ type: Boolean })
-	declare indeterminate: boolean;
+	declare indeterminate
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
@@ -154,7 +153,7 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hasChildren!: boolean;
+	hasChildren = false;
 
 	/**
 	 * Defines the state of the `additionalText`.
@@ -164,31 +163,31 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: `${ValueState}`;
+	@property()
+	additionalTextState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the accessible name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	declare accessibleName: string;
+	declare accessibleName
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
-	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	forcedSetsize!: number;
+	@property({ type: Number, noAttribute: true })
+	forcedSetsize = 1;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
-	@property({ validator: Integer, defaultValue: 1, noAttribute: true })
-	forcedPosinset!: number;
+	@property({ type: Number, noAttribute: true })
+	forcedPosinset = 1;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -197,7 +196,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	_fixed!: boolean;
+	_fixed = false;
 
 	/**
 	 * Defines the items of the component.

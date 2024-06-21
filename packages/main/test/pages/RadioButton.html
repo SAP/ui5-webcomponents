@@ -176,7 +176,7 @@
 		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function (radio) {
 			radio.addEventListener("ui5-change", function (event) {
 				counter += 1;
-				window["field"].value = counter;
+				window["field"].value = `${counter}`;
 			});
 		})
 

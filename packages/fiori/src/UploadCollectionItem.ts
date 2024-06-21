@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -116,8 +115,8 @@ class UploadCollectionItem extends ListItem {
 	 * @default null
 	 * @public
 	 */
-	@property({ type: Object, noAttribute: true, defaultValue: null })
-	file?: File | null;
+	@property({ type: Object, noAttribute: true })
+	file: File | null = null;
 
 	/**
 	 * The name of the file.
@@ -125,7 +124,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property()
-	fileName!: string;
+	fileName = "";
 
 	/**
 	 * If set to `true` the file name will be clickable and it will fire `file-name-click` event upon click.
@@ -133,15 +132,15 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	fileNameClickable!: boolean;
+	fileNameClickable = false;
 
 	/**
 	 * Disables the delete button.
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean, noAttribute: false })
-	declare disableDeleteButton: boolean;
+	@property({ type: Boolean })
+	declare disableDeleteButton;
 
 	/**
 	 * Hides the delete button.
@@ -149,7 +148,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideDeleteButton!: boolean;
+	hideDeleteButton = false;
 
 	/**
 	 * Hides the retry button when `uploadState` property is `Error`.
@@ -157,7 +156,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideRetryButton!: boolean;
+	hideRetryButton = false;
 
 	/**
 	 * Hides the terminate button when `uploadState` property is `Uploading`.
@@ -165,7 +164,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideTerminateButton!: boolean;
+	hideTerminateButton = false;
 
 	/**
 	 * The upload progress in percentage.
@@ -174,8 +173,8 @@ class UploadCollectionItem extends ListItem {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	progress!: number;
+	@property({ type: Number })
+	progress = 0;
 
 	/**
 	 * Upload state.
@@ -190,8 +189,8 @@ class UploadCollectionItem extends ListItem {
 	 * @default "Ready"
 	 * @public
 	 */
-	@property({ type: UploadState, defaultValue: UploadState.Ready })
-	uploadState!: `${UploadState}`;
+	@property()
+	uploadState: `${UploadState}` = "Ready";
 
 	/**
 	 * Indicates if editing.
@@ -199,7 +198,7 @@ class UploadCollectionItem extends ListItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_editing!: boolean;
+	_editing = false;
 
 	/**
 	 * A thumbnail, which will be shown in the beginning of the `ui5-upload-collection-item`.

@@ -10,7 +10,6 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -210,29 +209,29 @@ class Table extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Identifies the element (or elements) that labels the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the text to be displayed when there are no rows in the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the mode of the <code>ui5-table</code> overflow behavior.
@@ -246,8 +245,8 @@ class Table extends UI5Element {
 	 * @default "Scroll"
 	 * @public
 	 */
-	@property({ type: TableOverflowMode, defaultValue: TableOverflowMode.Scroll })
-	overflowMode!: `${TableOverflowMode}`;
+	@property()
+	overflowMode: `${TableOverflowMode}` = "Scroll";
 
 	/**
 	 * Defines if the loading indicator should be shown.
@@ -257,24 +256,24 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
      * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
      * @default 1000
      * @public
      */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
 	 */
-	@property({ type: String, defaultValue: "0" })
-	stickyTop!: string;
+	@property()
+	stickyTop = "0";
 
-	@property({ type: Integer, defaultValue: 0, noAttribute: true })
-	_invalidate!: number;
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {

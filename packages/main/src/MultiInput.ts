@@ -106,7 +106,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showValueHelpIcon!: boolean;
+	showValueHelpIcon = false;
 
 	/**
 	 * Indicates whether the tokenizer has tokens
@@ -114,7 +114,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	tokenizerAvailable!: boolean;
+	tokenizerAvailable = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -126,7 +126,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	declare name: string;
+	declare name?: string;
 
 	/**
 	 * Defines the component tokens.
@@ -147,7 +147,7 @@ class MultiInput extends Input implements IFormInputElement {
 	get formFormattedValue(): FormData | string | null {
 		const tokens = (this.tokens || []);
 
-		if (tokens.length) {
+		if (tokens.length && this.name) {
 			const formData = new FormData();
 
 			formData.append(this.name, this.value);

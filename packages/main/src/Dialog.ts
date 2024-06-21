@@ -129,11 +129,11 @@ class Dialog extends Popup {
 	 * Defines the header text.
 	 *
 	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Determines whether the component should be stretched to fullscreen.
@@ -144,7 +144,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	stretch!: boolean;
+	stretch = false;
 
 	/**
 	 * Determines whether the component is draggable.
@@ -160,7 +160,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	draggable!: boolean;
+	draggable = false;
 
 	/**
 	 * Configures the component to be resizable.
@@ -175,7 +175,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	resizable!: boolean;
+	resizable = false;
 
 	/**
 	 * Defines the state of the `Dialog`.
@@ -186,8 +186,8 @@ class Dialog extends Popup {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: `${ValueState}`;
+	@property()
+	state: `${ValueState}` = "None";
 
 	_screenResizeHandler: () => void;
 	_dragMouseMoveHandler: (e: MouseEvent) => void;
@@ -261,7 +261,7 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() {
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this._ariaLabel) {
+		if (this.headerText && !this._ariaLabel) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 

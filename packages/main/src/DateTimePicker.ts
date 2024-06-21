@@ -139,7 +139,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_showTimeView!: boolean;
+	_showTimeView = false
 
 	/**
 	 * Defines if the `DateTimePicker` should be displayed in phone mode.
@@ -150,14 +150,14 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_phoneMode!: boolean;
+	_phoneMode = false;
 
 	/**
 	 * Selected, but not yet confirmed date/time
 	 * @private
 	 */
 	@property({ type: Object })
-	_previewValues!: PreviewValues;
+	_previewValues: PreviewValues = {};
 
 	_handleResizeBound: ResizeObserverCallback;
 
