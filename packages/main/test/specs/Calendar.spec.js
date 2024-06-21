@@ -12,7 +12,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Year is set in the header", async () => {
-		const calendarHeader = await browser.$("#calendar1").shadow$("ui5-calendar-header");
+		const calendarHeader = await browser.$("#calendar1").shadow$(".ui5-calheader");
 		const yearButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`);
 		const headerText = parseInt(await yearButton.getText());
 		const currentYear = new Date().getFullYear();
@@ -26,7 +26,7 @@ describe("Calendar general interaction", () => {
 			monthMap.set(index, month);
 		});
 
-		const calendarHeader = await browser.$("#calendar1").shadow$("ui5-calendar-header");
+		const calendarHeader = await browser.$("#calendar1").shadow$(".ui5-calheader");
 		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
 		const monthText = await monthButton.getText();
 		const currentMonth = new Date().getMonth();
@@ -39,7 +39,7 @@ describe("Calendar general interaction", () => {
 		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const header = await calendar.shadow$("ui5-calendar-header");
+		const header = await calendar.shadow$(".ui5-calheader");
 		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
 		const monthButton = await header.shadow$(`[data-ui5-cal-header-btn-month]`);
 		const yearButton = await header.shadow$(`[data-ui5-cal-header-btn-year]`);
@@ -68,7 +68,7 @@ describe("Calendar general interaction", () => {
 		const yearPicker = await calendar.shadow$("ui5-yearpicker");
 		const YEAR = 1997;
 		await calendar.setAttribute("timestamp", Date.UTC(YEAR) / 1000);
-		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
+		await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const focusedItemTimestamp = await yearPicker.shadow$(`[tabindex="0"]`).getAttribute("data-sap-timestamp");
 		const focusedYear = new Date(parseInt(focusedItemTimestamp) * 1000).getUTCFullYear();
 		assert.strictEqual(focusedYear, 1997, "The focused year is 1997");
@@ -117,7 +117,7 @@ describe("Calendar general interaction", () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
-		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
+		await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const focusedItem = await calendar.shadow$("ui5-yearpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
 		assert.ok(await focusedItem.isFocusedDeep(), "Current year element is the active element");
@@ -128,7 +128,7 @@ describe("Calendar general interaction", () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 1, 0, 0, 0)).valueOf() / 1000);
-		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
+		await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
 		const focusedItem = await calendar.shadow$("ui5-monthpicker").shadow$(`[data-sap-timestamp="973036800"]`);
 
 		assert.ok(await focusedItem.isFocusedDeep(), "Current month element is the active element");
@@ -213,7 +213,7 @@ describe("Calendar general interaction", () => {
 	it("When month picker is shown the month button is hidden", async () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar1");
-		const calendarHeader = await calendar.shadow$("ui5-calendar-header");
+		const calendarHeader = await calendar.shadow$(".ui5-calheader");
 
 		await calendar.shadow$("ui5-daypicker").shadow$(`[tabindex="0"]`).click();
 		await browser.keys(["F4"]);
@@ -293,7 +293,7 @@ describe("Calendar general interaction", () => {
 
 	it("Previous and next buttons are disabled when necessary", async () => {
 		await browser.url(`test/pages/Calendar.html`);
-		const calendarHeader = await browser.$("#calendar4").shadow$("ui5-calendar-header");
+		const calendarHeader = await browser.$("#calendar4").shadow$(".ui5-calheader");
 		const prevButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-prev]`);
 		const nextButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
 
@@ -315,7 +315,7 @@ describe("Calendar general interaction", () => {
 	it("Second month and year are rendered in the header", async () => {
 		const calendar = await browser.$("#calendar5");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 9, 10, 0, 0, 0)).valueOf() / 1000);
-		const calendarHeader = await browser.$("#calendar5").shadow$("ui5-calendar-header");
+		const calendarHeader = await browser.$("#calendar5").shadow$(".ui5-calheader");
 		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`).$$('span');
 		const yearButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
 
@@ -324,7 +324,7 @@ describe("Calendar general interaction", () => {
 	});
 
 	it("Buttons for month and year in header are rendered with correct value", async () => {
-		const calendarHeader = await browser.$("#calendar5").shadow$("ui5-calendar-header");
+		const calendarHeader = await browser.$("#calendar5").shadow$(".ui5-calheader");
 		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`).$$('span');
 		const yearButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`).$$('span');
 
@@ -339,7 +339,7 @@ describe("Calendar general interaction", () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar5");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000);
-		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
+		await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-month]`).click();
 		const months = await calendar.shadow$("ui5-monthpicker").shadow$$(`.ui5-mp-item`);
 		const montInfo = await months[0].$$('span');
 
@@ -352,7 +352,7 @@ describe("Calendar general interaction", () => {
 		await browser.url(`test/pages/Calendar.html`);
 		const calendar = await browser.$("#calendar5");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).valueOf() / 1000);
-		await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
+		await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-year]`).click();
 		const years = await calendar.shadow$("ui5-yearpicker").shadow$$(`.ui5-yp-item`);
 		const yaerInfo = await years[0].$$("span");
 
@@ -367,7 +367,7 @@ describe("Calendar general interaction", () => {
 		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0]); // sets the max date to 2024-10-04
 		
-		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
+		const yearButton = await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		await yearButton.click();
 
 		const year2025 = await calendar.shadow$(`ui5-yearpicker`).shadow$(`.ui5-yp-root`).$$(".ui5-yp-item")[11];
@@ -379,7 +379,7 @@ describe("Calendar general interaction", () => {
 		await browser.url("test/pages/Calendar.html");
 
 		const calendar = await browser.$("#calendar1");
-		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
+		const yearButton = await calendar.shadow$(".ui5-calheader").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
 		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
 		await calendar.setAttribute("min-date", "25.10.2018");

@@ -58,14 +58,14 @@ class ResponsivePopover extends Popover {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	contentOnlyOnDesktop!: boolean;
+	contentOnlyOnDesktop = false;
 
 	/**
 	 * Used internaly for controls which must not have header.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hideHeader!: boolean;
+	_hideHeader = false;
 
 	/**
 	 * Defines whether a close button will be rendered in the header of the component
@@ -75,7 +75,7 @@ class ResponsivePopover extends Popover {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	_hideCloseButton!: boolean;
+	_hideCloseButton = false;
 
 	static i18nBundle: I18nBundle;
 

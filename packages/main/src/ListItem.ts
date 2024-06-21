@@ -29,7 +29,7 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
-import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
+import type ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
@@ -51,7 +51,7 @@ type SelectionRequestEventDetail = {
 }
 
 type AccInfo = {
-	role: string;
+	role?: string;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
@@ -108,8 +108,8 @@ abstract class ListItem extends ListItemBase {
 	 * @default "Active"
 	 * @public
 	*/
-	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: `${ListItemType}`;
+	@property()
+	type: `${ListItemType}` = "Active";
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -126,7 +126,7 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.15.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: ListItemAccessibilityAttributes;
+	accessibilityAttributes: ListItemAccessibilityAttributes = {};
 
 	/**
 	 * The navigated state of the list item.
@@ -136,23 +136,23 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	navigated!: boolean;
+	navigated = false;
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String, defaultValue: "" })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 * @private
 	*/
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * Defines the highlight state of the list items.
@@ -161,8 +161,8 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 * @since 1.24
 	 */
-	@property({ type: Highlight, defaultValue: Highlight.None })
-	highlight!: `${Highlight}`;
+	@property()
+	highlight: `${Highlight}` = "None";
 
 	/**
 	 * Used to define the role of the list item.
@@ -171,11 +171,11 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.3.0
 	 *
 	 */
-	@property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
-	accessibleRole!: `${ListItemAccessibleRole}`;
+	@property()
+	accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
 
-	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
-	_selectionMode!: `${ListSelectionMode}`;
+	@property()
+	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.

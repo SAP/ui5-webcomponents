@@ -7,7 +7,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
-import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
+import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
 import PageTemplate from "./generated/templates/PageTemplate.lit.js";
@@ -62,8 +62,8 @@ class Page extends UI5Element {
 	 * @default "Solid"
 	 * @public
 	 */
-	@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
-	backgroundDesign!: `${PageBackgroundDesign}`;
+	@property()
+	backgroundDesign: `${PageBackgroundDesign}` = "Solid";
 
 	/**
 	 * Disables vertical scrolling of page content.
@@ -72,7 +72,7 @@ class Page extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	noScrolling!: boolean;
+	noScrolling = false;
 
 	/**
 	 * Defines if the footer is fixed at the very bottom of the page.
@@ -82,7 +82,7 @@ class Page extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	fixedFooter!: boolean;
+	fixedFooter = false;
 
 	/**
 	 * Defines the footer visibility.
@@ -90,7 +90,7 @@ class Page extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideFooter!: boolean;
+	hideFooter = false;
 
 	/**
 	 * Defines the current media query size.
@@ -98,7 +98,7 @@ class Page extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange = "S";
 
 	/**
 	 * Defines the header HTML Element.

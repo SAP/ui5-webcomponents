@@ -208,7 +208,7 @@ code {
   color: #fff;
   position: absolute;
   top: 0.25rem;
-  inset-inline-end: 3.25rem;
+  inset-inline-end: 1rem;
   border-radius: 0.5rem;
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
@@ -216,6 +216,10 @@ code {
   content: "exp";
   background: #a100c2;
   pointer-events: none;
+}
+
+.newComponentBadge.expComponentBadge:before {
+  inset-inline-end: 3.25rem;
 }
 
 .newComponentBadge:after {

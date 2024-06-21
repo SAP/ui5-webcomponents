@@ -6,8 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/paper-plane.js";
 import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
@@ -89,27 +88,27 @@ class PromptInput extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the label of the input field.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
-	label!: string;
+	label?: string;
 
 	/**
 	 * Defines whether the clear icon of the input will be shown.
@@ -118,7 +117,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	showClearIcon!: boolean;
+	showClearIcon = false;
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
@@ -133,7 +132,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	showExceededText!: boolean;
+	showExceededText = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -144,7 +143,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -156,7 +155,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Sets the maximum number of characters available in the input field.
@@ -165,7 +164,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	maxlength?: number;
 
 	/**
@@ -174,8 +173,8 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None"
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
