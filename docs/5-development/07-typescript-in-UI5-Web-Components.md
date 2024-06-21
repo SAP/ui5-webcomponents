@@ -89,16 +89,20 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 The `@property` decorator has a single parameter of type object with the following fields to describe a component property:
 
-- type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
-- validator?: DataType,
-- defaultValue?: PropertyValue,
-- noAttribute?: boolean,
-- multiple?: boolean,
-- compareValues?: boolean,
+```ts
+type Property = {
+	type?: BooleanConstructor | StringConstructor | ObjectConstructor | NumberConstructor | ArrayConstructor,
+	noAttribute?: boolean,
+	converter?: {
+		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
+		toAttribute(value: unknown, type: unknown): string | null,
+	}
+}
+```
 
 The fields are explained in detail in the [Deep Dive and Best Practices](./06-deep-dive-and-best-practices.md) article.
 
-**Example:** "`String` properties with no specific default value" - we skip all settings as `String` is the default type and `empty string` is the default value.
+**Example:** "`String` properties with no specific default value"
 
 ```ts
 /**
@@ -113,7 +117,7 @@ The fields are explained in detail in the [Deep Dive and Best Practices](./06-de
 headerText?: string
 ```
 
-**Example:** "Properties with enumerated values" - we use `enum` for both the TypeScript class member and the property metadata in the decorator
+**Example:** "Properties with enumerated values" - we use `enum` for both the TypeScript class member, for the framework it is treated as `String` (no type given)
 
 ```ts
 /**
@@ -124,32 +128,27 @@ headerText?: string
  * @defaultvalue "Default"
  * @public
  */
-@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-design!: ButtonDesign;
+@property({})
+design: `${ButtonDesign}` = "Default";
 ```
 
-**Example:** Use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility)
+**Example:** Use `type:  Number` for Numbers
 
 ```ts
 /**
  * Defines component's timestamp.
  * <b>Note:</b> set by the Calendar component
- * @type {sap.ui.webc.base.types.Integer}
- * @name sap.ui.webc.main.CalendarHeader.prototype.timestamp
  * @public
  */
-@property({ validator: Integer })
-timestamp?: number;
+@property({ type: Number })
+timestamp = 0;
 ```
 
-The `validator` setting is preferable to `type` as it avoids confusion with the actual TypeScript type (i.e. `number` in this example).
-
-
-**Example:** TypeScript types (`string`, `boolean`) are used for TypeScript class members, and  Javascript constructors (`String`, `Boolean`) for the metadata settings (as before).
+**Example:** TypeScript types (`string`, `boolean`) are used for TypeScript class members, and  Javascript constructors (`String`, `Boolean`) for the metadata settings (as before). `Boolean` properties can be optional, but assigning `false` also implies the type to TypeScript and skips repeating `boolean` twice.
 
 ```ts
 @property({ type: Boolean })
-hidden!: boolean;
+hidden = false;
 ```
 
 ### Usage of `@name` in Properties Documentation
@@ -157,65 +156,23 @@ Set the `@name` JSDoc annotation for all *public* properties as JSDoc cannot ass
 This will not be necessary once we've switched to TypeDoc.
 
 ### Usage of `?` and `!`
-Use `?` for all metadata properties that may be `undefined` or `null`, and `!` for all other metadata properties. As a rule of thumb:
-- `Boolean` properties are always defined with `!` as they
-are always `false` by default
+Use `?` for all metadata properties that may be `undefined` or `null` and a property initializer for all other properties. `!` should be reserved for very rare cases with some complex object initialization.
+- `Boolean` properties should be initialized to `false`
 ```ts
 @property({ type: Boolean })
 interactive = false;
 ```
-- `String` properties are always defined with `!` as they
-are `empty string` by default, unless you specifically set `defaultValue: undefined` (then use `?`)
+- `String` properties are always defined with `?`
 ```ts
 @property()
 text?: string;
 ```
 
+unless a default value is required by the compont
 ```ts
 @property()
-target?: string;
+target = "my_target";
 ```
-
-- properties with `validator` set, should be always defined with `?` as they are `undefined` by default, unless you specify a `truthy` default value.
-```ts
-@property({ validator: Float })
-width?: number
-```
-
-### Never initialize metadata properties. Use `defaultValue` instead.
-
-Wrong:
-```ts
-class Button extends UI5Element {
-	@property({ type: ButtonDesign })
-	design: ButtonDesign = ButtonDesign.Default;
-}
-```
-
-Also Wrong:
-
-```ts
-class Button extends UI5Element {
-	@property({ type: ButtonDesign })
-	design: ButtonDesign;
-
-	constructor() {
-		super();
-		this.design = ButtonDesign.Default;
-	}
-}
-```
-
-Correct:
-
-```ts
-class Button extends UI5Element {
-	@property({type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: ButtonDesign;
-}
-```
-
-**Note:** We use `!` to instruct the TypeScript compiler that the variable will be initialized with a default value different than `null` and `undefined`, since the TypeScript compiler does not know about the component lifecycle and the fact that the framework will initialize the `design` class member.
 
 ### Defining Slots (`@slot`)
 
