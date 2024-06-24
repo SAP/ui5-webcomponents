@@ -3,12 +3,13 @@
         aria-selected="{{_isSelected}}"
         aria-label="{{_i18nSelection}}"
         fixed
+        ui5-table-selection-component
     >
     {{#if _isMultiSelect}}
         <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_isSelected}}"
-            @ui5-change="{{_informSelectionChange}}"
             accessible-name="{{_i18nRowSelector}}"
+            @ui5-change="{{_informSelectionChange}}"
         ></ui5-checkbox>
     {{/if}}
     </ui5-table-header-cell>
