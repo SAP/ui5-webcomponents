@@ -78,7 +78,7 @@ class TableHeaderRow extends TableRowBase {
 		}
 	}
 
-	isHeaderRow() {
+	isHeaderRow(): boolean {
 		return true;
 	}
 
