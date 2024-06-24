@@ -197,3 +197,47 @@ describe("Table - Fixed Header", async () => {
 		assert.ok(headerRow.isDisplayedInViewport(), "Header is displayed in the viewport");
 	});
 });
+
+describe("Table - Horizontal Scrolling", async () => {
+	before(async () => {
+		await browser.url(`test/pages/TableHorizontal.html`);
+	});
+
+	it("selection column should be fixed to the left", async () => {
+		const table = await browser.$("#table");
+		const innerTable = await table.shadow$("#table");
+		const lastColumn = await browser.$("#lastCell");
+		const firstRow = await browser.$("#firstRow");
+
+		assert.ok(await table.isExisting(), "Table exists");
+		assert.ok(await innerTable.isExisting(), "Inner table exists");
+		assert.ok(await lastColumn.isExisting(), "Last column cell exists");
+		assert.ok(await firstRow.isExisting(), "First row exists");
+
+		const { leftOffset, fixedX } = await browser.execute(() => {
+			const table = document.getElementById("table");
+			const row = document.getElementById("firstRow");
+			return {
+				fixedX: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
+				leftOffset: table.shadowRoot.querySelector("#table")?.scrollLeft || 0
+			}; 
+		});
+
+		assert.equal(leftOffset, 0, "Table is not scrolled horizontally");
+		assert.equal(fixedX, 0, "Selection column is fixed to the left");
+
+		await lastColumn.scrollIntoView();
+
+		const { leftOffset2, fixedX2 } = await browser.execute(() => {
+			const table = document.getElementById("table");
+			const row = document.getElementById("firstRow");
+			return {
+				fixedX2: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
+				leftOffset2: table.shadowRoot.querySelector("#table")?.scrollLeft || 0
+			}; 
+		});
+
+		assert.ok(leftOffset2 > 0, "Table is scrolled horizontally");
+		assert.equal(fixedX2, 0, "Selection column is still fixed to the left");
+	});
+});

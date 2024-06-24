@@ -522,7 +522,7 @@ class Table extends UI5Element {
 	}
 
 	get _tableOverflowX() {
-		return (this.overflowMode === TableOverflowMode.Popin) ? "hidden" : "auto";
+		return (this.overflowMode === TableOverflowMode.Popin) ? "" : "auto";
 	}
 
 	get _tableOverflowY() {
