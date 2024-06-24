@@ -193,7 +193,7 @@ Now you should use `pageIndicatorType` instead:
 <ui5-carousel page-indicator-type="Numeric"></ui5-carousel>
 ```
 
-- Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are removed with a single `items-per-page` property and adds additional size `XL`
+- Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are replaced by a single property `items-per-page` and adds additional size `XL`
 
 If previously you have used:
 ```html
@@ -1006,8 +1006,6 @@ now use the `overflowButton` slot:
 	<ui5-button slot="overflowButton" id="endOverflowButton">End</ui5-button>
 </ui5-tabcontainer>
 ```
-
- - The display CSS property of the component is changed from `inline-block` to `block`.   
 
  - You can no longer import and implement the `ITab` interface. TabContainer is designed to work only with Tab and TabSeparator classes, so the interface was obsolete.
 
