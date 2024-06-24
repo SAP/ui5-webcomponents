@@ -465,6 +465,7 @@ abstract class UI5Element extends HTMLElement {
 		// not the order elements are defined.
 		slottedChildrenMap.forEach((children, propertyName) => {
 			this._state[propertyName] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+			this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 		});
 
 		// Compare the content of each slot with the cached values and invalidate for the ones that changed
@@ -517,6 +518,7 @@ abstract class UI5Element extends HTMLElement {
 		});
 
 		this._state[propertyName] = [];
+		this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 	}
 
 	/**
@@ -1104,7 +1106,7 @@ abstract class UI5Element extends HTMLElement {
 				}
 
 				const propertyName = slotData.propertyName || slotName;
-				Object.defineProperty(proto, propertyName, {
+				const propertyDescriptor: PropertyDescriptor = {
 					get(this: UI5Element) {
 						if (this._state[propertyName] !== undefined) {
 							return this._state[propertyName];
@@ -1114,7 +1116,11 @@ abstract class UI5Element extends HTMLElement {
 					set() {
 						throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
 					},
-				});
+				};
+				Object.defineProperty(proto, propertyName, propertyDescriptor);
+				if (propertyName !== kebabToCamelCase(propertyName)) {
+					Object.defineProperty(proto, kebabToCamelCase(propertyName), propertyDescriptor);
+				}
 			}
 		}
 	}

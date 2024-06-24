@@ -1,22 +1,107 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta charset="utf-8" />
-	<title>AI Button Web Component</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<script data-config type="application/json">
-		{
-			"language": "EN"
-		}
+	<meta charset="utf-8">
+
+	<title>AI Button</title>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
-
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
 </head>
 
 <body>
-	<ui5-ai-button icon="da" end-icon="slim-arrow-down">Generate</ui5-ai-button>
-</body>
+	<ui5-title level="H3">Regular AI Button with Menu</ui5-title>
+	<br/>
 
+	<ui5-ai-button id="myAiButton" state="generate">
+		<ui5-ai-button-state name="generate" text="Generate" icon="ai"></ui5-ai-button-state>
+		<ui5-ai-button-state name="generating" text="Stop Generation" icon="stop"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">Icon-only AI Button with Menu</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButtonIconOnly" state="revise">
+		<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
+		<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+	</ui5-ai-button>
+
+	<ui5-menu id="menu">
+		<ui5-menu-item text="Regenerate"></ui5-menu-item>
+		<ui5-menu-item text="Fix Spelling & Grammar" starts-section></ui5-menu-item>
+		<ui5-menu-item text="Change Tone">
+			<ui5-menu-item text="Option 1"></ui5-menu-item>
+			<ui5-menu-item text="Option 2"></ui5-menu-item>
+			<ui5-menu-item text="Option 3"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Text Length">
+			<ui5-menu-item text="Short"></ui5-menu-item>
+			<ui5-menu-item text="Medium"></ui5-menu-item>
+			<ui5-menu-item text="Long"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Bulleted List"></ui5-menu-item>
+		<ui5-menu-item text="Translate">
+			<ui5-menu-item text="English"></ui5-menu-item>
+			<ui5-menu-item text="German"></ui5-menu-item>
+			<ui5-menu-item text="Spanish"></ui5-menu-item>
+		</ui5-menu-item>
+	</ui5-menu>
+
+	<script>
+		var generationId;
+
+		function startGeneration(button) {
+			console.warn("startGeneration");
+			generationId = setTimeout(function() {
+				console.warn("Generation completed");
+				button.state = "revise";
+			}, 3000);
+		}
+
+		function stopGeneration() {
+			console.warn("stopGeneration");
+			clearTimeout(generationId);
+		}
+
+		function aiButtonClickHandler(evt) {
+			var button = evt.target;
+			switch(button.state) {
+				case "":
+				case "generate":
+					button.state = "generating";
+					startGeneration(button);
+					break;
+				case "generating":
+					button.state = "generate";
+					stopGeneration();
+					break;
+				case "revise":
+					menu.opener = button;
+					menu.open = true;
+					break;
+			}
+		}
+
+		myAiButton.addEventListener("click", aiButtonClickHandler);
+
+		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
+
+		menu.addEventListener("item-click", function(evt) {
+			var button = menu.opener;
+			if (evt.detail.text === "Regenerate") {
+				button.state = "generating";
+				startGeneration(button);
+			}
+		});
+	</script>
+
+</body>
 </html>
