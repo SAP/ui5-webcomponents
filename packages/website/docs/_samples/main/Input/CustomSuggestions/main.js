@@ -2,6 +2,7 @@ import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/features/InputSuggestions.js";
 import "@ui5/webcomponents/dist/SuggestionItemCustom.js";
 import "@ui5/webcomponents-icons/dist/globe.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 
 const countries = [
@@ -34,11 +35,21 @@ const fillInput = (data, value) => {
 	
 		item.innerHTML = `
 			<div class='item-content'>
-				<span>${generateHighlightedMarkup(country, value)}</span>
-	
 				<ui5-icon name="globe"></ui5-icon>
+				<div class='item-titles'>
+					<span>${generateHighlightedMarkup(country, value)}</span>
+					<small>EU</small>
+				</div>
+	
+				<span class='green'><b>EU</b></span>
 			</div>
-		`
+		`;
 		input.appendChild(item);
 	});
 };
+
+input.addEventListener("ui5-selection-change", e => {
+	const text = e.detail.item?.text;
+
+	announce(text, "Polite");
+})

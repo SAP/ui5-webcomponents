@@ -1018,14 +1018,25 @@
 			
 				item.innerHTML = `
 					<div class='item-content'>
-						<span>${generateHighlightedMarkup(country, value)}</span>
-			
 						<ui5-icon name="globe"></ui5-icon>
+						<div class='item-titles'>
+							<span>${generateHighlightedMarkup(country, value)}</span>
+							<small>EU</small>
+						</div>
+			
+						<span class='green'><b>EU</b></span>
 					</div>
 				`
 				customFlatInput.appendChild(item);
 			});
-};
+		};
+
+		customFlatInput.addEventListener("ui5-selection-change", e => {
+			const text = e.detail.item?.text;
+			const invisibleMessage = window["sap-ui-webcomponents-bundle"].invisibleMessage;
+
+			invisibleMessage.announce(text, "Polite");
+		})
 	</script>
 </body>
 
