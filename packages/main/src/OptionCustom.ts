@@ -78,7 +78,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	declare selected: boolean;
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";

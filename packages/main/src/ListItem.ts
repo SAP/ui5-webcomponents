@@ -170,7 +170,7 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	declare selected: boolean;
 
 	/**
 	 * Used to define the role of the list item.
