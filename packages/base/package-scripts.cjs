@@ -65,8 +65,8 @@ const scripts = {
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
 		wdio: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-ci": `yarn cypress run --component --browser chrome --config-file config/cypress.config.js`,
-		"test-open": `yarn cypress open --component --browser chrome --config-file config/cypress.config.js`,
+		"test-cy-ci": `yarn cypress run --component --browser chrome --config-file config/cypress.config.js`,
+		"test-cy-open": `yarn cypress open --component --browser chrome --config-file config/cypress.config.js`,
 	},
 };
 
