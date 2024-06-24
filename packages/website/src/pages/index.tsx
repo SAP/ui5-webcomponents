@@ -7,6 +7,7 @@ import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
 import UI5Logo from "@site/static/img/compatibility-frameworks/UI5.svg";
+import UI5LogoNew from "@site/static/img/compatibility-frameworks/UI5_new.svg";
 
 import styles from './index.module.css';
 
@@ -15,10 +16,16 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div  className={clsx('container', styles.container)}>
-        <UI5Logo className={styles.logoMain}></UI5Logo>
+        {/* <UI5LogoNew className={styles.logoMain}></UI5LogoNew>
         <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
         <span className={styles.heroTitle__UI5}>UI5</span> Web Components
+        </Heading> */}
+
+        <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
+          <UI5LogoNew className={styles.logoMain}></UI5LogoNew>
+          <span className={styles.heroTitle__UI5}>UI5</span> Web Components
         </Heading>
+
         <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
          An <span className={styles.hero__subtitle__part1}><b>open-source</b></span> UI components library for building <span className={styles.hero__subtitle__part2}><b>enterprise-ready</b></span> apps!
         </p>
