@@ -2,13 +2,18 @@ import LegacyDateFormats from "../features/LegacyDateFormats.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
 import { getFormatSettings } from "../InitialConfiguration.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { registerConfiguration } from "./ConfigurationReset.js";
 
 type FormatSettings = {
 	firstDayOfWeek?: number,
 	legacyDateCalendarCustomizing?: LegacyDateCalendarCustomizing,
 };
 
-let formatSettings: FormatSettings;
+let formatSettings: FormatSettings | undefined;
+
+registerConfiguration("CalendarType", () => {
+	formatSettings = undefined;
+});
 
 /**
  * Returns the first day of the week from the configured format settings or based on the current locale.

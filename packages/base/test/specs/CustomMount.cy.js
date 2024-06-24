@@ -14,7 +14,7 @@ describe("Custom mount", () => {
 		const configurationObject = { "animationMode": "basic" }
 
 		cy.mount(html`<button>Test with configuration</button>`, {
-			ui5Configratuion: configurationObject
+			ui5Configuration: configurationObject
 		});
 
 		cy.get("button")

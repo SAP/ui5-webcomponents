@@ -6,9 +6,15 @@ import { fireLanguageChange } from "../locale/languageChange.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { isBooted } from "../Boot.js";
+import { registerConfiguration } from "./ConfigurationReset.js";
 
 let curLanguage: string | undefined;
-let fetchDefaultLanguage: boolean;
+let fetchDefaultLanguage: boolean | undefined;
+
+registerConfiguration("Language", () => {
+	curLanguage = undefined;
+	fetchDefaultLanguage = undefined;
+});
 
 /**
  * Returns the currently configured language, or the browser language as a fallback.
@@ -74,7 +80,7 @@ const setFetchDefaultLanguage = (fetchDefaultLang: boolean) => {
  */
 const getFetchDefaultLanguage = (): boolean => {
 	if (fetchDefaultLanguage === undefined) {
-		setFetchDefaultLanguage(getConfiguredFetchDefaultLanguage());
+		fetchDefaultLanguage = getConfiguredFetchDefaultLanguage();
 	}
 
 	return fetchDefaultLanguage;

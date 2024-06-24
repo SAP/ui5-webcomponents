@@ -35,7 +35,7 @@ describe("Configuration script", () => {
 
 	before(() => {
 		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, {
-			ui5Configratuion: configurationObject
+			ui5Configuration: configurationObject
 		});
 
 		cy.get("script[data-ui5-config]")
@@ -86,7 +86,7 @@ describe("Configuration script", () => {
 			.should("equal", configurationObject.animationMode);
 	});
 
-	it.only("getTheme", () => {
+	it("getTheme", () => {
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
 			.its("configuration")

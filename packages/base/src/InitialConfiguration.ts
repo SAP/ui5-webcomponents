@@ -6,6 +6,7 @@ import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import type CalendarType from "./types/CalendarType.js";
+import { resetConfiguration } from "./config/ConfigurationReset.js";
 
 let initialized = false;
 
@@ -203,7 +204,10 @@ const initConfiguration = () => {
  * Internaly exposed method to enable configurations in tests.
  * @private
  */
-const forceInitConfiguration = () => {
+const forceInitConfiguration = (testEnv = false) => {
+	if (testEnv) {
+		resetConfiguration();
+	}
 	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
 

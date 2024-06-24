@@ -4,8 +4,13 @@ import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
 import { boot, isBooted } from "../Boot.js";
+import { registerConfiguration } from "./ConfigurationReset.js";
 
-let curTheme: string;
+let curTheme: string | undefined;
+
+registerConfiguration("Theme", () => {
+	curTheme = undefined;
+});
 
 /**
  * Returns the current theme.
