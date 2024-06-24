@@ -122,9 +122,3 @@ abstract class TableRowBase extends UI5Element {
 }
 
 export default TableRowBase;
-
-const isInstanceOfTableRowBase = (obj: any) => obj instanceof HTMLElement && obj.hasAttribute("ui5-table-row-base");
-const isInstanceOfTableHeaderRow = (obj: any) => obj instanceof HTMLElement && obj.hasAttribute("ui5-table-header-row");
-const isInstanceOfTableRow = (obj: any) => obj instanceof HTMLElement && obj.hasAttribute("ui5-table-row");
-
-export { isInstanceOfTableRowBase, isInstanceOfTableHeaderRow, isInstanceOfTableRow };

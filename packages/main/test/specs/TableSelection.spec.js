@@ -71,7 +71,8 @@ const testConfig = {
 			},
 			"RANGE_MOUSE": {
 				"range_mouse_initial": "0",
-				"range_mouse_final": "4"
+				"range_mouse_final": "4",
+				"range_mouse_edge": "0"
 			},
 			"RANGE_KEYBOARD": {
 				"initial": "0",
@@ -110,7 +111,8 @@ const testConfig = {
 			},
 			"RANGE_MOUSE": {
 				"range_mouse_initial": "0",
-				"range_mouse_final": "0 1 2 3 4"
+				"range_mouse_final": "0 1 2 3 4",
+				"range_mouse_edge": "0 1 2 3 4"
 			},
 			"RANGE_KEYBOARD": {
 				"initial": "0",
@@ -225,9 +227,19 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 			}]);
 			await checkbox4.click();
 
-			await browser.releaseActions();
 			selected = await selection.getProperty("selected");
 			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_final, `Rows with keys ${testConfig.cases.RANGE_MOUSE.range_mouse_final} selected`);
+
+			await browser.performActions([{
+				type: "key",
+				id: "keyboard2",
+				actions: [{ type: "keyDown", value: Keys.SHIFT }],
+			}]);
+			await checkbox0.click();
+
+			await browser.releaseActions();
+			selected = await selection.getProperty("selected");
+			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_edge, `Rows with keys ${testConfig.cases.RANGE_MOUSE.range_mouse_edge} selected`);
 		});
 
 		it("range selection with keyboard", async () => {

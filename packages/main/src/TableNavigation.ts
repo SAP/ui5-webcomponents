@@ -20,7 +20,6 @@ import type Table from "./Table.js";
 import type TableRowBase from "./TableRowBase.js";
 import TableExtension from "./TableExtension.js";
 import GridWalker from "./GridWalker.js";
-import { isInstanceOfTableCellBase, isInstanceOfTableRowBase } from "./TableUtils.js";
 
 /**
  * Handles the keyboard navigation for the ui5-table.
@@ -128,7 +127,7 @@ class TableNavigation extends TableExtension {
 	}
 
 	_handleEnter(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (isInstanceOfTableCellBase(eventOrigin)) {
+		if (eventOrigin.hasAttribute("ui5-table-cell-base")) {
 			this._handleF2(e, eventOrigin);
 		}
 	}
@@ -144,7 +143,7 @@ class TableNavigation extends TableExtension {
 	}
 
 	_handleF7(e: KeyboardEvent, eventOrigin: HTMLElement) {
-		if (isInstanceOfTableRowBase(eventOrigin)) {
+		if (eventOrigin.hasAttribute("ui5-table-row-base")) {
 			this._gridWalker.setColPos(this._colPosition);
 			let elementToFocus = this._gridWalker.getCurrent() as HTMLElement;
 			if (this._tabPosition > -1) {
