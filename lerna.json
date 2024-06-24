@@ -30,6 +30,5 @@
       "preid": "rc"
     }
   },
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "npmClient": "yarn"
 }
