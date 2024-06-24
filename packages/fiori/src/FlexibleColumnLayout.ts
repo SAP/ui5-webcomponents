@@ -26,7 +26,7 @@ import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/ty
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
-	getLayoutsByMedia,
+	getDefaultLayoutsByMedia,
 } from "./fcl-utils/FCLLayout.js";
 
 // Texts
@@ -81,6 +81,11 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	resized: boolean,
 };
 
+type FlexibleColumnLayoutLayoutConfigurationChangeEventDetail = {
+	layout: `${FCLLayout}`,
+	columnLayout: FlexibleColumnLayoutColumnLayout,
+};
+
 type FCLAccessibilityRoles = Extract<Lowercase<AriaLandmarkRole>, "none" | "complementary" | "contentinfo" | "main" | "region">
 type FCLAccessibilityAttributes = {
 	startColumn?: {
@@ -102,15 +107,6 @@ type FCLAccessibilityAttributes = {
 	endSeparator?: {
 		role: FCLAccessibilityRoles,
 		name: string,
-	},
-}
-
-type UserDefinedColumnLayouts = {
-	"tablet": {
-		[layoutName in FCLLayout]?: FlexibleColumnLayoutColumnLayout;
-	},
-	"desktop": {
-		[layoutName in FCLLayout]?: FlexibleColumnLayoutColumnLayout;
 	},
 }
 
@@ -216,6 +212,25 @@ type UserDefinedColumnLayouts = {
 		resized: { type: Boolean },
 	},
 })
+
+/**
+ * Fired when the `layoutConfiguration` changes via user interaction by dragging the separators.
+ * @param {FCLLayout} layout The current layout
+ * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
+ * @public
+ */
+@event<FlexibleColumnLayoutLayoutConfigurationChangeEventDetail>("layout-configuration-change", {
+	detail: {
+		/**
+		* @public
+		*/
+		layout: { type: FCLLayout },
+		/**
+		* @public
+		*/
+		columnLayout: { type: Array },
+	},
+})
 class FlexibleColumnLayout extends UI5Element {
 	/**
 	* Defines the columns layout and their proportion.
@@ -294,11 +309,44 @@ class FlexibleColumnLayout extends UI5Element {
 	_visibleColumns = 1;
 
 	/**
-	* Allows the user to replace the whole layouts configuration
-	* @private
+	* Allows to customize the proportions of the column widts per screen size and layout.
+	* If no custom proportion provided for a specific layout, the default will be used.
+	*
+	* The `layoutsConfiguration` object has the following structure:
+	* ```json
+	* {	"desktop": {
+	* 		"TwoColumnsStartExpanded": {
+	* 			"layout": ["70%", "30%", "0px"] // 0  or "0%" is also valid
+	* 		},
+	* 		"ThreeColumnsMidExpanded": {
+	* 			"layout": ["30%", "40%", "30%"]
+	* 		},
+	* 		..
+	* 	},
+	* 	"tablet": {
+	* 		"TwoColumnsStartExpanded": {
+	* 			"layout": ["70%", "30%", "0px"]
+	* 		},
+	* 		"ThreeColumnsMidExpanded": {
+	* 			"layout": [0, "70%", "30%"]
+	* 		},
+	* 		..
+	* 	}
+	* ``
+ 	* **Notes:**
+	*
+	* - The proportions should be given in percentages. For example ["30%", "40%", "30%"], ["70%", "30%", 0], etc.
+	* - The proportions should add up to 100%.
+	* - Hidden columns are marked as "0px", e.g. ["0px", "70%", "30%"]. Specifying 0 or "0%" for hidden columns is also valid.
+	* - If the proportions do not match the layout (e.g. if provided proportions ["70%", "30%", "0px"] for "OneColumn" layout), then the default proportions will be used instead.
+	* - If the user drags the columns separator to resize the columns, the `layoutsConfiguration` object will be updated with the user-specified proportions for the given layout.
+	* - No custom configuration available for the phone screen size, as the default of 100% column width is always used there. Any custom configuration for the phone screen size will be ignored.
+	* @public
+	* @since 2.0.0
+	* @default {}
 	*/
 	@property({ type: Object })
-	_layoutsConfiguration?: LayoutConfiguration;
+	layoutsConfiguration: LayoutConfiguration = {};
 
 	/**
 	* Defines the content in the start column.
@@ -327,10 +375,6 @@ class FlexibleColumnLayout extends UI5Element {
 	_onSeparatorMoveEnd: (e: TouchEvent | MouseEvent) => void;
 	static i18nBundle: I18nBundle;
 	_prevLayout: `${FCLLayout}` | null;
-	_userDefinedColumnLayouts: UserDefinedColumnLayouts = {
-		tablet: {},
-		desktop: {},
-	};
 	_ontouchstart: PassiveEventListenerObject;
 	separatorMovementSession?: SeparatorMovementSession | null;
 
@@ -474,11 +518,24 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	nextColumnLayout(layout: `${FCLLayout}`) {
-		let userDefinedLayout;
-		if (this.media !== MEDIA.PHONE) {
-			userDefinedLayout = this._userDefinedColumnLayouts[this.media][layout];
+		return this.getCustomColumnLayout(layout) || this.getDefaultColumnLayout(layout);
+	}
+
+	getCustomColumnLayout(layout: `${FCLLayout}`) {
+		if (this.mediaAllowsCustomConfiguration()) {
+			const customLayout = this.layoutsConfiguration[this.media]?.[layout]?.layout;
+			if (customLayout && this.isValidColumnLayout(customLayout)) {
+				return customLayout;
+			}
 		}
-		return userDefinedLayout || this._effectiveLayoutsByMedia[this.media][layout].layout;
+	}
+
+	getDefaultColumnLayout(layout: `${FCLLayout}`) {
+		return getDefaultLayoutsByMedia()[this.media][layout].layout;
+	}
+
+	mediaAllowsCustomConfiguration() {
+		return this.media !== MEDIA.PHONE;
 	}
 
 	calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout) {
@@ -494,6 +551,13 @@ class FlexibleColumnLayout extends UI5Element {
 			endColumnVisible: this.endColumnVisible,
 			separatorsUsed: separatorUsed,
 			resized,
+		});
+	}
+
+	fireLayoutConfigurationChange() {
+		this.fireEvent<FlexibleColumnLayoutLayoutConfigurationChangeEventDetail>("layout-configuration-change", {
+			layout: this.layout,
+			columnLayout: this._columnLayout!,
 		});
 	}
 
@@ -549,7 +613,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 		const newLayout = this.separatorMovementSession.tmpFCLLayout;
-		const newColumnLayout = this._columnLayout!;
+		const newColumnLayout = this._columnLayout! as string[];
 
 		this.saveUserDefinedColumnLayout(newLayout, newColumnLayout);
 		this.exitSeparatorMovementSession();
@@ -577,13 +641,17 @@ class FlexibleColumnLayout extends UI5Element {
 		this.separatorMovementSession = null;
 	}
 
-	saveUserDefinedColumnLayout(newLayout: FCLLayout, newColumnLayout: FlexibleColumnLayoutColumnLayout) {
-		const media = this.media as MEDIA.TABLET | MEDIA.DESKTOP;
-
-		this._userDefinedColumnLayouts[media][newLayout] = newColumnLayout;
+	saveUserDefinedColumnLayout(newLayout: FCLLayout, newColumnLayout: string[]) {
+		const media = this.media as MEDIA.TABLET | MEDIA.DESKTOP,
+			oldColumnLayout = this.getCustomColumnLayout(newLayout);
+		this.layoutsConfiguration[media] ??= {};
+		this.layoutsConfiguration[media]![newLayout] ??= { layout: newColumnLayout };
 		if (this.layout !== newLayout) {
 			this.layout = newLayout;
 			this.fireLayoutChange(true, false);
+		}
+		if (oldColumnLayout !== newColumnLayout) {
+			this.fireLayoutConfigurationChange();
 		}
 	}
 
@@ -786,6 +854,62 @@ class FlexibleColumnLayout extends UI5Element {
 			return "0px";
 		}
 		return `${(pxWidth / this._availableWidthForColumns) * 100}%`;
+	}
+
+	isValidColumnLayout(columnLayout: (string | 0)[]) {
+		const pxWidths = columnLayout.map(x => this.convertColumnWidthToPixels(x)),
+			totalWidth = pxWidths.reduce((i, sum) => i + sum);
+
+		if (Math.round(totalWidth) !== this._availableWidthForColumns) {
+			return false;
+		}
+
+		const hasColumnBelowMinWidth = pxWidths.some(pxWidth => {
+			return (pxWidth > 0) && (pxWidth < COLUMN_MIN_WIDTH);
+		});
+		if (hasColumnBelowMinWidth) {
+			return false;
+		}
+
+		return this.verifyColumnWidthsMatchLayout(pxWidths);
+	}
+
+	verifyColumnWidthsMatchLayout(pxWidths: number[]) {
+		const columnWidths = {
+				start: pxWidths[0],
+				mid: pxWidths[1],
+				end: pxWidths[2],
+			},
+			startWidth = columnWidths.start,
+			startPercentWidth = parseInt(this.convertToRelativeColumnWidth(startWidth));
+
+		switch (this.layout) {
+		case FCLLayout.TwoColumnsStartExpanded: {
+			return columnWidths.start >= columnWidths.mid;
+		}
+		case FCLLayout.TwoColumnsMidExpanded: {
+			return columnWidths.mid > columnWidths.start;
+		}
+		case FCLLayout.ThreeColumnsEndExpanded: {
+			return (columnWidths.end > columnWidths.mid) && (startPercentWidth < 33);
+		}
+		case FCLLayout.ThreeColumnsStartExpandedEndHidden: {
+			return (columnWidths.start >= columnWidths.mid) && columnWidths.end === 0;
+		}
+		case FCLLayout.ThreeColumnsMidExpanded: {
+			return (columnWidths.mid >= columnWidths.end)
+			&& ((this.media === MEDIA.DESKTOP && startPercentWidth < 33) // desktop
+				|| (this.media === MEDIA.TABLET && startPercentWidth === 0)); // tablet
+		}
+		case FCLLayout.ThreeColumnsMidExpandedEndHidden: {
+			return (columnWidths.mid > columnWidths.start)
+				&& columnWidths.end === 0
+				&& ((this.media === MEDIA.DESKTOP && startPercentWidth >= 33)
+					|| (this.media === MEDIA.TABLET && startWidth >= COLUMN_MIN_WIDTH));
+		}
+		}
+
+		return false;
 	}
 
 	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, fclLayoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {
@@ -1063,7 +1187,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get effectiveSeparatorsInfo() {
-		return this._effectiveLayoutsByMedia[this.media][this.effectiveLayout].separators;
+		return getDefaultLayoutsByMedia()[this.media][this.effectiveLayout].separators;
 	}
 
 	get effectiveLayout() {
@@ -1172,10 +1296,6 @@ class FlexibleColumnLayout extends UI5Element {
 		return this.accessibilityAttributes.endSeparator?.role || "separator";
 	}
 
-	get _effectiveLayoutsByMedia() {
-		return this._layoutsConfiguration || getLayoutsByMedia();
-	}
-
 	get _accAttributes() {
 		return {
 			columns: {
@@ -1203,6 +1323,8 @@ export default FlexibleColumnLayout;
 export type {
 	MEDIA,
 	FlexibleColumnLayoutLayoutChangeEventDetail,
+	FlexibleColumnLayoutLayoutConfigurationChangeEventDetail,
 	FCLAccessibilityAttributes,
 	FlexibleColumnLayoutColumnLayout,
+	LayoutConfiguration,
 };
