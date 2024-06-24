@@ -193,7 +193,7 @@ Now you should use `pageIndicatorType` instead:
 <ui5-carousel page-indicator-type="Numeric"></ui5-carousel>
 ```
 
-- Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are replaced by a single property `items-per-page` and adds additional size `XL`
+- Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are replaced by a single property `items-per-page`, which also adds an additional `XL` size
 
 If previously you have used:
 ```html
@@ -424,7 +424,7 @@ Now you have to use it like:
 <ui5-dialog state="Success"></ui5-dialog>
 ```
 
-- `isOpen` and `close` methods are no longer present. Now `open` property can be used instead.
+- Methods `isOpen` and `close` are no longer present. Now `open` property can be used instead.
 
 Previously:
 ```ts
@@ -437,7 +437,7 @@ let isOpen = dialog.open;
 dialog.open = false;
 ```
 
-- `show` method is no longer present. `open` property can be used instead.
+- Method `show` is no longer present. Use `open` property instead.
 
 Previously:
 ```ts
@@ -448,7 +448,7 @@ Now:
 dialog.open = true;
 ```
 
-- parameter `preventInitialFocus` from method `show` is added as a property.
+- Parameter `preventInitialFocus` from method `show` is added as a property.
 
 Previously:
 ```ts
@@ -729,7 +729,7 @@ Now use `placement` instead:
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
 ```
 
-- `isOpen` and `close` methods are no longer present. Now `open` property can be used instead.
+- Methods `isOpen` and `close` are no longer present. Use `open` property instead.
 
 Previously:
 ```ts
@@ -742,7 +742,7 @@ let isOpen = popover.open;
 popover.open = false;
 ```
 
-- `showAt` method is no longer present.
+- Method `showAt` is no longer present. Use `open` and `opener` properties instead.
 
 Previously:
 ```ts
@@ -754,7 +754,7 @@ popover.opener = opener;
 popover.open = true;
 ```
 
-- parameter `preventInitialFocus` from method `showAt` is added as a property.
+- Parameter `preventInitialFocus` from method `showAt` is added as a property.
 
 Previously:
 ```ts
