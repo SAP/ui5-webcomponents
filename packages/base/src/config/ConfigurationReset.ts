@@ -1,20 +1,22 @@
-const registeredConfigurations = new Map<string, () => void>();
+type ConfigurationResetCallback = () => void;
 
-const registerConfiguration = (name: string, resetCallback: () => void) => {
-    const configuration = registeredConfigurations.has(name);
+const registeredConfigurations = new Map<string, ConfigurationResetCallback>();
 
-    if (!configuration) {
-        registeredConfigurations.set(name, resetCallback);
-    }
-}
+const registerConfiguration = (name: string, resetCallback: ConfigurationResetCallback) => {
+	const configuration = registeredConfigurations.has(name);
+
+	if (!configuration) {
+		registeredConfigurations.set(name, resetCallback);
+	}
+};
 
 const resetConfiguration = () => {
-    registeredConfigurations.forEach(resetCallback => {
-        resetCallback();
-    });
-}
+	registeredConfigurations.forEach(resetCallback => {
+		resetCallback();
+	});
+};
 
 export {
-    registerConfiguration,
-    resetConfiguration,
-}
+	registerConfiguration,
+	resetConfiguration,
+};

@@ -33,7 +33,7 @@ import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getThemeRoot, setThemeRoot } from "./dist/config/ThemeRoot.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
-import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
+import { _getRegisteredNames as getIconNames } from "./dist/asset-registries/Icons.js";
 import applyDirection from "./dist/locale/applyDirection.js";
 import { getCurrentRuntimeIndex } from "./dist/Runtimes.js";
 import LegacyDateFormats from "./dist/features/LegacyDateFormats.js";
@@ -43,12 +43,12 @@ import { hasStyle } from "./dist/ManagedStyles.js";
 
 // attachBoot (no longer triggers "boot")
 attachBoot(() => {
-    console.log("Listener1: after framework booted!")
+	console.log("Listener1: after framework booted!")
 })
 
 window["sap-ui-webcomponents-bundle"] = {
 	forceInitConfiguration,
-	configuration : {
+	configuration: {
 		getAnimationMode,
 		getLanguage,
 		setLanguage,
@@ -73,13 +73,13 @@ window["sap-ui-webcomponents-bundle"] = {
 	boot,
 	hasStyle,
 	registerThemePropertiesLoader,
-    registerThemeProps: async () => {
-        registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", () => {
-            return {
-                content: `:root{ --customCol: #fff; --customBg: #000; }`,
-                packageName: "",
-                fileName: "",
-            };
-        });
-    },
+	registerThemeProps: async () => {
+		registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", () => {
+			return {
+				content: `:root{ --customCol: #fff; --customBg: #000; }`,
+				packageName: "",
+				fileName: "",
+			};
+		});
+	},
 };

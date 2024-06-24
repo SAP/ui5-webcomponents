@@ -5,6 +5,7 @@ dist
 src/generated
 src/thirdparty
 bundle.esm.js
+bundle.common.js
 bundle.es5.js
 rollup.config*.js
 wdio.conf.cjs
