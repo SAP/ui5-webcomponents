@@ -51,7 +51,7 @@ class ${componentName} extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value?: string;
 
 	/**
 	 * Defines the text of the component.

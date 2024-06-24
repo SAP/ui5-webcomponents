@@ -73,10 +73,10 @@ Inside ToolbarButton.ts:
  
 ```typescript
 @property()
-text!: string;
+text?: string;
  
 @property({ type: Boolean })
-disabled!: boolean;
+disabled = false;
 ```
  
 Inside ToolbarButtonTemplate.hbs:

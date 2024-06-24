@@ -2,8 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -48,16 +46,16 @@ abstract class SliderBase extends UI5Element {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	min!: number;
+	@property({ type: Number })
+	min = 0;
 
 	/**
 	 * Defines the maximum value of the slider.
 	 * @default 100
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 100 })
-	max!: number;
+	@property({ type: Number })
+	max = 100;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -68,7 +66,7 @@ abstract class SliderBase extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name = "";
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
@@ -77,8 +75,8 @@ abstract class SliderBase extends UI5Element {
 	 * @default 1
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 1 })
-	step!: number;
+	@property({ type: Number })
+	step = 1;
 
 	/**
 	 * Displays a label with a value on every N-th step.
@@ -89,8 +87,8 @@ abstract class SliderBase extends UI5Element {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	labelInterval!: number;
+	@property({ type: Number })
+	labelInterval = 0;
 
 	/**
 	 * Enables tickmarks visualization for each step.
@@ -100,7 +98,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTickmarks!: boolean;
+	showTickmarks = false;
 
 	/**
 	 * Enables handle tooltip displaying the current value.
@@ -108,7 +106,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip!: boolean;
+	showTooltip = false;
 
 	/**
 	 * Defines whether the slider is in disabled state.
@@ -116,28 +114,28 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ defaultValue: "hidden" })
-	_tooltipVisibility!: string;
+	@property()
+	_tooltipVisibility = "hidden";
 
 	@property({ type: Boolean })
-	_labelsOverlapping!: boolean;
+	_labelsOverlapping = false;
 
 	@property({ type: Boolean })
-	_hiddenTickmarks!: boolean;
+	_hiddenTickmarks = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;

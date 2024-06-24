@@ -31,13 +31,13 @@
 	color:var(--sapList_Active_TextColor);
 }
 
-:host([desktop]) .ui5-product-switch-item-root:focus-within,
+:host([desktop]) .ui5-product-switch-item-root:focus,
 .ui5-product-switch-item-root:focus-visible {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset:var(--_ui5_product_switch_item_outline_offset)
 }
 
-:host([desktop][active]) .ui5-product-switch-item-root:focus-within,
+:host([desktop][active]) .ui5-product-switch-item-root:focus,
 :host([active]) .ui5-product-switch-item-root:focus-visible {
 	outline-color: var(--_ui5_product_switch_item_active_outline_color);
 }

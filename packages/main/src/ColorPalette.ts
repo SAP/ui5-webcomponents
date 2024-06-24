@@ -8,7 +8,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
@@ -105,7 +104,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showRecentColors!: boolean;
+	showRecentColors = false;
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
@@ -115,7 +114,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showMoreColors!: boolean;
+	showMoreColors = false;
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
@@ -124,23 +123,23 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	showDefaultColor!: boolean;
+	showDefaultColor = false;
 
 	/**
-	 * Defines the default color of the color palette
+	 * Defines the default color of the color palette, only valid CSS color values accepted
 	 *
 	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	defaultColor?: string;
 
 	/**
-	 * Defines the selected color.
+	 * Defines the selected color, only valid CSS color values accepted
 	 * @private
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	_selectedColor?: string;
 
 	/**
@@ -148,14 +147,14 @@ class ColorPalette extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	popupMode!: boolean;
+	popupMode = false;
 
 	/**
 	 * Defines if the palette is rendered on phone.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone!: boolean;
+	onPhone = false;
 
 	/**
 	 * Defines the `ui5-color-palette-item` elements.
@@ -175,7 +174,7 @@ class ColorPalette extends UI5Element {
 	_recentColors: Array<string>;
 	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
 	_currentlySelected?: ColorPaletteItem;
-	_shouldFocusRecentColors!: boolean;
+	_shouldFocusRecentColors = false;
 
 	static i18nBundle: I18nBundle;
 

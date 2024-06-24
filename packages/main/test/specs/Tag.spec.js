@@ -34,15 +34,6 @@ describe("Tag rendering", async () => {
 		});
 
 		assert.strictEqual(await tagHiddenText.getText(), `${descriptionTag} ${descriptionSuccess}`, "hidden text is correct");
-
-		tagHiddenText = await browser.$("#tagWithTextAndIcon").shadow$(".ui5-hidden-text");
-
-		let descriptionBadge = await browser.executeAsync(done => {
-			const sn = document.getElementById("tagWithTextAndIcon");
-			done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TAG_DESCRIPTION_BADGE));
-		});
-
-		assert.strictEqual(await tagHiddenText.getText(), descriptionBadge, "hidden text is correct");
 	});
 
 	it("tests that label is rendered if there is text content", async () => {
@@ -55,5 +46,29 @@ describe("Tag rendering", async () => {
 		const tagLabel = await browser.$("#tagIconOnly").shadow$(".ui5-tag-text");
 
 		assert.notOk(await tagLabel.isExisting(), "tag label tag shouldn't be rendered.");
+	});
+});
+
+describe("Wrapping", async () => {
+	before(async () => {
+		await browser.url(`test/pages/Tag.html`);
+	});
+
+	it("tests if tag text wraps - default wrappingType", async () => {
+		const tag = await browser.$("#tagWithWrappingDefault").shadow$(".ui5-tag-root");
+
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "normal", "tag label is wrapped");
+	});
+
+	it("tests if tag text wraps - wrappingType Normal", async () => {
+		const tag = await browser.$("#tagWithWrappingNormal").shadow$(".ui5-tag-root");
+
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "normal", "tag label is wrapped");
+	});
+
+	it("tests if tag text wraps - wrappingType None", async () => {
+		const tag = await browser.$("#tagWithWrappingNone").shadow$(".ui5-tag-root");
+
+		assert.strictEqual((await tag.getCSSProperty("white-space")).value, "nowrap", "tag label is truncated");
 	});
 });

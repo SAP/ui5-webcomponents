@@ -28,7 +28,7 @@ import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/Inp
 import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
-import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 import IconMode from "./types/IconMode.js";
@@ -113,8 +113,8 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
+	@property()
+	design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines whether the component is disabled.
@@ -124,7 +124,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
@@ -132,11 +132,11 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 *
 	 * Example:
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the button text.
@@ -148,11 +148,11 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 *
 	 * Example:
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	endIcon!: string;
+	endIcon?: string;
 
 	/**
 	 * When set to `true`, the component will
@@ -164,18 +164,18 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
 	 */
 	@property({ type: Boolean })
-	submits!: boolean;
+	submits = false;
 
 	/**
 	 * Defines the tooltip of the component.
 	 *
 	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -183,17 +183,17 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -213,7 +213,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: ButtonAccessibilityAttributes;
+	accessibilityAttributes: ButtonAccessibilityAttributes = {};
 
 	/**
 	 * Defines whether the button has special form-related functionality.
@@ -223,8 +223,8 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @public
 	 * @since 1.15.0
 	 */
-	@property({ type: ButtonType, defaultValue: ButtonType.Button })
-	type!: `${ButtonType}`;
+	@property()
+	type: `${ButtonType}` = "Button";
 
 	/**
 	 * Describes the accessibility role of the button.
@@ -235,43 +235,43 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @public
 	 * @since 1.23
 	 */
-	@property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Button })
-	accessibleRole!: `${ButtonAccessibleRole}`;
+	@property()
+	accessibleRole: `${ButtonAccessibleRole}` = "Button";
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * Defines if a content has been added to the default slot
 	 * @private
 	 */
 	@property({ type: Boolean })
-	iconOnly!: boolean;
+	iconOnly = false;
 
 	/**
 	 * Indicates if the elements has a slotted icon
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasIcon!: boolean;
+	hasIcon = false;
 
 	/**
 	 * Indicates if the elements has a slotted end icon
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasEndIcon!: boolean;
+	hasEndIcon = false;
 
 	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
-	nonInteractive!: boolean;
+	nonInteractive = false;
 
 	/**
 	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
@@ -284,24 +284,24 @@ class Button extends UI5Element implements IButton, IFormElement {
 	 * @private
 	 */
 	@property({ type: Object })
-	_iconSettings!: object;
+	_iconSettings: object = {};
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "0";
 
 	/**
 	 * @since 1.0.0-rc.13
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isTouch!: boolean;
+	_isTouch = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_cancelAction!: boolean;
+	_cancelAction = false;
 
 	/**
 	 * Defines the text of the component.
@@ -320,7 +320,6 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	constructor() {
 		super();
-
 		this._deactivate = () => {
 			if (activeButton) {
 				activeButton._setActiveState(false);
@@ -427,6 +426,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 			e.preventDefault();
 		}
 
+		if (isSpace(e)) {
+			markEvent(e, "button");
+		}
+
 		if (isSpace(e) || isEnter(e)) {
 			if (this.active) {
 				this._setActiveState(false);
@@ -526,6 +529,10 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescribedbyText() {
+		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
 	}
 
 	get _isSubmit() {

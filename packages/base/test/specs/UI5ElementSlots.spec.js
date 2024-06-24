@@ -16,6 +16,8 @@ describe("Slots work properly", () => {
 			expectedValues.individual = el.individual.length === 2;
 			expectedValues.items = el.items.length === 2;
 			expectedValues.named = el.named === undefined;
+			expectedValues.rowHeaderDefault = el["row-header"].length === 2;
+			expectedValues.rowHeaderCamelCase = el.rowHeader.length === 2;
 
 			done(expectedValues);
 		});
@@ -25,6 +27,8 @@ describe("Slots work properly", () => {
 		assert.strictEqual(res.individual, true, "There are 2 elements in the individual property");
 		assert.strictEqual(res.items, true, "There are 2 elements in the items property");
 		assert.strictEqual(res.named, true, "There is no named property as propertyName changed it to items");
+		assert.strictEqual(res.rowHeaderDefault, true, "There are 2 elements in the row-header accessor");
+		assert.strictEqual(res.rowHeaderCamelCase, true, "There are 2 elements in the rowHeader accessor");
 	});
 
 	it("Tests that individualSlots modifies the slot property of slotted children", async () => {

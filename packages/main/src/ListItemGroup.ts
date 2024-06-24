@@ -3,14 +3,14 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListItemBase from "./ListItemBase.js";
 
 // Template
 import ListItemGroupTemplate from "./generated/templates/ListItemGroupTemplate.lit.js";
 
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 /**
@@ -34,24 +34,24 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
-	dependencies: [StandardListItem, ListItemGroupHeader],
+	dependencies: [ListItemStandard, ListItemGroupHeader],
 })
 class ListItemGroup extends UI5Element {
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the accessible name of the header.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
-	@property({ type: String })
-	headerAccessibleName!: string;
+	@property()
+	headerAccessibleName?: string;
 
 	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
@@ -69,7 +69,7 @@ class ListItemGroup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	* Defines the header of the component.

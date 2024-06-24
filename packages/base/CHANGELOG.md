@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
+
+
+### Bug Fixes
+
+* **framework:** set dataTransfer.effectAllowed only for UI5 elements ([#9136](https://github.com/SAP/ui5-webcomponents/issues/9136)) ([28f6a2d](https://github.com/SAP/ui5-webcomponents/commit/28f6a2d25c2d0c49ace86a0be4fdfb9026f94be2))
+* **ui5-dialog:** fix focusing when dialog is open from OpenUI5 dialog ([#9183](https://github.com/SAP/ui5-webcomponents/issues/9183)) ([d067e13](https://github.com/SAP/ui5-webcomponents/commit/d067e139d8674413369a3e8b078ce6ca67415e90))
+
+
+### Features
+
+* **ui5-grid:** implementing new grid component ([#8362](https://github.com/SAP/ui5-webcomponents/issues/8362)) ([04d291d](https://github.com/SAP/ui5-webcomponents/commit/04d291dc368b884d9001e875441c54cf56e21d1a))
+
+
+
+
+
+# [2.0.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2024-06-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [2.0.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2024-05-29)
 
 

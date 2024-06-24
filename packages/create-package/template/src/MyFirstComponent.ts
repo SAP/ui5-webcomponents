@@ -43,8 +43,8 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	count!: number;
+	@property({ type: Number })
+	count = 0;
 
 	onClick() {
 		this.count++;

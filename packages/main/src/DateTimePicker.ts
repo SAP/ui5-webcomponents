@@ -31,6 +31,7 @@ import {
 	DATETIME_DESCRIPTION,
 	DATETIME_PICKER_DATE_BUTTON,
 	DATETIME_PICKER_TIME_BUTTON,
+	DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -138,7 +139,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_showTimeView!: boolean;
+	_showTimeView = false
 
 	/**
 	 * Defines if the `DateTimePicker` should be displayed in phone mode.
@@ -149,14 +150,14 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_phoneMode!: boolean;
+	_phoneMode = false;
 
 	/**
 	 * Selected, but not yet confirmed date/time
 	 * @private
 	 */
 	@property({ type: Object })
-	_previewValues!: PreviewValues;
+	_previewValues: PreviewValues = {};
 
 	_handleResizeBound: ResizeObserverCallback;
 
@@ -276,8 +277,18 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		return super.phone || this._phoneMode;
 	}
 
+	/**
+	 * @override
+	 */
 	get dateAriaDescription() {
 		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
+	}
+
+	/**
+	 * @override
+	 */
+	get pickerAccessibleName() {
+		return DateTimePicker.i18nBundle.getText(DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**

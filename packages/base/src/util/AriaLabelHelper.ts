@@ -1,4 +1,5 @@
-import UI5Element, { ChangeInfo } from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
+import type { ChangeInfo } from "../UI5Element.js";
 
 type InvalidateCallback = (changeInfo: ChangeInfo) => void;
 type MutationCallback = () => void;
@@ -17,8 +18,8 @@ const associatedElements = new WeakMap<HTMLElement, AssociatedElement>();
 const registeredElements = new WeakMap<UI5Element, RegisteredElement>();
 
 type AccessibleElement = HTMLElement & {
-	accessibleNameRef: string;
-	accessibleName: string;
+	accessibleNameRef?: string;
+	accessibleName?: string;
 };
 
 const observerOptions = {

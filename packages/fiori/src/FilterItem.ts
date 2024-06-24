@@ -29,7 +29,7 @@ class FilterItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the additional text of the component.
@@ -37,7 +37,7 @@ class FilterItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the `values` list.

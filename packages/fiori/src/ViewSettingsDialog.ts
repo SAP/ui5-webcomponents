@@ -14,7 +14,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
@@ -113,7 +113,7 @@ type VSDInternalSettings = {
 		Dialog,
 		Label,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroup,
 		SegmentedButton,
 		SegmentedButtonItem,
@@ -193,6 +193,18 @@ type VSDInternalSettings = {
  * @public
  */
 @event("before-open")
+/**
+ * Fired after the dialog is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the dialog is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -200,43 +212,56 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	sortDescending!: boolean;
+	sortDescending = false;
+
+	/**
+	 * Indicates if the dialog is open.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	open = false;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
 	 * @private
 	 */
 	@property({ type: Object })
-	_recentlyFocused!: List;
-
-	/**
-	 * Stores settings of the dialog before the initial open.
-	 * @private
-	 */
-	@property({ type: Object })
-	_initialSettings!: VSDInternalSettings;
-
-	/**
-	 * Stores settings of the dialog after confirmation.
-	 * @private
-	 */
-	@property({ type: Object })
-	_confirmedSettings!: VSDInternalSettings;
+	_recentlyFocused?: List;
 
 	/**
 	 * Stores current settings of the dialog.
 	 * @private
 	 */
 	@property({ type: Object })
-	_currentSettings!: VSDInternalSettings;
+	_currentSettings: VSDInternalSettings = {
+		sortOrder: [],
+		sortBy: [],
+		filters: [],
+	};
+
+	/**
+	 * Stores settings of the dialog before the initial open.
+	 * @private
+	 */
+	@property({ type: Object })
+	_initialSettings: VSDInternalSettings = this._currentSettings;
+
+	/**
+	 * Stores settings of the dialog after confirmation.
+	 * @private
+	 */
+	@property({ type: Object })
+	_confirmedSettings: VSDInternalSettings = this._currentSettings;
 
 	/**
 	 * Defnies the current mode of the component.
 	 * @since 1.0.0-rc.16
 	 * @private
 	 */
-	@property({ type: ViewSettingsDialogMode, defaultValue: ViewSettingsDialogMode.Sort })
-	_currentMode!: ViewSettingsDialogMode;
+	@property()
+	_currentMode: `${ViewSettingsDialogMode}` = "Sort";
 
 	/**
 	 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
@@ -244,7 +269,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_filterStepTwo!: boolean;
+	_filterStepTwo = false;
 
 	/**
 	 * Defines the list of items against which the user could sort data.
@@ -269,15 +294,6 @@ class ViewSettingsDialog extends UI5Element {
 	_sortBy?: List;
 
 	static i18nBundle: I18nBundle;
-
-	constructor() {
-		super();
-		this._currentSettings = {
-			sortOrder: [],
-			sortBy: [],
-			filters: [],
-		};
-	}
 
 	onBeforeRendering() {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {
@@ -496,9 +512,8 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Shows the dialog.
-	 * @public
 	 */
-	show(): void {
+	beforeDialogOpen(): void {
 		if (!this._dialog) {
 			this._sortOrder = this._sortOrderListDomRef;
 			this._sortBy = this._sortByList;
@@ -514,9 +529,18 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.open = true;
+	}
 
-		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
+	afterDialogOpen(): void {
+		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+
+		this._focusRecentlyUsedControl();
+
+		this.fireEvent("open");
+	}
+
+	afterDialogClose(): void {
+		this.fireEvent("close");
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
@@ -553,15 +577,6 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Closes the dialog.
-	 */
-	close() {
-		if (this._dialog) {
-			this._dialog.open = false;
-		}
-	}
-
-	/**
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
@@ -579,7 +594,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Stores current settings as confirmed and fires `confirm` event.
 	 */
 	_confirmSettings() {
-		this.close();
+		this.open = false;
 		this._confirmedSettings = this._currentSettings;
 
 		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
@@ -592,7 +607,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._confirmedSettings);
 
 		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
-		this.close();
+		this.open = false;
 	}
 
 	get eventsParams() {

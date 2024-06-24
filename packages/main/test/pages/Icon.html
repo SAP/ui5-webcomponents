@@ -182,18 +182,18 @@
 			nonInteractiveIconUI5ClickCounter = 0;
 
 		interactiveIcon.addEventListener("click", function() {
-			inpClickEventIteractive.value = ++interactiveIconClickCounter;
+			inpClickEventIteractive.value = `${++interactiveIconClickCounter}`;
 		});
 		interactiveIcon.addEventListener("ui5-click", function() {
-			inpUI5ClickEventIteractive.value = ++interactiveIconUI5ClickCounter;
+			inpUI5ClickEventIteractive.value = `${++interactiveIconUI5ClickCounter}`;
 		});
 
 
 		nonInteractiveIcon.addEventListener("click", function() {
-			inpClickEventNonIteractive.value = ++nonInteractiveIconClickCounter;
+			inpClickEventNonIteractive.value = `${++nonInteractiveIconClickCounter}`;
 		});
 		nonInteractiveIcon.addEventListener("ui5-click", function() {
-			inpUI5ClickEventNonIteractive.value = ++nonInteractiveIconUI5ClickCounter;
+			inpUI5ClickEventNonIteractive.value = `${++nonInteractiveIconUI5ClickCounter}`;
 		});
 	</script>
 

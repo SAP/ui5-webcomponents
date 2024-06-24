@@ -1,4 +1,5 @@
-import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -8,7 +9,6 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -24,10 +24,11 @@ import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
-import ToolbarAlign from "./types/ToolbarAlign.js";
+import type ToolbarAlign from "./types/ToolbarAlign.js";
+import type ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import {
@@ -86,15 +87,15 @@ class Toolbar extends UI5Element {
 	 * @public
 	 * @default "End"
 	 */
-	@property({ type: ToolbarAlign, defaultValue: ToolbarAlign.End })
-	alignContent!: `${ToolbarAlign}`;
+	@property()
+	alignContent: `${ToolbarAlign}` = "End";
 
 	/**
 	 * Calculated width of the whole toolbar.
 	 * @private
 	 * @default undefined
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	width?: number;
 
 	/**
@@ -102,7 +103,7 @@ class Toolbar extends UI5Element {
 	 * @private
 	 * @default undefined
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	contentWidth?: number;
 
 	/**
@@ -110,23 +111,32 @@ class Toolbar extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	reverseOverflow!: boolean;
+	reverseOverflow = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
+
+	/**
+	 * Defines the toolbar design.
+	 * @public
+	 * @default "Solid"
+	 * @since 2.0.0
+	 */
+	@property()
+	design: `${ToolbarDesign}` = "Solid"
 
 	/**
 	 * Defines the items of the component.
