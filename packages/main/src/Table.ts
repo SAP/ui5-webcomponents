@@ -392,8 +392,9 @@ class Table extends UI5Element {
 	_onfocusin(e: FocusEvent) {
 		// Handles focus that is below sticky element
 		const stickyElements = this._stickyElements;
+		const fixedElements = this._fixedElements;
 
-		if (stickyElements.length === 0) {
+		if (stickyElements.length === 0 && fixedElements.length === 0) {
 			return;
 		}
 
@@ -401,24 +402,41 @@ class Table extends UI5Element {
 		const target = e.target as HTMLElement;
 		const element = target.closest("ui5-table-cell, ui5-table-row") as HTMLElement ?? target;
 		const elementRect = element.getBoundingClientRect();
-		const stickyBottom = stickyElements.reduce((min, stickyElement) => {
+
+		let stickyBottom = stickyElements.reduce((min, stickyElement) => {
 			const stickyRect = stickyElement.getBoundingClientRect();
 
 			if (stickyRect.bottom > elementRect.top) {
 				return Math.max(min, stickyRect.bottom);
 			}
 			return min;
-		}, -Infinity);
+		}, 0);
+		let stickyLeft = fixedElements.reduce((min, fixedElement) => {
+			if (!fixedElement) {
+				return min;
+			}
+
+			const fixedRect = fixedElement.getBoundingClientRect();
+
+			if (fixedRect.right > elementRect.left) {
+				return Math.max(min, fixedRect.right);
+			}
+			return min;
+		}, 0);
 
 		// If the focused element is not behind any sticky element, do nothing
-		if (stickyBottom === -Infinity) {
-			return;
+		if (stickyBottom === 0) {
+			stickyBottom = elementRect.top;
+		}
+		if (stickyLeft === 0) {
+			stickyLeft = elementRect.left;
 		}
 
 		// Scroll the focused element into view
 		const scrollContainer = this._scrollContainer;
 		scrollContainer.scrollBy({
 			top: elementRect.top - stickyBottom,
+			left: elementRect.left - stickyLeft,
 		});
 	}
 
@@ -554,7 +572,7 @@ class Table extends UI5Element {
 
 	// TODO: Could be moved to UI5Element. TBD
 	get _scrollContainer() {
-		let element: HTMLElement = this as HTMLElement;
+		let element: HTMLElement = this._tableElement;
 		while (element) {
 			const { overflowY } = window.getComputedStyle(element);
 			if (overflowY === "auto" || overflowY === "scroll") {
@@ -568,6 +586,10 @@ class Table extends UI5Element {
 
 	get _stickyElements() {
 		return [this.headerRow[0]].filter(row => row.sticky);
+	}
+
+	get _fixedElements() {
+		return [...this.headerRow[0]._cells.filter(cell => cell?.hasAttribute("fixed"))];
 	}
 
 	get isTable() {

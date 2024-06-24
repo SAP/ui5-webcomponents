@@ -99,6 +99,10 @@ class TableHeaderRow extends TableRowBase {
 	get _i18nRowPopin() {
 		return TableRowBase.i18nBundle.getText(TABLE_ROW_POPIN);
 	}
+
+	get _cells() {
+		return [this.shadowRoot?.querySelector("#selection-cell"), ...this.cells];
+	}
 }
 
 TableHeaderRow.define();
