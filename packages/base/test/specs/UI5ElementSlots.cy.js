@@ -60,4 +60,59 @@ describe("Slots work properly", () => {
 		cy.get("[slot=individual-2]")
 			.should("exist");
 	});
+
+
+	it("Tests that changing the slot attribute of children redistributes them across slot accessors", () => {
+		let defaultSlotLength = 0;
+
+		cy.mount(html`<ui5-test-generic>
+		<span>Default slot content</span>
+		<span slot="other" id="o1">Other slot content 1</span>
+		<span slot="other" id="o2">Other slot content 2</span>
+		<span slot="named">Item in slot with propertyName</span>
+		<span slot="named">Item in slot with propertyName</span>
+	</ui5-test-generic>
+		`)
+
+		cy.get("[ui5-test-generic]")
+			.as("testGeneric")
+
+		cy.get("@testGeneric")
+			.invoke("prop", "default")
+			.then(value => {
+				defaultSlotLength = value.length;
+
+				return value.length
+			})
+			.should("be.greaterThan", 0)
+
+		cy.get("@testGeneric")
+			.invoke("prop", "other")
+			.should("have.length", 2)
+
+		cy.get("@testGeneric")
+			.invoke("prop", "items")
+			.should("have.length", 2);
+
+		cy.get("#o1")
+			.invoke("removeAttr", "slot")
+
+		cy.get("#o2")
+			.invoke("attr", "slot", "named")
+
+		cy.get("@testGeneric")
+			.invoke("prop", "default")
+			.then(value => {
+				return value.length - defaultSlotLength;
+			})
+			.should("equal", 1)
+
+		cy.get("@testGeneric")
+			.invoke("prop", "other")
+			.should("have.length", 0)
+
+		cy.get("@testGeneric")
+			.invoke("prop", "items")
+			.should("have.length", 3);
+	});
 });
