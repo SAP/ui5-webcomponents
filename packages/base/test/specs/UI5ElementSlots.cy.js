@@ -12,6 +12,8 @@ describe("Slots work properly", () => {
 		<span slot="individual">Individual slot content 2</span>
 		<span slot="named">Item in slot with propertyName</span>
 		<span slot="named">Item in slot with propertyName</span>
+		<span slot="row-header">Item in slot row-header</span>
+		<span slot="row-header">Item in slot row-header</span>
 	</ui5-test-generic>
 		`)
 
@@ -34,7 +36,7 @@ describe("Slots work properly", () => {
 			.should("have.length", 2)
 
 		cy.get("@testGeneric")
-			.invoke("prop", "items")
+			.invoke("prop", "row-header")
 			.should("have.length", 2)
 
 		cy.get("@testGeneric")
