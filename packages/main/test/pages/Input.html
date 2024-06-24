@@ -40,14 +40,26 @@
 	</div>
 
 		<div>
+			<h3>Flat items</h3>
+
+			<ui5-input show-suggestions id="flat-items-input">
+			</ui5-input>
+		</div>
+
+		<br>
+		<br>
+
+		<div>
 			<h3>Custom Suggestions</h3>
 
 			<ui5-input show-suggestions id="custom">
 			</ui5-input>
 		</div>
 
-	<br />
-	<br />
+		<h3>Custom Suggestions Flat</h3>
+
+		<ui5-input placeholder="Type something ..." show-suggestions id="input-custom-flat"></ui5-input>
+	</div>
 
 	<br />
 	<br />
@@ -442,14 +454,6 @@
 	<br>
 	<br>
 
-	<h3>Input with openPicker() on focusin</h3>
-	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto"
-		placeholder="Click to show recent values...">
-		<ui5-suggestion-item-group header-text="Recent Items">
-			<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
-		</ui5-suggestion-item-group>
-	</ui5-input>
-
 	<h3>Input - showing wrapping</h3>
 	<ui5-input show-suggestions id="input-change-wrapping">
 		<ui5-suggestion-item text="Item that does not wrap"></ui5-suggestion-item>
@@ -630,6 +634,7 @@
 		var oXSSButton = document.getElementById("xss-btn");
 		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 		var customSuggestionsInput = document.getElementById("custom");
+		const flatItemsInput = document.getElementById("flat-items-input");
 
 		let suggest = function (event) {
 			let input = event.target;
@@ -689,8 +694,8 @@
 		};
 
 		
-		const suggestCustom = function (event) {
-			let input = event.target;
+		const suggestCustom = e => {
+			let input = e.target;
 			let value = input.value;
 			const generateHighlightedMarkup = window["sap-ui-webcomponents-bundle"].generateHighlightedMarkup;
 
@@ -751,8 +756,23 @@
 				}
 			});
 		};
+		const suggestFlatItems = e => {
+			e.target.innerHTML = "";
 
-	
+			sap_database_entries.forEach(item => {
+				item.items.forEach(subItem => {
+					if (!subItem.text.toUpperCase().startsWith(e.target.value.toUpperCase())) {
+						return;
+					}
+
+					const suggestion = document.createElement("ui5-suggestion-item");
+					suggestion.text = subItem.text;
+					suggestion.additionalText = subItem.key;
+					e.target.appendChild(suggestion);
+				});
+			});
+		};
+
 		var changeCounter = 0;
 		var inputCounter = 0;
 		var selectionChangeCounter = 0;
@@ -761,6 +781,7 @@
 		inputCompact.addEventListener("ui5-input", suggest);
 		inputError.addEventListener("ui5-input", suggest);
 		customSuggestionsInput.addEventListener("ui5-input", suggestCustom);
+		flatItemsInput.addEventListener("ui5-input", suggestFlatItems);
 
 		input.addEventListener("ui5-selection-change", function (event) {
 			const item = event.detail.item;
@@ -965,6 +986,46 @@
 			spanChangeCount.innerText = selectionChangeCounter;
 			console.log(text);
 		});
+
+		const countries = [
+			"Albania",
+			"Andorra",
+			"Austria",
+			"Belarus",
+			"Belgium",
+			"Bulgaria",
+			"Croatia",
+			"Germany",
+			"Denmark",
+		];
+
+		const customFlatInput = document.getElementById("input-custom-flat");
+
+		customFlatInput.addEventListener("input", event => {
+			const value = event.target.value;
+			const filtered = countries.filter(country => country.toLowerCase().startsWith(value.toLowerCase()));
+
+			fillInput(filtered, value)
+		});
+
+		const fillInput = (data, value) => {
+			const generateHighlightedMarkup = window["sap-ui-webcomponents-bundle"].generateHighlightedMarkup;
+			customFlatInput.innerHTML = "";
+
+			data.forEach((country) => {
+				const item = document.createElement("ui5-suggestion-item-custom");
+				item.setAttribute("text", country);
+			
+				item.innerHTML = `
+					<div class='item-content'>
+						<span>${generateHighlightedMarkup(country, value)}</span>
+			
+						<ui5-icon name="globe"></ui5-icon>
+					</div>
+				`
+				customFlatInput.appendChild(item);
+			});
+};
 	</script>
 </body>
 

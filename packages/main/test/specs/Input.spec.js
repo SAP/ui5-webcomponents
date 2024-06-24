@@ -480,8 +480,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
 	});
 
-	// unstable in headless mode
-	it.skip("should remove input's focus when group header item is clicked", async () => {
+	it("should remove input's focus when group header item is clicked", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await $("#myInputGrouping");

@@ -631,6 +631,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		deregisterUI5Element(this);
 	}
 
+	_highlightSuggestionItem(item: SuggestionItem) {
+		item.markupText = this.typedInValue ? this.Suggestions?.hightlightInput((item.text), this.typedInValue) : encodeXML(item.text || "");
+	}
+
+	_isGroupItem(item: IInputSuggestionItem) {
+		return item.hasAttribute("ui5-suggestion-item-group");
+	}
+
 	onBeforeRendering() {
 		if (!this._keepInnerValue) {
 			this._innerValue = this.value;
@@ -641,10 +649,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 			this.suggestionItems.forEach(item => {
 				if (item.hasAttribute("ui5-suggestion-item")) {
-					(item as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((item as SuggestionItem).text), this.typedInValue) : encodeXML((item as SuggestionItem).text || "");
-				} else if (item.hasAttribute("ui5-suggestion-item-group")) {
+					this._highlightSuggestionItem(item as SuggestionItem);
+				} else if (this._isGroupItem(item)) {
 					item.items?.forEach(nestedItem => {
-						(nestedItem as SuggestionItem).markupText = this.typedInValue ? this.Suggestions?.hightlightInput(((nestedItem as SuggestionItem).text), this.typedInValue) : encodeXML((nestedItem as SuggestionItem).text || "");
+						this._highlightSuggestionItem(nestedItem as SuggestionItem);
 					});
 				}
 			});
@@ -1088,7 +1096,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.hasAttribute("ui5-suggestion-item-group"));
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !this._isGroupItem(item));
 
 		if (matchingItems.length) {
 			return matchingItems[0];
@@ -1196,7 +1204,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	acceptSuggestion(item: IInputSuggestionItemSelectable, keyboardUsed: boolean) {
-		if (item.hasAttribute("ui5-suggestion-item-group")) {
+		if (this._isGroupItem(item)) {
 			return;
 		}
 
@@ -1232,7 +1240,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @param item The item that is on select
 	 */
 	updateValueOnSelect(item: IInputSuggestionItem) {
-		const itemValue = item.hasAttribute("ui5-suggestion-item-group") ? this.valueBeforeSelectionStart : (item as IInputSuggestionItemSelectable).text;
+		const itemValue = this._isGroupItem(item) ? this.valueBeforeSelectionStart : (item as IInputSuggestionItemSelectable).text;
 
 		this.value = itemValue;
 		this._performTextSelection = true;

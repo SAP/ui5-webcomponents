@@ -62,3 +62,11 @@
 .titles-wrapper ui5-text:first-child {
 	font-size: 1.25rem;
 }
+
+.item-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+}

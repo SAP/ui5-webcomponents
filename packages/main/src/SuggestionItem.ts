@@ -41,7 +41,7 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 	additionalText = "";
 
 	/**
-	 * Defubes the markup text that will be displayed as suggestion.
+	 * Defines the markup text that will be displayed as suggestion.
 	 * Used for highlighting the matching parts of the text.
 	 *
 	 * @since 2.0.0

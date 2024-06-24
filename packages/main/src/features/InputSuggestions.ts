@@ -358,7 +358,7 @@ class Suggestions {
 		}
 
 		if (previousSelectedIdx - 1 < 0) {
-			if (items[previousSelectedIdx].hasAttribute("ui5-suggestion-item")) {
+			if (items[previousSelectedIdx].hasAttribute("ui5-suggestion-item") || items[previousSelectedIdx].hasAttribute("ui5-suggestion-item-custom")) {
 				(items[previousSelectedIdx] as SuggestionItem).selected = false;
 			}
 
@@ -396,7 +396,7 @@ class Suggestions {
 		};
 
 		if (currentItem.hasAttribute("ui5-suggestion-item") || currentItem.hasAttribute("ui5-suggestion-item-custom")) {
-			this.accInfo.additionalText = (currentItem as IInputSuggestionItemSelectable).additionalText;
+			this.accInfo.additionalText = (currentItem as IInputSuggestionItemSelectable).additionalText || "";
 			this.accInfo.currentPos = nonGroupItems.indexOf(currentItem as IInputSuggestionItemSelectable) + 1;
 			this.accInfo.listSize = nonGroupItems.length;
 		}
