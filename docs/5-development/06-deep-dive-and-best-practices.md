@@ -11,10 +11,10 @@ as this article will expand on many of the notions introduced there.
 
 ## Table of Contents
  [Component metadata](#metadata)
-   - [Tag](#metadata_tag) 
-   - [Properties](#metadata_properties) 
-   - [Slots](#metadata_slots) 
-   - [Events](#metadata_events) 
+   - [Tag](#metadata_tag)
+   - [Properties](#metadata_properties)
+   - [Slots](#metadata_slots)
+   - [Events](#metadata_events)
    - [Wrapping up metadata](#metadata_wrapping_up)
 
  [Understanding rendering](#rendering)
@@ -183,7 +183,7 @@ The properties are defined via `@property` decorator and they are managed state.
 })
 class MyComponent extends UI5Element {
 	@property()
-	text!: string;
+	text?: string;
 }
 ```
 
@@ -199,81 +199,30 @@ Whenever `text` is read or set, the framework-defined getter/setter will be call
 #### Properties vs Attributes
 
 The `properties` section defines both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
-same name but in `kebab-case` is supported. Properties of type `Object` have no attribute counterparts. If you wish not to have an attribute for a given property regardless of the type, you can configure it with `noAttribute: true`.
+same name but in `kebab-case` is supported. Properties of type `Object` and `Array` have no attribute counterparts. If you wish not to have an attribute for a given property regardless of the type, you can configure it with `noAttribute: true`.
 
 #### Public vs Private Properties
 
 The framework does not distinguish between *public* and *private* properties. You can treat some properties as private in a sense that you can document them as such and not advertise them to users.
 The usual convention is that private properties start with an `_`, but this is not mandatory. In the end, all properties defined with the `@property` decorator, public or private, are *component state*, therefore cause the component to be invalidated and subsequently re-rendered, when changed.
 
-#### Property Types and Property Validators
+#### Property Types
 
-The `type` and `validator` settings are both available in the `@property` decorator, but one should the one or the other.
+The`type` setting on the `@property` decorator is used for attribute conversion.
 
-The`type` defines the expected type of the property, usually the standard `String`, `Boolean`, `Object` or custom enumarations (`ValueState`, `ButtonDesign`).
+Converting from a property to a string, the framework can check the runtime type and convert to string, but coming an attribute, there is no way to know whether it is a boolean or a number unless a type is also given.
+**Note:** If `type` is omitted, it is implied to be `String`
 
-The `validator` is a custom class that implements `isValid` function that validates the property's value whenever it changes. If value is not valid, the framework will set the proeprty `defaultValue`.
+#### Types
 
-```ts
-@property({ validator: Integer, defaultValue: 0 })
-width!: number;
-```
-
-If we set a string value to the `width` property
-
-```ts
-this.width = "string vlaue" 
-```
-
-the framework will trigger Integer validation and the width propert will be set to 0 as default value.
-
-```ts
-const width = this.width // 0
-```
-
-#### Property Types and Default Values
-
-The most common types of properties are `String`, `Boolean`, `Object` and custom types like `ValueState`, `ButtonDesign`. 
-The last two are custom types (they do not exist in the browser) and often represent enumarations (ValueState: "Negative" | "Positive" | "None", etc.).
-
-Most property types can have a `defaultValue` set. `Boolean` is always `false` by default and `Object` is always `{}` by default, so `defaultValue` is not allowed for these types.
-
-You can also create custom property types by extending `@ui5/webcomponents-base/dist/DataType.js` and implementing its methods for your type.
-
-#### Properties With `multiple: true`
-
-If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly as a property of type `Object` would be (as arrays are technically objects). For example, it will not have an attribute counterpart.
-
-Example:
-```ts
-@customElement({
-	tag: "my-component",
-})
-class MyComponent extends UI5Element {
-	@property({ validator: Integer, multiple: true })
-	myNumbers!: number;
-}
-```
-
-```js
-myComponent.myNumbers = [1, 2, 3];
-```
-
-**Note:** Properties with `multiple: true` are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript). Their most common use case is as *private* properties for communication between related components. For example, the higher-order "date picker" component communicates with its "day picker", "month picker", and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
-
-**Note:** If you need to use a property with `multiple: true` as part of your component's public API, that is fine but bear in mind the limitations (no declarative support as with all Objects, so no attribute for this property).
-
-The alternative would be to use *abstract* items, for example:
-
-```html
-<my-component>
-	<my-item slot="numbers" value="1"></my-item>
-	<my-item slot="numbers" value="2"></my-item>
-	<my-item slot="numbers" value="3"></my-item>
-</my-component>
-```
-
-Here instead of having a `numbers` property of validator `Integer` configured with `multiple: true`, we have a `numbers` slot, and inside this slot we pass abstract items with a `value` property of validator `Integer`. This is now completely declarative, and is preferable unless the number of items is very large (in which case the solution with the multiple property would likely be better).
+|  Type   | Class to Use |                                Description                                 |
+| ------- | ------------ | -------------------------------------------------------------------------- |
+| string  | `String`     | Implied as default, should be omitted                                      |
+| boolean | `Boolean`    | Boolean value, the presence of the attribute will set the property to true |
+| number  | `Number`     | Number value, the attribute will be converted using `parseFloat`           |
+| object  | `Object`     | JS Object, equivalent to `noAttribute: true`                               |
+| []      | `Array`      | JS Array, equivalent to `noAttribute: true`                                |
+| Enum    | `String`     | Enums are treated as strings, type does not accept enum types              |
 
 #### Examples
 
@@ -289,26 +238,31 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 class MyComponent extends UI5Element {
 
 	@proeprty()
-	text!: string;
+	text?: string;
 
-	@property({ validator: Integer, defaultValue: 1024, noAttribute: true })
-	width!: number;
+	@proeprty()
+	name = "user1"
 
-	@property({ validator: Float, defaultValue: 0.5 })
-	scale!: number;
+	@property({ type: Number, noAttribute: true })
+	width = 1024
+
+	@property({ type: Number })
+	scale = 0.5
 
 	@property({ type: Object })
-	data!: object;
+	data: object = {};
 
 	/**
 	 * @private
 	 */
 	@proeprty({ type: Boolean })
-	_isPhone!: boolean;
+	_isPhone = false;
 }
 ```
 
 Here `text`, `width`, `scale` and `data` are public properties, and `_isPhone` private, but only by convention. If the user (or the component internally) changes any of these properties, the component will be invalidated.
+
+In most cases, `String` properties should be optional, unless an intial value makes more sense like the `input.value` being an empty string or some specific value;
 
 #### Best Practices for Using Properties
 
@@ -335,8 +289,8 @@ Both public and private properties are great ways to create CSS selectors for yo
 <my-comopnent size="XS"></my-comopnent> <!-- :host() targets my-component -->
 ```
 
-Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component dimensions will be changed from `5rem` to `2rem`. 
-Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute. 
+Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component dimensions will be changed from `5rem` to `2rem`.
+Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute.
 
 #### Metadata Properties vs Normal JS Properties
 
@@ -424,7 +378,7 @@ Unlike properties, slots can be of only two types: `HTMLElement` and `Node`.
 
 `HTMLElement` means the slot accepts only other HTML elements. You can use this type for any slot (default or named).
 
-`Node` means that the slot can accept both HTML elements and text nodes, and is allowed only for the `default` slot. 
+`Node` means that the slot can accept both HTML elements and text nodes, and is allowed only for the `default` slot.
 The reason for this restriction is that text nodes in HTML cannot have attributes, hence they cannot be slotted as HTML elements can.
 As a result, text can only go the default slot, hence `Node` is applicable only for default slots.
 
@@ -479,7 +433,7 @@ class MyComponent extends UI5Element {
 ```
 
 The framework will then create an `_individualSlot` property on each child, belonging to the slot. Just render these slots in the `.hbs` template
-to have all children belonging to the slot displayed by the browser separately in your HTML markup of choice. 
+to have all children belonging to the slot displayed by the browser separately in your HTML markup of choice.
 
 For more information on individual slots and how to render them in the `.hbs` template click [here](./04-understanding-hbs-templates.md#slots_individual).
 
@@ -510,7 +464,7 @@ Any event that you dispatch from your component will reach the application anywa
 
 Here is an example how to fire an event from your component:
 
-1. Declare the event in your `@event` decorator 
+1. Declare the event in your `@event` decorator
 
 ```js
 @event("toggle")
@@ -539,7 +493,7 @@ For more on the `.hbs` template syntax and event listeners click [here](./04-und
 ```js
 class MyPanel extends UI5Element {
 	...
-	
+
 	onPanelToggleClick(event) {
 		this.togglePanel(); // do some work when the user clicks the button
 		this.fireEvent("toggle"); // fire the event
@@ -585,10 +539,10 @@ Respectively, they will be accessible by the app with `event.detail.item` and `e
 ```js
 class MyItemsList extends UI5Element {
 	...
-	
+
 	onSelectionChange(event) {
 		...
-		
+
 		this.fireEvent("selectionChange", {
 			item: item,
 			oldItem: oldItem,
@@ -609,7 +563,7 @@ list.addEventListener("selectionChange", (event) => {
 });
 ```
 
-#### Events and noConflict Mode 
+#### Events and noConflict Mode
 
 By default, when using the `fireEvent` method, as demonstrated above, actually not just one, but two custom events are fired: one with the name provided as the first argument to `fireEvent`,
 and one more with the same name but prefixed by `ui5-`.
@@ -626,7 +580,7 @@ will dispatch two [custom events](https://developer.mozilla.org/en-US/docs/Web/E
 
 However, if you set the [noConflict](../2-advanced/01-configuration.md#no_conflict) configuration setting to `true`, only the **prefixed** event will be dispatched.
 
-So, when `noConflict: true` is configured, the same code 
+So, when `noConflict: true` is configured, the same code
 
 ```js
 fireEvent("toggle");
@@ -635,7 +589,7 @@ fireEvent("toggle");
 would result in just
  - `ui5-toggle`
 
-Therefore, the best practice when binding to events **fired by other UI5 Web Components** in your `.hbs` template, is to 
+Therefore, the best practice when binding to events **fired by other UI5 Web Components** in your `.hbs` template, is to
 always use the prefixed (`ui5-`) event.
 
 Example:
@@ -644,10 +598,10 @@ Example:
 <div class="my-component">
 	<button @click="{{onNativeButtonClick}}">Click me</button>
 	<ui5-button @ui5-click="{{onUI5ButtonClick}}">Click me</ui5-button>
-	
+
 	<input @change="{{onNativeInputChange}}" />
 	<ui5-input @ui5-change="{{onUI5InputChange}}"></ui5-input>
-	
+
 	<ui5-list @ui5-item-click="{{onUI5ListItemClick}}"></ui5-list>
 </div>
 ```
@@ -662,16 +616,16 @@ If we used the non-prefixed versions:
 <div class="my-component">
 	<button @click="{{onNativeButtonClick}}">Click me</button>
 	<ui5-button @click="{{onUI5ButtonClick}}">Click me</ui5-button>
-	
+
 	<input @change="{{onNativeInputChange}}" />
 	<ui5-input @change="{{onUI5InputChange}}"></ui5-input>
-	
+
 	<ui5-list @item-click="{{onUI5ListItemClick}}"></ui5-list>
 </div>
 ```
 
 this would work well only with the default configuration (where `noConflict` is `false` and both events are fired), but our code would
-"break" the moment an app sets `noConflict: true` since that would suppress UI5 Web Components from firing the non-prefixed versions and 
+"break" the moment an app sets `noConflict: true` since that would suppress UI5 Web Components from firing the non-prefixed versions and
 our event handlers (`onUI5ButtonClick`, `onUI5InputChange`, etc.) would never be executed.
 
 ### Wrapping up Metadata <a name="metadata_wrapping_up"></a>
@@ -695,11 +649,11 @@ type MyComponentChangeEventDetail = {
 })
 class MyComponent extends UI5Element {
 
-	@property({ type: String, defaultValue: "Hello" })
-	text!: string;
+	@property()
+	text = "Hello"
 
-	@property({ type: Boolean, noAttribute: true })
-	selected!: boolean;
+	@property()
+	selected = false
 
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<HTMLElement>;
@@ -713,9 +667,9 @@ This metadata conveys the following:
 
 This component will have the following getters/setters, created for it by the framework:
  - `this.text` - getter/setter, due to the `text` property, with default value of "Hello";
- - `this.selected` - getter/setter, due to the `selected` property, with default value of `false` (all Booleans are `false` by default in HTML and `defaultValue` cannot be configured for them);
+ - `this.selected` - getter/setter, due to the `selected` property, with default value of `false` (all Booleans should be optional, but initializing them to `false` gives a type hint to TypeScript and `boolean` does not appear twice in the code);
  - `this.items` - an array of all *Text Nodes and HTML Elements* in the default slot;
- - `this.icon` - an array of all HTML elements in the `icons` slot. 
+ - `this.icon` - an array of all HTML elements in the `icons` slot.
 
 The component will have only 1 attribute:
  - `text` due to the `text` property (the `selected` property has `noAttribute: true` set).
@@ -792,7 +746,7 @@ Example:
 </ui5-select>
 ```
 
-The `ui5-option` component does not provide a template, and is therefore never rendered. However, the `ui5-select` component, which is a physical component that has a template, 
+The `ui5-option` component does not provide a template, and is therefore never rendered. However, the `ui5-select` component, which is a physical component that has a template,
 renders HTML corresponding to each of its children (`ui5-option` instances) as part of its own shadow DOM.
 
 ### What is invalidation? <a name="invalidation"></a>
@@ -813,13 +767,13 @@ Changes to properties always cause an invalidation. No specific metadata configu
 class MyComponent extends UI5Element {
 
 	@property()
-	text!: string;
+	text?: string;
 }
 ```
 
 Whenever `text` changes, the component will be invalidated.
 
-Changes to slots (children are added/removed/rearranged) also cause an invalidation by default. 
+Changes to slots (children are added/removed/rearranged) also cause an invalidation by default.
 
 ```js
 class MyComponent extends UI5Element {
@@ -878,7 +832,7 @@ constructor() {
 	this._filteredItems = [];
 
 	// bind a method once so that you can pass the same function to register/deregister-based helpers
-	this._handleResizeBound = this._handleResize.bind(this); 
+	this._handleResizeBound = this._handleResize.bind(this);
 
 	// do one-time work when the first instance of a component is created
 	if (!isGlobalHandlerAttached) {
@@ -1025,12 +979,10 @@ Probably the best example of these hooks is the usage of the `ResizeHandler` hel
 The component has a private `_width` property, defined as follows:
 
 ```js
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-
 class MyComponent extends UI5Element {
 
-	@property({ validator: Integer })
-	_width!: number;
+	@property({ type: Number })
+	_width = 0;
 }
 ```
 
@@ -1045,7 +997,7 @@ class MyComponent extends UI5Element {
 		super();
 		this._fnOnResize = this._onResize.bind(this);
 	}
-	
+
 	onEnterDOM() {
 		ResizeHandler.register(this, this._fnOnResize);
 	}
@@ -1071,4 +1023,4 @@ class MyComponent extends UI5Element {
 In the `constructor` we bind the `_onResize` method to the component's instance to get a function with the correct context,
 and then in `onEnterDOM` and `onExitDOM` we register/deregister this function with the `ResizeHandler` helper class.
 
-Then, whenever the component resizes, the `ResizeHandler` will trigger the callback, the metadata `_width` property will be updated to a new value in `_onResize`, the component will be invalidated, and the template will be executed with the new value of `_width`, respectively `styles`. 
+Then, whenever the component resizes, the `ResizeHandler` will trigger the callback, the metadata `_width` property will be updated to a new value in `_onResize`, the component will be invalidated, and the template will be executed with the new value of `_width`, respectively `styles`.

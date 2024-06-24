@@ -1,5 +1,6 @@
 import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/MenuItem.js";
+import "@ui5/webcomponents/dist/MenuSeparator.js";
 
 import "@ui5/webcomponents-icons/dist/add-document.js";
 import "@ui5/webcomponents-icons/dist/add-folder.js";

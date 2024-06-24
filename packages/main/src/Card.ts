@@ -57,7 +57,7 @@ class Card extends UI5Element {
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -66,7 +66,7 @@ class Card extends UI5Element {
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the content of the component.

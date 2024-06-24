@@ -22,6 +22,13 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	@property({ type: Boolean })
 	declare selected: boolean;
 
+	/**
+	 * Defines whether the item is filtered
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible = false;
+
 	get isMultiComboBoxItem() {
 		return true;
 	}

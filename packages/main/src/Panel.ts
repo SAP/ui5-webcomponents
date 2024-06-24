@@ -14,8 +14,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import TitleLevel from "./types/TitleLevel.js";
-import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
+import type TitleLevel from "./types/TitleLevel.js";
+import type PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
 import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
@@ -99,11 +99,11 @@ class Panel extends UI5Element {
 	 * The text is visible in both expanded and collapsed states.
 	 *
 	 * **Note:** This property is overridden by the `header` slot.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Determines whether the component is in a fixed state that is not
@@ -112,7 +112,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	fixed!: boolean;
+	fixed = false;
 
 	/**
 	 * Indicates whether the component is collapsed and only the header is displayed.
@@ -120,7 +120,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
@@ -129,7 +129,7 @@ class Panel extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	noAnimation!: boolean;
+	noAnimation = false;
 
 	/**
 	 * Sets the accessible ARIA role of the component.
@@ -138,8 +138,8 @@ class Panel extends UI5Element {
 	 * @default "Form"
 	 * @public
 	 */
-	@property({ type: PanelAccessibleRole, defaultValue: PanelAccessibleRole.Form })
-	accessibleRole!: `${PanelAccessibleRole}`;
+	@property()
+	accessibleRole: `${PanelAccessibleRole}` = "Form";
 
 	/**
 	 * Defines the "aria-level" of component heading,
@@ -147,17 +147,17 @@ class Panel extends UI5Element {
 	 * @default "H2"
 	 * @public
 	*/
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	headerLevel!: `${TitleLevel}`;
+	@property()
+	headerLevel: `${TitleLevel}` = "H2";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Indicates whether the Panel header is sticky or not.
@@ -169,7 +169,7 @@ class Panel extends UI5Element {
 	 * @since 1.16.0-rc.1
 	 */
 	 @property({ type: Boolean })
-	 stickyHeader!: boolean;
+	 stickyHeader = false;
 
 	/**
 	 * When set to `true`, the `accessibleName` property will be
@@ -179,19 +179,19 @@ class Panel extends UI5Element {
 	 * @private
 	  */
 	@property({ type: Boolean })
-	useAccessibleNameForToggleButton!: boolean;
+	useAccessibleNameForToggleButton = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hasHeader!: boolean;
+	_hasHeader = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_contentExpanded!: boolean;
+	_contentExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_animationRunning!: boolean;
+	_animationRunning = false;
 
 	/**
 	 * Defines the component header area.

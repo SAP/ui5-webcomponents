@@ -1,0 +1,11 @@
+:host {
+	border-top: 0.0625rem solid var(--sapGroup_ContentBorderColor);
+	min-height: 0.125rem;
+}
+
+.ui5-menu-separator {
+	border: inherit;
+	min-height: inherit;
+	background: inherit;
+	opacity: 1;
+}

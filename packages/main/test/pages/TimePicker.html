@@ -73,12 +73,12 @@
 		<script>
 				var counter = 0;
 				timepickerChange.addEventListener("ui5-change", function() {
-					changeResult.value = ++counter;
+					changeResult.value = `${++counter}`;
 				});
 
 				var inputCounter = 0;
 				timepickerInput.addEventListener("ui5-input", function() {
-					inputResult.value = ++inputCounter;
+					inputResult.value = `${++inputCounter}`;
 				});
 
 				var tp = document.getElementById('timepickerSetTime');

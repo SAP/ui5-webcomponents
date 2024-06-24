@@ -6,10 +6,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
+import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -27,7 +27,7 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import type { Timeout, ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
+import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
@@ -92,7 +92,7 @@ type ShellBarSearchButtonEventDetail = {
 interface IShelBarItemInfo {
 	id: string,
 	icon?: string,
-	text: string,
+	text?: string,
 	priority: number,
 	show: boolean,
 	count?: string,
@@ -155,7 +155,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		Icon,
 		List,
 		Popover,
-		StandardListItem,
+		ListItemStandard,
 	],
 })
 /**
@@ -259,30 +259,30 @@ class ShellBar extends UI5Element {
 	 * Defines the `primaryTitle`.
 	 *
 	 * **Note:** The `primaryTitle` would be hidden on S screen size (less than approx. 700px).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	primaryTitle!: string;
+	primaryTitle?: string;
 
 	/**
 	 * Defines the `secondaryTitle`.
 	 *
 	 * **Note:** The `secondaryTitle` would be hidden on S and M screen sizes (less than approx. 1300px).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	secondaryTitle!: string;
+	secondaryTitle?: string;
 
 	/**
 	 * Defines the `notificationsCount`,
 	 * displayed in the notification icon top-right corner.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	notificationsCount!: string;
+	notificationsCount?: string;
 
 	/**
 	 * Defines, if the notification icon would be displayed.
@@ -290,7 +290,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showNotifications!: boolean;
+	showNotifications = false;
 
 	/**
 	 * Defines, if the product switch icon would be displayed.
@@ -298,7 +298,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showProductSwitch!: boolean;
+	showProductSwitch = false;
 
 	/**
 	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
@@ -308,7 +308,7 @@ class ShellBar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showSearchField!: boolean;
+	showSearchField = false;
 
 	/**
 	 * Defines additional accessibility attributes on different areas of the component.
@@ -344,37 +344,37 @@ class ShellBar extends UI5Element {
 	 * @since 1.10.0
 	 */
 	 @property({ type: Object })
-	 accessibilityAttributes!: ShellBarAccessibilityAttributes;
+	 accessibilityAttributes: ShellBarAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property()
-	breakpointSize!: string;
+	breakpointSize?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	withLogo!: boolean;
+	withLogo = false;
 
 	@property({ type: Object })
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
-	@property({ type: Object, multiple: true })
-	_menuPopoverItems: Array<HTMLElement>;
+	@property({ type: Array, noAttribute: true })
+	_menuPopoverItems: Array<HTMLElement> = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_menuPopoverExpanded!: boolean;
+	_menuPopoverExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_overflowPopoverExpanded!: boolean;
+	_overflowPopoverExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_fullWidthSearch!: boolean;
+	_fullWidthSearch = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isXXLBreakpoint!: boolean;
+	_isXXLBreakpoint = false;
 
 	/**
 	 * Defines the assistant slot.
@@ -1128,7 +1128,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _notificationsText() {
-		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
+		return ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount || 0);
 	}
 
 	get _cancelBtnText() {

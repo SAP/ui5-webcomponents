@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isLeft,
 	isRight,
@@ -31,8 +30,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
-import BackgroundDesign from "./types/BackgroundDesign.js";
-import BorderDesign from "./types/BorderDesign.js";
+import type BackgroundDesign from "./types/BackgroundDesign.js";
+import type BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -120,28 +119,28 @@ type CarouselNavigateEventDetail = {
 		/**
 		 * @public
 		 */
-		selectedIndex: { type: Integer },
+		selectedIndex: { type: Number },
 	},
 })
 
 class Carousel extends UI5Element {
 	/**
 	 * Defines the accessible name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.24
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the input.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.24
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
@@ -149,7 +148,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	cyclic!: boolean;
+	cyclic = false;
 
 	/**
 	 * Defines the number of items per page depending on the carousel width.
@@ -163,8 +162,8 @@ class Carousel extends UI5Element {
 	 * @default "S1 M1 L1 XL1"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "S1 M1 L1 XL1" })
-	itemsPerPage!: string;
+	@property()
+	itemsPerPage = "S1 M1 L1 XL1";
 
 	/**
 	 * Defines the visibility of the navigation arrows.
@@ -177,7 +176,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideNavigationArrows!: boolean;
+	hideNavigationArrows = false;
 
 	/**
 	 * Defines the visibility of the page indicator.
@@ -187,7 +186,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hidePageIndicator!: boolean;
+	hidePageIndicator = false;
 
 	/**
 	 * Defines the style of the page indicator.
@@ -199,8 +198,8 @@ class Carousel extends UI5Element {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: CarouselPageIndicatorType, defaultValue: CarouselPageIndicatorType.Default })
-	pageIndicatorType!: `${CarouselPageIndicatorType}`;
+	@property()
+	pageIndicatorType: `${CarouselPageIndicatorType}` = "Default";
 
 	/**
 	 * Defines the carousel's background design.
@@ -208,8 +207,8 @@ class Carousel extends UI5Element {
 	 * @default "Translucent"
 	 * @public
 	 */
-	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
-	backgroundDesign!: BackgroundDesign;
+	@property()
+	backgroundDesign: `${BackgroundDesign}` = "Translucent";
 
 	/**
 	 * Defines the page indicator background design.
@@ -217,8 +216,8 @@ class Carousel extends UI5Element {
 	 * @default "Solid"
 	 * @public
 	 */
-	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
-	pageIndicatorBackgroundDesign!: BackgroundDesign;
+	@property()
+	pageIndicatorBackgroundDesign: `${BackgroundDesign}` = "Solid";
 
 	/**
 	 * Defines the page indicator border design.
@@ -226,16 +225,16 @@ class Carousel extends UI5Element {
 	 * @default "Solid"
 	 * @public
 	 */
-	@property({ type: BorderDesign, defaultValue: BorderDesign.Solid })
-	pageIndicatorBorderDesign!: BorderDesign;
+	@property()
+	pageIndicatorBorderDesign: `${BorderDesign}` = "Solid";
 
 	/**
 	 * Defines the index of the initially selected item.
 	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	_selectedIndex!: number;
+	@property({ type: Number })
+	_selectedIndex = 0;
 
 	/**
 	 * Defines the position of arrows.
@@ -247,21 +246,21 @@ class Carousel extends UI5Element {
 	 * @default "Content"
 	 * @public
 	 */
-	@property({ type: CarouselArrowsPlacement, defaultValue: CarouselArrowsPlacement.Content })
-	arrowsPlacement!: `${CarouselArrowsPlacement}`;
+	@property()
+	arrowsPlacement: `${CarouselArrowsPlacement}` = "Content";
 
 	/**
 	 * Defines the carousel width in pixels.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_width?: number;
 
 	/**
 	 * Defines the carousel item width in pixels.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_itemWidth?: number;
 
 	/**
@@ -270,7 +269,7 @@ class Carousel extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_visibleNavigationArrows!: boolean;
+	_visibleNavigationArrows = false;
 
 	_scrollEnablement: ScrollEnablement;
 	_onResizeBound: ResizeObserverCallback;
@@ -535,6 +534,7 @@ class Carousel extends UI5Element {
 					width: `${this._itemWidth || 0}px`,
 				},
 				classes: visible ? "" : "ui5-carousel-item--hidden",
+				selected: visible,
 			};
 		});
 	}

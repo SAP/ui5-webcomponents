@@ -7,7 +7,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -16,7 +15,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
-import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -121,7 +120,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 	/**
 	 * Indicates whether the user can interact with the component or not.
 	 *
@@ -130,7 +129,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 	/**
 	 * Defines whether the component is read-only.
 	 *
@@ -140,7 +139,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 	/**
 	 * Defines whether the component is required.
 	 * @default false
@@ -148,15 +147,15 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.3
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the value state of the component.
@@ -168,8 +167,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the number of visible text rows for the component.
@@ -182,15 +181,15 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	rows!: number;
+	@property({ type: Number })
+	rows = 0;
 
 	/**
 	 * Defines the maximum number of characters that the `value` can have.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	maxlength?: number
 
 	/**
@@ -205,7 +204,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showExceededText!: boolean;
+	showExceededText = false;
 
 	/**
 	 * Enables the component to automatically grow and shrink dynamically with its content.
@@ -213,72 +212,72 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	growing!: boolean;
+	growing = false;
 
 	/**
 	 * Defines the maximum number of rows that the component can grow.
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	growingMaxRows!: number;
+	@property({ type: Number })
+	growingMaxRows = 0;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the textarea.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * @private
 	 */
 	 @property({ type: Boolean })
-	exceeding!: boolean;
+	exceeding = false;
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	_mirrorText!: IndexedTokenizedText;
+	@property({ type: Array })
+	_mirrorText: IndexedTokenizedText = [];
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_maxHeight!: string;
+	_maxHeight?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_width?: number;
 
 	/**

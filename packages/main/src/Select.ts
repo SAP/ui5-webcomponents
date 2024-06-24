@@ -29,7 +29,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -54,7 +53,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListItemBase from "./ListItemBase.js";
 
 // Templates
 import SelectTemplate from "./generated/templates/SelectTemplate.lit.js";
@@ -70,9 +69,9 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * @public
  */
 type IOption = ListItemBase & {
-	tooltip: string,
+	tooltip?: string,
 	icon?: string,
-	value: string,
+	value?: string,
 	additionalText?: string,
 	focused?: boolean,
 	effectiveDisplayText: string,
@@ -124,6 +123,7 @@ type SelectLiveChangeEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart popover - Used to style the popover element
  * @since 0.8.0
  */
 @customElement({
@@ -197,25 +197,25 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is required.
@@ -224,7 +224,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -236,54 +236,54 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @since 1.0.0-rc.9
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed!: boolean;
+	_iconPressed = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	opened!: boolean;
+	opened = false;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
-	_listWidth!: number;
+	@property({ type: Number, noAttribute: true })
+	_listWidth = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
-	_selectedIndexBeforeOpen: number;
-	_escapePressed: boolean;
-	_lastSelectedOption: IOption | null;
-	_typedChars: string;
+	_selectedIndexBeforeOpen = -1;
+	_escapePressed = false;
+	_lastSelectedOption: IOption | null = null;;
+	_typedChars = "";
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	valueStatePopover?: Popover;
@@ -348,21 +348,10 @@ class Select extends UI5Element implements IFormInputElement {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
-			return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
+			return selectedOption.hasAttribute("value") ? selectedOption.value! : selectedOption.textContent;
 		}
 
 		return "";
-	}
-
-	constructor() {
-		super();
-
-		this._selectedIndexBeforeOpen = -1;
-		this._escapePressed = false;
-		this._lastSelectedOption = null;
-		this._typedChars = "";
-
-		this._upgradeProperty("value");
 	}
 
 	onBeforeRendering() {
@@ -425,6 +414,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
+	@property()
 	set value(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
 

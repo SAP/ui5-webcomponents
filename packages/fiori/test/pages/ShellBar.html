@@ -149,18 +149,18 @@
 		</div>
 	</section>
 
-	<ui5-popover id="popover" placement="Bottom">
+	<ui5-popover id="popover" placement="Bottom" accessible-role="None">
 		<div class="popover-header">
 			<ui5-title class="shellbar2auto">John Doe</ui5-title>
 		</div>
 
 		<div class="popover-content">
-			<ui5-list separators="None" >
-				<ui5-li icon="sys-find">App Finder</ui5-li>
-				<ui5-li icon="settings">Settings</ui5-li>
-				<ui5-li icon="edit">Edit Home Page</ui5-li>
-				<ui5-li icon="sys-help">Help</ui5-li>
-				<ui5-li icon="log">Sign out</ui5-li>
+			<ui5-list accessible-role="menu" separators="None" >
+				<ui5-li accessible-role="menuitem" icon="sys-find">App Finder</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="settings">Settings</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="edit">Edit Home Page</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="sys-help">Help</ui5-li>
+				<ui5-li accessible-role="menuitem" icon="log">Sign out</ui5-li>
 			</ui5-list>
 		</div>
 	</ui5-popover>

@@ -19,7 +19,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 
 // Template
 import RadioButtonTemplate from "./generated/templates/RadioButtonTemplate.lit.js";
@@ -95,7 +95,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -106,7 +106,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -115,7 +115,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.9.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines whether the component is checked or not.
@@ -130,23 +130,23 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	checked!: boolean;
+	checked = false;
 
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -158,31 +158,31 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * **Note:** The selection can be changed with `ARROW_UP/DOWN` and `ARROW_LEFT/RIGHT` keys between radio buttons in same group.
 	 *
 	 * **Note:** Only one radio button can be selected per group.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the form value of the component.
 	 * When a form with a radio button group is submitted, the group's value
 	 * will be the value of the currently selected radio button.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value?: string;
 
 	/**
 	 * Defines whether the component text wraps when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 * @default "None"
+	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -191,19 +191,19 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.6.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	@property()
+	_tabIndex?: string;
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
@@ -211,7 +211,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	active = false;
 
 	/**
 	 * Defines if the component is selected in specific group
@@ -219,13 +219,13 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_groupChecked!: boolean;
+	_groupChecked = false;
 	@property({ type: Boolean, noAttribute: true })
-	_groupRequired!: boolean;
+	_groupRequired = false;
 
 	_deactivate: () => void;
-	_name!: string;
-	_checked!: boolean;
+	_name = "";
+	_checked = false;
 
 	get formValidityMessage() {
 		return RadioButton.i18nBundle.getText(FORM_SELECTABLE_REQUIRED2);
@@ -306,7 +306,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 			RadioButtonGroup.updateTabOrder(this.name);
 		}
 
-		this._name = this.name;
+		this._name = this.name || "";
 		this._checked = this.checked;
 	}
 

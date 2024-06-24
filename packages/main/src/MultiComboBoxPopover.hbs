@@ -68,20 +68,32 @@
 	{{/unless}}
 
 	{{#if filterSelected}}
-		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group-header data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-group-header>
+					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+						{{#each this.items}}
+							{{#if _isVisible}}
+								{{> listItem}}
+							{{/if}}
+						{{/each}}
+					</ui5-li-group>
 				{{else}}
 					{{> listItem}}
 				{{/if}}
 			{{/each}}
 		</ui5-list>
 	{{else}}
-		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group-header data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-group-header>
+					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+						{{#each this.items}}
+							{{#if _isVisible}}
+								{{> listItem}}
+							{{/if}}
+						{{/each}}
+					</ui5-li-group>
 				{{else}}
 					{{> listItem}}
 				{{/if}}
@@ -136,6 +148,7 @@
 		data-ui5-token-id="{{this._id}}"
 		data-ui5-stable="{{this.stableDomRef}}"
 		@keydown="{{../_onItemKeydown}}"
+		accessible-role="Option"
 	>
 		{{this.text}}
 	</ui5-li>

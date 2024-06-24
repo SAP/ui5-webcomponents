@@ -18,12 +18,10 @@ const metadata = {
 			noAttribute: true,
 		},
 		multiProp: {
-			type: String,
-			multiple: true,
+			type: Array,
 		},
 		defaultValueProp: {
 			type: String,
-			defaultValue: "Hello",
 		}
 	},
 	managedSlots: true,
@@ -49,6 +47,12 @@ const metadata = {
 };
 
 class Generic extends UI5Element {
+	constructor () {
+		super();
+
+		this.defaultValueProp = "Hello";
+	}
+
 	static get metadata() {
 		return metadata;
 	}
