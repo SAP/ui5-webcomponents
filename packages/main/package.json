@@ -29,6 +29,8 @@
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
     "test:suite-1": "wc-dev test-suite-1",
     "test:suite-2": "wc-dev test-suite-2",
+    "test:cypress": "nps test-cy-ci",
+    "test:cypress:open": "nps test-cy-open",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
   },
