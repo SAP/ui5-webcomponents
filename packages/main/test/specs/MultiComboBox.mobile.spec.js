@@ -36,6 +36,18 @@ describe("Basic interaction", () => {
 		assert.notOk(await picker.isDisplayedInViewport(), "Picker is closed now");
 	});
 
+	it("Should collapse the tokenizer when the picker is closed", async () => {
+		const mcb = await browser.$("#multi1");
+		const picker =  await mcb.shadow$("ui5-responsive-popover");
+		const dialogCloseButton = await picker.$(".ui5-responsive-popover-close-btn");
+		const tokenizer = await mcb.shadow$('ui5-tokenizer')
+
+		await mcb.click();
+		await dialogCloseButton.click();
+
+		assert.notOk(await tokenizer.getAttribute("expanded"), "The tokenizer is not expanded after closing the picker");
+	});
+
 	it("Should close the mobile picker dialog when pressing the OK button", async () => {
 		const multiCombo = await browser.$("#multi1");
 		const picker =  await multiCombo.shadow$("ui5-responsive-popover");
