@@ -384,7 +384,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Indicates whether the value state message popover is open.
 	 * @private
-	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	valueStateOpen = false;
