@@ -68,7 +68,7 @@
 	{{/unless}}
 
 	{{#if filterSelected}}
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list" accessible-role="listbox">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
 					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
@@ -78,7 +78,7 @@
 			{{/each}}
 		</ui5-list>
 	{{else}}
-		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" mode="MultiSelect" class="ui5-multi-combobox-all-items-list" accessible-role="listbox">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
 					<ui5-li-groupheader data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">{{ this.text }}</ui5-li-groupheader>
@@ -135,6 +135,7 @@
 		data-ui5-token-id="{{this._id}}"
 		data-ui5-stable="{{this.stableDomRef}}"
 		@keydown="{{../_onItemKeydown}}"
+		accessible-role="option"
 	>
 		{{this.text}}
 	</ui5-li>
