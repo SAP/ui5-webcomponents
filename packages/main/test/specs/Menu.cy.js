@@ -168,7 +168,7 @@ describe("Menu interaction", () => {
 			.ui5MenuItemPress("Escape");
 
 		cy.get("#btnOpen")
-			.focused();
+			.should("be.focused");
 	});
 
 	describe("Event firing", () => {
