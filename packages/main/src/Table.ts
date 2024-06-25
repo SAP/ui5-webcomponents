@@ -326,7 +326,9 @@ class Table extends UI5Element {
 		const renderNavigated = this._renderNavigated;
 		this._renderNavigated = this.rows.some(row => row.navigated);
 		if (renderNavigated !== this._renderNavigated) {
-			this.rows.forEach(row => row._renderNavigated = this._renderNavigated);
+			this.rows.forEach(row => {
+				row._renderNavigated = this._renderNavigated;
+			});
 		}
 
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
