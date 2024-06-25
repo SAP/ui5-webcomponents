@@ -11,6 +11,7 @@ import type CalendarLegendItemType from "./types/CalendarLegendItemType.js";
  * The `ui5-special-date` component defines a special calendar date to be used inside `ui5-calendar`,
  * which is visually distinguished from the rest of the dates.
  * @constructor
+ * @extends CalendarDate
  * @abstract
  * @public
  * @since 1.23.0
