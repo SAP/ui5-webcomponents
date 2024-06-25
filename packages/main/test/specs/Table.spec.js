@@ -209,10 +209,9 @@ describe("Table - Horizontal Scrolling", async () => {
 		assert.ok(await table.isExisting(), "Table exists");
 
 		const rightOffset = await browser.execute(() => {
-			const table = document.getElementById("table");
 			const row = document.getElementById("firstRow");
 
-			return row.shadowRoot.querySelector("#navigated-cell").getBoundingClientRect().right - table.getBoundingClientRect().right;
+			return row.shadowRoot.querySelector("#navigated-cell").getBoundingClientRect().right;
 		});
 
 		assert.equal(rightOffset, 0, "Navigated indicator is fixed to the right");
