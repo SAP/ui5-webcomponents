@@ -58,7 +58,7 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property()
-	key = "";
+	rowId = "";
 
 	/**
 	 * Defines the interactive state of the row.

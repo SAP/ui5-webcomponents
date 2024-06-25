@@ -27,7 +27,7 @@ describe("Mode - None", async () => {
 	it("selection should be not active", async () => {
 		const table = await browser.$("#table0");
 		const headerRow = await table.$("ui5-table-header-row");
-		const row = await table.$('ui5-table-row[key="0"]');
+		const row = await table.$('ui5-table-row[row-id="0"]');
 		const selection = await browser.$("#selection");
 
 		assert.ok(await table.isExisting(), "Table exists");
@@ -137,7 +137,7 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		it("Correct boxes are shown", async () => {
 			const table = await browser.$("#table0");
 			const headerRow = await table.$("ui5-table-header-row");
-			const row = await table.$('ui5-table-row[key="0"]');
+			const row = await table.$('ui5-table-row[row-id="0"]');
 
 			assert.ok(await table.isExisting(), "Table exists");
 			assert.ok(await headerRow.isExisting(), "Header row exists");
@@ -153,72 +153,72 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 		it("select row via SPACE", async () => {
 			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await table.$('ui5-table-row[key="0"]');
-			const row4 = await table.$('ui5-table-row[key="4"]');
+			const row0 = await table.$('ui5-table-row[row-id="0"]');
+			const row4 = await table.$('ui5-table-row[row-id="4"]');
 
 			await row0.click();
 			await row0.keys("Space");
 
 			let selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.SPACE.space_0, `Rows with keys ${testConfig.cases.SPACE.space_0} selected`);
+			assert.equal(selected, testConfig.cases.SPACE.space_0, `Rows with row-ids ${testConfig.cases.SPACE.space_0} selected`);
 
 			await row4.click();
 			await row4.keys("Space");
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.SPACE.space_4, `Rows with keys ${testConfig.cases.SPACE.space_4} selected`);
+			assert.equal(selected, testConfig.cases.SPACE.space_4, `Rows with row-ids ${testConfig.cases.SPACE.space_4} selected`);
 		});
 
 		it("select row via arrows (radio focus)", async () => {
 			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await table.$('ui5-table-row[key="0"]');
+			const row0 = await table.$('ui5-table-row[row-id="0"]');
 
 			const checkbox0 = await row0.shadow$("#selection-component");
 			await checkbox0.click();
 
 			let selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.ARROWS_BOX.arrow_initial, `Rows with keys ${testConfig.cases.ARROWS_BOX.arrow_initial} selected`);
+			assert.equal(selected, testConfig.cases.ARROWS_BOX.arrow_initial, `Rows with row-ids ${testConfig.cases.ARROWS_BOX.arrow_initial} selected`);
 
 			await browser.keys("ArrowDown");
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.ARROWS_BOX.arrow_down, `Rows with keys ${testConfig.cases.ARROWS_BOX.arrow_down} selected`);
+			assert.equal(selected, testConfig.cases.ARROWS_BOX.arrow_down, `Rows with row-ids ${testConfig.cases.ARROWS_BOX.arrow_down} selected`);
 
 			await browser.keys("ArrowUp");
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.ARROWS_BOX.arrow_up, `Rows with keys ${testConfig.cases.ARROWS_BOX.arrow_up} selected`);
+			assert.equal(selected, testConfig.cases.ARROWS_BOX.arrow_up, `Rows with row-ids ${testConfig.cases.ARROWS_BOX.arrow_up} selected`);
 		});
 
 		it("select row via mouse", async () => {
 			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await table.$('ui5-table-row[key="0"]');
-			const row4 = await table.$('ui5-table-row[key="4"]');
+			const row0 = await table.$('ui5-table-row[row-id="0"]');
+			const row4 = await table.$('ui5-table-row[row-id="4"]');
 
 			const checkbox0 = await row0.shadow$("#selection-component");
 			await checkbox0.click();
 
 			let selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.MOUSE.mouse_0, `Rows with keys ${testConfig.cases.MOUSE.mouse_0} selected`);
+			assert.equal(selected, testConfig.cases.MOUSE.mouse_0, `Rows with row-ids ${testConfig.cases.MOUSE.mouse_0} selected`);
 
 			const checkbox4 = await row4.shadow$("#selection-component");
 			await checkbox4.click();
 
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.MOUSE.mouse_4, `Rows with keys ${testConfig.cases.MOUSE.mouse_4} selected`);
+			assert.equal(selected, testConfig.cases.MOUSE.mouse_4, `Rows with row-ids ${testConfig.cases.MOUSE.mouse_4} selected`);
 		});
 
 		it("range selection with mouse", async () => {
 			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await table.$('ui5-table-row[key="0"]');
-			const row4 = await table.$('ui5-table-row[key="4"]');
+			const row0 = await table.$('ui5-table-row[row-id="0"]');
+			const row4 = await table.$('ui5-table-row[row-id="4"]');
 
 			const checkbox0 = await row0.shadow$("#selection-component");
 			const checkbox4 = await row4.shadow$("#selection-component");
 			await checkbox0.click();
 
 			let selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_initial, `Rows with keys ${testConfig.cases.RANGE_MOUSE.range_mouse_initial} selected`);
+			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_initial, `Rows with row-ids ${testConfig.cases.RANGE_MOUSE.range_mouse_initial} selected`);
 
 			await browser.performActions([{
 				type: "key",
@@ -228,7 +228,7 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 			await checkbox4.click();
 
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_final, `Rows with keys ${testConfig.cases.RANGE_MOUSE.range_mouse_final} selected`);
+			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_final, `Rows with row-ids ${testConfig.cases.RANGE_MOUSE.range_mouse_final} selected`);
 
 			await browser.performActions([{
 				type: "key",
@@ -239,24 +239,24 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 
 			await browser.releaseActions();
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_edge, `Rows with keys ${testConfig.cases.RANGE_MOUSE.range_mouse_edge} selected`);
+			assert.equal(selected, testConfig.cases.RANGE_MOUSE.range_mouse_edge, `Rows with row-ids ${testConfig.cases.RANGE_MOUSE.range_mouse_edge} selected`);
 		});
 
 		it("range selection with keyboard", async () => {
 			const table = await browser.$("#table0");
 			const selection = await browser.$("#selection");
-			const row0 = await table.$('ui5-table-row[key="0"]');
+			const row0 = await table.$('ui5-table-row[row-id="0"]');
 
 			await row0.click();
 			await row0.keys("Space");
 
 			let selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.RANGE_KEYBOARD.initial, `Rows with keys ${testConfig.cases.RANGE_MOUSE.initial} selected`);
+			assert.equal(selected, testConfig.cases.RANGE_KEYBOARD.initial, `Rows with row-ids ${testConfig.cases.RANGE_MOUSE.initial} selected`);
 
 			await browser.keys(["Shift", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowUp"]);
 
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.RANGE_KEYBOARD.block_1, `Rows with keys ${testConfig.cases.RANGE_KEYBOARD.block_1} selected`);
+			assert.equal(selected, testConfig.cases.RANGE_KEYBOARD.block_1, `Rows with row-ids ${testConfig.cases.RANGE_KEYBOARD.block_1} selected`);
 
 			await browser.keys("ArrowDown");
 			await browser.keys("ArrowDown");
@@ -265,7 +265,7 @@ Object.entries(testConfig).forEach(([mode, testConfig]) => {
 			await browser.keys(["Shift", "ArrowDown", "ArrowDown", "ArrowDown"]);
 
 			selected = await selection.getProperty("selected");
-			assert.equal(selected, testConfig.cases.RANGE_KEYBOARD.block_2, `Rows with keys ${testConfig.cases.RANGE_KEYBOARD.block_2} selected`);
+			assert.equal(selected, testConfig.cases.RANGE_KEYBOARD.block_2, `Rows with row-ids ${testConfig.cases.RANGE_KEYBOARD.block_2} selected`);
 		});
 	});
 });
