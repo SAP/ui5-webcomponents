@@ -24,7 +24,7 @@ class CalendarDateRange extends UI5Element implements ICalendarSelectedDates {
 	 * @public
 	 */
 	@property()
-	startValue!: string;
+	startValue = "";
 
 	/**
 	 * End of date range formatted according to the `formatPattern` property
@@ -33,7 +33,7 @@ class CalendarDateRange extends UI5Element implements ICalendarSelectedDates {
 	 * @public
 	 */
 	@property()
-	endValue!: string;
+	endValue = "";
 }
 
 CalendarDateRange.define();

@@ -83,8 +83,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @default "Button"
 	 * @public
 	 */
-	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.Button })
-	type!: `${TableGrowingMode}`;
+	@property()
+	type: `${TableGrowingMode}` = "Button";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
@@ -93,27 +93,27 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * **Note:** When not provided and the type is set to Button, a default text is displayed, corresponding to the
 	 * current language.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingText!: string;
+	growingText?: string;
 
 	/**
 	 * Defines the text that will be displayed below the `growingText` inside the growing button.
 	 * Has no effect when type is set to Scroll.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	growingSubText!: string;
+	growingSubText?: string;
 
 	/**
 	 * Disables the growing feature.
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the active state of the growing button.
@@ -121,7 +121,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_activeState?: boolean;
+	_activeState = false;
 
 	_table?: Table;
 	_observer?: IntersectionObserver;

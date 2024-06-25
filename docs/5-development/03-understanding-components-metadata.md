@@ -15,7 +15,7 @@ Defines the HTML tag for the Web Component.
 	tag: "my-component",
 })
 class MyComponent extends UI5Element {};
-``` 
+```
 
 
 
@@ -94,10 +94,10 @@ class MyComponent extends UI5Element {
 
 ## Properties / Attributes
 
-Defines the HTML properties for the Web Component. 
+Defines the HTML properties for the Web Component.
 
 **Note about attributes:** By default, for each property an equivalent attribute is supported. Attributes have the same names as properties, but in `kebab-case` rather than `camelCase`.
-Properties of type `Object`, properties with `multiple` set to`true` and properties with `noAttribute` set to `true` do not have an attribute equivalent. 
+Properties of type `Object`, properties with `multiple` set to`true` and properties with `noAttribute` set to `true` do not have an attribute equivalent.
 
 #### Example
 
@@ -107,79 +107,66 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 })
 class DemoComponent extends UI5Element {
 
-	@property({ type: String, defaultValue: "Hello" })
-	message!: string;
+	@property()
+	message = "Hello"
 
 	@property({ type: Boolean, "noAttribute": true })
-	shown!: boolean;
+	shown = false
 
 	@property({ type: Object })
-	settings!: object;
+	settings: object = {};
 
-	@property({ validator: Integer })
-	animationDuration!: number;
+	@property({ type: Number })
+	animationDuration = 1000;
 
-	@property({ validator: Integer,  "multiple": true })
-	nums!: Array<number>;
+	@property({ type: Array })
+	nums: Array<number> = []
 };
-``` 
+```
 
 
 #### @property configuration settings
 
-| Setting        | Type                         | Default   | Description                                                                                                   |
-|----------------|------------------------------|-----------|---------------------------------------------------------------------------------------------------------------|
-| `type`         | Property type                | String    | The type of the property. For more information on types see the table below.                                  |
-| `defaultValue` | Any valid value for the type | undefined | Default value of the property. Cannot be set for type "Boolean". Booleans are always false by default in HTML.|
-| `multiple`     | Boolean                      | false     | Indicates whether the property represents a single value or is an array of values of the given type.          |
-| `noAttribute`  | Boolean                      | false     | No attribute equivalent will be created for that property. Always true for properties of type Object.        |
-| `validator`  | Validator type                 | N/A       | The validator of the property. For more information on validators see the table below  |
+|    Setting    |     Type      | Default |                                                    Description                                                     |
+| ------------- | ------------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
+| `type`        | Property type | String  | The type of the property. For more information on types see the table below.                                       |
+| `noAttribute` | Boolean       | false   | No attribute equivalent will be created for that property. Always true for properties of type Object.              |
+| `converter`   | Object        | N/A     | A custom converter with two methods - `fromAttribute` and `toAttribute` that will receive the `type` and the value |
 
-**Note:** The `type` setting is required, except these two cases:
-
-- `string` properties (type: String is considered default)
-
-```ts
-@property()
-name!: string;
-``` 
-
-- `validator` is provided:
-
-```ts
-@property({ validator: Integer })
-animationDuration!: number;
-```
-
+Types are used for attribute conversion only. Converting from a property to a string, the framework can check the runtime type and convert to string, but coming an attribute, there is no way to know whether it is a boolean or a number unless a type is also given.
+**Note:** If `type` is omitted, it is implied to be `String`
 
 #### Types
 
-| Type        | Class to Use                                            | Description                             |
-|-------------|---------------------------------------------------------|-----------------------------------------|
-| string      | `String`                                                | String value                            |
-| boolean     | `Boolean`                                               | Boolean value - always false by default |
-| object      | `Object`                                                | JS Object                               |
-| custom type | Extend `@ui5/webcomponents-base/dist/types/DataType.js` | Used mainly for enumerations            |
+|  Type   | Class to Use |                                Description                                 |
+| ------- | ------------ | -------------------------------------------------------------------------- |
+| string  | `String`     | Implied as default, should be omitted                                      |
+| boolean | `Boolean`    | Boolean value, the presence of the attribute will set the property to true |
+| number  | `Number`     | Number value, the attribute will be converted using `parseFloat`           |
+| object  | `Object`     | JS Object, equivalent to `noAttribute: true`                               |
+| []      | `Array`      | JS Array, equivalent to `noAttribute: true`                                |
+| Enum    | `String`     | Enums are treated as strings, type does not accept enum types              |
 
+#### Initial values
 
-#### Examples of prebuilt custom types
+Use property initializers to pass initial values
+```ts
+@property()
+name = "user1";
 
-| Type       | Class to Use                                       | Description                                                    |
-|------------|----------------------------------------------------|----------------------------------------------------------------|
-| Integer    | `@ui5/webcomponents-base/dist/types/Integer.js`    | Integer value                                                  |
-| ValueState | `@ui5/webcomponents-base/dist/types/ValueState.js` | Enumeration with: `None`, `Error`, `Warning`, `Success` values |
+@property({ type: Boolean })
+collapsed = false;
 
-#### Validators
+@property({ type: Number })
+maxValue = 5;
 
-The `validator` is a custom class that implements `isValid` function that validates the property's value whenever it changes. If value is not valid, the framework will set the proeprty `defaultValue`.
+@property({ type: Object })
+accProperties = {};
 
-| Type        | Class to Use                                             | Description                             |
-|-------------|----------------------------------------------------------|-----------------------------------------|
-| number      | `Integer`                                                | Validates the prop value to integer     |
-| number      | `Float`                                                  | Validates the prop value to float       |
-| string      | `CSSColor`                                               | Validates the prop value to valid CSS color|
-| string      | `CSSSize`                                                | Validates the prop value to valid CSS size |
-| string or HTMLElement      | `DomReference`                            | Validates the prop value is it's a string or HTMLElement |
+@property({ type: Array })
+stars = [];
+```
+
 
 ## Slots
 
@@ -205,18 +192,18 @@ class MyComponent extends UI5Element {
 
 #### Slot configuration settings
 
-| Setting                      | Type                    | Default | Description                                                                                                                                                          |
-|------------------------------|-------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type` *                     | `HTMLElement` or `Node` | N/A     | The type of the children that can go into that slot.                                                                                                                  |
+|           Setting            |          Type           | Default |                                                                             Description                                                                              |
+| ---------------------------- | ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type` *                     | `HTMLElement` or `Node` | N/A     | The type of the children that can go into that slot.                                                                                                                 |
 | `individualSlots`            | `Boolean`               | false   | If set to `true`, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.                                                          |
 | `propertyName`               | `String`                | N/A     | Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.                                               |
 | `invalidateOnChildChange` ** | `Boolean` or `Object`   | false   | **Experimental, do not use.** Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component. |
 
 `*` The `type` setting is required.
 
-`**` 
-**Note:** `invalidateOnChildChange` is not meant to be used with standard DOM Elements and is not to be confused with `MutationObserver`-like functionality. 
-It rather targets the use case of components that slot abstract items (`UI5Element` instances without a template) and require to be invalidated in turn whenever these items are invalidated.  
+`**`
+**Note:** `invalidateOnChildChange` is not meant to be used with standard DOM Elements and is not to be confused with `MutationObserver`-like functionality.
+It rather targets the use case of components that slot abstract items (`UI5Element` instances without a template) and require to be invalidated in turn whenever these items are invalidated.
 
 The `invalidateOnChildChange` setting can be either a `Boolean` (`true` meaning invalidate the component on any change of a child in this slot) or an `Object` with `properties` and `slots` fields. They in turn can be either of
 type `Boolean` (`true` meaning invalidate on any property change or any slot change) or `Array` of strings indicating exactly which properties or slots lead to invalidation.
@@ -246,7 +233,7 @@ class MyComponent extends UI5Element {
 
 ```js
 class MyComponent extends UI5Element {
-	@slot({ 
+	@slot({
 		type: HTMLElement,
 		invalidateOnChildChange: {
 			"properties": true,
@@ -261,7 +248,7 @@ class MyComponent extends UI5Element {
 
  ```js
 class MyComponent extends UI5Element {
-	@slot({ 
+	@slot({
 		type: HTMLElement,
 		invalidateOnChildChange: {
 			"properties": ["text", "selected", "disabled"],
@@ -273,14 +260,14 @@ class MyComponent extends UI5Element {
 ```
 
 Notes:
- - Children without a `slot` attribute will be assigned to the `default` slot. 
+ - Children without a `slot` attribute will be assigned to the `default` slot.
  - All HTML text nodes will be assigned to the `default` slot, as they cannot have a `slot` attribute.
  - For all slots the Web Component will have a property created, with the name of the slot, to hold a list of all children assigned to this slot.
  For example, if you have a slot named "rows", "this.rows" will be an array, holding references to all children with `slot="rows"`, or no slot, if rows was default.
  - For the `default` slot you can provide an accessor. In the following example, `this.items` will hold all children that were assigned to the default slot.
 
 ```ts
- @slot({ 
+ @slot({
 	type: HTMLElement
 	"default": true,
 })
@@ -290,8 +277,8 @@ items!: Array<HTMLElement>;
 
  #### Slot types
 
-| Type        | Description                               |
-|-------------|-------------------------------------------|
+|    Type     |                Description                |
+| ----------- | ----------------------------------------- |
 | Node        | Accepts both Text nodes and HTML Elements |
 | HTMLElement | Accepts HTML Elements only                |
 

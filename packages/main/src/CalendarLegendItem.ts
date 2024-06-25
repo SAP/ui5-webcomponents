@@ -49,26 +49,26 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
 class CalendarLegendItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text content of the Calendar Legend Item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the type of the Calendar Legend Item.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
-	type!: `${CalendarLegendItemType}`;
+	@property()
+	type: `${CalendarLegendItemType}` = "None";
 
 	/**
 	 * Tab index of the component.
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1"
 
 	static i18nBundle: I18nBundle;
 

@@ -1,5 +1,4 @@
-import type DataType from "./types/DataType.js";
-import { camelToKebabCase } from "./util/StringHelper.js";
+import { camelToKebabCase, kebabToCamelCase } from "./util/StringHelper.js";
 import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 
@@ -20,15 +19,15 @@ type Slot = {
 type SlotValue = Node;
 
 type Property = {
-	type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
-	validator?: DataType,
-	defaultValue?: PropertyValue,
+	type?: BooleanConstructor | StringConstructor | ObjectConstructor | NumberConstructor | ArrayConstructor,
 	noAttribute?: boolean,
-	multiple?: boolean,
-	compareValues?: boolean,
+	converter?: {
+		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
+		toAttribute(value: unknown, type: unknown): string | null,
+	}
 }
 
-type PropertyValue = boolean | number | string | object | undefined | null | DataType;
+type PropertyValue = boolean | number | string | object | undefined | null;
 
 type EventData = Record<string, object>;
 
@@ -66,64 +65,18 @@ class UI5ElementMetadata {
 		const initialState: State = {};
 		const slotsAreManaged = this.slotsAreManaged();
 
-		// Initialize properties
-		const props = this.getProperties();
-		for (const propName in props) { // eslint-disable-line
-			const propType = props[propName].type;
-			const propDefaultValue = props[propName].defaultValue;
-
-			if (propType === Boolean) {
-				initialState[propName] = false;
-
-				if (propDefaultValue !== undefined) {
-					console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default"); // eslint-disable-line
-				}
-			} else if (props[propName].multiple) {
-				Object.defineProperty(initialState, propName, {
-					enumerable: true,
-					get() {
-					  return [];
-					},
-				  });
-			} else if (propType === Object) {
-				Object.defineProperty(initialState, propName, {
-					enumerable: true,
-					get() {
-					  return "defaultValue" in props[propName] ? props[propName].defaultValue : {};
-					},
-				  });
-			} else if (propType === String) {
-				initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
-			} else {
-				initialState[propName] = propDefaultValue;
-			}
-		}
-
 		// Initialize slots
 		if (slotsAreManaged) {
 			const slots = this.getSlots();
 			for (const [slotName, slotData] of Object.entries<Slot>(slots)) { // eslint-disable-line
 				const propertyName = slotData.propertyName || slotName;
 				initialState[propertyName] = [];
+				initialState[kebabToCamelCase(propertyName)] = initialState[propertyName];
 			}
 		}
 
 		this._initialState = initialState;
 		return initialState;
-	}
-
-	/**
-	 * Validates the property's value and returns it if correct
-	 * or returns the default value if not.
-	 * **Note:** Only intended for use by UI5Element.js
-	 * @public
-	 */
-	static validatePropertyValue(value: PropertyValue, propData: Property): PropertyValue {
-		const isMultiple = propData.multiple;
-		if (isMultiple && value) {
-			return (value as Array<PropertyValue>).map((propValue: PropertyValue) => validateSingleProperty(propValue, propData));
-		}
-		return validateSingleProperty(value, propData);
 	}
 
 	/**
@@ -170,7 +123,7 @@ class UI5ElementMetadata {
 	 */
 	hasAttribute(propName: string): boolean {
 		const propData = this.getProperties()[propName];
-		return propData.type !== Object && !propData.noAttribute && !propData.multiple;
+		return propData.type !== Object && propData.type !== Array && !propData.noAttribute;
 	}
 
 	/**
@@ -353,35 +306,6 @@ class UI5ElementMetadata {
 		throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
 	}
 }
-
-const validateSingleProperty = (value: PropertyValue, propData: Property) => {
-	const propertyType = propData.type;
-	let propertyValidator = propData.validator;
-
-	if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-		propertyValidator = propertyType as typeof DataType;
-	}
-
-	if (propertyValidator) {
-		return (propertyValidator as typeof DataType).isValid(value) ? value : propData.defaultValue;
-	}
-
-	if (!propertyType || propertyType === String) {
-		// eslint-disable-next-line @typescript-eslint/no-base-to-string -- if an object is passed as a value to a string property, this was an error so displaying [object Object] will indicate the issue to the developer
-		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
-	}
-
-	if (propertyType === Boolean) {
-		return typeof value === "boolean" ? value : false;
-	}
-
-	if (propertyType === Object) {
-		return typeof value === "object" ? value : propData.defaultValue;
-	}
-
-	// Check if "value" is part of the enum (propertyType) values and return the defaultValue if not found.
-	return value as string in propertyType ? value : propData.defaultValue;
-};
 
 const validateSingleSlot = (value: Node, slotData: Slot) => {
 	value && getSlottedNodes(value).forEach(el => {

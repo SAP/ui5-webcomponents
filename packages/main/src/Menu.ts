@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import {
 	isLeft,
 	isRight,
@@ -18,13 +17,14 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
+import MenuSeparator from "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -37,6 +37,16 @@ import {
 import menuCss from "./generated/themes/Menu.css.js";
 
 const MENU_OPEN_DELAY = 300;
+
+/**
+ * Interface for components that may be slotted inside a `ui5-menu`.
+ *
+ * **Note:** Use with `ui5-menu-item` or `ui5-menu-separator`. Implementing the interface does not guarantee that any other classes can work with the `ui5-menu`.
+ * @public
+ */
+interface IMenuItem extends UI5Element {
+	isSeparator: boolean;
+}
 
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -53,9 +63,13 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  *
  * `ui5-menu` component represents a hierarchical menu structure.
  *
- * ### Usage
+ * ### Structure
  *
- * `ui5-menu` contains `ui5-menu-item` components.
+ * The `ui5-menu` can hold two types of entities:
+ *
+ * - `ui5-menu-item` components
+ * - `ui5-menu-separator` - used to separate menu items with a line
+ *
  * An arbitrary hierarchy structure can be represented by recursively nesting menu items.
  *
  * ### Keyboard Handling
@@ -88,6 +102,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 		Button,
 		List,
 		MenuItem,
+		MenuSeparator,
 		BusyIndicator,
 	],
 })
@@ -174,11 +189,11 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 class Menu extends UI5Element {
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Indicates if the menu is open
@@ -187,7 +202,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	open!:boolean;
+	open = false;
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
@@ -196,7 +211,7 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
@@ -204,8 +219,8 @@ class Menu extends UI5Element {
 	 * @public
 	 * @since 1.13.0
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the ID or DOM Reference of the element at which the menu is shown.
@@ -215,17 +230,17 @@ class Menu extends UI5Element {
 	 * @default ""
 	 * @since 1.10.0
 	 */
-	@property({ validator: DOMReference, defaultValue: "" })
-	opener!: HTMLElement | string;
+	@property({ converter: DOMReferenceConverter })
+	opener?: HTMLElement | string;
 
 	/**
 	 * Defines the items of this component.
 	 *
-	 * **Note:** Use `ui5-menu-item` for the intended design.
+	 * **Note:** Use `ui5-menu-item` and `ui5-menu-separator` for their intended design.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<MenuItem>;
+	items!: Array<IMenuItem>;
 
 	static i18nBundle: I18nBundle;
 	_timeout?: Timeout;
@@ -250,10 +265,14 @@ class Menu extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	onBeforeRendering() {
-		const siblingsWithIcon = this.items.some(item => !!item.icon);
+	get _menuItems() {
+		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
 
-		this.items.forEach(item => {
+	onBeforeRendering() {
+		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+
+		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 	}
@@ -279,7 +298,7 @@ class Menu extends UI5Element {
 
 	_closeItemSubMenu(item: MenuItem) {
 		if (item && item._popover) {
-			const openedSibling = item.items.find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -294,10 +313,12 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const item = e.target as MenuItem;
 
-			item.focus();
+			if (item.hasAttribute("ui5-menu-item")) {
+				item.focus();
 
-			// Opens submenu with 300ms delay
-			this._startOpenTimeout(item);
+				// Opens submenu with 300ms delay
+				this._startOpenTimeout(item);
+			}
 		}
 	}
 
@@ -306,7 +327,7 @@ class Menu extends UI5Element {
 
 		this._timeout = setTimeout(() => {
 			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && opener.items.find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -365,7 +386,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		this.items[0]?.focus();
+		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
 
@@ -391,4 +412,5 @@ export type {
 	MenuItemClickEventDetail,
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
+	IMenuItem,
 };

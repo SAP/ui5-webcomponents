@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -80,7 +79,7 @@ class DynamicPageTitle extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	snapped!: boolean;
+	snapped = false;
 
 	/**
 	 * Defines if the mobileNavigationActions are shown.
@@ -88,27 +87,27 @@ class DynamicPageTitle extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	mobileNavigationActions!: boolean;
+	mobileNavigationActions = false;
 
 	/**
 	 * Indicates if the elements is on focus
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * Defines the minimum width of the content area.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	minContentWidth?: number;
 
 	/**
 	 * Defines the minimum width of the actions area.
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	minActionsWidth?: number;
 
 	/**
@@ -179,7 +178,7 @@ class DynamicPageTitle extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	static i18nBundle: I18nBundle;
 

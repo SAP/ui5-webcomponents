@@ -484,6 +484,7 @@ export interface TypeReference extends Reference {
  * The common interface of classes and mixins.
  */
 export interface ClassLike {
+  _ui5experimental?: boolean | string
   _ui5implements?: Reference[]
   _ui5privacy?: Privacy
   /**
