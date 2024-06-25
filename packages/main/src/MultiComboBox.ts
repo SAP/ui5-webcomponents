@@ -609,12 +609,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_toggleTokenizerPopover() {
 		this.tokenizerOpen = false;
-		this._getResponsivePopover().open = !this._getResponsivePopover().open;
+		this.open = !this.open;
 	}
 
 	togglePopoverByDropdownIcon() {
 		this._shouldFilterItems = false;
-		this._getResponsivePopover().open = !this._getResponsivePopover().open;
+		this.open = !this.open;
 		this.tokenizerOpen = false;
 	}
 
@@ -1110,7 +1110,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onItemTab() {
-		this._getResponsivePopover().open = false;
+		this.open = false;
 	}
 
 	_handleArrowNavigation(e: KeyboardEvent, isDownControl: boolean) {
@@ -1424,7 +1424,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if (!e.detail.selectionComponentPressed && !isSpace(castedEvent) && !isSpaceCtrl(castedEvent)) {
-			this._getResponsivePopover().open = false;
+			this.open = false;
 			this.value = "";
 
 			// if the item (not checkbox) is clicked, call the selection change
