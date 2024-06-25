@@ -1119,6 +1119,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onItemTab() {
+		this._getResponsivePopover().preventFocusRestore = true;
+		this._inputDom.focus();
 		this._open = false;
 		this._tokenizer.expanded = false;
 	}
