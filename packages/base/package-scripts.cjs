@@ -61,10 +61,9 @@ const scripts = {
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	test: {
-		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2" "test-ci"',
+		default: 'concurrently "nps test.ssr" "nps test.ssr2" "nps test.test-cy-ci"',
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
-		wdio: `node "${LIB}/test-runner/test-runner.js"`,
 		"test-cy-ci": `yarn cypress run --component --browser chrome --config-file config/cypress.config.js`,
 		"test-cy-open": `yarn cypress open --component --browser chrome --config-file config/cypress.config.js`,
 	},
