@@ -11,6 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 import type WrappingType from "./types/WrappingType.js";
 import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
@@ -22,7 +23,6 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
 import Icon from "./Icon.js";
-import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 
 type LinkClickEventDetail = {
 	altKey: boolean;
