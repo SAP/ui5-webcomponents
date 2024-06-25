@@ -72,6 +72,14 @@ class OptionCustom extends ListItemBase implements IOption {
 	@property()
 	tooltip?: string;
 
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	declare selected: boolean;
+
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";
 	}
