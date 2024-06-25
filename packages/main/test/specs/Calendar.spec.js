@@ -441,6 +441,6 @@ describe("Calendar general interaction", () => {
 		assert.ok(monthButton.hasAttribute("hidden"), "The month button is hidden");
 
 		await yearButton.click();
-		assert.ok(yearButton.hasAttribute("hidden"), "The month button is hidden");
+		assert.ok(yearButton.hasAttribute("hidden"), "The year button is hidden");
 	});
 });
