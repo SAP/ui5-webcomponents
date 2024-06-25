@@ -727,6 +727,8 @@ describe("Input general interaction", () => {
 	});
 
 	it("tests selection-change with custom items", async () => {
+		await browser.url(`test/pages/Input.html`);
+
 		const selChangeFireCount = $("#custom-items-selection-change-count");
 		const selChangeItemIndex = $("#custom-items-selection-item-index");
 		const input = await $("#input-custom-flat").shadow$("input");
