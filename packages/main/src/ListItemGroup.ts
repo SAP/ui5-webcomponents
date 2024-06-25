@@ -40,10 +40,10 @@ class ListItemGroup extends UI5Element {
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
-	 * @default undefined
+	 * @default ""
 	 */
 	@property()
-	headerText?: string;
+	headerText = "";
 
 	/**
 	 * Defines the accessible name of the header.
