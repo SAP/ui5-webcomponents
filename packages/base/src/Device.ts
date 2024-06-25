@@ -1,6 +1,9 @@
 const isSSR = typeof document === "undefined";
 
 const internals = {
+	isForcedMobile() {
+		return false;
+	},
 	get userAgent() {
 		if (isSSR) {
 			return "";
@@ -166,7 +169,7 @@ const isTablet = (): boolean => {
 
 const isPhone = (): boolean => {
 	detectTablet();
-	return internals.touch && !tablet;
+	return internals.isForcedMobile() || internals.touch && !tablet;
 };
 
 const isDesktop = (): boolean => {
@@ -193,6 +196,7 @@ const isAndroid = (): boolean => {
 };
 
 export {
+	internals,
 	supportsTouch,
 	isSafari,
 	isChrome,
