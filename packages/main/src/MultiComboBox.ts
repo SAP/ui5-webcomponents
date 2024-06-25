@@ -1567,10 +1567,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const value = input && input.value;
 
 		if (this.open) {
-			const list = this._getList();
-			const selectedItemsCount = list?.querySelectorAll("[ui5-li][selected]")?.length;
-			const allItemsCount = list?.querySelectorAll("[ui5-li]")?.length;
-			this._allSelected = selectedItemsCount === allItemsCount;
+			const items = this._getItems();
+			const selectedItemsCount = items.filter(item => item.selected).length;
+			this._allSelected = selectedItemsCount === items.length;
 		}
 
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
@@ -1651,7 +1650,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	storeResponsivePopoverWidth() {
 		if (this.open && !this._listWidth) {
-			this._listWidth = this.list!.offsetWidth;
+			this._listWidth =  this.list?.offsetWidth || 0;
 		}
 	}
 
