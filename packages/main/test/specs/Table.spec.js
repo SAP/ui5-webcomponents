@@ -203,16 +203,26 @@ describe("Table - Horizontal Scrolling", async () => {
 		await browser.url(`test/pages/TableHorizontal.html`);
 	});
 
-	it("selection column should be fixed to the left", async () => {
+	it("navigated indicator is fixed to the right", async () => {
 		const table = await browser.$("#table");
-		const innerTable = await table.shadow$("#table");
-		const lastColumn = await browser.$("#lastCell");
-		const firstRow = await browser.$("#firstRow");
 
 		assert.ok(await table.isExisting(), "Table exists");
-		assert.ok(await innerTable.isExisting(), "Inner table exists");
-		assert.ok(await lastColumn.isExisting(), "Last column cell exists");
-		assert.ok(await firstRow.isExisting(), "First row exists");
+
+		const rightOffset = await browser.execute(() => {
+			const table = document.getElementById("table");
+			const row = document.getElementById("firstRow");
+
+			return row.shadowRoot.querySelector("#navigated-cell").getBoundingClientRect().right - table.getBoundingClientRect().right;
+		});
+
+		assert.equal(rightOffset, 0, "Navigated indicator is fixed to the right");
+	});
+
+	it("selection column should be fixed to the left", async () => {
+		const table = await browser.$("#table");
+		const lastColumn = await browser.$("#lastCell");
+
+		assert.ok(await table.isExisting(), "Table exists");
 
 		const { leftOffset, fixedX } = await browser.execute(() => {
 			const table = document.getElementById("table");
