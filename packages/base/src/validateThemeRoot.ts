@@ -1,3 +1,5 @@
+import { getLocationHref } from "./Location";
+
 const getMetaTagValue = (metaTagName: string) => {
 	const metaTag = document.querySelector(`META[name="${metaTagName}"]`),
 		metaTagContent = metaTag && metaTag.getAttribute("content");
@@ -28,7 +30,7 @@ const validateThemeRoot = (themeRoot: string) => {
 			// new URL("/newExmPath", "http://example.com/exmPath") => http://example.com/newExmPath
 			// new URL("./newExmPath", "http://example.com/exmPath") => http://example.com/exmPath/newExmPath
 			// new URL("../newExmPath", "http://example.com/exmPath") => http://example.com/newExmPath
-			resultUrl = new URL(themeRoot, window.location.href).toString();
+			resultUrl = new URL(themeRoot, getLocationHref()).toString();
 		} else {
 			const themeRootURL = new URL(themeRoot);
 			const origin = themeRootURL.origin;
@@ -39,7 +41,7 @@ const validateThemeRoot = (themeRoot: string) => {
 			} else {
 				// If origin is not allow and the URL is not relative, we have to replace the origin
 				// with current location
-				resultUrl = buildCorrectUrl(themeRootURL.toString(), window.location.href);
+				resultUrl = buildCorrectUrl(themeRootURL.toString(), getLocationHref());
 			}
 		}
 

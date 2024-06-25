@@ -43,6 +43,7 @@ import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.j
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
 import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js";
+import { locationReload } from "@ui5/webcomponents-base/dist/Location.js";
 
 type BreadcrumbsItemClickEventDetail = {
 	item: BreadcrumbsItem;
@@ -374,7 +375,7 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		if (item._isCurrentPageItem) {
-			window.location.reload();
+			locationReload();
 		}
 	}
 

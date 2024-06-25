@@ -22,6 +22,7 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
 import Icon from "./Icon.js";
+import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 
 type LinkClickEventDetail = {
 	altKey: boolean;
@@ -287,12 +288,11 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	_isCrossOrigin(href: string) {
-		const loc = window.location;
 		this._dummyAnchor.href = href;
 
-		return !(this._dummyAnchor.hostname === loc.hostname
-			&& this._dummyAnchor.port === loc.port
-			&& this._dummyAnchor.protocol === loc.protocol);
+		return !(this._dummyAnchor.hostname === getLocationHostname()
+			&& this._dummyAnchor.port === getLocationPort()
+			&& this._dummyAnchor.protocol === getLocationProtocol());
 	}
 
 	get effectiveTabIndex() {

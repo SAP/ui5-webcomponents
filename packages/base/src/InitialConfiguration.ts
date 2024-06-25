@@ -7,6 +7,7 @@ import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import type CalendarType from "./types/CalendarType.js";
 import { resetConfiguration } from "./config/ConfigurationReset.js";
+import { getLocationSearch } from "./Location.js";
 
 let initialized = false;
 
@@ -125,7 +126,7 @@ const parseConfigurationScript = () => {
 };
 
 const parseURLParameters = () => {
-	const params = new URLSearchParams(window.location.search);
+	const params = new URLSearchParams(getLocationSearch());
 
 	// Process "sap-*" params first
 	params.forEach((value, key) => {
