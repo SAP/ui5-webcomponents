@@ -53,12 +53,13 @@ describe("Lifecycle works", () => {
 			.should("have.been.called")
 	});
 
-	it("Tests that changing a property invalidates", () => {
+	it("Tests element destruction callback", () => {
 		const el = document.createElement("ui5-test-generic");
 
 		cy.mount(html`<div id="container"></div>`)
 
 		cy.spy(el, "onExitDOM").as("onExitDOM")
+		cy.spy(el, "onEnterDOM").as("onEnterDOM")
 
 		cy.get("#container")
 			.then($container => {
@@ -67,11 +68,13 @@ describe("Lifecycle works", () => {
 				return $container;
 			})
 
+		cy.get("@onEnterDOM")
+			.should("have.been.called");
+
 		cy.get(el)
 			.then($el => {
 				$el.remove();
 			})
-
 
 		cy.get("@onExitDOM")
 			.should("have.been.called");

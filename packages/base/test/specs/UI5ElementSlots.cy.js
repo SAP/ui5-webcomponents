@@ -66,11 +66,11 @@ describe("Slots work properly", () => {
 		let defaultSlotLength = 0;
 
 		cy.mount(html`<ui5-test-generic>
-		<span>Default slot content</span>
-		<span slot="other" id="o1">Other slot content 1</span>
-		<span slot="other" id="o2">Other slot content 2</span>
-		<span slot="named">Item in slot with propertyName</span>
-		<span slot="named">Item in slot with propertyName</span>
+<span>Default slot content</span>
+<span slot="other" id="o1">Other slot content 1</span>
+<span slot="other" id="o2">Other slot content 2</span>
+<span slot="named">Item in slot with propertyName</span>
+<span slot="named">Item in slot with propertyName</span>
 	</ui5-test-generic>
 		`)
 
@@ -82,7 +82,7 @@ describe("Slots work properly", () => {
 			.then(value => {
 				defaultSlotLength = value.length;
 
-				return value.length
+				return defaultSlotLength;
 			})
 			.should("be.greaterThan", 0)
 
@@ -101,11 +101,13 @@ describe("Slots work properly", () => {
 			.invoke("attr", "slot", "named")
 
 		cy.get("@testGeneric")
-			.invoke("prop", "default")
-			.then(value => {
-				return value.length - defaultSlotLength;
+			.then($testGeneric => {
+				cy.wrap($testGeneric)
+					.invoke("prop", "default")
+					.should("have.length", defaultSlotLength + 1)
+
+					console.log("Probababa: ", defaultSlotLength)
 			})
-			.should("equal", 1)
 
 		cy.get("@testGeneric")
 			.invoke("prop", "other")

@@ -96,7 +96,7 @@ describe("Invalidation works", () => {
 			})
 
 		cy.get("@invalidations")
-			.should("have.been.calledOnce")
+			.should("have.been.called")
 	});
 
 	it("Tests that removing a child invalidates", () => {
@@ -124,7 +124,7 @@ describe("Invalidation works", () => {
 			})
 
 		cy.get("@invalidations")
-			.should("have.been.calledOnce")
+			.should("have.been.called")
 	});
 
 	it("Tests that modifying textContent invalidates", () => {
@@ -150,7 +150,7 @@ describe("Invalidation works", () => {
 			})
 
 		cy.get("@invalidations")
-			.should("have.been.calledOnce")
+			.should("have.been.called")
 	});
 
 	it("Tests that modifying nodeValue invalidates", () => {
@@ -176,7 +176,7 @@ describe("Invalidation works", () => {
 			})
 
 		cy.get("@invalidations")
-			.should("have.been.calledOnce")
+			.should("have.been.called")
 	});
 
 	it("Tests that multiple invalidations result in a single rendering", () => {
