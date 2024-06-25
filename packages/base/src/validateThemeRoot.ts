@@ -1,4 +1,4 @@
-import { getLocationHref } from "./Location";
+import { getLocationHref } from "./Location.ts";
 
 const getMetaTagValue = (metaTagName: string) => {
 	const metaTag = document.querySelector(`META[name="${metaTagName}"]`),

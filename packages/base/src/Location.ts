@@ -7,7 +7,7 @@ const internals = {
 		}
 		return window.location.search;
 	},
-}
+};
 
 const getLocationHostname = () => {
 	if (isSSR) {
@@ -40,7 +40,6 @@ const getLocationHref = () => {
 
 	return window.location.href;
 };
-
 
 const getLocationSearch = () => {
 	return internals.search();
