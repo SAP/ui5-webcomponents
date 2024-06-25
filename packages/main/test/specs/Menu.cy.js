@@ -164,8 +164,7 @@ describe("Menu interaction", () => {
 		cy.get("[ui5-menu]")
 			.ui5MenuOpen({ opener: "btnOpen" });
 
-		cy.get("[ui5-menu-item]")
-			.realPress("Escape");
+		cy.realPress("Escape");
 
 		cy.get("#btnOpen")
 			.should("be.focused");
