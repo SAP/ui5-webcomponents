@@ -389,6 +389,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	valueStateOpen = false;
 
 	/**
+	 * Indicates whether the Tokenizer n-more popover is open.
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	tokenizerOpen = false;
+
+	/**
 	 * Indicates whether the items picker is open.
 	 * @private
 	 * @since 2.0.0
@@ -596,20 +603,19 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!changePrevented) {
 			matchingItem.selected = !initiallySelected;
 			this._getResponsivePopover().preventFocusRestore = false;
-			this.open = false;
 			this.value = "";
 		}
 	}
 
 	_toggleTokenizerPopover() {
-		this._tokenizer.open = false;
-		this._getResponsivePopover().toggle(this);
+		this.tokenizerOpen = false;
+		this._getResponsivePopover().open = !this._getResponsivePopover().open;
 	}
 
 	togglePopoverByDropdownIcon() {
 		this._shouldFilterItems = false;
-		this._getResponsivePopover().toggle(this);
-		this._tokenizer.open = false;
+		this._getResponsivePopover().open = !this._getResponsivePopover().open;
+		this.tokenizerOpen = false;
 	}
 
 	_showFilteredItems() {
@@ -1571,7 +1577,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			const selectedListItemsCount = list?.querySelectorAll("[ui5-li][selected]")?.length;
 			const items = this._getItems();
 			const selectedItemsCount = items.filter(item => item.selected).length;
-			this._allSelected = selectedItemsCount === items.length && selectedListItemsCount !== items.length;
+			this._allSelected = selectedItemsCount === items.length || selectedListItemsCount === items.length;
 		}
 
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
