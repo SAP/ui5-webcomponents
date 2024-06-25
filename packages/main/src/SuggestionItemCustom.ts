@@ -34,7 +34,7 @@ import styles from "./generated/themes/SuggestionItemCustom.css.js";
 class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemSelectable {
 	/**
 	 * Defines the text of the `ui5-suggestion-item-custom`.
-	 * NOTE: The text property is considered only for autocomplete.
+	 * **Note:** The text property is considered only for autocomplete.
 	 * @default ""
 	 * @public
 	 */

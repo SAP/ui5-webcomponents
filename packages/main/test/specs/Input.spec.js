@@ -652,6 +652,24 @@ describe("Input general interaction", () => {
 		assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
 	});
 
+	it("Tests autocomplete(type-ahead) of custom suggestions", async () => {
+		let hasSelection;
+
+		const input = await $("#input-custom-flat").shadow$("input");
+		const EXPTECTED_VALUE = "Albania";
+
+		await input.click();
+		await input.keys("a");
+
+		hasSelection = await browser.execute(() => {
+			const input = document.getElementById("input-custom-flat").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart > 0;
+		});
+
+		assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+		assert.ok(hasSelection, "Autocompleted text is selected");
+	});
+
 	it("Tests disabled autocomplete(type-ahead)", async () => {
 		const input = await browser.$("#input-disabled-autocomplete").shadow$("input");
 
@@ -706,6 +724,25 @@ describe("Input general interaction", () => {
 		// assert
 		assert.notOk(await inputPopover.isDisplayedInViewport(), "The inpuit popover is closed as it lost the focus.");
 		assert.ok(await helpPopover.isDisplayedInViewport(), "The help popover remains open as the focus is within.");
+	});
+
+	it("tests selection-change with custom items", async () => {
+		const selChangeFireCount = $("#custom-items-selection-change-count");
+		const selChangeItemIndex = $("#custom-items-selection-item-index");
+		const input = await $("#input-custom-flat").shadow$("input");
+
+		await input.click();
+		await input.keys("a");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await selChangeFireCount.getHTML(false), "1", "The selection-change event is fired once");
+		assert.strictEqual(await selChangeItemIndex.getHTML(false), "0", "The selected item index is correct");
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await selChangeFireCount.getHTML(false), "2", "The selection-change event is fired twice");
+		assert.strictEqual(await selChangeItemIndex.getHTML(false), "1", "The selected item index is correct");
 	});
 
 	it("fires open event when suggestions picker is opened on typing", async () => {

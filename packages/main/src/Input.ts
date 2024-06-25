@@ -504,7 +504,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
 	 * property is set to `true`.
 	 *
-	 * **Note:** The `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` are recommended to be used as suggestion items.
+	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
 	 *
 	 * **Note:** Importing the Input Suggestions Support feature:
 	 *

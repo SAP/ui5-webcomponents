@@ -204,6 +204,24 @@ describe("MultiInput general interaction", () => {
 		assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.miItemsLabelText, "Text should be 2 Items");
 		assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.miNMoreLabelText, "Text should be 1 More");
 	});
+
+	it("Tests autocomplete(type-ahead) of custom suggestions", async () => {
+		let hasSelection;
+
+		const input = await $("#mi-custom-suggestions").shadow$("input");
+		const EXPTECTED_VALUE = "Bulgaria";
+
+		await input.click();
+		await input.keys("b");
+
+		hasSelection = await browser.execute(() => {
+			const input = document.getElementById("mi-custom-suggestions").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart > 0;
+		});
+
+		assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
+		assert.ok(hasSelection, "Autocompleted text is selected");
+	});
 });
 
 describe("MultiInput Truncated Token", () => {

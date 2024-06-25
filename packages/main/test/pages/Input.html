@@ -59,6 +59,10 @@
 		<h3>Custom Suggestions Flat</h3>
 
 		<ui5-input placeholder="Type something ..." show-suggestions id="input-custom-flat"></ui5-input>
+
+		<br>
+		<span>SelectionChange: <span id='custom-items-selection-change-count'>0</span></span>
+		<span>Item index: <span id='custom-items-selection-item-index'>-1</span></span>
 	</div>
 
 	<br />
@@ -1001,7 +1005,7 @@
 
 		const customFlatInput = document.getElementById("input-custom-flat");
 
-		customFlatInput.addEventListener("input", event => {
+		customFlatInput.addEventListener("ui5-input", event => {
 			const value = event.target.value;
 			const filtered = countries.filter(country => country.toLowerCase().startsWith(value.toLowerCase()));
 
@@ -1034,6 +1038,11 @@
 		customFlatInput.addEventListener("ui5-selection-change", e => {
 			const text = e.detail.item?.text;
 			const invisibleMessage = window["sap-ui-webcomponents-bundle"].invisibleMessage;
+			const selChangeFireCount = document.getElementById("custom-items-selection-change-count");
+			const selChangeItemIndex = document.getElementById("custom-items-selection-item-index");
+
+			selChangeFireCount.innerText = parseInt(selChangeFireCount.innerText || 0) + 1;
+			selChangeItemIndex.innerText = customFlatInput.suggestionItems.indexOf(e.detail.item);
 
 			invisibleMessage.announce(text, "Polite");
 		})
