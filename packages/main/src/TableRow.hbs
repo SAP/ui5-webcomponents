@@ -1,10 +1,10 @@
 {{#if _hasRowSelector}}
-    <ui5-table-cell id="selection-cell" aria-selected="{{_isSelected}}">
+    <ui5-table-cell id="selection-cell" aria-selected="{{_isSelected}}" ui5-table-selection-component>
     {{#if _isMultiSelect}}
         <ui5-checkbox id="selection-component" tabindex="-1"
             ?checked="{{_isSelected}}"
-            @ui5-change="{{_informSelectionChange}}"
             accessible-name="{{_i18nRowSelector}}"
+            @ui5-change="{{_informSelectionChange}}"
         ></ui5-checkbox>
     {{else}}
         <ui5-radio-button id="selection-component" tabindex="-1"

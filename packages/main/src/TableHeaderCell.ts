@@ -79,6 +79,7 @@ class TableHeaderCell extends TableCellBase {
 	_popinWidth: number = 0;
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		this.style.minWidth = this.minWidth;
 		this.style.maxWidth = this.maxWidth;
 		this.style.width = this.width;

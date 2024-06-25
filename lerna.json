@@ -1,5 +1,6 @@
 {
   "packages": [
+    "packages/ai",
     "packages/theming",
     "packages/base",
     "packages/localization",
@@ -30,6 +31,5 @@
       "preid": "rc"
     }
   },
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "npmClient": "yarn"
 }
