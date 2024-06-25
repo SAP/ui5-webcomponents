@@ -178,7 +178,14 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		invalidateOnChildChange: {
+			properties: ["navigated"],
+			slots: false,
+		},
+	})
 	rows!: Array<TableRow>;
 
 	/**
@@ -275,6 +282,9 @@ class Table extends UI5Element {
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
+
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
 		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -313,6 +323,14 @@ class Table extends UI5Element {
 	}
 
 	onBeforeRendering(): void {
+		const renderNavigated = this._renderNavigated;
+		this._renderNavigated = this.rows.some(row => row.navigated);
+		if (renderNavigated !== this._renderNavigated) {
+			this.rows.forEach(row => {
+				row._renderNavigated = this._renderNavigated;
+			});
+		}
+
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
 	}
@@ -487,6 +505,9 @@ class Table extends UI5Element {
 			}
 			return `minmax(${cell.width}, ${cell.width})`;
 		}));
+		if (this._renderNavigated) {
+			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
+		}
 		return widths.join(" ");
 	}
 
