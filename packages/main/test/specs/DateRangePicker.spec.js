@@ -286,7 +286,8 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("Enter");
 		await browser.keys("F4");
 
-		const dayPicker = await browser.$(`#daterange-picker3`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker3");
+		const dayPicker = await browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const days = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item");
 		const startSelectionDay = await days[14];
 		const dayInBetween = await days[15];
