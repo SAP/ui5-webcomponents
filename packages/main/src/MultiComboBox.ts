@@ -694,7 +694,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			if (filteredItems.length === 0) {
 				this._open = false;
 			} else {
-				this._getResponsivePopover().opener = this;
 				this._open = true;
 			}
 		}
@@ -1483,7 +1482,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_click() {
 		if (isPhone() && !this.readonly && !this._showMorePressed && !this._deleting) {
-			this._getResponsivePopover().opener = this;
 			this._open = true;
 		}
 
