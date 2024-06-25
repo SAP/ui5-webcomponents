@@ -401,7 +401,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	open = false;
+	_open = false;
 
 	@property()
 	_valueBeforeOpen = this.value;
@@ -609,12 +609,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_toggleTokenizerPopover() {
 		this.tokenizerOpen = false;
-		this.open = !this.open;
+		this._open = !this.open;
 	}
 
 	togglePopoverByDropdownIcon() {
 		this._shouldFilterItems = false;
-		this.open = !this.open;
+		this._open = !this.open;
 		this.tokenizerOpen = false;
 	}
 
@@ -630,6 +630,15 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const selectedItems = this._filteredItems.filter(item => item.selected);
 
 		this.selectedItems = this._getItems().filter((item, idx, allItems) => MultiComboBox._groupItemFilter(item, ++idx, allItems, selectedItems) || selectedItems.indexOf(item) !== -1);
+	}
+
+	/**
+	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
+	 * @default false
+	 * @public
+	 */
+	get open(): boolean {
+		return this._open;
 	}
 
 	get _showAllItemsButtonPressed(): boolean {
@@ -683,10 +692,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		if (!isPhone()) {
 			if (filteredItems.length === 0) {
-				this.open = false;
+				this._open = false;
 			} else {
 				this._getResponsivePopover().opener = this;
-				this.open = true;
+				this._open = true;
 			}
 		}
 
@@ -936,7 +945,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this.value = this.valueBeforeAutoComplete;
 		}
 
-		if (!this.noValidation || (!this.open && this.noValidation)) {
+		if (!this.noValidation || (!this._open && this.noValidation)) {
 			this.value = this._lastValue;
 		}
 	}
@@ -962,7 +971,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleTab() {
-		this.open = false;
+		this._open = false;
 	}
 
 	_handleSelectAll() {
@@ -1110,7 +1119,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onItemTab() {
-		this.open = false;
+		this._open = false;
+		this._tokenizer.expanded = false;
 	}
 
 	_handleArrowNavigation(e: KeyboardEvent, isDownControl: boolean) {
@@ -1140,7 +1150,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._handleArrowDown();
 		}
 
-		if (!isArrowDown && !this.open && !this.readonly) {
+		if (!isArrowDown && !this._open && !this.readonly) {
 			this._navigateToPrevItem();
 		}
 	}
@@ -1283,7 +1293,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			}
 
 			innerInput.setSelectionRange(matchingItem.text.length, matchingItem.text.length);
-			this.open = false;
+			this._open = false;
 		}
 	}
 
@@ -1353,7 +1363,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_afterOpen() {
-		const action = this.open ? "open" : "close";
+		const action = this._open ? "open" : "close";
 
 		if (!isPhone() && !this._isOpenedByKeyboard) {
 			this._innerInput.focus();
@@ -1424,7 +1434,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if (!e.detail.selectionComponentPressed && !isSpace(castedEvent) && !isSpaceCtrl(castedEvent)) {
-			this.open = false;
+			this._open = false;
 			this.value = "";
 
 			// if the item (not checkbox) is clicked, call the selection change
@@ -1437,6 +1447,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			}
 
 			this.fireEvent("input");
+			return;
 		}
 
 		this.value = this.valueBeforeAutoComplete || "";
@@ -1471,7 +1482,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_click() {
 		if (isPhone() && !this.readonly && !this._showMorePressed && !this._deleting) {
 			this._getResponsivePopover().opener = this;
-			this.open = true;
+			this._open = true;
 		}
 
 		this._showMorePressed = false;
@@ -1489,11 +1500,11 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_beforeClose() {
-		this.open = false;
+		this._open = false;
 	}
 
 	_afterClose() {
-		const action = this.open ? "open" : "close";
+		const action = this._open ? "open" : "close";
 
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -1508,7 +1519,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_beforeOpen() {
-		this.open = true;
+		this._open = true;
 		this._itemsBeforeOpen = this._getItems().map(item => {
 			return {
 				ref: item,
@@ -1576,8 +1587,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			const list = this._getList();
 			const selectedListItemsCount = list?.querySelectorAll("[ui5-li][selected]")?.length;
 			const items = this._getItems();
+			const listItems = list?.querySelectorAll("[ui5-li]")?.length;
 			const selectedItemsCount = items.filter(item => item.selected).length;
-			this._allSelected = selectedItemsCount === items.length || selectedListItemsCount === items.length;
+			this._allSelected = selectedItemsCount === items.length || selectedListItemsCount === listItems;
 		}
 
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
@@ -1613,6 +1625,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	onAfterRendering() {
+		this._getList();
 		this.valueStateOpen = this.shouldDisplayOnlyValueStateMessage;
 		this.storeResponsivePopoverWidth();
 
@@ -1657,7 +1670,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	storeResponsivePopoverWidth() {
-		if (this.open && !this._listWidth) {
+		if (this._open && !this._listWidth) {
 			this._listWidth = this.list!.offsetWidth;
 		}
 	}
@@ -1931,7 +1944,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		const isCurrentlyExpanded = this._tokenizer?.expanded;
-		const shouldBeExpanded = this.focused || this.open || isCurrentlyExpanded;
+		const shouldBeExpanded = this.focused || this._open || isCurrentlyExpanded;
 
 		return shouldBeExpanded;
 	}
