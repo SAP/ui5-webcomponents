@@ -37,6 +37,8 @@
 	grid-row: span 2;
 	min-width: 0;
 	padding: 0;
+	position: sticky;
+	right: 0;
 }
 
 :host([navigated]) #navigated-cell {
