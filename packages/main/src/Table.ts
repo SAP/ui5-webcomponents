@@ -283,12 +283,12 @@ class Table extends UI5Element {
 	/**
 	 * Defines the height of the component.
 	 *
-	 * Note: When using sticky headers, make sure that the height of the table is defined.
+	 * **Note:** When using sticky headers, make sure that the height of the table is defined.
 	 *
 	 * @default "auto"
 	 * @public
 	 */
-	@property({})
+	@property()
 	height = "auto";
 
 	@property({ type: Number, noAttribute: true })
