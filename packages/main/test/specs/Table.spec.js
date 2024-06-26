@@ -208,16 +208,16 @@ describe("Table - Horizontal Scrolling", async () => {
 
 		assert.ok(await table.isExisting(), "Table exists");
 
-		const { navigatedOffset, tableOffset } = await browser.execute(() => {
+		const { navigatedOffset, rowOffset } = await browser.execute(() => {
 			const row = document.getElementById("firstRow");
 
 			return {
 				navigatedOffset: row.shadowRoot.querySelector("#navigated-cell").getBoundingClientRect().right,
-				tableOffset: document.getElementById("table").shadowRoot.querySelector("#table").getBoundingClientRect().right,
+				rowOffset: row.getBoundingClientRect().right,
 			};
 		});
 
-		assert.equal(navigatedOffset, tableOffset, `Navigated indicator is fixed to the right (${navigatedOffset}, ${tableOffset})`);
+		assert.equal(navigatedOffset, rowOffset, `Navigated indicator is fixed to the right (${navigatedOffset}, ${rowOffset})`);
 	});
 
 	it("selection column should be fixed to the left", async () => {
