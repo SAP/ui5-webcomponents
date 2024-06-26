@@ -121,7 +121,7 @@ class IllustratedMessage extends UI5Element {
 	* elements of the component are displayed differently on the different breakpoints/illustration designs.
 	* @default "Auto"
 	* @public
-	* @since 1.5.0
+	* @since 2.0.0
 	*/
 	@property()
 	design: `${IllustrationMessageDesign}` = "Auto";

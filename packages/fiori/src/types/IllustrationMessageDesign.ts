@@ -1,7 +1,7 @@
 /**
  * Different types of IllustrationMessageDesign.
  * @public
- * @since 1.5.0
+ * @since 2.0.0
  */
 enum IllustrationMessageDesign {
 	/**
