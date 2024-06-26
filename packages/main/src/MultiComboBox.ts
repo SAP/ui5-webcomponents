@@ -588,8 +588,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_mobileInputChange(e: CustomEvent) {
-		this._inputChange.call(this);
+	_onMobileInputKeydown(e: KeyboardEvent) {
+		if (!isEnter(e)) {
+			return;
+		}
 		const { value } = (e.target as Input);
 		const matchingItem = this._getItems().find(item => item.text === value);
 
@@ -603,6 +605,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!changePrevented) {
 			matchingItem.selected = !initiallySelected;
 			this._getResponsivePopover().preventFocusRestore = false;
+			this._open = false;
 			this.value = "";
 		}
 	}
