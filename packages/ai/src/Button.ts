@@ -41,6 +41,7 @@ import ButtonCss from "./generated/themes/Button.css.js";
  * @extends UI5Element
  * @since 2.0
  * @public
+ * @experimental The Button and ButtonState web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
  */
 
 @customElement({
@@ -59,10 +60,6 @@ import ButtonCss from "./generated/themes/Button.css.js";
  * @public
  */
 @event("click")
-
-/**
- * @experimental
- */
 class Button extends UI5Element {
 	/**
 	 * Defines the component design.

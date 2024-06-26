@@ -29,6 +29,7 @@ import TableCell from "./TableCell.js";
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
  *
  * @public
+ * @experimental
  */
 interface ITableFeature extends UI5Element {
 	/**
@@ -46,6 +47,7 @@ interface ITableFeature extends UI5Element {
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>
  * and provide growing/data loading functionality.
  * @public
+ * @experimental
  */
 interface ITableGrowing extends ITableFeature {
 	/**
@@ -141,6 +143,11 @@ type TableRowClickEventDetail = {
  * @extends UI5Element
  * @since 2.0
  * @public
+ * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
+ * Currently, it's considered experimental as its API is subject to change.
+ * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
+ * For compatibility reasons, we moved the previous Tabple implementation to the **@ui5/webcomponents-compat** package
+ * and will be maintained until the new Table is experimental.
  */
 @customElement({
 	tag: "ui5-table",
