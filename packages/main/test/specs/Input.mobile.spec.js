@@ -84,9 +84,8 @@ describe("Eventing", () => {
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
 		await dialogInput.keys(sTypedText);
 
-		const suggestionItem = await input.shadow$("ui5-responsive-popover").$$("ui5-li-suggestion-item")[2];
+		const suggestionItem = await input.$$("ui5-suggestion-item")[2];
 		await suggestionItem.click();
-
 
 		const selectedKey = await browser.$("#myLabelSelectionChange").getText();
 		assert.strictEqual(selectedKey.split(" :: ")[1], sExpectedSelectedKey, "Selection change event property was correct");
@@ -97,10 +96,24 @@ describe("Eventing", () => {
 		const inputChange = await browser.$("#myLabelInputChange").getText();
 		assert.strictEqual(inputChange.split(" :: ")[1], sTypedText, "Input event property was correct");
 	});
+
+	it("tests selection-change with custom items", async () => {
+		const selChangeFireCount = $("#custom-items-selection-change-count");
+		const selChangeItemIndex = $("#custom-items-selection-item-index");
+		const input = await $("#input-custom-flat");
+
+		await input.shadow$("input").click();
+		await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone").keys("a");
+
+		await input.$("ui5-suggestion-item-custom").click();
+
+		assert.strictEqual(await selChangeFireCount.getHTML(false), "1", "The selection-change event is fired once");
+		assert.strictEqual(await selChangeItemIndex.getHTML(false), "0", "The selected item index is correct");
+	});
 });
 
 describe("Typeahead", () => {
-	before(async () => {
+	beforeEach(async () => {
 		await browser.url("test/pages/Input.html");
 		await browser.emulateDevice('iPhone X');
 	});
@@ -129,6 +142,18 @@ describe("Typeahead", () => {
 		await dialogInput.keys("c");
 
 		assert.strictEqual(await dialogInput.getProperty("value"), "c", "Value is not autocompleted");
+	});
+
+	it("Tests autocomplete(type-ahead) of custom suggestions", async () => {
+		const input = await $("#input-custom-flat");
+		const sExpected = "Albania";
+
+		await input.scrollIntoView();
+		await input.click();
+
+		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
+		await dialogInput.keys("a");
+		assert.strictEqual(await dialogInput.getProperty("value"), sExpected, "Value is autocompleted");
 	});
 });
 
@@ -166,17 +191,16 @@ describe("Picker filtering", () => {
 		await input.click();
 
 		const dialogInput = await input.shadow$("ui5-responsive-popover").$(".ui5-input-inner-phone");
-		const dialogList = await input.shadow$("ui5-responsive-popover").$('ui5-list')
 
-		assert.strictEqual(await dialogList.$$('ui5-li-suggestion-item').length, 0, "There are no filtered items initially");
+		assert.strictEqual(await input.$$('ui5-suggestion-item').length, 0, "There are no filtered items initially");
 		await dialogInput.keys("B");
-		assert.strictEqual(await dialogList.$$('ui5-li-suggestion-item').length, 4, "There are 4 filtered items");
+		assert.strictEqual(await input.$$('ui5-suggestion-item').length, 4, "There are 4 filtered items");
 	});
 
 	it("Should filter group header list items", async () => {
-		const dialogList = await browser.$("#myInput").shadow$("ui5-responsive-popover").$('ui5-list')
+		const input = await browser.$("#myInput");
 
-		assert.strictEqual(await dialogList.$$('ui5-li-group-header').length, 1, "There is 1 filtered group header");
+		assert.strictEqual(await input.$$('ui5-suggestion-item-group').length, 1, "There is 1 filtered group header");
 	});
 });
 
@@ -213,7 +237,7 @@ describe("Property open", () => {
 		});
 
 		const respPopover = await input.shadow$("ui5-responsive-popover");
-		const suggestionItems = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item");
+		const suggestionItems = await input.$$("ui5-suggestion-item");
 
 		assert.strictEqual(await respPopover.getProperty("open"), true, "Suggestions popover is open");
 		assert.strictEqual(suggestionItems.length, 3, "Suggestions popover displays 3 items");

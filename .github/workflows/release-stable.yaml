@@ -40,8 +40,8 @@ jobs:
         git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
         git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
         yarn lerna version ${{ github.event.inputs.release_type }}\
-            ${{ (github.event.inputs.prerelease == 'true' && '--conventional-prerelease') || '--conventional-graduate' }} \
-            --force-publish --yes --exact --create-release github 
+            ${{ (github.event.inputs.prerelease == 'true' && '--conventional-prerelease --force-publish') || '--conventional-graduate --force-conventional-graduate' }} \
+            --yes --exact --create-release github
 
     - name: Build
       run: yarn ci:releasebuild
