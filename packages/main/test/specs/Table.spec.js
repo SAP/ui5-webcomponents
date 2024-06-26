@@ -208,17 +208,16 @@ describe("Table - Horizontal Scrolling", async () => {
 
 		assert.ok(await table.isExisting(), "Table exists");
 
-		const { position, right } = await browser.execute(() => {
-			const navigatedCell = row.shadowRoot.querySelector("#navigated-cell");
+		const row = await browser.$("#firstRow");
+		const navigatedCell = await row.shadow$("#navigated-cell");
 
-			return {
-				position: getComputedStyle(navigatedCell).position,
-				right: getComputedStyle(navigatedCell).right
-			};
-		});
+		assert.ok(await navigatedCell.isExisting(), "Navigated cell exists");
 
-		assert.equal(position, "sticky", `Navigated indicator is sticky`);
-		assert.equal(right, "0px", `Navigated indicator is at the right edge`);
+		const stickyProperty = await navigatedCell.getCSSProperty("position");
+		const rightProperty = await navigatedCell.getCSSProperty("right");
+
+		assert.strictEqual(stickyProperty.value, "sticky", "Navigated cell is sticky");
+		assert.strictEqual(rightProperty.value, "0px", "Navigated cell is at the right edge");
 	});
 
 	it("selection column should be fixed to the left", async () => {
