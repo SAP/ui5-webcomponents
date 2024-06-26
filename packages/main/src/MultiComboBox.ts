@@ -1763,6 +1763,11 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const popover = this._getPopover();
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
 
+		if (focusIsGoingInPopover) {
+			e.stopImmediatePropagation();
+			return;
+		}
+
 		if ((!this.shadowRoot!.contains(e.relatedTarget as Node) || focusIsGoingInPopover) && !this._deleting && !this._clearingValue) {
 			this.focused = false;
 
