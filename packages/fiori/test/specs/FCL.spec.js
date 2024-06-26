@@ -454,6 +454,98 @@ describe("Preserves column min-width", () => {
 	});
 });
 
+describe("Layouts configuration", () => {
+	before(async () => {
+		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
+	});
+
+	it("applies default configuration initially", async () => {
+		await browser.setWindowSize(1400, 1080);
+
+		const fcl = await browser.$("#fcl3"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
+
+		// set initial state
+		await fcl.setProperty("layout", "TwoColumnsMidExpanded");
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsMidExpanded", "new layout set");
+
+		// assert: in the abcense of layout configuration, the default width is applied
+		assert.strictEqual(await startColumn.getAttribute("style"), "width: 33%;", "default width is applied for start column");
+		assert.strictEqual(await midColumn.getAttribute("style"), "width: 67%;", "default width is applied for mid column");
+	});
+
+	it("allows set configuration programatically", async () => {
+		const fcl = await browser.$("#fcl3"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			midColumn = await fcl.shadow$(".ui5-fcl-column--middle"),
+			layoutConfig = {
+				"desktop": {
+					"TwoColumnsStartExpanded": {
+						layout: ["75%", "25%", "0%"]
+					}
+				}
+			};
+
+		// set initial state
+		await fcl.setProperty("layoutsConfiguration", layoutConfig);
+		await fcl.setProperty("layout", "TwoColumnsStartExpanded");
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
+
+		// assert: the column widths in DOM are set as configured
+		assert.strictEqual(await startColumn.getAttribute("style"), "width: 75%;", "the custom width is set as configured for start column");
+		assert.strictEqual(await midColumn.getAttribute("style"), "width: 25%;", "the custom width is set as configured for mid column");
+	});
+
+	it("updates the configuration upon interactive resize of columns within same layout", async () => {
+		const fcl = await browser.$("#fcl3"),
+			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
+
+		// assert initial state
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "initial state is as expected");
+
+		// act: drag to resize the columns within the same layout
+		await startSeparator.dragAndDrop({ x: -10, y: 0 });
+		// assert layout change
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "the layout-type is preserved");
+
+		// assert configuration-update matches the resized column widths
+		const updatedLayoutConfig = (await fcl.getProperty("layoutsConfiguration")).desktop.TwoColumnsStartExpanded.layout,
+			startPercentageWidth = (await startColumn.getAttribute("style")).replace("width: ", "").replace(";", ""),
+			midPercentageWidth = (await midColumn.getAttribute("style")).replace("width: ", "").replace(";", "");
+
+		assert.strictEqual(parseInt(updatedLayoutConfig[0]), parseInt(startPercentageWidth), "correctly updated the config for start column");
+		assert.strictEqual(parseInt(updatedLayoutConfig[1]), parseInt(midPercentageWidth), "correctly updated the config for mid colum");
+		assert.strictEqual(parseInt(updatedLayoutConfig[2]), 0, "correctly updated the config for end colum");
+	});
+
+	it("updates the configuration upon interactive resize of columns to new layout", async () => {
+		const fcl = await browser.$("#fcl3"),
+			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
+
+		// assert initial state
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "initial state is as expected");
+
+		// act: drag to resize the columns to new layout
+		await startSeparator.dragAndDrop({ x: -500, y: 0 });
+		// assert layout change
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsMidExpanded", "the layout is updated");
+
+		// assert configuration-update matches the resized column widths
+		const updatedLayoutConfig = (await fcl.getProperty("layoutsConfiguration")).desktop.TwoColumnsMidExpanded.layout,
+			startPercentageWidth = (await startColumn.getAttribute("style")).replace("width: ", "").replace(";", ""),
+			midPercentageWidth = (await midColumn.getAttribute("style")).replace("width: ", "").replace(";", "");
+
+		assert.strictEqual(parseInt(updatedLayoutConfig[0]), parseInt(startPercentageWidth), "correctly updated the config for start column");
+		assert.strictEqual(parseInt(updatedLayoutConfig[1]), parseInt(midPercentageWidth), "correctly updated the config for mid colum");
+		assert.strictEqual(parseInt(updatedLayoutConfig[2]), 0, "correctly updated the config for end colum");
+	});
+});
+
 describe("ACC", () => {
 	before(async () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
