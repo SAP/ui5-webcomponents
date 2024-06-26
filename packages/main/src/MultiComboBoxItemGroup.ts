@@ -35,7 +35,7 @@ class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
 		invalidateOnChildChange: true,
 		type: HTMLElement,
 	})
-	items!: Array<IMultiComboBoxItem>;
+	items!: Array<MultiComboBoxItem>;
 
 	/**
 	 * Used to avoid tag name checks
