@@ -10,6 +10,12 @@
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
 
+	<style>
+		.link{
+			display: inline-block;
+			margin-right: 20px;
+		}
+	</style>
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
@@ -19,11 +25,25 @@
 
 <body class="ratingindicator1auto">
 
+	<div style="display: flex; flex-direction: row;">
+		<a class="link" href="?sap-ui-theme=sap_horizon">Horizon</a>
+		<a class="link" href="?sap-ui-theme=sap_horizon_dark">Horizon Dark</a>
+		<a class="link" href="?sap-ui-theme=sap_horizon_hcb">Horizon HCB</a>
+		<a class="link" href="?sap-ui-theme=sap_horizon_hcw">Horizon HCW</a>
+		<a class="link" href="?sap-ui-theme=sap_fiori_3">Quartz</a>
+		<a class="link" href="?sap-ui-theme=sap_fiori_3_dark">Quartz Dark</a>
+		<a class="link" href="?sap-ui-theme=sap_fiori_3_hcb">Quartz HCB</a>
+		<a class="link" href="?sap-ui-theme=sap_fiori_3_hcw">Quartz HCW</a>
+	</div>
+	<br />
+
 	<ui5-button id="btnToggle">Toggle 'Compact'</ui5-button>
 	<br />
 	<br />
 
 	<ui5-rating-indicator id="rating-indicator1" accessible-name="Hello World"></ui5-rating-indicator>
+	<br />
+	<ui5-rating-indicator id="rating-indicator-test" value="3.7" readonly></ui5-rating-indicator>
 	<br>
 	<br>
 	<br>
@@ -119,7 +139,6 @@
 		document.getElementById("btnToggle").addEventListener("click",  () => {
 			document.getElementsByTagName("body")[0].classList.toggle("sapUiSizeCompact");
 		});
-
 	</script>
 </body>
 
