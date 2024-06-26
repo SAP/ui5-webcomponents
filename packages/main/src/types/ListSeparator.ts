@@ -2,7 +2,7 @@
  * Different types of list items separators.
  * @public
  */
-enum ListSeparators {
+enum ListSeparator {
 	/**
 	 * Separators between the items including the last and the first one.
 	 * @public
@@ -21,4 +21,4 @@ enum ListSeparators {
 	None = "None",
 }
 
-export default ListSeparators;
+export default ListSeparator;
