@@ -1,6 +1,7 @@
 /**
  * Different types of list items separators.
  * @public
+ * @since 2.0.0
  */
 enum ListSeparator {
 	/**
