@@ -58,7 +58,7 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property()
-	key!: string;
+	key = "";
 
 	/**
 	 * Defines the interactive state of the row.
@@ -67,7 +67,19 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
+
+	/**
+	 * Defines the navigated state of the row.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	navigated = false;
+
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
 
 	static async onDefine() {
 		await super.onDefine();
@@ -80,6 +92,11 @@ class TableRow extends TableRowBase {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.toggleAttribute("_interactive", this._isInteractive);
+		if (this._renderNavigated && this.navigated) {
+			this.setAttribute("aria-current", "true");
+		} else {
+			this.removeAttribute("aria-current");
+		}
 	}
 
 	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {

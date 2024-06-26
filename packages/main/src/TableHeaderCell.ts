@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TableCellBase from "./TableCellBase.js";
 import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
@@ -36,8 +35,8 @@ class TableHeaderCell extends TableCellBase {
 	 * @default "auto"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "auto" })
-	width!: string;
+	@property()
+	width = "auto";
 
 	/**
  	 * Defines the minimum width of the column.
@@ -48,8 +47,8 @@ class TableHeaderCell extends TableCellBase {
 	 * @default "auto"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "auto" })
-	minWidth!: string;
+	@property()
+	minWidth = "auto";
 
 	/**
 	 * Defines the maximum width of the column.
@@ -57,8 +56,8 @@ class TableHeaderCell extends TableCellBase {
 	 * @default "auto"
 	 * @public
 	 */
-	@property({ type: String, defaultValue: "auto" })
-	maxWidth!: string;
+	@property()
+	maxWidth = "auto";
 
 	/**
 	 * Defines the importance of the column.
@@ -70,16 +69,17 @@ class TableHeaderCell extends TableCellBase {
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	importance!: number;
+	@property({ type: Number })
+	importance = 0;
 
 	@property({ type: Boolean, noAttribute: true })
-	_popin!: boolean;
+	_popin = false;
 
 	protected ariaRole: string = "columnheader";
 	_popinWidth: number = 0;
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		this.style.minWidth = this.minWidth;
 		this.style.maxWidth = this.maxWidth;
 		this.style.width = this.width;

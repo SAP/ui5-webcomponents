@@ -28,20 +28,20 @@ describe("Toast general interaction", () => {
 			"Toast's content div should be displayed in the viewport after its opening.")
 	});
 
-	it("tests domRendered property", async () => {
+	it("tests open property", async () => {
 		const button = await browser.$("#wcBtnShowToastBS");
 		const toast = await browser.$("#wcToastBS");
 		const toastShadowContent = await toast.shadow$(".ui5-toast-root");
 
 		assert.notOk(await toastShadowContent.isDisplayedInViewport(),
 			"Toast's content div should be displayed in the viewport after its opening.");
-		assert.notOk(await toast.getProperty("domRendered"),
-			"domRendered property value should be false before Toast is shown");
+		assert.notOk(await toast.getProperty("open"),
+			"open property value should be false before Toast is shown");
 
 		await button.click();
 
-		assert.strictEqual(await toast.getProperty("domRendered"), true,
-			"domRendered property value should be true when Toast is shown");
+		assert.strictEqual(await toast.getProperty("open"), true,
+			"open property value should be true when Toast is shown");
 
 		assert.ok(await toastShadowContent.isDisplayedInViewport(),
 			"Toast's content div should be displayed in the viewport after its opening.")
@@ -135,11 +135,11 @@ describe("Toast general interaction", () => {
 
 		await browser.waitUntil(async () => {
 			const open = await toast.getProperty("open");
-			const domRendered = await toast.getProperty("domRendered");
-			return !open && !domRendered;
+			const openAttribute = await toast.getAttribute("open");
+			return !open && !openAttribute;
 		}, {
 			timeout: 2000,
-			timeoutMsg: "After 2000ms the toast should be closed and domRendered should be false"
+			timeoutMsg: "After 2000ms the toast should be closed and open should be removed"
 		});
 	});
 

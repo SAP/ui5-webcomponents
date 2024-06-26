@@ -29,13 +29,17 @@ abstract class TableCellBase extends UI5Element {
 	content!: Array<Node>;
 
 	@property({ type: Boolean })
-	_popin!: boolean;
+	_popin = false;
 
 	protected ariaRole: string = "gridcell";
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
 		TableCellBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	onEnterDOM() {
+		this.toggleAttribute("ui5-table-cell-base", true);
 	}
 
 	onBeforeRendering() {
@@ -48,6 +52,10 @@ abstract class TableCellBase extends UI5Element {
 
 	getFocusDomRef() {
 		return this;
+	}
+
+	isTableCellBase() {
+		return true;
 	}
 }
 

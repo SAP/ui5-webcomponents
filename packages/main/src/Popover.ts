@@ -2,13 +2,13 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
-import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
+import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
@@ -99,35 +99,35 @@ class Popover extends Popup {
 	 * Defines the header text.
 	 *
 	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Determines on which side the component is placed at.
 	 * @default "End"
 	 * @public
 	 */
-	@property({ type: PopoverPlacement, defaultValue: PopoverPlacement.End })
-	placement!: `${PopoverPlacement}`;
+	@property()
+	placement: `${PopoverPlacement}` = "End";
 
 	/**
 	 * Determines the horizontal alignment of the component.
 	 * @default "Center"
 	 * @public
 	 */
-	@property({ type: PopoverHorizontalAlign, defaultValue: PopoverHorizontalAlign.Center })
-	horizontalAlign!: `${PopoverHorizontalAlign}`;
+	@property()
+	horizontalAlign: `${PopoverHorizontalAlign}` = "Center";
 
 	/**
 	 * Determines the vertical alignment of the component.
 	 * @default "Center"
 	 * @public
 	 */
-	@property({ type: PopoverVerticalAlign, defaultValue: PopoverVerticalAlign.Center })
-	verticalAlign!: `${PopoverVerticalAlign}`;
+	@property()
+	verticalAlign: `${PopoverVerticalAlign}` = "Center";
 
 	/**
 	 * Defines whether the component should close when
@@ -137,7 +137,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	modal!: boolean;
+	modal = false;
 
 	/**
 	 * Determines whether the component arrow is hidden.
@@ -146,7 +146,7 @@ class Popover extends Popup {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	hideArrow!: boolean;
+	hideArrow = false;
 
 	/**
 	 * Determines if there is no enough space, the component can be placed
@@ -155,7 +155,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	allowTargetOverlap!: boolean;
+	allowTargetOverlap = false;
 
 	/**
 	 * Defines whether the content is scrollable.
@@ -163,33 +163,33 @@ class Popover extends Popup {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	disableScrolling!: boolean;
+	disableScrolling = false;
 
 	/**
 	 * Sets the X translation of the arrow
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
-	arrowTranslateX!: number;
+	@property({ type: Number, noAttribute: true })
+	arrowTranslateX = 0;
 
 	/**
 	 * Sets the Y translation of the arrow
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
-	arrowTranslateY!: number;
+	@property({ type: Number, noAttribute: true })
+	arrowTranslateY = 0;
 
 	/**
 	 * Returns the calculated placement depending on the free space
 	 * @private
 	 */
-	@property({ type: PopoverPlacement, defaultValue: PopoverPlacement.End })
-	actualPlacement!: `${PopoverPlacement}`;
+	@property()
+	actualPlacement: `${PopoverPlacement}` = "End";
 
-	@property({ validator: Integer, noAttribute: true })
+	@property({ type: Number, noAttribute: true })
 	_maxHeight?: number;
 
-	@property({ validator: Integer, noAttribute: true })
+	@property({ type: Number, noAttribute: true })
 	_maxWidth?: number;
 
 	/**
@@ -230,7 +230,7 @@ class Popover extends Popup {
 	 * @default undefined
 	 * @since 1.2.0
 	 */
-	@property({ validator: DOMReference })
+	@property({ converter: DOMReferenceConverter })
 	set opener(value: HTMLElement | string) {
 		if (this._opener === value) {
 			return;

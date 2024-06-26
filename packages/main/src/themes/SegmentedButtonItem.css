@@ -102,7 +102,8 @@
 	/* calculating the minimum width by removing the icon size  */
 	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
 }
-:host([disabled]:active) {
+
+:host([disabled]) {
 	pointer-events: none;
 }
 

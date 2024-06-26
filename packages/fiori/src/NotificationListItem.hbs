@@ -46,14 +46,15 @@
 			</div>
 		{{/if}}
 
-		<div id="{{_id}}-footer" class="ui5-nli-footer">
-			{{#each footerItems}}
-				<slot name="{{slotName}}"></slot>
-				{{#if showDivider}}
-					<div class="ui5-nli-footer-divider" aria-hidden="true">·</div>
-				{{/if}}
-			{{/each}}
-
+		<div class="ui5-nli-footer">
+			<div id="{{_id}}-footnotes" class="ui5-nli-footnotes">
+				{{#each footerItems}}
+					<slot name="{{slotName}}"></slot>
+					{{#if showDivider}}
+						<div class="ui5-nli-footer-divider" aria-hidden="true">·</div>
+					{{/if}}
+				{{/each}}
+			</div>
 			<ui5-link
 				class="ui5-nli-footer-showMore"
 				?hidden="{{hideShowMore}}"

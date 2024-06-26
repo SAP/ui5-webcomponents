@@ -1,3 +1,8 @@
+import {
+	isUpShift,
+	isShift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -7,6 +12,7 @@ import type Table from "./Table.js";
 import type { ITableFeature } from "./Table.js";
 import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
+import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUtils.js";
 
 /**
  * @class
@@ -59,8 +65,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @default "Multiple"
 	 * @public
 	 */
-	@property({ type: TableSelectionMode, defaultValue: TableSelectionMode.Multiple })
-	mode!: `${TableSelectionMode}`;
+	@property()
+	mode: `${TableSelectionMode}` = "Multiple";
 
 	/**
 	 * Defines the selected rows separated by a space.
@@ -69,9 +75,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @public
 	 */
 	@property()
-	selected!: string;
+	selected = "";
 
 	_table?: Table;
+	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
 	onTableActivate(table: Table) {
 		this._table = table;
@@ -142,6 +149,10 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	informSelectionChange(row: TableRowBase) {
+		if (this._rangeSelection?.isMouse && this._rangeSelection.shiftPressed) {
+			return;
+		}
+
 		if (row.isHeaderRow()) {
 			this._informHeaderRowSelectionChange();
 		} else {
@@ -165,16 +176,20 @@ class TableSelection extends UI5Element implements ITableFeature {
 		this.selectedAsArray = [...selectedSet];
 	}
 
-	_informRowSelectionChange(row: TableRow) {
-		const isRowSelected = this.isMultiSelect() ? this.isSelected(row) : true;
+	_selectRow(row: TableRow, selected: boolean) {
 		const rowIdentifier = this.getRowIdentifier(row);
-		if (this.selected && this.mode === TableSelectionMode.Multiple) {
+		if (this.mode === TableSelectionMode.Multiple) {
 			const selectedSet = this.selectedAsSet;
-			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
+			selectedSet[selected ? "add" : "delete"](rowIdentifier);
 			this.selectedAsSet = selectedSet;
 		} else {
-			this.selected = rowIdentifier;
+			this.selected = selected ? rowIdentifier : "";
 		}
+	}
+
+	_informRowSelectionChange(row: TableRow) {
+		const isRowSelected = this.isMultiSelect() ? !this.isSelected(row) : true;
+		this._selectRow(row, isRowSelected);
 		this.fireEvent("change");
 	}
 
@@ -203,6 +218,160 @@ class TableSelection extends UI5Element implements ITableFeature {
 		this._table._invalidate++;
 		this._table.headerRow[0]._invalidate++;
 		this._table.rows.forEach(row => row._invalidate++);
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (!this.isMultiSelect() || !this._table || !e.shiftKey) {
+			return;
+		}
+
+		const focusedElement = getActiveElement(); // Assumption: The focused element is always the "next" row after navigation.
+
+		if (!(focusedElement?.hasAttribute("ui5-table-row") || this._rangeSelection?.isMouse || focusedElement?.hasAttribute("ui5-growing-row"))) {
+			this._stopRangeSelection();
+			return;
+		}
+
+		if (!this._rangeSelection) {
+			// If no range selection is active, start one
+			this._startRangeSelection(focusedElement as TableRow);
+		} else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+			const change = isUpShift(e) ? -1 : 1;
+			this._handleRangeSelection(focusedElement as TableRow, change);
+		}
+
+		if (this._rangeSelection) {
+			this._rangeSelection.shiftPressed = e.shiftKey;
+		}
+	}
+
+	_onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement) {
+		if (!this._table) {
+			return;
+		}
+
+		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || isShift(e) || !isSelectionCheckbox(e)) {
+			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
+			this._stopRangeSelection();
+		}
+
+		if (this._rangeSelection) {
+			this._rangeSelection.shiftPressed = e.shiftKey;
+		}
+	}
+
+	_onclick(e: MouseEvent) {
+		if (!this._table) {
+			return;
+		}
+
+		if (isHeaderSelector(e)) {
+			this._stopRangeSelection();
+			return;
+		}
+
+		if (!isSelectionCheckbox(e)) {
+			this._stopRangeSelection();
+			return;
+		}
+
+		const row = findRowInPath(e.composedPath());
+
+		if (e.shiftKey && this._rangeSelection?.isMouse) {
+			const startRow = this._rangeSelection.rows[0];
+			const startIndex = this._table.rows.indexOf(startRow);
+			const endIndex = this._table.rows.indexOf(row);
+
+			// When doing a range selection and clicking on an already selected row, the checked status should not change
+			// Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
+			// a visual inconsistency.
+			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
+
+			if (startIndex === -1 || endIndex === -1 || row.key === startRow.key || row.key === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].key) {
+				return;
+			}
+
+			const change = endIndex - startIndex;
+			this._handleRangeSelection(row, change);
+		} else if (row) {
+			this._startRangeSelection(row, true);
+		}
+	}
+
+	/**
+	 * Start the range selection and initialises the range selection state
+	 * @param row starting row
+	 * @private
+	 */
+	_startRangeSelection(row: TableRow, isMouse = false) {
+		const selected = this.isSelected(row);
+		if (isMouse && !selected) {
+			// Do not initiate range selection if the row is not selected
+			return;
+		}
+
+		this._rangeSelection = {
+			selected,
+			isUp: null,
+			rows: [row],
+			isMouse,
+			shiftPressed: false,
+		};
+	}
+
+	/**
+	 * Handles the range selection
+	 * @param targetRow row that is currently focused
+	 * @param change indicates direction
+	 * @private
+	 */
+	_handleRangeSelection(targetRow: TableRow, change: number) {
+		if (!this._rangeSelection) {
+			return;
+		}
+
+		const isUp = change > 0;
+		this._rangeSelection.isUp ??= isUp;
+
+		const shouldReverseSelection = isUp !== this._rangeSelection.isUp && !this._rangeSelection.isMouse;
+		let selectionChanged = shouldReverseSelection && this.isSelected(targetRow);
+
+		if (shouldReverseSelection) {
+			this._reverseRangeSelection();
+		} else {
+			const rowIndex = this._table!.rows.indexOf(targetRow);
+			const [startIndex, endIndex] = [rowIndex, rowIndex - change].sort((a, b) => a - b);
+
+			selectionChanged = this._table?.rows.slice(startIndex, endIndex + 1).reduce((changed, row) => {
+				const isRowNotInSelection = !this._rangeSelection?.rows.includes(row);
+				const isRowSelectionDifferent = this.isSelected(row) !== this._rangeSelection!.selected;
+
+				if (isRowNotInSelection) {
+					this._rangeSelection?.rows.push(row);
+				}
+
+				this._selectRow(row, this._rangeSelection!.selected);
+
+				return changed || isRowSelectionDifferent;
+			}, selectionChanged) || false;
+		}
+
+		selectionChanged && this._fireEvent("change");
+	}
+
+	_stopRangeSelection() {
+		this._rangeSelection = null;
+	}
+
+	_reverseRangeSelection() {
+		const row = this._rangeSelection?.rows.pop();
+		if (row) {
+			this._selectRow(row, false);
+		}
+
+		if (this._rangeSelection?.rows.length === 1) {
+			this._rangeSelection.isUp = null;
+		}
 	}
 }
 

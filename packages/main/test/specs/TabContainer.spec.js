@@ -519,7 +519,7 @@ describe("TabContainer drag and drop tests", () => {
 	const moveElementById = (items, id1, id2, targetPosition) => {
 		const findAndExecute = (items, matcher, cb) => {
 			const index = items.findIndex(matcher);
-			
+
 			if (index !== -1) {
 				cb(items, index);
 				return;
@@ -684,5 +684,5 @@ describe("TabContainer drag and drop tests", () => {
 		// close the popover
 		await tabContainer.getEndOverflow("tabContainerDnd").click();
 	});
-	
+
 });

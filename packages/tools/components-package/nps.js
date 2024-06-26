@@ -124,6 +124,8 @@ const getScripts = (options) => {
 		},
 		start: "nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
+		"test-cy-ci": `yarn cypress run --component --browser chrome --config-file config/cypress.config.js`,
+		"test-cy-open": `yarn cypress open --component --browser chrome --config-file config/cypress.config.js`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",

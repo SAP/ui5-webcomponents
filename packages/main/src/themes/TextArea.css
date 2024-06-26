@@ -178,11 +178,11 @@
 	min-height: calc(2 * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
-:host([growing]):not([growing-max-rows]) .ui5-textarea-inner {
+:host([growing]):not([growing-max-rows="0"]) .ui5-textarea-inner {
 	max-height: 100%;
 }
 
-:host([growing-max-rows]) .ui5-textarea-mirror {
+:host([growing-max-rows]:not([growing-max-rows="0"])) .ui5-textarea-mirror {
 	max-height: calc((var(--_textarea_growing_max_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 

@@ -20,7 +20,6 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -92,18 +91,14 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @public
 	 * @default []
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
-	@property({ type: Object, multiple: true })
-	_months!: MonthInterval;
+	@property({ type: Array })
+	_months: MonthInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
 	static i18nBundle: I18nBundle;
 

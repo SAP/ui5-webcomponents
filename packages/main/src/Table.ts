@@ -10,7 +10,6 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -179,7 +178,14 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		invalidateOnChildChange: {
+			properties: ["navigated"],
+			slots: false,
+		},
+	})
 	rows!: Array<TableRow>;
 
 	/**
@@ -210,29 +216,29 @@ class Table extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Identifies the element (or elements) that labels the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the text to be displayed when there are no rows in the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the mode of the <code>ui5-table</code> overflow behavior.
@@ -246,8 +252,8 @@ class Table extends UI5Element {
 	 * @default "Scroll"
 	 * @public
 	 */
-	@property({ type: TableOverflowMode, defaultValue: TableOverflowMode.Scroll })
-	overflowMode!: `${TableOverflowMode}`;
+	@property()
+	overflowMode: `${TableOverflowMode}` = "Scroll";
 
 	/**
 	 * Defines if the loading indicator should be shown.
@@ -257,16 +263,27 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
+
+	/**
+     * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
+     * @default 1000
+     * @public
+     */
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
 	 */
-	@property({ type: String, defaultValue: "0" })
-	stickyTop!: string;
+	@property()
+	stickyTop = "0";
 
-	@property({ type: Integer, defaultValue: 0, noAttribute: true })
-	_invalidate!: number;
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
+
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
 
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
@@ -306,6 +323,14 @@ class Table extends UI5Element {
 	}
 
 	onBeforeRendering(): void {
+		const renderNavigated = this._renderNavigated;
+		this._renderNavigated = this.rows.some(row => row.navigated);
+		if (renderNavigated !== this._renderNavigated) {
+			this.rows.forEach(row => {
+				row._renderNavigated = this._renderNavigated;
+			});
+		}
+
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
 	}
@@ -480,6 +505,9 @@ class Table extends UI5Element {
 			}
 			return `minmax(${cell.width}, ${cell.width})`;
 		}));
+		if (this._renderNavigated) {
+			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
+		}
 		return widths.join(" ");
 	}
 
@@ -505,6 +533,10 @@ class Table extends UI5Element {
 
 	get _tableElement() {
 		return this.shadowRoot!.getElementById("table") as HTMLElement;
+	}
+
+	get _loadingElement() {
+		return this.shadowRoot!.getElementById("loading") as HTMLElement;
 	}
 
 	get _effectiveNoDataText() {
@@ -544,6 +576,10 @@ class Table extends UI5Element {
 
 	get _stickyElements() {
 		return [this.headerRow[0]].filter(row => row.sticky);
+	}
+
+	get isTable() {
+		return true;
 	}
 }
 

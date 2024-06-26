@@ -43,15 +43,15 @@ class ListItemGroup extends UI5Element {
 	 * @default ""
 	 */
 	@property()
-	headerText!: string;
+	headerText = "";
 
 	/**
 	 * Defines the accessible name of the header.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
-	@property({ type: String })
-	headerAccessibleName!: string;
+	@property()
+	headerAccessibleName?: string;
 
 	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
@@ -69,7 +69,7 @@ class ListItemGroup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	* Defines the header of the component.

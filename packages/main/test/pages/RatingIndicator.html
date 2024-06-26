@@ -113,7 +113,7 @@
 		var changeEventInput = document.getElementById("change-event");
 
 		ratingIndicator4.addEventListener("ui5-change", event => {
-			changeEventInput.value = ++changeCount;
+			changeEventInput.value = `${++changeCount}`;
 		});
 
 		document.getElementById("btnToggle").addEventListener("click",  () => {
