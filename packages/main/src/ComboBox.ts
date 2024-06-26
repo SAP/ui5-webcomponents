@@ -343,7 +343,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -352,7 +352,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */

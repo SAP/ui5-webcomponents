@@ -378,7 +378,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

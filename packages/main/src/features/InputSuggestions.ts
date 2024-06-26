@@ -392,7 +392,7 @@ class Suggestions {
 		this.accInfo = {
 			isGroup: isGroupItem,
 			currentPos: items.indexOf(currentItem) + 1,
-			itemText: isGroupItem ? (selectedItem as SuggestionItemGroup).headerText : (selectedItem as IInputSuggestionItemSelectable).text,
+			itemText: (isGroupItem ? (selectedItem as SuggestionItemGroup).headerText : (selectedItem as IInputSuggestionItemSelectable).text) || "",
 		};
 
 		if (currentItem.hasAttribute("ui5-suggestion-item") || currentItem.hasAttribute("ui5-suggestion-item-custom")) {
