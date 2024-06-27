@@ -35,7 +35,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-## customElement Decorator
+## @customElement decorator
 The `customElement` decorator is a class decorator that takes one argument, which can be either a string or an object literal containing configuration options for the component. This allows each component to be individually configured.
 
 When the argument is a string, it defines the tag name of the component. Otherwise, if the argument is an object literal you can see available options below.
