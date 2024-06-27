@@ -9,6 +9,7 @@
 	font-family: var(--sapFontBoldFamily);
 	font-weight: var(--_ui5-tag-font-weight);
 	letter-spacing: var(--_ui5-tag-letter-spacing);
+	line-height: var(--_ui5-tag-height);
 }
 
 .ui5-tag-root {
@@ -18,8 +19,6 @@
 	width: 100%;
 	min-width: 1.125em;
 	max-width: 100%;
-	min-height: var(--_ui5-tag-height);
-	height: auto;
 	box-sizing: border-box;
 	padding: 0 0.25rem;
 	border: 0.0625rem solid;
@@ -48,7 +47,6 @@
 
 :host([wrapping-type="None"]) .ui5-tag-root {
 	white-space: nowrap;
-	height: var(--_ui5-tag-height);
 }
 
 :host([_icon-only]) .ui5-tag-root {
@@ -513,17 +511,17 @@
 }
 
 /* Sizes */
-:host([size="L"]) .ui5-tag-root{
+:host([size="L"]) {
+	font-family: var(--sapFontSemiboldDuplexFamily);
+	line-height: var(--_ui5-tag-height_size_l);
+}
+
+:host([size="L"]) .ui5-tag-root {
 	font-size: var(--_ui5-tag-font-size_size_l);
 }
 
 :host([size="L"]) .ui5-tag-root {
 	min-width: var(--_ui5-tag-min-width_size_l);
-    height: var(--_ui5-tag-height_size_l);
-}
-
-:host([size="L"]) .ui5-tag-root .ui5-tag-text {
-	height: var(--_ui5-tag-text-height_size_l);
 	padding: var(--_ui5-tag-text_padding_size_l);
 }
 
