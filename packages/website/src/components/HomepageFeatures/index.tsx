@@ -1,19 +1,31 @@
 import './styles.css';
 
+import Buildings from "@site/static/img/features/light/Buildings.svg";
+import Frame from "@site/static/img/features/light/Frame.svg";
+import Hand from "@site/static/img/features/light/Hand.svg";
+import BuildingsDark from "@site/static/img/features/dark/Buildings.svg";
+import FrameDark from "@site/static/img/features/dark/Frame.svg";
+import HandDark from "@site/static/img/features/dark/Hand.svg";
+
+
 import { useColorMode } from '@docusaurus/theme-common';
 
 type FeatureItem = {
   title: string;
-  src?: string;
-  srcContrast?: string;
+  SVG?: React.ComponentType<React.SVGProps<SVGSVGElement> & {
+    title?: string;
+  }>;
+  SVGDark?: React.ComponentType<React.SVGProps<SVGSVGElement> & {
+    title?: string;
+  }>;
   description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: 'Easy to Use',
-    src: require('@site/static/img/features/Frame.png').default,
-    srcContrast: require('@site/static/img/features-contrast/Frame_inverted.png').default,
+    SVG: Frame,
+    SVGDark: FrameDark,
     description: (
       <>
        Based on web standards - just HTML!
@@ -24,8 +36,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Lightweight',
-    src: require('@site/static/img/features/hand.png').default,
-    srcContrast: require('@site/static/img/features-contrast/hand_inverted.png').default,
+    SVG: Hand,
+    SVGDark:  HandDark,
     description: (
       <>
        Tiny - come with a minimal footprint.
@@ -36,8 +48,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Enterprise Ready',
-    src: require('@site/static/img/features/buildings.png').default,
-    srcContrast: require('@site/static/img/features-contrast/buildings_inverted.png').default,
+    SVG: Buildings,
+    SVGDark: BuildingsDark,
     description: (
       <>
        Implements latest SAP Design language.
@@ -48,12 +60,12 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({ title, src, srcContrast, description }: FeatureItem) {
+function Feature({ title, SVG, SVGDark, description }: FeatureItem) {
   const { colorMode } = useColorMode();
 
   return (
     <div className="feature">
-      <img className="feature__image" src={colorMode === "dark" ? srcContrast : src} alt={title} />
+      {colorMode === "light" ? <SVG className='feature__image'/> : <SVGDark className='feature__image'/>}
       <h2 className="feature__title">{title}</h2>
       <p className="feature__desc">{description}</p>
     </div>
