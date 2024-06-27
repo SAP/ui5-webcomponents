@@ -80,7 +80,7 @@
 			li.description = "the description goes here " + i;
 			li.additionalText = "Available";
 			li.additionalTextState = "Positive";
-			li.icon = "nutrition-activity" 
+			li.icon = "nutrition-activity"
 			return li;
 		}
 
@@ -177,42 +177,114 @@
 	<div class="snippet">
 		<ui5-list header-text="Community" mode="MultiSelect">
 			<ui5-li-group header-text="Front End Developers">
-				<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
-				<ui5-li image="../../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
-				<ui5-li image="../../../assets/images/avatars/woman_avatar_5.png" icon="navigation-right-arrow" icon-end>Carlotta</ui5-li>	
+				<ui5-li icon="navigation-right-arrow" icon-end>Jennifer
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/woman_avatar_3.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
+				<ui5-li icon="navigation-right-arrow" icon-end>Lora
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/woman_avatar_4.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
+				<ui5-li icon="navigation-right-arrow" icon-end>Carlotta
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
 			</ui5-li-group>
 
 			<ui5-li-group header-text="Back End Developers">
-				<ui5-li image="../../../assets/images/avatars/man_avatar_1.png"  icon="navigation-right-arrow" icon-end>Clark</ui5-li>
-				<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" icon="navigation-right-arrow" icon-end>Ellen</ui5-li>
-				<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" icon="navigation-right-arrow" icon-end>Adam</ui5-li>	
+				<ui5-li icon="navigation-right-arrow" icon-end>Clark
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
+				<ui5-li icon="navigation-right-arrow" icon-end>Ellen
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/woman_avatar_1.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
+				<ui5-li icon="navigation-right-arrow" icon-end>Adam
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/man_avatar_2.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
 			</ui5-li-group>
 
 			<ui5-li-group header-text="FullStack Developers">
-				<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" icon="navigation-right-arrow" icon-end>Susan</ui5-li>
-				<ui5-li image="../../../assets/images/avatars/man_avatar_3.png" icon="navigation-right-arrow" icon-end>David</ui5-li>
-				<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Natalie</ui5-li>	
+				<ui5-li icon="navigation-right-arrow" icon-end>Susan
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/woman_avatar_2.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
+				<ui5-li icon="navigation-right-arrow" icon-end>David
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
+				<ui5-li icon="navigation-right-arrow" icon-end>Natalie
+					<ui5-avatar slot="image" shape="Square">
+						<img src="../../../assets/images/avatars/woman_avatar_3.png" alt="Woman image">
+					</ui5-avatar>
+				</ui5-li>
 			</ui5-li-group>
 		</ui5-list>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-list header-text="Team Members" mode="MultiSelect">
 	<ui5-li-group header-text="Front End Developers">
-		<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Jennifer</ui5-li>
-		<ui5-li image="../../../assets/images/avatars/woman_avatar_4.png" icon="navigation-right-arrow" icon-end>Lora</ui5-li>
-		<ui5-li image="../../../assets/images/avatars/woman_avatar_5.png" icon="navigation-right-arrow" icon-end>Carlotta</ui5-li>	
+		<ui5-li icon="navigation-right-arrow" icon-end>Jennifer
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/woman_avatar_3.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" icon-end>Lora
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/woman_avatar_4.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" icon-end>Carlotta
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/woman_avatar_5.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
 	</ui5-li-group>
 
 	<ui5-li-group header-text="Back End Developers">
-		<ui5-li image="../../../assets/images/avatars/man_avatar_1.png"  icon="navigation-right-arrow" icon-end>Clark</ui5-li>
-		<ui5-li image="../../../assets/images/avatars/woman_avatar_1.png" icon="navigation-right-arrow" icon-end>Ellen</ui5-li>
-		<ui5-li image="../../../assets/images/avatars/man_avatar_2.png" icon="navigation-right-arrow" icon-end>Adam</ui5-li>	
+		<ui5-li icon="navigation-right-arrow" icon-end>Clark
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/man_avatar_1.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" icon-end>Ellen
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/woman_avatar_1.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" icon-end>Adam
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/man_avatar_2.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
 	</ui5-li-group>
 
 	<ui5-li-group header-text="FullStack Developers">
-		<ui5-li image="../../../assets/images/avatars/woman_avatar_2.png" icon="navigation-right-arrow" icon-end>Susan</ui5-li>
-		<ui5-li image="../../../assets/images/avatars/man_avatar_3.png" icon="navigation-right-arrow" icon-end>David</ui5-li>
-		<ui5-li image="../../../assets/images/avatars/woman_avatar_3.png" icon="navigation-right-arrow" icon-end>Natalie</ui5-li>	
+		<ui5-li icon="navigation-right-arrow" icon-end>Susan
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/woman_avatar_2.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" icon-end>David
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/man_avatar_3.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li icon="navigation-right-arrow" icon-end>Natalie
+			<ui5-avatar slot="image" shape="Square">
+				<img src="../../../assets/images/avatars/woman_avatar_3.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
 	</ui5-li-group>
 </ui5-list>
 	</xmp></pre>

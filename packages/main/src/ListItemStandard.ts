@@ -75,16 +75,6 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	iconEnd = false;
 
 	/**
-	 * Defines the `image` source URI.
-	 *
-	 * **Note:** The `image` would be displayed in the beginning of the list item.
-	 * @default undefined
-	 * @private
-	 */
-	@property()
-	imageSrc?: string;
-
-	/**
 	 * Defines the `additionalText`, displayed in the end of the list item.
 	 * @default undefined
 	 * @public
@@ -160,10 +150,6 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
 		this._hasImage = this.hasImage;
-	}
-
-	get displayImage(): boolean {
-		return !!this.imageSrc;
 	}
 
 	get displayIconBegin(): boolean {
