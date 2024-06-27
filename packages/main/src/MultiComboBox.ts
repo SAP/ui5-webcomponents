@@ -265,7 +265,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * **Note:** When the component is used inside a form element,
 	 * the value is sent as the first element in the form data, even if it's empty.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
@@ -284,11 +284,11 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder = "";
+	placeholder?: string;
 
 	/**
 	 * Defines if the user input will be prevented, if no matching item has been found
@@ -714,7 +714,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return "";
 		}
 
-		return this.placeholder;
+		return this.placeholder || "";
 	}
 
 	_handleArrowLeft() {

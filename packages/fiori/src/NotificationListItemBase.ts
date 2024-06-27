@@ -25,7 +25,7 @@ import {
 class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the `titleText` of the item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

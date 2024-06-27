@@ -162,7 +162,7 @@ class Button extends UI5Element {
 			button.style.width = `${buttonWidth}px`;
 			hiddenButton.icon = newStateObject.icon;
 			hiddenButton.endIcon = newStateObject.endIcon;
-			hiddenButton.textContent = newStateObject.text;
+			hiddenButton.textContent = newStateObject.text || null;
 
 			await renderFinished();
 			const hiddenButtonWidth = hiddenButton.offsetWidth;
