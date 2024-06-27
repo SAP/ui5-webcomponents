@@ -35,9 +35,13 @@ describe("Table - loading", () => {
 		cy.realPress("Tab");
 
 		cy.get("[ui5-table]")
+			.should("be.focused")
+
+		cy.get("[ui5-table]")
 			.shadow()
 			.find("#loading")
-			.should("be.focused")
+			.should("exist")
+			.and("be.focused");
 
 		cy.realPress("Tab");
 
