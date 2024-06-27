@@ -108,13 +108,6 @@
 	align-self: flex-end;
 }
 
-.ui5-li-img {
-	width: var(--_ui5_list_item_img_size);
-	height: var(--_ui5_list_item_img_size);
-	border-radius: var(--ui5-avatar-border-radius);
-}
-
-.ui5-li-img,
 .ui5-li-image {
 	min-width: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
