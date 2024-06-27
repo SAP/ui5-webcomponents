@@ -312,27 +312,6 @@ class FlexibleColumnLayout extends UI5Element {
 	* Allows to customize the proportions of the column widts per screen size and layout.
 	* If no custom proportion provided for a specific layout, the default will be used.
 	*
-	* The `layoutsConfiguration` object has the following structure:
-	* ```json
-	* {	"desktop": {
-	* 		"TwoColumnsStartExpanded": {
-	* 			"layout": ["70%", "30%", "0px"] // 0  or "0%" is also valid
-	* 		},
-	* 		"ThreeColumnsMidExpanded": {
-	* 			"layout": ["30%", "40%", "30%"]
-	* 		},
-	* 		..
-	* 	},
-	* 	"tablet": {
-	* 		"TwoColumnsStartExpanded": {
-	* 			"layout": ["70%", "30%", "0px"]
-	* 		},
-	* 		"ThreeColumnsMidExpanded": {
-	* 			"layout": [0, "70%", "30%"]
-	* 		},
-	* 		..
-	* 	}
-	* ``
  	* **Notes:**
 	*
 	* - The proportions should be given in percentages. For example ["30%", "40%", "30%"], ["70%", "30%", 0], etc.
