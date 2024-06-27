@@ -389,7 +389,28 @@ dateRangePicker.open = false;
 
 | Changed item | Old     | New     | 
 |--------------|---------|---------|
+| Public method | `show()`  | `open` property |
+| Public method | `close()` | `open` property |
 | Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" | 
+
+- The `show` and `close` public methods have been removed. Use the public property `open` instead.
+
+For example, if you used:
+
+```js
+dialog.show();
+...
+dialog.close();
+```
+
+use the `open` property instead:
+
+```js
+dialog.open = true;
+...
+dialog.open = false;
+```
+
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
@@ -401,7 +422,7 @@ Now you have to use it like:
 ```html
 <ui5-dialog state="Negative"></ui5-dialog>
 <ui5-dialog state="Critical"></ui5-dialog>
-<ui5-dialog state="Success"></ui5-dialog>
+<ui5-dialog state="Positive"></ui5-dialog>
 ```
 
 ### ui5-file-uploader
@@ -571,6 +592,22 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 ```html
 <ui5-list selection-mode="Single">
 <ui5-list selection-mode="Multiple">
+```
+
+| Enumaration     | `ListSeparators`      | `ListSeparator` |
+
+- The enum `ListSeparators` has been renamed to `ListSeparator` (singular form).
+If you previously imported the `ListSeparators`:
+```ts
+import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
+import type ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
+```
+
+Now, you must import the `ListSeparator` enumeration as follows:
+
+```ts
+import ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
+import type ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
 ```
 
 ### ui5-message-strip
@@ -1081,20 +1118,18 @@ import "@ui5/webcomponents/dist/Bar.js";
 For example, if you used:
 
 ```js
-d.show();
+bsd.show();
 ...
-d.close();
+bsd.close();
 ```
 
-use:
+use the `open` property instead:
 
 ```js
-d.open = true;
+bsd.open = true;
 ...
-d.open = false;
+bsd.open = false;
 ```
-
-instead.
 
 
 
@@ -1340,6 +1375,33 @@ Use the `UploadCollectionItem` type instead:
 ```js
 import type UploadCollectionItem from "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js"
 ```
+
+
+### ui5-view-settings-dialog
+
+| Changed item  | Old       | New             | 
+|---------------|-----------|-----------------|
+| Public method | `show()`  | `open` property |
+| Public method | `close()` | `open` property |
+
+- The `show` and `close` public methods have been removed. Use the public property `open` instead.
+
+For example, if you used:
+
+```js
+vsd.show();
+...
+vsd.close();
+```
+
+use the `open` property instead:
+
+```js
+vsd.open = true;
+...
+vsd.open = false;
+```
+
 
 ## Icons packages
 
