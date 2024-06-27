@@ -189,7 +189,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get hasSubmenu() {
-		return !!(this.items.length || this.loading);
+		return !!(this.items.length || this.loading) && !this.disabled;
 	}
 
 	get hasEndContent() {
@@ -296,6 +296,9 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.selected = false;
 		if (e.detail.escPressed) {
 			this.focus();
+			if (isPhone()) {
+				this.fireEvent("close-menu", {});
+			}
 		}
 	}
 
