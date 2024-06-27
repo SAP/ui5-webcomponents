@@ -49,31 +49,31 @@
 }
 
 /* Level H1 */
-:host([level="H1"]) {
+:host([title-style="H1"]) {
 	font-size: var(--sapFontHeader1Size);
 }
 
 /* Level H2 */
-:host([level="H2"]) {
+:host([title-style="H2"]) {
 	font-size: var(--sapFontHeader2Size);
 }
 
 /* Level H3 */
-:host([level="H3"]) {
+:host([title-style="H3"]) {
 	font-size: var(--sapFontHeader3Size);
 }
 
 /* Level H4 */
-:host([level="H4"]) {
+:host([title-style="H4"]) {
 	font-size: var(--sapFontHeader4Size);
 }
 
 /* Level H5 */
-:host([level="H5"]) {
+:host([title-style="H5"]) {
 	font-size: var(--sapFontHeader5Size);
 }
 
 /* Level H6 */
-:host([level="H6"]) {
+:host([title-style="H6"]) {
 	font-size: var(--sapFontHeader6Size);
 }
