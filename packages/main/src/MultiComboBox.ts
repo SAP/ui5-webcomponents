@@ -1762,8 +1762,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const responsivePopover = this._getResponsivePopover();
 		const popover = this._getPopover();
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
+		const focusIsGoingValueStatePopup = [popover].some(popup => popup?.contains(e.relatedTarget as Node));
 
-		if (focusIsGoingInPopover) {
+		if (focusIsGoingValueStatePopup) {
 			e.stopImmediatePropagation();
 			return;
 		}
