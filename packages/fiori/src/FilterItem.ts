@@ -33,7 +33,7 @@ class FilterItem extends UI5Element {
 
 	/**
 	 * Defines the additional text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

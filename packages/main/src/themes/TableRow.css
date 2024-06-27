@@ -32,3 +32,17 @@
 	flex-direction: column;
 	grid-column: 1 / -1;
 }
+
+#navigated-cell {
+	grid-row: span 2;
+	min-width: 0;
+	padding: 0;
+}
+
+:host([navigated]) #navigated-cell {
+    background-color: var(--sapList_SelectionBorderColor);
+}
+
+:host([navigated]) #popin-cell {
+	grid-column: 1 / -2;
+}
