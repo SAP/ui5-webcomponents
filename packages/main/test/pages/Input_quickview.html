@@ -112,10 +112,10 @@
 		 * Open quickviewCard on selection-change
 		 */
 		inputPreview.addEventListener("ui5-selection-change", function (event) {
-			const targetRef = event.detail.targetRef;
+			const item = event.detail.item;
 
 			quickViewCard.open = false;
-			quickViewCard.opener = targetRef;
+			quickViewCard.opener = item;
 			quickViewCard.open = true;
 		});
 
@@ -124,10 +124,10 @@
 		 */
 		 [].slice.call(document.querySelectorAll("#inputPreview .suggestionItem")).forEach(function(el) {
 			el.addEventListener("ui5-mouseover", function (event) {
-				const targetRef = event.detail.targetRef;
+				const { item } = event.detail;
 
 				quickViewCard.open = false;
-				quickViewCard.opener = targetRef;
+				quickViewCard.opener = item;
 				quickViewCard.open = true;
 			});
 
@@ -166,13 +166,13 @@
 		var focusQuickView2 = false;
 
 		inputPreview2.addEventListener("ui5-selection-change", function (event) {
-			var item = event.detail.targetRef;
+			var item = event.detail.item;
 			quickViewCard2.open = false;
 			quickViewCard2.opener = item;
 			quickViewCard2.open = true;
 
 			// log info
-			selectionChangeRes.value = item.textContent;
+			selectionChangeRes.value = item.text;
 		});
 
 		inputPreview2.addEventListener("keyup", async function (event) {
@@ -190,13 +190,13 @@
 
 		[].slice.call(document.querySelectorAll("#inputPreview2 .suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
-				const targetRef = event.detail.targetRef;
+				const item = event.detail.item;
 				quickViewCard2.open = false;
-				quickViewCard2.opener = targetRef;
+				quickViewCard2.opener = item;
 				quickViewCard2.open = true;
 
 				// log info
-				mouseoverResult.value = targetRef.textContent;
+				mouseoverResult.value = item.text;
 			});
 		});
 

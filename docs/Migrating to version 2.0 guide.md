@@ -68,9 +68,11 @@ import "@ui5/webcomponents-theming/dist/Assets.js"
 
 ### ui5-badge
 
-| Changed item                  | Old               | New          | 
-|-------------------------------|-------------------|--------------|
-| tag                      | `ui5-badge` | `ui5-tag` | 
+| Changed item           | Old               | New                                | 
+|------------------------|-------------------|------------------------------------|
+| tag                    | `ui5-badge` | `ui5-tag`                          | 
+| `design` default value | `Set3` | `Neutral`                          |
+| property      | `design` | no longer accepts `Set3` as value  |
 
 - The Badge `ui5-badge` has been renamed to Tag `ui5-tag`. If you have previously used the `ui5-badge`:
 ```html
@@ -81,6 +83,7 @@ Now use `ui5-tag` instead:
 <ui5-tag></ui5-tag>
 ```
 
+- The `design` property has new default value `Neutral` instead of `Set3`. `Set3` is no longer a valid value for the `design` property. 
 
 ### ui5-breadcrumbs
 
@@ -175,9 +178,11 @@ Now use `additionalText` instead:
 
 ### ui5-carousel
 
-| Changed item | Old       | New                      | 
-|--------------|-----------|--------------------------|
-| Property     | `pageIndicatorStyle`  | `pageIndicatorType` | 
+| Changed item | Old                                                        | New                    | 
+|--------------|------------------------------------------------------------|------------------------|
+| Property     | `pageIndicatorStyle`                                       | `pageIndicatorType` |
+| Property     | `items-per-page-s`, `items-per-page-m`, `items-per-page-l` | `items-per-page` |
+
 
 - The `pageIndicatorStyle` no longer exists. If you previously used it like:
 ```html
@@ -186,6 +191,19 @@ Now use `additionalText` instead:
 Now you should use `pageIndicatorType` instead:
 ```html
 <ui5-carousel page-indicator-type="Numeric"></ui5-carousel>
+```
+
+- Properties `items-per-page-s`, `items-per-page-m`, `items-per-page-l` are replaced by a single property `items-per-page`, which also adds an additional `XL` size
+
+If previously you have used:
+```html
+<ui5-carousel items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
+```
+
+Now use:
+
+```html
+<ui5-carousel items-per-page="S3 M3 L3 XL3">
 ```
 
 ### ui5-color-palette-popover
@@ -387,9 +405,30 @@ dateRangePicker.open = false;
 
 ### ui5-dialog
 
-| Changed item | Old     | New     | 
-|--------------|---------|---------|
-| Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" | 
+| Changed item | Old                           | New                                | 
+|--------------|-------------------------------|------------------------------------|
+| Property     | state="Error/Warning/Success" | state="Negative/Critical/Positive" |
+| Method       | isOpen, close, show           | `open` property                    |
+| Property     | N/A                           | `preventInitialFocus` property     |
+
+- The `show` and `close` public methods have been removed. Use the public property `open` instead.
+
+For example, if you used:
+
+```js
+dialog.show();
+...
+dialog.close();
+```
+
+use the `open` property instead:
+
+```js
+dialog.open = true;
+...
+dialog.open = false;
+```
+
 
 - The property values `Error/Warning/Success`  are renamed to `Negative/Critical/Positive`. If you previously used it like:
 ```html
@@ -401,7 +440,43 @@ Now you have to use it like:
 ```html
 <ui5-dialog state="Negative"></ui5-dialog>
 <ui5-dialog state="Critical"></ui5-dialog>
-<ui5-dialog state="Success"></ui5-dialog>
+<ui5-dialog state="Positive"></ui5-dialog>
+```
+
+- Methods `isOpen` and `close` are no longer present. Now `open` property can be used instead.
+
+Previously:
+```ts
+let isOpen = dialog.isOpen();
+dialog.close();
+```
+Now:
+```ts
+let isOpen = dialog.open;
+dialog.open = false;
+```
+
+- Method `show` is no longer present. Use `open` property instead.
+
+Previously:
+```ts
+dialog.show();
+```
+Now:
+```ts
+dialog.open = true;
+```
+
+- Parameter `preventInitialFocus` from method `show` is added as a property.
+
+Previously:
+```ts
+dialog.show(true);
+```
+Now:
+```ts
+dialog.preventInitalFocus = true;
+dialog.open = true;
 ```
 
 ### ui5-file-uploader
@@ -573,6 +648,22 @@ Now use `selectionMode`  and `Single`, `Multiple` instead:
 <ui5-list selection-mode="Multiple">
 ```
 
+| Enumaration     | `ListSeparators`      | `ListSeparator` |
+
+- The enum `ListSeparators` has been renamed to `ListSeparator` (singular form).
+If you previously imported the `ListSeparators`:
+```ts
+import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
+import type ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
+```
+
+Now, you must import the `ListSeparator` enumeration as follows:
+
+```ts
+import ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
+import type ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
+```
+
 ### ui5-message-strip
 
 | Changed item | Old     | New     | 
@@ -636,13 +727,16 @@ it will no longer work for the component. Instead, do not render disabled option
 
 ### ui5-popover
 
-| Changed item                 | Old               | New                                     | 
-|------------------------------|-------------------|-----------------------------------------|
-| Property                     | `horizontalAlign` | values have changed, f.e. `Left` to `Start` | 
-| Property                     | `placementType` | `placement` | 
+| Changed item                 | Old                    | New                                     | 
+|------------------------------|------------------------|-----------------------------------------|
+| Property                     | `horizontalAlign`      | values have changed, f.e. `Left` to `Start` | 
+| Property                     | `placementType`        | `placement` | 
 | `placement` type enumeration | `PopoverPlacementType` | `PopoverPlacement` | 
-| Event        | after-open  | open  | 
-| Event        | after-close  | close  | 
+| Method                       | `isOpen`, `close`, `showAt`    | `open` property |
+| Property                     | N/A                    | `preventInitialFocus` property |
+| Property                     | `hideBackdrop`          | N/A (removed) |
+| Event                        | after-open             | open  | 
+| Event                        | after-close            | close  | 
 
 
 - The `Left` and `Right` options have been renamed. If you previously used them to set the placement or the alignment of the popover:
@@ -670,20 +764,77 @@ Now use `placement` instead:
 import PopoverPlacement from "@ui5/webcomponents/dist/types/PopoverPlacement.js";
 ```
 
+- Methods `isOpen` and `close` are no longer present. Use `open` property instead.
+
+Previously:
+```ts
+let isOpen = popover.isOpen();
+popover.close();
+```
+Now:
+```ts
+let isOpen = popover.open;
+popover.open = false;
+```
+
+- Method `showAt` is no longer present. Use `open` and `opener` properties instead.
+
+Previously:
+```ts
+popover.showAt(opener);
+```
+Now:
+```ts
+popover.opener = opener;
+popover.open = true;
+```
+
+- Parameter `preventInitialFocus` from method `showAt` is added as a property.
+
+Previously:
+```ts
+popover.showAt(opener, true);
+```
+Now:
+```ts
+popover.preventInitalFocus = true;
+popover.opener = opener;
+popover.open = true;
+```
+
+- Property `hideBackdrop` is removed.
+
+Previously the application developers could define a modal popover without visible backdrop as follows:
+```html
+<ui5-popover modal hide-backdrop>
+```
+Now the application developers can use the standard [`::backdrop` CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
+```html
+<style>
+.transparentBackdrop::backdrop {
+  background: transparent;
+}
+</style>
+
+...
+
+<ui5-popover modal class="transparentBackdrop">
+```
+
 - The events `after-close` and `after-open`  have been renamed to `open` and `close` respectively.
 If you previously used the events like:
 
 ```ts
-poover.addEventListener("after-open", (event) => {
+popover.addEventListener("after-open", (event) => {
 });
-poover.addEventListener("after-close", (event) => {
+popover.addEventListener("after-close", (event) => {
 });
 ```
 Now you have to use it like:
 ```ts
-poover.addEventListener("open", (event) => {
+popover.addEventListener("open", (event) => {
 });
-poover.addEventListener("close", (event) => {
+popover.addEventListener("close", (event) => {
 });
 ```
 
@@ -1081,20 +1232,18 @@ import "@ui5/webcomponents/dist/Bar.js";
 For example, if you used:
 
 ```js
-d.show();
+bsd.show();
 ...
-d.close();
+bsd.close();
 ```
 
-use:
+use the `open` property instead:
 
 ```js
-d.open = true;
+bsd.open = true;
 ...
-d.open = false;
+bsd.open = false;
 ```
-
-instead.
 
 
 
@@ -1212,6 +1361,30 @@ shellbar.accessibilityAttributes = {
 };
 ```
 
+### ui5-side-navigation-item
+| Changed item | Old    | New           | 
+|--------------|--------|---------------|
+| Property     | `wholeItemToggleable` | N/A (removed) |
+
+-  `wholeItemToggleable` property is now removed. The functionality of clicking the whole item to show/hide the sub items is no longer available.
+- The collapsing/expanding of the item can still be done by pressing the icon.
+
+### ui5-notification-list
+
+- Instead of `ui5-list`, the new `ui5-notification-list` component should be used as a container for `ui5-li-notification` and `ui5-li-notification-group` components.
+  Previously the application developers were defining notifications in this way:
+```html
+<ui5-list>
+ <ui5-li-notification>
+...
+```
+To support accessibility, developers should now use the `ui5-notification-list` as seen below:
+```html
+<ui5-notification-list>
+  <ui5-li-notification>
+...
+```
+
 ### ui5-li-notification
 
 | Changed item | Old    | New                                                           | 
@@ -1253,17 +1426,6 @@ Now use `menu` instead:
     <ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
   </ui5-menu>
 ```
-- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification` component.
-  Previously the application developers were defining notifications in this way:
-```html
-<ui5-list>
- <ui5-li-notification>
-```
-To support accessibility, developers should now use the `ui5-notification-list` as seen below:
-```html
-<ui5-notification-list>
-  <ui5-li-notification>
-```
 
 ### ui5-li-notification-group
 | Changed item | Old    | New                                                           | 
@@ -1284,20 +1446,6 @@ now you must use `loading` and `loadingDelay` properties:
 ```html
 <ui5-li-notification-group loading loading-delay="500"></ui5-li-notification-group>
 ```
-- Instead of `ui5-list`, `ui5-notification-list` should be used as a container for `ui5-li-notification-group` component.
-  Previously the application developers were defining notifications in this way:
-```html
-<ui5-list>
-  <ui5-li-notification-group>
-    <ui5-li-notification>
-```
-To support accessibility, developers should now use the `ui5-notification-list` as seen below:
-```html
-<ui5-notification-list>
-  <ui5-li-notification-group>
-    <ui5-li-notification>
-```
-
 
 ### ui5-upload-collection
 
@@ -1340,6 +1488,33 @@ Use the `UploadCollectionItem` type instead:
 ```js
 import type UploadCollectionItem from "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js"
 ```
+
+
+### ui5-view-settings-dialog
+
+| Changed item  | Old       | New             | 
+|---------------|-----------|-----------------|
+| Public method | `show()`  | `open` property |
+| Public method | `close()` | `open` property |
+
+- The `show` and `close` public methods have been removed. Use the public property `open` instead.
+
+For example, if you used:
+
+```js
+vsd.show();
+...
+vsd.close();
+```
+
+use the `open` property instead:
+
+```js
+vsd.open = true;
+...
+vsd.open = false;
+```
+
 
 ## Icons packages
 

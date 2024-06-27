@@ -273,4 +273,25 @@ describe("DateRangePicker general interaction", () => {
 
 		await browser.keys("Escape");
 	});
+
+	it("Selected days: accessibility semantics", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("09/06/2024 - 15/06/2024");
+		await daterangepicker.keys("Enter");
+		await browser.keys("F4");
+
+		const dayPicker = await browser.$(`#daterange-picker3`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const days = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item");
+		const startSelectionDay = await days[14];
+		const dayInBetween = await days[15];
+		const endSelectionDay = await days[20];
+
+		assert.strictEqual(await startSelectionDay.getAttribute("aria-selected", "true"), "true", "The start day has selected semantics");
+		assert.strictEqual(await dayInBetween.getAttribute("aria-selected", "true"), "true", "The day in between has selected semantics");
+		assert.strictEqual(await endSelectionDay.getAttribute("aria-selected", "true"), "true", "The end day has selected semantics");
+
+		await browser.keys("Escape");
+	});
 });

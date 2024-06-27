@@ -186,7 +186,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.6.0
 	 */

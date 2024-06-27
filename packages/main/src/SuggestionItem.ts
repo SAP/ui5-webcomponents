@@ -1,26 +1,28 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 
-import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import SuggestionListItem from "./SuggestionListItem.js";
-import type ListItemType from "./types/ListItemType.js";
-import type { IInputSuggestionItem } from "./Input.js";
+import type { IInputSuggestionItemSelectable } from "./Input.js";
+import ListItemBase from "./ListItemBase.js";
+import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate.lit.js";
+
+import styles from "./generated/themes/SuggestionItem.css.js";
 
 /**
  * @class
  * The `ui5-suggestion-item` represents the suggestion item of the `ui5-input`.
  * @constructor
- * @extends UI5Element
+ * @extends ListItemBase
  * @abstract
- * @implements { IInputSuggestionItem }
+ * @implements { IInputSuggestionItemSelectable }
  * @public
  */
 @customElement({
 	tag: "ui5-suggestion-item",
-	dependencies: [SuggestionListItem],
+	template: SuggestionItemTemplate,
+	styles: [ListItemBase.styles, styles],
 })
-class SuggestionItem extends UI5Element implements IInputSuggestionItem {
+class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelectable {
 	/**
 	 * Defines the text of the component.
 	 * @default ""
@@ -30,78 +32,28 @@ class SuggestionItem extends UI5Element implements IInputSuggestionItem {
 	text = "";
 
 	/**
-	 * Defines the visual indication and behavior of the item.
-	 * Available options are `Active` (by default), `Inactive` and `Detail`.
-	 *
-	 * **Note:** When set to `Active`, the item will provide visual response upon press and hover,
-	 * while when `Inactive` or `Detail` - will not.
-	 * @default "Active"
-	 * @public
-	 * @since 1.0.0-rc.8
-	*/
-	@property()
-	type: `${ListItemType}` = "Active";
-
-	/**
-	 * Defines the description displayed right under the item text, if such is present.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	description = "";
-
-	/**
-	 * Defines the `icon` source URI.
-	 *
-	 * **Note:**
-	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	icon?: string;
-
-	/**
-	 * Defines whether the `icon` should be displayed in the beginning of the item or in the end.
-	 *
-	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	iconEnd = false;
-
-	/**
-	 * Defines the `image` source URI.
-	 *
-	 * **Note:** The `image` would be displayed in the beginning of the item.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	image?: string;
-
-	/**
 	 * Defines the `additionalText`, displayed in the end of the item.
-	 * @default ""
+	 * @default undefined
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
 	@property()
-	additionalText = "";
+	additionalText?: string;
 
 	/**
-	 * Defines the state of the `additionalText`.
-	 * @default "None"
-	 * @since 1.0.0-rc.15
-	 * @public
+	 * Defines the markup text that will be displayed as suggestion.
+	 * Used for highlighting the matching parts of the text.
+	 *
+	 * @since 2.0.0
+	 * @private
 	 */
 	@property()
-	additionalTextState: `${ValueState}` = "None";
+	markupText = "";
 
-	get groupItem() {
-		return false;
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 }
 
