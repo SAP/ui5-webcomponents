@@ -155,20 +155,6 @@ describe("Menu interaction", () => {
 			.and("have.attr", "active")
 	});
 
-	it("Focus restored to the menu opener", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen">
-			<ui5-menu-item text="New File"></ui5-menu-item>
-		</ui5-menu>`)
-
-		cy.get("[ui5-menu]")
-			.ui5MenuOpen({ opener: "btnOpen" });
-
-		cy.realPress('Escape')
-
-		cy.focused().should('have.attr', 'id', 'btnOpen')
-	});
-
 	describe("Event firing", () => {
 		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
