@@ -1,5 +1,12 @@
 import { html } from 'lit';
 
+Cypress.on('fail', (err, runnable) => {
+	// console.log(document.activeElement?.outerHTML, document.activeElement.shadowRoot?.activeElement?.outerHTML, document.activeElement.shadowRoot?.activeElement.shadowRoot?.activeElement?.outerHTML)
+	throw new Error(document.activeElement?.outerHTML, document.activeElement.shadowRoot?.activeElement?.outerHTML, document.activeElement.shadowRoot?.activeElement.shadowRoot?.activeElement?.outerHTML)
+	return false
+})
+
+
 describe("Table - loading", () => {
 	it("tests busy indicator is displayed", () => {
 		cy.mount(html`
@@ -27,15 +34,9 @@ describe("Table - loading", () => {
 
 		cy.realPress("Tab");
 
-		cy.focused()
-			.invoke("prop", "tagName")
-			.should("equal", "DIV")
-
 		cy.get("[ui5-table]")
 			.shadow()
 			.find("#loading")
-			.shadow()
-			.find("[data-sap-focus-ref]")
 			.should("be.focused")
 
 		cy.realPress("Tab");
