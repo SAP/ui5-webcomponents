@@ -23,7 +23,7 @@ class ComboBoxItemGroup extends UI5Element implements IComboBoxItem {
 		 * @public
 		 */
 		@property()
-		text = "";
+		headerText = "";
 
 		/**
 		 * Indicates whether the item is focused
