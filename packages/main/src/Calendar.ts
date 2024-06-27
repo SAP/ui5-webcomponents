@@ -505,6 +505,14 @@ class Calendar extends CalendarPart {
 		return this._currentPicker === "month" || this._currentPicker === "year";
 	}
 
+	/**
+	 * The year button is hidden when the year picker is shown
+	 * @private
+	 */
+	get _isHeaderYearButtonHidden(): boolean {
+		return this._currentPicker === "year";
+	}
+
 	get _isDayPickerHidden() {
 		return this._currentPicker !== "day";
 	}
