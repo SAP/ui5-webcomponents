@@ -28,14 +28,15 @@ describe("Table - loading", () => {
 		cy.realPress("Tab");
 
 		cy.focused()
-		// .should("have.class", "ui5-busy-indicator-busy-area")
-		.invoke("prop", "tagName")
-		.should("equal", "DIV")
+			.invoke("prop", "tagName")
+			.should("equal", "DIV")
 
 		cy.get("[ui5-table]")
 			.shadow()
 			.find("#loading")
-			.should("be.focused");
+			.shadow()
+			.find("[data-sap-focus-ref]")
+			.should("be.focused")
 
 		cy.realPress("Tab");
 
