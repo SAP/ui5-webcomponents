@@ -1774,7 +1774,7 @@ describe("MultiComboBox general interaction", () => {
 
 			let firstItem = await popover.$("ui5-list").$("ui5-li");
 
-			assert.ok(await firstItem.matches(":focus"), "The first group header should be focused");
+			assert.ok(await firstItem.matches(":focus"), "The first item inside the first group should be focused");
 		});
 
 		it("Group header keyboard handling", async () => {

@@ -48,6 +48,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  * @extends UI5Element
  * @since 2.0
  * @public
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({ tag: "ui5-table-selection" })
 

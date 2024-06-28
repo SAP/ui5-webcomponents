@@ -91,7 +91,8 @@ const SKIP_ITEMS_SIZE = 10;
  * @public
  */
 interface IComboBoxItem extends UI5Element {
-	text: string,
+	text?: string,
+	headerText?: string,
 	focused: boolean,
 	isGroupItem?: boolean,
 	selected?: boolean,
@@ -343,7 +344,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -352,7 +353,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -697,7 +698,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
-		const allItems:Array<IComboBoxItem> = this._getItems();
+		const allItems:Array<IComboBoxItem> = this._getItems().filter(item => !isInstanceOfComboBoxItemGroup(item));
 		return Filters.StartsWith(str, allItems, "text");
 	}
 
@@ -780,13 +781,13 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if (this.open) {
 			this._itemFocused = true;
-			this.value = isGroupItem ? "" : currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.text!;
 			this.focused = false;
 
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
-			this.value = isGroupItem ? nextItem.text : currentItem.text;
+			this.value = isGroupItem ? nextItem.text! : currentItem.text!;
 			currentItem.focused = false;
 		}
 
@@ -1065,7 +1066,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		const matchingItems: Array<IComboBoxItem> = (this._startsWithMatchingItems(current).filter(item => !isInstanceOfComboBoxItemGroup(item)));
+		const matchingItems: Array<IComboBoxItem> = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
@@ -1168,7 +1169,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {
-			announce(`${groupHeaderText} ${currentItem.text}`, InvisibleMessageMode.Polite);
+			announce(`${groupHeaderText} ${currentItem.headerText}`, InvisibleMessageMode.Polite);
 		} else {
 			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), InvisibleMessageMode.Polite);
 		}

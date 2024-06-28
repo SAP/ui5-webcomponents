@@ -112,7 +112,7 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

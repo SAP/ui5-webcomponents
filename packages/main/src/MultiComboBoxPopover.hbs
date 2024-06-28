@@ -74,7 +74,7 @@
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+					<ui5-li-group header-text="{{this.headerText}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
 						{{#each this.items}}
 							{{#if _isVisible}}
 								{{> listItem}}
@@ -90,7 +90,7 @@
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+					<ui5-li-group header-text="{{this.headerText}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
 						{{#each this.items}}
 							{{#if _isVisible}}
 								{{> listItem}}

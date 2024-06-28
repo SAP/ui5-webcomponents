@@ -16,7 +16,7 @@
 }
 
 .heroTitle__UI5 {
-  color: var(--ifm-color-primary);
+  font-weight: bold;
 }
 
 .buttons {
@@ -43,7 +43,7 @@
 
 @media (min-width: 600px) {
   .heroTitle {
-    font-weight: 900;
+    font-weight: normal;
     font-size: 5.5rem;
   }
 }
