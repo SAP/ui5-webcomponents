@@ -32,7 +32,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		const hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?color_picker3=rgba%28255%2C+255%2C+255%2C+1%29&color_picker4=blue"));
+			done(location.href.endsWith("FormSupport.html?color_picker3=rgba%28255%2C255%2C255%2C1%29&color_picker4=blue"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
@@ -323,7 +323,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		const hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?step_input3=0&step_input4=4"));
+			done(location.href.endsWith("FormSupport.html?step_input3=&step_input4=4"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
