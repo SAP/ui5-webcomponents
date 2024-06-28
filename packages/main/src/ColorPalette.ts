@@ -473,14 +473,6 @@ class ColorPalette extends UI5Element {
 		itemNavigation._focusCurrentItem();
 	}
 
-	focusFirstDisplayColorElement() {
-		this.focusColorElement(this.displayedColors[0], this._itemNavigation);
-	}
-
-	focusFirstFocusableElement() {
-		this.firstFocusableElement.focus();
-	}
-
 	get firstFocusableElement() {
 		return this.colorPaletteNavigationElements[0];
 	}
