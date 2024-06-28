@@ -56,7 +56,8 @@
 		});
 
 		colorPicker1.addEventListener("ui5-change", function(event) {
-			stepInput.value += 1;
+			const newValue = Number(stepInput.value) + 1;
+			stepInput.value = newValue.toString();
 		});
 
 	</script>
