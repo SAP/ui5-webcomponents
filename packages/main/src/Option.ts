@@ -58,7 +58,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	value = "";
+	value?: string;
 
 	/**
 	 * Defines the `icon` source URI.

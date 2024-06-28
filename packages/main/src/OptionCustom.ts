@@ -53,7 +53,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	value = "";
+	value?: string;
 
 	/**
 	 * Defines the text of the component.
