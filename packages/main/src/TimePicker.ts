@@ -344,7 +344,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @default null
 	 */
 	get dateValue(): Date | null {
-		return this.getFormat().parse(this._effectiveValue as string) as Date;
+		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
 	/**
@@ -630,7 +630,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
+		const date = this.getFormat().parse(this._effectiveValue) as Date;
 		if (!date) {
 			return;
 		}
