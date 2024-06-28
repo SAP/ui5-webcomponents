@@ -294,7 +294,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue(): FormData | string | null {
-		return this.value.toString(); // this.value
+		return this.value;
 	}
 
 	static async onDefine() {
@@ -455,7 +455,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 */
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
-		value = Number(this.value) + modifier; // Number()
+		value = Number(this.value) + modifier;
 		if (this.min !== undefined && value < this.min) {
 			value = this.min;
 		}
@@ -463,7 +463,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 			value = this.max;
 		}
 		value = this._preciseValue(value);
-		debugger;
+
 		if (value !== Number(this.value)) {
 			this.value = value.toFixed(this.valuePrecision);
 			this.input.value = this.value;

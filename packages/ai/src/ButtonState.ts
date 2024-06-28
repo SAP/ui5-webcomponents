@@ -36,7 +36,7 @@ class ButtonState extends UI5Element {
 
 	/**
 	 * Defines the text of the button in this state.
-	 * @default undefined
+	 * @default ""
 	 * @public
 	 */
 	@property()
