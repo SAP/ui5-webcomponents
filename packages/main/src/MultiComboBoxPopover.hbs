@@ -28,12 +28,11 @@
 			<div class="row">
 				<ui5-input
 					@ui5-input="{{_handleMobileInput}}"
-					{{!-- @ui5-change="{{_mobileInputChange}}" --}}
+					@keydown="{{_onMobileInputKeydown}}"
 					placeholder="{{placeholder}}"
 					value-state="{{_dialogInputValueState}}"
 					?show-clear-icon="{{showClearIcon}}"
 					?no-typeahead="{{noTypeahead}}"
-					@keydown="{{_onMobileInputKeydown}}"
 				>
 					{{#each _filteredItems}}
 						<ui5-suggestion-item text="{{this.text}}" additional-text="{{this.additionalText}}"></ui5-suggestion-item>

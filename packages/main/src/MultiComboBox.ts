@@ -398,7 +398,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Indicates whether the items picker is open.
 	 * @private
-	 * @since 2.0.0
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_open = false;
@@ -977,7 +976,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleSelectAll() {
-		const filteredItems = this._filteredItems;
+		const filteredItems = this._filteredItems.filter(item => !item.isGroupItem);
 		const allItemsSelected = filteredItems.every(item => item.selected);
 		this._previouslySelectedItems = filteredItems.filter(item => item.selected).map(item => item);
 
@@ -1030,7 +1029,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this.filterSelected = false;
 		} else {
 			this._previouslySelectedItems = this._getSelectedItems();
-			this.selectedItems?.forEach(item => {
+			this.selectedItems?.filter(item => !item.isGroupItem).forEach(item => {
 				item.selected = (e.target as CheckBox).checked;
 			});
 
@@ -1589,7 +1588,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (this.open) {
 			const list = this._getList();
 			const selectedListItemsCount = list?.querySelectorAll("[ui5-li][selected]")?.length;
-			const items = this._getItems();
+			const items = this._getItems().filter(item => !item.isGroupItem);
 			const listItems = list?.querySelectorAll("[ui5-li]")?.length;
 			const selectedItemsCount = items.filter(item => item.selected).length;
 			this._allSelected = selectedItemsCount === items.length || selectedListItemsCount === listItems;
@@ -1762,9 +1761,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const responsivePopover = this._getResponsivePopover();
 		const popover = this._getPopover();
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
-		const focusIsGoingValueStatePopup = [popover].some(popup => popup?.contains(e.relatedTarget as Node));
+		const focusIsGoingInValueStatePopup = [popover].some(popup => popup?.contains(e.relatedTarget as Node));
 
-		if (focusIsGoingValueStatePopup) {
+		if (focusIsGoingInValueStatePopup) {
 			e.stopImmediatePropagation();
 			return;
 		}
