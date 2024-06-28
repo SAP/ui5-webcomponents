@@ -520,6 +520,10 @@ class StepInput extends UI5Element implements IFormInputElement {
 	}
 
 	_isValueChanged(inputValue: string) {
+		if (this.value === "" && inputValue === "0") {
+			return;
+		}
+
 		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision;
 		// Treat values as distinct when modified to match a specific precision (e.g., from 3.4000 to 3.40),
 		// even if JavaScript sees them as equal, to correctly update valueState based on expected valuePrecision.
