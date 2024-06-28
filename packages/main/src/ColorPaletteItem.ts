@@ -37,11 +37,11 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * Defines the colour of the component.
 	 *
 	 * **Note:** The value should be a valid CSS color.
-	 * @default undefined
+	 * @default ""
 	 * @public
 	 */
 	@property()
-	value?: string;
+	value = "";
 
 	/**
 	 * Defines if the component is selected.

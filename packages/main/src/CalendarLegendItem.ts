@@ -49,11 +49,11 @@ import CalendarLegendItemCss from "./generated/themes/CalendarLegendItem.css.js"
 class CalendarLegendItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text content of the Calendar Legend Item.
-	 * @default undefined
+	 * @default ""
 	 * @public
 	 */
 	@property()
-	text?: string;
+	text = "";
 
 	/**
 	 * Defines the type of the Calendar Legend Item.

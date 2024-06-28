@@ -40,7 +40,7 @@ class ButtonState extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	text = "";
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component before the text.
