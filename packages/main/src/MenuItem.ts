@@ -4,6 +4,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
@@ -23,6 +25,8 @@ import menuItemCss from "./generated/themes/MenuItem.css.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
+
+type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeyShortcuts" | "role"> & ListItemAccessibilityAttributes;
 
 /**
  * @class
@@ -143,6 +147,21 @@ class MenuItem extends ListItem implements IMenuItem {
 	tooltip?: string;
 
 	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
+	 *
+	 * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
+	 *
+	 * @public
+	 * @since 2.0
+	 * @default {}
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: MenuItemAccessibilityAttributes = {};
+
+	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -242,8 +261,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: "menuitem",
+			role: this.accessibilityAttributes.role || "menuitem",
 			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
+			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
@@ -311,4 +332,5 @@ export default MenuItem;
 export type {
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
+	MenuItemAccessibilityAttributes,
 };
