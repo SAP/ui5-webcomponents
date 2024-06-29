@@ -6,8 +6,6 @@ import Hand from "@site/static/img/features/light/Hand.svg";
 import BuildingsDark from "@site/static/img/features/dark/Buildings.svg";
 import FrameDark from "@site/static/img/features/dark/Frame.svg";
 import HandDark from "@site/static/img/features/dark/Hand.svg";
-const build = require('@site/static/img/features/light/Buildings_Water.png').default
-
 
 import { useColorMode } from '@docusaurus/theme-common';
 
