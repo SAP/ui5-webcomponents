@@ -6,6 +6,7 @@ import Hand from "@site/static/img/features/light/Hand.svg";
 import BuildingsDark from "@site/static/img/features/dark/Buildings.svg";
 import FrameDark from "@site/static/img/features/dark/Frame.svg";
 import HandDark from "@site/static/img/features/dark/Hand.svg";
+const build = require('@site/static/img/features/light/Buildings_Water.png').default
 
 
 import { useColorMode } from '@docusaurus/theme-common';
@@ -18,7 +19,10 @@ type FeatureItem = {
   SVGDark?: React.ComponentType<React.SVGProps<SVGSVGElement> & {
     title?: string;
   }>;
-  description: JSX.Element;
+  src?: string,
+  srcDark?: string,
+  description: JSX.Element,
+  cssClass?: string,
 };
 
 const FeatureList: FeatureItem[] = [
@@ -26,6 +30,8 @@ const FeatureList: FeatureItem[] = [
     title: 'Easy to Use',
     SVG: Frame,
     SVGDark: FrameDark,
+    src: null,
+    srcDark: null,
     description: (
       <>
        Based on web standards - just HTML!
@@ -33,11 +39,14 @@ const FeatureList: FeatureItem[] = [
        Easy to add to your project.
       </>
     ),
+    cssClass: "feature__image_frame"
   },
   {
     title: 'Lightweight',
     SVG: Hand,
     SVGDark:  HandDark,
+    src: null,
+    srcDark: null,
     description: (
       <>
        Tiny - come with a minimal footprint.
@@ -50,6 +59,8 @@ const FeatureList: FeatureItem[] = [
     title: 'Enterprise Ready',
     SVG: Buildings,
     SVGDark: BuildingsDark,
+    src: require('@site/static/img/features/light/Buildings_Water.png').default,
+    srcDark: require('@site/static/img/features/dark/Buildings_Fire.png').default,
     description: (
       <>
        Implements latest SAP Design language.
@@ -60,14 +71,15 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({ title, SVG, SVGDark, description }: FeatureItem) {
+function Feature({ title, SVG, SVGDark, src, srcDark, description, cssClass }: FeatureItem) {
   const { colorMode } = useColorMode();
+  const light = colorMode === "light";
 
   return (
     <div className="feature">
-      {colorMode === "light" ? <SVG className='feature__image'/> : <SVGDark className='feature__image'/>}
-      <h2 className="feature__title">{title}</h2>
-      <p className="feature__desc">{description}</p>
+      {src ? light ? <img className='feature__image' src={src} /> : <img className='feature__image' src={srcDark} /> : light ? <SVG className={`feature__image ${cssClass}`}/> : <SVGDark className={`feature__image ${cssClass}`}/>}
+        <h2 className="feature__title">{title}</h2>
+        <p className="feature__desc">{description}</p>
     </div>
   );
 }
