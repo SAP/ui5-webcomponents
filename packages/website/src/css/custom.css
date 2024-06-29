@@ -188,6 +188,11 @@ code {
   font-weight: bold;
 }
 
+.button--getting-started {
+  border-radius: 1.215rem;
+  padding: 0.5rem 1.24rem 0.5rem 1.24rem;
+}
+
 @media (max-width: 996px) {
   .navbar__title {
     font-size: 0.875rem;
