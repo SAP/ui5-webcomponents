@@ -1,6 +1,6 @@
-# General Development Workflow
-This document aims to explain the steps component developers would have to perform
-on daily basis from forking the project to merging a change, emphasising on the Github workflow.
+# Development Workflow
+
+This article explains the daily development workflow for component developers: from forking to merging changes.
 
 
 ## 1. Fork the UI5 Web Components repository.
