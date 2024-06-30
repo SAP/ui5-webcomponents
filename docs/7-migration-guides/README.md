@@ -1,4 +1,4 @@
-# Migration Guide
+# Migration Guides
 
 UI5 Web Components versioning is based on [Semantic Versioning](https://semver.org/).
 

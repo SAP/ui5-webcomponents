@@ -1,3 +1,7 @@
+---
+sidebar_label: To UI5 Web Components 2.0
+---
+
 # Migration to UI5 Web Components 2.0
 
 This guide will assist you in seamlessly transitioning from UI5 Web Components version 1.x to UI5 Web Components 2.0.
