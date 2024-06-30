@@ -1,4 +1,4 @@
-# Release Management
+# Releases
 
 The article describes the release process management of UI5 Web Components.
 

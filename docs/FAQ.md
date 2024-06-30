@@ -1,3 +1,5 @@
+sidebar_label: FAQ
+
 # Frequently Asked Questions
 
 **Q: How can I play with UI5 Web Components easily?**
