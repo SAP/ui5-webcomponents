@@ -26,7 +26,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  * * Multiple - select multiple rows.
  * * None - no selection active.
  *
- * As the selection is key-based, `ui5-table-row` components need to define a unique `row-id` property.
+ * As the selection is key-based, `ui5-table-row` components need to define a unique `row-key` property.
  *
  * ### Usage
  *
@@ -109,7 +109,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	}
 
 	getRowIdentifier(row: TableRow): string {
-		return row.rowId;
+		return row.rowKey;
 	}
 
 	isSelected(row: TableRowBase): boolean {
@@ -288,7 +288,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			// a visual inconsistency.
 			row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
 
-			if (startIndex === -1 || endIndex === -1 || row.rowId === startRow.rowId || row.rowId === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowId) {
+			if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
 				return;
 			}
 

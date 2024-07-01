@@ -35,49 +35,49 @@
 			<ui5-table-header-cell id="weightCol" popin-text="Weight">Weight</ui5-table-header-cell>
 			<ui5-table-header-cell id="priceCol" min-width="220px">Price</ui5-table-header-cell>
 		</ui5-table-header-row>
-		<ui5-table-row row-id="0" navigated>
+		<ui5-table-row row-key="0" navigated>
 			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>956</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-id="1">
+		<ui5-table-row row-key="1">
 			<ui5-table-cell><ui5-label><b>Notebook Basic 16</b><br><a href="#">HT-1001</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Smartcards</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-input value="29 x 17 x 3.1 cm" accessible-name-ref="dimensionsCol"></ui5-input></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>1249</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-id="2" interactive>
+		<ui5-table-row row-key="2" interactive>
 			<ui5-table-cell><ui5-label><b>Notebook Basic 17</b><br><a href="#">HT-1002</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-id="3">
+		<ui5-table-row row-key="3">
 			<ui5-table-cell><ui5-label><b>Notebook Basic 18</b><br><a href="#">HT-1003</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-id="4">
+		<ui5-table-row row-key="4">
 			<ui5-table-cell><ui5-label><b>Notebook Basic 19</b><br><a href="#">HT-1004</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-id="5">
+		<ui5-table-row row-key="5">
 			<ui5-table-cell><ui5-label><b>Notebook Basic 20</b><br><a href="#">HT-1005</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
 		</ui5-table-row>
-		<ui5-table-row row-id="6" interactive>
+		<ui5-table-row row-key="6" interactive>
 			<ui5-table-cell><ui5-label><b>Notebook Basic 21</b><br><a href="#">HT-1006</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
@@ -96,7 +96,7 @@
 			table.style.width = `${e.target.value}%`;
 		});
 		table.addEventListener("row-click", (e) => {
-			console.log(`${Date.now()}: Row with the row-id ${e.detail.row.row-id} is clicked`);
+			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.row-key} is clicked`);
 		});
 
 		const growing = document.getElementById("growing");
@@ -106,7 +106,7 @@
 			// add 10 more additional rows to the ui5-table element by utilizing a loop
 			for (let i = 0; i < 10; i++) {
 				const newRow = document.createElement("ui5-table-row");
-				newRow.setAttribute("row-id", table.rows.length + i);
+				newRow.setAttribute("row-key", table.rows.length + i);
 				newRow.innerHTML = `
 					<ui5-table-cell><ui5-label><b>Notebook Basic ${15 + table.rows.length + i}</b><br><a href="#">HT-100${table.rows.length + i}</a></ui5-label></ui5-table-cell>
 					<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
