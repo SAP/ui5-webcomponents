@@ -7,7 +7,7 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("toggling", () => {
 		it("opens/closes", async () => {
-			const icon = await $("#multi1").shadow$(".inputIcon");
+			const icon = await $("#multi1").shadow$(".ui5-input-icon");
 			const popover = await $("#multi1").shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 
 			await icon.click();
@@ -55,7 +55,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("MultiComboBox open property is set correctly", async () => {
 			const mcb = await browser.$("#multi1");
-			const icon = await browser.$("#multi1").shadow$(".inputIcon");
+			const icon = await browser.$("#multi1").shadow$(".ui5-input-icon");
 			const eventInput = await browser.$("#events-input");
 			const callCountInput = await browser.$("#events-call-count");
 			const resetBtn = await browser.$("#reset-btn");
@@ -112,7 +112,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("Opens all items popover, selects and deselects the first item", async () => {
 			const mcb = await browser.$("#mcb");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$("ui5-list > ui5-li");
 			const firstItemCheckbox = await firstItem.shadow$("ui5-checkbox");
@@ -145,7 +145,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("When popover is opened via icon and item is selected/deselected, focus should return to the MultiComboBox", async () => {
 			const mcb = await browser.$("#mcb-success");
-			const icon = await browser.$("#mcb-success").shadow$(".inputIcon");
+			const icon = await browser.$("#mcb-success").shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
 
@@ -208,7 +208,7 @@ describe("MultiComboBox general interaction", () => {
 		it("should remove the value state header after validation reset", async () => {
 			const mcb = await browser.$("#mcb-predefined-value");
 			const innerInput = await browser.$("#mcb-predefined-value").shadow$("#ui5-multi-combobox-input");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 
 			await innerInput.click();
 			await innerInput.keys("d");
@@ -304,7 +304,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.setWindowSize(1920, 1080);
 
 			const mcb = await $("#more-mcb");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
 
 			await mcb.scrollIntoView();
@@ -474,7 +474,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const listItem = await popover.$("ui5-li");
 
@@ -574,7 +574,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("should select all items", async () => {
 			const cb = await browser.$("#mcb-select-all-vs");
-			const arrow = await cb.shadow$(".inputIcon");
+			const arrow = await cb.shadow$(".ui5-input-icon");
 			const spanRef = await browser.$("#select-all-event");
 
 			await arrow.click();
@@ -596,7 +596,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.setWindowSize(1920, 1080);
 
 			const cb = await browser.$("#mcb-select-all-vs");
-			const arrow = await cb.shadow$(".inputIcon");
+			const arrow = await cb.shadow$(".ui5-input-icon");
 			const spanRef = await browser.$("#select-all-event");
 
 			await arrow.click();
@@ -739,7 +739,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const listItem = await popover.$("ui5-li");
 
@@ -777,7 +777,7 @@ describe("MultiComboBox general interaction", () => {
 		it("focuses the first item on arrow down, then the input on arrow up", async () => {
 			const mcb = await browser.$("#mcb-with-placeholder");
 			const input = await mcb.shadow$("input");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const listItem = await popover.$("ui5-li");
 
@@ -1052,7 +1052,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const listItem = await popover.$("ui5-li");
 
@@ -1402,7 +1402,7 @@ describe("MultiComboBox general interaction", () => {
 
 		it("tests two-column layout", async () => {
 			const mcb = await browser.$("#mcb-two-column-layout");
-			const icon = await mcb.shadow$(".inputIcon");
+			const icon = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const listItem = await popover.$("ui5-li");
 
@@ -1719,7 +1719,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$(".inputIcon");
+			const arrow = await mcb.shadow$(".ui5-input-icon");
 			let popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItems = await popover.$("ui5-list").$$("ui5-li-group");
 			let listItems = await popover.$("ui5-list").$$("ui5-li");
@@ -1749,7 +1749,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$(".inputIcon");
+			const arrow = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItem;
 
@@ -1781,7 +1781,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$(".inputIcon");
+			const arrow = await mcb.shadow$(".ui5-input-icon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItem;
 

@@ -80,26 +80,28 @@
 
 	{{#if _effectiveShowClearIcon}}
 		<div @click={{_clear}} class="ui5-input-clear-icon-wrapper" tabindex="-1" @mousedown={{_iconMouseDown}}>
-			<ui5-icon tabindex="-1" class="inputIcon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
+			<ui5-icon tabindex="-1" class="ui5-input-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 		</div>
 	{{/if}}
 
-	{{#if icon}}
-		<slot name="icon"></slot>
-	{{/if}}
+	<div class="ui5-input-icon-root">
+		{{#if icon}}
+			<slot name="icon"></slot>
+		{{/if}}
 
-	{{#unless readonly}}
-		<ui5-icon name="slim-arrow-down"
-			class="inputIcon"
-			slot="icon"
-			tabindex="-1"
-			@click="{{togglePopoverByDropdownIcon}}"
-			@mousedown="{{_onIconMousedown}}"
-			@focusin="{{_forwardFocusToInner}}"
-			?pressed="{{open}}"
-			accessible-name="{{_iconAccessibleNameText}}"
-		></ui5-icon>
-	{{/unless}}
+		{{#unless readonly}}
+			<ui5-icon name="slim-arrow-down"
+				class="ui5-input-icon"
+				slot="icon"
+				tabindex="-1"
+				@click="{{togglePopoverByDropdownIcon}}"
+				@mousedown="{{_onIconMousedown}}"
+				@focusin="{{_forwardFocusToInner}}"
+				?pressed="{{open}}"
+				accessible-name="{{_iconAccessibleNameText}}"
+			></ui5-icon>
+		{{/unless}}
+	</div>
 </div>
 
 {{>include "./MultiComboBoxPopover.hbs"}}
