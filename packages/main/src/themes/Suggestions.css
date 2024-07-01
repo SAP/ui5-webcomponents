@@ -11,11 +11,6 @@
 	padding: 0 1rem;
 }
 
-.ui5-suggestions-popover [ui5-li]::part(icon),
-.ui5-suggestions-popover [ui5-li-suggestion-item]::part(icon) {
-	color: var(--sapList_TextColor);
-}
-
 .input-root-phone.native-input-wrapper {
 	display: contents;
 }

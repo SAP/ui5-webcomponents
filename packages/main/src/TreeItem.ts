@@ -37,7 +37,7 @@ class TreeItem extends TreeItemBase {
 	 * @default undefined
 	 */
 	@property()
-	text?: string;
+	text = "";
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the tree item.

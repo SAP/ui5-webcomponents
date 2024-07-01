@@ -122,7 +122,7 @@ class MultiInput extends Input implements IFormInputElement {
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * **Note:** When the component is used inside a form element,
 	 * the value is sent as the first element in the form data, even if it's empty.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -314,6 +314,10 @@ class MultiInput extends Input implements IFormInputElement {
 
 		if (!insideDOM && !insideShadowDom) {
 			this.tokenizer.expanded = false;
+		}
+
+		if (this.contains(relatedTarget) && relatedTarget.hasAttribute("ui5-token")) {
+			this.focused = false;
 		}
 	}
 

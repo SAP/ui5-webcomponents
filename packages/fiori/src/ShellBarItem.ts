@@ -54,7 +54,7 @@ class ShellBarItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	text = "";
 
 	/**
 	 * Defines the count displayed in the top-right corner.
