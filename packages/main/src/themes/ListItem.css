@@ -40,19 +40,19 @@
 }
 
 /* [ui5-li]: item with title and description */
-:host([has-title][description]) {
+:host([has-title][description][wrapping-type="None"]) {
 	height: 5rem;
 }
 
-:host([has-title][image]) {
+:host([has-title][image][wrapping-type="None"]) {
 	height: 5rem;
 }
 
-:host([_has-image-content]) {
+:host([_has-image-content][wrapping-type="None"]) {
 	height: 5rem;
 }
 
-:host([image]) .ui5-li-content {
+:host([image][wrapping-type="None"]) .ui5-li-content {
 	height: 3rem;
 }
 
@@ -84,18 +84,18 @@
 }
 
 .ui5-li-additional-text,
-:host(:not([wrapping-type="Normal"])) .ui5-li-title,
+:host([wrapping-type="None"]) .ui5-li-title,
 .ui5-li-desc {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-:host([wrapping-type="Normal"]) {
+:host(:not([wrapping-type="None"])) {
 	height: auto;
 }
 
-:host([wrapping-type="Normal"]) .ui5-li-content {
+:host(:not([wrapping-type="None"])) .ui5-li-content {
 	margin: var(--_ui5_list_item_content_vertical_offset) 0;
 }
 
