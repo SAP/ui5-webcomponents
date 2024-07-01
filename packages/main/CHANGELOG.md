@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.6](https://github.com/SAP/ui5-webcomponents/compare/v1.24.5...v1.24.6) (2024-07-01)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** adjust year button visibility ([#9328](https://github.com/SAP/ui5-webcomponents/issues/9328)) ([3b61360](https://github.com/SAP/ui5-webcomponents/commit/3b61360b916ef3dc844b7f2c888bcb0265151cae)), closes [#9107](https://github.com/SAP/ui5-webcomponents/issues/9107)
+* **ui5-daterange-picker:** selected announcement ([#9299](https://github.com/SAP/ui5-webcomponents/issues/9299)) ([92ec9d4](https://github.com/SAP/ui5-webcomponents/commit/92ec9d4ca79fab1f42d7539ebc74a237662863aa)), closes [#9241](https://github.com/SAP/ui5-webcomponents/issues/9241)
+* **ui5-dialog:** fix focusing when dialog is open from OpenUI5 dialog ([#9204](https://github.com/SAP/ui5-webcomponents/issues/9204)) ([e2a19fa](https://github.com/SAP/ui5-webcomponents/commit/e2a19fad3960193aa05c868dfe8a4d86fd8f532f)), closes [#9028](https://github.com/SAP/ui5-webcomponents/issues/9028) [#9183](https://github.com/SAP/ui5-webcomponents/issues/9183)
+* **ui5-step-input:** check input before accessing value ([#9220](https://github.com/SAP/ui5-webcomponents/issues/9220)) ([8ec9713](https://github.com/SAP/ui5-webcomponents/commit/8ec97133d8269c518a4e148476757ea4b6ede1e7)), closes [#9119](https://github.com/SAP/ui5-webcomponents/issues/9119)
+
+
+
+
+
 ## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
 
 

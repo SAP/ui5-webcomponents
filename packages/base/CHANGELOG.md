@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.6](https://github.com/SAP/ui5-webcomponents/compare/v1.24.5...v1.24.6) (2024-07-01)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** fix focusing when dialog is open from OpenUI5 dialog ([#9204](https://github.com/SAP/ui5-webcomponents/issues/9204)) ([e2a19fa](https://github.com/SAP/ui5-webcomponents/commit/e2a19fad3960193aa05c868dfe8a4d86fd8f532f)), closes [#9028](https://github.com/SAP/ui5-webcomponents/issues/9028) [#9183](https://github.com/SAP/ui5-webcomponents/issues/9183)
+
+
+
+
+
 ## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
 
 
