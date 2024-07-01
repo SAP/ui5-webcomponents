@@ -1,7 +1,7 @@
-# Defining a Component
+# Define Web Component
 
-To define your own UI5 Web Components, you need to:
-- Use the `customElement` decorator.
+To define your own web component, you need to:
+- Use the `@customElement` decorator.
 - Extend the `UI5Element` base class.
 
 ```ts
