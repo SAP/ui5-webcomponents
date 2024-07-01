@@ -1,21 +1,25 @@
 import type Table from "./Table";
-import type TableCellBase from "./TableCellBase";
-import type TableRowBase from "./TableRowBase";
+import type TableRow from "./TableRow";
 
 const isInstanceOfTable = (obj: any): obj is Table => {
 	return "isTable" in obj && !!obj.isTable;
 };
 
-const isInstanceOfTableCellBase = (obj: any): obj is TableCellBase => {
-	return "isTableCellBase" in obj && !!obj.isTableCellBase;
+const isSelectionCheckbox = (e: Event) => {
+	return e.composedPath().some((el: EventTarget) => (el as HTMLElement).hasAttribute?.("ui5-table-selection-component"));
 };
 
-const isInstanceOfTableRowBase = (obj: any): obj is TableRowBase => {
-	return "isTableRowBase" in obj && !!obj.isTableRowBase;
+const isHeaderSelector = (e: Event) => {
+	return isSelectionCheckbox(e) && e.composedPath().some((el: EventTarget) => el instanceof HTMLElement && el.hasAttribute("ui5-table-header-row"));
+};
+
+const findRowInPath = (composedPath: Array<EventTarget>) => {
+	return composedPath.find((el: EventTarget) => el instanceof HTMLElement && el.hasAttribute("ui5-table-row")) as TableRow;
 };
 
 export {
 	isInstanceOfTable,
-	isInstanceOfTableCellBase,
-	isInstanceOfTableRowBase,
+	isSelectionCheckbox,
+	isHeaderSelector,
+	findRowInPath,
 };

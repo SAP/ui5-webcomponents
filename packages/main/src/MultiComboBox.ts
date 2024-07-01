@@ -112,7 +112,8 @@ import SuggestionItem from "./SuggestionItem.js";
  * @public
  */
 interface IMultiComboBoxItem extends UI5Element {
-	text: string,
+	text?: string,
+	headerText?: string,
 	selected: boolean,
 	isGroupItem?: boolean,
 	stableDomRef: string,
@@ -265,7 +266,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
 	 * **Note:** When the component is used inside a form element,
 	 * the value is sent as the first element in the form data, even if it's empty.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
@@ -284,11 +285,11 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder = "";
+	placeholder?: string;
 
 	/**
 	 * Defines if the user input will be prevented, if no matching item has been found
@@ -508,7 +509,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			formData.append(this.name, this.value);
 
 			for (let i = 0; i < selectedItems.length; i++) {
-				formData.append(this.name, selectedItems[i].text);
+				formData.append(this.name, selectedItems[i].text!);
 			}
 
 			return formData;
@@ -714,7 +715,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return "";
 		}
 
-		return this.placeholder;
+		return this.placeholder || "";
 	}
 
 	_handleArrowLeft() {
@@ -854,7 +855,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	_handleTokenCreationUponPaste(pastedText: string, e: KeyboardEvent | ClipboardEvent) {
 		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
-		const matchingItems = this._getItems().filter(item => separatedText.includes(item.text) && !item.selected);
+		const matchingItems = this._getItems().filter(item => !item.isGroupItem && !item.selected && separatedText.includes(item.text!));
 
 		if (matchingItems.length > 1) {
 			e.preventDefault();
@@ -881,7 +882,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const selectedItem = this._getSelectedItems()[0];
 		const focusedToken = this._tokenizer.tokens.find(token => token.focused);
 		const value = this.value;
-		const matchingItem = this._getItems().find(item => item.text.localeCompare(value, undefined, { sensitivity: "base" }) === 0);
+		const matchingItem = this._getItems().find(item => item.text?.localeCompare(value, undefined, { sensitivity: "base" }) === 0);
 
 		e.preventDefault();
 
@@ -1207,9 +1208,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		this.value = currentItem.text;
-		this._innerInput.value = currentItem.text;
-		this._innerInput.setSelectionRange(0, currentItem.text.length);
+		this.value = currentItem.text!;
+		this._innerInput.value = currentItem.text!;
+		this._innerInput.setSelectionRange(0, currentItem.text!.length);
 	}
 
 	_navigateToPrevItem() {
@@ -1244,14 +1245,14 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		this.value = currentItem.text;
-		this._innerInput.value = currentItem.text;
-		this._innerInput.setSelectionRange(0, currentItem.text.length);
+		this.value = currentItem.text!;
+		this._innerInput.value = currentItem.text!;
+		this._innerInput.setSelectionRange(0, currentItem.text!.length);
 	}
 
 	_handleEnter() {
 		const lowerCaseValue = this.value.toLowerCase();
-		const matchingItem = this._getItems().find(item => (item.text.toLowerCase() === lowerCaseValue && !item.isGroupItem));
+		const matchingItem = this._getItems().find(item => (!item.isGroupItem && item.text!.toLowerCase() === lowerCaseValue));
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
@@ -1281,7 +1282,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				}
 			}
 
-			innerInput.setSelectionRange(matchingItem.text.length, matchingItem.text.length);
+			innerInput.setSelectionRange(matchingItem.text!.length, matchingItem.text!.length);
 			this._getRespPopover().open = false;
 		}
 	}
@@ -1542,10 +1543,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const innerInput = this._innerInput;
 
 		filterValue = filterValue || "";
-		this.value = value;
+		this.value = value!;
 
-		innerInput.value = value;
-		innerInput.setSelectionRange(filterValue.length, value.length);
+		innerInput.value = value!;
+		innerInput.setSelectionRange(filterValue.length, value!.length);
 
 		this._shouldAutocomplete = false;
 	}
@@ -1555,7 +1556,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.isGroupItem && !item.selected);
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !item.selected);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
@@ -1563,7 +1564,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_startsWithMatchingItems(str: string) {
-		return Filters.StartsWith(str, this._getItems(), "text");
+		return Filters.StartsWith(str, this._getItems().filter(item => !item.isGroupItem), "text");
 	}
 
 	_revertSelection() {

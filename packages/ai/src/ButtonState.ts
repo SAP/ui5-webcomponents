@@ -22,28 +22,25 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @abstract
  * @since 2.0
  * @public
+ * @experimental The Button and ButtonState web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
  */
 @customElement("ui5-ai-button-state")
-
-/**
- * @experimental
- */
 class ButtonState extends UI5Element {
 	/**
 	 * Defines the name of the button state.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the text of the button in this state.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component before the text.
@@ -52,11 +49,11 @@ class ButtonState extends UI5Element {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component after the text.
@@ -65,11 +62,11 @@ class ButtonState extends UI5Element {
 	 * **Example:**
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	endIcon!: string;
+	endIcon?: string;
 }
 
 ButtonState.define();
