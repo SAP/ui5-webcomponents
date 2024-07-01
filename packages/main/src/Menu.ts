@@ -227,7 +227,7 @@ class Menu extends UI5Element {
 	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
 	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
@@ -342,7 +342,7 @@ class Menu extends UI5Element {
 		if (!item._popover) {
 			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 				"item": item,
-				"text": item.text,
+				"text": item.text || "",
 			}, true, false);
 
 			if (!prevented && this._popover) {

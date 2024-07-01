@@ -16,8 +16,8 @@ const StartsWithPerTerm = <T>(value: string, items: Array<T>, propName: string) 
 	});
 };
 
-const StartsWith = <T>(value: string, items: Array<T>, propName: string): Array<T> => items.filter(item => (item[propName as keyof typeof item] as string).toLowerCase().startsWith(value.toLowerCase()));
-const Contains = <T>(value: string, items: Array<T>, propName: string): Array<T> => items.filter(item => (item[propName as keyof typeof item] as string).toLowerCase().includes(value.toLowerCase()));
+const StartsWith = <T>(value: string, items: Array<T>, propName: string): Array<T> => items.filter(item => (item[propName as keyof typeof item] as string || "").toLowerCase().startsWith(value.toLowerCase()));
+const Contains = <T>(value: string, items: Array<T>, propName: string): Array<T> => items.filter(item => (item[propName as keyof typeof item] as string || "").toLowerCase().includes(value.toLowerCase()));
 const None = <T>(_: string, items: Array<T>): Array<T> => items;
 
 export {

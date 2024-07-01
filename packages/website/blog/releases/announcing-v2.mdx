@@ -1,0 +1,115 @@
+# Announcing UI5 Web Components 2.0: A New Era Begins! 
+
+## A Journey of Innovation and Growth 
+
+Since the release of UI5 Web Components 1.0 in 2021, our journey has been marked by unwavering innovation and a commitment to excellence. 
+Over the past three years, we have listened to our community, refined our technologies, and expanded our capabilities. 
+Today, we stand at a pivotal moment in our evolution with the launch of **UI5 Web Components 2.0**. 
+
+## The Evolution of UI5 Web Components 
+
+Our project has continuously evolved, embracing new web standards, eliminating legacy code, and integrating invaluable user feedback from our community to enhance our APIs. This journey culminated in April with the unveiling of the first Release Candidate for UI5 Web Components 2.0.  
+
+## Announcing UI5 Web Components 2.0! 🎉 
+
+Today, we are thrilled to officially launch UI5 Web Components 2.0. This major release signifies our commitment to providing cutting-edge tools for web development. Version 2.0 not only enhances performance and reliability but also sets the stage for future innovations.  
+
+**Key Benefits of UI5 Web Components 2.0**
+
+UI5 Web Components 2.0 introduces several substantial improvements: 
+
+- Embracing New Standards: Future-proofing UI5 Web Components. 
+
+- Consistent APIs: Streamlined and more intuitive, albeit with some breaking changes. 
+
+- Elimination of Legacy Code: Reducing footprint and enhancing quality by minimizing bugs.  
+
+Looking ahead, we will adhere to Semantic Versioning and release major updates more frequently to keep pace with technological advancements. 
+
+## What's New in UI5 Web Components 2.0? 
+
+**Revolutionary Popover API**: Experience a standardized, consistent, and flexible mechanism for displaying popover content across all relevant components.  
+This API allows popups to display correctly above all other content, eliminating the need for the "static area" used in version 1.x. Previously, popups were placed in a static area within the body to ensure correct positioning despite various CSS rules. In version 2.x, the popover API simplifies the DOM structure by incorporating the popover directly within the component. This results in easier development, maintenance, and enhanced styling capabilities. It also allows components with popups to have physical children, supporting custom content and simplifying testing. The popover API is fully supported by all major browsers. 
+
+**Form-Associated Custom Elements**: Harness the power of native input behavior within HTML forms. This enhancement makes the features/InputElementsFormSupport.js feature redundant, simplifying form handling and enhancing the developer experience. Refer to the ElementInternals API documentation for more details. 
+
+**Seamless Time Zone Support**: Seamlessly manage time zones within your applications for a more personalized user experience. The date and time components are adapted to the time zone feature, allowing the components to present date in different time zones. The time zone identifiers format is the one used in IANA time zone database. 
+
+**New Components**: Expand your UI toolkit with new components such as Dynamic Page, Form, Table, Text, Tokenizer, AI Button, and AI Prompt Input. 
+
+**Enhanced Existing Components**: Benefit from improvements in List Drag and Drop, Tree Drag and Drop, Tab Container Drag and Drop, and a revamped Notifications Experience. 
+
+**Revamped Documentation Site**: Explore our new documentation site featuring a live editor, playground, dark mode, and an intuitive icons view. 
+
+**New symbol**: We are excited to introduce our new symbol and branding, reflecting the modern and dynamic nature of our project. Our new design incorporates defining elements of the feather and the flame. The feather symbolizes being lightweight, while the flame forms a connection to the phoenix, embodying the spirit of rebirth and continuous improvement. 
+
+**Explore the Full-Screen Playground** 
+
+Our new full-screen playground offers a range of features designed to enhance your development experience: 
+
+- Live code editing 
+
+- TypeScript support 
+
+- Code completion for components in HTML 
+
+- Sample download 
+
+- Easy sharing 
+
+- Theming options 
+
+- Predefined examples
+
+## Adoption and Breaking Changes 
+
+UI5 Web Components 2.0 is a major version and introduces breaking changes that may require updates to your code. Our comprehensive Migration Guide will assist you in making a smooth transition from UI5 Web Components v1.x to v2.0. Note: Majority of the breaking changes can be achieved with find and replace. 
+
+ 
+ **Notable Breaking Changes**: 
+
+- Removal of Belize theme. 
+
+- CSP via adoptedStyleSheets only; static area removed. 
+
+- Renaming of properties, events, and enumeration values. 
+
+- Badge component renamed to Tag. 
+
+- Old Table (ui5-table) moved to @ui5/webcomponents-compat; new Table available with better API and accessibility. 
+
+- Public methods for opening popovers replaced with the open property for declarative APIs. 
+
+- Components like Label, Text, Link, and Title now wrap by default (wrappingType="Normal" by default, wrappingType="None" optionally). 
+
+- SelectMenu and SelectMenuOption components removed; standard options with the popover API make them obsolete. 
+
+- Removed APIs without alternatives: 
+
+- Progress Indicator (ui5-progress-indicator): Disabled property removed. 
+
+- Select's Option (ui5-option): Disabled property removed for UX and accessibility alignment. 
+
+- Token (ui5-token): Readonly property removed; logic now within the Tokenizer. 
+
+ 
+## Ongoing Support for Version 1.x 
+
+ We will continue to support version 1.x until the end of the year, focusing on bug fixes to ensure continuity for our existing users. 
+
+ 
+## Get Help and Engage with the Community 
+
+ Encountering issues? Reach out for support or report bugs on our GitHub project: Submit a bug or ask a question here. 
+
+ 
+## Call to Action 
+
+UI5 Web Components 2.0 is a testament to our dedication to innovation, quality, and community engagement. We are particularly excited about the groundbreaking features such as the Popover API, Form-Associated Custom Elements, and seamless time zone support. 
+
+We invite you to preview the new version and migrate to UI5 Web Components 2.0 to fully leverage these advancements. Together, we are entering a new era of web development, and the possibilities are endless. Thank you for being part of this exciting journey with us!  
+
+   
+
+ 
+

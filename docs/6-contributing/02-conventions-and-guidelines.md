@@ -1,4 +1,5 @@
-# Development Conventions and Guidelines
+# Conventions and Guidelines
+
 ## JavaScript Coding Guidelines
 We enforce code style rules using [ESLint](https://eslint.org). Execute `npm run lint` to check your code for style issues.  
 You may also find an ESLint integration for your favorite IDE [here](https://eslint.org/docs/user-guide/integrations).
