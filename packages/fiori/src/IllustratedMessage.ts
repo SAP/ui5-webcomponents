@@ -112,7 +112,7 @@ class IllustratedMessage extends UI5Element {
 	* @public
 	*/
 	@property()
-	name = "BeforeSearch";
+	name: `${IllustrationMessageType}` = "BeforeSearch";
 
 	/**
 	* Determines which illustration breakpoint variant is used.
