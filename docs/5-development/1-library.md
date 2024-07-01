@@ -156,7 +156,7 @@ Examples:
 	```
 
 	In this example, what we did was simply replace one option in the configuration object to disable `headless` mode
-	so that we can use `browser.debug()` in our `*.spec.js` files. For more on testing, see [Testing Web Components](./05-testing-UI5-Web-Components.md).
+	so that we can use `browser.debug()` in our `*.spec.js` files. For more on testing, see [Testing Web Components](./10-testing.md).
 
 ### The `src/` directory
 
@@ -250,7 +250,7 @@ package assets (i18n and package-specific theme parameters). Users of your packa
 
 You can execute all specs by running `yarn test` or `npm run test`.
 
-For more on testing, see our [Testing Web Components](./05-testing-UI5-Web-Components.md) section.
+For more on testing, see our [Testing Web Components](./10-testing.md) section.
 
 ## Consumption of your web components library
 
