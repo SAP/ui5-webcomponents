@@ -116,10 +116,6 @@
 	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
 }
 
-.ui5-li-img-inner {
-	object-fit: contain;
-}
-
 .ui5-li-icon {
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);
