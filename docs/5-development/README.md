@@ -1,4 +1,4 @@
-# UI5 Web Components Development
+# Development
 
 In this section, you will learn how to create your own custom UI5 Web Components packages and develop your own UI5 Web Components. This section will cover how UI5 Web Components work, how to manage their states, and understand their lifecycle.
 

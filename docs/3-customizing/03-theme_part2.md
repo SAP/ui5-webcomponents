@@ -1,4 +1,4 @@
-# Manually Building a Custom Theme
+# Creating Custom Theme
 
 The article describes the steps to manually create a custom theme for your UI5 Web Components project without any tools.
 
@@ -20,7 +20,7 @@ change some of the values and finally include the CSS file in my app? And, the a
 
 Instead, it's best to change the source `.less` file (also available in [theming-base-content](https://github.com/SAP/theming-base-content/blob/master/content/Base/baseLib/sap_horizon/css_variables.less)), change some `Less` variables and compile it to CSS. Let's see how this could be implemented.
 
-# Creating a Custom Theme
+## Creating a Custom Theme
 
 
 ### 1. Using the "@sap-theming/theming-base-content"
@@ -128,7 +128,7 @@ npm run build:theme
 **That's it! The task outputs the CSS variables into the `dist/mytheme.css` file.**
 
 
-# Using a Custom Theme
+## Using a Custom Theme
 
 
 ### 1. Adding the custom CSS

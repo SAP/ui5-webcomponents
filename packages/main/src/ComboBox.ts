@@ -1124,7 +1124,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
 		const listItem = e.detail.item as ComboBoxListItem;
 
-		this._selectedItemText = listItem.mappedItem.text;
+		this._selectedItemText = listItem.mappedItem.text || "";
 		this._selectionPerformed = true;
 
 		const sameItemSelected = this.value === this._selectedItemText;
