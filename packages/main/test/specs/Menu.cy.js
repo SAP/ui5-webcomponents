@@ -349,7 +349,7 @@ describe("Menu interaction", () => {
 				.eq(2)
 				.shadow()
 				.find("li")
-				.should("have.attr", "aria-keyshoirtcuts", "Ctrl+A", "aria-keyshortcuts attribute is reflected")
+				.should("have.attr", "aria-keyshortcuts", "Ctrl+A", "aria-keyshortcuts attribute is reflected")
 				.and("have.attr", "role", "menuitemcheckbox", "role attribute is reflected")
 
 			cy.get("@items")
