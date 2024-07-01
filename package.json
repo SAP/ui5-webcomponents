@@ -71,7 +71,7 @@
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "turbo": "^1.7.0",
-    "typescript": "^5.2.2",
+    "typescript": "5.2.2",
     "vite-plugin-checker": "0.6.2",
     "vite-tsconfig-paths": "^4.2.1",
     "wsrun": "^5.2.4",
