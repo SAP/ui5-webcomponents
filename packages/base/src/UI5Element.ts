@@ -405,7 +405,7 @@ abstract class UI5Element extends HTMLElement {
 
 		// Init the _state object based on the supported slots and store the previous values
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
-			const propertyName = slotName;
+			const propertyName = slotData.propertyName || slotName;
 			propertyNameToSlotMap.set(propertyName, slotName);
 			slotsCachedContentMap.set(propertyName, [...(this._state[propertyName] as Array<SlotValue>)]);
 			this._clearSlot(slotName, slotData);
