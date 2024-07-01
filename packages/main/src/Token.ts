@@ -76,11 +76,11 @@ type TokenDeleteEventDetail = {
 class Token extends UI5Element implements IToken {
 	/**
 	 * Defines the text of the token.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines whether the component is selected or not.

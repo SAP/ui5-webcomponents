@@ -60,11 +60,11 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines the text of the tree item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
