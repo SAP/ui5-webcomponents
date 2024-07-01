@@ -1,10 +1,16 @@
 ### Slots
 
-In this article, we will discuss slots in the context of UI5 web components and how to define your own.
+In this article, we will discuss slots in the context of UI5 Web Components.
 
-Components often need to render dynamic children in specific locations in their component tree, allowing a developer to supply child content when using the component, which will then place that child content in the proper location.
+Components often need to render children in specific locations in their shadow root, allowing applications to supply child content when using the component.
 
-Currently, there are two types of slots: `named` and `unnamed`. The difference between these types is that named slots have accessors as class members, while unnamed slots do not. To define an unnamed slot, you simply add a `<slot>` element inside your `.hbs` template.
+Currently, there are two types of slots: "named" and "unnamed". The difference between these types is that named slots have accessors as class members, while unnamed slots do not.
+
+## Unnamed slots
+
+Use unnamed slots when your component does not need to know if any children have been passed to a certain slot, or generally interact with its children from the said slot.
+
+To define an unnamed slot, you simply add a `<slot>` element inside your `.hbs` template, for example:
 
 ```hbs
 <slot name="mySlot"></slot>
@@ -12,9 +18,10 @@ Currently, there are two types of slots: `named` and `unnamed`. The difference b
 
 **Note:** It is recommended to describe your unnamed slots inside a JSDoc comment that describes your class using the `@slot` tag, following the pattern `@slot {type} name - description`.
 
-To see how to define a `named` slot, see below.
+## Named slots and the `@slot` decorator
 
-## @slot decorator
+Contrary to unnamed slots, named slots are used whenever the component must interact with its children in order to render itself properly.
+
 To define your own named slot, you need to:
 - Use the `slot` decorator.
 - Define a class member.
@@ -22,7 +29,7 @@ To define your own named slot, you need to:
 The `slot` decorator is a property decorator that takes one optional argument as an object literal containing configuration options for the slot.
 
 Defining a slot with the `slot` decorator means that this slot will be managed by the library. This means:
-- If any of this UI5 Web Component's children are custom elements, the framework will wait until they are all defined and upgraded before rendering the component for the first time.
+- If any of this UI5 Web Component's children are custom elements, the framework will wait until they are all defined and upgraded before rendering the component.
 - The library will invalidate this UI5 Web Component whenever its children are added, removed, or rearranged (and additionally when invalidated, if `invalidateOnChildChange` is set).
 
 ```ts
@@ -63,7 +70,7 @@ Available types:
 ### default
 This option accepts a boolean value and is used to define whether this slot is the default one.
 
-**Note:** The default slot can be used directly with `<slot></slot>` without specifying the slot name inside the template.
+**Note:** The default slot is defined simply as an empty slot tag: `<slot></slot>` (without a `name` attribute).
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -78,7 +85,7 @@ class MyDemoComponent extends UI5Element {
 ```
 
 ### individualSlots
-This option accepts a boolean value and is used to define if each child will have its own slot, allowing you to arrange or wrap the children arbitrarily. This means that you need to handle the rendering on your own.
+This option accepts a boolean value and determines whether each child will have its own slot, allowing you to arrange or wrap the children arbitrarily. This means that you need to handle the rendering on your own.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -92,13 +99,9 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-To render individual slots, you have to iterate and render each item arbitrarily. This can be done in two ways as shown below:
+To render individual slots, you have to iterate all children in that slot and use the `_individualSlot` property that the framework sets automatically set on each child:
 
 ```hbs
-{{#each mySlot}}
-    <div>{{this}}</div>
-{{/each}}
-<!-- or -->
 {{#each mySlot}}
     <slot name="{{this._individualSlot}}"></slot>
 {{/each}}

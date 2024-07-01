@@ -1,10 +1,10 @@
 ### Properties / Attributes
 
-In this article, we will discuss properties in the context of UI5 web components and how to define your own.
+In this article, we will discuss properties in the context of UI5 Web Components.
 
-Properties are custom attributes that allow developers to control the state of the component.
+Properties allow you to configure the state of your component.
 
-By default, for each property, there is an equivalent attribute. Attributes have the same names as properties but in `kebab-case` rather than `camelCase`. Properties of type `Object` or `Array` and properties with `noAttribute` set to true do not have an attribute equivalent.
+By default, for each property, there is an equivalent attribute. Attributes have the same names as properties but in `kebab-case` rather than `camelCase`. Properties of type `Object` or `Array` and properties with `noAttribute` set to `true` do not have an attribute equivalent.
 
 ## @property decorator
 
@@ -31,7 +31,7 @@ class MyDemoComponent extends UI5Element {
 You can see the available options below.
 
 ### type
-This option is required and accepts a type constructor (e.g., `Boolean`, `String`) that will be used for attribute conversion. When converting from a property to a string, the framework can check the runtime type and convert it to a string, but when coming from an attribute, there is no way to know whether it is a boolean or a number unless a type is also given.
+This option is required and accepts a type constructor (e.g., `Boolean`, `String`) that will be used for attribute conversion. When converting from a property to an attribute, the framework can check the runtime type and convert it to a string, but when coming from an attribute, there is no way to know whether it is a boolean or a number, unless a type is provided.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -45,19 +45,19 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-Available types are listed below.
+Available types:
 
-|  Type   | Class to Use | Description |
-| ------- | ------------ | -------------------------------------------------------------------------- |
-| string  | `String`     | Implied as default, should be omitted                                      |
-| boolean | `Boolean`    | Boolean value, the presence of the attribute will set the property to true |
-| number  | `Number`     | Number value, the attribute will be converted using `parseFloat`           |
-| object  | `Object`     | JS Object, equivalent to `noAttribute: true`                               |
-| []      | `Array`      | JS Array, equivalent to `noAttribute: true`                                |
-| Enum    | `String`     | Enums are treated as strings, type does not accept enum types              |
+| Type        | Class to Use | Description                                                                  |
+|-------------| ------------ |------------------------------------------------------------------------------|
+| string      | `String`     | This is the default type, does not need to be explicitly set             |
+| boolean     | `Boolean`    | Boolean value, the presence of the attribute will set the property to `true` |
+| number      | `Number`     | Number value, the attribute will be converted using `parseFloat`             |
+| object      | `Object`     | JS Object, automatically applies `noAttribute: true`                         |
+| array       | `Array`      | JS Array, automatically applies `noAttribute: true`                          |
+| enumeration | `String`     | Enums are treated as strings, type does not accept enum types                |
 
 ### noAttribute
-This option accepts a boolean value and defines whether the property should set an equivalent attribute for the property on the custom element.
+This option accepts a boolean value and defines whether the property should not have an equivalent attribute (f.e. for properties that do not used for CSS selectors).
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -72,7 +72,7 @@ class MyDemoComponent extends UI5Element {
 ```
 
 ### converter
-This option accepts an object and allows you to define a custom converter with two methods - `fromAttribute` and `toAttribute` that will receive the `type` and the `value`.
+This option accepts an object and allows you to define a custom property-to-attribute (and vice-versa) converter with two methods - `fromAttribute` and `toAttribute` that will receive the `type` and the `value`.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -99,7 +99,7 @@ class MyDemoComponent extends UI5Element {
 ```
 
 ### Defining a default value
-To define a default value for the property, use property initializers to pass initial values.
+Use JavaScript property initializers to define default values.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -124,3 +124,5 @@ class MyDemoComponent extends UI5Element {
     stars = [];
 }
 ```
+
+Note: due to the way HTML attributes work, boolean properties can only have `false` as their default value.

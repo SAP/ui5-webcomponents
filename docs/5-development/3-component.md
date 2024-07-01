@@ -1,6 +1,6 @@
 # Defining a Component
 
-To define your own custom UI5 web components, you need to:
+To define your own UI5 Web Components, you need to:
 - Use the `customElement` decorator.
 - Extend the `UI5Element` base class.
 
@@ -35,7 +35,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-## @customElement decorator
+## The `@customElement` decorator
 The `customElement` decorator is a class decorator that takes one argument, which can be either a string or an object literal containing configuration options for the component. This allows each component to be individually configured.
 
 When the argument is a string, it defines the tag name of the component. Otherwise, if the argument is an object literal you can see available options below.
@@ -55,10 +55,10 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-**Note:** By the HTML specification, the tag name must contain a dash ('-').
+**Note:** As per the HTML specification, the tag name must contain a dash ('-').
 
 ### renderer
-This option specifies the rendering engine for the component. UI5 Web Components are agnostic of the DOM render engine used. However, all standard UI5 Web Components (`@ui5/webcomponents`, `@ui5/webcomponents-fiori`, etc.) use [lit-html](https://github.com/Polymer/lit-html) as the rendering technology of choice.
+This option specifies the rendering engine for the component. UI5 Web Components are agnostic of the DOM rendering engine used. However, all standard UI5 Web Components (`@ui5/webcomponents`, `@ui5/webcomponents-fiori`, etc.) use [lit-html](https://github.com/Polymer/lit-html) as the rendering technology of choice.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -73,10 +73,8 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-By specifying the `renderer` option, you can choose the rendering engine that best suits your component's needs.
-
 ### template
-This option accepts a template in a type that your defined renderer will understand.
+This option accepts a template in a format that your defined renderer will understand.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -91,7 +89,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-**Note:** Standard UI5 Web Components use Handlebars templates that are automatically converted to lit-html syntax by the build script. If you have a `MyDemoComponentTemplate.hbs`, the build script will create a `generated/templates/DemoTemplate.lit.ts` file for you.
+**Note:** Standard UI5 Web Components use Handlebars templates that are automatically converted to `lit-html` syntax by the build script. If you have a `MyDemoComponentTemplate.hbs`, the build script will create a `generated/templates/DemoTemplate.lit.ts` file for you.
 
 ### styles
 This option accepts either component styles or an array of component styles that should be inserted inside the shadow root of the component.
@@ -151,7 +149,7 @@ This option accepts a boolean value and determines if the component should be re
 
 **Important: You should almost never use this setting.**
 
-Components are usually built so their structure is the same for all themes, with only CSS variables changing. This way, the browser automatically updates the styles when CSS variables get new values.
+Components are usually built so that their HTML and CSS are the same for all themes, with only CSS variables changing. This way, the browser automatically updates the styles when the CSS variables get new values.
 
 However, in rare cases, a component must behave differently (not just look differently) based on the theme. For example, the `ui5-icon` component shows different versions of the icons based on the theme. Use the `themeAware` setting in these exceptional cases to ensure your component is re-rendered on theme change.
 
@@ -168,7 +166,7 @@ class MyDemoComponent extends UI5Element {
 ```
 
 ### fastNavigation
-This option accepts a boolean value and defines whether this control supports F6 fast navigation. When enabled, the framework will set the `data-sap-ui-fastnavgroup` attribute on the component root element to construct a fast navigation group.
+This option accepts a boolean value and defines whether this control supports F6 fast navigation. When enabled, the framework will set the `data-sap-ui-fastnavgroup` attribute on the component's root element to construct a fast navigation group.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -183,7 +181,7 @@ class MyDemoComponent extends UI5Element {
 ```
 
 ### formAssociated
-This option accepts a boolean value and defines if the component should support native form functionality. When set, the framework uses the `ElementInternals` API to implement the required interfaces for the component to work in a native HTML form as standard HTML input elements do. This is commonly used in input-type components such as Input, ComboBox, MultiComboBox, Select, and more.
+This option accepts a boolean value and defines if the component should support native form functionality. When set, the framework uses the `ElementInternals` API to implement the required interfaces for the component to work in a native HTML form as standard HTML input elements do. This is commonly used in input-type components such as Input, ComboBox, MultiComboBox, Select, and others.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
