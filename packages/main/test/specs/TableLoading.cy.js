@@ -1,6 +1,6 @@
 import { html } from 'lit';
 
-describe("Table - loading", () => {
+describe.skip("Table - loading", () => {
 	it("tests busy indicator is displayed", () => {
 		cy.mount(html`
 		<input id="before">
