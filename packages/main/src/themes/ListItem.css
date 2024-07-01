@@ -56,6 +56,11 @@
 	height: 3rem;
 }
 
+::slotted(img[slot="image"]){
+	height: 3rem;
+	object-fit: contain
+}
+
 :host([description]) .ui5-li-root {
 	padding: 1rem;
 }
