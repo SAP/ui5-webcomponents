@@ -1047,7 +1047,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_onItemKeydown(e: KeyboardEvent) {
-		const isFirstItem = this.list?.items[0] === e.target || (this.list?.items[1] === e.target && this.list?.items[0].hasAttribute("ui5-li-group"));
+		const isFirstItemGroup = this.list?.items[1] === e.target && this.list?.items[0].hasAttribute("ui5-li-group");
+		const isFirstItem = this.list?.items[0] === e.target || isFirstItemGroup;
 		const isArrowUp = isUp(e) || isUpCtrl(e);
 
 		if (this.hasValueStateMessage && !this.valueStateHeader) {
@@ -1097,7 +1098,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		if (isFirstItem && isArrowUp) {
 			if (this.showSelectAll) {
-				if (this.list?.items[0].hasAttribute("ui5-li-group") && this.list?.items[0] !== e.target) {
+				if (isFirstItemGroup) {
 					this.list?.items[0].focus();
 					return;
 				}
@@ -1767,7 +1768,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const responsivePopover = this._getResponsivePopover();
 		const popover = this._getPopover();
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
-		const focusIsGoingInValueStatePopup =popover?.contains(e.relatedTarget as Node);
+		const focusIsGoingInValueStatePopup = popover?.contains(e.relatedTarget as Node);
 
 		if (focusIsGoingInValueStatePopup) {
 			e.stopImmediatePropagation();
