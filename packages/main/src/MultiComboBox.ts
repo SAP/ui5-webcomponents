@@ -1633,7 +1633,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._tokenizer._handleResize();
 		this._tokenizer.preventInitialFocus = true;
 
-		if (this._getRespPopover()?.open && !isPhone()) {
+		if (this.open && !isPhone) {
 			this._tokenizer.expanded = true;
 		}
 
