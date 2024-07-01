@@ -9,7 +9,7 @@ This tutorial explains how to:
 
 ## Step 1. Create an NPM package.
 
-### Run the init command.
+### Run the init command
 
 **Note:** The following command will **create a new directory** and initialize your package there.
 Make sure you haven't created a directory yourself.
@@ -37,7 +37,7 @@ where `<NEW-PACKAGE-NAME>` is the name of your new package (and the name of the 
 
 will create a `my-components` directory and initialize the package there.
 
-### Follow the prompts.
+### Follow the prompts
 
 The initialization script will ask you to choose:
  - The **name** of your package (if you did not already pass a name when running the command above);
