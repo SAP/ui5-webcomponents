@@ -344,7 +344,7 @@ class Menu extends UI5Element {
 		if (!item._popover) {
 			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 				"item": item,
-				"text": item.text,
+				"text": item.text || "",
 			}, true, false);
 
 			if (!prevented && this._popover) {
