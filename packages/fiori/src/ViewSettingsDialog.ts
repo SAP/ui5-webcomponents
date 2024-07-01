@@ -613,9 +613,9 @@ class ViewSettingsDialog extends UI5Element {
 	get eventsParams() {
 		const _currentSortOrderSelected = this._currentSettings.sortOrder.filter(item => item.selected)[0],
 			_currentSortBySelected = this._currentSettings.sortBy.filter(item => item.selected)[0],
-			sortOrder = _currentSortOrderSelected && _currentSortOrderSelected.text || "",
+			sortOrder = _currentSortOrderSelected && (_currentSortOrderSelected.text || ""),
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
-			sortBy = _currentSortBySelected && _currentSortBySelected.text || "",
+			sortBy = _currentSortBySelected && (_currentSortBySelected.text || ""),
 			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
 			sortByItem = this.sortItems[sortByElementIndex];
 		return {

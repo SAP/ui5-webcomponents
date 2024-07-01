@@ -91,7 +91,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * Defines the currently selected color of the component.
 	 *
 	 * **Note**: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-	 * @default "rgba(255, 255, 255, 1)"
+	 * @default "rgba(255,255,255,1)"
 	 * @public
 	 */
 	@property()
