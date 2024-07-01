@@ -595,7 +595,7 @@ describe("Table general interaction", () => {
 			const table = await browser.$("#tbl");
 			const column = await table.$$("ui5-table-column")[0];
 
-			assert.notOk(await column.getAttribute("popin-display"), "Block", "Table row popin-display property is set by default.");
+			assert.strictEqual(await column.getAttribute("popin-display"), "Block", "Table row popin-display property is set by default.");
 		});
 	});
 });

@@ -1,0 +1,57 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import menuSeparatorTemplate from "./generated/templates/MenuSeparatorTemplate.lit.js";
+import menuSeparatorCss from "./generated/themes/MenuSeparator.css.js";
+import ListItemBase from "./ListItemBase.js";
+import ListItemCustom from "./ListItemCustom.js";
+import type { IMenuItem } from "./Menu.js";
+/**
+ * @class
+ * The `ui5-menu-separator` represents a horizontal line to separate menu items inside a `ui5-menu`.
+ * @constructor
+ * @extends ListItemBase
+ * @implements {IMenuItem}
+ * @public
+ * @since 2.0
+ */
+@customElement({
+	tag: "ui5-menu-separator",
+	renderer: litRender,
+	styles: [menuSeparatorCss],
+	template: menuSeparatorTemplate,
+	dependencies: [
+		ListItemCustom,
+	],
+})
+
+class MenuSeparator extends ListItemBase implements IMenuItem {
+	get isSeparator() {
+		return true;
+	}
+
+	get classes(): ClassMap {
+		return {
+			main: {
+				"ui5-menu-separator": true,
+			},
+		};
+	}
+
+	/**
+	 * @override
+	 */
+	get _focusable() {
+		return false;
+	}
+
+	/**
+	 * @override
+	 */
+	get _pressable() {
+		return false;
+	}
+}
+MenuSeparator.define();
+
+export default MenuSeparator;

@@ -52,7 +52,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -62,7 +62,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	_fixed!: boolean;
+	_fixed = false;
 
 	/**
      * Defines nested items by passing `ui5-side-navigation-sub-item` to the default slot.

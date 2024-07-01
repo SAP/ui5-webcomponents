@@ -29,15 +29,15 @@ class FilterItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines the additional text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the `values` list.

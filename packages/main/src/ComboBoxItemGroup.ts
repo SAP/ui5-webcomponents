@@ -19,18 +19,18 @@ import type { IComboBoxItem } from "./ComboBox.js";
 class ComboBoxItemGroup extends UI5Element implements IComboBoxItem {
 		/**
 		 * Defines the text of the component.
-		 * @default ""
+		 * @default undefined
 		 * @public
 		 */
 		@property()
-		text!: string;
+		headerText?: string;
 
 		/**
 		 * Indicates whether the item is focused
 		 * @protected
 		 */
 		@property({ type: Boolean })
-		focused!: boolean;
+		focused = false
 
 		/**
 		 * Defines the items of the <code>ui5-cb-item-group</code>.

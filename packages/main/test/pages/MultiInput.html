@@ -367,6 +367,26 @@
 
 	</div>
 
+	<div class="sample-container">
+
+		<h1 class="sample-container-title">Custom Suggestions</h1>
+
+		<ui5-multi-input id="mi-custom-suggestions" show-suggestions>
+			<ui5-suggestion-item-custom text="Bulgaria">
+				<span>Bulgaria</span>
+			</ui5-suggestion-item-custom>
+			<ui5-suggestion-item-custom text="Germany">
+				<span>Germany</span>
+			</ui5-suggestion-item-custom>
+			<ui5-suggestion-item-custom text="USA">
+				<span>USA</span>
+			</ui5-suggestion-item-custom>
+			<ui5-suggestion-item-custom text="Romania">
+				<span>Romania</span>
+			</ui5-suggestion-item-custom>
+		</ui5-multi-input>
+	</div>
+
 	<script>
 
 		var createTokenFromText = function (text) {
@@ -438,7 +458,7 @@
 
 		let valueHelpTriggerCounter = 0;
 		document.getElementById("multi-with-value-help-icon").addEventListener("ui5-value-help-trigger", function (event) {
-			document.getElementById("value-help-trigger-counter").value = ++valueHelpTriggerCounter;
+			document.getElementById("value-help-trigger-counter").value = `${++valueHelpTriggerCounter}`;
 		});
 
 		const handleTokenDelete = (event) => {
@@ -463,9 +483,9 @@
 			eventTargetText.value = event.detail.tokens.map(token => token.text).join(', ');
 
 			if (!eventCount.value || isNaN(eventCount.value)) {
-				eventCount.value = 1;
+				eventCount.value = "1";
 			} else {
-				eventCount.value = parseInt(eventCount.value) + 1;
+				eventCount.value = `${parseInt(eventCount.value) + 1}`;
 			}
 		}
 		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);

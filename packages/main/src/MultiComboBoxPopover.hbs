@@ -6,9 +6,12 @@
 	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
 	@ui5-selection-change={{_listSelectionChange}}
-	@ui5-close={{_afterClosePicker}}
+	@ui5-close={{_afterClose}}
 	@ui5-before-open={{_beforeOpen}}
-	@ui5-open={{_afterOpenPicker}}
+	@ui5-before-close={{_beforeClose}}
+	@ui5-open={{_afterOpen}}
+	.open={{_open}}
+	.opener={{this}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
@@ -25,7 +28,7 @@
 			<div class="row">
 				<ui5-input
 					@ui5-input="{{_handleMobileInput}}"
-					@ui5-change="{{_mobileInputChange}}"
+					@keydown="{{_onMobileInputKeydown}}"
 					placeholder="{{placeholder}}"
 					value-state="{{_dialogInputValueState}}"
 					?show-clear-icon="{{showClearIcon}}"
@@ -68,10 +71,10 @@
 	{{/unless}}
 
 	{{#if filterSelected}}
-		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each selectedItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+					<ui5-li-group header-text="{{this.headerText}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
 						{{#each this.items}}
 							{{#if _isVisible}}
 								{{> listItem}}
@@ -84,10 +87,10 @@
 			{{/each}}
 		</ui5-list>
 	{{else}}
-		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each _filteredItems}}
 				{{#if isGroupItem}}
-					<ui5-li-group header-text="{{this.text}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
+					<ui5-li-group header-text="{{this.headerText}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
 						{{#each this.items}}
 							{{#if _isVisible}}
 								{{> listItem}}
@@ -121,6 +124,8 @@
 		placement="Bottom"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 		tabindex="-1"
+		.open="{{valueStateOpen}}"
+		.opener="{{this}}"
 	>
 		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
@@ -148,6 +153,7 @@
 		data-ui5-token-id="{{this._id}}"
 		data-ui5-stable="{{this.stableDomRef}}"
 		@keydown="{{../_onItemKeydown}}"
+		accessible-role="Option"
 	>
 		{{this.text}}
 	</ui5-li>

@@ -30,7 +30,7 @@ import {
 } from "./upload-utils/UploadCollectionBodyDnD.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
-import UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
+import type UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
@@ -121,24 +121,24 @@ class UploadCollection extends UI5Element {
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: UploadCollectionSelectionMode, defaultValue: UploadCollectionSelectionMode.None })
-	selectionMode!: `${UploadCollectionSelectionMode}`;
+	@property()
+	selectionMode: `${UploadCollectionSelectionMode}` = "None";
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataDescription!: string;
+	noDataDescription?: string;
 
 	/**
 	 * Allows you to set your own text for the 'No data' text.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * By default there will be drag and drop overlay shown over the `ui5-upload-collection` when files
@@ -150,24 +150,24 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideDragOverlay!: boolean;
+	hideDragOverlay = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.16
 	 */
 	 @property()
-	 accessibleName!: string;
+	 accessibleName?: string;
 
 	/**
 	 * Indicates what overlay to show when files are being dragged.
 	 * @default "None"
 	 * @private
 	 */
-	@property({ type: UploadCollectionDnDOverlayMode, defaultValue: UploadCollectionDnDOverlayMode.None })
-	_dndOverlayMode!: UploadCollectionDnDOverlayMode;
+	@property()
+	_dndOverlayMode: `${UploadCollectionDnDOverlayMode}` = "None";
 
 	/**
 	 * Defines the items of the `ui5-upload-collection`.

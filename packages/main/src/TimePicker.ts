@@ -208,27 +208,27 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ type: String, defaultValue: undefined })
+	@property()
 	value?: string;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the disabled state of the comonent.
@@ -236,7 +236,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the readonly state of the comonent.
@@ -244,7 +244,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -255,7 +255,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	placeholder?: string;
 
 	/**
@@ -265,11 +265,11 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * HH:mm:ss -> 11:42:35
 	 * hh:mm:ss a -> 2:23:15 PM
 	 * mm:ss -> 12:04 (only minutes and seconds)
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	formatPattern!: string;
+	formatPattern?: string;
 
 	/**
 	 * Defines the open or closed state of the popover.
@@ -278,10 +278,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @since 2.0
 	 */
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isInputsPopoverOpen!: boolean;
+	_isInputsPopoverOpen = false;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
@@ -358,7 +358,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @protected
 	 */
 	get _formatPattern() {
-		const hasHours = !!this.formatPattern.match(/H/i);
+		const hasHours = !!this.formatPattern?.match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;
 
 		const localeData = getCachedLocaleDataInstance(getLocale());

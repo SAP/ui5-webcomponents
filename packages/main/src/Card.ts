@@ -52,21 +52,21 @@ class Card extends UI5Element {
 	 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
 	 *
 	 * **Note:** `accessibleName` should be always set, unless `accessibleNameRef` is set.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the content of the component.

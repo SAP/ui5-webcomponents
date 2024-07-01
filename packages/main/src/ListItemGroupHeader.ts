@@ -33,11 +33,11 @@ class ListItemGroupHeader extends ListItemBase {
 	 * Defines the text alternative of the component.
 	 *
 	 * **Note:** If not provided a default text alternative will be set, if present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	static i18nBundle: I18nBundle;
 

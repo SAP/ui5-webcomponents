@@ -22,7 +22,6 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import type DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
@@ -70,6 +69,35 @@ type InvalidationInfo = ChangeInfo & { target: UI5Element };
 type ChildChangeListener = (param: InvalidationInfo) => void;
 
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
+
+const defaultConverter = {
+	fromAttribute(value: string | null, type: unknown) {
+		if (type === Boolean) {
+			return value !== null;
+		}
+		if (type === Number) {
+			return value === null ? undefined : parseFloat(value);
+		}
+		return value;
+	},
+	toAttribute(value: unknown, type: unknown) {
+		if (type === Boolean) {
+			return value as boolean ? "" : null;
+		}
+
+		// don't set attributes for arrays and objects
+		if (type === Object || type === Array) {
+			return null;
+		}
+
+		// object, array, other
+		if (value === null || value === undefined) {
+			return null;
+		}
+
+		return String(value);
+	},
+};
 
 /**
  * Triggers re-rendering of a UI5Element instance due to state change.
@@ -136,6 +164,12 @@ abstract class UI5Element extends HTMLElement {
 	static _metadata: UI5ElementMetadata;
 
 	static renderer: Renderer;
+	initializedProperties: Map<string, unknown>;
+
+	// used to differentiate whether a setter is called from the constructor (from an initializer) or later
+	// setters from the constructor should not set attributes, this is delegated after the first rendering but is async
+	// setters after the constructor can set attributes synchronously for more convinient development
+	_rendered = false;
 
 	constructor() {
 		super();
@@ -159,11 +193,39 @@ abstract class UI5Element extends HTMLElement {
 
 		this._state = { ...ctor.getMetadata().getInitialState() };
 
-		this._upgradeAllProperties();
+		// save properties set before element is upgraded, as they will be overriden by the field initializers in the constructor
+		this.initializedProperties = new Map();
+		const allProps = (this.constructor as typeof UI5Element).getMetadata().getPropertiesList();
+		allProps.forEach(propertyName => {
+			if (this.hasOwnProperty(propertyName)) { // eslint-disable-line
+				const value = (this as Record<string, unknown>)[propertyName];
+				this.initializedProperties.set(propertyName, value);
+			}
+		});
 
+		this._initShadowRoot();
+	}
+
+	_initShadowRoot() {
+		const ctor = this.constructor as typeof UI5Element;
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
 			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+
+			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
+			if (slotsAreManaged) {
+				this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+			}
+		}
+	}
+
+	/**
+	 * Note: this "slotchange" listener is for slots, rendered in the component's shadow root
+	 */
+	_onShadowRootSlotChange(e: Event) {
+		const targetShadowRoot = (e.target as Node)?.getRootNode(); // the "slotchange" event target is always a slot element
+		if (targetShadowRoot === this.shadowRoot) { // only for slotchange events that originate from slots, belonging to the component's shadow root
+			this._processChildren();
 		}
 	}
 
@@ -207,7 +269,8 @@ abstract class UI5Element extends HTMLElement {
 		if (DEV_MODE) {
 			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
-				if (Object.hasOwn(this, prop)) {
+				if (Object.hasOwn(this, prop) && !this.initializedProperties.has(prop)) {
+					// initialized properties should not trigger this error as they will be reassigned, only property initializers will trigger this in case unsupported TS mode
 					// eslint-disable-next-line no-console
 					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} has a property [${prop}] that is shadowed by the instance. Updates to this property will not invalidate the component. Possible reason is TS target ES2022 or TS useDefineForClassFields`);
 				}
@@ -422,6 +485,7 @@ abstract class UI5Element extends HTMLElement {
 		// not the order elements are defined.
 		slottedChildrenMap.forEach((children, propertyName) => {
 			this._state[propertyName] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+			this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 		});
 
 		// Compare the content of each slot with the cached values and invalidate for the ones that changed
@@ -474,6 +538,7 @@ abstract class UI5Element extends HTMLElement {
 		});
 
 		this._state[propertyName] = [];
+		this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 	}
 
 	/**
@@ -533,20 +598,9 @@ abstract class UI5Element extends HTMLElement {
 		const nameInCamelCase = kebabToCamelCase(realName);
 		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
 			const propData = properties[nameInCamelCase];
-			const propertyType = propData.type;
-			let propertyValidator = propData.validator as typeof DataType;
 
-			if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-				propertyValidator = propertyType as typeof DataType;
-			}
-
-			if (propertyValidator) {
-				newPropertyValue = propertyValidator.attributeToProperty(newValue);
-			} else if (propertyType === Boolean) {
-				newPropertyValue = newValue !== null;
-			} else {
-				newPropertyValue = newValue as string;
-			}
+			const converter = propData.converter ?? defaultConverter;
+			newPropertyValue = converter.fromAttribute(newValue, propData.type);
 
 			(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
 		}
@@ -575,56 +629,32 @@ abstract class UI5Element extends HTMLElement {
 		if (!ctor.getMetadata().hasAttribute(name)) {
 			return;
 		}
+
 		const properties = ctor.getMetadata().getProperties();
 		const propData = properties[name];
-		const propertyType = propData.type;
-		let propertyValidator = propData.validator as typeof DataType;
 		const attrName = camelToKebabCase(name);
-		const attrValue = this.getAttribute(attrName);
+		const converter = propData.converter || defaultConverter;
 
-		if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-			propertyValidator = propertyType as typeof DataType;
+		if (DEV_MODE) {
+			const tag = (this.constructor as typeof UI5Element).getMetadata().getTag();
+			if (typeof newValue === "boolean" && propData.type !== Boolean) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] boolean value for property [${name}] of component [${tag}] is missing "{ type: Boolean }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
+			}
+			if (typeof newValue === "number" && propData.type !== Number) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
+			}
 		}
 
-		if (propertyValidator) {
-			const newAttrValue = propertyValidator.propertyToAttribute(newValue);
-			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
-				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
-				this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
-				this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
-			} else {
-				this.setAttribute(attrName, newAttrValue);
-			}
-		} else if (propertyType === Boolean) {
-			if (newValue === true && attrValue === null) {
-				this.setAttribute(attrName, "");
-			} else if (newValue === false && attrValue !== null) {
-				this.removeAttribute(attrName);
-			}
-		} else if (typeof newValue !== "object") {
-			if (attrValue !== newValue) {
-				this.setAttribute(attrName, newValue as string);
-			}
-		} // else { return; } // old object handling
-	}
-
-	/**
-	 * @private
-	 */
-	_upgradeProperty(this: Record<string, any>, propertyName: string) {
-		if (this.hasOwnProperty(propertyName)) { // eslint-disable-line
-			const value = this[propertyName];
-			delete this[propertyName];
-			this[propertyName] = value;
+		const newAttrValue = converter.toAttribute(newValue, propData.type);
+		if (newAttrValue === null || newAttrValue === undefined) { // null means there must be no attribute for the current value of the property
+			this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
+			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
+			this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
+		} else {
+			this.setAttribute(attrName, newAttrValue);
 		}
-	}
-
-	/**
-	 * @private
-	 */
-	_upgradeAllProperties() {
-		const allProps = (this.constructor as typeof UI5Element).getMetadata().getPropertiesList();
-		allProps.forEach(this._upgradeProperty.bind(this));
 	}
 
 	/**
@@ -695,6 +725,7 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Whenever a slot element is slotted inside a UI5 Web Component, its slotchange event invalidates the component
+	 * Note: this "slotchange" listener is for slots that are children of the component (in the light dom, as opposed to slots rendered by the component in the shadow root)
 	 *
 	 * @param slotName the name of the slot, where the slot element (whose slotchange event we're listening to) is
 	 * @private
@@ -736,6 +767,14 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	onInvalidation(changeInfo: ChangeInfo): void {} // eslint-disable-line
 
+	updateAttributes() {
+		const ctor = this.constructor as typeof UI5Element;
+		const props = ctor.getMetadata().getProperties();
+		for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
+			this._updateAttribute(prop, (this as unknown as Record<string, PropertyValue>)[prop]);
+		}
+	}
+
 	/**
 	 * Do not call this method directly, only intended to be called by js
 	 * @protected
@@ -744,10 +783,22 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
 
+		// restore properties that were initialized before `define` by calling the setter
+		if (this.initializedProperties.size > 0) {
+			Array.from(this.initializedProperties.entries()).forEach(([prop, value]) => {
+				delete (this as Record<string, unknown>)[prop];
+				(this as Record<string, unknown>)[prop] = value;
+			});
+			this.initializedProperties.clear();
+		}
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
 		this.onBeforeRendering();
+		if (!this._rendered) {
+			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+			this.updateAttributes();
+		}
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
 		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
@@ -782,6 +833,7 @@ abstract class UI5Element extends HTMLElement {
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
+		this._rendered = true;
 
 		// Safari requires that children get the slot attribute only after the slot tags have been rendered in the shadow DOM
 		if (hasIndividualSlots) {
@@ -1011,22 +1063,6 @@ abstract class UI5Element extends HTMLElement {
 				console.warn(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 			}
 
-			if (propData.type === Boolean && propData.defaultValue) {
-				throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
-			}
-
-			if (propData.type === Array) {
-				throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
-			}
-
-			if (propData.type === Object && propData.defaultValue) {
-				throw new Error(`Cannot set a default value for property "${prop}". All properties of type "Object" are empty objects by default.`);
-			}
-
-			if (propData.multiple && propData.defaultValue) {
-				throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
-			}
-
 			const descriptor = getPropertyDescriptor(proto, prop);
 			// if the decorator is on a setter, proxy the new setter to it
 			let origSet: (v: any) => void;
@@ -1047,44 +1083,14 @@ abstract class UI5Element extends HTMLElement {
 					if (origGet) {
 						return origGet.call(this);
 					}
-					if (this._state[prop] !== undefined) {
-						return this._state[prop];
-					}
-
-					const propDefaultValue = propData.defaultValue;
-
-					if (propData.type === Boolean) {
-						return false;
-					} else if (propData.type === String) {  // eslint-disable-line
-						return propDefaultValue;
-					} else if (propData.multiple) { // eslint-disable-line
-						return [];
-					} else {
-						return propDefaultValue;
-					}
+					return this._state[prop];
 				},
 
 				set(this: UI5Element, value: PropertyValue) {
-					let isDifferent;
 					const ctor = this.constructor as typeof UI5Element;
-					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
-					value = metadataCtor.validatePropertyValue(value, propData);
-					const propertyType = propData.type;
-					let propertyValidator = propData.validator as typeof DataType;
 					const oldState = origGet ? origGet.call(this) : this._state[prop];
 
-					if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
-						propertyValidator = propertyType as typeof DataType;
-					}
-
-					if (propertyValidator) {
-						isDifferent = !propertyValidator.valuesAreEqual(oldState, value);
-					} else if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
-						isDifferent = !arraysAreEqual(oldState, value);
-					} else {
-						isDifferent = oldState !== value;
-					}
-
+					const isDifferent = oldState !== value;
 					if (isDifferent) {
 						// if the decorator is on a setter, use it for storage
 						if (origSet) {
@@ -1099,10 +1105,14 @@ abstract class UI5Element extends HTMLElement {
 							oldValue: oldState,
 						});
 
+						if (this._rendered) {
+							// is already rendered so it is not the constructor - can set the attribute synchronously
+							this._updateAttribute(prop, value);
+						}
+
 						if (ctor.getMetadata().isFormAssociated()) {
 							setFormValue(this as unknown as IFormInputElement);
 						}
-						this._updateAttribute(prop, value);
 					}
 				},
 			});
@@ -1117,7 +1127,7 @@ abstract class UI5Element extends HTMLElement {
 				}
 
 				const propertyName = slotData.propertyName || slotName;
-				Object.defineProperty(proto, propertyName, {
+				const propertyDescriptor: PropertyDescriptor = {
 					get(this: UI5Element) {
 						if (this._state[propertyName] !== undefined) {
 							return this._state[propertyName];
@@ -1127,7 +1137,11 @@ abstract class UI5Element extends HTMLElement {
 					set() {
 						throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
 					},
-				});
+				};
+				Object.defineProperty(proto, propertyName, propertyDescriptor);
+				if (propertyName !== kebabToCamelCase(propertyName)) {
+					Object.defineProperty(proto, kebabToCamelCase(propertyName), propertyDescriptor);
+				}
 			}
 		}
 	}

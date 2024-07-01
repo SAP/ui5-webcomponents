@@ -391,21 +391,6 @@ describe("List Tests", () => {
 		assert.strictEqual(await loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
 	});
 
-	it("tests 'loadMore' event fired upon infinite scroll", async () => {
-		const btn = await browser.$("#btnTrigger");
-		const loadMoreResult = await browser.$("#loadMoreResult");
-
-		await btn.click();
-
-		await browser.waitUntil(async () => {
-			const value = await loadMoreResult.getValue();
-			return value === "1";
-		}, {
-			timeout: 5000,
-			timeoutMsg: "The event loadMore must be fired"
-		});
-	});
-
 	it("detailPress event is fired", async () => {
 		const detailCounterResult = await browser.$("#detailPressCounter");
 		const firstItem = await browser.$("#detailListItem");

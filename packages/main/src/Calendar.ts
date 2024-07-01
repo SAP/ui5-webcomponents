@@ -19,6 +19,8 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
@@ -33,7 +35,7 @@ import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarLegend from "./CalendarLegend.js";
 import type { CalendarLegendItemSelectionChangeEventDetail } from "./CalendarLegend.js";
 import SpecialCalendarDate from "./SpecialCalendarDate.js";
-import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
+import type CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import Icon from "./Icon.js";
 
 // Default calendar for bundling
@@ -57,6 +59,12 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
+/**
+ * Interface for components that may be slotted inside a `ui5-calendar`.
+ *
+ * **Note:** Use with `ui5-date` or `ui5-date-range` as calendar date selection types.
+ * @public
+ */
 interface ICalendarSelectedDates extends UI5Element {
 	value?: string,
 	startValue?: string,
@@ -225,11 +233,8 @@ class Calendar extends CalendarPart {
 	 * @default "Single"
 	 * @public
 	 */
-	@property({
-		type: CalendarSelectionMode,
-		defaultValue: CalendarSelectionMode.Single,
-	})
-	selectionMode!: `${CalendarSelectionMode}`;
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -240,34 +245,34 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
 
 	/**
 	 * Which picker is currently visible to the user: day/month/year
 	 * @private
 	 */
-	@property({ defaultValue: "day" })
-	_currentPicker!: string;
+	@property()
+	_currentPicker: "day" | "month" | "year" = "day"
 
 	@property({ type: Boolean })
-	_previousButtonDisabled!: boolean;
+	_previousButtonDisabled = false;
 
 	@property({ type: Boolean })
-	_nextButtonDisabled!: boolean;
+	_nextButtonDisabled = false;
 
 	@property()
-	_headerMonthButtonText!: string;
+	_headerMonthButtonText?: string;
 
 	@property()
-	_headerYearButtonText!: string;
+	_headerYearButtonText?: string;
 
 	@property()
-	_headerYearButtonTextSecType!: string;
+	_headerYearButtonTextSecType?: string;
 
-	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
-	_pickersMode!: CalendarPickersMode;
+	@property({ noAttribute: true })
+	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
-	_valueIsProcessed!: boolean
+	_valueIsProcessed = false;
 
 	/**
 	 * Defines the calendar legend of the component.
@@ -279,7 +284,8 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * Defines the selected date or dates (depending on the `selectionMode` property)
-	 * for this calendar as instances of `ui5-date`.
+	 * for this calendar as instances of `ui5-date` or `ui5-date-range`.
+	 * Use `ui5-date` for single or multiple selection, and `ui5-date-range` for range selection.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -297,8 +303,8 @@ class Calendar extends CalendarPart {
 	 * Defines the selected item type of the calendar legend item (if such exists).
 	 * @private
 	 */
-	@property({ type: CalendarLegendItemType, defaultValue: CalendarLegendItemType.None })
-	_selectedItemType!: `${CalendarLegendItemType}`;
+	@property()
+	_selectedItemType: `${CalendarLegendItemType}` = "None";
 
 	constructor() {
 		super();
@@ -583,6 +589,14 @@ class Calendar extends CalendarPart {
 	 */
 	get _isHeaderMonthButtonHidden(): boolean {
 		return this._currentPicker === "month" || this._currentPicker === "year";
+	}
+
+	/**
+	 * The year button is hidden when the year picker is shown
+	 * @private
+	 */
+	get _isHeaderYearButtonHidden(): boolean {
+		return this._currentPicker === "year";
 	}
 
 	get _isDayPickerHidden() {

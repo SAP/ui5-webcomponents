@@ -17,6 +17,7 @@ import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
 import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
+import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
 // but it's configurable:
@@ -56,6 +57,7 @@ import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
+import SuggestionItemCustom from "./SuggestionItemCustom.js";
 import MultiInput from "./MultiInput.js";
 import Label from "./Label.js";
 import Link from "./Link.js";
@@ -63,6 +65,7 @@ import Menu from "./Menu.js";
 import NavigationMenu from "./NavigationMenu.js";
 import NavigationMenuItem from "./NavigationMenuItem.js";
 import MenuItem from "./MenuItem.js";
+import MenuSeparator from "./MenuSeparator.js";
 import Popover from "./Popover.js";
 import Panel from "./Panel.js";
 import RadioButton from "./RadioButton.js";
@@ -120,6 +123,7 @@ const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon3d, icon
 const testAssets = {
 	...testAssetsCommon,
 	getAcceptIconPathData: getPathData,
+	generateHighlightedMarkup,
 	getExportedIconsValues: () => icons,
 };
 

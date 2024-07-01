@@ -1,4 +1,4 @@
-# Get Started with UI5 Web Components & Angular
+# UI5 Web Components & Angular
 
 In this tutorial, you will learn how to use `UI5 Web Components` in an Angular application. In the second part, we will introduce `UI5 Web Components for Angular` - wrapper library for UI5 Web Components, improving their integration with Angular.
 
