@@ -46,6 +46,12 @@ describe("Basic interaction", () => {
 		await dialogCloseButton.click();
 
 		assert.notOk(await tokenizer.getAttribute("expanded"), "The tokenizer is not expanded after closing the picker");
+
+		await tokenizer.shadow$(".ui5-tokenizer-more-text").click();
+
+		assert.notOk(await tokenizer.getAttribute("expanded"), "The tokenizer is not expanded after closing the picker when opened from the 'n-more' link");
+	
+		await dialogCloseButton.click();
 	});
 
 	it("Should close the mobile picker dialog when pressing the OK button", async () => {

@@ -1505,6 +1505,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this._dialogInputValueState = this.valueState;
+			this._tokenizer.expanded = false;
 		}
 
 		this._toggle();
