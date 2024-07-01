@@ -1,4 +1,4 @@
-# Understanding UI5 Web Components APIs
+# Components APIs
 
 *UI5 Web Components are just HTML.* Therefore, their usage is identical
 to the usage of standard HTML elements. Usually, Web Components creation and manipulation
