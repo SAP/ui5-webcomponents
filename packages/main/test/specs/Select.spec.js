@@ -539,6 +539,13 @@ describe("Select general interaction", () => {
 			"The aria-roledescription is correct.");
 	});
 
+	it("Tests options accessibility", async () => {
+		const optionWithTooltip = await browser.$("#selectOptionWithTooltip").shadow$("li.ui5-li-root");
+		const EXPECTED_TOOLTIP = "Tooltip"; 
+		assert.strictEqual(await optionWithTooltip.getAttribute("title"), EXPECTED_TOOLTIP,
+			"The tooltip is correctly set in the shadow root.");
+	});
+
 	it("Tests value state type", async () => {
 		const successSelect = await browser.$("#successSelect");
 		const successSelectValueState = successSelect.shadow$(`#${await successSelect.getProperty('_id')}-valueStateDesc`);
@@ -608,4 +615,6 @@ describe("Select general interaction", () => {
 		const selectedOption = await browser.$("#warningSelect ui5-option[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
 	});
+
+	it()
 });
