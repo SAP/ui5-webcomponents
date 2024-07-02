@@ -2,9 +2,7 @@
 
 In this article, we will discuss events in the context of UI5 Web Components.
 
-Components use `CustomEvent` to inform developers of important state changes in the components. For example, the `ui5-change` event is fired whenever the value of a `ui5-input` is changed.
-
-By default, all custom events fired by UI5 web components start with the `ui5-` prefix.
+Components use `CustomEvent` to inform developers of important state changes in the components. For example, the `change` event is fired whenever the value of a `ui5-input` is changed.
 
 ## `@event` Decorator
 
@@ -53,8 +51,6 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-**Note:** The `ui5-` prefix is automatically added.
-
 Events fired by the `fireEvent` method can be configurable, meaning you can decide whether the event should be cancelable or able to bubble. This can be done by setting the third and fourth parameters of the function to true, respectively.
 
 ```ts
@@ -100,3 +96,17 @@ class MyDemoComponent extends UI5Element {
 
 export { MyDemoComponent };
 ```
+
+## noConflict mode
+By default, UI5 Web Components fire all custom events twice: once with their name (e.g., `change`) and once more with a `ui5-` prefix (e.g., `ui5-change`). For example, when the `ui5-switch` is toggled, it fires a `change` event and a `ui5-change` event.
+
+The `noConflict` setting (`@ui5/webcomponents-base/config/NoConflict.js`) controls this behavior:
+- **`false` (default)**: Events fire both with and without the `ui5-` prefix.
+- **`true`**: Events fire only with the `ui5-` prefix, avoiding name collisions with third-party libraries.
+- **Object**: Specific events listed in the object fire only with the `ui5-` prefix, while all other events fire both ways. Example:
+  ```json
+  {
+      "events": ["selection-change", "header-click"]
+  }
+  ```
+  In this case, only `selection-change` and `header-click` fire with the `ui5-` prefix, leaving these names available for other uses.
