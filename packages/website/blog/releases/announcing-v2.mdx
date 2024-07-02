@@ -1,3 +1,9 @@
+---
+title: Announcing UI5 Web Components 2.0!
+tags: [release, v2]
+slug: /releases/announcing-v2
+---
+
 # Announcing UI5 Web Components 2.0: A New Era Begins! 
 
 ## A Journey of Innovation and Growth 
@@ -5,6 +11,8 @@
 Since the release of UI5 Web Components 1.0 in 2021, our journey has been marked by unwavering innovation and a commitment to excellence. 
 Over the past three years, we have listened to our community, refined our technologies, and expanded our capabilities. 
 Today, we stand at a pivotal moment in our evolution with the launch of **UI5 Web Components 2.0**. 
+
+![UI5 Web Components timeline](./img/ui5webcomponents_timeline.png)
 
 ## The Evolution of UI5 Web Components 
 
@@ -28,24 +36,56 @@ Looking ahead, we will adhere to Semantic Versioning and release major updates m
 
 ## What's New in UI5 Web Components 2.0? 
 
-**Revolutionary Popover API**: Experience a standardized, consistent, and flexible mechanism for displaying popover content across all relevant components.  
-This API allows popups to display correctly above all other content, eliminating the need for the "static area" used in version 1.x. Previously, popups were placed in a static area within the body to ensure correct positioning despite various CSS rules. In version 2.x, the popover API simplifies the DOM structure by incorporating the popover directly within the component. This results in easier development, maintenance, and enhanced styling capabilities. It also allows components with popups to have physical children, supporting custom content and simplifying testing. The popover API is fully supported by all major browsers. 
+### **Revolutionary Popover API**
 
-**Form-Associated Custom Elements**: Harness the power of native input behavior within HTML forms. This enhancement makes the features/InputElementsFormSupport.js feature redundant, simplifying form handling and enhancing the developer experience. Refer to the ElementInternals API documentation for more details. 
+Experience a standardized, consistent, and flexible mechanism for displaying popover content across all relevant components.  
+This API allows popups to display correctly above all other content, eliminating the need for the "static area" used in version 1.x. Previously, popups were placed in a static area within the body to ensure correct positioning despite various CSS rules. In version 2.x, the [popover API](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover) simplifies the DOM structure by incorporating the popover directly within the component. This results in easier development, maintenance, and enhanced styling capabilities. It also allows components with popups to have physical children, supporting custom content and simplifying testing. The popover API is fully supported by all major browsers. Discover all the practical benefits in our [blog post](https://sap.github.io/ui5-webcomponents/nightly/blog/releases/popover-api-in-v2/).
 
-**Seamless Time Zone Support**: Seamlessly manage time zones within your applications for a more personalized user experience. The date and time components are adapted to the time zone feature, allowing the components to present date in different time zones. The time zone identifiers format is the one used in IANA time zone database. 
+### **Form-Associated Custom Elements**
 
-**New Components**: Expand your UI toolkit with new components such as Dynamic Page, Form, Table, Text, Tokenizer, AI Button, and AI Prompt Input. 
+Harness the power of native input behavior within HTML forms. This enhancement makes the features/InputElementsFormSupport.js feature redundant, simplifying form handling and enhancing the developer experience. Refer to the [ElementInternals API documentation](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals) for more details. 
 
-**Enhanced Existing Components**: Benefit from improvements in List Drag and Drop, Tree Drag and Drop, Tab Container Drag and Drop, and a revamped Notifications Experience. 
+### **Seamless Time Zone Support**
 
-**Revamped Documentation Site**: Explore our new documentation site featuring a live editor, playground, dark mode, and an intuitive icons view. 
+Seamlessly manage time zones within your applications for a more personalized user experience. The date and time components are adapted to the time zone feature, allowing the components to present date in different time zones. The time zone identifiers format is the one used in IANA time zone database. See a [sample](https://sap.github.io/ui5-webcomponents/nightly/components/DateTimePicker/#timezones) in our website.
+
+### **New Components**
+
+Expand your UI toolkit with new components such as Dynamic Page, Form, Table, Text, Tokenizer, AI Button, and AI Prompt Input. 
+
+- [Dynamic Page](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/DynamicPage/): A layout component, representing a web page, consisting of a title, header with dynamic behavior, a content area, and an optional floating footer. Use the Dynamic Page if you need to have a title, that is always visible and a header, that has configurable Expanding/Snapping functionality. 
+- [Form](https://sap.github.io/ui5-webcomponents/nightly/components/Form/): The ui5-form is a layout component that arranges labels and form fields (like input fields) pairs into a specific number of columns. And, there is also "grouping" available to assist the implementation of richer UIs. The Form component reacts and changes its layout on predefined breakpoints.
+- [Table](https://sap.github.io/ui5-webcomponents/nightly/components/Table/): The ui5-table component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner. This Table replaces the previous Table web component, that has been part of @ui5/webcomponents version 1.x. For compatibility reasons, we moved the previous Table implementation to the @ui5/webcomponents-compat package and will be maintained until the new Table is experimental.
+- [Text](https://sap.github.io/ui5-webcomponents/nightly/components/Text/): The ui5-text component displays text that can be used in any content area of an application. By default, the text will wrap when the space is not enough. In addition, the component supports truncation via the max-lines property, by defining the number of lines the text should wrap before start truncating.
+- [Tokenizer](https://sap.github.io/ui5-webcomponents/nightly/components/Tokenizer/): A ui5-tokenizer is an invisible container for ui5-tokens that supports keyboard navigation and token selection.
+- [AI Button](https://sap.github.io/ui5-webcomponents/nightly/components/ai/Button/): The ui5-ai-button component represents a button used in AI-related scenarios. It enables users to trigger actions by clicking or tapping the ui5-ai-button, or by pressing certain keyboard keys, such as Enter.
+- [AI Prompt Input](https://sap.github.io/ui5-webcomponents/nightly/components/ai/PromptInput/): The ui5-ai-prompt-input component allows the user to write custom instructions in natural language, so that AI is guided to generate content tailored to user needs.
+
+![Preview of UI5 Web Components 2.0 new components](./img/new_components_v2.png)
+
+### **Enhanced Existing Components** 
+
+Benefit from improvements in List Drag and Drop, Tree Drag and Drop, Tab Container Drag and Drop, and a revamped Notifications Experience. 
+
+![Preview of UI5 Web Components 2.0 new features](./img/new_features_v2.png)
+
+:::note
+
+For the full list of changes, please refer to the release [change log](https://github.com/SAP/ui5-webcomponents/releases).
+
+:::
+
+### **Revamped Documentation Site**
+
+Explore our new documentation site featuring a live editor, playground, dark mode, and an intuitive icons view. 
+
+![UI5 Web Components 2.0 new website](./img/website.png)
 
 **New symbol**: We are excited to introduce our new symbol and branding, reflecting the modern and dynamic nature of our project. Our new design incorporates defining elements of the feather and the flame. The feather symbolizes being lightweight, while the flame forms a connection to the phoenix, embodying the spirit of rebirth and continuous improvement. 
 
 **Explore the Full-Screen Playground** 
 
-Our new full-screen playground offers a range of features designed to enhance your development experience: 
+Our new [full-screen playground](https://sap.github.io/ui5-webcomponents/nightly/play/) offers a range of features designed to enhance your development experience: 
 
 - Live code editing 
 
@@ -61,22 +101,25 @@ Our new full-screen playground offers a range of features designed to enhance yo
 
 - Predefined examples
 
+![UI5 Web Components 2.0 full-screen playground](./img/fullscreen_playground.png)
+
 ## Adoption and Breaking Changes 
 
 UI5 Web Components 2.0 is a major version and introduces breaking changes that may require updates to your code. Our comprehensive Migration Guide will assist you in making a smooth transition from UI5 Web Components v1.x to v2.0. Note: Majority of the breaking changes can be achieved with find and replace. 
 
- 
  **Notable Breaking Changes**: 
 
-- Removal of Belize theme. 
+- Removal of Belize theme.
 
-- CSP via adoptedStyleSheets only; static area removed. 
+- CSP via adoptedStyleSheets only.
 
-- Renaming of properties, events, and enumeration values. 
+- Staic area removed.
 
-- Badge component renamed to Tag. 
+- Renaming of properties, events, and enumeration values.
 
-- Old Table (ui5-table) moved to @ui5/webcomponents-compat; new Table available with better API and accessibility. 
+- Badge component renamed to Tag.
+
+- Old Table (ui5-table) moved to @ui5/webcomponents-compat; new Table available with better API and accessibility.
 
 - Public methods for opening popovers replaced with the open property for declarative APIs. 
 
@@ -100,14 +143,13 @@ UI5 Web Components 2.0 is a major version and introduces breaking changes that m
  
 ## Get Help and Engage with the Community 
 
- Encountering issues? Reach out for support or report bugs on our GitHub project: Submit a bug or ask a question here. 
+ Encountering issues? Reach out for support or report bugs on our GitHub project: [Submit a bug or ask a question here](https://github.com/SAP/ui5-webcomponents/issues/new/choose). 
 
- 
 ## Call to Action 
 
 UI5 Web Components 2.0 is a testament to our dedication to innovation, quality, and community engagement. We are particularly excited about the groundbreaking features such as the Popover API, Form-Associated Custom Elements, and seamless time zone support. 
 
-We invite you to preview the new version and migrate to UI5 Web Components 2.0 to fully leverage these advancements. Together, we are entering a new era of web development, and the possibilities are endless. Thank you for being part of this exciting journey with us!  
+We invite you to preview the new version and migrate to UI5 Web Components 2.0 to fully leverage these advancements. Together, we are entering a new era of web development, and the possibilities are endless. Thank you for being part of this exciting journey with us! 🙌 
 
    
 
