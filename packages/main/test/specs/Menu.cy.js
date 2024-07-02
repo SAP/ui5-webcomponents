@@ -60,7 +60,7 @@ describe("Menu interaction", () => {
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
 
-			
+
 			cy.get("[ui5-menu-item][text='Item 1.0']")
 			.as("item")
 			.ui5MenuItemClick();
@@ -309,6 +309,7 @@ describe("Menu interaction", () => {
 					<ui5-menu-item text="Item 1.1"></ui5-menu-item>
 				</ui5-menu-item>
 				<ui5-menu-item text="Item 2.0" accessible-name="test accessible name"></ui5-menu-item>
+				<ui5-menu-item text="Item 3.0" additional-text="Ctrl+A"></ui5-menu-item>
 			</ui5-menu>`)
 
 			cy.get("[ui5-menu]")
@@ -334,6 +335,28 @@ describe("Menu interaction", () => {
 			cy.get("@items")
 				.eq(1)
 				.should("have.attr", "accessible-name", "test accessible name")
+
+			cy.get("@items")
+				.eq(2)
+				.then($el => {
+					$el.get(0).accessibilityAttributes = {
+						ariaKeyShortcuts: "Ctrl+A",
+						role: "menuitemcheckbox",
+					}
+				})
+
+			cy.get("@items")
+				.eq(2)
+				.shadow()
+				.find("li")
+				.should("have.attr", "aria-keyshortcuts", "Ctrl+A", "aria-keyshortcuts attribute is reflected")
+				.and("have.attr", "role", "menuitemcheckbox", "role attribute is reflected")
+
+			cy.get("@items")
+				.eq(2)
+				.shadow()
+				.find("li .ui5-li-additional-text")
+				.should("have.attr", "aria-hidden", "true", "aria-hidden attribute is set to true")
 		});
 	})
 })
