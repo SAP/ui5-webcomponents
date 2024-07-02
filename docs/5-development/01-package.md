@@ -1,16 +1,16 @@
-# Creating web components library
+---
+sidebar_label: Create Web Components Project
+---
 
-This tutorial explains how to:
- - Create web components library, ready to be published as NPM package
- - Make use of `@ui5/webcomponents-tools`
- - Make use of HBS template support, i18n, theming, test setup, etc.
+# Create UI5 Web Components Project (Package)
+
+This tutorial explains how to create web components project, ready to be published as NPM package, on top of the  UI5 Web Components framework (`@ui5/webcomponents-base`) and tools (`@ui5/webcomponents-tools`) to make use of development server, theming, HBS template support, i18n, test setup, etc.
 
 ## Initialize New Project
 
 ### 1. Run the init command
 
-**Note:** The following command will **create a new directory** and initialize your library (NPM package) there.
-Make sure you haven't created a directory yourself.
+The following command will **create a new directory** and initialize your project, prepared as an NPM package.
 
  - With **npm**:
 
@@ -29,7 +29,7 @@ Make sure you haven't created a directory yourself.
 
     `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`
 
-The `<NEW-PACKAGE-NAME>` is the name of the directory to be created, but also of the library (and the NPM package).
+**Note:** The `<NEW-PACKAGE-NAME>` is the name of the directory/project to be created, but also the NPM package name, used in the `package.json`.
 
 For example:
 
@@ -37,12 +37,12 @@ For example:
 npm init @ui5/webcomponents-package my-components
 ```
 
-will create a `my-components` directory and initialize the library inside.
+will create a `my-components` directory and initialize the project inside.
 
 ### 2. Follow the prompts
 
 The initialization script will ask you to choose:
- - The **name** of your library/package (if you did not already pass a name when running the command above);
+ - The **name** of your NPM package (if you did not already pass a name when running the command above);
  - The **port** for your dev server (`8080` by default - just press Enter to select this);
  - The **componentName** of the sample web component that will be created (`MyComponent` by default - just press Enter to select this).
 
@@ -252,7 +252,7 @@ You can execute all specs by running `yarn test` or `npm run test`.
 
 For more on testing, see our [Testing Web Components](./10-testing.md) section.
 
-## Consumption of your web components library
+## Consumption of the Web Components
 
 Once you've developed your package and published it to NPM, application developers can import from the `dist/` directory
 of your package any of your Web Components, and optionally the `Assets.js` module, if they want additional themes and i18n.

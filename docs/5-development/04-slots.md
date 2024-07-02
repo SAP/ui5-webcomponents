@@ -1,4 +1,4 @@
-### Slots
+# Slots
 
 In this article, we will discuss slots in the context of UI5 Web Components.
 
@@ -67,7 +67,7 @@ Available types:
 | HTMLElement | Accepts HTML Elements only       |
 | Node        | Accepts both Text nodes and HTML Elements |
 
-### default
+### Default Slot
 This option accepts a boolean value and is used to define whether this slot is the default one.
 
 **Note:** The default slot is defined simply as an empty slot tag: `<slot></slot>` (without a `name` attribute).
@@ -84,7 +84,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-### individualSlots
+### `individualSlots`
 This option accepts a boolean value and determines whether each child will have its own slot, allowing you to arrange or wrap the children arbitrarily. This means that you need to handle the rendering on your own.
 
 ```ts
@@ -109,7 +109,7 @@ To render individual slots, you have to iterate all children in that slot and us
 
 **Note:** When this option is set to `true`, the `_individualSlot` property is set to each direct child, where `_individualSlot` returns a string following the pattern `{nameOfTheSlot}-{index}` and the slot attribute is changed based on that pattern.
 
-### invalidateOnChildChange
+### `invalidateOnChildChange`
 This option accepts a boolean value or an object literal containing a configuration with more specific settings, determining whether the component should be invalidated on child change.
 
 **NOTE: This is an experimental option and should not be used.**

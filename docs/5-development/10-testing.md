@@ -1,8 +1,4 @@
----
-sidebar_label: Tests
----
-
-# Testing UI5 Web Components
+# Testing
 
 
 The test framework of choice for UI5 Web Components is [WebdriverIO](https://webdriver.io/) or WDIO for short.
