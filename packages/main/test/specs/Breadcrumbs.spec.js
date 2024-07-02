@@ -148,10 +148,10 @@ describe("Breadcrumbs general interaction", () => {
 
 	it("standard breadcrumb with single item shows location", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsWithSingleItem"),
-			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
+			label = (await breadcrumbs.shadow$("ui5-label"));
 
 		// Check
-		assert.strictEqual(await link.getText(), "Location", "label is displayed");
+		assert.strictEqual(await label.getText(), "Location", "label is displayed");
 	});
 
 	it("opens upon space", async () => {
