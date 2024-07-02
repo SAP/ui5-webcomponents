@@ -44,7 +44,7 @@ For these reasons, we would suggest you use `.hbs` templates and have them compi
 ### Global context
 
 The context in the `.hbs` file is the **web component instance**, and you do not have to write the `this` keyword (although you can).
-Therefore, you can directly use metadata entities (property, slot, event names) or any other Javascript property on the component directly:
+Therefore, you can directly use metadata entities (property, slot, event names) or any other JavaScript property on the component directly:
 
 In the `Demo.js` file:
 
@@ -623,7 +623,7 @@ In the `Demo.hbs` file:
 After the following code is run, both the `div` and the `footer` will have the respective CSS styles applied to them.
 
 **Important:** do not build styles manually. Always use style maps as they are CSP-compliant and they will not build style strings and assign them,
-but will use Javascript APIs to apply each style/CSS variable separately.
+but will use JavaScript APIs to apply each style/CSS variable separately.
 
 The following is an anti-pattern and is **not allowed** in the latest version of the handlebars-to-lit compiler:
 
