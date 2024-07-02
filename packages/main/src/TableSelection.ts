@@ -77,7 +77,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	@property()
 	selected = "";
 
-	readonly _identifier = "TableSelection";
+	readonly identifier = "TableSelection";
 	_table?: Table;
 	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 

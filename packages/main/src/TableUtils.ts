@@ -18,7 +18,7 @@ const findRowInPath = (composedPath: Array<EventTarget>) => {
 };
 
 const isFeature = <T>(element: any, identifier: string): element is T => {
-	return element._identifier === identifier;
+	return element.identifier === identifier;
 };
 
 export {

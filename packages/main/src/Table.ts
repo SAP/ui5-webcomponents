@@ -32,7 +32,7 @@ import { isFeature } from "./TableUtils.js";
  * @public
  */
 interface ITableFeature extends UI5Element {
-	readonly _identifier: string;
+	readonly identifier: string;
 	/**
 	 * Called when the table is activated.
 	 * @param table table instance
