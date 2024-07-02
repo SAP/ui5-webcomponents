@@ -3,9 +3,15 @@ import {
 	getCalendarType as getConfiguredCalendarType,
 	getSecondaryCalendarType as getConfiguredSecondaryCalendarType,
 } from "../InitialConfiguration.js";
+import { registerConfiguration } from "./ConfigurationReset.js";
 
 let calendarType: CalendarType | undefined;
 let secondaryCalendarType: CalendarType | undefined;
+
+registerConfiguration("CalendarType", () => {
+	calendarType = undefined;
+	secondaryCalendarType = undefined;
+});
 
 /**
  * Returns the configured or default calendar type.

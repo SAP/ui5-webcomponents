@@ -1,6 +1,11 @@
 import { getTimezone as getConfiguredTimezone } from "../InitialConfiguration.js";
+import { registerConfiguration } from "./ConfigurationReset.js";
 
 let currTimezone: string | undefined;
+
+registerConfiguration("ThemeRoot", () => {
+	currTimezone = undefined;
+});
 
 /**
  * Returns the configured IANA timezone ID.

@@ -6,6 +6,8 @@ import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import type CalendarType from "./types/CalendarType.js";
+import { resetConfiguration } from "./config/ConfigurationReset.js";
+import { getLocationSearch } from "./Location.js";
 
 let initialized = false;
 
@@ -124,7 +126,7 @@ const parseConfigurationScript = () => {
 };
 
 const parseURLParameters = () => {
-	const params = new URLSearchParams(window.location.search);
+	const params = new URLSearchParams(getLocationSearch());
 
 	// Process "sap-*" params first
 	params.forEach((value, key) => {
@@ -194,6 +196,19 @@ const initConfiguration = () => {
 		return;
 	}
 
+	forceInitConfiguration();
+
+	initialized = true;
+};
+
+/**
+ * Internaly exposed method to enable configurations in tests.
+ * @private
+ */
+const forceInitConfiguration = (testEnv = false) => {
+	if (testEnv) {
+		resetConfiguration();
+	}
 	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
 
@@ -202,8 +217,6 @@ const initConfiguration = () => {
 
 	// 3. If OpenUI5 is detected, it has the highest priority
 	applyOpenUI5Configuration();
-
-	initialized = true;
 };
 
 export {
@@ -217,4 +230,5 @@ export {
 	getSecondaryCalendarType,
 	getTimezone,
 	getFormatSettings,
+	forceInitConfiguration,
 };
