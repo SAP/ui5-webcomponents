@@ -1,12 +1,14 @@
-### Properties / Attributes
+# Properties
 
 In this article, we will discuss properties in the context of UI5 Web Components.
+
+## Properties and Attributes
 
 Properties allow you to configure the state of your component.
 
 By default, for each property, there is an equivalent attribute. Attributes have the same names as properties but in `kebab-case` rather than `camelCase`. Properties of type `Object` or `Array` and properties with `noAttribute` set to `true` do not have an attribute equivalent.
 
-## @property decorator
+## `@property` decorator
 
 To define your own property, you need to:
 - Use the `property` decorator.
@@ -98,7 +100,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-### Defining a default value
+### Default Value
 Use JavaScript property initializers to define default values.
 
 ```ts
@@ -125,4 +127,4 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-Note: due to the way HTML attributes work, boolean properties can only have `false` as their default value.
+**Note:** due to how HTML attributes work, boolean properties can only have `false` as a default value.

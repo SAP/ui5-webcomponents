@@ -25,7 +25,7 @@
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
 - [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
 - [Customizing with `UI Theme Designer`](./docs/3-customizing/02-theme.md)
-- [Creating a Custom UI5 Web Components Package](./docs/5-development/01-library.md)
+- [Creating a Custom UI5 Web Components Package](./docs/5-development/01-package.md)
 - [Developing Custom UI5 Web Components](./docs/5-development/02-component.md)
 - [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/03-scoping.md)
 - [Release Management](./docs/Release%20Management.md)
