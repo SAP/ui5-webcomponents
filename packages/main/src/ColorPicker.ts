@@ -91,11 +91,11 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * Defines the currently selected color of the component.
 	 *
 	 * **Note**: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-	 * @default "rgba(255, 255, 255, 1)"
+	 * @default "rgba(255,255,255,1)"
 	 * @public
 	 */
 	@property()
-	value = "rgba(255, 255, 255, 1)";
+	value = "rgba(255,255,255,1)";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -212,7 +212,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	onBeforeRendering() {
 		// we have the color & ._mainValue properties here
 		this._value = getRGBColor(this.value);
-		const tempColor = `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, 1)`;
+		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},1)`;
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
