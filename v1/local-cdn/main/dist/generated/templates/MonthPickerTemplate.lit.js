@@ -1,0 +1,8 @@
+/* eslint no-unused-vars: 0 */
+import { html, repeat, ifDefined } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="ui5-mp-root" role="grid" aria-roledescription="${ifDefined(this.roleDescription)}" aria-readonly="false" aria-multiselectable="false" @keydown=${this._onkeydown} @keyup=${this._onkeyup} @click=${this._selectMonth}>${repeat(this._months, (item, index) => item._id || index, (item, index) => block1.call(this, context, tags, suffix, item, index))}</div>`; }
+function block1(context, tags, suffix, item, index) { return html `<div class="ui5-mp-quarter">${repeat(item, (item, index) => item._id || index, (item, index) => block2.call(this, context, tags, suffix, item, index))}</div>`; }
+function block2(context, tags, suffix, item, index) { return html `<div data-sap-timestamp=${ifDefined(item.timestamp)} tabindex=${ifDefined(item._tabIndex)} ?data-sap-focus-ref="${item.focusRef}" class="${ifDefined(item.classes)}" role="gridcell" aria-selected="${ifDefined(item.ariaSelected)}"><span class="ui5-dp-monthtext">${ifDefined(item.name)}</span>${item.nameInSecType ? block3.call(this, context, tags, suffix, item, index) : undefined}</div>`; }
+function block3(context, tags, suffix, item, index) { return html `<span class="ui5-dp-monthtext ui5-dp-monthsectext">${ifDefined(item.nameInSecType)}</span>`; }
+export default block0;
+//# sourceMappingURL=MonthPickerTemplate.lit.js.map

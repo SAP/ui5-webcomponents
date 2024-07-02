@@ -1,0 +1,2 @@
+"use strict";import{hasStyle as t,createStyle as o}from"./ManagedStyles.js";import{getFeature as r}from"./FeaturesRegistry.js";import p from"./generated/css/FontFace.css.js";import a from"./generated/css/OverrideFontFace.css.js";const n=()=>{const e=r("OpenUI5Support");(!e||!e.isOpenUI5Detected())&&i(),f()},i=()=>{t("data-ui5-font-face")||o(p,"data-ui5-font-face")},f=()=>{t("data-ui5-font-face-override")||o(a,"data-ui5-font-face-override")};export default n;
+//# sourceMappingURL=FontFace.js.map

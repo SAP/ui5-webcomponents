@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html role="application">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>MessageStrip</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+
+	
+
+
+	
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/MessageStrip-c081bc94.css">
+</head>
+
+<body class="messagestrip1auto">
+	<ui5-message-strip id="messageStrip">Hello World!</ui5-message-strip>
+	<ui5-input id="inputField"></ui5-input>
+
+
+	<ui5-message-strip class="top" design="Information">Default (Information) with default icon and close button:</ui5-message-strip>
+	<ui5-message-strip class="top" design="Negative">Negative with <b>default</b> icon and close button:</ui5-message-strip>
+	<ui5-message-strip class="top" design="Warning">Warning with default icon and close button:</ui5-message-strip>
+	<ui5-message-strip class="top" design="Positive">Positive with default icon and close button:</ui5-message-strip>
+
+	<ui5-message-strip class="top" design="Information">Information with default icon.</ui5-message-strip>
+	<ui5-message-strip class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
+
+	<ui5-message-strip hide-icon class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
+	<ui5-message-strip hide-icon hide-close-button class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
+	<ui5-message-strip hide-close-button class="top" design="Information">Ea mollit nulla laborum et fugiat nulla excepteur ea. Duis et dolor enim Lorem laboris adipisicing cillum quis proident dolor veniam voluptate. Nostrud dolore ipsum anim voluptate enim dolore eiusmod aliqua et. Est eu ex dolor ea ipsum. Adipisicing duis aliquip ullamco culpa dolore exercitation ullamco cillum irure.</ui5-message-strip>
+
+    <ui5-message-strip design="Warning" class="top"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-message-strip>
+
+    <ui5-message-strip design="Positive" class="top"><img src="../../../../assets/loading-b2cd685f.gif" width="16" height="16" slot="icon">Custom icon</ui5-message-strip>
+
+	<script>
+		var counter = 0;
+		messageStrip.addEventListener("ui5-close", function() {
+			inputField.value = ++counter;
+		});
+	</script>
+</body>
+</html>

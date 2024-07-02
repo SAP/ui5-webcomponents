@@ -1,0 +1,6 @@
+/* eslint no-unused-vars: 0 */
+import { html, ifDefined, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-button", tags, suffix)} class="ui5-ai-button-inner" design="${ifDefined(this.design)}" icon=${ifDefined(this._stateIcon)} end-icon=${ifDefined(this._stateEndIcon)} ?disabled="${this.disabled}" @click=${this._onclick}>${this._hasText ? block1.call(this, context, tags, suffix) : undefined}</${scopeTag("ui5-button", tags, suffix)}><${scopeTag("ui5-button", tags, suffix)} class="ui5-ai-button-hidden" design="${ifDefined(this.design)}"></${scopeTag("ui5-button", tags, suffix)}>` : html `<ui5-button class="ui5-ai-button-inner" design="${ifDefined(this.design)}" icon=${ifDefined(this._stateIcon)} end-icon=${ifDefined(this._stateEndIcon)} ?disabled="${this.disabled}" @click=${this._onclick}>${this._hasText ? block1.call(this, context, tags, suffix) : undefined}</ui5-button><ui5-button class="ui5-ai-button-hidden" design="${ifDefined(this.design)}"></ui5-button>`; }
+function block1(context, tags, suffix) { return html `<div class="ui5-ai-button-text">${ifDefined(this._stateText)}</div>`; }
+export default block0;
+//# sourceMappingURL=ButtonTemplate.lit.js.map

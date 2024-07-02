@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "intranet";
+const pathData = "M242 393v-27q-12-4-17.5-13t-7.5-18l-64-63q-1 5-1 9v9q0 40 26 69t64 34zm14-334q-10 0-17 7L82 202q-9 8-9 19v212q0 11 7.5 18.5T99 459h313q11 0 18.5-7.5T438 433V221q0-2-1-7t-9-13L273 66q-8-7-17-7zm39 135v18q0 13-13 13h-40v26q0 13-13 13h-20l26 26h47q13 0 13 13v38q14 1 22 7.5t12 14.5q14-14 22.5-33t8.5-40q0-33-18-59t-47-37zm117 317H99q-33 0-56-23t-23-55V221q0-36 29-60L204 26q23-20 52-20 31 0 52 22l156 134q27 28 27 59v212q0 32-23.5 55T412 511zM133 247q0-3 1-5 16-38 48.5-60t72.5-22q16 0 29 3 3 0 4 1 42 11 70 45.5t28 80.5q0 33-15.5 61.5T329 397l-1 1q-1 0-1 .5t-1 .5q-32 21-71 21-27 0-50.5-10.5t-41-28-27.5-41-10-50.5q0-25 7-43z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v2";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v2/intranet";
+export { pathData, ltr, accData };

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="popover1auto">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>PopoverArrowBounds</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	
+
+	
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/PopoverArrowBounds-32856f40.css">
+</head>
+
+<body class="sapUiSizeCompact">
+	<ui5-button id="myBtn1" data-placement-type="Left" class="myBtn">1</ui5-button>
+	<ui5-button id="myBtn2" data-placement-type="Left" data-vertical-align="Top" class="myBtn">2</ui5-button>
+	<ui5-button id="myBtn3" data-placement-type="Bottom" class="myBtn">3</ui5-button>
+	<ui5-button id="myBtn4" data-placement-type="Top" class="myBtn">4</ui5-button>
+	<ui5-button id="myBtn5" data-placement-type="Left" class="myBtn">5</ui5-button>
+	<ui5-button id="myBtn6" data-placement-type="Left" class="myBtn">6</ui5-button>
+
+	<ui5-toggle-button id="customSizeBtn">Bigger Popover</ui5-toggle-button>
+
+	<ui5-popover id="myPopover">My Popover</ui5-popover>
+
+	<script>
+		var myPopover = document.getElementById("myPopover");
+
+		Array.from(document.querySelectorAll(".myBtn")).forEach(function (btn) {
+			btn.addEventListener("click", function() {
+				myPopover.placementType = btn.dataset.placementType;
+				myPopover.verticalAlign = btn.dataset.verticalAlign;
+				myPopover.showAt(btn);
+			});
+		});
+
+		var customSizeBtn = document.getElementById("customSizeBtn");
+		customSizeBtn.addEventListener("click", function (event) {
+			myPopover.classList.toggle("customSize");
+		})
+	</script>
+</body>
+
+</html>

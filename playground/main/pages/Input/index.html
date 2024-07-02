@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-input</title>
+
+
+	
+
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/Input-38261f5b.css">
+</head>
+
+<body class="input1auto">
+	<h3> Input with suggestions: type 'a'</h3>
+	<ui5-label id="myLabel">Event [suggestionItemSelect] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelChange">Event [change] :: N/A</ui5-label><br/>
+	<ui5-label id="myLabelLiveChange">Event [input] :: N/A</ui5-label><br/>
+
+	<div>
+		<h3>Input in Cozy</h3>
+		<ui5-input id="myInput"
+			class="input2auto"
+			show-suggestions
+			placeholder="Search for a country ..."
+		>
+		</ui5-input>
+
+		<div>
+			Change event count: <span id="myInput-change-count"></span>
+		</div>
+		<div id="myInput-change-result"></div>
+	</div>
+
+	<div class="sapUiSizeCompact">
+		<h3>Input in Compact</h3>
+		<ui5-input id="inputCompact"
+			class="input2auto"
+			show-suggestions
+			placeholder="Search for a country ...">
+		</ui5-input>
+	</div>
+
+	<br/>
+	<br/>
+	<h3>Input suggestions with ui5-li</h3>
+	<ui5-input id="myInput2" show-suggestions class="input3auto">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li type="Inactive">Inactive Compact</ui5-li>
+		<ui5-li type="Inactive">Inactive Condensed</ui5-li>
+	</ui5-input>
+	<br/>
+	<br/>
+	<h3>Input suggestions with grouping</h3>
+	<ui5-input id="myInputGrouping" show-suggestions class="input3auto">
+		<ui5-suggestion-group-item text="Content Density"></ui5-suggestion-group-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-group-item text="Themes"></ui5-suggestion-group-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive Quartz"></ui5-suggestion-item>
+		<ui5-suggestion-item type="Inactive" text="Inactive HCB"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input suggestions with highlighing</h3>
+	<ui5-input id="myInputHighlighted" show-suggestions class="input3auto">
+		<ui5-suggestion-item text="Adam D" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Allen K" description="Technical Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Alex" description="Technical Support"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3> Input disabled</h3>
+	<ui5-input class="input4auto" id="input-disabled" disabled placeholder="Disabled one ...">
+		<ui5-icon slot="icon" name="appointment-2"></ui5-icon>
+	</ui5-input>
+	<input />
+
+	<h3> Input maxLength = 5</h3>
+	<ui5-input id="input-max-length" maxLength="5" placeholder="Max length of 5"></ui5-input>
+
+	<h3> Input valueState Success</h3>
+	<ui5-input id="input3" value-state="Success" placeholder="Success state ..."></ui5-input>
+
+	<h3> Input valueState Information</h3>
+	<ui5-input value-state="Information" placeholder="Info state ..."></ui5-input>
+
+	<h3> Test 'change' event</h3>
+	<ui5-input id="input1" value-state="Warning" placeholder="Warning state ..."></ui5-input>
+
+	<h3>Input with valueState and Dynamic suggestions</h3>
+	<ui5-input id="inputError"
+		class="input2auto"
+		show-suggestions
+		value-state="Error"
+		placeholder="Search for a country ...">
+	<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
+	</ui5-input>
+
+	<h3>Input with long suggestions with valueState and ui5-li</h3>
+	<ui5-input id="long-sugg" show-suggestions class="input2auto" value-state="Information">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3>Input with disabled autocomplete (type-ahead)</h3>
+	<ui5-input id="input-disabled-autocomplete" show-suggestions no-typeahead="true">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2. text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.Extra long text used as a list item. Extra long text used as a list item -2.</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>CozyTwo</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3>Input with disabled autocomplete and preventable suggestion select</h3>
+	<ui5-input id="input-prevent-suggestion-select" show-suggestions no-typeahead="true">
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+
+	<h3> 'change' event result</h3>
+	<ui5-input id="inputResult"></ui5-input>
+
+	<h3> 'selection-item-select' event result</h3>
+	<ui5-input id="input-selection-event-test"></ui5-input>
+
+	<h3> 'suggestionItemSelect' event result on group item</h3>
+	<ui5-input id="inputResultGrouping"></ui5-input>
+
+	<h3> Test 'input' event</h3>
+	<ui5-input id="input2" value-state="Error" placeholder="Error state ...">
+		<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+	</ui5-input>
+	<h3> 'input' test result</h3>
+	<ui5-input id="inputLiveChangeResult"></ui5-input>
+
+	<h3> Input test change with suggestions</h3>
+	<ui5-input id="inputChange-Suggestions" show-suggestions>
+		<ui5-icon slot="icon" name="message-warning"></ui5-icon>
+		<ui5-suggestion-item text="Project"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Fellowship"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Vocational Training"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3> Input test change</h3>
+	<ui5-input id="inputChange"></ui5-input>
+
+	<h3> Input test change result</h3>
+	<ui5-input id="inputChangeResult"></ui5-input>
+	<h3>Input test ESC</h3>
+	<ui5-input id="myInputEsc" show-suggestions class="input3auto">
+		<ui5-suggestion-item text="Chromium"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Titanium"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Iron"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Gold"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Silver"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3> Input readonly</h3>
+	<ui5-input id="input-readonly" value="Value can`t be changed" readonly></ui5-input>
+	<ui5-input id="input-readonly" placeholder="Value can`t be changed" readonly></ui5-input>
+
+	<h3> Input required</h3>
+	<ui5-input id="input-required" value="This input is required" required></ui5-input>
+
+	<h3> Input type 'Number'</h3>
+	<ui5-input id="input-number" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+
+	<ui5-input id="input-number2" type="Number" placeholder="Numbers are allowed only ..."></ui5-input>
+
+	<h3> Input type 'Password'</h3>
+	<ui5-input id="input-password" type="Password" placeholder="Typing in private ..."></ui5-input>
+
+	<h3> Input type 'Email'</h3>
+	<ui5-input id="input-email" type="Email" name="my-input-email"></ui5-input>
+
+	<h3> Input type 'Tel'</h3>
+	<ui5-input id="input-tel" maxlength="10" type="Tel"  name="my-input-tel"></ui5-input>
+
+	<h3> Input type 'URL'</h3>
+	<ui5-input id="input-url" type="URL"></ui5-input>
+
+	<h3> Input With aria-label</h3>
+	<ui5-input id="aria-label-input" accessible-name="Enter your secret password"></ui5-input>
+
+	<h3> Readonly input with value state</h3>
+	<ui5-input id="readonly-value-state-input" readonly value-state="Error"></ui5-input>
+
+	<h3> Inputs alignment</h3>
+	<ui5-button>Press</ui5-button>
+	<ui5-date-picker  id='dp5'
+			placeholder='Delivery Date...'
+			title='Delivery Date!'>
+	</ui5-date-picker>
+
+	<ui5-date-picker id='dp5'
+			placeholder='Delivery Date...'
+			value-state="Error"
+			title='Delivery Date!'>
+	</ui5-date-picker>
+
+	<ui5-date-picker
+			placeholder='Delivery Date...'
+			value-state="Information"
+			title='Delivery Date!'>
+	</ui5-date-picker>
+
+	<ui5-select id="mySelect2">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-input  value="input" value-state="Error"></ui5-input>
+
+	<ui5-select id="mySelect2" value-state="Error">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-select value-state="Information">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option selected>Compact</ui5-option>
+		<ui5-option>Condensed</ui5-option>
+	</ui5-select>
+
+	<ui5-multi-combobox value-state="Error"></ui5-multi-combobox>
+	<ui5-multi-combobox value-state="Information"></ui5-multi-combobox>
+
+	<h3> Input with multiple icons</h3>
+	<ui5-input id="input3" placeholder="Search ...">
+		<ui5-icon slot="icon" name="search" class="input5auto"></ui5-icon>
+		<ui5-icon slot="icon" name="decline" class="input5auto"></ui5-icon>
+	</ui5-input>
+
+	<h3> Input firing submit event and submit action on 'ENTER' in a form</h3>
+	<form id="submit-form">
+		<ui5-input id="submit-input" name="my-submit-input" placeholder="Type something and press 'ENTER' ..."></ui5-input>
+	</form>
+
+	<h3> Test scroll pos</h3>
+	<ui5-input id="scrollInput" show-suggestions>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+	<br><br>
+	<ui5-input id="scrollResult"></ui5-input>
+
+	<h3>Test accessibleName and accessibleNameRef</h3>
+	<ui5-input accessible-name="Very important input"></ui5-input>
+	<br>
+	<ui5-label id="enterNameLabel">Enter name: </ui5-label>
+	<ui5-input accessible-name-ref="enterNameLabel"></ui5-input>
+
+	<h3>Input suggestions with highlighing and XSS test</h3>
+	<ui5-input show-suggestions class="input3auto">
+		<ui5-suggestion-item text="<script>alert('XSS')</script>" description="Administrative Support"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Aanya Sing" description="<b onmouseover=alert('XSS')></b>">
+		</ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Test width of suggestions popover</h3>
+	<ui5-input id="suggestionsPopoverWidth" show-suggestions class="input6auto">
+		<ui5-li>Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</ui5-li>
+	</ui5-input>
+
+	<h3>Input in a Dialog</h3>
+	<ui5-button id="btnOpenDialog">Open Dialog</ui5-button>
+	<ui5-dialog id="dialog">
+		<ui5-input id="inputInDialog" show-suggestions class="input3auto">
+			<ui5-li>Cozy</ui5-li>
+			<ui5-li>Compact</ui5-li>
+			<ui5-li>Condensed</ui5-li>
+			<ui5-li type="Inactive">Inactive Compact</ui5-li>
+			<ui5-li type="Inactive">Inactive Condensed</ui5-li>
+		</ui5-input>
+	</ui5-dialog>
+
+	<h3>Short Input With Centered Text</h3>
+	<ui5-input class="short" value="244"></ui5-input>
+
+	<h3>Input with suggestions: clear value on selection change</h3>
+	<ui5-input id="change-event-value" show-suggestions>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
+	
+
+	<h3>Test Backspace</h3>
+	<ui5-input id="input-number3" type="Number" value="4"></ui5-input><br>
+	<ui5-button id="input-number3-focusout">Click</ui5-button>
+
+	<ui5-input id="input-number31" type="Number" value="4.333"></ui5-input><br>
+	<ui5-input id="input-number32" type="Number" value="4.3"></ui5-input><br>
+	<ui5-input id="input-number33" type="Number" value=".33"></ui5-input><br>
+	<ui5-input id="input-number34" type="Number" value="-1.33"></ui5-input><br>
+	<ui5-input id="input-number35" type="Number" value="-1.33e-2"></ui5-input><br>
+	<ui5-input id="input-number35_eventValue" value="-1.33e-2"></ui5-input><br>
+
+	<h3>sap_horizon</h3>
+
+	<div class="sap_horizon">
+		
+		<ui5-input placeholder="No Value State"></ui5-input>
+		<ui5-input placeholder="Disabled" disabled></ui5-input>
+		<ui5-input placeholder="ReadnOnly" readonly></ui5-input>
+		<ui5-input id="vs-error-default" placeholder="Error ValueState" value-state="Error"></ui5-input>
+		<ui5-input id="vs-warning-default" placeholder="Warning ValueState" value-state="Warning"></ui5-input>
+		<ui5-input id="vs-success-default" placeholder="Success ValueState" value-state="Success"></ui5-input>
+		<ui5-input id="vs-information-default" placeholder="Information ValueState" value-state="Information"></ui5-input>
+	</div>
+
+	<br>
+	<br>
+
+	<div id="xss-wrapper">
+		<ui5-button id="xss-btn">add xss item</ui5-button>
+		<ui5-input show-suggestions id="xss-input">
+			<ui5-suggestion-item text=""></ui5-suggestion-item>
+			<ui5-suggestion-item text="&lt;b&gt;&lt;/b&gt;"></ui5-suggestion-item>
+			<ui5-suggestion-item text="3412test1234"></ui5-suggestion-item>
+			<ui5-suggestion-item text="[[[b]]]"></ui5-suggestion-item>
+			<ui5-suggestion-item text="&amp;amp;"></ui5-suggestion-item>
+		</ui5-input>
+		<span id="xss-result">NO XSS</span>
+	</div>
+
+	<br>
+	<br>
+	<br>
+
+	<div>
+		<h3>Inputs with clear icon</h3>
+
+		<ui5-input id="clear-input" show-clear-icon placeholder="Type to show clear icon..."></ui5-input>
+		<br />
+		<br />
+		<span>Change: </span><span id="clear-input-change-event-count">0</span>
+		<br />
+		<span>Input: </span><span id="clear-input-input-event-count">0</span>
+		<br />
+		<br />
+		<span class="sapUiSizeCompact">
+			<ui5-input id="clear-input-compact" show-clear-icon placeholder="Type to show clear icon..." value="test"></ui5-input>
+			<br>
+			<button id="clear-icon-readonly-toggle">Toggle readonly</button>
+			<br>
+
+			<button id="clear-icon-disabled-toggle">Toggle disabled</button>
+		</span>
+		<br />
+		<br />
+		<span>Input with suggestions and clear icon</span>
+		<br />
+		<ui5-input id="clear-input-suggestions" show-suggestions show-clear-icon placeholder="Type to show clear icon...">
+			<ui5-suggestion-item text="text 1"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 2"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 3"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 4"></ui5-suggestion-item>
+			<ui5-suggestion-item text="text 5"></ui5-suggestion-item>
+		</ui5-input>
+		<br />
+	</div>
+
+	<h3>Input with openPicker() on focusin</h3>
+	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
+		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
+		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input - showing wrapping</h3>
+	<ui5-input show-suggestions id="input-change-wrapping">
+		<ui5-suggestion-item text="Item that does not wrap"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"></ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input - change event handling</h3>
+
+	<ui5-input id="input-change-1"></ui5-input>
+	<ui5-button id="clear-button">Clear</ui5-button>
+	<div>
+		Change event count: <span id="input-change-count-1"></span>
+	</div>
+
+	<ui5-input show-suggestions id="input-change-2">
+		<ui5-suggestion-item text="SOF"></ui5-suggestion-item>
+		<ui5-suggestion-item text="USA"></ui5-suggestion-item>
+	</ui5-input>
+	<div>
+		Change event count: <span id="input-change-count-2"></span>
+	</div>
+
+	<ui5-input id="input-change-3" type="Number" value="12.4"></ui5-input>
+	<div>
+		Change event value: <span id="input-change-value-3"></span>
+	</div>
+
+	<br>
+
+	<ui5-input value-state="Error" id="dynamic-value-state">
+		<span slot="valueStateMessage" id="text">0</span>
+	</ui5-input>
+
+	<br>
+
+	<ui5-button id="dynamic-value-state-trigger">Trigger dynamic value state</ui5-button>
+
+	<script>
+		const dynamicValueState = document.getElementById("dynamic-value-state");
+		const dynamicValueStateTrigger = document.getElementById("dynamic-value-state-trigger");
+
+		dynamicValueStateTrigger.addEventListener("click", () => {
+			const valueState = dynamicValueState.querySelector("[slot='valueStateMessage']");
+
+			setInterval(() => {
+				valueState.textContent = parseInt(valueState.textContent) + 1;
+			}, 1000);
+		});
+
+		document.getElementById("submit-input").addEventListener("keypress", function(event) {
+			if (event.key === 'Enter') {
+				var formToSubmit = document.getElementById("submit-form");
+				var submitEvent = new Event('submit');
+
+				/* The old way - supported by all browsers:
+				The submit method of the form won't trigger
+				a submit event by itself, dispatch it manually */
+
+				// formToSubmit.dispatchEvent(submitEvent);
+				// formToSubmit.submit();
+
+				// Fires submit event and submits
+				// No MS IE11 & Safari support yet
+				formToSubmit.requestSubmit()
+			}
+		});
+
+		document.getElementById("submit-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			alert("Submitted");
+		});
+
+		btnOpenDialog.addEventListener("click", function () {
+			dialog.show();
+		});
+		var sap_database_entries = [{ key: "A", text: "A" }, { key: "Afg", text: "Afghanistan" }, { key: "Arg", text: "Argentina" }, { key: "Alb", text: "Albania" }, { key: "Arm", text: "Armenia" }, { key: "Alg", text: "Algeria" }, { key: "And", text: "Andorra" }, { key: "Ang", text: "Angola" }, { key: "Ast", text: "Austria" }, { key: "Aus", text: "Australia" }, { key: "Aze", text: "Azerbaijan" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "B", text: "B" }, { key: "Bel", text: "Belarus" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }, { key: "C", text: "C" }, { key: "Ch", text: "China" }, { key: "Cub", text: "Cuba" }, { key: "Chil", text: "Chili" }, { key: "L", text: "L" }, { key: "Lat", text: "Latvia" }, { key: "Lit", text: "Litva" }, { key: "P", text: "P" }, { key: "Prt", text: "Portugal" }, { key: "S", text: "S" }, { key: "Sen", text: "Senegal" }, { key: "Ser", text: "Serbia" }, { key: "Sey", text: "Seychelles" }, { key: "Sierra", text: "Sierra Leone" }, { key: "Sgp", text: "Singapore" }, { key: "Sint", text: "Sint Maarten" }, { key: "Slv", text: "Slovakia" }, { key: "Slo", text: "Slovenia" }];
+
+		var input = document.getElementById('myInput');
+		var inputChangeWithSuggestions = document.getElementById('inputChange-Suggestions');
+		var inputGrouping = document.getElementById('myInputGrouping');
+		var myInput2 = document.getElementById('myInput2');
+		var inputError = document.getElementById("inputError");
+		var input1 = document.getElementById('input1');
+		var input2 = document.getElementById('input2');
+		var inputResult = document.getElementById('inputResult');
+		var inputResultGrouping = document.getElementById('inputResultGrouping');
+		var inputLiveChangeResult = document.getElementById('inputLiveChangeResult');
+		var label = document.getElementById('myLabel');
+		var labelChange = document.getElementById('myLabelChange');
+		var labelLiveChange = document.getElementById('myLabelLiveChange');
+		var oXSSButton = document.getElementById("xss-btn");
+
+		var suggestionSelectedCounterWithGrouping = 0;
+
+		var suggest = function (event) {
+			var input = event.target;
+			var value = input.value;
+			var suggestionItems = [];
+
+			if (value) {
+				suggestionItems = sap_database_entries.filter(function (item) {
+					return item.text.toUpperCase().indexOf(value.toUpperCase()) === 0;
+				});
+			}
+
+			while (input.lastChild && input.lastChild !== input.valueStateMessage[0]) {
+				input.removeChild(input.lastChild);
+			}
+
+			suggestionItems.forEach(function(item, idx) {
+				let suggestion;
+				const groupItem = item.text.length === 1;
+
+				if (groupItem) {
+					suggestion = document.createElement("ui5-suggestion-group-item");
+					suggestion.id = item.key;
+					suggestion.text = item.text;
+					input.appendChild(suggestion);
+				} else {
+					suggestion = document.createElement("ui5-suggestion-item");
+					suggestion.id = item.key;
+					suggestion.icon = "world";
+					suggestion.description = "travel the world";
+					suggestion.text = item.text
+					suggestion.additionalText = "explore";
+					suggestion.additionalTextState = "Success";
+					input.appendChild(suggestion);
+				}
+			});
+
+			labelLiveChange.innerHTML = "Event [input] :: " + value;
+		};
+
+		input.addEventListener("ui5-input", suggest);
+		inputCompact.addEventListener("ui5-input", suggest);
+		inputError.addEventListener("ui5-input", suggest);
+
+		input.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			label.innerHTML = "Event [suggestionSelectEvent] :: " + item.id;
+			suggestionSelectedCounter += 1;
+			inputResult.value = suggestionSelectedCounter;
+		});
+
+		inputGrouping.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			suggestionSelectedCounterWithGrouping += 1;
+			inputResultGrouping.value = suggestionSelectedCounterWithGrouping;
+		});
+
+		input.addEventListener("ui5-change", function (event) {
+			labelChange.innerHTML = "Event [change] :: " + event.target.value;
+		});
+
+		var changeCounter = 0;
+		var inputCounter = 0;
+		var suggestionSelectedCounter = 0;
+
+		input1.addEventListener("ui5-change", function (event) {
+			changeCounter += 1;
+			inputResult.value = changeCounter;
+		});
+
+		input2.addEventListener("ui5-input", function (event) {
+			inputCounter += 1;
+			inputLiveChangeResult.value = inputCounter;
+		});
+
+		myInput2.addEventListener("ui5-suggestionItemSelect", function (event) {
+			var item = event.detail.item;
+			suggestionSelectedCounter += 1;
+			inputResult.value = suggestionSelectedCounter;
+		});
+
+		var inputChangeResultCounter = 0;
+
+		inputChange.addEventListener("ui5-change", function (event) {
+			inputChangeResult.value = ++inputChangeResultCounter;
+		});
+
+		inputChangeWithSuggestions.addEventListener("ui5-change", function (event) {
+			inputChangeResult.value = ++inputChangeResultCounter;
+		});
+
+
+		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
+			scrollResult.value = event.detail.scrollTop;
+			console.log("scroll", { scrolltop: event.detail.scrollTop, container: event.detail.scrollContainer });
+		});
+
+		input.addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("myInput-change-count");
+			const changeResult = document.getElementById("myInput-change-result");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+			changeResult.innerText += event.target.value + "\r\n";
+		});
+
+		oXSSButton.addEventListener("click", function () {
+			const oXSSItem = document.createElement("ui5-suggestion-item");
+
+			oXSSItem.text = `Canada<<img src="xss" onerror="document.getElementById('xss-result').innerText = 'XSS FOUND'">`
+			document.getElementById("xss-input").appendChild(oXSSItem);
+		});
+
+		const clearInput = document.getElementById("clear-input");
+
+		clearInput.addEventListener("ui5-change", event => {
+			const span = document.getElementById("clear-input-change-event-count");
+
+			span.innerText = span.innerText ? parseInt(span.innerText) + 1 : 1;
+		});
+
+		clearInput.addEventListener("ui5-input", event => {
+			const span = document.getElementById("clear-input-input-event-count");
+
+			span.innerText = span.innerText ? parseInt(span.innerText) + 1 : 1;
+		});
+
+		const compactClearIconInput = document.getElementById("clear-input-compact");
+
+		document.getElementById("clear-icon-disabled-toggle").addEventListener("click", event => {
+			compactClearIconInput.toggleAttribute("disabled");
+		});
+
+		document.getElementById("clear-icon-readonly-toggle").addEventListener("click", event => {
+			compactClearIconInput.toggleAttribute("readonly");
+		});
+
+		document.getElementById("myInput").addEventListener("ui5-suggestion-item-select", event => {
+			const resultInput = document.getElementById("input-selection-event-test");
+			resultInput.setAttribute("value", parseInt(resultInput.getAttribute("value") || 0) + 1);
+		});
+
+		const openPickerInput = document.getElementById("openPickerInput");
+		let recentItems = [];
+		openPickerInput.addEventListener("input", handleSuggestions);
+		openPickerInput.addEventListener("suggestion-item-select", handleSelection);
+		openPickerInput.addEventListener("click", handleHistory);
+		openPickerInput.addEventListener("focus", handleHistory);
+
+		function handleSuggestions() {
+			fetch('https://dummyjson.com/users?select=firstName,lastName&limit=100')
+				.then(res => res.json())
+				.then(({users}) => {
+					var value = openPickerInput.value;
+					var suggestionItems = [];
+
+					[].slice.call(openPickerInput.children).forEach(child => {
+						openPickerInput.removeChild(child);
+					});
+
+					const recentItemsGroup = document.createElement("ui5-suggestion-group-item");
+					recentItemsGroup.text = "Recent items";
+					openPickerInput.appendChild(recentItemsGroup);
+
+					if (recentItems.length) {
+						recentItems.forEach(name => {
+							const item = document.createElement("ui5-suggestion-item");
+							item.icon = "employee";
+							item.text = name;
+							openPickerInput.appendChild(item);
+						})
+					} else {
+						const noRecentItem = document.createElement("ui5-suggestion-item");
+						noRecentItem.text = "No recent users";
+						noRecentItem.type = "Inactive";
+						openPickerInput.appendChild(noRecentItem);
+					}
+
+					if (value) {
+						let currentItems = Array.from(openPickerInput.children).map(({text}) => text);
+						suggestionItems = users
+							.map(({ firstName, lastName }) => `${firstName} ${lastName}`)
+							.filter(item => item.toUpperCase().indexOf(value.toUpperCase()) === 0 && !currentItems.includes(item));
+					}
+
+					if (suggestionItems.length) {
+						const suggestionsGroup = document.createElement("ui5-suggestion-group-item");
+						suggestionsGroup.text = "Suggestions";
+						openPickerInput.appendChild(suggestionsGroup);
+
+						suggestionItems.forEach(item => {
+							var li = document.createElement("ui5-suggestion-item");
+							li.icon = "employee";
+							li.text = item;
+							openPickerInput.appendChild(li);
+						});
+					}
+				});
+		}
+
+		function handleSelection(event) {
+			const name = event.detail.item.text;
+			const idx = recentItems.indexOf(name);
+			idx > -1 && recentItems.splice(idx, 1);
+			recentItems.unshift(name);
+			recentItems.length > 5 && recentItems.pop();
+		}
+
+		function handleHistory() {
+			handleSuggestions();
+			openPickerInput.openPicker();
+		}
+
+		document.getElementById("clear-button").addEventListener("click", event => {
+			document.getElementById("input-change-1").value = "";
+		});
+
+		document.getElementById("input-change-1").addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("input-change-count-1");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+		});
+
+		document.getElementById("input-change-2").addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("input-change-count-2");
+			changeCount.innerText = parseInt(changeCount.innerText || 0) + 1;
+		});
+
+		document.getElementById("input-change-3").addEventListener("ui5-change", (event) => {
+			const changeCount = document.getElementById("input-change-value-3");
+			changeCount.innerText = event.target.value;
+		});
+
+		document.getElementById("input-number35").addEventListener("ui5-input", event => {
+			const resultInput = document.getElementById("input-number35_eventValue");
+			resultInput.value = event.target.value;
+		});
+
+		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
+
+		const inputWithPreventableSelection = document.getElementById("input-prevent-suggestion-select");
+		inputWithPreventableSelection.addEventListener("ui5-suggestionItemSelect", (e) => {
+			const selectedItemText = e.detail.item.text || e.detail.item.textContent;
+			if(selectedItemText === "Cozy"){
+				e.preventDefault();
+				inputWithPreventableSelection.value = "test test";
+			}
+		});
+	</script>
+</body>
+</html>

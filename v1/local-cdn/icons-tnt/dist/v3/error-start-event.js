@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "error-start-event";
+const pathData = "M256 0c141 0 256 115 256 256S397 512 256 512C114 512 0 397 0 256S114 0 256 0zm0 486c127 0 230-103 230-230S383 26 256 26C128 26 25 129 25 256s103 230 231 230zm106-340c4 4 6 8 6 13 0 2 0 4-1 5l-74 174c-3 5-7 8-12 8-6 0-10-2-13-6l-33-50-66 73c-3 3-7 5-11 5-9 0-14-5-14-15 0-2 0-4 1-5l74-174c4-5 8-8 12-8 7 0 11 2 13 7l30 49 70-74c2-3 5-4 9-4 2 0 5 1 9 2zm-85 156l32-76-27 29c-3 3-7 5-12 5-5-1-8-4-10-7l-25-42-30 70 21-24c3-3 7-5 11-5 5 1 9 4 12 7z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/error-start-event";
+export { pathData, ltr, accData };

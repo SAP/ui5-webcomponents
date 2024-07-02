@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>ui5-checkbox</title>
+
+
+	
+
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+
+	
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/CheckBox-46926e71.css">
+</head>
+
+<body class="checkbox1auto">
+	<ui5-checkbox text="Option"></ui5-checkbox>
+	<ui5-checkbox id="cbReadonly" readonly text="Option"></ui5-checkbox>
+	<ui5-checkbox id="cbDisabled" disabled text="Option"></ui5-checkbox>
+	<ui5-checkbox id="cbError" value-state="Error" text="Option"></ui5-checkbox>
+	<ui5-checkbox id="truncatingCb" text="Long long long text that should truncate at some point" class="checkbox2auto"></ui5-checkbox>
+	<ui5-checkbox text="Long long long text that should truncate at some point"></ui5-checkbox>
+
+	<ui5-title>In Container - stretches to the container</ui5-title>
+	<div class="checkbox3auto">
+		<ui5-checkbox text="Option A"></ui5-checkbox>
+		<ui5-checkbox checked text="Option B"></ui5-checkbox>
+		<ui5-checkbox text="Option C"></ui5-checkbox>
+		<ui5-checkbox text="Option D"></ui5-checkbox>
+		<ui5-checkbox display-only text="Display only"></ui5-checkbox>
+		<ui5-checkbox display-only checked text="Display only checked"></ui5-checkbox>
+		<ui5-checkbox display-only checked indeterminate text="Display only partially checked"></ui5-checkbox>
+	</div>
+
+	<br><br>
+	<ui5-title>Text Wrapping</ui5-title>
+	<ui5-checkbox id="wrappingCb" wrapping-type="Normal" class="ui5-cb-testing-wrap checkbox2auto" text="Longest ever text written in English that have to wraps because it is so long of course!" ></ui5-checkbox>
+	<ui5-checkbox wrapping-type="Normal" text="Longest ever text written in English that wraps because it's too long of course!" class="checkbox2auto"></ui5-checkbox>
+
+	<br><br>
+	<ui5-title>Change Event Test</ui5-title>
+	<ui5-checkbox id="cb1" text="Long long long text"></ui5-checkbox>
+	<ui5-checkbox id="cb2" disabled></ui5-checkbox>
+	<ui5-checkbox id="displayOnlyCb" display-only></ui5-checkbox>
+	<ui5-input id="field"></ui5-input>
+
+	<br>
+	<ui5-title id="cb-label">ACC Test - aria-label</ui5-title>
+	<ui5-checkbox id="accCb" accessible-name="Hello world"></ui5-checkbox>
+	<ui5-checkbox id="accCb1" accessible-name-ref="cb-label"></ui5-checkbox>
+	<br />
+	<ui5-checkbox value-state="Warning" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="Error" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="None" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="Success" text="Long long long text" indeterminate checked></ui5-checkbox>
+	<ui5-checkbox value-state="Information" text="Long long long text" indeterminate checked></ui5-checkbox>
+
+	<br />
+	<ui5-checkbox id="checkboxChecked" checked></ui5-checkbox>
+
+	<br>
+	<ui5-checkbox class="defaultPreventedCb"></ui5-checkbox>
+	<ui5-checkbox class="defaultPreventedCb" checked></ui5-checkbox>
+	<ui5-checkbox class="defaultPreventedCb" indeterminate></ui5-checkbox>
+	<ui5-checkbox class="defaultPreventedCb" indeterminate checked></ui5-checkbox>
+
+	<br />
+	<ui5-title>Form submission</ui5-title>
+	<form id="cbForm">
+		<ui5-checkbox id="cbItem1" text="Option 1" checked></ui5-checkbox>
+		<ui5-checkbox id="cbItem2" text="Option 2" checked></ui5-checkbox>
+		<ui5-checkbox id="cbItem3" text="Option 3" required></ui5-checkbox>
+		<br><br>
+		<ui5-button id="cbSubmit" type="Submit">Submit</ui5-button>
+		<input type="hidden" id="cbFormSubmitted" value="false" />
+	</form>
+
+	<script>
+		var hcb = false;
+		var cbForm = document.querySelector("#cbForm");
+		var input = document.querySelector("#field");
+		var checkBox1 = document.querySelector("#cb1");
+		var checkBox2 = document.querySelector("#cb2");
+		var displayOnlyCb = document.querySelector("#displayOnlyCb");
+		var cbFormSubmitted = document.querySelector("#cbFormSubmitted");
+		var counter = 0;
+
+		[checkBox1, checkBox2, displayOnlyCb].forEach(function(el) {
+			el.addEventListener("ui5-change", function(event) {
+				counter += 1;
+				input.value = counter;
+			});
+		});
+
+		var defaultPreventedCb = document.querySelectorAll(".defaultPreventedCb");
+
+		defaultPreventedCb.forEach(function(el) {
+			el.addEventListener("ui5-change", function(event) {
+				event.preventDefault();
+			});
+		});
+
+		cbForm.addEventListener("submit", function (event) {
+			event.preventDefault();
+			cbFormSubmitted.value = true;
+			alert("Form submitted!");
+		});
+	</script>
+</body>
+
+</html>

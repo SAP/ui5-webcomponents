@@ -1,0 +1,62 @@
+{
+  "name": "@ui5/webcomponents",
+  "version": "1.24.0",
+  "description": "UI5 Web Components: webcomponents.main",
+  "ui5": {
+    "webComponentsPackage": true
+  },
+  "type": "module",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "private": false,
+  "customElements": "./dist/custom-elements.json",
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "scripts": {
+    "clean": "wc-dev clean",
+    "lint": "wc-dev lint",
+    "lint:scope": "nps scope.lint",
+    "start": "wc-dev start",
+    "watch": "wc-dev watch",
+    "generate": "nps generate",
+    "generateAPI": "nps generateAPI",
+    "build": "wc-dev build",
+    "bundle": "nps build.bundle",
+    "test": "wc-dev test",
+    "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
+    "test:suite-1": "wc-dev test-suite-1",
+    "test:suite-2": "wc-dev test-suite-2",
+    "create-ui5-element": "wc-create-ui5-element",
+    "prepublishOnly": "tsc -b"
+  },
+  "exports": {
+    "./.port": "./.port",
+    "./src/*": "./src/*",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./bundle.esm.js": "./bundle.esm.js",
+    "./bundle.common.js": "./bundle.common.js",
+    "./bundle.scoped.esm.js": "./bundle.scoped.esm.js",
+    "./*": "./dist/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/main"
+  },
+  "dependencies": {
+    "@ui5/webcomponents-base": "1.24.0",
+    "@ui5/webcomponents-icons": "1.24.0",
+    "@ui5/webcomponents-icons-business-suite": "1.24.0",
+    "@ui5/webcomponents-icons-tnt": "1.24.0",
+    "@ui5/webcomponents-localization": "1.24.0",
+    "@ui5/webcomponents-theming": "1.24.0"
+  },
+  "devDependencies": {
+    "@ui5/webcomponents-tools": "1.24.0",
+    "chromedriver": "^122.0.6"
+  }
+}

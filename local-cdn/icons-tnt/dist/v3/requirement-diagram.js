@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "requirement-diagram";
+const pathData = "M0 416V129c0-9 3-16 9-23 6-6 13-9 22-9h19c6-17 18-28 37-31 5-9 12-17 23-24 10-6 22-9 35-9 11 0 21 3 31 9 9 6 16 14 23 24 17 3 30 13 37 31h19c9 0 16 3 23 9 6 7 9 14 9 23v10l34-35c0-3-1-5-1-8V32c0-19 13-32 32-32h64c17 0 32 13 32 32v64c0 19-15 32-32 32h-64c-3 0-5-1-8-2l-57 58v57h97v-16c0-19 13-32 32-32h64c17 0 32 13 32 32v64c0 17-15 32-32 32h-64c-19 0-32-15-32-32v-16h-97v56l57 57c3-1 5-2 8-2h64c17 0 32 15 32 32v64c0 19-15 32-32 32h-64c-19 0-32-13-32-32v-64c0-3 1-4 1-7l-34-35v42c0 9-3 17-9 23-7 6-14 9-23 9H31c-19 0-31-13-31-32zM352 96h64V32h-64v64zM79 113c0 11 5 16 16 16h96c11 0 16-5 16-16 0-8-8-16-16-16h-16c0-9-3-16-9-23-6-6-14-9-23-9s-17 3-23 9c-6 7-9 14-9 23H95c-11 0-16 5-16 16zM31 416h224V129h-19c-3 7-6 13-10 20-6 8-15 12-26 12H86c-20 0-31-13-36-32H31v287zm95-63l-65-65 21-23 44 44 87-108 22 21zm290-128v64h64v-64h-64zm-64 191v64h64v-64h-64z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/requirement-diagram";
+export { pathData, ltr, accData };

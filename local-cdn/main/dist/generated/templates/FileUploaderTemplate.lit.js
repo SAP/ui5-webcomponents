@@ -1,0 +1,8 @@
+/* eslint no-unused-vars: 0 */
+import { html, ifDefined, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="ui5-file-uploader-root" @mouseover="${this._onmouseover}" @mouseout="${this._onmouseout}" @focusin="${this._onfocusin}" @focusout="${this._onfocusout}" @keydown="${this._onkeydown}" @keyup="${this._onkeyup}" @click="${this._onclick}" @dragover="${this._ondrag}" @drop="${this._ondrop}"><div class="ui5-file-uploader-mask">${!this.hideInput ? block1.call(this, context, tags, suffix) : undefined}<slot></slot></div>${this._keepInputInShadowDOM ? block2.call(this, context, tags, suffix) : block3.call(this, context, tags, suffix)}</div>`; }
+function block1(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-input", tags, suffix)} value="${ifDefined(this.value)}" value-state="${ifDefined(this.valueState)}" placeholder="${ifDefined(this.placeholder)}" ?disabled="${this.disabled}" tabindex="-1" class="ui5-file-uploader-input"></${scopeTag("ui5-input", tags, suffix)}>` : html `<ui5-input value="${ifDefined(this.value)}" value-state="${ifDefined(this.valueState)}" placeholder="${ifDefined(this.placeholder)}" ?disabled="${this.disabled}" tabindex="-1" class="ui5-file-uploader-input"></ui5-input>`; }
+function block2(context, tags, suffix) { return html `<input type="file" title="${ifDefined(this.titleText)}" accept="${ifDefined(this.accept)}" ?multiple="${this.multiple}" ?disabled="${this.disabled}" @change="${this._onChange}" aria-hidden="true" tabindex="-1">`; }
+function block3(context, tags, suffix) { return html `<slot name="formSupport"></slot>`; }
+export default block0;
+//# sourceMappingURL=FileUploaderTemplate.lit.js.map

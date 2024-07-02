@@ -1,0 +1,6 @@
+/* eslint no-unused-vars: 0 */
+import { html, repeat, classMap, ifDefined, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-popover", tags, suffix)} class="ui5-overflow-popover" placement="Bottom" horizontal-align="End" @ui5-close="${ifDefined(this.onOverflowPopoverClosed)}" @ui5-open="${ifDefined(this.onOverflowPopoverOpened)}" hide-arrow><div class="ui5-overflow-list ${classMap(this.classes.overflow)}">${repeat(this.overflowItems, (item, index) => item._id || index, (item, index) => block1.call(this, context, tags, suffix, item, index))}</div></${scopeTag("ui5-popover", tags, suffix)}>` : html `<ui5-popover class="ui5-overflow-popover" placement="Bottom" horizontal-align="End" @ui5-close="${ifDefined(this.onOverflowPopoverClosed)}" @ui5-open="${ifDefined(this.onOverflowPopoverOpened)}" hide-arrow><div class="ui5-overflow-list ${classMap(this.classes.overflow)}">${repeat(this.overflowItems, (item, index) => item._id || index, (item, index) => block1.call(this, context, tags, suffix, item, index))}</div></ui5-popover>`; }
+function block1(context, tags, suffix, item, index) { return html `${ifDefined(item.toolbarPopoverTemplate)}`; }
+export default block0;
+//# sourceMappingURL=ToolbarPopoverTemplate.lit.js.map

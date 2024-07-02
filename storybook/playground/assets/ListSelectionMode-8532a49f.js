@@ -1,0 +1,1 @@
+var l;(function(n){n.None="None",n.Single="Single",n.SingleStart="SingleStart",n.SingleEnd="SingleEnd",n.SingleAuto="SingleAuto",n.Multiple="Multiple",n.Delete="Delete"})(l||(l={}));const g=l;export{g as L};

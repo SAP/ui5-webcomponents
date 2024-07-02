@@ -1,0 +1,2 @@
+"use strict";import{getCustomElementsScopingSuffix as a,shouldScopeCustomElement as p}from"../CustomElementsScopeUtils.js";const l=(n,e)=>{const t=c(e),o=a();return n.call(e,e,t,o)},c=n=>{const e=n.constructor,t=e.getMetadata().getPureTag(),o=e.getUniqueDependencies().map(s=>s.getMetadata().getPureTag()).filter(p);return p(t)&&o.push(t),o};export default l;export{c as getTagsToScope};
+//# sourceMappingURL=executeTemplate.js.map

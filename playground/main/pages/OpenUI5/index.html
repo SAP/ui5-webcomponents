@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <title>OpenUI5 Latest Stable + UI5 Web Components</title>
+
+    <script id='sap-ui-bootstrap'
+            src='https://openui5.hana.ondemand.com/resources/sap-ui-core.js'
+            data-sap-ui-theme='sap_belize_hcb'
+            data-sap-ui-libs='sap.m, sap.ui.core'
+            data-sap-ui-preload="async"
+    ></script>
+
+    <script>
+        sap.ui.getCore().attachInit(function() {
+			const dialog = new sap.m.Dialog({
+                content: [
+                    new sap.ui.core.HTML({
+                        content: '<ui5-date-picker id="myDatepicker" value="Aug 14, 2018" data-sap-ui-integration-popup-content></ui5-date-picker>'
+                    }),
+                ]
+            });
+
+            const dialog2 = new sap.m.Dialog({
+                content: [
+                    new sap.ui.core.HTML({
+                        content: '<ui5-calendar id="myCalendar" value="Aug 14, 2018"></ui5-calendar>'
+                    }),
+                ]
+            });
+
+			const btn = new sap.m.Button({
+				text: "DialogWithDatePicker",
+				press: function() {
+					dialog.open();
+				},
+			});
+
+			const btn2 = new sap.m.Button({
+				text: "DialogWithCalendar",
+				press: function() {
+					dialog2.open();
+				},
+			});
+
+            const page = new sap.m.Page({
+                content: [
+                    dialog, dialog2, btn, btn2
+                ],
+            });
+
+			page.placeAt('content');
+        });
+    </script>
+
+    <script data-ui5-config type="application/json">
+        {
+            "language": "de",
+            "noConflict": {
+                "events": ["click"]
+            },
+            "compactSize": true,
+            "calendarType": "Islamic"
+        }
+    </script>
+
+    
+
+	
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/OpenUI5-ed5d1908.css">
+</head>
+
+<body class="openui51auto">
+
+	<ui5-button icon="download">Web Component</ui5-button>
+	<ui5-datepicker></ui5-datepicker>
+
+	<ui5-button id="btn">Open Dialog web component</ui5-button>
+	<ui5-dialog id="dg" header-text="Dialog 1">
+		<ui5-button id="btn2">Open Second Dialog web component</ui5-button>
+	</ui5-dialog>
+	<ui5-dialog id="dg2" header-text="Dialog 2"></ui5-dialog>
+	
+	<ui5-button id="btnPopup">Open Popover webc</ui5-button>
+	<ui5-popover id="popup" header-text="Popover"></ui5-popover>
+
+	<div id='content'></div>
+</body>
+
+<script>
+	btn.addEventListener("click", () => {
+		dg.show();
+	})
+	btnPopup.addEventListener("click", () => {
+		popup.showAt(btnPopup);
+	})
+	btn2.addEventListener("click", () => {
+		dg2.show();
+	})
+</script>
+</html>

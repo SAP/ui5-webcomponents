@@ -1,0 +1,5 @@
+import{j as n}from"./jsx-runtime-670e1be8.js";import{M as s}from"./index-6087c063.js";import{B as i,F as a}from"./Banner-a1178143.js";import{u as r}from"./index-bd2d4f36.js";import"./index-4e9ba9b8.js";import"./_commonjsHelpers-725317a4.js";import"./iframe-ec263bb9.js";import"../sb-preview/runtime.js";import"./index-11d98b33.js";import"./index-d38538b0.js";import"./index-356e4a49.js";function e(t){const o=Object.assign({h1:"h1",a:"a",p:"p",strong:"strong"},r(),t.components);return n.jsxs(n.Fragment,{children:[n.jsx(s,{title:"Docs/Changelog/1.0.0"}),`
+`,n.jsx(i,{}),`
+`,n.jsxs(o.h1,{id:"100-2021-11-10",children:[n.jsx(o.a,{href:"https://github.com/SAP/ui5-webcomponents/compare/v1.0.0-rc.16...v1.0.0",target:"_blank",rel:"nofollow noopener noreferrer",children:"1.0.0"})," (2021-11-10)"]}),`
+`,n.jsxs(o.p,{children:["👏 ",n.jsx(o.strong,{children:"We are happy to announce our first stable 1.0.0 version of UI5 Web Components"})," 👏"]}),`
+`,n.jsx(a,{})]})}function b(t={}){const{wrapper:o}=Object.assign({},r(),t.components);return o?n.jsx(o,Object.assign({},t,{children:n.jsx(e,t)})):e(t)}export{b as default};

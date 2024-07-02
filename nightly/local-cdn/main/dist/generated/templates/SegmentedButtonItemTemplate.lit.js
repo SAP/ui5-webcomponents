@@ -1,0 +1,6 @@
+/* eslint no-unused-vars: 0 */
+import { html, ifDefined, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<li role="option" aria-roledescription="${ifDefined(this.ariaDescription)}" aria-posinset="${ifDefined(this.posInSet)}" aria-setsize="${ifDefined(this.sizeOfSet)}" aria-selected="${ifDefined(this.selected)}" class="ui5-segmented-button-item-root" aria-disabled="${ifDefined(this.disabled)}" data-sap-focus-ref @click=${this._onclick} @keyup=${this._onkeyup} tabindex=${ifDefined(this.tabIndexValue)} aria-label="${ifDefined(this.ariaLabelText)}" title="${ifDefined(this.tooltip)}">${this.icon ? block1.call(this, context, tags, suffix) : undefined}<span id="${ifDefined(this._id)}-content" class="ui5-segmented-button-item-text"><bdi><slot></slot></bdi></span></li>`; }
+function block1(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-icon", tags, suffix)} class="ui5-segmented-button-item-icon" name="${ifDefined(this.icon)}" part="icon" ?show-tooltip=${this.iconOnly}></${scopeTag("ui5-icon", tags, suffix)}>` : html `<ui5-icon class="ui5-segmented-button-item-icon" name="${ifDefined(this.icon)}" part="icon" ?show-tooltip=${this.iconOnly}></ui5-icon>`; }
+export default block0;
+//# sourceMappingURL=SegmentedButtonItemTemplate.lit.js.map

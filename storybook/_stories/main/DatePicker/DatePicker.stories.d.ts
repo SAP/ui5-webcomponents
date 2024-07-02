@@ -1,0 +1,10 @@
+import type { Meta } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import type DatePicker from "@ui5/webcomponents/dist/DatePicker.js";
+declare const _default: Meta<DatePicker>;
+export default _default;
+export declare const Basic: UI5StoryArgs<DatePicker, StoryArgsSlots>;
+export declare const State: UI5StoryArgs<DatePicker, StoryArgsSlots>;
+export declare const MinMax: UI5StoryArgs<DatePicker, StoryArgsSlots>;
+export declare const CalendarTypes: UI5StoryArgs<DatePicker, StoryArgsSlots>;

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Badge</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+	
+	
+	<script src="Badge.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/Badge-c9b08aad.css">
+</head>
+
+<body class="badge1auto" onload="initializeBadges()">
+	<ui5-title level="H1">Badges</ui5-title>
+	<ui5-checkbox text="Interactive" id="checkboxId"></ui5-checkbox>
+	<section class="group gaps">
+		<ui5-title level="H2">Custom Badges</ui5-title>
+		<ui5-badge class="width200px">
+			Default color truncate truncate truncate
+		</ui5-badge>
+		<br>
+		<ui5-badge id="badgeWithTextAndIcon" class="width300px" color-scheme="1">
+			<ui5-icon name="accept" slot="icon"></ui5-icon>bigger width
+		</ui5-badge>
+		<br>
+		<ui5-badge design="Positive" id="noninteractiveBadge">
+			Noninteractive
+		</ui5-badge>
+		<br>
+		<ui5-badge design="Positive" id="interactiveBadge" interactive>
+			Interactive
+		</ui5-badge>
+		<br>
+		<ui5-badge id="badgeIconOnly" design="Positive" title="Step Completed" color-scheme="2">
+			<ui5-icon name="sap-ui5" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<br>
+		<ui5-badge color-scheme="3">
+			In Process
+		</ui5-badge>
+		<ui5-badge color-scheme="4">
+			<ui5-icon name="lab" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="5">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="6">
+			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
+		</ui5-badge>
+		<ui5-badge color-scheme="6"><ui5-icon name="pending" slot="icon"></ui5-icon>same line</ui5-badge>
+		<ui5-badge color-scheme="7">
+			<ui5-icon name="lightbulb" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<ui5-badge color-scheme="8">
+			<ui5-icon name="locked" slot="icon"></ui5-icon>
+		</ui5-badge>
+		<br>
+		<ui5-badge color-scheme="6">
+			<ui5-icon name="pending" slot="icon"></ui5-icon>Pending
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal" color-scheme="6">
+			<ui5-icon name="pending" slot="icon"></ui5-icon>P wrapping-type="true"
+		</ui5-badge>
+		<ui5-badge>
+			wrapping-type="true"
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal" class="width200px">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>Some long text with more lines text wrapping-type="true"
+		</ui5-badge>
+		<ui5-badge wrapping-type="Normal">
+			<ui5-icon name="email-read" slot="icon"></ui5-icon>
+		</ui5-badge>
+	</section>
+	<section class="group gaps">
+		<ui5-title level="H2">Set 1</ui5-title>
+		<div id="set1Content">
+		</div>
+	</section>
+	<section class="group gaps">
+		<ui5-title level="H2">Set 2</ui5-title>
+		<div id="set2Content">
+		</div>
+	</section>
+	<section class="group gaps">
+		<ui5-title level="H2">Set 3</ui5-title>
+		<div id="set3Content">
+		</div>
+	</section>
+	<section class="group gaps">
+		<ui5-title level="H2">Value states</ui5-title>
+		<div>
+			<ui5-badge design="Neutral">
+				Neutral
+			</ui5-badge>
+			<ui5-badge design="Information">
+				Information
+			</ui5-badge>
+			<ui5-badge design="Positive">
+				Positive
+			</ui5-badge>
+			<ui5-badge design="Negative">
+				Negative
+			</ui5-badge>
+			<ui5-badge design="Critical">
+				Critical
+			</ui5-badge>
+			<br />
+			<br />
+			<ui5-badge hide-state-icon design="Neutral">
+				Neutral - No icon
+			</ui5-badge>
+			<ui5-badge hide-state-icon design="Information">
+				Information - No icon
+			</ui5-badge>
+			<ui5-badge hide-state-icon design="Positive">
+				Positive - No icon
+			</ui5-badge>
+			<ui5-badge hide-state-icon design="Negative">
+				Negative - No icon
+			</ui5-badge>
+			<ui5-badge hide-state-icon design="Critical">
+				Critical - No icon
+			</ui5-badge>
+			<br />
+			<br />
+			<ui5-badge design="Neutral">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Neutral - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Information">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Information - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Positive">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Positive - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Negative">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Negative - Custom icon
+			</ui5-badge>
+			<ui5-badge design="Critical">
+				<ui5-icon name="email-read" slot="icon"></ui5-icon>Critical - Custom icon
+			</ui5-badge>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+
+		<script>
+			// delete Document.prototype.adoptedStyleSheets;
+		</script>
+		
+
+
+		
+
+
+		<script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+		<link rel="stylesheet" href="../../../../assets/TimePicker-0bfa349e.css">
+	</head>
+	<body class="timepicker1auto">
+
+		<div class="samples">
+			<div class="sample-box-1">
+				<ui5-time-picker id="timepicker" format-pattern="HH:mm:ss"></ui5-time-picker>
+				<ui5-time-picker></ui5-time-picker>
+				<ui5-time-picker id="timepicker2" format-pattern="hh:mm:ss" value=""></ui5-time-picker>
+				<ui5-time-picker id="timepicker3" format-pattern="hh:mm:ss a"></ui5-time-picker>
+				<ui5-time-picker id="timepicker4" format-pattern="HH:mm" value="12:05"></ui5-time-picker>
+				<ui5-time-picker id="timepicker5" format-pattern="hh:mm:ss" value="12:00:01"></ui5-time-picker>
+				<br>
+			</div>
+
+			<div class="sample-box-2">
+				<ui5-time-picker class="timepicker2auto"></ui5-time-picker>
+			</div>
+		</div>
+
+		<br /><br />
+		<ui5-title>Test "change" event</ui5-title>
+		<ui5-time-picker id="timepickerChange" format-pattern="HH:mm" value="12:00"></ui5-time-picker>
+		<ui5-input id="changeResult" value="0"></ui5-input>
+
+		<br /><br />
+		<ui5-title>Test "input" event</ui5-title>
+		<ui5-time-picker id="timepickerInput"></ui5-time-picker>
+		<ui5-input id="inputResult"></ui5-input>
+
+		<br /><br />
+		<ui5-title>Test "now" value</ui5-title>
+		<ui5-time-picker id="timepickerNow" value="now"></ui5-time-picker>
+
+		<br /><br />
+		<ui5-title>Test empty value</ui5-title>
+		<ui5-time-picker id="timepickerEmptyValue"></ui5-time-picker>
+		<ui5-button id="testBtn">btn for testing</ui5-button>
+
+		<br /><br />
+		<ui5-title>Test set time value</ui5-title>
+		<ui5-time-picker id="timepickerSetTime" value=""></ui5-time-picker>
+		<ui5-button id="setTimeButton">Set time</ui5-button>
+
+		<ui5-title>Test valueStateMessage slot</ui5-title>
+		<ui5-time-picker id="timepickerValueStateMessage" value-state="Error">
+			<div slot="valueStateMessage" id="customValueStateMessage">Please provide valid value</div>
+		</ui5-time-picker>
+		<ui5-button id="testBtn">btn for testing</ui5-button>
+
+
+		<section class="ui5-content-density-compact">
+			<h3>TimePicker in Compact</h3>
+			<div>
+				<ui5-time-picker></ui5-time-picker>
+			</div>
+		</section>
+
+		<script>
+				var counter = 0;
+				timepickerChange.addEventListener("ui5-change", function() {
+					changeResult.value = ++counter;
+				});
+
+				var inputCounter = 0;
+				timepickerInput.addEventListener("ui5-input", function() {
+					inputResult.value = ++inputCounter;
+				});
+
+				var tp = document.getElementById('timepickerSetTime');
+				document.getElementById('setTimeButton').addEventListener("click", function(e) {
+					tp.setAttribute("value", tp.formatValue(new Date(2020, 3, 13, 3, 16, 16)));
+				});
+		</script>
+	</body>
+</html>

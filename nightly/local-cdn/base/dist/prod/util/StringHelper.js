@@ -1,0 +1,2 @@
+"use strict";const t=new Map,o=new Map,r=e=>{if(!t.has(e)){const a=c(e.split("-"));t.set(e,a)}return t.get(e)},n=e=>{if(!o.has(e)){const a=e.replace(/([a-z])([A-Z])/g,"$1-$2").toLowerCase();o.set(e,a)}return o.get(e)},c=e=>e.map((a,s)=>s===0?a.toLowerCase():a.charAt(0).toUpperCase()+a.slice(1).toLowerCase()).join("");export{r as kebabToCamelCase,n as camelToKebabCase};
+//# sourceMappingURL=StringHelper.js.map

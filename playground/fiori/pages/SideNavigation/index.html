@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Side Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+	
+	
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-8d857bc6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/SideNavigation-ffae42e2.css">
+</head>
+
+<body class="sidenavigation1auto">
+	<ui5-shellbar
+		primary-title="UI5 Web Components"
+		secondary-title="The Best Run SAP"
+		show-co-pilot
+	>
+		<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
+	</ui5-shellbar>
+
+	<div class="content">
+		<ui5-side-navigation id="sn1">
+
+			<!-- Header -->
+			<div slot="header" class="header">
+				<ui5-avatar size="L">
+					<img src="../../../../assets/man_avatar_1-ffaff72e.png" />
+				</ui5-avatar>
+
+				<br>
+				<ui5-title>William Brown</ui5-title>
+				<ui5-label>UX expert</ui5-label>
+			</div>
+
+			<!-- Items -->
+			<ui5-side-navigation-item id="item1" text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
+			<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
+				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+			<ui5-side-navigation-item id="item3" text="Events.............................................................." icon="calendar" whole-item-toggleable>
+				<ui5-side-navigation-sub-item text="Local" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
+			<ui5-side-navigation-item id="externalLinkItem" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
+
+			<ui5-side-navigation-item id="item4" text="Home" icon="home" title="Home tooltip">
+				<ui5-side-navigation-sub-item text="Local" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
+			<ui5-side-navigation-item disabled id="item1" text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
+
+			<!-- Fixed Items -->
+			<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" title="Useful links tooltip">
+				<ui5-side-navigation-sub-item id="fixedItem11" text="Vacation Tool" title="Vacation Tool tooltip"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item id="fixedItem12" text="HR tool"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
+		</ui5-side-navigation>
+		<div class="inner-content">
+			<div>
+				<ui5-label>selection-change event</ui5-label>
+				<ui5-input id="counter" value="0"></ui5-input>
+			</div>
+			<div>
+				<ui5-label>click event</ui5-label>
+				<ui5-input id="click-counter" value="0"></ui5-input>
+			</div>
+			<div>
+				<ui5-label>prevent selection-change event</ui5-label>
+				<ui5-checkbox id="prevent-selection"></ui5-checkbox>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+		var sideNavigation = document.querySelector("ui5-side-navigation"),
+			input = document.querySelector("#counter"),
+			clickInput = document.querySelector("#click-counter"),
+			preventDefaultCb = document.querySelector("#prevent-selection"),
+			preventSelectionChange = false,
+			counter = 0,
+			clickCounter = 0;
+
+		document.querySelector("#startButton").addEventListener("click", function (event) {
+			sideNavigation.collapsed = !sideNavigation.collapsed;
+		});
+
+		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
+			item.addEventListener("ui5-click", function (event) {
+				clickInput.value = ++clickCounter;
+			});
+		});
+
+		preventDefaultCb.addEventListener("ui5-change", function (event) {
+			preventSelectionChange = event.target.checked;
+		});
+
+		sideNavigation.addEventListener("ui5-selection-change", function (event) {
+			if (preventSelectionChange) {
+				event.preventDefault();
+				return;
+			}
+
+			input.value = ++counter;
+		});
+
+	</script>
+</body>
+</html>

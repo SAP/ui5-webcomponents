@@ -1,0 +1,12 @@
+/* eslint no-unused-vars: 0 */
+import { html, repeat, classMap, styleMap, ifDefined } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="ui5-slider-root ${classMap(this.classes.root)}" @mousedown="${this._onmousedown}" @touchstart="${this._ontouchstart}" @mouseover="${this._onmouseover}" @mouseout="${this._onmouseout}" @keydown="${this._onkeydown}" @keyup="${this._onkeyup}" part="root-container"><div class="ui5-slider-inner">${this.step ? block1.call(this, context, tags, suffix) : undefined}</div><span id="${ifDefined(this._id)}-accName" class="ui5-hidden-text">${ifDefined(this.accessibleName)}</span><span id="${ifDefined(this._id)}-sliderDesc" class="ui5-hidden-text">${ifDefined(this._ariaLabelledByText)}</span></div> `; }
+function block1(context, tags, suffix) { return html `${this.showTickmarks ? block2.call(this, context, tags, suffix) : undefined}`; }
+function block2(context, tags, suffix) { return html `<ul class="ui5-slider-tickmarks">${repeat(this.tickmarksObject, (item, index) => item._id || index, (item, index) => block3.call(this, context, tags, suffix, item, index))}</ul>${this.labelInterval ? block6.call(this, context, tags, suffix) : undefined}`; }
+function block3(context, tags, suffix, item, index) { return html `${item ? block4.call(this, context, tags, suffix, item, index) : block5.call(this, context, tags, suffix, item, index)}`; }
+function block4(context, tags, suffix, item, index) { return html `<li class="ui5-slider-tickmark ui5-slider-tickmark-in-range"></li>`; }
+function block5(context, tags, suffix, item, index) { return html `<li class="ui5-slider-tickmark"></li>`; }
+function block6(context, tags, suffix) { return html `<ul class="ui5-slider-labels ${classMap(this.classes.labelContainer)}" style="${styleMap(this.styles.labelContainer)}">${repeat(this._labels, (item, index) => item._id || index, (item, index) => block7.call(this, context, tags, suffix, item, index))}</ul>`; }
+function block7(context, tags, suffix, item, index) { return html `<li style="${styleMap(this.styles.label)}">${ifDefined(item)}</li>`; }
+export default block0;
+//# sourceMappingURL=SliderBaseTemplate.lit.js.map

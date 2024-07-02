@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "association";
+const pathData = "M36 453L424 64H303c-11 0-16-5-16-16s5-16 16-16h160c9 0 17 7 17 16v160c0 9-8 16-17 16-8 0-15-7-15-16V86L59 475c-3 3-7 5-12 5-4 0-8-2-11-5-7-7-7-15 0-22z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/association";
+export { pathData, ltr, accData };

@@ -1,0 +1,58 @@
+{
+  "name": "@ui5/webcomponents-base",
+  "version": "1.24.0",
+  "description": "UI5 Web Components: webcomponents.base",
+  "author": "SAP SE (https://www.sap.com)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "module": "index.js",
+  "keywords": [
+    "openui5",
+    "sapui5",
+    "ui5"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SAP/ui5-webcomponents.git",
+    "directory": "packages/base"
+  },
+  "exports": {
+    "./dist/ssr-dom.js": {
+      "browser": "./dist/ssr-dom.js",
+      "node": "./dist/ssr-dom-shim.js",
+      "default": "./dist/ssr-dom.js"
+    },
+    ".": "./index.js",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./bundle.esm.js": "./bundle.esm.js",
+    "./*": "./dist/*"
+  },
+  "scripts": {
+    "clean": "nps clean",
+    "lint": "nps lint",
+    "start": "nps start",
+    "build": "nps build",
+    "generate": "nps generate",
+    "generateAPI": "nps generateAPI",
+    "bundle": "nps build.bundle",
+    "test": "nps test",
+    "prepublishOnly": "tsc -b"
+  },
+  "dependencies": {
+    "@lit-labs/ssr-dom-shim": "^1.1.2",
+    "lit-html": "^2.0.1"
+  },
+  "devDependencies": {
+    "@openui5/sap.ui.core": "1.120.5",
+    "@ui5/webcomponents-tools": "1.24.0",
+    "chromedriver": "^122.0.6",
+    "clean-css": "^5.2.2",
+    "copy-and-watch": "^0.1.5",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.22.0",
+    "mkdirp": "^1.0.4",
+    "replace-in-file": "^6.3.5",
+    "resolve": "^1.20.0"
+  }
+}

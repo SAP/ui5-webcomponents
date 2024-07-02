@@ -1,0 +1,1 @@
+import{a as o,b as e,r as t}from"../../Icons-10188341.js";o(()=>{console.log("Listener1: after framework booted!")});e();const s={registerThemeProps:async()=>{t("@ui5/webcomponents-theming","sap_horizon",()=>({content:":root{ --customCol: #fff; --customBg: #000; }",packageName:"",fileName:""}))}};window["sap-ui-webcomponents-bundle"]=s;

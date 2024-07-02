@@ -1,0 +1,67 @@
+{
+    "name": "@ui5/webcomponents-playground",
+    "private": true,
+    "version": "2.0.0-rc.3",
+    "description": "UI5 Web Components Playground",
+    "author": "SAP SE (https://www.sap.com)",
+    "license": "Apache-2.0",
+    "keywords": [
+        "ui5-web-components",
+        "openui5",
+        "sapui5"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SAP/ui5-webcomponents.git"
+    },
+    "devDependencies": {
+        "@storybook/addon-actions": "^7.6.0",
+        "@storybook/addon-essentials": "^7.6.0",
+        "@storybook/addon-links": "^7.6.0",
+        "@storybook/web-components": "^7.6.0",
+        "@storybook/web-components-vite": "^7.6.0",
+        "@types/react": "^18.0.27",
+        "@types/react-dom": "^18.0.11",
+        "@whitespace/storybook-addon-html": "^5.1.0",
+        "copy-and-watch": "^0.1.5",
+        "lit": "^2.7.1",
+        "npm-run-all": "^4.1.5",
+        "prettier": "^2.8.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-syntax-highlighter": "^15.5.0",
+        "remark-gfm": "^3.0.1",
+        "rimraf": "^3.0.2",
+        "storybook": "^7.6.0",
+        "typescript": "^5.2.2",
+        "vite-node": "^0.29.8"
+    },
+    "scripts": {
+        "build": "npm run build-storybook && npm run build-sitemap",
+        "build:bundle": "vite build",
+        "clean": "npm-run-all --parallel clean:*",
+        "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
+        "clean:pages": "rimraf ./docs/storybook-pages/main && rimraf ./docs/storybook-pages/fiori && rimraf ./docs/storybook-pages/compat",
+        "start": "npm run storybook",
+        "copy:assets": "npm-run-all copy:assets:resources copy:assets:main copy:assets:fiori copy:assets:compat",
+        "copy:assets:resources": "copy-and-watch \"../fiori/dist/resources/*\" \"./assets/js/ui5-webcomponents\"",
+        "copy:assets:main": "copy-and-watch \"../main/dist/assets/**/*\" \"./assets/\"",
+        "copy:assets:fiori": "copy-and-watch \"../fiori/dist/assets/**/*\" \"./assets/\"",
+        "copy:assets:compat": "copy-and-watch \"../compat/dist/assets/**/*\" \"./assets/\"",
+        "prepare:build:bundle": "npm run build:bundle",
+        "prepare:build:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist\"",
+        "prepare:build:pages": "npm run clean:pages && vite-node ./build-scripts-storybook/pages-prepare.ts",
+        "prepare:assets": "npm run clean:assets && npm run copy:assets",
+        "prepare:samples": "vite-node ./build-scripts-storybook/samples-prepare.ts",
+        "prepare:manifest": "node ./build-scripts-storybook/parse-manifest.js",
+        "prepare:documentation": "vite-node ./build-scripts-storybook/documentation-prepare.ts",
+        "prepare:types": "vite-node ./build-scripts-storybook/types-prepare.ts",
+        "prepare:overviews": "vite-node ./build-scripts-storybook/overviews-prepare.ts",
+        "storybook": "npm-run-all --parallel prepare:* && storybook dev -p 6006",
+        "build-storybook": "npm-run-all --parallel prepare:build:* prepare:* && tsc && storybook build -o ./dist/playground",
+        "build-sitemap": "vite-node ./build-scripts-storybook/sitemap-prepare.ts"
+    },
+    "dependencies": {
+        "xmlbuilder": "^15.1.1"
+    }
+}

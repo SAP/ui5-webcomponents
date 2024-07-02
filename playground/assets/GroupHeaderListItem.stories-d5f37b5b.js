@@ -1,0 +1,53 @@
+import{x as o}from"./lit-element-c5a2b594.js";import{l as i}from"./if-defined-c29cffe1.js";import{o as s}from"./unsafe-html-0ddd83da.js";const l={default:{control:{type:"text"},table:{type:{summary:"Array<Node>"}}}},_={package:"@ui5/webcomponents",tagName:"ui5-li-groupheader",showDefaultStoryOnly:!0},c={title:"Main/List/Group Header List Item",component:"GroupHeaderListItem",argTypes:l},u=e=>o` <ui5-list>
+  <ui5-li-groupheader
+    accessible-name="${i(e.accessibleName)}"
+    ?selected="${i(e.selected)}"
+  >
+    ${s(e.default)}
+  </ui5-li-groupheader>
+  <ui5-li
+  image="../assets/images/avatars/woman_avatar_3.png"
+  icon="navigation-right-arrow"
+  icon-end=""
+  >Jennifer</ui5-li
+>
+<ui5-li
+  image="../assets/images/avatars/woman_avatar_4.png"
+  icon="navigation-right-arrow"
+  icon-end=""
+  >Lora</ui5-li
+>
+<ui5-li
+  image="../assets/images/avatars/woman_avatar_5.png"
+  icon="navigation-right-arrow"
+  icon-end=""
+  >Carlotta</ui5-li
+>
+  </ui5-list>`,a=u.bind({});a.tags=["_hidden_"];a.args={default:"Front End Developers"};var n,t,r;a.parameters={...a.parameters,docs:{...(n=a.parameters)==null?void 0:n.docs,source:{originalSource:`args => {
+  return html\` <ui5-list>
+  <ui5-li-groupheader
+    accessible-name="\${ifDefined(args.accessibleName)}"
+    ?selected="\${ifDefined(args.selected)}"
+  >
+    \${unsafeHTML(args.default)}
+  </ui5-li-groupheader>
+  <ui5-li
+  image="../assets/images/avatars/woman_avatar_3.png"
+  icon="navigation-right-arrow"
+  icon-end=""
+  >Jennifer</ui5-li
+>
+<ui5-li
+  image="../assets/images/avatars/woman_avatar_4.png"
+  icon="navigation-right-arrow"
+  icon-end=""
+  >Lora</ui5-li
+>
+<ui5-li
+  image="../assets/images/avatars/woman_avatar_5.png"
+  icon="navigation-right-arrow"
+  icon-end=""
+  >Carlotta</ui5-li
+>
+  </ui5-list>\`;
+}`,...(r=(t=a.parameters)==null?void 0:t.docs)==null?void 0:r.source}}};const m=["Basic"],v=Object.freeze(Object.defineProperty({__proto__:null,Basic:a,__namedExportsOrder:m,default:c},Symbol.toStringTag,{value:"Module"}));export{v as C,_ as c};

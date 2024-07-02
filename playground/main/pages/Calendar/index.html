@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Calendar Playground</title>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	
+
+
+	
+
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/Calendar-50f74bde.css">
+</head>
+<body class="calendar1auto">
+
+	<section>
+		<ui5-label id="selectLabel" label-for="selectionType">Selection type for the first calendar:</ui5-label>
+		<ui5-select id="selectionType">
+			<ui5-option selected>Single</ui5-option>
+			<ui5-option>Multiple</ui5-option>
+			<ui5-option>Range</ui5-option>
+		</ui5-select>
+		<br>
+		<ui5-label id="toggleButtonLabel" label-for="weekNumbersButton">Show/hide weeknumbers for the first calendar:</ui5-label>
+		<ui5-toggle-button id="weekNumbersButton">hide</ui5-toggle-button>
+
+		<ui5-calendar id="calendar1"></ui5-calendar>
+		<ui5-textarea id="textArea" placeholder="Selected dates..."></ui5-textarea>
+	</section>
+
+	<section>
+		<ui5-calendar data-ui5-compact-size></ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-calendar id="calendar2" primary-calendar-type='Islamic'></ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-calendar id="calendar11" min-date="tomorrow"></ui5-calendar>
+		<ui5-calendar id="calendar12" max-date="yesterday"></ui5-calendar>
+		<ui5-calendar id="calendar3" min-date="1/7/2020" max-date="21/10/2020" format-pattern="dd/MM/yyyy"></ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-title>Calendar with preset dates</ui5-title>
+		<ui5-calendar selection-mode="Multiple">
+			<ui5-date value="Jan 20, 2021"></ui5-date>
+			<ui5-date value="Jan 22, 2021"></ui5-date>
+		</ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-title>Calendar with Minimum and Maximum Date & Format Pattern</ui5-title>
+		<ui5-calendar id="calendar4" data-ui5-compact-size min-date="7/7/2020" max-date="20/10/2020" timestamp="1594166400" format-pattern="dd/MM/yyyy">
+			<ui5-date value="08/07/2020"></ui5-date>
+		</ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-title> Calendar with no format pattern & ISO min-max dates</ui5-title>
+		<ui5-calendar id="calendar6" min-date="2020-10-20" max-date="2023-10-20"></ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-title>Calendar with primary and secondary calendar type</ui5-title>
+		<ui5-calendar id="calendar5" primary-calendar-type='Islamic' secondary-calendar-type='Gregorian'></ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-title>Calendar with same primary and secondary calendar type</ui5-title>
+		<ui5-calendar id="calendar7" primary-calendar-type='Gregorian' secondary-calendar-type='Gregorian'></ui5-calendar>
+	</section>
+
+</body>
+
+<script>
+	const toggleButton = document.getElementById("weekNumbersButton");
+	const select = document.getElementById("selectionType");
+	const calendar1 = document.getElementById("calendar1");
+	const textArea = document.getElementById("textArea");
+
+	select.addEventListener("ui5-change", function(event) {
+		calendar1.setAttribute("selection-mode", event.detail.selectedOption.textContent)
+	});
+
+	toggleButton.addEventListener("click", function(event) {
+		calendar1.hideWeekNumbers = event.target.pressed ? true : false;
+		toggleButton.innerHTML = event.target.pressed ? "show" : "hide";
+	});
+
+	calendar1.addEventListener("ui5-selected-dates-change", function(event) {
+		textArea.setAttribute("value", event.detail.dates.join(", ") + " / " + event.detail.values.join(", "));
+	});
+</script>
+
+</html>

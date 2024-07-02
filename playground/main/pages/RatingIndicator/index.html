@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Rating Indicator</title>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+
+	
+
+
+
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-659597d6.js"></script>
+  <link rel="stylesheet" href="../../../../assets/RatingIndicator-d544882e.css">
+</head>
+
+<body class="ratingindicator1auto">
+
+	<ui5-rating-indicator id="rating-indicator1" accessible-name="Hello World"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator2" max="10" value="6" accessible-name="Hello World"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator3" max="10" value="6" accessible-name="Hello World"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>test change event</h3>
+	<ui5-rating-indicator id="rating-indicator4" max="8" value="6"></ui5-rating-indicator>
+	<ui5-input value="0" id="change-event"></ui5-input>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator id="rating-indicator1" value="3.7"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>readonly</h3>
+	<ui5-rating-indicator id="rating-indicator-readonly" value="1" max="3" readonly></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>disabled</h3>
+	<ui5-rating-indicator value="3" disabled></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<ui5-rating-indicator value="3" max="3"></ui5-rating-indicator>
+	<br>
+	<br>
+
+	<h3>RatingIndicator with title</h3>
+	<ui5-rating-indicator id="rating-indicator-title" tooltip="Test" accessible-name="Hello World"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>RatingIndicator with required</h3>
+	<ui5-label id="label-required" for="rating-indicator-required" required="true">Required label</ui5-label>
+	<ui5-rating-indicator id="rating-indicator-required" required="true"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>RatingIndicator with accessibleName</h3>
+	<ui5-rating-indicator id="rating-indicator-acc-name" accessible-name="RatingIndicator with accessible name" stretch></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>RatingIndicator with accessibleNameRef</h3>
+	<ui5-label id="label-acc-name-ref" for="rating-indicator-acc-name-ref">Some ACC label</ui5-label>
+	<ui5-rating-indicator id="rating-indicator-acc-name-ref" accessible-name-ref="label-acc-name-ref" stretch></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
+	<h3>sizes</h3>
+	<section>
+		<ui5-rating-indicator class="ratingindicator2auto"></ui5-rating-indicator>
+		<br>
+		<ui5-rating-indicator class="ratingindicator3auto"></ui5-rating-indicator>
+		<br>
+		<ui5-rating-indicator class="ratingindicator4auto"></ui5-rating-indicator>
+		<br>
+		<ui5-rating-indicator class="ratingindicator5auto"></ui5-rating-indicator>
+		<br>
+
+	</section>
+
+	<script>
+		var changeCount = 0;
+		var ratingIndicator4 = document.getElementById("rating-indicator4");
+		var changeEventInput = document.getElementById("change-event");
+
+		ratingIndicator4.addEventListener("ui5-change", event => {
+			changeEventInput.value = ++changeCount;
+		});
+	</script>
+</body>
+
+</html>
