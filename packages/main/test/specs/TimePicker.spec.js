@@ -245,4 +245,18 @@ describe("TimePicker general interaction", () => {
 
 		await browser.keys("Escape");
 	});
+
+	it("input should have accessible name", async () => {
+		const timepicker = await browser.$("#timepickerAccessibleNameRef");
+		const innerInput = await timepicker.shadow$("ui5-input").shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-label"), "Pick a time", "Input aria-label attribute is correct.");
+	});
+
+	it("should apply aria-label from the accessibleNameRef property", async () => {
+		const timepicker = await browser.$("#timepickerAccessibleName");
+		const innerInput = await timepicker.shadow$("ui5-input").shadow$("input");
+
+		assert.strictEqual(await innerInput.getAttribute("aria-label"), "Pick a time", "Input aria-label attribute is correct.");
+	});
 });
