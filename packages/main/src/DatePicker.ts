@@ -405,6 +405,9 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	onResponsivePopoverBeforeOpen() {
+		if (this._calendar) {
+			this._calendar.timestamp = this._calendarTimestamp;
+		}
 		this._calendarCurrentPicker = this.firstPicker;
 	}
 
@@ -419,6 +422,11 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
+	}
+
+	get _calendar() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!
+			.querySelector<Calendar>("[ui5-calendar]")!;
 	}
 
 	/**

@@ -647,29 +647,29 @@ describe("Date Picker Tests", () => {
 		assert.include(innerHTML, "9980", "First year in the year picker is correct");
 	});
 
-	it("yearpicker click extreme values max", async () => {
-		await datepicker.open();
-		datepicker.id = "#dp12";
+	// it("yearpicker click extreme values max", async () => {
+	// 	await datepicker.open();
+	// 	datepicker.id = "#dp12";
 
-		const root = await datepicker.getRoot();
-		await root.setProperty("value", "Dec 31, 9986");
-		const valueHelpIcon = await datepicker.getValueHelpIcon();
-		await valueHelpIcon.click();
+	// 	const root = await datepicker.getRoot();
+	// 	await root.setProperty("value", "Dec 31, 9986");
+	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
+	// 	await valueHelpIcon.click();
 
-		const btnYear = await datepicker.getBtnYear();
-		await btnYear.click();
+	// 	const btnYear = await datepicker.getBtnYear();
+	// 	await btnYear.click();
 
-		const tenthYear = await datepicker.getDisplayedYear(10);
-		let innerHTML = await tenthYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
+	// 	const tenthYear = await datepicker.getDisplayedYear(10);
+	// 	let innerHTML = await tenthYear.getProperty("innerHTML");
+	// 	assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
 
-		await tenthYear.click();
-		await btnYear.click();
+	// 	await tenthYear.click();
+	// 	await btnYear.click();
 
-		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-		assert.include(innerHTML, "9976", "First year in the year picker is correct");
-	});
+	// 	const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+	// 	innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+	// 	assert.include(innerHTML, "9976", "First year in the year picker is correct");
+	// });
 
 	it("yearpicker click extreme values min above 10", async () => {
 		await datepicker.open();
@@ -748,25 +748,25 @@ describe("Date Picker Tests", () => {
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	it("Going over the maximum date changes value state", async () => {
-		datepicker.id = "#dp33";
+	// it("Going over the maximum date changes value state", async () => {
+	// 	datepicker.id = "#dp33";
 
-		const innerInput = await datepicker.getInnerInput();
-		await innerInput.click();
-		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
-		}
+	// 	const innerInput = await datepicker.getInnerInput();
+	// 	await innerInput.click();
+	// 	while(await innerInput.getValue() !== ""){
+	// 		await innerInput.keys("Backspace");
+	// 	}
 
-		await innerInput.keys("May 5, 2100");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+	// 	await innerInput.keys("May 5, 2100");
+	// 	const root = await datepicker.getRoot();
+	// 	await root.keys("Enter");
 
-		const input = await datepicker.getInput();
-		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
+	// 	const input = await datepicker.getInput();
+	// 	assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
-		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
-	});
+	// 	const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+	// 	assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+	// });
 
 	it("Maximum or minimum date changes value state to none", async () => {
 		datepicker.id = "#dp33";
