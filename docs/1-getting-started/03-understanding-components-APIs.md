@@ -13,7 +13,7 @@ UI5 Web Components provide the following kinds of APIs:
 | [properties / attributes](#properties) | Define the look and behavior of the component                                                                   |
 | [slots](#content)                      | Define whether you can put text or other HTML elements (and if yes, what kind) as DOM children of the component |
 | [events](#events)                      | Define what events the component fires due to user interaction                                                  |
-| [public methods](#methods)             | Methods you can call on the component                                                                           |
+| [public methods / getters](#methods)   | Methods/getters you can call on the component                                                                   |
 
 
 ## 1. How do I create a UI5 Web Component instance?
@@ -85,7 +85,7 @@ An example of such a Web Component is the `ui5-icon`:
 <ui5-icon name="add"></ui5-icon>
 ```
 
-The icon accepts no text or other HTML elements inside its opening and closing tags.
+The icon accepts no text or other HTML elements inside itself.
 Therefore, in the next example, the text inside the `<ui5-icon>` will be ignored.
 
 ```html
@@ -96,8 +96,8 @@ Other UI5 Web Components, such as `<ui5-button>` accept text (and in addition HT
 
 ```html
 <ui5-button id="btn">This is the content of the button</ui5-button>
-<ui5-button>This is the <strong>content<content> of the button</ui5-button>
-<ui5-button>This is the <span class="myClass">content<span> of the button</ui5-button>
+<ui5-button>This is the <strong>content</strong> of the button</ui5-button>
+<ui5-button>This is the <span class="myClass">content</span> of the button</ui5-button>
 ```
 
 You can change the content of these elements with any suitable DOM API.
@@ -163,7 +163,7 @@ And finally, some UI5 Web Components may render their children in different plac
 of each child.
 
 Let's have a look at the `<ui5-popover>` again. After consulting the documentation, we can see that this particular
-Web Component accepts three categories of children: `default, footer, header`. For `footer` and `header`
+Web Component accepts three categories of children: `default`, `footer`, and `header`. For `footer` and `header`
 the children can be any type of HTML Element (hence `HTMLElement`), while for `default` they can be both
 HTML Elements and text (hence `Node`).
 
@@ -222,19 +222,19 @@ Please, note, however that some frameworks (e.g. React) cannot use their standar
 for binding to custom events (such as `close`), but only for standard ones (such as `click`).
 So, for custom events in React you'd have to get a reference to the element and call `addEventListener` manually.
 
-For more information, please check our [React tutorial](../4-frameworks/01-React.md).
+For more information, please check our [React tutorial](../3-frameworks/01-React.md).
 
-## 5. How do I call public methods?
+## 5. How do I call public methods/getters?
 <a name="methods"></a>
 
 Get a reference to the UI5 Web Component and call the method on it, as you would with any other HTML element.
 
 ```js
-const myDialog = document.getElementsByTagName("ui5-dialog")[0];
-myDialog.open = true;
+const fileUploader = document.getElementsByTagName("ui5-file-uploader")[0];
+const files = fileUploader.files; // use the "files" public getter
 ```
 
-Consult the documentation for the available public methods for each UI5 Web Component.
+Consult the documentation for the available public methods/getters for each UI5 Web Component.
 
 ## 6. Conclusion
 <a name="conclusion"></a>

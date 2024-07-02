@@ -2,7 +2,7 @@
 
 The article describes the steps to manually create a custom theme for your UI5 Web Components project without any tools.
 
-<b>Note:</b>  We recommend using the `UI Theme Designer` tool to effortlessly create a custom theme for your UI5 Web Components project as described in the [Custom Theming with UI Theme Designer](./02-theme.md) article.
+<b>Note:</b>  We recommend using the `UI Theme Designer` tool to effortlessly create a custom theme for your UI5 Web Components project as described in the [Custom Theming with UI Theme Designer](02-theme.md) article.
 However, it requires SAP BTP account and configuration in the SAP BTP Cockpit. In case you don't have access to the UI Theme Designer, this article is for you.
 
 
@@ -45,7 +45,7 @@ npm install @sap-theming/theming-base-content
 ```less
 // src/mytheme.less
 
-@import "@sap-theming/theming-base-content/content/Base/baseLib/sap_horizon/css_variables.less";
+@import "../../node_modules/@sap-theming/theming-base-content/content/Base/baseLib/sap_horizon/css_variables.less";
 ```
 
 ### 2. Customizing variables
