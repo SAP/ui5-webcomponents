@@ -1,26 +1,26 @@
-# Importing UI5 Web Components
+# Components Packages
 
-*This section explains how to import UI5 Web Components to your projects.*
+*This section gives overview on the available components packages of web components and how to make use of them in your projects.*
 
-## Components Packages
+The UI5 Web Components project currently offers 3 NPM packages with Web Components.
+This separation is purely logical, as you can, and should, only import the components you are going to use. 
 
-The UI5 Web Components project currently offers 2 NPM packages with Web Components.
-
-This separation is purely logical, as you can, and should, only import the components you are going to need from both packages. 
 
 | Project | NPM Package                                                                        | Description                                                                          | Application           | Components List                                                   |
 |---------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|-----------------------|-------------------------------------------------------------------|
 | `main`  | [@ui5/webcomponents](https://www.npmjs.com/package/@ui5/webcomponents)             | "Bread-and-butter" components, such as buttons, pickers, inputs, list, table, etc. | General web apps      | [Explore](https://www.npmjs.com/package/@ui5/webcomponents)       |
 | `fiori` | [@ui5/webcomponents-fiori](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | More semantic, higher-order components that implement Fiori patterns                 | Mostly SAP Fiori apps | [Explore](https://www.npmjs.com/package/@ui5/webcomponents-fiori) |
+| `ai` | [@ui5/webcomponents-ai](https://www.npmjs.com/package/@ui5/webcomponents-fiori) | Provides web components implementing AI-related visual and interaction.   | Mostly SAP Fiori apps | [Explore](https://www.npmjs.com/package/@ui5/webcomponents-ai) |
 
 ## Usage
 
 
-1. Add one or both of the above packages as dependencies to your project.
+1. Install one or all of the above packages as dependencies to your project.
 
 ```
 npm i @ui5/webcomponents
 npm i @ui5/webcomponents-fiori
+npm i @ui5/webcomponents-ai
 ```
 
 2. Import the components your app is going to use.
@@ -36,6 +36,8 @@ import "@ui5/webcomponents/dist/List.js"; // ui5-list
 import "@ui5/webcomponents/dist/ListItemStandard.js"; // ui5-li
 
 import "@ui5/webcomponents-fiori/dist/Wizard.js"; // ui5-wizard
+
+import "@ui5/webcomponents-fiori/dist/PromtInput.js"; // ui5-prompt-input
 ```
 
 3. Use the components in your app.

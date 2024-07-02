@@ -8,13 +8,12 @@ import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
 import LogoWater from "@site/static/img/logos/LogoWater.svg";
-import LogoFire from "@site/static/img/logos/LogoFire.svg";
 
 import styles from './index.module.css';
 
 function Logo(props: { colorMode: string }) {
   return (
-    props.colorMode === "light" ? <LogoWater className={styles.logoMain} /> : <LogoFire className={styles.logoMain} />
+    <LogoWater className={styles.logoMain} />
   );
 } 
 

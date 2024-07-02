@@ -99,7 +99,7 @@ interface IInputSuggestionItem extends UI5Element {
 }
 
 interface IInputSuggestionItemSelectable extends IInputSuggestionItem {
-	text: string;
+	text?: string;
 	selected: boolean;
 }
 
@@ -632,7 +632,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_highlightSuggestionItem(item: SuggestionItem) {
-		item.markupText = this.typedInValue ? this.Suggestions?.hightlightInput((item.text), this.typedInValue) : encodeXML(item.text || "");
+		item.markupText = this.typedInValue ? this.Suggestions?.hightlightInput((item.text || ""), this.typedInValue) : encodeXML(item.text || "");
 	}
 
 	_isGroupItem(item: IInputSuggestionItem) {
@@ -814,7 +814,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		});
 
 		if (matchingItem) {
-			const itemText = matchingItem.text;
+			const itemText = matchingItem.text || "";
 
 			innerInput.setSelectionRange(itemText.length, itemText.length);
 			if (!suggestionItemPressed) {
@@ -1242,7 +1242,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	updateValueOnSelect(item: IInputSuggestionItem) {
 		const itemValue = this._isGroupItem(item) ? this.valueBeforeSelectionStart : (item as IInputSuggestionItemSelectable).text;
 
-		this.value = itemValue;
+		this.value = itemValue || "";
 		this._performTextSelection = true;
 	}
 
