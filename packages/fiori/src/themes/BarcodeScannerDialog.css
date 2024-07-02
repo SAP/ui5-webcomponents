@@ -1,34 +1,76 @@
 .ui5-barcode-scanner-dialog-root::part(content) {
-    padding: .4375rem;
+	padding: .4375rem;
 }
 
 /* video */
 .ui5-barcode-scanner-dialog-video-wrapper,
 .ui5-barcode-scanner-dialog-video {
-    height:100%;
-    width: 100%;
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+.ui5-barcode-scanner-dialog-video-wrapper::before {
+	content: '';
+	display: block;
+	position: absolute;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 1;
 }
 
 .ui5-barcode-scanner-dialog-video {
-    object-fit: cover;
+	object-fit: cover;
+}
+
+/* capture region */
+.ui5-barcode-scanner-dialog-capture-region {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 75vw;
+	height: 30vh;
+	max-width: 50rem;
+	max-height: 25rem;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	background-color: rgba(255, 255, 255, 0.6);
+	mix-blend-mode: overlay;
+	z-index: 2;
+	animation: pulse 2s infinite;
 }
 
 /* footer */
 .ui5-barcode-scanner-dialog-footer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
 }
 
 /* busy indicator */
 .ui5-barcode-scanner-dialog-busy {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 3;
 }
 
 .ui5-barcode-scanner-dialog-busy:not([active]) {
 	display: none;
+}
+
+/* animations */
+@keyframes pulse {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	50% {
+		transform: translate(-50%, -50%) scale(1.05);
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(1);
+	}
 }
