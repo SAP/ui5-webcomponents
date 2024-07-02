@@ -40,7 +40,7 @@ import styles from "./generated/themes/Text.css.js";
 	tag: "ui5-text",
 	renderer,
 	template: () => {
-		return html`<bdi><slot></slot></bdi>`;
+		return html`<span><slot></slot></span>`;
 	},
 	styles,
 })
