@@ -39,7 +39,7 @@ describe("avatar-group rendering", () => {
 				index = 1;
 			}
 
-			assert.strictEqual(avatarBackgroundColor, `Accent${index}`, "AvatarGroup _color-scheme property is assigned to avatars _size property");
+			assert.strictEqual(avatarBackgroundColor, `Accent${index}`, "AvatarGroup _color-scheme property is assigned to avatars");
 		});
 	});
 

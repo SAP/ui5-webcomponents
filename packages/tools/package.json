@@ -34,7 +34,7 @@
     "cem-plugin-vs-code-custom-data-generator": "^1.4.2",
     "chai": "^4.3.4",
     "child_process": "^1.0.2",
-    "chokidar": "^3.5.1",
+    "chokidar": "^3.6.0",
     "chokidar-cli": "^3.0.0",
     "command-line-args": "^5.1.1",
     "comment-parser": "^1.4.0",
@@ -71,7 +71,7 @@
   },
   "peerDependencies": {
     "chromedriver": "*",
-    "typescript": "^4.9.4"
+    "typescript": "^5.2.2"
   },
   "peerDependenciesMeta": {
     "typescript": {

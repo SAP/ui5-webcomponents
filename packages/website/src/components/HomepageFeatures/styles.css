@@ -18,12 +18,12 @@
 }
 
 .feature__image {
-  height: 10rem;
-  width: 10rem;
+  height: 12rem;
+  width: 12rem;
 }
 
 .feature__image.feature__image_frame {
-  width: 14rem;
+  width: 18rem;
 }
 
 .feature {

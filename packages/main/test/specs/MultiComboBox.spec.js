@@ -414,6 +414,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.keys("Tab");
 
 			assert.notOk(await popover.getProperty("open"), "The popover should not be opened.");
+
 			assert.notOk(await tokenizer.getProperty("expanded"), "The tokenizer should be collapsed.");
 		});
 
@@ -791,6 +792,25 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await mcb.getProperty("focused"), true, "The input should be focused");
 			assert.notOk(await listItem.matches(":focus"), "The first item is not focused");
+		});
+
+		it("focuses the item group, then select all item checkbox on arrow up", async () => {
+			const mcb = await browser.$("#mcb-select-all-grouping");
+			const input = await mcb.shadow$("input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const checkbox = await popover.$("ui5-checkbox");
+			const listItemGroup = await popover.$("ui5-li-group");
+
+
+			await input.click();
+			await mcb.keys("F4");
+			await input.keys("ArrowUp");
+
+			assert.ok(await listItemGroup.matches(":focus"), "The first item is focused");
+
+			await input.keys("ArrowUp");
+
+			assert.ok(await checkbox.matches(":focus"), "The select all checkbox is focused");
 		});
 
 		it("should navigate through the items with arrow keys when the picker is closed", async () => {

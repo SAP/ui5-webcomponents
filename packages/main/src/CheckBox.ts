@@ -190,11 +190,11 @@ class CheckBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the value state of the component.
