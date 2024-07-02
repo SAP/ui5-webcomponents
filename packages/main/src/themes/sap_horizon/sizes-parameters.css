@@ -49,6 +49,10 @@
 	--_ui5_color-palette-item-after-focus-offset: -0.125rem;
 	--_ui5_color_picker_slider_container_margin_top: -9px;
 
+	/* CheckBox */
+	--_ui5_checkbox_wrapped_focus_inset_block_end: 0.125rem;
+	--_ui5_checkbox_wrapped_content_margin_top: 0.125rem;
+
 	/* DayPicker */
 	--_ui5_daypicker_selected_item_now_special_day_top: 1.5625rem;
 	--_ui5_daypicker_specialday_focused_top: 1.3125rem;

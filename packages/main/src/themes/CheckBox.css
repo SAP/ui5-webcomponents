@@ -62,7 +62,7 @@
 }
 
 :host([wrapping-type="Normal"]) .ui5-checkbox-root:focus::before {
-	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
+	inset-block-end: var(--_ui5_checkbox_wrapped_focus_inset_block_end);
 }
 
 /* value states */

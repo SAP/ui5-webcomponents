@@ -1,0 +1,8 @@
+@import "../base/sizes-parameters.css";
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	/* CheckBox */
+	--_ui5_checkbox_wrapped_focus_inset_block_end: .375rem;
+}

@@ -41,12 +41,11 @@
 --_ui5_checkbox_inner_background: var(--sapField_Background);
 --_ui5_checkbox_wrapped_focus_padding: .375rem;
 --_ui5_checkbox_wrapped_content_margin_top: .125rem;
---_ui5_checkbox_wrapped_focus_left_top_bottom_position: .5625rem;
+--_ui5_checkbox_wrapped_focus_inset_block_end: .5625rem;
 --_ui5_checkbox_compact_wrapper_padding: .5rem;
 --_ui5_checkbox_compact_width_height: 2rem;
 --_ui5_checkbox_compact_inner_size: 1rem;
 --_ui5_checkbox_compact_focus_position: .375rem;
---_ui5_checkbox_compact_wrapped_label_margin_top: -1px;
 --_ui5_checkbox_label_color: var(--sapContent_LabelColor);
 --_ui5_checkbox_label_offset: var(--_ui5_checkbox_wrapper_padding);
 --_ui5_checkbox_disabled_label_color: var(--sapContent_LabelColor);
