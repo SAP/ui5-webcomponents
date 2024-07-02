@@ -776,7 +776,7 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const props = ctor.getMetadata().getProperties();
 		for (const prop of Object.keys(props)) { // eslint-disable-line
-			const initialValue = this.propertyDefaultValues.get(prop)
+			const initialValue = this.propertyDefaultValues.get(prop);
 
 			if (initialValue !== this[prop as keyof UI5Element]) {
 				this._updateAttribute(prop, (this as unknown as Record<string, PropertyValue>)[prop]);

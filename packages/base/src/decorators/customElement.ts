@@ -76,7 +76,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			savePropertyDefaultValues() {
 				const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 				for (const prop of Object.keys(props)) { // eslint-disable-line
-					this.registerPropertyDefaultValue(prop, this[prop])
+					this.registerPropertyDefaultValue(prop, this[prop]);
 				}
 			}
 		};
