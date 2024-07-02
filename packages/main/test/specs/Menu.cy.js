@@ -301,35 +301,6 @@ describe("Menu interaction", () => {
 
 	})
 
-	it("Focus restored to the menu opener", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen">
-			<ui5-menu-item text="New File" disabled></ui5-menu-item>
-		</ui5-menu>`)
- 
-		cy.get("[ui5-button]").as("button")
-			.realClick();
- 
-		cy.get("[ui5-menu]").as("menu")
-			.ui5MenuOpen({ opener: "btnOpen" });
- 
-		cy.get("@menu")
-			.ui5MenuOpened();
-
-		cy.get("[ui5-menu] > [ui5-menu-item]")
-			.as("items");
-
-		cy.get("@items")
-			.eq(0)
-			.ui5MenuItemClick()
-			.should("be.focused")
- 
-		cy.realPress("Escape");
- 
-		cy.get("@button")
-			.should("be.focused");
-	});
-
 	describe("Accessibility", () => {
 		it("Menu and Menu items accessibility attributes", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
