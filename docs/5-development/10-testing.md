@@ -27,7 +27,7 @@ your system (or it updates automatically, if allowed), you are expected to also 
 
 The configuration for WDIO can be found in the `config/` directory under `wdio.conf.js`.
 
-As explained [here](./01-custom-UI5-Web-Components-Packages.md) in the section about the `config/` directory, you can 
+As explained [here](./01-package.md) in the section about the `config/` directory, you can 
 customize, or even completely replace the default configuration.
 
 However, before doing so, please note the following two benefits of working with the default configuration, provided by UI5 Web Components:

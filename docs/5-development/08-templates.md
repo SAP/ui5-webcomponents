@@ -773,22 +773,21 @@ Then the `Demo2` component will use the `.hbs` file of the `Demo` component but 
 
 ### Rendering slots
 
-The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component, in a desired place in the shadow DOM.
-You should render each slot, defined in your component's metadata (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)), somewhere in the `.hbs` template.
+The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component, in a desired place in the shadow DOM. You should render each slot, defined in your component (see the [Slots](./04-slots.md)) section, somewhere in the `.hbs` template.
 
-To render the default slot simply render a `slot` tag:
+- To render the default slot simply render a `slot` tag:
 
 ```html
 <slot></slot>
 ```
 
-and to render a named slot:
+- To render a named slot:
 
 ```html
 <slot name="tabs"></slot>
 ```
 
-Here's a real-world example of a "page" component:
+- Here's a real-world example of a "page" component:
 
 In `Page.js` (metadata object):
 
@@ -836,7 +835,7 @@ and all children with attributes `slot="header"` / `slot="footer"` will be rende
 All children assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
 Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component. 
 
-The `individualSlots` slot metadata configuration setting (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)) allows you to have a separate physical slot for each child belonging to a certain slot.
+The `individualSlots` slot metadata configuration setting (see the [Slot](./04-slots.md) section) allows you to have a separate physical slot for each child belonging to a certain slot.
 
 However, setting `individualSlots: true` in the metadata configuration only creates an `_individualSlot` property on each element belonging to the slot, but does not create any slots automatically.
 The individual slots must be explicitly rendered by the developer in the `.hbs` template.
