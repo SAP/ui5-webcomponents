@@ -62,3 +62,41 @@ this.fireEvent("change", {}, cancelable, bubbles);
 ```
 
 **Note:** By default, the `fireEvent` method returns a boolean value that helps you understand whether the event was canceled (i.e., if the `preventDefault` method was called).
+
+## Types
+The `@event` decorator is generic and accepts a TypeScript type that describes its detail. This type is crucial for preventing incorrect detail data when the event is fired using `fireEvent` (which is also generic) and for ensuring type safety when listening for the event, so you know what kind of detail data to expect.
+
+**Note:** It's required to export all types that describe specific event details for all public events.
+
+Here's an example implementation:
+
+```typescript
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+
+// Define the event detail type
+export type MyDemoComponentChangeEventDetail = {
+    valid: boolean;
+};
+
+@customElement("my-demo-component")
+@event<MyDemoComponentChangeEventDetail>("change", {
+    detail: {
+        valid: { type: Boolean },
+    },
+})
+class MyDemoComponent extends UI5Element {
+    @property()
+    value = "";
+
+    onNativeInputChange(e: Event) {
+        this.fireEvent<MyDemoComponentChangeEventDetail>("change", {
+            valid: true,
+        });
+    }
+}
+
+export { MyDemoComponent };
+```
