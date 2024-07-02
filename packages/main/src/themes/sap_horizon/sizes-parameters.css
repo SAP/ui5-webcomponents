@@ -36,6 +36,9 @@
 	--_ui5_slider_handle_top: -.5rem;
 	--_ui5_slider_tooltip_height: 1.375rem;
 
+	/* CheckBox */
+	--_ui5_checkbox_wrapped_focus_inset_block: 0.125rem;
+
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.25rem;
 	--_ui5_color-palette-item-focus-height: 1rem;
