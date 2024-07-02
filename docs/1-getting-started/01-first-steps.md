@@ -19,7 +19,7 @@ To build your UI5 Web Components project you can use any bundling tool that supp
  - `.json` imports;
  - dynamic ES6 imports.
 
-This is true of all modern bundlers.  
+This is true for all modern bundlers.  
 
 UI5 Web Components are shipped as ES6 modules and published on NPM. If you are already using a framework that handles bundling of ES6 modules, skip forward to [Installation](#installation) or check the Tutorials section.
 
@@ -35,12 +35,12 @@ npm init vite
 - Select a framework: `vanilla`
 - Select a variant: `JavaScript`
 
-This command will create a project structure under `my-webcomponents-app`. Follow the instructions on the screen to install the initial depenednecies and start a dev server.
+This command will create a project structure under `my-webcomponents-app`. Follow the instructions on the screen to install the initial dependencies and start a dev server.
 
 ```
 cd my-webcomponents-app
 npm install
-npm run dev​
+npm run dev
 ```
 
 You should see a message that a server is running on `Local: http://localhost:3000/`. Launch your favourite IDE and change some code, the browser page will be automatically refreshed.
@@ -105,6 +105,6 @@ dist/assets/index.4116dceb.js 0.12kb / brotli: 0.09kb
 dist/assets/vendor.c05c7785.js 114.92kb / brotli: 24.30kb
 ```
 
-The contents of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
+The content of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
 
 #### 4. Enjoy UI5 Web Components.
