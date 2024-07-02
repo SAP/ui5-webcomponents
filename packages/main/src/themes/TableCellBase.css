@@ -18,4 +18,10 @@
 :host(#selection-cell) {
     width: auto;
     min-width: auto;
+    background-color: inherit;
+}
+
+:host([fixed]) {
+    position: sticky;
+    z-index: 1;
 }

@@ -66,6 +66,8 @@ class TableHeaderRow extends TableRowBase {
 	/**
 	 * Sticks the `ui5-table-header-row` to the top of a table.
 	 *
+	 * Note: If used in combination with overflowMode "Scroll", the table needs a defined height for the sticky header to work as expected.
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -97,6 +99,11 @@ class TableHeaderRow extends TableRowBase {
 
 	get _i18nRowPopin() {
 		return TableRowBase.i18nBundle.getText(TABLE_ROW_POPIN);
+	}
+
+	get _cells() {
+		// only add if not null #selection-cell if it is not null to the array
+		return [this.shadowRoot?.querySelector("#selection-cell"), ...this.cells];
 	}
 }
 

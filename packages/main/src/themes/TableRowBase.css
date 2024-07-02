@@ -2,8 +2,9 @@
 	display: grid;
 	grid-template-columns: subgrid;
 	grid-column: 1 / -1;
-	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
 	min-height: var(--_ui5_list_item_base_height);
+	box-sizing: border-box;
+	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
 }
 
 :host([tabindex]:focus) {
@@ -13,8 +14,21 @@
 
 #selection-cell {
 	padding: 0;
+	left: 0;
+}
+
+:dir(rtl)#selection-cell {
+	right: 0;
 }
 
 #selection-component {
 	vertical-align: middle;
+}
+
+/** Focus outline for the selection cell */
+:host([tabindex]:focus) #selection-cell {
+    outline: none;
+    box-shadow: var(--_ui5_table_shadow_border_top),
+				var(--_ui5_table_shadow_border_left),
+				var(--_ui5_table_shadow_border_bottom); /* There is a 1px difference between row and cell, therefore the outline is also 1px difference between their outline offsets */
 }
