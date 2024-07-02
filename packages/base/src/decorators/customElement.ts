@@ -21,7 +21,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
 } = {}): ClassDecorator => {
-	return (target: any) => {
+	return (target: any): any => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};
 		}
@@ -38,7 +38,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
-		 } = tagNameOrComponentSettings;
+		} = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
@@ -65,6 +65,21 @@ const customElement = (tagNameOrComponentSettings: string | {
 				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
+
+		return class extends target {
+			constructor(...args: any[]) {
+				super(...args);
+
+				this.savePropertyDefaultValues();
+			}
+
+			savePropertyDefaultValues() {
+				const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
+				for (const prop of Object.keys(props)) { // eslint-disable-line
+					this.registerPropertyDefaultValue(prop, this[prop])
+				}
+			}
+		};
 	};
 };
 

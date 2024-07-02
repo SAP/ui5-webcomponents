@@ -160,8 +160,14 @@ abstract class UI5Element extends HTMLElement {
 	_internals?: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
+	propertyDefaultValues = new Map<string, unknown>();
+
 	static template?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
+
+	registerPropertyDefaultValue(prop: string, value: unknown) {
+		this.propertyDefaultValues.set(prop, value);
+	}
 
 	static renderer: Renderer;
 	initializedProperties: Map<string, unknown>;
@@ -769,8 +775,12 @@ abstract class UI5Element extends HTMLElement {
 	updateAttributes() {
 		const ctor = this.constructor as typeof UI5Element;
 		const props = ctor.getMetadata().getProperties();
-		for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
-			this._updateAttribute(prop, (this as unknown as Record<string, PropertyValue>)[prop]);
+		for (const prop of Object.keys(props)) { // eslint-disable-line
+			const initialValue = this.propertyDefaultValues.get(prop)
+
+			if (initialValue !== this[prop as keyof UI5Element]) {
+				this._updateAttribute(prop, (this as unknown as Record<string, PropertyValue>)[prop]);
+			}
 		}
 	}
 
@@ -795,7 +805,6 @@ abstract class UI5Element extends HTMLElement {
 
 		this.onBeforeRendering();
 		if (!this._rendered) {
-			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
 			this.updateAttributes();
 		}
 
