@@ -170,7 +170,7 @@ If your styles are symmetric, the same from both sides, the result will be the s
 
 ## Content Density
 
-`Content Density` refers to the concept in SAP Design and primarily defines the spacing and sizing of web components to optimize usability and visual appeal based on the user's device and preferences.
+`Content Density` is a concept in SAP Design that primarily defines the spacing and sizing of web components to optimize usability and visual appeal based on the user's device and preferences.
 
 There are two main content density modes:
 
@@ -196,10 +196,10 @@ And, your web component is used normally:
 </body>
 ```
 
-The `--my-component-width` variable will be `2.75rem` and the `--my-component-padding` variable  will be `1rem`.
+As expected, the `--my-component-width` variable will be `2.75rem` and the `--my-component-padding` variable  will be `1rem`.
 
 
-To write `Compact` styles and define `Compact` CSS variables, targeting the `data-ui5-compact-size` attribute and the `.ui5-content-density-compact` class:
+To write `Compact` styles and define `Compact` CSS variables, you must target the `data-ui5-compact-size` attribute and the `.ui5-content-density-compact` class:
 
 ```css
 [data-ui5-compact-size],
