@@ -106,7 +106,7 @@ Practically speaking, the theming setup appears as follows:
 }
 ```
 
-The last piece is to connect the web component styles (the main file used in all themes) via the [@customElement](../02-component) decorator:
+The last piece is to connect the web component styles (the main file used in all themes) via the [@customElement](./02-component.md) decorator:
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
