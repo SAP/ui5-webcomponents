@@ -124,6 +124,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	@property({ type: Boolean })
 	_activeState = false;
 
+	readonly identifier = "TableGrowing";
 	_table?: Table;
 	_observer?: IntersectionObserver;
 	_individualSlot?: string;

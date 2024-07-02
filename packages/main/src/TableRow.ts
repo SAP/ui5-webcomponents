@@ -53,13 +53,13 @@ class TableRow extends TableRowBase {
 	cells!: Array<TableCell>;
 
 	/**
-	 * Unique identifier of the component.
+	 * Unique identifier of the row.
 	 *
 	 * @default ""
 	 * @public
 	 */
 	@property()
-	key = "";
+	rowKey = "";
 
 	/**
 	 * Defines the interactive state of the row.
