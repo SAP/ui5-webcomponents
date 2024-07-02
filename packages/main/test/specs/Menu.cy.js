@@ -304,9 +304,7 @@ describe("Menu interaction", () => {
 	it("Focus restored to the menu opener", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen">
-			<ui5-menu-item text="New File">
-				<ui5-menu-item text="New File"></ui5-menu-item>
-			</ui5-menu-item>
+			<ui5-menu-item text="New File" disabled></ui5-menu-item>
 		</ui5-menu>`)
  
 		cy.get("[ui5-button]").as("button")
@@ -317,6 +315,14 @@ describe("Menu interaction", () => {
  
 		cy.get("@menu")
 			.ui5MenuOpened();
+
+		cy.get("[ui5-menu] > [ui5-menu-item]")
+			.as("items");
+
+		cy.get("@items")
+			.eq(0)
+			.ui5MenuItemClick()
+			.should("be.focused")
  
 		cy.realPress("Escape");
  
