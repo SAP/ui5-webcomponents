@@ -36,11 +36,13 @@
 	</div>
 
 	{{#unless readonly}}
-		<ui5-icon
-			name="slim-arrow-down"
-			class="inputIcon"
-			?pressed="{{_iconPressed}}"
-		></ui5-icon>
+		<div class="ui5-input-icon-root">
+			<ui5-icon
+				name="slim-arrow-down"
+				class="ui5-input-icon"
+				?pressed="{{_iconPressed}}"
+			></ui5-icon>
+		</div>
 	{{/unless}}
 
 	{{#if hasValueState}}

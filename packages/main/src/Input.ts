@@ -518,6 +518,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	/**
 	 * Defines the icon to be displayed in the component.
+	 *
+	 * **Note:** It is recommended to hide the icon when the component is in readonly state
 	 * @public
 	 */
 	@slot()
@@ -1468,7 +1470,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get iconsCount(): number {
-		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const slottedIconsCount = this.icon.length;
 		const clearIconCount = Number(this._effectiveShowClearIcon) ?? 0;
 		return slottedIconsCount + clearIconCount;
 	}
