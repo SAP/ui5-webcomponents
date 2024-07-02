@@ -24,7 +24,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
-import { findScrollContainer, scrollElementIntoView } from "./TableUtils.js";
+import { findVerticalScrollContainer, scrollElementIntoView } from "./TableUtils.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -410,7 +410,7 @@ class Table extends UI5Element {
 
 	_onfocusin(e: FocusEvent) {
 		// Handles focus in the table, when the focus is below a sticky element
-		scrollElementIntoView(this._scrollContainer, e.target as HTMLElement, this._stickyElements);
+		scrollElementIntoView(this._scrollContainer, e.target as HTMLElement, this._stickyElements, this.effectiveDir === "rtl");
 	}
 
 	/**
@@ -548,13 +548,13 @@ class Table extends UI5Element {
 
 	get _stickyElements() {
 		const stickyRows = [this.headerRow[0]].filter(row => row.sticky);
-		const stickyColumns = this.headerRow[0]._cells.filter(cell => cell && cell.hasAttribute("fixed")) as TableHeaderCell[];
+		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
 
 		return [...stickyRows, ...stickyColumns];
 	}
 
 	get _scrollContainer() {
-		return findScrollContainer(this._tableElement);
+		return findVerticalScrollContainer(this._tableElement);
 	}
 
 	get isTable() {

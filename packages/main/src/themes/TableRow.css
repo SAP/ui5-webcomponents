@@ -41,6 +41,10 @@
 	right: 0;
 }
 
+:dir(rtl)#navigated-cell {
+	left: 0;
+}
+
 :host([navigated]) #navigated-cell {
     background-color: var(--sapList_SelectionBorderColor);
 }

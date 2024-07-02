@@ -17,6 +17,10 @@
 	left: 0;
 }
 
+:dir(rtl)#selection-cell {
+	right: 0;
+}
+
 #selection-component {
 	vertical-align: middle;
 }
@@ -24,7 +28,7 @@
 /** Focus outline for the selection cell */
 :host([tabindex]:focus) #selection-cell {
     outline: none;
-    box-shadow: inset 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor),
-                inset var(--sapContent_FocusWidth) 0 var(--sapContent_FocusColor),
-                inset 0 -1px var(--sapContent_FocusColor); /* There is a 1px difference between row and cell, therefore the outline is also 1px difference between their outline offsets */
+    box-shadow: var(--_ui5_table_shadow_border_top),
+				var(--_ui5_table_shadow_border_left),
+				var(--_ui5_table_shadow_border_bottom); /* There is a 1px difference between row and cell, therefore the outline is also 1px difference between their outline offsets */
 }

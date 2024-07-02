@@ -17,7 +17,7 @@ const findRowInPath = (composedPath: Array<EventTarget>) => {
 	return composedPath.find((el: EventTarget) => el instanceof HTMLElement && el.hasAttribute("ui5-table-row")) as TableRow;
 };
 
-const findScrollContainer = (element: HTMLElement): HTMLElement => {
+const findVerticalScrollContainer = (element: HTMLElement): HTMLElement => {
 	while (element) {
 		const { overflowY } = window.getComputedStyle(element);
 		if (overflowY === "auto" || overflowY === "scroll") {
@@ -34,26 +34,32 @@ const findScrollContainer = (element: HTMLElement): HTMLElement => {
 	return document.scrollingElement as HTMLElement || document.documentElement;
 };
 
-const scrollElementIntoView = (scrollContainer: HTMLElement, element: HTMLElement, stickyElements: HTMLElement[]) => {
+const scrollElementIntoView = (scrollContainer: HTMLElement, element: HTMLElement, stickyElements: HTMLElement[], isRtl: boolean) => {
 	if (stickyElements.length === 0) {
 		return;
 	}
 
 	const elementRect = element.getBoundingClientRect();
+	const inline = isRtl ? "right" : "left";
 
 	const { x: stickyX, y: stickyY } = stickyElements.reduce(({ x, y }, stickyElement) => {
-		const { top, left } = getComputedStyle(stickyElement);
+		const { top, [inline]: inlineStart } = getComputedStyle(stickyElement);
 		const stickyElementRect = stickyElement.getBoundingClientRect();
 		if (top !== "auto" && stickyElementRect.bottom > elementRect.top) {
 			y = Math.max(y, stickyElementRect.bottom);
 		}
-		if (left !== "auto" && stickyElementRect.right > elementRect.left) {
-			x = Math.max(x, stickyElementRect.right);
+		if (inlineStart !== "auto") {
+			if (!isRtl && stickyElementRect.right > elementRect.left) {
+				x = Math.max(x, stickyElementRect.right);
+			} else if (isRtl && stickyElementRect.left < elementRect.right) {
+				x = Math.min(x, stickyElementRect.left);
+			}
 		}
-		return { x, y };
-	}, { x: elementRect.left, y: elementRect.top });
 
-	const scrollX = elementRect.left - stickyX;
+		return { x, y };
+	}, { x: elementRect[inline], y: elementRect.top });
+
+	const scrollX = elementRect[inline] - stickyX;
 	const scrollY = elementRect.top - stickyY;
 
 	if (scrollX === 0 && scrollY === 0) {
@@ -72,6 +78,6 @@ export {
 	isSelectionCheckbox,
 	isHeaderSelector,
 	findRowInPath,
-	findScrollContainer,
+	findVerticalScrollContainer,
 	scrollElementIntoView,
 };

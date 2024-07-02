@@ -101,6 +101,7 @@ class TableHeaderRow extends TableRowBase {
 	}
 
 	get _cells() {
+		// only add if not null #selection-cell if it is not null to the array
 		return [this.shadowRoot?.querySelector("#selection-cell"), ...this.cells];
 	}
 }
