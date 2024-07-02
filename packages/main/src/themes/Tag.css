@@ -20,7 +20,7 @@
 	min-width: 1.125em;
 	max-width: 100%;
 	box-sizing: border-box;
-	padding: 0 0.25rem;
+	padding: 0.1875rem 0.25rem;
 	border: 0.0625rem solid;
 	border-radius: var(--sapButton_BorderCornerRadius);
 	white-space: normal;
@@ -69,7 +69,6 @@
 ::slotted([ui5-icon]) {
 	width: var(--_ui5-tag-icon-width);
 	min-width: var(--_ui5-tag-icon-width);
-	height:  calc(var(--_ui5-tag-height) - 0.125rem); /* remove width of the border since tag root is with box-sizing:border-box*/
 	color: inherit;
 	pointer-events: none;
 	align-self: flex-start;
