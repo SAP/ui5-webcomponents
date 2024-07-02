@@ -112,7 +112,7 @@ The script runs the `less` compiler over the `.less` file (`src/mytheme.less`) t
 and adds a small piece of metadata (see `CUSTOM_THEME_METADATA` variable), required by the UI5 Web Components framework to detect the custom theme.
 
 
-- Create a task in the `package.json` for convinience
+- Create a task in the `package.json` for convenience
 ```json
 "scripts": {
     "build:theme": "node customtheme.js"
