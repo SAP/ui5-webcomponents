@@ -3,10 +3,10 @@
 	@click={{_onclick}}
 	>
 	<span class="ui5-label-text-wrapper">
-		<bdi id="{{_id}}-bdi"><slot></slot></bdi>
+		<slot></slot>
 	</span>
-	<span 
-		aria-hidden="true" 
+	<span
+		aria-hidden="true"
 		class="ui5-label-required-colon"
 		data-colon="{{_colonSymbol}}"
 	>
