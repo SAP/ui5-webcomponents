@@ -133,11 +133,11 @@ type StepInputValueStateChangeEventDetail = {
 class StepInput extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a value of the component.
-	 * @default ""
+	 * @default 0
 	 * @public
 	 */
-	@property()
-	value = "";
+	@property({ type: Number })
+	value = 0;
 
 	/**
 	 * Defines a minimum value of the component.
@@ -256,7 +256,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_inputFocused = false;
 
 	@property({ noAttribute: true })
-	_previousValue: string = this.value;
+	_previousValue: number = this.value;
 
 	@property({ noAttribute: true })
 	_waitTimeout: number = INITIAL_WAIT_TIMEOUT;
@@ -294,7 +294,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue(): FormData | string | null {
-		return this.value;
+		return this.value.toString();
 	}
 
 	static async onDefine() {
@@ -336,16 +336,15 @@ class StepInput extends UI5Element implements IFormInputElement {
 	}
 
 	get _displayValue() {
-		const numberValue = Number(this.value);
-		if ((this.value === "0") || (Number.isInteger(numberValue))) {
-			return numberValue.toFixed(this.valuePrecision).toString();
+		if ((this.value === 0) || (Number.isInteger(this.value))) {
+			return this.value.toFixed(this.valuePrecision);
 		}
 
-		if (this.input && this.value === this.input.value) { // For the cases where the number is fractional and is ending with 0s.
+		if (this.input && this.value === Number(this.input.value)) { // For the cases where the number is fractional and is ending with 0s.
 			return this.input.value;
 		}
 
-		return this.value;
+		return this.value.toString();
 	}
 
 	get accInfo() {
@@ -403,8 +402,8 @@ class StepInput extends UI5Element implements IFormInputElement {
 	}
 
 	_setButtonState() {
-		this._decIconDisabled = this.min !== undefined && Number(this.value) <= this.min;
-		this._incIconDisabled = this.max !== undefined && Number(this.value) >= this.max;
+		this._decIconDisabled = this.min !== undefined && this.value <= this.min;
+		this._incIconDisabled = this.max !== undefined && this.value >= this.max;
 	}
 
 	_validate() {
@@ -455,7 +454,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 */
 	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
-		value = Number(this.value) + modifier;
+		value = this.value + modifier;
 		if (this.min !== undefined && value < this.min) {
 			value = this.min;
 		}
@@ -463,10 +462,9 @@ class StepInput extends UI5Element implements IFormInputElement {
 			value = this.max;
 		}
 		value = this._preciseValue(value);
-
-		if (value !== Number(this.value)) {
-			this.value = value.toFixed(this.valuePrecision);
-			this.input.value = this.value;
+		if (value !== this.value) {
+			this.value = value;
+			this.input.value = value.toFixed(this.valuePrecision);
 			this._validate();
 			this._setButtonState();
 			this.focused = true;
@@ -505,7 +503,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_onInputChange() {
 		this._setDefaultInputValueIfNeeded();
 
-		const inputValue = this.input.value;
+		const inputValue = Number(this.input.value);
 		if (this._isValueChanged(inputValue)) {
 			this._updateValueAndValidate(inputValue);
 		}
@@ -519,11 +517,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_isValueChanged(inputValue: string) {
-		if (this.value === "" && inputValue === "0") {
-			return;
-		}
-
+	_isValueChanged(inputValue: number) {
 		const isValueWithCorrectPrecision = this._isValueWithCorrectPrecision;
 		// Treat values as distinct when modified to match a specific precision (e.g., from 3.4000 to 3.40),
 		// even if JavaScript sees them as equal, to correctly update valueState based on expected valuePrecision.
@@ -531,12 +525,12 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 		return this.value !== this._previousValue
 			|| this.value !== inputValue
-			|| inputValue === "0"
+			|| inputValue === 0
 			|| !isValueWithCorrectPrecision
 			|| isPrecisionCorrectButValueStateError;
 	}
 
-	_updateValueAndValidate(inputValue: string) {
+	_updateValueAndValidate(inputValue: number) {
 		this.value = inputValue;
 		this._validate();
 		this._setButtonState();
@@ -571,13 +565,13 @@ class StepInput extends UI5Element implements IFormInputElement {
 		} else if (isEscape(e)) {
 			// return previous value
 			this.value = this._previousValue;
-			this.input.value = Number(this.value).toFixed(this.valuePrecision);
+			this.input.value = this.value.toFixed(this.valuePrecision);
 		} else if (this.max !== undefined && (isPageUpShift(e) || isUpShiftCtrl(e))) {
 			// step to max
-			this._modifyValue(this.max - Number(this.value));
+			this._modifyValue(this.max - this.value);
 		} else if (this.min !== undefined && (isPageDownShift(e) || isDownShiftCtrl(e))) {
 			// step to min
-			this._modifyValue(this.min - Number(this.value));
+			this._modifyValue(this.min - this.value);
 		} else if (!isUpCtrl(e) && !isDownCtrl(e) && !isUpShift(e) && !isDownShift(e)) {
 			preventDefault = false;
 		}
