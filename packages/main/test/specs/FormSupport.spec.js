@@ -323,7 +323,7 @@ describe("Form support", () => {
 		await submitBtn.click();
 
 		const hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?step_input3=&step_input4=4"));
+			done(location.href.endsWith("FormSupport.html?step_input3=0&step_input4=4"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});
