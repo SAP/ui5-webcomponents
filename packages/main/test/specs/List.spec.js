@@ -138,9 +138,17 @@ describe("List Tests", () => {
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
-	it("Tests rendering of image slot", async () => {
+	it("Tests rendering of image slot with avatar", async () => {
 		const imageSlot = await browser.executeAsync(done => {
-			done(document.getElementById("image-slot-li").shadowRoot.querySelector("slot[name='image']").assignedNodes()[0].querySelector("#image-slot-avatar"));
+			done(document.getElementById("image-slot-li2").shadowRoot.querySelector("slot[name='image']").assignedNodes()[0]);
+		});
+
+		assert.ok(imageSlot, "the content of image slot is rendered");
+	});
+
+	it("Tests rendering of image slot with img", async () => {
+		const imageSlot = await browser.executeAsync(done => {
+			done(document.getElementById("image-slot-li").shadowRoot.querySelector("slot[name='image']").assignedNodes()[0]);
 		});
 
 		assert.ok(imageSlot, "the content of image slot is rendered");

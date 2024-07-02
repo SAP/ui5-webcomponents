@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="./styles/List_test_page.css">
 
 	<style>
-		ui5-avatar img {
+		[ui5-avatar] img {
 			object-fit: contain;
 		}
 	</style>
@@ -228,12 +228,19 @@
 	<br/><br/>
 
 	<ui5-list>
-		<ui5-li id="image-slot-li"> Avatar inside image slot
-			<div slot="image">
-				<ui5-avatar id="image-slot-avatar">
-					<img src="./img/woman_avatar_5.png" alt="Woman image">
-				</ui5-avatar>
-			</div>
+		<ui5-li id="image-slot-li2"> Avatar inside image slot
+			<ui5-avatar id="image-slot-img" slot="image">
+				<img src="./img/woman_avatar_5.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list>
+		<ui5-li id="image-slot-li"> Img tag inside image slot
+			<img slot="image" src="./img/woman_avatar_5.png" alt="Woman image">
 		</ui5-li>
 
 	</ui5-list>
