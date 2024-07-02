@@ -1,4 +1,4 @@
-# Get Started with UI5 Web Components & React
+# UI5 Web Components & React
 
 In this tutorial, you will learn how to add UI5 Web Components to your application. You can add UI5 Web Components both to new React applications and to already existing ones.
 

@@ -148,13 +148,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the name/names of the file/files to upload.
-	 * @default undefined
+	 * @default ""
 	 * @formEvents change
 	 * @formProperty
 	 * @public
 	 */
 	@property()
-	value?: string;
+	value = "";
 
 	/**
 	 * Defines the value state of the component.

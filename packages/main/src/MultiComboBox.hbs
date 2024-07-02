@@ -22,6 +22,7 @@
 		@paste={{_handlePaste}}
 		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
+		?open = "{{tokenizerOpen}}"
 	>
 		{{#each items}}
 			{{#if isGroupItem}}

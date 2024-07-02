@@ -234,14 +234,6 @@ class ColorPalette extends UI5Element {
 			this.recentColorsElements[0].selected = true;
 			this.recentColorsElements[0].focus();
 		}
-
-		if (this.popupMode) {
-			if (this.showDefaultColor) {
-				this.focusFirstFocusableElement();
-			} else {
-				this.focusFirstDisplayColorElement();
-			}
-		}
 	}
 
 	selectColor(item: ColorPaletteItem) {
@@ -479,14 +471,6 @@ class ColorPalette extends UI5Element {
 	focusColorElement(element: ColorPaletteNavigationItem, itemNavigation: ItemNavigation) {
 		itemNavigation.setCurrentItem(element);
 		itemNavigation._focusCurrentItem();
-	}
-
-	focusFirstDisplayColorElement() {
-		this.focusColorElement(this.displayedColors[0], this._itemNavigation);
-	}
-
-	focusFirstFocusableElement() {
-		this.firstFocusableElement.focus();
 	}
 
 	get firstFocusableElement() {

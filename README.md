@@ -1,6 +1,5 @@
-![UI5 icon](/docs/images/UI5_logo_wide.png)
+#  ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_water.png)UI5 Web Components
 
-# UI5 Web Components
 [![CI](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml/badge.svg)](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui5-webcomponents)](https://api.reuse.software/info/github.com/SAP/ui5-webcomponents)
@@ -26,8 +25,8 @@
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
 - [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
 - [Customizing with `UI Theme Designer`](./docs/3-customizing/02-theme.md)
-- [Developing Custom UI5 Web Components](./docs/5-development/02-custom-UI5-Web-Components.md)
-- [Creating a Custom UI5 Web Components Package](./docs/5-development/01-custom-UI5-Web-Components-Packages.md)
+- [Creating a Custom UI5 Web Components Package](./docs/5-development/01-package.md)
+- [Developing Custom UI5 Web Components](./docs/5-development/02-component.md)
 - [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/03-scoping.md)
 - [Release Management](./docs/Release%20Management.md)
 - [F.A.Q.](./docs/FAQ.md)
