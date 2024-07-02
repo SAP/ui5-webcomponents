@@ -100,6 +100,8 @@ export { MyDemoComponent };
 ## noConflict mode
 By default, UI5 Web Components fire all custom events twice: once with their name (e.g., `change`) and once more with a `ui5-` prefix (e.g., `ui5-change`). For example, when the `ui5-switch` is toggled, it fires a `change` event and a `ui5-change` event.
 
+This `noConflict` setting allows us to prevent clashes between native and custom events.
+
 The `noConflict` setting (`@ui5/webcomponents-base/config/NoConflict.js`) controls this behavior:
 - **`false` (default)**: Events fire both with and without the `ui5-` prefix.
 - **`true`**: Events fire only with the `ui5-` prefix, avoiding name collisions with third-party libraries.
@@ -110,3 +112,5 @@ The `noConflict` setting (`@ui5/webcomponents-base/config/NoConflict.js`) contro
   }
   ```
   In this case, only `selection-change` and `header-click` fire with the `ui5-` prefix, leaving these names available for other uses.
+
+**Note:** With this setting, when attaching an event listener to a UI5 web component used inside a template, the event name must be specified with the ui5- prefix.
