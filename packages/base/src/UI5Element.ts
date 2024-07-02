@@ -249,7 +249,7 @@ abstract class UI5Element extends HTMLElement {
 		return this.__id;
 	}
 
-	render() {
+	_originalRender() {
 		const template = (this.constructor as typeof UI5Element).template;
 		return executeTemplate(template!, this);
 	}
@@ -1054,7 +1054,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _needsShadowDOM() {
-		return !!this.template || Object.prototype.hasOwnProperty.call(this.prototype, "render");
+		return !!this.template || "render" in this.prototype;
 	}
 
 	/**

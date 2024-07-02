@@ -8,7 +8,7 @@ import type UI5Element from "./UI5Element.js";
 const updateShadowRoot = (element: UI5Element) => {
 	const ctor = element.constructor as typeof UI5Element;
 	const shadowRoot = element.shadowRoot;
-	const renderResult = element.render(); // this is checked before calling updateShadowRoot
+	const renderResult = "render" in ctor.prototype ? (element as any).render() : element._originalRender(); // this is checked before calling updateShadowRoot
 
 	if (!shadowRoot) {
 		console.warn(`There is no shadow root to update`); // eslint-disable-line
