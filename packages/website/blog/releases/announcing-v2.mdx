@@ -1,5 +1,5 @@
 ---
-title: Announcing UI5 Web Components 2.0!
+title: Announcing UI5 Web Components 2.0! A New Era Begins!
 tags: [release, v2]
 slug: /releases/announcing-v2
 ---
@@ -8,15 +8,13 @@ slug: /releases/announcing-v2
 
 ## A Journey of Innovation and Growth 
 
-Since the release of UI5 Web Components 1.0 in 2021, our journey has been marked by unwavering innovation and a commitment to excellence. 
-Over the past three years, we have listened to our community, refined our technologies, and expanded our capabilities. 
-Today, we stand at a pivotal moment in our evolution with the launch of **UI5 Web Components 2.0**. 
+Since the release of UI5 Web Components 1.0 in 2021, our journey has been marked by unwavering innovation and a commitment to excellence. Over the past three years, we have listened to our community, refined our technologies, and expanded our capabilities. 
 
 ![UI5 Web Components timeline](./img/ui5webcomponents_timeline.png)
 
-## The Evolution of UI5 Web Components 
+Our project has continuously evolved, embracing new web standards, eliminating legacy code, and integrating invaluable user feedback from our community to enhance our APIs. This journey culminated in April with the unveiling of the first Release Candidate for UI5 Web Components 2.0.
 
-Our project has continuously evolved, embracing new web standards, eliminating legacy code, and integrating invaluable user feedback from our community to enhance our APIs. This journey culminated in April with the unveiling of the first Release Candidate for UI5 Web Components 2.0.  
+Today, we stand at a pivotal moment in our evolution with the official launch of UI5 Web Components 2.0. This marks a new era, one that reflects our dedication to growth and our ongoing mission to deliver superior web components.
 
 ## Announcing UI5 Web Components 2.0! 🎉 
 
@@ -81,7 +79,7 @@ Explore our new documentation site featuring a live editor, playground, dark mod
 
 ![UI5 Web Components 2.0 new website](./img/website.png)
 
-**New symbol**: We are excited to introduce our new symbol and branding, reflecting the modern and dynamic nature of our project. Our new design incorporates defining elements of the feather and the flame. The feather symbolizes being lightweight, while the flame forms a connection to the phoenix, embodying the spirit of rebirth and continuous improvement. 
+**New logo**: We are excited to introduce our new symbol and branding, reflecting the modern and dynamic nature of our project. Our new design incorporates defining elements of the feather and the flame. The feather symbolizes being lightweight, while the flame forms a connection to the phoenix, embodying the spirit of rebirth and continuous improvement. 
 
 **Explore the Full-Screen Playground** 
 
@@ -105,23 +103,29 @@ Our new [full-screen playground](https://sap.github.io/ui5-webcomponents/nightly
 
 ## Adoption and Breaking Changes 
 
-UI5 Web Components 2.0 is a major version and introduces breaking changes that may require updates to your code. Our comprehensive Migration Guide will assist you in making a smooth transition from UI5 Web Components v1.x to v2.0. Note: Majority of the breaking changes can be achieved with find and replace. 
+UI5 Web Components 2.0 is a major version and introduces breaking changes that may require updates to your code. Note: Majority of the breaking changes can be achieved with find and replace. 
+
+:::tip
+
+Our comprehensive [Migration Guide](https://sap.github.io/ui5-webcomponents/nightly/docs/migration-guides/to-version-2/) will assist you in making a smooth transition from UI5 Web Components v1.x to v2.0. 
+
+:::
 
  **Notable Breaking Changes**: 
 
-- Removal of Belize theme.
+- The Belize theme has been removed and no longer available.
 
-- CSP via adoptedStyleSheets only.
+- CSP (Content Security Policy) will be ensured via [`adoptedStyleSheets`](https://developer.mozilla.org/en-US/docs/Web/API/Document/adoptedStyleSheets) only. 
 
-- Staic area removed.
+- The static area has been removed as it's unnecessary.
 
 - Renaming of properties, events, and enumeration values.
 
-- Badge component renamed to Tag.
+- The Badge component (ui5-badge) has been renamed to Tag (ui5-tag).
 
-- Old Table (ui5-table) moved to @ui5/webcomponents-compat; new Table available with better API and accessibility.
+- Old Table (ui5-table) moved to `@ui5/webcomponents-compat`; new Table available with better API and accessibility.
 
-- Public methods for opening popovers replaced with the open property for declarative APIs. 
+- Public methods for opening popovers replaced with the `open` property for declarative APIs. 
 
 - Components like Label, Text, Link, and Title now wrap by default (wrappingType="Normal" by default, wrappingType="None" optionally). 
 
@@ -129,12 +133,13 @@ UI5 Web Components 2.0 is a major version and introduces breaking changes that m
 
 - Removed APIs without alternatives: 
 
-- Progress Indicator (ui5-progress-indicator): Disabled property removed. 
+  - Progress Indicator (ui5-progress-indicator): `Disabled` property removed. 
 
-- Select's Option (ui5-option): Disabled property removed for UX and accessibility alignment. 
+  - Select's Option (ui5-option): `Disabled` property removed for UX and accessibility alignment. 
 
-- Token (ui5-token): Readonly property removed; logic now within the Tokenizer. 
+  - Token (ui5-token): `Readonly` property removed; logic now within the Tokenizer. 
 
+  - The `Device#isIE` method has been removed and no longer available - the IE browser is not supported anymore.
  
 ## Ongoing Support for Version 1.x 
 
