@@ -226,7 +226,7 @@ class Suggestions {
 			isGroup: item.hasAttribute("ui5-suggestion-item-group"),
 			currentPos: nonGroupItems.indexOf(item) + 1,
 			listSize: nonGroupItems.length,
-			itemText: item.text,
+			itemText: item.text || "",
 			additionalText: item.additionalText,
 		};
 

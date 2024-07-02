@@ -7,14 +7,13 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
-import LogoWater from "@site/static/img/compatibility-frameworks/LogoWater.svg";
-import LogoFire from "@site/static/img/compatibility-frameworks/LogoFire.svg";
+import LogoWater from "@site/static/img/logos/LogoWater.svg";
 
 import styles from './index.module.css';
 
 function Logo(props: { colorMode: string }) {
   return (
-    props.colorMode === "light" ? <LogoWater className={styles.logoMain} /> : <LogoFire className={styles.logoMain} />
+    <LogoWater className={styles.logoMain} />
   );
 } 
 
@@ -72,7 +71,6 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        {/* <HomepageCompatibility /> */}
         <HomepageDemoApps />
         <HomepageTestimonials />
       </main>

@@ -41,7 +41,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @public
 	 */
 	@property()
-	value = "";
+	value = ""
 
 	/**
 	 * Defines if the component is selected.

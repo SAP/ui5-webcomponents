@@ -88,8 +88,7 @@ const config: Config = {
       title: 'UI5 Web Components',
       logo: {
         alt: 'UI5 Web Components Logo',
-        src: 'img/LogoWater.svg',
-        srcDark: 'img/LogoFire.svg',
+        src: 'img/logos/LogoWater.svg',
       },
       items: [
         {
