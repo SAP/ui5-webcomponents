@@ -1,18 +1,16 @@
-# Creating a Custom UI5 Web Components Package
+---
+sidebar_label: Create Web Components Project
+---
 
-This tutorial explains how to:
- - Create an NPM package for your own UI5 Web Components.
- - Use UI5 Web Components' standard build tools: `@ui5/webcomponents-tools`.
- - Gain all `@ui5/webcomponents` capabilities such as HBS template support, i18n, theming, test setup, etc.
+# Create UI5 Web Components Project (Package)
 
-**Note:** Whether you use `npm` or `yarn` is a matter of preference.
+This tutorial explains how to create web components project, ready to be published as NPM package, on top of the  UI5 Web Components framework (`@ui5/webcomponents-base`) and tools (`@ui5/webcomponents-tools`) to make use of development server, theming, HBS template support, i18n, test setup, etc.
 
-## Step 1. Create an NPM package.
+## Initialize New Project
 
-### Run the init command.
+### 1. Run the init command
 
-**Note:** The following command will **create a new directory** and initialize your package there.
-Make sure you haven't created a directory yourself.
+The following command will **create a new directory** and initialize your project, prepared as an NPM package.
 
  - With **npm**:
 
@@ -31,60 +29,43 @@ Make sure you haven't created a directory yourself.
 
     `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`
 
-where `<NEW-PACKAGE-NAME>` is the name of your new package (and the name of the directory to be created), for example:
+**Note:** The `<NEW-PACKAGE-NAME>` is the name of the directory/project to be created, but also the NPM package name, used in the `package.json`.
 
-`npm init @ui5/webcomponents-package my-components`
+For example:
 
-will create a `my-components` directory and initialize the package there.
+```sh
+npm init @ui5/webcomponents-package my-components
+```
 
-### Follow the prompts.
+will create a `my-components` directory and initialize the project inside.
+
+### 2. Follow the prompts
 
 The initialization script will ask you to choose:
- - The **name** of your package (if you did not already pass a name when running the command above);
+ - The **name** of your NPM package (if you did not already pass a name when running the command above);
  - The **port** for your dev server (`8080` by default - just press Enter to select this);
- - The **tag** of the sample web component that will be created (`my-first-component` by default - just press Enter to select this).
+ - The **componentName** of the sample web component that will be created (`MyComponent` by default - just press Enter to select this).
 
-### Your package is ready!
+**That's it! Your package is ready!**
 
-Just follow the instructions:
+### 3. Run the project
 
  - `cd <NEW-PACKAGE-NAME>`
- - `npm i` (or `yarn` if you prefer)
- - `npm start` (or `yarn start` if you prefer)
+ - `npm i` (or `yarn`)
+ - `npm start` (or `yarn start`)
 
-## Step 2. Run the dev server and test the build.
 
-To run the dev server, as instructed above:
+In addition to the development server that is started with `npm start`,
+there are `test` the `build` commands:
 
-`npm run start`
 
-or
-
-`yarn start`
-
-and once the project is built for the first time, the browser will automatically open the dev server URL.
-
-You can also run the tests:
-
-`npm run test`
-
-or
-
-`yarn test`
-
-and the production build:
-
-`npm run build`
-
-or
-
-`yarn build`.
+- `npm run build` ( or `yarn build`)
+- `npm run test` ( or `yarn test`)
 
 **Note:** In order to run the tests for the first time, you must have built the project with either `start` or `build`.
 
-That's it!
 
-## Understanding the Project Structure
+## The Project Structure
 
 ### `package.json`
 
@@ -94,7 +75,7 @@ These three `@ui5/` packages will serve as the foundation of your own package an
 | Package                         | Type of Dependency | Description                          |
 |---------------------------------|--------------------|--------------------------------------|
 | `@ui5/webcomponents-base`       | `dependency`       | Base classes and framework           |
-| `@ui5/webcomponents-theming` | `dependency`       | Base theming assets                  |
+| `@ui5/webcomponents-theming`    | `dependency`       | Base theming assets                  |
 | `@ui5/webcomponents-tools`      | `devDependency`    | Build tools and configuration assets |
 
 The initialization script will create several NPM scripts for you in `package.json`.
@@ -175,7 +156,7 @@ Examples:
 	```
 
 	In this example, what we did was simply replace one option in the configuration object to disable `headless` mode
-	so that we can use `browser.debug()` in our `*.spec.js` files. For more on testing, see [Testing Web Components](./05-testing-UI5-Web-Components.md).
+	so that we can use `browser.debug()` in our `*.spec.js` files. For more on testing, see [Testing Web Components](./10-testing.md).
 
 ### The `src/` directory
 
@@ -190,8 +171,8 @@ The main files describing a Web Component are:
 | `src/MyFirstComponent.js`  | Web Component class |
 | `src/MyFirstComponent.hbs` | Handlebars template |
 
-In order to understand how a UI5 Web Component works and what lies behind these two files, make sure you check the
-[Developing Web Components](./02-custom-UI5-Web-Components.md) section of the documentation.
+In order to understand how a UI5 Web Component works and what lies behind these two files, read the next articles
+to understand more about [Developing web components](./02-component.md).
 
 For the purposes of this tutorial, however, you don't need to understand their internals, as they are automatically generated by the
 script and are in a working state already.
@@ -269,9 +250,9 @@ package assets (i18n and package-specific theme parameters). Users of your packa
 
 You can execute all specs by running `yarn test` or `npm run test`.
 
-For more on testing, see our [Testing Web Components](./05-testing-UI5-Web-Components.md) section.
+For more on testing, see our [Testing Web Components](./10-testing.md) section.
 
-## Public Consumption of Your Custom UI5 Web Components Package
+## Consumption of the Web Components
 
 Once you've developed your package and published it to NPM, application developers can import from the `dist/` directory
 of your package any of your Web Components, and optionally the `Assets.js` module, if they want additional themes and i18n.

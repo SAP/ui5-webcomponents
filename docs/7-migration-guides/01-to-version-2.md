@@ -14,6 +14,9 @@ This guide will assist you in seamlessly transitioning from UI5 Web Components v
 | Method             | `Device#isIE`       | `N/A` (removed)                 | 
 | Module             | `CSP.js`            | `N/A` (removed)                 | 
 | Feature            | `InputElementsFormSupport`  | Removed as natively supported| 
+| Decorator field      | `@property({ defaltValue })` | `N/A` (removed)         |
+| Decorator field      | `@property({ validator: DOMReference })` | Removed `validator`, Added `converter` - `@property({ converter: DOMReference })` |
+
 
 ### UI5Element
 
@@ -44,11 +47,13 @@ class MyClass extends UI5Element {
 | Class              | StaticArea          | Removed                         |
 | Method             | `UI5Element#getSaticAreaItemDomRef` |  Removed        |
 
+*This change mainly manifests in the comonent development.*
+
 There used to be a so-called `"static area"` (`ui5-static-area`) - a DOM element directly in the `<body>` where the popups of all components were placed. This guaranteed that even if the HTML document had `overflow: hidden`, `transform`, or similar CSS rules applied, or the component was in a stacking context, its popup would still be positioned correctly.
 
 There is no longer need for a `"static area"` since the browser now ensures the correct positioning of popups thanks to the `popover API` that is fully adopted by the UI5 Web Components.
 
-- The `StaticArea` has been removed as it's unnecessary. This change mainly manifests in the comonent development.
+- The `StaticArea` has been removed as it's unnecessary.
 
 If you previously created a web component with a popup part, you had to define `staticAreaTemplate` and `staticAreaStyles`:
 
@@ -92,6 +97,96 @@ Now query the popup from inside the component's ShadowDOM directly:
 ```ts
 this.shadowRoot.querySelector("ui5-responsive-popover");
 ```
+
+### Decorators
+
+*This changes are realted to the comonent development.*
+
+#### `@property#defaultValue`
+
+
+The `defaultValue` field of the `@property` decorator has been removed. Providing initial (default) values for the properties used to be part of the `@property` decorator with a `defaultValue` field. The `defaultValue` used to have two mixed usages:
+
+- to provide an **initial value** if none is given
+- to provide a **fallback value** if an invalid value is given by the app developer (mostly for numbers and enum
+
+If you have previously used the `@property` decorator and set the `defaultValue` field:
+
+```ts
+@property({ defaultValue: "abc" })
+name!: string;
+
+@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
+backgroundDesign!: `${PageBackgroundDesign}`;
+```
+
+
+Now, component development is switching to the standard way of using property initializers:
+
+- **Initial Values**: they are no longer magically provided by the framework. Properties should be either optional or initialized, and very rarely (for complex objects) described as non-null
+
+- **Fallback values**: all runtime checks for properties (especially enumerations) are removed. All type-checking is left to the TypeScript compiler and assigning an invalid value to an enumeration or a number/boolean field is considered a bug that should be fixed, instead of the framework silently masking it by providing a fallback value.
+
+```diff
+- @property({ defaultValue: "abc" })
+- name!: string;
++ @property()
++ name = "abc";
+```
+
+```diff
+- @property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
+- backgroundDesign!: `${PageBackgroundDesign}`;
++ @property()
++ backgroundDesign: `${PageBackgroundDesign}` = "Solid";
+```
+
+```diff
+@property({ type: Boolean })
+- noScrolling!: boolean;
++ noScrolling = false;
+```
+
+#### `@property#validator`
+
+
+- The `validator` field of the `@property` decorator has been removed. You can use the newly introduced `converter` field
+ to define how the framework should convert the attribute to the property and vice verca. It has the following signature:
+```ts
+converter?: {
+		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
+		toAttribute(value: unknown, type: unknown): string | null,
+}
+```
+
+If you previously used `validator: Integer`:
+```ts
+  @property({ validator: Integer, defaultValue: 0 })
+  progress!: number;
+```
+
+Now use `type: Number` instead:
+```ts
+converter?: {
+  @property({ type: Number })
+  progress = 0;
+```
+
+If you previously used `validator: DOMReference`:
+```ts
+converter?: {
+  @property({ validator: DOMReference, defaultValue: "" })
+  opener!: HTMLElement | string
+```
+
+Now use the `converter` instead:
+```ts
+@property({ converter: DOMReference })
+opener?: HTMLElement | string;
+```
+
+
+
 
 
 ### Device
