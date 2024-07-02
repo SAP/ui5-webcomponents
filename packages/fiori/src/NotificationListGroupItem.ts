@@ -145,11 +145,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
-		const ids = [];
 
-		if (this.isLoading) {
-			ids.push(`${id}-loading`);
+		if (this.loading) {
+			return `${id}-loading`;
 		}
+
+		const ids = [];
 
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);

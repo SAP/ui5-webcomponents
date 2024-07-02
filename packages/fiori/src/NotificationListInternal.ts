@@ -26,7 +26,7 @@ class NotificationListInternal extends List {
 		this.getItems().forEach(item => {
 			items.push(item);
 
-			if (item instanceof NotificationListGroupItem && !item.collapsed) {
+			if (item instanceof NotificationListGroupItem && !item.collapsed && !item.loading) {
 				item.items.forEach(subItem => {
 					items.push(subItem);
 				});
