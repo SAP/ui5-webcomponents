@@ -20,7 +20,7 @@ This guide will assist you in seamlessly transitioning from UI5 Web Components v
 
 ### UI5Element
 
-- The `UI5Element#render` method has been removed in favour of the `UI5Element#renderer` method.
+- The `UI5Element#render` method has been removed in favor of the `UI5Element#renderer` method.
  
  If you previously used `render`:
 ```js
@@ -47,11 +47,11 @@ class MyClass extends UI5Element {
 | Class              | StaticArea          | Removed                         |
 | Method             | `UI5Element#getSaticAreaItemDomRef` |  Removed        |
 
-*This change mainly manifests in the comonent development.*
+*This change mainly manifests in component development.*
 
 There used to be a so-called `"static area"` (`ui5-static-area`) - a DOM element directly in the `<body>` where the popups of all components were placed. This guaranteed that even if the HTML document had `overflow: hidden`, `transform`, or similar CSS rules applied, or the component was in a stacking context, its popup would still be positioned correctly.
 
-There is no longer need for a `"static area"` since the browser now ensures the correct positioning of popups thanks to the `popover API` that is fully adopted by the UI5 Web Components.
+There is no longer a need for a `"static area"` since the browser now ensures the correct positioning of popups thanks to the `popover API` that is fully adopted by the UI5 Web Components.
 
 - The `StaticArea` has been removed as it's unnecessary.
 
@@ -100,7 +100,7 @@ this.shadowRoot.querySelector("ui5-responsive-popover");
 
 ### Decorators
 
-*This changes are realted to the comonent development.*
+*These changes are related to the component development.*
 
 #### `@property#defaultValue`
 
@@ -151,7 +151,7 @@ Now, component development is switching to the standard way of using property in
 
 
 - The `validator` field of the `@property` decorator has been removed. You can use the newly introduced `converter` field
- to define how the framework should convert the attribute to the property and vice verca. It has the following signature:
+ to define how the framework should convert the attribute to the property and vice versa. It has the following signature:
 ```ts
 converter?: {
 		fromAttribute(value: string | null, type: unknown): string | number | boolean | null | undefined,
@@ -191,7 +191,7 @@ opener?: HTMLElement | string;
 
 ### Device
 
-- The `Device#isIE` method has been removed and no longer available - the IE browser is not supported anymore.
+- The `Device#isIE` method has been removed and is no longer available - the IE browser is not supported anymore.
 
 ### CSP
 
@@ -211,7 +211,7 @@ Now remove the imports:
 
 ### InputElementsFormSupport
 
-- The `@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js` feature has been removed. Previously, the feature was required to make all form-associated web components (CheckBox, Inpuit, Select, etc) working in HTML forms properly. Now, with adopting the `ElementInternals API` all form-associated web components work natively in HTML form elements.
+- The `@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js` feature has been removed. Previously, the feature was required to make all form-associated web components (CheckBox, Inpuit, Select, etc) work in HTML forms properly. Now, with adopting the `ElementInternals API` all form-associated web components work natively in HTML form elements.
 
 If you previously imported:
 ```ts
@@ -225,7 +225,7 @@ Now remove the import as it's not available, but more importantly - it's unneces
 
 ## @ui5/webcomponents-theming
 
-- The `Belize` theme has been removed and no longer available
+- The `Belize` theme has been removed and is no longer available
 
 If you previously used `Belize`:
 ```ts
@@ -234,7 +234,7 @@ setTheme(“sap_belize”);
 
 Now the framework will fallback to `Horizon`:
 ```ts
-setTheme(“Belize”); // falbacks to Horizon
+setTheme(“Belize”); // fallbacks to Horizon
 ```
 
 ## @ui5/webcomponents
@@ -589,7 +589,7 @@ If you previously used the `ui5-cb-group-item` web component as separator to def
 ```
 
 Now use the `ui5-cb-item-group` web component and nest `ui5-cb-item` web components inside to form a group
-in hierarchical structure:
+in a hierarchical structure:
 ```html
 <ui5-combobox placeholder="Select a country">
     <ui5-cb-item-group header-text="Asia">
@@ -770,7 +770,7 @@ dateRangePicker.open = false;
 
 - The `show` and `close` public methods have been removed. Use the public property `open` instead.
 
-For example, if you used:
+If you previously used:
 
 ```js
 dialog.show();
@@ -982,7 +982,7 @@ input.addEventListener("change", (event) => {
 });
 ```
 
-The property **previewItem**, that returned the current suggestion item on preview, is no longer present. The user can listen for selection-change event in order to understand which suggestion item is on preview. 
+The property **previewItem**, which returned the current suggestion item on preview, is no longer present. The user can listen to the `selection-change` event to understand which suggestion item is on the preview. 
 
 
 - The read-only property `previewItem` has been removed
@@ -1010,7 +1010,7 @@ input.addEventListener("selection-change", event => {
 | Property     | `image`       | Removed|
 | Property     | `additionalTextState` | Removed|
 
-- The properties `type`, `description`, `icon`, `iconEnd`, `image` and `additionalTextState` have been removed in favour of the newly introduced `ui5-suggestion-item-custom` web component that allows user-defined content.
+- The properties `type`, `description`, `icon`, `iconEnd`, `image`, and `additionalTextState` have been removed in favor of the newly introduced `ui5-suggestion-item-custom` web component that allows user-defined content.
 
 If you previously used the `ui5-suggestion-item` web component and any of the removed properties:
 
@@ -1106,7 +1106,7 @@ import "@ui5/webcomponents/dist/SuggestionItemGroup.js";
 | Grouping  | flat structure       | nested structure     |
 | Property  | `allowCustomValues`  | `noValidation`       |
 
-- The `open-change` event has been replaced by `open` and `close` events, fired when the dropdown is opened or closed respectively.
+- The `open-change` event has been replaced by `open` and `close` events, fired when the dropdown is opened or closed.
 
 If you previously listened for `open-change`:
 ```js
@@ -1122,7 +1122,7 @@ input.addEventListener("close", (event) => {});
 - The `ui5-mcb-group-item` component has been replaced by `ui5-mcb-item-group`. 
 Furthermore, grouping is now implemented with a hierarchical structure, e.g. nesting.
 
-If you previously used the `ui5-mcb-group-item` web component as separator to define groups in a flat structure:
+If you previously used the `ui5-mcb-group-item` web component as a separator to define groups in a flat structure:
 
 ```html
 <ui5-multi-combobox placeholder="Select a country">
@@ -1136,7 +1136,7 @@ If you previously used the `ui5-mcb-group-item` web component as separator to de
 ```
 
 Now, you must use the `ui5-mcb-item-group` web component and nest `ui5-mcb-item` web components inside to form a group
-in hierarchical structure:
+in a hierarchical structure:
 ```html
 <ui5-multi-combobox placeholder="Select a country">
 	<ui5-mcb-item-group text="Asia">
@@ -1459,7 +1459,7 @@ import ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
 import type ListSeparator from "@ui5/webcomponents/dist/types/ListSeparator.js";
 ```
 
-- The grouping of list items is supported with different API - the `ui5-li-groupheader` web component is removed and groups can be formed with the `ui5-li-group`.
+- The grouping of list items is supported with different APIs - the `ui5-li-groupheader` web component is removed and groups can be formed with the `ui5-li-group`.
 
 Instead of using `ui5-li-groupheader` as a separator in a flat structure:
 ```html
@@ -1588,7 +1588,7 @@ Now you have to use it like:
 |--------------|---------|---------|
 | Event        | `change` | `selection-change` | 
 
-- The `change` event used to be fired while navigating between the suggestion items but anymore since this is not considered a final change. The `change` event will be fired after the user confirms the changes in the input field - by `focusout`, pressing [Enter] key, or by selecting a suggestion item  (by clicking or pressing [Enter] key over an item).
+- The `change` event used to be fired while navigating between the suggestion items but not anymore since this is not considered a final change. The `change` event will be fired after the user confirms the changes in the input field - by `focusout`, pressing [Enter] key, or by selecting a suggestion item  (by clicking or pressing [Enter] key over an item).
 
 If you previously used `change` to track live changes within the suggestions:
 ```ts
@@ -1616,7 +1616,7 @@ If you previously used the `disabled` property:
 <ui5-option disabled>Option</ui5-option>
 ```
 
-Now, it won't take effect - rendering disabled options is not recommended from UX perspective.
+Now, it won't take effect - rendering disabled options is not recommended from a UX perspective.
 
 ```html
 <ui5-option>Option</ui5-option>
@@ -1976,7 +1976,7 @@ Now you have to use it like:
 |--------------|---------|---------|
 | Property     | `activeIcon` | Removed | 
 
-- The `activeIcon` property is no longer present as dropped by specs. The active icon used to be displayed while the SplitButton is pressed - behaviour that is not recommended from UX point of view.
+- The `activeIcon` property is no longer present as dropped by specs. The active icon used to be displayed while the SplitButton is pressed. This is a behavior that is not recommended from a UX point of view.
 
 If you previosuly used `activeIcon`:
 ```html
@@ -1994,7 +1994,7 @@ Now, the property is not available and must not be set:
 |--------------|---------|---------|
 | Class        | `Table, TableCell, TableRow, TableColumn` | Moved | 
 
-- The Table, TableCell, TableRow, TableColumn used to be part of the `@ui5/webcomponents` have been moved to a new package `@ui5/webcomponents-compat`. The classes are moved, but the tag names and the APIs remain the same.
+- The Table, TableCell, TableRow, and TableColumn that used to be part of the `@ui5/webcomponents` have been moved to a new package `@ui5/webcomponents-compat`. The classes are moved, but the tag names and the APIs remain the same.
 
 If you previously used the Table from `@ui5/webcomponents`:
 ```ts
@@ -2016,7 +2016,7 @@ import "@ui5/webcomponents-compat/dist/TableCell.js"; // ui5-table-cell
 ```
 
 Or, switch to the new `v2 Table` - the successor or the `v1 Table`:
-There is a brand new Table implementation in the `@ui5/webcomponents` package available since version 2.0 that will be the successor of the Table from version 1.0. However, for short period the newly introduced `v2 Table` will be `experimental` (its API is subject to change) and until we productize it, we will maintain the `v1 Table` inside the `@ui5/webcomponents-compat` package.
+There is a brand new Table implementation in the `@ui5/webcomponents` package available since version 2.0 that will be the successor of the Table from version 1.0. However, for a short period the newly introduced `v2 Table` will be `experimental` (its API is subject to change) and until we productize it, we will maintain the `v1 Table` inside the `@ui5/webcomponents-compat` package.
 After removing the `experimental` flag of the `v2 Table`, we will deprecate and remove the `v1 Table`.
 
 
@@ -2044,7 +2044,7 @@ Now you have to use it like:
 <ui5-time-picker value-state="Positive"></ui5-time-picker>
 ```
 
-- The methods `openPicker()`, `closePicker()`, and `isOpen()` have been removed in favour of the `open` property.
+- The methods `openPicker()`, `closePicker()`, and `isOpen()` have been removed in favor of the `open` property.
 
 If you previously used `openPicker()` and `closePicker()` to toggle the TimePicker:
 ```ts
@@ -2217,7 +2217,7 @@ If you previously used the `mode` property and the `ListMode` values:
 <ui5-tree mode="MultiSelect">
 ```
 
-Now use `selectionMode`  and `Single`, `Multiple` and the `ListSelectionMode` values instead:
+Now use `selectionMode`  and `Single`, `Multiple`, and the `ListSelectionMode` values instead:
 ```html
 <ui5-tree selection-mode="Single">
 <ui5-tree selection-mode="Multiple">
@@ -2458,7 +2458,7 @@ fcl.addEventListener("layout-change", function(e) {
 }
 ```
 
-- The  property `hideArrows` has been renamed to `disableResizing`.
+- The property `hideArrows` has been renamed to `disableResizing`.
 
 If you previously used `hideArrows`:
 ```html
@@ -2627,7 +2627,7 @@ Now use `menu` instead:
 | Event     | `close` | N/A (removed) |
 | Slot     | `actions` | N/A (removed) |
 
- - The properties "showClose", "showCounter", "priority", the event "close" and the slot "actions" are removed and there are no alternatives provided. The NotificationGroup no longer shows a "Close" button, counter text, priority and actions.
+ - The properties "showClose", "showCounter", "priority", the event "close" and the slot "actions" are removed and there are no alternatives provided. The NotificationGroup no longer shows a "Close" button, counter text, priority, and actions.
 
 - The `busy` and `busyDelay` properties have been renamed to `loading` and `loadingDelay` properties.
 
@@ -2714,7 +2714,7 @@ If you previously used it:
 <ui5-upload-collection selection-mode="Delete"></ui5-upload-collection>
 ```
 
-Now omit it completely and use `hide-delete-button` onto the ui5-upload-collection:
+Now omit it completely and use `hide-delete-button` on the ui5-upload-collection:
 ```html
 <ui5-upload-collection>
    <ui5-upload-collection-item hide-delete-button>  </ui5-upload-collection-item>
@@ -2813,12 +2813,12 @@ getPathData().then(pathData => {
 
  - The JavaScript template option has been removed.
 
-If you previously run `npm init @ui5/webcomponents-package` to create JS-based project
+If you previously ran `npm init @ui5/webcomponents-package` to create a JS-based project
 the command will create a TypeScript-based project.
 
 - The TypEscript option `--enable-typescript` has been removed.
 
-If you previously used `npm init @ui5/webcomponents-package --enable-typescript` to create  TypeScript-based project, now it's by default
+If you previously used `npm init @ui5/webcomponents-package --enable-typescript` to create a TypeScript-based project, now it's by default
 
 ## Other
 
