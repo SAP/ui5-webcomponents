@@ -580,9 +580,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isEnter(e) && this._internals?.form) {
-			submitForm(this);
-		}
 		if (this._isPhone && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
@@ -599,7 +596,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		if (this.open) {
 			return;
 		}
-		if (isPageUpShiftCtrl(e)) {
+
+		if (isEnter(e)) {
+			if (this._internals?.form) {
+				submitForm(this);
+			}
+		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
 			this._modifyValueBy(1, "second");
 		} else if (isPageUpShift(e)) {
