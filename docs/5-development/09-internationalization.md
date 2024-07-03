@@ -1,3 +1,7 @@
+---
+title: Internationalization
+---
+
 # Internationalization (i18n)
 
 In this article, we will discuss internationalization (i18n) in the context of UI5 Web Components.
@@ -28,9 +32,9 @@ Here is an example of providing translations:
 PLEASE_WAIT=Espere
 ```
 
-## Integrating i18n into Components
+## I18n in Web Components
 
-To integrate internationalization (i18n) into UI5 web components, you need to load the i18n bundle that contains all translatable texts for the current package.
+To integrate internationalization (i18n) into web components, you need to load the i18n bundle that contains all translatable texts for the current package.
 
 To load the bundle, use the `getI18nBundle` method from the `i18nBundle.js` module in the `@ui5/webcomponents-base` package.
 
