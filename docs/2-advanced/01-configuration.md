@@ -89,7 +89,7 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 import "@ui5/webcomponents-icons/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](05-using-assets.md) section.
+For more about assets, see the dedicated [Assets](04-using-assets.md) section.
 
 - Configure the additional language either via the [configuration script](#script) or [module imports](#imports).
 
