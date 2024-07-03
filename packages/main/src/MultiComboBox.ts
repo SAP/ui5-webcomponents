@@ -662,6 +662,12 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
+	_onPopoverFocusOut() {
+		if (!isPhone()) {
+			this._tokenizer.expanded = this._open;
+		}
+	}
+
 	_tokenizerFocusOut(e: FocusEvent) {
 		this._tokenizerFocused = false;
 
