@@ -1321,6 +1321,8 @@ Now, you need to set `wrapping-type="None"` to keep the text truncating:
 | Class     | StandardListItem | ListItemStandard | 
 | Property     | highlight="Error/Warning/Success" | highlight="Negative/Critical/Positive" | 
 | Property     | additionalTextState="Error/Warning/Success" | additional-text-state="Negative/Critical/Positive" | 
+| Property | `image` | N/A (removed) | 
+| Slot | `imageContent` | `image` | 
 | Property Type | `accessibleRole="menuitem, listitem, treeitem"` | `accessibleRole="MenuItem, ListItem, TreeItem"` | 
 
 
@@ -1341,16 +1343,16 @@ import ListItemStandard from "@ui5/webcomponents/ListItemStandard.js";
 
 If you previously used it like:
 ```html
-<ui5-li highlight="Warning"></ui5-li>
+<ui5-li highlight="Error"></ui5-li>
 <ui5-li highlight="Warning"></ui5-li>
 <ui5-li highlight="Success"></ui5-li>
 ```
 
 Now you have to use it like:
 ```html
+<ui5-li highlight="Negative"></ui5-li>
 <ui5-li highlight="Critical"></ui5-li>
-<ui5-li highlight="Critical"></ui5-li>
-<ui5-li highlight="Success"></ui5-li>
+<ui5-li highlight="Positive"></ui5-li>
 ```
 
 
@@ -1358,17 +1360,39 @@ Now you have to use it like:
 
 If you previously used it like:
 ```html
-<ui5-li additional-text-state="Warning"></ui5-li>
+<ui5-li additional-text-state="Error"></ui5-li>
 <ui5-li additional-text-state="Warning"></ui5-li>
 <ui5-li additional-text-state="Success"></ui5-li>
 ```
 
 Now you have to use it like:
 ```html
-<ui5-li additional-text-state="Critical"></ui5-li>
+<ui5-li additional-text-state="Negative"></ui5-li>
 <ui5-li additional-text-state="Critical"></ui5-li>
 <ui5-li additional-text-state="Success"></ui5-li>
 ```
+
+- The `image` property has been removed and the `imageContent` slot has been renamed to `image`.
+
+If you previously used the `image` property:
+```html
+<ui5-li image="./img/HT-1022.jpg">Standard List Item</ui5-li>
+```
+
+or the `imageContent` slot:
+```html
+<ui5-li> Avatar inside imageContent slot
+	<ui5-avatar slot="imageContent" shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+</ui5-li>
+```
+
+Now use the `image` slot instead:
+```html
+<ui5-li> Avatar inside image slot
+  <img src="" slot="image" />
+</ui5-li>
+```
+
 
 - The `accessibleRole` property has been updated from a string type to an enum type `ListItemAccessibleRole`. The available options for the `ui5-li`:
 

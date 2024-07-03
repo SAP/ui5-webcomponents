@@ -1,6 +1,6 @@
 # Styles
 
-The article guides you through defining and structuring your styles for creating themeable web components.
+The article guides you through defining and structuring your styles for creating themeable web components with the UI5 Web Components framework and tools.
 
 ## CSS Variables
 
@@ -19,15 +19,19 @@ UI5 Web Components comes with several built-in themes:
 
 To implement these themes, the UI5 Web Components uses and depends on the `SAP CSS variables`, available in the [@sap-theming/theming-base-content](https://www.npmjs.com/package/@sap-theming/theming-base-content) package.
 
-**Note:** The [theming-base-content](https://github.com/SAP/theming-base-content/tree/master) project is developed by SAP and provides color, font, and metric definitions of SAP themes to be used by application UIs and UI frameworks.
+**Note:** The [theming-base-content](https://github.com/SAP/theming-base-content/) project is developed by SAP and provides color, font, and metric definitions of SAP themes to be used by application UIs and UI frameworks.
 
-There is a collection of CSS variables per theme - f.e. [Morning Horizon CSS Variables](https://github.com/SAP/theming-base-content/blob/master/content/Base/baseLib/sap_horizon/css_variables.css) and [Qaurtz Light CSS Variables](https://github.com/SAP/theming-base-content/blob/master/content/Base/baseLib/sap_fiori_3/css_variables.css).
-And, if we look closer, both collections include the same set of variables, but with different values:
+The package provides collections of CSS variables per theme - one for `Morning Horizon`, one for `Qaurtz Light` and so on.
+Let's exlore a small part of these collections. You will notice that both collections include the same set of variables, but with different values:
 
 ```css
 /* Horizon */
 root {
 	--sapBrandColor: #0070f2;
+	--sapHighlightColor: #0064d9;
+	--sapBaseColor: #fff;
+	--sapShellColor: #fff;
+	--sapBackgroundColor: #f5f6f7;
 	--sapTextColor: #1d2d3e;
 ```
 
@@ -36,6 +40,10 @@ root {
 :root {
 	--sapBrandColor: #0a6ed1;
 	--sapTextColor: #32363a;
+	--sapHighlightColor: #0854a0;
+	--sapBaseColor: #fff;
+	--sapShellColor: #354a5f;
+	--sapBackgroundColor: #f7f7f7
 ```
 
 
