@@ -91,16 +91,20 @@ class ListItemBase extends UI5Element implements ITabbable {
 	focused = false;
 
 	/**
-	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
+	 * Indicates if the list item is inactive, e.g has hover and pressed effects.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	nonActionable = false;
+	inactive = false;
 
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+	}
+
+	onBeforeRendering(): void {
+		this.inactive = this._effectiveInactive;
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -226,6 +230,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 			return 0;
 		}
 		return this.forcedTabIndex;
+	}
+
+	get _effectiveInactive() {
+		return this.inactive;
 	}
 }
 

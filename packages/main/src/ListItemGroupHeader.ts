@@ -41,8 +41,8 @@ class ListItemGroupHeader extends ListItemBase {
 
 	static i18nBundle: I18nBundle;
 
-	onBeforeRendering(): void {
-		this.nonActionable = true;
+	get _effectiveInactive() {
+		return true;
 	}
 
 	get groupItem() {

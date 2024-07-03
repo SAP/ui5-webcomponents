@@ -11,14 +11,14 @@
 }
 
 /* active */
-:host([active]:not([non-actionable])) .ui5-li-root .ui5-li-icon {
+:host([active]:not([inactive])) .ui5-li-root .ui5-li-icon {
 	color: var(--sapList_Active_TextColor);
 }
 
 /* [ui5-li]: title, description, additionalTextState */
-:host([active]:not([non-actionable])) .ui5-li-title,
-:host([active]:not([non-actionable])) .ui5-li-desc,
-:host([active]:not([non-actionable])) .ui5-li-additional-text {
+:host([active]:not([inactive])) .ui5-li-title,
+:host([active]:not([inactive])) .ui5-li-desc,
+:host([active]:not([inactive])) .ui5-li-additional-text {
 	color: var(--sapList_Active_TextColor);
 }
 

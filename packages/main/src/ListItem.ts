@@ -233,10 +233,6 @@ abstract class ListItem extends ListItemBase {
 		};
 	}
 
-	onBeforeRendering() {
-		this.nonActionable = !(this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
-	}
-
 	onEnterDOM() {
 		super.onEnterDOM();
 		document.addEventListener("mouseup", this.deactivate);
@@ -368,6 +364,10 @@ abstract class ListItem extends ListItemBase {
 
 	get isInactive() {
 		return this.type === ListItemType.Inactive || this.type === ListItemType.Detail;
+	}
+
+	get _effectiveInactive() {
+		return !(this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	get placeSelectionElementBefore() {

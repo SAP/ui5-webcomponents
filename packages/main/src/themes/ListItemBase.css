@@ -14,8 +14,8 @@
 	pointer-events: none;
 }
 
-/* actionable (type="Active" + desktop) */
-:host(:not([non-actionable]):not([disabled])) {
+/* inactive (type="Active" + desktop) */
+:host(:not([inactive]):not([disabled])) {
 	cursor: pointer;
 }
 
@@ -30,18 +30,18 @@
 }
 
 /* hovered */
-:host(:not([non-actionable]):not([active], [selected]):hover) {
+:host(:not([inactive]):not([active], [selected]):hover) {
 	background-color: var(--sapList_Hover_Background);
 }
 
 /* selected and hovered */
-:host(:not([non-actionable])[selected]:not([active], [data-moving]):hover) {
+:host(:not([inactive])[selected]:not([active], [data-moving]):hover) {
 	background-color: var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */
-:host([active]:not([non-actionable]):not([data-moving])),
-:host([active]:not([non-actionable])[selected]:not([data-moving])) {
+:host([active]:not([inactive]):not([data-moving])),
+:host([active]:not([inactive])[selected]:not([data-moving])) {
 	background-color: var(--sapList_Active_Background);
 }
 
