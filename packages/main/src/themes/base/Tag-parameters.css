@@ -1,7 +1,7 @@
 :root {
 	--_ui5-tag-height: 1rem;
-	--_ui5-tag-padding-inline: 0.3125em;
 	--_ui5-tag-padding-inline-icon-only: 0.1875rem;
+	--_ui5-tag-text-padding: 0 0.25rem;
 	--_ui5-tag-text-transform: uppercase;
 	--_ui5-tag-icon-width: 0.75rem;
 	--_ui5-tag-icon-gap: 0.125rem;
