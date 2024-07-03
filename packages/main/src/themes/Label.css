@@ -53,7 +53,7 @@
 }
 
 .ui5-label-text-wrapper {
-	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
+	padding-inline-end: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
 }
 
 :host([required][show-colon]) .ui5-label-required-colon:after {
