@@ -1,5 +1,5 @@
 ---
-sidebar_label: HBS Templates
+sidebar_label: Templates
 ---
 
 # Handlebars Templates
