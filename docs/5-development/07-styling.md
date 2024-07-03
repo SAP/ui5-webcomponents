@@ -77,7 +77,7 @@ In addition, you can define your own CSS Variables and provide different values 
 
 | File  | Purpose  |
 |-------|----------|
-| `src/themes/MyFirstComponent.css`                   | The web component CSS file with all CSS rules, used in all themes and inserted in the shadow root.             |
+| `src/themes/MyComponent.css`                   | The web component CSS file with all CSS rules, used in all themes and inserted in the shadow root.             |
 | `src/themes/sap_horizon/parameters-bundle.css`      | Values for the component-specific CSS Variables for the `sap_horizon` theme                                       |
 | `src/themes/sap_horizon_dark/parameters-bundle.css` | Values for the component-specific CSS Variables for the `sap_horizon_dark` theme                    |
 | `src/themes/sap_horizon_hcb/parameters-bundle.css`  | Values for the component-specific CSS Variables for the `sap_horizon_hcb` theme                     |
@@ -91,7 +91,7 @@ Practically speaking, the theming setup appears as follows:
 
 - The web component styles:
 ```css
-/* src/themes/MyFirstComponent.css */
+/* src/themes/MyComponent.css */
 :host {
 	color: var(--sapTextColor); /* using global vars */
 	border-color: var(--my-component-border-color); /* using component-specific vars */
