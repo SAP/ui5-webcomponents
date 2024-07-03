@@ -1,5 +1,247 @@
 # Deep dive and best practices
 
+This tutorial will cover some finer details and best practices when designing and developing UI5 Web Components.
+
+## Metadata deep dive <a name="metadata"></a>
+
+The metadata defines the public API of your component. Among other things, here you define:
+ - the tag name
+ - what properties/attributes (and of what type) your component supports
+ - what slots your component supports
+ - what events your component fires
+
+### Tag <a name="metadata_tag"></a>
+
+The tag name must include a `-` as required for any custom element. The tag is declared using `@customElement` decorator: 
+
+```js
+@custom("my-component")
+//or
+@custom({
+	tag: "my-component"
+})
+```
+and then the usage is:
+
+```html
+<my-component></my-component>
+```
+
+The `tag`, as defined is referred to as the "pure tag", meaning it is not suffixed (scoping is not used).
+
+Important: the pure tag name of every UI5 Web Component is always set as an **attribute** to the component too.
+
+For example, when you create a `ui5-button`:
+
+```html
+<ui5-button id="b1" class="button1" design="Emphasized"></ui5-button>
+```
+
+the framework will create an empty attribute with the name `ui5-button` too, so the actual DOM would look like this:
+
+```html
+<ui5-button id="b1" class="button1" design="Emphasized" ui5-button></ui5-button>
+```
+
+Even if a suffix for tag names is configured (when scoping is enabled), the attribute with the pure tag name will be the same.
+
+For example, if the configured suffix is `-demo` and all components are used with this suffix:
+
+```html
+<ui5-button-demo id="b1" class="button1" design="Emphasized" ui5-button></ui5-button-demo>
+```
+
+the **attribute** will still be the same (`ui5-button` as opposed to the tag name of `ui5-button-demo`).
+
+Therefore, the best practice when developing UI5 Web Components is to write CSS selectors for the shadow roots using
+attribute selectors, instead of tag selectors.
+
+For example, if the `Demo.hbs` file looks like this:
+
+```html
+<div class="my-component">
+	<ui5-button id="openBtn">Open</ui5-button>
+	<div>
+		<slot></slot>
+	</div>
+	<ui5-list></ui5-list>
+</div>
+```
+
+you should not write selectors by tag name for other components in the `Demo.css` file:
+
+```css
+ui5-button {
+	width: 50px;
+}
+```
+
+because, as stated above, the tag name could be suffixed and is not guaranteed to always be the same as the pure tag name.
+
+Instead, use the attribute selector:
+
+```css
+[ui5-button] {
+	width: 50px;
+}
+```
+
+or another type of selector (for example by ID):
+
+```css
+#openBtn {
+	width: 50px;
+}
+```
+
+### Properties <a name="metadata_properties"></a>
+
+#### Properties are managed state
+
+The framework will create a getter/setter pair on your component's prototype for each property, defined with `@property` decorator.
+
+For example, defining text property:
+
+```js
+@property
+text = ""
+```
+
+you can use the `text` getter/setter on this component's instances:
+
+```js
+let t = myComponent.text;
+myComponent.text = "New text";
+```
+
+Whenever `text` is read or set, the framework-defined getter/setter will be called and thus the framework will be in control of the property.
+
+#### Properties vs attributes
+
+The `properties` section defines both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
+same name but in `kebab-case` is supported. Properties of type `Object` have no attribute counterparts. If you wish to not have an attribute for a given property regardless of type, you can configure it with `noAttribute: true` setting.
+
+#### Public vs private properties
+
+The framework does not distinguish between *public* and *private* properties. You can treat some properties as private in a sense that you can document them as such and not advertise them to users.
+The usual convention is that private properties start with an `_`, but this is not mandatory. In the end, all properties defined in the metadata, public or private,
+are *component state*, therefore cause the component to be invalidated and subsequently re-rendered, when changed.
+
+#### Property types and default values
+
+The most common types of properties are `String`, `Boolean`, `Object`and `Number`.
+
+Most property types can have a default but `Boolean` should always `false` by default.
+
+#### Properties with `multiple: true`
+
+If you need a property that accepts multiple values, it has to be described as an array of elements of the given `type`, and will be treated by the framework exactly as
+a property of type `Object` would be (as arrays are technically objects). For example, it will not have an attribute counterpart.
+
+Example:
+
+```ts
+@property({ type: Array })
+numbers: Array<number> = []
+```
+
+```js
+myComponent.numbers = [1, 2, 3];
+```
+
+Properties with array values are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
+Their most common use case is as *private* properties for communication between related components. For example, the higher-order "date picker" component
+communicates with its "day picker", "month picker", and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
+
+If you need to use a property that accepts array as part of your component's public API, that is fine, but bear in mind the limitations 
+(no declarative support as with all Objects, so no attribute for this property).
+
+The alternative would be to use *abstract* items, for example:
+
+```html
+<my-component>
+	<my-item slot="numbers" value="1"></my-item>
+	<my-item slot="numbers" value="2"></my-item>
+	<my-item slot="numbers" value="3"></my-item>
+</my-component>
+```
+
+Here instead of having a `numbers` property of type `Number`, configured with `multiple: true`, we have a `numbers` slot, and inside this slot we pass abstract items with
+a `value` property of type `Number`. This is now completely declarative, and is preferable unless the number of items is very large (in which case the 
+solution with the multiple property would likely be better).
+
+#### Examples
+
+Example of defining properties:
+
+```ts
+class MyDemoComponent extends UI5Element {
+	@property()
+	text = "Hello";
+
+	@property({ type: Number, noAttribute: true })
+	width = 1024;
+
+	@property({ type: Number })
+	scale = 0.5;
+
+	@property({ type: Object })
+	data = {};
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_isPhone = {};
+}
+```
+
+Here `text`, `width`, `scale` and `data` are public properties, and `_isPhone` private, but only by convention. If the user (or the component internally) changes any of these properties, the component will be invalidated.
+
+#### Best practices for using properties
+
+The best practice is to **never** change public properties from within the component (they are owned by the application) unless the property changes due to user interaction (f.e. the user typed in an input - so you change the `value` property; or the user clicked a checkbox - and you flip the `checked` property). It is also
+a best practice to always **fire an event** if you change a public property due to user interaction, to let the application know and synchronize its own state.
+
+As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
+
+Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors:
+
+```css
+:host {
+	height: 5rem;
+	width: 5rem;
+}
+
+:host([size="XS"]) {
+	height: 2rem;
+	width: 2rem;
+}
+```
+
+```html
+<my-comopnent size="XS"></my-comopnent> <!-- :host() targets my-component -->
+```
+
+Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component's dimensions will be changed from `5rem` to `2rem`. 
+Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute. 
+
+#### Metadata properties vs normal JS properties
+
+It is important not to confuse properties defined with `@property` decorator  with regular Javascript properties.
+You can create any number of properties on your component's instance, f.e.:
+
+```js
+constructor() {
+	super();
+	this._isMobile = false;
+}
+```
+
+However, only metadata-defined properties are managed by the framework: cause invalidation and are converted to/from attributes.
+Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
+that they will not be managed by the framework.
+
 ## Understanding rendering
 
 ### What is rendering? <a name="rendering_def"></a>
