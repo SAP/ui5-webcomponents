@@ -13,7 +13,6 @@ type Slot = {
 	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
-	cloned?: boolean,
 };
 
 type SlotValue = Node;
