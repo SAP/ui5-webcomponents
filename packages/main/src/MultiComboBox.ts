@@ -742,7 +742,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_onPopoverFocusOut () {
+	_onPopoverFocusOut() {
 		if (!isPhone()) {
 			this._tokenizer.expanded = this._open;
 		}
