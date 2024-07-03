@@ -1,3 +1,7 @@
+---
+title: Using Features
+---
+
 # Using Additional Features
 
 *Some UI5 Web Components packages offer **additional features**. This section explains what they are and how to make use of them.*
