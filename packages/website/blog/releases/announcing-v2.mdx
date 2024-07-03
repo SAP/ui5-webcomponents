@@ -50,15 +50,16 @@ Seamlessly manage time zones within your applications for a more personalized us
 Expand your UI toolkit with new components such as Dynamic Page, Form, Table, Text, Tokenizer, AI Button, and AI Prompt Input. 
 
 - [Dynamic Page](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/DynamicPage/): A layout component, representing a web page, consisting of a title, a header with dynamic behavior, a content area, and an optional floating footer. Use the Dynamic Page if you need to have a title, that is always visible and a header, that has configurable Expanding/Snapping functionality. 
-- [Form](https://sap.github.io/ui5-webcomponents/nightly/components/Form/): The ui5-form is a layout component that arranges labels and form fields (like input fields) pairs into a specific number of columns. And, there is also "grouping" available to assist the implementation of richer UIs. The Form component reacts and changes its layout on predefined breakpoints.
-- [Table](https://sap.github.io/ui5-webcomponents/nightly/components/Table/): The ui5-table component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner. This Table replaces the previous Table web component, that has been part of @ui5/webcomponents version 1.x. For compatibility reasons, we moved the previous Table implementation to the @ui5/webcomponents-compat package and will be maintained until the new Table is experimental.
-- [Text](https://sap.github.io/ui5-webcomponents/nightly/components/Text/): The ui5-text component displays text that can be used in any content area of an application. By default, the text will wrap when the space is not enough. IIn addition, the component supports truncation via the max-lines property, which defines the number of lines the text should wrap before it starts truncating.
-- [Tokenizer](https://sap.github.io/ui5-webcomponents/nightly/components/Tokenizer/): A ui5-tokenizer is an invisible container for ui5-tokens that supports keyboard navigation and token selection.
-- [AI Button](https://sap.github.io/ui5-webcomponents/nightly/components/ai/Button/): The ui5-ai-button component represents a button used in AI-related scenarios. It enables users to trigger actions by clicking or tapping the ui5-ai-button, or by pressing certain keyboard keys, such as Enter.
-- [AI Prompt Input](https://sap.github.io/ui5-webcomponents/nightly/components/ai/PromptInput/): The ui5-ai-prompt-input component allows the user to write custom instructions in natural language so that AI is guided to generate content tailored to user needs.
-- [Custom Option](https://sap.github.io/ui5-webcomponents/nightly/components/OptionCustom/): The ui5-option-custom component defines a custom content of an option in the ui5-select. The component accepts arbitrary HTML content to allow full customization.
-- [Custom Suggestion Item](https://sap.github.io/ui5-webcomponents/nightly/components/SuggestionItemCustom/): The ui5-suggestion-item-custom is a type of suggestion item, that can be used to place suggestion items with custom content in the input. 
-- [Notification List](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/NotificationList/): The ui5-notification-list web component acts as a container for ui5-li-notification-group and ui5-li-notification, delivering the new SAP Design Notification experience.
+- [Form](https://sap.github.io/ui5-webcomponents/nightly/components/Form/): The `ui5-form` is a layout component that arranges labels and form fields (like input fields) pairs into a specific number of columns. And, there is also "grouping" available to assist the implementation of richer UIs. The Form component reacts and changes its layout on predefined breakpoints.
+- [Table](https://sap.github.io/ui5-webcomponents/nightly/components/Table/): The `ui5-table` component provides a set of sophisticated features for displaying and dealing with vast amounts of data in a responsive manner. This Table replaces the previous Table web component, that has been part of @ui5/webcomponents version 1.x. For compatibility reasons, we moved the previous Table implementation to the `@ui5/webcomponents-compa`t package and will be maintained until the new Table is experimental.
+- [Text](https://sap.github.io/ui5-webcomponents/nightly/components/Text/): The `ui5-text` component displays text that can be used in any content area of an application. By default, the text will wrap when the space is not enough. In addition, the component supports truncation via the max-lines property, which defines the number of lines the text should wrap before it starts truncating.
+- [Tokenizer](https://sap.github.io/ui5-webcomponents/nightly/components/Tokenizer/): A `ui5-tokenizer` is an invisible container for `ui5-tokens` that supports keyboard navigation and token selection.
+- [AI Button](https://sap.github.io/ui5-webcomponents/nightly/components/ai/Button/): The `ui5-ai-button` component represents a button used in AI-related scenarios. It enables users to trigger actions by clicking or tapping the ui5-ai-button, or by pressing certain keyboard keys, such as Enter.
+- [AI Prompt Input](https://sap.github.io/ui5-webcomponents/nightly/components/ai/PromptInput/): The `ui5-ai-prompt-input` component allows the user to write custom instructions in natural language so that AI is guided to generate content tailored to user needs.
+- [Custom Option](https://sap.github.io/ui5-webcomponents/nightly/components/OptionCustom/): The `ui5-option-custom` component defines a custom content of an option in the `ui5-select`. The component accepts arbitrary HTML content to allow full customization.
+- [Custom Suggestion Item](https://sap.github.io/ui5-webcomponents/nightly/components/SuggestionItemCustom/): The `ui5-suggestion-item-custom` is a type of suggestion item, that can be used to place suggestion items with custom content in the input. 
+- [Notification List](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/NotificationList/): The `ui5-notification-list` web component acts as a container for `ui5-li-notification-group` and `ui5-li-notification`, delivering the new SAP Design Notification experience.
+- [List Group](https://sap.github.io/ui5-webcomponents/nightly/components/ListItemGroup/): The `ui5-li-group` is a special list item used exclusively for creating groups of list items within a `ui5-list`.
 
 ![Preview of UI5 Web Components 2.0 new components](./img/new_components_v2.png)
 
@@ -120,13 +121,13 @@ Our comprehensive [Migration Guide](https://sap.github.io/ui5-webcomponents/nigh
 
 - The static area has been removed since the browser now ensures the correct positioning of popups thanks to the popover API that is fully adopted by the UI5 Web Components.
 
-- The Badge component (ui5-badge) has been renamed to Tag (ui5-tag).
+- The Badge component (`ui5-badge`) has been renamed to Tag (`ui5-tag`).
 
-- The old Table (ui5-table) has been moved to `@ui5/webcomponents-compat`; new Table is available with better API and accessibility.
+- The old Table (`ui5-table`) has been moved to `@ui5/webcomponents-compat`; new Table is available with better API and accessibility.
 
 - Public methods for opening popovers are replaced with the `open` property for declarative APIs. 
 
-- Components like Label, Text, Link, and Title now wrap by default (wrappingType="Normal" by default, wrappingType="None" optionally). 
+- Components like Label, Text, Link, and Title now wrap by default (`wrappingType="Normal"` by default, `wrappingType="None"` optionally). 
 
 - SelectMenu and SelectMenuOption components have been removed; standard options with the popover API make them obsolete. 
 
@@ -134,15 +135,15 @@ Our comprehensive [Migration Guide](https://sap.github.io/ui5-webcomponents/nigh
 
 - Removed APIs without alternatives: 
 
-  - Progress Indicator (ui5-progress-indicator): `Disabled` property removed. 
+  - Progress Indicator (`ui5-progress-indicator`): `Disabled` property removed. 
 
-  - Select Option (ui5-option): `Disabled` property removed for UX and accessibility alignment. 
+  - Select Option (`ui5-option`): `Disabled` property removed for UX and accessibility alignment. 
 
-  - Token (ui5-token): `Readonly` property removed; logic now within the Tokenizer. 
+  - Token (`ui5-token`): `Readonly` property removed; logic now within the Tokenizer. 
 
   - The `Device#isIE` method has been removed and is no longer available - the IE browser is not supported anymore.
 
-  - Notification List Group (ui5-li-notification-group): The properties `showClose`, `showCounter`, `priority`, the event `close` and the slot `actions` are removed due to the new better notification list design concept.
+  - Notification List Group (`ui5-li-notification-group`): The properties `showClose`, `showCounter`, `priority`, the event `close` and the slot `actions` are removed due to the new better notification list design concept.
  
 ## Ongoing Support for Version 1.x 
 
