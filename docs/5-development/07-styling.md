@@ -21,7 +21,7 @@ To implement these themes, the UI5 Web Components uses and depends on the `SAP C
 
 **Note:** The [theming-base-content](https://github.com/SAP/theming-base-content/) project is developed by SAP and provides color, font, and metric definitions of SAP themes to be used by application UIs and UI frameworks.
 
-The package provides collections of CSS variables per theme - one for `Morning Horizon`, one for `Qaurtz Light` and so on.
+The package provides collections of CSS variables per theme - one for `Morning Horizon`, one for `Quartz Light` and so on.
 Let's exlore a small part of these collections. You will notice that both collections include the same set of variables, but with different values:
 
 ```css
