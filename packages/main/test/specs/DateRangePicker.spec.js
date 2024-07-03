@@ -249,6 +249,39 @@ describe("DateRangePicker general interaction", () => {
 		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
 	});
 
+	it("picker popover should have accessible name", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+		await daterangepicker.click();
+		await browser.keys("F4");
+
+		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
+	});
+
+	it("Selected days: accessibility semantics", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("09/06/2024 - 15/06/2024");
+		await daterangepicker.keys("Enter");
+		await browser.keys("F4");
+
+		const dayPicker = await browser.$(`#daterange-picker3`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const days = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item");
+		const startSelectionDay = await days[14];
+		const dayInBetween = await days[15];
+		const endSelectionDay = await days[20];
+
+		assert.strictEqual(await startSelectionDay.getAttribute("aria-selected", "true"), "true", "The start day has selected semantics");
+		assert.strictEqual(await dayInBetween.getAttribute("aria-selected", "true"), "true", "The day in between has selected semantics");
+		assert.strictEqual(await endSelectionDay.getAttribute("aria-selected", "true"), "true", "The end day has selected semantics");
+
+		await browser.keys("Escape");
+	});
+
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
 		await browser.url(`test/pages/DateRangePicker.html?sap-ui-language=bg`);
 
@@ -260,17 +293,5 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("Enter");
 
 		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Negative", "Min and max dates are set correctly");
-	});
-
-	it("picker popover should have accessible name", async () => {
-		const daterangepicker = await browser.$("#daterange-picker3");
-		await daterangepicker.click();
-		await browser.keys("F4");
-
-		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
-
-		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
-
-		await browser.keys("Escape");
 	});
 });

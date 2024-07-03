@@ -141,7 +141,7 @@ class TreeItemBase extends ListItem {
 	* @since 1.1.0
 	*/
 	@property({ type: Boolean })
-	declare indeterminate
+	declare indeterminate: boolean;
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
@@ -173,7 +173,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	declare accessibleName
+	declare accessibleName?: string;
 
 	/**
 	 * @private

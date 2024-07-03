@@ -39,6 +39,9 @@ const metadata = {
 		named: {
 			type: HTMLElement,
 			propertyName: "items",
+		},
+		"row-header": {
+			type: HTMLElement,
 		}
 	}
 };

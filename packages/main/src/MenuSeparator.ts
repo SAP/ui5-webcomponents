@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import menuSeparatorTemplate from "./generated/templates/MenuSeparatorTemplate.lit.js";
@@ -27,14 +26,6 @@ import type { IMenuItem } from "./Menu.js";
 })
 
 class MenuSeparator extends ListItemBase implements IMenuItem {
-	/**
-	 * **Note:** This property is inherited and not supported. If set, it won't take any effect.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	declare selected: boolean;
-
 	get isSeparator() {
 		return true;
 	}

@@ -1,9 +1,12 @@
 <ui5-dialog
 	prevent-initial-focus
 	aria-label="{{_dialogTitle}}"
-	@ui5-open={{_focusRecentlyUsedControl}}
 	@ui5-before-close={{_restoreConfirmedOnEscape}}
 	?stretch={{_isPhone}}
+	.open="{{open}}"
+	@ui5-before-open="{{beforeDialogOpen}}"
+	@ui5-open="{{afterDialogOpen}}"
+	@ui5-close="{{afterDialogClose}}"
 >
 
 	<div slot="header" class="ui5-vsd-header">

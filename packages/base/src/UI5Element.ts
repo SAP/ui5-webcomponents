@@ -203,9 +203,29 @@ abstract class UI5Element extends HTMLElement {
 			}
 		});
 
+		this._initShadowRoot();
+	}
+
+	_initShadowRoot() {
+		const ctor = this.constructor as typeof UI5Element;
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
 			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+
+			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
+			if (slotsAreManaged) {
+				this.shadowRoot!.addEventListener("slotchange", this._onShadowRootSlotChange.bind(this));
+			}
+		}
+	}
+
+	/**
+	 * Note: this "slotchange" listener is for slots, rendered in the component's shadow root
+	 */
+	_onShadowRootSlotChange(e: Event) {
+		const targetShadowRoot = (e.target as Node)?.getRootNode(); // the "slotchange" event target is always a slot element
+		if (targetShadowRoot === this.shadowRoot) { // only for slotchange events that originate from slots, belonging to the component's shadow root
+			this._processChildren();
 		}
 	}
 
@@ -345,10 +365,9 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const canSlotText = metadata.canSlotText();
-		const hasClonedSlot = Object.keys(metadata.getSlots()).some(slotName => metadata.getSlots()[slotName].cloned);
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: canSlotText || hasClonedSlot,
+			subtree: canSlotText,
 			characterData: canSlotText,
 		};
 		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
@@ -465,6 +484,7 @@ abstract class UI5Element extends HTMLElement {
 		// not the order elements are defined.
 		slottedChildrenMap.forEach((children, propertyName) => {
 			this._state[propertyName] = children.sort((a, b) => a.idx - b.idx).map(_ => _.child);
+			this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 		});
 
 		// Compare the content of each slot with the cached values and invalidate for the ones that changed
@@ -517,6 +537,7 @@ abstract class UI5Element extends HTMLElement {
 		});
 
 		this._state[propertyName] = [];
+		this._state[kebabToCamelCase(propertyName)] = this._state[propertyName];
 	}
 
 	/**
@@ -703,6 +724,7 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Whenever a slot element is slotted inside a UI5 Web Component, its slotchange event invalidates the component
+	 * Note: this "slotchange" listener is for slots that are children of the component (in the light dom, as opposed to slots rendered by the component in the shadow root)
 	 *
 	 * @param slotName the name of the slot, where the slot element (whose slotchange event we're listening to) is
 	 * @private
@@ -1104,7 +1126,7 @@ abstract class UI5Element extends HTMLElement {
 				}
 
 				const propertyName = slotData.propertyName || slotName;
-				Object.defineProperty(proto, propertyName, {
+				const propertyDescriptor: PropertyDescriptor = {
 					get(this: UI5Element) {
 						if (this._state[propertyName] !== undefined) {
 							return this._state[propertyName];
@@ -1114,7 +1136,11 @@ abstract class UI5Element extends HTMLElement {
 					set() {
 						throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
 					},
-				});
+				};
+				Object.defineProperty(proto, propertyName, propertyDescriptor);
+				if (propertyName !== kebabToCamelCase(propertyName)) {
+					Object.defineProperty(proto, kebabToCamelCase(propertyName), propertyDescriptor);
+				}
 			}
 		}
 	}

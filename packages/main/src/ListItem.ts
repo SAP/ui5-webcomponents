@@ -165,6 +165,14 @@ abstract class ListItem extends ListItemBase {
 	highlight: `${Highlight}` = "None";
 
 	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	declare selected: boolean;
+
+	/**
 	 * Used to define the role of the list item.
 	 * @private
 	 * @default "ListItem"

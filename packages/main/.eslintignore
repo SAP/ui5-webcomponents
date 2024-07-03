@@ -7,6 +7,8 @@ test
 bundle.*.js
 rollup.config*.js
 wdio.conf.cjs
+cypress.config.js
+cypress/
 postcss.config.cjs
 package-scripts.cjs
 .eslintrc.cjs

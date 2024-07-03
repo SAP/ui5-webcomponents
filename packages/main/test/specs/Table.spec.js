@@ -197,3 +197,40 @@ describe("Table - Fixed Header", async () => {
 		assert.ok(headerRow.isDisplayedInViewport(), "Header is displayed in the viewport");
 	});
 });
+
+// Tests navigated property of rows
+describe("Table - Navigated Rows", async () => {
+	before(async () => {
+		await browser.url(`test/pages/TableLoading.html`);
+	});
+
+	it("Navigated cell is rendered", async () => {
+		await browser.executeAsync(done => {
+			document.getElementById("row1").navigated = true;
+			done();
+		});
+
+		const row1 = await browser.$("#row1");
+		const row2 = await browser.$("#row1");
+		const navigatedCell1 = await row1.shadow$("#navigated-cell");
+		const navigatedCell2 = await row1.shadow$("#navigated-cell");
+
+		assert.ok(await navigatedCell1.isExisting(), "The navigated cell is rendered for the row with navigated=true");
+		assert.ok(await navigatedCell2.isExisting(), "The navigated cell is also rendered for the row with navigated=false");
+		assert.strictEqual(await navigatedCell1.getAttribute("excluded-from-navigation"), "", "The navigated cell is excluded from item navigation");
+		assert.strictEqual(await navigatedCell2.getAttribute("excluded-from-navigation"), "", "The navigated cell is excluded from item navigation");
+
+		const navigatedCell1BG = await browser.executeAsync(done => {
+			done(getComputedStyle(document.getElementById("row1").shadowRoot.querySelector("#navigated-cell")).backgroundColor);
+		});
+		const navigatedCell2BG = await browser.executeAsync(done => {
+			done(getComputedStyle(document.getElementById("row2").shadowRoot.querySelector("#navigated-cell")).backgroundColor);
+		});
+		assert.notEqual(navigatedCell1BG, navigatedCell2BG, "Background color of navigated cell is different from the one of non-navigated cell");
+
+		const gridTemplateColumns = await browser.executeAsync(done => {
+			done(document.getElementById("table1").shadowRoot.querySelector("#table").style.gridTemplateColumns);
+		});
+		assert.ok(gridTemplateColumns.endsWith("table_navigated_cell_width)"), "gridTemplateColumns is correct");
+	});
+});
