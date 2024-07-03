@@ -32,7 +32,7 @@ sidebar_label: FAQ
 
 **Q: How can I customize UI5 Web Components' styles?**
 
-**A:** Read the [Styling UI5 Web Components](2-advanced/01-styles.md) article.
+**A:** Read the [Styling UI5 Web Components](2-advanced/11-styles.md) article.
 
 
 **Q: How big is the runtime?**
