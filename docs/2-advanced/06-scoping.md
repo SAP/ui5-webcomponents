@@ -1,3 +1,7 @@
+---
+title: Scoping
+---
+
 # Micro-Frontends and Custom Elements Scoping
 
 ## What does `scoping` mean?

@@ -1,3 +1,7 @@
+---
+title: Styling Scrollbars
+---
+
 # Scrollbars Customization
 
 By default, some of the components provide additional CSS styles, which are applied to their scrollbars in order to achieve their target design.

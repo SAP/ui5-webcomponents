@@ -1,3 +1,7 @@
+---
+title: Accessibility
+---
+
 # Accessibility in UI5 Web Components
 
 Accessibility refers to the possibility for everyone, including and especially people with special needs, to access and use IT products. Making software work for more people should be of high priority. All users should be able to operate our software without loss of meaningful content, functionality, and efficiency when using assistive technologies.

@@ -1,3 +1,7 @@
+---
+title: Custom Themes
+---
+
 # Creating Custom Theme
 
 The article describes the steps to manually create a custom theme for your UI5 Web Components project without any tools.

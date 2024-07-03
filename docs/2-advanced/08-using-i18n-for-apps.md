@@ -1,3 +1,7 @@
+---
+title: i18n for Apps
+---
+
 # UI5 Web Components i18n for Apps
 
 *This section explains how to use the UI5 Web Components `i18n` functionality for the purpose of your app's translatable texts.
