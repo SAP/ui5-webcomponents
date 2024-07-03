@@ -1,5 +1,5 @@
 ---
-sidebar_label: HBS Templates
+sidebar_label: Templates
 ---
 
 # Handlebars Templates
@@ -13,13 +13,13 @@ The preferred way to write the renderers for UI5 Web Components (and supported d
 
 Example:
 
-The following `src/Demo.hbs` template
+The following `src/MyComponent.hbs` template
 
 ```handlebars
 <button>{{text}}</button>
 ```
 
-will be compiled to `dist/generated/templates/DemoTemplate.lit.js` with the following content,
+will be compiled to `dist/generated/templates/MyComponentTemplate.lit.js` with the following content,
 
 ```js
 import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -44,16 +44,16 @@ For these reasons, we would suggest you use `.hbs` templates and have them compi
 ### Global context
 
 The context in the `.hbs` file is the **web component instance**, and you do not have to write the `this` keyword (although you can).
-Therefore, you can directly use metadata entities (property, slot, event names) or any other Javascript property on the component directly:
+Therefore, you can directly use metadata entities (property, slot, event names) or any other JavaScript property on the component directly:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.age = 30;
 this.fullName = `${this.name} ${this.lastName}`;
 ```
 
-In the `Demo.hbs` file you can just use them directly:
+In the `MyComponent.hbs` file you can just use them directly:
 
 ```handlebars
 <p>{{fullName}}</p>
@@ -75,7 +75,7 @@ In a loop, the context is always the current item, and not the component itself.
 
 Example:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.items = [
@@ -94,7 +94,7 @@ this.items = [
 ]
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 {{#each items}}
@@ -133,7 +133,7 @@ Here, each `div` inside the loop gets assigned an `item` property that points to
 
 Here's another example for the `this` keyword:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.numbers = [
@@ -142,7 +142,7 @@ this.numbers = [
 ];
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 {{#each numbers}}
@@ -169,7 +169,7 @@ You can access the global context inside loops with the "one-level-up" expressio
 
 Example:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.name = "John Smith";
@@ -183,7 +183,7 @@ this.items = [
 ]
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 {{#each items}}
@@ -202,14 +202,14 @@ You can use the following features when writing `.hbs` templates:
 
 You can access any property from the context (generally the web component instance) in your `.hbs` template with `{{` and `}}`.
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.tooltip = "Some tooltip";
 this.txt = "Some text";
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <button title="{{tooltip}}">{{txt}}<button/>
@@ -225,7 +225,7 @@ For example, the following is **not allowed**:
 
 You can access object properties:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.person = {
@@ -234,7 +234,7 @@ this.person = {
 }
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <p>{{person.name}} {{person.lastName}}</p>
@@ -248,7 +248,7 @@ but you cannot use expressions inside `.hbs` templates. The following is **not a
 
 Instead, you should precalculate the required value in the `.js` file and use it directly in the template:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 get fullName() {
@@ -256,7 +256,7 @@ get fullName() {
 }
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <p>{{fullName}}</p>
@@ -265,13 +265,13 @@ In the `Demo.hbs` file:
 By default, all content that you pass is _escaped_ for security purposes.
 However, you can pass **arbitrary HTML** with `{{{` and `}}}`:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.unsafeMessage = `<span>This is unsafe content</span>`;
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <p>{{{unsafeMessage}}}</p>
@@ -287,13 +287,13 @@ The result in DOM would be:
 your HTML manually beforehand. A common use-case for the `{{{` and `}}}` binding is to manually add `<strong>` tags to parts of a string
 to implement highlighting while the user is typing. Here's an example:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.userInput = `<strong>Arg</strong>entina`;
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <div>{{{userInput}}}</div>
@@ -303,14 +303,14 @@ Thus, if the user has typed "Arg" (while typing "Argentina"), this part of the n
 
 Finally, it is possible to pass HTML elements (not just strings as in all examples above), and they will be rendered:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.messageDiv = document.createElement("div");
 this.messageDiv.textContent = "Hello";
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <p>{{messageDiv}}</p>
@@ -380,7 +380,7 @@ Again, you cannot use expressions, so the following is **not allowed**:
 
 Instead, you should have a precalculated value in your `.js file`, for example:
 
-In `Demo.js`:
+In `MyComponent.js`:
 
 ```js
 get isAdmin() {
@@ -388,7 +388,7 @@ get isAdmin() {
 }
 ```
 
-and then use this value in `Demo.hbs`:
+and then use this value in `MyComponent.hbs`:
 
 ```handlebars
 {{#if isAdmin }}
@@ -400,7 +400,7 @@ and then use this value in `Demo.hbs`:
 
 You can use `each` to loop over arrays.
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.items = [
@@ -419,7 +419,7 @@ this.items = [
 ]
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 {{#each items}}
@@ -575,13 +575,13 @@ Therefore, always bind boolean attributes with `?`.
 
 You can bind events as follows:
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 this.onClick = event => {};
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <button @click="{{onClick}}"></button>
@@ -594,7 +594,7 @@ Style maps are an easy and useful tool to apply multiple styles to an element dy
 In order to use a style map in your `.hbs` template, you must bind a `styles` property (or as in the next example, a getter called `styles`).
 Any binding to a `styles` object on a `style` attribute will be treated as a style map.
 
-In the `Demo.js` file:
+In the `MyComponent.js` file:
 
 ```js
 get styles() {
@@ -611,7 +611,7 @@ get styles() {
 }
 ```
 
-In the `Demo.hbs` file:
+In the `MyComponent.hbs` file:
 
 ```handlebars
 <div style="{{styles.root}}">
@@ -623,7 +623,7 @@ In the `Demo.hbs` file:
 After the following code is run, both the `div` and the `footer` will have the respective CSS styles applied to them.
 
 **Important:** do not build styles manually. Always use style maps as they are CSP-compliant and they will not build style strings and assign them,
-but will use Javascript APIs to apply each style/CSS variable separately.
+but will use JavaScript APIs to apply each style/CSS variable separately.
 
 The following is an anti-pattern and is **not allowed** in the latest version of the handlebars-to-lit compiler:
 
@@ -650,8 +650,8 @@ In order to use a class map in your `.hbs` template, you must bind a `classes` p
 get classes() {
 	return {
 		main: {
-			"ui5-demo-main": true,
-			"ui5-demo-mobile": isPhone()
+			"ui5-myComponent-main": true,
+			"ui5-myComponent-mobile": isPhone()
 		},
 		content :{
 			"ui5-content-wide": this.width > 1024	
@@ -673,7 +673,7 @@ get classes() {
 ```
 
 Here, all 3 HTML elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
-are unconditional (`ui5-demo-main` and `ui5-section`) so these classes will always be set, however the rest are going to be set only if certain criteria are met.
+are unconditional (`ui5-myComponent-main` and `ui5-section`) so these classes will always be set, however the rest are going to be set only if certain criteria are met.
 
 ### Partials <a name="syntax_partials"></a>
 
@@ -705,7 +705,7 @@ Partials are very often used to define **hooks** - extension points for other co
 
 Example:
 
-In `Demo.hbs`:
+In `MyComponent.hbs`:
 
 ```handlebars
 <section>
@@ -740,7 +740,7 @@ You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PAT
 Example:
 
 ```handlebars
-{{>include "./Demo.hbs"}}
+{{>include "./MyComponent.hbs"}}
 ```
 
 Paths to `.hbs` files from other `node_modules/` libraries are also supported.
@@ -753,10 +753,10 @@ Example:
 
 The most common use case for `{{>include}}` is to include an `.hbs` file that has extension points (hooks) and implement them. Given the example from the previous section (about Partials), consider the following:
 
-In `Demo2.hbs`:
+In `MyComponent2.hbs`:
 
 ```handlebars
-{{>include "./Demo.hbs"}}
+{{>include "./MyComponent.hbs"}}
 
 {{#*inline "beforeContent"}}
 	<span>Implementation here</span>
@@ -767,7 +767,7 @@ In `Demo2.hbs`:
 {{/inline}}
 ```
 
-Then the `Demo2` component will use the `.hbs` file of the `Demo` component but with its own version of its partials.
+Then the `MyComponent2` component will use the `.hbs` file of the `MyComponent` component but with its own version of its partials.
 
 ## Using the `slot` element
 
@@ -791,18 +791,15 @@ The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) eleme
 
 In `Page.js` (metadata object):
 
-```js
-slots: {
-	header: {
-		type: HTMLElement
-	},
-	"default": {
-		type: HTMLElement,
-		propertyName: "content"
-	},
-	footer: {
-		type: HTMLElement
-	}
+```ts
+@slot()
+header!: Array<HTMLElement>;
+
+@slot({ type: Node, "default": true })
+content!: Array<Node>;
+
+@slot()
+footer!: Array<HTMLElement>;
 }
 ```
 
@@ -844,24 +841,21 @@ To do so, simply render a `slot` with a `name` property equal to the `_individua
 
 Here's an example:
 
-In `Demo.js` (metadata object):
+In `MyComponent.js` (metadata object):
 
-```js
-{
-	slots: {
-		"default": {
-			type: HTMLElement,
-			propertyName: "items",
-			individualSlots: true
-		}
-	}
-}
+```ts
+@slot({
+	type: HTMLElement,
+	"default": true,
+	individualSlots: true,
+})
+items!: Array<HTMLElement>;
 ```
 
 Since `propertyName` is set to `items`, the children of the default slot will be accessible on the web component instance with `this.items`;
 and since `individualSlots` is set to `true`, every child in `this.items` (every child slotted in the default slot) will have an `_individualSlots` property created by the framework. 
 
-In `Demo.hbs` you must render a slot for each child with `name` equal to the `_individualSlot` property value for this child:
+In `MyComponent.hbs` you must render a slot for each child with `name` equal to the `_individualSlot` property value for this child:
 
 ```handlebars
 {{#each items}}
