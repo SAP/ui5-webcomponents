@@ -832,7 +832,7 @@
 
 
 		scrollInput.addEventListener("ui5-suggestion-scroll", function (event) {
-			scrollResult.value = event.detail.scrollTop;
+			scrollResult.value = `${event.detail.scrollTop}`;
 			console.log("scroll", { scrolltop: event.detail.scrollTop, container: event.detail.scrollContainer });
 		});
 
