@@ -127,6 +127,13 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
+		it("Disabled item", async () => {
+			const item = await browser.$("#disabledPdf");
+			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
+
+			assert.notOk(await item.isClickable(), "Item shouldn't be clickable");
+			assert.notOk(await deleteBtn.isClickable(), "Delete button shouldn't be clickable");
+		});
 	});
 
 	describe("Events", () => {
