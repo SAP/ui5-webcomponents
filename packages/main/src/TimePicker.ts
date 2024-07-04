@@ -203,13 +203,13 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 class TimePicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a formatted time value.
-	 * @default undefined
+	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
 	 */
 	@property()
-	value?: string;
+	value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -343,8 +343,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @default null
 	 */
-	get dateValue(): Date | Date[] | null {
-		return this.getFormat().parse(this._effectiveValue as string);
+	get dateValue(): Date | null {
+		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
 	/**
@@ -630,7 +630,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
+		const date = this.getFormat().parse(this._effectiveValue) as Date;
 		if (!date) {
 			return;
 		}

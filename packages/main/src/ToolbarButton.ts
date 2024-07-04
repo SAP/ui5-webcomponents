@@ -141,10 +141,10 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Button text
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the width of the button.

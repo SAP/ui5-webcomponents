@@ -31,7 +31,7 @@ import type {
 } from "./Input.js";
 
 interface IToken extends HTMLElement, ITabbable {
-	text: string;
+	text?: string;
 	readonly: boolean,
 	selected: boolean,
 	isTruncatable: boolean,
@@ -153,7 +153,7 @@ class MultiInput extends Input implements IFormInputElement {
 			formData.append(this.name, this.value);
 
 			for (let i = 0; i < tokens.length; i++) {
-				formData.append(this.name, tokens[i].text);
+				formData.append(this.name, (tokens[i].text || ""));
 			}
 
 			return formData;
