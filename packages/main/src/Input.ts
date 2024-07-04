@@ -1011,7 +1011,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail as InputEventDetail).inputType
+			|| (e.detail as InputEventDetail)?.inputType
 			|| "";
 		this._keepInnerValue = false;
 
