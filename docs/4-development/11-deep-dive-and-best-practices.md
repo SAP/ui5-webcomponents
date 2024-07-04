@@ -14,7 +14,7 @@ The metadata defines the public API of your component. Among other things, here 
 
 The tag name must include a `-` as required for any custom element. The tag is declared using `@customElement` decorator: 
 
-```js
+```ts
 @custom("my-component")
 //or
 @custom({
@@ -102,14 +102,14 @@ The framework will create a getter/setter pair on your component's prototype for
 
 For example, defining text property:
 
-```js
+```ts
 @property
 text = ""
 ```
 
 you can use the `text` getter/setter on this component's instances:
 
-```js
+```ts
 let t = myComponent.text;
 myComponent.text = "New text";
 ```
@@ -133,49 +133,12 @@ The most common types of properties are `String`, `Boolean`, `Object`and `Number
 
 Most property types can have a default but `Boolean` should always `false` by default.
 
-#### Properties with `multiple: true`
-
-If you need a property that accepts multiple values, it has to be described as an array of elements of the given `type`, and will be treated by the framework exactly as
-a property of type `Object` would be (as arrays are technically objects). For example, it will not have an attribute counterpart.
-
-Example:
-
-```ts
-@property({ type: Array })
-numbers: Array<number> = []
-```
-
-```js
-myComponent.numbers = [1, 2, 3];
-```
-
-Properties with array values are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
-Their most common use case is as *private* properties for communication between related components. For example, the higher-order "date picker" component
-communicates with its "day picker", "month picker", and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
-
-If you need to use a property that accepts array as part of your component's public API, that is fine, but bear in mind the limitations 
-(no declarative support as with all Objects, so no attribute for this property).
-
-The alternative would be to use *abstract* items, for example:
-
-```html
-<my-component>
-	<my-item slot="numbers" value="1"></my-item>
-	<my-item slot="numbers" value="2"></my-item>
-	<my-item slot="numbers" value="3"></my-item>
-</my-component>
-```
-
-Here instead of having a `numbers` property of type `Number`, configured with `multiple: true`, we have a `numbers` slot, and inside this slot we pass abstract items with
-a `value` property of type `Number`. This is now completely declarative, and is preferable unless the number of items is very large (in which case the 
-solution with the multiple property would likely be better).
-
 #### Examples
 
 Example of defining properties:
 
 ```ts
-class MyDemoComponent extends UI5Element {
+class MyComponent extends UI5Element {
 	@property()
 	text = "Hello";
 
@@ -226,12 +189,12 @@ Both public and private properties are great ways to create CSS selectors for yo
 Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component's dimensions will be changed from `5rem` to `2rem`. 
 Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute. 
 
-#### Metadata properties vs normal JS properties
+#### Metadata properties vs standard JS properties
 
 It is important not to confuse properties defined with `@property` decorator  with regular Javascript properties.
 You can create any number of properties on your component's instance, f.e.:
 
-```js
+```ts
 constructor() {
 	super();
 	this._isMobile = false;
@@ -254,11 +217,11 @@ Each component that has a `template` described in `@customElement` decorator wil
 
 Example:
 
-```js
-import MyDemoComponentTemplate from "./generated/templates/MyDemoComponentTemplate.lit.js";
+```ts
+import MyComponentTemplate from "./generated/templates/MyComponentTemplate.lit.js";
 
 @customElement({
-    template: MyDemoComponentTemplate
+    template: MyComponentTemplate
 })
 ```
 
@@ -290,7 +253,7 @@ A component becomes *invalidated* whenever:
 
 Changes to properties always cause an invalidation. No specific metadata configuration is needed.
 
-```js
+```ts
 @property()
 text?: string;
 ```
@@ -305,8 +268,10 @@ If that is the case for the component you're building, you need to define slot u
 ```ts
 @slot({ type: HTMLElement, "default": true })
 content!: Array<HTMLElement>;
+
 @slot()
 header!: Array<HTMLElement>;
+
 @slot()
 footer!: Array<HTMLElement>;
 ```
@@ -333,7 +298,7 @@ Finally, `invalidateOnChildChange` allows for more fine-granular rules when exac
 
 Using the right lifecycle hook for the task is crucial to a well-designed and performant component.
 
-### 1. `constructor`
+### `constructor`
 
 Use the constructor for one-time initialization tasks.
 
@@ -356,9 +321,9 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 
 
 @customElement({
-    tag: "my-demo-component",
+    tag: "my-component",
 })
-class MyDemoComponent extends UI5Element {
+class MyComponent extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_handleResizeBound: ResizeObserverCallback;
 
@@ -382,7 +347,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-### 2. `onBeforeRendering`
+### `onBeforeRendering`
 
 Use `onBeforeRendering` to prepare variables to be used in the `.hbs` template.
 
@@ -402,9 +367,9 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement({
-    tag: "my-demo-component",
+    tag: "my-component",
 })
-class MyDemoComponent extends UI5Element {
+class MyComponent extends UI5Element {
 	@property()
 	filter = "";
 
@@ -419,7 +384,7 @@ Let's imagine we want to only show the items whose `name` property matches the v
 
 ```ts
 
-class MyDemoComponent extends UI5Element {
+class MyComponent extends UI5Element {
 	@property()
 	filter = "";
 
@@ -465,7 +430,7 @@ The user would only see the first and third items as these are the only ones we 
 
 In summary: `onBeforeRendering` is the best place to prepare all the variables you are going to need in the `.hbs` template.
 
-### 3. `onAfterRendering`
+### `onAfterRendering`
 
 The `onAfterRendering` lifecycle hook allows you to access the DOM every time the component is rendered.
 
@@ -482,20 +447,20 @@ In some cases, however, you must directly access the DOM since certain operation
 Example:
 
 ```html
-<div class="my-demo-component">
+<div class="my-component">
 	<input id="first">
 	<input id="second">
 </div>
 ```
 
-```js
+```ts
 onAfterRendering() {
 	this.shadowRoot.querySelector("#second").focus();
-	this._totalWidth = this.shadowRoot.querySelector("div.my-demo-component").offsetWidth;
+	this._totalWidth = this.shadowRoot.querySelector("div.my-component").offsetWidth;
 }
 ```
 
-### 4. `onEnterDOM` and `onExitDOM`
+### `onEnterDOM` and `onExitDOM`
 
 Unlike `onBeforeRendering` and `onAfterRendering`, which sound like parts of the same flow (but are not, and are actually used for completely independent tasks),
 `onEnterDOM` and `onExitDOM` should almost always be used together, therefore they are presented as a whole in this article.
@@ -509,8 +474,8 @@ Note that these hooks are completely independent of the component's rendering li
 
 Normally, when a web component is created, for example:
 
-```js
-const b = document.createElement("my-demo-component");
+```ts
+const b = document.createElement("my-component");
 ```
 
 it is already fully operational, although it isn't in DOM yet. Therefore, you should use `onEnterDOM` and `onExitDOM` only for functionality, related to
@@ -532,9 +497,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 @customElement({
-    tag: "my-demo-component",
+    tag: "my-component",
 })
-class MyDemoComponent extends UI5Element {
+class MyComponent extends UI5Element {
 	@property({ type: Number })
 	_width = 0;
 
