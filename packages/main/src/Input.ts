@@ -1354,7 +1354,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get _flattenItems(): Array<IInputSuggestionItem> {
-		return (this.getSlottedNodes("suggestionItems") as Array<IInputSuggestionItem>).reduce((acc, item) => {
+		return this.getSlottedNodes<IInputSuggestionItem>("suggestionItems").reduce((acc, item) => {
 			if (this._isGroupItem(item)) {
 				return [...acc, item, ...item.items!];
 			}

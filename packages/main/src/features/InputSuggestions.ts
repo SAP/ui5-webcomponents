@@ -479,7 +479,7 @@ class Suggestions {
 	_getItems(): Array<IInputSuggestionItem> {
 		const suggestionComponent = this._getComponent();
 
-		return (suggestionComponent.getSlottedNodes("suggestionItems") as Array<IInputSuggestionItem>).reduce((acc, item) => {
+		return (suggestionComponent.getSlottedNodes<IInputSuggestionItem>("suggestionItems")).reduce((acc, item) => {
 			if (item.hasAttribute("ui5-suggestion-item-group")) {
 				return [...acc, item, ...item.items!];
 			}
