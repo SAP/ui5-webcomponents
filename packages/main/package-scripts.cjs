@@ -5,6 +5,7 @@ const options = {
 	portStep: 2,
 	noWatchTS: true,
 	dev: true,
+	packageName: "main"
 };
 
 const scripts = getScripts(options);

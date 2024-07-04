@@ -75,7 +75,7 @@ const getScripts = (options) => {
 		},
 		build: {
 			default: "nps prepare lint build.bundle", // build.bundle2
-			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
+			templates: `node "${LIB}/buildTest/buildTemplates.js" --packageName=${options.packageName}`,
 			styles: {
 				default: `concurrently "nps build.styles.themes" "nps build.styles.components" "nps build.styles.componentStyles"`,
 				themes: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
@@ -102,9 +102,9 @@ const getScripts = (options) => {
 		},
 		copy: {
 			default: "nps copy.src copy.props",
-			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
+			src: `node "${LIB}/copy-and-watch/index.js" --packageName=${options.packageName} --silent "src/**/*.{js,json}" dist/`,
 			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --packageName=${options.packageName} --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
 			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,

@@ -55,6 +55,15 @@ const target = args.pop();
 const sources = args;
 const parents = [...new Set(sources.map(globParent))];
 
+let packageName = process.argv.find((value) => {
+	return value.includes("packageName");
+});
+
+if (packageName) {
+	packageName = packageName.replace("--packageName=", "");
+}
+
+
 const findTarget = from => {
 	const parent = parents
 		.filter(p => from.indexOf(p) >= 0)
@@ -80,6 +89,7 @@ const createDirIfNotExist = to => {
 	});
 };
 const copy = from => {
+	console.log(`${packageName}:[copy-and-watch][pid${process.pid}][copy]${sources}: Taking ${JSON.stringify(process.memoryUsage().rss / 1024 / 1024)}MB memory`)
 	const to = findTarget(from);
 	createDirIfNotExist(to);
 	const stats = fs.statSync(from);
@@ -90,11 +100,14 @@ const copy = from => {
 	options.silent || console.log('[COPY]'.yellow, from, 'to'.yellow, to);
 };
 const remove = from => {
+	console.log(`${packageName}:[copy-and-watch][pid${process.pid}][remove]${sources}: Taking ${JSON.stringify(process.memoryUsage().rss / 1024 / 1024)}MB memory`)
 	const to = findTarget(from);
 	fs.unlinkSync(to);
 	options.silent || console.log('[DELETE]'.yellow, to);
 };
+
 const rimraf = dir => {
+	console.log(`${packageName}:[copy-and-watch][pid${process.pid}][rimraf]${sources}: Taking ${JSON.stringify(process.memoryUsage().rss / 1024 / 1024)}MB memory`)
 	if (fs.existsSync(dir)) {
 		fs.readdirSync(dir).forEach(entry => {
 			const entryPath = path.join(dir, entry);
