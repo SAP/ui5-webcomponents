@@ -615,6 +615,4 @@ describe("Select general interaction", () => {
 		const selectedOption = await browser.$("#warningSelect ui5-option[selected]");
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
 	});
-
-	it()
 });
