@@ -1714,19 +1714,21 @@ describe("MultiComboBox general interaction", () => {
 			const mCbWarning = await browser.$("#mcb-warning");
 			const mCbSuccess = await browser.$("#mcb-success");
 			const mCbError = await browser.$("#mcb-error");
+			let input = await mCbWarning.shadow$("#ui5-multi-combobox-input");
+
+			await input.click();
 
 			let popover = await mCbWarning.shadow$("ui5-popover");
-
-			await mCbWarning.click();
-
 			let ariaHiddenText = await mCbWarning.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			let valueStateText = await popover.$("div").getHTML(false);
-
+			console.warn(valueStateText);
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 			assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
 
+			input = await mCbError.shadow$("#ui5-multi-combobox-input");
+
 			await mCbWarning.keys("Escape");
-			await mCbError.click();
+			await input.click();
 
 			popover = await mCbError.shadow$("ui5-popover");
 
@@ -1750,8 +1752,7 @@ describe("MultiComboBox general interaction", () => {
 			await mCbInformation.click();
 			await mCbInformation.keys("a");
 
-			const popoverHeader = await mCbInformation.shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
-			const valueStateText = await popoverHeader.$("div").getHTML(false);
+			const valueStateText = await mCbInformation.$("div[slot='valueStateMessage']").getHTML(false);
 			const ariaHiddenText = await mCbInformation.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
