@@ -48,32 +48,26 @@
 	text-shadow: inherit;
 }
 
-/* Level H1 */
 :host([size="H1"]) {
 	font-size: var(--sapFontHeader1Size);
 }
 
-/* Level H2 */
 :host([size="H2"]) {
 	font-size: var(--sapFontHeader2Size);
 }
 
-/* Level H3 */
 :host([size="H3"]) {
 	font-size: var(--sapFontHeader3Size);
 }
 
-/* Level H4 */
 :host([size="H4"]) {
 	font-size: var(--sapFontHeader4Size);
 }
 
-/* Level H5 */
 :host([size="H5"]) {
 	font-size: var(--sapFontHeader5Size);
 }
 
-/* Level H6 */
 :host([size="H6"]) {
 	font-size: var(--sapFontHeader6Size);
 }
