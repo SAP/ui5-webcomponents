@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **UI5Element:** component invalidated when children change slots ([#9104](https://github.com/SAP/ui5-webcomponents/issues/9104)) ([a882721](https://github.com/SAP/ui5-webcomponents/commit/a8827219d52c67158e29aa616454bceadaa7128a))
+
+
+### Features
+
+* add property initializers ([#8846](https://github.com/SAP/ui5-webcomponents/issues/8846)) ([eef0cc9](https://github.com/SAP/ui5-webcomponents/commit/eef0cc9b663fda6268b98e516ed46439435fa2b0))
+* **UI5Element:** better support for kebab-case slots ([#9106](https://github.com/SAP/ui5-webcomponents/issues/9106)) ([e1dd34c](https://github.com/SAP/ui5-webcomponents/commit/e1dd34c39dd7a97fac4fde6bdb342c7874c48d9c))
+
+
+### BREAKING CHANGES
+
+* @property decorator must be adapted according to new type parameter
+
+
+
+
+
 # [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
 
 

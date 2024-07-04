@@ -7,14 +7,13 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageDemoApps from '@site/src/components/HomepageDemoApps';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 import Heading from '@theme/Heading';
-import LogoWater from "@site/static/img/compatibility-frameworks/LogoWater.svg";
-import LogoFire from "@site/static/img/compatibility-frameworks/LogoFire.svg";
+import LogoWater from "@site/static/img/logos/LogoWater.svg";
 
 import styles from './index.module.css';
 
 function Logo(props: { colorMode: string }) {
   return (
-    props.colorMode === "light" ? <LogoWater className={styles.logoMain} /> : <LogoFire className={styles.logoMain} />
+    <LogoWater className={styles.logoMain} />
   );
 } 
 
@@ -54,8 +53,8 @@ function HomepageHeader() {
 function Banner() {
   return (
     <div className="alert alert--info" role="alert" style={{fontSize: "1.5rem", textAlign: "center"}}>
-        🎉&nbsp;<b>UI5 Web Components 2.0 is here!</b>
-          <div>Discover the <b><a href="/blog/releases/announcing-rc-v2/"> all the exciting features in store!
+        🎉&nbsp;<b>UI5 Web Components 2.0 is released!</b>
+          <div>Discover <b><a href="https://github.com/SAP/ui5-webcomponents/releases/tag/v2.0.0"> all the exciting features in store!
             </a></b>&nbsp;🎉
           </div>
     </div>
@@ -72,7 +71,6 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        {/* <HomepageCompatibility /> */}
         <HomepageDemoApps />
         <HomepageTestimonials />
       </main>
