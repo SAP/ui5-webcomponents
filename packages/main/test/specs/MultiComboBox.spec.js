@@ -1721,7 +1721,7 @@ describe("MultiComboBox general interaction", () => {
 			let popover = await mCbWarning.shadow$("ui5-popover");
 			let ariaHiddenText = await mCbWarning.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			let valueStateText = await popover.$("div").getHTML(false);
-			console.warn(valueStateText);
+
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 			assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
 
