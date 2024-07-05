@@ -40,9 +40,10 @@ describe("Basic interaction", () => {
 
 	it("Should collapse the tokenizer when the picker is closed", async () => {
 		const mcb = await browser.$("#multi1");
-		const picker =  await mcb.shadow$("ui5-responsive-popover");
+		const tokenizer = await mcb.shadow$('ui5-tokenizer');
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+		const picker =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const dialogCloseButton = await picker.$(".ui5-responsive-popover-close-btn");
-		const tokenizer = await mcb.shadow$('ui5-tokenizer')
 
 		await mcb.click();
 		await dialogCloseButton.click();
