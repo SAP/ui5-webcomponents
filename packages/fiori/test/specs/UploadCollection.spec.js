@@ -210,6 +210,31 @@ describe("UploadCollection", () => {
 		});
 	});
 
+	describe("Keyboard handling", () => {
+		it("Tab chain", async () => {
+			const isActiveElement = (element) => {
+				return browser.executeAsync((expectedActiveElem, done) => {
+					const activeElement = document.activeElement;
+					done(activeElement.shadowRoot.activeElement === expectedActiveElem);
+				}, element);
+			};
+
+			const item = await browser.$("#hiddenFileName");
+
+			await item.click();
+			assert.ok(await item.isFocused(), "Item should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$("[ui5-button][icon=refresh]")), "Retry button should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$(".ui5-uci-edit")), "Edit button should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$(".ui5-upload-collection-deletebtn")), "Delete button should be focused");
+		});
+	});
+
 	describe("Edit - various file names", async () => {
 		before(async () => {
 			await browser.url(`test/pages/UploadCollection.html`);
