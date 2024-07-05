@@ -522,7 +522,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._fireChangeEvent();
 
 		const focusedOutToItemsPicker = this.open && this._getPicker().contains(toBeFocused);
-		const focusedOutToValueState = this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused);
+		const focusedOutToValueState = this.valueStateOpen && this.contains(toBeFocused);
 
 		if (focusedOutToItemsPicker || focusedOutToValueState) {
 			e.stopImmediatePropagation();
