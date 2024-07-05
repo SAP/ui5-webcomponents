@@ -22,7 +22,6 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
-import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
@@ -104,7 +103,6 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 		List,
 		MenuItem,
 		MenuSeparator,
-		Icon,
 		BusyIndicator,
 	],
 })
@@ -387,7 +385,6 @@ class Menu extends UI5Element {
 	}
 
 	_afterPopoverOpen() {
-		this.open = true;
 		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
