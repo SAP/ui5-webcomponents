@@ -209,7 +209,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = ""
+	value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -343,8 +343,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @default null
 	 */
-	get dateValue(): Date | Date[] | null {
-		return this.getFormat().parse(this._effectiveValue);
+	get dateValue(): Date | null {
+		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
 	/**

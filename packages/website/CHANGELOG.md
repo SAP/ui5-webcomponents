@@ -3,6 +3,140 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **ui5-tab-container:** enhance documentation page ([#9271](https://github.com/SAP/ui5-webcomponents/issues/9271)) ([a7f99e6](https://github.com/SAP/ui5-webcomponents/commit/a7f99e69aba34c05ee9325ff02a96967d85e5562)), closes [#9079](https://github.com/SAP/ui5-webcomponents/issues/9079) [#9248](https://github.com/SAP/ui5-webcomponents/issues/9248)
+
+
+### Code Refactoring
+
+* **ui5-combobox, ui5-multi-combobox:** prepare for physical list items ([#9307](https://github.com/SAP/ui5-webcomponents/issues/9307)) ([67c7597](https://github.com/SAP/ui5-webcomponents/commit/67c7597f5b0157327b5b24070ac4b885beb9c0cf)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+* **ui5-input:** suggestions refactoring ([#9092](https://github.com/SAP/ui5-webcomponents/issues/9092)) ([36c9c8f](https://github.com/SAP/ui5-webcomponents/commit/36c9c8f1e2cf438d9173649a82a90af8db0cc282)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7890](https://github.com/SAP/ui5-webcomponents/issues/7890)
+* **ui5-li:** replace the usage of image property with image slot ([#9089](https://github.com/SAP/ui5-webcomponents/issues/9089)) ([391ffaa](https://github.com/SAP/ui5-webcomponents/commit/391ffaa0d650d773f3e7cbd62accc27d3ae8cd94))
+* **ui5-view-settings-dialog:** change opening api to open property ([#9249](https://github.com/SAP/ui5-webcomponents/issues/9249)) ([52106cc](https://github.com/SAP/ui5-webcomponents/commit/52106ccffba64d13949764339a71225b33dac3a3))
+
+
+### Features
+
+* add property initializers ([#8846](https://github.com/SAP/ui5-webcomponents/issues/8846)) ([eef0cc9](https://github.com/SAP/ui5-webcomponents/commit/eef0cc9b663fda6268b98e516ed46439435fa2b0))
+* **ui5-ai-button:** initial implementation ([b39548f](https://github.com/SAP/ui5-webcomponents/commit/b39548f7af9e0dd76543327d5bab5242d9ef15a0))
+* **ui5-menu-separator:** add new component ([#8871](https://github.com/SAP/ui5-webcomponents/issues/8871)) ([f7fea29](https://github.com/SAP/ui5-webcomponents/commit/f7fea290c4bb2e5f235222cba7e48b09c5b3b39b)), closes [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461)
+
+
+### Reverts
+
+* Revert "WIP: create announcing-v2.mdx" (#9350) ([95b90e4](https://github.com/SAP/ui5-webcomponents/commit/95b90e4eb8f55e833610c9525134cca5ef0f6c6c)), closes [#9350](https://github.com/SAP/ui5-webcomponents/issues/9350) [#9346](https://github.com/SAP/ui5-webcomponents/issues/9346)
+
+
+### BREAKING CHANGES
+
+* **ui5-li:** The `image` property of the `ui5-li` is removed and the `imageContent` slot is renamed to `image`.
+If you have previously used the `image` property:
+```html
+<ui5-li image="./img/HT-1022.jpg">Standard List Item</ui5-li>
+```
+or the `imageContent` slot:
+```html
+<ui5-li> Avatar inside imageContent slot
+	<ui5-avatar slot="imageContent" shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+</ui5-li>
+```
+
+Now use `image`  slot instead:
+```html
+<ui5-li> Avatar inside image slot
+	<ui5-avatar slot="image" shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+</ui5-li>
+
+```
+
+
+Related to https://github.com/SAP/ui5-webcomponents/issues/8461, https://github.com/SAP/ui5-webcomponents/issues/7887, https://github.com/SAP/ui5-webcomponents/issues/9200
+* **ui5-combobox, ui5-multi-combobox:** The ui5-cb-item-group & ui5-mcb-item-group text property is renamed to header-text.
+If you previously used the text property:
+
+<ui5-cb-item-group text="A">
+   <ui5-cb-item text="Algeria"></ui5-cb-item>
+</ui5-cb-item-group>
+<ui5-mcb-item-group text="A">
+   <ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+</ui5-mcb-item-group>
+Now you must rename it to header-text:
+
+<ui5-cb-item-group header-text="A">
+   <ui5-cb-item text="Algeria"></ui5-cb-item>
+</ui5-cb-item-group>
+<ui5-mcb-item-group header-text="A">
+   <ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+</ui5-mcb-item-group>
+* **ui5-input:** remove `type`, `description`, `icon`, `iconEnd`, `image` from `ui5-suggestion-item` and introduce `ui5-suggestion-item-custom`
+
+`ui5-suggestion-item`:
+- `type` property is removed, use `ui5-suggestion-item-custom` instead.
+- `description` property is removed, use `ui5-suggestion-item-custom` instead.
+- `icon` property is removed, use `ui5-suggestion-item-custom` instead.
+- `iconEnd` property is removed, use `ui5-suggestion-item-custom` instead.
+- `image` property is removed, use `ui5-suggestion-item-custom` instead.
+
+`ui5-suggestion-group-item`:
+- renamed to `ui5-suggestion-item-group`
+- `text` is removed, use `headerText` instead
+
+`ui5-suggestion-item-custom`:
+- custom suggestion item with open content similar to `ui5-li-custom`
+- to be used for custom scenarios
+- to highlight custom items use `@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js`
+
+All suggestion items are now physical items and can be overstyled.
+Grouping now works with via nesting: e.g.
+
+```js
+<ui5-input show-suggestions>
+  <ui5-suggestion-item-group header-text="Group 1">
+    <ui5-suggestion-item text="Group Item 1"></ui5-suggestion-item>
+  </ui5-suggestion-item-group>
+</ui5-input>
+```
+* **ui5-view-settings-dialog:** Removed `show` and `close` methods.
+
+Before, the ui5-view-settings-dialog could be opened and closed by calling `show()` and `close()`:
+```ts
+const viewSettingsDialog = document.getElementById("exampleID");
+viewSettingsDialog.show();
+viewSettingsDialog.close();
+```
+Now, the dialog is opened and closed by setting the open property to true or false:
+```ts
+const viewSettingsDialog = document.getElementById("exampleID");
+viewSettingsDialog.open = true;
+viewSettingsDialog.open = false;
+```
+fixes: https://github.com/SAP/ui5-webcomponents/issues/9240
+* @property decorator must be adapted according to new type parameter
+* **ui5-menu-separator:** `startsSection` property removed from MenuItems
+
+Before:
+
+<ui5-menu>
+    <ui5-menu-item text="Item A"></ui5-menu-item>
+    <ui5-menu-item text="Item B" starts-section></ui5-menu-item>
+</ui5-menu>
+
+Now:
+
+<ui5-menu>
+    <ui5-menu-item text="Item A"></ui5-menu-item>
+    <ui5-menu-separator></ui5-menu-separator>
+    <ui5-menu-item text="Item B"></ui5-menu-item>
+</ui5-menu>
+
+
+
+
+
 # [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
 
 
