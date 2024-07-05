@@ -51,7 +51,7 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	maxLines = Infinity;
+	maxLines: number = Infinity;
 
 	onBeforeRendering() {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);
