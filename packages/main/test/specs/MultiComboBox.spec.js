@@ -121,7 +121,8 @@ describe("MultiComboBox general interaction", () => {
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const body = await browser.$(".multicombobox1auto");
 			const nMoreText = await tokenizer.shadow$(".ui5-tokenizer-more-text");
-			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+			const popover =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			const firstItemCheckbox = await popover.$("ui5-list > ui5-li").shadow$("ui5-checkbox");
 
 			await arrow.click();
