@@ -51,19 +51,14 @@
 	padding-bottom: var(--_ui5_checkbox_root_side_padding);
 }
 
-:host(:not([wrapping-type="None"])[text]) .ui5-checkbox-root .ui5-checkbox-inner,
-:host(:not([wrapping-type="None"])[text]) .ui5-checkbox-root .ui5-checkbox-label {
-	margin-top: var(--_ui5_checkbox_wrapped_content_margin_top);
-}
-
 :host(:not([wrapping-type="None"])[text]) .ui5-checkbox-root .ui5-checkbox-label {
 	overflow-wrap: break-word;
 	align-self: center;
 }
 
-:host([desktop]:not([wrapping-type="None"])) .ui5-checkbox-root:focus::before,
-.ui5-checkbox-root:focus-visible::before {
-	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
+:host([desktop][text]:not([wrapping-type="None"])) .ui5-checkbox-root:focus::before,
+.ui5-checkbox-root[text]:focus-visible::before {
+	inset-block: var(--_ui5_checkbox_wrapped_focus_inset_block);
 }
 
 /* value states */

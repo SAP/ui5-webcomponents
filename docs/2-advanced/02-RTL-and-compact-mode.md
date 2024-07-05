@@ -1,3 +1,7 @@
+---
+title: RTL & Compact Mode
+---
+
 # Right-To-Left (RTL) and Compact Mode
 
 *This section explains how to make UI5 Web Components render in **RTL** and **compact mode**.*

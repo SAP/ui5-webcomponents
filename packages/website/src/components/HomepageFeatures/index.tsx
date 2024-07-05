@@ -1,22 +1,10 @@
 import './styles.css';
 
-import Buildings from "@site/static/img/features/light/Buildings.svg";
-import Frame from "@site/static/img/features/light/Frame.svg";
-import Hand from "@site/static/img/features/light/Hand.svg";
-import BuildingsDark from "@site/static/img/features/dark/Buildings.svg";
-import FrameDark from "@site/static/img/features/dark/Frame.svg";
-import HandDark from "@site/static/img/features/dark/Hand.svg";
 
 import { useColorMode } from '@docusaurus/theme-common';
 
 type FeatureItem = {
   title: string;
-  SVG?: React.ComponentType<React.SVGProps<SVGSVGElement> & {
-    title?: string;
-  }>;
-  SVGDark?: React.ComponentType<React.SVGProps<SVGSVGElement> & {
-    title?: string;
-  }>;
   src?: string,
   srcDark?: string,
   description: JSX.Element,
@@ -26,10 +14,8 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: 'Easy to Use',
-    SVG: Frame,
-    SVGDark: FrameDark,
-    src: null,
-    srcDark: null,
+    src: require('@site/static/img/features/light/Frame.png').default,
+    srcDark: require('@site/static/img/features/dark/Frame.png').default,
     description: (
       <>
        Based on web standards - just HTML!
@@ -41,10 +27,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Lightweight',
-    SVG: Hand,
-    SVGDark:  HandDark,
-    src: null,
-    srcDark: null,
+    src: require('@site/static/img/features/light/Hand.png').default,
+    srcDark: require('@site/static/img/features/dark/Hand.png').default,
     description: (
       <>
        Tiny - come with a minimal footprint.
@@ -55,10 +39,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Enterprise Ready',
-    SVG: Buildings,
-    SVGDark: BuildingsDark,
-    src: require('@site/static/img/features/light/Buildings_Water.png').default,
-    srcDark: require('@site/static/img/features/dark/Buildings_Fire.png').default,
+    src: require('@site/static/img/features/light/Buildings.png').default,
+    srcDark: require('@site/static/img/features/dark/Buildings.png').default,
     description: (
       <>
        Implements latest SAP Design language.
@@ -69,13 +51,13 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({ title, SVG, SVGDark, src, srcDark, description, cssClass }: FeatureItem) {
+function Feature({ title, src, srcDark, description, cssClass }: FeatureItem) {
   const { colorMode } = useColorMode();
   const light = colorMode === "light";
 
   return (
     <div className="feature">
-      {src ? light ? <img className='feature__image' src={src} /> : <img className='feature__image' src={srcDark} /> : light ? <SVG className={`feature__image ${cssClass}`}/> : <SVGDark className={`feature__image ${cssClass}`}/>}
+      {light ? <img className={`feature__image ${cssClass}`} src={src} /> : <img className={`feature__image ${cssClass}`} src={srcDark} /> }
         <h2 className="feature__title">{title}</h2>
         <p className="feature__desc">{description}</p>
     </div>

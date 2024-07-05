@@ -742,6 +742,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	_onPopoverFocusOut() {
+		if (!isPhone()) {
+			this._tokenizer.expanded = this._open;
+		}
+	}
+
 	_tokenizerFocusOut(e: FocusEvent) {
 		this._tokenizerFocused = false;
 
@@ -1518,6 +1524,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this._dialogInputValueState = this.valueState;
+			this._tokenizer.expanded = false;
 		}
 
 		this.fireEvent(action);
@@ -1643,7 +1650,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._tokenizer._handleResize();
 		this._tokenizer.preventInitialFocus = true;
 
-		if (this.open) {
+		if (this.open && !isPhone()) {
 			this._tokenizer.expanded = true;
 		}
 

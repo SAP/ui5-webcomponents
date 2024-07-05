@@ -70,6 +70,10 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        blog: {
+          blogSidebarTitle: 'All our posts',
+          blogSidebarCount: 'ALL',
+        },
       } satisfies Preset.Options,
     ],
   ],
@@ -89,7 +93,6 @@ const config: Config = {
       logo: {
         alt: 'UI5 Web Components Logo',
         src: 'img/logos/LogoWater.svg',
-        srcDark: 'img/logos/LogoFire.svg',
       },
       items: [
         {

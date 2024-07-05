@@ -35,11 +35,11 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	/**
 	 * Defines the text of the `ui5-suggestion-item-custom`.
 	 * **Note:** The text property is considered only for autocomplete.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the content of the component.
