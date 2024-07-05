@@ -286,7 +286,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines whether the component is required.
-	 * @since 2.0.1
+	 * @since 2.0.2
 	 * @default false
 	 * @public
 	 */
@@ -297,7 +297,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Defines the aria-label attribute for the component.
 	 * @default undefined
 	 * @public
-	 * @since 2.0.1
+	 * @since 2.0.2
 	 */
 	@property()
 	accessibleName?: string;
@@ -306,7 +306,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Receives id (or many ids) of the elements that label the component.
 	 * @default undefined
 	 * @public
-	 * @since 2.0.1
+	 * @since 2.0.2
 	 */
 	@property()
 	accessibleNameRef?: string;
