@@ -598,7 +598,7 @@ describe("TextArea general interaction", () => {
 
 			cy.get("@textarea")
 				.shadow()
-				.find("[ui5-popover].ui5-valuestatemessage-popover")
+				.find("<div slot='valueStateMessage'>Custom message</div>")
 				.should("be.visible")
 				.should("have.text", "Custom message")
 				.and("have.attr", "open");
