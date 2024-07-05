@@ -1,4 +1,4 @@
-name: Deploy Website [auto]
+name: Deploy Website Nightly [auto]
 
 on:
   schedule:
