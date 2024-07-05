@@ -1,4 +1,4 @@
-<div id="before" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
+<div id="before" role="none" tabindex="0" data-ui5-focus-trap ui5-table-dummy-focus-area></div>
 
 <div id="table" role="grid"
     style="{{styles.table}}"
@@ -32,7 +32,7 @@
     <ui5-busy-indicator id="loading" delay="{{loadingDelay}}" active data-sap-focus-ref></ui5-busy-indicator>
 {{/if}}
 
-<div id="after" role="none" tabindex="0" ui5-table-dummy-focus-area></div>
+<div id="after" role="none" tabindex="0" data-ui5-focus-trap ui5-table-dummy-focus-area></div>
 
 {{#*inline "growingRow"}}
     <ui5-table-row id="growing-row" ui5-growing-row>
