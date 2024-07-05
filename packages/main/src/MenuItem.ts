@@ -60,11 +60,11 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines the text of the tree item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
@@ -74,12 +74,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	 *
 	 * The priority of what will be displayed at the end of the menu item is as follows:
 	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText = "";
+	additionalText?: string;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -126,12 +126,12 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.7.0
 	 */
 	@property()
-	accessibleName = "";
+	accessibleName?: string;
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
@@ -189,7 +189,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get hasSubmenu() {
-		return !!(this.items.length || this.loading);
+		return !!(this.items.length || this.loading) && !this.disabled;
 	}
 
 	get hasEndContent() {
@@ -296,6 +296,9 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.selected = false;
 		if (e.detail.escPressed) {
 			this.focus();
+			if (isPhone()) {
+				this.fireEvent("close-menu", {});
+			}
 		}
 	}
 

@@ -59,6 +59,12 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
+/**
+ * Interface for components that may be slotted inside a `ui5-calendar`.
+ *
+ * **Note:** Use with `ui5-date` or `ui5-date-range` as calendar date selection types.
+ * @public
+ */
 interface ICalendarSelectedDates extends UI5Element {
 	value?: string,
 	startValue?: string,
@@ -278,7 +284,8 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * Defines the selected date or dates (depending on the `selectionMode` property)
-	 * for this calendar as instances of `ui5-date`.
+	 * for this calendar as instances of `ui5-date` or `ui5-date-range`.
+	 * Use `ui5-date` for single or multiple selection, and `ui5-date-range` for range selection.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -582,6 +589,14 @@ class Calendar extends CalendarPart {
 	 */
 	get _isHeaderMonthButtonHidden(): boolean {
 		return this._currentPicker === "month" || this._currentPicker === "year";
+	}
+
+	/**
+	 * The year button is hidden when the year picker is shown
+	 * @private
+	 */
+	get _isHeaderYearButtonHidden(): boolean {
+		return this._currentPicker === "year";
 	}
 
 	get _isDayPickerHidden() {

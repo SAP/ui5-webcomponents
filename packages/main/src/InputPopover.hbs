@@ -109,30 +109,9 @@
 		separators="{{suggestionSeparators}}"
 		selection-mode="Single"
 		@mousedown="{{onItemMouseDown}}"
-		@mouseover="{{_handleItemMouseOver}}"
-		@mouseout="{{_handleItemMouseOut}}"
 		@ui5-item-click="{{_handleSuggestionItemPress}}"
 		@ui5-selection-change="{{_handleSelectionChange}}"
 	>
-		{{#each suggestionObjects}}
-			{{#if groupItem}}
-				<ui5-li-group-header data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-group-header>
-			{{else}}
-				<ui5-li-suggestion-item
-					wrapping-type="Normal"
-					image="{{this.image}}"
-					icon="{{this.icon}}"
-					additional-text="{{this.additionalText}}"
-					type="{{this.type}}"
-					additional-text-state="{{this.additionalTextState}}"
-					data-ui5-key="{{key}}"
-				>
-					{{{ this.text }}}
-					{{#if this.description}}
-						<span slot="richDescription">{{{ this.description }}}</span>
-					{{/if}}
-				</ui5-li-suggestion-item>
-			{{/if}}
-		{{/each}}
+		<slot></slot>
 	</ui5-list>
 {{/inline}}

@@ -73,6 +73,10 @@ const scrollElementIntoView = (scrollContainer: HTMLElement, element: HTMLElemen
 	});
 };
 
+const isFeature = <T>(element: any, identifier: string): element is T => {
+	return element.identifier === identifier;
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -80,4 +84,5 @@ export {
 	findRowInPath,
 	findVerticalScrollContainer,
 	scrollElementIntoView,
+	isFeature,
 };

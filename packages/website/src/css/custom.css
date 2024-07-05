@@ -6,13 +6,6 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-table-background: transparent;
@@ -35,23 +28,32 @@
 }
 
 :root {
-  --ifm-color-primary: #fe7520;
-  --ifm-color-primary-dark: #fe6304;
-  --ifm-color-primary-darker: #f25d01;
-  --ifm-color-primary-darkest: #c74d01;
-  --ifm-color-primary-light: #fe873c;
-  --ifm-color-primary-lighter: #fe8f4b;
+  --ifm-color-primary: #5D36FF;
+  --ifm-color-primary-dark: #481CFF;
+  --ifm-color-primary-darker: #481CFF;
+  --ifm-color-primary-darkest: #481CFF;
+  --ifm-color-primary-light: #4C72E9;
+  --ifm-color-primary-lighter: #4C72E9;
+  --ifm-color-primary-lightest: #4292DC;
+}
+
+.hero--primary {
+  --ifm-hero-background-color: #fff;
+}
+
+
+[data-theme='dark'] {
+  --ifm-color-primary: #3BADD3;
+  --ifm-color-primary-dark: #58b9da;
+  --ifm-color-primary-darker: #3BADD3;
+  --ifm-color-primary-darkest: #E7641D;
+  --ifm-color-primary-light: #e97434;
+  --ifm-color-primary-lighter: #feaa75;
   --ifm-color-primary-lightest: #feaa75;
 }
 
-[data-theme='dark'] {
-  --ifm-color-primary: #fe7520;
-  --ifm-color-primary-dark: #fe6304;
-  --ifm-color-primary-darker: #f25d01;
-  --ifm-color-primary-darkest: #c74d01;
-  --ifm-color-primary-light: #fe873c;
-  --ifm-color-primary-lighter: #fe8f4b;
-  --ifm-color-primary-lightest: #feaa75;
+[data-theme='dark'] .hero--primary {
+  --ifm-hero-background-color: #12171C;
 }
 
 :root {
@@ -121,9 +123,6 @@
   display: none;
 }
 
-.hero--primary {
-  --ifm-hero-background-color: var(--ifm-background-color);
-}
 
 
 .header-github-link {
@@ -157,6 +156,10 @@ code {
 }
 
 
+.navbar__logo img {
+  height: 1.75rem;
+}
+
 .navbar__item li,
 .navbar__item li a {
   cursor: pointer;
@@ -176,6 +179,11 @@ code {
 /* Make top level menu items bold (main,fiori,etc.) */
 .theme-doc-sidebar-item-category-level-1.menu__list-item > .menu__list-item-collapsible > a[href*="\/components"] {
   font-weight: bold;
+}
+
+.button--getting-started {
+  border-radius: 1.215rem;
+  padding: 0.5rem 1.24rem 0.5rem 1.24rem;
 }
 
 @media (max-width: 996px) {
