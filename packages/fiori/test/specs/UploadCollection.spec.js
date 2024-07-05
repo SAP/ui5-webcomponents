@@ -191,6 +191,47 @@ describe("UploadCollection", () => {
 		});
 	});
 
+	describe("Keyboard handling", () => {
+		const isActiveElement = (element) => {
+			return browser.executeAsync((expectedActiveElem, done) => {
+				const activeElement = document.activeElement;
+				done(activeElement.shadowRoot.activeElement === expectedActiveElem);
+			}, element);
+		};
+
+		it("Item tab order", async () => {
+			const item = await browser.$("#hiddenFileName");
+
+			await item.click();
+			assert.ok(await item.isFocused(), "Item should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$("[ui5-button][icon=refresh]")), "Retry button should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$(".ui5-uci-edit")), "Edit button should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$(".ui5-upload-collection-deletebtn")), "Delete button should be focused");
+		});
+
+		it("Tab through empty upload collection", async () => {
+			const tabStop1 = await browser.$("#tabStop1");
+			const tabStop2 = await browser.$("#tabStop2");
+			const uploadCollection = await browser.$("#uploadCollectionDnD");
+
+			await tabStop1.click();
+			await browser.keys("Tab");
+			await browser.keys("Tab");
+
+			assert.ok(await isActiveElement(await uploadCollection.shadow$(".uc-no-files")), "No files item should be focused");
+
+			await browser.keys("Tab");
+
+			assert.ok(await tabStop2.isFocused(), "Should have passed the upload collection and focused the next tab stop");
+		});
+	});
+
 	describe("Edit - various file names", async () => {
 		before(async () => {
 			await browser.url(`test/pages/UploadCollection.html`);
