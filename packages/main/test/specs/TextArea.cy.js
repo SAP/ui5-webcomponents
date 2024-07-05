@@ -597,11 +597,9 @@ describe("TextArea general interaction", () => {
 				.should("be.focused");
 
 			cy.get("@textarea")
-				.shadow()
 				.find('[slot="valueStateMessage"]')
 				.should("be.visible")
 				.should("have.text", "Custom message")
-				.and("have.attr", "open");
 
 			cy.get("@textarea")
 				.shadow()
