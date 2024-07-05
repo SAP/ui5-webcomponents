@@ -598,7 +598,7 @@ describe("TextArea general interaction", () => {
 
 			cy.get("@textarea")
 				.shadow()
-				.find("<div slot='valueStateMessage'>Custom message</div>")
+				.find("div['slot=valueStateMessage']")
 				.should("be.visible")
 				.should("have.text", "Custom message")
 				.and("have.attr", "open");
