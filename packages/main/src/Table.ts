@@ -289,17 +289,6 @@ class Table extends UI5Element {
 	@property()
 	stickyTop = "0";
 
-	/**
-	 * Defines the height of the component.
-	 *
-	 * **Note:** When using sticky headers, make sure that the height of the table is defined.
-	 *
-	 * @default "auto"
-	 * @public
-	 */
-	@property()
-	height = "auto";
-
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
@@ -477,7 +466,6 @@ class Table extends UI5Element {
 		return {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
-				"height": this.height,
 				"overflow-x": this._tableOverflowX,
 			},
 		};
@@ -503,7 +491,7 @@ class Table extends UI5Element {
 	}
 
 	get _tableOverflowX() {
-		return (this.overflowMode === TableOverflowMode.Popin) ? "" : "auto";
+		return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
 	}
 
 	get _tableOverflowY() {
@@ -552,7 +540,7 @@ class Table extends UI5Element {
 	}
 
 	get _stickyElements() {
-		const stickyRows = [this.headerRow[0]].filter(row => row.sticky);
+		const stickyRows = this.headerRow.filter(row => row.sticky);
 		const stickyColumns = this.headerRow[0]._stickyCells as TableHeaderCell[];
 
 		return [...stickyRows, ...stickyColumns];

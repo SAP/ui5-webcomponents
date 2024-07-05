@@ -100,11 +100,6 @@ class TableHeaderRow extends TableRowBase {
 	get _i18nRowPopin() {
 		return TableRowBase.i18nBundle.getText(TABLE_ROW_POPIN);
 	}
-
-	get _cells() {
-		// only add if not null #selection-cell if it is not null to the array
-		return [this.shadowRoot?.querySelector("#selection-cell"), ...this.cells];
-	}
 }
 
 TableHeaderRow.define();
