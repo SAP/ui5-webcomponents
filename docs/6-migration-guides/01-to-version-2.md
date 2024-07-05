@@ -2013,7 +2013,6 @@ Now, the property is not available and must not be set:
 
 ### ui5-table
 
-### ui5-split-button
 | Changed item | Old     | New     | 
 |--------------|---------|---------|
 | Class        | `Table, TableCell, TableRow, TableColumn` | Moved | 
