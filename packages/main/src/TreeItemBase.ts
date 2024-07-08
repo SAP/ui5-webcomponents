@@ -122,7 +122,7 @@ class TreeItemBase extends ListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	/**
 	* Defines whether the selection of a tree node is displayed as partially selected.
