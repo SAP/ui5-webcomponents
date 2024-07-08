@@ -127,6 +127,13 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
+		it("Disabled item", async () => {
+			const item = await browser.$("#disabledPdf");
+			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
+
+			assert.notOk(await item.isClickable(), "Item shouldn't be clickable");
+			assert.notOk(await deleteBtn.isClickable(), "Delete button shouldn't be clickable");
+		});
 	});
 
 	describe("Events", () => {
@@ -163,13 +170,25 @@ describe("UploadCollection", () => {
 		it("upload collection should fire 'item-delete' regardless of the selectionMode", async () => {
 			const uploadCollection = await browser.$("#uploadCollection");
 			const item = await browser.$("#latestReportsPdf");
+			const itemsLength = (await uploadCollection.getProperty("items")).length;
 
 			await uploadCollection.setAttribute("selection-mode", "None");
 
 			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
 			await deleteBtn.click();
 
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, itemsLength - 1, "item should be deleted when 'item-delete' event is fired");
+		});
+
+		it("upload collection should fire 'item-delete' when 'DELETE' key is pressed on item", async () => {
+			const uploadCollection = await browser.$("#uploadCollection");
+			const item = await browser.$("#reportPdf");
+			const itemsLength = (await uploadCollection.getProperty("items")).length;
+
+			await item.click();
+			await browser.keys("Delete");
+
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, itemsLength - 1, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", async () => {

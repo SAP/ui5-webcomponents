@@ -17,7 +17,6 @@
 
 .ui5-uci-buttons {
 	display: flex;
-	pointer-events: all;
 	margin-inline-start: 1rem;
 	gap: 0.5rem;
 }
