@@ -1849,7 +1849,7 @@ class MultiComboBox extends UI5Element {
 	get _innerInput(): HTMLInputElement {
 		if (isPhone()) {
 			if (this.allItemsPopover?.opened) {
-				return this.allItemsPopover.querySelector("ui5-input")!.shadowRoot!.querySelector("input")!;
+				return this.allItemsPopover.querySelector("[ui5-input]")!.shadowRoot!.querySelector("input")!;
 			}
 		}
 
