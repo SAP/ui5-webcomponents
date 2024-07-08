@@ -27,12 +27,12 @@ sidebar_label: FAQ
 
 **Q: Can I create my own UI5 Web Components?**
 
-**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](./5-development/01-package.md)
+**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](4-development/01-package.md)
 
 
 **Q: How can I customize UI5 Web Components' styles?**
 
-**A:** Read the [Styling UI5 Web Components](./3-customizing/01-styles.md) article.
+**A:** Read the [Styling UI5 Web Components](2-advanced/11-styles.md) article.
 
 
 **Q: How big is the runtime?**
