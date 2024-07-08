@@ -155,7 +155,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
 	 *
 	 * @public
-	 * @since 2.0
+	 * @since 2.1.0
 	 * @default {}
 	 */
 	@property({ type: Object })
