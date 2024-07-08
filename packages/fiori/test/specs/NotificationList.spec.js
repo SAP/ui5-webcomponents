@@ -72,7 +72,6 @@ describe("Notification List Item Tests", () => {
 		const EXPECTED_RESULT_2 = "New order #2202";
 		const firstItem = await browser.$("#nli1");
 
-
 		// act
 		await firstItem.click();
 
@@ -170,7 +169,6 @@ describe("Notification List Item Tests", () => {
 
 		assert.strictEqual(state2, "alert", "The 'Warning' state icon is correctly displayed.");
 		assert.strictEqual(state3, "error", "The 'Error' state icon is correctly displayed.");
-
 	});
 
 	it("tests importance", async () => {
@@ -205,7 +203,6 @@ describe("Notification List Item Tests", () => {
 		const menu3 = await firstItem.$("ui5-menu").hasAttribute("open");
 		// assert
 		assert.ok(await menu3, "There is open menu with shift+F10.");
-
 	});
 
 	// Accessibility tests follows
@@ -293,7 +290,6 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await btnListItemClose1.getAttribute("role"), 'button', "The role is correct.");
 
 		assert.notOk(await btnListItemClose3.isExisting(), "There is no 'Close' button rendered");
-
 	});
 
 	it("tests aria attributes click on ShowMore", async () => {
