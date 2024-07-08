@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 ## [1.24.6](https://github.com/SAP/ui5-webcomponents/compare/v1.24.5...v1.24.6) (2024-07-01)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

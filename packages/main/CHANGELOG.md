@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
+
+
+### Bug Fixes
+
+* **ui5-input, ui5-combobox, ui5-multi-combobox:** prevent native input autocomplete ([#9141](https://github.com/SAP/ui5-webcomponents/issues/9141)) ([ddd6314](https://github.com/SAP/ui5-webcomponents/commit/ddd6314e7ed0360b1d9be4dd56642725291ad223))
+* **ui5-multi-combobox:**  fix scoping by querying on pure tag attr ([165b0e0](https://github.com/SAP/ui5-webcomponents/commit/165b0e017f4276f42a2e712e862b6b6068ffc577))
+
+
+
+
+
 ## [1.24.6](https://github.com/SAP/ui5-webcomponents/compare/v1.24.5...v1.24.6) (2024-07-01)
 
 
