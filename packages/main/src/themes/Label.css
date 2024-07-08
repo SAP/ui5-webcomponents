@@ -52,12 +52,12 @@
 	line-height: 0;
 }
 
-:host([required][show-colon]) .ui5-label-required-colon:after {
-	margin-inline-start: .125rem;
+.ui5-label-text-wrapper {
+	padding-inline-end: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
 }
 
-bdi {
-	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
+:host([required][show-colon]) .ui5-label-required-colon:after {
+	margin-inline-start: .125rem;
 }
 
 :host([show-colon]) .ui5-label-required-colon {
