@@ -89,8 +89,14 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property()
 	subtitleText?: string;
 
+	@property({ type: Boolean })
+	_firstItemInTimeline!: boolean;
+
+	@property({ type: Boolean })
+	_isNextItemGroup!: boolean;
+
 	@property({ noAttribute: true })
-	forcedTabIndex?: string;
+	forcedTabIndex?: string = "-1";
 
 	/**
 	 * Defines the items orientation.
@@ -107,8 +113,28 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property()
 	forcedLineWidth?: string;
 
+	@property({ type: Boolean })
+	hideBubble!: boolean;
+
+	@property({ type: Boolean })
+	_lastItem!: boolean;
+
+	@property({ type: Boolean })
+	hidden!: boolean;
+
+	isGroupItem = false;
+
 	constructor() {
 		super();
+	}
+
+	onBeforeRendering() {
+		// Add margin to empty timeline items in a group to match the height of those with content.
+		if (this.layout === TimelineLayout.Horizontal) {
+			if ((this.parentElement as ITimelineItem)?.isGroupItem && !this.innerHTML) {
+				this.style.setProperty("margin-block-end", "1.5rem");
+			}
+		}
 	}
 
 	onNamePress() {

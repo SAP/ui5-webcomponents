@@ -10,7 +10,7 @@
 	flex-direction: column;
 }
 
-:host(:not([layout="Horizontal"])) .ui5-tli-indicator {
+:host([layout="Vertical"]) .ui5-tli-indicator {
 	position: relative;
 	width: 2rem;
 }
@@ -22,37 +22,48 @@
 	align-items: center;
 }
 
-:host(:not([layout="Horizontal"])) .ui5-tli-indicator::before {
+:host([layout="Vertical"]) .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
 	width: 1px;
 	position: absolute;
-	top: 2.125rem;
+	top: 2rem;
 	bottom: var(--_ui5_timeline_tli_indicator_before_bottom);
 	left: 50%;
 }
 
-:host([layout="Horizontal"]) .ui5-tli-indicator::before {
+:host(:first-child[layout="Vertical"]:not([_first-item-in-timeline])) .ui5-tli-indicator::after {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
-	height: 1px;
-	top: 50%;
+	width: 1px;
 	position: absolute;
-	left: 2.0625rem;
-	right: var(--_ui5_timeline_tli_indicator_before_right);
+	top: calc(-100% - 1rem);
+	bottom: var(--_ui5_timeline_tli_indicator_before_bottom);
+	left: 50%;
+	height: calc(100% + 1rem);
 }
-:host(:not([layout="Horizontal"])) .ui5-tli-indicator.ui5-tli-indicator-large-line::before {
+
+:host([layout="Vertical"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before {
 	bottom: var(--_ui5_timeline_tli_indicator_before_without_icon_bottom);
 }
 
-:host([layout="Horizontal"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before{
-	right: var(--_ui5_timeline_tli_indicator_before_without_icon_right);
+:host([_last-item]:last-child[layout="Vertical"]) .ui5-tli-indicator::before {
+	content: "";
+	display: inline-block;
+	background-color: var(--sapContent_ForegroundBorderColor);
+	height: 100%;
+	top: calc(-100% - -0.25rem);
+	position: absolute;
 }
 
+/* :host([layout="Horizontal"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before{
+	right: var(--_ui5_timeline_tli_indicator_before_without_icon_right);
+} */
+
 /* Line when no Icon is provided */
-:host(:not([layout="Horizontal"])):not([icon]) .ui5-tli-indicator::before {
+:host([layout="Vertical"]):not([icon]) .ui5-tli-indicator::before {
 	bottom: var(--_ui5_timeline_tli_indicator_before_without_icon_bottom);
 	top: 1.875rem;
 }
@@ -61,10 +72,10 @@
 :host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator::before {
 	top: 50%;
 	right: var(--_ui5_timeline_tli_indicator_before_without_icon_right);
-	left: 1.6875rem;
+	left: 1rem;
 }
 
-:host(:not([layout="Horizontal"])):not([icon]) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
+:host([layout="Vertical"]):not([icon]) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
 	bottom: var(--_ui5_timeline_tli_indicator_before_bottom);
 }
 
@@ -151,8 +162,8 @@
 
 .ui5-tli-bubble:focus::after {
 	content: "";
-    border: var(--_ui5_TimelineItem_bubble_border_width) var(--_ui5_TimelineItem_bubble_border_style) var(--sapContent_FocusColor);
-    border-radius: var(--_ui5_TimelineItem_bubble_focus_border_radius);
+	border: var(--_ui5_TimelineItem_bubble_border_width) var(--_ui5_TimelineItem_bubble_border_style) var(--sapContent_FocusColor);
+	border-radius: var(--_ui5_TimelineItem_bubble_focus_border_radius);
 	position: absolute;
 	top: var(--_ui5_TimelineItem_bubble_border_top);
 	right: var(--_ui5_TimelineItem_bubble_border_right);
@@ -280,4 +291,86 @@
 :host([layout="Horizontal"]:dir(rtl)) .ui5-tli-indicator::before {
 	left: var(--_ui5_timeline_tli_indicator_before_right);
 	right: 2.125rem;
+}
+
+:host {
+	align-content: end;
+}
+
+:host([hide-bubble]) {
+	display: none;
+}
+
+.ui5-tli-group-item-btn-arrow {
+	position: absolute;
+	width: 0.5rem;
+	height: 0.5rem;
+	transform: rotate(45deg);
+	border: 1px solid var(--sapButton_BorderColor);
+	background-color: var(--sapButton_Background);
+	right: 4.25rem;
+	top: 0.8125rem;
+	border-right-color: transparent;
+	border-top-color: transparent;
+}
+
+.ui5-tli-root:hover .ui5-tli-group-item-btn-arrow {
+	background-color: var(--sapButton_Hover_Background);
+}
+
+:host([layout="Horizontal"]) .ui5-tli-root {
+	flex-direction: column;
+}
+
+:host([layout="Vertical"]:last-child[_last-item]) {
+	margin-block-start: 1rem;
+}
+
+:host([_is-next-item-group]:last-child:not([_last-item])) .ui5-tli-indicator:before {
+	content: "";
+	display: inline-block;
+	background-color: var(--sapContent_ForegroundBorderColor);
+	height: calc(100% + 3rem);
+	top: 2rem;
+	position: absolute;
+}
+
+:host([layout="Horizontal"][_is-next-item-group]:last-child:not([_last-item])) .ui5-tli-indicator:before {
+	height: 1px;
+	top: 50%;
+	left: 1.75rem;
+}
+
+:host([layout="Vertical"]:last-child:not([_last-item])) .ui5-tli-indicator:before {
+	content: "";
+	display: inline-block;
+	background-color: var(--sapContent_ForegroundBorderColor);
+	top: 2rem;
+	position: absolute;
+	height: 100%;
+}
+
+/* Styles for horizontal */
+
+:host([layout="Horizontal"]) {
+	height: auto;
+	min-width: 3rem;
+	margin-inline-end: 0.25rem;
+}
+
+:host([icon][layout="Horizontal"]:not([_last-item])) .ui5-tli-indicator::after,
+:host(:not([icon])[layout="Horizontal"]:not([_last-item]):not([_is-next-item-group])) .ui5-tli-indicator::before {
+	content: "";
+	display: inline-block;
+	background-color: var(--sapContent_ForegroundBorderColor);
+	height: 1px;
+	top: 1rem;
+	position: absolute;
+	width: 100%;
+	left: 2.0625rem;
+}
+
+:host([icon][layout="Horizontal"]:not([_last-item]):not([_is-next-item-group])) .ui5-tli-indicator::after,
+:host(:not([icon])[layout="Horizontal"]:not([_last-item]):not([_is-next-item-group])) .ui5-tli-indicator::before {
+	width: calc(100% - 0.625rem);
 }

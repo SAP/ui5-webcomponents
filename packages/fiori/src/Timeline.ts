@@ -5,14 +5,18 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isTabNext,
+	isTabPrevious,
+} from "@ui5/webcomponents-base/dist/Keys.js";
+import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
+import TimelineGroupItem from "./TimelineGroupItem.js";
 
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
@@ -22,12 +26,18 @@ import TimelineLayout from "./types/TimelineLayout.js";
  * Interface for components that may be slotted inside `ui5-timeline` as items
  * @public
  */
-interface ITimelineItem extends UI5Element, ITabbable {
-    layout: `${TimelineLayout}`,
-    icon?: string,
-    forcedLineWidth?: string,
-    nameClickable: boolean,
-    focusLink: () => void,
+interface ITimelineItem extends UI5Element {
+	_lastItem: boolean;
+	layout: `${TimelineLayout}`;
+	icon?: string;
+	_isNextItemGroup?: boolean;
+	forcedLineWidth?: string;
+	isGroupItem: boolean;
+	nameClickable?: boolean;
+	focusLink?(): void;
+	_collapsed?: boolean;
+	items?: Array<ITimelineItem>;
+	_firstItemInTimeline?: boolean;
 }
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
@@ -54,7 +64,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	renderer: litRender,
 	styles: TimelineCss,
 	template: TimelineTemplate,
-	dependencies: [TimelineItem],
+	dependencies: [TimelineItem, TimelineGroupItem],
 })
 class Timeline extends UI5Element {
 	/**
@@ -73,7 +83,7 @@ class Timeline extends UI5Element {
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName!: string;
 
 	/**
 	 * Determines the content of the `ui5-timeline`.
@@ -90,7 +100,7 @@ class Timeline extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.items,
+			getItemsCallback: () => this._navigatableItems,
 		});
 	}
 
@@ -105,51 +115,118 @@ class Timeline extends UI5Element {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		const target = e.target as TimelineItem;
+		let target = e.target as ITimelineItem | ToggleButton;
+
+		if ((target as ITimelineItem).isGroupItem) {
+			target = target.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!;
+		}
 
 		this._itemNavigation.setCurrentItem(target);
 	}
 
 	onBeforeRendering() {
+		this.setEffectiveLayout();
 		this._itemNavigation._navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
-		for (let i = 0; i < this.items.length; i++) {
-			this.items[i].layout = this.layout;
-			if (this.items[i + 1] && !!this.items[i + 1].icon) {
-				this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
-			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
-				this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
+		if (this.items) {
+			for (let i = 0; i < this.items.length; i++) {
+				this.items[i].layout = this.layout;
+				if (this.items[i + 1] && !!this.items[i + 1].icon) {
+					this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
+				} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
+					this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
+				}
 			}
+		}
+		this._setLastItem();
+		this._setIsNextItemGroup();
+		this.items[0]._firstItemInTimeline = true;
+	}
+
+	_setLastItem() {
+		const items = this.items;
+		if (items && items.length > 0) {
+			items[items.length - 1]._lastItem = true;
+		}
+	}
+
+	_setIsNextItemGroup() {
+		for (let i = 0; i < this.items.length; i++) {
+			if (this.items[i].isGroupItem) {
+				this.items[i].items![this.items[i].items!.length - 1]._isNextItemGroup = true;
+			} else if (this.items[i + 1] && this.items[i + 1].isGroupItem) {
+				this.items[i]._isNextItemGroup = true;
+			}
+		}
+	}
+
+	setEffectiveLayout() {
+		if (this.layout === TimelineLayout.Horizontal) {
+			this.items.forEach(item => {
+				if (item.isGroupItem) {
+					item.items!.forEach(groupItem => {
+						groupItem.layout = this.layout;
+					});
+				}
+			});
 		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		const target = e.target as TimelineItem;
+		const target = e.target as ITimelineItem;
 
 		if (isTabNext(e)) {
 			if (!target.nameClickable || getEventMark(e) === "link") {
-				this._handleTabNextOrPrevious(e, isTabNext(e));
+				this._handleNextOrPreviousItem(e, true);
 			}
 		} else if (isTabPrevious(e)) {
-			this._handleTabNextOrPrevious(e);
+			if ((!target.nameClickable || getEventMark(e) === "link")) {
+				this._handleNextOrPreviousItem(e);
+			}
 		}
 	}
 
-	_handleTabNextOrPrevious(e: KeyboardEvent, isNext?: boolean) {
-		const target = e.target as TimelineItem;
-		const nextTargetIndex = isNext ? this.items.indexOf(target) + 1 : this.items.indexOf(target) - 1;
-		const nextTarget = this.items[nextTargetIndex] as TimelineItem;
+	_handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean) {
+		const target = e.target as ITimelineItem | ToggleButton;
+		let updatedTarget = target;
+
+		if ((target as ITimelineItem).isGroupItem) {
+			updatedTarget = target.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!;
+		}
+
+		const nextTargetIndex = isNext ? this._navigatableItems.indexOf(updatedTarget) + 1 : this._navigatableItems.indexOf(updatedTarget) - 1;
+		const nextTarget = this._navigatableItems[nextTargetIndex] as ITimelineItem | TimelineGroupItem | ToggleButton;
+
 		if (!nextTarget) {
 			return;
 		}
-		if (nextTarget.nameClickable && !isNext) {
+
+		if (nextTarget) {
 			e.preventDefault();
-			nextTarget.focusLink();
-			return;
+			nextTarget.focus();
+			this._itemNavigation.setCurrentItem(nextTarget);
 		}
-		e.preventDefault();
-		nextTarget.focus();
-		this._itemNavigation.setCurrentItem(nextTarget);
+	}
+
+	get _navigatableItems() {
+		const navigatableItems: Array<ITimelineItem | ToggleButton> = [];
+		this.items.forEach(item => {
+			if (!item.isGroupItem) {
+				navigatableItems.push(item);
+			}
+
+			if (item.isGroupItem) {
+				navigatableItems.push(item.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!);
+			}
+
+			if (item.isGroupItem && !item._collapsed) {
+				item.items!.forEach(groupItem => {
+					navigatableItems.push(groupItem);
+				});
+			}
+		});
+
+		return navigatableItems;
 	}
 }
 

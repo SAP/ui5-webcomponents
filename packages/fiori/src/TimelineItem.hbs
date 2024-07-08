@@ -1,6 +1,4 @@
-<div
-	class="ui5-tli-root"
->
+<div class="ui5-tli-root">
 	<div class="{{classes.indicator}}">
 		<div class="ui5-tli-icon-outer">
 			{{#if icon}}
@@ -10,6 +8,7 @@
 			{{/if}}
 		</div>
 	</div>
+	{{#unless hideBubble}}
 	<div class="ui5-tli-bubble" tabindex="{{forcedTabIndex}}" data-sap-focus-ref>
 		<div class="ui5-tli-title">
 			{{#if name}}
@@ -26,6 +25,7 @@
 		{{/if}}
 		<span class="{{classes.bubbleArrowPosition}}"></span>
 	</div>
+	{{/unless}}
 </div>
 
 {{#*inline "name"}}

@@ -14,6 +14,11 @@
 	padding: 0;
 }
 
+:host([layout="Vertical"]) .ui5-timeline-list {
+	display: flex;
+	flex-direction: column;
+}
+
 .ui5-timeline-list-item {
 	margin-bottom: var(--_ui5_tl_li_margin_bottom);
 }
@@ -27,6 +32,7 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	display: flex;
 }
 
 :host([layout="Horizontal"]) .ui5-timeline-list-item {
