@@ -504,8 +504,16 @@ class FlexibleColumnLayout extends UI5Element {
 		if (this.mediaAllowsCustomConfiguration()) {
 			const customLayout = this.layoutsConfiguration[this.media]?.[layout]?.layout;
 			if (customLayout && this.isValidColumnLayout(customLayout)) {
-				return customLayout;
+				return [...customLayout]; // preserve orignal for comparison
 			}
+		}
+	}
+
+	setCustomColumnLayout(layout: `${FCLLayout}`, columnLayout: string[]) {
+		if (this.mediaAllowsCustomConfiguration()) {
+			this.layoutsConfiguration[this.media] ??= {};
+			this.layoutsConfiguration[this.media]![layout] ??= { layout: columnLayout };
+			this.layoutsConfiguration[this.media]![layout]!.layout = columnLayout;
 		}
 	}
 
@@ -522,9 +530,10 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
+		const columnLayout = [...this._columnLayout!] as string[]; // do not leak reference to the private _columnLayout array to prevent apps modifying its content
 		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
-			columnLayout: this._columnLayout!,
+			columnLayout,
 			startColumnVisible: this.startColumnVisible,
 			midColumnVisible: this.midColumnVisible,
 			endColumnVisible: this.endColumnVisible,
@@ -534,9 +543,10 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutConfigurationChange() {
+		const columnLayout = [...this._columnLayout!] as string[]; // do not leak reference to the private _columnLayout array to prevent apps modifying its content
 		this.fireEvent<FlexibleColumnLayoutLayoutConfigurationChangeEventDetail>("layout-configuration-change", {
 			layout: this.layout,
-			columnLayout: this._columnLayout!,
+			columnLayout,
 		});
 	}
 
@@ -592,7 +602,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 		const newLayout = this.separatorMovementSession.tmpFCLLayout;
-		const newColumnLayout = this._columnLayout! as string[];
+		const newColumnLayout = [...this._columnLayout!] as string[]; // obtain the values only
 
 		this.saveUserDefinedColumnLayout(newLayout, newColumnLayout);
 		this.exitSeparatorMovementSession();
@@ -621,15 +631,13 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	saveUserDefinedColumnLayout(newLayout: FCLLayout, newColumnLayout: string[]) {
-		const media = this.media as MEDIA.TABLET | MEDIA.DESKTOP,
-			oldColumnLayout = this.getCustomColumnLayout(newLayout);
-		this.layoutsConfiguration[media] ??= {};
-		this.layoutsConfiguration[media]![newLayout] ??= { layout: newColumnLayout };
+		const oldColumnLayout = this.getCustomColumnLayout(newLayout);
 		if (this.layout !== newLayout) {
 			this.layout = newLayout;
 			this.fireLayoutChange(true, false);
 		}
-		if (oldColumnLayout !== newColumnLayout) {
+		if (oldColumnLayout?.join() !== newColumnLayout.join()) { // compare arrays' content
+			this.setCustomColumnLayout(newLayout, newColumnLayout);
 			this.fireLayoutConfigurationChange();
 		}
 	}
@@ -839,12 +847,13 @@ class FlexibleColumnLayout extends UI5Element {
 		const pxWidths = columnLayout.map(x => this.convertColumnWidthToPixels(x)),
 			totalWidth = pxWidths.reduce((i, sum) => i + sum);
 
-		if (Math.round(totalWidth) !== this._availableWidthForColumns) {
+		if (Math.round(totalWidth) !== Math.round(this._availableWidthForColumns)) {
 			return false;
 		}
 
 		const hasColumnBelowMinWidth = pxWidths.some(pxWidth => {
-			return (pxWidth > 0) && (pxWidth < COLUMN_MIN_WIDTH);
+			// ceil before comparing to avoid floating point precision issues
+			return (pxWidth > 0) && (Math.ceil(pxWidth) < COLUMN_MIN_WIDTH);
 		});
 		if (hasColumnBelowMinWidth) {
 			return false;

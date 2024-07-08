@@ -462,7 +462,7 @@ describe("Layouts configuration", () => {
 	it("applies default configuration initially", async () => {
 		await browser.setWindowSize(1400, 1080);
 
-		const fcl = await browser.$("#fcl3"),
+		const fcl = await browser.$("#fcl1"),
 			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
 			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
 
@@ -476,7 +476,7 @@ describe("Layouts configuration", () => {
 	});
 
 	it("allows set configuration programatically", async () => {
-		const fcl = await browser.$("#fcl3"),
+		const fcl = await browser.$("#fcl1"),
 			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
 			midColumn = await fcl.shadow$(".ui5-fcl-column--middle"),
 			layoutConfig = {
@@ -495,10 +495,11 @@ describe("Layouts configuration", () => {
 		// assert: the column widths in DOM are set as configured
 		assert.strictEqual(await startColumn.getAttribute("style"), "width: 75%;", "the custom width is set as configured for start column");
 		assert.strictEqual(await midColumn.getAttribute("style"), "width: 25%;", "the custom width is set as configured for mid column");
+		// TODO check no event fired
 	});
 
 	it("updates the configuration upon interactive resize of columns within same layout", async () => {
-		const fcl = await browser.$("#fcl3"),
+		const fcl = await browser.$("#fcl1"),
 			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
 			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
 			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
@@ -522,7 +523,7 @@ describe("Layouts configuration", () => {
 	});
 
 	it("updates the configuration upon interactive resize of columns to new layout", async () => {
-		const fcl = await browser.$("#fcl3"),
+		const fcl = await browser.$("#fcl1"),
 			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
 			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
 			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
@@ -543,6 +544,67 @@ describe("Layouts configuration", () => {
 		assert.strictEqual(parseInt(updatedLayoutConfig[0]), parseInt(startPercentageWidth), "correctly updated the config for start column");
 		assert.strictEqual(parseInt(updatedLayoutConfig[1]), parseInt(midPercentageWidth), "correctly updated the config for mid colum");
 		assert.strictEqual(parseInt(updatedLayoutConfig[2]), 0, "correctly updated the config for end colum");
+	});
+
+	it("fires event upon interactive resize of columns within same layout", async () => {
+		const fcl = await browser.$("#fcl1"),
+			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			midColumn = await fcl.shadow$(".ui5-fcl-column--middle"),
+			reportedColumnLayout = await browser.$("#layoutChangeRes1"),
+			layoutConfigChangeCounter = await browser.$("#layoutChangeRes5");
+		let counter = parseInt(await layoutConfigChangeCounter.getValue()) || 0;;
+
+		// set initial state
+		await fcl.setProperty("layout", "TwoColumnsStartExpanded");
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
+
+		// act: drag to resize the columns within the same layout
+		await startSeparator.dragAndDrop({ x: -10, y: 0 });
+		// assert layout preserved
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "the layout-type is preserved");
+
+		// assert event is fired
+		assert.strictEqual(await layoutConfigChangeCounter.getValue(), `${++counter}`, "The event layout-configuration-change fired once.");
+
+		// assert event.detail.columnLayout reports the resized column widths
+		const reportedColumnLayoutArray = (await reportedColumnLayout.getValue()).split(","),
+			startPercentageWidth = (await startColumn.getAttribute("style")).replace("width: ", "").replace(";", ""),
+			midPercentageWidth = (await midColumn.getAttribute("style")).replace("width: ", "").replace(";", "");
+
+		assert.strictEqual(parseInt(reportedColumnLayoutArray[0]), parseInt(startPercentageWidth), "correctly reported the config for start column");
+		assert.strictEqual(parseInt(reportedColumnLayoutArray[1]), parseInt(midPercentageWidth), "correctly reported the config for mid colum");
+		assert.strictEqual(parseInt(reportedColumnLayoutArray[2]), 0, "correctly reported the config for end colum");
+	});
+
+	it("fires event upon interactive resize of columns to new layout", async () => {
+		const fcl = await browser.$("#fcl1"),
+			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			midColumn = await fcl.shadow$(".ui5-fcl-column--middle"),
+			reportedColumnLayout = await browser.$("#layoutChangeRes1"),
+			layoutConfigChangeCounter = await browser.$("#layoutChangeRes5");
+		let counter = parseInt(await layoutConfigChangeCounter.getValue()) || 0;;
+
+		// assert initial state
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "new layout set");
+
+		// act: drag to resize the columns to new layout
+		await startSeparator.dragAndDrop({ x: -500, y: 0 });
+		// assert layout change
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsMidExpanded", "the layout is updated");
+
+		// assert event is fired
+		assert.strictEqual(await layoutConfigChangeCounter.getValue(), `${++counter}`, "The event layout-configuration-change fired once.");
+
+		// assert event.detail.columnLayout reports the resized column widths
+		const reportedColumnLayoutArray = (await reportedColumnLayout.getValue()).split(","),
+			startPercentageWidth = (await startColumn.getAttribute("style")).replace("width: ", "").replace(";", ""),
+			midPercentageWidth = (await midColumn.getAttribute("style")).replace("width: ", "").replace(";", "");
+
+		assert.strictEqual(parseInt(reportedColumnLayoutArray[0]), parseInt(startPercentageWidth), "correctly reported the config for start column");
+		assert.strictEqual(parseInt(reportedColumnLayoutArray[1]), parseInt(midPercentageWidth), "correctly reported the config for mid colum");
+		assert.strictEqual(parseInt(reportedColumnLayoutArray[2]), 0, "correctly reported the config for end colum");
 	});
 });
 
