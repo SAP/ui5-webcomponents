@@ -16,7 +16,7 @@ import TableRow from "./TableRow.js";
 import type TableHeaderRow from "./TableHeaderRow.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import TableExtension from "./TableExtension.js";
-import TableSelection from "./TableSelection.js";
+import type TableSelection from "./TableSelection.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
 import {
@@ -24,6 +24,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
+import { isFeature } from "./TableUtils.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -32,6 +33,7 @@ import TableCell from "./TableCell.js";
  * @experimental
  */
 interface ITableFeature extends UI5Element {
+	readonly identifier: string;
 	/**
 	 * Called when the table is activated.
 	 * @param table table instance
@@ -82,6 +84,7 @@ type TableRowClickEventDetail = {
  *
  * The `ui5-table` can be enhanced in its functionalities by applying different features.
  * Features can be slotted into the `features` slot, to enable them in the component.
+ * Features need to be imported separately, as they are not enabled by default.
  *
  * The following features are currently available:
  *
@@ -346,12 +349,8 @@ class Table extends UI5Element {
 		this.features.forEach(feature => feature.onTableRendered?.());
 	}
 
-	_getFeature<Klass>(klass: any): Klass | undefined {
-		return this.features.find(feature => feature instanceof klass) as Klass;
-	}
-
 	_getSelection(): TableSelection | undefined {
-		return this._getFeature(TableSelection);
+		return this.features.find(feature => isFeature<TableSelection>(feature, "TableSelection")) as TableSelection;
 	}
 
 	_onEvent(e: Event) {
