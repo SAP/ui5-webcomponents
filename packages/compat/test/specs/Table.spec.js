@@ -148,10 +148,10 @@ describe("Table general interaction", () => {
 				await browser.keys("Tab");
 				await browser.keys("Tab");
 
-				assert.equal(await link.getProperty("focused"), true, "Link is focused")
+				assert.equal(await link.isFocused(), true, "Link is focused")
 
 				await browser.keys("Tab");
-				assert.equal(await afterBtn.getProperty("focused"), true, "Button is focused")
+				assert.equal(await afterBtn.isFocused(), true, "Button is focused")
 			});
 
 			it("Should have correct focus handling when having popin rows", async () => {
@@ -162,10 +162,10 @@ describe("Table general interaction", () => {
 				await input.click();
 				await browser.keys("Tab");
 
-				assert.equal(await btn.getProperty("focused"), true, "Button is focused")
+				assert.equal(await btn.isFocused(), true, "Button is focused")
 
 				await browser.keys("Tab");
-				assert.equal(await secondInput.getProperty("focused"), true, "Input is focused")
+				assert.equal(await secondInput.isFocused(), true, "Input is focused")
 			});
 
 			after(async () => {
