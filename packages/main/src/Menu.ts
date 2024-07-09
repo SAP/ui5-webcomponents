@@ -297,6 +297,12 @@ class Menu extends UI5Element {
 	_parentMenuItem?: MenuItem;
 
 	/**
+	 * Stores the last created busy sub-menu.
+	 */
+	@property({ type: Object, defaultValue: undefined })
+	_lastBusyMenu?: Menu;
+
+	/**
 	 * Stores parent menu item DOM representation (if there is such).
 	 */
 	@property({ type: Object, defaultValue: undefined })
@@ -372,19 +378,18 @@ class Menu extends UI5Element {
 		const itemsWithIcon = this.itemsWithIcon;
 
 		this._currentItems.forEach(item => {
-			item.item._siblingsWithChildren = itemsWithChildren;
-			item.item._siblingsWithIcon = itemsWithIcon;
-			const subMenu = item.item._subMenu;
 			const menuItem = item.item;
-			if (subMenu && subMenu.busy) {
+			menuItem._siblingsWithChildren = itemsWithChildren;
+			menuItem._siblingsWithIcon = itemsWithIcon;
+
+			const subMenu = menuItem._subMenu || this._lastBusyMenu;
+
+			if (subMenu) {
 				subMenu.innerHTML = "";
 				const fragment = this._clonedItemsFragment(menuItem);
 				subMenu.appendChild(fragment);
-			}
-
-			if (subMenu) {
-				subMenu.busy = item.item.busy;
-				subMenu.busyDelay = item.item.busyDelay;
+				subMenu.busy = menuItem.busy;
+				subMenu.busyDelay = menuItem.busyDelay;
 			}
 		});
 	}
@@ -466,6 +471,7 @@ class Menu extends UI5Element {
 		}
 		const ctor = this.constructor as typeof Menu;
 		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
+		const mainMenu = this._findMainMenu(item);
 
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${opener.id}`);
@@ -477,6 +483,9 @@ class Menu extends UI5Element {
 		subMenu.appendChild(fragment);
 		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
 		item._subMenu = subMenu;
+		if (item.busy && (this as Menu).id !== mainMenu.id) {
+			this._lastBusyMenu = subMenu;
+		}
 	}
 
 	_clonedItemsFragment(item: MenuItem) {
