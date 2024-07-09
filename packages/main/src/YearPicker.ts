@@ -43,6 +43,7 @@ type Year = {
 	yearInSecType: string | undefined;
 	disabled: boolean;
 	classes: string;
+	parts: string;
 }
 
 type YearInterval = Array<Array<Year>>;
@@ -172,10 +173,12 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
 				classes: "ui5-yp-item",
+				parts: "year-cell"
 			};
 
 			if (isSelected) {
 				year.classes += " ui5-yp-item--selected";
+				year.parts += " year-cell-selected";
 			}
 
 			if (isDisabled) {
