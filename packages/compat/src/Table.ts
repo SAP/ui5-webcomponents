@@ -931,6 +931,7 @@ class Table extends UI5Element {
 	onInvalidation(change: ChangeInfo) {
 		if (change.type === "property" && change.name === "growing") {
 			this.tableEndObserved = false;
+			this.getIntersectionObserver().disconnect();
 		}
 	}
 
