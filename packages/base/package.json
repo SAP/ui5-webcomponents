@@ -50,7 +50,7 @@
     "lit-html": "^2.0.1"
   },
   "devDependencies": {
-    "@openui5/sap.ui.core": "1.120.5",
+    "@openui5/sap.ui.core": "1.120.17",
     "@ui5/webcomponents-tools": "2.0.0",
     "chromedriver": "^125.0.0",
     "clean-css": "^5.2.2",
