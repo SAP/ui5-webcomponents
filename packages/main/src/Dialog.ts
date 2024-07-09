@@ -425,8 +425,6 @@ class Dialog extends Popup {
 			return;
 		}
 
-		e.preventDefault();
-
 		const {
 			top,
 			left,
