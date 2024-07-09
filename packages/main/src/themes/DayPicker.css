@@ -225,7 +225,6 @@
 
 .ui5-dp-item.ui5-dp-item--selected-between .ui5-dp-daytext {
 	border-radius: var(--_ui5_daypicker_item_border_radius);
-	/* color: var(--sapTextColor); */
 	font-weight: var(--_ui5_daypicker_item_selected_between_text_font);
 }
 
