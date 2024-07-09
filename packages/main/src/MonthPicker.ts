@@ -163,7 +163,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
-				parts: "month-cell"
+				parts: "month-cell",
 			};
 
 			if (isSelected) {

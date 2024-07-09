@@ -173,7 +173,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
 				classes: "ui5-yp-item",
-				parts: "year-cell"
+				parts: "year-cell",
 			};
 
 			if (isSelected) {
