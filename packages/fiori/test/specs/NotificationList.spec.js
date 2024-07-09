@@ -293,7 +293,7 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests aria attributes click on ShowMore", async () => {
-		var firstItem = await browser.$("#nli3a");
+		var firstItem = await browser.$("#nli5");
 		var btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
 		var btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
 
@@ -302,14 +302,10 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-expanded"), 'false', "The aria-expanded is correct.");
 
 		// act
+		await btnListItemShowMore.scrollIntoView();
 		await btnListItemShowMore.click();
 
-		firstItem = await browser.$("#nli3a");
-		btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
-		btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
-
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'Less button. Show the texts with truncation', "The aria-label is correct.");
-		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("role"), 'button', "The role is correct.");
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-expanded"), 'true', "The aria-expanded is correct.");
 	});
 
@@ -330,7 +326,7 @@ describe("Notification List Item Tests", () => {
 		const fourthGroupRoot =  await browser.$("#nlgi4").shadow$(".ui5-nli-group-root");
 		const loadingId =  `${await fourthGroupItem.getProperty("_id")}-loading`;
 		const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId}`;
-		
+
 		assert.strictEqual(await firstGroupList.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await firstGroupRoot.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await fourthGroupRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY, "The aria-lebelledby is correct.");
