@@ -293,7 +293,7 @@ describe("Notification List Item Tests", () => {
 	});
 
 	it("tests aria attributes click on ShowMore", async () => {
-		var firstItem = await browser.$("#nli5");
+		var firstItem = await browser.$("#nli3а");
 		var btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
 		var btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
 
