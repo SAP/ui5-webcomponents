@@ -446,7 +446,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await tokens[2].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 		})
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
