@@ -395,7 +395,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget && this.contains(eTarget);
 
 		this.focused = false;
 
@@ -577,7 +577,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		}
 
 		if (this.hasCustomValueState) {
-			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 		}
 
 		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
@@ -609,10 +609,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get hasValueState() {
 		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
-	}
-
-	get valueStateMessageText() {
-		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
