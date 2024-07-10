@@ -32,7 +32,7 @@
     "@babel/core": "^7.23.7",
     "@babel/generator": "^7.23.6",
     "@babel/parser": "^7.23.6",
-    "@openui5/sap.ui.core": "1.120.5",
+    "@openui5/sap.ui.core": "1.120.17",
     "@ui5/webcomponents-tools": "2.0.1",
     "babel-plugin-amd-to-esm": "^2.0.3",
     "chromedriver": "^125.0.0",
