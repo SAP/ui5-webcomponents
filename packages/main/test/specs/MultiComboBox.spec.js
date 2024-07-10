@@ -117,11 +117,11 @@ describe("MultiComboBox general interaction", () => {
 
 		it("should collapse the tokenizer when the n-more popover is closed", async () => {
 			const mcb = await browser.$("#mcb-select-all-vs");
-			const arrow = await mcb.shadow$(".inputIcon");
+			const arrow = await mcb.shadow$("ui5-icon");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const body = await browser.$(".multicombobox1auto");
 			const nMoreText = await tokenizer.shadow$(".ui5-tokenizer-more-text");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#multi1");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
 			const popover =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 			const firstItemCheckbox = await popover.$("ui5-list > ui5-li").shadow$("ui5-checkbox");
 
