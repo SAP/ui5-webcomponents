@@ -1440,6 +1440,7 @@ class MultiComboBox extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this._dialogInputValueState = this.valueState;
+			this._tokenizer.expanded = false;
 			this.blur();
 		}
 
