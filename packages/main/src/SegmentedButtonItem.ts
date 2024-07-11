@@ -107,15 +107,6 @@ class SegmentedButtonItem extends ToggleButton implements ISegmentedButtonItem {
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
 	}
-
-	_onclick(e: MouseEvent) {
-		if (this.disabled) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-
-		super._onclick(e);
-	}
 }
 
 SegmentedButtonItem.define();

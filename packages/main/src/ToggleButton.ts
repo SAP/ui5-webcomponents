@@ -45,6 +45,11 @@ class ToggleButton extends Button {
 	pressed!: boolean;
 
 	_onclick(e: MouseEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
 		this.pressed = !this.pressed;
 
 		if (isSafari()) {
