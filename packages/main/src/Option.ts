@@ -73,7 +73,7 @@ class Option extends ListItemBase implements IOption {
 	icon?: string;
 
 	/**
-	 * Defines the `additionalText`, displayed in the end of the list item.
+	 * Defines the `additionalText`, displayed in the end of the option.
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -82,7 +82,7 @@ class Option extends ListItemBase implements IOption {
 	additionalText?: string;
 
 	/**
-	 * Defines the text of the tooltip that would be displayed for the list item.
+	 * Defines the tooltip of the option.
 	 * @default undefined
 	 * @public
 	 * @since 1.23.0

@@ -1,3 +1,7 @@
+---
+title: Accessibility
+---
+
 # Accessibility in UI5 Web Components
 
 Accessibility refers to the possibility for everyone, including and especially people with special needs, to access and use IT products. Making software work for more people should be of high priority. All users should be able to operate our software without loss of meaningful content, functionality, and efficiency when using assistive technologies.
@@ -181,6 +185,7 @@ The `accessibilityAttributes` property is currently supported in:
 `accessibilityAttributes` is also supported for composite components, where the application can enrich the accessibility of elements inside the component. For a more detailed information check the documentation of the property in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
+* [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
 
 ---
 

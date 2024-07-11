@@ -1,3 +1,7 @@
+---
+title: Using Assets
+---
+
 # Using Additional Assets
 
 *Most UI5 Web Components packages offer **additional assets**. This section explains what these are and how to use them.*

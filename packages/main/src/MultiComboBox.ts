@@ -742,6 +742,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	_onPopoverFocusOut() {
+		if (!isPhone()) {
+			this._tokenizer.expanded = this._open;
+		}
+	}
+
 	_tokenizerFocusOut(e: FocusEvent) {
 		this._tokenizerFocused = false;
 
@@ -1769,7 +1775,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const responsivePopover = this._getResponsivePopover();
 		const popover = this._getPopover();
 		const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget as Node));
-		const focusIsGoingInValueStatePopup = popover?.contains(e.relatedTarget as Node);
+		const focusIsGoingInValueStatePopup = this?.contains(e.relatedTarget as Node);
 
 		if (focusIsGoingInValueStatePopup) {
 			e.stopImmediatePropagation();
@@ -1832,7 +1838,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
-		return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
 	get valueStateDefaultText(): string {
@@ -1851,10 +1857,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	get valueStateTextId() {
 		return this.hasValueState ? `ui5-multi-combobox-valueStateDesc` : undefined;
-	}
-
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get ariaLabelText() {

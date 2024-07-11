@@ -70,6 +70,10 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        blog: {
+          blogSidebarTitle: 'All our posts',
+          blogSidebarCount: 'ALL',
+        },
       } satisfies Preset.Options,
     ],
   ],

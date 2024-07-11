@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+
+### Bug Fixes
+
+* **ui5-li-notification-group:** suspend nested item navigation ([#9361](https://github.com/SAP/ui5-webcomponents/issues/9361)) ([90f5f11](https://github.com/SAP/ui5-webcomponents/commit/90f5f11c6353a894a34b8275c331660730e1443e))
+* **ui5-notification-list-item:** focus is no longer trapped in loading item ([#8969](https://github.com/SAP/ui5-webcomponents/issues/8969)) ([fa37d92](https://github.com/SAP/ui5-webcomponents/commit/fa37d92f30931a1ac38d6efadf4439ba3d3d555e)), closes [#8768](https://github.com/SAP/ui5-webcomponents/issues/8768)
+* **ui5-notification-list:** fixed show more test ([#9419](https://github.com/SAP/ui5-webcomponents/issues/9419)) ([4ba9173](https://github.com/SAP/ui5-webcomponents/commit/4ba917317a6cf48e7606e9988635fd45cb293dd1))
+* **ui5-upload-collection-item:** delete can be triggered by keyboard now ([#9392](https://github.com/SAP/ui5-webcomponents/issues/9392)) ([b3de325](https://github.com/SAP/ui5-webcomponents/commit/b3de325d58e566b7be19978952501d4be99aeb5c))
+
+
+
+
+
+## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
+
+
+### Bug Fixes
+
+* **ui5-notification-list:** fixed show more test ([#9400](https://github.com/SAP/ui5-webcomponents/issues/9400)) ([c19c5e3](https://github.com/SAP/ui5-webcomponents/commit/c19c5e3f3a756bdd8323a73b59c94b44167f16f7))
+
+
+
+
+
+# [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **dynamic-page:** some remarks fixed ([#9341](https://github.com/SAP/ui5-webcomponents/issues/9341)) ([eb99114](https://github.com/SAP/ui5-webcomponents/commit/eb991145f0029d00c41c37a1b3a7e1e7229be647))
+* **ui5-tag:** fix styling issues ([#9305](https://github.com/SAP/ui5-webcomponents/issues/9305)) ([24dd42b](https://github.com/SAP/ui5-webcomponents/commit/24dd42b16f6889f9ea54402f4b664c84fdf92bfa))
+
+
+### Code Refactoring
+
+* **ui5-illustrated-message:** rename IllustrationMessageSize enum ([#9302](https://github.com/SAP/ui5-webcomponents/issues/9302)) ([6fe2a02](https://github.com/SAP/ui5-webcomponents/commit/6fe2a023772f34550a3d7f433017b1f8f2c5cd0c)), closes [#8605](https://github.com/SAP/ui5-webcomponents/issues/8605) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7887](https://github.com/SAP/ui5-webcomponents/issues/7887)
+* **ui5-view-settings-dialog:** change opening api to open property ([#9249](https://github.com/SAP/ui5-webcomponents/issues/9249)) ([52106cc](https://github.com/SAP/ui5-webcomponents/commit/52106ccffba64d13949764339a71225b33dac3a3))
+
+
+### Features
+
+* add property initializers ([#8846](https://github.com/SAP/ui5-webcomponents/issues/8846)) ([eef0cc9](https://github.com/SAP/ui5-webcomponents/commit/eef0cc9b663fda6268b98e516ed46439435fa2b0))
+* **ui5-flexible-column-layout:** enable resize via separators drag-and-drop ([#9160](https://github.com/SAP/ui5-webcomponents/issues/9160)) ([9b54af4](https://github.com/SAP/ui5-webcomponents/commit/9b54af42b6dccfee5781ef45f66d2003a71f7e5b))
+
+
+### BREAKING CHANGES
+
+* **ui5-illustrated-message:** The enum IllustrationMessageSize is renamed to IllustrationMessageDesign.
+If you have previously imported the enum:
+
+import IllustrationMessageSize from "@ui5/webcomponents-base/dist/types/IllustrationMessageSize.js";
+Now import IllustrationMessageDesign instead:
+
+import IllustrationMessageDesign from "@ui5/webcomponents-base/dist/types/IllustrationMessageDesign.js";
+* **ui5-view-settings-dialog:** Removed `show` and `close` methods.
+
+Before, the ui5-view-settings-dialog could be opened and closed by calling `show()` and `close()`:
+```ts
+const viewSettingsDialog = document.getElementById("exampleID");
+viewSettingsDialog.show();
+viewSettingsDialog.close();
+```
+Now, the dialog is opened and closed by setting the open property to true or false:
+```ts
+const viewSettingsDialog = document.getElementById("exampleID");
+viewSettingsDialog.open = true;
+viewSettingsDialog.open = false;
+```
+fixes: https://github.com/SAP/ui5-webcomponents/issues/9240
+* @property decorator must be adapted according to new type parameter
+
+
+
+
+
 # [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
 
 
