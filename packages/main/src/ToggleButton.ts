@@ -48,6 +48,8 @@ class ToggleButton extends Button {
 		if (this.disabled) {
 			e.preventDefault();
 			e.stopPropagation();
+
+			return;
 		}
 
 		this.pressed = !this.pressed;
