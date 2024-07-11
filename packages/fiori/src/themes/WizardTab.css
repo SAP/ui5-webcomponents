@@ -51,6 +51,10 @@
 	color: var(--sapContent_LabelColor);
 }
 
+:host([disabled]) .ui5-wiz-step-root {
+	pointer-events: none;
+}
+
 .ui5-wiz-step-root {
 	display: flex;
 	align-items: center;
