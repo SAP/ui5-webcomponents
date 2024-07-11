@@ -133,4 +133,16 @@ describe("SegmentedButton general interaction", () => {
 		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be pressed");
 		assert.ok(await secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem should be pressed");
 	});
+
+	it("tests disabled focus", async () => {
+		const button1 =  await browser.$("#button1");
+		const segmentedButtonItem1 =  await browser.$("#testSB1ToggleBtn");
+
+		await button1.click();
+		await button1.keys("Tab");
+		assert.ok(await segmentedButtonItem1.matches(":focus"), "The first SegmentedButtonItem should be focused.");
+
+		await segmentedButtonItem1.keys("ArrowRight");
+		assert.ok(await segmentedButtonItem1.matches(":focus"), "The focus did not move to second item");
+	});
 });
