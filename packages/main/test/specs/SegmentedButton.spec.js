@@ -140,9 +140,9 @@ describe("SegmentedButton general interaction", () => {
 
 		await button1.click();
 		await button1.keys("Tab");
-		assert.ok(await segmentedButtonItem1.matches(":focus"), "The first SegmentedButtonItem should be focused.");
+		assert.ok(await segmentedButtonItem1.isFocused(), "The first SegmentedButtonItem should be focused.");
 
 		await segmentedButtonItem1.keys("ArrowRight");
-		assert.ok(await segmentedButtonItem1.matches(":focus"), "The focus did not move to second item");
+		assert.ok(await segmentedButtonItem1.isFocused(), "The focus did not move to second item");
 	});
 });
