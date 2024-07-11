@@ -9,5 +9,4 @@
 	--_ui5_checkbox_wrapped_content_margin_top: 0;
 	--_ui5_checkbox_wrapped_focus_padding: .5rem;
 	--_ui5_checkbox_inner_readonly_border: 1px solid var(--sapField_ReadOnly_BorderColor);
-	--_ui5_checkbox_compact_wrapped_label_margin_top: -0.125rem;
 }
