@@ -114,6 +114,33 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(inlinedTokens.length > 0, "Token is displayed");
 		});
+
+		it("should collapse the tokenizer when the n-more popover is closed", async () => {
+			const mcb = await browser.$("#mcb-select-all-vs");
+			const arrow = await mcb.shadow$("ui5-icon");
+			const tokenizer = await mcb.shadow$("ui5-tokenizer");
+			const body = await browser.$(".multicombobox1auto");
+			const nMoreText = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-select-all-vs");
+			const popover =  await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const firstItemCheckbox = await popover.$("ui5-list > ui5-li").shadow$("ui5-checkbox");
+
+			await arrow.click();
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+
+			// select all items
+			await browser.keys("Space");
+
+			assert.ok(await tokenizer.getProperty("expanded"), "The tokenizer is expanded");
+
+			await body.click();
+			await nMoreText.click();
+			await firstItemCheckbox.click();
+			await body.click();
+
+			assert.notOk(await tokenizer.getProperty("expanded"), "The tokenizer is collapsed");
+		});
 	});
 
 	describe("selection and filtering", () => {
@@ -419,7 +446,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await tokens[2].keys('F4');
 
-			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "tokenizer is scrolled when navigating through the tokens");
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "tokenizer is scrolled when navigating through the tokens");
 		})
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {

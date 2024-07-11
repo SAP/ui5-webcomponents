@@ -9,6 +9,7 @@
 	@ui5-after-close={{_afterClosePicker}}
 	@ui5-before-open={{_beforeOpen}}
 	@ui5-after-open={{_afterOpenPicker}}
+	@focusout={{_onPopoverFocusOut}}
 >
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
