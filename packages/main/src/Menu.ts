@@ -297,12 +297,6 @@ class Menu extends UI5Element {
 	_parentMenuItem?: MenuItem;
 
 	/**
-	 * Stores the last created busy sub-menu.
-	 */
-	@property({ type: Object, defaultValue: undefined })
-	_lastBusyMenu?: Menu;
-
-	/**
 	 * Stores parent menu item DOM representation (if there is such).
 	 */
 	@property({ type: Object, defaultValue: undefined })
