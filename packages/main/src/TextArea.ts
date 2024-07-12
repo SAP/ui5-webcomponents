@@ -161,8 +161,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * Defines the value state of the component.
 	 *
 	 * **Note:** If `maxlength` property is set,
-	 * the component turns into "Warning" state once the characters exceeds the limit.
-	 * In this case, only the "Error" state is considered and can be applied.
+	 * the component turns into "Critical" state once the characters exceeds the limit.
+	 * In this case, only the "Negative" state is considered and can be applied.
 	 * @default "None"
 	 * @since 1.0.0-rc.7
 	 * @public
