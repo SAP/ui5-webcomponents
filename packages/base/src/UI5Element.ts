@@ -1180,7 +1180,7 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static getUniqueDependencies(this: typeof UI5Element): Array<typeof UI5Element> {
 		if (!uniqueDependenciesCache.has(this)) {
-			this.cacheUniqueDependencies()
+			this.cacheUniqueDependencies();
 		}
 
 		return uniqueDependenciesCache.get(this) || [];

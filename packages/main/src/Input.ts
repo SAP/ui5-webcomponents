@@ -51,7 +51,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { SuggestionComponent } from "./features/InputSuggestions.js";
-import InputSuggestions from "./features/InputSuggestions.js";
+import type InputSuggestions from "./features/InputSuggestions.js";
 import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -1657,7 +1657,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	static async onDefine() {
-		Input.i18nBundle = await getI18nBundle("@ui5/webcomponents")
+		Input.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

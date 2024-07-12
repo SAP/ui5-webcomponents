@@ -1,6 +1,5 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { ComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";

@@ -1,7 +1,8 @@
-import EventProvider from "./EventProvider";
-import type UI5Element from "./UI5Element";
+import EventProvider from "./EventProvider.js";
+import type UI5Element from "./UI5Element.js";
 
 abstract class ComponentFeature {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty-function
 	constructor(...args: any[]) {}
 	static define?: () => Promise<void>;
 	static dependencies?: Array<typeof UI5Element>
@@ -25,16 +26,10 @@ const getFeature = <T>(name: string): T => {
 };
 
 const registerComponentFeature = async (name: string, feature: typeof ComponentFeature) => {
-	console.log("registerComponentFeature1")
 	await Promise.all(feature.dependencies?.map(dep => dep.define()) || []);
 	await feature.define?.();
 
-	console.log("registerComponentFeature2")
-
 	componentFeatures.set(name, feature);
-
-	console.log("registerComponentFeature3")
-
 	notifyForFeatureLoad(name);
 };
 
@@ -43,7 +38,7 @@ const getComponentFeature = <T>(name: string): T => {
 };
 
 const subscribeForFeatureLoad = (name: string, klass: typeof UI5Element) => {
-	let isSubscribed = subscribers.has(klass);
+	const isSubscribed = subscribers.has(klass);
 
 	if (isSubscribed) {
 		return;
@@ -51,16 +46,14 @@ const subscribeForFeatureLoad = (name: string, klass: typeof UI5Element) => {
 
 	subscribers.add(klass);
 
-	eventProvider.attachEvent(featureLoadEventName(name),() => {
-		console.log(featureLoadEventName(name))
+	eventProvider.attachEvent(featureLoadEventName(name), () => {
 		klass.cacheUniqueDependencies();
-		debugger
-	})
-}
+	});
+};
 
 const notifyForFeatureLoad = (name: string) => {
-	eventProvider.fireEvent(featureLoadEventName(name), undefined)
-}
+	eventProvider.fireEvent(featureLoadEventName(name), undefined);
+};
 
 export {
 	registerFeature,
@@ -68,5 +61,5 @@ export {
 	registerComponentFeature,
 	getComponentFeature,
 	subscribeForFeatureLoad,
-	ComponentFeature
+	ComponentFeature,
 };

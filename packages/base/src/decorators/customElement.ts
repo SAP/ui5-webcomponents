@@ -40,7 +40,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
-			features
+			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
@@ -49,9 +49,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 
 		if (features) {
-			features.forEach((feature) => {
-				subscribeForFeatureLoad(feature, target)
-			})
+			features.forEach(feature => {
+				subscribeForFeatureLoad(feature, target as typeof UI5Element);
+			});
 		}
 
 		if (themeAware) {

@@ -216,7 +216,6 @@ class ColorPalette extends UI5Element {
 		if (this.showMoreColors) {
 			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 			if (ColorPaletteMoreColorsClass) {
-				console.trace("onBeforeRendering")
 				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
 			}
 		}
@@ -225,7 +224,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get _effectiveShowMoreColors() {
-		return !!(this.showMoreColors && this.moreColorsFeature)
+		return !!(this.showMoreColors && this.moreColorsFeature);
 	}
 
 	onAfterRendering() {
@@ -528,15 +527,15 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorPaletteDialogTitle() {
-		return this.moreColorsFeature?.colorPaletteDialogTitle
+		return this.moreColorsFeature?.colorPaletteDialogTitle;
 	}
 
 	get colorPaletteDialogOKButton() {
-		return this.moreColorsFeature?.colorPaletteDialogOKButton
+		return this.moreColorsFeature?.colorPaletteDialogOKButton;
 	}
 
 	get colorPaletteCancelButton() {
-		return this.moreColorsFeature?.colorPaletteCancelButton
+		return this.moreColorsFeature?.colorPaletteCancelButton;
 	}
 
 	/**
