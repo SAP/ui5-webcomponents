@@ -140,6 +140,20 @@
 	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -1.875rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -1.9375rem;
 
+	/* TimelineItem COZY */
+	--_ui5_timeline_tli_indicator_after_top: calc(-100% - 1rem);
+	--_ui5_timeline_tli_indicator_after_height: calc(100% + 1rem);
+	--_ui5_timeline_tli_indicator_before_height: 100%;
+	--_ui5_timeline_tli_horizontal_indicator_after_width: calc(100% + 0.25rem);
+	--_ui5_timeline_tli_horizontal_indicator_after_left: 2.0625rem;
+	--_ui5_timeline_tli_horizontal_without_icon_indicator_before_width: calc(100% + 0.5rem);
+	--_ui5_timeline_tli_horizontal_indicator_before_width: calc(100% + 0.5rem);
+	--_ui5_timeline_tli_icon_horizontal_indicator_after_width: calc(100% + 0.25rem);
+	--_ui5_timeline_tli_without_icon_horizontal_indicator_before_width: calc(100% + 0.375rem);
+	--_ui5_timeline_tli_horizontal_indicator_short_after_width: 100%;
+	--_ui5_timeline_tli_last_child_vertical_indicator_before_height: calc(100% - 1.5rem);
+	--_ui5_timeline_tli_last_child_vertical_indicator_before_top: calc(-100% + 1.5rem);
+
 	/* SplitButton */
 	--_ui5_split_button_middle_separator_top: -0.0625rem;
 	--_ui5_split_button_middle_separator_height: 2.25rem;
@@ -353,10 +367,31 @@
 	--_ui5-tree-toggle-icon-size: 0.8125rem;
 
 	/* Timeline */
-	--_ui5_timeline_tli_indicator_before_bottom: -0.5rem;
+	--_ui5_timeline_tli_indicator_before_bottom: -0.75rem;
 	--_ui5_timeline_tli_indicator_before_right: -0.5rem;
-	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -0.75rem;
+	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -1rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -0.8125rem;
+
+	/* TimelineItem */
+	--_ui5_timeline_tli_indicator_after_top: calc(-100% + 1rem);
+	--_ui5_timeline_tli_indicator_after_height: calc(100% - 0.75rem);
+	--_ui5_timeline_tli_indicator_before_height: calc(100% - 1.25rem);
+	--_ui5_timeline_tli_horizontal_indicator_after_width: calc(100% - 0.75rem);
+	--_ui5_timeline_tli_horizontal_indicator_after_left: 1.8625rem;
+	--_ui5_timeline_tli_horizontal_without_icon_indicator_before_width: calc(100% - 0.75rem);
+	--_ui5_timeline_tli_horizontal_indicator_before_width: calc(100% - 0.75rem);
+	--_ui5_timeline_tli_horizontal_indicator_short_after_width: calc(100% - 1rem);
+	--_ui5_timeline_tli_icon_horizontal_indicator_after_width: calc(100% - 0.75rem);
+	--_ui5_timeline_tli_without_icon_horizontal_indicator_before_width: calc(100% - 0.625rem);
+	--_ui5_timeline_tli_last_child_vertical_indicator_before_height: calc(100% - 2.5rem);
+	--_ui5_timeline_tli_last_child_vertical_indicator_before_top: calc(-100% + 2.5rem);
+
+	/* TimelineGroupItem */
+	--_ui5_timeline_tlgi_horizontal_line_placeholder_before_width: calc(100% + 1.5rem);
+	--_ui5_timeline_tlgi_horizontal_compact_root_margin_left: 0.5rem;
+	--_ui5_timeline_tlgi_compact_icon_before_height: calc(100% + 1.5rem);
+	--_ui5_timeline_tlgi_compact_root_gap: 0.5rem;
+
 
 	/* ViewSettingsDialog */
 	--_ui5_vsd_header_container: 2.5rem;

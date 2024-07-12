@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 import TimelineItem from "./TimelineItem.js";
@@ -14,33 +13,54 @@ import TimelineGroupItemTemplate from "./generated/templates/TimelineGroupItemTe
 // Styles
 import TimelineGroupItemCss from "./generated/themes/TimelineGroupItem.css.js";
 
+const SHORT_LINE_WIDTH = "ShortLineWidth";
+const LARGE_LINE_WIDTH = "LargeLineWidth";
+
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * An entry posted on the timeline.
+ * It is intented to represent a group of `<ui5-timeline-item>`s.
  *
- * <h3>Usage</h3>
- *
- * For the <code>timeline-group-item</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents-fiori/dist/TimelineGroupItem.js";</code>
+ * **Note**: Please do not use empty groups in order to preserve the intended design.
  *
  * @constructor
  * @extends UI5Element
  * @public
+ * @since 2.1.0
  */
 @customElement({
 	tag: "ui5-timeline-group-item",
 	renderer: litRender,
 	styles: TimelineGroupItemCss,
 	template: TimelineGroupItemTemplate,
-	dependencies: [Button, TimelineItem, ToggleButton],
+	dependencies: [TimelineItem, ToggleButton],
 })
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
-	_lastItemInGroup!: boolean;
 	isGroupItem = true;
+
+	/**
+	 * Defines the text of the button that expands and collapses the group.
+	 * @public
+	 */
+	@property()
+	groupName: string = "";
+
+	/**
+	 * Determines if the group is collapsed or expanded.
+	 * @public
+	 */
+	@property({ type: Boolean })
+	_collapsed!: boolean;
+
+	/**
+	 * Determines the content of the `ui5-timeline-group-item`.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, individualSlots: true, "default": true })
+	items!: Array<ITimelineItem>;
 
 	/**
 	 * Defines the items orientation.
@@ -48,35 +68,35 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property()
-	layout: `${TimelineLayout}` = TimelineLayout.Vertical;
+	layout: `${TimelineLayout}` = "Vertical";
 
+	/**
+	 * Shows the number of items in the group.
+	 * @private
+	 */
 	@property({ type: Number })
 	itemsCount: number = 0;
 
-	@property({ type: Boolean })
-	_collapsed!: boolean;
-
+	/**
+	 * Applies to the last item in the group.
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_lastItem!: boolean;
 
+	/**
+	 * Determines if the item afterwards is a group item.
+	 * Intended for styling purposes.
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_isNextItemGroup!: boolean;
 
 	@property({ noAttribute: true })
 	forcedTabIndex: string = "-1";
 
-	/**
-	 * Determines the content of the `ui5-timeline`.
-	 * @public
-	 */
-	@slot({ type: HTMLElement, individualSlots: true, "default": true })
-	items!: Array<ITimelineItem>;
-
 	@property()
 	hidden!: boolean;
-
-	@property()
-	groupName: string = "";
 
 	@property({ type: Boolean })
 	_firstItemInTimeline!: boolean;
@@ -86,18 +106,27 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 		this.itemsCount = this.items.length;
 
-		// apply _index property to every item in a row: 1 to the first, 2 to the second, etc.
-		// this.items.forEach((item: TimelineItem, index: number) => {
-		// 	item.positionInGroup = index + 1;
-		// });
-
-		// for the last item in the timeline if it is group, so styles dont draw a line.
 		if (this._lastItem) {
 			this.items[this.items.length - 1]._lastItem = true;
 		}
 
-		if (this._firstItemInTimeline) {
+		if (this.items.length && this._firstItemInTimeline) {
 			this.items[0]._firstItemInTimeline = true;
+		}
+
+		this.items.forEach((item, index) => {
+			item.positionInGroup = index + 1;
+		});
+
+		if (this.items) {
+			for (let i = 0; i < this.items.length; i++) {
+				this.items[i].layout = this.layout;
+				if (this.items[i + 1] && !!this.items[i + 1].icon) {
+					this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
+				} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
+					this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
+				}
+			}
 		}
 	}
 
@@ -124,34 +153,20 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	}
 
 	setLastItemProperty() {
-		// get slotted items and apply this._lastItem true to the last one
-
 		const items = this.items;
-		// if (items && items.length > 0) {
-		// 	items[items.length - 1]._lastItemInGroup = true;
-		// }
 
-		// if collapsed, remove the _lastItem property from the last item
-		if (this._collapsed) {
+		if (items && items.length > 0 && this._collapsed) {
 			items[items.length - 1]._lastItem = false;
 		}
 	}
 
-	get grpItemIcon() {
+	get groupItemIcon() {
 		if (this.layout === TimelineLayout.Vertical) {
 			return this._collapsed ? "slim-arrow-left" : "slim-arrow-down";
 		}
 
 		return this._collapsed ? "slim-arrow-up" : "slim-arrow-right";
 	}
-
-	// get _navigatableItems() {
-	// 	// return this.items and the button in the group
-	// 	const items = this.items;
-	// 	const button = this.shadowRoot!.querySelector<Button>("ui5-button")!;
-
-	// 	return [button, ...items];
-	// }
 
 	get classes() {
 		return {

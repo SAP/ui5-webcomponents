@@ -26,3 +26,33 @@ describe("Timeline general interaction", () => {
 		assert.ok(timelineItem, "Item within Timeline Item is rendered");
 	})
 });
+
+describe("Timeline with group items interactions", () => {
+	before(async () => {
+		await browser.url(`test/pages/Timeline.html`);
+	});
+
+	it("Group items are rendered", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Events']");
+		const groupItemsLength = await groupItem[0].$$("ui5-timeline-item").length;
+
+
+		assert.strictEqual(groupItemsLength, 4, "Group items are rendered");
+	})
+
+	it("Group items are collapsed on button click", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Events']");
+		const groupItemButton = await groupItem[0].shadow$("ui5-toggle-button");
+
+		await groupItemButton.click();
+
+		await browser.keys("Tab");
+
+		const nextGroupItem = await timeline.$$("ui5-timeline-group-item[group-name='Meetings']");
+		const nextGroupItemButton = nextGroupItem[0].shadow$("ui5-toggle-button");
+
+		assert.ok(nextGroupItemButton.matches(":focus"), "Items are hidden on group collapse");
+	})
+})

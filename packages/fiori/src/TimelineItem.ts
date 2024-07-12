@@ -113,16 +113,33 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property()
 	forcedLineWidth?: string;
 
+	/**
+	 * @private
+	 */
 	@property({ type: Boolean })
 	hideBubble!: boolean;
 
+	/**
+	 * Marks the last `<ui5-timeline-item>`
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_lastItem!: boolean;
 
+	/**
+	 * @private
+	 */
 	@property({ type: Boolean })
 	hidden!: boolean;
 
 	isGroupItem = false;
+
+	/**
+	 * Defines the position of the item in a group.
+	 * @private
+	 */
+	@property({ type: Number })
+	positionInGroup?: number;
 
 	constructor() {
 		super();
@@ -132,7 +149,9 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		// Add margin to empty timeline items in a group to match the height of those with content.
 		if (this.layout === TimelineLayout.Horizontal) {
 			if ((this.parentElement as ITimelineItem)?.isGroupItem && !this.innerHTML) {
-				this.style.setProperty("margin-block-end", "1.5rem");
+				this.style.setProperty("margin-block-end", "3.75rem");
+			} else if ((this.parentElement as ITimelineItem)?.isGroupItem && this.textContent) {
+				this.style.setProperty("margin-block-end", "2.25rem");
 			}
 		}
 	}

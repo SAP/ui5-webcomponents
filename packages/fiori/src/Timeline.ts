@@ -34,6 +34,7 @@ interface ITimelineItem extends UI5Element {
 	forcedLineWidth?: string;
 	isGroupItem: boolean;
 	nameClickable?: boolean;
+	positionInGroup?: number;
 	focusLink?(): void;
 	_collapsed?: boolean;
 	items?: Array<ITimelineItem>;
@@ -125,7 +126,6 @@ class Timeline extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this.setEffectiveLayout();
 		this._itemNavigation._navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
 		if (this.items) {
@@ -153,22 +153,13 @@ class Timeline extends UI5Element {
 	_setIsNextItemGroup() {
 		for (let i = 0; i < this.items.length; i++) {
 			if (this.items[i].isGroupItem) {
-				this.items[i].items![this.items[i].items!.length - 1]._isNextItemGroup = true;
+				const groupItems = this.items[i].items;
+				if (groupItems && groupItems.length > 0) {
+					groupItems[groupItems.length - 1]!._isNextItemGroup = true;
+				}
 			} else if (this.items[i + 1] && this.items[i + 1].isGroupItem) {
 				this.items[i]._isNextItemGroup = true;
 			}
-		}
-	}
-
-	setEffectiveLayout() {
-		if (this.layout === TimelineLayout.Horizontal) {
-			this.items.forEach(item => {
-				if (item.isGroupItem) {
-					item.items!.forEach(groupItem => {
-						groupItem.layout = this.layout;
-					});
-				}
-			});
 		}
 	}
 
