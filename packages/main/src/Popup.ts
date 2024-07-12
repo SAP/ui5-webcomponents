@@ -20,6 +20,7 @@ import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponent
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import Title from "./Title.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -28,6 +29,7 @@ import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsReg
 import popupStlyes from "./generated/themes/Popup.css.js";
 import popupBlockLayerStyles from "./generated/themes/PopupBlockLayer.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
+import Icon from "./Icon";
 
 const createBlockingStyle = (): void => {
 	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
@@ -77,6 +79,9 @@ type PopupBeforeCloseEventDetail = {
 	renderer: litRender,
 	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
+	dependencies: [
+		Title,
+	],
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
