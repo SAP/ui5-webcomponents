@@ -10,7 +10,7 @@ abstract class ComponentFeature {
 
 const features = new Map<string, any>();
 const componentFeatures = new Map<string, ComponentFeature>();
-const subscribers = new WeakSet<typeof UI5Element>();
+const subscribers = new Map<typeof UI5Element, Array<string>>();
 
 const EVENT_NAME = "componentFeatureLoad";
 const eventProvider = new EventProvider<undefined, void>();
@@ -37,18 +37,21 @@ const getComponentFeature = <T>(name: string): T => {
 	return componentFeatures.get(name) as T;
 };
 
-const subscribeForFeatureLoad = (name: string, klass: typeof UI5Element) => {
-	const isSubscribed = subscribers.has(klass);
+const subscribeForFeatureLoad = (name: string, klass: typeof UI5Element, callback: () => void) => {
+	const subscriber = subscribers.get(klass);
+	const isSubscribed = subscriber?.includes(name)
 
 	if (isSubscribed) {
 		return;
 	}
 
-	subscribers.add(klass);
+	if (!subscriber) {
+		subscribers.set(klass, [name]);
+	} else {
+		subscriber.push(name);
+	}
 
-	eventProvider.attachEvent(featureLoadEventName(name), () => {
-		klass.cacheUniqueDependencies();
-	});
+	eventProvider.attachEvent(featureLoadEventName(name), callback);
 };
 
 const notifyForFeatureLoad = (name: string) => {

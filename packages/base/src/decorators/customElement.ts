@@ -2,7 +2,6 @@ import type UI5Element from "../UI5Element.js";
 import type { Renderer } from "../UI5Element.js";
 import type { TemplateFunction as Template } from "../renderer/executeTemplate.js";
 import type { ComponentStylesData as Styles } from "../types.js";
-import { subscribeForFeatureLoad } from "../FeaturesRegistry.js";
 
 /**
  * Returns a custom element class decorator.
@@ -49,9 +48,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 
 		if (features) {
-			features.forEach(feature => {
-				subscribeForFeatureLoad(feature, target as typeof UI5Element);
-			});
+			target.metadata.features = features;
 		}
 
 		if (themeAware) {
