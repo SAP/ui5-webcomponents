@@ -460,7 +460,6 @@ class Menu extends UI5Element {
 	}
 
 	_createSubMenu(item: MenuItem, opener: HTMLElement) {
-		const mainMenu = this._findMainMenu(item);
 		let subMenu = item._subMenu;
 		let subMenuRef = this._getSubmenuReference(item);
 
@@ -480,15 +479,6 @@ class Menu extends UI5Element {
 		}
 
 		item._subMenu = this._isSubMenu ? subMenuRef : subMenu;
-
-		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
-			item,
-		}, false, false);
-
-		item._subMenu?.showAt(opener);
-		item._preventSubMenuClose = true;
-		this._openedSubMenuItem = item;
-		this._subMenuOpenerId = opener.id;
 	}
 
 	_getSubmenuReference(item: MenuItem) {
@@ -507,6 +497,17 @@ class Menu extends UI5Element {
 		}
 
 		return fragment;
+	}
+
+	_openItemSubMenu(item: MenuItem, opener: HTMLElement) {
+		const mainMenu = this._findMainMenu(item);
+		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+			item,
+		}, false, false);
+		item._subMenu!.showAt(opener);
+		item._preventSubMenuClose = true;
+		this._openedSubMenuItem = item;
+		this._subMenuOpenerId = opener.id;
 	}
 
 	_closeItemSubMenu(item: MenuItem, forceClose = false, keyboard = false) {
@@ -544,6 +545,7 @@ class Menu extends UI5Element {
 		if (menuItem && menuItem.hasSubmenu) {
 			// create new sub-menu
 			this._createSubMenu(menuItem, opener);
+			this._openItemSubMenu(menuItem, opener);
 		}
 		if (this._parentMenuItem) {
 			this._parentMenuItem._preventSubMenuClose = true;
@@ -686,11 +688,13 @@ class Menu extends UI5Element {
 			parentMenuItem;
 
 		do {
-			parentMenuItem = !menu._parentMenuItem || menu._parentMenuItem.parentElement
-				? menu._parentMenuItem
-				: menu._getParentMenuItem(element);
+			if (menu) {
+				parentMenuItem = !menu._parentMenuItem || menu._parentMenuItem.parentElement
+					? menu._parentMenuItem
+					: menu._getParentMenuItem(element);
+			}
 			menu = parentMenuItem ? parentMenuItem.parentElement as Menu : menu;
-		} while (menu && parentMenuItem);
+		} while (parentMenuItem);
 
 		return menu;
 	}
