@@ -50,7 +50,8 @@
 	position: relative;
 	align-self: center;
 	flex-grow: 1;
-	margin-inline-end: 1rem;
+	margin-inline-end: 0.5rem;
+	margin-inline-start: -0.9375rem;
 }
 
 :host([_collapsed]) .ui5-tlgi-line {
@@ -123,9 +124,10 @@
 
 :host([layout="Horizontal"][_collapsed]) .ui5-tlgi-line {
 	width: 100%;
-	height: 100%;
+	height: calc(100% + 1rem);
 	border-block-start: none;
 	border-inline-start: 1px dashed var(--sapContent_NonInteractiveIconColor);
+	margin-block-start: -0.8125rem;
 }
 
 :host([layout="Horizontal"]) .ui5-tlgi-line-placeholder {
