@@ -13,10 +13,15 @@
 				?show-clear-icon={{showClearIcon}}
 				?disabled="{{disabled}}"
 				?readonly="{{readonly}}"
+				?show-suggestions="{{showSuggestions}}"
 				@keydown="{{_onkeydown}}"
 				@ui5-input="{{_onInnerInput}}"
 				@ui5-change="{{_onInnerChange}}"
+				@ui5-type-ahead="{{_onTypeAhead}}"
 			>
+				{{!-- suggestions --}}
+				<slot></slot>
+
 				{{#if valueStateMessage.length}}
 					<slot name="valueStateMessage" slot="valueStateMessage"></slot>
 				{{/if}}
