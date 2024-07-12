@@ -2,6 +2,7 @@ import type UI5Element from "../UI5Element.js";
 import type { Renderer } from "../UI5Element.js";
 import type { TemplateFunction as Template } from "../renderer/executeTemplate.js";
 import type { ComponentStylesData as Styles } from "../types.js";
+import { subscribeForFeatureLoad } from "../FeaturesRegistry.js";
 
 /**
  * Returns a custom element class decorator.
@@ -20,6 +21,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	fastNavigation?: boolean,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
+	features?: Array<string>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -38,12 +40,20 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
+			features
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
 		}
+
+		if (features) {
+			features.forEach((feature) => {
+				subscribeForFeatureLoad(feature, target)
+			})
+		}
+
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
 		}

@@ -16,7 +16,7 @@ import {
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -51,7 +51,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { SuggestionComponent } from "./features/InputSuggestions.js";
-import type InputSuggestions from "./features/InputSuggestions.js";
+import InputSuggestions from "./features/InputSuggestions.js";
 import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
@@ -200,8 +200,9 @@ type InputSuggestionScrollEventDetail = {
 		ValueStateMessageCss,
 		SuggestionsCss,
 	],
+	features: ["InputSuggestions"],
 	get dependencies() {
-		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
+		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
 		return ([Popover, ResponsivePopover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	},
 })
@@ -569,6 +570,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}
 
+	get _effectiveShowSuggestions() {
+		return !!(this.showSuggestions && this.Suggestions);
+	}
+
 	get formValidity(): ValidityStateFlags {
 		return { valueMissing: this.required && !this.value };
 	}
@@ -700,7 +705,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	onAfterRendering() {
 		const innerInput = this.getInputDOMRefSync()!;
 
-		if (this.Suggestions && this.showSuggestions && this.Suggestions._getPicker()) {
+		if (this.showSuggestions && this.Suggestions?._getPicker()) {
 			this._listWidth = this.Suggestions._getListWidth();
 		}
 
@@ -782,13 +787,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handleUp(e: KeyboardEvent) {
-		if (this.Suggestions && this.Suggestions.isOpened()) {
+		if (this.Suggestions?.isOpened()) {
 			this.Suggestions.onUp(e);
 		}
 	}
 
 	_handleDown(e: KeyboardEvent) {
-		if (this.Suggestions && this.Suggestions.isOpened()) {
+		if (this.Suggestions?.isOpened()) {
 			this.Suggestions.onDown(e);
 		}
 	}
@@ -807,7 +812,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handleEnter(e: KeyboardEvent) {
 		// if a group item is focused, this is false
-		const suggestionItemPressed = !!(this.Suggestions && this.Suggestions.onEnter(e));
+		const suggestionItemPressed = !!(this.Suggestions?.onEnter(e));
 		const innerInput = this.getInputDOMRefSync()!;
 		const matchingItem = this._selectableItems.find(item => {
 			return item.text === this.value;
@@ -843,7 +848,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handlePageUp(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions!.onPageUp(e);
+			this.Suggestions?.onPageUp(e);
 		} else {
 			e.preventDefault();
 		}
@@ -851,7 +856,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handlePageDown(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions!.onPageDown(e);
+			this.Suggestions?.onPageDown(e);
 		} else {
 			e.preventDefault();
 		}
@@ -859,13 +864,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handleHome(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions!.onHome(e);
+			this.Suggestions?.onHome(e);
 		}
 	}
 
 	_handleEnd(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions!.onEnd(e);
+			this.Suggestions?.onEnd(e);
 		}
 	}
 
@@ -882,7 +887,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		if (isOpen && this.Suggestions!._isItemOnTarget()) {
+		if (isOpen && this.Suggestions?._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.typedInValue || this.valueBeforeSelectionStart;
 
@@ -953,8 +958,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._isValueStateFocused = false;
 		this.hasSuggestionItemSelected = false;
 
-		this.Suggestions._deselectItems();
-		this.Suggestions._clearItemFocus();
+		this.Suggestions?._deselectItems();
+		this.Suggestions?._clearItemFocus();
 	}
 
 	_click() {
@@ -1194,12 +1199,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-
+		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
-		} else {
-			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
 		}
 	}
 
@@ -1315,7 +1317,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return Promise.resolve(false);
 		}
 
-		return this.Suggestions._isScrollable();
+		return this.Suggestions?._isScrollable();
 	}
 
 	onItemMouseDown(e: MouseEvent) {
@@ -1545,7 +1547,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get availableSuggestionsCount() {
-		if (this.showSuggestions && (this.value || this.Suggestions!.isOpened())) {
+		if (this.showSuggestions && (this.value || this.Suggestions?.isOpened())) {
 			const nonGroupItems = this._selectableItems;
 
 			switch (nonGroupItems.length) {
@@ -1572,7 +1574,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get _isSuggestionsFocused() {
-		return !this.focused && this.Suggestions && this.Suggestions.isOpened();
+		return !this.focused && this.Suggestions?.isOpened();
 	}
 
 	/**
@@ -1655,12 +1657,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	static async onDefine() {
-		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-
-		[Input.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			Suggestions ? Suggestions.init() : Promise.resolve(),
-		]);
+		Input.i18nBundle = await getI18nBundle("@ui5/webcomponents")
 	}
 }
 
