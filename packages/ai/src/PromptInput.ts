@@ -225,7 +225,6 @@ class PromptInput extends UI5Element {
 	valueStateMessage!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-	_initialRendering = true;
 
 	static async onDefine() {
 		PromptInput.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");

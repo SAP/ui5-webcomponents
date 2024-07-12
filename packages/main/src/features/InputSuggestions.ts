@@ -479,13 +479,9 @@ class Suggestions {
 	_getItems(): Array<IInputSuggestionItem> {
 		const suggestionComponent = this._getComponent();
 
-		return (suggestionComponent.getSlottedNodes<IInputSuggestionItem>("suggestionItems")).reduce((acc, item) => {
-			if (item.hasAttribute("ui5-suggestion-item-group")) {
-				return [...acc, item, ...item.items!];
-			}
-
-			return [...acc, item];
-		}, [] as Array<IInputSuggestionItem>);
+		return suggestionComponent.getSlottedNodes<IInputSuggestionItem>("suggestionItems").flatMap(item => {
+			return item.hasAttribute("ui5-suggestion-item-group") ? [item, ...item.items!] : [item];
+		});
 	}
 
 	_getNonGroupItems(): Array<IInputSuggestionItemSelectable> {

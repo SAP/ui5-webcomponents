@@ -1354,13 +1354,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	get _flattenItems(): Array<IInputSuggestionItem> {
-		return this.getSlottedNodes<IInputSuggestionItem>("suggestionItems").reduce((acc, item) => {
-			if (this._isGroupItem(item)) {
-				return [...acc, item, ...item.items!];
-			}
-
-			return [...acc, item];
-		}, [] as Array<IInputSuggestionItem>);
+		return this.getSlottedNodes<IInputSuggestionItem>("suggestionItems").flatMap(item => {
+			return this._isGroupItem(item) ? [item, ...item.items!] : [item];
+		});
 	}
 
 	get _selectableItems(): Array<IInputSuggestionItemSelectable> {
