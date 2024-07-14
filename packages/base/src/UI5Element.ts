@@ -1220,8 +1220,8 @@ abstract class UI5Element extends HTMLElement {
 		const features = this.getMetadata().getFeatures();
 
 		features.forEach(feature => {
-			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this))
-		})
+			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
+		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);

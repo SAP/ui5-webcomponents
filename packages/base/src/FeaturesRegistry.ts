@@ -39,7 +39,7 @@ const getComponentFeature = <T>(name: string): T => {
 
 const subscribeForFeatureLoad = (name: string, klass: typeof UI5Element, callback: () => void) => {
 	const subscriber = subscribers.get(klass);
-	const isSubscribed = subscriber?.includes(name)
+	const isSubscribed = subscriber?.includes(name);
 
 	if (isSubscribed) {
 		return;
