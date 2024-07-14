@@ -413,7 +413,13 @@ class Menu extends UI5Element {
 			this._parentMenuItem = undefined;
 			this._opener = undefined;
 		}
-		const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
+
+		const menuItem = (opener as OpenerStandardListItem).associatedItem;
+		const parentMenuItem = !this._parentMenuItem || this._parentMenuItem.parentElement
+			? this._parentMenuItem
+			: this._getParentMenuItem(menuItem);
+
+		const busyWithoutItems = !parentMenuItem?.items.length && parentMenuItem?.busy;
 		const popover = await this._createPopover();
 		popover.initialFocus = `${this._id}-menu-item-0`;
 		popover.showAt(opener, busyWithoutItems);
@@ -536,8 +542,8 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_prepareSubMenu(item: MenuItem, opener: OpenerStandardListItem) {
-		const menuItem = item.parentElement ? item : opener.associatedItem;
+	_prepareSubMenu(item: MenuItem, opener: HTMLElement) {
+		const menuItem = item.parentElement ? item : (opener as OpenerStandardListItem).associatedItem;
 		if (opener.id !== this._subMenuOpenerId || (menuItem && menuItem.hasSubmenu)) {
 			// close opened sub-menu if there is any opened
 			this._closeItemSubMenu(this._openedSubMenuItem!, true);
@@ -562,7 +568,7 @@ class Menu extends UI5Element {
 		mainMenu?.fireEvent<MenuItemFocusEventDetail>("item-focus", { ref: menuListItem, item });
 	}
 
-	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem) {
+	_startOpenTimeout(item: MenuItem, opener: HTMLElement) {
 		clearTimeout(this._timeout);
 
 		// Sets the new timeout
@@ -666,14 +672,14 @@ class Menu extends UI5Element {
 				}, true, false);
 
 				if (!prevented) {
-					let openerMenuItem = item;
-					let parentMenu = openerMenuItem.parentElement as Menu;
-					do {
-						openerMenuItem._preventSubMenuClose = false;
-						this._closeItemSubMenu(openerMenuItem);
-						parentMenu = openerMenuItem.parentElement as Menu;
-						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
-					} while (parentMenu._parentMenuItem);
+					// let openerMenuItem = item;
+					// let parentMenu = openerMenuItem.parentElement as Menu;
+					// do {
+					// 	openerMenuItem._preventSubMenuClose = false;
+					// 	this._closeItemSubMenu(openerMenuItem);
+					// 	parentMenu = openerMenuItem.parentElement as Menu;
+					// 	openerMenuItem = parentMenu._parentMenuItem as MenuItem;
+					// } while (parentMenu._parentMenuItem);
 
 					mainMenu._popover!.close();
 				}
