@@ -17,6 +17,8 @@ describe("Table - loading", () => {
 		cy.get("[ui5-table]")
 			.shadow()
 			.find("#loading")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
 
 		cy.get("#before")
