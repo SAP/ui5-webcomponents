@@ -220,10 +220,10 @@ Example:
 ```
 ### fetchDefaultFontFaces
 <a name="fetchDefaultFontFaces"></a>
-Font faces used in the UI5 Web Components are fetched over the network.
 
-Normally, you would never want to change that setting, but if for technical reasons you prefer even the default font faces to be fetched
-over the network, then set `fetchDefaultFontFaces` this to `false`
+This configuration option controls whether default font faces are fetched over the network.
+
+Typically, you would not need to modify this setting. However, if for technical reasons you prefer the default font faces to not be fetched over the network, you can set `fetchDefaultFontFaces` to `false`.
 
 Example:
 ```html

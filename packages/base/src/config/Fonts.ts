@@ -16,9 +16,10 @@ const getFetchDefaultFontFaces = (): boolean => {
 };
 
 /**
- * Sets the "fetchDefaultFontFaces".
- * - When "true" (default value), all used font faces are fetched over the network
- * - When "false", all used font faces are not fetch by default and need to be handled separately
+ * Defines the "fetchDefaultFontFaces" setting.
+ *
+ * - When set to "true" (default), all used font faces are fetched over the network.
+ * - When set to "false", default font faces are not fetched automatically and must be managed separately.
  * @public
  * @param { fetchDefaultFontFaces } boolean
  */
