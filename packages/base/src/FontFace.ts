@@ -3,12 +3,13 @@ import { getFeature } from "./FeaturesRegistry.js";
 import fontFaceCSS from "./generated/css/FontFace.css.js";
 import overrideFontFaceCSS from "./generated/css/OverrideFontFace.css.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
+import { getFetchDefaultFontFaces } from "./config/Fonts.js";
 
 const insertFontFace = () => {
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 
 	// Only set the main font if there is no OpenUI5 support, or there is, but OpenUI5 is not loaded
-	if (!openUI5Support || !openUI5Support.isOpenUI5Detected()) {
+	if ((!openUI5Support || !openUI5Support.isOpenUI5Detected())) {
 		insertMainFontFace();
 	}
 
@@ -17,6 +18,10 @@ const insertFontFace = () => {
 };
 
 const insertMainFontFace = () => {
+	if (getFetchDefaultFontFaces()) {
+		return;
+	}
+
 	if (!hasStyle("data-ui5-font-face")) {
 		createStyle(fontFaceCSS, "data-ui5-font-face");
 	}
