@@ -647,29 +647,29 @@ describe("Date Picker Tests", () => {
 		assert.include(innerHTML, "9980", "First year in the year picker is correct");
 	});
 
-	// it("yearpicker click extreme values max", async () => {
-	// 	await datepicker.open();
-	// 	datepicker.id = "#dp12";
+	it("yearpicker click extreme values max", async () => {
+		await datepicker.open();
+		datepicker.id = "#dp12";
 
-	// 	const root = await datepicker.getRoot();
-	// 	await root.setProperty("value", "Dec 31, 9986");
-	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
-	// 	await valueHelpIcon.click();
+		const root = await datepicker.getRoot();
+		await root.setProperty("value", "Dec 31, 9986");
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-	// 	const btnYear = await datepicker.getBtnYear();
-	// 	await btnYear.click();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
 
-	// 	const tenthYear = await datepicker.getDisplayedYear(10);
-	// 	let innerHTML = await tenthYear.getProperty("innerHTML");
-	// 	assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
+		const tenthYear = await datepicker.getDisplayedYear(10);
+		let innerHTML = await tenthYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9986", "Tenth year in the year picker is correct");
 
-	// 	await tenthYear.click();
-	// 	await btnYear.click();
+		await tenthYear.click();
+		await btnYear.click();
 
-	// 	const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
-	// 	innerHTML = await firstDisplayedYear.getProperty("innerHTML");
-	// 	assert.include(innerHTML, "9976", "First year in the year picker is correct");
-	// });
+		const firstDisplayedYear = await datepicker.getFirstDisplayedYear();
+		innerHTML = await firstDisplayedYear.getProperty("innerHTML");
+		assert.include(innerHTML, "9976", "First year in the year picker is correct");
+	});
 
 	it("yearpicker click extreme values min above 10", async () => {
 		await datepicker.open();

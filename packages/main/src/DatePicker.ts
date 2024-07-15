@@ -405,9 +405,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	onResponsivePopoverBeforeOpen() {
-		if (this._calendar) {
-			this._calendar.timestamp = this._calendarTimestamp;
-		}
+		this._calendar.timestamp = this._calendarTimestamp;
 		this._calendarCurrentPicker = this.firstPicker;
 	}
 
