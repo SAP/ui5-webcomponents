@@ -110,7 +110,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * Defines the indicator line width.
 	 * @private
 	 */
-	@property()
+	@property({ noAttribute: true })
 	forcedLineWidth?: string;
 
 	/**

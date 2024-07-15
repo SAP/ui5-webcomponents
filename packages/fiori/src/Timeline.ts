@@ -9,6 +9,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -26,7 +27,7 @@ import TimelineLayout from "./types/TimelineLayout.js";
  * Interface for components that may be slotted inside `ui5-timeline` as items
  * @public
  */
-interface ITimelineItem extends UI5Element {
+interface ITimelineItem extends UI5Element, ITabbable {
 	_lastItem: boolean;
 	layout: `${TimelineLayout}`;
 	icon?: string;
@@ -36,7 +37,7 @@ interface ITimelineItem extends UI5Element {
 	nameClickable?: boolean;
 	positionInGroup?: number;
 	focusLink?(): void;
-	_collapsed?: boolean;
+	collapsed?: boolean;
 	items?: Array<ITimelineItem>;
 	_firstItemInTimeline?: boolean;
 }
@@ -84,7 +85,7 @@ class Timeline extends UI5Element {
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Determines the content of the `ui5-timeline`.
@@ -205,7 +206,7 @@ class Timeline extends UI5Element {
 				navigatableItems.push(item.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!);
 			}
 
-			if (item.isGroupItem && !item._collapsed) {
+			if (item.isGroupItem && !item.collapsed) {
 				item.items?.forEach(groupItem => {
 					navigatableItems.push(groupItem);
 				});

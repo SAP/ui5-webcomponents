@@ -53,7 +53,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	_collapsed = false;
+	collapsed = false;
 
 	/**
 	 * Determines the content of the `ui5-timeline-group-item`.
@@ -101,23 +101,41 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	@property({ noAttribute: true })
 	forcedTabIndex = "-1";
 
-	onBeforeRendering(): void {
-		this.setLastItemProperty();
-
+	onBeforeRendering() {
 		this.itemsCount = this.items.length;
+		this._setGroupItemProps();
+	}
 
-		if (this._lastItem) {
-			this.items[this.items.length - 1]._lastItem = true;
-		}
+	_setGroupItemProps() {
+		this._setLastItemProperty();
+		this._setFirstItemInTimeline();
+		this._setPositionInGroup();
+		this._setGroupItemsHidden();
+		this._setItemsLayoutAndForcedLineWidth();
+	}
 
+	_setFirstItemInTimeline() {
 		if (this.items.length && this._firstItemInTimeline) {
 			this.items[0]._firstItemInTimeline = true;
 		}
+	}
 
+	_setPositionInGroup() {
 		this.items.forEach((item, index) => {
 			item.positionInGroup = index + 1;
 		});
+	}
 
+	_setGroupItemsHidden() {
+		const groupItems = this.items;
+		if (groupItems) {
+			groupItems.forEach(item => {
+				item.hidden = !!this.collapsed;
+			});
+		}
+	}
+
+	_setItemsLayoutAndForcedLineWidth() {
 		if (this.items) {
 			for (let i = 0; i < this.items.length; i++) {
 				this.items[i].layout = this.layout;
@@ -131,41 +149,31 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	}
 
 	onGroupItemClick() {
-		const groupItems = this.items;
-		this._collapsed = !this._collapsed;
-
-		if (groupItems) {
-			groupItems.forEach(item => {
-				item.hidden = !item.hidden;
-			});
-		}
-	}
-
-	_handleFocusLink(currentItem: TimelineItem, isLinkFocused: boolean, e: Event) {
-		if (!isLinkFocused && currentItem.nameClickable) {
-			currentItem.focusLink();
-			e.stopPropagation();
-		}
+		this.collapsed = !this.collapsed;
 	}
 
 	get _groupName() {
 		return this.groupName;
 	}
 
-	setLastItemProperty() {
+	_setLastItemProperty() {
 		const items = this.items;
 
-		if (items && items.length > 0 && this._collapsed) {
-			items[items.length - 1]._lastItem = false;
+		if (items && items.length > 0) {
+			if (this.collapsed) {
+				items[items.length - 1]._lastItem = false;
+			} else if (this._lastItem) {
+				items[items.length - 1]._lastItem = true;
+			}
 		}
 	}
 
 	get groupItemIcon() {
 		if (this.layout === TimelineLayout.Vertical) {
-			return this._collapsed ? "slim-arrow-left" : "slim-arrow-down";
+			return this.collapsed ? "slim-arrow-left" : "slim-arrow-down";
 		}
 
-		return this._collapsed ? "slim-arrow-up" : "slim-arrow-right";
+		return this.collapsed ? "slim-arrow-up" : "slim-arrow-right";
 	}
 }
 
