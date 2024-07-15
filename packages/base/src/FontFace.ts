@@ -18,7 +18,9 @@ const insertFontFace = () => {
 };
 
 const insertMainFontFace = () => {
-	if (getFetchDefaultFontFaces()) {
+	const hasFontStyles = document.querySelector("head>style[data-ui5-font-face]");
+
+	if (getFetchDefaultFontFaces() || hasFontStyles) {
 		return;
 	}
 
