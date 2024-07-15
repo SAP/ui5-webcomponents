@@ -33,6 +33,10 @@
 	inset-inline-start: 50%;
 }
 
+:host(:not([icon])[layout="Vertical"]) .ui5-tli-indicator::before {
+	inset-block-start: 1.75rem;
+}
+
 :host([position-in-group][layout="Vertical"]) .ui5-tli-indicator::before {
 	bottom: -1.5rem;
 }
@@ -57,18 +61,6 @@
 	bottom: var(--_ui5_timeline_tli_indicator_before_without_icon_bottom);
 }
 
-:host([_last-item]:last-child[layout="Vertical"]) .ui5-tli-indicator::before {
-	content: "";
-	display: inline-block;
-	background-color: var(--sapContent_ForegroundBorderColor);
-	height: var(--_ui5_timeline_tli_last_child_vertical_indicator_before_height); /* calc(100% - 1.5rem) cozy, calc(100% - 2.5rem) compact*/
-	inset-block-start: var(--_ui5_timeline_tli_last_child_vertical_indicator_before_top); /* calc(-100% + 1.5rem) cozy, calc(-100% + 2.5rem) compact*/
-	position: absolute;
-}
-
-:host(:not([icon])[_last-item]:last-child[layout="Vertical"]) .ui5-tli-indicator::before {
-	height: calc(100% - 0.5rem);
-}
 
 /* Line when no Icon is provided */
 :host([layout="Vertical"]):not([icon]) .ui5-tli-indicator::before {
@@ -330,10 +322,6 @@
 	flex-direction: column;
 }
 
-:host([layout="Vertical"]:last-child[_last-item]) {
-	margin-block-start: 1rem;
-}
-
 :host([layout="Horizontal"][_is-next-item-group]:last-child:not([_last-item])) .ui5-tli-indicator::before {
 	height: 1px;
 	inset-block-start: 50%;
@@ -425,7 +413,6 @@
 	width: calc(100% - 0.25rem);
 }
 
-/* HERE */
 :host(:not([icon])[layout="Horizontal"]:not([_last-item]):not([_is-next-item-group])) .ui5-tli-indicator::before {
 	width: var(--_ui5_timeline_tli_horizontal_indicator_before_width);
 	inset-inline-start: 1.625rem;

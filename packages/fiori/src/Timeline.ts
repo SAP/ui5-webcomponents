@@ -152,12 +152,7 @@ class Timeline extends UI5Element {
 
 	_setIsNextItemGroup() {
 		for (let i = 0; i < this.items.length; i++) {
-			if (this.items[i].isGroupItem) {
-				const groupItems = this.items[i].items;
-				if (groupItems && groupItems.length > 0) {
-					groupItems[groupItems.length - 1]!._isNextItemGroup = true;
-				}
-			} else if (this.items[i + 1] && this.items[i + 1].isGroupItem) {
+			if (this.items[i + 1] && this.items[i + 1].isGroupItem) {
 				this.items[i]._isNextItemGroup = true;
 			}
 		}
@@ -211,7 +206,7 @@ class Timeline extends UI5Element {
 			}
 
 			if (item.isGroupItem && !item._collapsed) {
-				item.items!.forEach(groupItem => {
+				item.items?.forEach(groupItem => {
 					navigatableItems.push(groupItem);
 				});
 			}

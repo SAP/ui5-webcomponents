@@ -46,14 +46,14 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @public
 	 */
 	@property()
-	groupName: string = "";
+	groupName = "";
 
 	/**
 	 * Determines if the group is collapsed or expanded.
 	 * @public
 	 */
 	@property({ type: Boolean })
-	_collapsed!: boolean;
+	_collapsed = false;
 
 	/**
 	 * Determines the content of the `ui5-timeline-group-item`.
@@ -92,14 +92,14 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	@property({ type: Boolean })
 	_isNextItemGroup!: boolean;
 
-	@property({ noAttribute: true })
-	forcedTabIndex: string = "-1";
-
 	@property()
 	hidden!: boolean;
 
 	@property({ type: Boolean })
 	_firstItemInTimeline!: boolean;
+
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1";
 
 	onBeforeRendering(): void {
 		this.setLastItemProperty();
@@ -166,14 +166,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 		}
 
 		return this._collapsed ? "slim-arrow-up" : "slim-arrow-right";
-	}
-
-	get classes() {
-		return {
-			collapsed: {
-				"toggled": this._collapsed,
-			},
-		};
 	}
 }
 

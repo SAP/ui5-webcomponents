@@ -68,7 +68,7 @@
 	position: absolute;
 	inset-block-start: 0.375rem;
 	inset-inline-start: 50%;
-	height: calc(100% + 4.5rem);
+	height: var(--_ui5_timeline_tlgi_compact_icon_before_height, calc(100% + 4.5rem));
 }
 
 :host([layout="Vertical"]:not(:last-child)[_collapsed]:not([_is-next-item-group])) .ui5-tlgi-icon-dot::before {
@@ -171,4 +171,8 @@
 	position: absolute;
 	inset-inline-start: 0.125rem;
 	width: var(--_ui5_timeline_tlgi_horizontal_line_placeholder_before_width, calc(100% + 1.5625rem));
+}
+
+:host(:not([_is-next-item-group])[layout="Horizontal"]:not(:last-child)[_collapsed]) .ui5-tlgi-line-placeholder::before {
+	width: var(--_ui5_timeline_tlgi_horizontal_line_placeholder_before_width, calc(100% + 1.9375rem));
 }

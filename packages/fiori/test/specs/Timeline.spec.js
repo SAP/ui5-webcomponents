@@ -55,4 +55,34 @@ describe("Timeline with group items interactions", () => {
 
 		assert.ok(nextGroupItemButton.matches(":focus"), "Items are hidden on group collapse");
 	})
+
+	it("Group items are navigatable", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Events']");
+
+		await browser.keys("Tab");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowUp");
+
+		const secondItemInGroup = await groupItem[0].$$("ui5-timeline-item");
+
+		assert.ok(secondItemInGroup[1].matches(":focus"), "Group items are navigatable with tab and arrow keys");
+	})
+
+	it("Group can be collapsed/expanded using keyboard", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Meetings']");
+		const groupItemButton = await groupItem[0].shadow$("ui5-toggle-button");
+
+		await groupItemButton.click();
+		await browser.keys("Enter");
+
+		assert.strictEqual(await groupItem[0].hasAttribute("_collapsed"), false, "Group can be expanded with keyboard");
+
+		await browser.keys("Space");
+
+		assert.strictEqual(await groupItem[0].hasAttribute("_collapsed"), true, "Group can be collapsed with keyboard");
+		} 
+	);
 })
