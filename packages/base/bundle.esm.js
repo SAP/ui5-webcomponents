@@ -31,6 +31,7 @@ import { getAnimationMode } from "./dist/config/AnimationMode.js";
 import { getLanguage, setLanguage } from "./dist/config/Language.js";
 import { getCalendarType } from "./dist/config/CalendarType.js";
 import { getTheme, setTheme } from "./dist/config/Theme.js";
+import { getFetchDefaultFontFacesData } from "./dist/config/Fonts.js";
 import { getThemeRoot, setThemeRoot } from "./dist/config/ThemeRoot.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
@@ -53,6 +54,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getCalendarType,
 		getFirstDayOfWeek,
 		getLegacyDateCalendarCustomizing,
+		getFetchDefaultFontFacesData,
 	},
 	getCurrentRuntimeIndex,
 	getIconNames,

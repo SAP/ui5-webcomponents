@@ -77,4 +77,12 @@ describe("Configuration script has effect", () => {
 		});
 		assert.strictEqual(res, 'basic', "animationMode is basic");
 	});
+
+	it("Tests that fetchDefaultFontFacesData is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getFetchDefaultFontFacesData());
+		});
+		assert.strictEqual(res, false, "fetchDefaultFontFacesData is false");
+	});
 });
