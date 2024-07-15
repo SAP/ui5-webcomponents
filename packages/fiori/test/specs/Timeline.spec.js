@@ -78,11 +78,11 @@ describe("Timeline with group items interactions", () => {
 		await groupItemButton.click();
 		await browser.keys("Enter");
 
-		assert.strictEqual(await groupItem[0].hasAttribute("_collapsed"), false, "Group can be expanded with keyboard");
+		assert.strictEqual(await groupItem[0].hasAttribute("collapsed"), false, "Group can be expanded with keyboard");
 
 		await browser.keys("Space");
 
-		assert.strictEqual(await groupItem[0].hasAttribute("_collapsed"), true, "Group can be collapsed with keyboard");
+		assert.strictEqual(await groupItem[0].hasAttribute("collapsed"), true, "Group can be collapsed with keyboard");
 		} 
 	);
 })
