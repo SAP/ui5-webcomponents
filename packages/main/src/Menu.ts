@@ -481,7 +481,7 @@ class Menu extends UI5Element {
 		let subMenu = item._subMenu;
 		let subMenuRef = this._getSubmenuReference(item);
 
-		if ((!subMenu && !this._isSubMenu) || !subMenuRef) {
+		if ((!subMenu && !this._isSubMenu) || (!subMenuRef && this._isSubMenu)) {
 			const ctor = this.constructor as typeof Menu;
 			subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
 			subMenu._isSubMenu = true;
@@ -661,6 +661,7 @@ class Menu extends UI5Element {
 	}
 
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
+		clearTimeout(this._timeout);
 		const opener = e.detail.item as OpenerStandardListItem;
 		const item = opener.associatedItem;
 
