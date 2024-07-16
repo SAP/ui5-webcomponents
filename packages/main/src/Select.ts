@@ -660,10 +660,15 @@ class Select extends UI5Element implements IFormInputElement {
 		const options: Array<IOption> = this.options;
 
 		const previousOption = options[oldIndex];
+		const nextOption = options[newIndex];
+
+		if (previousOption === nextOption) {
+			return;
+		}
+
 		previousOption.selected = false;
 		previousOption.focused = false;
 
-		const nextOption = options[newIndex];
 		nextOption.selected = true;
 		nextOption.focused = true;
 
