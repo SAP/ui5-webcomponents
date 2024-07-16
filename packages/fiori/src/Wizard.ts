@@ -811,7 +811,11 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
+<<<<<<< HEAD
 		return this.stepsInHeaderDOM.filter(step => !step.disabled);
+=======
+		return Array.from(this.shadowRoot!.querySelectorAll<WizardTab>("[ui5-wizard-tab]:not([disabled])"));
+>>>>>>> ced3ba55d7b106e4ad31e1ef392ec94ac08f727c
 	}
 
 	get navAriaRoleDescription() {
