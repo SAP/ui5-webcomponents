@@ -227,6 +227,10 @@ class SegmentedButton extends UI5Element {
 		const eventTarget = e.target as SegmentedButtonItem;
 		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
 
+		if (eventTarget.disabled || eventTarget === this.getDomRef() || !isTargetSegmentedButtonItem) {
+			return;
+		}
+
 		if (isTargetSegmentedButtonItem) {
 			eventTarget.focus();
 			this._itemNavigation.setCurrentItem(eventTarget);
