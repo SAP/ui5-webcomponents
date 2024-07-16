@@ -482,7 +482,6 @@ class ColorPalette extends UI5Element {
 		this._setColor(colorPicker.value);
 		this._closeDialog();
 		this._shouldFocusRecentColors = !this.popupMode;
-		this.recentColorsElements[0].selected = true;
 		this._currentlySelected = colorPicker.value ? this.recentColorsElements[0] : undefined;
 	}
 
