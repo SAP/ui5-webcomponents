@@ -50,11 +50,22 @@ class Title extends UI5Element {
 	/**
 	 * Defines the component level.
 	 * Available options are: `"H6"` to `"H1"`.
+	 * This property does not influence the style of the component.
+	 * Use the property `size` for this purpose instead.
 	 * @default "H2"
 	 * @public
 	 */
 	@property()
 	level: `${TitleLevel}` = "H2";
+
+	/**
+	 * Defines the visual appearance of the title.
+	 * Available options are: `"H6"` to `"H1"`.
+	 * @default "H5"
+	 * @public
+	 */
+	@property()
+	size: `${TitleLevel}` = "H5";
 
 	get h1() {
 		return this.level === TitleLevel.H1;

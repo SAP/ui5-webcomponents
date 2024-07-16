@@ -116,6 +116,26 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await selectHost.getProperty("value"), EXPECTED_SELECTION_TEXT2, "The 'value' property is correct.");
 	});
 
+	it("doesn't changes selection while closed with Arrow Up/Down while at last item", async () => {
+		await browser.url(`test/pages/Select.html`);
+
+		const inputResult = await browser.$("#inputResult").shadow$("input");
+		const select = await browser.$("#errorSelect");
+		const selectText = await browser.$("#errorSelect").shadow$(".ui5-select-label-root");
+		const EXPECTED_SELECTION_TEXT1 = "Condensed";
+
+		// make sure focus is on closed select
+		await select.click();
+		await select.keys("Escape");
+
+		await select.keys("ArrowDown");
+		let selectTextHtml = await selectText.getHTML(false);
+		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Arrow Down shouldn't change selected item");
+		assert.strictEqual(await select.getProperty("value"), EXPECTED_SELECTION_TEXT1, "The 'value' property is correct.");
+
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Change event shouldn't have fired");
+	});
+
 	it("changes selection while closed with Arrow Up/Down", async () => {
 		await browser.url(`test/pages/Select.html`);
 

@@ -23,7 +23,11 @@
 	{{else if hasEndContent}}
 		<slot name="endContent"></slot>
 	{{else if additionalText}}
-		<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
+		<span
+			part="additional-text"
+			class="ui5-li-additional-text"
+			aria-hidden="{{_accInfo.ariaHidden}}"
+		>{{additionalText}}</span>
 	{{/if}}
 
 {{/inline}}

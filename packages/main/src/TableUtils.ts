@@ -17,9 +17,14 @@ const findRowInPath = (composedPath: Array<EventTarget>) => {
 	return composedPath.find((el: EventTarget) => el instanceof HTMLElement && el.hasAttribute("ui5-table-row")) as TableRow;
 };
 
+const isFeature = <T>(element: any, identifier: string): element is T => {
+	return element.identifier === identifier;
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
 	isHeaderSelector,
 	findRowInPath,
+	isFeature,
 };

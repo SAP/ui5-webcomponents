@@ -69,10 +69,6 @@ class NotificationListItemBase extends ListItemBase {
 		return NotificationListItemBase.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOADING);
 	}
 
-	get isLoading() {
-		return this.loading;
-	}
-
 	/**
 	 * Event handlers
 	 */

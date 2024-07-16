@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+
+### Bug Fixes
+
+* **ui5-li-notification-group:** suspend nested item navigation ([#9361](https://github.com/SAP/ui5-webcomponents/issues/9361)) ([90f5f11](https://github.com/SAP/ui5-webcomponents/commit/90f5f11c6353a894a34b8275c331660730e1443e))
+* **ui5-notification-list-item:** focus is no longer trapped in loading item ([#8969](https://github.com/SAP/ui5-webcomponents/issues/8969)) ([fa37d92](https://github.com/SAP/ui5-webcomponents/commit/fa37d92f30931a1ac38d6efadf4439ba3d3d555e)), closes [#8768](https://github.com/SAP/ui5-webcomponents/issues/8768)
+* **ui5-notification-list:** fixed show more test ([#9419](https://github.com/SAP/ui5-webcomponents/issues/9419)) ([4ba9173](https://github.com/SAP/ui5-webcomponents/commit/4ba917317a6cf48e7606e9988635fd45cb293dd1))
+* **ui5-upload-collection-item:** delete can be triggered by keyboard now ([#9392](https://github.com/SAP/ui5-webcomponents/issues/9392)) ([b3de325](https://github.com/SAP/ui5-webcomponents/commit/b3de325d58e566b7be19978952501d4be99aeb5c))
+
+
+
+
+
+## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
+
+
+### Bug Fixes
+
+* **ui5-notification-list:** fixed show more test ([#9400](https://github.com/SAP/ui5-webcomponents/issues/9400)) ([c19c5e3](https://github.com/SAP/ui5-webcomponents/commit/c19c5e3f3a756bdd8323a73b59c94b44167f16f7))
+
+
+
+
+
 # [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
 
 
