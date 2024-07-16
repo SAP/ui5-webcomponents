@@ -748,25 +748,24 @@ describe("Date Picker Tests", () => {
 		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
 	});
 
-	// it("Going over the maximum date changes value state", async () => {
-	// 	datepicker.id = "#dp33";
+	it("Going over the maximum date changes value state", async () => {
+		datepicker.id = "#dp33";
 
-	// 	const innerInput = await datepicker.getInnerInput();
-	// 	await innerInput.click();
-	// 	while(await innerInput.getValue() !== ""){
-	// 		await innerInput.keys("Backspace");
-	// 	}
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		while(await innerInput.getValue() !== ""){
+			await innerInput.keys("Backspace");
+		}
 
-	// 	await innerInput.keys("May 5, 2100");
-	// 	const root = await datepicker.getRoot();
-	// 	await root.keys("Enter");
+		await innerInput.keys("May 5, 2100");
+		await innerInput.keys("Enter");
 
-	// 	const input = await datepicker.getInput();
-	// 	assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
+		const input = await datepicker.getInput();
+		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
 
-	// 	const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
-	// 	assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
-	// });
+		const contentWrapper = await browser.$("#dp33").shadow$("ui5-input").shadow$(".ui5-input-content");
+		assert.ok(await contentWrapper.isDisplayedInViewport(), "content wrapper has error styles");
+	});
 
 	it("Maximum or minimum date changes value state to none", async () => {
 		datepicker.id = "#dp33";
