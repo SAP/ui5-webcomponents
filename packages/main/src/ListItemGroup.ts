@@ -60,6 +60,7 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} source Contains information about the moved element under `element` property.
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
+ * @since 2.1.0
  * @allowPreventDefault
  */
 
@@ -83,6 +84,7 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} source Contains information about the moved element under `element` property.
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
+ * @since 2.1.0
  * @allowPreventDefault
  */
 @event<ListItemGroupMoveEventDetail>("move", {
