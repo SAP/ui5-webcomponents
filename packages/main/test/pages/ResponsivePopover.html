@@ -21,10 +21,7 @@
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
 
 	<!-- with header and footer slots -->
-	<ui5-responsive-popover initial-focus="emailInput" id="respPopover">
-		<div id="respPopoverHeader" slot="header">
-			<ui5-title>Hello World</ui5-title>
-		</div>
+	<ui5-responsive-popover initial-focus="emailInput" id="respPopover" header-text="Hello World">
 
 		<div class="popover-content">
 			<ui5-label for="emailInput" required>Email: </ui5-label>
