@@ -86,6 +86,7 @@ import {
 	SELECT_OPTIONS,
 	SHOW_SELECTED_BUTTON,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
+	COMBOBOX_AVAILABLE_OPTIONS,
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 	MCB_SELECTED_ITEMS,
 	INPUT_CLEAR_ICON_ACC_NAME,
@@ -1865,6 +1866,10 @@ class MultiComboBox extends UI5Element {
 
 	get _headerTitleText() {
 		return MultiComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get _popupLabel() {
+		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
 	}
 
 	get _iconAccessibleNameText() {
