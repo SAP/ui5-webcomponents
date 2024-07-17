@@ -145,6 +145,7 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_emphasized_focused_border_before);
+	border-radius: inherit;
 }
 
 .ui5-button-root::-moz-focus-inner {
