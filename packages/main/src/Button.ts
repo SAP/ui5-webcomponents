@@ -320,6 +320,9 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	constructor() {
 		super();
+
+		this.classList.add("ui5-element-rounded-corners-05");
+
 		this._deactivate = () => {
 			if (activeButton) {
 				activeButton._setActiveState(false);

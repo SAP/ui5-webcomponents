@@ -9,6 +9,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
@@ -56,7 +57,6 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Array<Node>} default - Determines the content over which the component will appear.
  * @since 0.12.0
  */
 @customElement({
@@ -116,6 +116,13 @@ class BusyIndicator extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	_isBusy = false;
+
+	/**
+	 * Determines the content over which the component will appear.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
+	content!: Array<HTMLElement>;
 
 	_keydownHandler: (e: KeyboardEvent) => void;
 	_preventEventHandler: (e: KeyboardEvent) => void;
@@ -179,6 +186,9 @@ class BusyIndicator extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this.classList.toggle("ui5-busy-indicator-rounded-corners-1", this.content[0].classList.contains("ui5-element-rounded-corners-1"));
+		this.classList.toggle("ui5-busy-indicator-rounded-corners-05", this.content[0].classList.contains("ui5-element-rounded-corners-05"));
+
 		if (this.active) {
 			if (!this._isBusy && !this._busyTimeoutId) {
 				this._busyTimeoutId = setTimeout(() => {

@@ -6,6 +6,14 @@
 	border-radius: unset;
 }
 
+:host(.ui5-busy-indicator-rounded-corners-1) { 
+	border-radius: 1rem; /* most likely value should be different in Fiori and Horizon */
+}
+
+:host(.ui5-busy-indicator-rounded-corners-05) {
+	border-radius: 0.5rem;
+}
+
 :host([_is-busy]) {
 	color: var(--_ui5_busy_indicator_color);
 }
@@ -103,7 +111,7 @@
 .ui5-busy-indicator-busy-area:focus-visible {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
-	border-radius: var(--_ui5_busy_indicator_focus_border_radius);
+	border-radius: inherit;
 }
 
 .ui5-busy-indicator-circles-wrapper {

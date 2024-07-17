@@ -85,6 +85,12 @@ class Card extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	header!: Array<CardHeader>;
 
+	constructor() {
+		super();
+
+		this.classList.add("ui5-element-rounded-corners-1");
+	}
+
 	static i18nBundle: I18nBundle;
 
 	get classes() {
