@@ -252,7 +252,6 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-search-button {
-	--_ui5_button_focused_border_radius: var(--_ui5_shellbar_search_button_border_radius);
 	--_ui5_shellbar_button_border_radius: var(--_ui5_shellbar_search_button_border_radius);
 	height: var(--_ui5_shellbar_search_button_size);
 	width: var(--_ui5_shellbar_search_button_size);

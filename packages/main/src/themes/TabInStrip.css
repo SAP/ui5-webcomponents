@@ -62,8 +62,7 @@
 	height: 1.5rem;
 	min-width: 1.5rem;
 	margin-inline-start: var(--_ui5_tc_headerItem_expand_button_margin_inline_start);
-	--_ui5_button_border_radius: var(--_ui5_tc_headerItem_expand_button_border_radius);
-	--_ui5_button_focused_border_radius: var(--_ui5_tc_headerItem_expand_button_border_radius);
+	border-radius: var(--_ui5_tc_headerItem_expand_button_border_radius);
 }
 
 .ui5-tab-expand-button > [ui5-button]:not([active]) {

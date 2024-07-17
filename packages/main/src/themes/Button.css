@@ -37,6 +37,7 @@
 	position: relative;
 	background: transparent;
 	border: none;
+	border-radius: inherit;
 	color: inherit;
 	text-shadow: inherit;
 	font: inherit;
@@ -121,7 +122,7 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
-	border-radius: var(--_ui5_button_focused_border_radius);
+	border-radius: inherit;
 }
 
 :host([desktop][active]) .ui5-button-root:focus-within:before,
@@ -144,7 +145,6 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_emphasized_focused_border_before);
-	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
 .ui5-button-root::-moz-focus-inner {

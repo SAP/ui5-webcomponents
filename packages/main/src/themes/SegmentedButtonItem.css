@@ -116,7 +116,7 @@
 	box-sizing: border-box;
 	inset: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
-	border-radius: var(--_ui5_button_focused_border_radius);
+	border-radius: var(--_ui5_button_border_radius);
 }
 
 :host([desktop][active]) .ui5-segmented-button-item-root:focus-within:before,
