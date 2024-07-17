@@ -217,9 +217,11 @@ class RadioButtonGroup {
 		return previousRadioToSelect;
 	}
 
-	static enforceSingleSelection(radioBtn: RadioButton, groupName: string) {
+	static enforceSingleSelection(radioBtn: RadioButton, groupName: string, notAdding = false) {
+		if (notAdding && this.hasGroup(groupName) && !this.getGroup(groupName)!.includes(radioBtn)) {
+			return;
+		}
 		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
-
 		if (radioBtn.checked) {
 			if (!checkedRadio) {
 				this.checkedRadios.set(groupName, radioBtn);
