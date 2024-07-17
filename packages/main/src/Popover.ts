@@ -364,6 +364,12 @@ class Popover extends Popup {
 	async _show() {
 		super._show();
 
+		const opener = this.getOpenerHTMLElement(this.opener);
+
+		if (opener && this._isUI5Element(opener) && !opener.getDomRef()) {
+			return;
+		}
+
 		if (!this._opened) {
 			this._showOutsideViewport();
 		}
@@ -378,10 +384,10 @@ class Popover extends Popup {
 
 		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = this.getOpenerHTMLElement(this.opener)!.getBoundingClientRect();
+			this._openerRect = opener!.getBoundingClientRect();
 		}
 
-		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin() && this._oldPlacement) {
+		if (this._oldPlacement && this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
 			// reuse the old placement as the opener is not available,
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
@@ -476,6 +482,10 @@ class Popover extends Popup {
 			top: "-10000px",
 			left: "-10000px",
 		});
+	}
+
+	_isUI5Element(el: HTMLElement): el is UI5Element {
+		return "isUI5Element" in el;
 	}
 
 	get arrowDOM() {
