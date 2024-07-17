@@ -64,27 +64,9 @@
 			</ui5-list>
 		</div>
 	</ui5-flexible-column-layout>
-<ui5-flexible-column-layout>
-	...
-</ui5-flexible-column-layout>
-
-<script>
-	import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-
-	const fcl = document.querySelector("ui5-flexible-column-layout");
-	fcl.addEventListener("layout-change", (event) => {
-		console.error(`Layout changed to: ${event.detail.layout}`);
-		announce(`Layout changed to ${event.detail.layout}`);
-	});
-</script>
 
 	<script>
 		var fcl = document.getElementById("fcl3");
-		fcl.addEventListener("layout-change", function(event) {
-			console.error("Layout changed to: " + event.detail.layout);
-			const invisibleMessage = window["sap-ui-webcomponents-bundle"].invisibleMessage;
-			invisibleMessage.announce(`Layout changed to ${event.detail.layout}`);
-		});	
 		fcl._layoutsConfiguration = {
 			desktop: {
 				"OneColumn": {
