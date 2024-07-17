@@ -1501,6 +1501,32 @@ describe("MultiComboBox general interaction", () => {
 			assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
 		});
 
+		it("Should not open value state popup when popover is open after clicking n more link", async () => {
+			const mcb = await browser.$("#mcb-select-all-vs");
+
+			await mcb.scrollIntoView();
+			await mcb.click();
+
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const valueStatePopover = await mcb.shadow$("ui5-popover");
+
+			assert.notOk(await popover.getProperty("open"), "Popover with value state message header should not be opened.");
+			assert.ok(await valueStatePopover.getProperty("open"), "Value state popover should be opened.");
+
+			await mcb.keys("F4");
+			await browser.keys("ArrowUp");
+			await browser.keys("Enter");
+			await browser.keys("Tab");
+
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			nMoreText.click();
+
+			await browser.pause(1000);
+
+			assert.ok(await popover.getProperty("open"), "Popover with value state message header should be opened.");
+			assert.notOk(await valueStatePopover.getProperty("open"), "Value state popover should not be opened.");
+		});
+
 		it("Should apply correct text to the tokens overflow indicator", async () => {
 			const mcNItems = await browser.$("#mc-items");
 			const mcNMore = await browser.$("#mc-more");
