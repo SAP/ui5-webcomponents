@@ -477,11 +477,15 @@ class Suggestions {
 	 *
 	 */
 	_getItems(): Array<IInputSuggestionItem> {
-		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
+		const suggestionComponent = this._getComponent();
+
+		return suggestionComponent.getSlottedNodes<IInputSuggestionItem>("suggestionItems").flatMap(item => {
+			return item.hasAttribute("ui5-suggestion-item-group") ? [item, ...item.items!] : [item];
+		});
 	}
 
 	_getNonGroupItems(): Array<IInputSuggestionItemSelectable> {
-		return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]"));
+		return this._getItems().filter(item => !item.hasAttribute("ui5-suggestion-item-group")) as Array<IInputSuggestionItemSelectable>;
 	}
 
 	_getComponent(): SuggestionComponent {
