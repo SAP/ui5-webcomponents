@@ -3,6 +3,10 @@
 }
 
 :host {
+	border-radius: var(--_ui5_busy_indicator_empty_border_radius)
+}
+
+:host(:not(:empty)) {
 	border-radius: unset;
 }
 
@@ -103,7 +107,6 @@
 .ui5-busy-indicator-busy-area:focus-visible {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
-	border-radius: var(--_ui5_busy_indicator_focus_border_radius);
 }
 
 .ui5-busy-indicator-circles-wrapper {
