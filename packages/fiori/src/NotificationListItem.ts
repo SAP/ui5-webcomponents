@@ -476,6 +476,10 @@ class NotificationListItem extends NotificationListItemBase {
 		};
 	}
 
+	get _ariaLevel() {
+		return this.parentElement!.hasAttribute("ui5-li-notification-group") ? "2" : undefined;
+	}
+
 	get menuButtonDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-menu-btn")!;
 	}
