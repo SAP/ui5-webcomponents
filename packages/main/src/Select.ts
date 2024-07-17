@@ -570,14 +570,15 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_select(index: number) {
+		const selectedIndex = this._selectedIndex;
 		if (index < 0 || index >= this.options.length || this.options.length === 0) {
 			return;
 		}
-		if (this.options[this._selectedIndex]) {
-			this.options[this._selectedIndex].selected = false;
+		if (this.options[selectedIndex]) {
+			this.options[selectedIndex].selected = false;
 		}
 
-		if (this._selectedIndex !== index) {
+		if (selectedIndex !== index) {
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
