@@ -25,6 +25,7 @@
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	box-sizing: border-box;
+	border-radius: inherit;
 }
 
 .ui5-shellbar-menu-button,

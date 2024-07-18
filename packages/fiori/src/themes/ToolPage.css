@@ -1,0 +1,62 @@
+
+:host(:not([hidden])) {
+	width: 100%;
+	height: 100%;
+	display: block;
+	padding: 0.5rem 0.5rem 0 0.5rem;
+	background: var(--sapBackgroundColor);
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+::slotted([ui5-shellbar]) {
+	box-shadow: var(--_ui5_tool_page_box_shadow);
+	border-radius: 0.5rem;
+}
+
+.ui5-tool-page-root {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+.ui5-tool-page-header {
+
+}
+
+.ui5-tool-page-section {
+	display: flex;
+	flex: 1;
+	min-height: 0;
+	position: relative;
+}
+
+.ui5-tool-page-aside {
+	margin: 0.5rem 0.5rem 0 0;
+	transition: transform 0.3s;
+	z-index: 1;
+}
+
+.ui5-tool-page-phone .ui5-tool-page-aside {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.ui5-tool-page-content {
+	flex: 1;
+	min-width: 0;
+	margin: 0.5rem 0 0 0;
+
+	box-shadow: var(--_ui5_tool_page_box_shadow);
+	border-radius: 0.5rem 0.5rem 0 0;
+	background: var(--sapBackgroundColor);
+}
+
+:host([side-collapsed]) .ui5-tool-page-phone .ui5-tool-page-aside {
+	transform: translateX(calc(-100% - 0.25rem));
+}
