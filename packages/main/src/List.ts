@@ -715,22 +715,6 @@ class List extends UI5Element {
 		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
-	get loadingIndPosition() {
-		if (!this.grows) {
-			return "absolute";
-		}
-
-		return this._inViewport ? "absolute" : "sticky";
-	}
-
-	get styles() {
-		return {
-			loadingInd: {
-				position: this.loadingIndPosition,
-			},
-		};
-	}
-
 	get listAccessibleRole() {
 		return this.accessibleRole.toLowerCase();
 	}

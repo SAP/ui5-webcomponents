@@ -16,6 +16,13 @@
 	@ui5-_selection-requested={{onSelectionRequested}}
 	@ui5-_focus-requested={{onFocusRequested}}
 >
+	<ui5-busy-indicator
+		id="{{_id}}-busyIndicator"
+		delay="{{loadingDelay}}"
+		?active="{{loading}}"
+		?inert="{{loading}}"
+		class="ui5-list-busy-indicator"
+	>
 	<div class="ui5-list-scroll-container">
 		{{! header}}
 		{{#if header.length}}
@@ -66,23 +73,11 @@
 
 		<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span>
 	</div>
-
-	{{#if loading}}
-		<div class="ui5-list-loading-row">
-			<ui5-busy-indicator
-				delay="{{loadingDelay}}"
-				active
-				class="ui5-list-loading-ind"
-				style="{{styles.loadingInd}}"
-				data-sap-focus-ref
-			></ui5-busy-indicator>
-		</div>
-	{{/if}}
-
 	<ui5-drop-indicator
 		orientation="Horizontal"
 		.ownerReference="{{this}}"
 	></ui5-drop-indicator>
+	</ui5-busy-indicator>
 </div>
 
 
