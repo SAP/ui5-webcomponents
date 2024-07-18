@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** correct valueStateMessage documentation ([#9458](https://github.com/SAP/ui5-webcomponents/issues/9458)) ([62cbfb4](https://github.com/SAP/ui5-webcomponents/commit/62cbfb4a6a1174658337024487351c858cff41fb))
+* **ui5-combobox:** remove the cloning of the value state message ([#9384](https://github.com/SAP/ui5-webcomponents/issues/9384)) ([a24c6b7](https://github.com/SAP/ui5-webcomponents/commit/a24c6b79fb9215cba288873691fdfcd26cdc5c11)), closes [#9347](https://github.com/SAP/ui5-webcomponents/issues/9347)
+* **ui5-dialog, ui5-popover:** add missing ui5-title dependency ([#9480](https://github.com/SAP/ui5-webcomponents/issues/9480)) ([57b3d37](https://github.com/SAP/ui5-webcomponents/commit/57b3d37a2404d6f4ec4da8579fef188149dd2387))
+* **ui5-dialog:** fix draggable dialog header focusing with mouse ([#9420](https://github.com/SAP/ui5-webcomponents/issues/9420)) ([654306a](https://github.com/SAP/ui5-webcomponents/commit/654306a6e78af70a118afefd24fc4ec4ab15c6e5))
+* **ui5-option:** correct tooltip property forwarding ([#9502](https://github.com/SAP/ui5-webcomponents/issues/9502)) ([dde34fc](https://github.com/SAP/ui5-webcomponents/commit/dde34fc2d700ec337b787c2839b9026e16c26bfe)), closes [#9015](https://github.com/SAP/ui5-webcomponents/issues/9015)
+* **ui5-popover:** immediate open by dynamically created UI5Element no longer throws error ([#9486](https://github.com/SAP/ui5-webcomponents/issues/9486)) ([a4bc8e0](https://github.com/SAP/ui5-webcomponents/commit/a4bc8e088fcd241367538ad38bc1bd7a31935bbd))
+* **ui5-select:** prevent unnecessary change event ([#9489](https://github.com/SAP/ui5-webcomponents/issues/9489)) ([02059bc](https://github.com/SAP/ui5-webcomponents/commit/02059bc4a01536fa27e37a578ab6eb1499a016ee))
+* **ui5-select:** prevent unnecessary live-change event ([#9499](https://github.com/SAP/ui5-webcomponents/issues/9499)) ([1efb84b](https://github.com/SAP/ui5-webcomponents/commit/1efb84bf828d4426087981cdecb70adf9fd4a899))
+* **ui5-tabcontainer:** fix selected sub items screen readers announcement ([#9426](https://github.com/SAP/ui5-webcomponents/issues/9426)) ([fae1a3a](https://github.com/SAP/ui5-webcomponents/commit/fae1a3a0427593299d177ca486e15719065f43a1))
+* **ui5-tag:** fix wrapped text styles ([#9320](https://github.com/SAP/ui5-webcomponents/issues/9320)) ([2388edd](https://github.com/SAP/ui5-webcomponents/commit/2388eddd9692b9c5db5efbb95e81cbd6696f87af))
+* **ui5-toolbar:** prevent child events bubble ([#9464](https://github.com/SAP/ui5-webcomponents/issues/9464)) ([3361725](https://github.com/SAP/ui5-webcomponents/commit/33617258ca771b218406e10cab3343b4a3a6714d))
+
+
+### Features
+
+* **ui5-li-group:** drag and drop enabled ([#9415](https://github.com/SAP/ui5-webcomponents/issues/9415)) ([963e0c2](https://github.com/SAP/ui5-webcomponents/commit/963e0c2dba281958f66e8df3dc8d297d575b0154))
+* **ui5-prompt-input:** implement suggestions ([#9390](https://github.com/SAP/ui5-webcomponents/issues/9390)) ([a261cfb](https://github.com/SAP/ui5-webcomponents/commit/a261cfbfa06328e1f496a8a2acd1e4b22e78243d))
+* **ui5-title:** add new "size" property ([#9327](https://github.com/SAP/ui5-webcomponents/issues/9327)) ([8e430e2](https://github.com/SAP/ui5-webcomponents/commit/8e430e2692e94dffd806f80de40dcd85ce76bb44))
+
+
+
+
+
 # [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
 
 

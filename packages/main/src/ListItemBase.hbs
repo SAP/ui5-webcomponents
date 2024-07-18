@@ -8,6 +8,7 @@
 	@keydown="{{_onkeydown}}"
 	draggable="{{movable}}"
 	@click="{{_onclick}}"
+	{{> listItemAttributes}}
 >
 	{{> listItemContent}}
 </li>
@@ -18,4 +19,7 @@
 			<span part="title" class="ui5-li-title"><slot></slot></span>
 		</div>
 	</div>
+{{/inline}}
+
+{{#*inline "listItemAttributes"}}
 {{/inline}}
