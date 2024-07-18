@@ -43,8 +43,6 @@
 .ui5-popup-footer-root,
 :host([header-text]) .ui5-popup-header-text {
     margin: 0;
-    font-size: 1rem;
-    font-family: "72override", var(--_ui5_popup_header_font_family);
     display: flex;
     justify-content: center;
     align-items: center;

@@ -29,6 +29,7 @@
 		<div
 			data-ui5-cal-header-btn-year
 			class="ui5-calheader-arrowbtn ui5-calheader-middlebtn"
+			?hidden="{{_isHeaderYearButtonHidden}}"
 			tabindex="0"
 			role="button"
 			@click={{onHeaderShowYearPress}}

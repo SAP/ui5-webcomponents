@@ -39,7 +39,7 @@ class TableColumn extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	minWidth = Infinity;
+	minWidth: number = Infinity;
 
 	/**
 	 * The text for the column when it pops in.

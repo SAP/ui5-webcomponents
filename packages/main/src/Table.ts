@@ -16,7 +16,7 @@ import TableRow from "./TableRow.js";
 import type TableHeaderRow from "./TableHeaderRow.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import TableExtension from "./TableExtension.js";
-import TableSelection from "./TableSelection.js";
+import type TableSelection from "./TableSelection.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
 import {
@@ -24,13 +24,16 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
+import { isFeature } from "./TableUtils.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
  *
  * @public
+ * @experimental
  */
 interface ITableFeature extends UI5Element {
+	readonly identifier: string;
 	/**
 	 * Called when the table is activated.
 	 * @param table table instance
@@ -46,6 +49,7 @@ interface ITableFeature extends UI5Element {
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>
  * and provide growing/data loading functionality.
  * @public
+ * @experimental
  */
 interface ITableGrowing extends ITableFeature {
 	/**
@@ -80,6 +84,7 @@ type TableRowClickEventDetail = {
  *
  * The `ui5-table` can be enhanced in its functionalities by applying different features.
  * Features can be slotted into the `features` slot, to enable them in the component.
+ * Features need to be imported separately, as they are not enabled by default.
  *
  * The following features are currently available:
  *
@@ -141,6 +146,11 @@ type TableRowClickEventDetail = {
  * @extends UI5Element
  * @since 2.0
  * @public
+ * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
+ * Currently, it's considered experimental as its API is subject to change.
+ * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
+ * For compatibility reasons, we moved the previous Tabple implementation to the **@ui5/webcomponents-compat** package
+ * and will be maintained until the new Table is experimental.
  */
 @customElement({
 	tag: "ui5-table",
@@ -178,7 +188,14 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		invalidateOnChildChange: {
+			properties: ["navigated"],
+			slots: false,
+		},
+	})
 	rows!: Array<TableRow>;
 
 	/**
@@ -275,6 +292,9 @@ class Table extends UI5Element {
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
+
 	static i18nBundle: I18nBundle;
 	static async onDefine() {
 		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -313,6 +333,14 @@ class Table extends UI5Element {
 	}
 
 	onBeforeRendering(): void {
+		const renderNavigated = this._renderNavigated;
+		this._renderNavigated = this.rows.some(row => row.navigated);
+		if (renderNavigated !== this._renderNavigated) {
+			this.rows.forEach(row => {
+				row._renderNavigated = this._renderNavigated;
+			});
+		}
+
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();
 	}
@@ -321,12 +349,8 @@ class Table extends UI5Element {
 		this.features.forEach(feature => feature.onTableRendered?.());
 	}
 
-	_getFeature<Klass>(klass: any): Klass | undefined {
-		return this.features.find(feature => feature instanceof klass) as Klass;
-	}
-
 	_getSelection(): TableSelection | undefined {
-		return this._getFeature(TableSelection);
+		return this.features.find(feature => isFeature<TableSelection>(feature, "TableSelection")) as TableSelection;
 	}
 
 	_onEvent(e: Event) {
@@ -487,6 +511,9 @@ class Table extends UI5Element {
 			}
 			return `minmax(${cell.width}, ${cell.width})`;
 		}));
+		if (this._renderNavigated) {
+			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
+		}
 		return widths.join(" ");
 	}
 

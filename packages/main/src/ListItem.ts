@@ -65,6 +65,7 @@ type AccInfo = {
 	listItemAriaLabel?: string;
 	ariaOwns?: string;
 	tooltip?: string;
+	ariaKeyShortcuts?: string;
 }
 
 type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
@@ -163,6 +164,14 @@ abstract class ListItem extends ListItemBase {
 	 */
 	@property()
 	highlight: `${Highlight}` = "None";
+
+	/**
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	declare selected: boolean;
 
 	/**
 	 * Used to define the role of the list item.

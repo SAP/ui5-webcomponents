@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-tools
+
+
+
+
+
+# [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* template result comparison ([#9279](https://github.com/SAP/ui5-webcomponents/issues/9279)) ([3a02e3e](https://github.com/SAP/ui5-webcomponents/commit/3a02e3ec51ade59a9bdd27784a7be5a1229ef24f))
+
+
+### Features
+
+* add property initializers ([#8846](https://github.com/SAP/ui5-webcomponents/issues/8846)) ([eef0cc9](https://github.com/SAP/ui5-webcomponents/commit/eef0cc9b663fda6268b98e516ed46439435fa2b0))
+
+
+### BREAKING CHANGES
+
+* @property decorator must be adapted according to new type parameter
+
+
+
+
+
 # [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

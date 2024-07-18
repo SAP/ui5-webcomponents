@@ -132,7 +132,7 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -141,7 +141,7 @@ class RatingIndicator extends UI5Element {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.15.0
 	 */
@@ -243,6 +243,7 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
+			e.preventDefault();
 			return;
 		}
 

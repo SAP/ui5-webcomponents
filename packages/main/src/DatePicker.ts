@@ -306,7 +306,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -335,7 +335,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	/**
 	 * Defines the aria-label attribute for the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -344,7 +344,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -365,7 +365,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */

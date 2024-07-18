@@ -91,7 +91,8 @@ const SKIP_ITEMS_SIZE = 10;
  * @public
  */
 interface IComboBoxItem extends UI5Element {
-	text: string,
+	text?: string,
+	headerText?: string,
 	focused: boolean,
 	isGroupItem?: boolean,
 	selected?: boolean,
@@ -343,7 +344,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -352,7 +353,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -401,7 +402,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the `ui5-combobox` is in `Information`, `Warning` or `Error` value state.
+	 * when the `ui5-combobox` is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -521,7 +522,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._fireChangeEvent();
 
 		const focusedOutToItemsPicker = this.open && this._getPicker().contains(toBeFocused);
-		const focusedOutToValueState = this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused);
+		const focusedOutToValueState = this.valueStateOpen && this.contains(toBeFocused);
 
 		if (focusedOutToItemsPicker || focusedOutToValueState) {
 			e.stopImmediatePropagation();
@@ -697,7 +698,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
-		const allItems:Array<IComboBoxItem> = this._getItems();
+		const allItems:Array<IComboBoxItem> = this._getItems().filter(item => !isInstanceOfComboBoxItemGroup(item));
 		return Filters.StartsWith(str, allItems, "text");
 	}
 
@@ -780,13 +781,13 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		if (this.open) {
 			this._itemFocused = true;
-			this.value = isGroupItem ? "" : currentItem.text;
+			this.value = isGroupItem ? "" : currentItem.text!;
 			this.focused = false;
 
 			currentItem.focused = true;
 		} else {
 			this.focused = true;
-			this.value = isGroupItem ? nextItem.text : currentItem.text;
+			this.value = isGroupItem ? nextItem.text! : currentItem.text!;
 			currentItem.focused = false;
 		}
 
@@ -1065,7 +1066,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		const matchingItems: Array<IComboBoxItem> = (this._startsWithMatchingItems(current).filter(item => !isInstanceOfComboBoxItemGroup(item)));
+		const matchingItems: Array<IComboBoxItem> = this._startsWithMatchingItems(current);
 
 		if (matchingItems.length) {
 			return matchingItems[0];
@@ -1123,7 +1124,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
 		const listItem = e.detail.item as ComboBoxListItem;
 
-		this._selectedItemText = listItem.mappedItem.text;
+		this._selectedItemText = listItem.mappedItem.text || "";
 		this._selectionPerformed = true;
 
 		const sameItemSelected = this.value === this._selectedItemText;
@@ -1168,7 +1169,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {
-			announce(`${groupHeaderText} ${currentItem.text}`, InvisibleMessageMode.Polite);
+			announce(`${groupHeaderText} ${currentItem.headerText}`, InvisibleMessageMode.Polite);
 		} else {
 			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), InvisibleMessageMode.Polite);
 		}
@@ -1220,7 +1221,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_announceValueStateText() {
-		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
+		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessage.map(el => el.textContent).join(" ");
 
 		if (valueStateText) {
 			announce(valueStateText, InvisibleMessageMode.Polite);
@@ -1276,7 +1277,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
-		return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
 	get valueStateDefaultText(): string | undefined {
@@ -1285,10 +1286,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		return this.valueStateTextMappings[this.valueState];
-	}
-
-	get valueStateMessageText(): Array<Node> {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get valueStateTextMappings(): ValueStateAnnouncement {
