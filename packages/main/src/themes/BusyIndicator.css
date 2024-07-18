@@ -2,10 +2,6 @@
 	display: inline-block;
 }
 
-:host {
-	border-radius: var(--_ui5_busy_indicator_empty_border_radius)
-}
-
 :host(:not(:empty)) {
 	border-radius: unset;
 }
