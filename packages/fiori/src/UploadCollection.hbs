@@ -14,8 +14,8 @@
 			<slot slot="header" name="header"></slot>
 			<slot></slot>
 			{{#if _showNoData}}
-				<ui5-li-custom class="{{classes.noFiles}}">
-					<ui5-illustrated-message name="Tent" class="uc-no-files-illustration">
+				<ui5-li-custom class="{{classes.noFiles}}" type="Inactive">
+					<ui5-illustrated-message name="Tent">
 						<ui5-title slot="title" wrapping-type="None" level="H2">{{_noDataText}}</ui5-title>
 						<span slot="subtitle">{{_noDataDescription}}</span>
 					</ui5-illustrated-message>

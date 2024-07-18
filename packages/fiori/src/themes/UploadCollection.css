@@ -11,10 +11,6 @@
 	background-color: var(--sapGroup_ContentBackground);
 }
 
-.uc-no-files-illustration {
-	pointer-events: none;
-}
-
 /* Drag and Drop */
 .uc-dnd-overlay {
 	position: absolute;
