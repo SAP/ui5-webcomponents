@@ -310,15 +310,15 @@ exports.config = {
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
 	 * @param {Object} test test details
 	 */
-	afterTest: async function (test, context) {
+	afterTest: async function (test) {
 		// fetch the browser logs and fail the test if there are `console.error` messages with the `[UI5-FWK]` marker
 		const logs = await browser.getLogs('browser');
 		const severeLogs = logs
 			.filter(l => l.level === "SEVERE" && l.message.includes("[UI5-FWK]"))
 			.map(l => l.message);
-		assert.equal(severeLogs.length, 0, `[${test.title}]\n\n    ${severeLogs.join("\n    ")}`)
+
 		if (severeLogs.length) {
-			test.callback(new Error('Framework errors detected.'))
+			test.callback(new Error(`[${test.title}]\n\n    ${severeLogs.join("\n    ")}`));
 		}
 	},
 	/**
