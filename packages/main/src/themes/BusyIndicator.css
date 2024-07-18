@@ -2,10 +2,6 @@
 	display: inline-block;
 }
 
-:host(:not(:empty)) {
-	border-radius: unset;
-}
-
 :host([_is-busy]) {
 	color: var(--_ui5_busy_indicator_color);
 }
