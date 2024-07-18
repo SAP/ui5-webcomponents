@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** correct separator visualization ([#9478](https://github.com/SAP/ui5-webcomponents/issues/9478)) ([1be8d6c](https://github.com/SAP/ui5-webcomponents/commit/1be8d6c094827aeedcc6742a6aae81ce6cd2d966)), closes [#9477](https://github.com/SAP/ui5-webcomponents/issues/9477)
+* **ui5-wizard:** disabled steps are no longer clickable ([#9459](https://github.com/SAP/ui5-webcomponents/issues/9459)) ([2ea26ca](https://github.com/SAP/ui5-webcomponents/commit/2ea26caa0b4457a3b79edbbdfbbe206ad5713135))
+
+
+
+
+
 # [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
 
 
