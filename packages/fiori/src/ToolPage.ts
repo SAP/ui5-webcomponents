@@ -4,7 +4,11 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import {
+	isPhone,
+	isTablet,
+	isCombi,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
@@ -38,11 +42,22 @@ import ToolPageCss from "./generated/themes/ToolPage.css.js";
 	template: ToolPageTemplate,
 })
 class ToolPage extends UI5Element {
-	_sideCollapsed = false;
+	_sideCollapsed = isPhone() || (isTablet() && !isCombi());
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isPhone = isPhone();
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isTablet = isTablet() && !isCombi();
 
 	/**
 	 * Indicates whether if the side menu is collapsed.
-	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -82,14 +97,6 @@ class ToolPage extends UI5Element {
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	content!: Array<HTMLElement>;
-
-	get classes() {
-		return {
-			root: {
-				"ui5-tool-page-phone": isPhone(),
-			},
-		};
-	}
 }
 
 ToolPage.define();

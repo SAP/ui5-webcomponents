@@ -196,7 +196,7 @@ class SideNavigation extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	isTouchDevice = false;;
+	isTouchDevice = false;
 
 	static i18nBundle: I18nBundle;
 

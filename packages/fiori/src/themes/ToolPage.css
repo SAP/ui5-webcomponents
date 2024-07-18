@@ -9,9 +9,12 @@
 	overflow: hidden;
 }
 
-::slotted([ui5-shellbar]) {
-	box-shadow: var(--_ui5_tool_page_box_shadow);
-	border-radius: 0.5rem;
+:host(:not([hidden][is-tablet])) {
+	padding: 0.5rem;
+}
+
+:host(:not([hidden][is-phone])) {
+	padding: 0.25rem;
 }
 
 .ui5-tool-page-root {
@@ -39,7 +42,11 @@
 	z-index: 1;
 }
 
-.ui5-tool-page-phone .ui5-tool-page-aside {
+:host([is-phone]) .ui5-tool-page-aside {
+	margin: 0.25rem 0.25rem 0 0;
+}
+
+:host([is-phone]) .ui5-tool-page-aside {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -57,6 +64,20 @@
 	background: var(--sapBackgroundColor);
 }
 
-:host([side-collapsed]) .ui5-tool-page-phone .ui5-tool-page-aside {
+:host([is-phone]) .ui5-tool-page-content {
+	margin: 0.25rem 0 0 0;
+}
+
+:host([is-phone]) .ui5-tool-page-content,
+:host([is-tablet]) .ui5-tool-page-content {
+	border-radius: 0.5rem;
+}
+
+:host([side-collapsed][is-phone]) .ui5-tool-page-aside {
 	transform: translateX(calc(-100% - 0.25rem));
+}
+
+::slotted([ui5-shellbar]) {
+	box-shadow: var(--_ui5_tool_page_box_shadow);
+	border-radius: 0.5rem;
 }
