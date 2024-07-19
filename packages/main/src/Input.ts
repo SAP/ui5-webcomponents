@@ -1137,6 +1137,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_closePicker() {
 		this.open = false;
+		this._handleChange();
+	}
+
+	_cancelChange() {
+		this.open = false;
+		this._changeToBeFired = false;
+		this.value = this.previousValue;
 	}
 
 	_afterOpenPicker() {
@@ -1236,6 +1243,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			// value might change in the change event handler
 			this.typedInValue = this.value;
 			this.previousValue = this.value;
+			this._changeToBeFired = false;
 		}
 
 		this.valueBeforeSelectionStart = "";
