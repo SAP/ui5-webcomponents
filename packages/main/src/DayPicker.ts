@@ -278,7 +278,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelectedBetween) {
 				day.classes += " ui5-dp-item--selected-between";
-
 				day.parts += " day-cell-selected-between";
 			}
 
@@ -290,8 +289,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				day.classes += " ui5-dp-item--othermonth";
 			}
 
-			if (isWeekend) {
-				day.classes += " ui5-dp-item--weeekend";
+			if ((isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working") {
+				day.classes += " ui5-dp-item--weekend";
 			}
 
 			if (isDisabled) {
