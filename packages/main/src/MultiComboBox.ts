@@ -1650,7 +1650,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		// force resize of the tokenizer on invalidation
 		this._tokenizer._handleResize();
 		this._tokenizer.preventInitialFocus = true;
-		this._tokenizer.readonly = this.readonly;
 
 		if (this.open && !isPhone()) {
 			this._tokenizer.expanded = true;
