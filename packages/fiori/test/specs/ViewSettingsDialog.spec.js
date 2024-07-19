@@ -129,6 +129,19 @@ describe("ViewSettingsDialog general interaction", () => {
 		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
 	});
 
+	it("test ViewSettingsDialog reset settings", async () => {
+		const btnOpenDialog = await browser.$("#btnResetPrevented");
+		const viewSettingsDialog = await browser.$("#vsdResetPrevented");
+		await btnOpenDialog.click();
+
+		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
+
+		const selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Descending", "sortOrder has returned to the initial state");
+
+		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
+	});
+
 	it("test ViewSettingsDialog set settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const btnSetSettings = await browser.$("#btnChangeSettings");
