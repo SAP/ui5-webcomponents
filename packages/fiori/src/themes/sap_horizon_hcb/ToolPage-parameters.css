@@ -1,7 +1,0 @@
-@import "../base/ToolPage-parameters.css";
-
-:root {
-	--_ui5_tool_page_shadow_color1: var(--sapContent_ShadowColor);
-	--_ui5_tool_page_shadow_color2: color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
-	--_ui5_tool_page_box_shadow: 0 0 0 0.0625rem var(--_ui5_tool_page_shadow_color1), 0 0.5rem 1rem 0 var(--_ui5_tool_page_shadow_color2);
-}

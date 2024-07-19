@@ -12,10 +12,10 @@ import {
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
-import ToolPageTemplate from "./generated/templates/ToolPageTemplate.lit.js";
+import NavigationLayoutTemplate from "./generated/templates/NavigationLayoutTemplate.lit.js";
 
 // Styles
-import ToolPageCss from "./generated/themes/ToolPage.css.js";
+import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 
 /**
  * @class
@@ -25,23 +25,23 @@ import ToolPageCss from "./generated/themes/ToolPage.css.js";
  * The `ui5-tool-page` is a container ...
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents-fiori/dist/ToolPage.js";`
+ * `import "@ui5/webcomponents-fiori/dist/NavigationLayout.js";`
  * @constructor
  * @extends UI5Element
  * @since 2.1.0
  * @public
  */
 @customElement({
-	tag: "ui5-tool-page",
+	tag: "ui5-navigation-layout",
 	languageAware: true,
 	renderer: litRender,
 	styles: [
 		browserScrollbarCSS,
-		ToolPageCss,
+		NavigationLayoutCss,
 	],
-	template: ToolPageTemplate,
+	template: NavigationLayoutTemplate,
 })
-class ToolPage extends UI5Element {
+class NavigationLayout extends UI5Element {
 	_sideCollapsed = isPhone() || (isTablet() && !isCombi());
 
 	/**
@@ -101,6 +101,6 @@ class ToolPage extends UI5Element {
 	content!: Array<HTMLElement>;
 }
 
-ToolPage.define();
+NavigationLayout.define();
 
-export default ToolPage;
+export default NavigationLayout;

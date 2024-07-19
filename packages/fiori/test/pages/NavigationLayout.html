@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Tool Page</title>
+	<title>Navigation Layout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script data-ui5-config type="application/json">
 		{
@@ -15,7 +15,7 @@
 
 <body class="sidenavigation1auto">
 
-	<ui5-tool-page id="toolPage1">
+	<ui5-navigation-layout id="nl1">
 		<ui5-shellbar
 			slot="header"
 			primary-title="UI5 Web Components"
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 		</div>
-	</ui5-tool-page>
+	</ui5-navigation-layout>
 
 	<script>
 		var sideNavigation = document.querySelector("ui5-side-navigation"),
@@ -82,7 +82,7 @@
 			clickCounter = 0;
 
 		document.querySelector("#startButton").addEventListener("click", function (event) {
-			toolPage1.sideCollapsed = !toolPage1.sideCollapsed;
+			nl1.sideCollapsed = !nl1.sideCollapsed;
 		});
 
 		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {

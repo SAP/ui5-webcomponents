@@ -34,7 +34,7 @@ import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SortItem from "./SortItem.js";
 import Timeline from "./Timeline.js";
-import ToolPage from "./ToolPage.js";
+import NavigationLayout from "./NavigationLayout.js";
 import UploadCollection from "./UploadCollection.js";
 import UploadCollectionItem from "./UploadCollectionItem.js";
 import ViewSettingsDialog from "./ViewSettingsDialog.js";
