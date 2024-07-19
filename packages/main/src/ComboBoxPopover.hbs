@@ -6,6 +6,7 @@
 	style="{{styles.suggestionsPopover}}"
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
+	accessible-name="{{_popupLabel}}"
 >
 	<ui5-busy-indicator
 		?active={{loading}}
