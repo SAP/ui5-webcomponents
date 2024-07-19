@@ -77,6 +77,7 @@ import {
 	INPUT_SUGGESTIONS_MORE_HITS,
 	INPUT_SUGGESTIONS_NO_HIT,
 	INPUT_CLEAR_ICON_ACC_NAME,
+	INPUT_AVALIABLE_VALUES,
 	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -1412,6 +1413,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get clearIconAccessibleName() {
 		return Input.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
+	}
+
+	get _popupLabel() {
+		return Input.i18nBundle.getText(INPUT_AVALIABLE_VALUES);
 	}
 
 	get inputType() {
