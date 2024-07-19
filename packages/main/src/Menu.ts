@@ -17,7 +17,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
@@ -363,8 +363,7 @@ class Menu extends UI5Element {
 	}
 
 	get menuHeaderTextPhone() {
-		const menu = this as Menu;
-		const parentMenuItem = this._getParentMenuItem(menu);
+		const parentMenuItem = this._getParentMenuItem(this);
 		return parentMenuItem ? parentMenuItem.text : this.headerText;
 	}
 
@@ -412,8 +411,7 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	async showAt(opener: HTMLElement): Promise<void> {
-		const menu = this as Menu;
-		let parentMenuItem = this._getParentMenuItem(menu);
+		let parentMenuItem = this._getParentMenuItem(this);
 
 		if (!this._isSubMenu) {
 			parentMenuItem = undefined;
@@ -447,8 +445,7 @@ class Menu extends UI5Element {
 	}
 
 	_navigateBack() {
-		const menu = this as Menu;
-		const parentMenuItem = this._getParentMenuItem(menu);
+		const parentMenuItem = this._getParentMenuItem(this);
 		if (parentMenuItem) {
 			this._closeItemSubMenu(parentMenuItem, true);
 		}
@@ -482,8 +479,7 @@ class Menu extends UI5Element {
 		let subMenuRef = this._getSubmenuReference(item);
 
 		if ((!subMenu && !this._isSubMenu) || (!subMenuRef && this._isSubMenu)) {
-			const ctor = this.constructor as typeof Menu;
-			subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
+			subMenu = document.createElement(this.tagName.toLowerCase()) as Menu;
 			subMenu._isSubMenu = true;
 			subMenu.setAttribute("id", `submenu-${opener.id}`);
 			subMenu._parentMenuItem = item;
@@ -617,8 +613,7 @@ class Menu extends UI5Element {
 	}
 
 	_busyMouseOver() {
-		const menu = this as Menu;
-		const parentMenuItem = this._getParentMenuItem(menu);
+		const parentMenuItem = this._getParentMenuItem(this);
 		if (parentMenuItem) {
 			parentMenuItem._preventSubMenuClose = true;
 		}
