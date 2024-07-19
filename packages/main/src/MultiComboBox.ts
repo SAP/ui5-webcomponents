@@ -84,6 +84,7 @@ import {
 	SELECT_OPTIONS,
 	SHOW_SELECTED_BUTTON,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
+	COMBOBOX_AVAILABLE_OPTIONS,
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 	MCB_SELECTED_ITEMS,
 	INPUT_CLEAR_ICON_ACC_NAME,
@@ -471,7 +472,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -1988,6 +1989,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const selected = items.filter(item => item.selected);
 
 		return MultiComboBox.i18nBundle.getText(MCB_SELECTED_ITEMS, selected.length, items.length);
+	}
+
+	get _popupLabel() {
+		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
 	}
 
 	get classes(): ClassMap {

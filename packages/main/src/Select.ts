@@ -306,7 +306,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 *
 	 * **Note:** If the component has `suggestionItems`,
 	 * the `valueStateMessage` would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
@@ -570,14 +570,15 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_select(index: number) {
+		const selectedIndex = this._selectedIndex;
 		if (index < 0 || index >= this.options.length || this.options.length === 0) {
 			return;
 		}
-		if (this.options[this._selectedIndex]) {
-			this.options[this._selectedIndex].selected = false;
+		if (this.options[selectedIndex]) {
+			this.options[selectedIndex].selected = false;
 		}
 
-		if (this._selectedIndex !== index) {
+		if (selectedIndex !== index) {
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
@@ -660,10 +661,15 @@ class Select extends UI5Element implements IFormInputElement {
 		const options: Array<IOption> = this.options;
 
 		const previousOption = options[oldIndex];
+		const nextOption = options[newIndex];
+
+		if (previousOption === nextOption) {
+			return;
+		}
+
 		previousOption.selected = false;
 		previousOption.focused = false;
 
-		const nextOption = options[newIndex];
 		nextOption.selected = true;
 		nextOption.focused = true;
 

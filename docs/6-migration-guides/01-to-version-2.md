@@ -1369,7 +1369,7 @@ Now you have to use it like:
 ```html
 <ui5-li additional-text-state="Negative"></ui5-li>
 <ui5-li additional-text-state="Critical"></ui5-li>
-<ui5-li additional-text-state="Success"></ui5-li>
+<ui5-li additional-text-state="Positive"></ui5-li>
 ```
 
 - The `image` property has been removed and the `imageContent` slot has been renamed to `image`.
@@ -2286,7 +2286,7 @@ Now you have to use it like:
 ```html
 <ui5-tree-item additional-text-state="Negative"></ui5-tree-item>
 <ui5-tree-item additional-text-state="Critical"></ui5-tree-item>
-<ui5-tree-item additional-text-state="Success"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Positive"></ui5-tree-item>
 ```
 
 ### ui5-toast
