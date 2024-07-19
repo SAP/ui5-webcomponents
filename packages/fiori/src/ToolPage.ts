@@ -68,8 +68,10 @@ class ToolPage extends UI5Element {
 			return;
 		}
 
-		if (this.sideContent.length > 0) {
-			(this.sideContent[0] as SideNavigation).collapsed = value;
+		const sideNavigation = this.querySelector("[ui5-side-navigation]") as SideNavigation;
+
+		if (sideNavigation) {
+			sideNavigation.collapsed = value;
 		}
 	}
 
