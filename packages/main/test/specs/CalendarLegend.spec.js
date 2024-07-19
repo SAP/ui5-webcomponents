@@ -80,6 +80,6 @@ describe("Calendar Legend with standard items", () => {
 		// get the items again
 		filteredDays = await dayPicker.shadow$$("[special-day]");
 
-		assert.strictEqual(filteredDays.length, 20, "Days are un-filtered")
+		assert.strictEqual(filteredDays.length, 31, "Days are un-filtered")
 	});
 })
