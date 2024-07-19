@@ -42,6 +42,7 @@
 	z-index: 1;
 }
 
+:host([is-phone]) .ui5-nl-aside,
 :host([side-collapsed]) .ui5-nl-aside {
 	z-index: 3;
 }
