@@ -6,16 +6,19 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
 	isShow,
+	isEnter,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -44,6 +47,7 @@ import {
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -203,24 +207,24 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 class TimePicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines a formatted time value.
-	 * @default undefined
+	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
 	 */
 	@property()
-	value?: string;
+	value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	name = "";
+	name?: string;
 
 	/**
 	 * Defines the value state of the component.
@@ -280,6 +284,33 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@property({ type: Boolean })
 	open = false;
 
+	/**
+	 * Defines whether the component is required.
+	 * @since 2.1.0
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	required = false;
+
+	/**
+	 * Defines the aria-label attribute for the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.1.0
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
+	 * Receives id (or many ids) of the elements that label the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.1.0
+	 */
+	@property()
+	accessibleNameRef?: string;
+
 	@property({ type: Boolean, noAttribute: true })
 	_isInputsPopoverOpen = false;
 
@@ -289,7 +320,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
+	 * when the `ui5-time-picker` is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -306,9 +337,16 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
 	}
+	get formValidityMessage() {
+		return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
 
 	async formElementAnchor() {
-		return this.getFocusDomRefAsync();
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
 	}
 
 	get formFormattedValue(): FormData | string | null {
@@ -335,6 +373,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
+			"ariaRequired": this.required,
+			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
 
@@ -343,8 +383,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @default null
 	 */
-	get dateValue(): Date | Date[] | null {
-		return this.getFormat().parse(this._effectiveValue as string);
+	get dateValue(): Date | null {
+		return this.getFormat().parse(this._effectiveValue) as Date;
 	}
 
 	/**
@@ -556,7 +596,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		if (this.open) {
 			return;
 		}
-		if (isPageUpShiftCtrl(e)) {
+
+		if (isEnter(e)) {
+			if (this._internals?.form) {
+				submitForm(this);
+			}
+		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
 			this._modifyValueBy(1, "second");
 		} else if (isPageUpShift(e)) {
@@ -630,7 +675,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
+		const date = this.getFormat().parse(this._effectiveValue) as Date;
 		if (!date) {
 			return;
 		}

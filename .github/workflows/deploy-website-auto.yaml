@@ -1,8 +1,12 @@
-name: Deploy Website [auto]
+name: Deploy Website Nightly [auto]
 
 on:
   schedule:
   - cron: "00 00 * * *"
+  workflow_run:
+    workflows: ["Release RC version [auto]"]
+    types:
+        - completed
 
 jobs:
   deploy:

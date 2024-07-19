@@ -25,6 +25,7 @@ import RadioButton from "./RadioButton.js";
  * @extends TableRowBase
  * @since 2.0
  * @public
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-row",
@@ -52,13 +53,13 @@ class TableRow extends TableRowBase {
 	cells!: Array<TableCell>;
 
 	/**
-	 * Unique identifier of the component.
+	 * Unique identifier of the row.
 	 *
 	 * @default ""
 	 * @public
 	 */
 	@property()
-	key = "";
+	rowKey = "";
 
 	/**
 	 * Defines the interactive state of the row.
@@ -68,6 +69,18 @@ class TableRow extends TableRowBase {
 	 */
 	@property({ type: Boolean })
 	interactive = false;
+
+	/**
+	 * Defines the navigated state of the row.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	navigated = false;
+
+	@property({ type: Boolean, noAttribute: true })
+	_renderNavigated = false;
 
 	static async onDefine() {
 		await super.onDefine();
@@ -80,6 +93,11 @@ class TableRow extends TableRowBase {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.toggleAttribute("_interactive", this._isInteractive);
+		if (this._renderNavigated && this.navigated) {
+			this.setAttribute("aria-current", "true");
+		} else {
+			this.removeAttribute("aria-current");
+		}
 	}
 
 	async focus(focusOptions?: FocusOptions | undefined): Promise<void> {

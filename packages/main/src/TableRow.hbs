@@ -21,6 +21,10 @@
     <slot name="{{_individualSlot}}"></slot>
 {{/each}}
 
+{{#if _renderNavigated}}
+    <ui5-table-cell id="navigated-cell" excluded-from-navigation></ui5-table-cell>
+{{/if}}
+
 {{#if _popinCells.length}}
     <ui5-table-cell id="popin-cell">
         {{#each _popinCells}}
