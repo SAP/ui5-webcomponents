@@ -261,6 +261,8 @@ class NotificationListItem extends NotificationListItemBase {
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
 
+	_ariaLevel : string | undefined = undefined;
+
 	constructor() {
 		super();
 
@@ -475,10 +477,6 @@ class NotificationListItem extends NotificationListItemBase {
 				expanded: this._showMorePressed,
 			},
 		};
-	}
-
-	get _ariaLevel() {
-		return this.parentElement!.hasAttribute("ui5-li-notification-group") ? "2" : undefined;
 	}
 
 	get menuButtonDOM() {
