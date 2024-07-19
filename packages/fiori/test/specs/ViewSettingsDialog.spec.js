@@ -129,19 +129,6 @@ describe("ViewSettingsDialog general interaction", () => {
 		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
 	});
 
-	it("test ViewSettingsDialog reset settings", async () => {
-		const btnOpenDialog = await browser.$("#btnResetPrevented");
-		const viewSettingsDialog = await browser.$("#vsdResetPrevented");
-		await btnOpenDialog.click();
-
-		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
-
-		const selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
-		assert.include(selectedLiText, "Descending", "sortOrder has returned to the initial state");
-
-		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
-	});
-
 	it("test ViewSettingsDialog set settings", async () => {
 		const btnOpenDialog = await browser.$("#btnOpenDialog");
 		const btnSetSettings = await browser.$("#btnChangeSettings");
@@ -188,5 +175,19 @@ describe("ViewSettingsDialog general interaction", () => {
 		assert.strictEqual(await vsdSegmentedButton.isDisplayed(), false, "Segmented button is not built when there is only set of items");
 
 		await browser.keys("Escape");
+	});
+
+	it("test ViewSettingsDialog reset settings", async () => {
+		const btnOpenDialog = await browser.$("#btnResetPrevented");
+		const viewSettingsDialog = await browser.$("#vsdResetPrevented");
+		await btnOpenDialog.click();
+
+		const descendingOrderElement = await viewSettingsDialog.shadow$("ui5-list").$$("ui5-li")[1];
+		await descendingOrderElement.click();
+		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
+		const selectedLiText = await viewSettingsDialog.shadow$("ui5-list").$("ui5-li[selected]").getText();
+		assert.include(selectedLiText, "Descending", "sortOrder has returned to the initial state");
+
+		await (await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-footer").$$("ui5-button"))[1].click();
 	});
 });
