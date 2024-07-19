@@ -261,7 +261,7 @@ class NotificationListItem extends NotificationListItemBase {
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
 
-	_ariaLevel : string | undefined = undefined;
+	_ariaLevel : string | undefined;
 
 	constructor() {
 		super();
