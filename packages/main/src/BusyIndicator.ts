@@ -200,7 +200,7 @@ class BusyIndicator extends UI5Element {
 			return;
 		}
 
-		e.stopImmediatePropagation();
+		// e.stopImmediatePropagation();
 
 		// move the focus to the last element in this DOM and let TAB continue to the next focusable element
 		if (isTabNext(e)) {

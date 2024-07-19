@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -13,6 +14,7 @@ import {
 	ARIA_LABEL_CARD_CONTENT,
 } from "./generated/i18n/i18n-defaults.js";
 import type CardHeader from "./CardHeader.js";
+import type BusyIndicator from "./BusyIndicator.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
@@ -85,6 +87,9 @@ class Card extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	header!: Array<CardHeader>;
 
+	@slot()
+	loadingIndicator!: Array<BusyIndicator>;
+
 	static i18nBundle: I18nBundle;
 
 	get classes() {
@@ -113,6 +118,32 @@ class Card extends UI5Element {
 
 	static async onDefine() {
 		Card.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	_redirectFocus(e: FocusEvent) {
+		if (!this._isLoading) {
+			return;
+		}
+
+		if (!this.contains(e.relatedTarget as Node)) {
+			e.preventDefault();
+			this.loadingIndicator[0].focus();
+		}
+	}
+
+	_handleKeydown(e: KeyboardEvent) {
+		if (!this._isLoading) {
+			return;
+		}
+
+		// move the focus to the last element in this DOM and let TAB continue to the next focusable element
+		if (isTabNext(e)) {
+			this.shadowRoot!.querySelector<HTMLElement>("[data-ui5-focus-redirect]")!.focus();
+		}
+	}
+
+	get _isLoading() {
+		return this.loadingIndicator[0]?.active;
 	}
 }
 
