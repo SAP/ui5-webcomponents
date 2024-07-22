@@ -90,10 +90,10 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	subtitleText?: string;
 
 	@property({ type: Boolean })
-	_firstItemInTimeline!: boolean;
+	_firstItemInTimeline = false;
 
 	@property({ type: Boolean })
-	_isNextItemGroup!: boolean;
+	_isNextItemGroup = false;
 
 	@property({ noAttribute: true })
 	forcedTabIndex?: string = "-1";
@@ -117,20 +117,20 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hideBubble!: boolean;
+	hideBubble = false;
 
 	/**
 	 * Marks the last `<ui5-timeline-item>`
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_lastItem!: boolean;
+	_lastItem = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hidden!: boolean;
+	hidden = false;
 
 	isGroupItem = false;
 
@@ -146,13 +146,15 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	}
 
 	onBeforeRendering() {
-		// Add margin to empty timeline items in a group to match the height of those with content.
-		if (this.layout === TimelineLayout.Horizontal) {
-			if ((this.parentElement as ITimelineItem)?.isGroupItem && !this.innerHTML) {
-				this.style.setProperty("margin-block-end", "3.75rem");
-			} else if ((this.parentElement as ITimelineItem)?.isGroupItem && this.textContent) {
-				this.style.setProperty("margin-block-end", "2.25rem");
-			}
+		if (this.layout !== TimelineLayout.Horizontal) {
+			return;
+		}
+
+		// Add margin to empty timeline items in a group to match the height of those with content (in horizontal layout only).
+		if ((this.parentElement as ITimelineItem)?.isGroupItem && !this.innerHTML) {
+			this.style.setProperty("margin-block-end", "3.75rem");
+		} else if ((this.parentElement as ITimelineItem)?.isGroupItem && this.textContent) {
+			this.style.setProperty("margin-block-end", "2.25rem");
 		}
 	}
 

@@ -28,17 +28,17 @@ import TimelineLayout from "./types/TimelineLayout.js";
  * @public
  */
 interface ITimelineItem extends UI5Element, ITabbable {
-	_lastItem: boolean;
 	layout: `${TimelineLayout}`;
-	icon?: string;
-	_isNextItemGroup?: boolean;
-	forcedLineWidth?: string;
 	isGroupItem: boolean;
+	forcedLineWidth?: string;
+	icon?: string;
 	nameClickable?: boolean;
 	positionInGroup?: number;
-	focusLink?(): void;
 	collapsed?: boolean;
 	items?: Array<ITimelineItem>;
+	focusLink?(): void;
+	_lastItem: boolean;
+	_isNextItemGroup?: boolean;
 	_firstItemInTimeline?: boolean;
 }
 
@@ -129,16 +129,19 @@ class Timeline extends UI5Element {
 	onBeforeRendering() {
 		this._itemNavigation._navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
-		if (this.items) {
-			for (let i = 0; i < this.items.length; i++) {
-				this.items[i].layout = this.layout;
-				if (this.items[i + 1] && !!this.items[i + 1].icon) {
-					this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
-				} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
-					this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
-				}
+		if (!this.items) {
+			return;
+		}
+
+		for (let i = 0; i < this.items.length; i++) {
+			this.items[i].layout = this.layout;
+			if (this.items[i + 1] && !!this.items[i + 1].icon) {
+				this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
+			} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
+				this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
 			}
 		}
+
 		this._setLastItem();
 		this._setIsNextItemGroup();
 		this.items[0]._firstItemInTimeline = true;
@@ -162,14 +165,14 @@ class Timeline extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ITimelineItem;
 
+		if (target.nameClickable && getEventMark(e) !== "link") {
+			return;
+		}
+
 		if (isTabNext(e)) {
-			if (!target.nameClickable || getEventMark(e) === "link") {
-				this._handleNextOrPreviousItem(e, true);
-			}
+			this._handleNextOrPreviousItem(e, true);
 		} else if (isTabPrevious(e)) {
-			if ((!target.nameClickable || getEventMark(e) === "link")) {
-				this._handleNextOrPreviousItem(e);
-			}
+			this._handleNextOrPreviousItem(e);
 		}
 	}
 
@@ -182,7 +185,7 @@ class Timeline extends UI5Element {
 		}
 
 		const nextTargetIndex = isNext ? this._navigatableItems.indexOf(updatedTarget) + 1 : this._navigatableItems.indexOf(updatedTarget) - 1;
-		const nextTarget = this._navigatableItems[nextTargetIndex] as ITimelineItem | TimelineGroupItem | ToggleButton;
+		const nextTarget = this._navigatableItems[nextTargetIndex];
 
 		if (!nextTarget) {
 			return;
@@ -197,12 +200,15 @@ class Timeline extends UI5Element {
 
 	get _navigatableItems() {
 		const navigatableItems: Array<ITimelineItem | ToggleButton> = [];
+
+		if (!this.items) {
+			return [];
+		}
+
 		this.items.forEach(item => {
 			if (!item.isGroupItem) {
 				navigatableItems.push(item);
-			}
-
-			if (item.isGroupItem) {
+			} else {
 				navigatableItems.push(item.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!);
 			}
 

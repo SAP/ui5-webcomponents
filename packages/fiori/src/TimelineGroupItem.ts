@@ -39,8 +39,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	dependencies: [TimelineItem, ToggleButton],
 })
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
-	isGroupItem = true;
-
 	/**
 	 * Defines the text of the button that expands and collapses the group.
 	 * @public
@@ -82,7 +80,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_lastItem!: boolean;
+	_lastItem = false;
 
 	/**
 	 * Determines if the item afterwards is a group item.
@@ -90,60 +88,52 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isNextItemGroup!: boolean;
-
-	@property()
-	hidden!: boolean;
+	_isNextItemGroup = false;
 
 	@property({ type: Boolean })
-	_firstItemInTimeline!: boolean;
+	hidden = false;
+
+	@property({ type: Boolean })
+	_firstItemInTimeline = false;
 
 	@property({ noAttribute: true })
 	forcedTabIndex = "-1";
 
+	isGroupItem = true;
+
 	onBeforeRendering() {
+		if (!this.items || !this.items.length) {
+			return;
+		}
+
 		this.itemsCount = this.items.length;
 		this._setGroupItemProps();
 	}
 
 	_setGroupItemProps() {
-		this._setLastItemProperty();
-		this._setFirstItemInTimeline();
-		this._setPositionInGroup();
-		this._setGroupItemsHidden();
-		this._setItemsLayoutAndForcedLineWidth();
-	}
+		const items = this.items;
+		const itemsLength = items.length;
 
-	_setFirstItemInTimeline() {
-		if (this.items.length && this._firstItemInTimeline) {
-			this.items[0]._firstItemInTimeline = true;
+		if (itemsLength && this._firstItemInTimeline) {
+			items[0]._firstItemInTimeline = true;
 		}
-	}
 
-	_setPositionInGroup() {
-		this.items.forEach((item, index) => {
-			item.positionInGroup = index + 1;
-		});
-	}
-
-	_setGroupItemsHidden() {
-		const groupItems = this.items;
-		if (groupItems) {
-			groupItems.forEach(item => {
-				item.hidden = !!this.collapsed;
-			});
+		if (this.collapsed) {
+			items[itemsLength - 1]._lastItem = false;
+		} else if (this._lastItem) {
+			items[itemsLength - 1]._lastItem = true;
 		}
-	}
 
-	_setItemsLayoutAndForcedLineWidth() {
-		if (this.items) {
-			for (let i = 0; i < this.items.length; i++) {
-				this.items[i].layout = this.layout;
-				if (this.items[i + 1] && !!this.items[i + 1].icon) {
-					this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
-				} else if (this.items[i].icon && this.items[i + 1] && !this.items[i + 1].icon) {
-					this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
-				}
+		for (let i = 0; i < itemsLength; i++) {
+			const item = items[i];
+			item.positionInGroup = i + 1;
+			item.hidden = !!this.collapsed;
+			item.layout = this.layout;
+
+			if (items[i + 1] && !!items[i + 1].icon) {
+				item.forcedLineWidth = SHORT_LINE_WIDTH;
+			} else if (item.icon && items[i + 1] && !items[i + 1].icon) {
+				item.forcedLineWidth = LARGE_LINE_WIDTH;
 			}
 		}
 	}
@@ -154,18 +144,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 	get _groupName() {
 		return this.groupName;
-	}
-
-	_setLastItemProperty() {
-		const items = this.items;
-
-		if (items && items.length > 0) {
-			if (this.collapsed) {
-				items[items.length - 1]._lastItem = false;
-			} else if (this._lastItem) {
-				items[items.length - 1]._lastItem = true;
-			}
-		}
 	}
 
 	get groupItemIcon() {
