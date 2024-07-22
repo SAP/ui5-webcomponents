@@ -317,7 +317,7 @@ const parseComponentDeclaration = (declaration, fileContent) => {
     let additionalInfo;
 
     if (declaration.customElement) {
-        additionalInfo = `\`${declaration.tagName}\``;
+        additionalInfo = `\`\<${declaration.tagName}\>\``;
     }
 
     if (declaration._ui5since) {
