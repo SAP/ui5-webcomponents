@@ -388,7 +388,7 @@
 		listEvents.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			selectionChangeResultField.value = `${selectionChangeCounter}`;
-			selectionChangeResultFieldRadio.value = event.detail.selectionComponentPressed;
+			selectionChangeResultFieldRadio.value = `${event.detail.selectionComponentPressed}`;
 		});
 
 		listEvents.addEventListener("ui5-selection-change", function(event) {
