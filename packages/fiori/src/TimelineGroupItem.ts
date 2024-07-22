@@ -102,7 +102,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	isGroupItem = true;
 
 	onBeforeRendering() {
-		if (!this.items || !this.items.length) {
+		if (!this.items.length) {
 			return;
 		}
 

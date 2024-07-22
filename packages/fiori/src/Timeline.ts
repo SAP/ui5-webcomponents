@@ -129,7 +129,7 @@ class Timeline extends UI5Element {
 	onBeforeRendering() {
 		this._itemNavigation._navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
-		if (!this.items) {
+		if (!this.items.length) {
 			return;
 		}
 
@@ -201,7 +201,7 @@ class Timeline extends UI5Element {
 	get _navigatableItems() {
 		const navigatableItems: Array<ITimelineItem | ToggleButton> = [];
 
-		if (!this.items) {
+		if (!this.items.length) {
 			return [];
 		}
 
