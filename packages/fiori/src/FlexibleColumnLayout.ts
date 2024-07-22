@@ -503,8 +503,11 @@ class FlexibleColumnLayout extends UI5Element {
 	getCustomColumnLayout(layout: `${FCLLayout}`) {
 		if (this.mediaAllowsCustomConfiguration()) {
 			const customLayout = this.layoutsConfiguration[this.media]?.[layout]?.layout;
-			if (customLayout && this.isValidColumnLayout(customLayout)) {
-				return [...customLayout]; // preserve orignal for comparison
+			if (customLayout) {
+				const normalizedWidths = this.normalizeColumnWidths(customLayout); // satisfy min-width constraint
+				if (this.isValidColumnLayout(normalizedWidths)) { // satisfy layout-specific contraints
+					return normalizedWidths;
+				}
 			}
 		}
 	}
@@ -844,22 +847,64 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	isValidColumnLayout(columnLayout: (string | 0)[]) {
-		const pxWidths = columnLayout.map(x => this.convertColumnWidthToPixels(x)),
-			totalWidth = pxWidths.reduce((i, sum) => i + sum);
+		const pxWidths = columnLayout?.map(w => this.convertColumnWidthToPixels(w));
+		const totalWidth = pxWidths.reduce((i, sum) => i + sum);
 
 		if (Math.round(totalWidth) !== Math.round(this._availableWidthForColumns)) {
 			return false;
 		}
 
-		const hasColumnBelowMinWidth = pxWidths.some(pxWidth => {
-			// ceil before comparing to avoid floating point precision issues
-			return (pxWidth > 0) && (Math.ceil(pxWidth) < COLUMN_MIN_WIDTH);
-		});
-		if (hasColumnBelowMinWidth) {
-			return false;
+		return this.verifyColumnWidthsMatchLayout(pxWidths);
+	}
+
+	normalizeColumnWidths(columnLayout: (string | 0)[]) {
+		// convert to pixel numbers
+		const pxWidths = columnLayout.map(w => this.convertColumnWidthToPixels(w));
+
+		this.adjustWidthsToMinWidth(pxWidths);
+
+		// back to percent widths
+		return pxWidths.map(w => this.convertToRelativeColumnWidth(w));
+	}
+
+	adjustWidthsToMinWidth(pxWidths: number[]) {
+		const indicesOfColumnsToAdjust = this.getIndicesOfColumnsBelowMinWidth(pxWidths);
+
+		if (!indicesOfColumnsToAdjust.length) {
+			return;
 		}
 
-		return this.verifyColumnWidthsMatchLayout(pxWidths);
+		const indexOfWidestColumn = this.getIndexOfWidestColumn(pxWidths);
+		let deficit = 0;
+
+		indicesOfColumnsToAdjust.forEach(indexOfColumnBelowMinWith => {
+			deficit = COLUMN_MIN_WIDTH - pxWidths[indexOfColumnBelowMinWith];
+
+			// enlarge the column by transfering from the widest column
+			pxWidths[indexOfColumnBelowMinWith] += deficit;
+			pxWidths[indexOfWidestColumn] -= deficit;
+		});
+	}
+
+	getIndicesOfColumnsBelowMinWidth(columnLayout: number[]) {
+		const indices: number[] = [];
+		columnLayout.forEach((pxWidth, i) => {
+			// ceil before comparing to avoid floating point precision issues
+			if ((pxWidth > 0) && (Math.ceil(pxWidth) < COLUMN_MIN_WIDTH)) {
+				indices.push(i);
+			}
+		});
+		return indices;
+	}
+
+	getIndexOfWidestColumn(columnLayout: number[]) {
+		let maxIndex = 0;
+		columnLayout.forEach((pxWidth, i) => {
+			if (pxWidth > columnLayout[maxIndex]) {
+				maxIndex = i;
+			}
+		});
+		return maxIndex;
 	}
 
 	verifyColumnWidthsMatchLayout(pxWidths: number[]) {

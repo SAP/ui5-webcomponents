@@ -495,7 +495,27 @@ describe("Layouts configuration", () => {
 		// assert: the column widths in DOM are set as configured
 		assert.strictEqual(await startColumn.getAttribute("style"), "width: 75%;", "the custom width is set as configured for start column");
 		assert.strictEqual(await midColumn.getAttribute("style"), "width: 25%;", "the custom width is set as configured for mid column");
-		// TODO check no event fired
+	});
+
+	it("preserves column min-width when configuration set programatically", async () => {
+		const fcl = await browser.$("#fcl1"),
+			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
+			layoutConfig = {
+				"desktop": {
+					"TwoColumnsMidExpanded": {
+						layout: ["1%", "99%", "0%"] // specify unacceptably small width for first column
+					}
+				}
+			},
+			smallestColumnWidth = 312;
+
+		// set initial state
+		await fcl.setProperty("layoutsConfiguration", layoutConfig);
+		await fcl.setProperty("layout", "TwoColumnsMidExpanded");
+		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsMidExpanded", "new layout set");
+
+		// assert: the column widths in DOM are set as configured
+		assert.strictEqual(await startColumn.getSize("width"), smallestColumnWidth, "column min width is preserved");
 	});
 
 	it("updates the configuration upon interactive resize of columns within same layout", async () => {
@@ -504,7 +524,8 @@ describe("Layouts configuration", () => {
 			startColumn = await fcl.shadow$(".ui5-fcl-column--start"),
 			midColumn = await fcl.shadow$(".ui5-fcl-column--middle");
 
-		// assert initial state
+		// set initial state
+		await fcl.setProperty("layout", "TwoColumnsStartExpanded");
 		assert.strictEqual(await fcl.getProperty("layout"), "TwoColumnsStartExpanded", "initial state is as expected");
 
 		// act: drag to resize the columns within the same layout
