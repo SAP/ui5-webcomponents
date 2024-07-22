@@ -704,7 +704,7 @@ class TimePickerClock extends UI5Element {
 				this._movSelectedValue = 0 + this._selectedValue;
 			}
 		} else if (evt.type === "mousemove") {
-			if (!this._dimensionParameters.radius) {
+			if (!this._dimensionParameters) {
 				this._calculateDimensions();
 			}
 			this._calculatePosition((evt as MouseEvent).pageX, (evt as MouseEvent).pageY);
