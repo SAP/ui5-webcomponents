@@ -177,6 +177,13 @@ type SpecialCalendarDateT = {
  * @constructor
  * @extends CalendarPart
  * @public
+ * @csspart day-cell - Used to style the day cells.
+ * @csspart day-cell-selected - Used to style the day cells when selected.
+ * @csspart day-cell-selected-between - Used to style the day cells in between of selected dates in range.
+ * @csspart month-cell - Used to style the month cells.
+ * @csspart month-cell-selected - Used to style the month cells when selected.
+ * @csspart year-cell - Used to style the year cells.
+ * @csspart year-cell-selected - Used to style the year cells when selected.
  * @since 1.0.0-rc.11
  */
 @customElement({

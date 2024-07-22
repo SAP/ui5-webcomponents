@@ -6,7 +6,7 @@
 	@click="{{_onclick}}"
 	tabindex="{{forcedTabIndex}}"
 	aria-labelledby="{{ariaLabelledBy}}"
-	aria-level="2"
+	aria-level="{{_ariaLevel}}"
 >
 	{{#if loading}}
 		<span id="{{_id}}-loading" class="ui5-hidden-text">{{loadingText}}</span>
