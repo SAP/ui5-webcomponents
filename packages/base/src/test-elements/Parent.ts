@@ -23,7 +23,7 @@ class Parent extends UI5Element {
 		invalidateOnChildChange: {
 			properties: true,
 			slots: false,
-		}
+		},
 	})
 	items!: Array<HTMLElement>;
 	static get template() {

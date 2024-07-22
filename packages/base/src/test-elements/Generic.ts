@@ -27,7 +27,7 @@ class Generic extends UI5Element {
 	@property()
 	defaultValueProp = "Hello";
 
-	@slot({ type: Node, "default": true})
+	@slot({ type: Node, "default": true })
 	content!: Array<Node>
 
 	@slot({ type: HTMLElement })
