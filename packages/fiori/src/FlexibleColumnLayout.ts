@@ -354,6 +354,7 @@ class FlexibleColumnLayout extends UI5Element {
 	_onSeparatorMoveEnd: (e: TouchEvent | MouseEvent) => void;
 	static i18nBundle: I18nBundle;
 	_prevLayout: `${FCLLayout}` | null;
+	_prevLayoutsConfiguration: LayoutConfiguration | null;
 	_ontouchstart: PassiveEventListenerObject;
 	separatorMovementSession?: SeparatorMovementSession | null;
 
@@ -361,6 +362,7 @@ class FlexibleColumnLayout extends UI5Element {
 		super();
 
 		this._prevLayout = null;
+		this._prevLayoutsConfiguration = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
 		this._onSeparatorMove = this.onSeparatorMove.bind(this);
@@ -398,6 +400,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
+		this.syncLayoutsConfiguration();
 		this.syncLayout();
 	}
 
@@ -435,6 +438,15 @@ class FlexibleColumnLayout extends UI5Element {
 		if (this._prevLayout !== this.layout) {
 			this.updateLayout();
 			this._prevLayout = this.layout;
+		}
+	}
+
+	syncLayoutsConfiguration() {
+		if (this._prevLayoutsConfiguration !== this.layoutsConfiguration) {
+			this._prevLayoutsConfiguration = this.layoutsConfiguration;
+			if (this.nextColumnLayout(this.layout).join() !== this._columnLayout?.join() && !this.separatorMovementSession) {
+				this.updateLayout();
+			}
 		}
 	}
 
