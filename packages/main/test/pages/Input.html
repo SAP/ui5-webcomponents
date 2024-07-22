@@ -486,7 +486,6 @@
 		Change event value: <span id="input-change-value-3"></span>
 	</div>
 
-	<br>
 
 	<ui5-input value-state="Negative" id="dynamic-value-state">
 		<span slot="valueStateMessage" id="text">0</span>
@@ -506,6 +505,14 @@
 	<span id="input-selection-change-value"></span>
 
 	<br />
+
+	<h3> 'select' event handling</h3>
+	<ui5-input id="selectInput" value="Value to be selected"></ui5-input>
+	<br>
+	<span>Select event fired: <span id="select-event-counter">0</span></span>
+	<br>
+	<br>
+
 	<h3>Input - open suggestions picker</h3>
 	<ui5-input id="input-suggestions-open" show-suggestions>
 		<ui5-suggestion-item text ="Cozy"></ui5-suggestion-item>
@@ -639,6 +646,7 @@
 		let labelSelectionChange = document.getElementById("myLabelSelectionChange");
 		var customSuggestionsInput = document.getElementById("custom");
 		const flatItemsInput = document.getElementById("flat-items-input");
+		const selectInput = document.getElementById("selectInput");
 
 		let suggest = function (event) {
 			let input = event.target;
@@ -697,7 +705,6 @@
 			labelInputChange.innerHTML = "Event [input] :: " + value;
 		};
 
-		
 		const suggestCustom = e => {
 			let input = e.target;
 			let value = input.value;
@@ -819,6 +826,9 @@
 			inputLiveChangeResult.value = `${inputCounter}`;
 		});
 
+		selectInput.addEventListener("ui5-select", (e) => {
+			document.getElementById("select-event-counter").innerText = parseInt(document.getElementById("select-event-counter").innerText) + 1;
+		});
 
 		var inputChangeResultCounter = 0;
 
@@ -1019,7 +1029,7 @@
 			data.forEach((country) => {
 				const item = document.createElement("ui5-suggestion-item-custom");
 				item.setAttribute("text", country);
-			
+
 				item.innerHTML = `
 					<div class='item-content'>
 						<ui5-icon name="globe"></ui5-icon>
@@ -1027,7 +1037,7 @@
 							<span>${generateHighlightedMarkup(country, value)}</span>
 							<small>EU</small>
 						</div>
-			
+
 						<span class='green'><b>EU</b></span>
 					</div>
 				`
