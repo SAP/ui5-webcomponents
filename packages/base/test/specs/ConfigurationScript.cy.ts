@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import "../../bundle.common.js";
+import "../../src/bundle.common.js";
 
 describe("Configuration script", () => {
 	const configurationObject = {

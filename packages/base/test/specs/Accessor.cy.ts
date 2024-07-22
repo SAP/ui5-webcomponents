@@ -1,5 +1,6 @@
 import { html } from 'lit';
-import "../../bundle.esm.js";
+
+import "../../src/test-elements/Accessor.js";
 
 describe("Framework boot", () => {
 	it("Setting property updates attribute, state and DOM", () => {

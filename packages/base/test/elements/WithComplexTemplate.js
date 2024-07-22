@@ -1,6 +1,6 @@
-import UI5Element from "../../dist/UI5Element.js";
-import litRender from "../../dist/renderer/LitRenderer.js";
-import WithComplexTemplateTemplate from "../../dist/generated/templates/elements/WithComplexTemplateTemplate.lit.js";
+import UI5Element from "../../src/UI5Element.ts";
+import litRender from "../../src/renderer/LitRenderer.ts";
+import WithComplexTemplateTemplate from "../../src/generated/templates/elements/WithComplexTemplateTemplate.lit.ts";
 
 class WithComplexTemplate extends UI5Element {
 	static get metadata() {

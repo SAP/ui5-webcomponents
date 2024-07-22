@@ -5,9 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import AccessorBase from "./AccessorBase.js";
-import customElement from "../../dist/decorators/customElement.js";
-import property from "../../dist/decorators/property.js";
-import litRender, { html } from "../../dist/renderer/LitRenderer.js";
+import customElement from "../../src/decorators/customElement.ts";
+import property from "../../src/decorators/property.ts";
+import litRender, { html } from "../../src/renderer/LitRenderer.ts";
 let Accessor = class Accessor extends AccessorBase {
     constructor() {
         super(...arguments);

@@ -1,4 +1,4 @@
-import "../../bundle.esm.js";
+import "../../src/bundle.common.js";
 
 describe("Event provider attaches and detaches listeners properly", () => {
 	it("Tests that listeners can be removed (1 listener)", () => {

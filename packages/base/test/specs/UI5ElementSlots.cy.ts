@@ -1,5 +1,6 @@
 import { html } from 'lit';
-import "../../bundle.esm.js";
+
+import "../../src/test-elements/Generic.js";
 
 describe("Slots work properly", () => {
 	it("Tests that properties exist on the element for each slot", () => {
@@ -21,7 +22,7 @@ describe("Slots work properly", () => {
 			.as("testGeneric")
 
 		cy.get("@testGeneric")
-			.invoke("prop", "default")
+			.invoke("prop", "content")
 			.then(value => {
 				return value.length
 			})
@@ -78,7 +79,7 @@ describe("Slots work properly", () => {
 			.as("testGeneric")
 
 		cy.get("@testGeneric")
-			.invoke("prop", "default")
+			.invoke("prop", "content")
 			.then(value => {
 				defaultSlotLength = value.length;
 
@@ -103,10 +104,8 @@ describe("Slots work properly", () => {
 		cy.get("@testGeneric")
 			.then($testGeneric => {
 				cy.wrap($testGeneric)
-					.invoke("prop", "default")
+					.invoke("prop", "content")
 					.should("have.length", defaultSlotLength + 1)
-
-					console.log("Probababa: ", defaultSlotLength)
 			})
 
 		cy.get("@testGeneric")

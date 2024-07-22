@@ -1,5 +1,7 @@
 import { html } from 'lit';
-import "../../bundle.esm.js";
+
+import "../../src/test-elements/Generic.js";
+import "../../src/test-elements/NoShadowDOM.js";
 
 describe("The framework can define web components", () => {
 	it("Tests that element's Shadow DOM is rendered if it has a template", () => {

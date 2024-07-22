@@ -1,4 +1,6 @@
-import "../../bundle.esm.js";
+import "../../src/bundle.common.js";
+import "../../src/test-elements/Accessor.js"
+import "../assets/Themes.js"
 
 describe("Theming works", () => {
 	it("Tests that the parameters for the default theme are embedded on boot", () => {

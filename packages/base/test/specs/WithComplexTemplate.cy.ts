@@ -1,5 +1,6 @@
 import { html } from 'lit';
-import "../../bundle.esm.js";
+
+import "../../src/test-elements/WithComplexTemplate.js";
 
 describe("Complex templates", () => {
 	it("Tests context maintained in the HBS template before, after and inside 'each' statements", () => {

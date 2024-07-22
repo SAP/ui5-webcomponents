@@ -4,9 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import UI5Element from "../../dist/UI5Element.js";
-import customElement from "../../dist/decorators/customElement.js";
-import property from "../../dist/decorators/property.js";
+import UI5Element from "../../src/UI5Element.ts";
+import customElement from "../../src/decorators/customElement.ts";
+import property from "../../src/decorators/property.ts";
 let AccessorBase = class AccessorBase extends UI5Element {
     constructor() {
         super(...arguments);

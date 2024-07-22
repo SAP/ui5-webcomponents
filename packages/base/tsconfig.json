@@ -1,7 +1,11 @@
 {
     "include": ["src/**/*", "src/global.d.ts"],
     // ssr-dom is imported with bare specifier so that conditional exports are used, but this treats it as input and output, so ignore it
-    "exclude": ["src/ssr-dom.ts"],
+    "exclude": [
+      "src/ssr-dom.ts",
+      "src/test-elements/*.ts",
+      "test/specs/*.ts"
+    ],
     "compilerOptions": {
       "target": "ES2021",
       "lib": ["DOM", "DOM.Iterable", "ES2023"],

@@ -1,5 +1,6 @@
 import { html } from 'lit';
-import "../../bundle.esm.js";
+
+import "../../src/test-elements/Generic.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a property invalidates", () => {

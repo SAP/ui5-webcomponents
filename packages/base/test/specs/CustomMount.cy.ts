@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import "../../bundle.common.js";
+import "../../src/bundle.common.js";
 
 describe("Custom mount", () => {
 	it("mount", () => {

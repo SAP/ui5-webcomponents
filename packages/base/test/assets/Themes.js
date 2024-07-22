@@ -1,4 +1,4 @@
-import { registerThemePropertiesLoader } from "../../dist/asset-registries/Themes.js";
+import { registerThemePropertiesLoader } from "../../src/asset-registries/Themes.ts";
 
 const defaultTheme = {
 	content: `:root{ --var1: grey; }`,

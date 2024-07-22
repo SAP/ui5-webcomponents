@@ -1,5 +1,7 @@
 import { html } from 'lit';
-import "../../bundle.esm.js";
+
+import "../../src/test-elements/Parent.js";
+import "../../src/test-elements/Child.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a monitored property of a child invalidates the parent", () => {

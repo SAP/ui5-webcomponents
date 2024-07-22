@@ -1,4 +1,4 @@
-import UI5Element from "../../dist/UI5Element.js";
+import UI5Element from "../../src/UI5Element.ts";
 
 const metadata = {
 	tag: "ui5-test-no-shadow",

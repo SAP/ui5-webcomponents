@@ -1,6 +1,6 @@
 import { html } from 'lit';
-import { internals } from "../../dist/Location.js";
-import "../../bundle.common.js";
+import { internals } from "../../src/Location.js";
+import "../../src/bundle.common.js";
 
 describe("Some settings can be set via SAP UI URL params", () => {
 	before(() => {

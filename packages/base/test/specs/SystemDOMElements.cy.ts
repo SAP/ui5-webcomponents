@@ -1,4 +1,4 @@
-import "../../bundle.esm.js";
+import "../../src/bundle.common.js";
 
 describe("Shared Resources", () => {
 	it("Tests the presense of the shared resources 'meta' element", async () => {

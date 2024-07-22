@@ -1,5 +1,5 @@
-import UI5Element from "../../dist/UI5Element.js";
-import litRender, { html } from "../../dist/renderer/LitRenderer.js";
+import UI5Element from "../../src/UI5Element.ts";
+import litRender, { html } from "../../src/renderer/LitRenderer.ts";
 
 const metadata = {
 	tag: "ui5-test-child",
