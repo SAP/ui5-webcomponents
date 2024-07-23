@@ -150,13 +150,6 @@
 		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 	</ui5-input>
 
-	<h3>Input with disabled autocomplete and preventable suggestion select</h3>
-	<ui5-input id="input-prevent-suggestion-select" show-suggestions no-typeahead="true">
-		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
-		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
-	</ui5-input>
-
 	<h3> 'change' event result</h3>
 	<ui5-input id="inputResult"></ui5-input>
 
@@ -345,7 +338,7 @@
 
 	<h3>Test width of suggestions popover</h3>
 	<ui5-input id="suggestionsPopoverWidth" show-suggestions class="input6auto">
-		<ui5-suggestion-item>Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</ui5-suggestion-item>
+		<ui5-suggestion-item text="Argentinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Input in a Dialog</h3>
@@ -365,9 +358,9 @@
 
 	<h3>Input with suggestions: clear value on selection change</h3>
 	<ui5-input id="change-event-value" show-suggestions>
-		<ui5-suggestion-item>Cozy</ui5-suggestion-item>
-		<ui5-suggestion-item>Compact</ui5-suggestion-item>
-		<ui5-suggestion-item>Condensed</ui5-suggestion-item>
+		<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 	</ui5-input>
 	<link rel="stylesheet" type="text/css" href="./styles/Input.css">
 

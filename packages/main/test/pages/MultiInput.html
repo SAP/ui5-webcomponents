@@ -490,7 +490,7 @@
 		}
 		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);
 
-		document.getElementById("token-unique").addEventListener("ui5-paste", function (event) {
+		document.getElementById("token-unique").addEventListener("paste", function (event) {
 			event.preventDefault();
 
 			let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
