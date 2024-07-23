@@ -63,6 +63,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 	/**
 	 * Determines if the group is collapsed or expanded.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -169,7 +170,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 		return this.groupName;
 	}
 
-	get groupItemIcon() {
+	get _groupItemIcon() {
 		if (this.layout === TimelineLayout.Vertical) {
 			return this.collapsed ? "slim-arrow-left" : "slim-arrow-down";
 		}
@@ -177,7 +178,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 		return this.collapsed ? "slim-arrow-up" : "slim-arrow-right";
 	}
 
-	get collapsed() {
+	get collapsed(): boolean {
 		return this._collapsed;
 	}
 }
@@ -185,3 +186,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 TimelineGroupItem.define();
 
 export default TimelineGroupItem;
+export type {
+	TimelineGroupItemToggleCollapseEventDetail,
+};
