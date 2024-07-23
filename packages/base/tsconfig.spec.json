@@ -1,0 +1,8 @@
+{
+  "extends": "@ui5/webcomponents-tools/tsconfig.json",
+  "include": ["test/specs/**/*.cy.ts"],
+  "exclude": [
+    "src/test-elements/*.ts",
+    "test/specs/*.ts"
+  ]
+}

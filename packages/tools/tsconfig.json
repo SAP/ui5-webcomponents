@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    // Generate d.ts files
+    "declaration": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "composite": true,
+    "experimentalDecorators": true,
+    "ignoreDeprecations": "5.0",
+    "importsNotUsedAsValues": "preserve"
+  },
+}
