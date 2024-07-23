@@ -40,3 +40,7 @@
     height: 100%;
     z-index: 2;
 }
+
+#loading[_is-busy] {
+	background-color: var(--_ui5_busy_indicator_block_layer);
+}

@@ -77,6 +77,7 @@ import {
 	INPUT_SUGGESTIONS_MORE_HITS,
 	INPUT_SUGGESTIONS_NO_HIT,
 	INPUT_CLEAR_ICON_ACC_NAME,
+	INPUT_AVALIABLE_VALUES,
 	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -1117,7 +1118,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handleTypeAhead(item: IInputSuggestionItemSelectable) {
-		const value = item.text ? item.text : item.textContent || "";
+		const value = item.text ? item.text : "";
 
 		this._innerValue = value;
 		this.value = value;
@@ -1225,14 +1226,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const value = this.typedInValue || this.value;
-		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
+		const itemText = item.text || "";
 		const fireChange = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
+		this.value = itemText;
 
-		if (fireChange) {
-			this.value = itemText;
+		if (fireChange && (this.previousValue !== itemText)) {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 
@@ -1420,6 +1421,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	get clearIconAccessibleName() {
 		return Input.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
+	}
+
+	get _popupLabel() {
+		return Input.i18nBundle.getText(INPUT_AVALIABLE_VALUES);
 	}
 
 	get inputType() {

@@ -22,7 +22,9 @@
 {{/each}}
 
 {{#if _renderNavigated}}
-    <ui5-table-cell id="navigated-cell" excluded-from-navigation></ui5-table-cell>
+    <ui5-table-cell id="navigated-cell" excluded-from-navigation>
+        <div id="navigated"></div>
+    </ui5-table-cell>
 {{/if}}
 
 {{#if _popinCells.length}}

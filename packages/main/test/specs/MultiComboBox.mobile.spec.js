@@ -50,7 +50,7 @@ describe("Basic interaction", () => {
 		await tokenizer.shadow$(".ui5-tokenizer-more-text").click();
 
 		assert.notOk(await tokenizer.getAttribute("expanded"), "The tokenizer is not expanded after closing the picker when opened from the 'n-more' link");
-	
+
 		await dialogCloseButton.click();
 	});
 
@@ -188,6 +188,26 @@ describe("Typeahead", () => {
 
 		assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
 	});
+
+	it("Should not change the value of MultiComboBox when readonly", async () => {
+		await browser.url(`test/pages/MultiComboBox.html`);
+
+		const multiCombo = await browser.$("#mcb-ro");
+		const picker =  await multiCombo.shadow$("ui5-responsive-popover");
+
+		await multiCombo.scrollIntoView();
+		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
+
+		const dialogInput = await multiCombo.shadow$("ui5-responsive-popover").$("ui5-input");
+		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+
+		await dialogInput.click();
+		await dialogInput.keys("test");
+		await dialogOkButton.click();
+
+		assert.notOk(await picker.isDisplayedInViewport(), "Picker is closed now");
+		assert.strictEqual(await multiCombo.getProperty("value"), "", "Value should not be populated to the readonly MCB");
+	});
 });
 
 describe("Items selection", () => {
@@ -303,7 +323,7 @@ describe("Items selection", () => {
 		assert.strictEqual(await spanRef.getText(), "Selected items count: 0");
 	});
 
-	
+
 	it("select all should not be checked if all items are not selected", async () => {
 		const mcb = await $("#mcb-select-all-vs");
 		const popover = await mcb.shadow$("ui5-responsive-popover");

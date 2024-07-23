@@ -518,3 +518,16 @@ describe("Keyboard navigation", () => {
 	});
 });
 
+describe("Notification List Item Without a Group", () => {
+	before(async () => {
+		await browser.url(`test/pages/NotificationListItem.html`);
+	});
+
+	it("ACC", async () => {
+		const item1 = await browser.$("#notificationListWithMenu [ui5-li-notification]");
+		const item1Root = await item1.shadow$(".ui5-nli-root");
+
+		assert.notOk(await item1Root.getAttribute("aria-level"),  "aria-level is not set");
+	});
+});
+

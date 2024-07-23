@@ -9,6 +9,7 @@
 	<ui5-tokenizer slot="_beginContent"
 		prevent-popover-open
 		hide-popover-arrow
+		?readonly="{{../readonly}}"
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
 		@ui5-show-more-items-press="{{_showFilteredItems}}"

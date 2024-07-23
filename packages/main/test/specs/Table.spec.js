@@ -220,13 +220,13 @@ describe("Table - Navigated Rows", async () => {
 		assert.strictEqual(await navigatedCell1.getAttribute("excluded-from-navigation"), "", "The navigated cell is excluded from item navigation");
 		assert.strictEqual(await navigatedCell2.getAttribute("excluded-from-navigation"), "", "The navigated cell is excluded from item navigation");
 
-		const navigatedCell1BG = await browser.executeAsync(done => {
-			done(getComputedStyle(document.getElementById("row1").shadowRoot.querySelector("#navigated-cell")).backgroundColor);
+		const navigated1BG = await browser.executeAsync(done => {
+			done(getComputedStyle(document.getElementById("row1").shadowRoot.querySelector("#navigated")).backgroundColor);
 		});
-		const navigatedCell2BG = await browser.executeAsync(done => {
-			done(getComputedStyle(document.getElementById("row2").shadowRoot.querySelector("#navigated-cell")).backgroundColor);
+		const navigated2BG = await browser.executeAsync(done => {
+			done(getComputedStyle(document.getElementById("row2").shadowRoot.querySelector("#navigated")).backgroundColor);
 		});
-		assert.notEqual(navigatedCell1BG, navigatedCell2BG, "Background color of navigated cell is different from the one of non-navigated cell");
+		assert.notEqual(navigated1BG, navigated2BG, "Background color of navigated cell is different from the one of non-navigated cell");
 
 		const gridTemplateColumns = await browser.executeAsync(done => {
 			done(document.getElementById("table1").shadowRoot.querySelector("#table").style.gridTemplateColumns);
