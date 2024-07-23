@@ -198,6 +198,62 @@ describe("Table - Fixed Header", async () => {
 	});
 });
 
+describe("Table - Horizontal Scrolling", async () => {
+	before(async () => {
+		await browser.url(`test/pages/TableHorizontal.html`);
+	});
+
+	it("navigated indicator is fixed to the right", async () => {
+		const table = await browser.$("#table");
+
+		assert.ok(await table.isExisting(), "Table exists");
+
+		const row = await browser.$("#firstRow");
+		const navigatedCell = await row.shadow$("#navigated-cell");
+
+		assert.ok(await navigatedCell.isExisting(), "Navigated cell exists");
+
+		const stickyProperty = await navigatedCell.getCSSProperty("position");
+		const rightProperty = await navigatedCell.getCSSProperty("right");
+
+		assert.strictEqual(stickyProperty.value, "sticky", "Navigated cell is sticky");
+		assert.strictEqual(rightProperty.value, "0px", "Navigated cell is at the right edge");
+	});
+
+	it("selection column should be fixed to the left", async () => {
+		const table = await browser.$("#table");
+		const lastColumn = await browser.$("#lastCell");
+
+		assert.ok(await table.isExisting(), "Table exists");
+
+		const { leftOffset, fixedX } = await browser.execute(() => {
+			const table = document.getElementById("table");
+			const row = document.getElementById("firstRow");
+			return {
+				fixedX: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
+				leftOffset: table.shadowRoot.querySelector("#table")?.scrollLeft || 0
+			}; 
+		});
+
+		assert.equal(leftOffset, 0, "Table is not scrolled horizontally");
+		assert.equal(fixedX, 0, "Selection column is fixed to the left");
+
+		await lastColumn.scrollIntoView();
+
+		const { leftOffset2, fixedX2 } = await browser.execute(() => {
+			const table = document.getElementById("table");
+			const row = document.getElementById("firstRow");
+			return {
+				fixedX2: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
+				leftOffset2: table.scrollLeft || 0
+			}; 
+		});
+
+		assert.ok(leftOffset2 > 0, "Table is scrolled horizontally");
+		assert.equal(fixedX2, 0, "Selection column is still fixed to the left");
+	});
+});
+
 // Tests navigated property of rows
 describe("Table - Navigated Rows", async () => {
 	before(async () => {
