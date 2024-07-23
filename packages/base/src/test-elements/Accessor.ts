@@ -9,6 +9,7 @@ import litRender, { html } from "../renderer/LitRenderer.js";
 })
 class Accessor extends AccessorBase {
 	@property()
+	// @ts-ignore
 	title?: string;
 
 	render() {
