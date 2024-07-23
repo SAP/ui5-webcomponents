@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
@@ -24,7 +25,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
- * @slot {Node[]} default - Determines the description of the `ui5-timeline-item`.
  */
 @customElement({
 	tag: "ui5-timeline-item",
@@ -89,6 +89,13 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property()
 	subtitleText?: string;
 
+	/**
+	 * Defines the content of the `ui5-timeline-item`.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
+
 	@property({ type: Boolean })
 	_firstItemInTimeline = false;
 
@@ -96,7 +103,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	_isNextItemGroup = false;
 
 	@property({ noAttribute: true })
-	forcedTabIndex?: string = "-1";
+	forcedTabIndex: string = "-1";
 
 	/**
 	 * Defines the items orientation.
@@ -132,8 +139,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property({ type: Boolean })
 	hidden = false;
 
-	isGroupItem = false;
-
 	/**
 	 * Defines the position of the item in a group.
 	 * @private
@@ -143,19 +148,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	constructor() {
 		super();
-	}
-
-	onBeforeRendering() {
-		if (this.layout !== TimelineLayout.Horizontal) {
-			return;
-		}
-
-		// Add margin to empty timeline items in a group to match the height of those with content (in horizontal layout only).
-		if ((this.parentElement as ITimelineItem)?.isGroupItem && !this.innerHTML) {
-			this.style.setProperty("margin-block-end", "3.75rem");
-		} else if ((this.parentElement as ITimelineItem)?.isGroupItem && this.textContent) {
-			this.style.setProperty("margin-block-end", "2.25rem");
-		}
 	}
 
 	onNamePress() {
@@ -182,6 +174,10 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 				"ui5-tli-bubble-arrow--top": this.layout === TimelineLayout.Horizontal,
 			},
 		};
+	}
+
+	get isGroupItem() {
+		return false;
 	}
 }
 

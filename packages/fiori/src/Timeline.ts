@@ -120,7 +120,7 @@ class Timeline extends UI5Element {
 		let target = e.target as ITimelineItem | ToggleButton;
 
 		if ((target as ITimelineItem).isGroupItem) {
-			target = target.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!;
+			target = target.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!;
 		}
 
 		this._itemNavigation.setCurrentItem(target);
@@ -181,7 +181,7 @@ class Timeline extends UI5Element {
 		let updatedTarget = target;
 
 		if ((target as ITimelineItem).isGroupItem) {
-			updatedTarget = target.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!;
+			updatedTarget = target.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!;
 		}
 
 		const nextTargetIndex = isNext ? this._navigatableItems.indexOf(updatedTarget) + 1 : this._navigatableItems.indexOf(updatedTarget) - 1;
@@ -209,7 +209,7 @@ class Timeline extends UI5Element {
 			if (!item.isGroupItem) {
 				navigatableItems.push(item);
 			} else {
-				navigatableItems.push(item.shadowRoot!.querySelector<ToggleButton>("ui5-toggle-button")!);
+				navigatableItems.push(item.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!);
 			}
 
 			if (item.isGroupItem && !item.collapsed) {

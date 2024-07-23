@@ -56,10 +56,11 @@ type TimelineGroupItemToggleCollapseEventDetail = {
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	/**
 	 * Defines the text of the button that expands and collapses the group.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	groupName = "";
+	groupName?: string;
 
 	/**
 	 * Determines if the group is collapsed or expanded.
@@ -67,14 +68,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	set collapsed(value: boolean) {
-		const oldValue = this._collapsed;
-		this._collapsed = value;
-
-		if (oldValue !== value) {
-			this.fireEvent("toggle-collapse", { collapsed: value });
-		}
-	}
+	collapsed = false;
 
 	/**
 	 * Determines the content of the `ui5-timeline-group-item`.
@@ -122,9 +116,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	@property({ noAttribute: true })
 	forcedTabIndex = "-1";
 
-	isGroupItem = true;
-	_collapsed = false;
-
 	onBeforeRendering() {
 		if (!this.items.length) {
 			return;
@@ -164,6 +155,11 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 	onGroupItemClick() {
 		this.collapsed = !this.collapsed;
+		this.fireEvent("toggle-collapse", { collapsed: this.collapsed });
+	}
+
+	get isGroupItem() {
+		return true;
 	}
 
 	get _groupName() {
@@ -176,10 +172,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 		}
 
 		return this.collapsed ? "slim-arrow-up" : "slim-arrow-right";
-	}
-
-	get collapsed(): boolean {
-		return this._collapsed;
 	}
 }
 

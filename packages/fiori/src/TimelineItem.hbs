@@ -18,11 +18,9 @@
 			</div>
 			<div class="ui5-tli-subtitle">{{subtitleText}}</div>
 
-			{{#if innerHTML}}
-				<div class="ui5-tli-desc">
-					<slot></slot>
-				</div>
-			{{/if}}
+			<div class="ui5-tli-desc">
+				<slot></slot>
+			</div>
 			<span class="{{classes.bubbleArrowPosition}}"></span>
 		</div>
 	{{/unless}}
