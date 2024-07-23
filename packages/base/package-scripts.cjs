@@ -31,7 +31,7 @@ const scripts = {
 	},
 	build: {
 		default: `nps prepare`,
-		bundle: `vite build ${viteConfig}`,
+		bundle: `vite build ${viteConfig}  --mode testing  --base "/"`,
 	},
 	copy: {
 		default: "nps copy.src",
