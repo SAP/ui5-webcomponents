@@ -189,7 +189,7 @@ describe("Typeahead", () => {
 		assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
 	});
 
-	it("Should open the picker with preselected items only when n-more is clicked", async () => {
+	it("Should not change the value of MultiComboBox when readonly", async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
 
 		const multiCombo = await browser.$("#mcb-ro");
