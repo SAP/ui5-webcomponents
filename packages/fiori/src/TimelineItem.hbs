@@ -9,22 +9,22 @@
 		</div>
 	</div>
 	{{#unless hideBubble}}
-	<div class="ui5-tli-bubble" tabindex="{{forcedTabIndex}}" data-sap-focus-ref>
-		<div class="ui5-tli-title">
-			{{#if name}}
-				{{> name}}
-			{{/if}}
-			<span>{{titleText}}</span>
-		</div>
-		<div class="ui5-tli-subtitle">{{subtitleText}}</div>
-
-		{{#if innerHTML}}
-			<div class="ui5-tli-desc">
-				<slot></slot>
+		<div class="ui5-tli-bubble" tabindex="{{forcedTabIndex}}" data-sap-focus-ref>
+			<div class="ui5-tli-title">
+				{{#if name}}
+					{{> name}}
+				{{/if}}
+				<span>{{titleText}}</span>
 			</div>
-		{{/if}}
-		<span class="{{classes.bubbleArrowPosition}}"></span>
-	</div>
+			<div class="ui5-tli-subtitle">{{subtitleText}}</div>
+
+			{{#if innerHTML}}
+				<div class="ui5-tli-desc">
+					<slot></slot>
+				</div>
+			{{/if}}
+			<span class="{{classes.bubbleArrowPosition}}"></span>
+		</div>
 	{{/unless}}
 </div>
 
