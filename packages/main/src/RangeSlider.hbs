@@ -45,9 +45,18 @@
 	>
 		<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
 
-		{{#if showTooltip}}
+		{{#if showTooltip}}		
 			<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
-				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
+				{{#if inputTooltip}}
+					<ui5-input
+						type="Number"
+						value="{{startValue}}"
+						@change="{{_onInputChange}}"
+						start-value
+					></ui5-input>
+				{{else}}
+					<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
+				{{/if}}
 			</div>
 		{{/if}}
 	</div>
@@ -70,7 +79,16 @@
 
 		{{#if showTooltip}}
 			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
-				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
+				{{#if inputTooltip}}
+					<ui5-input
+						type="Number"
+						value="{{endValue}}"
+						@change="{{_onInputChange}}"
+						end-value
+					></ui5-input>
+				{{else}}
+					<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
+				{{/if}}
 			</div>
 		{{/if}}
 	</div>

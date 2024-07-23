@@ -153,8 +153,6 @@
 	justify-content: center;
 	align-items: center;
 	visibility: hidden;
-	pointer-events: none;
-	line-height: 1rem;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%);
@@ -169,6 +167,21 @@
 	min-width: var(--_ui5_slider_tooltip_min_width);
 	padding: var(--_ui5_slider_tooltip_padding);
 	box-sizing: var(--_ui5_slider_tooltip_border_box);
+}
+
+:host([input-tooltip]) .ui5-slider-tooltip {
+	padding: 0;
+}
+
+.ui5-slider-tooltip ui5-input {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
 }
 
 .ui5-slider-tooltip-value {
@@ -237,3 +250,8 @@
 	border-radius: var(--_ui5_slider_handle_border_radius);
 	pointer-events: none;
 }
+
+/* .ui5-slider-popover-input {
+	min-width: 20px;
+	min-height: 2px;
+} */

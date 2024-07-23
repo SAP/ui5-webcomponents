@@ -540,6 +540,21 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._endValueAtBeginningOfAction = undefined;
 	}
 
+	_onInputChange(e: Event) {
+		const ctor = this.constructor as typeof RangeSlider;
+
+		const input = e.target as HTMLInputElement;
+		const value = ctor.clipValue(parseFloat(input.value), this._effectiveMin, this._effectiveMax);
+
+		if (input.hasAttribute("start-value")) {
+			this.update("startValue", value, undefined);
+		}
+
+		if (input.hasAttribute("end-value")) {
+			this.update("endValue", value, undefined);
+		}
+	}
+
 	/**
 	 * Determines where the press occured and which values of the Range Slider
 	 * handles should be updated on further interaction.

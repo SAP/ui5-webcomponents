@@ -33,10 +33,18 @@
 		part="handle"
 	>
 			<ui5-icon name="direction-arrows" part="icon-slider" slider-icon></ui5-icon>
-		{{#if showTooltip}}
-			<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
-				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
-			</div>
-		{{/if}}
+			{{#if showTooltip}}
+				<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
+					{{#if inputTooltip}}
+						<ui5-input
+							type="Number"
+							value="{{value}}"
+							@change="{{_onInputChange}}"
+						></ui5-input>
+					{{else}}
+						<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
+					{{/if}}
+				</div>
+			{{/if}}
 	</div>
 {{/inline}}

@@ -7,6 +7,7 @@ import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
+import Input from "./Input.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -109,6 +110,14 @@ abstract class SliderBase extends UI5Element {
 	showTooltip = false;
 
 	/**
+	 * Enables handle tooltip displaying the current value.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	inputTooltip = false;
+
+	/**
 	 * Defines whether the slider is in disabled state.
 	 * @default false
 	 * @public
@@ -124,6 +133,12 @@ abstract class SliderBase extends UI5Element {
 	 */
 	@property()
 	accessibleName?: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused = false;
 
 	/**
 	 * @private
@@ -403,9 +418,10 @@ abstract class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_handleFocusOnMouseDown(e: TouchEvent | MouseEvent) {
-		const focusedElement = this.shadowRoot!.activeElement;
+		const currentlyFocusedElement = this.shadowRoot!.activeElement;
+		const elementToBeFocused = e.target as HTMLElement;
 
-		if (!focusedElement || focusedElement !== e.target) {
+		if ((!currentlyFocusedElement || currentlyFocusedElement !== elementToBeFocused) && !elementToBeFocused.hasAttribute("ui5-input")) {
 			this._preserveFocus(true);
 			this.focusInnerElement();
 		}
