@@ -314,6 +314,23 @@ const parseComponentDeclaration = (declaration, fileContent) => {
         return "";
     }
 
+    let additionalInfo;
+
+    if (declaration.customElement) {
+        additionalInfo = `\`\<${declaration.tagName}\>\``;
+    }
+
+    if (declaration._ui5since) {
+        additionalInfo = additionalInfo ? `${additionalInfo} | <span className="badge badge--primary">Since ${declaration._ui5since}</span>`
+        : `<span className="badge badge--primary">Since ${declaration._ui5since}</span>`;
+    }
+
+    if (additionalInfo) {
+        fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", `<div className="componentAdditionalInfo">${additionalInfo}</div>
+
+<%COMPONENT_OVERVIEW%>`)
+    }
+
     if (declaration._ui5experimental) {
         fileContent = addExperimentalClassName(fileContent, declaration);
 

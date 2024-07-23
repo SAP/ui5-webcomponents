@@ -264,7 +264,7 @@ describe("General interaction", () => {
 
 		// click on first item
 		const popover = await combo.shadow$("ui5-responsive-popover");
-		const link = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root a");
+		const link = await combo.$("div[slot='valueStateMessage'] a");
 
 		await link.click();
 
@@ -912,8 +912,7 @@ describe("Accessibility", async () => {
 		await cbError.click();
 		await cbError.keys("a");
 
-		const popoverHeader = await cbError.shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
-		const valueStateText = await popoverHeader.$("div").getHTML(false);
+		const valueStateText = await cbError.$("div[slot='valueStateMessage']").getHTML(false);
 		const ariaHiddenText = await cbError.shadow$(`#value-state-description`).getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -1332,7 +1331,7 @@ describe("Keyboard navigation", async () => {
 
 		const valueState = await comboBox.shadow$("ui5-popover");
 
-		await valueState.$("a").click();
+		await comboBox.$("div[slot='valueStateMessage'] a").click();
 		await comboBox.keys("Tab");
 
 		assert.notOk(await valueState.isExisting(), "Value state message is closed.");

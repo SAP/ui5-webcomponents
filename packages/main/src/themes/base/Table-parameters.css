@@ -1,7 +1,7 @@
 :root {
 	--_ui5_table_cell_valign: center;
 	--_ui5_table_cell_min_width: 2.75rem;
-	--_ui5_table_navigated_cell_width: 0.25rem;
+	--_ui5_table_navigated_cell_width: 0.1875rem;
 	--_ui5_table_shadow_border_left: inset var(--sapContent_FocusWidth) 0 var(--sapContent_FocusColor);
 	--_ui5_table_shadow_border_right: inset calc(-1 * var(--sapContent_FocusWidth)) 0 var(--sapContent_FocusColor);
 	--_ui5_table_shadow_border_top: inset 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor);

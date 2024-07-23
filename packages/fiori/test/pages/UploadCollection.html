@@ -77,6 +77,23 @@
 			Some description.
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
+			id="reportPdf"
+			file-name="report.pdf"
+			upload-state="Complete"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			Some description.
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="disabledPdf"
+			file-name="disabledFile.pdf"
+			upload-state="Complete"
+			disabled
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			Some description.
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
 			id="noFileExtension"
 			file-name="noextension"
 			upload-state="Complete"
@@ -93,6 +110,8 @@
 		</ui5-upload-collection-item>
 	</ui5-upload-collection>
 
+	<button id="tabStop1">Tab stop helper</button>
+
 	<ui5-upload-collection id="uploadCollectionDnD">
 		<div class="header" slot="header">
 			<ui5-title>Attachments (0)</ui5-title>
@@ -102,6 +121,8 @@
 			</ui5-file-uploader>
 		</div>
 	</ui5-upload-collection>
+
+	<button id="tabStop2">Tab stop helper</button>
 
 	<div class="header">
 		<ui5-label id="uploadStateEvent"></ui5-label>

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+
+### Features
+
+* **ui5-prompt-input:** implement suggestions ([#9390](https://github.com/SAP/ui5-webcomponents/issues/9390)) ([a261cfb](https://github.com/SAP/ui5-webcomponents/commit/a261cfbfa06328e1f496a8a2acd1e4b22e78243d))
+* **ui5-title:** add new "size" property ([#9327](https://github.com/SAP/ui5-webcomponents/issues/9327)) ([8e430e2](https://github.com/SAP/ui5-webcomponents/commit/8e430e2692e94dffd806f80de40dcd85ce76bb44))
+
+
+
+
+
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
 ## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-website

@@ -1,6 +1,5 @@
 :host {
     background: var(--sapList_HeaderBackground);
-    grid-template-rows: var(--_ui5_list_item_base_height);
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
 }
 

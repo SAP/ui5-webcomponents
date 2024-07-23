@@ -13,7 +13,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
-import type TableHeaderRow from "./TableHeaderRow.js";
+import TableHeaderRow from "./TableHeaderRow.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import TableExtension from "./TableExtension.js";
 import type TableSelection from "./TableSelection.js";
@@ -160,6 +160,7 @@ type TableRowClickEventDetail = {
 	fastNavigation: true,
 	dependencies: [
 		BusyIndicator,
+		TableHeaderRow,
 		TableCell,
 		TableRow,
 	],

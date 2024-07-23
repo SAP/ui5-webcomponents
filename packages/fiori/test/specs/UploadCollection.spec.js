@@ -127,6 +127,13 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
+		it("Disabled item", async () => {
+			const item = await browser.$("#disabledPdf");
+			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
+
+			assert.notOk(await item.isClickable(), "Item shouldn't be clickable");
+			assert.notOk(await deleteBtn.isClickable(), "Delete button shouldn't be clickable");
+		});
 	});
 
 	describe("Events", () => {
@@ -163,13 +170,25 @@ describe("UploadCollection", () => {
 		it("upload collection should fire 'item-delete' regardless of the selectionMode", async () => {
 			const uploadCollection = await browser.$("#uploadCollection");
 			const item = await browser.$("#latestReportsPdf");
+			const itemsLength = (await uploadCollection.getProperty("items")).length;
 
 			await uploadCollection.setAttribute("selection-mode", "None");
 
 			const deleteBtn = await item.shadow$(".ui5-upload-collection-deletebtn");
 			await deleteBtn.click();
 
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, itemsLength - 1, "item should be deleted when 'item-delete' event is fired");
+		});
+
+		it("upload collection should fire 'item-delete' when 'DELETE' key is pressed on item", async () => {
+			const uploadCollection = await browser.$("#uploadCollection");
+			const item = await browser.$("#reportPdf");
+			const itemsLength = (await uploadCollection.getProperty("items")).length;
+
+			await item.click();
+			await browser.keys("Delete");
+
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, itemsLength - 1, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", async () => {
@@ -188,6 +207,47 @@ describe("UploadCollection", () => {
 
 			const eventText = await browser.$("#uploadStateEvent").getText();
 			assert.include(eventText, "Terminate", "Terminate event is fired");
+		});
+	});
+
+	describe("Keyboard handling", () => {
+		const isActiveElement = (element) => {
+			return browser.executeAsync((expectedActiveElem, done) => {
+				const activeElement = document.activeElement;
+				done(activeElement.shadowRoot.activeElement === expectedActiveElem);
+			}, element);
+		};
+
+		it("Item tab order", async () => {
+			const item = await browser.$("#hiddenFileName");
+
+			await item.click();
+			assert.ok(await item.isFocused(), "Item should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$("[ui5-button][icon=refresh]")), "Retry button should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$(".ui5-uci-edit")), "Edit button should be focused");
+
+			await browser.keys("Tab");
+			assert.ok(await isActiveElement(await item.shadow$(".ui5-upload-collection-deletebtn")), "Delete button should be focused");
+		});
+
+		it("Tab through empty upload collection", async () => {
+			const tabStop1 = await browser.$("#tabStop1");
+			const tabStop2 = await browser.$("#tabStop2");
+			const uploadCollection = await browser.$("#uploadCollectionDnD");
+
+			await tabStop1.click();
+			await browser.keys("Tab");
+			await browser.keys("Tab");
+
+			assert.ok(await isActiveElement(await uploadCollection.shadow$(".uc-no-files")), "No files item should be focused");
+
+			await browser.keys("Tab");
+
+			assert.ok(await tabStop2.isFocused(), "Should have passed the upload collection and focused the next tab stop");
 		});
 	});
 

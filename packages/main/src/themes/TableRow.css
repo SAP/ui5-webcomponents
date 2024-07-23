@@ -34,6 +34,8 @@
 }
 
 #navigated-cell {
+	position: relative;
+	overflow: visible;
 	grid-row: span 2;
 	min-width: 0;
 	padding: 0;
@@ -45,8 +47,20 @@
 	left: 0;
 }
 
-:host([navigated]) #navigated-cell {
+:host([navigated]) #navigated {
+	position: absolute;
+	inset: 0;
     background-color: var(--sapList_SelectionBorderColor);
+}
+
+:host([tabindex]:focus) #navigated {
+	transform: translateX(calc(var(--_ui5_table_navigated_cell_width) * -1));
+	bottom: 2px;
+	top: 3px;
+}
+
+:host([tabindex]:focus) #navigated:dir(rtl) {
+	transform: translateX(var(--_ui5_table_navigated_cell_width));
 }
 
 :host([navigated]) #popin-cell {
