@@ -243,3 +243,8 @@ code {
   background: #334eff;
   pointer-events: none;
 }
+
+.componentAdditionalInfo {
+  margin-top: calc(-1 * calc(var(--ifm-h1-vertical-rhythm-bottom) * var(--ifm-leading))) !important;
+  margin-bottom: var(--ifm-leading);
+}
