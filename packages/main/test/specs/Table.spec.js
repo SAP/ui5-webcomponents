@@ -245,7 +245,7 @@ describe("Table - Horizontal Scrolling", async () => {
 			const row = document.getElementById("firstRow");
 			return {
 				fixedX2: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
-				leftOffset2: table.shadowRoot.querySelector("#table")?.scrollLeft || 0
+				leftOffset2: table.scrollLeft || 0
 			}; 
 		});
 
