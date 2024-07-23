@@ -467,7 +467,6 @@ class Table extends UI5Element {
 		return {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
-				"overflow-x": this._tableOverflowX,
 			},
 		};
 	}
