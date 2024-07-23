@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import TimelineLayout from "./types/TimelineLayout.js";
@@ -15,6 +16,10 @@ import TimelineGroupItemCss from "./generated/themes/TimelineGroupItem.css.js";
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
 const LARGE_LINE_WIDTH = "LargeLineWidth";
+
+type TimelineGroupItemToggleCollapseEventDetail = {
+	collapsed: boolean;
+};
 
 /**
  * @class
@@ -38,6 +43,16 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	template: TimelineGroupItemTemplate,
 	dependencies: [TimelineItem, ToggleButton],
 })
+/**
+ * Fired when the group item is expanded or collapsed.
+ * @public
+ * @param {boolean} collapsed Indicator whether the group item is collapsed or expanded.
+ */
+@event<TimelineGroupItemToggleCollapseEventDetail>("toggle-collapse", {
+	detail: {
+		collapsed: { type: Boolean },
+	},
+})
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	/**
 	 * Defines the text of the button that expands and collapses the group.
@@ -51,7 +66,14 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed = false;
+	set collapsed(value: boolean) {
+		const oldValue = this._collapsed;
+		this._collapsed = value;
+
+		if (oldValue !== value) {
+			this.fireEvent("toggle-collapse", { collapsed: value });
+		}
+	}
 
 	/**
 	 * Determines the content of the `ui5-timeline-group-item`.
@@ -100,6 +122,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	forcedTabIndex = "-1";
 
 	isGroupItem = true;
+	_collapsed = false;
 
 	onBeforeRendering() {
 		if (!this.items.length) {
@@ -152,6 +175,10 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 		}
 
 		return this.collapsed ? "slim-arrow-up" : "slim-arrow-right";
+	}
+
+	get collapsed() {
+		return this._collapsed;
 	}
 }
 
