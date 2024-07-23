@@ -3,7 +3,7 @@ import { getFeature } from "./FeaturesRegistry.js";
 import fontFaceCSS from "./generated/css/FontFace.css.js";
 import overrideFontFaceCSS from "./generated/css/OverrideFontFace.css.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
-import { getFetchDefaultFontFaces } from "./config/Fonts.js";
+import { getDefaultFontLoading } from "./config/Fonts.js";
 
 const insertFontFace = () => {
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
@@ -20,7 +20,7 @@ const insertFontFace = () => {
 const insertMainFontFace = () => {
 	const hasFontStyles = document.querySelector("head>style[data-ui5-font-face]");
 
-	if (getFetchDefaultFontFaces() || hasFontStyles) {
+	if (getDefaultFontLoading() || hasFontStyles) {
 		return;
 	}
 

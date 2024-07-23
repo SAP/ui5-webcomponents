@@ -1,33 +1,33 @@
-import { getFetchDefaultFontFaces as getConfiguredFetchDefaultFontFaces } from "../InitialConfiguration.js";
+import { getDefaultFontLoading as getConfiguredDefaultFontLoading } from "../InitialConfiguration.js";
 
-let fetchDefaultFontFaces: boolean;
+let defaultFontLoading: boolean;
 
 /**
- * Returns if the "fetchDefaultFontFaces" configuration is set.
+ * Returns if the "defaultFontLoading" configuration is set.
  * @public
  * @returns { boolean }
  */
-const getFetchDefaultFontFaces = (): boolean => {
-	if (fetchDefaultFontFaces === undefined) {
-		fetchDefaultFontFaces = getConfiguredFetchDefaultFontFaces();
+const getDefaultFontLoading = (): boolean => {
+	if (defaultFontLoading === undefined) {
+		defaultFontLoading = getConfiguredDefaultFontLoading();
 	}
 
-	return fetchDefaultFontFaces;
+	return defaultFontLoading;
 };
 
 /**
- * Defines the "fetchDefaultFontFaces" setting.
+ * Defines the "defaultFontLoading" setting.
  *
  * - When set to "true" (default), all used font faces are fetched over the network.
  * - When set to "false", default font faces are not fetched automatically and must be managed separately.
  * @public
- * @param { boolean } fetchDefaultFontFacesData
+ * @param { boolean } defaultFontLoadingData
  */
-const setFetchDefaultFontFaces = (fetchDefaultFontFacesData: boolean) => {
-	fetchDefaultFontFaces = fetchDefaultFontFacesData;
+const setDefaultFontLoading = (defaultFontLoadingData: boolean) => {
+	defaultFontLoading = defaultFontLoadingData;
 };
 
 export {
-	getFetchDefaultFontFaces,
-	setFetchDefaultFontFaces,
+	getDefaultFontLoading,
+	setDefaultFontLoading,
 };

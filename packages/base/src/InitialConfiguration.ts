@@ -21,7 +21,7 @@ type InitialConfig = {
 	noConflict: boolean,
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
-	fetchDefaultFontFaces: boolean,
+	defaultFontLoading: boolean,
 };
 
 let initialConfig: InitialConfig = {
@@ -36,7 +36,7 @@ let initialConfig: InitialConfig = {
 	noConflict: false, // no URL
 	formatSettings: {},
 	fetchDefaultLanguage: false,
-	fetchDefaultFontFaces: true,
+	defaultFontLoading: true,
 };
 
 /* General settings */
@@ -75,9 +75,9 @@ const getNoConflict = () => {
 	return initialConfig.noConflict;
 };
 
-const getFetchDefaultFontFaces = () => {
+const getDefaultFontLoading = () => {
 	initConfiguration();
-	return initialConfig.fetchDefaultFontFaces;
+	return initialConfig.defaultFontLoading;
 };
 
 /**
@@ -224,5 +224,5 @@ export {
 	getSecondaryCalendarType,
 	getTimezone,
 	getFormatSettings,
-	getFetchDefaultFontFaces,
+	getDefaultFontLoading,
 };

@@ -12,12 +12,12 @@ There are several reasons why you might need to customize fonts:
 - To download additional fonts, such as `72-Light`.
 - To prevent the default fonts from being fetched.
 
-To achieve this, you can prevent the fetching of default fonts by configuring `setFetchDefaultFontFaces (@ui5/webcomponents-base/dist/config/Fonts.js)` to `false`:
+To achieve this, you can prevent the fetching of default fonts by configuring `setDefaultFontLoading (@ui5/webcomponents-base/dist/config/Fonts.js)` to `false`:
 
 ```ts
-import { getFetchDefaultFontFaces, setFetchDefaultFontFaces } from "@ui5/webcomponents-base/dist/config/Fonts.js";
+import { getDefaultFontLoading, setDefaultFontLoading } from "@ui5/webcomponents-base/dist/config/Fonts.js";
 
-setFetchDefaultFontFaces(false);
+setDefaultFontLoading(false);
 ```
 
 Then, specify the custom font you intend to use. When the UI5 Web Components framework initializes, it will refrain from fetching default fonts and instead use the ones you have provided.
