@@ -221,6 +221,14 @@ type InputSuggestionScrollEventDetail = {
 @event("input")
 
 /**
+ * Fired when some text has been selected.
+ *
+ * @since 2.0.0
+ * @public
+ */
+@event("select")
+
+/**
  * Fired when the user navigates to a suggestion item via the ARROW keys,
  * as a preview, before the final selection.
  * @param {HTMLElement} item The previewed suggestion item.
@@ -1017,6 +1025,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		});
 	}
 
+	_handleSelect() {
+		this.fireEvent("select", {});
+	}
+
 	_handleInput(e: InputEvent | CustomEvent<InputEventDetail>) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
@@ -1118,7 +1130,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_handleTypeAhead(item: IInputSuggestionItemSelectable) {
-		const value = item.text ? item.text : item.textContent || "";
+		const value = item.text ? item.text : "";
 
 		this._innerValue = value;
 		this.value = value;
@@ -1219,14 +1231,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const value = this.typedInValue || this.value;
-		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
+		const itemText = item.text || "";
 		const fireChange = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
+		this.value = itemText;
 
-		if (fireChange) {
-			this.value = itemText;
+		if (fireChange && (this.previousValue !== itemText)) {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 

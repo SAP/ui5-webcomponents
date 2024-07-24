@@ -6,7 +6,7 @@
 	<div class="ui5-input-content">
 		{{> preContent}}
 
-		<input 
+		<input
 			id="inner"
 			class="ui5-input-inner"
 			style="{{styles.innerInput}}"
@@ -31,6 +31,7 @@
 			autocomplete="off"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
+			@select="{{_handleSelect}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
