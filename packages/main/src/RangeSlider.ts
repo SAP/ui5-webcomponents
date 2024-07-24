@@ -11,6 +11,7 @@ import {
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
+import Input from "./Input.js";
 
 // Texts
 import {
@@ -88,7 +89,7 @@ type AffectedValue = "startValue" | "endValue";
 	languageAware: true,
 	formAssociated: true,
 	template: RangeSliderTemplate,
-	dependencies: [Icon],
+	dependencies: [Icon, Input],
 	styles: [SliderBase.styles, rangeSliderStyles],
 })
 class RangeSlider extends SliderBase implements IFormInputElement {
@@ -547,12 +548,11 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		const value = ctor.clipValue(parseFloat(input.value), this._effectiveMin, this._effectiveMax);
 
 		if (input.hasAttribute("start-value")) {
-			this.update("startValue", value, undefined);
+			this.startValue = value;
+			return;
 		}
 
-		if (input.hasAttribute("end-value")) {
-			this.update("endValue", value, undefined);
-		}
+		this.endValue = value;
 	}
 
 	/**
