@@ -99,16 +99,12 @@ const getScripts = (options) => {
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
-		copy: {
-			default: "nps copy.props",
-			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
-		},
+		copy: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		watch: {
 			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			typescript: tsWatchCommandStandalone,
-			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
+			props: 'nps "copy --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
