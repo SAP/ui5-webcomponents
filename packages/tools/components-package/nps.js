@@ -103,7 +103,7 @@ const getScripts = (options) => {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
 			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		},
 		watch: {
 			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
@@ -117,7 +117,7 @@ const getScripts = (options) => {
 				themes: 'nps "build.styles.themes -w"',
 				components: `nps "build.styles.components -w"`,
 			},
-			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
+			templates: 'chokidar "src/**/*.hbs" -i "src/generated" -c "nps build.templates"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",

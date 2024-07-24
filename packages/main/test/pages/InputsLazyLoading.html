@@ -57,11 +57,11 @@
     <h1>Hardcoded items</h1>
 
     <ui5-input show-suggestions>
-      <ui5-suggestion-item>Dryanovo</ui5-suggestion-item>
-      <ui5-suggestion-item>Gabrovo</ui5-suggestion-item>
-      <ui5-suggestion-item>Sofia</ui5-suggestion-item>
-      <ui5-suggestion-item>Yablanitsa</ui5-suggestion-item>
-      <ui5-suggestion-item>New York</ui5-suggestion-item>
+      <ui5-suggestion-item text="Dryanovo"></ui5-suggestion-item>
+      <ui5-suggestion-item text="Gabrovo"></ui5-suggestion-item>
+      <ui5-suggestion-item text="Sofia"></ui5-suggestion-item>
+      <ui5-suggestion-item text="Yablanitsa"></ui5-suggestion-item>
+      <ui5-suggestion-item text="New York"></ui5-suggestion-item>
     </ui5-input>
   </div>
 
@@ -204,8 +204,8 @@
 
     const addSuggestions = (arr) => {
       arr.forEach((item, i) => {
-        const el = document.createElement("ui5-input-suggestion");
-        el.innerText = `${item} ${i}`;
+        const el = document.createElement("ui5-suggestion-item");
+        el.setAttribute("text", `${item} ${i}`);
         field.appendChild(el);
       });
     };
