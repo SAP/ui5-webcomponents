@@ -25,15 +25,15 @@ import type FilterItemOption from "./FilterItemOption.js";
 class FilterItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the additional text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()

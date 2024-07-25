@@ -15,10 +15,15 @@ import {
 
 function getVersion() {
     if (ExecutionEnvironment.canUseDOM) {
-        if (!location.pathname.includes("nightly") ) {
+        if (location.pathname.includes("v1") ) {
             return "v1";
         }
-        return "Nightly";
+
+        if (location.pathname.includes("nightly") ) {
+            return "Nightly";
+        }
+
+        return "v2";
     }
 }
 
@@ -66,11 +71,19 @@ function VersionNavbarItemDesktop() {
                 onClick={() => { setVersion("Nightly") }}
                 className={clsx({ 'menu__link--active': version === "Nightly" })}
             />
-            <NavbarItem
-                label="v1"
+             <NavbarItem
+                label="Version 2"
                 isDropdownItem
                 target="_self"
                 href="https://sap.github.io/ui5-webcomponents"
+                onClick={() => { setVersion("v2") }}
+                className={clsx({ 'menu__link--active': version === "v2" })}
+            />
+            <NavbarItem
+                label="Version 1"
+                isDropdownItem
+                target="_self"
+                href="https://sap.github.io/ui5-webcomponents/v1"
                 onClick={() => { setVersion("v1") }}
                 className={clsx({ 'menu__link--active': version === "v1" })}
             />

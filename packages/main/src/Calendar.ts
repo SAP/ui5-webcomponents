@@ -19,6 +19,8 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
@@ -57,6 +59,12 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
+/**
+ * Interface for components that may be slotted inside a `ui5-calendar`.
+ *
+ * **Note:** Use with `ui5-date` or `ui5-date-range` as calendar date selection types.
+ * @public
+ */
 interface ICalendarSelectedDates extends UI5Element {
 	value?: string,
 	startValue?: string,
@@ -169,6 +177,13 @@ type SpecialCalendarDateT = {
  * @constructor
  * @extends CalendarPart
  * @public
+ * @csspart day-cell - Used to style the day cells.
+ * @csspart day-cell-selected - Used to style the day cells when selected.
+ * @csspart day-cell-selected-between - Used to style the day cells in between of selected dates in range.
+ * @csspart month-cell - Used to style the month cells.
+ * @csspart month-cell-selected - Used to style the month cells when selected.
+ * @csspart year-cell - Used to style the year cells.
+ * @csspart year-cell-selected - Used to style the year cells when selected.
  * @since 1.0.0-rc.11
  */
 @customElement({
@@ -276,7 +291,8 @@ class Calendar extends CalendarPart {
 
 	/**
 	 * Defines the selected date or dates (depending on the `selectionMode` property)
-	 * for this calendar as instances of `ui5-date`.
+	 * for this calendar as instances of `ui5-date` or `ui5-date-range`.
+	 * Use `ui5-date` for single or multiple selection, and `ui5-date-range` for range selection.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -580,6 +596,14 @@ class Calendar extends CalendarPart {
 	 */
 	get _isHeaderMonthButtonHidden(): boolean {
 		return this._currentPicker === "month" || this._currentPicker === "year";
+	}
+
+	/**
+	 * The year button is hidden when the year picker is shown
+	 * @private
+	 */
+	get _isHeaderYearButtonHidden(): boolean {
+		return this._currentPicker === "year";
 	}
 
 	get _isDayPickerHidden() {

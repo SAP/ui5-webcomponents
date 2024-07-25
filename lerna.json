@@ -1,5 +1,6 @@
 {
   "packages": [
+    "packages/ai",
     "packages/theming",
     "packages/base",
     "packages/localization",
@@ -13,7 +14,7 @@
     "packages/create-package",
     "packages/compat"
   ],
-  "version": "2.0.0-rc.6",
+  "version": "2.1.0-rc.1",
   "command": {
     "publish": {
       "allowBranch": "*",
@@ -30,6 +31,5 @@
       "preid": "rc"
     }
   },
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "npmClient": "yarn"
 }

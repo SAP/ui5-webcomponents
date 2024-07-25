@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type TableCellBase from "./TableCellBase.js";
 import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
 import type Table from "./Table.js";
@@ -41,6 +41,7 @@ abstract class TableRowBase extends UI5Element {
 
 	onEnterDOM() {
 		this.setAttribute("role", "row");
+		this.toggleAttribute("ui5-table-row-base", true);
 	}
 
 	onBeforeRendering() {
@@ -55,12 +56,12 @@ abstract class TableRowBase extends UI5Element {
 		return this;
 	}
 
-	isHeaderRow() {
-		return false;
-	}
-
 	_informSelectionChange() {
 		this._tableSelection?.informSelectionChange(this);
+	}
+
+	isHeaderRow(): boolean {
+		return false;
 	}
 
 	_onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement) {
@@ -111,12 +112,16 @@ abstract class TableRowBase extends UI5Element {
 		return this.cells.filter(c => c._popin);
 	}
 
-	get _i18nRowSelector(): string {
-		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
+	get _stickyCells() {
+		const selectionCell = this.shadowRoot?.querySelector("#selection-cell"),
+			navigatedCell = this.shadowRoot?.querySelector("#navigated-cell");
+
+		// filter out null/undefined
+		return [selectionCell, ...this.cells, navigatedCell].filter(cell => cell?.hasAttribute("fixed"));
 	}
 
-	get isTableRowBase() {
-		return true;
+	get _i18nRowSelector(): string {
+		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
 	}
 }
 

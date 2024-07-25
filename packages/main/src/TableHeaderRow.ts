@@ -28,6 +28,7 @@ import {
  * @extends TableRowBase
  * @since 2.0
  * @public
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-header-row",
@@ -65,6 +66,9 @@ class TableHeaderRow extends TableRowBase {
 	/**
 	 * Sticks the `ui5-table-header-row` to the top of a table.
 	 *
+	 * Note: If used in combination with overflowMode "Scroll", the table needs a defined height
+	 * or needs to be inside of a container with a defined height for the sticky header to work as expected.
+	 *
 	 * @default false
 	 * @public
 	 */
@@ -78,7 +82,7 @@ class TableHeaderRow extends TableRowBase {
 		}
 	}
 
-	isHeaderRow() {
+	isHeaderRow(): boolean {
 		return true;
 	}
 

@@ -18,7 +18,12 @@
 }
 
 .feature__image {
-  height: 8rem;
+  height: 12rem;
+  width: 12rem;
+}
+
+.feature__image.feature__image_frame {
+  width: 18rem;
 }
 
 .feature {
@@ -36,7 +41,7 @@
 
 .feature__title {
   font-weight: 700;
-  font-size: var(--ifm-h3-font-size);
+  font-style: normal;
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -44,10 +49,11 @@
 }
 
 .feature__desc {
-  font-size: 1rem;
-  margin-bottom: 4rem;
+  font-style: normal;
+  font-weight: 300;
   text-wrap: wrap;
   text-align: center;
+  max-width: 26rem;
 }
 
 @media (max-width: 900px) {

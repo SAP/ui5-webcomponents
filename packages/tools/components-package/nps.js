@@ -77,10 +77,9 @@ const getScripts = (options) => {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp src/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: `concurrently "nps build.styles.themes" "nps build.styles.components" "nps build.styles.componentStyles"`,
+				default: `concurrently "nps build.styles.themes" "nps build.styles.components"`,
 				themes: `node "${LIB}/css-processors/css-processor-themes.mjs"`,
 				components: `node "${LIB}/css-processors/css-processor-components.mjs"`,
-				componentStyles: `node "${LIB}/css-processors/css-processor-component-styles.mjs"`,
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
@@ -104,7 +103,7 @@ const getScripts = (options) => {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
 			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
-			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		},
 		watch: {
 			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
@@ -114,12 +113,11 @@ const getScripts = (options) => {
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
-				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"  "nps watch.styles.componentStyles" ',
+				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
 				components: `nps "build.styles.components -w"`,
-				componentStyles: `nps "build.styles.componentStyles -w"`,
 			},
-			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
+			templates: 'chokidar "src/**/*.hbs" -i "src/generated" -c "nps build.templates"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",

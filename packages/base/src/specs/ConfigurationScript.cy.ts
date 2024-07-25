@@ -30,6 +30,7 @@ describe("Configuration script", () => {
 		"noConflict": {
 			"events": ["selection-change", "header-click"],
 		},
+		"defaultFontLoading": false,
 	};
 
 	before(() => {
@@ -101,5 +102,13 @@ describe("Configuration script", () => {
 			.should("deep.equal", configurationObject.noConflict)
 			.its("events")
 			.should("deep.equal", configurationObject.noConflict.events);
+	});
+
+	it("getDefaultFontLoading", () => {
+		cy.window()
+			.its("sap-ui-webcomponents-bundle")
+			.its("configuration")
+			.invoke("getDefaultFontLoading")
+			.should("equal", false);
 	});
 });

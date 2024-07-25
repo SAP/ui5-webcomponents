@@ -261,6 +261,8 @@ class NotificationListItem extends NotificationListItemBase {
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
 
+	_ariaLevel : string | undefined;
+
 	constructor() {
 		super();
 
@@ -378,6 +380,11 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
+
+		if (this.loading) {
+			return `${id}-loading`;
+		}
+
 		const ids = [];
 
 		if (this.hasImportance) {
@@ -386,10 +393,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
-		}
-
-		if (this.isLoading) {
-			ids.push(`${id}-loading`);
 		}
 
 		ids.push(`${id}-read`);
