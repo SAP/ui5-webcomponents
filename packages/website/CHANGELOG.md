@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* **ui5-table:** adds the missing TableHeaderRow dependency ([#9490](https://github.com/SAP/ui5-webcomponents/issues/9490)) ([0b836b3](https://github.com/SAP/ui5-webcomponents/commit/0b836b395d12ab7137688af1cd6f2b4795563dfc))
+
+
+
+
+
 # [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
 
 
