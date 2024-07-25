@@ -18,7 +18,7 @@ import { renderFinished } from "./Render.js";
 // i18n
 import { registerI18nLoader, getI18nBundle } from "./i18nBundle.js";
 import parseProperties from "./PropertiesFileFormat.js";
-import { forceInitConfiguration } from "./InitialConfiguration.js";
+import { resetConfiguration } from "./InitialConfiguration.js";
 
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./config/AnimationMode.js";
@@ -44,7 +44,7 @@ attachBoot(() => {
 });
 
 window["sap-ui-webcomponents-bundle"] = {
-	forceInitConfiguration,
+	resetConfiguration,
 	configuration: {
 		getAnimationMode,
 		getLanguage,

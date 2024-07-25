@@ -30,8 +30,8 @@ const fiori3Hcw = {
 	fileName: "",
 };
 
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_horizon", () => defaultTheme);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3", () => fiori3);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_dark", () => fiori3Dark);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_hcb", () => fiori3Hcb);
-registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_hcw", () => fiori3Hcw);
+registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_horizon", async () => Promise.resolve(defaultTheme));
+registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3", async () => Promise.resolve(fiori3));
+registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_dark", async () => Promise.resolve(fiori3Dark));
+registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_hcb", async () => Promise.resolve(fiori3Hcb));
+registerThemePropertiesLoader("@ui5/webcomponents-base-test", "sap_fiori_3_hcw", async () => Promise.resolve(fiori3Hcw));

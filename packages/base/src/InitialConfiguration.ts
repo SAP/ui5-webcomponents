@@ -6,7 +6,7 @@ import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import type CalendarType from "./types/CalendarType.js";
-import { resetConfiguration } from "./config/ConfigurationReset.js";
+import { resetConfiguration as resetConfigurationFn } from "./config/ConfigurationReset.js";
 import { getLocationSearch } from "./Location.js";
 
 let initialized = false;
@@ -203,7 +203,7 @@ const initConfiguration = () => {
 		return;
 	}
 
-	forceInitConfiguration();
+	resetConfiguration();
 
 	initialized = true;
 };
@@ -212,9 +212,9 @@ const initConfiguration = () => {
  * Internaly exposed method to enable configurations in tests.
  * @private
  */
-const forceInitConfiguration = (testEnv = false) => {
+const resetConfiguration = (testEnv?: boolean) => {
 	if (testEnv) {
-		resetConfiguration();
+		resetConfigurationFn();
 	}
 	// 1. Lowest priority - configuration script
 	parseConfigurationScript();
@@ -238,5 +238,5 @@ export {
 	getTimezone,
 	getFormatSettings,
 	getDefaultFontLoading,
-	forceInitConfiguration,
+	resetConfiguration,
 };
