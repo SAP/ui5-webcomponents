@@ -17,10 +17,6 @@ import TimelineGroupItemCss from "./generated/themes/TimelineGroupItem.css.js";
 const SHORT_LINE_WIDTH = "ShortLineWidth";
 const LARGE_LINE_WIDTH = "LargeLineWidth";
 
-type TimelineGroupItemToggleCollapseEventDetail = {
-	collapsed: boolean;
-};
-
 /**
  * @class
  *
@@ -46,13 +42,8 @@ type TimelineGroupItemToggleCollapseEventDetail = {
 /**
  * Fired when the group item is expanded or collapsed.
  * @public
- * @param {boolean} collapsed Indicator whether the group item is collapsed or expanded.
  */
-@event<TimelineGroupItemToggleCollapseEventDetail>("toggle-collapse", {
-	detail: {
-		collapsed: { type: Boolean },
-	},
-})
+@event("toggle-collapse")
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	/**
 	 * Defines the text of the button that expands and collapses the group.
@@ -155,7 +146,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 	onGroupItemClick() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent("toggle-collapse", { collapsed: this.collapsed });
+		this.fireEvent("toggle-collapse");
 	}
 
 	get isGroupItem() {
@@ -178,6 +169,3 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 TimelineGroupItem.define();
 
 export default TimelineGroupItem;
-export type {
-	TimelineGroupItemToggleCollapseEventDetail,
-};

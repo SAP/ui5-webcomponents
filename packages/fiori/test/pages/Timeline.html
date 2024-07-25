@@ -187,15 +187,11 @@
 	<h2>Basic Timeline - Horizontal With Groups</h2>
 	<div style="width: 600px;">
 		<ui5-timeline layout="Horizontal" id="horizontalWithGrps">
-			<ui5-timeline-group-item group-name="SAP">
-				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Talking</ui5-timeline-item>
-				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Hybrid meeting</ui5-timeline-item>
-				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP D-com"><ui5-avatar initials="SK"></ui5-avatar></ui5-timeline-item>
+			<ui5-timeline-group-item group-name="SAP" collapsed>
+				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk"></ui5-timeline-item>
 			</ui5-timeline-group-item>
 			<ui5-timeline-group-item group-name="SAP Events">
-				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Online Meeting</ui5-timeline-item>
-				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Few topics</ui5-timeline-item>
-				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP D-com"><ui5-avatar initials="SK"></ui5-avatar></ui5-timeline-item>
+				<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk"></ui5-timeline-item>
 			</ui5-timeline-group-item>
 			<ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="20.02.2017 11:30"  name="Team Balkan Meeting">20.02.2017 11:30</ui5-timeline-item>
 			<ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="20.02.2017 11:30" icon="calendar" name="Team Balkan Meeting"><ui5-avatar initials="SK"></ui5-avatar></ui5-timeline-item>
@@ -225,6 +221,68 @@
 			<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi magnam nam sed numquam.</ui5-timeline-item>
 			<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP Talk">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi magnam nam sed numquam.</ui5-timeline-item>
 			<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP D-com"><ui5-avatar initials="SK"></ui5-avatar></ui5-timeline-item>
+		</ui5-timeline>
+	</div>
+</section>
+
+<section style="width: 100%;">
+	<h2>Advanced Timeline - Horizontal With Groups and Diverse Components</h2>
+	<div style="width: 800px;">
+		<ui5-timeline layout="Horizontal" id="horizontalWithGrps">
+			<ui5-timeline-group-item group-name="SAP Events">
+				<ui5-timeline-item title-text="Online Meeting" subtitle-text="20.02.2017 11:30" icon="calendar">
+					<div>Discussion about upcoming projects</div>
+					<ui5-link>Meeting Link</ui5-link>
+				</ui5-timeline-item>
+				<ui5-timeline-item title-text="Workshop" subtitle-text="21.02.2017 09:00" icon="calendar">
+					<ui5-badge color-scheme="1">Important</ui5-badge>
+					<div>Topics: UI5 Basics, Advanced Concepts</div>
+					<ui5-link>Workshop Details</ui5-link>
+				</ui5-timeline-item>
+				<ui5-timeline-item title-text="Webinar" subtitle-text="22.02.2017 14:00" icon="calendar">
+					<ui5-avatar initials="SK"></ui5-avatar>
+					<div>Speaker: Sarah Kerrigan</div>
+					<ui5-button design="Positive">Join Webinar</ui5-button>
+				</ui5-timeline-item>
+			</ui5-timeline-group-item>
+			<ui5-timeline-group-item group-name="Internal Meetings">
+				<ui5-timeline-item title-text="Team Sync" subtitle-text="20.02.2017 10:00" icon="group">
+					<ui5-avatar-group type="Group" avatar-size="S">
+						<ui5-avatar initials="JS"></ui5-avatar>
+						<ui5-avatar initials="MJ"></ui5-avatar>
+						<ui5-avatar initials="TK"></ui5-avatar>
+					</ui5-avatar-group>
+					<div>Quarterly planning session</div>
+				</ui5-timeline-item>
+				<ui5-timeline-item title-text="Budget Review" subtitle-text="20.02.2017 15:00" icon="money-bills">
+					<ui5-input placeholder="Add notes..."></ui5-input>
+					<div>Reviewing the budget for Q1</div>
+				</ui5-timeline-item>
+				<ui5-timeline-item title-text="One-on-One" subtitle-text="21.02.2017 11:00" icon="employee">
+					<ui5-avatar icon="employee"></ui5-avatar>
+					<div>Manager: John Smith</div>
+					<ui5-textarea placeholder="Meeting notes..."></ui5-textarea>
+				</ui5-timeline-item>
+			</ui5-timeline-group-item>
+			<ui5-timeline-group-item group-name="Project Deadlines">
+				<ui5-timeline-item title-text="Milestone 1" subtitle-text="23.02.2017 17:00" icon="checklist-2">
+					<ui5-badge color-scheme="5">High Priority</ui5-badge>
+					<div>Task progress update</div>
+				</ui5-timeline-item>
+				<ui5-timeline-item title-text="Final Submission" subtitle-text="25.02.2017 12:00" icon="upload">
+					<ui5-badge color-scheme="7">Deadline</ui5-badge>
+					<div>Upload final project documents</div>
+					<ui5-button design="Attention">Submit</ui5-button>
+				</ui5-timeline-item>
+				<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
+					<ui5-avatar-group type="Group" avatar-size="S">
+						<ui5-avatar initials="LK"></ui5-avatar>
+						<ui5-avatar initials="AW"></ui5-avatar>
+						<ui5-avatar initials="BR"></ui5-avatar>
+					</ui5-avatar-group>
+					<div>Review project deliverables</div>
+				</ui5-timeline-item>
+			</ui5-timeline-group-item>
 		</ui5-timeline>
 	</div>
 </section>

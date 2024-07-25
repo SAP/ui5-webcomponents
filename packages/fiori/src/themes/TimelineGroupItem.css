@@ -91,9 +91,12 @@
 	flex-direction: row;
 }
 
+:host([layout="Horizontal"]) .ui5-tl-group-item {
+	height: 100%;
+}
+
 :host([layout="Horizontal"]) .ui5-tlgi-root {
-	flex-direction: column-reverse;
-	gap: 4.25rem;
+	height: var(--_ui5_timeline_tlgi_root_horizontal_height);
 }
 
 :host([layout="Horizontal"]) .ui5-tlgi-btn-root {
@@ -106,6 +109,10 @@
 	gap: 0.8275rem;
 	margin-block-start: 0.4375rem;
 	margin-inline-end: var(--_ui5_timeline_tlgi_horizontal_compact_root_margin_left, 0);
+}
+
+:host([layout="Horizontal"][collapsed]) .ui5-tlgi-root:last-child {
+	margin-block-end: -0.4375rem;
 }
 
 :host([layout="Horizontal"][collapsed]):first-child .ui5-tlgi-btn-root {
@@ -131,7 +138,7 @@
 }
 
 :host([layout="Horizontal"]) .ui5-tlgi-line-placeholder {
-	height: var(--_ui5_timeline_tlgi_horizontal_height);
+	height: var(--_ui5_timeline_tlgi_line_horizontal_height);
 	align-self: unset;
 	margin-inline-end: 0;
 	margin-inline-start: 0.25rem;
@@ -155,7 +162,6 @@
 
 :host([layout="Horizontal"]) .ui5-tlgi-root {
 	flex-direction: column-reverse;
-	gap: 4.25rem;
 }
 
 :host([layout="Horizontal"]) .ui5-tlgi-btn-root {
