@@ -234,7 +234,7 @@ class TimePickerClock extends UI5Element {
 		innerMin: 0,
 		offsetX: 0,
 		offsetY: 0,
-	};;
+	};
 
 	/**
 	 * Mousedown or Touchstart event flag.
