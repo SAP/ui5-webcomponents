@@ -1,16 +1,11 @@
 {
-    "include": ["src/**/*", "global.d.ts"],
-    "compilerOptions": {
-      "target": "ES2021",
-      "lib": ["DOM", "DOM.Iterable", "ES2023"],
-      // Generate d.ts files
-      "declaration": true,
-      "outDir": "dist",
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "inlineSources": true,
-      "strict": true,
-      "moduleResolution": "node",
-      "experimentalDecorators": true,
-    },
+	"extends": "../tools/test.json",
+	"include": [
+		"src/**/*",
+		"global.d.ts"
+	],
+	"compilerOptions": {
+		"outDir": "dist",
+		"experimentalDecorators": true,
+	},
 }
