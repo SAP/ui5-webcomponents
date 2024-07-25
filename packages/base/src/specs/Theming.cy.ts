@@ -1,6 +1,6 @@
-import "../../src/bundle.common.js";
-import "../../src/test-elements/Accessor.js"
-import "../assets/Themes.js"
+import "../bundle.common.js";
+import "./assets/test-elements/Accessor.js";
+import "./assets/Themes.js";
 
 describe("Theming works", () => {
 	it("Tests that the parameters for the default theme are embedded on boot", () => {
@@ -15,7 +15,8 @@ describe("Theming works", () => {
 		cy.document()
 			.its("adoptedStyleSheets")
 			.then(adoptedStyleSheets => {
-				return adoptedStyleSheets.find(sh => sh._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`);
+				// eslint-disable-next-line
+				return adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`);
 			})
 			.its("cssRules")
 			.its(0)
@@ -24,7 +25,7 @@ describe("Theming works", () => {
 	});
 
 	it("Tests that the parameters for the default theme are embedded on boot", () => {
-		const newTheme = 'sap_fiori_3_hcb';
+		const newTheme = "sap_fiori_3_hcb";
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
@@ -34,14 +35,15 @@ describe("Theming works", () => {
 			.should("equal", currentRuntime);
 
 		cy.window()
-		.its("sap-ui-webcomponents-bundle")
-		.its("configuration")
-		.invoke("setTheme", newTheme);
+			.its("sap-ui-webcomponents-bundle")
+			.its("configuration")
+			.invoke("setTheme", newTheme);
 
 		cy.document()
 			.its("adoptedStyleSheets")
 			.then(adoptedStyleSheets => {
-				return adoptedStyleSheets.find(sh => sh._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`);
+				// eslint-disable-next-line
+				return adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`);
 			})
 			.its("cssRules")
 			.its(0)
@@ -50,7 +52,7 @@ describe("Theming works", () => {
 	});
 
 	it("Tests that the parameters for the default theme are embedded on boot", () => {
-		const unknownTheme = 'sap_unknown_theme';
+		const unknownTheme = "sap_unknown_theme";
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
@@ -60,14 +62,15 @@ describe("Theming works", () => {
 			.should("equal", currentRuntime);
 
 		cy.window()
-		.its("sap-ui-webcomponents-bundle")
-		.its("configuration")
-		.invoke("setTheme", unknownTheme);
+			.its("sap-ui-webcomponents-bundle")
+			.its("configuration")
+			.invoke("setTheme", unknownTheme);
 
 		cy.document()
 			.its("adoptedStyleSheets")
 			.then(adoptedStyleSheets => {
-				return adoptedStyleSheets.find(sh => sh._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`);
+				// eslint-disable-next-line
+				return adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === `${dataPropAttr}|@ui5/webcomponents-base-test`);
 			})
 			.its("cssRules")
 			.its(0)

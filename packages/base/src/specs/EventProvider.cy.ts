@@ -1,4 +1,4 @@
-import "../../src/bundle.common.js";
+import "../bundle.common.js";
 
 describe("Event provider attaches and detaches listeners properly", () => {
 	it("Tests that listeners can be removed (1 listener)", () => {
@@ -27,7 +27,7 @@ describe("Event provider attaches and detaches listeners properly", () => {
 			.then(() => {
 				return timesCalled;
 			})
-			.should("equal", 1)
+			.should("equal", 1);
 	});
 
 	it("Tests that listeners can be removed (more than 1 listener)", () => {
@@ -58,6 +58,6 @@ describe("Event provider attaches and detaches listeners properly", () => {
 			.then(() => {
 				return timesCalled;
 			})
-			.should("equal", 1)
+			.should("equal", 1);
 	});
 });

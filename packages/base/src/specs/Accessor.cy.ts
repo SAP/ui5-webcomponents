@@ -1,14 +1,12 @@
-import { html } from 'lit';
-
-import "../../src/test-elements/Accessor.js";
+import "./assets/test-elements/Accessor.js";
 
 describe("Framework boot", () => {
 	it("Setting property updates attribute, state and DOM", () => {
-		cy.mount(html`<ui5-test-accessor></ui5-test-accessor>`);
+		cy.mount(`<ui5-test-accessor></ui5-test-accessor>`);
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
-			.invoke("prop", "myProp", true)
+			.invoke("prop", "myProp", true);
 
 		cy.get("@testAccessor")
 			.should("have.attr", "my-prop");
@@ -24,7 +22,7 @@ describe("Framework boot", () => {
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
-			.invoke("prop", "myProp", false)
+			.invoke("prop", "myProp", false);
 
 		cy.get("@testAccessor")
 			.should("not.have.attr", "my-prop");
@@ -40,11 +38,11 @@ describe("Framework boot", () => {
 	});
 
 	it("Setting attribute updates property, state and DOM", () => {
-		cy.mount(html`<ui5-test-accessor></ui5-test-accessor>`);
+		cy.mount(`<ui5-test-accessor></ui5-test-accessor>`);
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
-			.invoke("attr", "my-prop", "")
+			.invoke("attr", "my-prop", "");
 
 		cy.get("@testAccessor")
 			.should("have.attr", "my-prop");
@@ -60,7 +58,7 @@ describe("Framework boot", () => {
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
-			.invoke("removeAttr", "my-prop")
+			.invoke("removeAttr", "my-prop");
 
 		cy.get("@testAccessor")
 			.should("not.have.attr", "my-prop");
@@ -76,7 +74,7 @@ describe("Framework boot", () => {
 	});
 
 	it("should stop searching for accessors when HTMLElement is reached", () => {
-		cy.mount(html`<ui5-test-accessor></ui5-test-accessor>`);
+		cy.mount(`<ui5-test-accessor></ui5-test-accessor>`);
 
 		cy.get("[ui5-test-accessor]")
 			.invoke("prop", "title")

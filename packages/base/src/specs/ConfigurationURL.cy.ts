@@ -1,6 +1,5 @@
-import { html } from 'lit';
-import { internals } from "../../src/Location.js";
-import "../../src/bundle.common.js";
+import { internals } from "../Location.js";
+import "../bundle.common.js";
 
 describe("Some settings can be set via SAP UI URL params", () => {
 	before(() => {
@@ -8,14 +7,14 @@ describe("Some settings can be set via SAP UI URL params", () => {
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.wrap(internals)
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} })
-	})
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} });
+	});
 
 	it("Tests that language is applied", () => {
 		cy.window()
@@ -48,7 +47,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			.invoke("getAnimationMode")
 			.should("equal", "basic");
 	});
-})
+});
 
 describe("Different themeRoot configurations", () => {
 	it("Allowed theme root", () => {
@@ -56,13 +55,13 @@ describe("Different themeRoot configurations", () => {
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.wrap(internals)
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} })
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} });
 
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
@@ -71,25 +70,24 @@ describe("Different themeRoot configurations", () => {
 			.should("equal", "https://example.com/UI5/");
 	});
 
-
 	it("Unallowed theme root", () => {
 		const searchParams = "sap-ui-theme=sap_horizon_hcb@https://another-example.com";
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.wrap(internals)
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} })
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} });
 
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
 			.its("configuration")
 			.invoke("getThemeRoot")
-			.should("equal", window.location.origin + "/UI5/");
+			.should("equal", `${window.location.origin}/UI5/`);
 	});
 
 	it("Relative theme root", () => {
@@ -97,24 +95,24 @@ describe("Different themeRoot configurations", () => {
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.wrap(internals)
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} })
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} });
 
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
 			.its("configuration")
 			.invoke("getThemeRoot")
 			.then(themeRoot => {
-				return themeRoot.endsWith("/test/UI5/")
+				return (themeRoot as string).endsWith("/test/UI5/");
 			})
 			.should("be.true");
 	});
-})
+});
 
 describe("Some settings can be set via SAP URL params", () => {
 	before(() => {
@@ -122,14 +120,14 @@ describe("Some settings can be set via SAP URL params", () => {
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.wrap(internals)
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} })
-	})
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} });
+	});
 
 	it("Tests that language is applied via sap-ui-language", () => {
 		cy.window()
@@ -148,21 +146,20 @@ describe("Some settings can be set via SAP URL params", () => {
 	});
 });
 
-
 describe("Some settings can be set via SAP UI URL params", () => {
 	before(() => {
 		const searchParams = "sap-language=bg&sap-ui-language=de&sap-theme=sap_fiori_3_dark&sap-theme=sap_fiori_3_hcb";
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.wrap(internals)
 			.invoke("search")
 			.should("be.equal", searchParams);
 
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} })
-	})
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, { ui5Configuration: {} });
+	});
 
 	it("Tests that language is applied via sap-ui-language", () => {
 		cy.window()
@@ -179,4 +176,4 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			.invoke("getTheme")
 			.should("equal", "sap_fiori_3_hcb");
 	});
-})
+});

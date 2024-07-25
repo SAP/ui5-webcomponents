@@ -5,9 +5,7 @@
   "compilerOptions": {
     "tsBuildInfoFile": "dist/.tsbuildinfo",
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["@ui5/webcomponents-tools"]
   },
-  "references": [
-    { "path": "./tsconfig.spec.json" },
-  ]
 }

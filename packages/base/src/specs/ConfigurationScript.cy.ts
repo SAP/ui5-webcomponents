@@ -1,5 +1,4 @@
-import { html } from 'lit';
-import "../../src/bundle.common.js";
+import "../bundle.common.js";
 
 describe("Configuration script", () => {
 	const configurationObject = {
@@ -14,28 +13,28 @@ describe("Configuration script", () => {
 				{
 					"dateFormat": "A",
 					"islamicMonthStart": "14351201",
-					"gregDate": "20140925"
+					"gregDate": "20140925",
 				},
 				{
 					"dateFormat": "A",
 					"islamicMonthStart": "14360101",
-					"gregDate": "20141024"
+					"gregDate": "20141024",
 				},
 				{
 					"dateFormat": "A",
 					"islamicMonthStart": "14360201",
-					"gregDate": "20141123"
-				}
-			]
+					"gregDate": "20141123",
+				},
+			],
 		},
 		"noConflict": {
-			"events": ["selection-change", "header-click"]
-		}
-	}
+			"events": ["selection-change", "header-click"],
+		},
+	};
 
 	before(() => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`, {
-			ui5Configuration: configurationObject
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`, {
+			ui5Configuration: configurationObject,
 		});
 
 		cy.get("script[data-ui5-config]")
@@ -44,7 +43,7 @@ describe("Configuration script", () => {
 				return $el.get(0).innerHTML;
 			})
 			.should("equal", JSON.stringify(configurationObject));
-	})
+	});
 
 	it("getLanguage", () => {
 		cy.window()
@@ -101,6 +100,6 @@ describe("Configuration script", () => {
 			.invoke("getNoConflict")
 			.should("deep.equal", configurationObject.noConflict)
 			.its("events")
-			.should("deep.equal", configurationObject.noConflict.events)
+			.should("deep.equal", configurationObject.noConflict.events);
 	});
-})
+});

@@ -1,13 +1,13 @@
-import "../../src/bundle.common.js";
+import "../bundle.common.js";
 
 describe("Some configuration options can be changed at runtime", () => {
 	it("Tests that theme can be changed", () => {
-		const newTheme = 'sap_horizon_hcb';
+		const newTheme = "sap_horizon_hcb";
 
 		cy.window()
-		.its("sap-ui-webcomponents-bundle")
-		.its("configuration")
-		.invoke("setTheme", newTheme);
+			.its("sap-ui-webcomponents-bundle")
+			.its("configuration")
+			.invoke("setTheme", newTheme);
 
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
@@ -17,7 +17,7 @@ describe("Some configuration options can be changed at runtime", () => {
 	});
 
 	it("Tests that noConflict can be changed", () => {
-		const noConflictObject = { events: ["selection-change"] }
+		const noConflictObject = { events: ["selection-change"] };
 
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
@@ -30,7 +30,7 @@ describe("Some configuration options can be changed at runtime", () => {
 			.invoke("getNoConflict")
 			.should("deep.equal", noConflictObject)
 			.its("events")
-			.should("deep.equal", noConflictObject.events)
+			.should("deep.equal", noConflictObject.events);
 	});
 
 	it("Tests that theme root is applied", () => {
@@ -39,12 +39,12 @@ describe("Some configuration options can be changed at runtime", () => {
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
 			.its("configuration")
-			.invoke("setThemeRoot", newThemeRoot)
+			.invoke("setThemeRoot", newThemeRoot);
 
 		cy.window()
 			.its("sap-ui-webcomponents-bundle")
 			.its("configuration")
 			.invoke("getThemeRoot")
-			.should("equal", newThemeRoot)
+			.should("equal", newThemeRoot);
 	});
-})
+});

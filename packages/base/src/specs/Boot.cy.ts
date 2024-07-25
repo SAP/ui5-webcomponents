@@ -1,4 +1,4 @@
-import "../../src/bundle.common.js";
+import "../bundle.common.js";
 
 describe("Framework boot", () => {
 	it("Tests theme loading, when registered after 'attachBoot' and 'boot'", () => {

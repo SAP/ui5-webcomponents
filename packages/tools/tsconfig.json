@@ -12,6 +12,10 @@
     "composite": true,
     "experimentalDecorators": true,
     "ignoreDeprecations": "5.0",
-    "importsNotUsedAsValues": "preserve"
+    "importsNotUsedAsValues": "preserve",
+    "types": [
+      "cypress",
+      "cypress-ct-lit"
+    ],
   },
 }

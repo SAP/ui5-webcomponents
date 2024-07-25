@@ -1,16 +1,15 @@
-import { html } from 'lit';
-
-import "../../src/test-elements/Generic.js";
+import type UI5Element from "../UI5Element.js";
+import "./assets/test-elements/Generic.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a property invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then(el => {
-				cy.spy(el.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>((el.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@testGeneric")
 			.invoke("prop", "strProp", "new value");
@@ -19,11 +18,11 @@ describe("Invalidation works", () => {
 			.invoke("prop", "boolProp", true);
 
 		cy.get("@invalidations")
-			.should("have.been.calledTwice")
+			.should("have.been.calledTwice");
 	});
 
 	it("Tests that setting a property to the same value does not invalidate", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		const text = "new value";
 
@@ -31,18 +30,18 @@ describe("Invalidation works", () => {
 			.as("testGeneric")
 			.invoke("prop", "strProp", text)
 			.then(el => {
-				cy.spy(el.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>((el.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@testGeneric")
-			.invoke("prop", "strProp", text)
+			.invoke("prop", "strProp", text);
 
 		cy.get("@invalidations")
-			.should("have.not.been.called")
+			.should("have.not.been.called");
 	});
 
 	it("Tests that setting a property of type Object always invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		const obj = {};
 		const otherObj = {};
@@ -51,57 +50,57 @@ describe("Invalidation works", () => {
 			.as("testGeneric")
 			.invoke("prop", "objectProp", obj)
 			.then(el => {
-				cy.spy(el.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>((el.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@testGeneric")
-			.invoke("prop", "objectProp", otherObj)
+			.invoke("prop", "objectProp", otherObj);
 
 		cy.get("@invalidations")
-			.should("have.been.calledOnce")
+			.should("have.been.calledOnce");
 	});
 
 	it("Tests that setting an array property always invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
-		const arr = [];
-		const otherArr = [];
+		const arr: Array<string> = [];
+		const otherArr: Array<string> = [];
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.invoke("prop", "multiProp", arr)
 			.then(el => {
-				cy.spy(el.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>((el.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@testGeneric")
-			.invoke("prop", "multiProp", otherArr)
+			.invoke("prop", "multiProp", otherArr);
 
 		cy.get("@invalidations")
-			.should("have.been.calledOnce")
+			.should("have.been.calledOnce");
 	});
 
 	it("Tests that adding a child invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then(el => {
-				cy.spy(el.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>((el.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@testGeneric")
 			.then($testGeneric => {
 				const div = document.createElement("div");
 				$testGeneric.append(div);
-			})
+			});
 
 		cy.get("@invalidations")
-			.should("have.been.called")
+			.should("have.been.called");
 	});
 
 	it("Tests that removing a child invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		const div = document.createElement("div");
 
@@ -110,88 +109,88 @@ describe("Invalidation works", () => {
 			.then($testGeneric => {
 				$testGeneric.append(div);
 
-				return $testGeneric
+				return $testGeneric;
 			})
 			.then($testGeneric => {
-				cy.spy($testGeneric.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>(($testGeneric.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@invalidations")
-			.should("have.not.been.called")
+			.should("have.not.been.called");
 
-		cy.get(div)
+		cy.wrap(div)
 			.then($div => {
 				$div.remove();
-			})
+			});
 
 		cy.get("@invalidations")
-			.should("have.been.called")
+			.should("have.been.called");
 	});
 
 	it("Tests that modifying textContent invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then($testGeneric => {
 				$testGeneric.text("test");
 
-				return $testGeneric
+				return $testGeneric;
 			})
 			.then($testGeneric => {
-				cy.spy($testGeneric.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>(($testGeneric.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@invalidations")
-			.should("have.not.been.called")
+			.should("have.not.been.called");
 
 		cy.get("@testGeneric")
 			.then($testGeneric => {
 				$testGeneric.text("test2");
-			})
+			});
 
 		cy.get("@invalidations")
-			.should("have.been.called")
+			.should("have.been.called");
 	});
 
 	it("Tests that modifying nodeValue invalidates", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		cy.get("[ui5-test-generic]")
 			.as("testGeneric")
 			.then($testGeneric => {
 				$testGeneric.text("test");
 
-				return $testGeneric
+				return $testGeneric;
 			})
 			.then($testGeneric => {
-				cy.spy($testGeneric.get(0), "onInvalidation").as("invalidations")
-			})
+				cy.spy<UI5Element>(($testGeneric.get(0) as UI5Element), "onInvalidation").as("invalidations");
+			});
 
 		cy.get("@invalidations")
-			.should("have.not.been.called")
+			.should("have.not.been.called");
 
 		cy.get("@testGeneric")
 			.then($testGeneric => {
 				$testGeneric.get(0).childNodes[0].nodeValue = "test2";
-			})
+			});
 
 		cy.get("@invalidations")
-			.should("have.been.called")
+			.should("have.been.called");
 	});
 
 	it("Tests that multiple invalidations result in a single rendering", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		cy.get("[ui5-test-generic]")
-			.as("testGeneric")
+			.as("testGeneric");
 
 		cy.get("@testGeneric")
 			.then($testGeneric => {
-				cy.spy($testGeneric.get(0), "onInvalidation").as("invalidations")
+				cy.spy<UI5Element>(($testGeneric.get(0) as UI5Element), "onInvalidation").as("invalidations");
 
-				cy.spy($testGeneric.get(0), "_render").as('rendering')
-			})
+				cy.spy<UI5Element>(($testGeneric.get(0) as UI5Element), "_render").as("rendering");
+			});
 
 		cy.get("@testGeneric")
 			.invoke("prop", "strProp", "new");
@@ -200,9 +199,9 @@ describe("Invalidation works", () => {
 			.invoke("prop", "strProp", "new2");
 
 		cy.get("@invalidations")
-			.should("have.been.calledTwice")
+			.should("have.been.calledTwice");
 
 		cy.get("@rendering")
-			.should("have.been.calledOnce")
+			.should("have.been.calledOnce");
 	});
 });

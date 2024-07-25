@@ -6,7 +6,7 @@ module.exports = defineConfig({
   component: {
     supportFile: path.join(__dirname, "cypress/support/component.js"),
     indexHtmlFile: path.join(__dirname, "cypress/support/component-index.html"),
-    specPattern: "test/specs/*.cy.{js,ts}",
+    specPattern: "**/specs/*.cy.{js,ts}",
     devServer: {
       framework: 'cypress-ct-lit',
       bundler: 'vite',

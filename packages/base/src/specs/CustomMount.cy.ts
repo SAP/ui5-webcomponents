@@ -1,9 +1,8 @@
-import { html } from 'lit';
-import "../../src/bundle.common.js";
+import "../bundle.common.js";
 
 describe("Custom mount", () => {
 	it("mount", () => {
-		cy.mount(html`<button>Test</button>`);
+		cy.mount(`<button>Test</button>`);
 
 		cy.get("button")
 			.should("exist")
@@ -11,10 +10,10 @@ describe("Custom mount", () => {
 	});
 
 	it("mount with configuration", () => {
-		const configurationObject = { "animationMode": "basic" }
+		const configurationObject = { "animationMode": "basic" };
 
-		cy.mount(html`<button>Test with configuration</button>`, {
-			ui5Configuration: configurationObject
+		cy.mount(`<button>Test with configuration</button>`, {
+			ui5Configuration: configurationObject,
 		});
 
 		cy.get("button")
@@ -34,4 +33,4 @@ describe("Custom mount", () => {
 			.invoke("getAnimationMode")
 			.should("equal", configurationObject.animationMode);
 	});
-})
+});

@@ -1,13 +1,11 @@
-import { html } from 'lit';
-
-import "../../src/test-elements/Generic.js";
+import "./assets/test-elements/Generic.js";
 
 describe("Properties can only have values, restricted to their types", () => {
 	it("String property enforced to string", () => {
-		cy.mount(html`<ui5-test-generic></ui5-test-generic>`)
+		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
 		cy.get("[ui5-test-generic]")
-			.as("testGeneric")
+			.as("testGeneric");
 
 		cy.get("@testGeneric")
 			.invoke("prop", "strProp", 5);
