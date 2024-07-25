@@ -429,7 +429,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -484,7 +484,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		e.preventDefault();
 
 		// If 'step' is 0 no interaction is available as there is no constant quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -525,7 +525,11 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.update(undefined, newValues[0], newValues[1]);
 	}
 
-	_handleUp() {
+	_handleUp(e: MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(undefined);
 

@@ -162,7 +162,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this.step === 0) {
+		if (this.disabled || this.step === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -222,6 +222,10 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		e.preventDefault();
 
 		// If step is 0 no interaction is available because there is no constant
@@ -241,7 +245,11 @@ class Slider extends SliderBase implements IFormInputElement {
 	/** Called when the user finish interacting with the slider
 	 * @private
 	 */
-	_handleUp() {
+	_handleUp(e: TouchEvent | MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireEvent("change");
 		}

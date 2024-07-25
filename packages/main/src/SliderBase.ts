@@ -154,7 +154,7 @@ abstract class SliderBase extends UI5Element {
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
-	_upHandler: () => void;
+	_upHandler: (e: TouchEvent | MouseEvent) => void;
 	_stateStorage: StateStorage;
 	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
@@ -195,7 +195,7 @@ abstract class SliderBase extends UI5Element {
 
 	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
-	_handleUp() {}
+	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
@@ -296,7 +296,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
