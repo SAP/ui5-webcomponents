@@ -194,8 +194,6 @@ class Slider extends SliderBase implements IFormInputElement {
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
 		}
-
-		this.focused = true;
 	}
 
 	_onfocusout(e: FocusEvent) {
@@ -213,8 +211,6 @@ class Slider extends SliderBase implements IFormInputElement {
 		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-input")) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
-
-		this.focused = false;
 	}
 
 	/**

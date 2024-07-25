@@ -29,6 +29,9 @@
 		aria-valuenow="{{value}}"
 		aria-labelledby="{{_ariaLabelledByHandleRefs}}"
 		aria-disabled="{{_ariaDisabled}}"
+		aria-keyshortcuts="F2"
+		aria-describedby="{{_ariaDescribedByHandleRefs}}"
+
 		data-sap-focus-ref
 		part="handle"
 	>
@@ -40,6 +43,7 @@
 							type="Number"
 							value="{{value}}"
 							@change="{{_onInputChange}}"
+							aria-labelledby={{_ariaLabelledByInputRefs}}
 						></ui5-input>
 					{{else}}
 						<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>

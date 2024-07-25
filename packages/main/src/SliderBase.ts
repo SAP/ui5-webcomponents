@@ -8,7 +8,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
-	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
+	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
@@ -289,7 +289,13 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
+		const target = (e.target as HTMLElement);
+
+		if (isF2(e) && target.querySelector("ui5-input")) {
+			(target.querySelector("ui5-input") as HTMLElement).focus();
+		}
+
+		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -736,6 +742,22 @@ abstract class SliderBase extends UI5Element {
 
 	get _ariaLabelledByHandleRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	}
+
+	get _ariaDescribedByHandleRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderInputDesc`].join(" ").trim();
+	}
+
+	get _ariaLabelledByInputRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderInputLabel`].join(" ").trim();
+	}
+
+	get _ariaDescribedByInputText() {
+		return "Press F2 to enter a value";
+	}
+
+	get _ariaLabelledByInputText() {
+		return "Current value";
 	}
 }
 
