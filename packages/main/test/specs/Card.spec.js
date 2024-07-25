@@ -96,6 +96,14 @@ describe("Card general interaction", () => {
 		await cardHeaderTitle.setAttribute("aria-level", 4);
 		assert.strictEqual(await cardHeader.shadow$(".ui5-card-header .ui5-card-header-title").getAttribute("aria-level"), "4");
 	});
+
+	it("tests loading", async () => {
+		const card = await browser.$("#loadingCard");
+		const busyIndicator = card.shadow$("ui5-busy-indicator");
+
+		assert.ok(await busyIndicator.getAttribute("active"), "The busy indicator is active.");
+		assert.strictEqual(await busyIndicator.getAttribute("delay"), 500, "The delay is correct.");
+	});
 });
 
 describe("CardHeader", () => {
