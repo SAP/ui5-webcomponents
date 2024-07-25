@@ -222,7 +222,7 @@ class TimePickerClock extends UI5Element {
 	 * Keeps variables used in interaction calculations.
 	 */
 	@property({ type: Object })
-	_dimensionParameters!: TimePickerClockDimensions = {
+	_dimensionParameters: TimePickerClockDimensions = {
 		radius: 0,
 		centerX: 0,
 		centerY: 0,
