@@ -222,7 +222,19 @@ class TimePickerClock extends UI5Element {
 	 * Keeps variables used in interaction calculations.
 	 */
 	@property({ type: Object })
-	_dimensionParameters!: TimePickerClockDimensions;
+	_dimensionParameters: TimePickerClockDimensions = {
+		radius: 0,
+		centerX: 0,
+		centerY: 0,
+		dotHeight: 0,
+		numberHeight: 0,
+		outerMax: 0,
+		outerMin: 0,
+		innerMax: 0,
+		innerMin: 0,
+		offsetX: 0,
+		offsetY: 0,
+	};;
 
 	/**
 	 * Mousedown or Touchstart event flag.
@@ -704,7 +716,7 @@ class TimePickerClock extends UI5Element {
 				this._movSelectedValue = 0 + this._selectedValue;
 			}
 		} else if (evt.type === "mousemove") {
-			if (!this._dimensionParameters) {
+			if (!this._dimensionParameters.radius) {
 				this._calculateDimensions();
 			}
 			this._calculatePosition((evt as MouseEvent).pageX, (evt as MouseEvent).pageY);
