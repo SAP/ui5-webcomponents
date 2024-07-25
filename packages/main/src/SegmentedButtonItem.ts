@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -206,7 +207,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
+		return getDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	static async onDefine() {

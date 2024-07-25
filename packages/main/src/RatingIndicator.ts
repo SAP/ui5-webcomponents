@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
+import { getDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -295,8 +295,11 @@ class RatingIndicator extends UI5Element {
 		return this.disabled ? "-1" : tabindex || "0";
 	}
 
-	get ratingTooltip() {
-		return this.tooltip || this.defaultTooltip;
+	get ratingTooltip(): string | undefined {
+		if (this.tooltip) {
+			return this.tooltip;
+		}
+		return getDefaultTooltips() ? this.defaultTooltip : undefined;
 	}
 
 	get defaultTooltip() {
