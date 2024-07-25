@@ -101,7 +101,7 @@ describe("Card general interaction", () => {
 		const card = await browser.$("#loadingCard");
 		const busyIndicator = card.shadow$("ui5-busy-indicator");
 
-		assert.ok(await busyIndicator.getAttribute("active"), "The busy indicator is active.");
+		assert.ok(await busyIndicator.hasAttribute("active"), "The busy indicator is active.");
 		assert.strictEqual(await busyIndicator.getAttribute("delay"), 500, "The delay is correct.");
 	});
 });
