@@ -1393,6 +1393,26 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
 		});
 
+		it("Backspace should not delete tokens, when MCB is readonly", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-ro");
+			const inner = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await inner.click();
+
+			assert.strictEqual(tokens.length, 3, "3 Tokens are placed in the MCB");
+
+			await inner.keys("Backspace");
+			await inner.keys("Backspace");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 3, "3 Tokens are placed in the MCB");
+			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
+		});
+
 		it("should open/close popover on keyboard combination ctrl + i", async () => {
 			const mcb = await browser.$("#truncated-token");
 			const inner = await mcb.shadow$("input");

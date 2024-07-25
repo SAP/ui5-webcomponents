@@ -9,6 +9,10 @@
     display: none;
 }
 
+:host([overflow-mode="Scroll"]) {
+    overflow-x: scroll;
+}
+
 #table {
     display: grid;
     grid-auto-rows: minmax(min-content, auto);
@@ -39,4 +43,8 @@
     inset: 0;
     height: 100%;
     z-index: 2;
+}
+
+#loading[_is-busy] {
+	background-color: var(--_ui5_busy_indicator_block_layer);
 }

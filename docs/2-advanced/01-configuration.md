@@ -16,6 +16,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 | [noConflict](#noConflict)                     | `true`, `false`                                                                                                                                                                                                                                                                                | `false`               | When set to true, all events will be fired with a `ui5-` prefix only   | Components that fire events (most do)                          |
 | [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                                                                                                                                                                                                       | `{}`                  | Allows to override locale-specific configuration                       | Date/time components (`ui5-date-picker`, etc.)                 |
 | [fetchDefaultLanguage](#fetchDefaultLanguage) | `true`, `false`                                                                                                                                                                                                                                                                                | `false`               | Whether to fetch assets even for the default language                  | Framework                                                      |
+| [defaultFontLoading](#defaultFontLoading) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to fetch default font faces                  | Framework                                                      |
 | [timezone](#timezone)                         | `Asia/Tokyo`, `Pacific/Apia`, `Asia/Kolkata`, `Europe/Sofia` and etc.                                                                                                                                                                                                                          | Your local time zone. | Allows to override your local time zone.                               | Date/time components (`ui5-date-picker`, etc.)                 |
 | [themeRoot](#themeRoot)                       | String to a URL - see the [themeRoot](#themeRoot) section below                                                                                                                                                                                                                                | N/A                   | Allows to set a URL to a Theme-designer-created custom theme.          | All components                                                 |
 
@@ -217,6 +218,21 @@ Example:
 }
 </script>
 ```
+### defaultFontLoading
+<a name="defaultFontLoading"></a>
+
+This configuration option controls whether default font faces are fetched over the network.
+
+Typically, you would not need to modify this setting. However, if for technical reasons you prefer the default font faces to not be fetched over the network, you can set `defaultFontLoading` to `false`.
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"defaultFontLoading": false
+}
+</script>
+```
 ### timezone
 <a name="timezone"></a>
 
@@ -273,7 +289,8 @@ Example:
 		"events": ["selection-change", "header-click"]
 	},
 	"fetchDefaultLanguage": true,
-	"timezone": "Europe/Sofia"
+	"timezone": "Europe/Sofia",
+	defaultFontLoading
 }
 </script>
 ```
@@ -325,6 +342,12 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 
 ```js
 import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+```
+
+ - `defaultFontLoading`
+
+```js
+import { getDefaultFontLoading, setDefaultFontLoading } from "@ui5/webcomponents-base/dist/config/Fonts.js";
 ```
  - `timezone` - can only be set initially in the configuration script.
 

@@ -20,6 +20,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	fastNavigation?: boolean,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
+	features?: Array<string>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -38,12 +39,18 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
+			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
 		}
+
+		if (features) {
+			target.metadata.features = features;
+		}
+
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
 		}

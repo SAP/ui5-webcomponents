@@ -112,12 +112,16 @@ abstract class TableRowBase extends UI5Element {
 		return this.cells.filter(c => c._popin);
 	}
 
-	get _i18nRowSelector(): string {
-		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
+	get _stickyCells() {
+		const selectionCell = this.shadowRoot?.querySelector("#selection-cell"),
+			navigatedCell = this.shadowRoot?.querySelector("#navigated-cell");
+
+		// filter out null/undefined
+		return [selectionCell, ...this.cells, navigatedCell].filter(cell => cell?.hasAttribute("fixed"));
 	}
 
-	get isTableRowBase() {
-		return true;
+	get _i18nRowSelector(): string {
+		return TableRowBase.i18nBundle.getText(TABLE_ROW_SELECTOR);
 	}
 }
 

@@ -77,4 +77,12 @@ describe("Configuration script has effect", () => {
 		});
 		assert.strictEqual(res, 'basic', "animationMode is basic");
 	});
+
+	it("Tests that defaultFontLoading is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getDefaultFontLoading());
+		});
+		assert.strictEqual(res, false, "defaultFontLoading is false");
+	});
 });

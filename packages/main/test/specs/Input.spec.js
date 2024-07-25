@@ -135,6 +135,15 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputLiveChangeResult.getValue(), "3", "input is fired 3 times");
 	});
 
+	it("fires select event", async () => {
+		const inputInner = await browser.$("#selectInput").shadow$("input");
+		const selectResult = await browser.$("#select-event-counter");
+
+		await inputInner.doubleClick();
+
+		assert.strictEqual(await selectResult.getText(), "1", "select is called");
+	});
+
 	it("fires change when same value typed, but value is mutated via API in between", async () => {
 		const inputChange = await browser.$("#inputChange").shadow$("input");
 		const inputChangeResult = await browser.$("#inputChangeResult").shadow$("input");
@@ -1041,7 +1050,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called now, since the value is updated");
 	});
 
-	it("Change event should be fired only once, when a user types a value identical to a item and presses ENTER - #3732", async () => {
+	it("Change event should be fired only once, when a user types a value identical to an item and presses ENTER - #3732", async () => {
 		const inputChange = await browser.$("#input-change-2").shadow$("input");
 		const changeCount = await browser.$("#input-change-count-2");
 
@@ -1093,6 +1102,75 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await input.getValue(), "", "Input's value should be empty");
 		assert.strictEqual(await inner.getValue(), "", "Inner input's value should be empty");
+	});
+
+	it("Change event is not fired when the same suggestion item is selected (with typeahead) - #8912", async () => {
+		const suggestionsInput = await browser.$("#myInput");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("a");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		const changeCount = await browser.$("#myInput-change-count");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+
+		await suggestionsInput.keys("Backspace");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+	});
+
+	it("Change event is not fired when the same suggestion item is selected (no-typeahead) - #8912", async () => {
+		const suggestionsInput = await browser.$("#myInput");
+		await browser.execute(() => {
+			document.querySelector("#myInput").noTypeahead = true;
+		});
+
+		await suggestionsInput.keys("Backspace");
+
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		const changeCount = await browser.$("#myInput-change-count");
+
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+
+		// restore the default property value
+		await browser.execute(() => {
+			document.querySelector("#myInput").noTypeahead = false;
+		});
+	});
+
+	it("Change event is not fired when the same suggestion item is selected after focus out and selecting suggestion again - #8912", async () => {
+		const suggestionsInput = await browser.$("#myInput");
+		const changeCount = await browser.$("#myInput-change-count");
+
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
+
+		await suggestionsInput.keys("Tab");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("Backspace");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
+		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
 	});
 });
 
