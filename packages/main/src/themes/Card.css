@@ -19,6 +19,17 @@
 	box-sizing: border-box;
 }
 
+.ui5-card-busy-indicator {
+	width: 100%;
+	height: 100%;
+	border-radius: var(--_ui5_card_border-radius);
+}
+
+.ui5-card-inner {
+	width: 100%;
+	height: 100%;
+}
+
 .ui5-card-root.ui5-card--interactive:hover {
 	box-shadow: var(--_ui5_card_hover_box_shadow);
 }
