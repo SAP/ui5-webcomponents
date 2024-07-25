@@ -7,7 +7,6 @@ import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
-import Input from "./Input.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -133,12 +132,6 @@ abstract class SliderBase extends UI5Element {
 	 */
 	@property()
 	accessibleName?: string;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused = false;
 
 	/**
 	 * @private

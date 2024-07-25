@@ -250,8 +250,3 @@
 	border-radius: var(--_ui5_slider_handle_border_radius);
 	pointer-events: none;
 }
-
-/* .ui5-slider-popover-input {
-	min-width: 20px;
-	min-height: 2px;
-} */
