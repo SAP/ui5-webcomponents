@@ -3,7 +3,7 @@ import type UI5Element from "../UI5Element";
 type QueryDecorator = (target: UI5Element, propertyKey: string | symbol) => void;
 
 /**
- * A decorator that converts a class mmeber into a getter that
+ * A decorator that converts a class member into a getter that
  * executes a querySelectorAll on the element's renderRoot.
  *
  * @param { string } selector DOM String containing selector to match
