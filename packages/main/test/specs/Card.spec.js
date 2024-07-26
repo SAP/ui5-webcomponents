@@ -102,7 +102,7 @@ describe("Card general interaction", () => {
 		const busyIndicator = card.shadow$("ui5-busy-indicator");
 
 		assert.ok(await busyIndicator.hasAttribute("active"), "The busy indicator is active.");
-		assert.strictEqual(await busyIndicator.getAttribute("delay"), 500, "The delay is correct.");
+		assert.strictEqual(await busyIndicator.getAttribute("delay"), "500", "The delay is correct.");
 	});
 });
 
