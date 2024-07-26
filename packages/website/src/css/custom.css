@@ -83,7 +83,8 @@
     --playground-code-selection-background: var(--sys-color-primary-transparent);
 }
 
-[data-theme='dark'] playground-file-editor {
+[data-theme='dark'] {
+  --playground-code-cursor-color: #fff;
   --playground-code-background: #212121;
   --playground-code-default-color: #eeffff;
   --playground-code-keyword-color: #c792ea;
