@@ -88,7 +88,7 @@ class Card extends UI5Element {
 	header!: Array<CardHeader>;
 
 	/**
-	 * Defines if a busy indicator would be displayed over the card.
+	 * Defines if a loading indicator would be displayed over the card.
 	 * @default false
 	 * @public
 	 * @since 2.1.0
@@ -97,7 +97,7 @@ class Card extends UI5Element {
 	loading = false;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will show up for this card.
+	 * Defines the delay in milliseconds, after which the loading indicator will show up for this card.
 	 * @default 1000
 	 * @public
 	 * @since 2.1.0
