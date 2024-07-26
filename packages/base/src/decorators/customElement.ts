@@ -20,6 +20,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	features?: Array<string>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -36,12 +37,18 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
 		}
+
+		if (features) {
+			target.metadata.features = features;
+		}
+
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
 		}
@@ -50,11 +57,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 
 		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
-			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
-			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
+			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};
