@@ -751,14 +751,6 @@ abstract class SliderBase extends UI5Element {
 	get _ariaLabelledByInputRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderInputLabel`].join(" ").trim();
 	}
-
-	get _ariaDescribedByInputText() {
-		return "Press F2 to enter a value";
-	}
-
-	get _ariaLabelledByInputText() {
-		return "Current value";
-	}
 }
 
 export default SliderBase;

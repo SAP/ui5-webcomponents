@@ -14,6 +14,8 @@ import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 // Texts
 import {
 	SLIDER_ARIA_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -339,6 +341,14 @@ class Slider extends SliderBase implements IFormInputElement {
 
 	get _ariaLabelledByText() {
 		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
+	}
+
+	get _ariaDescribedByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_DESCRIPTION);
+	}
+
+	get _ariaLabelledByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
 	}
 
 	static async onDefine() {

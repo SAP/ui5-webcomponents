@@ -42,8 +42,8 @@
 						<ui5-input
 							type="Number"
 							value="{{value}}"
+							accessible-name-ref="{{_ariaLabelledByInputRefs}}"
 							@change="{{_onInputChange}}"
-							aria-labelledby={{_ariaLabelledByInputRefs}}
 						></ui5-input>
 					{{else}}
 						<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
