@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>ui5-radio-button</title>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/RadioButton.css">
+</head>
+
+<body class="radiobutton1auto">
+
+<button id="addBtn">Add</button>
+<div id="test"></div>
+
+<script>
+	const addBtn = document.querySelector("#addBtn")
+	const div = document.querySelector("div#test")
+
+	addBtn.addEventListener("click", () => {
+		const old = document.querySelector("#testRbtn12");
+
+		div.innerHTML = `<ui5-radio-button id="testRbtn11" name="test2" text="A"></ui5-radio-button>
+				<ui5-radio-button id="testRbtn12" name="test2" checked text="B"></ui5-radio-button>
+				<ui5-radio-button id="testRbtn13" name="test2" text="C"></ui5-radio-button>`;
+
+		if (old) {
+			old.checked = true;
+		}
+
+	})
+
+</script>
+
+</body>
+</html>
