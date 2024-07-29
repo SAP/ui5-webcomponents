@@ -28,4 +28,11 @@ describe("Text", () => {
 
 		assert.strictEqual((await text.getCSSProperty("-webkit-line-clamp")).value, 1, "-webkit-line-clamp should be 1");
 	});
+
+	it("tests emptyIndicatorMode", async () => {
+		const text = await browser.$("#emptyText").shadow$(".empty-indicator");
+
+		assert.strictEqual(await text.getText(), "–", "'–' should be rendered");
+		assert.strictEqual(await text.getAttribute("aria-label"), "Empty value", "Aria label is properly set");
+	});
 });
