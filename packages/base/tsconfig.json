@@ -13,6 +13,7 @@
 		"outDir": "dist",
 		"composite": true,
 		"rootDir": "src",
+		"experimentalDecorators": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 	},
 }
