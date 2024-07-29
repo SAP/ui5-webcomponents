@@ -36,16 +36,7 @@ describe("Invalidation works", () => {
 		cy.mount(`<ui5-test-generic-ext></ui5-test-generic-ext>`);
 
 		cy.get("[ui5-test-generic-ext]")
-			.then($el => {
-				return ($el.get(0).constructor as typeof UI5Element).getMetadata();
-			})
-			.as("metadata");
-
-		cy.get("@metadata")
-			.invoke("getProperties")
-			.its("strProp")
-			.should("exist")
-			.its("defaultValue")
+			.invoke("attr", "str-prop")
 			.should("equal", "Ext");
 	});
 });
