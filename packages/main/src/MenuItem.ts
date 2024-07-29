@@ -17,6 +17,7 @@ import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
+	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import type { IMenuItem } from "./Menu.js";
@@ -226,6 +227,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
+	}
+
+	get menuAccessibleName() {
+		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	get menuHeaderTextPhone() {

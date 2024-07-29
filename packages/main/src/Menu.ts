@@ -31,6 +31,7 @@ import type {
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
+	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -267,6 +268,10 @@ class Menu extends UI5Element {
 
 	get _menuItems() {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
+
+	get menuAccessibleName() {
+		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	onBeforeRendering() {
