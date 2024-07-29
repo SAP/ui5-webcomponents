@@ -3,12 +3,12 @@ import {
 	getCalendarType as getConfiguredCalendarType,
 	getSecondaryCalendarType as getConfiguredSecondaryCalendarType,
 } from "../InitialConfiguration.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let calendarType: CalendarType | undefined;
 let secondaryCalendarType: CalendarType | undefined;
 
-registerConfiguration("CalendarType", () => {
+attachConfigurationReset(() => {
 	calendarType = undefined;
 	secondaryCalendarType = undefined;
 });

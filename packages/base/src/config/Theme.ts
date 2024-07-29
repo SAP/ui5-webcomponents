@@ -4,11 +4,11 @@ import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
 import { boot, isBooted } from "../Boot.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let curTheme: string | undefined;
 
-registerConfiguration("Theme", () => {
+attachConfigurationReset(() => {
 	curTheme = undefined;
 });
 

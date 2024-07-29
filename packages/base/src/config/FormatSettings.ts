@@ -2,7 +2,7 @@ import LegacyDateFormats from "../features/LegacyDateFormats.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
 import { getFormatSettings } from "../InitialConfiguration.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 type FormatSettings = {
 	firstDayOfWeek?: number,
@@ -11,7 +11,7 @@ type FormatSettings = {
 
 let formatSettings: FormatSettings | undefined;
 
-registerConfiguration("CalendarType", () => {
+attachConfigurationReset(() => {
 	formatSettings = undefined;
 });
 

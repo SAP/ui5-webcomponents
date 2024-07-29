@@ -1,22 +1,18 @@
+import EventProvider from "../EventProvider.js";
+
+const eventProvider = new EventProvider<undefined, void>();
+const CONFIGURATION_RESET = "configurationReset";
 type ConfigurationResetCallback = () => void;
 
-const registeredConfigurations = new Map<string, ConfigurationResetCallback>();
-
-const registerConfiguration = (name: string, resetCallback: ConfigurationResetCallback) => {
-	const configuration = registeredConfigurations.has(name);
-
-	if (!configuration) {
-		registeredConfigurations.set(name, resetCallback);
-	}
+const attachConfigurationReset = (listener: ConfigurationResetCallback) => {
+	eventProvider.attachEvent(CONFIGURATION_RESET, listener);
 };
 
 const resetConfiguration = () => {
-	registeredConfigurations.forEach(resetCallback => {
-		resetCallback();
-	});
+	eventProvider.fireEvent(CONFIGURATION_RESET, undefined);
 };
 
 export {
-	registerConfiguration,
+	attachConfigurationReset,
 	resetConfiguration,
 };

@@ -1,10 +1,10 @@
 import { getAnimationMode as getConfiguredAnimationMode } from "../InitialConfiguration.js";
 import AnimationMode from "../types/AnimationMode.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let curAnimationMode: `${AnimationMode}` | undefined;
 
-registerConfiguration("AnimationMode", () => {
+attachConfigurationReset(() => {
 	curAnimationMode = undefined;
 });
 

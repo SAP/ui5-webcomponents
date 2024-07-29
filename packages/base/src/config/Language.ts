@@ -6,12 +6,12 @@ import { fireLanguageChange } from "../locale/languageChange.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { isBooted } from "../Boot.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let curLanguage: string | undefined;
 let fetchDefaultLanguage: boolean | undefined;
 
-registerConfiguration("Language", () => {
+attachConfigurationReset(() => {
 	curLanguage = undefined;
 	fetchDefaultLanguage = undefined;
 });

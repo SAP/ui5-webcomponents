@@ -1,9 +1,9 @@
 import { getTimezone as getConfiguredTimezone } from "../InitialConfiguration.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let currTimezone: string | undefined;
 
-registerConfiguration("ThemeRoot", () => {
+attachConfigurationReset(() => {
 	currTimezone = undefined;
 });
 

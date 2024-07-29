@@ -1,5 +1,5 @@
 import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguration.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 // Fire these events even with noConflict: true
 const excludeList = [
@@ -11,7 +11,7 @@ type NoConflictData = boolean | { events: Array<string>};
 
 let noConflict: NoConflictData | undefined;
 
-registerConfiguration("NoConflict", () => {
+attachConfigurationReset(() => {
 	noConflict = undefined;
 });
 

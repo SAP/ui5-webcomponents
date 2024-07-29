@@ -2,11 +2,11 @@ import createLinkInHead from "../util/createLinkInHead.js";
 import validateThemeRoot from "../validateThemeRoot.js";
 import { getThemeRoot as getConfiguredThemeRoot } from "../InitialConfiguration.js";
 import { getTheme } from "./Theme.js";
-import { registerConfiguration } from "./ConfigurationReset.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 
 let currThemeRoot: string | undefined;
 
-registerConfiguration("ThemeRoot", () => {
+attachConfigurationReset(() => {
 	currThemeRoot = undefined;
 });
 
