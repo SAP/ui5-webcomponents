@@ -48,6 +48,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { InputSuggestion, SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
+import "./features/InputSuggestions.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
