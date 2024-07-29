@@ -1,5 +1,5 @@
 import { setupHooks } from '@cypress/mount-utils';
-import { html } from "lit";
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { mount } from 'cypress-ct-lit'
 import "./commands.js";
 
@@ -23,11 +23,9 @@ function ui5Mount(component, options = {}) {
 		configurationScript.innerHTML = "{}";
 		window?.["sap-ui-webcomponents-bundle"]?.resetConfiguration(true);
 	}
-	if (typeof component === "string") {
-		const test = [component];
-		test.raw = [component];
 
-		return mount(html(test), options)
+	if (typeof component === "string") {
+		return mount(unsafeHTML(component), options)
 	}
 
 	return mount(component, options)
