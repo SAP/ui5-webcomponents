@@ -414,7 +414,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
-	@property()
+	@property({ noAttribute: true })
 	set value(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
 
