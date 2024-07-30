@@ -3,7 +3,7 @@ import { filter } from "../filter.util.js"
 
 const Input = ({ sidebar, updateItems }) => {
   return (
-      <div style={{ paddingInlineEnd: "0.5rem", paddingBlockEnd: "0.5rem" }}>
+      <div className="filterWrapper">
         <input
           className="filter"
           type='search'
@@ -14,8 +14,7 @@ const Input = ({ sidebar, updateItems }) => {
             updateItems(coppiedArray);
           }}
           aria-label='Filter'
-          placeholder='Filter...'
-          style={{ width: "100%" }} />
+          placeholder='Filter...' />
       </div>
   );
 };

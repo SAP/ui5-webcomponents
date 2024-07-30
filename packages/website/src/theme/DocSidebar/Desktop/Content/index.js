@@ -48,7 +48,7 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
       {items.length ?
       <ul className={clsx(ThemeClassNames.docs.docSidebarMenu, 'menu__list')}>
         <DocSidebarItems items={items} activePath={path} level={1} />
-      </ul> : "No data"
+      </ul> : <div className="filterNoDataText">No items found</div>
       }
     </nav>
   );

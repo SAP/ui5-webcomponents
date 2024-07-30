@@ -19,6 +19,8 @@ const DocSidebarMobileSecondaryMenu = ({sidebar, path}) => {
   return (
     <>
       <Input sidebar={sidebar} updateItems={updateItems}/>
+      {
+      items.length ? 
       <ul className={clsx(ThemeClassNames.docs.docSidebarMenu, 'menu__list')}>
         <DocSidebarItems
           items={items}
@@ -35,6 +37,8 @@ const DocSidebarMobileSecondaryMenu = ({sidebar, path}) => {
           level={1}
         />
       </ul>
+      : <div className="filterNoDataText">No items found</div>
+      }
     </>
   );
 };
