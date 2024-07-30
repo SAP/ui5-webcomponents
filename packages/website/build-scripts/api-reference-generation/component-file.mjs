@@ -314,21 +314,12 @@ const parseComponentDeclaration = (declaration, fileContent) => {
         return "";
     }
 
-    let additionalInfo;
-
     if (declaration.customElement) {
-        additionalInfo = `\`\<${declaration.tagName}\>\``;
+        fileContent = enhanceFrontMatter(fileContent, "ui5_tag_name", declaration.tagName)
     }
 
     if (declaration._ui5since) {
-        additionalInfo = additionalInfo ? `${additionalInfo} | <span className="badge badge--primary">Since ${declaration._ui5since}</span>`
-        : `<span className="badge badge--primary">Since ${declaration._ui5since}</span>`;
-    }
-
-    if (additionalInfo) {
-        fileContent = fileContent.replace("<%COMPONENT_OVERVIEW%>", `<div className="componentAdditionalInfo">${additionalInfo}</div>
-
-<%COMPONENT_OVERVIEW%>`)
+        fileContent = enhanceFrontMatter(fileContent, "ui5_since", `${declaration._ui5since}`)
     }
 
     if (declaration._ui5experimental) {
@@ -373,15 +364,29 @@ sidebar_class_name: ${experimentalCssClass}
 ${fileContent}`
     }
 
+    return enhanceFrontMatter(fileContent, "sidebar_class_name", experimentalCssClass)
+}
+
+const enhanceFrontMatter = (fileContent, front_matter_name, value) => {
+    const frontMatter = fileContent.match(/^---\n(?:.+\n)*---/);
+
+    if (!frontMatter) {
+        return `---
+${front_matter_name}: ${value}
+---
+
+${fileContent}`
+    }
+
     const frontMatterLines = frontMatter[0].split("\n");
-    const classLineIndex = frontMatterLines.findIndex(line => line.startsWith("sidebar_class_name"))
+    const classLineIndex = frontMatterLines.findIndex(line => line.startsWith(front_matter_name))
     const classLine = classLineIndex !== -1 ? frontMatterLines[classLineIndex] : undefined;
-    const hasExperimentalClass = classLine?.includes(experimentalCssClass);
+    const hasExperimentalClass = classLine?.includes(value);
 
     if (classLine && !hasExperimentalClass) {
-        frontMatterLines[classLineIndex] = `${classLine} ${experimentalCssClass}`;
+        frontMatterLines[classLineIndex] = `${classLine} ${value}`;
     } else if (!classLine) {
-       frontMatterLines.splice(frontMatterLines.length - 1, 0, `sidebar_class_name: ${experimentalCssClass}`);
+       frontMatterLines.splice(frontMatterLines.length - 1, 0, `${front_matter_name}: ${value}`);
     }
 
     return fileContent.replace(frontMatter[0], frontMatterLines.join("\n"));
