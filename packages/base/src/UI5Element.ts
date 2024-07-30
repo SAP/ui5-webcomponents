@@ -37,7 +37,7 @@ import type {
 } from "./types.js";
 import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -1220,6 +1220,10 @@ abstract class UI5Element extends HTMLElement {
 		const features = this.getMetadata().getFeatures();
 
 		features.forEach(feature => {
+			if (getComponentFeature(feature)) {
+				this.cacheUniqueDependencies();
+			}
+
 			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
 		});
 
