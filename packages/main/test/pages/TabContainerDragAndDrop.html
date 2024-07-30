@@ -113,19 +113,23 @@
 			const { destination, source } = e.detail;
 			const currentParent = destination.element.parentElement;
 
-			if (destination.placement === "Before") {
-				currentParent.insertBefore(
-					source.element,
-					destination.element
-				);
-			} else if (destination.placement === "After") {
-				const nextElement = Array.from(currentParent.children).at(Array.from(currentParent.children).indexOf(destination.element) + 1);
-				currentParent.insertBefore(
-					source.element,
-					nextElement
-				);
-			} else if (destination.placement === "On") {
-				destination.element.prepend(source.element);
+			switch (destination.placement) {
+				case "Before":
+					currentParent.insertBefore(
+						source.element,
+						destination.element
+					);
+					break;
+				case "After":
+					const nextElement = Array.from(currentParent.children).at(Array.from(currentParent.children).indexOf(destination.element) + 1);
+					currentParent.insertBefore(
+						source.element,
+						nextElement
+					);
+					break;
+				case "On":
+					destination.element.prepend(source.element);
+					break;
 			}
 
 			const newParent = source.element.parentElement;

@@ -20,6 +20,7 @@ import {
 	isRight,
 	isLeft,
 	isUp,
+	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -609,6 +610,39 @@ class TabContainer extends UI5Element {
 		draggedElement.focus();
 	}
 
+	_moveTab(tab: HTMLElement, e: KeyboardEvent) {
+		let placement;
+		let dropTarget;
+		const realTab = (tab as TabInStrip).realTabReference;
+
+		switch (e.key) {
+		case "ArrowLeft":
+			placement = "Before";
+			dropTarget = realTab.previousElementSibling as HTMLElement;
+			break;
+		case "ArrowRight":
+			placement = "After";
+			dropTarget = realTab.nextElementSibling as HTMLElement;
+			break;
+		}
+
+		if (!dropTarget || !placement) {
+			return;
+		}
+
+		this.fireEvent<TabContainerMoveEventDetail>("move", {
+			source: {
+				element: realTab,
+			},
+			destination: {
+				element: dropTarget,
+				placement: placement as `${MovePlacement}`,
+			},
+		});
+
+		realTab.focus();
+	}
+
 	_onHeaderDragLeave(e: DragEvent) {
 		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
 			return;
@@ -749,6 +783,11 @@ class TabContainer extends UI5Element {
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
+			return;
+		}
+
+		if (isCtrl(e)) {
+			this._moveTab(tab, e);
 			return;
 		}
 
