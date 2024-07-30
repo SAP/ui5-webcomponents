@@ -245,19 +245,15 @@ code {
   pointer-events: none;
 }
 
-.theme-doc-sidebar-item-category {
-  &.expComponentBadge:before {
+.theme-doc-sidebar-item-category.newComponentBadge:after,
+.theme-doc-sidebar-item-category.expComponentBadge:before {
     inset-inline-end: 2.25rem;
-  }
-
-  &.newComponentBadge:after {
-    inset-inline-end: 2.25rem;
-  }
-
-  &.newComponentBadge.expComponentBadge:before {
-    inset-inline-end: 4.5rem;
-  }
 }
+
+.theme-doc-sidebar-item-category.newComponentBadge.expComponentBadge:before {
+    inset-inline-end: 4.5rem;
+}
+
 
 .componentAdditionalInfo {
   margin-top: calc(-1 * calc(var(--ifm-h1-vertical-rhythm-bottom) * var(--ifm-leading))) !important;
