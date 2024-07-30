@@ -432,4 +432,28 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step2.isDisplayedInViewport(), false,
 			"Second step should not be visible.");
 	});
+
+	describe("Page Mode", () => {
+		beforeEach(async () => {
+			await browser.url(`test/pages/WizardPageMode_test.html`);
+		});
+
+		it("tests if the selected step receives initial focus", async () => {
+			// open dialog
+			await (await $("#button")).click();
+
+			// next step button click
+			await (await $("#nextButton")).click();
+
+			// focus next (cancel button)
+			await browser.keys("Tab");
+			// focus next (first selected step in navigator)
+			await browser.keys("Tab");
+
+			const secondStep = await $("#wiz2").shadow$(`[data-ui5-index="2"]`);
+
+			assert.strictEqual(await secondStep.getProperty("selected"), true, "Second step is selected.");
+			assert.strictEqual(await secondStep.matches(":focus"), true, "Second step is focused.");
+		});
+	});
 });
