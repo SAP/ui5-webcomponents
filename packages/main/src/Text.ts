@@ -1,10 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
 import TextTemplate from "./generated/templates/TextTemplate.lit.js";
@@ -69,6 +71,15 @@ class Text extends UI5Element {
 	@property()
 	emptyIndicatorMode: `${EmptyIndicatorMode}` = "Off";
 
+	/**
+	 * Defines the text of the component.
+	 *
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 * @public
+	 */
+	@slot({ type: Node, "default": true })
+	text!: Array<Node>;
+
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
@@ -79,8 +90,12 @@ class Text extends UI5Element {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);
 	}
 
+	get hasText() {
+		return willShowContent(this.text);
+	}
+
 	get _renderEmptyIndicator() {
-		return this.innerHTML === "" && this.emptyIndicatorMode === "On";
+		return !this.hasText && this.emptyIndicatorMode === "On";
 	}
 
 	get _ariaLabelText() {
