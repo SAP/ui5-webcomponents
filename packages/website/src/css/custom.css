@@ -6,13 +6,6 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-table-background: transparent;
@@ -35,53 +28,63 @@
 }
 
 :root {
-  --ifm-color-primary: #fe7520;
-  --ifm-color-primary-dark: #fe6304;
-  --ifm-color-primary-darker: #f25d01;
-  --ifm-color-primary-darkest: #c74d01;
-  --ifm-color-primary-light: #fe873c;
-  --ifm-color-primary-lighter: #fe8f4b;
+  --ifm-color-primary: #5D36FF;
+  --ifm-color-primary-dark: #481CFF;
+  --ifm-color-primary-darker: #481CFF;
+  --ifm-color-primary-darkest: #481CFF;
+  --ifm-color-primary-light: #4C72E9;
+  --ifm-color-primary-lighter: #4C72E9;
+  --ifm-color-primary-lightest: #4292DC;
+}
+
+.hero--primary {
+  --ifm-hero-background-color: #fff;
+}
+
+
+[data-theme='dark'] {
+  --ifm-color-primary: #3BADD3;
+  --ifm-color-primary-dark: #58b9da;
+  --ifm-color-primary-darker: #3BADD3;
+  --ifm-color-primary-darkest: #E7641D;
+  --ifm-color-primary-light: #e97434;
+  --ifm-color-primary-lighter: #feaa75;
   --ifm-color-primary-lightest: #feaa75;
 }
 
-[data-theme='dark'] {
-  --ifm-color-primary: #fe7520;
-  --ifm-color-primary-dark: #fe6304;
-  --ifm-color-primary-darker: #f25d01;
-  --ifm-color-primary-darkest: #c74d01;
-  --ifm-color-primary-light: #fe873c;
-  --ifm-color-primary-lighter: #fe8f4b;
-  --ifm-color-primary-lightest: #feaa75;
+[data-theme='dark'] .hero--primary {
+  --ifm-hero-background-color: #12171C;
 }
 
 :root {
-    --playground-code-background: var(--sys-color-surface);
-    --playground-code-keyword-color: #708;
-    --playground-code-atom-color: #005cc5;
-    --playground-code-number-color: #005cc5;
-    --playground-code-def-color: #00f;
-    --playground-code-variable-color: #6f42c1;
-    --playground-code-property-color: #008176;
-    --playground-code-operator-color: #d92f3f;
-    --playground-code-variable-2-color: #000000;
-    --playground-code-variable-3-color: #000000;
-    --playground-code-type-color: #005cc5;
-    --playground-code-comment-color: #6a737d;
-    --playground-code-string-color: #a11;
-    --playground-code-string-2-color: #a11;
-    --playground-code-meta-color: #000000;
-    --playground-code-qualifier-color: #6f42c1;
-    --playground-code-builtin-color: #6f42c1;
-    --playground-code-tag-color: #30914c;
-    --playground-code-attribute-color: #6f42c1;
-    --playground-code-callee-color: #005cc5;
-    --playground-highlight-color: var(--sys-color-primary);
-    --playground-code-gutter-background: var(--playground-code-background);
-    --playground-code-cursor-color: var(--sys-color-on-surface);
-    --playground-code-selection-background: var(--sys-color-primary-transparent);
+  --playground-code-background: var(--sys-color-surface);
+  --playground-code-keyword-color: #708;
+  --playground-code-atom-color: #005cc5;
+  --playground-code-number-color: #005cc5;
+  --playground-code-def-color: #00f;
+  --playground-code-variable-color: #6f42c1;
+  --playground-code-property-color: #008176;
+  --playground-code-operator-color: #d92f3f;
+  --playground-code-variable-2-color: #000000;
+  --playground-code-variable-3-color: #000000;
+  --playground-code-type-color: #005cc5;
+  --playground-code-comment-color: #6a737d;
+  --playground-code-string-color: #a11;
+  --playground-code-string-2-color: #a11;
+  --playground-code-meta-color: #000000;
+  --playground-code-qualifier-color: #6f42c1;
+  --playground-code-builtin-color: #6f42c1;
+  --playground-code-tag-color: #30914c;
+  --playground-code-attribute-color: #6f42c1;
+  --playground-code-callee-color: #005cc5;
+  --playground-highlight-color: var(--sys-color-primary);
+  --playground-code-gutter-background: var(--playground-code-background);
+  --playground-code-cursor-color: var(--sys-color-on-surface);
+  --playground-code-selection-background: var(--sys-color-primary-transparent);
 }
 
-[data-theme='dark'] playground-file-editor {
+[data-theme='dark'] {
+  --playground-code-cursor-color: #fff;
   --playground-code-background: #212121;
   --playground-code-default-color: #eeffff;
   --playground-code-keyword-color: #c792ea;
@@ -121,9 +124,6 @@
   display: none;
 }
 
-.hero--primary {
-  --ifm-hero-background-color: var(--ifm-background-color);
-}
 
 
 .header-github-link {
@@ -157,6 +157,10 @@ code {
 }
 
 
+.navbar__logo img {
+  height: 1.75rem;
+}
+
 .navbar__item li,
 .navbar__item li a {
   cursor: pointer;
@@ -171,6 +175,16 @@ code {
 .mainPageContainer {
   max-width: 1800px;
   margin: 0 auto;
+}
+
+/* Make top level menu items bold (main,fiori,etc.) */
+.theme-doc-sidebar-item-category-level-1.menu__list-item>.menu__list-item-collapsible>a[href*="\/components"] {
+  font-weight: bold;
+}
+
+.button--getting-started {
+  border-radius: 1.215rem;
+  padding: 0.5rem 1.24rem 0.5rem 1.24rem;
 }
 
 @media (max-width: 996px) {
@@ -194,14 +208,13 @@ code {
   }
 }
 
-.newComponentBadge {
+.newComponentBadge,
+.expComponentBadge {
   position: relative;
 }
 
-.newComponentBadge:after {
-  content: "New";
+.expComponentBadge:before {
   color: #fff;
-  background: #334eff;
   position: absolute;
   top: 0.25rem;
   inset-inline-end: 1rem;
@@ -209,4 +222,65 @@ code {
   padding: 0.125rem 0.25rem;
   box-sizing: border-box;
   font-size: 0.75rem;
+  content: "exp";
+  background: #a100c2;
+  pointer-events: none;
+}
+
+.newComponentBadge.expComponentBadge:before {
+  inset-inline-end: 3.25rem;
+}
+
+.newComponentBadge:after {
+  color: #fff;
+  position: absolute;
+  top: 0.25rem;
+  inset-inline-end: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.125rem 0.25rem;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+  content: "new";
+  background: #334eff;
+  pointer-events: none;
+}
+
+.theme-doc-sidebar-item-category.newComponentBadge:after,
+.theme-doc-sidebar-item-category.expComponentBadge:before {
+    inset-inline-end: 2.25rem;
+}
+
+.theme-doc-sidebar-item-category.newComponentBadge.expComponentBadge:before {
+    inset-inline-end: 4.5rem;
+}
+
+
+.componentAdditionalInfo {
+  margin-top: calc(-1 * calc(var(--ifm-h1-vertical-rhythm-bottom) * var(--ifm-leading))) !important;
+  margin-bottom: var(--ifm-leading);
+}
+
+.filter {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--ifm-navbar-search-input-background-color);
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--ifm-navbar-search-input-color);
+  cursor: text;
+  display: inline-block;
+  font-size: .9rem;
+  height: 2rem;
+  padding: 0 .5rem 0 .5rem;
+  width: 100%;
+}
+
+.filterNoDataText {
+  padding: .5rem;
+  text-align: center;
+}
+
+.filterWrapper {
+  padding-inline-end: 0.5rem;
+  padding-block-end: 0.5rem;
 }

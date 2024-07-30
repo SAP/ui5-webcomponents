@@ -3,7 +3,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -17,8 +16,8 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
-import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
-import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
+import type MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
+import type MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
 
 // Styles
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
@@ -134,7 +133,7 @@ class MediaGallery extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showAllThumbnails!: boolean;
+	showAllThumbnails = false;
 
 	/**
 	 * If enabled, a `display-area-click` event is fired
@@ -146,15 +145,15 @@ class MediaGallery extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactiveDisplayArea!: boolean;
+	interactiveDisplayArea = false;
 
 	/**
 	 * Determines the layout of the component.
 	 * @default "Auto"
 	 * @public
 	 */
-	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Auto })
-	layout!: `${MediaGalleryLayout}`;
+	@property()
+	layout: `${MediaGalleryLayout}` = "Auto";
 
 	/**
 	 * Determines the horizontal alignment of the thumbnails menu
@@ -162,8 +161,8 @@ class MediaGallery extends UI5Element {
 	 * @default "Left"
 	 * @public
 	 */
-	@property({ type: MediaGalleryMenuHorizontalAlign, defaultValue: MediaGalleryMenuHorizontalAlign.Left })
-	menuHorizontalAlign!: `${MediaGalleryMenuHorizontalAlign}`;
+	@property()
+	menuHorizontalAlign: `${MediaGalleryMenuHorizontalAlign}` = "Left";
 
 	/**
 	 * Determines the vertical alignment of the thumbnails menu
@@ -171,8 +170,8 @@ class MediaGallery extends UI5Element {
 	 * @default "Bottom"
 	 * @public
 	 */
-	@property({ type: MediaGalleryMenuVerticalAlign, defaultValue: MediaGalleryMenuVerticalAlign.Bottom })
-	menuVerticalAlign!: `${MediaGalleryMenuVerticalAlign}`;
+	@property()
+	menuVerticalAlign: `${MediaGalleryMenuVerticalAlign}` = "Bottom";
 
 	/**
 	 * Determines the actual applied layout type
@@ -181,22 +180,22 @@ class MediaGallery extends UI5Element {
 	 * @default "Vertical"
 	 * @private
 	 */
-	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Vertical })
-	effectiveLayout!: `${MediaGalleryLayout}`;
+	@property()
+	effectiveLayout: `${MediaGalleryLayout}` = "Vertical";
 
 	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange = "S";
 
 	/**
 	 * The number of items in the overflow.
 	 * @private
 	 */
-	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_overflowSize!: number;
+	@property({ type: Number, noAttribute: true })
+	_overflowSize = 0;
 
 	/**
 	 * Defines the component items.

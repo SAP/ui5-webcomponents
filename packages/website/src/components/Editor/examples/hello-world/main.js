@@ -8,7 +8,7 @@ import { customElement, property } from "@ui5/webcomponents-base/dist/decorators
 })
 export class MyElement extends UI5Element {
   @property()
-  name!: string;
+  name?: string;
 
   render() {
     return html \`

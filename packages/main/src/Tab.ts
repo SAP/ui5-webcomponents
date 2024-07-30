@@ -6,6 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -27,7 +28,7 @@ import TabContainer from "./TabContainer.js";
 import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import CustomListItem from "./CustomListItem.js";
+import ListItemCustom from "./ListItemCustom.js";
 
 // Templates
 import TabTemplate from "./generated/templates/TabTemplate.lit.js";
@@ -51,7 +52,7 @@ interface TabInStrip extends HTMLElement {
 	realTabReference: Tab;
 }
 
-interface TabInOverflow extends CustomListItem {
+interface TabInOverflow extends ListItemCustom {
 	realTabReference: Tab;
 }
 
@@ -75,17 +76,17 @@ interface TabInOverflow extends CustomListItem {
 	dependencies: [
 		Icon,
 		Button,
-		CustomListItem,
+		ListItemCustom,
 	],
 })
 class Tab extends UI5Element implements ITabbable, ITab {
 	/**
 	 * The text to be displayed for the item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Disabled tabs can't be selected.
@@ -93,25 +94,25 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the icon source URI to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous built-in icons.
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the component's design color.
@@ -128,8 +129,8 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: SemanticColor, defaultValue: SemanticColor.Default })
-	design!: `${SemanticColor}`;
+	@property()
+	design: `${SemanticColor}` = "Default";
 
 	/**
 	 * Specifies if the component is selected.
@@ -137,7 +138,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines if the tab is movable.
@@ -146,13 +147,13 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	@property({ type: Boolean })
-	_isTopLevelTab!: boolean;
+	_isTopLevelTab = false;
 
-	@property({ type: Object, defaultValue: null })
-	_selectedTabReference!: Tab;
+	@property({ type: Object })
+	_selectedTabReference?: Tab;
 
 	/**
 	 * Holds the content associated with this tab.
@@ -188,7 +189,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_forcedMixedMode?: boolean;
 	_getElementInStrip?: () => HTMLElement | undefined;
 	_getElementInOverflow?: () => HTMLElement | undefined;
-	_individualSlot!: string;
+	_individualSlot?: string;
 	_forcedPosinset?: number;
 	_forcedSetsize?: number;
 	_forcedStyleInOverflow?: Record<string, any>;
@@ -255,6 +256,12 @@ class Tab extends UI5Element implements ITabbable, ITab {
 
 	get hasOwnContent() {
 		return willShowContent(this.content);
+	}
+
+	get expandBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: "menu",
+		};
 	}
 
 	receiveStripInfo({

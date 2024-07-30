@@ -1,7 +1,7 @@
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/BusyIndicator.js";
 import "@ui5/webcomponents/dist/List.js";
-import "@ui5/webcomponents/dist/StandardListItem.js";
+import "@ui5/webcomponents/dist/ListItemStandard.js";
 
 var busyIndicator = document.querySelector("ui5-busy-indicator");
 var list = document.querySelector("ui5-list");

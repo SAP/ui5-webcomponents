@@ -22,11 +22,11 @@ class BreadcrumbsItem extends UI5Element {
 	 * Defines the link href.
 	 *
 	 * **Note:** Standard hyperlink behavior is supported.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	href!: string;
+	href?: string;
 
 	/**
 	 * Defines the link target.
@@ -43,7 +43,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	target?: string;
 
 	/**
@@ -52,7 +52,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName!: string
+	accessibleName?: string
 
 	/**
 	 * Defines the text of the component.

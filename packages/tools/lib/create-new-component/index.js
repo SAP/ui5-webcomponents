@@ -1,7 +1,5 @@
 const fs = require("fs");
-const path = require("path");
 const prompts = require("prompts");
-const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
 
 /**

@@ -778,7 +778,7 @@
 			tbl.insertAdjacentHTML('beforeend', html);
 
 			tbl.setAttribute("growing-button-subtext", "[" + loadMoreTracker * ROWS + " / 123]");
-			inputLoadMoreCounter.value = loadMoreTracker - 1;
+			inputLoadMoreCounter.value = `${loadMoreTracker - 1}`;
 
 			setTimeout(function() {
 				tbl.busy = false;

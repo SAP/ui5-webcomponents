@@ -14,7 +14,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
@@ -66,7 +66,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 }
 
 // Common properties for several VSDInternalSettings fields
-type VSDItem = {text: string, selected: boolean}
+type VSDItem = {text?: string, selected: boolean}
 
 // Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
@@ -113,7 +113,7 @@ type VSDInternalSettings = {
 		Dialog,
 		Label,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		ListItemGroup,
 		SegmentedButton,
 		SegmentedButtonItem,
@@ -193,6 +193,18 @@ type VSDInternalSettings = {
  * @public
  */
 @event("before-open")
+/**
+ * Fired after the dialog is opened.
+ * @since 2.0.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the dialog is closed.
+ * @since 2.0.0
+ * @public
+ */
+@event("close")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -200,43 +212,56 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	sortDescending!: boolean;
+	sortDescending = false;
+
+	/**
+	 * Indicates if the dialog is open.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	open = false;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
 	 * @private
 	 */
 	@property({ type: Object })
-	_recentlyFocused!: List;
-
-	/**
-	 * Stores settings of the dialog before the initial open.
-	 * @private
-	 */
-	@property({ type: Object })
-	_initialSettings!: VSDInternalSettings;
-
-	/**
-	 * Stores settings of the dialog after confirmation.
-	 * @private
-	 */
-	@property({ type: Object })
-	_confirmedSettings!: VSDInternalSettings;
+	_recentlyFocused?: List;
 
 	/**
 	 * Stores current settings of the dialog.
 	 * @private
 	 */
 	@property({ type: Object })
-	_currentSettings!: VSDInternalSettings;
+	_currentSettings: VSDInternalSettings = {
+		sortOrder: [],
+		sortBy: [],
+		filters: [],
+	};
+
+	/**
+	 * Stores settings of the dialog before the initial open.
+	 * @private
+	 */
+	@property({ type: Object })
+	_initialSettings: VSDInternalSettings = this._currentSettings;
+
+	/**
+	 * Stores settings of the dialog after confirmation.
+	 * @private
+	 */
+	@property({ type: Object })
+	_confirmedSettings: VSDInternalSettings = this._currentSettings;
 
 	/**
 	 * Defnies the current mode of the component.
 	 * @since 1.0.0-rc.16
 	 * @private
 	 */
-	@property({ type: ViewSettingsDialogMode, defaultValue: ViewSettingsDialogMode.Sort })
-	_currentMode!: ViewSettingsDialogMode;
+	@property()
+	_currentMode: `${ViewSettingsDialogMode}` = "Sort";
 
 	/**
 	 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
@@ -244,7 +269,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_filterStepTwo!: boolean;
+	_filterStepTwo = false;
 
 	/**
 	 * Defines the list of items against which the user could sort data.
@@ -269,15 +294,6 @@ class ViewSettingsDialog extends UI5Element {
 	_sortBy?: List;
 
 	static i18nBundle: I18nBundle;
-
-	constructor() {
-		super();
-		this._currentSettings = {
-			sortOrder: [],
-			sortBy: [],
-			filters: [],
-		};
-	}
 
 	onBeforeRendering() {
 		if (this._currentSettings.filters && this._currentSettings.filters.length) {
@@ -430,11 +446,11 @@ class ViewSettingsDialog extends UI5Element {
 			sortBy: JSON.parse(JSON.stringify(this.initSortByItems)),
 			filters: this.filterItems.map(item => {
 				return {
-					text: item.text,
+					text: item.text || "",
 					selected: false,
 					filterOptions: item.values.map(optionValue => {
 						return {
-							text: optionValue.text,
+							text: optionValue.text || "",
 							selected: optionValue.selected,
 						};
 					}),
@@ -496,9 +512,8 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Shows the dialog.
-	 * @public
 	 */
-	show(): void {
+	beforeDialogOpen(): void {
 		if (!this._dialog) {
 			this._sortOrder = this._sortOrderListDomRef;
 			this._sortBy = this._sortByList;
@@ -514,9 +529,18 @@ class ViewSettingsDialog extends UI5Element {
 		}
 
 		this.fireEvent("before-open", {}, true, false);
-		this._dialog.show(true);
+	}
 
-		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
+	afterDialogOpen(): void {
+		this._dialog?.querySelector<List>("[ui5-list]")?.focusFirstItem();
+
+		this._focusRecentlyUsedControl();
+
+		this.fireEvent("open");
+	}
+
+	afterDialogClose(): void {
+		this.fireEvent("close");
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
@@ -553,13 +577,6 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	/**
-	 * Closes the dialog.
-	 */
-	close() {
-		this._dialog && this._dialog.close();
-	}
-
-	/**
 	 * Sets focus on recently used control within the dialog.
 	 */
 	_focusRecentlyUsedControl() {
@@ -577,7 +594,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Stores current settings as confirmed and fires `confirm` event.
 	 */
 	_confirmSettings() {
-		this.close();
+		this.open = false;
 		this._confirmedSettings = this._currentSettings;
 
 		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
@@ -590,15 +607,15 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._confirmedSettings);
 
 		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
-		this.close();
+		this.open = false;
 	}
 
 	get eventsParams() {
 		const _currentSortOrderSelected = this._currentSettings.sortOrder.filter(item => item.selected)[0],
 			_currentSortBySelected = this._currentSettings.sortBy.filter(item => item.selected)[0],
-			sortOrder = _currentSortOrderSelected && _currentSortOrderSelected.text,
+			sortOrder = _currentSortOrderSelected && (_currentSortOrderSelected.text || ""),
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
-			sortBy = _currentSortBySelected && _currentSortBySelected.text,
+			sortBy = _currentSortBySelected && (_currentSortBySelected.text || ""),
 			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
 			sortByItem = this.sortItems[sortByElementIndex];
 		return {
@@ -618,13 +635,13 @@ class ViewSettingsDialog extends UI5Element {
 
 			filter.filterOptions.forEach(option => {
 				if (option.selected) {
-					selectedOptions.push(option.text);
+					selectedOptions.push(option.text || "");
 				}
 			});
 
 			if (selectedOptions.length) {
 				result.push({});
-				result[result.length - 1][filter.text] = selectedOptions;
+				result[result.length - 1][filter.text || ""] = selectedOptions;
 			}
 		});
 
@@ -701,7 +718,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @public
 	 */
 	setConfirmedSettings(settings: VSDSettings): void {
-		if (settings && this._dialog && !this._dialog.isOpen()) {
+		if (settings && this._dialog && !this._dialog.open) {
 			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
@@ -731,7 +748,7 @@ class ViewSettingsDialog extends UI5Element {
 
 				for (let i = 0; i < tempSettings.filters.length; i++) {
 					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
-						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
+						if (inputFilters[tempSettings.filters[i].text || ""] && inputFilters[tempSettings.filters[i].text || ""].indexOf(tempSettings.filters[i].filterOptions[j].text || "") > -1) {
 							tempSettings.filters[i].filterOptions[j].selected = true;
 						} else {
 							tempSettings.filters[i].filterOptions[j].selected = false;

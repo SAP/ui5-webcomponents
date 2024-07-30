@@ -11,9 +11,6 @@
 	--_ui5_shellbar_button_focused_border: 0.0625rem dotted var(--sapContent_FocusColor);
 	--_ui5_shellbar_button_active_color: var(--sapShell_Active_TextColor);
 	--_ui5_shellbar_logo_outline_border_radius: 0;
-	--_ui5_shellbar_copilot_stop_color1: #C0D9F2;
-	--_ui5_shellbar_copilot_stop_color2: #FFFFFF;
-	--_ui5_shellbar_copilot_focus_offset: 0;
 	--_ui5_shellbar_search_button_size: 2.25rem;
 	--_ui5_shellbar_search_field_height: 2.25rem;
 	--_ui5_shellbar_search_button_border_radius: 0.25rem;

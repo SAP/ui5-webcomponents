@@ -15,7 +15,6 @@ import {
 	isEnter,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -30,14 +29,17 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListAccessibleRole from "./types/ListAccessibleRole.js";
+import type ListItemBase from "./ListItemBase.js";
+import type {
+	ListItemBasePressEventDetail,
+} from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
-	PressEventDetail,
 } from "./ListItem.js";
-import ListSeparators from "./types/ListSeparators.js";
+import ListSeparator from "./types/ListSeparator.js";
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template
@@ -53,8 +55,8 @@ import {
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
 } from "./generated/i18n/i18n-defaults.js";
-import CheckBox from "./CheckBox.js";
-import RadioButton from "./RadioButton.js";
+import type CheckBox from "./CheckBox.js";
+import type RadioButton from "./RadioButton.js";
 import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
@@ -147,9 +149,9 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/List.js";`
  *
- * `import "@ui5/webcomponents/dist/StandardListItem.js";` (for `ui5-li`)
+ * `import "@ui5/webcomponents/dist/ListItemStandard.js";` (for `ui5-li`)
  *
- * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
+ * `import "@ui5/webcomponents/dist/ListItemCustom.js";` (for `ui5-li-custom`)
  *
  * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor
@@ -284,24 +286,70 @@ type ListItemClickEventDetail = {
 		item: { type: HTMLElement },
 	},
 })
+
+/**
+ * Fired when a movable list item is moved over a potential drop target during a dragging operation.
+ *
+ * If the new position is valid, prevent the default action of the event using `preventDefault()`.
+ * @param {object} source Contains information about the moved element under `element` property.
+ * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
+ * @public
+ * @since 2.0.0
+ * @allowPreventDefault
+ */
+
+@event<ListMoveEventDetail>("move-over", {
+	detail: {
+		/**
+		 * @public
+		 */
+		source: { type: Object },
+		/**
+		 * @public
+		 */
+		destination: { type: Object },
+	},
+})
+
+/**
+ * Fired when a movable list item is dropped onto a drop target.
+ *
+ * **Note:** `move` event is fired only if there was a preceding `move-over` with prevented default action.
+ * @param {object} source Contains information about the moved element under `element` property.
+ * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
+ * @public
+ * @allowPreventDefault
+ */
+@event<ListMoveEventDetail>("move", {
+	detail: {
+		/**
+		 * @public
+		 */
+		source: { type: Object },
+		/**
+		 * @public
+		 */
+		destination: { type: Object },
+	},
+})
 class List extends UI5Element {
 	/**
 	 * Defines the component header text.
 	 *
 	 * **Note:** If `header` is set this property is ignored.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the footer text.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	footerText!: string;
+	footerText?: string;
 
 	/**
 	 * Determines whether the component is indented.
@@ -309,31 +357,31 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	indent!: boolean;
+	indent = false;
 
 	/**
 	 * Defines the selection mode of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
-	selectionMode!: `${ListSelectionMode}`;
+	@property()
+	selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the item separator style that is used.
 	 * @default "All"
 	 * @public
 	 */
-	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
-	separators!: `${ListSeparators}`;
+	@property()
+	separators: `${ListSeparator}`= "All";
 
 	/**
 	 * Defines whether the component will have growing capability either by pressing a `More` button,
@@ -345,8 +393,8 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.13
 	 * @public
 	 */
-	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
-	growing!: `${ListGrowingMode}`;
+	@property()
+	growing: `${ListGrowingMode}` = "None";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
@@ -354,12 +402,12 @@ class List extends UI5Element {
 	 * **Note:** If not specified a built-in text will be displayed.
 	 *
 	 * **Note:** This property takes effect if the `growing` property is set to the `Button`.
-	 * @default ""
+	 * @default undefined
 	 * @since 1.24
 	 * @public
 	 */
 	@property()
-	growingButtonText!: string;
+	growingButtonText?: string;
 
 	/**
 	 * Defines if the component would display a loading indicator over the list.
@@ -368,56 +416,56 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.6
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
 	 * @default 1000
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 1000 })
-	loadingDelay!: number;
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the input.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the accessible role of the component.
 	 * @public
-	 * @default "list"
+	 * @default "List"
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "list" })
-	accessibleRole!: string;
+	@property()
+	accessibleRole: `${ListAccessibleRole}` = "List";
 
 	/**
 	 * Defines if the entire list is in view port.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_inViewport!: boolean;
+	_inViewport = false;
 
 	/**
 	 * Defines the active state of the `More` button.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_loadMoreActive!: boolean;
+	_loadMoreActive = false;
 
 	/**
 	 * Defines the items of the component.
@@ -425,7 +473,11 @@ class List extends UI5Element {
 	 * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		invalidateOnChildChange: true,
+	})
 	items!: Array<ListItemBase | ListItemGroup>;
 
 	/**
@@ -663,20 +715,8 @@ class List extends UI5Element {
 		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
-	get loadingIndPosition() {
-		if (!this.grows) {
-			return "absolute";
-		}
-
-		return this._inViewport ? "absolute" : "sticky";
-	}
-
-	get styles() {
-		return {
-			loadingInd: {
-				position: this.loadingIndPosition,
-			},
-		};
+	get listAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
 	}
 
 	get classes(): ClassMap {
@@ -693,8 +733,8 @@ class List extends UI5Element {
 
 		slottedItems.forEach((item, key) => {
 			const isLastChild = key === slottedItems.length - 1;
-			const showBottomBorder = this.separators === ListSeparators.All
-				|| (this.separators === ListSeparators.Inner && !isLastChild);
+			const showBottomBorder = this.separators === ListSeparator.All
+				|| (this.separators === ListSeparator.Inner && !isLastChild);
 
 			if (item.hasConfigurableMode) {
 				(item as ListItem)._selectionMode = this.selectionMode;
@@ -1081,7 +1121,7 @@ class List extends UI5Element {
 		}
 	}
 
-	onItemPress(e: CustomEvent<PressEventDetail>) {
+	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
 		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {

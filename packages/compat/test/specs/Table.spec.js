@@ -133,24 +133,45 @@ describe("Table general interaction", () => {
 				"The aria-label value is correct when there is an empty cell in the row.");
 		});
 
-		it("Should have correct focus handling when having popin rows", async () => {
-			await browser.url(`test/pages/TableAllPopin.html`);
-			await browser.setWindowSize(500, 1200);
+		describe("Keyboard handling when popin", async () => {
+			before(async () => {
+				await browser.url(`test/pages/TableAllPopin.html`);
+				await browser.setWindowSize(500, 1200);
+			})
 
-			const input = await $("#tbl2 #interactive");
-			const btn = await $("#btn-focused");
-			const secondInput = await $("#input-second-focused");
+			it("Should have correct focus handling when having popin rows", async () => {
+				const beforeBtn = await browser.$("#beforeEl");
+				const link = await browser.$("#focusedEl");
+				const afterBtn = await browser.$("#afterEl");
 
-			await input.click();
-			await browser.keys("Tab");
+				await beforeBtn.click();
+				await browser.keys("Tab");
+				await browser.keys("Tab");
 
-			assert.equal(await btn.matches(":focus"), true, "Button is focused")
+				assert.equal(await link.isFocused(), true, "Link is focused")
 
-			await browser.keys("Tab");
-			assert.equal(await secondInput.matches(":focus"), true, "Input is focused")
+				await browser.keys("Tab");
+				assert.equal(await afterBtn.isFocused(), true, "Button is focused")
+			});
 
-			await browser.setWindowSize(1600, 1200);
-		});
+			it("Should have correct focus handling when having popin rows", async () => {
+				const input = await browser.$("#tbl2 #interactive");
+				const btn = await browser.$("#btn-focused");
+				const secondInput = await browser.$("#input-second-focused");
+
+				await input.click();
+				await browser.keys("Tab");
+
+				assert.equal(await btn.isFocused(), true, "Button is focused")
+
+				await browser.keys("Tab");
+				assert.equal(await secondInput.isFocused(), true, "Input is focused")
+			});
+
+			after(async () => {
+				await browser.setWindowSize(1600, 1200);
+			})
+		})
 	});
 
 	describe("Growing Table on 'More' button press", async () => {
@@ -595,7 +616,7 @@ describe("Table general interaction", () => {
 			const table = await browser.$("#tbl");
 			const column = await table.$$("ui5-table-column")[0];
 
-			assert.notOk(await column.getAttribute("popin-display"), "Block", "Table row popin-display property is set by default.");
+			assert.strictEqual(await column.getAttribute("popin-display"), "Block", "Table row popin-display property is set by default.");
 		});
 	});
 });

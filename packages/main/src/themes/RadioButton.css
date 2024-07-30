@@ -175,7 +175,7 @@
 }
 
 .ui5-radio-root {
-	height: var(--_ui5_radio_button_height);
+	height: auto;
 	position: relative;
 	display: inline-flex;
 	flex-wrap: nowrap;
@@ -217,21 +217,21 @@
 	display: flex;
 	align-items: center;
 	padding-inline-end: var(--_ui5_radio_button_label_offset);
+	padding-block: var(--_ui5_radio_button_label_side_padding);
 	vertical-align: top;
 	max-width: 100%;
-	text-overflow: ellipsis;
-	overflow: hidden;
 	pointer-events: none;
 	color: var(--_ui5_radio_button_label_color);
-}
-
-:host([wrapping-type="Normal"][text]) .ui5-radio-root {
-	height: auto;
-}
-
-:host([wrapping-type="Normal"][text]) [ui5-label].ui5-radio-label {
-	padding: var(--_ui5_radio_button_label_side_padding) 0;
 	overflow-wrap: break-word;
+}
+
+:host([wrapping-type="None"][text]) .ui5-radio-root {
+	height: var(--_ui5_radio_button_height);
+}
+
+:host([wrapping-type="None"][text]) [ui5-label].ui5-radio-label {
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 /* SVG */

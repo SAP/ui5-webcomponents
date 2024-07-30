@@ -1,6 +1,5 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
 
 import ToolbarItem from "./ToolbarItem.js";
@@ -31,7 +30,7 @@ class ToolbarSpacer extends ToolbarItem {
 	 * @public
 	 * @default undefined
 	 */
-	@property({ validator: CSSSize })
+	@property()
 	width?: string;
 
 	get styles() {

@@ -18,7 +18,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
+	features?: Array<string>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -35,19 +37,30 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			formAssociated,
 			shadowRootOptions,
+			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
 		}
+
+		if (features) {
+			target.metadata.features = features;
+		}
+
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
 		}
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
 		}
+		if (formAssociated) {
+			target.metadata.formAssociated = formAssociated;
+		}
+
 		if (shadowRootOptions) {
 			target.metadata.shadowRootOptions = shadowRootOptions;
 		}
@@ -56,7 +69,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};

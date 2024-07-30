@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -22,13 +23,15 @@ import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 import AvatarCss from "./generated/themes/Avatar.css.js";
 
 import Icon from "./Icon.js";
-import AvatarSize from "./types/AvatarSize.js";
-import AvatarShape from "./types/AvatarShape.js";
-import AvatarColorScheme from "./types/AvatarColorScheme.js";
+import type AvatarSize from "./types/AvatarSize.js";
+import type AvatarShape from "./types/AvatarShape.js";
+import type AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
+
+type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
  * @class
@@ -79,7 +82,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
@@ -90,7 +93,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
+	interactive = false;
 
 	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
@@ -106,11 +109,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * **Note:** If no icon or an empty one is provided, by default the "employee" icon should be displayed.
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the name of the fallback icon, which should be displayed in the following cases:
@@ -128,81 +131,81 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * `<ui5-avatar fallback-icon="alert">`
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default "employee"
 	 * @public
 	 */
 	@property()
-	fallbackIcon!: string;
+	fallbackIcon = "employee";
 
 	/**
 	 * Defines the displayed initials.
 	 *
 	 * Up to three Latin letters can be displayed as initials.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initials!: string;
+	initials?: string;
 
 	/**
 	 * Defines the shape of the component.
 	 * @default "Circle"
 	 * @public
 	 */
-	@property({ type: AvatarShape, defaultValue: AvatarShape.Circle })
-	shape!: `${AvatarShape}`;
+	@property()
+	shape: `${AvatarShape}` = "Circle";
 
 	/**
 	 * Defines predefined size of the component.
 	 * @default "S"
 	 * @public
 	 */
-	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	size!: `${AvatarSize}`;
-
-	/**
-	 * @private
-	 */
-	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	_size!: AvatarSize;
+	@property()
+	size: `${AvatarSize}` = "S";
 
 	/**
 	 * Defines the background color of the desired image.
 	 * @default "Accent6"
 	 * @public
 	 */
-	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	colorScheme!: `${AvatarColorScheme}`;
+	@property()
+	colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * @private
 	 */
-	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	_colorScheme!: AvatarColorScheme;
+	@property()
+	_colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
-	 * Defines the aria-haspopup value of the component when `interactive` property is `true`.
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following field is supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	@property({ type: Object })
+	accessibilityAttributes: AvatarAccessibilityAttributes = {};
 
 	@property({ noAttribute: true })
-	forcedTabIndex!: string;
+	forcedTabIndex?: string;
 
 	@property({ type: Boolean })
-	_hasImage!: boolean;
+	_hasImage = false;
 
 	/**
 	 * Receives the desired `<img>` tag
@@ -218,7 +221,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Defines the optional badge that will be used for visual affordance.
 	 *
 	 * **Note:** While the slot allows for custom badges, to achieve
-	 * the Fiori design, please use `ui5-badge` with `ui5-icon`
+	 * the Fiori design, you can use the `ui5-tag` with `ui5-icon`
 	 * in the corresponding `icon` slot, without text nodes.
 	 * @public
 	 * @since 1.7.0
@@ -250,7 +253,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 */
 	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
-		return this.getAttribute("size") as AvatarSize || this._size;
+		return this.getAttribute("size") as AvatarSize;
 	}
 
 	/**
@@ -269,14 +272,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	get _ariaHasPopup() {
 		return this._getAriaHasPopup();
-	}
-
-	get _fallbackIcon() {
-		if (this.fallbackIcon === "") {
-			this.fallbackIcon = "employee";
-		}
-
-		return this.fallbackIcon;
 	}
 
 	get _interactive() {
@@ -400,14 +395,19 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	_getAriaHasPopup() {
-		if (!this._interactive || this.ariaHaspopup === "") {
+		const ariaHaspopup = this.accessibilityAttributes.hasPopup;
+
+		if (!this._interactive || !ariaHaspopup) {
 			return;
 		}
 
-		return this.ariaHaspopup;
+		return ariaHaspopup;
 	}
 }
 
 Avatar.define();
 
 export default Avatar;
+export type {
+	AvatarAccessibilityAttributes,
+};

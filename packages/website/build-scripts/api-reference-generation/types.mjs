@@ -3,7 +3,7 @@ import path from "path"
 import { parseDeclaration } from "./component-file.mjs"
 import { findAllImplementations, getInterfaces, getEnums, realPackagesName } from "./manifest.mjs"
 
-const packages = ["main", "fiori", "compat"];
+const packages = ["main", "fiori", "compat", "ai"];
 
 const generateTypes = () => {
     packages.forEach(async (packageName) => {
@@ -28,12 +28,10 @@ import DocCardList from '@theme/DocCardList';
             declaration._implementations = findAllImplementations(declaration);
 
             await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `${declaration.name}.mdx`), parseDeclaration(declaration, packageName))
-            await fs.writeFile(path.join(`./docs/components/${packageName}/interfaces`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
         })
 
         enums.forEach(async (declaration) => {
             await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `${declaration.name}.mdx`), parseDeclaration(declaration, packageName))
-            await fs.writeFile(path.join(`./docs/components/${packageName}/enums`, `_${declaration.name}Declaration.json`), JSON.stringify(declaration))
         })
     })
 }

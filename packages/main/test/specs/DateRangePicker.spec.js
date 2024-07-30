@@ -209,7 +209,7 @@ describe("DateRangePicker general interaction", () => {
 	it("Month is not changed in multiselect mode", async () => {
 		await browser.url(`test/pages/DateRangePicker.html`);
 		const daterangepicker = await browser.$("#daterange-picker1");
-		const calendarHeader = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`ui5-calendar-header`);
+		const calendarHeader = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`.ui5-calheader`);
 		const dayPicker = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const dayOne = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[15];
 		const nextButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
@@ -247,6 +247,39 @@ describe("DateRangePicker general interaction", () => {
 		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "First date is correct");
 		assert.equal(res.endDateValue, null, "Second date is correct");
 		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
+	});
+
+	it("picker popover should have accessible name", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+		await daterangepicker.click();
+		await browser.keys("F4");
+
+		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
+	});
+
+	it("Selected days: accessibility semantics", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("09/06/2024 - 15/06/2024");
+		await daterangepicker.keys("Enter");
+		await browser.keys("F4");
+
+		const dayPicker = await browser.$(`#daterange-picker3`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const days = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item");
+		const startSelectionDay = await days[14];
+		const dayInBetween = await days[15];
+		const endSelectionDay = await days[20];
+
+		assert.strictEqual(await startSelectionDay.getAttribute("aria-selected", "true"), "true", "The start day has selected semantics");
+		assert.strictEqual(await dayInBetween.getAttribute("aria-selected", "true"), "true", "The day in between has selected semantics");
+		assert.strictEqual(await endSelectionDay.getAttribute("aria-selected", "true"), "true", "The end day has selected semantics");
+
+		await browser.keys("Escape");
 	});
 
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {

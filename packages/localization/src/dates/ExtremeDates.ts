@@ -1,4 +1,4 @@
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "./CalendarDate.js";
 
 const cache = new Map<string, CalendarDate>();

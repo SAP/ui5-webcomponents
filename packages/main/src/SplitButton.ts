@@ -21,7 +21,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import ButtonDesign from "./types/ButtonDesign.js";
+import type ButtonDesign from "./types/ButtonDesign.js";
 import Button from "./Button.js";
 
 import {
@@ -105,11 +105,11 @@ class SplitButton extends UI5Element {
 	 * Example:
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the arrow button should have the active state styles or not.
@@ -118,15 +118,15 @@ class SplitButton extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
-	activeArrowButton!: boolean;
+	activeArrowButton = false;
 
 	/**
 	 * Defines the component design.
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
+	@property()
+	design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines whether the component is disabled.
@@ -136,30 +136,23 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
-
-	/**
-	 * Accessibility-related properties for inner elements of the Split Button
-	 * @private
-	 */
-	@property({ type: Object })
-	_splitButtonAccInfo!: Record<string, boolean>;
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @default "0"
 	 * @private
 	 */
-	@property({ defaultValue: "0", noAttribute: true })
-	_tabIndex!: string;
+	@property({ noAttribute: true })
+	_tabIndex = "0"
 
 	/**
 	 * Indicates if there is Space key pressed
@@ -167,7 +160,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed!: boolean;
+	_spacePressed = false;
 
 	/**
 	 * Indicates if there is SHIFT or ESCAPE key pressed
@@ -175,7 +168,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_shiftOrEscapePressed!: boolean;
+	_shiftOrEscapePressed = false;
 
 	/**
 	 * Defines the active state of the text button
@@ -183,7 +176,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_textButtonActive!: boolean;
+	_textButtonActive = false;
 
 	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
@@ -191,7 +184,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_activeArrowButton!: boolean;
+	_activeArrowButton = false;
 
 	/**
 	 * Defines the text of the component.
@@ -449,9 +442,6 @@ class SplitButton extends UI5Element {
 
 	get accessibilityInfo() {
 		return {
-			// affects arrow button
-			ariaExpanded: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaExpanded,
-			ariaHaspopup: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaHaspopup,
 			// affects root element
 			description: SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 			keyboardHint: SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),

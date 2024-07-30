@@ -7,7 +7,7 @@
 	<div class="ui5-input-content">
 		{{> preContent}}
 
-		<input 
+		<input
 			id="inner"
 			part="input"
 			class="ui5-input-inner"
@@ -30,8 +30,10 @@
 			aria-expanded="{{accInfo.input.ariaExpanded}}"
 			aria-label="{{accInfo.input.ariaLabel}}"
 			aria-required="{{required}}"
+			autocomplete="off"
 			@input="{{_handleInput}}"
 			@change="{{_handleChange}}"
+			@select="{{_handleSelect}}"
 			@keydown="{{_onkeydown}}"
 			@keyup="{{_onkeyup}}"
 			@click={{_click}}
@@ -43,7 +45,7 @@
 		/>
 
 		{{#if _effectiveShowClearIcon}}
-			<div @click={{_clear}} @mousedown={{_iconMouseDown}} class="ui5-input-clear-icon-wrapper" input-icon tabindex="-1">
+			<div @click={{_clear}} @mousedown={{_iconMouseDown}} class="ui5-input-clear-icon-wrapper inputIcon" tabindex="-1">
 				<ui5-icon part="clear-icon" tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 			</div>
 		{{/if}}
@@ -60,7 +62,7 @@
 
 		{{> postContent }}
 
-		{{#if showSuggestions}}
+		{{#if _effectiveShowSuggestions}}
 			<span id="suggestionsText" class="ui5-hidden-text">{{suggestionsText}}</span>
 			<span id="selectionText" class="ui5-hidden-text" aria-live="polite" role="status"></span>
 			<span id="suggestionsCount" class="ui5-hidden-text" aria-live="polite">{{availableSuggestionsCount}}</span>
@@ -74,8 +76,6 @@
 			<span id="valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 		{{/if}}
 	</div>
-
-	<slot name="formSupport"></slot>
 </div>
 
 

@@ -90,7 +90,7 @@
 	transform: rotate(-45deg);
 }
 
-:host([modal]:not([hide-backdrop]))::backdrop {
+:host([modal])::backdrop {
 	background-color: var(--_ui5_popup_block_layer_background);
 }
 

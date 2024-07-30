@@ -14,5 +14,5 @@ const btnOpenBasic = document.getElementById("btnOpenBasic");
 const menuSubs = document.getElementById("menuSubs");
 
 btnOpenBasic.addEventListener("click", function(event) {
-    menuSubs.showAt(btnOpenBasic);
+    menuSubs.open = !menuSubs.open;
 });

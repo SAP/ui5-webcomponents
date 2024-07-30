@@ -3,14 +3,16 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import type { IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
-import IconDesign from "./types/IconDesign.js";
+import type IconDesign from "./types/IconDesign.js";
+import IconMode from "./types/IconMode.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
@@ -22,7 +24,6 @@ import iconCss from "./generated/themes/Icon.css.js";
 interface IIcon extends HTMLElement { }
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-const PRESENTATION_ROLE = "presentation";
 
 /**
  * @class
@@ -82,7 +83,7 @@ const PRESENTATION_ROLE = "presentation";
  *
  * ### Keyboard Handling
  *
- * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `mode` property is set to `Interactive`.
  * - [Shift] - If [Space] / [Enter] or [Return] is pressed, pressing [Shift] releases the ui5-icon without triggering the click event.
  *
  * ### ES6 Module Import
@@ -117,17 +118,8 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 * @since 1.9.2
 	 */
-	@property({ type: IconDesign, defaultValue: IconDesign.Default })
-	design!: `${IconDesign}`;
-
-	/**
-	 * Defines if the icon is interactive (focusable and pressable)
-	 * @default false
-	 * @public
-	 * @since 1.0.0-rc.8
-	 */
-	@property({ type: Boolean })
-	interactive!: boolean;
+	@property()
+	design: `${IconDesign}` = "Default";
 
 	/**
 	 * Defines the unique identifier (icon name) of the component.
@@ -151,11 +143,11 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * Example:
 	 * `name='business-suite/3d'`, `name='business-suite/1x2-grid-layout'`, `name='business-suite/4x4-grid-layout'`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -163,11 +155,11 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * **Note:** Every icon should have a text alternative in order to
 	 * calculate its accessible name.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component should have a tooltip.
@@ -177,48 +169,39 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip!: boolean;
+	showTooltip = false;
 
 	/**
-	 * Defines the accessibility role of the component.
-	 * @default ""
+	 * Defines the mode of the component.
+	 * @default "Image"
 	 * @public
-	 * @since 1.1.0
+	 * @since 2.0.0
 	 */
 	@property()
-	accessibleRole!: string;
-
-	/**
-	 * Defines the ARIA hidden state of the component.
-	 * Note: If the role is presentation the default value of aria-hidden will be true.
-	 * @private
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	ariaHidden!: string;
+	mode: `${IconMode}` = "Image";
 
 	/**
 	 * @private
 	 */
-	@property({ multiple: true })
-	pathData!: Array<string>;
+	@property({ type: Array })
+	pathData: Array<string> = [];
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, defaultValue: undefined, noAttribute: true })
+	@property({ type: Object, noAttribute: true })
 	accData?: I18nText;
 
 	/**
 	* @private
 	*/
 	@property({ type: Boolean })
-	invalid!: boolean;
+	invalid = false;
 
 	/**
 	 * @private
 	 */
-	@property({ noAttribute: true, defaultValue: undefined })
+	@property({ noAttribute: true })
 	effectiveAccessibleName?: string;
 
 	ltr?: boolean;
@@ -227,7 +210,7 @@ class Icon extends UI5Element implements IIcon {
 	customSvg?: object;
 
 	_onkeydown(e: KeyboardEvent) {
-		if (!this.interactive) {
+		if (this.mode !== IconMode.Interactive) {
 			return;
 		}
 
@@ -241,7 +224,7 @@ class Icon extends UI5Element implements IIcon {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (this.interactive && isSpace(e)) {
+		if (this.mode === IconMode.Interactive && isSpace(e)) {
 			this.fireEvent("click");
 		}
 	}
@@ -254,35 +237,22 @@ class Icon extends UI5Element implements IIcon {
 	}
 
 	get effectiveAriaHidden() {
-		if (this.ariaHidden === "") {
-			if (this.isDecorative) {
-				return true;
-			}
-
-			return;
-		}
-
-		return this.ariaHidden;
+		return this.mode === IconMode.Decorative ? "true" : undefined;
 	}
 
 	get _tabIndex() {
-		return this.interactive ? "0" : undefined;
-	}
-
-	get isDecorative() {
-		return this.effectiveAccessibleRole === PRESENTATION_ROLE;
+		return this.mode === IconMode.Interactive ? "0" : undefined;
 	}
 
 	get effectiveAccessibleRole() {
-		if (this.accessibleRole) {
-			return this.accessibleRole;
-		}
-
-		if (this.interactive) {
+		switch (this.mode) {
+		case IconMode.Interactive:
 			return "button";
+		case IconMode.Decorative:
+			return "presentation";
+		default:
+			return "img";
 		}
-
-		return this.effectiveAccessibleName ? "img" : PRESENTATION_ROLE;
 	}
 
 	onEnterDOM() {

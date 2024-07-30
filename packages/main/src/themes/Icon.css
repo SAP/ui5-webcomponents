@@ -50,8 +50,8 @@
 	color: var(--sapPositiveElementColor);
 }
 
-:host([interactive][desktop]) .ui5-icon-root:focus-within,
-:host([interactive]) .ui5-icon-root:focus-visible {
+:host([mode="Interactive"][desktop]) .ui5-icon-root:focus,
+:host([mode="Interactive"]) .ui5-icon-root:focus-visible {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--ui5-icon-focus-border-radius);
 }
@@ -65,7 +65,7 @@
 }
 
 
-:host([interactive]) {
+:host([mode="Interactive"]) {
 	cursor: pointer;
 }
 

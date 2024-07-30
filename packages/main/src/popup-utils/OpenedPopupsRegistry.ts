@@ -1,6 +1,6 @@
 import getSharedResource from "@ui5/webcomponents-base/dist/getSharedResource.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
-import Popup from "../Popup.js";
+import type Popup from "../Popup.js";
 
 type RegisteredPopup = {
 	instance: Popup;
@@ -47,7 +47,7 @@ const _keydownListener = (event: KeyboardEvent) => {
 
 	if (isEscape(event)) {
 		event.stopPropagation();
-		OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance.close(true);
+		OpenedPopupsRegistry.openedRegistry[OpenedPopupsRegistry.openedRegistry.length - 1].instance.closePopup(true);
 	}
 };
 

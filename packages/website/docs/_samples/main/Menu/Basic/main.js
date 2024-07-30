@@ -1,5 +1,6 @@
 import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/MenuItem.js";
+import "@ui5/webcomponents/dist/MenuSeparator.js";
 
 import "@ui5/webcomponents-icons/dist/add-document.js";
 import "@ui5/webcomponents-icons/dist/add-folder.js";
@@ -14,5 +15,5 @@ const btnOpenBasic = document.getElementById("btnOpenBasic");
 const menuBasic = document.getElementById("menuBasic");
 
 btnOpenBasic.addEventListener("click", function(event) {
-    menuBasic.showAt(btnOpenBasic);
+    menuBasic.open = !menuBasic.open;
 });

@@ -1,0 +1,7 @@
+:root {
+	--_ui5_dynamic_page_actions-lines-color: transparent;
+	--_ui5_dynamic_page_header-actions-background: var(--sapObjectHeader_Background);
+	--_ui5_dynamic_page_header-actions-color: var(--sapButton_TextColor);
+	--_ui5_dynamic_page_header-actions-background-pressed: var(--_ui5_dynamic_page_header-actions-color);
+	--_ui5_dynamic_page_header-actions-color-pressed: var(--_ui5_dynamic_page_header-actions-background);
+}

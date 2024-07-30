@@ -2,7 +2,7 @@
     min-width: 1px; /** So that it can always get focus **/
     overflow: visible;
     border: none;
-    inset: "unset";
+    inset: unset;
     margin: 0;
     padding: 0;
 }

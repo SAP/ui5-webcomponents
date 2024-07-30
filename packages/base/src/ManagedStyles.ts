@@ -1,4 +1,4 @@
-import { StyleData, StyleDataCSP } from "./types.js";
+import type { StyleData, StyleDataCSP } from "./types.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "./Runtimes.js";
 
 const isSSR = typeof document === "undefined";

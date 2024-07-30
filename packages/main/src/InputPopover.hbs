@@ -1,18 +1,19 @@
-{{#if showSuggestions}}
+{{#if _effectiveShowSuggestions}}
 	<ui5-responsive-popover
 		class="{{classes.popover}}"
 		hide-arrow
 		prevent-focus-restore
-		_disable-initial-focus
+		prevent-initial-focus
 		placement="Bottom"
 		horizontal-align="Start"
 		tabindex="-1"
 		style="{{styles.suggestionsPopover}}"
-		@ui5-after-open="{{_afterOpenPicker}}"
-		@ui5-after-close="{{_afterClosePicker}}"
+		@ui5-open="{{_afterOpenPicker}}"
+		@ui5-close="{{_afterClosePicker}}"
 		@ui5-scroll="{{_scroll}}"
 		.open={{open}}
 		.opener={{this}}
+		accessible-name="{{_popupLabel}}"
 	>
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">
@@ -76,7 +77,7 @@
 {{#if hasValueStateMessage}}
 		<ui5-popover
 			skip-registry-update
-			_disable-initial-focus
+			prevent-initial-focus
 			prevent-focus-restore
 			hide-arrow
 			class="ui5-valuestatemessage-popover"
@@ -85,7 +86,7 @@
 			horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 			.opener={{this}}
 			.open={{valueStateOpen}}
-			@ui5-after-close="{{_handleValueStatePopoverAfterClose}}"
+			@ui5-close="{{_handleValueStatePopoverAfterClose}}"
 		>
 			<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
@@ -109,30 +110,9 @@
 		separators="{{suggestionSeparators}}"
 		selection-mode="Single"
 		@mousedown="{{onItemMouseDown}}"
-		@mouseover="{{_handleItemMouseOver}}"
-		@mouseout="{{_handleItemMouseOut}}"
 		@ui5-item-click="{{_handleSuggestionItemPress}}"
 		@ui5-selection-change="{{_handleSelectionChange}}"
 	>
-		{{#each suggestionObjects}}
-			{{#if groupItem}}
-				<ui5-li-group-header data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-group-header>
-			{{else}}
-				<ui5-li-suggestion-item
-					wrapping-type="Normal"
-					image="{{this.image}}"
-					icon="{{this.icon}}"
-					additional-text="{{this.additionalText}}"
-					type="{{this.type}}"
-					additional-text-state="{{this.additionalTextState}}"
-					data-ui5-key="{{key}}"
-				>
-					{{{ this.text }}}
-					{{#if this.description}}
-						<span slot="richDescription">{{{ this.description }}}</span>
-					{{/if}}
-				</ui5-li-suggestion-item>
-			{{/if}}
-		{{/each}}
+		<slot></slot>
 	</ui5-list>
 {{/inline}}

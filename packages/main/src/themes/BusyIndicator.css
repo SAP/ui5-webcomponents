@@ -73,6 +73,7 @@
 	position: relative;
 	background-color: inherit;
 	height: inherit;
+	border-radius: inherit;
 }
 
 .ui5-busy-indicator-busy-area {
@@ -87,13 +88,17 @@
 	align-items: center;
 	background-color: inherit;
 	flex-direction: column;
+	border-radius: inherit;
+}
+
+:host(:not(:empty)) .ui5-busy-indicator-busy-area {
+	background-color: var(--_ui5_busy_indicator_block_layer);
 }
 
 :host([desktop]) .ui5-busy-indicator-busy-area:focus,
 .ui5-busy-indicator-busy-area:focus-visible {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
-	border-radius: var(--_ui5_busy_indicator_focus_border_radius);
 }
 
 .ui5-busy-indicator-circles-wrapper {

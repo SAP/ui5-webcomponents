@@ -11,8 +11,11 @@ const createTokenFromText = function (text) {
 };
 
 document.getElementById("multi-input").addEventListener("token-delete", function (event) {
-    const token = event.detail?.token;
-    token && token.remove();
+	const tokens = event.detail?.tokens;
+
+	if (tokens) {
+		tokens.forEach(token => token.remove());
+	}
 });
 
 document.getElementById("multi-input").addEventListener("paste", function (event) {

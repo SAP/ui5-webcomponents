@@ -1,0 +1,6 @@
+ui5-form-item::part(layout) {
+	background: #72c9e1;
+}
+ui5-form-item::part(content) {
+	background: #eef9fc;
+}

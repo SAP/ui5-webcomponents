@@ -60,7 +60,7 @@
     font-size: var(--sapFontLargeSize);
     font-family: var(--sapFontFamily);
     line-height: 1.4;
-    color: var(--sapContent_LabelColor);
+    color: var(--sapTextColor);
     margin-bottom: 0.5rem;
     max-width: 61.9375rem;
 }

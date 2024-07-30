@@ -70,7 +70,7 @@ const setButtonVisibility = (index, totalItems) => {
 }
 
 btnOpendialog.addEventListener("click", () => {
-    dialog.show();
+    dialog.open = true;
     const index = wizardWiz.getSelectedStepIndex();
     setButtonVisibility(index, wizardWiz.children.length);
 });
@@ -94,10 +94,10 @@ previousStepButton.addEventListener("click", () => {
 });
 
 cancelButton.addEventListener("click", () => {
-    dialog.close();
+    dialog.open = false;
 });
 
 wizardFinalize.addEventListener("click", () => {
     alert("Finalize");
-    dialog.close();
+    dialog.open = false;
 });

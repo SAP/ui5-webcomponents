@@ -1,17 +1,20 @@
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/List.js";
-import "@ui5/webcomponents/dist/StandardListItem.js";
+import "@ui5/webcomponents/dist/ListItemStandard.js";
 import "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents/dist/RatingIndicator.js";
 import "@ui5/webcomponents/dist/Tab.js";
 import "@ui5/webcomponents/dist/TabContainer.js";
 import "@ui5/webcomponents/dist/TabSeparator.js";
+import "@ui5/webcomponents/dist/ToggleButton.js";
 
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";
 
+import "@ui5/webcomponents-icons/dist/da.js";
+import "@ui5/webcomponents-icons/dist/da-2.js";
 import "@ui5/webcomponents-icons/dist/incoming-call.js";
 import "@ui5/webcomponents-icons/dist/disconnected.js";
 import "@ui5/webcomponents-icons/dist/camera.js";
@@ -159,4 +162,10 @@ fullscreenMidColumn.addEventListener("click", function (e) {
 });
 fullscreenEndColumn.addEventListener("click", function (e) {
     fcl.layout = nextLayout("col3fullscreen");
+});
+[...document.querySelectorAll("ui5-toggle-button")].forEach(el => {
+	el.addEventListener("click", event => {
+		const toggleButton = event.target;
+		toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
+	});
 });

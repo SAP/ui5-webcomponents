@@ -17,7 +17,6 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -44,6 +43,7 @@ type Year = {
 	yearInSecType: string | undefined;
 	disabled: boolean;
 	classes: string;
+	parts: string;
 }
 
 type YearInterval = Array<Array<Year>>;
@@ -87,18 +87,14 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @default []
 	 * @public
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
-	@property({ type: Object, multiple: true })
-	_years!: YearInterval;
+	@property({ type: Array })
+	_years: YearInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
 	_firstYear?: number;
 	_lastYear?: number;
@@ -177,10 +173,12 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
 				classes: "ui5-yp-item",
+				parts: "year-cell",
 			};
 
 			if (isSelected) {
 				year.classes += " ui5-yp-item--selected";
+				year.parts += " year-cell-selected";
 			}
 
 			if (isDisabled) {

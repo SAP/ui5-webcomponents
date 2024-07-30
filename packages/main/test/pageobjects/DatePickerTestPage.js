@@ -52,22 +52,22 @@ class DatePickerTestPage {
 
 	async getBtnPrev() {
 
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-prev]`);
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`.ui5-calheader`).shadow$(`div[data-ui5-cal-header-btn-prev]`);
 	}
 
 	async getBtnNext() {
 
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-next]`);
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`.ui5-calheader`).shadow$(`div[data-ui5-cal-header-btn-next]`);
 	}
 
 	async getBtnYear() {
 
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-year]`);
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`.ui5-calheader`).shadow$(`div[data-ui5-cal-header-btn-year]`);
 	}
 
 	async getBtnMonth() {
 
-		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`ui5-calendar-header`).shadow$(`div[data-ui5-cal-header-btn-month]`);
+		return browser.$(this._sut).shadow$("ui5-calendar").shadow$(`.ui5-calheader`).shadow$(`div[data-ui5-cal-header-btn-month]`);
 	}
 
 	async getDayPicker() {
@@ -150,14 +150,20 @@ class DatePickerTestPage {
 
 	async isPickerOpen() {
 		return browser.executeAsync((id, done) => {
-			done(document.querySelector(id).isOpen());
+			done(document.querySelector(id).open);
 		}, this._sut);
 	}
 
-	async openPicker(options) {
-		return browser.executeAsync((id, options, done) => {
-			done(document.querySelector(id).openPicker(options));
-		}, this._sut, options);
+	async openPicker() {
+		return browser.executeAsync((id, done) => {
+			done(document.querySelector(id).open = true);
+		}, this._sut);
+	}
+
+	async closePicker() {
+		return browser.executeAsync((id, done) => {
+			done(document.querySelector(id).open = false);
+		}, this._sut);
 	}
 
 	async open() {

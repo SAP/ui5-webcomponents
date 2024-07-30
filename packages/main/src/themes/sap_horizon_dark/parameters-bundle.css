@@ -1,6 +1,6 @@
 @import "./Avatar-parameters.css";
 @import "../sap_horizon/AvatarGroup-parameters.css";
-@import "./Badge-parameters.css";
+@import "./Tag-parameters.css";
 @import "../base/Bar-parameters.css";
 @import "./Breadcrumbs-parameters.css";
 @import "../base/BrowserScrollbar-parameters.css";
@@ -19,6 +19,7 @@
 @import "../base/Dialog-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
+@import "../base/Table-parameters.css";
 @import "../base/ListItemGroupHeader-parameters.css";
 @import "./Icon-parameters.css";
 @import "./Input-parameters.css";

@@ -24,6 +24,7 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
@@ -62,6 +63,7 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 		TimePickerClock,
 		ToggleSpinButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 
@@ -70,19 +72,19 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * Flag for pressed Space key
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed!: boolean;
+	_spacePressed = false;
 
 	/**
 	 * Flag for focused state of Clocks component
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_focused!: boolean;
+	_focused = false;
 
 	/**
 	 * Flag for focused state of AM/PM segmented button
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_amPmFocused!: boolean;
+	_amPmFocused = false;
 
 	onBeforeRendering() {
 		this._createComponents();

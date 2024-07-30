@@ -6,6 +6,7 @@
 	@keydown="{{_keydown}}"
 	class="ui5-token--wrapper"
 	role="option"
+	aria-description="{{ariaDescription}}"
 	aria-selected="{{selected}}"
 >
 	<span class="ui5-token--text">{{this.text}}</span>
@@ -18,7 +19,8 @@
 				<slot name="closeIcon" @click="{{_delete}}"></slot>
 			{{else}}
 				<ui5-icon
-					name="{{iconURI}}"
+					name="decline"
+					mode="Decorative"
 					accessible-name="{{tokenDeletableText}}"
 					show-tooltip
 					@click="{{_delete}}"

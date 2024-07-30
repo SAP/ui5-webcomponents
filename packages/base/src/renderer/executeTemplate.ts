@@ -37,4 +37,5 @@ const getTagsToScope = (component: UI5Element) => {
 };
 
 export default executeTemplate;
+export { getTagsToScope };
 export type { TemplateFunction, TemplateFunctionResult };

@@ -130,7 +130,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @since 1.24.0
 	*/
 	@property({ type: Boolean })
-	open!: boolean;
+	open = false;
 
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
@@ -138,7 +138,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	loading!: boolean;
+	loading = false;
 
 	/**
 	 * Indicates whether the user has granted permissions to use the camera.
@@ -146,7 +146,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	permissionsGranted!: boolean;
+	permissionsGranted = false;
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
@@ -210,6 +210,10 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_closeDialog() {
+		this.open = false;
+	}
+
+	_fireCloseEvent() {
 		this.open = false;
 		this.fireEvent("close");
 	}

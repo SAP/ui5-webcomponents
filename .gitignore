@@ -2,34 +2,18 @@
 .gitignore
 !packages/create-package/template/.gitignore
 !packages/website/.gitignore
-tmp
-temp
-target
 dist
-jsdoc-dist
 **/src/generated
 .dev-server-port
-# TODO remove this as the tools no longer generate it, kept for clean up (in the clean task as well)
-.port
-
-# jsdoc temporary folders
-packages/base/jsdoc-dist
-packages/main/jsdoc-dist
-packages/fiori/jsdoc-dist
 
 # scoping feature generated entry points for vite consumption
+packages/compat/test/pages/scoped
 packages/main/test/pages/scoped
 packages/fiori/test/pages/scoped
-packages/main/test/pages/resources/css
-packages/fiori/test/pages/resources/css
-
-# Ignore default target directory for the npm package 'ui5-codecompletion'
-.ui5
 
 # Ignore npm files/folders
 node_modules
 npm-debug.log
-package-lock.json
 
 # Ignore Mac files
 .DS_Store
@@ -50,14 +34,8 @@ yarn-error.log*
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore default target directory for the npm package 'ui5-schemas'
-.tmp
-
-# Ignore rollup CJS output file of icon-collection-bundler
-icon-collection-bundler.cjs.js
 
 # Playground
-.jekyll-cache
 packages/playground/_site/
 packages/playground/.sass-cache/
 packages/playground/assets/js/ui5-webcomponents/

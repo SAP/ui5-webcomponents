@@ -3,7 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TitleLevel from "./types/TitleLevel.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 
 // Template
 import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
@@ -41,47 +41,54 @@ class Title extends UI5Element {
 	 * Defines how the text of a component will be displayed when there is not enough space.
 	 *
 	 * **Note:** for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
-	 * @default "None"
+	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the component level.
 	 * Available options are: `"H6"` to `"H1"`.
+	 * This property does not influence the style of the component.
+	 * Use the property `size` for this purpose instead.
 	 * @default "H2"
 	 * @public
 	 */
-	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	level!: `${TitleLevel}`;
+	@property()
+	level: `${TitleLevel}` = "H2";
 
-	get normalizedLevel() {
-		return this.level.toLowerCase();
-	}
+	/**
+	 * Defines the visual appearance of the title.
+	 * Available options are: `"H6"` to `"H1"`.
+	 * @default "H5"
+	 * @public
+	 */
+	@property()
+	size: `${TitleLevel}` = "H5";
 
 	get h1() {
-		return this.normalizedLevel === "h1";
+		return this.level === TitleLevel.H1;
 	}
 
 	get h2() {
-		return this.normalizedLevel === "h2";
+		return this.level === TitleLevel.H2;
 	}
 
 	get h3() {
-		return this.normalizedLevel === "h3";
+		return this.level === TitleLevel.H3;
 	}
 
 	get h4() {
-		return this.normalizedLevel === "h4";
+		return this.level === TitleLevel.H4;
 	}
 
 	get h5() {
-		return this.normalizedLevel === "h5";
+		return this.level === TitleLevel.H5;
 	}
 
 	get h6() {
-		return this.normalizedLevel === "h6";
+		return this.level === TitleLevel.H6;
 	}
 }
 

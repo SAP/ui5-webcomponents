@@ -1,5 +1,6 @@
 {
   "packages": [
+    "packages/ai",
     "packages/theming",
     "packages/base",
     "packages/localization",
@@ -9,12 +10,11 @@
     "packages/icons-business-suite",
     "packages/icons-tnt",
     "packages/tools",
-    "packages/playground",
     "packages/website",
     "packages/create-package",
     "packages/compat"
   ],
-  "version": "2.0.0-rc.2",
+  "version": "2.1.0-rc.2",
   "command": {
     "publish": {
       "allowBranch": "*",
@@ -31,6 +31,5 @@
       "preid": "rc"
     }
   },
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "npmClient": "yarn"
 }

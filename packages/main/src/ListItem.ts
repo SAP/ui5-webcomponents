@@ -3,16 +3,18 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import HighlightTypes from "./types/HighlightTypes.js";
+import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -27,10 +29,11 @@ import {
 	LIST_ITEM_SELECTED,
 	LIST_ITEM_NOT_SELECTED,
 } from "./generated/i18n/i18n-defaults.js";
+import type ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
-import HasPopup from "./types/HasPopup.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -47,20 +50,14 @@ type SelectionRequestEventDetail = {
 	key?: string,
 }
 
-type PressEventDetail = {
-	item: ListItem,
-	selected: boolean,
-	key: string,
-}
-
 type AccInfo = {
-	role: string;
+	role?: string;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${Lowercase<HasPopup>}`;
+	ariaHaspopup?: `${Lowercase<AriaHasPopup>}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;
@@ -68,17 +65,15 @@ type AccInfo = {
 	listItemAriaLabel?: string;
 	ariaOwns?: string;
 	tooltip?: string;
+	ariaKeyShortcuts?: string;
 }
 
-type AccessibilityAttributes = {
-	ariaSetsize?: number,
-	ariaPosinset?: number,
-}
+type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
 
 /**
  * @class
  * A class to serve as a base
- * for the `StandardListItem` and `CustomListItem` classes.
+ * for the `ListItemStandard` and `ListItemCustom` classes.
  * @constructor
  * @abstract
  * @extends ListItemBase
@@ -86,7 +81,11 @@ type AccessibilityAttributes = {
  */
 @customElement({
 	languageAware: true,
-	styles: [ListItemBase.styles, styles],
+	styles: [
+		ListItemBase.styles,
+		listItemAdditionalTextCss,
+		styles,
+	],
 	dependencies: [
 		Button,
 		RadioButton,
@@ -98,7 +97,6 @@ type AccessibilityAttributes = {
  * @public
  */
 @event("detail-click")
-@event("_press")
 @event("_focused")
 @event("_selection-requested")
 abstract class ListItem extends ListItemBase {
@@ -111,27 +109,25 @@ abstract class ListItem extends ListItemBase {
 	 * @default "Active"
 	 * @public
 	*/
-	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: `${ListItemType}`;
+	@property()
+	type: `${ListItemType}` = "Active";
 
 	/**
-	 * An object of strings that defines several additional accessibility attribute values
-	 * for customization depending on the use case.
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
 	 *
-	 *  It supports the following fields:
+	 * - **ariaSetsize**: Defines the number of items in the current set  when not all items in the set are present in the DOM.
+	 * **Note:** The value is an integer reflecting the number of items in the complete set. If the size of the entire set is unknown, set `-1`.
 	 *
-	 * - `ariaSetsize`: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
-	 * 	The value of each `aria-setsize` is an integer reflecting number of items in the complete set.
+	 * 	- **ariaPosinset**: Defines an element's number or position in the current set when not all items are present in the DOM.
+	 * 	**Note:** The value is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
 	 *
-	 * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
-	 * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
-	 * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
 	 * @default {}
 	 * @public
 	 * @since 1.15.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes: ListItemAccessibilityAttributes = {};
 
 	/**
 	 * The navigated state of the list item.
@@ -141,33 +137,23 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	navigated!: boolean;
+	navigated = false;
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property({ type: String, defaultValue: "" })
-	tooltip!: string;
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 * @private
 	*/
 	@property({ type: Boolean })
-	active!: boolean;
-
-	/**
-	 * Defines the tooltip of the component.
-	 * @default ""
-	 * @deprecated
-	 * @private
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	title!: string;
+	active = false;
 
 	/**
 	 * Defines the highlight state of the list items.
@@ -176,36 +162,29 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	 * @since 1.24
 	 */
-	@property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
-	highlight!: `${HighlightTypes}`;
+	@property()
+	highlight: `${Highlight}` = "None";
 
 	/**
-	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 * @private
-	*/
+	 * Defines the selected state of the component.
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
-	actionable!: boolean;
+	declare selected: boolean;
 
 	/**
 	 * Used to define the role of the list item.
 	 * @private
-	 * @default ""
+	 * @default "ListItem"
 	 * @since 1.3.0
 	 *
 	 */
 	@property()
-	accessibleRole!: string;
+	accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
 
-	@property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
-	_selectionMode!: `${ListSelectionMode}`;
-
-	/**
-	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-	 * @since 1.10.0
-	 * @private
-	 */
-	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: `${HasPopup}`;
+	@property()
+	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
@@ -221,7 +200,7 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
-	// used in template, implemented in TreeItemBase, StandardListItem
+	// used in template, implemented in TreeItemBase, ListItemStandard
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
 	indeterminate?: boolean;
@@ -256,10 +235,12 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	onEnterDOM() {
+		super.onEnterDOM();
 		document.addEventListener("mouseup", this.deactivate);
 		document.addEventListener("touchend", this.deactivate);
 		document.addEventListener("keyup", this.deactivateByKey);
@@ -277,35 +258,28 @@ abstract class ListItem extends ListItemBase {
 		const itemActive = this.type === ListItemType.Active,
 			itemNavigated = this.typeNavigation;
 
-		if (isSpace(e)) {
-			e.preventDefault();
-		}
-
 		if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
 			this.activate();
 		}
 
-		if (isEnter(e)) {
-			this.fireItemPress(e);
-		}
-
 		if (isF2(e)) {
+			const activeElement = getActiveElement();
 			const focusDomRef = this.getFocusDomRef()!;
-			if (this.focused) {
-				(await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+
+			if (activeElement === focusDomRef) {
+				const firstFocusable = await getFirstFocusableElement(focusDomRef);
+				firstFocusable?.focus();
 			} else {
-				focusDomRef.focus(); // stop content editing
+				focusDomRef.focus();
 			}
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
+
 		if (isSpace(e) || isEnter(e)) {
 			this.deactivate();
-		}
-
-		if (isSpace(e)) {
-			this.fireItemPress(e);
 		}
 
 		if (this.modeDelete && isDelete(e)) {
@@ -332,20 +306,18 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_onfocusout() {
-		super._onfocusout();
 		this.deactivate();
 	}
 
-	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer) {
 			return;
 		}
-		this.fireItemPress(e);
-	}
 
-	_ondragstart(e: DragEvent) {
 		if (e.target === this._listItem) {
 			this.setAttribute("data-moving", "");
+			e.dataTransfer.dropEffect = "move";
+			e.dataTransfer.effectAllowed = "move";
 		}
 	}
 
@@ -355,7 +327,7 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	/*
+	/**
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
@@ -390,13 +362,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
-		if (this.isInactive || this.disabled) {
+		if (this.isInactive) {
 			return;
 		}
-		if (isEnter(e as KeyboardEvent)) {
-			e.preventDefault();
-		}
-		this.fireEvent<PressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		super.fireItemPress(e);
 	}
 
 	get isInactive() {
@@ -460,6 +429,10 @@ abstract class ListItem extends ListItemBase {
 		return undefined;
 	}
 
+	get listItemAccessibleRole() {
+		return this.accessibleRole.toLowerCase();
+	}
+
 	get ariaSelectedText() {
 		let ariaSelectedText;
 
@@ -494,21 +467,21 @@ abstract class ListItem extends ListItemBase {
 
 	get _accInfo(): AccInfo {
 		return {
-			role: this.accessibleRole,
+			role: this.listItemAccessibleRole,
 			ariaExpanded: undefined,
 			ariaLevel: undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this.ariaHaspopup?.toLowerCase() as Lowercase<HasPopup> || undefined,
+			ariaHaspopup: this.accessibilityAttributes.hasPopup,
 			setsize: this.accessibilityAttributes.ariaSetsize,
 			posinset: this.accessibilityAttributes.ariaPosinset,
-			tooltip: this.tooltip || this.title,
+			tooltip: this.tooltip,
 		};
 	}
 
 	get _hasHighlightColor() {
-		return this.highlight !== HighlightTypes.None;
+		return this.highlight !== Highlight.None;
 	}
 
 	get hasConfigurableMode() {
@@ -528,6 +501,5 @@ export default ListItem;
 export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
-	PressEventDetail,
-	AccessibilityAttributes,
+	ListItemAccessibilityAttributes,
 };

@@ -1,6 +1,4 @@
 *.css
-dist/resources
-dist/test-resources
 src/generated
 lib/
 node_modules/
@@ -10,7 +8,3 @@ bundle.*.js
 .eslintrc.js
 .eslintignore
 main.*js
-rollup*
-serve.json
-wdio.conf.js
-!core

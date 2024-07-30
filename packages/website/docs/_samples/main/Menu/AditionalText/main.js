@@ -12,5 +12,5 @@ const btnOpenAdditionalText = document.getElementById("btnOpenAdditionalText");
 const menuAdditionalText = document.getElementById("menuAdditionalText");
 
 btnOpenAdditionalText.addEventListener("click", function(event) {
-    menuAdditionalText.showAt(btnOpenAdditionalText);
+    menuAdditionalText.open = !menuAdditionalText.open;
 });

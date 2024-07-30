@@ -1,6 +1,5 @@
-![UI5 icon](/docs/images/UI5_logo_wide.png)
+#  ![UI5 icon](https://raw.githubusercontent.com/SAP/ui5-webcomponents/main/docs/images/UI5_logo_water.png)UI5 Web Components
 
-# UI5 Web Components
 [![CI](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml/badge.svg)](https://github.com/SAP/ui5-webcomponents/actions/workflows/test.yaml)
 [![npm Package Version](https://badge.fury.io/js/%40ui5%2Fwebcomponents.svg)](https://www.npmjs.com/package/@ui5/webcomponents)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui5-webcomponents)](https://api.reuse.software/info/github.com/SAP/ui5-webcomponents)
@@ -25,10 +24,10 @@
 ## More Resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
 - [Configuring UI5 Web Components](./docs/2-advanced/01-configuration.md)
-- [Customizing with `UI Theme Designer`](./docs/3-customizing/02-theme.md)
-- [Developing Custom UI5 Web Components](./docs/5-development/02-custom-UI5-Web-Components.md)
-- [Creating a Custom UI5 Web Components Package](./docs/5-development/01-custom-UI5-Web-Components-Packages.md)
-- [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/03-scoping.md)
+- [Customizing with `UI Theme Designer`](./docs/3-customizing/12-theming.md)
+- [Creating a Custom UI5 Web Components Package](docs/4-development/01-package.md)
+- [Developing Custom UI5 Web Components](docs/4-development/02-component.md)
+- [Micro-Frontends and Custom Elements Scoping](./docs/2-advanced/06-scoping.md)
 - [Release Management](./docs/Release%20Management.md)
 - [F.A.Q.](./docs/FAQ.md)
 
@@ -103,17 +102,17 @@ UI5 Web Components are supported by all major modern browsers.
 
 Browser | Supported versions
 --------|--------
-Chrome | Latest
-Firefox | Latest
-Safari | Latest
-Edge | Latest
+Chrome | Latest two stable releases
+Firefox | Latest two stable releases
+Safari | Latest two stable releases
+Edge | Latest two stable releases
 
 ## Project Structure, Development and Build
 
 This section might be of interest to you mainly if you need to run or build the project locally
 
 ### Requirements
-- [Node.js](https://nodejs.org/) (**version 20 or higher**)
+- [Node.js](https://nodejs.org/) (**version 21 or higher**)
 - [Yarn](https://yarnpkg.com/en) (**version 1.22 or higher**)
 
 **Note:** The UI5 Web Components project is set up with the [Yarn](https://yarnpkg.com/) node package manager.
@@ -157,7 +156,7 @@ yarn start:website
 # open http://localhost:3000/ui5-webcomponents/nightly/
 ```
 
-**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](./docs/6-contributing/03-website.md)
+**Note:** If you wish to manually install dependencies & run the Playground you can check out our [in depth tutorial](docs/5-contributing/03-website.md)
 
 ### Production Build
 To build the UI5 Web Components project, run the following commands:
@@ -171,7 +170,7 @@ Afterwards, you can find the build output in the `dist` folder of the correspond
 For example, to find the Button component (that belongs to the `main` package), look inside the `packages/main/dist` folder.
 
 ## Limitations
-None as of 1.3.0
+None as of 1.24.0
 
 ## Known Issues
 No major bugs known. To report an issue or view the currently open issues, click [here](https://github.com/SAP/ui5-webcomponents/issues).
@@ -180,4 +179,4 @@ No major bugs known. To report an issue or view the currently open issues, click
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://ui5-slack-invite.cfapps.eu10.hana.ondemand.com/).
 
 ## Contribute
-Please check our [Contribution Guidelines](./docs/6-contributing/02-conventions-and-guidelines.md).
+Please check our [Contribution Guidelines](docs/5-contributing/02-conventions-and-guidelines.md).

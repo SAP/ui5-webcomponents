@@ -15,13 +15,14 @@
 	<div id="toolbars-container">
 		<ui5-title level="H3">Basic</ui5-title>
 		<br /><br />
-		<ui5-toolbar>
-			<ui5-toolbar-button icon="add" text="Left 1 (long)"></ui5-toolbar-button>
-			<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+		<ui5-toolbar id="clickCountToolbar">
+			<ui5-toolbar-button icon="add" text="Left 1 (long)" id="clickCounter"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 2" id="clearCounter"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
 			<ui5-toolbar-separator></ui5-toolbar-separator>
 			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
 		</ui5-toolbar>
+		<ui5-input id="input" value="0"></ui5-input>
 
 		<br /><br />
 
@@ -175,6 +176,21 @@
 			</ui5-toolbar>
 		</section>
 
+		<br />
+		<ui5-title level="H3">Toolbar with design="Transparent"</ui5-title>
+
+		<section>
+			<ui5-toolbar design="Transparent">
+				<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+				<ui5-toolbar-spacer width="100px"></ui5-toolbar-spacer>
+				<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
+			</ui5-toolbar>
+		</section>
+
+		<br />
+
 		<section>
 			<ui5-title level="H3">Toolbar with many separators</ui5-title>
 			<br /><br />
@@ -239,6 +255,20 @@
 			</div>
 
 		</section>
+		<section id="testEventpreventClosing">
+			<div style="width: 250px;">
+				<ui5-toolbar id="testEventpreventClosing-toolbar">
+					<ui5-toolbar-button text="Some longer title text">
+
+					</ui5-toolbar-button>
+					<ui5-toolbar-select>
+						<ui5-toolbar-select-option>
+							test
+						</ui5-toolbar-select-option>
+					</ui5-toolbar-select>
+				</ui5-toolbar>
+			</div>
+		</section>
 	</div>
 	<ui5-popover id="myPopup" placement="Bottom">
 		<div slot="header" style="padding: 0.5rem">Hello World</div>
@@ -259,6 +289,7 @@
 		const items = document.querySelectorAll("ui5-toolbar-button");
 		const select = document.getElementById("toolbar-select");
 		const toolbarSlider = document.getElementById("toolbarSlider");
+		const input = document.getElementById("input");
 
 		items.forEach(item => {
 			item.addEventListener("ui5-click", e => {
@@ -276,6 +307,15 @@
 
 		select.addEventListener("ui5-close", e => {
 			console.log("Closed", e);
+		});
+
+		document.querySelector('body').addEventListener('click', (e) => {
+			if (e.target.id === "clearCounter") {
+				input.setAttribute("value", "0");
+			} else  {
+				let clickCounter = parseInt(input.getAttribute("value"));
+				input.setAttribute("value", `${++clickCounter}`);
+			}
 		});
 
 		toolbarSlider.addEventListener("input", e => {

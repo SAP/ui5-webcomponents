@@ -20,8 +20,8 @@
 	<ui5-checkbox id="cbReadonly" readonly text="Option"></ui5-checkbox>
 	<ui5-checkbox id="cbDisabled" disabled text="Option"></ui5-checkbox>
 	<ui5-checkbox id="cbError" value-state="Negative" text="Option"></ui5-checkbox>
-	<ui5-checkbox id="truncatingCb" text="Long long long text that should truncate at some point" class="checkbox2auto"></ui5-checkbox>
-	<ui5-checkbox text="Long long long text that should truncate at some point"></ui5-checkbox>
+	<ui5-checkbox id="wrappingCb" text="Long long long text that should wrap at some point" class="checkbox2auto"></ui5-checkbox>
+	<ui5-checkbox wrapping-type="None" text="Long long long text that should truncate at some point"></ui5-checkbox>
 
 	<ui5-title>In Container - stretches to the container</ui5-title>
 	<div class="checkbox3auto">
@@ -35,9 +35,14 @@
 	</div>
 
 	<br><br>
-	<ui5-title>Text Wrapping</ui5-title>
-	<ui5-checkbox id="wrappingCb" wrapping-type="Normal" class="ui5-cb-testing-wrap checkbox2auto" text="Longest ever text written in English that have to wraps because it is so long of course!" ></ui5-checkbox>
-	<ui5-checkbox wrapping-type="Normal" text="Longest ever text written in English that wraps because it's too long of course!" class="checkbox2auto"></ui5-checkbox>
+	<ui5-title>wrappingType="Normal" (default value)</ui5-title>
+	<ui5-checkbox class="ui5-cb-testing-wrap checkbox2auto" text="Longest ever text written in English that have to wrap because it is so long of course!" ></ui5-checkbox>
+	<ui5-checkbox text="Longest ever text written in English that wraps because it's too long of course!" class="checkbox2auto"></ui5-checkbox>
+
+	<br><br>
+	<ui5-title>wrappingType="None"</ui5-title>
+	<ui5-checkbox id="truncatingCb" wrapping-type="None" class="ui5-cb-testing-wrap checkbox2auto" text="Longest ever text written in English that have to truncate because it is so long of course!" ></ui5-checkbox>
+	<ui5-checkbox wrapping-type="None" text="Longest ever text written in English that truncates because it's too long of course!" class="checkbox2auto"></ui5-checkbox>
 
 	<br><br>
 	<ui5-title>Change Event Test</ui5-title>
@@ -90,7 +95,7 @@
 		[checkBox1, checkBox2, displayOnlyCb].forEach(function(el) {
 			el.addEventListener("ui5-change", function(event) {
 				counter += 1;
-				input.value = counter;
+				input.value = `${counter}`;
 			});
 		});
 

@@ -9,6 +9,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 import {
 	isEnter,
@@ -72,6 +73,8 @@ const offsets = {
 		[AvatarGroupType.Group]: "-2.75rem",
 	},
 };
+
+type AvatarGroupAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 type AvatarGroupClickEventDetail = {
 	targetRef: HTMLElement,
@@ -181,25 +184,28 @@ class AvatarGroup extends UI5Element {
 	 * @default "Group"
 	 * @public
 	 */
-	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
-	type!: `${AvatarGroupType}`;
+	@property()
+	type: `${AvatarGroupType}` = "Group"
 
 	/**
-	 * Defines the aria-haspopup value of the component on:
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following field is supported:
 	 *
-	 * -  the whole container when `type` property is `Group`
-	 * -  the default "More" overflow button when `type` is `Individual`
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	 @property({ type: Object })
+	 accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_overflowButtonText!: string;
+	_overflowButtonText?: string;
 
 	/**
 	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
@@ -227,8 +233,8 @@ class AvatarGroup extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
-	_colorIndex: number;
-	_hiddenItems: number;
+	_colorIndex = 0;
+	_hiddenItems = 0;
 	_itemNavigation: ItemNavigation;
 
 	constructor() {
@@ -239,8 +245,6 @@ class AvatarGroup extends UI5Element {
 				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
 			},
 		});
-		this._colorIndex = 0;
-		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
 	}
 
@@ -577,11 +581,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		if (this.ariaHaspopup === "") {
-			return;
-		}
-
-		return this.ariaHaspopup;
+		return this.accessibilityAttributes.hasPopup;
 	}
 }
 
@@ -590,5 +590,6 @@ AvatarGroup.define();
 export default AvatarGroup;
 export type {
 	AvatarGroupClickEventDetail,
+	AvatarGroupAccessibilityAttributes,
 	IAvatarGroupItem,
 };

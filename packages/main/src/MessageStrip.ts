@@ -47,10 +47,11 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  *
  * ### Overview
  *
- * The `ui5-message-strip` component enables the embedding of app-related messages.
- * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Critical and Negative.
- * Each message can have a Close button, so that it can be removed from the UI, if needed.
- *
+ * The ui5-message-strip component allows for the embedding of application-related messages.
+ * It supports four semantic designs, each with its own color and icon: "Information", "Positive", "Critical", and "Negative".
+ * Additionally, users can choose from two color sets ("ColorSet1" and "ColorSet2"), each containing 10 predefined color schemes.
+ * Each message shows a "Close" button, so that it can be removed from the UI, if needed.
+
  * ### Usage
  *
  * For the `ui5-message-strip` component, you can define whether it displays
@@ -98,11 +99,8 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({
-		type: MessageStripDesign,
-		defaultValue: MessageStripDesign.Information,
-	})
-	design!: `${MessageStripDesign}`;
+	@property()
+	design: `${MessageStripDesign}` = "Information";
 
 	/**
 	 * Defines the color scheme of the component.
@@ -111,10 +109,10 @@ class MessageStrip extends UI5Element {
 	 *
 	 * @default "1"
 	 * @public
-	 * @since 2.0
+	 * @since 2.0.0
 	 */
-	@property({ defaultValue: "1" })
-	colorScheme!: string;
+	@property()
+	colorScheme = "1"
 
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
@@ -127,7 +125,7 @@ class MessageStrip extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	hideIcon!: boolean;
+	hideIcon = false
 
 	/**
 	 * Defines whether the MessageStrip renders close button.
@@ -135,7 +133,7 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideCloseButton!: boolean;
+	hideCloseButton = false;
 
 	/**
 	 * Defines the content to be displayed as graphical element within the component.
@@ -178,6 +176,14 @@ class MessageStrip extends UI5Element {
 		return `${MessageStrip.designAnnouncementMappings()[this.design]} ${this.hideCloseButton ? "" : this._closableText}`;
 	}
 
+	get shouldHideIcon() {
+		if (this.designClasses === DesignClassesMapping.ColorSet1 || this.designClasses === DesignClassesMapping.ColorSet2) {
+			return this.hideIcon || this.icon.length === 0;
+		}
+
+		return this.hideIcon;
+	}
+
 	get _closeButtonText() {
 		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
@@ -190,7 +196,7 @@ class MessageStrip extends UI5Element {
 		return {
 			root: {
 				"ui5-message-strip-root": true,
-				"ui5-message-strip-root-hide-icon": this.hideIcon,
+				"ui5-message-strip-root-hide-icon": this.shouldHideIcon,
 				"ui5-message-strip-root-hide-close-button": this.hideCloseButton,
 				[this.designClasses]: true,
 			},

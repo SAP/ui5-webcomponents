@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
@@ -17,8 +16,8 @@ const styles = `
     renderer: litRender,
 })
 export class MyElement extends UI5Element {
-    @property({ type: Integer, defaultValue: 0})
-    count!: number;
+    @property({ type: Number })
+    count = 0;
 
     render() {
         return html `

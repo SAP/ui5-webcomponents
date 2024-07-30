@@ -4,6 +4,7 @@ import path from "path";
 import fs from 'fs';
 import {
 	getDeprecatedStatus,
+	getExperimentalStatus,
 	getSinceStatus,
 	getPrivacyStatus,
 	getReference,
@@ -64,18 +65,33 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass.customElement = !!customElementDecorator || className === "UI5Element" || undefined;
 	currClass.kind = "class";
 	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
+	currClass._ui5experimental = getExperimentalStatus(classParsedJsDoc);
 	currClass._ui5since = getSinceStatus(classParsedJsDoc);
 	currClass._ui5privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract") ? true : undefined;
 	currClass.description = normalizeDescription(classParsedJsDoc.description || findTag(classParsedJsDoc, "class")?.description);
 	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
-		.map(tag => getReference(ts, normalizeTagType(tag.type), classNode, moduleDoc.path))
+		.map(tag => {
+			const correctInterfaceDescription = classNode?.heritageClauses?.some(heritageClause => {
+				return heritageClause?.types?.some(type => type.expression?.text === normalizeTagType(tag.type));
+			});
+
+			if (!correctInterfaceDescription) {
+				logDocumentationError(moduleDoc.path, `@interface {${tag.type}} tag is used, but the class doesn't implement the corresponding interface`)
+			}
+
+			return getReference(ts, normalizeTagType(tag.type), classNode, moduleDoc.path)
+		})
 		.filter(Boolean);
 
 
 	if (hasTag(classParsedJsDoc, "extends")) {
 		const superclassTag = findTag(classParsedJsDoc, "extends");
 		currClass.superclass = getReference(ts, superclassTag.name, classNode, moduleDoc.path);
+
+		if (classNode?.heritageClauses?.[0]?.types?.[0]?.expression?.text !== superclassTag.name) {
+			logDocumentationError(moduleDoc.path, `@extends ${superclassTag.name} is used, but the class doesn't extend the corresponding superclass`)
+		}
 
 		if (currClass.superclass?.name === "UI5Element") {
 			currClass.customElement = true;
@@ -113,6 +129,10 @@ function processClass(ts, classNode, moduleDoc) {
 	// Events
 	currClass.events = findAllDecorators(classNode, "event")
 		?.map(event => processEvent(ts, event, classNode, moduleDoc));
+
+	const filename = classNode.getSourceFile().fileName;
+	const sourceFile = typeProgram.getSourceFile(filename);
+	const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
 
 	// Slots (with accessor), methods and fields
 	for (let i = 0; i < (currClass.members?.length || 0); i++) {
@@ -168,16 +188,20 @@ function processClass(ts, classNode, moduleDoc) {
 				const propertyDecorator = findDecorator(classNodeMember, "property");
 
 				if (propertyDecorator) {
-					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
 					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind === ts.SyntaxKind.TrueKeyword || undefined;
 				}
 
-				if (currClass.customElement && member.privacy === "public" && !propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "multiple") && !["object"].includes(member._ui5validator?.toLowerCase())) {
-					const filename = classNode.getSourceFile().fileName;
-					const sourceFile = typeProgram.getSourceFile(filename);
-					const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
+				if (currClass.customElement && member.privacy === "public") {
 					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isPropertyDeclaration(m) && m.name?.text === member.name);
 					const attributeValue = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramMember), tsProgramMember);
+
+					if (attributeValue === "boolean" && member.default === "true") {
+						logDocumentationError(moduleDoc.path, `Boolean properties must be initialzed to false. [${member.name}] property of class [${className}] is intialized to \`true\``)
+					}
+
+					if (!member.type) {
+						logDocumentationError(moduleDoc.path, `Public properties must have type. The type of [${member.name}] property is not determinated automatically. Please check it.`)
+					}
 
 					currClass.attributes.push({
 						description: member.description,
@@ -293,6 +317,7 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 		kind: "interface",
 		name: interfaceName,
 		description: normalizeDescription(interfaceParsedJsDoc?.description),
+		_ui5experimental: getExperimentalStatus(interfaceParsedJsDoc),
 		_ui5privacy: getPrivacyStatus(interfaceParsedJsDoc),
 		_ui5since: getSinceStatus(interfaceParsedJsDoc),
 		deprecated: getDeprecatedStatus(interfaceParsedJsDoc),
@@ -313,6 +338,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 		kind: "enum",
 		name: enumName,
 		description: normalizeDescription(enumJSdoc?.comment),
+		_ui5experimental: getExperimentalStatus(enumParsedJsDoc),
 		_ui5privacy: getPrivacyStatus(enumParsedJsDoc),
 		_ui5since: getSinceStatus(enumParsedJsDoc),
 		deprecated: getDeprecatedStatus(enumParsedJsDoc) || undefined,

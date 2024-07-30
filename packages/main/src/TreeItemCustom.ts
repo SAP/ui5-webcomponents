@@ -41,7 +41,7 @@ class TreeItemCustom extends TreeItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hideSelectionElement!: boolean;
+	hideSelectionElement = false;
 
 	/**
 	 * Defines the content of the `ui5-tree-item`.
@@ -52,8 +52,9 @@ class TreeItemCustom extends TreeItemBase {
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+		const isFocused = this.matches(":focus");
 
-		if (!isTab && !this.focused && !isF2(e)) {
+		if (!isTab && !isFocused && !isF2(e)) {
 			return;
 		}
 
@@ -62,8 +63,9 @@ class TreeItemCustom extends TreeItemBase {
 
 	_onkeyup(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);
+		const isFocused = this.matches(":focus");
 
-		if (!isTab && !this.focused) {
+		if (!isTab && !isFocused && !isF2(e)) {
 			return;
 		}
 

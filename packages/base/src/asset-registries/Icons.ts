@@ -160,7 +160,7 @@ const getRegisteredIconData = (collection: string, name: string) => {
  * @param { string } name
  * @return { Promise }
  */
-const getIconAccessibleName = async (name: string): Promise<string | undefined> => {
+const getIconAccessibleName = async (name: string | undefined): Promise<string | undefined> => {
 	if (!name) {
 		return;
 	}

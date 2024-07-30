@@ -8,7 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getCalendarType, getSecondaryCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
@@ -38,7 +38,7 @@ class DateComponentBase extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ type: CalendarType })
+	@property()
 	primaryCalendarType?: `${CalendarType}`;
 
 	/**
@@ -48,16 +48,16 @@ class DateComponentBase extends UI5Element {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ type: CalendarType })
+	@property()
 	secondaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Determines the format, displayed in the input field.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	formatPattern!: string;
+	formatPattern?: string;
 
 	/**
 	 * Determines the minimum date available for selection.
@@ -68,7 +68,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	minDate!: string;
+	minDate = "";
 
 	/**
 	 * Determines the maximum date available for selection.
@@ -79,7 +79,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	maxDate!: string;
+	maxDate = "";
 
 	static i18nBundle?: I18nBundle;
 

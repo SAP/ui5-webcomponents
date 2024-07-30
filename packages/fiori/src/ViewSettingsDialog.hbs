@@ -1,8 +1,12 @@
 <ui5-dialog
+	prevent-initial-focus
 	aria-label="{{_dialogTitle}}"
-	@ui5-after-open={{_focusRecentlyUsedControl}}
 	@ui5-before-close={{_restoreConfirmedOnEscape}}
 	?stretch={{_isPhone}}
+	.open="{{open}}"
+	@ui5-before-open="{{beforeDialogOpen}}"
+	@ui5-open="{{afterDialogOpen}}"
+	@ui5-close="{{afterDialogClose}}"
 >
 
 	<div slot="header" class="ui5-vsd-header">
@@ -16,7 +20,7 @@
 						@click="{{_navigateToFilters}}"
 					></ui5-button>
 				{{/if}}
-				<ui5-title class="ui5-vsd-title" id="{{_id}}-label">{{_title}}</ui5-title>
+				<ui5-title wrapping-type="None" class="ui5-vsd-title" id="{{_id}}-label">{{_title}}</ui5-title>
 			</div>
 			<div class="ui5-vsd-header-end">
 				<ui5-button

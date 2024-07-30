@@ -7,18 +7,19 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isSpace,
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
-import BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
+import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
@@ -31,7 +32,7 @@ import type { LinkClickEventDetail } from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -91,7 +92,7 @@ type BreadcrumbsItemClickEventDetail = {
 		Link,
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Icon,
 		Button,
 	],
@@ -142,24 +143,24 @@ class Breadcrumbs extends UI5Element {
 	 * @default "Standard"
 	 * @public
 	*/
-	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
-	design!: `${BreadcrumbsDesign}`;
+	@property()
+	design: `${BreadcrumbsDesign}` = "Standard";
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
 	 * @default "Slash"
 	 * @public
 	 */
-	@property({ type: BreadcrumbsSeparator, defaultValue: BreadcrumbsSeparator.Slash })
-	separators!: `${BreadcrumbsSeparator}`;
+	@property()
+	separators: `${BreadcrumbsSeparator}` = "Slash";
 
 	/**
 	 * Holds the number of items in the overflow.
 	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_overflowSize!: number;
+	@property({ type: Number, noAttribute: true })
+	_overflowSize = 0;
 
 	/**
 	 * Defines the component items.
@@ -212,7 +213,9 @@ class Breadcrumbs extends UI5Element {
 		this._preprocessItems();
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
+		await renderFinished();
+
 		this._cacheWidths();
 		this._updateOverflow();
 	}
@@ -321,7 +324,7 @@ class Breadcrumbs extends UI5Element {
 
 		// if overflow was emptied while picker was open => close redundant popup
 		if (this._isOverflowEmpty && this._isPickerOpen) {
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 
 		// if the last focused link has done into the overflow =>
@@ -382,7 +385,7 @@ class Breadcrumbs extends UI5Element {
 
 		if (this.fireEvent("item-click", { item }, true)) {
 			window.open(item.href, item.target || "_self", "noopener,noreferrer");
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 	}
 
@@ -401,12 +404,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this.responsivePopover && this.responsivePopover.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
 	_openRespPopover() {
 		this.responsivePopover = this._respPopover();
-		this.responsivePopover.showAt(this._dropdownArrowLink);
+		this.responsivePopover.opener = this._dropdownArrowLink;
+		this.responsivePopover.open = true;
 	}
 
 	_isItemVisible(item: BreadcrumbsItem) {
@@ -512,11 +518,10 @@ class Breadcrumbs extends UI5Element {
 		return this._overflowItemsData.length === 0;
 	}
 
-	get _ariaHasPopup() {
-		if (!this._isOverflowEmpty) {
-			return "listbox";
-		}
-		return undefined;
+	get linkAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: this._isOverflowEmpty ? undefined : "listbox",
+		};
 	}
 
 	get _isPickerOpen() {

@@ -20,6 +20,9 @@ multiInput.addEventListener("change", (event) => {
 });
 
 multiInput.addEventListener("token-delete", (event) => {
-    const token = event.detail?.token;
-    token && token.remove();
+	const tokens = event.detail?.tokens;
+
+	if (tokens) {
+		tokens.forEach(token => token.remove());
+	}
 });

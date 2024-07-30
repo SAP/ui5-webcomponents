@@ -1,10 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Button from "./Button.js";
-import type { AccessibilityAttributes as ButtonAccessibilityAttributes } from "./Button.js";
-import ButtonDesign from "./types/ButtonDesign.js";
+import type { ButtonAccessibilityAttributes } from "./Button.js";
+import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import type { IEventOptions } from "./ToolbarItem.js";
@@ -15,7 +14,7 @@ import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
-type AccessibilityAttributes = ButtonAccessibilityAttributes;
+type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 
 /**
  * @class
@@ -56,90 +55,96 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the action design.
 	 * @default "Default"
 	 * @public
 	 */
-	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: `${ButtonDesign}`;
+	@property()
+	design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines the `icon` source URI.
 	 *
 	 * **Note:** SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string
 
 	/**
-	 * Defines whether the icon should be displayed after the component text.
-	 * @default false
+	 * Defines the icon, displayed as graphical element within the component after the button text.
+	 *
+	 * **Note:** It is highly recommended to use `endIcon` property only together with `icon` and/or `text` properties.
+	 * Usage of `endIcon` only should be avoided.
+	 *
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
 	 * @public
 	 */
-	@property({ type: Boolean })
-	iconEnd!: boolean;
+	@property()
+	endIcon?: string;
 
 	/**
 	 * Defines the tooltip of the component.
 	 *
 	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
-	 * An object of strings that defines several additional accessibility attribute values
-	 * for customization depending on the use case.
+	 * Defines the additional accessibility attributes that will be applied to the component.
 	 *
-	 * It supports the following fields:
+	 * The following fields are supported:
 	 *
-	 * - `expanded`: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-	 * 	- `true`
-	 * 	- `false`
-	 * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
-	 * 	- `Dialog`
-	 * 	- `Grid`
-	 * 	- `ListBox`
-	 * 	- `Menu`
-	 * 	- `Tree`
-	 * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
+	 * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
+	 * Accepts the following string values: `true` or `false`
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * - **controls**: Identifies the element (or elements) whose contents or presence are controlled by the button element.
+	 * Accepts a lowercase string value.
+	 *
 	 * @default {}
 	 * @public
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: AccessibilityAttributes;
+	accessibilityAttributes: ToolbarButtonAccessibilityAttributes = {};
 
 	/**
 	 * Button text
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines the width of the button.
@@ -148,7 +153,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: CSSSize })
+	@property()
 	width?: string;
 
 	get styles() {
@@ -184,5 +189,5 @@ ToolbarButton.define();
 export default ToolbarButton;
 
 export type {
-	AccessibilityAttributes,
+	ToolbarButtonAccessibilityAttributes,
 };

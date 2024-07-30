@@ -1,6 +1,6 @@
 import getEffectiveStyle from "./getEffectiveStyle.js";
 import { attachCustomCSSChange } from "./CustomStyle.js";
-import UI5Element from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
 
 const constructableStyleMap = new Map<string, Array<CSSStyleSheet>>();
 

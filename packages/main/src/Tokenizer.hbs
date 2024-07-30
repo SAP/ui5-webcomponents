@@ -1,15 +1,18 @@
-<div class="{{classes.wrapper}}">
-	<span id="{{_id}}-hiddenText" class="ui5-hidden-text">{{tokenizerLabel}}</span>
-
+<div class="ui5-tokenizer-root">
 	<div
-		class="{{classes.content}}"
+		class="ui5-tokenizer--content"
 		@ui5-delete="{{_delete}}"
 		@click="{{_click}}"
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
+		@focusout="{{_onfocusout}}"
+		@focusin="{{_onfocusin}}"
 		@ui5-select="{{onTokenSelect}}"
 		role="listbox"
-		aria-labelledby="{{_id}}-hiddenText"
+		aria-label="{{tokenizerLabel}}"
+		aria-description="{{tokenizerAriaDescription}}"
+		aria-disabled="{{_ariaDisabled}}"
+		aria-readonly="{{_ariaReadonly}}"
 	>
 		{{#each tokens}}
 			<slot name="{{this._individualSlot}}"></slot>
@@ -18,7 +21,9 @@
 
 	{{#if showNMore}}
 		<span
-			@click="{{_openMorePopoverAndFireEvent}}"
+			role="button"
+			aria-haspopup="dialog"
+			@click="{{_handleNMoreClick}}"
 			class="ui5-tokenizer-more-text"
 			part="n-more-text"
 		>{{_nMoreText}}</span>

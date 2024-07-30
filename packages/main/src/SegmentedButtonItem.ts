@@ -1,20 +1,20 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
-import { IButton } from "./Button.js";
+import type { IButton } from "./Button.js";
 import Icon from "./Icon.js";
 
 import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
@@ -35,7 +35,8 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
  * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
  * @constructor
  * @extends UI5Element
- * @implements { ISegmentedButtonItem, IButton }
+ * @implements { ISegmentedButtonItem }
+ * @implements { IButton }
  * @public
  */
 @customElement({
@@ -54,7 +55,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as selected.
@@ -62,18 +63,18 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the tooltip of the component.
 	 *
 	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -81,17 +82,17 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
@@ -99,41 +100,48 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 *
 	 * Example:
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
+
+	/**
+	 * Defines if the button has icon and no text.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	iconOnly = false;
 
 	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
-	nonInteractive!: boolean;
+	nonInteractive = false;
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
-	@property({ type: String, defaultValue: "0", noAttribute: true })
-	forcedTabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex?: string;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
 	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	posInSet!: number;
+	@property({ type: Number })
+	posInSet = 0;
 
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
 	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	sizeOfSet!: number;
+	@property({ type: Number })
+	sizeOfSet = 0;
 
 	/**
 	 * Defines the text of the component.
@@ -154,7 +162,12 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		super();
 	}
 
-	_onclick() {
+	_onclick(e: MouseEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
 		this.selected = !this.selected;
 	}
 
@@ -164,17 +177,21 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		}
 	}
 
+	onBeforeRendering(): void {
+		this.iconOnly = !willShowContent(this.text);
+	}
+
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpaceShift(e)) {
 			e.preventDefault();
 		}
 	}
 
-	get isIconOnly() {
-		return !willShowContent(this.text);
-	}
-
 	get tabIndexValue() {
+		if (this.disabled) {
+			return;
+		}
+
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {
@@ -189,7 +206,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get showIconTooltip() {
-		return this.isIconOnly && !this.tooltip;
+		return this.iconOnly && !this.tooltip;
 	}
 
 	static async onDefine() {

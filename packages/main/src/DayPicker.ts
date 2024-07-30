@@ -28,7 +28,6 @@ import {
 	isPageDownAlt,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
@@ -77,6 +76,7 @@ type Day = {
 	weekNum?: number,
 	isHidden?: boolean,
 	type?: string,
+	parts: string,
 }
 
 type WeekNumber = {
@@ -124,12 +124,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @default []
 	 * @public
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the day picker component.
@@ -141,8 +137,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @default "Single"
 	 * @public
 	 */
-	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: `${CalendarSelectionMode}`;
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -154,43 +150,37 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
 
 	/**
 	 * @private
 	 */
-	@property({
-		type: Object,
-		multiple: true,
-	})
-	_weeks!: Array<Week>;
+	@property({ type: Array })
+	_weeks: Array<Week> = [];
 
-	@property({
-		type: Object,
-		multiple: true,
-	})
-	_dayNames!: Array<DayName>;
+	@property({ type: Array })
+	_dayNames: Array<DayName> = [];
 
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
 	 * @private
 	 */
-	 @property()
+	 @property({ type: Number })
 	_secondTimestamp?: number;
 
 	/**
 	 * Array of special calendar dates (if such are passed) from the calendar.
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	specialCalendarDates!: Array<SpecialCalendarDateT>;
+	@property({ type: Array })
+	specialCalendarDates: Array<SpecialCalendarDateT> = [];
 
 	_autoFocus?: boolean;
 
@@ -264,16 +254,17 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
-				selected: isSelected,
+				selected: isSelected || isSelectedBetween,
 				day: tempDate.getDate(),
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel,
-				ariaSelected: isSelected ? "true" : "false",
+				ariaSelected: String(isSelected || isSelectedBetween),
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
 				type: specialDayType,
+				parts: "day-cell",
 			};
 
 			if (isFirstDayOfWeek) {
@@ -282,10 +273,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelected) {
 				day.classes += " ui5-dp-item--selected";
+				day.parts += " day-cell-selected";
 			}
 
 			if (isSelectedBetween) {
 				day.classes += " ui5-dp-item--selected-between";
+
+				day.parts += " day-cell-selected-between";
 			}
 
 			if (isToday) {
@@ -312,7 +306,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
 				week.unshift({
-					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData),
+					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType),
 					isHidden: this.shouldHideWeekNumbers,
 				});
 			}
@@ -411,8 +405,11 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			return timestamp === this.selectedDates[0];
 		}
 
-		// Multiple, Range
-		return this.selectedDates.includes(timestamp);
+		if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			return this.selectedDates.includes(timestamp);
+		}
+
+		return timestamp === this.selectedDates[0] || timestamp === this.selectedDates[this.selectedDates.length - 1];
 	}
 
 	/**
@@ -432,7 +429,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 
 		// Two dates selected - stable range
-		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[this.selectedDates.length - 1]);
 	}
 
 	/**

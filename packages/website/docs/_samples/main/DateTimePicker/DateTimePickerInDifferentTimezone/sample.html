@@ -9,17 +9,27 @@
 
     <script data-ui5-config type="application/json">
         {
-            "language": "EN",
-            "timezone" : "Pacific/Apia"
+            "language": "EN"
         }
     </script>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor); height: 450px;">
     <!-- playground-fold-end -->
-
-    
-    <ui5-datetime-picker value="now"></ui5-datetime-picker>
+		<div style="display: flex; align-items: center;">
+			<ui5-select id="sel" style="width: 300px">
+				<ui5-option data-timezone="Pacific/Honolulu">Pacific/Honolulu</ui5-option>
+				<ui5-option data-timezone="America/Los_Angeles">America/Los_Angeles</ui5-option>
+				<ui5-option data-timezone="America/New_York">America/New_York</ui5-option>
+				<ui5-option data-timezone="Europe/London">Europe/London</ui5-option>
+				<ui5-option data-timezone="Europe/Sofia" selected>Europe/Sofia</ui5-option>
+				<ui5-option data-timezone="Asia/Dubai">Asia/Dubai</ui5-option>
+				<ui5-option data-timezone="Asia/Bishkek">Asia/Bishkek</ui5-option>
+				<ui5-option data-timezone="Australia/Sydney">Australia/Sydney</ui5-option>
+				<ui5-option data-timezone="Pacific/Apia">Pacific/Apia</ui5-option>
+			</ui5-select>
+			<ui5-datetime-picker id="dtp" format-pattern="medium" value="today"></ui5-datetime-picker>
+		</div>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>
 </body>

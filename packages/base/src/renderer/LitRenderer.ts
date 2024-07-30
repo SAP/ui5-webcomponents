@@ -2,15 +2,16 @@ import {
 	render,
 	html,
 	svg,
-	TemplateResult,
 } from "lit-html";
+
+import type { TemplateResult } from "lit-html";
 
 import { getFeature } from "../FeaturesRegistry.js";
 import type { LitStatic } from "../CustomElementsScope.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import type UI5Element from "../UI5Element.js";
 import type { Renderer, RendererOptions } from "../UI5Element.js";
-import { TemplateFunctionResult } from "./executeTemplate.js";
+import type { TemplateFunctionResult } from "./executeTemplate.js";
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");

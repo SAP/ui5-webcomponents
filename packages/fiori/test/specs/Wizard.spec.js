@@ -61,6 +61,13 @@ describe("Wizard general interaction", () => {
 			"Step has aria-label set to the number of the step and its title.");
 	});
 
+	it("Disabled step should not be interactive", async () => {
+		const wiz = await browser.$("#wizTest");
+		const disabledStep = await wiz.shadow$(`[data-ui5-index="2"]`);
+
+		assert.notOk(await disabledStep.isClickable(), "Disabled step should not be clickable");
+	});
+
 	it("move to next step by API", async () => {
 		const wiz = await browser.$("#wizTest");
 		const btnToStep2 = await browser.$("#toStep2");

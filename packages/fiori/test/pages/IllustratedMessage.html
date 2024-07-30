@@ -220,11 +220,11 @@
 		});
 
 		dialogOpener.addEventListener("click", () => {
-			dialog.show();
+			dialog.open = true;
 		});
 
 		dialogCloser.addEventListener("click", () => {
-			dialog.close();
+			dialog.open = false;
 		});
 
 		containerHeightSelect.addEventListener("ui5-change", (event) => {

@@ -36,6 +36,10 @@
 	user-select: text;
 }
 
+::slotted([slot="header"]) {
+	max-width: 100%;
+}
+
 .ui5-popup-root {
 	display: flex;
 	flex-direction: column;

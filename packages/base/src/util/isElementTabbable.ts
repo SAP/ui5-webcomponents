@@ -12,8 +12,6 @@ const isElementTabbable = (el: HTMLElement): boolean => {
 		return false;
 	}
 
-	const nodeName = el.nodeName.toLowerCase();
-
 	if (el.hasAttribute("data-sap-no-tab-ref")) {
 		return false;
 	}
@@ -27,7 +25,8 @@ const isElementTabbable = (el: HTMLElement): boolean => {
 		return parseInt(tabIndex) >= 0;
 	}
 
-	if (nodeName === "a" || /input|select|textarea|button|object/.test(nodeName)) {
+	const nodeName = el.nodeName.toLowerCase();
+	if (nodeName === "a" || /^(input|select|textarea|button|object)$/.test(nodeName)) {
 		return !(el as HTMLLinkElement).disabled;
 	}
 

@@ -58,7 +58,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	expanded!: boolean;
+	expanded = false;
 
 	/**
 	 * Defines nested items by passing `ui5-side-navigation-item` to the default slot.
