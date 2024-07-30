@@ -615,14 +615,28 @@ class TabContainer extends UI5Element {
 		let dropTarget;
 		const realTab = (tab as TabInStrip).realTabReference;
 
+		if (!realTab.movable) {
+			return;
+		}
+
 		switch (e.key) {
 		case "ArrowLeft":
+		case "ArrowUp":
 			placement = "Before";
 			dropTarget = realTab.previousElementSibling as HTMLElement;
 			break;
 		case "ArrowRight":
+		case "ArrowDown":
 			placement = "After";
 			dropTarget = realTab.nextElementSibling as HTMLElement;
+			break;
+		case "Home":
+			placement = "Before";
+			dropTarget = realTab.parentElement?.firstElementChild as HTMLElement;
+			break;
+		case "End":
+			placement = "After";
+			dropTarget = realTab.parentElement?.lastElementChild as HTMLElement;
 			break;
 		}
 

@@ -17,7 +17,7 @@
 
 	<section>
 		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed overflow-mode="StartAndEnd">
+		<ui5-tabcontainer id="tabContainerDnd" collapsed overflow-mode="End">
 			<ui5-tab id="tabOne" movable design="Positive" text="One"></ui5-tab>
 			<ui5-tab id="tabTwo" movable design="Negative" text="Two" disabled>
 				<ui5-tab slot="items" movable text="2.1"></ui5-tab>
@@ -111,21 +111,13 @@
 		tc.addEventListener("ui5-move", (e) => {
 			// TODO: validate source.element
 			const { destination, source } = e.detail;
-			const currentParent = destination.element.parentElement;
 
 			switch (destination.placement) {
 				case "Before":
-					currentParent.insertBefore(
-						source.element,
-						destination.element
-					);
+					destination.element.before(source.element);
 					break;
 				case "After":
-					const nextElement = Array.from(currentParent.children).at(Array.from(currentParent.children).indexOf(destination.element) + 1);
-					currentParent.insertBefore(
-						source.element,
-						nextElement
-					);
+					destination.element.after(source.element);
 					break;
 				case "On":
 					destination.element.prepend(source.element);
