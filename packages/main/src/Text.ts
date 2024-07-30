@@ -66,6 +66,7 @@ class Text extends UI5Element {
 	/**
 	 * Specifies if an empty indicator should be displayed when there is no text.
 	 * @default EmptyIndicatorMode.Off
+	 * @since 2.1.0
 	 * @public
 	 */
 	@property()
