@@ -8,6 +8,8 @@ import {
 import { translate } from '@docusaurus/Translate';
 import DocSidebarItems from '@theme/DocSidebarItems';
 import styles from './styles.module.css';
+import Input from '../../Input/index.js';
+
 function useShowAnnouncementBar() {
   const { isActive } = useAnnouncementBar();
   const [showAnnouncementBar, setShowAnnouncementBar] = useState(isActive);
@@ -22,36 +24,13 @@ function useShowAnnouncementBar() {
   return isActive && showAnnouncementBar;
 }
 
-function filterHelper(elements, lowerText) {
-  return elements.filter(element => {
-
-    if (element.label?.toLowerCase().includes(lowerText)) {
-      return true;
-    }
-
-    if (element.items) {
-      element.items = filterHelper(element.items, lowerText);
-    }
-
-    const containsItems = (element.items && element.items.length > 0);
-
-    return containsItems;
-  });
-}
-
-function filter(sidebar = [], text) {
-  if (!text) return sidebar;
-  const lowerText = text.toLowerCase();
-
-  return filterHelper(sidebar, lowerText);
-}
-
 export default function DocSidebarDesktopContent({ path, sidebar, className }) {
   const showAnnouncementBar = useShowAnnouncementBar();
   const [items, setItems] = useState(JSON.parse(JSON.stringify(sidebar)));
-  const callback = (e) => {
-    setItems(filter(JSON.parse(JSON.stringify(sidebar)), e.target.value))
-  }
+  const updateItems = (filteredItems) => {
+    setItems(filteredItems);
+  };
+
   return (
     <nav
       aria-label={translate({
@@ -65,9 +44,7 @@ export default function DocSidebarDesktopContent({ path, sidebar, className }) {
         showAnnouncementBar && styles.menuWithAnnouncementBar,
         className,
       )}>
-      <div style={{ paddingInlineEnd: "0.5rem", paddingBlockEnd: "0.5rem" }}>
-        <input className="filter" type='search' autocomplete='off' onChange={callback} aria-label='Filter' placeholder='Filter...' style={{ width: "100%" }} />
-      </div>
+      <Input sidebar={sidebar} updateItems={updateItems}/>
       {items.length ?
       <ul className={clsx(ThemeClassNames.docs.docSidebarMenu, 'menu__list')}>
         <DocSidebarItems items={items} activePath={path} level={1} />
