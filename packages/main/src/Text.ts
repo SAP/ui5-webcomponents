@@ -7,7 +7,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import type EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
+import EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
 import TextTemplate from "./generated/templates/TextTemplate.lit.js";
 
@@ -73,8 +73,6 @@ class Text extends UI5Element {
 
 	/**
 	 * Defines the text of the component.
-	 *
-	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
@@ -95,7 +93,7 @@ class Text extends UI5Element {
 	}
 
 	get _renderEmptyIndicator() {
-		return !this.hasText && this.emptyIndicatorMode === "On";
+		return !this.hasText && this.emptyIndicatorMode === EmptyIndicatorMode.On;
 	}
 
 	get _ariaLabelText() {
