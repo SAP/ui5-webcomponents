@@ -562,7 +562,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
-		if (!this.open) {
+		if (!this.open || this.readonly) {
 			return;
 		}
 

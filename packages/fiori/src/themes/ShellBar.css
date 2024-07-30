@@ -151,7 +151,6 @@ slot[name="profile"] {
 	height: var(--_ui5_shellbar_overflow_container_middle_height);
 	width: 0;
 	flex-shrink: 0;
-	width: 7.5rem;
 }
 
 .ui5-shellbar-mid-content {
@@ -165,10 +164,6 @@ slot[name="profile"] {
 
 .ui5-shellbar-mid-content + .ui5-shellbar-overflow-container-right {
 	width: 33.3%;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-middle {
-	width: 0;
 }
 
 :host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {

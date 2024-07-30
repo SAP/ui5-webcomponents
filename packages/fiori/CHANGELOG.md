@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* **ui5-li-notification:** fix aria-level value ([#9504](https://github.com/SAP/ui5-webcomponents/issues/9504)) ([ca153d0](https://github.com/SAP/ui5-webcomponents/commit/ca153d01317286164e39a119c43c7ecaddffdeef))
+* **ui5-upload-collection:** make empty upload collection focusable ([#9403](https://github.com/SAP/ui5-webcomponents/issues/9403)) ([16d7bef](https://github.com/SAP/ui5-webcomponents/commit/16d7bef464be7b3e1b2d11484a5145d8d526855a))
+
+
+
+
+
 # [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
 
 
