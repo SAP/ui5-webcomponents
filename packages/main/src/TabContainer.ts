@@ -610,10 +610,10 @@ class TabContainer extends UI5Element {
 		draggedElement.focus();
 	}
 
-	_moveTab(tab: HTMLElement, e: KeyboardEvent) {
+	_moveTab(tab: TabInStrip, e: KeyboardEvent) {
 		let placement;
 		let dropTarget;
-		const realTab = (tab as TabInStrip).realTabReference;
+		const realTab = tab.realTabReference;
 
 		if (!realTab.movable) {
 			return;
