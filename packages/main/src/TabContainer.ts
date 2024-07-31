@@ -696,14 +696,16 @@ class TabContainer extends UI5Element {
 	}
 
 	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
-		const { destination } = e.detail;
-		const draggedElement = DragRegistry.getDraggedElement()!;
+		const { destination, source } = e.detail;
+
+		const realTabReference = (source.element as TabInStrip).realTabReference;
+		const sourceElement = realTabReference || source.element;
 
 		e.preventDefault();
 
 		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
-				element: draggedElement,
+				element: sourceElement,
 			},
 			destination: {
 				element: (destination.element as TabInStrip).realTabReference,
@@ -712,7 +714,7 @@ class TabContainer extends UI5Element {
 		}, true);
 
 		this.dropIndicatorDOM!.targetReference = null;
-		draggedElement.focus();
+		sourceElement.focus();
 	}
 
 	async _onTabStripClick(e: Event) {

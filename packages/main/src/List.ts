@@ -14,6 +14,7 @@ import {
 	isSpace,
 	isEnter,
 	isTabPrevious,
+	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
@@ -880,9 +881,60 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isCtrl(e)) {
+			this._moveItem(e.target as ListItemBase, e);
+			return;
+		}
+
 		if (isTabNext(e)) {
 			this._handleTabNext(e);
 		}
+	}
+
+	_moveItem(item: ListItemBase, e: KeyboardEvent) {
+		let placement;
+		let dropTarget;
+
+		if (!item.movable) {
+			return;
+		}
+
+		switch (e.key) {
+		case "ArrowLeft":
+		case "ArrowUp":
+			placement = "Before";
+			dropTarget = item.previousElementSibling as HTMLElement;
+			break;
+		case "ArrowRight":
+		case "ArrowDown":
+			placement = "After";
+			dropTarget = item.nextElementSibling as HTMLElement;
+			break;
+		case "Home":
+			placement = "Before";
+			dropTarget = item.parentElement?.firstElementChild as HTMLElement;
+			break;
+		case "End":
+			placement = "After";
+			dropTarget = item.parentElement?.lastElementChild as HTMLElement;
+			break;
+		}
+
+		if (!dropTarget || !placement) {
+			return;
+		}
+
+		this.fireEvent<ListMoveEventDetail>("move", {
+			source: {
+				element: item,
+			},
+			destination: {
+				element: dropTarget,
+				placement: placement as `${MovePlacement}`,
+			},
+		});
+
+		item.focus();
 	}
 
 	_onLoadMoreKeydown(e: KeyboardEvent) {
