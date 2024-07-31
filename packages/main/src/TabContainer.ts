@@ -680,6 +680,7 @@ class TabContainer extends UI5Element {
 
 		const realTabReference = (source.element as TabInStrip).realTabReference;
 		const sourceElement = realTabReference || source.element;
+		const destinationElement = (destination.element as TabInStrip).realTabReference;
 
 		e.preventDefault();
 
@@ -688,7 +689,7 @@ class TabContainer extends UI5Element {
 				element: sourceElement,
 			},
 			destination: {
-				element: (destination.element as TabInStrip).realTabReference,
+				element: destinationElement,
 				placement: destination.placement,
 			},
 		}, true);
@@ -778,12 +779,16 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
-		if (!tab || tab.realTabReference.disabled) {
+		if (!tab) {
 			return;
 		}
 
 		if (isCtrl(e)) {
 			this._moveItem(tab, e);
+			return;
+		}
+
+		if (tab.realTabReference.disabled) {
 			return;
 		}
 
