@@ -3,7 +3,7 @@
 	width: 100%;
 	height: 100%;
 	display: block;
-	container-type: inline-size;
+	container-type: size;
 }
 
 .ui5-page-root {
