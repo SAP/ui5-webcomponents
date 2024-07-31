@@ -320,7 +320,7 @@ class ShellBar extends UI5Element {
 	 * - **notifications** - `notifications.expanded` and `notifications.hasPopup`.
 	 * - **profile** - `profile.expanded`, `profile.hasPopup` and `profile.name`.
 	 * - **product** - `product.expanded` and `product.hasPopup`.
-	 * - **search** - `search.expanded` and `search.hasPopup`.
+	 * - **search** - `search.hasPopup`.
 	 * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
 	 *
 	 * The accessibility attributes support the following values:
@@ -1159,7 +1159,6 @@ class ShellBar extends UI5Element {
 	}
 
 	get accInfo() {
-		const searchExpanded = this.accessibilityAttributes.search?.expanded;
 		const overflowExpanded = this.accessibilityAttributes.overflow?.expanded;
 
 		return {
@@ -1188,7 +1187,6 @@ class ShellBar extends UI5Element {
 				"title": this._searchText,
 				"accessibilityAttributes": {
 					hasPopup: this.accessibilityAttributes.search?.hasPopup,
-					expanded: searchExpanded === undefined ? this.showSearchField : searchExpanded,
 				},
 			},
 			overflow: {
