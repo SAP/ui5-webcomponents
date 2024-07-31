@@ -37,4 +37,4 @@ class WithComplexTemplate extends UI5Element {
 
 WithComplexTemplate.define();
 
-export default WithComplexTemplate
+export default WithComplexTemplate;
