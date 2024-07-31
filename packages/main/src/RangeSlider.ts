@@ -18,6 +18,8 @@ import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
+	RANGE_SLIDER_TOOLTIP_INPUT_LABEL,
+	RANGE_SLIDER_TOOLTIP_INPUT_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -858,6 +860,14 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	get _ariaLabelledByProgressBarRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	}
+
+	get _ariaLabelledByInputText() {
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_TOOLTIP_INPUT_LABEL);
+	}
+
+	get _ariaDescribedByInputText() {
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_TOOLTIP_INPUT_DESCRIPTION);
 	}
 
 	get styles() {

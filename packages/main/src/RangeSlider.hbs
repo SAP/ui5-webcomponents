@@ -51,6 +51,7 @@
 					<ui5-input
 						type="Number"
 						value="{{startValue}}"
+						accessible-name-ref="{{_ariaLabelledByInputRefs}}"
 						@change="{{_onInputChange}}"
 						start-value
 					></ui5-input>
@@ -83,6 +84,7 @@
 					<ui5-input
 						type="Number"
 						value="{{endValue}}"
+						accessible-name-ref="{{_ariaLabelledByInputRefs}}"
 						@change="{{_onInputChange}}"
 						end-value
 					></ui5-input>

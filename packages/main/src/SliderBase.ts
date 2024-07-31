@@ -289,13 +289,13 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		const target = (e.target as HTMLElement);
+		const target = e.target as HTMLElement;
 
-		if (isF2(e) && target.querySelector("ui5-input")) {
-			(target.querySelector("ui5-input") as HTMLElement).focus();
+		if (isF2(e) && target.classList.contains("ui5-slider-handle")) {
+			(this.shadowRoot?.querySelector("ui5-input") as HTMLElement).focus();
 		}
 
-		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-input")) {
+		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-slider-handle")) {
 			return;
 		}
 
@@ -750,6 +750,14 @@ abstract class SliderBase extends UI5Element {
 
 	get _ariaLabelledByInputRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderInputLabel`].join(" ").trim();
+	}
+
+	get _ariaDescribedByInputText() {
+		return "";
+	}
+
+	get _ariaLabelledByInputText() {
+		return "";
 	}
 }
 
