@@ -158,7 +158,7 @@ class Timeline extends UI5Element {
 			items[items.length - 1].lastItem = true;
 		}
 	}
-	
+
 	_setIsNextItemGroup() {
 		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].isNextItemGroup = false;
