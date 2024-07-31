@@ -116,6 +116,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	],
 	dependencies: [
 		Icon,
+		...Popup.dependencies,
 	],
 })
 class Dialog extends Popup {

@@ -41,6 +41,7 @@ type Metadata = {
 	languageAware?: boolean,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
+	features?: Array<string>
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -94,6 +95,14 @@ class UI5ElementMetadata {
 	 */
 	getPureTag(): string {
 		return this.metadata.tag || "";
+	}
+
+	/**
+	 * Returns the tag of the UI5 Element without the scope
+	 * @private
+	 */
+	getFeatures(): Array<string> {
+		return this.metadata.features || [];
 	}
 
 	/**
