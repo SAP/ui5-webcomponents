@@ -29,6 +29,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  *
  * @constructor
  * @extends UI5Element
+ * @implements {ITimelineItem}
  * @public
  * @since 2.1.0
  */
@@ -77,18 +78,11 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	layout: `${TimelineLayout}` = "Vertical";
 
 	/**
-	 * Shows the number of items in the group.
-	 * @private
-	 */
-	@property({ type: Number })
-	itemsCount: number = 0;
-
-	/**
 	 * Applies to the last item in the group.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_lastItem = false;
+	lastItem = false;
 
 	/**
 	 * Determines if the item afterwards is a group item.
@@ -96,13 +90,16 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isNextItemGroup = false;
+	isNextItemGroup = false;
 
 	@property({ type: Boolean })
 	hidden = false;
 
+	/**
+	 * @private
+	 */
 	@property({ type: Boolean })
-	_firstItemInTimeline = false;
+	firstItemInTimeline = false;
 
 	@property({ noAttribute: true })
 	forcedTabIndex = "-1";
@@ -112,7 +109,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 			return;
 		}
 
-		this.itemsCount = this.items.length;
 		this._setGroupItemProps();
 	}
 
@@ -120,14 +116,22 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 		const items = this.items;
 		const itemsLength = items.length;
 
-		if (itemsLength && this._firstItemInTimeline) {
-			items[0]._firstItemInTimeline = true;
+		if (itemsLength && this.firstItemInTimeline) {
+			items[0].firstItemInTimeline = true;
 		}
 
-		if (this.collapsed) {
-			items[itemsLength - 1]._lastItem = false;
-		} else if (this._lastItem) {
-			items[itemsLength - 1]._lastItem = true;
+		for (let i = 0; i < itemsLength; i++) {
+			items[i].lastItem = false;
+			items[i].isNextItemGroup = false;
+		}
+
+		if (itemsLength > 0) {
+			items[itemsLength - 1].isNextItemGroup = this.isNextItemGroup;
+			if (this.collapsed) {
+				items[itemsLength - 1].lastItem = false;
+			} else if (this.lastItem) {
+				items[itemsLength - 1].lastItem = true;
+			}
 		}
 
 		for (let i = 0; i < itemsLength; i++) {

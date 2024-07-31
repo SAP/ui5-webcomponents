@@ -71,11 +71,11 @@
 	height: var(--_ui5_timeline_tlgi_compact_icon_before_height, calc(100% + 4.5rem));
 }
 
-:host([layout="Vertical"]:not(:last-child)[collapsed]:not([_is-next-item-group])) .ui5-tlgi-icon-dot::before {
+:host([layout="Vertical"]:not(:last-child)[collapsed]:not([is-next-item-group])) .ui5-tlgi-icon-dot::before {
 	height: var(--_ui5_timeline_tlgi_compact_icon_before_height, calc(100% + 3.75rem));
 }
 
-:host([layout="Vertical"]:not([_first-item-in-timeline])[collapsed]) .ui5-tlgi-icon-dot::after {
+:host([layout="Vertical"]:not([first-item-in-timeline])[collapsed]) .ui5-tlgi-icon-dot::after {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
@@ -179,6 +179,6 @@
 	width: var(--_ui5_timeline_tlgi_horizontal_line_placeholder_before_width, calc(100% + 1.5625rem));
 }
 
-:host(:not([_is-next-item-group])[layout="Horizontal"]:not(:last-child)[collapsed]) .ui5-tlgi-line-placeholder::before {
+:host(:not([is-next-item-group])[layout="Horizontal"]:not(:last-child)[collapsed]) .ui5-tlgi-line-placeholder::before {
 	width: var(--_ui5_timeline_tlgi_horizontal_line_placeholder_before_width, calc(100% + 1.9375rem));
 }

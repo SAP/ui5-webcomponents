@@ -94,16 +94,22 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	content!: Array<Node>;
 
+	/**
+	 * @private
+	 */
 	@property({ type: Boolean })
-	_firstItemInTimeline = false;
+	firstItemInTimeline = false;
 
+	/**
+	 * @private
+	 */
 	@property({ type: Boolean })
-	_isNextItemGroup = false;
+	isNextItemGroup = false;
 
 	@property({ noAttribute: true })
-	forcedTabIndex: string = "-1";
+	forcedTabIndex = "-1";
 
 	/**
 	 * Defines the items orientation.
@@ -131,7 +137,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_lastItem = false;
+	lastItem = false;
 
 	/**
 	 * @private

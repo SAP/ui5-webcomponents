@@ -37,9 +37,9 @@ interface ITimelineItem extends UI5Element, ITabbable {
 	collapsed?: boolean;
 	items?: Array<ITimelineItem>;
 	focusLink?(): void;
-	_lastItem: boolean;
-	_isNextItemGroup?: boolean;
-	_firstItemInTimeline?: boolean;
+	lastItem: boolean;
+	isNextItemGroup?: boolean;
+	firstItemInTimeline?: boolean;
 }
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
@@ -144,20 +144,29 @@ class Timeline extends UI5Element {
 
 		this._setLastItem();
 		this._setIsNextItemGroup();
-		this.items[0]._firstItemInTimeline = true;
+		this.items[0].firstItemInTimeline = true;
 	}
 
 	_setLastItem() {
 		const items = this.items;
-		if (items && items.length > 0) {
-			items[items.length - 1]._lastItem = true;
+
+		for (let i = 0; i < items.length; i++) {
+			items[i].lastItem = false;
+		}
+
+		if (items.length > 0) {
+			items[items.length - 1].lastItem = true;
 		}
 	}
-
+	
 	_setIsNextItemGroup() {
 		for (let i = 0; i < this.items.length; i++) {
+			this.items[i].isNextItemGroup = false;
+		}
+
+		for (let i = 0; i < this.items.length; i++) {
 			if (this.items[i + 1] && this.items[i + 1].isGroupItem) {
-				this.items[i]._isNextItemGroup = true;
+				this.items[i].isNextItemGroup = true;
 			}
 		}
 	}
