@@ -90,13 +90,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	focused = false;
 
-	/**
-	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	actionable = false;
-
 	onEnterDOM() {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -104,7 +97,19 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	onBeforeRendering(): void {
-		this.actionable = true;
+		if (!this._internals) {
+			this._internals = this.attachInternals();
+		}
+
+		if (this.actionable && !this._internals.states.has("actionable")) {
+			this._internals.states.add("actionable");
+		} else if (!this.actionable && this._internals.states.has("actionable")) {
+			this._internals.states.delete("actionable");
+		}
+	}
+
+	get actionable() {
+		return true;
 	}
 
 	_onfocusin(e: FocusEvent) {

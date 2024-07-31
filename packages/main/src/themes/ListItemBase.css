@@ -15,7 +15,7 @@
 }
 
 /* actionable (type="Active" + desktop) */
-:host([actionable]:not([disabled])) {
+:host(:state(actionable):not([disabled])) {
 	cursor: pointer;
 }
 
@@ -30,18 +30,18 @@
 }
 
 /* hovered */
-:host([actionable]:not([active], [selected]):hover) {
+:host(:state(actionable):not([active], [selected]):hover) {
 	background-color: var(--sapList_Hover_Background);
 }
 
 /* selected and hovered */
-:host([actionable][selected]:not([active], [data-moving]):hover) {
+:host(:state(actionable)[selected]:not([active], [data-moving]):hover) {
 	background-color: var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */
-:host([active][actionable]:not([data-moving])),
-:host([active][actionable][selected]:not([data-moving])) {
+:host([active]:state(actionable):not([data-moving])),
+:host([active]:state(actionable)[selected]:not([data-moving])) {
 	background-color: var(--sapList_Active_Background);
 }
 

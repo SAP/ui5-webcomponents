@@ -234,9 +234,8 @@ abstract class ListItem extends ListItemBase {
 		};
 	}
 
-	onBeforeRendering() {
-		super.onBeforeRendering();
-		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
+	get actionable() {
+		return (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
 	}
 
 	onEnterDOM() {

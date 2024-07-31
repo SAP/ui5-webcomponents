@@ -116,7 +116,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
-		this.actionable = false;
+	}
+
+	get actionable() {
+		return false;
 	}
 
 	/**
