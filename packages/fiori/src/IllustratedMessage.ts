@@ -11,7 +11,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
-import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
+import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
 
@@ -111,8 +111,8 @@ class IllustratedMessage extends UI5Element {
 	* @default "BeforeSearch"
 	* @public
 	*/
-	@property({ type: String, defaultValue: IllustrationMessageType.BeforeSearch })
-	name!: string;
+	@property()
+	name = "BeforeSearch";
 
 	/**
 	* Determines which illustration breakpoint variant is used.
@@ -121,10 +121,10 @@ class IllustratedMessage extends UI5Element {
 	* elements of the component are displayed differently on the different breakpoints/illustration designs.
 	* @default "Auto"
 	* @public
-	* @since 1.5.0
+	* @since 2.0.0
 	*/
-	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	design!: `${IllustrationMessageSize}`;
+	@property()
+	design: `${IllustrationMessageDesign}` = "Auto";
 
 	/**
 	* Defines the subtitle of the component.
@@ -132,30 +132,30 @@ class IllustratedMessage extends UI5Element {
 	* **Note:** Using this property, the default subtitle text of illustration will be overwritten.
 	*
 	* **Note:** Using `subtitle` slot, the default of this property will be overwritten.
-	* @default ""
+	* @default undefined
 	* @public
 	*/
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
 	/**
 	* Defines the title of the component.
 	*
 	* **Note:** Using this property, the default title text of illustration will be overwritten.
-	* @default ""
+	* @default undefined
 	* @public
 	*/
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	* Receives id(or many ids) of the elements that label the component.
-	* @default ""
+	* @default undefined
 	* @public
 	* @since 1.7.0
 	*/
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	* Illustration breakpoint variant for the <code>Dot</code> design.
@@ -164,7 +164,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.24.0
 	*/
 	@property({ noAttribute: true })
-	dotSvg!: string;
+	dotSvg?: string;
 
 	/**
 	* Illustration breakpoint variant for the <code>Spot</code> design.
@@ -173,7 +173,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	spotSvg!: string;
+	spotSvg?: string;
 
 	/**
 	* Illustration breakpoint variant for the `Scene` design.
@@ -181,7 +181,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	sceneSvg!: string;
+	sceneSvg?: string;
 
 	/**
 	* Illustration breakpoint variant for the `Dialog` design.
@@ -189,14 +189,14 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.9.0
 	*/
 	@property({ noAttribute: true })
-	dialogSvg!: string;
+	dialogSvg?: string;
 
 	/**
 	* Determinates what is the current media of the component based on its width.
 	* @private
 	*/
 	@property()
-	media!: string;
+	media?: string;
 
 	/**
 	* Defines the title of the component.
@@ -300,7 +300,7 @@ class IllustratedMessage extends UI5Element {
 		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData!.title);
 		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData!.subtitle);
 
-		if (this.design !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageDesign.Auto) {
 			this._handleCustomSize();
 		}
 	}
@@ -314,7 +314,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	handleResize() {
-		if (this.design !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageDesign.Auto) {
 			this._adjustHeightToFitContainer();
 			return;
 		}
@@ -393,16 +393,16 @@ class IllustratedMessage extends UI5Element {
 	 */
 	_handleCustomSize() {
 		switch (this.design) {
-		case IllustrationMessageSize.Base:
+		case IllustrationMessageDesign.Base:
 			this.media = IllustratedMessage.MEDIA.BASE;
 			return;
-		case IllustrationMessageSize.Dot:
+		case IllustrationMessageDesign.Dot:
 			this.media = IllustratedMessage.MEDIA.DOT;
 			return;
-		case IllustrationMessageSize.Spot:
+		case IllustrationMessageDesign.Spot:
 			this.media = IllustratedMessage.MEDIA.SPOT;
 			return;
-		case IllustrationMessageSize.Dialog:
+		case IllustrationMessageDesign.Dialog:
 			this.media = IllustratedMessage.MEDIA.DIALOG;
 			return;
 		default:
@@ -414,7 +414,7 @@ class IllustratedMessage extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get effectiveIllustration(): string {
+	get effectiveIllustration(): string | undefined {
 		switch (this.media) {
 		case IllustratedMessage.MEDIA.DOT:
 			return this.dotSvg;

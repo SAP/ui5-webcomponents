@@ -1,12 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import type { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 import ListItemStandardTemplate from "./generated/templates/ListItemStandardTemplate.lit.js";
 
 /**
@@ -46,12 +46,12 @@ import ListItemStandardTemplate from "./generated/templates/ListItemStandardTemp
 class ListItemStandard extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 0.8.0
 	 */
 	@property()
-	description!: string;
+	description?: string;
 
 	/**
 	 * Defines the `icon` source URI.
@@ -59,40 +59,29 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * **Note:**
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
 	 *
-	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean;
-
-	/**
-	 * Defines the `image` source URI.
-	 *
-	 * **Note:** The `image` would be displayed in the beginning of the list item.
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	image!: string;
+	iconEnd = false;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the list item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the state of the `additionalText`.
@@ -102,8 +91,8 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: `${ValueState}`;
+	@property()
+	additionalTextState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the item is movable.
@@ -112,17 +101,17 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	/**
 	 * Defines the text alternative of the component.
 	 * Note: If not provided a default text alternative will be set, if present.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	declare accessibleName: string;
+	declare accessibleName?: string;
 
 	/**
 	 * Defines if the text of the component should wrap, they truncate by default.
@@ -132,18 +121,18 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @private
 	 * @since 1.5.0
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Indicates if the list item has text content.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasTitle!: boolean;
+	hasTitle = false;
 
 	@property({ type: Boolean })
-	_hasImageContent!: boolean;
+	_hasImage = false;
 
 	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
@@ -151,20 +140,16 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 *
 	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
 	 * `ui5-li` should be customized in order to fit.
-	 * @since 1.10.0
+	 * @since 2.0.0
 	 * @public
 	 */
 	@slot()
-	imageContent!: Array<HTMLElement>;
+	image!: Array<HTMLElement>;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
-		this._hasImageContent = this.hasImageContent;
-	}
-
-	get displayImage(): boolean {
-		return !!this.image;
+		this._hasImage = this.hasImage;
 	}
 
 	get displayIconBegin(): boolean {
@@ -175,8 +160,8 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 		return !!(this.icon && this.iconEnd);
 	}
 
-	get hasImageContent(): boolean {
-		return !!this.imageContent.length;
+	get hasImage(): boolean {
+		return !!this.image.length;
 	}
 }
 

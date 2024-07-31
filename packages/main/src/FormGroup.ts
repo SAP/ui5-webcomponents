@@ -1,12 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import type FormItem from "./FormItem.js";
 import type { IFormItem } from "./Form.js";
-import FormItemSpacing from "./types/FormItemSpacing.js";
+import type FormItemSpacing from "./types/FormItemSpacing.js";
 
 /**
  * @class
@@ -32,6 +31,7 @@ import FormItemSpacing from "./types/FormItemSpacing.js";
  * @public
  * @implements {IFormItem}
  * @since 2.0.0
+ * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  * @extends UI5Element
  */
 @customElement("ui5-form-group")
@@ -39,11 +39,11 @@ class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines header text of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines column span of the component,
@@ -52,7 +52,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: undefined })
+	@property({ type: Number })
 	columnSpan?: number;
 
 	/**
@@ -68,23 +68,22 @@ class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	colsS!: number;
+	@property({ type: Number })
+	colsS = 1;
 
-	@property({ validator: Integer, defaultValue: 1 })
-	colsM!: number;
+	@property({ type: Number })
+	colsM = 1;
 
-	@property({ validator: Integer, defaultValue: 1 })
-	colsL!: number;
+	@property({ type: Number })
+	colsL = 1;
 
-	@property({ validator: Integer, defaultValue: 1 })
-	colsXl!: number;
+	@property({ type: Number })
+	colsXl = 1;
 
-	@property({ type: FormItemSpacing, defaultValue: FormItemSpacing.Normal })
-	itemSpacing!: `${FormItemSpacing}`;
+	@property()
+	itemSpacing: `${FormItemSpacing}` = "Normal";
 
-	@property({ type: String, defaultValue: "S12 M4 L4 XL4" })
-	labelSpan!: string;
+	labelSpan = "S12 M4 L4 XL4";
 
 	onBeforeRendering() {
 		this.processFormItems();

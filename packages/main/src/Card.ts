@@ -8,6 +8,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
+
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
@@ -45,28 +47,28 @@ import cardCss from "./generated/themes/Card.css.js";
 	renderer: litRender,
 	template: CardTemplate,
 	styles: cardCss,
-	dependencies: [Icon],
+	dependencies: [Icon, BusyIndicator],
 })
 class Card extends UI5Element {
 	/**
 	 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
 	 *
 	 * **Note:** `accessibleName` should be always set, unless `accessibleNameRef` is set.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the content of the component.
@@ -84,6 +86,24 @@ class Card extends UI5Element {
 	*/
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	header!: Array<CardHeader>;
+
+	/**
+	 * Defines if a loading indicator would be displayed over the card.
+	 * @default false
+	 * @public
+	 * @since 2.1.0
+	 */
+	@property({ type: Boolean })
+	loading = false;
+
+	/**
+	 * Defines the delay in milliseconds, after which the loading indicator will show up for this card.
+	 * @default 1000
+	 * @public
+	 * @since 2.1.0
+	 */
+	@property({ type: Number })
+	loadingDelay = 1000;
 
 	static i18nBundle: I18nBundle;
 

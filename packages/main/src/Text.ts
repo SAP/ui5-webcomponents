@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import renderer, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 
 // Styles
@@ -41,7 +40,7 @@ import styles from "./generated/themes/Text.css.js";
 	tag: "ui5-text",
 	renderer,
 	template: () => {
-		return html`<bdi><slot></slot></bdi>`;
+		return html`<span><slot></slot></span>`;
 	},
 	styles,
 })
@@ -51,8 +50,8 @@ class Text extends UI5Element {
 	 * @default Infinity
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: Infinity })
-	maxLines!: number;
+	@property({ type: Number })
+	maxLines: number = Infinity;
 
 	onBeforeRendering() {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);

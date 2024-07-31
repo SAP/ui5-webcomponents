@@ -184,8 +184,8 @@ class AvatarGroup extends UI5Element {
 	 * @default "Group"
 	 * @public
 	 */
-	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
-	type!: `${AvatarGroupType}`;
+	@property()
+	type: `${AvatarGroupType}` = "Group"
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -199,13 +199,13 @@ class AvatarGroup extends UI5Element {
 	 * @default {}
 	 */
 	 @property({ type: Object })
-	 accessibilityAttributes!: AvatarGroupAccessibilityAttributes;
+	 accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_overflowButtonText!: string;
+	_overflowButtonText?: string;
 
 	/**
 	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
@@ -233,8 +233,8 @@ class AvatarGroup extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
-	_colorIndex: number;
-	_hiddenItems: number;
+	_colorIndex = 0;
+	_hiddenItems = 0;
 	_itemNavigation: ItemNavigation;
 
 	constructor() {
@@ -245,8 +245,6 @@ class AvatarGroup extends UI5Element {
 				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
 			},
 		});
-		this._colorIndex = 0;
-		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
 	}
 

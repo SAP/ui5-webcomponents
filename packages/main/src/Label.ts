@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import WrappingType from "./types/WrappingType.js";
+import type WrappingType from "./types/WrappingType.js";
 import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -49,11 +49,11 @@ class Label extends UI5Element {
 	 * Defines the labeled input by providing its ID.
 	 *
 	 * **Note:** Can be used with both `ui5-input` and native input.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	for!: string;
+	for?: string;
 
 	/**
 	 * Defines whether colon is added to the component text.
@@ -63,7 +63,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showColon!: boolean;
+	showColon = false;
 
 	/**
 	 * Defines whether an asterisk character is added to the component text.
@@ -75,7 +75,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -84,8 +84,8 @@ class Label extends UI5Element {
 	 * @default "Normal"
 	 * @public
 	 */
-	@property({ type: WrappingType, defaultValue: WrappingType.Normal })
-	wrappingType!: `${WrappingType}`;
+	@property()
+	wrappingType: `${WrappingType}` = "Normal";
 
 	static i18nBundle: I18nBundle;
 

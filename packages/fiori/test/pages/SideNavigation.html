@@ -98,7 +98,7 @@
 
 		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
 			item.addEventListener("ui5-click", function (event) {
-				clickInput.value = ++clickCounter;
+				clickInput.value = `${++clickCounter}`;
 			});
 		});
 
@@ -112,7 +112,7 @@
 				return;
 			}
 
-			input.value = ++counter;
+			input.value = `${++counter}`;
 		});
 
 	</script>

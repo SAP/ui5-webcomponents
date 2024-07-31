@@ -23,7 +23,7 @@ class ToolbarSelectOption extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 
 	/**
 	 * Defines the text of the component.

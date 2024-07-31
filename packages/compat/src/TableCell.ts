@@ -37,19 +37,19 @@ class TableCell extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	lastInRow!: boolean;
+	lastInRow = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	popined!: boolean;
+	popined = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_popinedInline!: boolean;
+	_popinedInline = false;
 
 	/**
 	 * Specifies the content of the component.

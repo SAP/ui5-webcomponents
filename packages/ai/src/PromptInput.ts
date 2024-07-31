@@ -6,10 +6,9 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/paper-plane.js";
-import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import type { IInputSuggestionItem, InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -41,6 +40,7 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @constructor
  * @public
  * @extends UI5Element
+ * @experimental The **@ui5/webcomponents-ai** package is under development and considered experimental - components' APIs are subject to change.
  */
 @customElement({
 	tag: "ui5-ai-prompt-input",
@@ -89,27 +89,27 @@ class PromptInput extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the label of the input field.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @since 2.0.0
 	 * @public
 	 */
 	@property()
-	label!: string;
+	label?: string;
 
 	/**
 	 * Defines whether the clear icon of the input will be shown.
@@ -118,7 +118,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	showClearIcon!: boolean;
+	showClearIcon = false;
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
@@ -133,7 +133,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	showExceededText!: boolean;
+	showExceededText = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -144,7 +144,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -156,7 +156,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Sets the maximum number of characters available in the input field.
@@ -165,7 +165,7 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	maxlength?: number;
 
 	/**
@@ -174,8 +174,37 @@ class PromptInput extends UI5Element {
 	 * @since 2.0.0
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None"
+
+	/**
+	 * Defines whether the component should show suggestions, if such are present.
+	 *
+	 * **Note:** You need to import the `InputSuggestions` module
+	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showSuggestions = false;
+
+	/**
+	 * Defines the suggestion items.
+	 *
+	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
+	 * property is set to `true`.
+	 *
+	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
+	 *
+	 * **Note:** Importing the Input Suggestions Support feature:
+	 *
+	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
+	 *
+	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
+	 * @public
+	 */
+		@slot({ type: HTMLElement, "default": true })
+		suggestionItems!: Array<IInputSuggestionItem>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -201,10 +230,6 @@ class PromptInput extends UI5Element {
 		PromptInput.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
 	}
 
-	constructor() {
-		super();
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this.fireEvent("submit");
@@ -223,6 +248,10 @@ class PromptInput extends UI5Element {
 
 	_onButtonClick() {
 		this.fireEvent("submit");
+	}
+
+	_onTypeAhead(e: CustomEvent): void {
+		this.value = (e.target as Input).value;
 	}
 
 	get _exceededText() {

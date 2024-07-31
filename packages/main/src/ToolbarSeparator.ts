@@ -25,7 +25,7 @@ import ToolbarItem from "./ToolbarItem.js";
 
 class ToolbarSeparator extends ToolbarItem {
 	@property({ type: Boolean })
-	visible!: boolean;
+	visible = false;
 
 	static get toolbarTemplate() {
 		return ToolbarSeparatorTemplate;

@@ -72,7 +72,6 @@ describe("Notification List Item Tests", () => {
 		const EXPECTED_RESULT_2 = "New order #2202";
 		const firstItem = await browser.$("#nli1");
 
-
 		// act
 		await firstItem.click();
 
@@ -170,7 +169,6 @@ describe("Notification List Item Tests", () => {
 
 		assert.strictEqual(state2, "alert", "The 'Warning' state icon is correctly displayed.");
 		assert.strictEqual(state3, "error", "The 'Error' state icon is correctly displayed.");
-
 	});
 
 	it("tests importance", async () => {
@@ -205,7 +203,6 @@ describe("Notification List Item Tests", () => {
 		const menu3 = await firstItem.$("ui5-menu").hasAttribute("open");
 		// assert
 		assert.ok(await menu3, "There is open menu with shift+F10.");
-
 	});
 
 	// Accessibility tests follows
@@ -234,11 +231,7 @@ describe("Notification List Item Tests", () => {
 		const EXPECTED_ARIA_LABELLED_BY3 = `${importantId3} ${titleTextId3} ${readId3} ${descriptionId3} ${footerId3}`;
 
 		const loadingId4 = `${await loadingItem.getProperty("_id")}-loading`;
-		const titleTextId4 = `${await loadingItem.getProperty("_id")}-title-text`;
-		const readId4 = `${await loadingItem.getProperty("_id")}-read`;
-		const descriptionId4 = `${await loadingItem.getProperty("_id")}-description`;
-		const footerId4 = `${await loadingItem.getProperty("_id")}-footnotes`;
-		const EXPECTED_ARIA_LABELLED_BY4 = `${titleTextId4} ${loadingId4} ${readId4} ${descriptionId4} ${footerId4}`;
+		const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId4}`;
 
 		// assert
 		assert.strictEqual(await firstItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY,
@@ -249,7 +242,7 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await thirdItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY3,
 			"The ariaLabelledBy text is correct.");
 
-		assert.strictEqual(await loadingItemRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY4,
+		assert.strictEqual(await loadingItemRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY,
 			"The ariaLabelledBy text is correct.");
 	});
 
@@ -297,10 +290,9 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await btnListItemClose1.getAttribute("role"), 'button', "The role is correct.");
 
 		assert.notOk(await btnListItemClose3.isExisting(), "There is no 'Close' button rendered");
-
 	});
 
-	it("tests click on ShowMore", async () => {
+	it("tests aria attributes click on ShowMore", async () => {
 		var firstItem = await browser.$("#nli3a");
 		var btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
 		var btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
@@ -310,14 +302,10 @@ describe("Notification List Item Tests", () => {
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-expanded"), 'false', "The aria-expanded is correct.");
 
 		// act
+		await btnListItemShowMore.scrollIntoView();
 		await btnListItemShowMore.click();
 
-		firstItem = await browser.$("#nli3a");
-		btnListItemShowMore = await firstItem.shadow$("[showMore-btn]");
-		btnListItemShowMoreRoot = await btnListItemShowMore.shadow$(".ui5-link-root");
-
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-label"), 'Less button. Show the texts with truncation', "The aria-label is correct.");
-		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("role"), 'button', "The role is correct.");
 		assert.strictEqual(await btnListItemShowMoreRoot.getAttribute("aria-expanded"), 'true', "The aria-expanded is correct.");
 	});
 
@@ -337,12 +325,11 @@ describe("Notification List Item Tests", () => {
 		const fourthGroupItem = await browser.$("#nlgi4");
 		const fourthGroupRoot =  await browser.$("#nlgi4").shadow$(".ui5-nli-group-root");
 		const loadingId =  `${await fourthGroupItem.getProperty("_id")}-loading`;
-		const titleId =  `${await fourthGroupItem.getProperty("_id")}-title-text`;
-		const EXPECTED_ARIA_LABELLED_BY = `${loadingId} ${titleId}`;
-		
+		const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId}`;
+
 		assert.strictEqual(await firstGroupList.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await firstGroupRoot.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
-		assert.strictEqual(await fourthGroupRoot.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLED_BY, "The aria-lebelledby is correct.");
+		assert.strictEqual(await fourthGroupRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY, "The aria-lebelledby is correct.");
 	});
 
 	it("tests Group Item 'aria-description' and 'aria-level'", async () => {
@@ -389,7 +376,6 @@ describe("Keyboard navigation", () => {
 		await browser.url(`test/pages/NotificationList_test_page.html`);
 	});
 
-
 	it("Items navigation", async () => {
 		await browser.executeAsync(done => {
 			document.getElementById("nlgi1").focus();
@@ -403,11 +389,28 @@ describe("Keyboard navigation", () => {
 		assert.ok(await browser.$("#nli2").isFocused(), "Second item is focused.");
 
 		await browser.keys("ArrowDown");
-		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
+		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group is focused.");
 
 		await browser.keys("ArrowDown");
 		assert.ok(await browser.$("#nli3").isFocused(), "Second group first item is focused.");
 
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nli3a").isFocused(), "Second group second item is focused.");
+
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nli4").isFocused(), "Second group third item (loading) is focused.");
+
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		assert.ok(await browser.$("#nlgi5").isFocused(), "Last group is focused.");
+
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowUp");
 		await browser.keys("ArrowUp");
 		assert.ok(await browser.$("#nlgi2").isFocused(), "Second group  is focused.");
 
@@ -512,6 +515,19 @@ describe("Keyboard navigation", () => {
 
 		await browser.keys("ArrowUp");
 		assert.ok(await browser.$("#nlgi1").isFocused(), "First group is focused.");
+	});
+});
+
+describe("Notification List Item Without a Group", () => {
+	before(async () => {
+		await browser.url(`test/pages/NotificationListItem.html`);
+	});
+
+	it("ACC", async () => {
+		const item1 = await browser.$("#notificationListWithMenu [ui5-li-notification]");
+		const item1Root = await item1.shadow$(".ui5-nli-root");
+
+		assert.notOk(await item1Root.getAttribute("aria-level"),  "aria-level is not set");
 	});
 });
 

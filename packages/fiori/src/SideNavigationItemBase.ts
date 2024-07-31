@@ -21,10 +21,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * Defines the text of the item.
 	 *
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -36,27 +36,27 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the tooltip of the component.
 	 *
 	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 2.0.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	forcedTabIndex!: string;
-
-	@property({ type: Boolean })
-	sideNavCollapsed!: boolean;
+	@property({ noAttribute: true })
+	forcedTabIndex?: string
 
 	@property({ type: Boolean })
-	inPopover!: boolean;
+	sideNavCollapsed = false;
+
+	@property({ type: Boolean })
+	inPopover = false;
 
 	_sideNavigation!: SideNavigation;
 

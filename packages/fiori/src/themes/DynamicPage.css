@@ -1,7 +1,8 @@
 .ui5-dynamic-page-title-header-wrapper {
     position: sticky;
     top: 0;
-    z-index: 1;
+     /* We need the z-index to be higher than in the header actions, to avoid overlapping by snap on scroll */
+    z-index: 2;
 }
 
 :host {
@@ -45,7 +46,9 @@
     bottom: 0.5rem;
     box-sizing: border-box;
     z-index: 1;
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
 }
 
 .ui5-dynamic-page-spacer {
@@ -57,11 +60,8 @@
 }
 
 :host([show-footer]) .ui5-dynamic-page-footer {
-    animation: bounceShow 0.35s forwards ease-in-out;
-}
-
-:host(:not([show-footer])) .ui5-dynamic-page-footer {
-    animation: bounceHide 0.35s forwards ease-in-out;
+    transform: translateY(0);
+    opacity: 1;
 }
 
 ::slotted([slot="footerArea"]) {
@@ -73,27 +73,6 @@
     margin: 0 0.5rem 0.5rem 0.5rem;
 }
 
-/* Footer animation */
-@keyframes bounceShow {
-    0% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes bounceHide {
-    0% {
-        transform: translateY(-5%);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-}
 
 ::slotted([slot="titleArea"]) {
     width: auto;

@@ -239,22 +239,22 @@
 
 		avatar.accessibilityAttributes = { hasPopup: "menu" };
 		avatar.addEventListener("ui5-click", function() {
-			input.value = ++inputValue;
+			input.value = `${++inputValue}`;
 		});
 
-		
+
 		interactiveDisabled.accessibilityAttributes = { hasPopup: "menu" };
 		interactiveDisabled.addEventListener("ui5-click", function() {
-			input3.value = ++inputValue3;
+			input3.value = `${++inputValue3}`;
 		});
 
 		nonInteractiveAvatar.addEventListener("ui5-click", function() {
-			input.value = ++inputValue;
+			input.value = `${++inputValue}`;
 		});
 
 		myInteractiveAvatar.accessibilityAttributes = { hasPopup: "menu" };
 		myInteractiveAvatar.addEventListener("ui5-click", function() {
-			input2.value = ++inputValue2;
+			input2.value = `${++inputValue2}`;
 		});
 	</script>
 

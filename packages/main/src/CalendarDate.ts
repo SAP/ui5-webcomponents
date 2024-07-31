@@ -11,6 +11,7 @@ import type { ICalendarSelectedDates } from "./Calendar.js";
  * The `ui5-date` component defines a calendar date to be used inside `ui5-calendar`
  * @constructor
  * @extends UI5Element
+ * @implements {ICalendarSelectedDates}
  * @abstract
  * @public
  */
@@ -23,7 +24,7 @@ class CalendarDate extends UI5Element implements ICalendarSelectedDates {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 }
 
 CalendarDate.define();

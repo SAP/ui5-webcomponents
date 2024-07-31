@@ -11,7 +11,6 @@ const getAutocompleteData = (_package) => {
     _manifest.modules.forEach(module => {
         module.declarations.forEach(declaration => {
             if (declaration.kind === "class" && declaration.customElement) {
-                // console.log(declaration.tagName, declaration.attributes);
                 result[declaration.tagName] = {attrs: {}};
                 declaration.attributes?.forEach(attr => {
                     if (attr.type.text === "boolean") {

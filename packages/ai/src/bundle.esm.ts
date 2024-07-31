@@ -5,6 +5,7 @@ import testAssets from "@ui5/webcomponents/dist/bundle.esm.js";
 import "./Assets.js";
 
 import Button from "./Button.js";
+import ButtonState from "./ButtonState.js";
 import PromptInput from "./PromptInput.js";
 
 export default testAssets;

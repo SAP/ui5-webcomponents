@@ -7,6 +7,10 @@
 	--_ui5_split_button_text_button_width: 2.25rem;
 	--_ui5_color_picker_slider_container_margin_top: -10px;
 
+	/* CheckBox */
+	--_ui5_checkbox_focus_position: 0.25rem;
+	--_ui5_checkbox_wrapped_focus_inset_block: 0.1875rem;
+
 	/* DayPicker */
 	--_ui5_daypicker_selected_item_now_special_day_top: 1.5625rem;
 	--_ui5_daypicker_specialday_focused_top: 1.3125rem;

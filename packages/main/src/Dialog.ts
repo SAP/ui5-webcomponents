@@ -60,7 +60,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
  *
- * The `ui5-dialog` is modal, which means that an user action is required before it is possible to return to the parent window.
+ * The `ui5-dialog` is modal, which means that a user action is required before it is possible to return to the parent window.
  * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
  * The content of the `ui5-dialog` is fully customizable.
  *
@@ -98,12 +98,6 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  *
  * `import "@ui5/webcomponents/dist/Dialog";`
  *
- * **Note:** We recommend placing popup-like components (`ui5-dialog` and `ui5-popover`)
- * outside any other components. Preferably, the popup-like components should be placed
- * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
- * the position and/or z-index management of the popup-like components.
- *
- * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
  * @constructor
  * @extends Popup
  * @public
@@ -129,11 +123,11 @@ class Dialog extends Popup {
 	 * Defines the header text.
 	 *
 	 * **Note:** If `header` slot is provided, the `headerText` is ignored.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Determines whether the component should be stretched to fullscreen.
@@ -144,7 +138,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	stretch!: boolean;
+	stretch = false;
 
 	/**
 	 * Determines whether the component is draggable.
@@ -160,7 +154,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	draggable!: boolean;
+	draggable = false;
 
 	/**
 	 * Configures the component to be resizable.
@@ -175,7 +169,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	resizable!: boolean;
+	resizable = false;
 
 	/**
 	 * Defines the state of the `Dialog`.
@@ -186,8 +180,8 @@ class Dialog extends Popup {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: `${ValueState}`;
+	@property()
+	state: `${ValueState}` = "None";
 
 	_screenResizeHandler: () => void;
 	_dragMouseMoveHandler: (e: MouseEvent) => void;
@@ -261,7 +255,7 @@ class Dialog extends Popup {
 	get _ariaLabelledBy() {
 		let ariaLabelledById;
 
-		if (this.headerText !== "" && !this._ariaLabel) {
+		if (this.headerText && !this._ariaLabel) {
 			ariaLabelledById = "ui5-popup-header-text";
 		}
 
@@ -424,8 +418,6 @@ class Dialog extends Popup {
 		if (!this._movable || !this.draggable || !Dialog._isHeader(e.target as HTMLElement)) {
 			return;
 		}
-
-		e.preventDefault();
 
 		const {
 			top,

@@ -14,6 +14,17 @@ const getDeprecatedStatus = (jsdocComment) => {
             : undefined;
 };
 
+const getExperimentalStatus = (jsdocComment) => {
+    const experimentalTag = findTag(jsdocComment, "experimental");
+    return experimentalTag?.name
+        ? experimentalTag.description
+            ? `${experimentalTag.name} ${experimentalTag.description}`
+            : experimentalTag.name
+        : experimentalTag
+            ? true
+            : undefined;
+};
+
 const toKebabCase = str => {
     return str.replaceAll(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase())
 }
@@ -214,10 +225,10 @@ const allowedTags = {
     event: [...commonTags, "param", "allowPreventDefault", "native"],
     eventParam: [...commonTags],
     method: [...commonTags, "param", "returns", "override"],
-    class: [...commonTags, "constructor", "class", "abstract", "implements", "extends", "slot", "csspart"],
+    class: [...commonTags, "constructor", "class", "abstract", "experimental", "implements", "extends", "slot", "csspart"],
     enum: [...commonTags],
-    enumMember: [...commonTags],
-    interface: [...commonTags],
+    enumMember: [...commonTags, "experimental",],
+    interface: [...commonTags, "experimental",],
 };
 allowedTags.getter = [...allowedTags.field, "override"]
 
@@ -283,6 +294,8 @@ const validateJSDocTag = (tag) => {
         case "boolean":
             return !tag.name && !tag.type && !tag.description;
         case "deprecated":
+            return !tag.type;
+        case "experimental":
             return !tag.type;
         case "extends":
             return !tag.type && tag.name && !tag.description;
@@ -365,6 +378,7 @@ export {
     getPrivacyStatus,
     getSinceStatus,
     getDeprecatedStatus,
+    getExperimentalStatus,
     getType,
     getReference,
     validateJSDocComment,

@@ -174,7 +174,7 @@
 		var displayChange = function (event) {
 			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
 			changeCount++;
-			changeResult.value = changeCount;
+			changeResult.value = `${changeCount}`;
 		}
 
 		siCozy.addEventListener('ui5-change', displayChange);
@@ -184,7 +184,7 @@
 
 		stepInputChange1.addEventListener('ui5-change', function(e) {
 			const val = Number.parseInt(e.target.value, 10);
-			stepInputChange2.value = val + 999;
+			stepInputChange2.value = `${val + 999}`;
 			displayChange(e);
 		});
 

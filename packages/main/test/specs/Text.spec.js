@@ -8,7 +8,7 @@ describe("Text", () => {
 	it("tests root element is bdi", async () => {
 		const rootElement = await browser.$("#text1").shadow$(":first-child");
 
-		assert.strictEqual(await rootElement.getTagName(), "bdi", "Root item should be bdi");
+		assert.strictEqual(await rootElement.getTagName(), "span", "Root item should be span");
 	});
 
 	it("tests default wrapping behavior", async () => {

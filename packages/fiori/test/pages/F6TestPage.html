@@ -344,7 +344,7 @@
 			function updateProductInfo(item) {
 				avatar.icon = avatars[getRandomInt(6)];
 				avatar.backgroundColor = avatarsBG[getRandomInt(9) + 1];
-				productRating.value = getRandomInt(4) + 1;
+				productRating.value = `${getRandomInt(4) + 1}`;
 				col2title.textContent = item.textContent;
 				lblName.innerHTML = "<b>" + item.textContent + "</b>";
 				lblDesc.innerHTML = "<b>" + item.description + "</b>";

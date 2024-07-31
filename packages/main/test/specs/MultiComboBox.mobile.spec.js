@@ -36,6 +36,24 @@ describe("Basic interaction", () => {
 		assert.notOk(await picker.isDisplayedInViewport(), "Picker is closed now");
 	});
 
+	it("Should collapse the tokenizer when the picker is closed", async () => {
+		const mcb = await browser.$("#multi1");
+		const picker =  await mcb.shadow$("ui5-responsive-popover");
+		const dialogCloseButton = await picker.$(".ui5-responsive-popover-close-btn");
+		const tokenizer = await mcb.shadow$('ui5-tokenizer')
+
+		await mcb.click();
+		await dialogCloseButton.click();
+
+		assert.notOk(await tokenizer.getAttribute("expanded"), "The tokenizer is not expanded after closing the picker");
+
+		await tokenizer.shadow$(".ui5-tokenizer-more-text").click();
+
+		assert.notOk(await tokenizer.getAttribute("expanded"), "The tokenizer is not expanded after closing the picker when opened from the 'n-more' link");
+
+		await dialogCloseButton.click();
+	});
+
 	it("Should close the mobile picker dialog when pressing the OK button", async () => {
 		const multiCombo = await browser.$("#multi1");
 		const picker =  await multiCombo.shadow$("ui5-responsive-popover");
@@ -170,6 +188,26 @@ describe("Typeahead", () => {
 
 		assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
 	});
+
+	it("Should not change the value of MultiComboBox when readonly", async () => {
+		await browser.url(`test/pages/MultiComboBox.html`);
+
+		const multiCombo = await browser.$("#mcb-ro");
+		const picker =  await multiCombo.shadow$("ui5-responsive-popover");
+
+		await multiCombo.scrollIntoView();
+		await multiCombo.shadow$('ui5-tokenizer').shadow$(".ui5-tokenizer-more-text").click();
+
+		const dialogInput = await multiCombo.shadow$("ui5-responsive-popover").$("ui5-input");
+		const dialogOkButton = await multiCombo.shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+
+		await dialogInput.click();
+		await dialogInput.keys("test");
+		await dialogOkButton.click();
+
+		assert.notOk(await picker.isDisplayedInViewport(), "Picker is closed now");
+		assert.strictEqual(await multiCombo.getProperty("value"), "", "Value should not be populated to the readonly MCB");
+	});
 });
 
 describe("Items selection", () => {
@@ -283,6 +321,35 @@ describe("Items selection", () => {
 		// ok button
 		await popover.$(".ui5-responsive-popover-footer").$("ui5-button").click();
 		assert.strictEqual(await spanRef.getText(), "Selected items count: 0");
+	});
+
+
+	it("select all should not be checked if all items are not selected", async () => {
+		const mcb = await $("#mcb-select-all-vs");
+		const popover = await mcb.shadow$("ui5-responsive-popover");
+		const closeIcon = await popover.$(".ui5-responsive-popover-close-btn");
+		const selectAllCheckbox = await popover.$(".ui5-mcb-select-all-checkbox");
+
+		await mcb.click();
+
+		await selectAllCheckbox.click();
+		await closeIcon.click();
+		await mcb.click();
+
+		assert.strictEqual(await selectAllCheckbox.getProperty("checked"), false, "Select all checkbox is not checked");
+	});
+
+	it("should not close the dialog on checkbox click", async () => {
+		const mcb = await $("#mcb-select-all-vs");
+		const popover = await mcb.shadow$("ui5-responsive-popover");
+
+		await mcb.scrollIntoView();
+		await mcb.click();
+
+		const listItemCheckbox = await popover.$$("ui5-li")[0].shadow$("ui5-checkbox");
+		await listItemCheckbox.click();
+
+		assert.strictEqual(await mcb.getProperty("open"), true, "Mobile dialog is not closed on checkbox click");
 	});
 });
 

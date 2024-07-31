@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -85,8 +84,8 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @formProperty
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value = 0;
 
 	_valueInitial?: number;
 	_valueOnInteractionStart?: number;

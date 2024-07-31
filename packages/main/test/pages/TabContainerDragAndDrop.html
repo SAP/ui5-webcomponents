@@ -72,7 +72,7 @@
 		const tc = document.getElementById("tabContainerDnd");
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
 		let maxNestingLevel = 2;
-		maxNestingLevelInput.value = maxNestingLevel;
+		maxNestingLevelInput.value = `${maxNestingLevel}`;
 
 		const getTabLevel = (element) => {
 			if (element.hasAttribute("ui5-tabcontainer")) {

@@ -20,6 +20,7 @@ import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponent
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import Title from "./Title.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -53,8 +54,7 @@ type PopupBeforeCloseEventDetail = {
  * ### Overview
  * Base class for all popup Web Components.
  *
- * If you need to create your own popup-like custom UI5 Web Components, it is highly recommended that you extend
- * at least Popup in order to have consistency with other popups in terms of modal behavior and z-index management.
+ * If you need to create your own popup-like custom UI5 Web Components.
  *
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
@@ -62,16 +62,12 @@ type PopupBeforeCloseEventDetail = {
  *  - Derivatives may call the "openPopup" and "closePopup" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
- *   - It is in the static area
  *   - Controlled by the "open" and "close" methods
  *
  * 3. The Popup class "traps" focus:
  *  - Derivatives may call the "applyInitialFocus" method (usually when opening, to transfer focus inside the popup)
  *
- * 4. The Popup class automatically assigns "z-index"
- *  - Each time a popup is opened, it gets a higher than the previously opened popup z-index
- *
- * 5. The template of this component exposes two inline partials you can override in derivatives:
+ * 4. The template of this component exposes two inline partials you can override in derivatives:
  *  - beforeContent (upper part of the box, useful for header/title/close button)
  *  - afterContent (lower part, useful for footer/action buttons)
  * @constructor
@@ -82,6 +78,9 @@ type PopupBeforeCloseEventDetail = {
 	renderer: litRender,
 	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
+	dependencies: [
+		Title,
+	],
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
@@ -130,11 +129,11 @@ abstract class Popup extends UI5Element {
 	 *
 	 * **Note:** If an element with `autofocus` attribute is added inside the component,
 	 * `initialFocus` won't take effect.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initialFocus!: string;
+	initialFocus?: string;
 
 	/**
 	 * Defines if the focus should be returned to the previously focused element,
@@ -144,7 +143,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: Boolean })
-	preventFocusRestore!: boolean;
+	preventFocusRestore = false;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -152,17 +151,17 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
 
 	/**
 	 * Allows setting a custom role.
@@ -170,15 +169,15 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.10.0
 	 */
-	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: `${PopupAccessibleRole}`;
+	@property()
+	accessibleRole: `${PopupAccessibleRole}` = "Dialog";
 
 	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
 	@property()
-	mediaRange!: string;
+	mediaRange?: string;
 
 	/**
 	 * Indicates whether initial focus should be prevented.
@@ -187,7 +186,7 @@ abstract class Popup extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	preventInitialFocus!: boolean;
+	preventInitialFocus = false;
 
 	/**
 	 * Indicates if the element is the top modal popup
@@ -197,7 +196,7 @@ abstract class Popup extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	isTopModalPopup!: boolean;
+	isTopModalPopup = false;
 
 	/**
 	 * Defines the content of the Popup.
@@ -210,19 +209,19 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone!: boolean;
+	onPhone = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onDesktop!: boolean;
+	onDesktop = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_focusedElementBeforeOpen?: HTMLElement | null;
-	_opened!: boolean;
-	_open!: boolean;
+	_opened = false;
+	_open = false;
 
 	constructor() {
 		super();
@@ -326,7 +325,9 @@ abstract class Popup extends UI5Element {
 		// initial focus, if focused element is dynamically created
 		await this.applyInitialFocus();
 
-		this.fireEvent("open", {}, false, false);
+		if (this.isConnected) {
+			this.fireEvent("open", {}, false, false);
+		}
 	}
 
 	_resize() {
@@ -477,6 +478,9 @@ abstract class Popup extends UI5Element {
 		element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
 
 		if (element) {
+			if (element === this._root) {
+				element.tabIndex = -1;
+			}
 			element.focus();
 		}
 	}

@@ -5,7 +5,7 @@ interface IFormElement extends UI5Element {
 }
 
 interface IFormInputElement extends IFormElement {
-	name: string;
+	name?: string;
 	formFormattedValue: FormData | string | null;
 	formValidityMessage?: string;
 	formValidity?: ValidityStateFlags;

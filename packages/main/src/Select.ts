@@ -29,7 +29,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -70,9 +69,9 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * @public
  */
 type IOption = ListItemBase & {
-	tooltip: string,
+	tooltip?: string,
 	icon?: string,
-	value: string,
+	value?: string,
 	additionalText?: string,
 	focused?: boolean,
 	effectiveDisplayText: string,
@@ -198,25 +197,25 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is required.
@@ -225,7 +224,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -237,54 +236,54 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @since 1.0.0-rc.9
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed!: boolean;
+	_iconPressed = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	opened!: boolean;
+	opened = false;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
-	_listWidth!: number;
+	@property({ type: Number, noAttribute: true })
+	_listWidth = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
-	_selectedIndexBeforeOpen: number;
-	_escapePressed: boolean;
-	_lastSelectedOption: IOption | null;
-	_typedChars: string;
+	_selectedIndexBeforeOpen = -1;
+	_escapePressed = false;
+	_lastSelectedOption: IOption | null = null;;
+	_typedChars = "";
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	valueStatePopover?: Popover;
@@ -307,7 +306,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 *
 	 * **Note:** If the component has `suggestionItems`,
 	 * the `valueStateMessage` would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
@@ -349,21 +348,10 @@ class Select extends UI5Element implements IFormInputElement {
 		const selectedOption = this.selectedOption;
 
 		if (selectedOption) {
-			return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
+			return selectedOption.hasAttribute("value") ? selectedOption.value! : selectedOption.textContent;
 		}
 
 		return "";
-	}
-
-	constructor() {
-		super();
-
-		this._selectedIndexBeforeOpen = -1;
-		this._escapePressed = false;
-		this._lastSelectedOption = null;
-		this._typedChars = "";
-
-		this._upgradeProperty("value");
 	}
 
 	onBeforeRendering() {
@@ -426,6 +414,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
+	@property({ noAttribute: true })
 	set value(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
 
@@ -581,14 +570,15 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_select(index: number) {
+		const selectedIndex = this._selectedIndex;
 		if (index < 0 || index >= this.options.length || this.options.length === 0) {
 			return;
 		}
-		if (this.options[this._selectedIndex]) {
-			this.options[this._selectedIndex].selected = false;
+		if (this.options[selectedIndex]) {
+			this.options[selectedIndex].selected = false;
 		}
 
-		if (this._selectedIndex !== index) {
+		if (selectedIndex !== index) {
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
@@ -671,10 +661,15 @@ class Select extends UI5Element implements IFormInputElement {
 		const options: Array<IOption> = this.options;
 
 		const previousOption = options[oldIndex];
+		const nextOption = options[newIndex];
+
+		if (previousOption === nextOption) {
+			return;
+		}
+
 		previousOption.selected = false;
 		previousOption.focused = false;
 
-		const nextOption = options[newIndex];
 		nextOption.selected = true;
 		nextOption.focused = true;
 

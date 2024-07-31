@@ -126,6 +126,13 @@
 	padding: var(--_ui5_input_inner_padding_with_icon);
 }
 
+[inner-input][type="search"]::-webkit-search-decoration,
+[inner-input][type="search"]::-webkit-search-cancel-button,
+[inner-input][type="search"]::-webkit-search-results-button,
+[inner-input][type="search"]::-webkit-search-results-decoration { 
+	display: none; 
+}
+
 .ui5-input-value-state-icon {
 	height: 100%;
 	display: var(--_ui5-input-value-state-icon-display);

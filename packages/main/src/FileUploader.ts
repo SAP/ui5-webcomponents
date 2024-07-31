@@ -96,11 +96,11 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Comma-separated list of file types that the component should accept.
 	 *
 	 * **Note:** Please make sure you are adding the `.` in front on the file type, e.g. `.png` in case you want to accept png's only.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accept!: string;
+	accept?: string;
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
@@ -108,7 +108,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideInput!: boolean;
+	hideInput = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -118,7 +118,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Allows multiple files to be chosen.
@@ -126,25 +126,25 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	multiple!: boolean;
+	multiple = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the name/names of the file/files to upload.
@@ -154,21 +154,21 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 
 	/**
 	 * Defines the value state of the component.
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
@@ -186,7 +186,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -209,7 +209,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	get formFormattedValue() {
-		if (this.files) {
+		if (this.files && this.name) {
 			const formData = new FormData();
 
 			for (let i = 0; i < this.files.length; i++) {

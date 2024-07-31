@@ -8,7 +8,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
@@ -18,7 +17,7 @@ import {
 	isUp,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
@@ -74,10 +73,11 @@ type ColorPaletteItemClickEventDetail = {
 @customElement({
 	tag: "ui5-color-palette",
 	renderer: litRender,
+	features: ["ColorPaletteMoreColors"],
 	template: ColorPaletteTemplate,
 	styles: [ColorPaletteCss, ColorPaletteDialogCss],
 	get dependencies() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+		const colorPaletteMoreColors = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
 	},
 })
@@ -105,7 +105,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showRecentColors!: boolean;
+	showRecentColors = false;
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
@@ -115,7 +115,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showMoreColors!: boolean;
+	showMoreColors = false;
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
@@ -124,23 +124,23 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	showDefaultColor!: boolean;
+	showDefaultColor = false;
 
 	/**
-	 * Defines the default color of the color palette
+	 * Defines the default color of the color palette, only valid CSS color values accepted
 	 *
 	 * **Note:** The default color should be a part of the ColorPalette colors`
 	 * @private
 	 * @since 1.0.0-rc.16
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	defaultColor?: string;
 
 	/**
-	 * Defines the selected color.
+	 * Defines the selected color, only valid CSS color values accepted
 	 * @private
 	 */
-	@property({ validator: CSSColor })
+	@property()
 	_selectedColor?: string;
 
 	/**
@@ -148,14 +148,14 @@ class ColorPalette extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	popupMode!: boolean;
+	popupMode = false;
 
 	/**
 	 * Defines if the palette is rendered on phone.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone!: boolean;
+	onPhone = false;
 
 	/**
 	 * Defines the `ui5-color-palette-item` elements.
@@ -173,19 +173,14 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
+	moreColorsFeature?: ColorPaletteMoreColors;
 	_currentlySelected?: ColorPaletteItem;
-	_shouldFocusRecentColors!: boolean;
+	_shouldFocusRecentColors = false;
 
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-
-		[ColorPalette.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			colorPaletteMoreColors ? colorPaletteMoreColors.init() : Promise.resolve(),
-		]);
+		ColorPalette.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -219,29 +214,23 @@ class ColorPalette extends UI5Element {
 		});
 
 		if (this.showMoreColors) {
-			const ColorPaletteMoreColorsClass = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 			if (ColorPaletteMoreColorsClass) {
 				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
-			} else {
-				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
 		}
 
 		this.onPhone = isPhone();
 	}
 
+	get _effectiveShowMoreColors() {
+		return !!(this.showMoreColors && this.moreColorsFeature);
+	}
+
 	onAfterRendering() {
 		if (this._shouldFocusRecentColors && this.hasRecentColors) {
 			this.recentColorsElements[0].selected = true;
 			this.recentColorsElements[0].focus();
-		}
-
-		if (this.popupMode) {
-			if (this.showDefaultColor) {
-				this.focusFirstFocusableElement();
-			} else {
-				this.focusFirstDisplayColorElement();
-			}
 		}
 	}
 
@@ -482,14 +471,6 @@ class ColorPalette extends UI5Element {
 		itemNavigation._focusCurrentItem();
 	}
 
-	focusFirstDisplayColorElement() {
-		this.focusColorElement(this.displayedColors[0], this._itemNavigation);
-	}
-
-	focusFirstFocusableElement() {
-		this.firstFocusableElement.focus();
-	}
-
 	get firstFocusableElement() {
 		return this.colorPaletteNavigationElements[0];
 	}
@@ -543,6 +524,18 @@ class ColorPalette extends UI5Element {
 
 	get allColorsInPalette() {
 		return [...this.effectiveColorItems, ...this.recentColorsElements];
+	}
+
+	get colorPaletteDialogTitle() {
+		return this.moreColorsFeature?.colorPaletteDialogTitle;
+	}
+
+	get colorPaletteDialogOKButton() {
+		return this.moreColorsFeature?.colorPaletteDialogOKButton;
+	}
+
+	get colorPaletteCancelButton() {
+		return this.moreColorsFeature?.colorPaletteCancelButton;
 	}
 
 	/**

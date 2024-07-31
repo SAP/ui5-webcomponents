@@ -18,9 +18,7 @@
 
 {{#*inline "valueStateMessage"}}
 	{{#if hasCustomValueState}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessage"></slot>
 	{{else}}
 		{{valueStateDefaultText}}
 	{{/if}}

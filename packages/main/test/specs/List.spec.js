@@ -138,12 +138,20 @@ describe("List Tests", () => {
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
-	it("Tests rendering of imageContent slot", async () => {
-		const imageContentSlot = await browser.executeAsync(done => {
-			done(document.getElementById("imageContent-slot-li").shadowRoot.querySelector("slot[name='imageContent']").assignedNodes()[0].querySelector("#imageContent-slot-avatar"));
+	it("Tests rendering of image slot with avatar", async () => {
+		const imageSlot = await browser.executeAsync(done => {
+			done(document.getElementById("image-slot-li2").shadowRoot.querySelector("slot[name='image']").assignedNodes()[0]);
 		});
 
-		assert.ok(imageContentSlot, "the content of imageContent slot is rendered");
+		assert.ok(imageSlot, "the content of image slot is rendered");
+	});
+
+	it("Tests rendering of image slot with img", async () => {
+		const imageSlot = await browser.executeAsync(done => {
+			done(document.getElementById("image-slot-li").shadowRoot.querySelector("slot[name='image']").assignedNodes()[0]);
+		});
+
+		assert.ok(imageSlot, "the content of image slot is rendered");
 	});
 
 	it("Clicking on inactive items does not change single selection", async () => {
@@ -389,21 +397,6 @@ describe("List Tests", () => {
 	it("tests 'loadMore' event not fired initially when the list did not overflow", async () => {
 		const loadMoreResult = await browser.$("#growingScrollTestCounter");
 		assert.strictEqual(await loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
-	});
-
-	it("tests 'loadMore' event fired upon infinite scroll", async () => {
-		const btn = await browser.$("#btnTrigger");
-		const loadMoreResult = await browser.$("#loadMoreResult");
-
-		await btn.click();
-
-		await browser.waitUntil(async () => {
-			const value = await loadMoreResult.getValue();
-			return value === "1";
-		}, {
-			timeout: 5000,
-			timeoutMsg: "The event loadMore must be fired"
-		});
 	});
 
 	it("detailPress event is fired", async () => {

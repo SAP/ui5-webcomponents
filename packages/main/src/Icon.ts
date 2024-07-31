@@ -11,7 +11,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
-import IconDesign from "./types/IconDesign.js";
+import type IconDesign from "./types/IconDesign.js";
 import IconMode from "./types/IconMode.js";
 
 // Styles
@@ -118,8 +118,8 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 * @since 1.9.2
 	 */
-	@property({ type: IconDesign, defaultValue: IconDesign.Default })
-	design!: `${IconDesign}`;
+	@property()
+	design: `${IconDesign}` = "Default";
 
 	/**
 	 * Defines the unique identifier (icon name) of the component.
@@ -143,11 +143,11 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * Example:
 	 * `name='business-suite/3d'`, `name='business-suite/1x2-grid-layout'`, `name='business-suite/4x4-grid-layout'`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -155,11 +155,11 @@ class Icon extends UI5Element implements IIcon {
 	 *
 	 * **Note:** Every icon should have a text alternative in order to
 	 * calculate its accessible name.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component should have a tooltip.
@@ -169,7 +169,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip!: boolean;
+	showTooltip = false;
 
 	/**
 	 * Defines the mode of the component.
@@ -177,31 +177,31 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 * @since 2.0.0
 	 */
-	@property({ type: IconMode, defaultValue: IconMode.Image })
-	mode!: `${IconMode}`;
+	@property()
+	mode: `${IconMode}` = "Image";
 
 	/**
 	 * @private
 	 */
-	@property({ multiple: true })
-	pathData!: Array<string>;
+	@property({ type: Array })
+	pathData: Array<string> = [];
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, defaultValue: undefined, noAttribute: true })
+	@property({ type: Object, noAttribute: true })
 	accData?: I18nText;
 
 	/**
 	* @private
 	*/
 	@property({ type: Boolean })
-	invalid!: boolean;
+	invalid = false;
 
 	/**
 	 * @private
 	 */
-	@property({ noAttribute: true, defaultValue: undefined })
+	@property({ noAttribute: true })
 	effectiveAccessibleName?: string;
 
 	ltr?: boolean;

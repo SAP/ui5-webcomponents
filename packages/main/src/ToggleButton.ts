@@ -42,7 +42,7 @@ class ToggleButton extends Button {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	pressed!: boolean;
+	pressed = false;
 
 	_onclick() {
 		this.pressed = !this.pressed;

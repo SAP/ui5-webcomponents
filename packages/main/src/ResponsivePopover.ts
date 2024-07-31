@@ -11,7 +11,6 @@ import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
-import Title from "./Title.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Styles
@@ -48,7 +47,6 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 		...Popover.dependencies,
 		Button,
 		Dialog,
-		Title,
 	],
 })
 class ResponsivePopover extends Popover {
@@ -58,14 +56,14 @@ class ResponsivePopover extends Popover {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	contentOnlyOnDesktop!: boolean;
+	contentOnlyOnDesktop = false;
 
 	/**
 	 * Used internaly for controls which must not have header.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hideHeader!: boolean;
+	_hideHeader = false;
 
 	/**
 	 * Defines whether a close button will be rendered in the header of the component
@@ -75,7 +73,7 @@ class ResponsivePopover extends Popover {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	_hideCloseButton!: boolean;
+	_hideCloseButton = false;
 
 	static i18nBundle: I18nBundle;
 

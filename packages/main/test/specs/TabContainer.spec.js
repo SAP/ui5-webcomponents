@@ -398,6 +398,25 @@ describe("TabContainer general interaction", () => {
 
 		assert.ok(isTabInOverflowFocused, "Tab in overflow should be focused");
 	});
+
+	it("test sub items selection", async () => {
+		const tabContainer = await browser.$("#tabContainerNestedTabs");
+		const item = tabContainer.shadow$$(".ui5-tab-strip-item")[3];
+
+		await browser.$("#tabContainerNestedTabs").scrollIntoView();
+		await item.click();
+		await browser.keys("ArrowDown");
+
+		const listItem = await browser.$$(">>>#tabContainerNestedTabs [ui5-li-custom]")[3];
+
+		assert.notOk(await listItem.getProperty("selected"), "tab is not selected");
+		await listItem.click();
+
+		await browser.keys("Escape");
+		await browser.keys("ArrowDown");
+
+		assert.ok(await listItem.getProperty("selected"), "tab is selected");
+	});
 });
 
 describe("TabContainer keyboard handling", () => {
@@ -519,7 +538,7 @@ describe("TabContainer drag and drop tests", () => {
 	const moveElementById = (items, id1, id2, targetPosition) => {
 		const findAndExecute = (items, matcher, cb) => {
 			const index = items.findIndex(matcher);
-			
+
 			if (index !== -1) {
 				cb(items, index);
 				return;
@@ -684,5 +703,5 @@ describe("TabContainer drag and drop tests", () => {
 		// close the popover
 		await tabContainer.getEndOverflow("tabContainerDnd").click();
 	});
-	
+
 });

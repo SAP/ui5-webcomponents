@@ -33,6 +33,9 @@
 	--_ui5_split_button_middle_separator_top: 0.3125rem;
 	--_ui5_split_button_middle_separator_height: 1rem;
 
+	/* CheckBox */
+	--_ui5_checkbox_wrapped_focus_inset_block: 0.125rem;
+
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.25rem;
 	--_ui5_color-palette-item-focus-height: 1rem;

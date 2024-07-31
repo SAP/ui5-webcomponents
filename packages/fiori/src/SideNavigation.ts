@@ -142,7 +142,7 @@ class SideNavigation extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	collapsed!: boolean;
+	collapsed = false;
 
 	/**
 	 * Defines the main items of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
@@ -183,19 +183,20 @@ class SideNavigation extends UI5Element {
 	_popoverContents!: SideNavigationPopoverContents;
 
 	@property({ type: Boolean })
-	inPopover!: boolean;
-	_isOverflow!: boolean;
+	inPopover= false;
+
+	@property({ type: Array })
+	_menuPopoverItems: Array<HTMLElement> = [];
+
+	_isOverflow = false;;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
-
-	@property({ type: Object, multiple: true })
-	_menuPopoverItems!: Array<HTMLElement>;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	isTouchDevice!: boolean;
+	isTouchDevice = false;;
 
 	static i18nBundle: I18nBundle;
 
@@ -292,7 +293,7 @@ class SideNavigation extends UI5Element {
 		this._selectItem(associatedItem);
 		this.closePicker();
 
-		this._popoverContents.item.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
+		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {

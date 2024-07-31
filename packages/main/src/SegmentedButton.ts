@@ -84,7 +84,7 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 * @since 1.0.3
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName?: string;
 
 	/**
@@ -93,8 +93,8 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 * @since 1.14.0
 	 */
-	@property({ type: SegmentedButtonSelectionMode, defaultValue: SegmentedButtonSelectionMode.Single })
-	selectionMode!: `${SegmentedButtonSelectionMode}`;
+	@property()
+	selectionMode: `${SegmentedButtonSelectionMode}` = "Single";
 
 	/**
 	 * Defines the items of `ui5-segmented-button`.
@@ -123,7 +123,7 @@ class SegmentedButton extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
+			getItemsCallback: () => this.navigatableItems,
 		});
 		this.hasPreviouslyFocusedItem = false;
 	}
@@ -249,6 +249,12 @@ class SegmentedButton extends UI5Element {
 	 */
 	get selectedItems(): Array<ISegmentedButtonItem> {
 		return this.items.filter(item => item.selected);
+	}
+
+	get navigatableItems() {
+		return this.getSlottedNodes<SegmentedButtonItem>("items").filter(item => {
+			return !item.disabled;
+		});
 	}
 
 	get ariaDescribedBy() {

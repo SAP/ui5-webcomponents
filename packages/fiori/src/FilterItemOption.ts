@@ -23,11 +23,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 class FilterItemOption extends UI5Element {
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string;
+	text?: string;
 
 	/**
 	 * Defines if the component is selected.
@@ -35,7 +35,7 @@ class FilterItemOption extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected!: boolean;
+	selected = false;
 }
 
 FilterItemOption.define();

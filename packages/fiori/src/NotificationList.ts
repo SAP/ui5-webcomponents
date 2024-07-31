@@ -61,7 +61,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * `import "@ui5/webcomponents-fiori/dist/NotificationList.js";``
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  */
 @customElement({
@@ -131,11 +131,11 @@ class NotificationList extends UI5Element {
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	get _accessibleName() {
 		return NotificationList.i18nFioriBundle.getText(NOTIFICATION_LIST_ACCESSIBLE_NAME);

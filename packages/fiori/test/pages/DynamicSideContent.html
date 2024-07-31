@@ -121,10 +121,10 @@
 		});
 
 		dynamicSideContent.addEventListener("ui5-layout-change", function(event) {
-			currentBreakpoint.value = event.detail.currentBreakpoint;
-			previousBreakpoint.value = event.detail.previousBreakpoint;
-			mainVisible.value = event.detail.mainContentVisible ? 1 : 0;
-			sideVisible.value = event.detail.sideContentVisible ? 1 : 0;
+			currentBreakpoint.value = event.detail.currentBreakpoint?.toString();
+			previousBreakpoint.value = event.detail.previousBreakpoint?.toString();
+			mainVisible.value = event.detail.mainContentVisible ? "1" : "0"
+			sideVisible.value = event.detail.sideContentVisible ? "1" : "0"
 		});
 	</script>
 

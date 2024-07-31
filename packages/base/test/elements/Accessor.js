@@ -40,7 +40,7 @@ import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRender
 })
 class Accessor extends UI5Element {
 	@property({ type: String, defaultValue: undefined})
-	title!: string;
+	title?: string;
 
 	render() {
 		return html`<div>${this.myProp}</div>`;
