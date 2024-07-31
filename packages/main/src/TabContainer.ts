@@ -611,14 +611,12 @@ class TabContainer extends UI5Element {
 		draggedElement.focus();
 	}
 
-	_moveItem(tab: TabInStrip, e: KeyboardEvent) {
-		const realTab = tab.realTabReference;
-
-		if (!realTab.movable) {
+	_moveItem(tab: Tab, e: KeyboardEvent) {
+		if (!tab.movable) {
 			return;
 		}
 
-		const { placement, dropTarget } = findNextPlacement(realTab, e);
+		const { placement, dropTarget } = findNextPlacement(tab, e);
 
 		if (!dropTarget || !placement) {
 			return;
@@ -626,7 +624,7 @@ class TabContainer extends UI5Element {
 
 		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
-				element: realTab,
+				element: tab,
 			},
 			destination: {
 				element: dropTarget,
@@ -634,7 +632,7 @@ class TabContainer extends UI5Element {
 			},
 		});
 
-		realTab.focus();
+		tab.focus();
 	}
 
 	_onHeaderDragLeave(e: DragEvent) {
@@ -793,7 +791,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isCtrl(e)) {
-			this._moveItem(tab, e);
+			this._moveItem(tab.realTabReference, e);
 			return;
 		}
 

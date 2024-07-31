@@ -83,7 +83,7 @@ type ListItemDeleteEventDetail = {
 }
 
 type ListMoveEventDetail = {
-	originalEvent: UIEvent,
+	originalEvent: Event,
 	source: {
 		element: HTMLElement,
 	},
@@ -306,7 +306,7 @@ type ListItemClickEventDetail = {
 		/**
 		 * @public
 		 */
-		originalEvent: { type: UIEvent },
+		originalEvent: { type: Event },
 		/**
 		 * @public
 		 */
@@ -332,7 +332,7 @@ type ListItemClickEventDetail = {
 		/**
 		 * @public
 		 */
-		originalEvent: { type: UIEvent },
+		originalEvent: { type: Event },
 		/**
 		 * @public
 		 */
