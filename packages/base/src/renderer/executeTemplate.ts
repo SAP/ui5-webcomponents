@@ -27,7 +27,8 @@ const getTagsToScope = (component: UI5Element) => {
 	const ctor = component.constructor as typeof UI5Element;
 
 	const componentTag = ctor.getMetadata().getPureTag();
-	const tagsToScope = ctor.getUniqueDependencies().map((dep: typeof UI5Element) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+	let tagsToScope = ctor.getUniqueDependencies().map((dep: typeof UI5Element) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+	tagsToScope = tagsToScope.concat(ctor.additionalTagsToScope);
 
 	if (shouldScopeCustomElement(componentTag)) {
 		tagsToScope.push(componentTag);

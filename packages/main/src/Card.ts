@@ -68,6 +68,16 @@ class Card extends UI5Element {
 	@property()
 	accessibleNameRef?: string;
 
+	@property({ type: Boolean })
+	busy = false;
+
+	@property({ type: Boolean })
+	_busyDepLoaded = false;
+
+	get showBusy() {
+		return this.busy && this._busyDepLoaded;
+	}
+
 	/**
 	 * Defines the content of the component.
 	 * @public
@@ -95,6 +105,16 @@ class Card extends UI5Element {
 				"ui5-card--nocontent": !this.content.length,
 			},
 		};
+	}
+
+	async onBeforeRendering() {
+		if (this.busy && !this._busyDepLoaded) {
+			// await this.importComponent("./BusyIndicator.js")
+			const klass = (await import("./BusyIndicator.js")).default;
+			const tagName = (klass as unknown as typeof UI5Element).getMetadata().getTag();
+			(this.constructor as typeof UI5Element).additionalTagsToScope.push(tagName);
+			this._busyDepLoaded = true;
+		}
 	}
 
 	get _hasHeader() {

@@ -43,6 +43,7 @@ let autoId = 0;
 
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
+const additionalTagsToScope = new Map<typeof UI5Element, Array<string>>();
 
 type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => void;
 
@@ -1166,6 +1167,14 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static get dependencies(): Array<typeof UI5Element> {
 		return [];
+	}
+
+	static get additionalTagsToScope(): Array<string> {
+		if (!additionalTagsToScope.has(this)) {
+			additionalTagsToScope.set(this, []);
+		}
+
+		return additionalTagsToScope.get(this) ?? [];
 	}
 
 	/**

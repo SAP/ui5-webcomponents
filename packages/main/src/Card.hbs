@@ -8,6 +8,9 @@
 			<slot name="header"></slot>
 		</div>
 	{{/if}}
+	{{#if showBusy}}
+		<ui5-busy-indicator active></ui5-busy-indicator>
+	{{/if}}
 	<div role="group" aria-label="{{_ariaCardContentLabel}}" part="content">
 		<slot></slot>
 	</div>
