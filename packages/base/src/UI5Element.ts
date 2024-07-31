@@ -37,6 +37,7 @@ import type {
 } from "./types.js";
 import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
+import { subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -1168,6 +1169,11 @@ abstract class UI5Element extends HTMLElement {
 		return [];
 	}
 
+	static cacheUniqueDependencies(this: typeof UI5Element): void {
+		const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+		uniqueDependenciesCache.set(this, filtered);
+	}
+
 	/**
 	 * Returns a list of the unique dependencies for this UI5 Web Component
 	 *
@@ -1175,8 +1181,7 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static getUniqueDependencies(this: typeof UI5Element): Array<typeof UI5Element> {
 		if (!uniqueDependenciesCache.has(this)) {
-			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
-			uniqueDependenciesCache.set(this, filtered);
+			this.cacheUniqueDependencies();
 		}
 
 		return uniqueDependenciesCache.get(this) || [];
@@ -1211,6 +1216,12 @@ abstract class UI5Element extends HTMLElement {
 		]);
 
 		const tag = this.getMetadata().getTag();
+
+		const features = this.getMetadata().getFeatures();
+
+		features.forEach(feature => {
+			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
+		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);

@@ -17,7 +17,7 @@ import {
 	isUp,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
@@ -73,10 +73,11 @@ type ColorPaletteItemClickEventDetail = {
 @customElement({
 	tag: "ui5-color-palette",
 	renderer: litRender,
+	features: ["ColorPaletteMoreColors"],
 	template: ColorPaletteTemplate,
 	styles: [ColorPaletteCss, ColorPaletteDialogCss],
 	get dependencies() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+		const colorPaletteMoreColors = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
 	},
 })
@@ -172,19 +173,14 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature: ColorPaletteMoreColors | Record<string, any> = {};
+	moreColorsFeature?: ColorPaletteMoreColors;
 	_currentlySelected?: ColorPaletteItem;
 	_shouldFocusRecentColors = false;
 
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-
-		[ColorPalette.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			colorPaletteMoreColors ? colorPaletteMoreColors.init() : Promise.resolve(),
-		]);
+		ColorPalette.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -218,15 +214,17 @@ class ColorPalette extends UI5Element {
 		});
 
 		if (this.showMoreColors) {
-			const ColorPaletteMoreColorsClass = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
 			if (ColorPaletteMoreColorsClass) {
 				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
-			} else {
-				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
 		}
 
 		this.onPhone = isPhone();
+	}
+
+	get _effectiveShowMoreColors() {
+		return !!(this.showMoreColors && this.moreColorsFeature);
 	}
 
 	onAfterRendering() {
@@ -526,6 +524,18 @@ class ColorPalette extends UI5Element {
 
 	get allColorsInPalette() {
 		return [...this.effectiveColorItems, ...this.recentColorsElements];
+	}
+
+	get colorPaletteDialogTitle() {
+		return this.moreColorsFeature?.colorPaletteDialogTitle;
+	}
+
+	get colorPaletteDialogOKButton() {
+		return this.moreColorsFeature?.colorPaletteDialogOKButton;
+	}
+
+	get colorPaletteCancelButton() {
+		return this.moreColorsFeature?.colorPaletteCancelButton;
 	}
 
 	/**
