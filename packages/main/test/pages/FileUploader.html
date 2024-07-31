@@ -28,7 +28,7 @@
 	</div>
 
 	<div>
-		<ui5-label>Single file upload:</label>
+		<label>Single file upload:</label>
 		<ui5-file-uploader placeholder="upload file">
 			<ui5-button>Upload</ui5-button>
 		</ui5-file-uploader>
@@ -95,6 +95,26 @@
 		</ui5-file-uploader>
 	</div>
 	<div>
+		<ui5-title>Maximum File Size</ui5-title>
+		<div class="fileuploader1auto">
+			<!-- <label>Accepts maximum file size of 1 MB:</label> -->
+			<ui5-file-uploader 
+				placeholder="Upload file up to 1 MB"
+				max-file-size="1"
+				multiple
+				id="file-uploader-max-size">
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
+			<div>
+				<label>Event "fileSizeExceed" thrown count:</label>
+				<span id="file-size-exceeded-count">0</span>
+			</div>
+			<div>
+				<span id="file-size-exceeded-result"></span>
+			</div>
+		</div>
+	</div>
+	<div>
 		<ui5-title>Form support</ui5-title>
 		<form
 			class="fileuploader1auto"
@@ -150,6 +170,16 @@
 				console.log("Error")
 			})
 		});
+
+		const eventCount = document.getElementById("file-size-exceeded-count");
+		const eventResult = document.getElementById("file-size-exceeded-result");
+		const maxSizeFileUploader = document.getElementById("file-uploader-max-size")
+		
+		maxSizeFileUploader.addEventListener("fileSizeExceed", function (event) {
+			eventCount.innerHTML = parseFloat(eventCount.innerHTML) + 1;
+			eventResult.innerHTML = "File Name: '" + event.detail.fileName + "', Size: " + event.detail.fileSize.toFixed(2) + " MB";
+		});
+
 	</script>
 </body>
 </html>

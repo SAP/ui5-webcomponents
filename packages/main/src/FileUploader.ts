@@ -35,6 +35,11 @@ type FileUploaderChangeEventDetail = {
 	files: FileList | null,
 }
 
+type FileUploaderFileSizeExceededEventDetail = {
+	fileName: string,
+	fileSize: number,
+}
+
 /**
  * @class
  *
@@ -89,6 +94,23 @@ type FileUploaderChangeEventDetail = {
 		 * @public
 		 */
 		files: { type: FileList },
+	},
+})
+/**
+ * Event is fired when the size of a file is above the maximumFileSize property.
+ * @param {string} fileName The name of a file to be uploaded.
+ * @param {number} fileSize The size in MB of a file to be uploaded.
+ */
+@event<FileUploaderFileSizeExceededEventDetail>("fileSizeExceed", {
+	detail: {
+		/**
+		 * @public
+		 */
+		fileName: { type: String },
+		/**
+		 * @public
+		 */
+		fileSize: { type: Number },
 	},
 })
 class FileUploader extends UI5Element implements IFormInputElement {
@@ -155,6 +177,14 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	value = "";
+
+	/**
+	 * Defines the maximum file size limit in megabytes which prevents the upload if at least one file exceeds it.
+	 * @default undefined
+	 * @public
+	 */
+	@property({ type: Number })
+	maxFileSize?: number;
 
 	/**
 	 * Defines the value state of the component.
@@ -264,7 +294,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		e.stopPropagation();
 		const files = e.dataTransfer?.files;
 
-		if (files) {
+		if (files && this._checkFileSize(files)) {
 			this._input.files = files;
 			this._updateValue(files);
 			this.fireEvent<FileUploaderChangeEventDetail>("change", {
@@ -305,6 +335,10 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_onChange(e: Event) {
 		const changedFiles = (e.target as HTMLInputElement).files;
 
+		if (!this._checkFileSize(changedFiles)) {
+			return;
+		}
+
 		this._updateValue(changedFiles);
 		this.fireEvent<FileUploaderChangeEventDetail>("change", {
 			files: changedFiles,
@@ -315,6 +349,28 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		this.value = Array.from(files || []).reduce((acc, currFile) => {
 			return `${acc}"${currFile.name}" `;
 		}, "");
+	}
+
+	/** Returns true if all files are below the maxiumumFileSize,
+	 * otherwise throws a "fileSizeExceed" if one file exceeds it.
+	 * @private
+	 */
+	_checkFileSize(files: FileList | null): boolean {
+		if (!files) {
+			return true;
+		}
+		for (let i = 0; i < files.length; i++) {
+			const fileSize = (files[i].size / 1024) / 1024;
+			if (this.maxFileSize && (fileSize > this.maxFileSize)) {
+				// todo - name it Exceed or Exceeded?
+				this.fireEvent<FileUploaderFileSizeExceededEventDetail>("fileSizeExceed", {
+					fileName: files[i].name,
+					fileSize,
+				});
+				return false;
+			}
+		}
+		return true;
 	}
 
 	toggleValueStatePopover(open: boolean) {
