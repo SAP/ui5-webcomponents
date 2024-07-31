@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs").promises;
 
 const replaceIncludes = async (file) => {
+	let filesIncluded = [];
 	const filePath = path.dirname(file);
 	let fileContent = await fs.readFile(file, "utf-8");
 
@@ -19,11 +20,14 @@ const replaceIncludes = async (file) => {
 			// Node module path, f.e. {{>include "@ui5/webcomponents/src/Popup.hbs"}}
 			targetFile = require.resolve(targetFile);
 		}
+		filesIncluded.push(targetFile);
 
-		fileContent = fileContent.replace(match[0], await replaceIncludes(targetFile));
+		const { fileContent: replacedContent, filesIncluded: transitiveFilesIncluded} = await replaceIncludes(targetFile)
+		fileContent = fileContent.replace(match[0], replacedContent);
+		filesIncluded = filesIncluded.concat(transitiveFilesIncluded);
 	}
 
-	return fileContent;
+	return { fileContent, filesIncluded };
 };
 
 module.exports = {

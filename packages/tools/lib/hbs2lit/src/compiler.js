@@ -13,7 +13,8 @@ const removeWhiteSpaces = (source) => {
 };
 
 const hbs2lit = async (file, componentName) => {
-	let sPreprocessed = await includesReplacer.replace(file);
+	const replacementResult = await includesReplacer.replace(file);
+	let sPreprocessed = replacementResult.fileContent;
 
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
@@ -54,7 +55,7 @@ const hbs2lit = async (file, componentName) => {
 	}
 
 	result = svgProcessor.process(result);
-	return result;
+	return { result, filesIncluded: replacementResult.filesIncluded };
 };
 
 module.exports = hbs2lit;

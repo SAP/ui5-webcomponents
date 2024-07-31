@@ -1,8 +1,8 @@
 const { defineConfig } = require('vite');
 const virtualIndex = require("@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js");
 const customHotUpdate = require("@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js");
+const hbsWatch = require("@ui5/webcomponents-tools/lib/dev-server/hbs-watch.js");
 const ssrDomShimLoader = require("@ui5/webcomponents-tools/lib/dev-server/ssr-dom-shim-loader.js");
-const { existsSync } = require('fs');
 const { dirname, join, resolve } = require('path');
 const path = require('path');
 const tsconfigPaths = require('vite-tsconfig-paths').default;
@@ -101,7 +101,7 @@ module.exports = defineConfig(async () => {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
+		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(), hbsWatch(),
 			checker({
 				// e.g. use TypeScript check
 				typescript: {

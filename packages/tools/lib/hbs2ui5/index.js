@@ -43,10 +43,12 @@ const processFile = async (file, outputDir) => {
 		}
 		console.log("  -> " + componentName + ".hbs");
 	}
-	const litCode = await hbs2lit(file, componentName);
-	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
-
-	return writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode, componentHasTypes));
+	const { result: litCode, filesIncluded } = await hbs2lit(file, componentName);
+	const absoluteOutputDir = path.isAbsolute(outputDir)
+		? outputDir
+		: composeAbsoluteOutputDir(file, outputDir);
+	await writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode, componentHasTypes));
+	return filesIncluded;
 };
 
 const composeAbsoluteOutputDir = (file, outputDir) => {
@@ -88,7 +90,7 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 		await fs.mkdir(outputDir, { recursive: true });
 
 		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.${process.env.UI5_TS ? "ts" : "js"}`;
-
+		console.log({compiledFilePath})
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");
 		fileContentUnix = fileContentUnix.replace(/\r/g, "\n");
@@ -117,3 +119,5 @@ if (!args['d'] || !args['o']) {
 		console.log("Templates generated");
 	});
 }
+
+exports.processFile = processFile;
