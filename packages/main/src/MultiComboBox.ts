@@ -1906,7 +1906,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed && !this.open;
 	}
 
 	get valueStateTypeMappings(): ValueStateTypeAnnouncement {
