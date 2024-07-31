@@ -17,7 +17,7 @@ const scripts = {
 	lint: `eslint .`,
 	generate: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates generateSsrDom",
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript integrate.no-remaining-require",
-	typescript: "tsc -b",
+	typescript: "tsc -b tsconfig.build.json",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.amd-to-es6 integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -42,7 +42,7 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	// these files are ignored in TS because the import in UI5Elments tries to load them from the dist and throws an error. create them empty here
 	generateSsrDom: `yarn nodetouch dist/ssr-dom.js dist/ssr-dom.d.ts`,
-	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
+	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 	generateProd: {
 		"default": "nps generateProd.remove-dev-mode generateProd.copy-prod",
 		"remove-dev-mode": `node "${LIB}/remove-dev-mode/remove-dev-mode.mjs"`,

@@ -1,0 +1,13 @@
+{
+	"extends": "@ui5/webcomponents-tools/tsconfig.json",
+	"include": [
+		"src/**/*",
+		"test/**/*",
+	],
+	"compilerOptions": {
+		"types": ["@ui5/webcomponents-tools"],
+		"composite": true,
+		"experimentalDecorators": true,
+		"tsBuildInfoFile": "dist/.tsbuildinfospec",
+	},
+}

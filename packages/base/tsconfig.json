@@ -1,19 +1,11 @@
 {
-	"extends": "@ui5/webcomponents-tools/tsconfig.json",
-	"include": [
-		"src/**/*",
-		"src/global.d.ts"
-	],
-	// ssr-dom is imported with bare specifier so that conditional exports are used, but this treats it as input and output, so ignore it
-	"exclude": [
-		"src/ssr-dom.ts"
-	],
-	"compilerOptions": {
-		"types": ["@ui5/webcomponents-tools"],
-		"outDir": "dist",
-		"composite": true,
-		"rootDir": "src",
-		"experimentalDecorators": true,
-		"tsBuildInfoFile": "dist/.tsbuildinfo",
-	},
+	"files": [],
+	"references": [
+		{
+			"path": "./tsconfig.spec.json"
+		},
+		{
+			"path": "./tsconfig.build.json"
+		}
+	]
 }

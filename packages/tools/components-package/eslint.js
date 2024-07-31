@@ -14,7 +14,7 @@ const overrides = tsMode ? [{
 		"plugin:@typescript-eslint/recommended-requiring-type-checking"
 	],
 	parserOptions: {
-	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
+	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json", "./packages/*/tsconfig.spec.json", "./packages/*/tsconfig.build.json"],
 	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
 	},
 	rules: {
