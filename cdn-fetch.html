@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script type="importmap">
+		{
+			"imports": {
+				"@ui5/webcomponents-localization/": "/packages/localization/",
+				"@ui5/webcomponents/": "/packages/main/",
+				"@ui5/webcomponents-theming/": "/packages/theming/",
+				"@ui5/webcomponents-icons/": "/packages/icons/",
+				"@ui5/webcomponents-base/": "/packages/base/",
+				"@sap-theming/": "https://cdn.jsdelivr.net/npm/@sap-theming@1.24.7/",
+				"@types/openui5/": "https://cdn.jsdelivr.net/npm/@types/openui5@1.24.7/",
+				"@types/jquery/": "https://cdn.jsdelivr.net/npm/@types/jquery/",
+				"lit-html": "https://cdn.jsdelivr.net/npm/lit-html",
+				"lit-html/": "https://cdn.jsdelivr.net/npm/lit-html/"
+			}
+		}
+  </script>
+</head>
+
+<body>
+	<!-- run a build and start a normal serve in the root folder to test CDN scenario with asset fetch -->
+	<script type="module">
+		import "@ui5/webcomponents/dist/Button.js";
+		import "@ui5/webcomponents/dist/DatePicker.js";
+		import "@ui5/webcomponents/dist/Icon.js";
+		import "@ui5/webcomponents/dist/Card.js";
+		import "@ui5/webcomponents/dist/Assets-fetch.js";
+		import "@ui5/webcomponents-icons/dist/AllIcons-fetch.js";
+	</script>
+	<ui5-button>Submit</ui5-button>
+	<ui5-date-picker></ui5-date-picker>
+	<ui5-card>
+		<div slot="header">header</div>
+		<div>content</div>
+	</ui5-card>
+    <ui5-icon name="home"></ui5-icon>
+</body>
+
+</html>
