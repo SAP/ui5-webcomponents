@@ -83,6 +83,7 @@ type ListItemDeleteEventDetail = {
 }
 
 type ListMoveEventDetail = {
+	originalEvent: UIEvent,
 	source: {
 		element: HTMLElement,
 	},
@@ -305,6 +306,10 @@ type ListItemClickEventDetail = {
 		/**
 		 * @public
 		 */
+		originalEvent: { type: UIEvent },
+		/**
+		 * @public
+		 */
 		source: { type: Object },
 		/**
 		 * @public
@@ -324,6 +329,10 @@ type ListItemClickEventDetail = {
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
+		/**
+		 * @public
+		 */
+		originalEvent: { type: UIEvent },
 		/**
 		 * @public
 		 */
@@ -904,6 +913,7 @@ class List extends UI5Element {
 		}
 
 		this.fireEvent<ListMoveEventDetail>("move", {
+			originalEvent: e,
 			source: {
 				element: item,
 			},
@@ -1067,6 +1077,7 @@ class List extends UI5Element {
 
 		const placementAccepted = placements.some(placement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
+				originalEvent: e,
 				source: {
 					element: draggedElement,
 				},
@@ -1096,6 +1107,7 @@ class List extends UI5Element {
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		this.fireEvent<ListMoveEventDetail>("move", {
+			originalEvent: e,
 			source: {
 				element: draggedElement,
 			},
