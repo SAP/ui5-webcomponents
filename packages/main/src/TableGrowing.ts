@@ -54,7 +54,7 @@ import {
  *
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
@@ -124,6 +124,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	@property({ type: Boolean })
 	_activeState = false;
 
+	readonly identifier = "TableGrowing";
 	_table?: Table;
 	_observer?: IntersectionObserver;
 	_individualSlot?: string;

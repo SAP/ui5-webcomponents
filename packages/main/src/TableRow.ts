@@ -23,7 +23,7 @@ import RadioButton from "./RadioButton.js";
  *
  * @constructor
  * @extends TableRowBase
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
@@ -53,13 +53,13 @@ class TableRow extends TableRowBase {
 	cells!: Array<TableCell>;
 
 	/**
-	 * Unique identifier of the component.
+	 * Unique identifier of the row.
 	 *
 	 * @default ""
 	 * @public
 	 */
 	@property()
-	key = "";
+	rowKey = "";
 
 	/**
 	 * Defines the interactive state of the row.

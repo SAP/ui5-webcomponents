@@ -40,7 +40,7 @@ import styles from "./generated/themes/Text.css.js";
 	tag: "ui5-text",
 	renderer,
 	template: () => {
-		return html`<bdi><slot></slot></bdi>`;
+		return html`<span><slot></slot></span>`;
 	},
 	styles,
 })
@@ -51,7 +51,7 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	maxLines = Infinity;
+	maxLines: number = Infinity;
 
 	onBeforeRendering() {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);

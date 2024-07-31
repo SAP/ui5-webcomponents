@@ -49,7 +49,7 @@ describe("Menu interaction", () => {
 			.should("exist");
 	});
 
-	it("Sub-menu opening", () => {
+	it("Restore focus to previous element after close", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu open opener="btnOpen">
 			<ui5-menu-item text="Item 1.0" icon="open-folder">
@@ -60,8 +60,7 @@ describe("Menu interaction", () => {
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
 
-			
-			cy.get("[ui5-menu-item][text='Item 1.0']")
+		cy.get("[ui5-menu-item][text='Item 1.0']")
 			.as("item")
 			.ui5MenuItemClick();
 
@@ -153,6 +152,35 @@ describe("Menu interaction", () => {
 			.find("[ui5-busy-indicator]")
 			.should("have.attr", "delay", "500")
 			.and("have.attr", "active")
+	});
+
+	it("Menu and Menu items busy indication - without items", () => {
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		<ui5-menu id="menu">
+			<ui5-menu-item text="Item 1"></ui5-menu-item>
+		</ui5-menu>`)
+
+		cy.get("#btnOpen")
+			.as("button")
+			.realClick();
+
+		cy.get("@button")
+			.should("be.focused");
+
+		cy.get("[ui5-menu]")
+			.as("menu")
+			.ui5MenuOpen({
+				opener: "btnOpen"
+			});
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpened();
+
+		cy.get("[ui5-menu-item]")
+			.ui5MenuItemPress("Space");
+
+		cy.get("@button")
+			.should("be.focused");
 	});
 
 	describe("Event firing", () => {
@@ -309,6 +337,7 @@ describe("Menu interaction", () => {
 					<ui5-menu-item text="Item 1.1"></ui5-menu-item>
 				</ui5-menu-item>
 				<ui5-menu-item text="Item 2.0" accessible-name="test accessible name"></ui5-menu-item>
+				<ui5-menu-item text="Item 3.0" additional-text="Ctrl+A"></ui5-menu-item>
 			</ui5-menu>`)
 
 			cy.get("[ui5-menu]")
@@ -334,6 +363,28 @@ describe("Menu interaction", () => {
 			cy.get("@items")
 				.eq(1)
 				.should("have.attr", "accessible-name", "test accessible name")
+
+			cy.get("@items")
+				.eq(2)
+				.then($el => {
+					$el.get(0).accessibilityAttributes = {
+						ariaKeyShortcuts: "Ctrl+A",
+						role: "menuitemcheckbox",
+					}
+				})
+
+			cy.get("@items")
+				.eq(2)
+				.shadow()
+				.find("li")
+				.should("have.attr", "aria-keyshortcuts", "Ctrl+A", "aria-keyshortcuts attribute is reflected")
+				.and("have.attr", "role", "menuitemcheckbox", "role attribute is reflected")
+
+			cy.get("@items")
+				.eq(2)
+				.shadow()
+				.find("li .ui5-li-additional-text")
+				.should("have.attr", "aria-hidden", "true", "aria-hidden attribute is set to true")
 		});
 	})
 })

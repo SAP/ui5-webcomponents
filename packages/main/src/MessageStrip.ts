@@ -47,10 +47,11 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  *
  * ### Overview
  *
- * The `ui5-message-strip` component enables the embedding of app-related messages.
- * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Critical and Negative.
- * Each message can have a Close button, so that it can be removed from the UI, if needed.
- *
+ * The ui5-message-strip component allows for the embedding of application-related messages.
+ * It supports four semantic designs, each with its own color and icon: "Information", "Positive", "Critical", and "Negative".
+ * Additionally, users can choose from two color sets ("ColorSet1" and "ColorSet2"), each containing 10 predefined color schemes.
+ * Each message shows a "Close" button, so that it can be removed from the UI, if needed.
+
  * ### Usage
  *
  * For the `ui5-message-strip` component, you can define whether it displays

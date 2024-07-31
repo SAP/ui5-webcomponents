@@ -1393,6 +1393,26 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
 		});
 
+		it("Backspace should not delete tokens, when MCB is readonly", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-ro");
+			const inner = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await inner.click();
+
+			assert.strictEqual(tokens.length, 3, "3 Tokens are placed in the MCB");
+
+			await inner.keys("Backspace");
+			await inner.keys("Backspace");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 3, "3 Tokens are placed in the MCB");
+			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
+		});
+
 		it("should open/close popover on keyboard combination ctrl + i", async () => {
 			const mcb = await browser.$("#truncated-token");
 			const inner = await mcb.shadow$("input");
@@ -1499,6 +1519,35 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
+		});
+
+		it("Should not open value state popup when popover is open after clicking n more link", async () => {
+			const mcb = await browser.$("#mcb-select-all-vs");
+
+			await mcb.scrollIntoView();
+			await mcb.click();
+
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const valueStatePopover = await mcb.shadow$("ui5-popover");
+
+			assert.notOk(await popover.getProperty("open"), "Popover with value state message header should not be opened.");
+			assert.ok(await valueStatePopover.getProperty("open"), "Value state popover should be opened.");
+
+			await mcb.keys("F4");
+			await browser.keys("ArrowUp");
+			await browser.keys("Enter");
+			await browser.keys("Tab");
+
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			nMoreText.click();
+
+			await browser.waitUntil(async () => mcb.getProperty("open"), {
+				timeout: 1000,
+				timeoutMsg: "Popover is open"
+			});
+
+			assert.ok(await popover.getProperty("open"), "Popover with value state message header should be opened.");
+			assert.notOk(await valueStatePopover.getProperty("open"), "Value state popover should not be opened.");
 		});
 
 		it("Should apply correct text to the tokens overflow indicator", async () => {
@@ -1714,19 +1763,21 @@ describe("MultiComboBox general interaction", () => {
 			const mCbWarning = await browser.$("#mcb-warning");
 			const mCbSuccess = await browser.$("#mcb-success");
 			const mCbError = await browser.$("#mcb-error");
+			let input = await mCbWarning.shadow$("#ui5-multi-combobox-input");
+
+			await input.click();
 
 			let popover = await mCbWarning.shadow$("ui5-popover");
-
-			await mCbWarning.click();
-
 			let ariaHiddenText = await mCbWarning.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			let valueStateText = await popover.$("div").getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 			assert.strictEqual(valueStateText.includes("Warning issued"), true, "Displayed value state message text is correct");
 
+			input = await mCbError.shadow$("#ui5-multi-combobox-input");
+
 			await mCbWarning.keys("Escape");
-			await mCbError.click();
+			await input.click();
 
 			popover = await mCbError.shadow$("ui5-popover");
 
@@ -1750,8 +1801,7 @@ describe("MultiComboBox general interaction", () => {
 			await mCbInformation.click();
 			await mCbInformation.keys("a");
 
-			const popoverHeader = await mCbInformation.shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
-			const valueStateText = await popoverHeader.$("div").getHTML(false);
+			const valueStateText = await mCbInformation.$("div[slot='valueStateMessage']").getHTML(false);
 			const ariaHiddenText = await mCbInformation.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");

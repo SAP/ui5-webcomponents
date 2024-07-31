@@ -365,7 +365,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
@@ -405,6 +405,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	}
 
 	onResponsivePopoverBeforeOpen() {
+		this._calendar.timestamp = this._calendarTimestamp;
 		this._calendarCurrentPicker = this.firstPicker;
 	}
 
@@ -419,6 +420,11 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
+	}
+
+	get _calendar() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!
+			.querySelector<Calendar>("[ui5-calendar]")!;
 	}
 
 	/**

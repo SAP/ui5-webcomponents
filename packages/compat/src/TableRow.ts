@@ -199,7 +199,7 @@ class TableRow extends UI5Element implements ITableRow {
 		const target = e.target as HTMLElement;
 		const checkboxPressed = target.classList.contains("ui5-multi-select-checkbox");
 		const rowElements = Array.from(this.shadowRoot!.querySelectorAll("tr") || []);
-		const elements = rowElements.map(getLastTabbableElement);
+		const elements = rowElements.map(getLastTabbableElement).filter(Boolean);
 		const lastFocusableElement = elements.pop();
 
 		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {

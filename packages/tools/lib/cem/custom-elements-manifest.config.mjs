@@ -130,6 +130,10 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass.events = findAllDecorators(classNode, "event")
 		?.map(event => processEvent(ts, event, classNode, moduleDoc));
 
+	const filename = classNode.getSourceFile().fileName;
+	const sourceFile = typeProgram.getSourceFile(filename);
+	const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
+
 	// Slots (with accessor), methods and fields
 	for (let i = 0; i < (currClass.members?.length || 0); i++) {
 		const member = currClass.members[i];
@@ -184,20 +188,21 @@ function processClass(ts, classNode, moduleDoc) {
 				const propertyDecorator = findDecorator(classNodeMember, "property");
 
 				if (propertyDecorator) {
-					member._ui5validator = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => ["validator", "type"].includes(property.name.text))?.initializer?.text || "String";
 					member._ui5noAttribute = propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "noAttribute")?.initializer?.kind === ts.SyntaxKind.TrueKeyword || undefined;
 				}
 
-				if (currClass.customElement && member.privacy === "public" && !propertyDecorator?.expression?.arguments[0]?.properties?.find(property => property.name.text === "multiple") && !["object"].includes(member._ui5validator?.toLowerCase())) {
-					const filename = classNode.getSourceFile().fileName;
-					const sourceFile = typeProgram.getSourceFile(filename);
-					const tsProgramClassNode = sourceFile.statements.find(statement => ts.isClassDeclaration(statement) && statement.name?.text === classNode.name?.text);
+				if (currClass.customElement && member.privacy === "public") {
 					const tsProgramMember = tsProgramClassNode.members.find(m => ts.isPropertyDeclaration(m) && m.name?.text === member.name);
 					const attributeValue = typeChecker.typeToString(typeChecker.getTypeAtLocation(tsProgramMember), tsProgramMember);
 
 					if (attributeValue === "boolean" && member.default === "true") {
 						logDocumentationError(moduleDoc.path, `Boolean properties must be initialzed to false. [${member.name}] property of class [${className}] is intialized to \`true\``)
 					}
+
+					if (!member.type) {
+						logDocumentationError(moduleDoc.path, `Public properties must have type. The type of [${member.name}] property is not determinated automatically. Please check it.`)
+					}
+
 					currClass.attributes.push({
 						description: member.description,
 						name: toKebabCase(member.name),

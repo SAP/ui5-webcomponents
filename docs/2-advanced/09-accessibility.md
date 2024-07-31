@@ -185,6 +185,7 @@ The `accessibilityAttributes` property is currently supported in:
 `accessibilityAttributes` is also supported for composite components, where the application can enrich the accessibility of elements inside the component. For a more detailed information check the documentation of the property in:
 * [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/FlexibleColumnLayout/)
 * [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/components/fiori/ShellBar/)
+* [MenuItem](https://sap.github.io/ui5-webcomponents/nightly/components/MenuItem/)
 
 ---
 

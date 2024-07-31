@@ -579,10 +579,10 @@ Furthermore, grouping is now implemented with a hierarchical structure, e.g. nes
 If you previously used the `ui5-cb-group-item` web component as separator to define groups in a flat structure:
 ```html
 <ui5-combobox placeholder="Select a country">
-	  <ui5-cb-group-item text="Asia"></ui5-cb-group-item>
+    <ui5-cb-group-item text="Asia"></ui5-cb-group-item>
     <ui5-cb-item text="Afghanistan"></ui5-cb-item>
     <ui5-cb-item text="China"></ui5-cb-item>
-	  <ui5-cb-group-item text="Europe"></ui5-cb-group-item>
+    <ui5-cb-group-item text="Europe"></ui5-cb-group-item>
     <ui5-cb-item text="Austria"></ui5-cb-item>
     <ui5-cb-item text="Bulgaria"></ui5-cb-item>
 </ui5-combobox>
@@ -1369,7 +1369,7 @@ Now you have to use it like:
 ```html
 <ui5-li additional-text-state="Negative"></ui5-li>
 <ui5-li additional-text-state="Critical"></ui5-li>
-<ui5-li additional-text-state="Success"></ui5-li>
+<ui5-li additional-text-state="Positive"></ui5-li>
 ```
 
 - The `image` property has been removed and the `imageContent` slot has been renamed to `image`.
@@ -2013,7 +2013,6 @@ Now, the property is not available and must not be set:
 
 ### ui5-table
 
-### ui5-split-button
 | Changed item | Old     | New     | 
 |--------------|---------|---------|
 | Class        | `Table, TableCell, TableRow, TableColumn` | Moved | 
@@ -2287,7 +2286,7 @@ Now you have to use it like:
 ```html
 <ui5-tree-item additional-text-state="Negative"></ui5-tree-item>
 <ui5-tree-item additional-text-state="Critical"></ui5-tree-item>
-<ui5-tree-item additional-text-state="Success"></ui5-tree-item>
+<ui5-tree-item additional-text-state="Positive"></ui5-tree-item>
 ```
 
 ### ui5-toast

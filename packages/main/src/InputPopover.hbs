@@ -1,4 +1,4 @@
-{{#if showSuggestions}}
+{{#if _effectiveShowSuggestions}}
 	<ui5-responsive-popover
 		class="{{classes.popover}}"
 		hide-arrow
@@ -13,6 +13,7 @@
 		@ui5-scroll="{{_scroll}}"
 		.open={{open}}
 		.opener={{this}}
+		accessible-name="{{_popupLabel}}"
 	>
 	{{#if _isPhone}}
 		<div slot="header" class="ui5-responsive-popover-header">

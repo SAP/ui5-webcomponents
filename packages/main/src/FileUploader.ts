@@ -96,7 +96,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Comma-separated list of file types that the component should accept.
 	 *
 	 * **Note:** Please make sure you are adding the `.` in front on the file type, e.g. `.png` in case you want to accept png's only.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -186,7 +186,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the component is in `Information`, `Warning` or `Error` value state.
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */

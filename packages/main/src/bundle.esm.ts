@@ -55,6 +55,7 @@ import Table from "./Table.js";
 import TableHeaderCell from "./TableHeaderCell.js";
 import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
+import TableSelection from "./TableSelection.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import SuggestionItemCustom from "./SuggestionItemCustom.js";

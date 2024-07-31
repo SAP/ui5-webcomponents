@@ -161,8 +161,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * Defines the value state of the component.
 	 *
 	 * **Note:** If `maxlength` property is set,
-	 * the component turns into "Warning" state once the characters exceeds the limit.
-	 * In this case, only the "Error" state is considered and can be applied.
+	 * the component turns into "Critical" state once the characters exceeds the limit.
+	 * In this case, only the "Negative" state is considered and can be applied.
 	 * @default "None"
 	 * @since 1.0.0-rc.7
 	 * @public
@@ -287,7 +287,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed if the component has
-	 * `valueState` of type `Information`, `Warning` or `Error`.
+	 * `valueState` of type `Information`, `Critical` or `Negative`.
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
@@ -395,7 +395,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget && this.contains(eTarget);
 
 		this.focused = false;
 
@@ -577,7 +577,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		}
 
 		if (this.hasCustomValueState) {
-			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 		}
 
 		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
@@ -609,10 +609,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get hasValueState() {
 		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
-	}
-
-	get valueStateMessageText() {
-		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {

@@ -381,8 +381,21 @@ describe("Form support", () => {
 		const submitBtn = await browser.$("#time_picker_btn1");
 		await submitBtn.click();
 
-		const hrefIsSame = await browser.executeAsync(done => {
-			done(location.href.endsWith("FormSupport.html?time_picker3=&time_picker4=1%3A10%3A10%E2%80%AFPM"));
+		let hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html"));
+		});
+
+		assert.ok(hrefIsSame, "Form wasn't submitted due not filled required field");
+
+		const time_picker3 = await browser.$("#time_picker3");
+		await time_picker3.click();
+
+		await browser.keys(["o", "k"])
+
+		await submitBtn.click();
+
+		hrefIsSame = await browser.executeAsync(done => {
+			done(location.href.endsWith("FormSupport.html?time_picker3=ok&time_picker4=1%3A10%3A10%E2%80%AFPM"));
 		});
 		assert.ok(hrefIsSame, "Form was submitted with correct parameters");
 	});

@@ -1,7 +1,7 @@
 :root {
 	--_ui5-tag-height: 1rem;
-	--_ui5-tag-padding-inline: 0.3125em;
 	--_ui5-tag-padding-inline-icon-only: 0.1875rem;
+	--_ui5-tag-text-padding: 0 0.25rem;
 	--_ui5-tag-text-transform: uppercase;
 	--_ui5-tag-icon-width: 0.75rem;
 	--_ui5-tag-icon-gap: 0.125rem;
@@ -111,7 +111,7 @@
 	--ui5-tag-set2-color-scheme-10-active-border: var(--sapIndicationColor_10_Active_BorderColor);
 
 	/* Sizes */
-	--_ui5-tag-height_size_l: 1.75rem;
+	--_ui5-tag-height_size_l: 1.5rem;
 	--_ui5-tag-min-width_size_l: 1.75rem;
 	--_ui5-tag-font-size_size_l: 1.25rem;
 	--_ui5-tag-icon_min_width_size_l: 1.25rem;

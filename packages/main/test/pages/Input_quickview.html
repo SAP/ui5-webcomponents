@@ -190,7 +190,7 @@
 
 		[].slice.call(document.querySelectorAll("#inputPreview2 .suggestionItem")).forEach(function(el) {
 			el.addEventListener("mouseover", function (event) {
-				const item = event.detail.item;
+				const item = event.currentTarget;
 				quickViewCard2.open = false;
 				quickViewCard2.opener = item;
 				quickViewCard2.open = true;

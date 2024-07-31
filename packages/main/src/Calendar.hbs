@@ -19,6 +19,7 @@
 			?hide-week-numbers="{{hideWeekNumbers}}"
 			@ui5-change="{{onSelectedDatesChange}}"
 			@ui5-navigate="{{onNavigate}}"
+			exportparts="day-cell, day-cell-selected, day-cell-selected-between"
 		></ui5-daypicker>
 
 		<ui5-monthpicker
@@ -34,6 +35,7 @@
 			timestamp="{{_timestamp}}"
 			@ui5-change="{{onSelectedMonthChange}}"
 			@ui5-navigate="{{onNavigate}}"
+			exportparts="month-cell, month-cell-selected"
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
@@ -49,6 +51,7 @@
 			timestamp="{{_timestamp}}"
 			@ui5-change="{{onSelectedYearChange}}"
 			@ui5-navigate="{{onNavigate}}"
+			exportparts="year-cell, year-cell-selected"
 		></ui5-yearpicker>
 	</div>
 	<div class="ui5-calheader">

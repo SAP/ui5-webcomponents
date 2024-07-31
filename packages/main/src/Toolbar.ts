@@ -498,6 +498,7 @@ class Toolbar extends UI5Element {
 	}
 
 	onInteract(e: CustomEvent) {
+		e.stopImmediatePropagation();
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
 
