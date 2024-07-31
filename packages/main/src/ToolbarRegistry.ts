@@ -5,7 +5,7 @@ import type ToolbarItem from "./ToolbarItem.js";
 const registry = getSharedResource<Map<string, typeof ToolbarItem>>("ToolbarItem.registry", new Map());
 
 const registerToolbarItem = (ElementClass: typeof ToolbarItem) => {
-	registry.set(ElementClass.name, ElementClass);
+	registry.set(ElementClass.getMetadata().getPureTag(), ElementClass);
 };
 
 const getRegisteredToolbarItem = (name: string) => {
