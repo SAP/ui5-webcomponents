@@ -34,6 +34,7 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
+import findNextPlacement from "@ui5/webcomponents-base/dist/util/dragAndDrop/findNextPlacement.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
@@ -610,35 +611,14 @@ class TabContainer extends UI5Element {
 		draggedElement.focus();
 	}
 
-	_moveTab(tab: TabInStrip, e: KeyboardEvent) {
-		let placement;
-		let dropTarget;
+	_moveItem(tab: TabInStrip, e: KeyboardEvent) {
 		const realTab = tab.realTabReference;
 
 		if (!realTab.movable) {
 			return;
 		}
 
-		switch (e.key) {
-		case "ArrowLeft":
-		case "ArrowUp":
-			placement = "Before";
-			dropTarget = realTab.previousElementSibling as HTMLElement;
-			break;
-		case "ArrowRight":
-		case "ArrowDown":
-			placement = "After";
-			dropTarget = realTab.nextElementSibling as HTMLElement;
-			break;
-		case "Home":
-			placement = "Before";
-			dropTarget = realTab.parentElement?.firstElementChild as HTMLElement;
-			break;
-		case "End":
-			placement = "After";
-			dropTarget = realTab.parentElement?.lastElementChild as HTMLElement;
-			break;
-		}
+		const { placement, dropTarget } = findNextPlacement(realTab, e);
 
 		if (!dropTarget || !placement) {
 			return;
@@ -803,7 +783,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isCtrl(e)) {
-			this._moveTab(tab, e);
+			this._moveItem(tab, e);
 			return;
 		}
 

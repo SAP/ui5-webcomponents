@@ -18,6 +18,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import findNextPlacement from "@ui5/webcomponents-base/dist/util/dragAndDrop/findNextPlacement.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -892,33 +893,11 @@ class List extends UI5Element {
 	}
 
 	_moveItem(item: ListItemBase, e: KeyboardEvent) {
-		let placement;
-		let dropTarget;
-
-		if (!item.movable) {
+		if (!item || !item.movable) {
 			return;
 		}
 
-		switch (e.key) {
-		case "ArrowLeft":
-		case "ArrowUp":
-			placement = "Before";
-			dropTarget = item.previousElementSibling as HTMLElement;
-			break;
-		case "ArrowRight":
-		case "ArrowDown":
-			placement = "After";
-			dropTarget = item.nextElementSibling as HTMLElement;
-			break;
-		case "Home":
-			placement = "Before";
-			dropTarget = item.parentElement?.firstElementChild as HTMLElement;
-			break;
-		case "End":
-			placement = "After";
-			dropTarget = item.parentElement?.lastElementChild as HTMLElement;
-			break;
-		}
+		const { placement, dropTarget } = findNextPlacement(item, e);
 
 		if (!dropTarget || !placement) {
 			return;
