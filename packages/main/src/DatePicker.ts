@@ -423,7 +423,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get _calendar() {
-		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!
+		return this.staticAreaItem!.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!
 			.querySelector<Calendar>("[ui5-calendar]")!;
 	}
 
