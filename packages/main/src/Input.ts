@@ -1034,11 +1034,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.fireEvent("select", {});
 	}
 
-	_handleInput(e: InputEvent | CustomEvent<InputEventDetail>) {
+	_handleInput(e: InputEvent | CustomEvent<InputEventDetail> | Event) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail as InputEventDetail).inputType
+			|| (e as Event).type
+			|| (e as CustomEvent<InputEventDetail>).detail.inputType
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1283,7 +1284,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.valueBeforeSelectionStart = inputValue;
 
 		if (isUserInput) { // input
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
+			const inputType = e.inputType || e.type;
+			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 			this.fireResetSelectionChange();
