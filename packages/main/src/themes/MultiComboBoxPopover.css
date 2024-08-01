@@ -12,7 +12,7 @@
 	position: sticky;
 	top: 0;
 	z-index: 2;
-	background: var(--sapToolbar_Background);
+	background: var(--sapPageHeader_Background);
 }
 
 .ui5-mcb-select-all-checkbox {

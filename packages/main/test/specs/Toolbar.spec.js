@@ -64,14 +64,13 @@ describe("Toolbar general interaction", () => {
 	it("Should call child events only once", async () => {
 		const toolbar = await browser.$("#clickCountToolbar");
 		const countButton = await toolbar.shadow$("#clickCounter");
-		const clearButton = await toolbar.shadow$("#clearCounter");
 		const input = await browser.$("#input");
 
-		await clearButton.click();
+		await input.setAttribute("value", "0");
 		await countButton.click();
 
 		assert.strictEqual(await input.getProperty("value"), "1", "Button click event only called once");
-		await clearButton.click();
+		await input.setAttribute("value", "0");
 	});
 
 

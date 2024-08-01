@@ -331,13 +331,30 @@
 		<div id="cont" class="myContent">I am the content</div>
 	</ui5-card>
 
+	<ui5-card
+		id="loadingCard"
+		loading
+		loading-delay="500"
+		accessible-name="My Card">
+		<ui5-card-header
+			id="loadingCardHeader"
+			slot="header"
+			interactive
+			title-text="Interactive Header">
+			<ui5-button slot="action">Header Button</ui5-button>
+		</ui5-card-header>
+		<div class="myContent">
+			<ui5-button>Content Button</ui5-button>
+		</div>
+	</ui5-card>
+
 	<script>
 		function onClick(event) {
 			console.log(event);
 			field.value = `${parseInt(field.value) + 1}`;
 		}
 
-		[cardHeader, cardHeader2, cardHeader3].forEach(function (el) {
+		[cardHeader, cardHeader2, cardHeader3, loadingCardHeader].forEach(function (el) {
 			el.addEventListener("ui5-click", onClick);
 		});
 	</script>

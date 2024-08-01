@@ -47,6 +47,7 @@ type Month = {
 	nameInSecType: string,
 	disabled: boolean,
 	classes: string,
+	parts: string,
 }
 
 type MonthInterval = Array<Array<Month>>;
@@ -162,10 +163,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
+				parts: "month-cell",
 			};
 
 			if (isSelected) {
 				month.classes += " ui5-mp-item--selected";
+				month.parts += " month-cell-selected";
 			}
 
 			if (isDisabled) {
