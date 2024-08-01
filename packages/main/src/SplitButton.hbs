@@ -14,8 +14,6 @@
 		design="{{design}}"
 		icon="{{icon}}"
 		tabindex="-1"
-		tooltip="{{_defaultButtonTooltip}}"
-		.accessibilityAttributes={{accInfo.defaultButton.accessibilityAttributes}}
 		?disabled="{{disabled}}"
 		?active="{{_textButtonActive}}"
 		@click="{{_handleMouseClick}}"
@@ -34,7 +32,7 @@
 		design="{{design}}"
 		icon="slim-arrow-down"
 		tabindex="-1"
-		tooltip="{{_arrowButtonTooltip}}"
+		tooltip="{{accInfo.arrowButton.title}}"
 		.accessibilityAttributes={{accInfo.arrowButton.accessibilityAttributes}}
 		?disabled="{{disabled}}"
 		?active="{{effectiveActiveArrowButton}}"

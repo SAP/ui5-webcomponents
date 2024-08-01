@@ -16,7 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -28,6 +28,7 @@ import Button from "./Button.js";
 import {
 	SPLIT_BUTTON_DESCRIPTION,
 	SPLIT_BUTTON_KEYBOARD_HINT,
+	SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -35,13 +36,6 @@ import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.j
 
 // Styles
 import SplitButtonCss from "./generated/themes/SplitButton.css.js";
-
-type SplitButtonDefaultAccessibilityAttributes = Pick<AccessibilityAttributes, "name">
-type SplitButtonArrowAccessibiliityAttributes = Pick<AccessibilityAttributes, "name" | "hasPopup" | "controls">
-type SplitButtonAccessibilityAttributes = {
-	defaultButton?: SplitButtonDefaultAccessibilityAttributes,
-	arrowButton?: SplitButtonArrowAccessibiliityAttributes
-}
 
 /**
  * @class
@@ -153,33 +147,6 @@ class SplitButton extends UI5Element {
 	 */
 	@property()
 	accessibleName?: string;
-
-	/**
-	 * Defines additional accessibility attributes on different areas of the component.
-	 *
-	 * - **defaultButton** - `defaultButton.name`.
-	 * - **arrowButton** - `arrowButton.hasPopup`, `arrowButton.controls` and `arrowButton.name`.
-	 *
-	 * The accessibility attributes support the following values:
-	 *
-	 * - **role**: Defines the accessible ARIA role of the logo area.
-	 * Accepts the following string values: `button` or `link`.
-	 *
-	 * - **hasPopup**: Indicates the availability and type of interactive popup element,
-	 * such as menu or dialog, that can be triggered by the button.
-	 *
-	 * - **name**: Defines the accessible ARIA name of the area.
-	 * Accepts any string.
-	 *
-	 * - **controls**: Identifies the element (or elements) whose contents or presence are controlled by the button element.
-	 * Accepts a lowercase string value.
-	 *
-	 * @default {}
-	 * @public
-	 * @since 2.0
-	 */
-	@property({ type: Object })
-	accessibilityAttributes: SplitButtonAccessibilityAttributes = {};
 
 	/**
 	 * Defines the tabIndex of the component.
@@ -481,26 +448,17 @@ class SplitButton extends UI5Element {
 				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
 			},
-			defaultButton: {
-				"title": this._defaultButtonTooltip,
-				"accessibilityAttributes": {},
-			},
 			arrowButton: {
-				"title": this._arrowButtonTooltip,
+				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
-					"hasPopup": this.accessibilityAttributes.arrowButton?.hasPopup,
-					"controls": this.accessibilityAttributes.arrowButton?.controls,
+					"hasPopup": AriaHasPopup.Menu.toLocaleLowerCase(),
 				},
 			},
 		};
 	}
 
-	get _defaultButtonTooltip() {
-		return this.accessibilityAttributes.defaultButton?.name;
-	}
-
-	get _arrowButtonTooltip() {
-		return this.accessibilityAttributes.arrowButton?.name;
+	get arrowButtonTooltip() {
+		return SplitButton.i18nBundle.getText(SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP);
 	}
 
 	get ariaLabelText() {
@@ -511,6 +469,3 @@ class SplitButton extends UI5Element {
 SplitButton.define();
 
 export default SplitButton;
-export type {
-	SplitButtonAccessibilityAttributes,
-};
