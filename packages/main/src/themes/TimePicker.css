@@ -34,6 +34,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	height: inherit;
 }
 
 :host .ui5-time-picker-input {
@@ -44,4 +45,5 @@
 	letter-spacing: inherit;
 	word-spacing: inherit;
 	margin: inherit;
+	height: inherit;
 }
