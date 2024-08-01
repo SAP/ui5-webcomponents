@@ -229,10 +229,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return `${this.text} ${this.accessibleName}`.trim();
 	}
 
-	get menuAccessibleName() {
-		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
-	}
-
 	get menuHeaderTextPhone() {
 		return this.text;
 	}
@@ -247,6 +243,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get labelClose() {
 		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
+	}
+
+	get acessibleNameText() {
+		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	get isSeparator(): boolean {

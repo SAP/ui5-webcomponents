@@ -270,7 +270,7 @@ class Menu extends UI5Element {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
-	get menuAccessibleName() {
+	get acessibleNameText() {
 		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
