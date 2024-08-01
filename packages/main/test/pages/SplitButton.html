@@ -104,6 +104,9 @@
 	</ui5-menu>
 </body>
 <script>
+	const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
+	const menu = document.getElementById("menu");
+
 	splitBtn.addEventListener("ui5-arrow-click", function() {
 		menu.opener = splitBtn; 
 		menu.open = !menu.open;
