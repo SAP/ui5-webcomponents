@@ -172,7 +172,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
 	 * @private
 	 */
-	 @property()
+	 @property({ type: Number })
 	_secondTimestamp?: number;
 
 	/**

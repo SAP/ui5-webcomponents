@@ -135,6 +135,15 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputLiveChangeResult.getValue(), "3", "input is fired 3 times");
 	});
 
+	it("fires select event", async () => {
+		const inputInner = await browser.$("#selectInput").shadow$("input");
+		const selectResult = await browser.$("#select-event-counter");
+
+		await inputInner.doubleClick();
+
+		assert.strictEqual(await selectResult.getText(), "1", "select is called");
+	});
+
 	it("fires change when same value typed, but value is mutated via API in between", async () => {
 		const inputChange = await browser.$("#inputChange").shadow$("input");
 		const inputChangeResult = await browser.$("#inputChangeResult").shadow$("input");

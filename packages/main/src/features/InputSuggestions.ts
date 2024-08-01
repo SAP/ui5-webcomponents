@@ -1,5 +1,5 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
@@ -45,7 +45,7 @@ type SuggestionsAccInfo = {
  * @class
  * @private
  */
-class Suggestions {
+class Suggestions extends ComponentFeature {
 	component: SuggestionComponent;
 	slotName: string;
 	handleFocus: boolean;
@@ -60,6 +60,7 @@ class Suggestions {
 	static SCROLL_STEP = 60;
 
 	constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean) {
+		super();
 		// The component, that the suggestion would plug into.
 		this.component = component;
 
@@ -555,13 +556,13 @@ class Suggestions {
 		];
 	}
 
-	static async init() {
+	static async define() {
 		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
 // Add suggestions support to the global features registry so that Input.js can use it
-registerFeature("InputSuggestions", Suggestions);
+registerComponentFeature("InputSuggestions", Suggestions);
 
 export default Suggestions;
 
