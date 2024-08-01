@@ -645,6 +645,10 @@ abstract class UI5Element extends HTMLElement {
 				// eslint-disable-next-line
 				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
 			}
+			if (typeof newValue === "string" && propData.type && propData.type !== String) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] string value for property [${name}] of component [${tag}] which has a non-string type [${propData.type}] in its property decorator. Attribute conversion will stop and keep the string value in the property.`);
+			}
 		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
