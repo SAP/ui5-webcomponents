@@ -46,7 +46,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  *
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
@@ -252,9 +252,11 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return;
 		}
 
-		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || isShift(e) || !isSelectionCheckbox(e)) {
+		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !isShift(e)) {
 			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
-			this._stopRangeSelection();
+			if (isSelectionCheckbox(e)) {
+				this._stopRangeSelection();
+			}
 		}
 
 		if (this._rangeSelection) {

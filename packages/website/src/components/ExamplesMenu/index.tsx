@@ -32,11 +32,11 @@ export default function ({loadHelloWorld, loadCounter, initialActiveState }) {
 	}, [dropdownRef]);
 
 	return (
-	<div className={clsx('navbar__item', 'dropdown', 'dropdown--hoverable', {
+	<div ref={dropdownRef} className={clsx('navbar__item', 'dropdown', {
 		'dropdown--show': showDropdown,
 	})}>
 	  
-		<a href="#" aria-haspopup="true" aria-expanded="false" role="button" className="navbar__link"
+		<a href="#" aria-haspopup="true" aria-expanded={showDropdown} role="button" className="navbar__link"
 		 onClick={(e) => {
 			e.preventDefault();
 			setShowDropdown(!showDropdown);
@@ -47,7 +47,8 @@ export default function ({loadHelloWorld, loadCounter, initialActiveState }) {
 					className={clsx('dropdown__link', {"menu__link--active": active === "hello-world" })}
 					onClick={() => { 
 						setActive("hello-world");
-						loadHelloWorld()
+						loadHelloWorld();
+						setShowDropdown(false);
 					}}>
 						Hello World
 				</Link>
@@ -58,6 +59,7 @@ export default function ({loadHelloWorld, loadCounter, initialActiveState }) {
 					onClick={() => { 
 						setActive("counter");
 						loadCounter();
+						setShowDropdown(false);
 					}}>
 					Counter
 				</Link>

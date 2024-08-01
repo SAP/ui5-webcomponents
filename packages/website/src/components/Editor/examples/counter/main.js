@@ -1,6 +1,5 @@
 export default `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { customElement, property } from "@ui5/webcomponents-base/dist/decorators.js";
 
 @customElement({

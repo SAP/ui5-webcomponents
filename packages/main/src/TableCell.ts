@@ -20,7 +20,7 @@ import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
  *
  * @constructor
  * @extends TableCellBase
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
