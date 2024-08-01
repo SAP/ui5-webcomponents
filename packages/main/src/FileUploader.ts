@@ -97,11 +97,13 @@ type FileUploaderFileSizeExceededEventDetail = {
 	},
 })
 /**
- * Event is fired when the size of a file is above the maximumFileSize property.
+ * Event is fired when the size of a file is above the `maxFileSize` property.
  * @param {string} fileName The name of a file to be uploaded.
  * @param {number} fileSize The size in MB of a file to be uploaded.
+ * @since 2.2.0
+ * @public
  */
-@event<FileUploaderFileSizeExceededEventDetail>("fileSizeExceed", {
+@event<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
 	detail: {
 		/**
 		 * @public
@@ -181,6 +183,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the maximum file size limit in megabytes which prevents the upload if at least one file exceeds it.
 	 * @default undefined
+	 * @since 2.2.0
 	 * @public
 	 */
 	@property({ type: Number })
@@ -333,10 +336,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onChange(e: Event) {
-		const changedFiles = (e.target as HTMLInputElement).files;
+		let changedFiles = (e.target as HTMLInputElement).files;
 
 		if (!this._checkFileSize(changedFiles)) {
-			return;
+			if (!this.value) {
+				return;
+			}
+			changedFiles = new DataTransfer().files;
 		}
 
 		this._updateValue(changedFiles);
@@ -351,19 +357,19 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}, "");
 	}
 
-	/** Returns true if all files are below the maxiumumFileSize,
-	 * otherwise throws a "fileSizeExceed" if one file exceeds it.
+	/**
+	 * Returns true if all files are below the maxFileSize, otherwise throws a "fileSizeExceeded" event if one file exceeds it.
 	 * @private
 	 */
 	_checkFileSize(files: FileList | null): boolean {
-		if (!files) {
+		if (!(this.maxFileSize && files)) {
 			return true;
 		}
+
 		for (let i = 0; i < files.length; i++) {
 			const fileSize = (files[i].size / 1024) / 1024;
-			if (this.maxFileSize && (fileSize > this.maxFileSize)) {
-				// todo - name it Exceed or Exceeded?
-				this.fireEvent<FileUploaderFileSizeExceededEventDetail>("fileSizeExceed", {
+			if (fileSize > this.maxFileSize) {
+				this.fireEvent<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
 					fileName: files[i].name,
 					fileSize,
 				});
@@ -507,4 +513,5 @@ FileUploader.define();
 export default FileUploader;
 export type {
 	FileUploaderChangeEventDetail,
+	FileUploaderFileSizeExceededEventDetail,
 };
