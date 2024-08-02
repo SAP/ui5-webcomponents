@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
@@ -12,7 +11,6 @@ import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
-import Title from "./Title.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Styles
@@ -23,13 +21,16 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-responsive-popover</code> acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
+ * ### Overview
+ * The `ui5-responsive-popover` acts as a Popover on desktop and tablet, while on phone it acts as a Dialog.
  * The component improves tremendously the user experience on mobile.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * Use it when you want to make sure that all the content is visible on any device.
  *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/ResponsivePopover.js";`
  * @constructor
  * @extends Popover
  * @since 1.0.0-rc.6
@@ -46,7 +47,6 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 		...Popover.dependencies,
 		Button,
 		Dialog,
-		Title,
 	],
 })
 class ResponsivePopover extends Popover {
@@ -56,25 +56,24 @@ class ResponsivePopover extends Popover {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	contentOnlyOnDesktop!: boolean;
+	contentOnlyOnDesktop = false;
 
 	/**
 	 * Used internaly for controls which must not have header.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hideHeader!: boolean;
+	_hideHeader = false;
 
 	/**
 	 * Defines whether a close button will be rendered in the header of the component
-	 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
-	 *
+	 * **Note:** If you are using the `header` slot, this property will have no effect
 	 * @private
 	 * @default false
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	_hideCloseButton!: boolean;
+	_hideCloseButton = false;
 
 	static i18nBundle: I18nBundle;
 
@@ -82,54 +81,40 @@ class ResponsivePopover extends Popover {
 		super();
 	}
 
-	/**
-	 * Shows popover on desktop and dialog on mobile.
-	 * @param opener the element that the popover is shown at
-	 * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-	 * @public
-	 * @returns Resolves when the responsive popover is open
-	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false): Promise<void> {
+	async openPopup() {
 		if (!isPhone()) {
-			await super.showAt(opener, preventInitialFocus);
-		} else {
-			this.style.display = "contents";
-			const nextZIndex = getNextZIndex();
-			if (!nextZIndex) {
-				return;
-			}
+			await super.openPopup();
+		} else if (this._dialog) {
+			this._dialog.open = true;
+		}
+	}
 
-			this.style.zIndex = nextZIndex.toString();
-			await this._dialog.show(preventInitialFocus);
+	async _show() {
+		if (!isPhone()) {
+			return super._show();
 		}
 	}
 
 	/**
 	 * Closes the popover/dialog.
-	 * @public
+	 * @override
 	 */
-	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
+	closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) : void {
 		if (!isPhone()) {
-			super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			super.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
 		} else {
-			this._dialog.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+			this._dialog?.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
 		}
 	}
 
-	toggle(opener: HTMLElement) {
-		if (this.isOpen()) {
-			return this.close();
+	toggle(opener: HTMLElement) : void {
+		if (this.open) {
+			this.closePopup();
+			return;
 		}
 
-		this.showAt(opener);
-	}
-
-	/**
-	 * Tells if the responsive popover is open.
-	 * @public
-	 */
-	isOpen() : boolean {
-		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
+		this.opener = opener;
+		this.open = true;
 	}
 
 	get classes() {
@@ -168,14 +153,14 @@ class ResponsivePopover extends Popover {
 	}
 
 	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+		this._opened = true;
 		this.open = true;
-		this.opened = true;
 		this._propagateDialogEvent(e);
 	}
 
 	_afterDialogClose(e: CustomEvent) {
+		this._opened = false;
 		this.open = false;
-		this.opened = false;
 		this._propagateDialogEvent(e);
 	}
 

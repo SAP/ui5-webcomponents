@@ -6,16 +6,19 @@
 
 There are several configuration settings that affect all UI5 Web Components globally.
 
-| Setting                                       | Values                                                                                                                                                                                                                                                                                         | Default Value | Description                                                            | Applies To                                                     |
-| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |---------------| ---------------------------------------------------------------------- | -------------------------------------------------------------- |
-| [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                      | `sap_horizon` | Visual theme to be applied                                             | All components                                                 |
-| [language](#language)                         | `ar`, `bg`, `ca`, `cs`, `cy`, `da`, `de`, `el`, `en`, `en_GB`, `es`, `es_MX`, `et`, `fi`, `fr`, `fr_CA`, `hi`, `hr`, `hu`, `in`, `it`, `iw`, `ja`, `kk`, `ko`, `lt`, `lv`, `ms`, `nl`, `no`, `pl`, `pt_PT`, `pt`, `ro`, `ru`, `sh`, `sk`, `sl`, `sv`, `th`, `tr`, `uk`, `vi`, `zh_CN`, `zh_TW` | N/A (`null`)  | Language to be used for translatable texts                             | Components and icons with translatable texts                   |
-| [animationMode](#animationMode)               | `full`, `basic`, `minimal`, `none`                                                                                                                                                                                                                                                             | `full`        | Amount/intensity of animations to be played for some components        | Components with animations (`ui5-panel`, `ui5-carousel`, etc.) |
-| [calendarType](#calendarType)                 | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `Gregorian`   | Default calendar type to be used for date-related components           | Date/time components (`ui5-date-picker`, etc.)                 |
-| [secondaryCalendarType](#calendarType)        | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `undefined`   | Default secondary calendar type to be used for date-related components | Date/time components (`ui5-date-picker`, etc.)                 |
-| [noConflict](#noConflict)                     | `true`, `false`                                                                                                                                                                                                                                                                                | `false`       | When set to true, all events will be fired with a `ui5-` prefix only   | Components that fire events (most do)                          |
-| [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                                                                                                                                                                                                       | `{}`          | Allows to override locale-specific configuration                       | Date/time components (`ui5-date-picker`, etc.)                 |
-| [fetchDefaultLanguage](#fetchDefaultLanguage) | `true`, `false`                                                                                                                                                                                                                                                                                | `false`       | Whether to fetch assets even for the default language                  | Framework                                                      |
+| Setting                                       | Values                                                                                                                                                                                                                                                                                         | Default Value         | Description                                                            | Applies To                                                     |
+|-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|------------------------------------------------------------------------|----------------------------------------------------------------|
+| [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                                                                                               | `sap_horizon`         | Visual theme to be applied                                             | All components                                                 |
+| [language](#language)                         | `ar`, `bg`, `ca`, `cs`, `cy`, `da`, `de`, `el`, `en`, `en_GB`, `es`, `es_MX`, `et`, `fi`, `fr`, `fr_CA`, `hi`, `hr`, `hu`, `in`, `it`, `iw`, `ja`, `kk`, `ko`, `lt`, `lv`, `ms`, `nl`, `no`, `pl`, `pt_PT`, `pt`, `ro`, `ru`, `sh`, `sk`, `sl`, `sv`, `th`, `tr`, `uk`, `vi`, `zh_CN`, `zh_TW` | N/A (`null`)          | Language to be used for translatable texts                             | Components and icons with translatable texts                   |
+| [animationMode](#animationMode)               | `full`, `basic`, `minimal`, `none`                                                                                                                                                                                                                                                             | `full`                | Amount/intensity of animations to be played for some components        | Components with animations (`ui5-panel`, `ui5-carousel`, etc.) |
+| [calendarType](#calendarType)                 | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `Gregorian`           | Default calendar type to be used for date-related components           | Date/time components (`ui5-date-picker`, etc.)                 |
+| [secondaryCalendarType](#calendarType)        | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `undefined`           | Default secondary calendar type to be used for date-related components | Date/time components (`ui5-date-picker`, etc.)                 |
+| [noConflict](#noConflict)                     | `true`, `false`                                                                                                                                                                                                                                                                                | `false`               | When set to true, all events will be fired with a `ui5-` prefix only   | Components that fire events (most do)                          |
+| [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                                                                                                                                                                                                       | `{}`                  | Allows to override locale-specific configuration                       | Date/time components (`ui5-date-picker`, etc.)                 |
+| [fetchDefaultLanguage](#fetchDefaultLanguage) | `true`, `false`                                                                                                                                                                                                                                                                                | `false`               | Whether to fetch assets even for the default language                  | Framework                                                      |
+| [defaultFontLoading](#defaultFontLoading) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to fetch default font faces                  | Framework                                                      |
+| [timezone](#timezone)                         | `Asia/Tokyo`, `Pacific/Apia`, `Asia/Kolkata`, `Europe/Sofia` and etc.                                                                                                                                                                                                                          | Your local time zone. | Allows to override your local time zone.                               | Date/time components (`ui5-date-picker`, etc.)                 |
+| [themeRoot](#themeRoot)                       | String to a URL - see the [themeRoot](#themeRoot) section below                                                                                                                                                                                                                                | N/A                   | Allows to set a URL to a Theme-designer-created custom theme.          | All components                                                 |
 
 ### theme
 <a name="theme"></a>
@@ -42,7 +45,7 @@ import "@ui5/webcomponents/dist/Assets.js";
 import "@ui5/webcomponents-fiori/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](../1-getting-started/05-using-assets.md) section.
+For more about assets, see the dedicated [Assets](04-using-assets.md) section.
 
  - Configure the additional theme either via the [configuration script](#script) or [module imports](#imports).
 
@@ -62,9 +65,6 @@ setTheme(getDefaultTheme());
 
 The following themes are deprecated and no longer maintained - out of maintenance and left for compatibility only. The themes will be removed in the next major version.
 We recommend using `Horizon` (sap_horizon) and `Quartz` (sap_fiori_3) theme families.
-- The `sap_belize` is known as `Belize` [deprecated since 1.22].
-- The `sap_belize_hcb` is known as `High Contrast Black` [deprecated since 1.22].
-- The `sap_belize_hcw` is known as `High Contrast White` [deprecated since 1.22].
 
 ### language
 <a name="language"></a>
@@ -90,7 +90,7 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 import "@ui5/webcomponents-icons/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](../1-getting-started/05-using-assets.md) section.
+For more about assets, see the dedicated [Assets](04-using-assets.md) section.
 
 - Configure the additional language either via the [configuration script](#script) or [module imports](#imports).
 
@@ -129,7 +129,7 @@ You can always override the calendar type for each instance via component-specif
 
 The `Gregorian` calendar type is built in all date-related UI5 Web Components.
 
-Calendar types are opt-in features, see [Using Features](../1-getting-started/06-using-features.md) for details.
+Calendar types are opt-in features, see [Using Features](05-using-features.md) for details.
 Setting another calendar type via configuration or component properties requires that the respective calendar type be explicitly imported.
 
 Example:
@@ -218,6 +218,50 @@ Example:
 }
 </script>
 ```
+### defaultFontLoading
+<a name="defaultFontLoading"></a>
+
+This configuration option controls whether default font faces are fetched over the network.
+
+Typically, you would not need to modify this setting. However, if for technical reasons you prefer the default font faces to not be fetched over the network, you can set `defaultFontLoading` to `false`.
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"defaultFontLoading": false
+}
+</script>
+```
+### timezone
+<a name="timezone"></a>
+
+The time zone should be an IANA time zone ID, e.g. "America/New_York". It can be set to the `timezone` property in the configuration script.
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"timezone": "Europe/Sofia"
+}
+</script>
+```
+
+### themeRoot
+<a name="themeRoot"></a>
+
+Allows you to set a URL, from which the framework will fetch the theme styles (CSS variables).
+
+*Note:* This configuration setting is only applicable to custom themes, created with SAP Theme Designer.
+
+Example:
+```html
+<script data-ui5-config type="application/json">
+{
+	"themeRoot": "https://my-example-host.com/"
+}
+</script>
+```
 
 ## Configuration Script
 <a name="script"></a>
@@ -234,7 +278,7 @@ Example:
 ```html
 <script data-ui5-config type="application/json">
 {
-	"theme": "sap_belize_hcb",
+	"theme": "sap_horizon_hcb",
 	"language": "ja",
 	"animationMode": "none",
 	"calendarType": "Japanese",
@@ -244,7 +288,9 @@ Example:
 	"noConflict": {
 		"events": ["selection-change", "header-click"]
 	},
-	"fetchDefaultLanguage": true
+	"fetchDefaultLanguage": true,
+	"timezone": "Europe/Sofia",
+	defaultFontLoading
 }
 </script>
 ```
@@ -298,4 +344,18 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 ```
 
-Next: [Right-To-Left (RTL) And Compact Mode](./02-rtl-and-compact-mode.md)
+ - `defaultFontLoading`
+
+```js
+import { getDefaultFontLoading, setDefaultFontLoading } from "@ui5/webcomponents-base/dist/config/Fonts.js";
+```
+ - `timezone` - can only be set initially in the configuration script.
+
+```js
+import { getTimezone } from "@ui5/webcomponents-base/dist/config/Timezone.js";
+```
+ - `themeRoot`
+
+```js
+import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
+```

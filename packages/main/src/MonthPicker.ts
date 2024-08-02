@@ -5,6 +5,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import {
 	isEnter,
 	isSpace,
@@ -19,7 +20,6 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -38,7 +38,6 @@ import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const PAGE_SIZE = 12; // total months on a single page
-const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
 
 type Month = {
 	timestamp: string,
@@ -50,6 +49,7 @@ type Month = {
 	nameInSecType: string,
 	disabled: boolean,
 	classes: string,
+	parts: string,
 }
 
 type MonthInterval = Array<Array<Month>>;
@@ -65,11 +65,9 @@ type MonthPickerNavigateEventDetail = {
 
 /**
  * Month picker component.
- *
  * @class
  *
  * Displays months which can be selected.
- *
  * @constructor
  * @extends CalendarPart
  * @private
@@ -94,16 +92,11 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 *
 	 * @public
 	 * @default []
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the day picker component.
@@ -118,13 +111,13 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @public
 	 */
 	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: `${CalendarSelectionMode}`;
+	selectionMode!: `${CalendarSelectionMode}`; // todo - update
 
-	@property({ type: Object, multiple: true })
-	_months!: MonthInterval;
+	@property({ type: Array })
+	_months: MonthInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
@@ -152,6 +145,11 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		if (!this._hidden) {
 			this.focus();
 		}
+	}
+
+	get rowSize() {
+		return (this.secondaryCalendarType === CalendarType.Islamic && this.primaryCalendarType !== CalendarType.Islamic)
+			|| (this.secondaryCalendarType === CalendarType.Persian && this.primaryCalendarType !== CalendarType.Persian) ? 2 : 3;
 	}
 
 	_buildMonths() {
@@ -192,10 +190,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
 				classes: "ui5-mp-item",
+				parts: "month-cell",
 			};
 
 			if (isSelected) {
 				month.classes += " ui5-mp-item--selected";
+				month.parts += " month-cell-selected";
 			}
 
 			if (isSelectedBetween) {
@@ -206,7 +206,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				month.classes += " ui5-mp-item--disabled";
 			}
 
-			const quarterIndex = Math.floor(i / ROW_SIZE);
+			const quarterIndex = Math.floor(i / this.rowSize);
 
 			if (months[quarterIndex]) {
 				months[quarterIndex].push(month);
@@ -256,9 +256,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isRight(e)) {
 			this._modifyTimestampBy(1);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-ROW_SIZE);
+			this._modifyTimestampBy(-this.rowSize);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(ROW_SIZE);
+			this._modifyTimestampBy(this.rowSize);
 		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-PAGE_SIZE);
 		} else if (isPageDown(e)) {
@@ -268,7 +268,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHomeCtrl(e)) {
 			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
+			this._setTimestamp(parseInt(this._months[PAGE_SIZE / this.rowSize - 1][this.rowSize - 1].timestamp)); // last month of last row
 		} else {
 			preventDefault = false;
 		}
@@ -282,7 +282,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._months.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
 			if (indexInRow !== -1) { // The current month is on this row
-				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
+				const index = homePressed ? 0 : this.rowSize - 1; // select the first (if Home) or last (if End) month on the row
 				this._setTimestamp(parseInt(row[index].timestamp));
 			}
 		});
@@ -399,7 +399,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js.
-	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
+	 *
+	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -408,7 +409,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by Calendar.js
-	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
+	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
 	_showNextPage() {

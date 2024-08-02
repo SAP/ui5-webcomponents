@@ -1,27 +1,20 @@
 /**
- * Different table growing modes.
+ * Growing mode of the &lt;ui5-table&gt; component.
  *
  * @public
  */
 enum TableGrowingMode {
 	/**
-	 * Component <code>load-more</code> is fired
-	 * upon pressing a "More" button at the bottom.
+	 * Renders a growing button, which can be pressed to load more data.
 	 * @public
 	 */
 	Button = "Button",
 
 	/**
-	 * Component <code>load-more</code> is fired upon scroll.
+	 * Scroll to load more data.
 	 * @public
 	 */
 	Scroll = "Scroll",
-
-	/**
-	 * Component growing is not enabled.
-	 * @public
-	 */
-	None = "None",
 }
 
 export default TableGrowingMode;

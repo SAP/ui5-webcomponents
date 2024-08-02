@@ -1,0 +1,6 @@
+@import "../base/sizes-parameters.css";
+
+:root {
+	/* CalendarLegend */
+    --_ui5-calendar-legend-item-root-focus-offset: -0.0625rem;
+}

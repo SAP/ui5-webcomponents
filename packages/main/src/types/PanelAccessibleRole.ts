@@ -1,6 +1,5 @@
 /**
  * Panel accessible roles.
- *
  * @public
  */
 enum PanelAccessibleRole {

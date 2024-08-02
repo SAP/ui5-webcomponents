@@ -48,7 +48,7 @@
 		<ui5-button>3</ui5-button>
 		<ui5-button>4</ui5-button>
 		<ui5-button>5</ui5-button>
-		<ui5-label wrapping-type="Normal">
+		<ui5-label>
 			<span>
 				Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui
 				illud zril
@@ -124,7 +124,7 @@
 
 	<br><br>
 
-	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" mode="SingleSelect">
+	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" selection-mode="Single">
 		<ui5-li id="list-item">Active item - press</ui5-li>
 		<ui5-li>Active item - press</ui5-li>
 		<ui5-li selected type="Inactive">Inactive item</ui5-li>
@@ -156,7 +156,7 @@
 
 			<!-- start column -->
 			<div class="col" slot="startColumn">
-				<ui5-list id="col1list" header-text="Products (13)" mode="SingleSelect">
+				<ui5-list id="col1list" header-text="Products (13)" selection-mode="Single">
 					<ui5-li id="fcl-li" description=HT-2001 icon='slim-arrow-right' icon-end additional-text="47.00 EUR">10 inch Portable DVD</ui5-li>
 					<ui5-li description=HT-2001 icon='slim-arrow-right' icon-end additional-text="249.00 EUR">7 inch WidescreenPortable DVD Player w MP3</ui5-li>
 					<ui5-li description=HT-1251 icon='slim-arrow-right' icon-end additional-text="947.00 EUR">Astro Laptop 1516</ui5-li>
@@ -263,7 +263,7 @@
 				</div>
 				<br><br>
 
-				<ui5-tabcontainer id="tabContainer1" fixed collapsed>
+				<ui5-tabcontainer id="tabContainer1" collapsed>
 					<ui5-tab text="Products" additional-text="125">
 					</ui5-tab>
 					<ui5-tab-separator></ui5-tab-separator>
@@ -283,7 +283,7 @@
 
 				<section style="padding: 1rem 1rem; background: var(--sapList_Background);">
 					<p>
-						<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						<ui5-title level="H5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 						aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -291,7 +291,7 @@
 						</ui5-title>
 					</p>
 					<p>
-						<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						<ui5-title level="H5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 						aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -299,7 +299,7 @@
 						</ui5-title>
 					</p>
 					<p>
-						<ui5-title level="H5" wrapping-type="Normal">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						<ui5-title level="H5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 						aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
@@ -344,7 +344,7 @@
 			function updateProductInfo(item) {
 				avatar.icon = avatars[getRandomInt(6)];
 				avatar.backgroundColor = avatarsBG[getRandomInt(9) + 1];
-				productRating.value = getRandomInt(4) + 1;
+				productRating.value = `${getRandomInt(4) + 1}`;
 				col2title.textContent = item.textContent;
 				lblName.innerHTML = "<b>" + item.textContent + "</b>";
 				lblDesc.innerHTML = "<b>" + item.description + "</b>";

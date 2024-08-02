@@ -1,0 +1,10 @@
+:root {
+	--ui5_table_bottom_border: 1px solid var(--sapList_BorderColor);
+	--ui5_table_header_row_outline_width: 1px;
+	--ui5_table_multiselect_column_width: 2.75rem;
+	--ui5_table_header_row_font_weight: normal;
+	--ui5_table_header_row_font_family: var(--sapFontFamily);
+	--ui5_table_header_row_border_bottom_color: var(--sapList_BorderColor);
+	--ui5_table_header_row_border_width: 1px;
+	--_ui5_table_load_more_border-bottom: none;
+}

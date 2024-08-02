@@ -17,7 +17,7 @@ const getTimezone = (): string | undefined => {
 
 /**
  * Sets the IANA timezone ID.
- * <b>For example:</b> "America/New_York", "Europe/London", "Australia/Sydney", "Asia/Bishkek", etc.
+ * **For example:** "America/New_York", "Europe/London", "Australia/Sydney", "Asia/Bishkek", etc.
  *>
  * @param {string} timezone
  * @private

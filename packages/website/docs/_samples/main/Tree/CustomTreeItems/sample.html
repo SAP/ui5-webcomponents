@@ -1,0 +1,54 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+<body style="background-color: var(--sapBackgroundColor);">
+<!-- playground-fold-end -->
+
+<ui5-tree>
+
+    <div slot="header">
+		<ui5-title level="H5">Tree with custom items</ui5-title>
+	</div>
+
+    <ui5-tree-item-custom
+        expanded="true"
+        show-toggle-button
+        hide-selection-element
+        type="Active"
+        level="1"
+    >
+    <ui5-button slot="content">Level 1</ui5-button>
+
+    <ui5-tree-item-custom
+        type="Active"
+        show-toggle-button
+        level="2"
+        expanded="true"
+    >
+        <ui5-select slot="content">
+            <ui5-option>Level 2</ui5-option>
+            <ui5-option>Option 2.1</ui5-option>
+            <ui5-option>Option 2.3</ui5-option>
+        </ui5-select>
+        <ui5-tree-item-custom
+            hide-selection-element
+            type="Active"
+            level="3"
+        >
+            <ui5-button slot="content">Level 3</ui5-button>
+        </ui5-tree-item-custom>
+    </ui5-tree-item-custom>
+</ui5-tree-item-custom>
+
+</ui5-tree>
+<!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
+<!-- playground-fold-end -->
+

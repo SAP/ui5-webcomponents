@@ -3,10 +3,10 @@
 		skip-registry-update
 		prevent-focus-restore
 		hide-arrow
-		_disable-initial-focus
+		prevent-initial-focus
 		class="ui5-valuestatemessage-popover"
 		style="{{styles.valueStateMsgPopover}}"
-		placement-type="Bottom"
+		placement="Bottom"
 		horizontal-align="{{_valueStatePopoverHorizontalAlign}}"
 	>
 		<div slot="header" class="ui5-valuestatemessage-root {{classes.valueStateMsg}}">
@@ -18,9 +18,7 @@
 
 {{#*inline "valueStateMessage"}}
 	{{#if hasCustomValueState}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessage"></slot>
 	{{else}}
 		{{valueStateDefaultText}}
 	{{/if}}

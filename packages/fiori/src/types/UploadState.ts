@@ -1,6 +1,5 @@
 /**
  * Different types of UploadState.
- *
  * @public
  */
 enum UploadState {

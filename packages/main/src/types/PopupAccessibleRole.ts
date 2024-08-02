@@ -1,6 +1,5 @@
 /**
  * Popup accessible roles.
- *
  * @public
  */
 enum PopupAccessibleRole {

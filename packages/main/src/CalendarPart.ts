@@ -1,9 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import DateComponentBase from "./DateComponentBase.js";
 
 /**
@@ -12,7 +12,6 @@ import DateComponentBase from "./DateComponentBase.js";
  * Abstract base class for Calendar, DayPicker, MonthPicker and YearPicker that adds support for:
  *  - common properties (timestamp, selectedDates): declarations and methods that operate on them
  *  - other common code
- *
  * @constructor
  * @extends DateComponentBase
  * @public
@@ -21,10 +20,10 @@ import DateComponentBase from "./DateComponentBase.js";
 class CalendarPart extends DateComponentBase {
 	/**
 	 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
-	 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
+	 * **Node:** Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
 	 * @protected
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	timestamp?: number;
 
 	get _minTimestamp() {
@@ -52,7 +51,7 @@ class CalendarPart extends DateComponentBase {
 	}
 
 	get _localDate() {
-		return new Date(this._timestamp * 1000);
+		return UI5Date.getInstance(this._timestamp * 1000);
 	}
 
 	/**
@@ -65,7 +64,6 @@ class CalendarPart extends DateComponentBase {
 
 	/**
 	 * Change a timestamp and enforce limits
-	 *
 	 * @param timestamp
 	 * @protected
 	 */

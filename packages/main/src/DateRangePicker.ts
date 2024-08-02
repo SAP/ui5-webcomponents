@@ -1,52 +1,57 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
-import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATERANGE_DESCRIPTION,
+	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
+import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
+// todo - update? import CalendarPickersMode from "./types/CalendarPickersMode.js";
+import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
 	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
+
+const DEFAULT_DELIMITER = "-";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The DateRangePicker enables the users to enter a localized date range using touch, mouse, keyboard input, or by selecting a date range in the calendar.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * The user can enter a date by:
  * Using the calendar that opens in a popup or typing it in directly in the input field (not available for mobile devices).
- * For the <code>ui5-daterange-picker</code>
- * <h3>ES6 Module Import</h3>
+ * For the `ui5-daterange-picker`
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/DateRangePicker.js";</code>
+ * `import "@ui5/webcomponents/dist/DateRangePicker.js";`
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-daterange-picker</code> provides advanced keyboard handling.
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-daterange-picker` provides advanced keyboard handling.
  *
- * When the <code>ui5-daterange-picker</code> input field is focused the user can
+ * When the `ui5-daterange-picker` input field is focused the user can
  * increment or decrement respectively the range start or end date, depending on where the cursor is.
  * The following shortcuts are available:
- * <br>
- * <ul>
- * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
- * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
- * </ul>
  *
+ * - [Page Down] - Decrements the corresponding day of the month by one
+ * - [Shift] + [Page Down] - Decrements the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Down] - Decrements the corresponding year by one
+ * - [Page Up] - Increments the corresponding day of the month by one
+ * - [Shift] + [Page Up] - Increments the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Up] - Increments the corresponding year by one
  * @constructor
  * @extends DatePicker
  * @since 1.0.0-rc.8
@@ -55,27 +60,43 @@ import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 @customElement({
 	tag: "ui5-daterange-picker",
 	styles: [DatePicker.styles, DateRangePickerCss],
+	template: DateRangePickerTemplate,
+	dependencies: [...DatePicker.dependencies, CalendarDateRange],
 })
-class DateRangePicker extends DatePicker {
+class DateRangePicker extends DatePicker implements IFormInputElement {
 	 /**
 	 * Determines the symbol which separates the dates.
 	 * If not supplied, the default time interval delimiter for the current locale will be used.
-	 *
 	 * @default "-"
 	 * @public
 	 */
-	@property({ defaultValue: "-" })
-	delimiter!: string;
+	@property()
+	delimiter = "-";
 
 	 /**
 	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
-	 *
 	 * @private
 	 */
 	@property()
-	_tempValue!: string;
+	_tempValue?: string;
 
 	private _prevDelimiter: string | null;
+
+	get formFormattedValue() {
+		const values = this._splitValueByDelimiter(this.value || "").filter(Boolean);
+
+		if (values.length && this.name) {
+			const formData = new FormData();
+
+			for (let i = 0; i < values.length; i++) {
+				formData.append(this.name, values[i]);
+			}
+
+			return formData;
+		}
+
+		return this.value;
+	}
 
 	constructor() {
 		super();
@@ -83,8 +104,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
-	 *
+	 * **Note:** The getter method is inherited and not supported. If called it will return an empty value.
 	 * @public
 	 * @default null
 	 */
@@ -93,8 +113,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	/**
-	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
-	 *
+	 * **Note:** The getter method is inherited and not supported. If called it will return an empty value.
 	 * @public
 	 * @default null
 	 */
@@ -146,7 +165,6 @@ class DateRangePicker extends DatePicker {
 
 	/**
 	 * Returns the start date of the currently selected range as JavaScript Date instance.
-	 *
 	 * @public
 	 * @default null
 	 */
@@ -156,12 +174,19 @@ class DateRangePicker extends DatePicker {
 
 	/**
 	 * Returns the end date of the currently selected range as JavaScript Date instance.
-	 *
 	 * @public
 	 * @default null
 	 */
 	get endDateValue(): Date | null {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();
+	}
+
+	get startValue(): string {
+		return this._calendarSelectedDates[0] || "";
+	}
+
+	get endValue(): string {
+		return this._calendarSelectedDates[1] || "";
 	}
 
 	/**
@@ -171,8 +196,18 @@ class DateRangePicker extends DatePicker {
 		return this.placeholder !== undefined ? this.placeholder : `${this._displayFormat} ${this._effectiveDelimiter} ${this._displayFormat}`;
 	}
 
+	/**
+	 * @override
+	 */
 	get dateAriaDescription() {
 		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
+	}
+
+	/**
+	 * @override
+	 */
+	get pickerAccessibleName() {
+		return DateRangePicker.i18nBundle.getText(DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	/**
@@ -224,9 +259,9 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(event: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
-		const values = event.detail.values;
+		const values = event.detail.selectedValues;
 
 		if (values.length === 0) {
 			return;
@@ -236,9 +271,9 @@ class DateRangePicker extends DatePicker {
 			this._tempValue = values[0];
 			return;
 		}
-		const newValue = this._buildValue(event.detail.dates[0], event.detail.dates[1]); // the value will be normalized so we don't need to order them here
+		const newValue = this._buildValue(event.detail.selectedDates[0], event.detail.selectedDates[1]); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -275,8 +310,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _effectiveDelimiter(): string {
-		const ctor = this.constructor as typeof DateRangePicker;
-		return this.delimiter || (ctor.getMetadata().getProperties().delimiter.defaultValue) as string;
+		return this.delimiter || DEFAULT_DELIMITER;
 	}
 
 	_splitValueByDelimiter(value: string) {

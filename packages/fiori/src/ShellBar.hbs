@@ -89,17 +89,24 @@
 		{{/if}}
 	</div>
 
-	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
+	{{#if hasMidContent}}
+		<div class="ui5-shellbar-overflow-container ui5-shellbar-mid-content">
+			<slot name="midContent"></slot>
+		</div>
+	{{else}}
+		<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-middle">
 		{{#if _isXXLBreakpoint}}
 			{{#if hasSearchField}}
 				<slot name="searchField"></slot>
 			{{/if}}
 		{{/if}}
-	</div>
+		</div>
+	{{/if}}
 
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 		<div class="ui5-shellbar-overflow-container-right-child">
 
+		{{#unless hasMidContent }}
 		{{#unless _isXXLBreakpoint }}
 			{{#if hasSearchField}}
 				{{#if _fullWidthSearch}}
@@ -136,17 +143,10 @@
 				></ui5-button>
 			{{/if}}
 		{{/unless}}
+		{{/unless}}
 
-			{{#if showCoPilot}}
-				<ui5-button
-					id="{{this._id}}-item-coPilot"
-					@click={{_coPilotClick}}
-					tooltip="{{_copilotText}}"
-					class="{{classes.items.copilot}} ui5-shellbar-button ui5-shellbar-coPilot"
-					icon={{_coPilotIcon}}
-					design="Transparent"
-					data-ui5-stable="copilot"
-				/>
+			{{#if hasAssistant}}
+				<slot name="assistant"></slot>
 			{{/if}}
 
 			{{#each customItemsInfo}}
@@ -225,3 +225,5 @@
 		<slot name="profile"></slot>
 	</ui5-button>
 {{/inline}}
+
+{{>include "./ShellBarPopover.hbs"}}

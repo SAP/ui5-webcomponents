@@ -9,7 +9,7 @@ class WithComplexTemplate extends UI5Element {
 		};
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 

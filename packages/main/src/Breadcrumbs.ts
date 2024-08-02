@@ -7,19 +7,19 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
-	isEnter,
 	isSpace,
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
-import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
+import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import {
 	BREADCRUMB_ITEM_POS,
@@ -29,18 +29,16 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
-import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
-import BreadcrumbsPopoverTemplate from "./generated/templates/BreadcrumbsPopoverTemplate.lit.js";
 
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
@@ -54,37 +52,30 @@ type BreadcrumbsItemClickEventDetail = {
 	shiftKey: boolean;
 }
 
-type FocusAdaptor = ITabbable & {
-	getlabelWrapper: () => Element | null;
-}
-
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Enables users to navigate between items by providing a list of links to previous steps in the user's navigation path.
  * It helps the user to be aware of their location within the application and allows faster navigation.
- * <br><br>
+ *
  * The last three steps can be accessed as links directly, while the remaining links prior to them are available
  * in a drop-down menu.
- * <br><br>
+ *
  * You can choose the type of separator to be used from a number of predefined options.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-breadcrumbs</code> provides advanced keyboard handling.
- * <br>
- * <ul>
- * <li>[F4, ALT+UP, ALT+DOWN, SPACE, ENTER] - If the dropdown arrow is focused - opens/closes the drop-down.</li>
- * <li>[SPACE, ENTER] - Activates the focused item and triggers the <code>item-click</code> event.</li>
- * <li>[ESC] - Closes the drop-down.</li>
- * <li>[LEFT] - If the drop-down is closed - navigates one item to the left.</li>
- * <li>[RIGHT] - If the drop-down is closed - navigates one item to the right.</li>
- * <li>[UP] - If the drop-down is open - moves focus to the next item.</li>
- * <li>[DOWN] - If the drop-down is open - moves focus to the previous item.</li>
- * <li>[HOME] - Navigates to the first item.</li>
- * <li>[END] - Navigates to the last item.</li>
- * </ul>
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-breadcrumbs` provides advanced keyboard handling.
+ *
+ * - [F4], [Alt] + [Up], [Alt] + [Down], [Space], or [Enter] - If the dropdown arrow is focused - opens/closes the drop-down.
+ * - [Space],[Enter] - Activates the focused item and triggers the `item-click` event.
+ * - [Escape] - Closes the drop-down.
+ * - [Left] - If the drop-down is closed - navigates one item to the left.
+ * - [Right] - If the drop-down is closed - navigates one item to the right.
+ * - [Up] - If the drop-down is open - moves focus to the next item.
+ * - [Down] - If the drop-down is open - moves focus to the previous item.
+ * - [Home] - Navigates to the first item.
+ * - [End] - Navigates to the last item.
  * @constructor
  * @extends UI5Element
  * @public
@@ -95,24 +86,21 @@ type FocusAdaptor = ITabbable & {
 	languageAware: true,
 	renderer: litRender,
 	template: BreadcrumbsTemplate,
-	staticAreaTemplate: BreadcrumbsPopoverTemplate,
-	styles: breadcrumbsCss,
-	staticAreaStyles: breadcrumbsPopoverCss,
+	styles: [breadcrumbsCss, breadcrumbsPopoverCss],
 	dependencies: [
 		BreadcrumbsItem,
 		Link,
-		Label,
 		ResponsivePopover,
 		List,
-		StandardListItem,
+		ListItemStandard,
 		Icon,
 		Button,
 	],
 })
 /**
- * Fires when a <code>BreadcrumbsItem</code> is clicked.
- * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
+ * Fires when a `BreadcrumbsItem` is clicked.
  *
+ * **Note:** You can prevent browser location change by calling `event.preventDefault()`.
  * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
@@ -147,40 +135,37 @@ type FocusAdaptor = ITabbable & {
 })
 class Breadcrumbs extends UI5Element {
 	/**
-	 * Defines the visual indication and behavior of the breadcrumbs.
-	 * <br><br>
-	 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
-	 * The last item contains only plain text and is not a link.
+	 * Defines the visual appearance of the last BreadcrumbsItem.
 	 *
+	 * The Breadcrumbs supports two visual appearances for the last BreadcrumbsItem:
+	 * - "Standard" - displaying the last item as "current page" (bold and without separator)
+	 * - "NoCurrentPage" - displaying the last item as a regular BreadcrumbsItem, followed by separator
 	 * @default "Standard"
 	 * @public
 	*/
-	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
-	design!: `${BreadcrumbsDesign}`;
+	@property()
+	design: `${BreadcrumbsDesign}` = "Standard";
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
-	 *
 	 * @default "Slash"
 	 * @public
 	 */
-	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separatorStyle!: `${BreadcrumbsSeparatorStyle}`;
+	@property()
+	separators: `${BreadcrumbsSeparator}` = "Slash";
 
 	/**
 	 * Holds the number of items in the overflow.
-	 *
 	 * @default 0
 	 * @private
 	 */
-	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_overflowSize!: number;
+	@property({ type: Number, noAttribute: true })
+	_overflowSize = 0;
 
 	/**
 	 * Defines the component items.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
+	 * **Note:** Use the `ui5-breadcrumbs-item` component to define the desired items.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
@@ -194,7 +179,6 @@ class Breadcrumbs extends UI5Element {
 	// the width of the interactive element that opens the overflow
 	_dropdownArrowLinkWidth = 0;
 	responsivePopover?: ResponsivePopover;
-	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -206,19 +190,6 @@ class Breadcrumbs extends UI5Element {
 		});
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
-
-		this._labelFocusAdaptor = {
-			id: `${this._id}-labelWrapper`,
-			getlabelWrapper: this.getCurrentLocationLabelWrapper.bind(this),
-			set _tabIndex(value: string) {
-				const wrapper = this.getlabelWrapper();
-				wrapper && wrapper.setAttribute("tabindex", value);
-			},
-			get _tabIndex() {
-				const wrapper = this.getlabelWrapper();
-				return wrapper?.getAttribute("tabindex") || "";
-			},
-		};
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
@@ -228,7 +199,7 @@ class Breadcrumbs extends UI5Element {
 			if (isInOverflow) {
 				// the content of an overflowing item has changed
 				// => need to render the item outside the overflow to obtain its new width
-				// => lower-down the <code>_overfowSize</code> to exclude that item from the overflow
+				// => lower-down the `_overfowSize` to exclude that item from the overflow
 				this._overflowSize = itemIndex;
 			}
 		}
@@ -242,7 +213,9 @@ class Breadcrumbs extends UI5Element {
 		this._preprocessItems();
 	}
 
-	onAfterRendering() {
+	async onAfterRendering() {
+		await renderFinished();
+
 		this._cacheWidths();
 		this._updateOverflow();
 	}
@@ -275,16 +248,11 @@ class Breadcrumbs extends UI5Element {
 			items.unshift(this._dropdownArrowLink);
 		}
 
-		if (this._endsWithCurrentLocationLabel) {
-			items.push(this._labelFocusAdaptor);
-		}
 		return items;
 	}
 
 	_onfocusin(e: FocusEvent) {
-		const target = e.target,
-			labelWrapper = this.getCurrentLocationLabelWrapper(),
-			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target as Link;
+		const currentItem = e.target as Link;
 
 		this._itemNavigation.setCurrentItem(currentItem);
 	}
@@ -299,10 +267,6 @@ class Breadcrumbs extends UI5Element {
 		}
 		if (isSpace(e) && isDropdownArrowFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
 			e.preventDefault();
-			return;
-		}
-		if ((isEnter(e) || isSpace(e)) && this._isCurrentLocationLabelFocused) {
-			this._onLabelPress(e);
 		}
 	}
 
@@ -318,19 +282,12 @@ class Breadcrumbs extends UI5Element {
 	 */
 	_cacheWidths() {
 		const map = this._breadcrumbItemWidths,
-			items = this._getItems(),
-			label = this._currentLocationLabel;
+			items = this._getItems();
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
 				link = this.shadowRoot!.querySelector<HTMLElement>(`#${item._id}-link-wrapper`)!;
 			map.set(item, this._getElementWidth(link));
-		}
-
-		if (items.length && this._endsWithCurrentLocationLabel && label) {
-			const item = items[items.length - 1];
-
-			map.set(item, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
@@ -367,13 +324,13 @@ class Breadcrumbs extends UI5Element {
 
 		// if overflow was emptied while picker was open => close redundant popup
 		if (this._isOverflowEmpty && this._isPickerOpen) {
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 
 		// if the last focused link has done into the overflow =>
 		// ensure the first visible link is focusable
 		const focusableItems = this._getFocusableItems();
-		if (!focusableItems.some(x => x._tabIndex === "0")) {
+		if (!focusableItems.some(x => x.forcedTabIndex === "0")) {
 			this._itemNavigation.setCurrentItem(focusableItems[0]);
 		}
 	}
@@ -413,26 +370,12 @@ class Breadcrumbs extends UI5Element {
 			shiftKey,
 		}, true)) {
 			e.preventDefault();
+			return;
 		}
-	}
 
-	_onLabelPress(e: MouseEvent | KeyboardEvent) {
-		const items = this._getItems(),
-			item = items[items.length - 1],
-			{
-				altKey,
-				ctrlKey,
-				metaKey,
-				shiftKey,
-			} = e;
-
-		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
-			item,
-			altKey,
-			ctrlKey,
-			metaKey,
-			shiftKey,
-		});
+		if (item._isCurrentPageItem) {
+			window.location.reload();
+		}
 	}
 
 	_onOverflowListItemSelect(e: CustomEvent<ListSelectionChangeEventDetail>) {
@@ -442,17 +385,16 @@ class Breadcrumbs extends UI5Element {
 
 		if (this.fireEvent("item-click", { item }, true)) {
 			window.open(item.href, item.target || "_self", "noopener,noreferrer");
-			this.responsivePopover!.close();
+			this.responsivePopover!.open = false;
 		}
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	async _toggleRespPopover() {
-		this.responsivePopover = await this._respPopover();
+	_toggleRespPopover() {
+		this.responsivePopover = this._respPopover();
 
 		if (this._isPickerOpen) {
 			this._closeRespPopover();
@@ -462,12 +404,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_closeRespPopover() {
-		this.responsivePopover && this.responsivePopover.close();
+		if (this.responsivePopover) {
+			this.responsivePopover.open = false;
+		}
 	}
 
-	async _openRespPopover() {
-		this.responsivePopover = await this._respPopover();
-		this.responsivePopover.showAt(this._dropdownArrowLink);
+	_openRespPopover() {
+		this.responsivePopover = this._respPopover();
+		this.responsivePopover.opener = this._dropdownArrowLink;
+		this.responsivePopover.open = true;
 	}
 
 	_isItemVisible(item: BreadcrumbsItem) {
@@ -505,42 +450,18 @@ class Breadcrumbs extends UI5Element {
 		return text;
 	}
 
-	getCurrentLocationLabelWrapper() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-breadcrumbs-current-location > span");
-	}
-
 	get _visibleItems() {
 		return this._getItems()
 			.slice(this._overflowSize)
 			.filter(i => this._isItemVisible(i));
 	}
 
-	get _endsWithCurrentLocationLabel() {
+	get _endsWithCurrentPageItem() {
 		return this.design === BreadcrumbsDesign.Standard;
 	}
 
-	get _currentLocationText() {
-		const items = this._getItems();
-		if (this._endsWithCurrentLocationLabel && items.length) {
-			const item = items[items.length - 1];
-			if (this._isItemVisible(item)) {
-				return item.innerText;
-			}
-		}
-		return "";
-	}
-
-	get _currentLocationLabel() {
-		return this.shadowRoot!.querySelector<Label>(".ui5-breadcrumbs-current-location [ui5-label]");
-	}
-
 	get _isDropdownArrowFocused() {
-		return this._dropdownArrowLink._tabIndex === "0";
-	}
-
-	get _isCurrentLocationLabelFocused() {
-		const label = this.getCurrentLocationLabelWrapper();
-		return label && label.tabIndex === 0;
+		return this._dropdownArrowLink.forcedTabIndex === "0";
 	}
 
 	/**
@@ -576,39 +497,14 @@ class Breadcrumbs extends UI5Element {
 	 */
 	get _linksData() {
 		const items = this._visibleItems;
-		const itemsCount = items.length; // get size before removing of current location
-
-		if (this._endsWithCurrentLocationLabel) {
-			items.pop();
-		}
+		const itemsCount = items.length;
 
 		return items
 			.map((item, index) => {
 				item._accessibleNameText = this._getItemAccessibleName(item, index + 1, itemsCount);
+				item._isCurrentPageItem = index === (itemsCount - 1) && this._endsWithCurrentPageItem;
 				return item;
 			});
-	}
-
-	/**
-	 * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
-	 */
-	get _currentLocationAccName() {
-		const items = this._visibleItems;
-
-		const positionText = this._getItemPositionText(items.length, items.length);
-		const lastItem = items[items.length - 1];
-
-		if (!lastItem) {
-			return positionText;
-		}
-
-		const lastItemText = lastItem.textContent || "";
-
-		if (lastItem.accessibleName) {
-			return `${lastItemText.trim()} ${lastItem.accessibleName} ${positionText}`;
-		}
-
-		return `${lastItemText.trim()} ${positionText}`;
 	}
 
 	/**
@@ -622,15 +518,14 @@ class Breadcrumbs extends UI5Element {
 		return this._overflowItemsData.length === 0;
 	}
 
-	get _ariaHasPopup() {
-		if (!this._isOverflowEmpty) {
-			return "listbox";
-		}
-		return undefined;
+	get linkAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+		return {
+			hasPopup: this._isOverflowEmpty ? undefined : "listbox",
+		};
 	}
 
 	get _isPickerOpen() {
-		return !!this.responsivePopover && this.responsivePopover.opened;
+		return !!this.responsivePopover && this.responsivePopover.open;
 	}
 
 	get _accessibleNameText() {

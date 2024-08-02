@@ -27,6 +27,7 @@
 					{{#each this}}
 						{{#if this.timestamp}}
 							<div
+								?special-day="{{this.type}}"
 								tabindex="{{this._tabIndex}}"
 								?data-sap-focus-ref="{{this.focusRef}}"
 								data-sap-timestamp="{{this.timestamp}}"
@@ -34,7 +35,8 @@
 								aria-selected="{{this.ariaSelected}}"
 								aria-label="{{this.ariaLabel}}"
 								aria-disabled="{{this.ariaDisabled}}"
-								class="{{this.classes}}">
+								class="{{this.classes}}"
+								part="{{this.parts}}">
 									<span
 										class="ui5-dp-daytext"
 										data-sap-timestamp="{{this.timestamp}}"
@@ -45,6 +47,9 @@
 										<span class="ui5-dp-daytext ui5-dp-daysectext" >
 											{{this.secondDay}}
 										</span>
+									{{/if}}
+									{{#if this.type}}
+										<div class="ui5-dp-specialday {{this.type}}"></div>
 									{{/if}}
 							</div>
 						{{else}}

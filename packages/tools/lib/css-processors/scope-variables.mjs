@@ -1,4 +1,7 @@
 import * as path from "path";
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 /**
  * Tries to detect an override for a package

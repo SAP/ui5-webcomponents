@@ -1,4 +1,5 @@
-import UI5Element, { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -8,11 +9,11 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -21,25 +22,27 @@ import {
 import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
-import ToolbarPopoverTemplate from "./generated/templates/ToolbarPopoverTemplate.lit.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
-import ToolbarAlign from "./types/ToolbarAlign.js";
+import type ToolbarAlign from "./types/ToolbarAlign.js";
+import type ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
-import HasPopup from "./types/HasPopup.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type ToolbarItem from "./ToolbarItem.js";
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
-	getRegisteredStaticAreaStyles,
 	getRegisteredDependencies,
 } from "./ToolbarRegistry.js";
 
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+
+type ToolbarMinWidthChangeEventDetail = {
+	minWidth: number,
+};
 
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
@@ -52,22 +55,19 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-toolbar</code> component is used to create a horizontal layout with items.
+ * The `ui5-toolbar` component is used to create a horizontal layout with items.
  * The items can be overflowing in a popover, when the space is not enough to show all of them.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-toolbar</code> provides advanced keyboard handling.
- * <br>
- * <ul>
- * <li>The control is not interactive, but can contain of interactive elements </li>
- * <li>[TAB] - iterates through elements</li>
- * </ul>
- * <br>
+ * ### Keyboard Handling
+ * The `ui5-toolbar` provides advanced keyboard handling.
  *
- * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Toolbar";</code>
+ * - The control is not interactive, but can contain of interactive elements
+ * - [Tab] - iterates through elements
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Toolbar.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -78,26 +78,24 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	languageAware: true,
 	renderer: litRender,
 	template: ToolbarTemplate,
-	staticAreaTemplate: ToolbarPopoverTemplate,
 })
 class Toolbar extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
-	 *
 	 * @public
 	 * @default "End"
 	 */
-	@property({ type: ToolbarAlign, defaultValue: ToolbarAlign.End })
-	alignContent!: `${ToolbarAlign}`;
+	@property()
+	alignContent: `${ToolbarAlign}` = "End";
 
 	/**
 	 * Calculated width of the whole toolbar.
 	 * @private
 	 * @default undefined
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	width?: number;
 
 	/**
@@ -105,7 +103,7 @@ class Toolbar extends UI5Element {
 	 * @private
 	 * @default undefined
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	contentWidth?: number;
 
 	/**
@@ -113,31 +111,37 @@ class Toolbar extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	reverseOverflow!: boolean;
+	reverseOverflow = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
+	@property()
+	accessibleNameRef?: string;
+
+	/**
+	 * Defines the toolbar design.
+	 * @public
+	 * @default "Solid"
+	 * @since 2.0.0
+	 */
+	@property()
+	design: `${ToolbarDesign}` = "Solid"
 
 	/**
 	 * Defines the items of the component.
      *
-     * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
-	 *
+     * **Note:** Currently only `ui5-toolbar-button`, `ui5-toolbar-select`, `ui5-toolbar-separator` and `ui5-toolbar-spacer` are allowed here.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -147,6 +151,7 @@ class Toolbar extends UI5Element {
 	_onInteract!: EventListener;
 	itemsToOverflow: Array<ToolbarItem> = [];
 	itemsWidth = 0;
+	minContentWidth = 0;
 	popoverOpen = false;
 	itemsWidthMeasured = false;
 
@@ -156,13 +161,6 @@ class Toolbar extends UI5Element {
 		const styles = getRegisteredStyles();
 		return [
 			ToolbarCss,
-			...styles,
-		];
-	}
-
-	static get staticAreaStyles() {
-		const styles = getRegisteredStaticAreaStyles();
-		return [
 			ToolbarPopoverCss,
 			...styles,
 		];
@@ -280,7 +278,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: HasPopup.Menu,
+					hasPopup: AriaHasPopup.Menu.toLowerCase(),
 				},
 			},
 		};
@@ -337,23 +335,23 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Returns if the overflow popup is open.
-	 *
 	 * @public
 	 */
-	async isOverflowOpen(): Promise<boolean> {
-		const overflowPopover = await this.getOverflowPopover();
-		return overflowPopover!.isOpen();
+	isOverflowOpen(): boolean {
+		const overflowPopover = this.getOverflowPopover();
+		return overflowPopover!.open;
 	}
 
-	async openOverflow(): Promise<void> {
-		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover!.showAt(this.overflowButtonDOM!);
-		this.reverseOverflow = overflowPopover!.actualPlacementType === "Top";
+	openOverflow(): void {
+		const overflowPopover = this.getOverflowPopover();
+		overflowPopover!.opener = this.overflowButtonDOM!;
+		overflowPopover!.open = true;
+		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
 	}
 
-	async closeOverflow() {
-		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover!.close();
+	closeOverflow() {
+		const overflowPopover = this.getOverflowPopover();
+		overflowPopover!.open = false;
 	}
 
 	toggleOverflow() {
@@ -364,9 +362,8 @@ class Toolbar extends UI5Element {
 		}
 	}
 
-	async getOverflowPopover(): Promise<Popover | null> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-overflow-popover");
+	getOverflowPopover(): Popover | null {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
 	}
 
 	/**
@@ -389,15 +386,27 @@ class Toolbar extends UI5Element {
 	}
 
 	storeItemsWidth() {
-		let totalWidth = 0;
+		let totalWidth = 0,
+			minWidth = 0;
 
 		this.items.forEach((item: ToolbarItem) => {
 			const itemWidth = this.getItemWidth(item);
 			totalWidth += itemWidth;
+			if (item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow) {
+				minWidth += itemWidth;
+			}
 			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
 		});
 
+		if (minWidth !== this.minContentWidth) {
+			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
+			this.fireEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
+				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
+			});
+		}
+
 		this.itemsWidth = totalWidth;
+		this.minContentWidth = minWidth;
 	}
 
 	distributeItems(overflowSpace = 0) {
@@ -468,14 +477,14 @@ class Toolbar extends UI5Element {
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "false";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
 		}
 	}
 
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
 		if (this.overflowButtonDOM) {
-			this.overflowButtonDOM.accessibilityAttributes.expanded = "true";
+			this.overflowButtonDOM.accessibilityAttributes.expanded = true;
 		}
 	}
 
@@ -489,6 +498,7 @@ class Toolbar extends UI5Element {
 	}
 
 	onInteract(e: CustomEvent) {
+		e.stopImmediatePropagation();
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
 
@@ -505,9 +515,10 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			const eventType: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
-			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
+			const eventType = e.type;
+			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
+			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
+			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
 				return;
@@ -521,8 +532,8 @@ class Toolbar extends UI5Element {
 	 * Private members
 	 */
 
-	async attachListeners() {
-		const popover = await this.getOverflowPopover();
+	attachListeners() {
+		const popover = this.getOverflowPopover();
 
 		this.subscribedEvents.forEach((e: string) => {
 			this.itemsDOM?.addEventListener(e, this._onInteract);
@@ -530,8 +541,8 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	async detachListeners() {
-		const popover = await this.getOverflowPopover();
+	detachListeners() {
+		const popover = this.getOverflowPopover();
 
 		this.subscribedEvents.forEach((e: string) => {
 			this.itemsDOM?.removeEventListener(e, this._onInteract);
@@ -547,7 +558,8 @@ class Toolbar extends UI5Element {
 
 	getItemsInfo(items: Array<ToolbarItem>) {
 		return items.map((item: ToolbarItem) => {
-			const ElementClass = getRegisteredToolbarItem(item.constructor.name);
+			const ctor = item.constructor as typeof ToolbarItem;
+			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
 
 			if (!ElementClass) {
 				return null;
@@ -600,3 +612,6 @@ class Toolbar extends UI5Element {
 Toolbar.define();
 
 export default Toolbar;
+export type {
+	ToolbarMinWidthChangeEventDetail,
+};

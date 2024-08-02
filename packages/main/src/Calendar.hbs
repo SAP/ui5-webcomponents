@@ -8,6 +8,7 @@
 			?hidden="{{_isDayPickerHidden}}"
 			format-pattern="{{_formatPattern}}"
 			.selectedDates="{{_selectedDatesTimestamps}}"
+			.specialCalendarDates="{{_specialCalendarDates}}"
 			._hidden="{{_isDayPickerHidden}}"
 			.primaryCalendarType="{{_primaryCalendarType}}"
 			.secondaryCalendarType="{{_secondaryCalendarType}}"
@@ -18,6 +19,7 @@
 			?hide-week-numbers="{{hideWeekNumbers}}"
 			@ui5-change="{{onSelectedDatesChange}}"
 			@ui5-navigate="{{onNavigate}}"
+			exportparts="day-cell, day-cell-selected, day-cell-selected-between"
 		></ui5-daypicker>
 
 		<ui5-monthpicker
@@ -34,6 +36,7 @@
 			timestamp="{{_timestamp}}"
 			@ui5-change="{{onSelectedMonthChange}}"
 			@ui5-navigate="{{onNavigate}}"
+			exportparts="month-cell, month-cell-selected"
 		></ui5-monthpicker>
 
 		<ui5-yearpicker
@@ -50,25 +53,17 @@
 			timestamp="{{_timestamp}}"
 			@ui5-change="{{onSelectedYearChange}}"
 			@ui5-navigate="{{onNavigate}}"
+			exportparts="year-cell, year-cell-selected"
 		></ui5-yearpicker>
 	</div>
+	<div class="ui5-calheader">
+		{{>include "./CalendarHeader.hbs"}}
+	</div>
+</div>
 
-	{{! Positioned above the content due to flex-direction:column-reverse, but physically here for tab order to work}}
-	<ui5-calendar-header
-			id="{{_id}}-head"
-			.primaryCalendarType="{{_primaryCalendarType}}"
-			.secondaryCalendarType="{{_secondaryCalendarType}}"
-			.buttonTextForSecondaryCalendarType="{{secondaryCalendarTypeButtonText}}"
-			timestamp="{{_timestamp}}"
-			.isPrevButtonDisabled="{{_previousButtonDisabled}}"
-			.isNextButtonDisabled="{{_nextButtonDisabled}}"
-			.isMonthButtonHidden="{{_isHeaderMonthButtonHidden}}"
-			._monthButtonText="{{_headerMonthButtonText}}"
-			._yearButtonText="{{_headerYearButtonText}}"
-			._yearButtonTextSecType="{{_headerYearButtonTextSecType}}"
-			@ui5-previous-press="{{onHeaderPreviousPress}}"
-			@ui5-next-press="{{onHeaderNextPress}}"
-			@ui5-show-month-press="{{onHeaderShowMonthPress}}"
-			@ui5-show-year-press="{{onHeaderShowYearPress}}"
-	></ui5-calendar-header>
+<div
+	@ui5-_calendar-legend-selection-change={{_onCalendarLegendSelectionChange}}
+	@ui5-_calendar-legend-focus-out={{_onLegendFocusOut}}
+>
+	<slot name="calendarLegend"></slot>
 </div>

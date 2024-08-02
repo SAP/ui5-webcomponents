@@ -17,7 +17,6 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -47,6 +46,7 @@ type Year = {
 	yearInSecType: string | undefined;
 	disabled: boolean;
 	classes: string;
+	parts: string;
 }
 
 type YearInterval = Array<Array<Year>>;
@@ -64,7 +64,6 @@ type YearPickerNavigateEventDetail = {
  * @class
  *
  * Displays years which can be selected.
- *
  * @constructor
  * @extends CalendarPart
  * @private
@@ -89,16 +88,11 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 *
 	 * @default []
 	 * @public
 	 */
-	@property({
-		validator: Integer,
-		multiple: true,
-		compareValues: true,
-	})
-	selectedDates!: Array<number>;
+	@property({ type: Array })
+	selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the day picker component.
@@ -113,13 +107,13 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @public
 	 */
 	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: `${CalendarSelectionMode}`;
+	selectionMode!: `${CalendarSelectionMode}`; // todo - update
 
-	@property({ type: Object, multiple: true })
-	_years!: YearInterval;
+	@property({ type: Array })
+	_years: YearInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden!: boolean;
+	_hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
@@ -207,10 +201,12 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
 				classes: "ui5-yp-item",
+				parts: "year-cell",
 			};
 
 			if (isSelected) {
 				year.classes += " ui5-yp-item--selected";
+				year.parts += " year-cell-selected";
 			}
 
 			if (isSelectedBetween) {
@@ -371,7 +367,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Sets the timestamp to an absolute value.
-	 *
 	 * @param value
 	 * @private
 	 */
@@ -382,7 +377,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page.
-	 *
 	 * @param amount
 	 * @private
 	 */
@@ -403,7 +397,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * User clicked with the mouser or pressed Enter/Space
-	 *
 	 * @param e
 	 * @private
 	 */
@@ -439,7 +432,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 *
 	 * @protected
 	 */
 	_hasPreviousPage(): boolean {
@@ -448,7 +440,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 *
 	 * @protected
 	 */
 	_hasNextPage(): boolean {
@@ -457,8 +448,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
-	 *
+	 * **Note:** when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -468,8 +458,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
-	 *
+	 * **Note:** when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
 	_showNextPage() {

@@ -1,0 +1,11 @@
+<tr
+	class="ui5-table-group-row-root"
+	part="group-row"
+	aria-label={{ariaLabelText}}
+	tabindex="{{forcedTabIndex}}"
+	@focusin="{{_onfocusin}}"
+>
+	<td colspan={{colSpan}}>
+		<slot></slot>
+	</td>
+</tr>

@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
-import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
+import type ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 type IEventOptions = {
 	preventClosing: boolean;
@@ -11,8 +11,7 @@ type IEventOptions = {
 /**
  * @class
  *
- * Represents an abstract class for items, used in the <code>ui5-toolbar</code>.
- *
+ * Represents an abstract class for items, used in the `ui5-toolbar`.
  * @constructor
  * @extends UI5Element
  * @abstract
@@ -23,17 +22,11 @@ class ToolbarItem extends UI5Element {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>NeverOverflow</code></li>
-	 * <li><code>AlwaysOverflow</code></li>
-	 * <li><code>Default</code></li>
-	 * </ul>
 	 * @public
 	 * @default "Default"
 	 */
-	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
-	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
+	@property()
+	overflowPriority: `${ToolbarItemOverflowBehavior}` = "Default";
 
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
@@ -42,7 +35,7 @@ class ToolbarItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	preventOverflowClosing!: boolean;
+	preventOverflowClosing = false;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar

@@ -1,0 +1,10 @@
+{{>include "./ListItemBase.hbs"}}
+
+{{#*inline "listItemContent"}}
+	<slot></slot>
+{{/inline}}
+
+{{#*inline "listItemAttributes"}}
+	role="option"
+	title="{{tooltip}}"
+{{/inline}}

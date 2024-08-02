@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
 	isDown,
@@ -24,6 +24,7 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
@@ -33,33 +34,36 @@ import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionCloc
 import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.js";
 
 /**
+ * Fired when the picker is being closed.
+ */
+@event("close-picker")
+
+/**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-time-selection-clocks</code> is component that contains all the <code>ui5-time-picker-clock</code> components
- * necessary for the <code>ui5-time-picker</code> as well as all necessary <code>ui5-toggle-spin-button</code> components
+ * `ui5-time-selection-clocks` is component that contains all the `ui5-time-picker-clock` components
+ * necessary for the `ui5-time-picker` as well as all necessary `ui5-toggle-spin-button` components
  * used for switching between different clocks.
- * <code>ui5-time-picker-clock</code> components and <code>ui5-toggle-spin-button</code> depend on the time format set to
- * <code>ui5-time-picker</code> component.
+ * `ui5-time-picker-clock` components and `ui5-toggle-spin-button` depend on the time format set to
+ * `ui5-time-picker` component.
  *
  * This component should not be used separately.
- *
  * @constructor
  * @extends TimePickerInternals
- * @abstract
  * @since 1.15.0
  * @private
  */
 @customElement({
 	tag: "ui5-time-selection-clocks",
-	renderer: litRender,
 	styles: TimeSelectionClocksCss,
 	template: TimeSelectionClocksTemplate,
 	dependencies: [
 		TimePickerClock,
 		ToggleSpinButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 
@@ -68,7 +72,19 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * Flag for pressed Space key
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed!: boolean;
+	_spacePressed = false;
+
+	/**
+	 * Flag for focused state of Clocks component
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_focused = false;
+
+	/**
+	 * Flag for focused state of AM/PM segmented button
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_amPmFocused = false;
 
 	onBeforeRendering() {
 		this._createComponents();
@@ -76,7 +92,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * Returns ToggleSpinButton component by index or name.
-	 *
 	 * @param indexOrName the index or name of the component
 	 * @returns component (if exists) or undefined
 	 */
@@ -88,7 +103,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * Returns TimePickerClock component by index or name.
-	 *
 	 * @param indexOrName the index or name of the component
 	 * @returns component (if exists) or undefined
 	 */
@@ -100,19 +114,22 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * TimePickerClocks focusin event handler. Focuses the active button and switches to active clock.
-	 *
 	 * @param evt Event object
 	 */
 	_clocksFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
+		this._focused = true;
 		if (target.id === this._id) {
 			this._switchClock(this._activeIndex);
 		}
 	}
 
+	_clocksFocusOut() {
+		this._focused = false;
+	}
+
 	/**
 	 * ToggleSpinButton focusin event handler.Switches to clock which button is being focused.
-	 *
 	 * @param evt Event object
 	 */
 	_buttonFocusIn(evt: Event) {
@@ -124,8 +141,21 @@ class TimeSelectionClocks extends TimePickerInternals {
 	}
 
 	/**
+	 * AM/PM segmented button focusin event handler.
+	 */
+	_amPmFocusIn() {
+		this._amPmFocused = true;
+	}
+
+	/**
+	 * AM/PM segmented button focusout event handler.
+	 */
+	_amPmFocusOut() {
+		this._amPmFocused = false;
+	}
+
+	/**
 	 * keyup event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_onkeyup(evt: KeyboardEvent) {
@@ -136,7 +166,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * keydown event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_onkeydown(evt: KeyboardEvent) {
@@ -155,7 +184,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 		} else if ((isUp(evt) || isDown(evt)) && !isUpAlt(evt) && !isDownAlt(evt)) {
 			// Arrows up/down increase/decrease currently active clock
 			clock = this._clockComponent(this._activeIndex);
-			clock && !clock.disabled && clock._modifyValue(isUp(evt));
+			clock && !clock.disabled && !this._amPmFocused && clock._modifyValue(isUp(evt));
 			evt.preventDefault();
 		} else if (isPageUp(evt) || isPageDown(evt)) {
 			// PageUp/PageDown increase/decrease hours clock
@@ -185,8 +214,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 			// A/P selects AM/PM segmented button item
 			const buttonAmPm = this._buttonAmPm();
 			if (buttonAmPm) {
-				buttonAmPm.items[0].pressed = isKeyA(evt);
-				buttonAmPm.items[1].pressed = isKeyP(evt);
+				buttonAmPm.items[0].selected = isKeyA(evt);
+				buttonAmPm.items[1].selected = isKeyP(evt);
 				const period = isKeyA(evt) ? buttonAmPm.items[0].textContent : buttonAmPm.items[1].textContent;
 				period && this._calculatePeriodChange(period);
 			}
@@ -207,7 +236,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * Handles direct numbers entry.
-	 *
 	 * @param evt Event object
 	 */
 	_numbersInput(evt: KeyboardEvent) {
@@ -349,12 +377,12 @@ class TimeSelectionClocks extends TimePickerInternals {
 			});
 		}
 		this._entities[this._activeIndex].active = true;
+		this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 		this._createPeriodComponent();
 	}
 
 	/**
 	 * Switches to the specific clock by name.
-	 *
 	 * @param clockName the name of the clock
 	 */
 	_switchTo(clockName: string) {
@@ -366,7 +394,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * Switches to the specific clock by its index in _clocks property.
-	 *
 	 * @param clockIndex the index of the clock
 	 */
 	_switchClock(clockIndex: number) {
@@ -374,15 +401,16 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		if (this._entities.length && clockIndex < this._entities.length && newButton) {
 			this._entities[this._activeIndex].active = false;
+			this._entities[this._activeIndex].focused = false;
 			this._activeIndex = clockIndex;
 			this._entities[this._activeIndex].active = true;
+			this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 			newButton.focus();
 		}
 	}
 
 	/**
 	 * Switches to the next available clock.
-	 *
 	 * @param wrapAround whether to switch to the first clock if there are no next clock
 	 */
 	_switchNextClock(wrapAround = false) {
@@ -408,7 +436,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 	/**
 	 * Clock 'change' event handler.
-	 *
 	 * @param evt Event object
 	 */
 	_clockChange(evt: CustomEvent<TimePickerClockChangeEventDetail>) {

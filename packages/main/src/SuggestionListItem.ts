@@ -1,15 +1,14 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import StandardListItem from "./StandardListItem.js";
+import ListItemStandard from "./ListItemStandard.js";
 import SuggestionListItemTemplate from "./generated/templates/SuggestionListItemTemplate.lit.js";
 
 /**
  * @class
- * The <code>ui5-li-suggestion-item</code> represents the suggestion item in the <code>ui5-input</code>
+ * The `ui5-li-suggestion-item` represents the suggestion item in the `ui5-input`
  * suggestion popover.
- *
  * @constructor
- * @extends StandardListItem
+ * @extends ListItemStandard
  * @csspart title - Used to style the title of the suggestion list item
  * @csspart description - Used to style the description of the suggestion list item
  * @csspart info - Used to style the info of the suggestion list item
@@ -18,11 +17,10 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
 	tag: "ui5-li-suggestion-item",
 	template: SuggestionListItemTemplate,
 })
-class SuggestionListItem extends StandardListItem {
+class SuggestionListItem extends ListItemStandard {
 	/**
 	 * Defines a description that can contain HTML.
-	 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
-	 * <br>
+	 * **Note:** If not specified, the `description` property will be used.
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -31,7 +29,6 @@ class SuggestionListItem extends StandardListItem {
 
 	/**
 	 * Defines the title text of the suggestion item.
-	 *
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })

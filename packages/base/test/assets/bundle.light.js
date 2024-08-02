@@ -1,6 +1,7 @@
 import { attachBoot } from "../../dist/Boot.js";
 import { boot } from "../../dist/Boot.js";
 import { registerThemePropertiesLoader } from "../../dist/AssetRegistry.js";
+import { hasStyle } from "../../dist/ManagedStyles.js";
 
 // attachBoot (no longer triggers "boot")
 attachBoot(() => {
@@ -12,6 +13,7 @@ boot();
 
 const testAssets = {
     // registerThemePropertiesLoader after boot (and after attachBoot ), will call applyTheme
+    hasStyle: hasStyle,
     registerThemeProps: async () => {
         registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_horizon", () => {
             return {

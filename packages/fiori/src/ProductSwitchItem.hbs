@@ -6,9 +6,9 @@
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		tabindex={{_tabIndex}}
+		tabindex={{forcedTabIndex}}
 		href="{{targetSrc}}"
-		target="{{target}}">
+		target="{{_effectiveTarget}}">
 		{{> item}}
 	</a>
 {{else}}
@@ -21,7 +21,7 @@
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
 		@keyup="{{_onkeyup}}"
-		tabindex={{_tabIndex}}>
+		tabindex={{forcedTabIndex}}>
 		{{> item}}
 	</div>
 {{/if}}

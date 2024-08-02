@@ -14,6 +14,21 @@ const getDeprecatedStatus = (jsdocComment) => {
             : undefined;
 };
 
+const getExperimentalStatus = (jsdocComment) => {
+    const experimentalTag = findTag(jsdocComment, "experimental");
+    return experimentalTag?.name
+        ? experimentalTag.description
+            ? `${experimentalTag.name} ${experimentalTag.description}`
+            : experimentalTag.name
+        : experimentalTag
+            ? true
+            : undefined;
+};
+
+const toKebabCase = str => {
+    return str.replaceAll(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? "-" : "") + $.toLowerCase())
+}
+
 const normalizeDescription = (description) => {
 	return typeof description === 'string' ? description.replaceAll(/^-\s+|^(\n)+|(\n)+$/g, ""): description;
 }
@@ -24,6 +39,8 @@ const getTypeRefs = (ts, node, member) => {
             return type.typeArguments?.length
                 ? type.typeArguments.map((typeRef) => typeRef.typeName?.text)
                 : [type.typeName?.text];
+        } else if (type?.kind === ts.SyntaxKind.ArrayType) {
+            return [type.elementType?.typeName?.text];
         } else if (type?.kind === ts.SyntaxKind.UnionType) {
             return type.types
                 .map((type) => extractTypeRefs(type))
@@ -208,10 +225,10 @@ const allowedTags = {
     event: [...commonTags, "param", "allowPreventDefault", "native"],
     eventParam: [...commonTags],
     method: [...commonTags, "param", "returns", "override"],
-    class: [...commonTags, "constructor", "class", "abstract", "implements", "extends", "slot", "csspart"],
+    class: [...commonTags, "constructor", "class", "abstract", "experimental", "implements", "extends", "slot", "csspart"],
     enum: [...commonTags],
-    enumMember: [...commonTags],
-    interface: [...commonTags],
+    enumMember: [...commonTags, "experimental",],
+    interface: [...commonTags, "experimental",],
 };
 allowedTags.getter = [...allowedTags.field, "override"]
 
@@ -277,6 +294,8 @@ const validateJSDocTag = (tag) => {
         case "boolean":
             return !tag.name && !tag.type && !tag.description;
         case "deprecated":
+            return !tag.type;
+        case "experimental":
             return !tag.type;
         case "extends":
             return !tag.type && tag.name && !tag.description;
@@ -352,13 +371,14 @@ const displayDocumentationErrors = () => {
 }
 
 const formatArrays = (typeText) => {
-	return typeText.replaceAll(/(\S+)\[\]/g, "Array<$1>")
+	return typeText?.replaceAll(/(\S+)\[\]/g, "Array<$1>")
 }
 
 export {
     getPrivacyStatus,
     getSinceStatus,
     getDeprecatedStatus,
+    getExperimentalStatus,
     getType,
     getReference,
     validateJSDocComment,
@@ -374,4 +394,5 @@ export {
     normalizeTagType,
     displayDocumentationErrors,
     logDocumentationError,
+    toKebabCase
 };

@@ -2,22 +2,25 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
-import type IAvatar from "./Avatar.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
+import type { IButton } from "./Button.js";
 
 import {
 	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
@@ -32,7 +35,17 @@ import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
 import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
-import { IButton } from "./Interfaces.js";
+
+/**
+ * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as `ui5-avatar-group`
+ * @public
+ */
+interface IAvatarGroupItem extends HTMLElement, ITabbable {
+	еffectiveBackgroundColor: AvatarColorScheme;
+	size: `${AvatarSize}`;
+	effectiveSize: AvatarSize;
+	interactive: boolean;
+}
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -61,6 +74,8 @@ const offsets = {
 	},
 };
 
+type AvatarGroupAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
+
 type AvatarGroupClickEventDetail = {
 	targetRef: HTMLElement,
 	overflowButtonClicked: boolean,
@@ -69,7 +84,7 @@ type AvatarGroupClickEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * Displays a group of avatars arranged horizontally. It is useful to visually
  * showcase a group of related avatars, such as, project team members or employees.
@@ -77,61 +92,51 @@ type AvatarGroupClickEventDetail = {
  * The component allows you to display the avatars in different sizes,
  * depending on your use case.
  *
- * The <code>AvatarGroup</code> component has two group types:
- * <ul>
- * <li><code>Group</code> type: The avatars are displayed as partially overlapped on
- * top of each other and the entire group has one click/tap area.</li>
- * <li><code>Individual</code> type: The avatars are displayed side-by-side and each
- * avatar has its own click/tap area.</li>
- * </ul>
+ * The `AvatarGroup` component has two group types:
  *
- * <h3>Responsive Behavior</h3>
+ * - `Group` type: The avatars are displayed as partially overlapped on
+ * top of each other and the entire group has one click/tap area.
+ * - `Individual` type: The avatars are displayed side-by-side and each
+ * avatar has its own click/tap area.
+ *
+ * ### Usage
+ *
+ * Use the `AvatarGroup` if:
+ *
+ * - You want to display a group of avatars.
+ * - You want to display several avatars which have something in common.
+ *
+ * Do not use the `AvatarGroup` if:
+ *
+ * - You want to display a single avatar.
+ * - You want to display a gallery for simple images.
+ * - You want to use it for other visual content than avatars.
+ *
+ * ### Responsive Behavior
  *
  * When the available space is less than the width required to display all avatars,
  * an overflow visualization appears as a button placed at the end with the same shape
  * and size as the avatars. The visualization displays the number of avatars that have overflowed
  * and are not currently visible.
  *
- * <h3>Usage</h3>
- *
- * Use the <code>AvatarGroup</code> if:
- * <ul>
- * <li>You want to display a group of avatars.</li>
- * <li>You want to display several avatars which have something in common.</li>
- * </ul>
- *
- * Do not use the <code>AvatarGroup</code> if:
- * <ul>
- * <li>You want to display a single avatar.</li>
- * <li>You want to display a gallery for simple images.</li>
- * <li>You want to use it for other visual content than avatars.</li>
- * </ul>
- *
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  * The component provides advanced keyboard handling.
  * When focused, the user can use the following keyboard
  * shortcuts in order to perform a navigation:
  *
- * <br>
- * <code>type</code> Individual:
- * <br>
- * <ul>
- * <li>[TAB] - Move focus to the overflow button</li>
- * <li>[LEFT] - Navigate one avatar to the left</li>
- * <li>[RIGHT] - Navigate one avatar to the right</li>
- * <li>[HOME] - Navigate to the first avatar</li>
- * <li>[END] - Navigate to the last avatar</li>
- * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
- * </ul>
- * <br>
- * <code>type</code> Group:
- * <br>
- * <ul>
- * <li>[TAB] - Move focus to the next interactive element after the component</li>
- * <li>[SPACE],[ENTER],[RETURN] - Trigger <code>ui5-click</code> event</li>
- * </ul>
- * <br>
+ * `type` Individual:
  *
+ * - [Tab] - Move focus to the overflow button
+ * - [Left] - Navigate one avatar to the left
+ * - [Right] - Navigate one avatar to the right
+ * - [Home] - Navigate to the first avatar
+ * - [End] - Navigate to the last avatar
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
+ *
+ * `type` Group:
+ *
+ * - [Tab] - Move focus to the next interactive element after the component
+ * - [Space] / [Enter] or [Return] - Trigger `ui5-click` event
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.11
@@ -146,13 +151,13 @@ type AvatarGroupClickEventDetail = {
 	dependencies: [Button],
 })
 /**
-* Fired when the component is activated either with a
-* click/tap or by using the Enter or Space key.
-* @param {HTMLElement} targetRef The DOM ref of the clicked item.
-* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
-* @public
-* @since 1.0.0-rc.11
-*/
+ * Fired when the component is activated either with a
+ * click/tap or by using the Enter or Space key.
+ * @param {HTMLElement} targetRef The DOM ref of the clicked item.
+ * @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
+ * @public
+ * @since 1.0.0-rc.11
+ */
 @event<AvatarGroupClickEventDetail>("click", {
 	detail: {
 		/**
@@ -167,59 +172,59 @@ type AvatarGroupClickEventDetail = {
 })
 
 /**
-* Fired when the count of visible <code>ui5-avatar</code> elements in the
-* component has changed
-* @public
-* @since 1.0.0-rc.13
-*/
+ * Fired when the count of visible `ui5-avatar` elements in the
+ * component has changed
+ * @public
+ * @since 1.0.0-rc.13
+ */
 @event("overflow")
 class AvatarGroup extends UI5Element {
 	/**
-	 * Defines the mode of the <code>AvatarGroup</code>.
-	 *
+	 * Defines the mode of the `AvatarGroup`.
 	 * @default "Group"
 	 * @public
 	 */
-	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
-	type!: `${AvatarGroupType}`;
+	@property()
+	type: `${AvatarGroupType}` = "Group"
 
 	/**
-	 * Defines the aria-haspopup value of the component on:
-	 * <br><br>
-	 * <ul>
-	 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
-	 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
-	 * </ul>
-	 * <br><br>
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following field is supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	 @property({ type: Object })
+	 accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_overflowButtonText!: string;
+	_overflowButtonText?: string;
 
 	/**
-	 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
-	 * <br><br>
-	 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
+	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
+	 *
+	 * **Note:** The UX guidelines recommends using avatars with "Circle" shape.
+	 *
 	 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 	 * as the built-in overflow action has "Circle" shape.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<IAvatar>;
+	items!: Array<IAvatarGroupItem>;
 
 	/**
 	 * Defines the overflow button of the component.
-	 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
-	 * <br><br>
-	 * <b>Note:</b> If this slot is not used, the component will
-	 * display the built-in overflow button.
+	 *
+	 * **Note:** We recommend using the `ui5-button` component.
+	 *
+	 * **Note:** If this slot is not used, the component will display the built-in overflow button.
 	 * @public
 	 * @since 1.0.0-rc.13
 	 */
@@ -228,8 +233,8 @@ class AvatarGroup extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
-	_colorIndex: number;
-	_hiddenItems: number;
+	_colorIndex = 0;
+	_hiddenItems = 0;
 	_itemNavigation: ItemNavigation;
 
 	constructor() {
@@ -240,8 +245,6 @@ class AvatarGroup extends UI5Element {
 				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
 			},
 		});
-		this._colorIndex = 0;
-		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
 	}
 
@@ -250,21 +253,21 @@ class AvatarGroup extends UI5Element {
 	}
 
 	/**
-	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
+	 * Returns an array containing the `ui5-avatar` instances that are currently not displayed due to lack of space.
 	 * @default []
 	 * @public
 	 */
-	get hiddenItems(): IAvatar[] {
+	get hiddenItems(): IAvatarGroupItem[] {
 		return this.items.slice(this._hiddenStartIndex);
 	}
 
 	/**
-	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
+	 * Returns an array containing the `AvatarColorScheme` values that correspond to the avatars in the component.
 	 * @default []
 	 * @public
 	 */
 	get colorScheme(): AvatarColorScheme[] {
-		return this.items.map(avatar => avatar._effectiveBackgroundColor);
+		return this.items.map(avatar => avatar.еffectiveBackgroundColor);
 	}
 
 	get _customOverflowButton() {
@@ -366,18 +369,18 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get firstAvatarSize() {
-		return this.items[0].size;
+		return this.items[0]?.size ?? AvatarSize.S;
 	}
 
 	get classes() {
 		return {
 			overflowButton: {
 				"ui5-avatar-group-overflow-btn": true,
-				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === "XS",
-				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === "S",
-				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === "M",
-				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === "L",
-				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === "XL",
+				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === AvatarSize.XS,
+				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === AvatarSize.S,
+				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === AvatarSize.M,
+				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === AvatarSize.L,
+				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === AvatarSize.XL,
 			},
 		};
 	}
@@ -395,6 +398,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+
 		ResizeHandler.register(this, this._onResizeHandler);
 	}
 
@@ -478,13 +485,13 @@ class AvatarGroup extends UI5Element {
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
 			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				// based on RTL the browser automatically sets left or right margin to avatars
-				avatar.style.marginInlineEnd = offsets[avatar._effectiveSize][this.type];
+				avatar.style.marginInlineEnd = offsets[avatar.effectiveSize][this.type];
 			}
 		});
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this._itemNavigation.setCurrentItem(e.target as IAvatar);
+		this._itemNavigation.setCurrentItem(e.target as IAvatarGroupItem);
 	}
 
 	/**
@@ -526,7 +533,7 @@ class AvatarGroup extends UI5Element {
 		let hiddenItems = 0;
 
 		for (let index = 0; index < this._itemsCount; index++) {
-			const item: IAvatar = this.items[index];
+			const item: IAvatarGroupItem = this.items[index];
 
 			// show item to determine if it will fit the new container size
 			item.hidden = false;
@@ -574,11 +581,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_getAriaHasPopup() {
-		if (this.ariaHaspopup === "") {
-			return;
-		}
-
-		return this.ariaHaspopup;
+		return this.accessibilityAttributes.hasPopup;
 	}
 }
 
@@ -587,4 +590,6 @@ AvatarGroup.define();
 export default AvatarGroup;
 export type {
 	AvatarGroupClickEventDetail,
+	AvatarGroupAccessibilityAttributes,
+	IAvatarGroupItem,
 };

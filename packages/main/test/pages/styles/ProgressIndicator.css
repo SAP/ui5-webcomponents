@@ -6,3 +6,12 @@
     height: 50px;
     width: 200px;
 }
+
+.progressindicator3auto::part(bar),
+.progressindicator3auto::part(remaining-bar)::after {
+    background-color: rgb(255, 0, 0);
+}
+
+.progressindicator3auto::part(remaining-bar) {
+    background-color: rgb(255, 225, 225);
+}

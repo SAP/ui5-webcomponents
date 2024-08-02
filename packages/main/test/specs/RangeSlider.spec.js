@@ -206,15 +206,6 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 });
 
 describe("Properties synchronization and normalization", () => {
-
-	it("Should fallback to default value of 1 if step property is not a valid number", async () => {
-		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
-
-		await rangeSlider.setProperty("step", "String value");
-
-		assert.strictEqual(await rangeSlider.getProperty("step"), 1, "Step value should be its default value");
-	});
-
 	it("If a negative number is set to the step property its positive equivalent should be used as effective value", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
 

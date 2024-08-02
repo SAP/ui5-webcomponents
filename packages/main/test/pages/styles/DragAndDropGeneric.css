@@ -1,0 +1,13 @@
+html,body {
+    height: 100%;
+}
+
+.label {
+    color: grey;
+}
+
+.events {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(6, 1fr);
+}

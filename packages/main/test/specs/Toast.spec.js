@@ -28,20 +28,20 @@ describe("Toast general interaction", () => {
 			"Toast's content div should be displayed in the viewport after its opening.")
 	});
 
-	it("tests domRendered property", async () => {
+	it("tests open property", async () => {
 		const button = await browser.$("#wcBtnShowToastBS");
 		const toast = await browser.$("#wcToastBS");
 		const toastShadowContent = await toast.shadow$(".ui5-toast-root");
 
 		assert.notOk(await toastShadowContent.isDisplayedInViewport(),
 			"Toast's content div should be displayed in the viewport after its opening.");
-		assert.notOk(await toast.getProperty("domRendered"),
-			"domRendered property value should be false before Toast is shown");
+		assert.notOk(await toast.getProperty("open"),
+			"open property value should be false before Toast is shown");
 
 		await button.click();
 
-		assert.strictEqual(await toast.getProperty("domRendered"), true,
-			"domRendered property value should be true when Toast is shown");
+		assert.strictEqual(await toast.getProperty("open"), true,
+			"open property value should be true when Toast is shown");
 
 		assert.ok(await toastShadowContent.isDisplayedInViewport(),
 			"Toast's content div should be displayed in the viewport after its opening.")
@@ -79,12 +79,12 @@ describe("Toast general interaction", () => {
 
 	it("tests shadow content div inline styles with default duration", async () => {
 		const button = await browser.$("#wcBtnShowToastBE");
-		const toastShadowContent = await browser.$("#wcToastBE").shadow$(".ui5-toast-root");
+		const toast = await browser.$("#wcToastBE");
 		const EXPECTED_STYLES = "transition-duration: 1000ms; transition-delay: 2000ms; opacity: 0;";
 
 		await button.click();
 
-		const styleValue = await toastShadowContent.getAttribute("style");
+		const styleValue = await toast.getAttribute("style");
 		assert.include(styleValue, EXPECTED_STYLES,
 			"The correct default inline styles are applied to the shadow ui5-toast-root");
 	});
@@ -92,7 +92,6 @@ describe("Toast general interaction", () => {
 	it("tests shadow content div inline styles with long duration", async () => {
 		const button = await browser.$("#wcBtnShowToastBS");
 		const toast = await browser.$("#wcToastBS");
-		const toastShadowContent = await toast.shadow$(".ui5-toast-root");
 		const maximumAllowedTransition = 1000;
 		const durationProperty = await toast.getProperty("duration");
 		let calculatedDelay;
@@ -103,7 +102,7 @@ describe("Toast general interaction", () => {
 
 		const EXPECTED_STYLES = `transition-duration: ${maximumAllowedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
 
-		const styleValue = await toastShadowContent.getAttribute("style");
+		const styleValue = await toast.getAttribute("style");
 		assert.include(styleValue, EXPECTED_STYLES,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is longer than default. Transition is not longer than allowed (1000ms).");
@@ -112,7 +111,6 @@ describe("Toast general interaction", () => {
 	it("tests shadow content div inline styles with short duration", async () => {
 		const button = await browser.$("#wcBtnShowToastME");
 		const toast = await browser.$("#wcToastME");
-		const toastShadowContent = await toast.shadow$(".ui5-toast-root");
 		const durationProperty = await toast.getProperty("duration");
 		let calculatedTransition, calculatedDelay;
 
@@ -123,7 +121,7 @@ describe("Toast general interaction", () => {
 
 		const EXPECTED_STYLES = `transition-duration: ${calculatedTransition}ms; transition-delay: ${calculatedDelay}; opacity: 0;`;
 
-		const styleValue = await toastShadowContent.getAttribute("style");
+		const styleValue = await toast.getAttribute("style");
 		assert.include(styleValue, EXPECTED_STYLES,
 				"The correct custom inline styles are applied to the shadow ui5-toast-root," +
 				"when the duration is shorter than default. Transition is a third of the duration.");
@@ -137,11 +135,11 @@ describe("Toast general interaction", () => {
 
 		await browser.waitUntil(async () => {
 			const open = await toast.getProperty("open");
-			const domRendered = await toast.getProperty("domRendered");
-			return !open && !domRendered;
+			const openAttribute = await toast.getAttribute("open");
+			return !open && !openAttribute;
 		}, {
 			timeout: 2000,
-			timeoutMsg: "After 2000ms the toast should be closed and domRendered should be false"
+			timeoutMsg: "After 2000ms the toast should be closed and open should be removed"
 		});
 	});
 
@@ -199,5 +197,24 @@ describe("Keyboard handling", () => {
 		await browser.pause(3000);
 
 		assert.ok(await toast.getProperty("open"), "second Toast should stay open");
+	});
+});
+
+describe("Customisation", async () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Toast.html`);
+	});
+
+	it("should check sizes to the toast", async () => {
+		const btn = await $("#wcBtnShowToastStyled");
+		const styledToast = await $("#wcToastStyled")
+
+		await btn.click();
+
+		const width = await styledToast.getSize("width");
+		const height = await styledToast.getSize("height");
+
+		assert.strictEqual(width, 300, "width is custom");
+		assert.strictEqual(height, 64, "height is custom");
 	});
 });

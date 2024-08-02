@@ -24,12 +24,10 @@ const getThemeRoot = (): string | undefined => {
  * Sets theme root for the current theme.
  * When set, the framework will validate the theme root and fetch the theme styles (CSS variables) from this location.
  *
- * <b>Note:</b> The feature is specific to custom themes, created with the `UI Theme Designer`.
+ * **Note:** The feature is specific to custom themes, created with the `UI Theme Designer`.
  * The provided theme root is used only as a base to construct the actual location of the theme styles: `{themeRoot}/.../css_variables.css`.
  *
- * <br/>
- *
- * <b>Note:</b> Certain security restrictions will apply before fetching the theme assets.
+ * **Note:** Certain security restrictions will apply before fetching the theme assets.
  * Absolute URLs to a different origin than the current page will result in using the current page as an origin.
  * To allow specific origins, use &lt;meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/"&gt; tag inside the &lt;head&gt; of the page.
  *

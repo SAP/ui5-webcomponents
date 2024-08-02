@@ -12,7 +12,7 @@ class ListTestPage {
 	}
 
 	async getItem(index) {
-		return (await browser.$$("#list1 ui5-li"))[index];
+		return (await browser.$$(`${this._sut} ui5-li`))[index];
 	}
 }
 

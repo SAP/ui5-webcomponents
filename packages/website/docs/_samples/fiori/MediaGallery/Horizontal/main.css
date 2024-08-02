@@ -1,0 +1,9 @@
+ui5-media-gallery-item:not(:defined) {
+    visibility: hidden;
+}
+
+@media (min-width: 600px) {
+    ui5-media-gallery {
+        height: 50rem;
+    }
+}

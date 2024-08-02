@@ -1,6 +1,5 @@
 /**
  * Side Content visibility options.
- *
  * @public
  */
 enum SideContentVisibility {

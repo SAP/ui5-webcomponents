@@ -1,76 +1,45 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
-
-// Styles
-import tableCellStyles from "./generated/themes/TableCell.css.js";
-
-// Texts
-import {
-	ARIA_LABEL_EMPTY_CELL,
-} from "./generated/i18n/i18n-defaults.js";
+import TableCellStyles from "./generated/themes/TableCell.css.js";
+import TableCellBase from "./TableCellBase.js";
+import type TableRow from "./TableRow.js";
+import type Table from "./Table.js";
+import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-table-cell</code> component defines the structure of the data in a single <code>ui5-table</code> cell.
+ * The `ui5-table-cell` represents a cell inside of a `ui5-table`.
+ * It is tightly coupled to the `ui5-table` and thus should only be used in the table component.
+ *
+ * ### ES6 Module Import
+ *
+ * `import @ui5/webcomponents/dist/TableCell.js;`
  *
  * @constructor
- * @extends UI5Element
+ * @extends TableCellBase
+ * @since 2.0.0
  * @public
- * @csspart cell - Used to style the native <code>td</code> element
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 @customElement({
 	tag: "ui5-table-cell",
-	renderer: litRender,
+	styles: [TableCellBase.styles, TableCellStyles],
 	template: TableCellTemplate,
-	styles: tableCellStyles,
 })
-class TableCell extends UI5Element {
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	lastInRow!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	popined!: boolean;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_popinedInline!: boolean;
-
-	/**
-	 * Specifies the content of the component.
-	 *
-	 * @public
-	 */
-	@slot({ type: HTMLElement, "default": true })
-	content?: Array<HTMLElement>;
-
-	static i18nBundle: I18nBundle;
-	static async onDefine() {
-		TableCell.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+class TableCell extends TableCellBase {
+	get _popinHeader() {
+		const row = this.parentElement as TableRow;
+		const table = row.parentElement as Table;
+		const index = row.cells.indexOf(this);
+		const headerCell = table.headerRow[0].cells[index];
+		return headerCell.content[0]?.cloneNode(true);
 	}
 
-	get cellContent(): Array<HTMLElement> {
-		return this.getSlottedNodes<HTMLElement>("content");
-	}
-
-	get ariaLabelEmptyCellText(): string {
-		return TableCell.i18nBundle.getText(ARIA_LABEL_EMPTY_CELL);
+	get _i18nPopinColon() {
+		return TableCellBase.i18nBundle.getText(LABEL_COLON);
 	}
 }
 

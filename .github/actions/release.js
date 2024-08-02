@@ -20,7 +20,7 @@ const OTP = options.otp;
 
 const run = async () => {
 	const { globby } = await import("globby");
-	let FILES = await globby(["packages/*/package.json", "!packages/playground/package.json"]);
+	let FILES = await globby(["packages/*/package.json", "!packages/playground/package.json", "!packages/website/package.json"]);
 
 	// Step 1: process package.json files
 	const pkgs = await Promise.all(FILES.map(processPackageJSON));

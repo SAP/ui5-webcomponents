@@ -17,13 +17,13 @@
 
 	--_ui5_side_navigation_icon_font_size: 1.125rem;
 	--_ui5_side_navigation_expand_icon_color: var(--sapContent_NonInteractiveIconColor);
+	--_ui5_side_navigation_external_link_icon_color: var(--sapContent_LabelColor);
 	--_ui5_side_navigation_item_height: 2.5rem;
 	--_ui5_side_navigation_item_bottom_margin: 0.25rem;
 	--_ui5_side_navigation_item_bottom_margin_compact: 0.5rem;
 	--_ui5_side_navigation_item_focus_border_offset: 0;
 	--_ui5_side_navigation_item_border_style_color: solid var(--sapList_BorderColor);
 	--_ui5_side_navigation_item_border_width: 0 0 0.0625rem 0;
-	--_ui5_side_navigation_item_padding_right: 0;
 	--_ui5_side_navigation_group_expanded_border_width: var(--_ui5_side_navigation_item_border_width);
 	--_ui5_side_navigation_last_item_border_style: solid transparent;
 	--_ui5_side_navigation_hover_border_style_color: solid var(--sapList_SelectionBorderColor);

@@ -65,7 +65,7 @@
 	height: 100%;
 }
 
-[ui5-li-groupheader] {
+[ui5-li-group]::part(header) {
 	overflow: hidden;
 }
 

@@ -12,17 +12,17 @@ enum ValueState {
 	/**
 	 * @public
 	 */
-	Success = "Success",
+	Positive = "Positive",
 
 	/**
 	 * @public
 	 */
-	Warning = "Warning",
+	Critical = "Critical",
 
 	/**
 	 * @public
 	 */
-	Error = "Error",
+	Negative = "Negative",
 
 	/**
 	 * @public

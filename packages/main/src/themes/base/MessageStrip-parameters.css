@@ -15,4 +15,29 @@
 	--_ui5_message_strip_focus_offset: -2px;
 	--_ui5_message_strip_close_button_top: 0.125rem;
 	--_ui5_message_strip_close_button_right: 0.125rem;
+	/* Next two variables below are hardcoded values of sapButton_Lite_Hover_Background parameter with specified opacity*/
+	--_ui5_message_strip_close_button_color_set_1_background: #eaecee4d;
+	--_ui5_message_strip_close_button_color_set_2_background: #eaecee80;
+	--_ui5_message_strip_close_button_color_set_1_color: var(--sapButton_Emphasized_TextColor);
+	--_ui5_message_strip_close_button_color_set_1_hover_color: var(--sapButton_Emphasized_TextColor);
+	--_ui5_message_strip_scheme_1_set_2_background: var(--sapIndicationColor_1b);
+	--_ui5_message_strip_scheme_1_set_2_border_color: var(--sapIndicationColor_1b_BorderColor);
+	--_ui5_message_strip_scheme_2_set_2_background: var(--sapIndicationColor_2b);
+	--_ui5_message_strip_scheme_2_set_2_border_color: var(--sapIndicationColor_2b_BorderColor);
+	--_ui5_message_strip_scheme_3_set_2_background: var(--sapIndicationColor_3b);
+	--_ui5_message_strip_scheme_3_set_2_border_color: var(--sapIndicationColor_3b_BorderColor);
+	--_ui5_message_strip_scheme_4_set_2_background: var(--sapIndicationColor_4b);
+	--_ui5_message_strip_scheme_4_set_2_border_color: var(--sapIndicationColor_4b_BorderColor);
+	--_ui5_message_strip_scheme_5_set_2_background: var(--sapIndicationColor_5b);
+	--_ui5_message_strip_scheme_5_set_2_border_color: var(--sapIndicationColor_5b_BorderColor);
+	--_ui5_message_strip_scheme_6_set_2_background: var(--sapIndicationColor_6b);
+	--_ui5_message_strip_scheme_6_set_2_border_color: var(--sapIndicationColor_6b_BorderColor);
+	--_ui5_message_strip_scheme_7_set_2_background: var(--sapIndicationColor_7b);
+	--_ui5_message_strip_scheme_7_set_2_border_color: var(--sapIndicationColor_7b_BorderColor);
+	--_ui5_message_strip_scheme_8_set_2_background: var(--sapIndicationColor_8b);
+	--_ui5_message_strip_scheme_8_set_2_border_color: var(--sapIndicationColor_8b_BorderColor);
+	--_ui5_message_strip_scheme_9_set_2_background: var(--sapIndicationColor_9b);
+	--_ui5_message_strip_scheme_9_set_2_border_color: var(--sapIndicationColor_9b_BorderColor);
+	--_ui5_message_strip_scheme_10_set_2_background: var(--sapIndicationColor_10b);
+	--_ui5_message_strip_scheme_10_set_2_border_color: var(--sapIndicationColor_10b_BorderColor);
 }

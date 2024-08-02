@@ -17,6 +17,10 @@
 	background-color: var(--sapField_Background);
 	border-radius: var(--_ui5-datepicker_border_radius);
 	margin: var(--_ui5_input_margin_top_bottom) 0;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 
 :host(:not([disabled]):not([readonly]):active) {

@@ -1,32 +1,5 @@
 @import "./InvisibleTextStyles.css";
 
-/* actionable (type="Active" + desktop) */
-:host([actionable]:not([disabled])) {
-	cursor: pointer;
-}
-
-/* selected and hovered */
-:host([selected][actionable]:not([active]):hover) {
-	background : var(--sapList_Hover_SelectionBackground);
-}
-
-/* selected and active */
-:host([active][actionable]),
-:host([selected][active][actionable]) {
-	background: var(--sapList_Active_Background);
-}
-
-/* hovered */
-:host([actionable]:not([active]):not([selected]):hover) {
-	background : var(--sapList_Hover_Background);
-}
-
-/* focused */
-:host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus,
-:host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus {
-	outline-color: var(--sapContent_ContrastFocusColor);
-}
-
 /* navigated */
 :host([navigated]) .ui5-li-root .ui5-li-navigated {
 	width: 0.1875rem;
@@ -50,15 +23,15 @@
 }
 
 /* [ui5-li]: additionalTextState */
-:host([additional-text-state="Warning"]) .ui5-li-additional-text {
+:host([additional-text-state="Critical"]) .ui5-li-additional-text {
 	color: var(--sapCriticalTextColor);
 }
 
-:host([additional-text-state="Success"]) .ui5-li-additional-text {
+:host([additional-text-state="Positive"]) .ui5-li-additional-text {
 	color: var(--sapPositiveTextColor);
 }
 
-:host([additional-text-state="Error"]) .ui5-li-additional-text {
+:host([additional-text-state="Negative"]) .ui5-li-additional-text {
 	color: var(--sapNegativeTextColor);
 }
 
@@ -75,12 +48,19 @@
 	height: 5rem;
 }
 
-:host([_has-image-content]) {
+:host([_has-image]) {
 	height: 5rem;
 }
 
 :host([image]) .ui5-li-content {
 	height: 3rem;
+}
+
+::slotted(img[slot="image"]){
+	width: var(--_ui5_list_item_img_size);
+	height: var(--_ui5_list_item_img_size);
+	border-radius: var(--ui5-avatar-border-radius);
+	object-fit: contain
 }
 
 :host([description]) .ui5-li-root {
@@ -96,11 +76,7 @@
 }
 
 .ui5-li-text-wrapper {
-	display: flex;
 	flex-direction: column;
-	flex: auto;
-	min-width: 1px;
-	line-height: normal;
 }
 
 :host([description]) .ui5-li-text-wrapper {
@@ -112,11 +88,6 @@
 .ui5-li-description-info-wrapper {
 	display: flex;
 	justify-content: space-between;
-}
-
-.ui5-li-title {
-	color: var(--sapList_TextColor);
-	font-size: var(--_ui5_list_item_title_size);
 }
 
 .ui5-li-additional-text,
@@ -140,26 +111,11 @@
 	font-size: var(--sapFontSize);
 }
 
-.ui5-li-additional-text {
-	margin: 0 0.25rem;
-	color: var(--sapNeutralTextColor);
-	font-size: var(--sapFontSize);
-	min-width: 3.75rem;
-	text-align: end;
-}
-
 :host([description]) .ui5-li-additional-text {
 	align-self: flex-end;
 }
 
-.ui5-li-img {
-	width: var(--_ui5_list_item_img_size);
-	height: var(--_ui5_list_item_img_size);
-	border-radius: var(--ui5-avatar-border-radius);
-}
-
-.ui5-li-img,
-.ui5-li-imgContent {
+.ui5-li-image {
 	min-width: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin-top: var(--_ui5_list_item_img_top_margin);
@@ -167,22 +123,11 @@
 	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
 }
 
-.ui5-li-img-inner {
-	object-fit: contain;
-}
-
 .ui5-li-icon {
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);
 	color: var(--sapContent_NonInteractiveIconColor);
 	padding-inline-end: var(--_ui5_list_item_icon_padding-inline-end);
-}
-
-.ui5-li-content {
-	display: flex;
-	align-items: center;
-	flex: auto;
-	overflow: hidden;
 }
 
 .ui5-li-detailbtn,
@@ -207,18 +152,45 @@
 	margin-top: var(--_ui5_list_item_selection_btn_margin_top);
 }
 
-:host([_mode="SingleSelectBegin"]) .ui5-li-root {
+:host([_selection-mode="SingleStart"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
-:host([_mode="MultiSelect"]) .ui5-li-root {
+:host([_selection-mode="Multiple"]) .ui5-li-root {
 	padding-inline: 0 1rem;
 }
 
-:host([_mode="SingleSelectEnd"]) .ui5-li-root {
+:host([_selection-mode="SingleEnd"]) .ui5-li-root {
 	padding-inline: 1rem 0;
 }
 
 :host [ui5-checkbox].ui5-li-singlesel-radiobtn {
 	margin-right: var(--_ui5_list_item_cb_margin_right);
+}
+
+/* highlight */
+.ui5-li-highlight {
+	position: absolute;
+	width: 0.375rem;
+	bottom: 0;
+	left: 0;
+	top: 0;
+	border-inline-end: 0.0625rem solid var(--ui5-listitem-background-color);
+	box-sizing: border-box;
+}
+
+:host([highlight="Negative"]) .ui5-li-highlight {
+	background: var(--sapNegativeTextColor);
+}
+
+:host([highlight="Critical"]) .ui5-li-highlight {
+	background: var(--sapCriticalTextColor);
+}
+
+:host([highlight="Positive"]) .ui5-li-highlight {
+	background: var(--sapPositiveTextColor);
+}
+
+:host([highlight="Information"]) .ui5-li-highlight {
+	background: var(--sapInformativeTextColor);
 }

@@ -1,0 +1,41 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 350px">
+    <!-- playground-fold-end -->
+
+	<ui5-button id="btnOpenEndContent">Open Menu</ui5-button>
+
+	<ui5-menu id="menuEndContent" header-text="My ui5-menu">
+		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file - prevent default" icon="add-document">
+			<ui5-button id="newAdd" slot="endContent" icon="add" design="Transparent"></ui5-button>
+			<ui5-button id="newHint" slot="endContent" icon="hint" design="Transparent"></ui5-button>
+			<ui5-button id="newFavorite" slot="endContent" icon="favorite" design="Transparent"></ui5-button>
+		</ui5-menu-item>
+		<ui5-menu-item text="New Folder" additional-text="Ctrl+F" icon="add-folder"></ui5-menu-item>
+		<ui5-menu-item text="Open" icon="open-folder" accessible-name="Choose platform" starts-section>
+			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K"></ui5-menu-item>
+			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Save with very long title for a menu item text inside" icon="save">
+			<ui5-menu-item text="Save Locally" icon="save"></ui5-menu-item>
+			<ui5-menu-item text="Save on Cloud" icon="upload-to-cloud"></ui5-menu-item>
+		</ui5-menu-item>
+		<ui5-menu-item text="Close" additional-text="Ctrl+W"></ui5-menu-item>
+		<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
+	</ui5-menu>
+
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

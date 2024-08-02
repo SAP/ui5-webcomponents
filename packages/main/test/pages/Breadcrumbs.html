@@ -79,7 +79,7 @@
 		<ui5-breadcrumbs-item href="#">Link7</ui5-breadcrumbs-item>
 	</ui5-breadcrumbs>
 
-	<h2>Breadcrumbs with specific separator style</h2>
+	<h2>Breadcrumbs with specific separators</h2>
 	<ui5-select id="selectSeparator">
 		<ui5-option>Slash</ui5-option>
 		<ui5-option>BackSlash</ui5-option>
@@ -171,7 +171,7 @@
 		btn.addEventListener("click", function(event) {
 			var hcb = event.target.pressed;
 			var styles = hcb ? "background:#333;color:palegoldenrod;" : "background:#fff;color:#333;";
-			var theme = hcb ? "sap_belize_hcb" : "sap_fiori_3";
+			var theme = hcb ? "sap_horizon_hcb" : "sap_horizon";
 
 			document.body.setAttribute("style", styles);
 			var Conf = window["sap-ui-webcomponents-bundle"].configuration;
@@ -234,7 +234,7 @@
 
 		selectSeparator.addEventListener("ui5-change", function(e) {
 			let separator = e.detail.selectedOption.textContent;
-			breadcrumbs4.setAttribute("separator-style", separator);
+			breadcrumbs4.setAttribute("separators", separator);
 		});
 
 	</script>

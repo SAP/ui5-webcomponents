@@ -30,19 +30,31 @@
 		<ui5-label id="scanError"></ui5-label>
 	</div>
 
+	<p>Barcode scanner dialog <code>open</code> state: <span class="open-state">false</span></p>
+
 	<script>
-		btnScan.addEventListener("click", function(event) {
-			dlgScan.show();
+		const dlgScan = document.getElementById("dlgScan");
+		const btnScan = document.getElementById("btnScan");
+		const scanResult = document.getElementById("scanResult");
+		const scanError = document.getElementById("scanError");
+
+		btnScan.addEventListener("click", (event) => {
+			dlgScan.open = true;
+			document.querySelector(".open-state").textContent = `${dlgScan.open}`;
 		});
 
-		dlgScan.addEventListener("ui5-scan-success", function(event) {
+		dlgScan.addEventListener("ui5-scan-success", (event) => {
 			scanResult.innerHTML = event.detail.text;
-			dlgScan.close();
+			dlgScan.open = false;
 		});
 
-		dlgScan.addEventListener("ui5-scan-error", function(event) {
+		dlgScan.addEventListener("ui5-scan-error", (event) => {
 			scanError.innerHTML = event.detail.message;
-			dlgScan.close();
+			dlgScan.open = false;
+		});
+
+		dlgScan.addEventListener("ui5-close", (event) => {
+			document.querySelector(".open-state").textContent = `${dlgScan.open}`;
 		});
 	</script>
 </body>

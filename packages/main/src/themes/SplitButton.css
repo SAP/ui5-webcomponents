@@ -3,7 +3,7 @@
 
 :host(:not([hidden])) {
 	display: inline-flex;
-	height: 100%;
+	height: var(--_ui5_button_base_height);
 	border-radius: var(--_ui5_button_border_radius);
 	background-color: var(--sapButton_Background);
 	box-shadow: var(--_ui5_split_button_host_default_box_shadow);
@@ -32,7 +32,7 @@
 
 :host([active-arrow-button][design="Emphasized"]) .ui5-split-arrow-button,
 :host([design="Emphasized"]) .ui5-split-arrow-button[active] {
-	background-color: var(--sapButton_Selected_Background);
+	background-color: var(--sapButton_Emphasized_Active_Background);
 	border: 0.0625rem solid var(--sapButton_Emphasized_Active_BorderColor);
 }
 
@@ -41,13 +41,14 @@
 :host([design="Transparent"]) .ui5-split-arrow-button[active],
 :host([design="Default"]) .ui5-split-arrow-button[active],
 .ui5-split-arrow-button[active], .ui5-split-arrow-button[active]:hover {
-	background-color: var(--sapButton_Selected_Background);
+	background-color: var(--sapButton_Active_Background);
 	border: 0.0625rem solid var(--sapButton_Lite_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 }
 
 :host([disabled]:not([hidden])) {
 	pointer-events: none;
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 :host([design="Positive"]:not([hidden])) {
@@ -89,11 +90,13 @@
 	color: var(--_ui5_split_button_transparent_hover_color);
 }
 
-:host([focused]) .ui5-split-button-root {
+:host([desktop]) .ui5-split-button-root:focus-within,
+.ui5-split-button-root:focus-visible {
 	outline: 0;
 }
 
-:host([focused]) .ui5-split-button-root:after {
+:host([desktop]) .ui5-split-button-root:focus-within:after,
+.ui5-split-button-root:focus-visible:after {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -103,7 +106,8 @@
 	border-radius: var(--_ui5_split_button_focused_border_radius);
 }
 
-:host([design="Emphasized"][focused]) .ui5-split-button-root:after {
+:host([design="Emphasized"][desktop]) .ui5-split-button-root:focus-within:after,
+:host([design="Emphasized"]) .ui5-split-button-root:focus-visible:after  {
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
@@ -111,6 +115,7 @@
 	display: inline-flex;
 	position: relative;
 	width: inherit;
+	height: 100%;
 }
 
 .ui5-split-button-root:focus,
@@ -225,7 +230,7 @@
 	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
 	box-shadow: var(--_ui5_split_arrow_button_emphasized_hover_box_shadow, none)
 }
-[dir="rtl"].ui5-split-arrow-button[design="Emphasized"]:hover {
+:dir(rtl).ui5-split-arrow-button[design="Emphasized"]:hover {
 	box-shadow: var(--_ui5_split_arrow_button_emphasized_hover_box_shadow_rtl, none);
 }
 
@@ -304,20 +309,21 @@
 }
 
 
-
-.ui5-split-arrow-button[focused]::part(button)::after {
+.ui5-split-arrow-button[desktop]::part(button):focus-within::after,
+.ui5-split-arrow-button::part(button):focus-visible::after {
 	border-start-start-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 	border-end-start-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 }
 
-.ui5-split-text-button[focused]::part(button)::after {
+.ui5-split-arrow-button[desktop]::part(button):focus-within::after,
+.ui5-split-text-button::part(button):focus-visible::after {
 	border-start-end-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 	border-end-end-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 }
 
 .ui5-split-text-button[active][design="Emphasized"] {
 	color: var(--sapButton_Emphasized_Active_TextColor);
-	background-color: var(--sapButton_Selected_Background);
+	background-color: var(--sapButton_Emphasized_Active_Background);
 }
 
 :host([design="Emphasized"][active-arrow-button]) .ui5-split-arrow-button,

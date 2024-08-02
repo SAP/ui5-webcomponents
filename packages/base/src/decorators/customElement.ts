@@ -15,11 +15,12 @@ const customElement = (tagNameOrComponentSettings: string | {
 	styles?: Styles,
 	template?: Template,
 	dependencies?: Array<typeof UI5Element>,
-	staticAreaStyles?: Styles,
-	staticAreaTemplate?: Template,
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
+	formAssociated?: boolean,
+	shadowRootOptions?: Partial<ShadowRootInit>,
+	features?: Array<string>,
 } = {}): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
@@ -36,25 +37,39 @@ const customElement = (tagNameOrComponentSettings: string | {
 			languageAware,
 			themeAware,
 			fastNavigation,
+			formAssociated,
+			shadowRootOptions,
+			features,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
 		}
+
+		if (features) {
+			target.metadata.features = features;
+		}
+
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
 		}
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
 		}
+		if (formAssociated) {
+			target.metadata.formAssociated = formAssociated;
+		}
 
-		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
-			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
-			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
+		if (shadowRootOptions) {
+			target.metadata.shadowRootOptions = shadowRootOptions;
+		}
+
+		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {
+			const customElementEntityValue = tagNameOrComponentSettings[customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-				get: () => customElementEntityValue,
+				get: () => tagNameOrComponentSettings[customElementEntity as keyof typeof tag],
 			});
 		});
 	};

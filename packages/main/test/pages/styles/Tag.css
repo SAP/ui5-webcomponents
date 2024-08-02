@@ -1,0 +1,26 @@
+html,
+body {
+	margin: 0;
+}
+
+.group {
+	padding: 1rem;
+}
+
+.gaps .ui5-tag,
+.gaps ui5-tag {
+	margin-bottom: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.width300px {
+	width: 300px;
+}
+
+.width200px {
+	width: 200px;
+}
+
+.tag1auto {
+	background-color: var(--sapBackgroundColor);
+}

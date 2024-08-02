@@ -1,13 +1,11 @@
 /**
  * Different  Breadcrumbs designs.
- *
  * @public
  */
 enum BreadcrumbsDesign {
 	/**
 	 * Shows the current page as the last item in the trail.
 	 * The last item contains only plain text and is not a link.
-	 *
 	 * @public
 	 */
 	Standard = "Standard",

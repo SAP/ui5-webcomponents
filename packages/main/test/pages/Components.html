@@ -37,7 +37,7 @@
 
 	<!-- hidden web components -->
 	<ui5-busy-indicator id="busyIndicator2" hidden></ui5-busy-indicator>
-	<ui5-badge id="badge2" hidden>Required</ui5-badge>
+	<ui5-tag id="tag2" hidden>Required</ui5-tag>
 	<ui5-button id="btn2" hidden>Primary button</ui5-button>
 	<ui5-card id="card2" hidden>
 		<ui5-card-header slot="header" header-text="Primary card">
@@ -50,10 +50,11 @@
 	<ui5-label id="lbl2" hidden>Hello world</ui5-label>
 	<ui5-link id="ln2" hidden>Press me</ui5-link>
 
-	<ui5-list id="list2" header-text="API: GroupHeaderListItem" hidden>
-		<ui5-li-groupheader>New Items</ui5-li-groupheader>
-		<ui5-li icon="navigation-right-arrow" >Laptop HP</ui5-li>
-		<ui5-li-custom>Discounted Items</ui5-li-custom>
+	<ui5-list id="list2" header-text="API: ListItemGroupHeader" hidden>
+		<ui5-li-group header-text="New Items">
+			<ui5-li icon="navigation-right-arrow" >Laptop HP</ui5-li>
+			<ui5-li-custom>Discounted Items</ui5-li-custom>
+		</ui5-li-group>
 	</ui5-list>
 
 	<ui5-message-strip id="ms2" hidden>Hello world</ui5-message-strip>

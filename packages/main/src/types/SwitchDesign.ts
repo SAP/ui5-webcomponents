@@ -1,6 +1,5 @@
 /**
  * Different types of Switch designs.
- *
  * @public
  */
 enum SwitchDesign {

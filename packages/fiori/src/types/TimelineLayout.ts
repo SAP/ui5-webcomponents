@@ -1,6 +1,5 @@
 /**
  * Available Timeline layout orientation
- *
  * @public
  */
 enum TimelineLayout {

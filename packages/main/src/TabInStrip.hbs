@@ -4,14 +4,17 @@
 	role="tab"
 	aria-roledescription="{{_roleDescription}}"
 	aria-haspopup="{{_ariaHasPopup}}"
-	aria-posinset="{{this._posinset}}"
-	aria-setsize="{{this._setsize}}"
+	aria-posinset="{{this._forcedPosinset}}"
+	aria-setsize="{{this._forcedSetsize}}"
 	aria-controls="ui5-tc-content"
 	aria-selected="{{this.effectiveSelected}}"
 	aria-disabled="{{this.effectiveDisabled}}"
-	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
-	._realTab="{{this}}"
+	?disabled="{{this.effectiveDisabled}}"
+	draggable="{{this.movable}}"
+	@dragstart="{{this._ondragstart}}"
+	@dragend="{{this._ondragend}}"
+	.realTabReference="{{this}}"
 >
 	{{#if this.icon}}
 		<div class="ui5-tab-strip-item-icon-outer">
@@ -56,7 +59,7 @@
 				tabindex="-1"
 				?disabled="{{disabled}}"
 				tooltip="{{expandButtonTitle}}"
-				aria-haspopup="Menu">
+				.accessibilityAttributes="{{expandBtnAccessibilityAttributes}}">
 			</ui5-button>
 		</div>
 	{{/if}}

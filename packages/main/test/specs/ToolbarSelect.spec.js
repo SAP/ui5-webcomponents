@@ -10,7 +10,7 @@ describe("Toolbar general interaction", () => {
 		const select = await toolbar.shadow$("ui5-select");
 		const valueState = await select.getAttribute("value-state");
 
-		assert.strictEqual(valueState, "Warning", "Select value state is correct");
+		assert.strictEqual(valueState, "Critical", "Select value state is correct");
 	});
 
 	it("Should render the select with disabled property correctly", async () => {
@@ -57,12 +57,11 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("ui5-toolbar");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
+		const popover = await toolbar.shadow$("ui5-popover");
 		const valueState = await popover.$("ui5-select").getAttribute("value-state");
 		const disabled = await popover.$("ui5-select[disabled]").getAttribute("disabled");
 
-		assert.strictEqual(valueState, "Warning", "Select value state is correct");
+		assert.strictEqual(valueState, "Critical", "Select value state is correct");
 		assert.strictEqual(disabled, "true", "Disabled select is rendered correctly");
 
 		// Accessibility

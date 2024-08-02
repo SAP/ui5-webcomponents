@@ -7,24 +7,21 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -37,6 +34,7 @@ import {
 	VALUE_STATE_TYPE_WARNING,
 	TEXTAREA_CHARACTERS_LEFT,
 	TEXTAREA_CHARACTERS_EXCEEDED,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -59,17 +57,16 @@ type ExceededText = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-textarea</code> component is used to enter multiple lines of text.
- * <br><br>
- * When empty, it can hold a placeholder similar to a <code>ui5-input</code>.
- * You can define the rows of the <code>ui5-textarea</code> and also determine specific behavior when handling long texts.
+ * The `ui5-textarea` component is used to enter multiple rows of text.
  *
- * <h3>ES6 Module Import</h3>
+ * When empty, it can hold a placeholder similar to a `ui5-input`.
+ * You can define the rows of the `ui5-textarea` and also determine specific behavior when handling long texts.
  *
- * <code>import "@ui5/webcomponents/dist/TextArea";</code>
+ * ### ES6 Module Import
  *
+ * `import "@ui5/webcomponents/dist/TextArea.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -77,17 +74,15 @@ type ExceededText = {
  */
 @customElement({
 	tag: "ui5-textarea",
+	formAssociated: true,
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles],
+	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
 	renderer: litRender,
 	template: TextAreaTemplate,
-	staticAreaTemplate: TextAreaPopoverTemplate,
-	staticAreaStyles: valueStateMessageStyles,
 	dependencies: [Popover, Icon],
 })
 /**
  * Fired when the text has changed and the focus leaves the component.
- *
  * @public
  */
 @event("change")
@@ -95,239 +90,235 @@ type ExceededText = {
 /**
  * Fired when the value of the component changes at each keystroke or when
  * something is pasted.
- *
  * @since 1.0.0-rc.5
  * @public
  */
 @event("input")
 
-class TextArea extends UI5Element implements IFormElement {
+/**
+ * Fired when some text has been selected.
+ *
+ * @since 1.23.0
+ * @public
+ */
+@event("select")
+
+/**
+ * Fired when textarea is scrolled.
+ *
+ * @since 1.23.0
+ * @public
+ */
+@event("scroll")
+
+class TextArea extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the value of the component.
-	 *
 	 * @formEvents change input
 	 * @formProperty
 	 * @default ""
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value = "";
 	/**
 	 * Indicates whether the user can interact with the component or not.
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
+	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.3
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	placeholder!: string;
+	placeholder?: string;
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If <code>maxlength</code> property is set,
-	 * the component turns into "Warning" state once the characters exceeds the limit.
-	 * In this case, only the "Error" state is considered and can be applied.
-	 *
+	 * **Note:** If `maxlength` property is set,
+	 * the component turns into "Critical" state once the characters exceeds the limit.
+	 * In this case, only the "Negative" state is considered and can be applied.
 	 * @default "None"
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	/**
-	 * Defines the number of visible text lines for the component.
-	 * <br><br>
-	 * <b>Notes:</b>
-	 * <ul>
-	 * <li>If the <code>growing</code> property is enabled, this property defines the minimum rows to be displayed
-	 * in the textarea.</li>
-	 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
-	 * </ul>
+	 * Defines the number of visible text rows for the component.
 	 *
+	 * **Notes:**
+	 *
+	 * - If the `growing` property is enabled, this property defines the minimum rows to be displayed
+	 * in the textarea.
+	 * - The CSS `height` property wins over the `rows` property, if both are set.
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	rows!: number;
+	@property({ type: Number })
+	rows = 0;
 
 	/**
-	 * Defines the maximum number of characters that the <code>value</code> can have.
-	 *
+	 * Defines the maximum number of characters that the `value` can have.
 	 * @default undefined
 	 * @public
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	maxlength?: number
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
 	 * in the component.
-	 * <br><br>
-	 * If set to <code>false</code>, the user is not allowed to enter more characters than what is set in the
-	 * <code>maxlength</code> property.
-	 * If set to <code>true</code> the characters exceeding the <code>maxlength</code> value are selected on
-	 * paste and the counter below the component displays their number.
 	 *
+	 * If set to `false`, the user is not allowed to enter more characters than what is set in the
+	 * `maxlength` property.
+	 * If set to `true` the characters exceeding the `maxlength` value are selected on
+	 * paste and the counter below the component displays their number.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showExceededText!: boolean;
+	showExceededText = false;
 
 	/**
 	 * Enables the component to automatically grow and shrink dynamically with its content.
-	 * <br><br>
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	growing!: boolean;
+	growing = false;
 
 	/**
-	 * Defines the maximum number of lines that the component can grow.
-	 *
+	 * Defines the maximum number of rows that the component can grow.
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	growingMaxLines!: number;
+	@property({ type: Number })
+	growingMaxRows = 0;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
-	 * @default ""
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the textarea.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	focused = false;
 
 	/**
 	 * @private
 	 */
 	 @property({ type: Boolean })
-	exceeding!: boolean;
+	exceeding = false;
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	_mirrorText!: IndexedTokenizedText;
+	@property({ type: Array })
+	_mirrorText: IndexedTokenizedText = [];
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_maxHeight!: string;
+	_maxHeight?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	_width?: number;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
+	 * The value state message slot should contain only one root element.
+   	 *
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 *
-	 * <br><br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the component has
-	 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
-	 *
+	 * **Note:** The `valueStateMessage` would be displayed if the component has
+	 * `valueState` of type `Information`, `Critical` or `Negative`.
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
-	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
-	 *
-	 * @private
-	 */
-	 @slot()
-	 formSupport!: Array<HTMLElement>;
 
 	_fnOnResize: ResizeObserverCallback;
 	_firstRendering: boolean;
 	_openValueStateMsgPopover: boolean;
 	_exceededTextProps!: ExceededText;
 	_keyDown?: boolean;
-	FormSupport?: typeof FormSupportT;
 	previousValue: string;
 	valueStatePopover?: Popover;
 
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return TextArea.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value;
+	}
 
 	static async onDefine() {
 		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -361,13 +352,6 @@ class TextArea extends UI5Element implements IFormElement {
 
 		this.exceeding = !!this._exceededTextProps.leftCharactersCount && this._exceededTextProps.leftCharactersCount < 0;
 		this._setCSSParams();
-
-		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenTextArea(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
 	}
 
 	onAfterRendering() {
@@ -411,7 +395,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget && this.contains(eTarget);
 
 		this.focused = false;
 
@@ -422,6 +406,14 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onchange() {
 		this.fireEvent("change", {});
+	}
+
+	_onselect() {
+		this.fireEvent("select", {});
+	}
+
+	_onscroll() {
+		this.fireEvent("scroll", {});
 	}
 
 	_oninput(e: InputEvent) {
@@ -453,7 +445,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_setCSSParams() {
 		this.style.setProperty("--_textarea_rows", this.rows ? String(this.rows) : "2");
-		this.style.setProperty("--_textarea_growing_max_lines", String(this.growingMaxLines));
+		this.style.setProperty("--_textarea_growing_max_rows", String(this.growingMaxRows));
 	}
 
 	toggleValueStateMessage(toggle: boolean) {
@@ -464,24 +456,28 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 	}
 
-	async openPopover() {
-		this.valueStatePopover = await this._getPopover();
-		this.valueStatePopover && await this.valueStatePopover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
+	openPopover() {
+		this.valueStatePopover = this._getPopover();
+		if (this.valueStatePopover) {
+			this.valueStatePopover.opener = this.shadowRoot!.querySelector<HTMLElement>(".ui5-textarea-root .ui5-textarea-wrapper")!;
+			this.valueStatePopover.open = true;
+		}
 	}
 
-	async closePopover() {
-		this.valueStatePopover = await this._getPopover();
-		this.valueStatePopover && this.valueStatePopover.close();
+	closePopover() {
+		this.valueStatePopover = this._getPopover();
+		if (this.valueStatePopover) {
+			this.valueStatePopover.open = false;
+		}
 	}
 
-	async _getPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
+	_getPopover() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_tokenizeText(value: string) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
-			.replace(/>/gm, "&gt;")
+		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "<")
+			.replace(/>/gm, ">")
 			.split("\n");
 
 		if (tokenizedText.length < this.rows) {
@@ -534,8 +530,8 @@ class TextArea extends UI5Element implements IFormElement {
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
@@ -581,7 +577,7 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		if (this.hasCustomValueState) {
-			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 		}
 
 		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
@@ -596,7 +592,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	get ariaInvalid() {
-		return this.valueState === "Error" ? "true" : null;
+		return this.valueState === ValueState.Negative ? "true" : null;
 	}
 
 	get openValueStateMsgPopover() {
@@ -612,15 +608,11 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	get hasValueState() {
-		return this.valueState === ValueState.Error || this.valueState === ValueState.Warning || this.valueState === ValueState.Information;
+		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
 	}
 
-	get valueStateMessageText() {
-		return this.valueStateMessage.map(x => x.cloneNode(true));
-	}
-
-	get _valueStatePopoverHorizontalAlign() {
-		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
+		return this.effectiveDir !== "rtl" ? "Start" : "End";
 	}
 
 	/**
@@ -628,9 +620,9 @@ class TextArea extends UI5Element implements IFormElement {
 	 */
 	get _valueStateMessageIcon() {
 		const iconPerValueState = {
-			Error: "error",
-			Warning: "alert",
-			Success: "sys-enter-2",
+			Negative: "error",
+			Critical: "alert",
+			Positive: "sys-enter-2",
 			Information: "information",
 		};
 
@@ -639,19 +631,19 @@ class TextArea extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings() {
 		return {
-			"Success": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Positive": TextArea.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Negative": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Positive": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			"Negative": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Critical": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 }

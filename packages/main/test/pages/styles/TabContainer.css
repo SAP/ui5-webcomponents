@@ -47,3 +47,7 @@ html,
     display: flex;
     gap: 2rem;
 }
+
+.narrowTabContainer {
+    width: 200px;
+}

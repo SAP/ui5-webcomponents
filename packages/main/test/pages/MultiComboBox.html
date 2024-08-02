@@ -65,7 +65,7 @@
 		<span>Predefined value</span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values id="multi1" accessible-name="MultiComboBox with predefined values">
+		<ui5-multi-combobox no-validation id="multi1" accessible-name="MultiComboBox with predefined values">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -89,10 +89,10 @@
 	</div>
 
 	<div class="demo-section">
-		<span>allow-custom-values and predefined value</span>
+		<span>no-validation and predefined value</span>
 
 		<br>
-		<ui5-multi-combobox id="multi-acv" allow-custom-values value="com">
+		<ui5-multi-combobox id="multi-acv" no-validation value="com">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -115,7 +115,7 @@
 		<span>disabled and placeholder </span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" disabled>
+		<ui5-multi-combobox no-validation placeholder="Some initial text" disabled>
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -127,7 +127,7 @@
 		<span>value state success </span>
 
 		<br>
-		<ui5-multi-combobox id="mcb-success" allow-custom-values placeholder="Some initial text" value-state="Success">
+		<ui5-multi-combobox id="mcb-success" no-validation placeholder="Some initial text" value-state="Positive">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -139,13 +139,13 @@
 		<span>value state information </span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" id="mcb-information"
+		<ui5-multi-combobox no-validation placeholder="Some initial text" id="mcb-information"
 			value-state="Information">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
-			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as
+			<div slot="valueStateMessage">Information message. This is a <a href="#" target="_blank">Link</a>. Extra long text used as
 				an information message. Extra long text used as an information message - 2. Extra long text used as an
 				information message - 3.</div>
 		</ui5-multi-combobox>
@@ -155,7 +155,7 @@
 		<span>value state warning </span>
 
 		<br>
-		<ui5-multi-combobox id="mcb-warning" allow-custom-values placeholder="Some initial text" value-state="Warning">
+		<ui5-multi-combobox id="mcb-warning" no-validation placeholder="Some initial text" value-state="Critical">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -167,7 +167,7 @@
 		<span>value state error </span>
 
 		<br>
-		<ui5-multi-combobox id="mcb-error" allow-custom-values placeholder="Some initial text" value-state="Error">
+		<ui5-multi-combobox id="mcb-error" no-validation placeholder="Some initial text" value-state="Negative">
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -179,7 +179,7 @@
 		<span>readonly </span>
 
 		<br>
-		<ui5-multi-combobox id="mcb-ro" allow-custom-values placeholder="Some initial text" readonly>
+		<ui5-multi-combobox id="mcb-ro" no-validation placeholder="Some initial text" readonly>
 			<ui5-mcb-item selected text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
@@ -191,7 +191,7 @@
 		<span>Readonly with value state </span>
 
 		<br>
-		<ui5-multi-combobox id="readonly-value-state-mcb" value-state="Error" readonly>
+		<ui5-multi-combobox id="readonly-value-state-mcb" value-state="Negative" readonly>
 			<ui5-mcb-item text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -203,7 +203,7 @@
 		<span>Select all</span>
 
 		<br>
-		<ui5-multi-combobox show-select-all id="mcb-select-all-vs" value-state="Error">
+		<ui5-multi-combobox show-select-all id="mcb-select-all-vs" value-state="Negative">
 			<ui5-mcb-item text="Qui minim"></ui5-mcb-item>
 			<ui5-mcb-item text="minim amet"></ui5-mcb-item>
 			<ui5-mcb-item text="amet mollit"></ui5-mcb-item>
@@ -234,6 +234,33 @@
 		</ui5-multi-combobox>
 
 		<br>
+
+		<div class="demo-section">
+			<span>Select all with groups</span>
+
+			<br>
+			<ui5-multi-combobox show-select-all id="mcb-select-all-grouping" value-state="Critical">
+				<ui5-mcb-item-group header-text="Asia">
+					<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+					<ui5-mcb-item text="China"></ui5-mcb-item>
+					<ui5-mcb-item text="India"></ui5-mcb-item>
+					<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
+				</ui5-mcb-item-group>
+				<ui5-mcb-item-group header-text="Europe">
+					<ui5-mcb-item text="Austria"></ui5-mcb-item>
+					<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+					<ui5-mcb-item text="Germany"></ui5-mcb-item>
+					<ui5-mcb-item text="Italy"></ui5-mcb-item>
+				</ui5-mcb-item-group>
+				<ui5-mcb-item-group header-text="North America">
+					<ui5-mcb-item text="Canada"></ui5-mcb-item>
+					<ui5-mcb-item text="Granada"></ui5-mcb-item>
+					<ui5-mcb-item text="Haiti"></ui5-mcb-item>
+					<ui5-mcb-item text="United States"></ui5-mcb-item>
+				</ui5-mcb-item-group>
+			</ui5-multi-combobox>
+
+			<br>
 
 		<ui5-multi-combobox show-select-all id="mcb-select-all">
 			<ui5-mcb-item text="Qui minim"></ui5-mcb-item>
@@ -270,7 +297,7 @@
 		<span id="select-all-event">Selected items count: <span>0</span></span>
 
 		<script>
-			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selectionChange", e => {
+			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selection-change", e => {
 				console.log("selection change")
 				document.querySelector("#select-all-event span").textContent = e.detail.items.length;
 			});
@@ -281,7 +308,7 @@
 		<span>MultiComboBox with items</span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" id="mcb">
+		<ui5-multi-combobox no-validation placeholder="Some initial text" id="mcb">
 			<ui5-mcb-item text="Cosy" id="first-item"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -295,7 +322,7 @@
 		<span>MultiComboBox without type ahead</span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" no-typeahead id="mcb-no-typeahead">
+		<ui5-multi-combobox no-validation placeholder="Some initial text" no-typeahead id="mcb-no-typeahead">
 			<ui5-mcb-item text="Cosy" id="first-item"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -307,7 +334,7 @@
 		<span>MultiComboBox with more items</span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" id="mcb-items">
+		<ui5-multi-combobox no-validation placeholder="Some initial text" id="mcb-items">
 			<ui5-mcb-item text="Item 0" id="first-item"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Item 1"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Item 2"></ui5-mcb-item>
@@ -327,7 +354,7 @@
 		<span>MultiComboBox with validation</span>
 
 		<br>
-		<ui5-multi-combobox allow-custom-values placeholder="Some initial text" id="another-mcb">
+		<ui5-multi-combobox no-validation placeholder="Some initial text" id="another-mcb">
 			<ui5-mcb-item text="Cosy"></ui5-mcb-item>
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item text="Condensed"></ui5-mcb-item>
@@ -362,22 +389,25 @@
 		<span>MultiComboBox with grouping</span>
 
 		<br>
-		<ui5-multi-combobox id="mcb-grouping" allow-custom-values placeholder="Select a country">
-			<ui5-mcb-group-item text="Asia"></ui5-mcb-group-item>
-			<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
-			<ui5-mcb-item text="China"></ui5-mcb-item>
-			<ui5-mcb-item text="India"></ui5-mcb-item>
-			<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
-			<ui5-mcb-group-item text="Europe"></ui5-mcb-group-item>
-			<ui5-mcb-item text="Austria"></ui5-mcb-item>
-			<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
-			<ui5-mcb-item text="Germany"></ui5-mcb-item>
-			<ui5-mcb-item text="Italy"></ui5-mcb-item>
-			<ui5-mcb-group-item text="North America"></ui5-mcb-group-item>
-			<ui5-mcb-item text="Canada"></ui5-mcb-item>
-			<ui5-mcb-item text="Granada"></ui5-mcb-item>
-			<ui5-mcb-item text="Haiti"></ui5-mcb-item>
-			<ui5-mcb-item text="United States"></ui5-mcb-item>
+		<ui5-multi-combobox id="mcb-grouping" no-validation placeholder="Select a country">
+			<ui5-mcb-item-group header-text="Asia">
+				<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+				<ui5-mcb-item text="China"></ui5-mcb-item>
+				<ui5-mcb-item text="India"></ui5-mcb-item>
+				<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
+			</ui5-mcb-item-group>
+			<ui5-mcb-item-group header-text="Europe">
+				<ui5-mcb-item text="Austria"></ui5-mcb-item>
+				<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+				<ui5-mcb-item text="Germany"></ui5-mcb-item>
+				<ui5-mcb-item text="Italy"></ui5-mcb-item>
+			</ui5-mcb-item-group>
+			<ui5-mcb-item-group header-text="North America">
+				<ui5-mcb-item text="Canada"></ui5-mcb-item>
+				<ui5-mcb-item text="Granada"></ui5-mcb-item>
+				<ui5-mcb-item text="Haiti"></ui5-mcb-item>
+				<ui5-mcb-item text="United States"></ui5-mcb-item>
+			</ui5-mcb-item-group>
 		</ui5-multi-combobox>
 		<span>SelectionChange events emitted:</span>
 		<span id="selection-change-events-fired"></span>
@@ -564,20 +594,27 @@
 		var callCountInput = document.getElementById("events-call-count");
 		var resetBtn = document.getElementById("reset-btn");
 		var selectionChangeCounter = 0;
-		var openChangeCounter = 0;
+		var openCounter = 0;
+		var closeCounter = 0;
 		const multiComboBox = document.querySelector("#mcb-prevent");
 
-		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
+		document.getElementById("mcb").addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;
-			callCountInput.value = selectionChangeCounter;
+			callCountInput.value = `${selectionChangeCounter}`;
 		});
 
-		document.getElementById("multi1").addEventListener("ui5-openChange", function (event) {
-			openChangeCounter += 1;
-			eventNameInput.value = "openChange";
-			callCountInput.value = openChangeCounter;
+		document.getElementById("multi1").addEventListener("ui5-open", function (event) {
+			openCounter += 1;
+			eventNameInput.value = "open";
+			callCountInput.value = `${openCounter}`;
+		});
+
+		document.getElementById("multi1").addEventListener("ui5-close", function (event) {
+			closeCounter += 1;
+			eventNameInput.value = "close";
+			callCountInput.value = `${closeCounter}`;
 		});
 
 		resetBtn.addEventListener("click", function (event) {
@@ -585,7 +622,8 @@
 			eventParamsInput.value = "";
 			callCountInput.value = "";
 			selectionChangeCounter = 0;
-			openChangeCounter = 0;
+			openCounter = 0;
+			closeCounter = 0;
 		});
 
 		// Placeholders test

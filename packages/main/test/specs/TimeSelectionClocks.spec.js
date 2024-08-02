@@ -70,16 +70,16 @@ describe("Interactions", () => {
 
 		await buttons[0].click();
 
-		assert.notOk(await amButtonItem.getProperty("pressed"), "AM should not be pressed");
-		assert.ok(await pmButtonItem.getProperty("pressed"), "PM should be pressed");
+		assert.notOk(await amButtonItem.getProperty("selected"), "AM should not be selected");
+		assert.ok(await pmButtonItem.getProperty("selected"), "PM should be selected");
 
 		await browser.keys("a");
-		assert.ok(await amButtonItem.getProperty("pressed"), "AM should be pressed");
-		assert.notOk(await pmButtonItem.getProperty("pressed"), "PM should not be pressed");
+		assert.ok(await amButtonItem.getProperty("selected"), "AM should be selected");
+		assert.notOk(await pmButtonItem.getProperty("selected"), "PM should not be selected");
 
 		await browser.keys("p");
-		assert.notOk(await amButtonItem.getProperty("pressed"), "AM should not be pressed");
-		assert.ok(await pmButtonItem.getProperty("pressed"), "PM should be pressed");
+		assert.notOk(await amButtonItem.getProperty("selected"), "AM should not be selected");
+		assert.ok(await pmButtonItem.getProperty("selected"), "PM should be selected");
 	});
 
 	it("arrow keys", async () => {

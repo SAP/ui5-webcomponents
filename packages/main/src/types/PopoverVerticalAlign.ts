@@ -1,11 +1,9 @@
 /**
  * Popover vertical align types.
- *
  * @public
  */
 enum PopoverVerticalAlign {
 	/**
-	 *
 	 * @public
 	 */
 	Center = "Center",

@@ -12,7 +12,7 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("123123123");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "Error", "The value state is on error");
+		assert.strictEqual(await daterangepicker.shadow$("ui5-input").getProperty("valueState"), "Negative", "The value state is negative");
 	});
 
 	it("Custom Validation None", async () => {
@@ -27,8 +27,7 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Selected dates are updated after value update in the input field", async () => {
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker3");
-		const dayPicker = await browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const dayPicker = await browser.$("#daterange-picker3").shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const firstDateTimestamp = 1599609600;
 
 		assert.strictEqual(await dayPicker.getProperty("timestamp"), firstDateTimestamp, "The first date is selected");
@@ -101,8 +100,7 @@ describe("DateRangePicker general interaction", () => {
 	})
 
 	it("Change event fired once", async () => {
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker1");
-		const dayPicker = await browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const dayPicker = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const dayOne = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[5];
 		const dayTwo = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[15];
 		const daterangepicker = await browser.$("#daterange-picker1");
@@ -210,10 +208,9 @@ describe("DateRangePicker general interaction", () => {
 
 	it("Month is not changed in multiselect mode", async () => {
 		await browser.url(`test/pages/DateRangePicker.html`);
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker1");
 		const daterangepicker = await browser.$("#daterange-picker1");
-		const calendarHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-calendar-header`);
-		const dayPicker = await browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const calendarHeader = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`.ui5-calheader`);
+		const dayPicker = await browser.$(`#daterange-picker1`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
 		const dayOne = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item" )[15];
 		const nextButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-next]`);
 		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
@@ -252,9 +249,42 @@ describe("DateRangePicker general interaction", () => {
 		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
 	});
 
+	it("picker popover should have accessible name", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+		await daterangepicker.click();
+		await browser.keys("F4");
+
+		const popover = await daterangepicker.shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date Range", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
+	});
+
+	it("Selected days: accessibility semantics", async () => {
+		const daterangepicker = await browser.$("#daterange-picker3");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("09/06/2024 - 15/06/2024");
+		await daterangepicker.keys("Enter");
+		await browser.keys("F4");
+
+		const dayPicker = await browser.$(`#daterange-picker3`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`);
+		const days = await dayPicker.shadow$(`.ui5-dp-root`).$(".ui5-dp-content").$$("div > .ui5-dp-item");
+		const startSelectionDay = await days[14];
+		const dayInBetween = await days[15];
+		const endSelectionDay = await days[20];
+
+		assert.strictEqual(await startSelectionDay.getAttribute("aria-selected", "true"), "true", "The start day has selected semantics");
+		assert.strictEqual(await dayInBetween.getAttribute("aria-selected", "true"), "true", "The day in between has selected semantics");
+		assert.strictEqual(await endSelectionDay.getAttribute("aria-selected", "true"), "true", "The end day has selected semantics");
+
+		await browser.keys("Escape");
+	});
+
 	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
 		await browser.url(`test/pages/DateRangePicker.html?sap-ui-language=bg`);
-		
+
 		const daterangepicker = await browser.$("#daterange-picker8");
 		const dateRangePickerInput = await daterangepicker.shadow$("ui5-input");
 
@@ -262,6 +292,6 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("10.02.2023 г. - 25.07.2023 г.");
 		await daterangepicker.keys("Enter");
 
-		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Error", "Min and max dates are set correctly");
+		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Negative", "Min and max dates are set correctly");
 	});
 });

@@ -1,14 +1,16 @@
 <ui5-responsive-popover
 	hide-arrow
 	content-only-on-desktop
-	placement-type="Bottom"
+	placement="Bottom"
 	?open="{{_open}}"
 	.opener="{{opener}}"
-	@ui5-after-close="{{onAfterClose}}"
+	@ui5-close="{{onAfterClose}}"
+	@ui5-open="{{onAfterOpen}}"
 >
 	<div slot="header" class="ui5-cp-header">
 		<ui5-title
-			class="ui5-cp-title"
+			level="H1"
+			wrapping-type="None"
 		>{{_colorPaletteTitle}}</ui5-title>
 	</div>
 	<div>

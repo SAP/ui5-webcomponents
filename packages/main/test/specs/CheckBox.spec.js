@@ -1,4 +1,8 @@
 import { assert } from "chai";
+const KEYS = {
+	ENTER: '\uE007',
+	SPACE: '\ue00D',
+}
 
 describe("CheckBox general interaction", () => {
 	before(async () => {
@@ -20,6 +24,32 @@ describe("CheckBox general interaction", () => {
 		await checkBox.keys("Enter");
 
 		assert.strictEqual(await field.getProperty("value"), "3", "Change event should be fired 3 times");
+	});
+
+	it("tests readonly space and enter keys active state", async () => {
+		const checkBox = await browser.$("#cbReadonly");
+
+		await checkBox.click(); // force focus
+
+		// Setup for SPACE Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.SPACE }],
+			}]);
+		// Action
+		assert.strictEqual(await checkBox.getAttribute("active"), null, "Space doesn't trigger active attr");
+		await browser.releaseActions();
+
+		// Setup for ENTER Key
+		await browser.performActions([{
+			type: 'key',
+			id: 'keyboard3',
+			actions: [{ type: 'keyDown', value: KEYS.ENTER }],
+			}]);
+		// Action
+		assert.strictEqual(await checkBox.getAttribute("active"), null, "Enter doesn't trigger active attr");
+		await browser.releaseActions();
 	});
 
 	it("tests change event not fired, when disabled", async () => {

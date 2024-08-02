@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 
@@ -12,15 +11,13 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * <code>ui5-toggle-spin-button</code> is explicitly used in the new design of <code>ui5-time-picker</code>.
- * It extends <code>ui5-toggle-button</code> with some specific accessibility-related properties in order to
+ * `ui5-toggle-spin-button` is explicitly used in the new design of `ui5-time-picker`.
+ * It extends `ui5-toggle-button` with some specific accessibility-related properties in order to
  * have spin button look and feel from accessibility point of view. This component should not be used separately.
- *
  * @constructor
  * @extends ToggleButton
- * @abstract
  * @since 1.15.0
  * @private
  */
@@ -34,32 +31,28 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
 class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Defines the ARIA valuemin of the component.
-	 *
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	valueMin!: number;
+	@property({ type: Number })
+	valueMin = -1;
 
 	/**
 	 * Defines the ARIA valuemax of the component.
-	 *
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	valueMax!: number;
+	@property({ type: Number })
+	valueMax = -1;
 
 	/**
 	 * Defines the ARIA valuenow of the component.
-	 *
 	 * @default -1
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
-	valueNow!: number;
+	@property({ type: Number })
+	valueNow = -1;;
 
 	/**
 	 * Defines the ARIA valuetext of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 */
 	@property()
 	valueText?: string;
@@ -68,6 +61,13 @@ class ToggleSpinButton extends ToggleButton {
 	 * Override of the handler in order to prevent button toggle functionality
 	 */
 	_onclick() {}
+
+	/**
+	 * Override
+	 */
+	get effectiveAccRole() {
+		return "spinbutton";
+	}
 }
 
 ToggleSpinButton.define();

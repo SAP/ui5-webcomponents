@@ -17,8 +17,6 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 	RATING_INDICATOR_TOOLTIP_TEXT,
@@ -41,36 +39,32 @@ type Star = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * The Rating Indicator is used to display a specific number of icons that are used to rate an item.
  * Additionally, it is also used to display the average and overall ratings.
  *
- * <h3>Usage</h3>
+ * ### Usage
  * The recommended number of icons is between 5 and 7.
  *
- * <h3>Responsive Behavior</h3>
- * You can change the size of the Rating Indicator by changing its <code>font-size</code> CSS property.
- * <br>
- * Example: <code>&lt;ui5-rating-indicator style="font-size: 3rem;">&lt;/ui5-rating-indicator></code>
+ * ### Responsive Behavior
+ * You can change the size of the Rating Indicator by changing its `font-size` CSS property.
  *
- * <h3>Keyboard Handling</h3>
- * When the <code>ui5-rating-indicator</code> is focused, the user can change the rating
+ * Example: `<ui5-rating-indicator style="font-size: 3rem;"></ui5-rating-indicator>`
+ *
+ * ### Keyboard Handling
+ * When the `ui5-rating-indicator` is focused, the user can change the rating
  * with the following keyboard shortcuts:
- * <br>
  *
- * <ul>
- * <li>[RIGHT/UP] - Increases the value of the rating by one step. If the highest value is reached, does nothing</li>
- * <li>[LEFT/DOWN] - Decreases the value of the rating by one step. If the lowest value is reached, does nothing.</li>
- * <li>[HOME] - Sets the lowest value.</li>
- * <li>[END] - Sets the highest value.</li>
- * <li>[SPACE/ENTER/RETURN] - Increases the value of the rating by one step. If the highest value is reached, sets the rating to the lowest value.</li>
- * <li>Any number - Changes value to the corresponding number. If typed number is larger than the number of values, sets the highest value.</li>
- * </ul>
+ * - [RIGHT/UP] - Increases the value of the rating by one step. If the highest value is reached, does nothing
+ * - [LEFT/DOWN] - Decreases the value of the rating by one step. If the lowest value is reached, does nothing.
+ * - [Home] - Sets the lowest value.
+ * - [End] - Sets the highest value.
+ * - [SPACE/ENTER/RETURN] - Increases the value of the rating by one step. If the highest value is reached, sets the rating to the lowest value.
+ * - Any number - Changes value to the corresponding number. If typed number is larger than the number of values, sets the highest value.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/RatingIndicator.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/RatingIndicator.js";`
  * @constructor
  * @extends UI5Element
  * @public
@@ -87,7 +81,6 @@ type Star = {
 })
 /**
  * The event is fired when the value changes.
- *
  * @public
  */
 @event("change")
@@ -95,104 +88,95 @@ type Star = {
 class RatingIndicator extends UI5Element {
 	/**
 	 * The indicated value of the rating.
-	 * <br><br>
-	 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
-	 * <ul>
-	 * <li>1.0 - 1.2 -> 1</li>
-	 * <li>1.3 - 1.7 -> 1.5</li>
-	 * <li>1.8 - 1.9 -> 2</li>
-	 * <ul>
+	 *
+	 * **Note:** If you set a number which is not round, it would be shown as follows:
+	 *
+	 * - 1.0 - 1.2 -> 1
+	 * - 1.3 - 1.7 -> 1.5
+	 * - 1.8 - 1.9 -> 2
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value: number = 0;
 
 	/**
 	 * The number of displayed rating symbols.
-	 *
 	 * @default 5
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ validator: Integer, defaultValue: 5 })
-	max!: number;
+	@property({ type: Number })
+	max: number = 5;
 
 	/**
 	 * Defines whether the component is disabled.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> A disabled component is completely noninteractive.
-	 *
+	 * **Note:** A disabled component is completely noninteractive.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
-	 * <br><br>
-	 * <b>Note:</b> A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
 	 *
+	 * **Note:** A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.15.0
 	 */
-	 @property({ defaultValue: "" })
-	 accessibleNameRef!: string;
+	 @property()
+	 accessibleNameRef?: string;
 
 	 /**
 	 * Defines whether the component is required.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.15.0
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Defines the tooltip of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.19.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ type: Object, multiple: true })
-	_stars!: Array<Star>;
+	@property({ type: Array })
+	_stars: Array<Star> = [];
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_focused!: boolean;
+	_focused = false;
 
 	_liveValue?: number;
 
@@ -259,6 +243,7 @@ class RatingIndicator extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
+			e.preventDefault();
 			return;
 		}
 

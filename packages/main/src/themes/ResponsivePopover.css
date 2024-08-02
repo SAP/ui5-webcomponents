@@ -4,16 +4,16 @@
 	min-height: 2rem;
 }
 
-:host([opened]) {
-	display: inline-block;
+:host([on-phone]) {
+	display: contents;
 }
 
 .ui5-responsive-popover-header {
 	height: var(--_ui5-responsive_popover_header_height);
 	display: flex;
-	justify-content: space-between;
+	justify-content: var(--_ui5_popup_header_prop_header_text_alignment);
 	align-items: center;
-	width:100%;
+	width: 100%;
 }
 
 .ui5-responsive-popover-header-text {

@@ -71,8 +71,8 @@ const useFallbackBundle = (packageName: string, localeId: string) => {
  * This method preforms the asynchronous task of fetching the actual text resources. It will fetch
  * each text resource over the network once (even for multiple calls to the same method).
  * It should be fully finished before the i18nBundle class is created in the webcomponents.
- * This method uses the bundle URLs that are populated by the <code>registerI18nBundle</code> method.
- * To simplify the usage, the synchronization of both methods happens internally for the same <code>bundleId</code>
+ * This method uses the bundle URLs that are populated by the `registerI18nBundle` method.
+ * To simplify the usage, the synchronization of both methods happens internally for the same `bundleId`
  * @param {packageName} packageName the NPM package name
  * @public
  */

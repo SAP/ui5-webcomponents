@@ -10,7 +10,7 @@
 	@click={{_selectMonth}}
 >
 	{{#each _months}}
-		<div class="ui5-mp-quarter">
+		<div role="row" class="ui5-mp-quarter">
 
 			{{#each this}}
 				<div
@@ -18,6 +18,7 @@
 					tabindex={{this._tabIndex}}
 					?data-sap-focus-ref="{{this.focusRef}}"
 					class="{{this.classes}}"
+					part="{{this.parts}}"
 					role="gridcell"
 					aria-selected="{{this.ariaSelected}}"
 				>

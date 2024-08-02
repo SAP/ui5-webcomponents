@@ -1,6 +1,5 @@
 /**
  * Different input types.
- *
  * @public
  */
 enum InputType {
@@ -39,6 +38,13 @@ enum InputType {
 	 * @public
 	 */
 	URL = "URL",
+
+	/**
+	 * Used for input fields that should contain a search term.
+	 * @since 2.0.0
+	 * @public
+	 */
+	Search = "Search",
 }
 
 export default InputType;

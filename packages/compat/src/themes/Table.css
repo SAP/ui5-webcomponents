@@ -1,0 +1,106 @@
+@import "./GrowingButton.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+	width: 100%;
+}
+
+.ui5-table-root {
+	position: relative;
+	border-bottom: var(--ui5_table_bottom_border);
+}
+
+table {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.ui5-table-header-row-navigated {
+    width: 0.1875rem;
+    background: var(--sapList_HeaderBackground);
+    vertical-align: middle;
+}
+
+.ui5-table-header-row {
+	color: var(--sapList_HeaderTextColor);
+	height: var(--ui5_table_header_row_height);
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	font-weight: var(--ui5_table_header_row_font_weight);
+	border-bottom: var(--ui5_table_header_row_border_width) solid var(--ui5_table_header_row_border_bottom_color);
+}
+
+.ui5-table-header-row:focus {
+	outline: var(--ui5_table_header_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	outline-offset: var(--ui5_table_focus_outline_offset);
+}
+
+tr {
+	height: 3rem;
+}
+
+.ui5-table-no-data-row {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: auto;
+	justify-content: center;
+	text-align: center;
+	padding: 0.5rem 1rem;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: 0.875rem;
+	box-sizing: border-box;
+	color: var(--sapTextColor);
+	min-height: 3rem;
+	background-color: var(--sapList_Background);
+}
+
+.ui5-table-end-row {
+	height: 0px;
+}
+
+:host([busy]) .ui5-table-busy-row {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	outline: none;
+	z-index: 100;
+}
+
+:host([busy]) .ui5-table-busy-ind {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+:host([busy]) [growing-button] {
+	opacity: 0.72;
+}
+
+:host [growing-button] {
+	border-bottom: var(--_ui5_table_load_more_border-bottom);
+}
+
+.ui5-table-select-all-column {
+	width: var(--ui5_table_multiselect_column_width);
+	text-align: center;
+}
+
+:host([sticky-column-header]) .ui5-table-header-row {
+	position: sticky;
+	top: 0;
+	z-index: 99;
+}
+
+th {
+	background: var(--sapList_HeaderBackground);
+}
+
+.ui5-table-focusarea {
+	position: fixed;
+}

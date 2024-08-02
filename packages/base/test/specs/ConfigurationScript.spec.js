@@ -5,14 +5,6 @@ describe("Configuration script has effect", () => {
 		await browser.url("test/pages/ConfigurationScript.html?do-not-change-configuration");
 	});
 
-	it("Tests that RTL is applied", async () => {
-		const res = await browser.executeAsync(done => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			done(config.getRTL());
-		});
-		assert.strictEqual(res, true, "RTL is true");
-	});
-
 	it("Tests that language is applied", async () => {
 		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
@@ -42,7 +34,7 @@ describe("Configuration script has effect", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_belize_hcb', "Theme is HCB");
+		assert.strictEqual(res, 'sap_horizon_hcb', "Theme is HCB");
 	});
 
 	it("Tests that noConflict is applied", async () => {
@@ -84,5 +76,13 @@ describe("Configuration script has effect", () => {
 			done(config.getAnimationMode());
 		});
 		assert.strictEqual(res, 'basic', "animationMode is basic");
+	});
+
+	it("Tests that defaultFontLoading is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getDefaultFontLoading());
+		});
+		assert.strictEqual(res, false, "defaultFontLoading is false");
 	});
 });

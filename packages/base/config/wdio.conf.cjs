@@ -230,13 +230,6 @@ exports.config = {
 			}, this, attrName);
 		}, true);
 
-		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
-			return browser.executeAsync(async (selector, done) => {
-				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				done(staticAreaItem.host.classList[0]);
-			}, selector);
-		}, false);
-
 		await browser.addLocatorStrategy('activeElement', (selector) => {
 			return document.querySelector(selector).shadowRoot.activeElement;
 		});
@@ -256,7 +249,6 @@ exports.config = {
 			"getHTML",
 			"getProperty",
 			"getSize",
-			"getStaticAreaItemClassName", // custom
 			"getText",
 			"getValue",
 			"hasClass", // custom

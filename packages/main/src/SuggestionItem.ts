@@ -1,115 +1,59 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import SuggestionListItem from "./SuggestionListItem.js";
-import ListItemType from "./types/ListItemType.js";
-import type { IInputSuggestionItem } from "./Interfaces.js";
+import type { IInputSuggestionItemSelectable } from "./Input.js";
+import ListItemBase from "./ListItemBase.js";
+import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate.lit.js";
+
+import styles from "./generated/themes/SuggestionItem.css.js";
 
 /**
  * @class
- * The <code>ui5-suggestion-item</code> represents the suggestion item of the <code>ui5-input</code>.
- *
+ * The `ui5-suggestion-item` represents the suggestion item of the `ui5-input`.
  * @constructor
- * @extends UI5Element
+ * @extends ListItemBase
  * @abstract
- * @implements { IInputSuggestionItem }
+ * @implements { IInputSuggestionItemSelectable }
  * @public
  */
 @customElement({
 	tag: "ui5-suggestion-item",
-	dependencies: [SuggestionListItem],
+	template: SuggestionItemTemplate,
+	styles: [ListItemBase.styles, styles],
 })
-class SuggestionItem extends UI5Element implements IInputSuggestionItem {
+class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelectable {
 	/**
 	 * Defines the text of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text!: string
+	text?: string;
 
 	/**
-	 * Defines the visual indication and behavior of the item.
-	 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
-	 * <br><br>
-	 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
-	 * while when <code>Inactive</code> or <code>Detail</code> - will not.
-	 *
-	 * @default "Active"
-	 * @public
-	 * @since 1.0.0-rc.8
-	*/
-	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: `${ListItemType}`
-
-	/**
-	 * Defines the description displayed right under the item text, if such is present.
-	 *
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	description!: string
-
-	/**
-	 * Defines the <code>icon</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b>
-	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 *
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	icon!: string
-
-	/**
-	 * Defines whether the <code>icon</code> should be displayed in the beginning of the item or in the end.
-	 * <br><br>
-	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
-	 *
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	iconEnd!: boolean;
-	/**
-	 * Defines the <code>image</code> source URI.
-	 * <br><br>
-	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
-	 *
-	 * @default ""
-	 * @public
-	 */
-	@property()
-	image!: string
-
-	/**
-	 * Defines the <code>additionalText</code>, displayed in the end of the item.
-	 *
-	 * @default ""
+	 * Defines the `additionalText`, displayed in the end of the item.
+	 * @default undefined
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
 	@property()
-	additionalText!: string
+	additionalText?: string;
 
 	/**
-	 * Defines the state of the <code>additionalText</code>.
+	 * Defines the markup text that will be displayed as suggestion.
+	 * Used for highlighting the matching parts of the text.
 	 *
-	 * @default "None"
-	 * @since 1.0.0-rc.15
-	 * @public
+	 * @since 2.0.0
+	 * @private
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: `${ValueState}`
+	@property()
+	markupText = "";
 
-	get groupItem() {
-		return false;
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 }
 

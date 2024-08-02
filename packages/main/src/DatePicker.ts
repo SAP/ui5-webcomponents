@@ -1,16 +1,18 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isPageUp,
 	isPageDown,
@@ -26,25 +28,29 @@ import {
 	isF6Next,
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import HasPopup from "./types/HasPopup.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
+import {
+	DATEPICKER_OPEN_ICON_TITLE,
+	DATEPICKER_DATE_DESCRIPTION,
+	INPUT_SUGGESTIONS_TITLE,
+	FORM_TEXTFIELD_REQUIRED,
+	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
+} from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
+import IconMode from "./types/IconMode.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -72,84 +78,79 @@ type DatePickerInputEventDetail = {
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-date-picker</code> component provides an input field with assigned calendar which opens on user action.
- * The <code>ui5-date-picker</code> allows users to select a localized date using touch,
+ * The `ui5-date-picker` component provides an input field with assigned calendar which opens on user action.
+ * The `ui5-date-picker` allows users to select a localized date using touch,
  * mouse, or keyboard input. It consists of two parts: the date input field and the
  * date picker.
  *
- * <h3>Usage</h3>
+ * ### Usage
  *
  * The user can enter a date by:
- * <ul>
- * <li>Using the calendar that opens in a popup</li>
- * <li>Typing it in directly in the input field</li>
- * </ul>
- * <br><br>
+ *
+ * - Using the calendar that opens in a popup
+ * - Typing it in directly in the input field
+ *
  * When the user makes an entry and presses the enter key, the calendar shows the corresponding date.
  * When the user directly triggers the calendar display, the actual date is displayed.
  *
- * <h3>Formatting</h3>
+ * ### Formatting
  *
  * If a date is entered by typing it into
  * the input field, it must fit to the used date format.
- * <br><br>
+ *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
- * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ *
+ * For example, if the `format-pattern` is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
  *
- * <h3>Keyboard Handling</h3>
- * The <code>ui5-date-picker</code> provides advanced keyboard handling.
- * If the <code>ui5-date-picker</code> is focused,
- * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
- * Once the drop-down is opened, you can use the <code>UP</code>, <code>DOWN</code>, <code>LEFT</code>, <code>RIGHT</code> arrow keys
- * to navigate through the dates and select one by pressing the <code>Space</code> or <code>Enter</code> keys. Moreover you can
+ * ### Keyboard Handling
+ * The `ui5-date-picker` provides advanced keyboard handling.
+ * If the `ui5-date-picker` is focused,
+ * you can open or close the drop-down by pressing [F4], [Alt] + [Up] or [Alt] + [Down] keys.
+ * Once the drop-down is opened, you can use the [Up], [Down], [Left] or [Right] arrow keys
+ * to navigate through the dates and select one by pressing the `Space` or `Enter` keys. Moreover you can
  * use TAB to reach the buttons for changing month and year.
- * <br>
  *
- * If the <code>ui5-date-picker</code> input field is focused and its corresponding picker dialog is not opened,
- * then users can increment or decrement the date referenced by <code>dateValue</code> property
+ * If the `ui5-date-picker` input field is focused and its corresponding picker dialog is not opened,
+ * then users can increment or decrement the date referenced by `dateValue` property
  * by using the following shortcuts:
- * <br>
- * <ul>
- * <li>[PAGEDOWN] - Decrements the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEDOWN] - Decrements the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEDOWN] - Decrements the corresponding year by one</li>
- * <li>[PAGEUP] - Increments the corresponding day of the month by one</li>
- * <li>[SHIFT] + [PAGEUP] - Increments the corresponding month by one</li>
- * <li>[SHIFT] + [CTRL] + [PAGEUP] - Increments the corresponding year by one</li>
- * </ul>
  *
- * <h3>Calendar types</h3>
+ * - [Page Down] - Decrements the corresponding day of the month by one
+ * - [Shift] + [Page Down] - Decrements the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Down] - Decrements the corresponding year by one
+ * - [Page Up] - Increments the corresponding day of the month by one
+ * - [Shift] + [Page Up] - Increments the corresponding month by one
+ * - [Shift] + [Ctrl] + [Page Up] - Increments the corresponding year by one
+ *
+ * ### Calendar types
  * The component supports several calendar types - Gregorian, Buddhist, Islamic, Japanese and Persian.
  * By default the Gregorian Calendar is used. In order to use the Buddhist, Islamic, Japanese or Persian calendar,
- * you need to set the <code>primaryCalendarType</code> property and import one or more of the following modules:
- * <br><br>
+ * you need to set the `primaryCalendarType` property and import one or more of the following modules:
  *
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";</code>
- * <br>
- * <code>import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";</code>
- * <br><br>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js";`
  *
- * Or, you can use the global configuration and set the <code>calendarType</code> key:
- * <br>
- * <pre><code>&lt;script data-id="sap-ui-config" type="application/json"&gt;
- * {
- *	"calendarType": "Japanese"
- * }
- * &lt;/script&gt;</code></pre>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Islamic.js";`
  *
- * <h3>ES6 Module Import</h3>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Japanese.js";`
  *
- * <code>import "@ui5/webcomponents/dist/DatePicker";</code>
+ * `import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";`
  *
+ * Or, you can use the global configuration and set the `calendarType` key:
+ *
+ * ```html
+ * <script data-id="sap-ui-config" type="application/json">
+ * 	{
+ * 		"calendarType": "Japanese"
+ * 	}
+ * <script>
+ * ```
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/DatePicker.js";`
  * @constructor
  * @extends DateComponentBase
  * @public
@@ -158,10 +159,10 @@ type DatePickerInputEventDetail = {
 @customElement({
 	tag: "ui5-date-picker",
 	languageAware: true,
+	formAssociated: true,
 	template: DatePickerTemplate,
-	staticAreaTemplate: DatePickerPopoverTemplate,
-	styles: datePickerCss,
-	staticAreaStyles: [
+	styles: [
+		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
 	],
@@ -176,12 +177,11 @@ type DatePickerInputEventDetail = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- *
  * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<DatePickerChangeEventDetail>("change", {
 	detail: {
 		/**
@@ -200,12 +200,11 @@ type DatePickerInputEventDetail = {
 })
 /**
  * Fired when the value of the component is changed at each key stroke.
- *
  * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
+ */
 @event<DatePickerInputEventDetail>("input", {
 	detail: {
 		/**
@@ -226,10 +225,9 @@ type DatePickerInputEventDetail = {
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- *
  * @allowPreventDefault
  * @public
- * @param {string} valueState The new <code>valueState</code> that will be set.
+ * @param {string} valueState The new `valueState` that will be set.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event<DatePickerValueStateChangeEventDetail>("value-state-change", {
@@ -248,167 +246,157 @@ type DatePickerInputEventDetail = {
 		},
 	},
 })
-class DatePicker extends DateComponentBase implements IFormElement {
+class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * Defines a formatted date value.
-	 *
 	 * @default ""
 	 * @formEvents change input
 	 * @formProperty
 	 * @public
 	 */
 	@property()
-	value!: string
+	value = "";
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None"
 
 	/**
 	 * Defines whether the component is required.
-	 *
 	 * @since 1.0.0-rc.9
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required!: boolean;
+	required = false;
 
 	/**
 	 * Determines whether the component is displayed as disabled.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as read-only.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly!: boolean;
+	readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
 	 * component has no value.
 	 *
-	 * <br><br>
-	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * **Note:** When no placeholder is set, the format pattern is displayed as a placeholder.
 	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-	 *
 	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	placeholder?: string;
 
 	/**
-	 * Determines the name with which the component will be submitted in an HTML form.
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
 	 *
-	 * <br><br>
-	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-	 *
-	 * <br><br>
-	 * <b>Note:</b> When set, a native <code>input</code> HTML element
-	 * will be created inside the component so that it can be submitted as
-	 * part of an HTML form. Do not use this property unless you need to submit a form.
-	 *
-	 * @default ""
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the visibility of the week numbers column.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> For calendars other than Gregorian,
+	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
-	 *
 	 * @default false
 	 * @public
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers!: boolean;
+	hideWeekNumbers = false;
+
+	/**
+	 * Defines the open or closed state of the popover.
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	open = false;
 
 	/**
 	 * Defines the aria-label attribute for the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
-
-	@property({ type: Boolean, noAttribute: true })
-	_isPickerOpen!: boolean;
+	@property()
+	accessibleNameRef?: string;
 
 	@property({ type: Object })
-	_respPopoverConfig!: object;
+	_respPopoverConfig?: object;
 
-	@property({ defaultValue: "day" })
-	_calendarCurrentPicker!: string;
+	@property()
+	_calendarCurrentPicker = "day";
 
 	liveValue?: string;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
-	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-	 * <br>
-	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
+	 * **Note:** The `valueStateMessage` would be displayed,
+	 * when the component is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.7
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
 	valueStateMessage!: Array<HTMLElement>;
 
-	/**
-	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-	 * when <code>name</code> property is set.
-	 *
-	 * @private
-	 */
-	@slot({ type: HTMLElement })
-	formSupport!: Array<HTMLElement>;
-
 	responsivePopover?: ResponsivePopover;
 
-	FormSupport?: typeof FormSupportT;
-
 	static i18nBundle: I18nBundle;
+
+	get formValidityMessage() {
+		return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
+
+	async formElementAnchor() {
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
+	}
+
+	get formFormattedValue(): FormData | string | null {
+		return this.value;
+	}
 
 	/**
 	 * @protected
 	 */
 	onResponsivePopoverAfterClose() {
-		this._isPickerOpen = false;
+		this.open = false;
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
 		} else {
@@ -416,9 +404,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 	}
 
-	onBeforeRendering() {
-		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
+	onResponsivePopoverBeforeOpen() {
+		this._calendar.timestamp = this._calendarTimestamp;
+		this._calendarCurrentPicker = this.firstPicker;
+	}
 
+	onBeforeRendering() {
 		["minDate", "maxDate"].forEach((prop: string) => {
 			const propValue = this[prop as keyof DatePicker] as string;
 
@@ -427,19 +418,17 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			}
 		});
 
-		if (this.FormSupport) {
-			this.FormSupport.syncNativeHiddenInput(this);
-		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
-		}
-
 		this.value = this.normalizeValue(this.value) || this.value;
 		this.liveValue = this.value;
 	}
 
+	get _calendar() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!
+			.querySelector<Calendar>("[ui5-calendar]")!;
+	}
+
 	/**
 	 * Override in derivatives to change calendar selection mode
-	 *
 	 * @protected
 	 */
 	get _calendarSelectionMode(): string {
@@ -450,7 +439,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Used to provide a timestamp to the Calendar (to focus it to a relevant date when open) based on the component's state
 	 * Override in derivatives to provide the calendar a timestamp based on their properties
 	 * By default focus the calendar on the selected date if set, or the current day otherwise
-	 *
 	 * @protected
 	 */
 	get _calendarTimestamp(): number {
@@ -465,7 +453,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Used to provide selectedDates to the calendar based on the component's state
 	 * Override in derivatives to provide different rules for setting the calendar's selected dates
-	 *
 	 * @protected
 	 */
 	get _calendarSelectedDates(): Array<string> {
@@ -479,7 +466,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		if (isShow(e)) {
 			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
-			if (this.isOpen()) {
+			if (this.open) {
 				if (!isF4(e)) {
 					this._toggleAndFocusInput();
 				}
@@ -487,18 +474,18 @@ class DatePicker extends DateComponentBase implements IFormElement {
 				this._toggleAndFocusInput();
 			}
 		}
-
-		if ((this._getInput().isEqualNode(e.target as Node) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-			this.closePicker();
+		const target = e.target as HTMLElement;
+		if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+			this._togglePicker();
 		}
 
-		if (this.isOpen()) {
+		if (this.open) {
 			return;
 		}
 
 		if (isEnter(e)) {
-			if (this.FormSupport) {
-				this.FormSupport.triggerFormSubmit(this);
+			if (this._internals?.form) {
+				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
@@ -576,7 +563,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		const valid = this._checkValueValidity(this.value);
 		const previousValueState = this.valueState;
 
-		this.valueState = valid ? ValueState.None : ValueState.Error;
+		this.valueState = valid ? ValueState.None : ValueState.Negative;
 
 		const eventPrevented = !this.fireEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
 
@@ -585,25 +572,18 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 	}
 
-	_toggleAndFocusInput() {
-		this.togglePicker();
-		this._getInput().focus();
-	}
-
 	_getInput(): Input {
 		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
 
 	/**
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
-	 *
 	 * @protected
 	 */
 	_onInputSubmit() {}
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
-	 *
 	 * @protected
 	 */
 	_onInputChange(e: Event) {
@@ -612,7 +592,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The ui5-input "input" event handler - fire input even when the user types
-	 *
 	 * @protected
 	 */
 	_onInputInput(e: KeyboardEvent) {
@@ -621,7 +600,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if the provided value is valid and within valid range.
-	 *
 	 * @protected
 	 * @param value
 	 */
@@ -634,14 +612,14 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_click(e: MouseEvent) {
 		if (isPhone()) {
-			this.responsivePopover!.showAt(this);
+			this.responsivePopover!.opener = this;
+			this.responsivePopover!.open = true;
 			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
 
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
-	 *
 	 * @public
 	 * @param value A value to be tested against the current date format
 	 */
@@ -655,7 +633,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if a date is between the minimum and maximum date.
-	 *
 	 * @public
 	 * @param value A value to be checked
 	 */
@@ -675,7 +652,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The parser understands many formats, but we need one format
-	 *
 	 * @protected
 	 */
 	normalizeValue(value: string) {
@@ -717,8 +693,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	get accInfo() {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": HasPopup.Grid,
-			"ariaAutoComplete": "none",
+			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
@@ -736,9 +711,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
+	get pickerAccessibleName() {
+		return DatePicker.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
+	}
+
 	/**
 	 * Defines whether the dialog on mobile should have header
-	 *
 	 * @private
 	 */
 	get _shouldHideHeader() {
@@ -746,17 +724,31 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	/**
-	 * Defines whether the value help icon is hidden
-	 *
-	 * @private
+	 * Returns the first picker depending on the CalendarPickerMode
 	 */
-	get _ariaHidden() {
-		return isDesktop();
+	get firstPicker() {
+		const calendarPickerMode = this._calendarPickersMode;
+		let firstPicker = "day";
+
+		if (calendarPickerMode === CalendarPickersMode.YEAR) {
+			firstPicker = "year";
+		} else if (calendarPickerMode === CalendarPickersMode.MONTH_YEAR) {
+			firstPicker = "month";
+		}
+
+		return firstPicker;
 	}
 
-	async _respPopover() {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	/**
+	 * Defines whether the value help icon is hidden
+	 * @private
+	 */
+	get _iconMode() {
+		return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
+	}
+
+	_respPopover() {
+		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	_canOpenPicker() {
@@ -782,16 +774,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * The user selected a new date in the calendar
-	 *
 	 * @param e
 	 * @protected
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
-		const newValue = e.detail.values && e.detail.values[0];
+		const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
-		this.closePicker();
+		this._togglePicker();
 	}
 
 	/**
@@ -810,8 +801,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
-	 * according to the <code>formatPattern</code> property of the DatePicker instance
-	 *
+	 * according to the `formatPattern` property of the DatePicker instance
 	 * @public
 	 * @param date A Java Script date object to be formatted as string
 	 * @returns The date as string
@@ -820,50 +810,17 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return this.getFormat().format(date);
 	}
 
-	/**
-	 * Closes the picker.
-	 *
-	 * @public
-	 */
-	closePicker(): void {
-		this.responsivePopover!.close();
+	_togglePicker(): void {
+		this.open = !this.open;
 	}
 
-	/**
-	 * Opens the picker.
-	 *
-	 * @public
-	 * @returns Resolves when the picker is open
-	 */
-	async openPicker(): Promise<void> {
-		this._isPickerOpen = true;
-		this._calendarCurrentPicker = "day";
-		this.responsivePopover = await this._respPopover();
-
-		this.responsivePopover.showAt(this);
-	}
-
-	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
-		} else if (this._canOpenPicker()) {
-			this.openPicker();
-		}
-	}
-
-	/**
-	 * Checks if the picker is open.
-	 *
-	 * @public
-	 * @returns true if the picker is open, false otherwise
-	 */
-	isOpen(): boolean {
-		return !!this._isPickerOpen;
+	_toggleAndFocusInput() {
+		this._togglePicker();
+		this._getInput().focus();
 	}
 
 	/**
 	 * Currently selected date represented as a Local JavaScript Date instance.
-	 *
 	 * @public
 	 * @default null
 	 */

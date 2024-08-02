@@ -1,0 +1,39 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 350px;">
+    <!-- playground-fold-end -->
+
+    <ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions>
+        <ui5-icon id="valueHelpIcon" slot="icon" name="value-help"></ui5-icon>
+    </ui5-input>
+
+    <ui5-dialog id="dialog">
+        <!--Dialog Header -->
+        <div slot="header" style="width: 100%; padding:  1rem">
+            <ui5-title level="H4">Products</ui5-title>
+            <ui5-input id="dialogSearchInput" placeholder="Search" style="width: 100%; margin:  1rem 0">
+                <ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
+            </ui5-input>
+        </div>
+        <!-- Dialog Content -->
+        <ui5-list id="itemsList" no-data-text="No data" style="min-width: 500px"></ui5-list>
+
+        <!-- Dialog Footer -->
+        <div slot="footer" id="footer">
+            <ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
+        </div>
+    </ui5-dialog>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

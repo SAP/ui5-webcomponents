@@ -2,15 +2,7 @@ import { assert } from "chai";
 
 describe("Some settings can be set via SAP UI URL params", () => {
 	beforeEach(async () => {
-		await browser.url("test/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb@https://example.com&sap-ui-animationMode=basic");
-	});
-
-	it("Tests that RTL is applied", async () => {
-		const res = await browser.executeAsync(done => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			done(config.getRTL());
-		});
-		assert.strictEqual(res, true, "RTL is true");
+		await browser.url("test/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_horizon_hcb@https://example.com&sap-ui-animationMode=basic");
 	});
 
 	it("Tests that language is applied", async () => {
@@ -34,7 +26,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_belize_hcb', "Theme is HCB");
+		assert.strictEqual(res, 'sap_horizon_hcb', "Theme is HCB");
 	});
 
 	it("Tests that theme root is applied", async () => {
@@ -45,7 +37,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 		});
 		assert.strictEqual(res, 'https://example.com/UI5/', "Theme root is https://example.com/UI5");
 
-		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_belize_hcb@https://another-example.com");
+		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_horizon_hcb@https://another-example.com");
 
 		res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
@@ -57,7 +49,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 
 		assert.strictEqual(res, `${location.origin}/UI5/`, `Theme root is ${location.origin}/UI5/`);
 
-		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_belize_hcb@./test");
+		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_horizon_hcb@./test");
 
 		res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;

@@ -1,6 +1,5 @@
 /**
- * Defines the horizontal alignment of the thumbnails menu of the <code>ui5-media-gallery</code> component.
- *
+ * Defines the horizontal alignment of the thumbnails menu of the `ui5-media-gallery` component.
  * @public
  */
 enum MediaGalleryMenuHorizontalAlign {

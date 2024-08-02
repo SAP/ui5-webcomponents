@@ -5,8 +5,7 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 
 /**
  * @class
- * The <code>ui5-mcb-item</code> represents the item for a <code>ui5-multi-combobox</code>.
- *
+ * The `ui5-mcb-item` represents the item for a `ui5-multi-combobox`.
  * @constructor
  * @extends ComboBoxItem
  * @abstract
@@ -17,18 +16,29 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	/**
 	 * Defines the selected state of the component.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	declare selected: boolean;
 
-	get stableDomRef() {
-		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	/**
+	 * Defines whether the item is filtered
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_isVisible = false;
+
+	get isMultiComboBoxItem() {
+		return true;
 	}
 }
+
+const isInstanceOfMultiComboBoxItem = (object: any): object is MultiComboBoxItem => {
+	return "isMultiComboBoxItem" in object;
+};
 
 MultiComboBoxItem.define();
 
 export default MultiComboBoxItem;
+export { isInstanceOfMultiComboBoxItem };

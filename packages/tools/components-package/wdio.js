@@ -1,4 +1,5 @@
 const dns = require("node:dns");
+const assert = require("chai").assert;
 
 exports.config = {
 	//
@@ -235,12 +236,11 @@ exports.config = {
 			}, this, attrName);
 		}, true);
 
-		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
-			return browser.executeAsync(async (selector, done) => {
-				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
-				done(staticAreaItem.host.classList[0]);
-			}, selector);
-		}, false);
+		await browser.addCommand("matches", async function(selector) {
+			return browser.executeAsync((elem, selector, done) => {
+				done(elem.matches(selector));
+			}, this, selector);
+		}, true);
 
 		await browser.addLocatorStrategy('activeElement', (selector) => {
 			return document.querySelector(selector).shadowRoot.activeElement;
@@ -257,11 +257,11 @@ exports.config = {
 			"$$",
 			"getAttribute",
 			"hasAttribute", // custom
+			"matches", // custom
 			"getCSSProperty",
 			"getHTML",
 			"getProperty",
 			"getSize",
-			"getStaticAreaItemClassName", // custom
 			"getText",
 			"getValue",
 			"hasClass", // custom
@@ -273,7 +273,7 @@ exports.config = {
 			"isFocusedDeep", // custom
 			"isFocusedDeepElement", // custom
 			"shadow$",
-			"shadow$$",
+			"shadow$$"
 		];
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
@@ -310,8 +310,17 @@ exports.config = {
 	 * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
 	 * @param {Object} test test details
 	 */
-	// afterTest: function (test) {
-	// },
+	afterTest: async function (test) {
+		// fetch the browser logs and fail the test if there are `console.error` messages with the `[UI5-FWK]` marker
+		const logs = await browser.getLogs('browser');
+		const severeLogs = logs
+			.filter(l => l.level === "SEVERE" && l.message.includes("[UI5-FWK]"))
+			.map(l => l.message);
+
+		if (severeLogs.length) {
+			test.callback(new Error(`[${test.title}]\n\n    ${severeLogs.join("\n    ")}`));
+		}
+	},
 	/**
 	 * Hook that gets executed after the suite has ended
 	 * @param {Object} suite suite details

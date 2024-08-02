@@ -1,11 +1,10 @@
 <div class="{{classes.root}}"
 	id="{{_id}}"
 	role="note"
-	aria-live="assertive"
 	aria-labelledby="{{_id}}"
 >
 
-	{{#unless hideIcon}}
+	{{#unless shouldHideIcon}}
 		<div
 		class="ui5-message-strip-icon-wrapper"
 		aria-hidden="true"

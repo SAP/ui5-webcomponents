@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -11,7 +12,8 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { IAvatar } from "./Interfaces.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import type { IAvatarGroupItem } from "./AvatarGroup.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
@@ -21,18 +23,19 @@ import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 import AvatarCss from "./generated/themes/Avatar.css.js";
 
 import Icon from "./Icon.js";
-import AvatarSize from "./types/AvatarSize.js";
-import AvatarShape from "./types/AvatarShape.js";
-import AvatarColorScheme from "./types/AvatarColorScheme.js";
+import type AvatarSize from "./types/AvatarSize.js";
+import type AvatarShape from "./types/AvatarShape.js";
+import type AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 
+type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
+
 /**
  * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * An image-like component that has different display options for representing images and icons
  * in different shapes and sizes, depending on the use case.
@@ -40,23 +43,17 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  * The shape can be circular or square. There are several predefined sizes, as well as an option to
  * set a custom size.
  *
- * <br><br>
- * <h3>Keyboard Handling</h3>
+ * ### Keyboard Handling
  *
- * <ul>
- * <li>[SPACE, ENTER, RETURN] - Fires the <code>click</code> event if the <code>interactive</code> property is set to true.</li>
- * <li>[SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.</li>
- * </ul>
- * <br><br>
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Shift] - If [Space] is pressed, pressing [Shift] releases the component without triggering the click event.
  *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/Avatar.js";</code>
- *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents/dist/Avatar.js";`
  * @constructor
  * @extends UI5Element
  * @since 1.0.0-rc.6
- * @implements {IAvatar}
+ * @implements {IAvatarGroupItem}
  * @public
  */
 @customElement({
@@ -68,180 +65,152 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 	dependencies: [Icon],
 })
 /**
-* Fired on mouseup, space and enter if avatar is interactive
-* <b>Note:</b> The event will not be fired if the <code>disabled</code>
-* property is set to <code>true</code>.
-* @private
-* @since 1.0.0-rc.11
-*/
+ * Fired on mouseup, space and enter if avatar is interactive
+ *
+ * **Note:** The event will not be fired if the `disabled`
+ * property is set to `true`.
+ * @private
+ * @since 1.0.0-rc.11
+ */
 @event("click")
-class Avatar extends UI5Element implements ITabbable, IAvatar {
+class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or
 	 * focused, and it is not in the tab chain.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
-	 * <b>Note:</b> This property won't have effect if the <code>disabled</code>
-	 * property is set to <code>true</code>.
+	 *
+	 * **Note:** This property won't have effect if the `disabled`
+	 * property is set to `true`.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive!: boolean;
-
-	/**
-	 * Indicates if the elements is on focus
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	/**
-	 * Indicates if the elements is pressed
-	 * @private
-	 */
-	@property({ type: Boolean })
-	pressed!: boolean;
+	interactive = false;
 
 	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
-	 * <br>
-	 * <b>Note:</b> If <code>image</code> slot is provided, the property will be ignored.
-	 * <br>
-	 * <b>Note:</b> You should import the desired icon first, then use its name as "icon".
-	 * <br><br>
-	 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
-	 * <br>
-	 * <pre>&lt;ui5-avatar icon="employee"></pre>
-	 * <br>
-	 * <b>Note:</b> If no icon or an empty one is provided, by default the "employee" icon should be displayed.
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @default ""
+	 * **Note:** If `image` slot is provided, the property will be ignored.
+	 *
+	 * **Note:** You should import the desired icon first, then use its name as "icon".
+	 *
+	 * `import "@ui5/webcomponents-icons/dist/{icon_name}.js"`
+	 *
+	 * `<ui5-avatar icon="employee">`
+	 *
+	 * **Note:** If no icon or an empty one is provided, by default the "employee" icon should be displayed.
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines the name of the fallback icon, which should be displayed in the following cases:
-	 * <ul>
-	 * 	<li>If the initials are not valid (more than 3 letters, unsupported languages or empty initials).</li>
-	 * 	<li>If there are three initials and they do not fit in the shape (e.g. WWW for some of the sizes).</li>
-	 * 	<li>If the image src is wrong.</li>
-	 * </ul>
 	 *
-	 * <br>
-	 * <b>Note:</b> If not set, a default fallback icon "employee" is displayed.
-	 * <br>
-	 * <b>Note:</b> You should import the desired icon first, then use its name as "fallback-icon".
-	 * <br><br>
-	 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
-	 * <br>
-	 * <pre>&lt;ui5-avatar fallback-icon="alert"></pre>
-	 * <br>
+	 * 	- If the initials are not valid (more than 3 letters, unsupported languages or empty initials).
+	 * 	- If there are three initials and they do not fit in the shape (e.g. WWW for some of the sizes).
+	 * 	- If the image src is wrong.
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @default ""
+	 * **Note:** If not set, a default fallback icon "employee" is displayed.
+	 *
+	 * **Note:** You should import the desired icon first, then use its name as "fallback-icon".
+	 *
+	 * `import "@ui5/webcomponents-icons/dist/{icon_name}.js"`
+	 *
+	 * `<ui5-avatar fallback-icon="alert">`
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default "employee"
 	 * @public
 	 */
 	@property()
-	fallbackIcon!: string;
+	fallbackIcon = "employee";
 
 	/**
 	 * Defines the displayed initials.
-	 * <br>
-	 * Up to three Latin letters can be displayed as initials.
 	 *
-	 * @default ""
+	 * Up to three Latin letters can be displayed as initials.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	initials!: string;
+	initials?: string;
 
 	/**
 	 * Defines the shape of the component.
-	 *
 	 * @default "Circle"
 	 * @public
 	 */
-	@property({ type: AvatarShape, defaultValue: AvatarShape.Circle })
-	shape!: `${AvatarShape}`;
+	@property()
+	shape: `${AvatarShape}` = "Circle";
 
 	/**
 	 * Defines predefined size of the component.
-	 *
 	 * @default "S"
 	 * @public
 	 */
-	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	size!: `${AvatarSize}`;
-
-	/**
-	 * @private
-	 */
-	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	_size!: AvatarSize;
+	@property()
+	size: `${AvatarSize}` = "S";
 
 	/**
 	 * Defines the background color of the desired image.
-	 *
 	 * @default "Accent6"
 	 * @public
 	 */
-	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	colorScheme!: `${AvatarColorScheme}`;
+	@property()
+	colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * @private
 	 */
-	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	_colorScheme!: AvatarColorScheme;
+	@property()
+	_colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * Defines the text alternative of the component.
 	 * If not provided a default text alternative will be set, if present.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
-	 * Defines the aria-haspopup value of the component when <code>interactive</code> property is <code>true</code>.
-	 * <br><br>
-	 * @since 1.0.0-rc.15
-	 * @protected
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following field is supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
+	 * @public
+	 * @since 2.0.0
+	 * @default {}
 	 */
-	@property()
-	ariaHaspopup!: string;
+	@property({ type: Object })
+	accessibilityAttributes: AvatarAccessibilityAttributes = {};
 
 	@property({ noAttribute: true })
-	_tabIndex!: string;
+	forcedTabIndex?: string;
 
 	@property({ type: Boolean })
-	_hasImage!: boolean;
+	_hasImage = false;
 
 	/**
-	 * Receives the desired <code>&lt;img&gt;</code> tag
+	 * Receives the desired `<img>` tag
 	 *
-	 * <b>Note:</b> If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
-	 * <br /> <br />
-	 * <code>
-	 *		ui5-avatar:not(:defined) { <br />
-	 *			&nbsp;visibility: hidden; <br />
-	 *		} <br />
-	 * </code>
+	 * **Note:** If you experience flickering of the provided image, you can hide the component until it is being defined with the following CSS:
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -250,24 +219,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	/**
 	 * Defines the optional badge that will be used for visual affordance.
-	 * <b>Note:</b> While the slot allows for custom badges, to achieve
-	 * the Fiori design, please use <code>ui5-badge</code> with <code>ui5-icon</code>
-	 * in the corresponding <code>icon</code> slot, without text nodes.
-	 * <br><br>
-	 * Example:
-	 * <br><br>
-	 * &lt;ui5-avatar><br>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br>
-	 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;/ui5-badge><br>
-	 * &lt;/ui5-avatar>
-	 * <br><br>
-	 * <ui5-avatar initials="AB" color-scheme="Accent1">
-	 * <ui5-badge slot="badge">
-	 * <ui5-icon slot="icon" name="accelerated"></ui5-icon>
-	 * </ui5-badge>
-	 * </ui5-avatar>
 	 *
+	 * **Note:** While the slot allows for custom badges, to achieve
+	 * the Fiori design, you can use the `ui5-tag` with `ui5-icon`
+	 * in the corresponding `icon` slot, without text nodes.
 	 * @public
 	 * @since 1.7.0
 	 */
@@ -288,7 +243,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	}
 
 	get tabindex() {
-		return this._tabIndex || (this._interactive ? "0" : "-1");
+		return this.forcedTabIndex || (this._interactive ? "0" : "-1");
 	}
 
 	/**
@@ -296,9 +251,9 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "S"
 	 * @private
 	 */
-	get _effectiveSize(): AvatarSize {
+	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
-		return this.getAttribute("size") as AvatarSize || this._size;
+		return this.getAttribute("size") as AvatarSize;
 	}
 
 	/**
@@ -306,7 +261,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	 * @default "Accent6"
 	 * @private
 	 */
-	get _effectiveBackgroundColor(): AvatarColorScheme {
+	get еffectiveBackgroundColor(): AvatarColorScheme {
 		// we read the attribute, because the "background-color" property will always have a default value
 		return this.getAttribute("color-scheme") as AvatarColorScheme || this._colorScheme;
 	}
@@ -317,14 +272,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	get _ariaHasPopup() {
 		return this._getAriaHasPopup();
-	}
-
-	get _fallbackIcon() {
-		if (this.fallbackIcon === "") {
-			this.fallbackIcon = "employee";
-		}
-
-		return this.fallbackIcon;
 	}
 
 	get _interactive() {
@@ -358,7 +305,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	get initialsContainer(): HTMLObjectElement | null {
 		return this.getDomRef()!.querySelector(".ui5-avatar-initials");
-	 }
+	}
+
+	get fallBackIconDomRef(): Icon | null {
+		return this.getDomRef()!.querySelector(".ui5-avatar-icon-fallback");
+	}
 
 	onBeforeRendering() {
 		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
@@ -372,6 +323,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	}
 
 	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
+
 		this.initialsContainer && ResizeHandler.register(this.initialsContainer,
 			this._handleResizeBound);
 	}
@@ -388,20 +343,25 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 	}
 
 	_checkInitials() {
-		const avatar = this.getDomRef()!,
-			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
-		// if there aren`t initalts set - the fallBack icon should be shown
-		if (!this.validInitials) {
-			avatarInitials!.classList.add("ui5-avatar-initials-hidden");
+		const avatar = this.getDomRef()!;
+		const avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		const validInitials = this.validInitials && avatarInitials && avatarInitials.scrollWidth <= avatar.scrollWidth;
+
+		if (validInitials) {
+			this.showInitials();
 			return;
 		}
-		// if initials` width is bigger than the avatar, an icon should be shown inside the avatar
-		avatarInitials && avatarInitials.classList.remove("ui5-avatar-initials-hidden");
-		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials && avatarInitials.scrollWidth > avatar.scrollWidth) {
-				avatarInitials.classList.add("ui5-avatar-initials-hidden");
-			}
-		}
+		this.showFallbackIcon();
+	}
+
+	showFallbackIcon() {
+		this.initialsContainer?.classList.add("ui5-avatar-initials-hidden");
+		this.fallBackIconDomRef?.classList.remove("ui5-avatar-fallback-icon-hidden");
+	}
+
+	showInitials() {
+		this.initialsContainer?.classList.remove("ui5-avatar-initials-hidden");
+		this.fallBackIconDomRef?.classList.add("ui5-avatar-fallback-icon-hidden");
 	}
 
 	_onClickHandler(e: MouseEvent) {
@@ -432,28 +392,22 @@ class Avatar extends UI5Element implements ITabbable, IAvatar {
 
 	_fireClick() {
 		this.fireEvent("click");
-		this.pressed = !this.pressed;
-	}
-
-	_onfocusout() {
-		this.focused = false;
-	}
-
-	_onfocusin() {
-		if (this._interactive) {
-			this.focused = true;
-		}
 	}
 
 	_getAriaHasPopup() {
-		if (!this._interactive || this.ariaHaspopup === "") {
+		const ariaHaspopup = this.accessibilityAttributes.hasPopup;
+
+		if (!this._interactive || !ariaHaspopup) {
 			return;
 		}
 
-		return this.ariaHaspopup;
+		return ariaHaspopup;
 	}
 }
 
 Avatar.define();
 
 export default Avatar;
+export type {
+	AvatarAccessibilityAttributes,
+};

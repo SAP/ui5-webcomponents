@@ -30,6 +30,8 @@
 			@change="{{_onchange}}"
 			@keyup="{{_onkeyup}}"
 			@keydown="{{_onkeydown}}"
+			@select="{{_onselect}}"
+			@scroll="{{_onscroll}}"
 			data-sap-focus-ref
 			part="textarea">
 		</textarea>
@@ -44,8 +46,8 @@
 	{{#if hasValueState}}
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 	{{/if}}
-
-	<slot name="formSupport"></slot>
 </div>
 
 {{#*inline "afterTextarea"}}{{/inline}}
+
+{{>include "./TextAreaPopover.hbs"}}

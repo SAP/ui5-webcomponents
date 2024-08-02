@@ -2,8 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -24,14 +22,12 @@ type DirectionStart = "left" | "right";
 
 /**
  * Fired when the value changes and the user has finished interacting with the slider.
- *
  * @public
  */
 @event("change")
 
 /**
  * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
- *
  * @public
  */
 @event("input")
@@ -39,8 +35,7 @@ type DirectionStart = "left" | "right";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
- *
+ * ### Overview
  * @constructor
  * @extends UI5Element
  * @public
@@ -48,96 +43,99 @@ type DirectionStart = "left" | "right";
 abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
-	 *
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 0 })
-	min!: number;
+	@property({ type: Number })
+	min = 0;
 
 	/**
 	 * Defines the maximum value of the slider.
-	 *
 	 * @default 100
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 100 })
-	max!: number;
+	@property({ type: Number })
+	max = 100;
+
+	/**
+	 * Determines the name by which the component will be identified upon submission in an HTML form.
+	 *
+	 * **Note:** This property is only applicable within the context of an HTML Form element.
+	 * @default undefined
+	 * @public
+	 * @since 2.0.0
+	 */
+	@property()
+	name?: string;
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-	 * <br><br>
-	 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 	 *
+	 * **Note:** If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 	 * @default 1
 	 * @public
 	 */
-	@property({ validator: Float, defaultValue: 1 })
-	step!: number;
+	@property({ type: Number })
+	step = 1;
 
 	/**
 	 * Displays a label with a value on every N-th step.
-	 * <br><br>
-	 * <b>Note:</b> The step and tickmarks properties must be enabled.
+	 *
+	 * **Note:** The step and tickmarks properties must be enabled.
 	 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 	 * tickmark will be labelled, which means every 4th value number.
-	 *
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	labelInterval!: number;
+	@property({ type: Number })
+	labelInterval = 0;
 
 	/**
 	 * Enables tickmarks visualization for each step.
-	 * <br><br>
-	 * <b>Note:</b> The step must be a positive number.
 	 *
+	 * **Note:** The step must be a positive number.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTickmarks!: boolean;
+	showTickmarks = false;
 
 	/**
 	 * Enables handle tooltip displaying the current value.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip!: boolean;
+	showTooltip = false;
 
 	/**
 	 * Defines whether the slider is in disabled state.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled!: boolean;
+	disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * @private
 	 */
-	@property({ defaultValue: "hidden" })
-	_tooltipVisibility!: string;
+	@property()
+	_tooltipVisibility = "hidden";
 
 	@property({ type: Boolean })
-	_labelsOverlapping!: boolean;
+	_labelsOverlapping = false;
 
 	@property({ type: Boolean })
-	_hiddenTickmarks!: boolean;
+	_hiddenTickmarks = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
@@ -152,6 +150,10 @@ abstract class SliderBase extends UI5Element {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
+
+	async formElementAnchor() {
+		return this.getFocusDomRefAsync();
+	}
 
 	constructor() {
 		super();
@@ -224,7 +226,7 @@ abstract class SliderBase extends UI5Element {
 		};
 	}
 
-	static get render() {
+	static get renderer() {
 		return litRender;
 	}
 
@@ -259,8 +261,7 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	/** Shows the tooltip(s) if the <code>showTooltip</code> property is set to true
-	 *
+	/** Shows the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
 	_onmouseover() {
@@ -270,8 +271,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Hides the tooltip(s) if the <code>showTooltip</code> property is set to true
-	 *
+	 * Hides the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
 	_onmouseout() {
@@ -303,7 +303,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Flags if an inner element is currently being focused
-	 *
 	 * @private
 	 */
 	_preserveFocus(isFocusing: boolean) {
@@ -312,7 +311,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Return if an inside element within the component is currently being focused
-	 *
 	 * @private
 	 */
 	_isFocusing() {
@@ -321,7 +319,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
-	 *
 	 * @private
 	 */
 	_preventFocusOut() {
@@ -338,7 +335,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Handle the responsiveness of the Slider's UI elements when resizing
-	 *
 	 * @private
 	 */
 	_handleResize() {
@@ -376,7 +372,6 @@ abstract class SliderBase extends UI5Element {
 	 * Called when the user starts interacting with the slider.
 	 * After a down event on the slider root, listen for move events on window, so the slider value
 	 * is updated even if the user drags the pointer outside the slider root.
-	 *
 	 * @protected
 	 */
 	handleDownBase(e: TouchEvent | MouseEvent) {
@@ -405,7 +400,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Forward the focus to an inner inner part within the component on press
-	 *
 	 * @private
 	 */
 	_handleFocusOnMouseDown(e: TouchEvent | MouseEvent) {
@@ -419,8 +413,7 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Called when the user finish interacting with the slider
-	 * Fires an <code>change</code> event indicating a final value change, after user interaction is finished.
-	 *
+	 * Fires an `change` event indicating a final value change, after user interaction is finished.
 	 * @protected
 	 */
 	handleUpBase() {
@@ -436,8 +429,7 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Updates state storage for the value-related property
-	 * Fires an <code>input</code> event indicating a value change via interaction that is not yet finished.
-	 *
+	 * Fires an `input` event indicating a value change via interaction that is not yet finished.
 	 * @protected
 	 */
 	updateStateStorageAndFireInputEvent(valueType: string) {
@@ -449,7 +441,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Goes through the key shortcuts available for the component and returns 'true' if the event is triggered by one.
-	 *
 	 * @private
 	 */
 	static _isActionKey(e: KeyboardEvent) {
@@ -458,7 +449,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Locks the given value between min and max boundaries based on slider properties
-	 *
 	 * @protected
 	 */
 	static clipValue(value: number, min: number, max: number): number {
@@ -468,7 +458,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Sets the slider value from an event
-	 *
 	 * @protected
 	 */
 	static getValueFromInteraction(e: TouchEvent | MouseEvent, stepSize: number, min: number, max: number, boundingClientRect: DOMRect, directionStart: DirectionStart): number {
@@ -481,7 +470,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * "Stepify" the raw value - calculate the new value depending on the specified step property
-	 *
 	 * @protected
 	 */
 	static getSteppedValue(value: number, stepSize: number, min: number): number {
@@ -501,7 +489,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Gets pageX value from event on user interaction with the Slider
-	 *
 	 * @protected
 	 */
 	static getPageXValueFromEvent(e: TouchEvent | MouseEvent): number {
@@ -518,7 +505,6 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Computes the new value (in %) from the pageX position of the cursor.
 	 * Returns the value rounded to a precision of at most 2 digits after decimal point.
-	 *
 	 * @protected
 	 */
 	static computedValueFromPageX(pageX: number, min: number, max: number, boundingClientRect: DOMRect, directionStart: DirectionStart) {
@@ -557,7 +543,6 @@ abstract class SliderBase extends UI5Element {
 	 *
 	 * Will return true if any of the properties is not equal to its previously
 	 * stored value.
-	 *
 	 * @protected
 	 */
 	isCurrentStateOutdated() {
@@ -566,7 +551,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Returns the last stored value of a property
-	 *
 	 * @protected
 	 */
 	getStoredPropertyState(prop: string) {
@@ -576,7 +560,6 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * Check if one or more properties have been updated compared to their last
 	 * saved values in the state storage.
-	 *
 	 * @protected
 	 */
 	isPropertyUpdated(...props: Array<string>) {
@@ -585,7 +568,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Updates the previously saved in the _stateStorage values of one or more properties.
-	 *
 	 * @protected
 	 */
 	storePropertyState(...props: Array<string>) {
@@ -603,7 +585,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Calculates the labels amount, width and text and creates them
-	 *
 	 * @private
 	 */
 	_createLabels() {
@@ -685,7 +666,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Calculates space between tickmarks
-	 *
 	 * @private
 	 */
 	_spaceBetweenTickmarks() {
@@ -694,7 +674,6 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 * Notify in case of a invalid step value type
-	 *
 	 * @private
 	 */
 	_validateStep(step: number) {
@@ -716,9 +695,8 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Normalizes a new <code>step</code> property value.
+	 * Normalizes a new `step` property value.
 	 * If tickmarks are enabled recreates them according to it.
-	 *
 	 * @private
 	 */
 	get _effectiveStep() {

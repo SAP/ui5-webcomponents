@@ -1,6 +1,7 @@
 const { defineConfig } = require('vite');
 const virtualIndex = require("@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js");
 const customHotUpdate = require("@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js");
+const ssrDomShimLoader = require("@ui5/webcomponents-tools/lib/dev-server/ssr-dom-shim-loader.js");
 const { existsSync } = require('fs');
 const { dirname, join, resolve } = require('path');
 const path = require('path');
@@ -63,6 +64,9 @@ const customResolver = (id, source, options) => {
 			if (resolved.endsWith("dist/sap/base/util/LoaderExtensions.js")) {
 				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
 			}
+			if (resolved.endsWith("dist/sap/base/util/ObjectPath.js")) {
+				resolved = resolved.replace("/dist/", "/src/").replace(".js", ".ts");
+			}
 			return resolved;
 		}
 	}
@@ -97,7 +101,7 @@ module.exports = defineConfig(async () => {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(),
+		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
 			checker({
 				// e.g. use TypeScript check
 				typescript: {

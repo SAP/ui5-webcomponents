@@ -2,6 +2,12 @@
     display: inline-block;
 }
 
+.ui5-cal-root .ui5-calheader {
+    display: block;
+    height: var(--_ui5_calendar_header_height);
+    font-family: var(--_ui5_button_fontFamily);
+}
+
 .ui5-cal-root {
     background: var(--sapList_Background);
     box-sizing: border-box;
@@ -11,11 +17,7 @@
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
-}
-
-.ui5-cal-root [ui5-calendar-header] {
-    height: var(--_ui5_calendar_header_height);
-    font-family: var(--_ui5_button_fontFamily);
+    overflow: hidden;
 }
 
 .ui5-cal-root .ui5-cal-content {

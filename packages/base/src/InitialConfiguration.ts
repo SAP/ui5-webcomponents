@@ -5,7 +5,7 @@ import validateThemeRoot from "./validateThemeRoot.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
-import CalendarType from "./types/CalendarType.js";
+import type CalendarType from "./types/CalendarType.js";
 
 let initialized = false;
 
@@ -14,7 +14,6 @@ type InitialConfig = {
 	animationMode: AnimationMode,
 	theme: string,
 	themeRoot: string | undefined,
-	rtl: boolean | undefined,
 	language: string | undefined,
 	calendarType: CalendarType | undefined,
 	secondaryCalendarType: CalendarType | undefined,
@@ -22,6 +21,7 @@ type InitialConfig = {
 	noConflict: boolean,
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
+	defaultFontLoading: boolean,
 };
 
 let initialConfig: InitialConfig = {
@@ -36,6 +36,7 @@ let initialConfig: InitialConfig = {
 	noConflict: false, // no URL
 	formatSettings: {},
 	fetchDefaultLanguage: false,
+	defaultFontLoading: true,
 };
 
 /* General settings */
@@ -52,11 +53,6 @@ const getTheme = () => {
 const getThemeRoot = () => {
 	initConfiguration();
 	return initialConfig.themeRoot;
-};
-
-const getRTL = () => {
-	initConfiguration();
-	return initialConfig.rtl;
 };
 
 const getLanguage = () => {
@@ -77,6 +73,11 @@ const getFetchDefaultLanguage = () => {
 const getNoConflict = () => {
 	initConfiguration();
 	return initialConfig.noConflict;
+};
+
+const getDefaultFontLoading = () => {
+	initConfiguration();
+	return initialConfig.defaultFontLoading;
 };
 
 /**
@@ -216,7 +217,6 @@ export {
 	getAnimationMode,
 	getTheme,
 	getThemeRoot,
-	getRTL,
 	getLanguage,
 	getFetchDefaultLanguage,
 	getNoConflict,
@@ -224,4 +224,5 @@ export {
 	getSecondaryCalendarType,
 	getTimezone,
 	getFormatSettings,
+	getDefaultFontLoading,
 };

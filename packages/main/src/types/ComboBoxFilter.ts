@@ -1,6 +1,5 @@
 /**
  * Different filtering types of the ComboBox.
- *
  * @public
  */
  enum ComboBoxFilter {

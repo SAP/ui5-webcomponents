@@ -4,10 +4,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { IColorPaletteItem } from "./Interfaces.js";
+import type { IColorPaletteItem } from "./ColorPalette.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
@@ -19,13 +17,11 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
- * The <code>ui5-color-palette-item</code> component represents a color in the the <code>ui5-color-palette</code>.
- *
+ * The `ui5-color-palette-item` component represents a color in the the `ui5-color-palette`.
  * @constructor
  * @extends UI5Element
- * @abstract
  * @since 1.0.0-rc.12
  * @implements { IColorPaletteItem }
  * @public
@@ -39,45 +35,54 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	/**
 	 * Defines the colour of the component.
-	 * <br><br>
-	 * <b>Note:</b> The value should be a valid CSS color.
 	 *
-	 * @default undefined
+	 * **Note:** The value should be a valid CSS color.
+	 * @default ""
 	 * @public
 	 */
-	@property({ validator: CSSColor })
-	value?: string;
+	@property()
+	value = ""
+
+	/**
+	 * Defines if the component is selected.
+	 *
+	 * **Note:** Only one item must be selected per <code>ui5-color-palette</code>.
+	 * If more than one item is defined as selected, the last one would be considered as the selected one.
+	 *
+	 * @public
+	 * @default false
+	 * @since 2.0.0
+	 */
+	@property({ type: Boolean })
+	selected = false;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
-	 *
 	 * @private
 	 */
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex = "-1";
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
-	 *
 	 * @private
 	 */
-	@property({ validator: Integer })
+	@property({ type: Number })
 	index?: number;
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.
-	 *
 	 * @private
 	 */
 	@property({ type: Boolean })
-	phone!: boolean;
+	onPhone = false;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	_disabled!: boolean;
+	_disabled = false;
 
 	static i18nBundle: I18nBundle;
 
@@ -91,7 +96,8 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 
 	onBeforeRendering() {
 		this._disabled = !this.value;
-		this.phone = isPhone();
+		this.onPhone = isPhone();
+		this.setAttribute("style", `background-color: ${this.value}`);
 	}
 
 	get colorLabel() {
@@ -102,6 +108,14 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 		return {
 			root: {
 				"background-color": this.value,
+			},
+		};
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-cp-item": true,
 			},
 		};
 	}

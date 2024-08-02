@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -25,17 +24,18 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  * Shows the progress of a process in a graphical way. To indicate the progress,
  * the inside of the component is filled with a color.
  *
- * <h3>Responsive Behavior</h3>
- * You can change the size of the Progress Indicator by changing its <code>width</code> or <code>height</code> CSS properties.
+ * ### Responsive Behavior
+ * You can change the size of the Progress Indicator by changing its `width` or `height` CSS properties.
  *
- * <h3>ES6 Module Import</h3>
+ * ### ES6 Module Import
  *
- * <code>import "@ui5/webcomponents/dist/ProgressIndicator.js";</code>
- *
+ * `import "@ui5/webcomponents/dist/ProgressIndicator.js";`
+ * @csspart bar - Used to style the main bar of the `ui5-progress-indicator`
+ * @csspart remaining-bar - Used to style the remaining bar of the `ui5-progress-indicator`
  * @constructor
  * @extends UI5Element
  * @public
@@ -52,66 +52,52 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
 class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.16.0
 	*/
 	@property()
-	accessibleName!: string;
-
-	/**
-	 * Defines whether component is in disabled state.
-	 *
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component value is shown.
-	 *
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideValue!: boolean;
+	hideValue = false;
 
 	/**
 	 * Specifies the numerical value in percent for the length of the component.
 	 *
-	 * <b>Note:</b>
+	 * **Note:**
 	 * If a value greater than 100 is provided, the percentValue is set to 100. In other cases of invalid value, percentValue is set to its default of 0.
 	 * @default 0
 	 * @public
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	value!: number;
+	@property({ type: Number })
+	value = 0;
 
 	/**
 	 * Specifies the text value to be displayed in the bar.
 	 *
-	 * <b>Note:</b>
-	 * <ul>
-	 * <li>If there is no value provided or the value is empty, the default percentage value is shown.</li>
-	 * <li>If <code>hideValue</code> property is <code>true</code> both the <code>displayValue</code> and <code>value</code> property values are not shown.</li>
-	 * </ul>
+	 * **Note:**
 	 *
-	 * @default null
+	 * - If there is no value provided or the value is empty, the default percentage value is shown.
+	 * - If `hideValue` property is `true` both the `displayValue` and `value` property values are not shown.
+	 * @default undefined
 	 * @public
 	 */
-	@property({ defaultValue: null })
-	displayValue?: string | null;
+	@property()
+	displayValue?: string;
 
 	/**
 	 * Defines the value state of the component.
-	 *
 	 * @default "None"
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: `${ValueState}`;
+	@property()
+	valueState: `${ValueState}` = "None";
 
 	static i18nBundle: I18nBundle;
 	_previousValue: number;
@@ -131,18 +117,18 @@ class ProgressIndicator extends UI5Element {
 
 	valueStateTextMappings(): Record<string, string> {
 		return {
-			"Error": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
-			"Success": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Negative": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Critical": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Positive": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
 			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
 	valueStateIconMappings(): Record<string, string> {
 		return {
-			"Error": "status-negative",
-			"Warning": "status-critical",
-			"Success": "status-positive",
+			"Negative": "status-negative",
+			"Critical": "status-critical",
+			"Positive": "status-positive",
 			"Information": "information",
 		};
 	}
@@ -198,10 +184,6 @@ class ProgressIndicator extends UI5Element {
 
 	get valueStateIcon() {
 		return this.valueStateIconMappings()[this.valueState];
-	}
-
-	get _ariaDisabled() {
-		return this.disabled || undefined;
 	}
 
 	static async onDefine() {

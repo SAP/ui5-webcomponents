@@ -5,7 +5,6 @@ describe('SSR / Device', () => {
 
     it('all detections should return false', () => {
         assert.strictEqual(Device.supportsTouch(), false, `'supportsTouch' should be false`);
-        assert.strictEqual(Device.isIE(), false, `'isIE' should be false`);
         assert.strictEqual(Device.isSafari(), false, `'isSafari' should be false`);
         assert.strictEqual(Device.isChrome(), false, `'isChrome' should be false`);
         assert.strictEqual(Device.isFirefox(), false, `'isFirefox' should be false`);

@@ -1,8 +1,7 @@
 /**
  * Different Icon semantic designs.
-*
-* @public
-*/
+ * @public
+ */
 enum IconDesign {
 	/**
 	 * Contrast design

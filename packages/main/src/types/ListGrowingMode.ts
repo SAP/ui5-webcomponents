@@ -1,6 +1,5 @@
 /**
  * Different list growing modes.
- *
  * @public
  */
 enum ListGrowingMode {

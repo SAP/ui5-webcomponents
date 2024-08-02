@@ -71,7 +71,7 @@ describe("General assertions", () => {
 
 	it("tests components with 'hidden' property are not visible", async () => {
 		[
-			await browser.$("#badge2"),
+			await browser.$("#tag2"),
 			await browser.$("#busyIndicator2"),
 			await browser.$("#btn2"),
 			await browser.$("#card2"),

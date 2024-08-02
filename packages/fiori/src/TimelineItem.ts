@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
-import type { ITimelineItem } from "./Interfaces.js";
+import type { ITimelineItem } from "./Timeline.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
@@ -17,15 +17,14 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
  * An entry posted on the timeline.
- *
  * @constructor
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
- * @slot {Node[]} default - Determines the description of the <code>ui5-timeline-item</code>.
+ * @slot {Node[]} default - Determines the description of the `ui5-timeline-item`.
  */
 @customElement({
 	tag: "ui5-timeline-item",
@@ -40,81 +39,73 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 /**
  * Fired when the item name is pressed either with a
  * click/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
- * attribute is not set.
  *
+ * **Note:** The event will not be fired if the `name-clickable`
+ * attribute is not set.
  * @public
  */
 @event("name-click")
 class TimelineItem extends UI5Element implements ITimelineItem {
 	/**
-	 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
+	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
-	 * <br><br>
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 *
-	 * @default ""
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
-	 * Defines the name of the item, displayed before the <code>title-text</code>.
-	 *
-	 * @default ""
+	 * Defines the name of the item, displayed before the `title-text`.
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
-	 * Defines if the <code>name</code> is clickable.
-	 *
+	 * Defines if the `name` is clickable.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	nameClickable!: boolean;
+	nameClickable = false;
 
 	/**
 	 * Defines the title text of the component.
-	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	 * Defines the subtitle text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
+	@property({ noAttribute: true })
+	forcedTabIndex?: string;
 
 	/**
 	 * Defines the items orientation.
-	 *
 	 * @default "Vertical"
 	 * @private
 	 */
-	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
-	layout!: `${TimelineLayout}`;
+	@property()
+	layout: `${TimelineLayout}` = "Vertical";
 
 	/**
 	 * Defines the indicator line width.
-	 *
 	 * @private
 	 */
 	@property()
-	_lineWidth!: string;
+	forcedLineWidth?: string;
 
 	constructor() {
 		super();
@@ -135,8 +126,8 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		return {
 			indicator: {
 				"ui5-tli-indicator": true,
-				"ui5-tli-indicator-short-line": this._lineWidth === SHORT_LINE_WIDTH,
-				"ui5-tli-indicator-large-line": this._lineWidth === LARGE_LINE_WIDTH,
+				"ui5-tli-indicator-short-line": this.forcedLineWidth === SHORT_LINE_WIDTH,
+				"ui5-tli-indicator-large-line": this.forcedLineWidth === LARGE_LINE_WIDTH,
 			},
 			bubbleArrowPosition: {
 				"ui5-tli-bubble-arrow": true,
