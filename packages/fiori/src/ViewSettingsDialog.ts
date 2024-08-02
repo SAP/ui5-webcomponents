@@ -231,6 +231,15 @@ class ViewSettingsDialog extends UI5Element {
 	open = false;
 
 	/**
+	 * Indicates if the reset button is disabled.
+	 * @private
+	 * @default false
+	 * @since 2.2.0
+	 */
+	@property({ type: Boolean })
+	resetButtonDisabled  = false;
+
+	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
 	 * @private
 	 */
@@ -270,15 +279,6 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_filterStepTwo = false;
-
-	/**
-	 * Indicates if the reset button is disabled.
-	 * @private
-	 * @default false
-	 * @since 2.1.0
-	 */
-	@property({ type: Boolean })
-	_resetButtonDisabled  = false;
 
 	/**
 	 * Defines the list of items against which the user could sort data.
@@ -417,7 +417,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Determines disabled state of the `Reset` button.
 	 */
 	get _disableResetButton() {
-		return this._dialog && this._resetButtonDisabled;
+		return this._dialog && this.resetButtonDisabled;
 	}
 
 	/**
@@ -531,7 +531,6 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	_handleFilterValueItemClick(e: CustomEvent<ListItemClickEventDetail>) {
-		this._resetButtonDisabled = false;
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
@@ -648,7 +647,6 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	 _resetButtonPress() {
 		this.fireEvent("reset");
-		this._resetButtonDisabled = true;
 	}
 
 	/**
@@ -666,7 +664,6 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	_onSortOrderChange(e: CustomEvent<ListItemClickEventDetail>) {
 		this._recentlyFocused = this._sortOrder!;
-		this._resetButtonDisabled = false;
 		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
 			item.selected = item.text === e.detail.item.innerText;
 			return item;
@@ -681,7 +678,6 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	 _onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
 		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
-		this._resetButtonDisabled = false;
 		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
 			item.selected = index === selectedItemIndex;
