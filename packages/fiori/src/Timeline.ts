@@ -217,9 +217,9 @@ class Timeline extends UI5Element {
 		this.items.forEach(item => {
 			if (!item.isGroupItem) {
 				navigatableItems.push(item);
-				
+
 				return;
-			} 
+			}
 
 			const navigatableItem = item.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]");
 
