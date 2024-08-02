@@ -129,7 +129,13 @@
 	bottom: var(--_ui5_dialog_resize_handle_bottom);
 	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
 	cursor: var(--_ui5_dialog_resize_cursor);
-	color: var(--_ui5_dialog_resize_handle_color);
+	width: var(--_ui5_dialog_resize_handle_size);
+	height: var(--_ui5_dialog_resize_handle_size);
+	border-radius: 50%;
+}
+
+.ui5-popup-resize-handle [ui5-icon] {
+	color: var(--sapButton_Lite_TextColor);
 }
 
 ::slotted([slot="footer"]) {
