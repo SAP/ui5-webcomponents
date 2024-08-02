@@ -60,7 +60,6 @@
 }
 
 :host([header-text]) .ui5-popup-header-text {
-    text-align: center;
     min-height: var(--_ui5_popup_default_header_height);
     max-height: var(--_ui5_popup_default_header_height);
     line-height: var(--_ui5_popup_default_header_height);
@@ -68,7 +67,8 @@
     overflow: hidden;
     white-space: nowrap;
     max-width: 100%;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: var(--_ui5_popup_header_prop_header_text_alignment);
 }
 
 :host([header-text]) .ui5-popup-header-root {

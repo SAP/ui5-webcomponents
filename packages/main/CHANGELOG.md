@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** prevent console error when no items are present ([#9587](https://github.com/SAP/ui5-webcomponents/issues/9587)) ([4f832bd](https://github.com/SAP/ui5-webcomponents/commit/4f832bdf3cac6c2d26b53d785081c71b77a46d1d)), closes [#9581](https://github.com/SAP/ui5-webcomponents/issues/9581)
+* **ui5-radio-button:** fix selection issue ([#9565](https://github.com/SAP/ui5-webcomponents/issues/9565)) ([5b74c67](https://github.com/SAP/ui5-webcomponents/commit/5b74c67a37b28eb9b15d1c13f265c74f6f341758))
+* **ui5-responsive-popover:** fix header text alignment ([#9501](https://github.com/SAP/ui5-webcomponents/issues/9501)) ([85424ef](https://github.com/SAP/ui5-webcomponents/commit/85424efc6630c9892fb4ee8c596cd8da0eff50c2))
+* **ui5-step-input:** apply overstyling correctly ([#9610](https://github.com/SAP/ui5-webcomponents/issues/9610)) ([1a12e52](https://github.com/SAP/ui5-webcomponents/commit/1a12e52aee2e21739b44ac30fe52196c42cd6255)), closes [#9365](https://github.com/SAP/ui5-webcomponents/issues/9365)
+* **ui5-timepicker:** align input with timepicker styles ([#9612](https://github.com/SAP/ui5-webcomponents/issues/9612)) ([df445eb](https://github.com/SAP/ui5-webcomponents/commit/df445ebfeafa085e3f3d9dff6ad1d08834c4ab24)), closes [#9366](https://github.com/SAP/ui5-webcomponents/issues/9366)
+* **ui5-toolbar:** update ToolbarRegistry to use metadata tag instead of class name ([#9607](https://github.com/SAP/ui5-webcomponents/issues/9607)) ([c2e2c29](https://github.com/SAP/ui5-webcomponents/commit/c2e2c2930ef8618a07c9d6e7df44de20abc30a8e))
+
+
+### Features
+
+* **core:** fire PascalCase events for easier react usage ([#9608](https://github.com/SAP/ui5-webcomponents/issues/9608)) ([43e28fa](https://github.com/SAP/ui5-webcomponents/commit/43e28fa5da370bde06cc23d78a3508321673ca54))
+* **ui5-timeline-group-item:** introduce new component ([#9407](https://github.com/SAP/ui5-webcomponents/issues/9407)) ([aea62ef](https://github.com/SAP/ui5-webcomponents/commit/aea62ef38b55107f7dfd63c468bc1936d426ae42))
+
+
+
+
+
 # [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
 
 
