@@ -1,27 +1,29 @@
-const findNextPlacement = (item: HTMLElement, e: KeyboardEvent) => {
+const findNextPlacement = (items: Array<HTMLElement>, item: HTMLElement, e: KeyboardEvent) => {
 	let placement;
-	let dropTarget;
+	let index = items.indexOf(item);
 
 	switch (e.key) {
 	case "ArrowLeft":
 	case "ArrowUp":
 		placement = "Before";
-		dropTarget = item.previousElementSibling as HTMLElement;
+		index--;
 		break;
 	case "ArrowRight":
 	case "ArrowDown":
 		placement = "After";
-		dropTarget = item.nextElementSibling as HTMLElement;
+		index++;
 		break;
 	case "Home":
 		placement = "Before";
-		dropTarget = item.parentElement?.firstElementChild as HTMLElement;
+		index = 0;
 		break;
 	case "End":
 		placement = "After";
-		dropTarget = item.parentElement?.lastElementChild as HTMLElement;
+		index = items.length - 1;
 		break;
 	}
+
+	const dropTarget = items[index];
 
 	return { placement, dropTarget };
 };

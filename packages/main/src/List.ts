@@ -906,7 +906,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		const { placement, dropTarget } = findNextPlacement(item, e);
+		const { placement, dropTarget } = findNextPlacement(this.items, item, e);
 
 		if (!dropTarget || !placement) {
 			return;

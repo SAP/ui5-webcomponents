@@ -262,15 +262,15 @@ describe("Keyboard drag and drop tests", () => {
 	it("Moving overflow items", async () => {
 		await tabContainer.getEndOverflow("tabContainerDnd").click();
 
-		await browser.keys("ArrowDown");
-
 		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
-		let id = await displayedPopoverItems[1].getAttribute("id");
+		let id = await displayedPopoverItems[0].getAttribute("id");
 
 		await browser.keys(["Control", "ArrowDown"]);
-		await tabContainer.getEndOverflow("tabContainerDnd");
 		displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		assert.strictEqual(await displayedPopoverItems[1].getAttribute("id"), id, "item was moved down");
 
-		assert.strictEqual(await displayedPopoverItems[2].getAttribute("id"), id, "First item was moved down");
+		await browser.keys(["Control", "ArrowUp"]);
+		displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+		assert.strictEqual(await displayedPopoverItems[0].getAttribute("id"), id, "item was moved up");
 	});
 });

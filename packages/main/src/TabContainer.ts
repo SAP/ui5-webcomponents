@@ -616,7 +616,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const { placement, dropTarget } = findNextPlacement(tab, e);
+		const { placement, dropTarget } = findNextPlacement(this.items, tab, e);
 
 		if (!dropTarget || !placement) {
 			return;
@@ -681,8 +681,9 @@ class TabContainer extends UI5Element {
 		let destinationElement : HTMLElement = (destination.element as TabInStrip).realTabReference;
 
 		if (e.detail.originalEvent instanceof KeyboardEvent) {
-			const nextPlacement = findNextPlacement(sourceElement, e.detail.originalEvent);
-			destinationElement = nextPlacement.dropTarget as HTMLElement;
+			const items = (sourceElement.parentElement as Tab).items;
+			const nextPlacement = findNextPlacement(items, sourceElement, e.detail.originalEvent);
+			destinationElement = nextPlacement.dropTarget;
 		}
 
 		if (!destinationElement) {
