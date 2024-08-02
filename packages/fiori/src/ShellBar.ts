@@ -1298,7 +1298,6 @@ class ShellBar extends UI5Element {
 				"title": this._searchText,
 				"accessibilityAttributes": {
 					hasPopup: this._searchHasPopup,
-					expanded: this.showSearchField,
 				},
 			},
 			overflow: {
