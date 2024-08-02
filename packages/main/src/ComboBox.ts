@@ -1216,7 +1216,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
 
 			if (!isListItemInVisibleArea) {
-				listItem.scrollIntoView({ behavior: "instant", block: forward ? "end" : "start", inline: "nearest" });
+				listItem.scrollIntoView({
+					behavior: "auto",
+					block: "nearest",
+					inline: "nearest",
+				});
 			}
 		}
 	}
