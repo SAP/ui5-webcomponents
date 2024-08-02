@@ -13,6 +13,8 @@ await Promise.all([
     cp("../theming/dist", "local-cdn/local-cdn/theming/dist", {recursive: true}),
     cp("../localization/dist", "local-cdn/local-cdn/localization/dist", {recursive: true}),
     cp("../../node_modules/lit-html", "local-cdn/local-cdn/lit-html", {recursive: true}),
+    cp("../fiori/src/illustrations", "local-cdn/local-cdn/illustrations", {recursive: true}),
+    cp("../fiori/src/illustrations/tnt", "local-cdn/local-cdn/illustrations-tnt", {recursive: true}),
 
     cp("../ai/package.json", "local-cdn/local-cdn/ai/package.json"),
     cp("../base/package.json", "local-cdn/local-cdn/base/package.json"),
