@@ -1,5 +1,5 @@
 import "../../src/bundle.common.js";
-import "../../src/test-elements/Generic.js";
+import "../../test/test-elements/Generic.js";
 
 describe("Custom themes can be registered", () => {
 	it("Tests that theme parameters are changed on theme change", () => {

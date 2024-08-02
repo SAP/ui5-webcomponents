@@ -1,7 +1,7 @@
-import UI5Element from "../UI5Element.js";
-import customElement from "../decorators/customElement.js";
-import litRender from "../renderer/LitRenderer.js";
-import WithComplexTemplateTemplate from "../generated/templates/test-elements/WithComplexTemplateTemplate.lit.js";
+import UI5Element from "../../src/UI5Element.js";
+import customElement from "../../src/decorators/customElement.js";
+import litRender from "../../src/renderer/LitRenderer.js";
+import WithComplexTemplateTemplate from "../../src/generated/templates/test-elements/WithComplexTemplateTemplate.lit.js";
 
 @customElement({
 	tag: "ui5-test-complex-template",

@@ -16,11 +16,7 @@ const overrides = tsMode ? [{
 	parserOptions: {
 	  "project": [
 		"./tsconfig.json",
-		"./tsconfig.spec.json",
-		"./tsconfig.build.json",
 		"./packages/*/tsconfig.json",
-		"./packages/*/tsconfig.spec.json",
-		"./packages/*/tsconfig.build.json"
 	],
 	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
 	},

@@ -1,4 +1,4 @@
-import "../../src/test-elements/Accessor.js";
+import "../../test/test-elements/Accessor.js";
 
 describe("Framework boot", () => {
 	it("Setting property updates attribute, state and DOM", () => {

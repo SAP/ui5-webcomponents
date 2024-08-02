@@ -1,5 +1,5 @@
 import type UI5Element from "../../src/UI5Element.js";
-import "../../src/test-elements/GenericExt.js";
+import "../../test/test-elements/GenericExt.js";
 
 describe("Invalidation works", () => {
 	it("Tests that changing a monitored property of a child invalidates the parent", () => {

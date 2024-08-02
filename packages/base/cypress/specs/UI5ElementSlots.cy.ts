@@ -1,4 +1,4 @@
-import "../../src/test-elements/Generic.js";
+import "../../test/test-elements/Generic.js";
 
 describe("Slots work properly", () => {
 	it("Tests that properties exist on the element for each slot", () => {

@@ -1,8 +1,8 @@
-import UI5Element from "../UI5Element.js";
-import litRender, { html } from "../renderer/LitRenderer.js";
-import customElement from "../decorators/customElement.js";
-import slot from "../decorators/slot.js";
-import property from "../decorators/property.js";
+import UI5Element from "../../src/UI5Element.js";
+import litRender, { html } from "../../src/renderer/LitRenderer.js";
+import customElement from "../../src/decorators/customElement.js";
+import slot from "../../src/decorators/slot.js";
+import property from "../../src/decorators/property.js";
 
 @customElement({
 	tag: "ui5-test-generic",

@@ -1,6 +1,6 @@
-import customElement from "../decorators/customElement.js";
-import property from "../decorators/property.js";
-import slot from "../decorators/slot.js";
+import customElement from "../../src/decorators/customElement.js";
+import property from "../../src/decorators/property.js";
+import slot from "../../src/decorators/slot.js";
 import Generic from "./Generic.js";
 
 @customElement("ui5-test-generic-ext")

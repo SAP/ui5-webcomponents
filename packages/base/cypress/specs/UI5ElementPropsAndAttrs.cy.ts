@@ -1,4 +1,4 @@
-import "../../src/test-elements/Generic.js";
+import "../../test/test-elements/Generic.js";
 
 describe("Properties and attributes convert to each other", () => {
 	it("Tests that properties with default values are initialized with the default value", () => {

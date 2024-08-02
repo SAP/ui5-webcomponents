@@ -1,5 +1,5 @@
 import type UI5Element from "../../src/UI5Element.js";
-import "../../src/test-elements/Generic.js";
+import "../../test/test-elements/Generic.js";
 
 describe("Lifecycle works", () => {
 	it("Tests that changing a property invalidates", () => {

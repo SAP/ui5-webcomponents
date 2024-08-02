@@ -35,7 +35,7 @@
 	},
 	"references": [
 		{
-			"path": "../base/tsconfig.build.json"
+			"path": "../base"
 		},
 		{
 			"path": "../localization"

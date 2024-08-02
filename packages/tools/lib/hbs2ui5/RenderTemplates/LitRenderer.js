@@ -18,7 +18,7 @@ const importForControl = (controlName, hasTypes) => {
 
 	if (process.env.UI5_BASE) {
 		// base package has a component in `test/elements` instead of `src`
-		return `import type ${controlName} from "../../../test-elements/${controlName}.js";`
+		return `import type ${controlName} from "../../../../test/test-elements/${controlName}.js";`
 	}
 	return `import type ${controlName} from "../../${controlName}.js";`
 }
