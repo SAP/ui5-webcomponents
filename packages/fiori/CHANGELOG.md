@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** fixed wrong overlapping in header area ([#9568](https://github.com/SAP/ui5-webcomponents/issues/9568)) ([9d55094](https://github.com/SAP/ui5-webcomponents/commit/9d550946c4708ee2e124307344837a0ce38ca682)), closes [#9560](https://github.com/SAP/ui5-webcomponents/issues/9560)
+* **ui5-page:** replace resize observer with container query ([#9576](https://github.com/SAP/ui5-webcomponents/issues/9576)) ([67b9ce1](https://github.com/SAP/ui5-webcomponents/commit/67b9ce1a8cab83fe7a943ddb8c963fdb9f249d4c))
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([2691670](https://github.com/SAP/ui5-webcomponents/commit/269167087c69f31cdce96f9c04464de40bc5054b)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+* **ui5-shellbar:** remove aria attribute from search button ([#9597](https://github.com/SAP/ui5-webcomponents/issues/9597)) ([43c03e7](https://github.com/SAP/ui5-webcomponents/commit/43c03e7510a82b189d3729062089f2a0dcbb12c8))
+
+
+### Features
+
+* **core:** fire PascalCase events for easier react usage ([#9608](https://github.com/SAP/ui5-webcomponents/issues/9608)) ([43e28fa](https://github.com/SAP/ui5-webcomponents/commit/43e28fa5da370bde06cc23d78a3508321673ca54))
+* **ui5-timeline-group-item:** introduce new component ([#9407](https://github.com/SAP/ui5-webcomponents/issues/9407)) ([aea62ef](https://github.com/SAP/ui5-webcomponents/commit/aea62ef38b55107f7dfd63c468bc1936d426ae42))
+
+
+
+
+
 # [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
 
 
