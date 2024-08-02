@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-checkbox:** adjust focus outline in wrapped mode ([#9330](https://github.com/SAP/ui5-webcomponents/issues/9330)) ([31fd31a](https://github.com/SAP/ui5-webcomponents/commit/31fd31ac7111682466f07fe133cb738ebc41263e)), closes [#9254](https://github.com/SAP/ui5-webcomponents/issues/9254)
+* **ui5-date-picker:** adjust timestamp ([#9609](https://github.com/SAP/ui5-webcomponents/issues/9609)) ([36ef543](https://github.com/SAP/ui5-webcomponents/commit/36ef543578ec04ec58d56ba77aa6214761d63c2d)), closes [#9217](https://github.com/SAP/ui5-webcomponents/issues/9217)
+* **ui5-file-uploader:** apply focus properly from inside of a popover… ([#9234](https://github.com/SAP/ui5-webcomponents/issues/9234)) ([ea601ff](https://github.com/SAP/ui5-webcomponents/commit/ea601ff6c8b418c53abec88a9e5a16507ca2a51d)), closes [#9162](https://github.com/SAP/ui5-webcomponents/issues/9162) [#9090](https://github.com/SAP/ui5-webcomponents/issues/9090)
+* **ui5-illustrated-message:** fix missing apostrophe in default (sub)titles ([49cf1cd](https://github.com/SAP/ui5-webcomponents/commit/49cf1cd5bb31fdec4644cb8d79e0887cf7b9426b))
+* **ui5-menu:** adjust loading sub-menu ([#9423](https://github.com/SAP/ui5-webcomponents/issues/9423)) ([e47d1ea](https://github.com/SAP/ui5-webcomponents/commit/e47d1ea36b670f83fbd3e9b72aeec4a0495a8c85)), closes [#7391](https://github.com/SAP/ui5-webcomponents/issues/7391)
+* **ui5-multi-combobox, ui5-combobox, ui5-input:** improve popup announcement ([#9514](https://github.com/SAP/ui5-webcomponents/issues/9514)) ([3f37765](https://github.com/SAP/ui5-webcomponents/commit/3f377652f059493e17eee2c40661d6ed4bf8d342)), closes [#9116](https://github.com/SAP/ui5-webcomponents/issues/9116)
+* **ui5-multi-combobox:** collapse the tokenizer on mobile devices ([#9406](https://github.com/SAP/ui5-webcomponents/issues/9406)) ([6187df8](https://github.com/SAP/ui5-webcomponents/commit/6187df8883f86dc897f3efe047c63f0212becaa4)), closes [#9176](https://github.com/SAP/ui5-webcomponents/issues/9176)
+* **ui5-multi-combobox:** collapse tokenizer on n-more popover focusout ([#9405](https://github.com/SAP/ui5-webcomponents/issues/9405)) ([30ae2fe](https://github.com/SAP/ui5-webcomponents/commit/30ae2fee1461a8ecafe75cbfee1100b5f000dd2f)), closes [#8493](https://github.com/SAP/ui5-webcomponents/issues/8493)
+* **ui5-segmented-button:** prevent focus for disabled items ([#9469](https://github.com/SAP/ui5-webcomponents/issues/9469)) ([a17b20e](https://github.com/SAP/ui5-webcomponents/commit/a17b20e86e1f2f2602b46e29695e054427f85631)), closes [#9236](https://github.com/SAP/ui5-webcomponents/issues/9236)
+* **ui5-select:** prevent unnecessary change event ([#9491](https://github.com/SAP/ui5-webcomponents/issues/9491)) ([6a95eef](https://github.com/SAP/ui5-webcomponents/commit/6a95eeffd33bf08e0869392d08332632a67c17cd))
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([986d133](https://github.com/SAP/ui5-webcomponents/commit/986d133b2ac89092d691138fb621a8e5329c6b75)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+* **ui5-shellbar:** add tooltip for shellbar items ([#9412](https://github.com/SAP/ui5-webcomponents/issues/9412)) ([7a82738](https://github.com/SAP/ui5-webcomponents/commit/7a8273843aec5f80671195be3059ce56af830805)), closes [#5885](https://github.com/SAP/ui5-webcomponents/issues/5885)
+* **ui5-shellbar:** improved readability ([#9528](https://github.com/SAP/ui5-webcomponents/issues/9528)) ([7604346](https://github.com/SAP/ui5-webcomponents/commit/7604346c7752a68d94a281449e9b4a4cba569dda)), closes [#9296](https://github.com/SAP/ui5-webcomponents/issues/9296)
+* **ui5-table:** access interactive content inside popin cell ([#9424](https://github.com/SAP/ui5-webcomponents/issues/9424)) ([3d5c207](https://github.com/SAP/ui5-webcomponents/commit/3d5c2074e67a0f05a4618d0aef36ee5773fb5d51)), closes [#9288](https://github.com/SAP/ui5-webcomponents/issues/9288)
+* **ui5-table:** correct announced row count ([#9443](https://github.com/SAP/ui5-webcomponents/issues/9443)) ([5537438](https://github.com/SAP/ui5-webcomponents/commit/5537438a3fc5d8616c74dd864ed9767a4fc4809d)), closes [#9243](https://github.com/SAP/ui5-webcomponents/issues/9243)
+* **ui5-table:** correct font weight ([#9418](https://github.com/SAP/ui5-webcomponents/issues/9418)) ([ed95673](https://github.com/SAP/ui5-webcomponents/commit/ed95673916f502092378498fb3436d96451d0f3f)), closes [#9046](https://github.com/SAP/ui5-webcomponents/issues/9046)
+* **ui5-table:** correct load-more event on mode change ([#9435](https://github.com/SAP/ui5-webcomponents/issues/9435)) ([3e38b4f](https://github.com/SAP/ui5-webcomponents/commit/3e38b4fda4dc0d139eba563329a81bba1cf904ea)), closes [#8052](https://github.com/SAP/ui5-webcomponents/issues/8052)
+
+
+### Reverts
+
+* Revert "chore: fix features loading" (#9573) ([f45c7a3](https://github.com/SAP/ui5-webcomponents/commit/f45c7a3a26bf8232cd6c31cde54593c466924bd4)), closes [#9573](https://github.com/SAP/ui5-webcomponents/issues/9573)
+
+
+
+
+
 ## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
 
 

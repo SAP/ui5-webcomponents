@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** fix missing apostrophe in default (sub)titles ([49cf1cd](https://github.com/SAP/ui5-webcomponents/commit/49cf1cd5bb31fdec4644cb8d79e0887cf7b9426b))
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([986d133](https://github.com/SAP/ui5-webcomponents/commit/986d133b2ac89092d691138fb621a8e5329c6b75)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+* **ui5-shellbar:** add tooltip for shellbar items ([#9412](https://github.com/SAP/ui5-webcomponents/issues/9412)) ([7a82738](https://github.com/SAP/ui5-webcomponents/commit/7a8273843aec5f80671195be3059ce56af830805)), closes [#5885](https://github.com/SAP/ui5-webcomponents/issues/5885)
+* **ui5-shellbar:** improved readability ([#9528](https://github.com/SAP/ui5-webcomponents/issues/9528)) ([7604346](https://github.com/SAP/ui5-webcomponents/commit/7604346c7752a68d94a281449e9b4a4cba569dda)), closes [#9296](https://github.com/SAP/ui5-webcomponents/issues/9296)
+
+
+
+
+
 ## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

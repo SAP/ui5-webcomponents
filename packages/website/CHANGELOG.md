@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([986d133](https://github.com/SAP/ui5-webcomponents/commit/986d133b2ac89092d691138fb621a8e5329c6b75)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+
+
+
+
+
 ## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-website

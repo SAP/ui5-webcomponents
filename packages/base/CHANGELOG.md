@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
+
+
+### Reverts
+
+* Revert "chore: fix features loading" (#9573) ([f45c7a3](https://github.com/SAP/ui5-webcomponents/commit/f45c7a3a26bf8232cd6c31cde54593c466924bd4)), closes [#9573](https://github.com/SAP/ui5-webcomponents/issues/9573)
+
+
+
+
+
 ## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
