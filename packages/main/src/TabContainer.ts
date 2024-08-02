@@ -681,7 +681,7 @@ class TabContainer extends UI5Element {
 		let destinationElement : HTMLElement = (destination.element as TabInStrip).realTabReference;
 
 		if (e.detail.originalEvent instanceof KeyboardEvent) {
-			const items = (sourceElement.parentElement as Tab).items;
+			const items = (sourceElement.parentElement as Tab | TabContainer).items;
 			const nextPlacement = findNextPlacement(items, sourceElement, e.detail.originalEvent);
 			destinationElement = nextPlacement.dropTarget;
 		}
