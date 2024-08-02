@@ -126,11 +126,11 @@
 
 .ui5-popup-resize-handle {
 	position: absolute;
-	bottom: var(--_ui5_dialog_resize_handle_bottom);
-	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
+	bottom: -0.5rem;
+	inset-inline-end: -0.5rem;
 	cursor: var(--_ui5_dialog_resize_cursor);
-	width: var(--_ui5_dialog_resize_handle_size);
-	height: var(--_ui5_dialog_resize_handle_size);
+	width: 1.5rem;
+	height: 1.5rem;
 	border-radius: 50%;
 }
 
