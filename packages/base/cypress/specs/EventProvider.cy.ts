@@ -1,13 +1,11 @@
-import "../../src/bundle.common.js";
+import EventProvider from "../../src/EventProvider.js";
 
 describe("Event provider attaches and detaches listeners properly", () => {
 	it("Tests that listeners can be removed (1 listener)", () => {
 		let timesCalled = 0;
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.then(bundle => {
-				const ep = new bundle.EventProvider();
+		cy.then(() => {
+				const ep = new EventProvider();
 				const callback = () => {
 					timesCalled++;
 				};
@@ -16,13 +14,13 @@ describe("Event provider attaches and detaches listeners properly", () => {
 				ep.attachEvent("test", callback);
 
 				// Act
-				ep.fireEvent("test"); // should execute the callback and increase the counter
+				ep.fireEvent("test", undefined); // should execute the callback and increase the counter
 
 				// Setup
 				ep.detachEvent("test", callback);
 
 				// Act
-				ep.fireEvent("test"); // should not execute the callback and increase the counter
+				ep.fireEvent("test", undefined); // should not execute the callback and increase the counter
 			})
 			.then(() => {
 				return timesCalled;
@@ -33,10 +31,8 @@ describe("Event provider attaches and detaches listeners properly", () => {
 	it("Tests that listeners can be removed (more than 1 listener)", () => {
 		let timesCalled = 0;
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.then(bundle => {
-				const ep = new bundle.EventProvider();
+		cy.then(() => {
+				const ep = new EventProvider();
 				const callback = () => {
 					timesCalled++;
 				};
@@ -47,13 +43,13 @@ describe("Event provider attaches and detaches listeners properly", () => {
 				ep.attachEvent("test", callback);
 
 				// Act
-				ep.fireEvent("test"); // should execute the callback and increase the counter
+				ep.fireEvent("test", undefined); // should execute the callback and increase the counter
 
 				// Setup
 				ep.detachEvent("test", callback);
 
 				// Act
-				ep.fireEvent("test"); // should not execute the callback and increase the counter
+				ep.fireEvent("test", undefined); // should not execute the callback and increase the counter
 			})
 			.then(() => {
 				return timesCalled;

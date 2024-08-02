@@ -1,4 +1,6 @@
-import "../../src/bundle.common.js";
+import { registerThemePropertiesLoader } from "../../src/AssetRegistry.js";
+import { setTheme } from "../../src/config/Theme.js";
+import { getCurrentRuntimeIndex } from "../../src/Runtimes.js";
 import "../../test/test-elements/Generic.js";
 
 describe("Custom themes can be registered", () => {
@@ -10,19 +12,14 @@ describe("Custom themes can be registered", () => {
 
 		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.invoke("getCurrentRuntimeIndex")
+		cy.then(() => getCurrentRuntimeIndex())
 			.should("equal", currentRuntime);
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.invoke("registerThemePropertiesLoader", "@ui5/webcomponents-base-test", newTheme, () => `:root{ ${var1}; }`);
+		cy.then(() => registerThemePropertiesLoader("@ui5/webcomponents-base-test", newTheme, () => Promise.resolve(`:root{ ${var1}; }`)))
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("setTheme", newTheme);
+		cy.then(() => {
+			setTheme(newTheme)
+		})
 
 		cy.document()
 			.its("adoptedStyleSheets")

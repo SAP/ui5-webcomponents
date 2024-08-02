@@ -1,15 +1,14 @@
-import "../../src/bundle.common.js";
-import "../../src//test-elements/Accessor.js";
-import "../assets/Themes.js";
+import { setTheme } from "../../src/config/Theme.js";
+import { getCurrentRuntimeIndex } from "../../src/Runtimes.js";
+import "../../test/test-elements/Accessor.js";
+import "../../test/assets/Themes.js";
 
 describe("Theming works", () => {
 	it("Tests that the parameters for the default theme are embedded on boot", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.invoke("getCurrentRuntimeIndex")
+		cy.then(() => getCurrentRuntimeIndex())
 			.should("equal", currentRuntime);
 
 		cy.document()
@@ -29,15 +28,10 @@ describe("Theming works", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.invoke("getCurrentRuntimeIndex")
+		cy.then(() => getCurrentRuntimeIndex())
 			.should("equal", currentRuntime);
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("setTheme", newTheme);
+		cy.then(() => setTheme(newTheme))
 
 		cy.document()
 			.its("adoptedStyleSheets")
@@ -56,15 +50,10 @@ describe("Theming works", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.invoke("getCurrentRuntimeIndex")
+		cy.then(() => getCurrentRuntimeIndex())
 			.should("equal", currentRuntime);
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("setTheme", unknownTheme);
+		cy.then(() => setTheme(unknownTheme))
 
 		cy.document()
 			.its("adoptedStyleSheets")

@@ -1,4 +1,11 @@
-import "../../src/bundle.common.js";
+import { getAnimationMode } from "../../src/config/AnimationMode.js";
+import { getCalendarType } from "../../src/config/CalendarType.js";
+import { getDefaultFontLoading } from "../../src/config/Fonts.js";
+import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "../../src/config/FormatSettings.js";
+import { getLanguage } from "../../src/config/Language.js";
+import { getNoConflict } from "../../src/config/NoConflict.js";
+import { getTheme } from "../../src/config/Theme.js";
+import { resetConfiguration } from "../../src/InitialConfiguration.js";
 
 describe("Configuration script", () => {
 	const configurationObject = {
@@ -38,6 +45,8 @@ describe("Configuration script", () => {
 			ui5Configuration: configurationObject,
 		});
 
+		cy.then(() => resetConfiguration(true));
+
 		cy.get("script[data-ui5-config]")
 			.should("exist")
 			.then($el => {
@@ -47,68 +56,44 @@ describe("Configuration script", () => {
 	});
 
 	it("getLanguage", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getLanguage")
+		cy.then(() => getLanguage())
 			.should("equal", configurationObject.language);
 	});
 
 	it("getCalendarType", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getCalendarType")
+		cy.then(() => getCalendarType())
 			.should("equal", configurationObject.calendarType);
 	});
 
 	it("getFirstDayOfWeek", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getFirstDayOfWeek")
+		cy.then(() => getFirstDayOfWeek())
 			.should("equal", configurationObject.formatSettings.firstDayOfWeek);
 	});
 
 	it("getLegacyDateCalendarCustomizing", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getLegacyDateCalendarCustomizing")
+		cy.then(() => getLegacyDateCalendarCustomizing())
 			.should("deep.equal", configurationObject.formatSettings.legacyDateCalendarCustomizing);
 	});
 
 	it("getAnimationMode", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getAnimationMode")
+		cy.then(() => getAnimationMode())
 			.should("equal", configurationObject.animationMode);
 	});
 
 	it("getTheme", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getTheme")
+		cy.then(() => getTheme())
 			.should("equal", configurationObject.theme);
 	});
 
 	it("getNoConflict", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getNoConflict")
+		cy.then(() => getNoConflict())
 			.should("deep.equal", configurationObject.noConflict)
 			.its("events")
 			.should("deep.equal", configurationObject.noConflict.events);
 	});
 
 	it("getDefaultFontLoading", () => {
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getDefaultFontLoading")
+		cy.then(() => getDefaultFontLoading())
 			.should("equal", false);
 	});
 });

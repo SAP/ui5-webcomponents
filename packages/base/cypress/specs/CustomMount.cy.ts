@@ -1,4 +1,5 @@
-import "../../src/bundle.common.js";
+import { getAnimationMode } from "../../src/config/AnimationMode.js";
+
 
 describe("Custom mount", () => {
 	it("mount", () => {
@@ -27,10 +28,7 @@ describe("Custom mount", () => {
 			})
 			.should("equal", JSON.stringify(configurationObject));
 
-		cy.window()
-			.its("sap-ui-webcomponents-bundle")
-			.its("configuration")
-			.invoke("getAnimationMode")
+		cy.then(() => getAnimationMode())
 			.should("equal", configurationObject.animationMode);
 	});
 });

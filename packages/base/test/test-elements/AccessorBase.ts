@@ -23,6 +23,4 @@ class AccessorBase extends UI5Element {
 	}
 }
 
-AccessorBase.define();
-
 export default AccessorBase;

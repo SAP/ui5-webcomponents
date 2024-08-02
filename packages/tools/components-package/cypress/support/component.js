@@ -16,12 +16,10 @@ function ui5Mount(component, options = {}) {
 	if (options.ui5Configuration) {
 		configurationScript.innerHTML = JSON.stringify(options.ui5Configuration);
 
-		window?.["sap-ui-webcomponents-bundle"]?.resetConfiguration(true);
 	}
 
 	dispose = () => {
 		configurationScript.innerHTML = "{}";
-		window?.["sap-ui-webcomponents-bundle"]?.resetConfiguration(true);
 	}
 
 	if (typeof component === "string") {
