@@ -217,11 +217,17 @@ class Timeline extends UI5Element {
 		this.items.forEach(item => {
 			if (!item.isGroupItem) {
 				navigatableItems.push(item);
-			} else {
-				navigatableItems.push(item.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]")!);
+				
+				return;
+			} 
+
+			const navigatableItem = item.shadowRoot!.querySelector<ToggleButton>("[ui5-toggle-button]");
+
+			if (navigatableItem) {
+				navigatableItems.push(navigatableItem);
 			}
 
-			if (item.isGroupItem && !item.collapsed) {
+			if (!item.collapsed) {
 				item.items?.forEach(groupItem => {
 					navigatableItems.push(groupItem);
 				});
