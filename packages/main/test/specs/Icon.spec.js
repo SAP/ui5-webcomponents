@@ -50,7 +50,7 @@ describe("Icon general interaction", () => {
 	});
 
 	it("Tests switch to sap_horizon", async () => {
-		const V4_PATH_START = "M118";
+		const V4_PATH_START = "M288";
 		const V5_PATH_START = "M486";
 
 		// assert - initial SVG path

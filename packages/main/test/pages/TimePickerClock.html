@@ -73,9 +73,9 @@
 			var clock = event.target;
 			event.detail.finalChange && eventCount++;
 			clockChangeId.value = clock.id;
-			clockChangeValue.value = clock.selectedValue;
-			clockChangeStringValue.value = clock._getStringValue(clock.selectedValue);
-			clockChangeEvent.value = eventCount;
+			clockChangeValue.value = `${clock.selectedValue}`;
+			clockChangeStringValue.value = `${clock._getStringValue(clock.selectedValue)}`;
+			clockChangeEvent.value = `${eventCount}`;
 		}
 
 	</script>
