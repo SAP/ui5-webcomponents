@@ -104,18 +104,18 @@
 	</ui5-menu>
 </body>
 <script>
-const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
-const menu = document.getElementById("menu");
+	const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
+	const menu = document.getElementById("menu");
 
-splitBtn.addEventListener("ui5-arrow-click", function() {
-	menu.opener = splitBtn; 
-	menu.open = !menu.open;
-	splitBtn.activeArrowButton = !splitBtn.activeArrowButton;
-});
+	splitBtn.addEventListener("ui5-arrow-click", function() {
+		menu.opener = splitBtn; 
+		menu.open = !menu.open;
+		splitBtn.activeArrowButton = !splitBtn.activeArrowButton;
+	});
 
-menu.addEventListener("close", function() {
-	splitBtn.activeArrowButton = false;
-});
+	menu.addEventListener("close", function() {
+		splitBtn.activeArrowButton = false;
+	});
 
 	var displayEvent = document.getElementById("displayEvent"),
 		displayElement = document.getElementById("displayElement"),

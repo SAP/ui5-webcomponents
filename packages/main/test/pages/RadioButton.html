@@ -200,7 +200,26 @@
 				<ui5-radio-button name="sameGroup" text="C"></ui5-radio-button>
 			`;
 		}
+	</script>
 
-</script>
+	<ui5-title level="H2">Dynamically Created Buttons</ui5-title>
+	<button id="addBtn">Add</button>
+	<div id="radioContainer"></div>
+	<script>
+		const addBtn = document.querySelector("#addBtn")
+		const div = document.querySelector("div#radioContainer")
+
+		addBtn.addEventListener("click", () => {
+			const old = document.querySelector("#testDRbtn12");
+
+			div.innerHTML = `<ui5-radio-button id="testDRbtn11" name="test2" text="A"></ui5-radio-button>
+				<ui5-radio-button id="testDRbtn12" name="test2" checked text="B"></ui5-radio-button>
+				<ui5-radio-button id="testDRbtn13" name="test2" text="C"></ui5-radio-button>`;
+
+			if (old) {
+				old.checked = true;
+			}
+		});
+	</script>
 </body>
 </html>

@@ -221,11 +221,11 @@
 
 		document.getElementById("tree").addEventListener("ui5-item-mouseover", function(event) {
 			console.log("Item mouseover: ", event.detail.item);
-			mouseOverInput.value++;
+			mouseOverInput.value = `${parseInt(mouseOverInput.value) + 1}`;
 		});
 		document.getElementById("tree").addEventListener("ui5-item-mouseout", function(event) {
 			console.log("Item mouseout: ", event.detail.item);
-			mouseOutInput.value++;
+			mouseOutInput.value = `${parseInt(mouseOutInput.value) + 1}`;
 		});
 
 		document.getElementById("tree").addEventListener("ui5-item-click", function(event) {
@@ -305,7 +305,7 @@
 		var preventedCounter = document.getElementById("prevented-counter");
 		preventableClickTree.addEventListener("ui5-item-click", function (event) {
 			event.preventDefault();
-			preventedCounter.value++;
+			preventedCounter.value = `${parseInt(preventedCounter.value) + 1}`;
 		});
 
 		var indetereminateTree = document.getElementById("treeIndeterminate");

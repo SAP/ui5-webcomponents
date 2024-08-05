@@ -144,7 +144,7 @@ type TableRowClickEventDetail = {
  *
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
  * Currently, it's considered experimental as its API is subject to change.
