@@ -265,12 +265,12 @@ class ViewSettingsDialog extends UI5Element {
 
 	/**
 	 * Indicates if the reset button is disabled.
-	 * @private
+	 * @public
 	 * @default false
 	 * @since 2.2.0
 	 */
 	@property({ type: Boolean })
-	resetButtonDisabled  = false;
+	resetButtonDisabled = false;
 
 	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
