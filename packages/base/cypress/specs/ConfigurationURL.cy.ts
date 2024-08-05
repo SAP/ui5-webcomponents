@@ -13,12 +13,11 @@ describe("Some settings can be set via SAP UI URL params", () => {
 
 		cy.stub(internals, "search", () => {
 			return searchParams;
-		})
+		});
 
 		cy.then(() => {
 			return resetConfiguration(true);
 		});
-
 
 		cy.wrap(internals)
 			.invoke("search")
@@ -28,22 +27,26 @@ describe("Some settings can be set via SAP UI URL params", () => {
 	});
 
 	it("Tests that language is applied", () => {
-		cy.then(() => getLanguage())
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
 			.should("equal", "ja");
 	});
 
 	it("Tests that calendarType is applied", () => {
-		cy.then(() => getCalendarType())
+		cy.wrap({ getCalendarType })
+			.invoke("getCalendarType")
 			.should("equal", "Japanese");
 	});
 
 	it("Tests that theme is applied", () => {
-		cy.then(() => getTheme())
+		cy.wrap({ getTheme })
+			.invoke("getTheme")
 			.should("equal", "sap_horizon_hcb");
 	});
 
 	it("Tests that animationMode is applied", () => {
-		cy.then(() => getAnimationMode())
+		cy.wrap({ getAnimationMode })
+			.invoke("getAnimationMode")
 			.should("equal", "basic");
 	});
 });
@@ -56,7 +59,8 @@ describe("Different themeRoot configurations", () => {
 			return searchParams;
 		});
 
-		cy.then(() => resetConfiguration(true));
+		cy.wrap({ resetConfiguration })
+			.invoke("resetConfiguration", true);
 
 		cy.wrap(internals)
 			.invoke("search")
@@ -64,7 +68,8 @@ describe("Different themeRoot configurations", () => {
 
 		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
-		cy.then(() => getThemeRoot())
+		cy.wrap({ getThemeRoot })
+			.invoke("getThemeRoot")
 			.should("equal", "https://example.com/UI5/");
 	});
 
@@ -75,7 +80,8 @@ describe("Different themeRoot configurations", () => {
 			return searchParams;
 		});
 
-		cy.then(() => resetConfiguration(true));
+		cy.wrap({ resetConfiguration })
+			.invoke("resetConfiguration", true);
 
 		cy.wrap(internals)
 			.invoke("search")
@@ -83,7 +89,8 @@ describe("Different themeRoot configurations", () => {
 
 		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
-		cy.then(() => getThemeRoot())
+		cy.wrap({ getThemeRoot })
+			.invoke("getThemeRoot")
 			.should("equal", `${window.location.origin}/UI5/`);
 	});
 
@@ -94,7 +101,8 @@ describe("Different themeRoot configurations", () => {
 			return searchParams;
 		});
 
-		cy.then(() => resetConfiguration(true));
+		cy.wrap({ resetConfiguration })
+			.invoke("resetConfiguration", true);
 
 		cy.wrap(internals)
 			.invoke("search")
@@ -102,11 +110,11 @@ describe("Different themeRoot configurations", () => {
 
 		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
-
-		cy.then(() => getThemeRoot())
-		.then((themeRoot) => {
-			return (themeRoot as string).endsWith("/test/UI5/");
-		})
+		cy.wrap({ getThemeRoot })
+			.invoke("getThemeRoot")
+			.then(themeRoot => {
+				return themeRoot?.endsWith("/test/UI5/");
+			})
 			.should("be.true");
 	});
 });
@@ -119,7 +127,8 @@ describe("Some settings can be set via SAP URL params", () => {
 			return searchParams;
 		});
 
-		cy.then(() => resetConfiguration(true));
+		cy.wrap({ resetConfiguration })
+			.invoke("resetConfiguration", true);
 
 		cy.wrap(internals)
 			.invoke("search")
@@ -129,12 +138,14 @@ describe("Some settings can be set via SAP URL params", () => {
 	});
 
 	it("Tests that language is applied via sap-ui-language", () => {
-		cy.then(() => getLanguage())
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
 			.should("equal", "bg");
 	});
 
 	it("Tests that theme is applied via sap-ui-theme", () => {
-		cy.then(() => getTheme())
+		cy.wrap({ getTheme })
+			.invoke("getTheme")
 			.should("equal", "sap_fiori_3_dark");
 	});
 });
@@ -147,7 +158,8 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			return searchParams;
 		});
 
-		cy.then(() => resetConfiguration(true));
+		cy.wrap({ resetConfiguration })
+			.invoke("resetConfiguration", true);
 
 		cy.wrap(internals)
 			.invoke("search")
@@ -157,12 +169,14 @@ describe("Some settings can be set via SAP UI URL params", () => {
 	});
 
 	it("Tests that language is applied via sap-ui-language", () => {
-		cy.then(() => getLanguage())
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
 			.should("equal", "de");
 	});
 
 	it("Tests that theme is applied via sap-ui-theme", () => {
-		cy.then(() => getTheme())
+		cy.wrap({ getTheme })
+			.invoke("getTheme")
 			.should("equal", "sap_fiori_3_hcb");
 	});
 });

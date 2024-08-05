@@ -1,6 +1,5 @@
 import { getAnimationMode } from "../../src/config/AnimationMode.js";
 
-
 describe("Custom mount", () => {
 	it("mount", () => {
 		cy.mount(`<button>Test</button>`);
@@ -28,7 +27,8 @@ describe("Custom mount", () => {
 			})
 			.should("equal", JSON.stringify(configurationObject));
 
-		cy.then(() => getAnimationMode())
+		cy.wrap({ getAnimationMode })
+			.invoke("getAnimationMode")
 			.should("equal", configurationObject.animationMode);
 	});
 });

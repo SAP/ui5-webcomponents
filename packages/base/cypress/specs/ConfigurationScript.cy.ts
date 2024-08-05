@@ -45,7 +45,8 @@ describe("Configuration script", () => {
 			ui5Configuration: configurationObject,
 		});
 
-		cy.then(() => resetConfiguration(true));
+		cy.wrap({ resetConfiguration })
+			.invoke("resetConfiguration", true);
 
 		cy.get("script[data-ui5-config]")
 			.should("exist")
@@ -56,44 +57,52 @@ describe("Configuration script", () => {
 	});
 
 	it("getLanguage", () => {
-		cy.then(() => getLanguage())
+		cy.wrap({ getLanguage })
+			.invoke("getLanguage")
 			.should("equal", configurationObject.language);
 	});
 
 	it("getCalendarType", () => {
-		cy.then(() => getCalendarType())
+		cy.wrap({ getCalendarType })
+			.invoke("getCalendarType")
 			.should("equal", configurationObject.calendarType);
 	});
 
 	it("getFirstDayOfWeek", () => {
-		cy.then(() => getFirstDayOfWeek())
+		cy.wrap({ getFirstDayOfWeek })
+			.invoke("getFirstDayOfWeek")
 			.should("equal", configurationObject.formatSettings.firstDayOfWeek);
 	});
 
 	it("getLegacyDateCalendarCustomizing", () => {
-		cy.then(() => getLegacyDateCalendarCustomizing())
+		cy.wrap({ getLegacyDateCalendarCustomizing })
+			.invoke("getLegacyDateCalendarCustomizing")
 			.should("deep.equal", configurationObject.formatSettings.legacyDateCalendarCustomizing);
 	});
 
 	it("getAnimationMode", () => {
-		cy.then(() => getAnimationMode())
+		cy.wrap({ getAnimationMode })
+			.invoke("getAnimationMode")
 			.should("equal", configurationObject.animationMode);
 	});
 
 	it("getTheme", () => {
-		cy.then(() => getTheme())
+		cy.wrap({ getTheme })
+			.invoke("getTheme")
 			.should("equal", configurationObject.theme);
 	});
 
 	it("getNoConflict", () => {
-		cy.then(() => getNoConflict())
+		cy.wrap({ getNoConflict })
+			.invoke("getNoConflict")
 			.should("deep.equal", configurationObject.noConflict)
 			.its("events")
 			.should("deep.equal", configurationObject.noConflict.events);
 	});
 
 	it("getDefaultFontLoading", () => {
-		cy.then(() => getDefaultFontLoading())
+		cy.wrap({ getDefaultFontLoading })
+			.invoke("getDefaultFontLoading")
 			.should("equal", false);
 	});
 });

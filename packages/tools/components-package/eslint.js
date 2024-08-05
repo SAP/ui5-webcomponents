@@ -16,7 +16,7 @@ const overrides = tsMode ? [{
 	parserOptions: {
 	  "project": [
 		"./tsconfig.json",
-		"./packages/*/tsconfig.json",
+		"./cypress/tsconfig.json",
 	],
 	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
 	},

@@ -5,23 +5,23 @@ describe("Event provider attaches and detaches listeners properly", () => {
 		let timesCalled = 0;
 
 		cy.then(() => {
-				const ep = new EventProvider();
-				const callback = () => {
-					timesCalled++;
-				};
+			const ep = new EventProvider();
+			const callback = () => {
+				timesCalled++;
+			};
 
-				// Setup
-				ep.attachEvent("test", callback);
+			// Setup
+			ep.attachEvent("test", callback);
 
-				// Act
-				ep.fireEvent("test", undefined); // should execute the callback and increase the counter
+			// Act
+			ep.fireEvent("test", undefined); // should execute the callback and increase the counter
 
-				// Setup
-				ep.detachEvent("test", callback);
+			// Setup
+			ep.detachEvent("test", callback);
 
-				// Act
-				ep.fireEvent("test", undefined); // should not execute the callback and increase the counter
-			})
+			// Act
+			ep.fireEvent("test", undefined); // should not execute the callback and increase the counter
+		})
 			.then(() => {
 				return timesCalled;
 			})
@@ -32,25 +32,25 @@ describe("Event provider attaches and detaches listeners properly", () => {
 		let timesCalled = 0;
 
 		cy.then(() => {
-				const ep = new EventProvider();
-				const callback = () => {
-					timesCalled++;
-				};
-				const somePreviousCallback = () => { };
+			const ep = new EventProvider();
+			const callback = () => {
+				timesCalled++;
+			};
+			const somePreviousCallback = () => { };
 
-				// Setup
-				ep.attachEvent("test", somePreviousCallback); // Attach something so that after detachEvent the listeners array is not empty!
-				ep.attachEvent("test", callback);
+			// Setup
+			ep.attachEvent("test", somePreviousCallback); // Attach something so that after detachEvent the listeners array is not empty!
+			ep.attachEvent("test", callback);
 
-				// Act
-				ep.fireEvent("test", undefined); // should execute the callback and increase the counter
+			// Act
+			ep.fireEvent("test", undefined); // should execute the callback and increase the counter
 
-				// Setup
-				ep.detachEvent("test", callback);
+			// Setup
+			ep.detachEvent("test", callback);
 
-				// Act
-				ep.fireEvent("test", undefined); // should not execute the callback and increase the counter
-			})
+			// Act
+			ep.fireEvent("test", undefined); // should not execute the callback and increase the counter
+		})
 			.then(() => {
 				return timesCalled;
 			})

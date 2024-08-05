@@ -12,14 +12,15 @@ describe("Custom themes can be registered", () => {
 
 		cy.mount(`<ui5-test-generic></ui5-test-generic>`);
 
-		cy.then(() => getCurrentRuntimeIndex())
+		cy.wrap({ getCurrentRuntimeIndex })
+			.invoke("getCurrentRuntimeIndex")
 			.should("equal", currentRuntime);
 
-		cy.then(() => registerThemePropertiesLoader("@ui5/webcomponents-base-test", newTheme, () => Promise.resolve(`:root{ ${var1}; }`)))
+		cy.wrap({ registerThemePropertiesLoader })
+			.invoke("registerThemePropertiesLoader", "@ui5/webcomponents-base-test", newTheme, () => Promise.resolve(`:root{ ${var1}; }`));
 
-		cy.then(() => {
-			setTheme(newTheme)
-		})
+		cy.wrap({ setTheme })
+			.invoke("setTheme", newTheme);
 
 		cy.document()
 			.its("adoptedStyleSheets")

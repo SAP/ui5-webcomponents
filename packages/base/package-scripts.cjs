@@ -42,7 +42,8 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	// these files are ignored in TS because the import in UI5Elments tries to load them from the dist and throws an error. create them empty here
 	generateSsrDom: `yarn nodetouch dist/ssr-dom.js dist/ssr-dom.d.ts`,
-	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
+	generateTemplates: ``,
+	generateTestTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/test-elements -o src/generated/templates`,
 	generateProd: {
 		"default": "nps generateProd.remove-dev-mode generateProd.copy-prod",
 		"remove-dev-mode": `node "${LIB}/remove-dev-mode/remove-dev-mode.mjs"`,
@@ -64,8 +65,8 @@ const scripts = {
 		default: 'concurrently "nps test.ssr" "nps test.ssr2" "nps test.test-cy-ci"',
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
-		"test-cy-ci": `yarn cypress run --component --browser chrome`,
-		"test-cy-open": `nps generate && yarn cypress open --component --browser chrome`,
+		"test-cy-ci": `nps generate && nps generateTestTemplates && yarn cypress run --component --browser chrome`,
+		"test-cy-open": `nps generate && nps generateTestTemplates && yarn cypress open --component --browser chrome`,
 	},
 };
 

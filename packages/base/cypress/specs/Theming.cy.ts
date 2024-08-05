@@ -8,7 +8,8 @@ describe("Theming works", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.then(() => getCurrentRuntimeIndex())
+		cy.wrap({ getCurrentRuntimeIndex })
+			.invoke("getCurrentRuntimeIndex")
 			.should("equal", currentRuntime);
 
 		cy.document()
@@ -28,10 +29,12 @@ describe("Theming works", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.then(() => getCurrentRuntimeIndex())
+		cy.wrap({ getCurrentRuntimeIndex })
+			.invoke("getCurrentRuntimeIndex")
 			.should("equal", currentRuntime);
 
-		cy.then(() => setTheme(newTheme))
+		cy.wrap({ setTheme })
+			.invoke("setTheme", newTheme);
 
 		cy.document()
 			.its("adoptedStyleSheets")
@@ -50,10 +53,12 @@ describe("Theming works", () => {
 		const currentRuntime = 0;
 		const dataPropAttr = `data-ui5-component-properties-${currentRuntime}`;
 
-		cy.then(() => getCurrentRuntimeIndex())
+		cy.wrap({ getCurrentRuntimeIndex })
+			.invoke("getCurrentRuntimeIndex")
 			.should("equal", currentRuntime);
 
-		cy.then(() => setTheme(unknownTheme))
+		cy.wrap({ setTheme })
+			.invoke("setTheme", unknownTheme);
 
 		cy.document()
 			.its("adoptedStyleSheets")
