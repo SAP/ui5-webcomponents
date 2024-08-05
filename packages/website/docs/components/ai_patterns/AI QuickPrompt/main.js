@@ -24,13 +24,12 @@ var generationStopped = false;
 var currentTextKey;
 var translationKey = "en";
 const sendButton = document.getElementById("footerBtnSend");
-const cancelButton = document.getElementById("footerBtnCancel");
 const toast = document.getElementById("quickPromptToast");
 const predefinedTexts = texts.predefinedTexts;
 const predefinedTextsBulleted = texts.predefinedTextsBulleted;
-const predefinedTextsSimplified = texts.predefinedTextsSimplified;
 const predefinedTextsExpanded = texts.predefinedTextsExpanded;
 const predefinedTextsRephrased = texts.predefinedTextsRephrased;
+const predefinedTextsSimplified = texts.predefinedTextsSimplified;
 const predefinedTextsSummarized = texts.predefinedTextsSummarized;
 
 function aiQuickPromptButtonClickHandler(e) {
@@ -40,7 +39,6 @@ function aiQuickPromptButtonClickHandler(e) {
 		case "generate":
 			button.state = "generating";
 			sendButton.disabled = true;
-			cancelButton.disabled = true;
 			startQuickPromptGeneration(button);
 			const keys = Object.keys(predefinedTexts[translationKey]);
 			const randomKey = keys[Math.floor(Math.random() * keys.length)];
@@ -76,7 +74,6 @@ function stopQuickPromptGeneration() {
 	clearInterval(generationId);
 	generationStopped = true;
 	sendButton.disabled = false;
-	cancelButton.disabled = false;
 	output.disabled = false;
 }
 
@@ -208,7 +205,6 @@ function generateText(text, button) {
 			output.value += words[currentWordIndex] + " ";
 			currentWordIndex++;
 			sendButton.disabled = true;
-			cancelButton.disabled = true;
 			output.disabled = true;
 		} else {
 			if (!generationStopped) {
@@ -217,7 +213,6 @@ function generateText(text, button) {
 			}
 			clearInterval(generationId);
 			sendButton.disabled = false;
-			cancelButton.disabled = false;
 			output.disabled = false;
 		}
 	}, 75);

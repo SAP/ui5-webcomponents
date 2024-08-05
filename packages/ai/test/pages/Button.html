@@ -109,6 +109,7 @@
 			<ui5-menu-item text="English"></ui5-menu-item>
 			<ui5-menu-item text="German"></ui5-menu-item>
 		</ui5-menu-item>
+		<ui5-menu-separator></ui5-menu-separator>
 		<ui5-menu-item text="Generate Error"></ui5-menu-item>
 		<ui5-menu-separator></ui5-menu-separator>
 		<ui5-menu-item text="Clear"></ui5-menu-item>
@@ -121,13 +122,12 @@
 		var currentTextKey;
 		var translationKey = "en";
 		const sendButton = document.getElementById("footerBtnSend");
-		const cancelButton = document.getElementById("footerBtnCancel");
 		const toast = document.getElementById("quickPromptToast");
 		const predefinedTexts = data.predefinedTexts;
 		const predefinedTextsBulleted = data.predefinedTextsBulleted;
-		const predefinedTextsSimplified = data.predefinedTextsSimplified;
 		const predefinedTextsExpanded = data.predefinedTextsExpanded;
 		const predefinedTextsRephrased = data.predefinedTextsRephrased;
+		const predefinedTextsSimplified = data.predefinedTextsSimplified;
 		const predefinedTextsSummarized = data.predefinedTextsSummarized;
 
 		function startGeneration(button) {
@@ -181,7 +181,6 @@
 				case "generate":
 					button.state = "generating";
 					sendButton.disabled = true;
-					cancelButton.disabled = true;
 					startQuickPromptGeneration(button);
 					const keys = Object.keys(predefinedTexts[translationKey]);
 					const randomKey = keys[Math.floor(Math.random() * keys.length)];
@@ -217,7 +216,6 @@
 			clearInterval(generationId);
 			generationStopped = true;
 			sendButton.disabled = false;
-			cancelButton.disabled = false;
 			output.disabled = false;
 		}
 
@@ -348,7 +346,6 @@
 					output.value += words[currentWordIndex] + " ";
 					currentWordIndex++;
 					sendButton.disabled = true;
-					cancelButton.disabled = true;
 					output.disabled = true;
 				} else {
 					if (!generationStopped) {
@@ -357,7 +354,6 @@
 					}
 					clearInterval(generationId);
 					sendButton.disabled = false;
-					cancelButton.disabled = false;
 					output.disabled = false;
 				}
 			}, 75);
