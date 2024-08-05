@@ -65,6 +65,11 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 	sortDescending: boolean,
 }
 
+type ViewSettingsDialogSelectionChange = VSDSettings & {
+	sortByItem: SortItem,
+	sortDescending: boolean,
+}
+
 // Common properties for several VSDInternalSettings fields
 type VSDItem = {text?: string, selected: boolean}
 
@@ -207,11 +212,39 @@ type VSDInternalSettings = {
 @event("close")
 /**
  * Fired when reset button is pressed.
- * @since 2.1.0
+ * @since 2.2.0
  * @public
- * @allowPreventDefault
  */
 @event("reset")
+/**
+ * Fired when item is pressed.
+ * @since 2.2.0
+ * @public
+ */
+@event<ViewSettingsDialogSelectionChange>("selection-change", {
+	detail: {
+		/**
+		 * @public
+		 */
+		sortOrder: { type: String },
+		/**
+		 * @public
+		 */
+		sortBy: { type: String },
+		/**
+		 * @public
+		 */
+		sortByItem: { type: HTMLElement },
+		/**
+		 * @public
+		 */
+		sortDescending: { type: Boolean },
+		/**
+		 * @public
+		 */
+		filters: { type: Array },
+	},
+})
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -544,6 +577,8 @@ class ViewSettingsDialog extends UI5Element {
 		});
 
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+
+		this.fireEvent<ViewSettingsDialogSelectionChange>("selection-change", this.eventsParams);
 	}
 
 	_navigateToFilters() {
@@ -671,6 +706,8 @@ class ViewSettingsDialog extends UI5Element {
 
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+
+		this.fireEvent<ViewSettingsDialogSelectionChange>("selection-change", this.eventsParams);
 	}
 
 	/**
@@ -685,6 +722,8 @@ class ViewSettingsDialog extends UI5Element {
 		});
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+
+		this.fireEvent<ViewSettingsDialogSelectionChange>("selection-change", this.eventsParams);
 	}
 
 	/**
@@ -748,5 +787,6 @@ export default ViewSettingsDialog;
 export type {
 	ViewSettingsDialogConfirmEventDetail,
 	ViewSettingsDialogCancelEventDetail,
+	ViewSettingsDialogSelectionChange,
 	VSDSettings,
 };
