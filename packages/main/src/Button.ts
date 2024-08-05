@@ -25,7 +25,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import { getDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -503,7 +503,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	getDefaultTooltip() {
-		if (!getDefaultTooltips()) {
+		if (!getEnableDefaultTooltips()) {
 			return;
 		}
 
@@ -533,7 +533,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get showIconTooltip() {
-		return getDefaultTooltips() && this.iconOnly && !this.tooltip;
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {

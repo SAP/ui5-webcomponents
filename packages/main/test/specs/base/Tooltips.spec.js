@@ -2,7 +2,7 @@ import { assert } from "chai";
 
 describe("Default Tooltips", () => {
 	before(async () => {
-		await browser.url(`test/pages/base/Tooltips.html?sap-ui-defaultTooltips=false`);
+		await browser.url(`test/pages/base/Tooltips.html?sap-ui-enableDefaultTooltips=false`);
 	});
 
 	it("Tooltips turned off", async () => {

@@ -17,7 +17,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 | [formatSettings](#formatSettings)             | See the [Format settings](#formatSettings) section below                                                                                                                                                                                                                                       | `{}`                  | Allows to override locale-specific configuration                       | Date/time components (`ui5-date-picker`, etc.)                 |
 | [fetchDefaultLanguage](#fetchDefaultLanguage) | `true`, `false`                                                                                                                                                                                                                                                                                | `false`               | Whether to fetch assets even for the default language                  | Framework                                                      |
 | [defaultFontLoading](#defaultFontLoading) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to fetch default font faces                  | Framework                                                      |
-| [defaultTooltips](#defaultTooltips) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to display default tooltips                     | Components (Icon, Button, RatingIndicator, etc.)                                                      |
+| [enableDefaultTooltips](#enableDefaultTooltips) | `true`, `false`                                                                                                                                                                                                                                                                                | `true`               | Whether to display default tooltips                     | Components (Icon, Button, RatingIndicator, etc.)                                                      |
 | [timezone](#timezone)                         | `Asia/Tokyo`, `Pacific/Apia`, `Asia/Kolkata`, `Europe/Sofia` and etc.                                                                                                                                                                                                                          | Your local time zone. | Allows to override your local time zone.                               | Date/time components (`ui5-date-picker`, etc.)                 |
 | [themeRoot](#themeRoot)                       | String to a URL - see the [themeRoot](#themeRoot) section below                                                                                                                                                                                                                                | N/A                   | Allows to set a URL to a Theme-designer-created custom theme.          | All components                                                 |
 
@@ -235,20 +235,20 @@ Example:
 </script>
 ```
 
-### defaultTooltips
-<a name="defaultTooltips"></a>
+### enableDefaultTooltips
+<a name="enableDefaultTooltips"></a>
 
 This configuration option controls whether components will display default tooltips in specific cases.
 
 Default tooltips are generally recommended to cover accessibility standards and typically you would not need to modify this setting.
 However, in rare cases you may want to implement custom tooltip visualization and turn off the default tooltips.
-To do so, set `defaultTooltips` to `false`.
+To do so, set `enableDefaultTooltips` to `false`.
 
 Example:
 ```html
 <script data-ui5-config type="application/json">
 {
-	"defaultTooltips": false
+	"enableDefaultTooltips": false
 }
 </script>
 ```
@@ -370,10 +370,10 @@ import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcompon
 import { getDefaultFontLoading, setDefaultFontLoading } from "@ui5/webcomponents-base/dist/config/Fonts.js";
 ```
 
- - `defaultTooltips`
+ - `enableDefaultTooltips`
 
 ```js
-import { getDefaultTooltips, setDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
+import { getEnableDefaultTooltips, setEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 ```
 
  - `timezone` - can only be set initially in the configuration script.

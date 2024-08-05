@@ -22,7 +22,7 @@ type InitialConfig = {
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
 	defaultFontLoading: boolean,
-	defaultTooltips: boolean,
+	enableDefaultTooltips: boolean,
 };
 
 let initialConfig: InitialConfig = {
@@ -38,7 +38,7 @@ let initialConfig: InitialConfig = {
 	formatSettings: {},
 	fetchDefaultLanguage: false,
 	defaultFontLoading: true,
-	defaultTooltips: true,
+	enableDefaultTooltips: true,
 };
 
 /* General settings */
@@ -82,9 +82,9 @@ const getDefaultFontLoading = () => {
 	return initialConfig.defaultFontLoading;
 };
 
-const getDefaultTooltips = () => {
+const getEnableDefaultTooltips = () => {
 	initConfiguration();
-	return initialConfig.defaultTooltips;
+	return initialConfig.enableDefaultTooltips;
 };
 
 /**
@@ -232,5 +232,5 @@ export {
 	getTimezone,
 	getFormatSettings,
 	getDefaultFontLoading,
-	getDefaultTooltips,
+	getEnableDefaultTooltips,
 };
