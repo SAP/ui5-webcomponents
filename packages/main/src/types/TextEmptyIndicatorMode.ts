@@ -1,5 +1,5 @@
 /**
- * Empty Indicator Mode .
+ * Empty Indicator Mode.
  * @public
  */
 enum EmptyIndicatorMode {
