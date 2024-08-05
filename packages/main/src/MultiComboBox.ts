@@ -562,7 +562,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
-		if (!this.open) {
+		if (!this.open || this.readonly) {
 			return;
 		}
 
@@ -1906,7 +1906,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed && !this.open;
 	}
 
 	get valueStateTypeMappings(): ValueStateTypeAnnouncement {

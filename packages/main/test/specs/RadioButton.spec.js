@@ -238,7 +238,7 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(await radioButtonsShadowRoots[1].getAttribute("tabindex"), "-1", `second radio button has tabindex="-1"`);
 		assert.strictEqual(await radioButtonsShadowRoots[2].getAttribute("tabindex"), "-1", `third radio button has tabindex="-1"`);
 	});
-	
+
 	it("tests form interaction", async () => {
 		const rb = await browser.$("#formRadioBtnRequired");
 		let validForm = await browser.executeAsync(done => {
@@ -258,6 +258,22 @@ describe("RadioButton general interaction", () => {
 		assert.ok(await rb.getProperty("checked"), "required radio button is now checked")
 		assert.ok(validForm, "form is valid");
 	});
+
+	it("tests dynamically creating of buttons", async () => {
+		const bnt = await browser.$("#addBtn");
+		await bnt.scrollIntoView();
+		await bnt.click();
+
+		assert.ok(await browser.$("#testDRbtn12").getProperty("checked"), "radio button is now checked");
+
+		await browser.$("#testDRbtn11").click();
+		assert.ok(await browser.$("#testDRbtn11").getProperty("checked"), "radio button is now checked");
+
+		await bnt.click();
+
+		assert.ok(await browser.$("#testDRbtn12").getProperty("checked"), "radio button is now checked");
+	});
+
 });
 
 describe("RadioButton keyboard handling in RTL", () => {

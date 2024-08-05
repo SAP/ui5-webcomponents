@@ -13,7 +13,7 @@ import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
  * @constructor
  * @abstract
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  */
 @customElement({
