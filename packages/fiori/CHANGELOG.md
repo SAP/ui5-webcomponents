@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page-title:** separator fixed ([#9621](https://github.com/SAP/ui5-webcomponents/issues/9621)) ([5240c0b](https://github.com/SAP/ui5-webcomponents/commit/5240c0b46e781abaa54afc014a7861d85622206b))
+* **ui5-timeline:** fix javascript error ([#9634](https://github.com/SAP/ui5-webcomponents/issues/9634)) ([ac2c014](https://github.com/SAP/ui5-webcomponents/commit/ac2c0148f7d41f52f01c50a42322b8d150633d2d)), closes [#9633](https://github.com/SAP/ui5-webcomponents/issues/9633)
+
+
+
+
+
 # [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
 
 
