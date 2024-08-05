@@ -46,7 +46,7 @@ function aiQuickPromptButtonClickHandler(e) {
 			generateText(predefinedTexts[translationKey][randomKey], button);
 			break;
 		case "generating":
-			button.state = "generate";
+			button.state = "revise";
 			stopQuickPromptGeneration(button);
 			break;
 		case "revise":
@@ -108,14 +108,13 @@ menu1.addEventListener("item-click", function (e) {
 		case "Make Bulleted List":
 			startTextGeneration(button, "reviseGenerating", predefinedTextsBulleted);
 			break;
-		case "Clear":
-			clearOutput(output);
+		case "Clear Error":
+			clearValueState(output);
 			break;
 		case "Fix Spelling & Grammar":
 			fixSpellingAndGrammar(button, output);
 			break;
 		case "Generate Error":
-			clearOutput(output);
 			setNegativeValueState(output);
 			break;
 		case "Simplify":
@@ -159,7 +158,7 @@ function startTextGeneration(button, state, predefinedTexts) {
 	generateText(predefinedTexts[translationKey][currentTextKey], button);
 }
 
-function clearOutput(output) {
+function clearValueState(output) {
 	output.value = "";
 	output.valueState = "None";
 }
@@ -190,7 +189,6 @@ function fixSpellingAndGrammar(button, output) {
 
 quickPromptAiButton.addEventListener("click", aiQuickPromptButtonClickHandler);
 
-// TEXT GENERATION
 function generateText(text, button) {
 	if (generationId) {
 		clearInterval(generationId);
