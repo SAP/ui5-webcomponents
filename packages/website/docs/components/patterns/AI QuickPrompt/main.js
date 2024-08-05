@@ -159,7 +159,6 @@ function startTextGeneration(button, state, predefinedTexts) {
 }
 
 function clearValueState(output) {
-	output.value = "";
 	output.valueState = "None";
 }
 
