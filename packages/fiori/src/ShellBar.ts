@@ -27,6 +27,7 @@ import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type ShellBarItem from "./ShellBarItem.js";
