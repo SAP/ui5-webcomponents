@@ -4,7 +4,7 @@ type QueryDecorator = (target: UI5Element, propertyKey: string | symbol) => void
 
 /**
  * A decorator that converts a class member into a getter that
- * executes a querySelector on the element's renderRoot.
+ * executes a querySelector on the element's shadow DOM.
  *
  * @param { string } selector DOM String containing selector to match
  * @returns { QueryDecorator }

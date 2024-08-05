@@ -262,7 +262,7 @@ class NotificationListItem extends NotificationListItemBase {
 	titleTextDOM?: HTMLElement;
 
 	@query(".ui5-nli-menu-btn")
-	menuButtonDOM!: HTMLElement;
+	menuButtonDOM?: HTMLElement;
 
 	@query(".ui5-nli-description")
 	descriptionDOM?: HTMLElement;
