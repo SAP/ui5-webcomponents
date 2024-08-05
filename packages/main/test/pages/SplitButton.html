@@ -102,22 +102,22 @@
 	</ui5-menu>
 </body>
 <script>
-const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
-const menu = document.getElementById("menu");
+	const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
+	const menu = document.getElementById("menu");
 
-splitBtn.addEventListener("ui5-arrow-click", function() {
-	if (menu.open) {
-		menu.close();
+	splitBtn.addEventListener("ui5-arrow-click", function() {
+		if (menu.open) {
+			menu.close();
+			splitBtn.activeArrowButton = false;
+		} else {
+			menu.showAt(splitBtn);
+			splitBtn.activeArrowButton = true;
+		}
+	});
+
+	menu.addEventListener("after-close", function() {
 		splitBtn.activeArrowButton = false;
-	} else {
-		menu.showAt(splitBtn);
-		splitBtn.activeArrowButton = true;
-	}
-});
-
-menu.addEventListener("after-close", function() {
-	splitBtn.activeArrowButton = false;
-});
+	});
 
 	var displayEvent = document.getElementById("displayEvent"),
 		displayElement = document.getElementById("displayElement"),
