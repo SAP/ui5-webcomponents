@@ -10,6 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { Result, Exception } from "@zxing/library/esm5/index.js";
+import type { Interval } from "@ui5/webcomponents-base/dist/types.js";
 
 // Texts
 import {
@@ -148,54 +149,81 @@ class BarcodeScannerDialog extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	permissionsGranted = false;
 
-	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
+	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
+	_scanInterval!: Interval | null;
+	_tempCanvas?: HTMLCanvasElement;
+	_handleVideoPlayingBound: () => void;
+	_handleCaptureRegionBound: () => void;
 
 	constructor() {
 		super();
 		this._codeReader = new BrowserMultiFormatReader();
+		this._handleVideoPlayingBound = this._handleVideoPlaying.bind(this);
+		this._handleCaptureRegionBound = this._handleDrawCaptureRegion.bind(this);
 	}
 
 	static async onDefine() {
 		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
-	onAfterRendering() {
-		if (this.open) {
-			if (this.loading) {
-				return;
-			}
+	async onAfterRendering() {
+		if (!this.open) {
+			return;
+		}
 
-			if (!this._hasGetUserMedia()) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
-				return;
-			}
+		if (!this._hasGetUserMedia()) {
+			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+			return;
+		}
 
-			if (!this.permissionsGranted) {
-				this.loading = true;
-			}
+		if (this.loading) {
+			return;
+		}
 
-			this._getUserPermission()
-				.then(() => {
-					this.permissionsGranted = true;
-				})
-				.catch(err => {
-					this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
-					this.loading = false;
-				});
-		} else {
+		if (!this.permissionsGranted) {
+			this.loading = true;
+		}
+
+		const video = this._getVideoElement();
+		if (!video.paused && !video.ended) {
+			return;
+		}
+
+		try {
+			const stream = await this._getUserPermission();
+			video.addEventListener("loadeddata", this._handleVideoPlayingBound);
+			video.srcObject = stream;
+
+			this.permissionsGranted = true;
+		} catch (error) {
+			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: (error as Error).message });
 			this.loading = false;
 		}
+	}
+
+	onEnterDOM() {
+		super.onEnterDOM();
+		window.addEventListener("resize", this._handleCaptureRegionBound);
+	}
+
+	onExitDOM() {
+		super.onExitDOM();
+		window.removeEventListener("resize", this._handleCaptureRegionBound);
 	}
 
 	get _open() {
 		return this.open && this.permissionsGranted;
 	}
 
-	/**
-	 *  PRIVATE METHODS
-	 */
+	get _cancelButtonText() {
+		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT);
+	}
+
+	get _busyIndicatorText() {
+		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
+	}
 
 	_hasGetUserMedia() {
 		return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
@@ -209,48 +237,232 @@ class BarcodeScannerDialog extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
-	_closeDialog() {
-		this.open = false;
+	_getOverlayElement() {
+		return this.shadowRoot!.querySelector<HTMLCanvasElement>(".ui5-barcode-scanner-dialog-overlay")!;
 	}
 
-	_fireCloseEvent() {
+	/**
+	 * CALCULATIONS
+	 *
+	 * The following methods are used to calculate the capture region
+	 * and draw it on the overlay canvas.
+	 * The capture region is a square area in the center of the video element
+	 * where the barcode scanning is performed.
+	 * The region is defined as a proportion of the video element's dimensions.
+	 * The overlay canvas is used to draw a semi-transparent black overlay
+	 * over the video element and a red border around the capture region.
+	 * The overlay canvas is updated on every frame to ensure the capture region is always visible.
+	 * The capture region is used to crop the video frame and extract the barcode image.
+	 * The extracted image is then processed by the zxing-js library to decode the barcode.
+	 */
+
+	_calculateCaptureRegion(clientWidth: number, clientHeight: number) {
+		// Define the maximum scan size as a proportion of the video element
+		const maxScanProportion = 0.66666667; // 2:3
+		// Calculate maximum square dimension based on video dimensions and max proportion
+		const maxScanDimension = Math.min(clientWidth, clientHeight) * maxScanProportion;
+		// Calculate offset to center the square scan region
+		const xOffset = (clientWidth - maxScanDimension) / 2;
+		const yOffset = (clientHeight - maxScanDimension) / 2;
+		// Calculate the width and height of the scan region
+		const scanWidth = Math.floor(maxScanDimension);
+		const scanHeight = Math.floor(maxScanDimension);
+
+		return {
+			scanHeight,
+			scanWidth,
+			xOffset,
+			yOffset,
+		};
+	}
+
+	_drawCaptureRegion() {
+		const canvasElement = this._getOverlayElement();
+		const videoElement = this._getVideoElement();
+
+		if (canvasElement && videoElement) {
+			const context = canvasElement.getContext("2d");
+			if (context) {
+				const videoClientWidth = videoElement.clientWidth;
+				const videoClientHeight = videoElement.clientHeight;
+
+				// Set canvas dimensions to match the video element's dimensions
+				canvasElement.width = videoClientWidth;
+				canvasElement.height = videoClientHeight;
+
+				// Clear the canvas
+				context.clearRect(0, 0, videoClientWidth, videoClientHeight);
+				// Calculate the capture region
+				const captureRegion = this._calculateCaptureRegion(videoClientWidth, videoClientHeight);
+
+				// Draw a semi-transparent black overlay over the video
+				context.fillStyle = "rgba(0, 0, 0, 0.5)";
+				context.fillRect(0, 0, videoClientWidth, videoClientHeight);
+				context.clearRect(captureRegion.xOffset, captureRegion.yOffset, captureRegion.scanWidth, captureRegion.scanHeight);
+
+				// Draw red border around the capture region
+				context.strokeStyle = "orange";
+				context.lineWidth = 1;
+				context.strokeRect(captureRegion.xOffset, captureRegion.yOffset, captureRegion.scanWidth, captureRegion.scanHeight);
+
+				// Display the overlay
+				canvasElement.style.display = "block";
+			}
+		}
+	}
+
+	_getOrCreateCanvas() {
+		if (!this._tempCanvas) {
+			this._tempCanvas = document.createElement("canvas");
+		}
+		return this._tempCanvas;
+	}
+
+	_captureFrame() {
+		const video = this._getVideoElement();
+		if (!video) {
+			return null;
+		}
+
+		const tempCanvas = this._getOrCreateCanvas();
+		const context = tempCanvas.getContext("2d");
+		if (!context) {
+			return null;
+		}
+
+		const videoWidth = video.videoWidth;
+		const videoHeight = video.videoHeight;
+		const clientWidth = video.clientWidth;
+		const clientHeight = video.clientHeight;
+
+		const captureRegion = this._calculateCaptureRegion(clientWidth, clientHeight);
+
+		// Calculate the ratio of videoSize to clientSize
+		const ratioX = videoWidth / clientWidth;
+		const ratioY = videoHeight / clientHeight;
+		const scale = Math.min(ratioX, ratioY);
+
+		// Calculate the scaled capture region
+		const scaledXOffset = captureRegion.xOffset * scale;
+		const scaledYOffset = captureRegion.yOffset * scale;
+		const scaledScanWidth = captureRegion.scanWidth * scale;
+		const scaledScanHeight = captureRegion.scanHeight * scale;
+
+		// Set canvas dimensions to match the capture region dimensions
+		tempCanvas.width = captureRegion.scanWidth;
+		tempCanvas.height = captureRegion.scanHeight;
+
+		// Clear the canvas
+		context.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+		// Correct positioning if aspect ratios are different
+		const positionX = (videoWidth - clientWidth * scale) / 2;
+		const positionY = (videoHeight - clientHeight * scale) / 2;
+
+		// Calculate final source position considering the video element's offset
+		const finalXOffset = scaledXOffset + positionX;
+		const finalYOffset = scaledYOffset + positionY;
+
+		// Draw the portion of the video on the canvas
+		context.drawImage(
+			video,
+			finalXOffset, finalYOffset, scaledScanWidth, scaledScanHeight, // Source rectangle
+			0, 0, tempCanvas.width, tempCanvas.height, // Destination rectangle
+		);
+
+		return tempCanvas;
+	}
+
+	/**
+	 * HANDLERS
+	 */
+
+	async _processFrame() {
+		try {
+			const canvas = this._captureFrame() as HTMLCanvasElement;
+			const dataUrl = canvas.toDataURL();
+			const result = await this._codeReader.decodeFromImageUrl(dataUrl);
+
+			this._handleScanSuccess(result);
+		} catch (error) {
+			this._handleScanError(error as Exception);
+		}
+	}
+
+	_handleScanSuccess(result: Result) {
+		this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
+			text: result.getText(),
+			rawBytes: result.getRawBytes(),
+		});
+	}
+
+	_handleScanError(error: Exception) {
+		if (error instanceof NotFoundException) {
+			return;
+		}
+
+		this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: error.message });
+	}
+
+	_handleVideoPlaying() {
+		this._drawCaptureRegion();
+
+		this.loading = false;
+
+		// Ensure any existing interval is cleared before setting a new one
+		if (this._scanInterval) {
+			clearInterval(this._scanInterval);
+		}
+
+		this._scanInterval = setInterval(() => {
+			this._processFrame();
+		}, 200);
+	}
+
+	_handleDrawCaptureRegion() {
+		this._drawCaptureRegion();
+	}
+
+	_closeDialog() {
+		this._resetReader();
 		this.open = false;
 		this.fireEvent("close");
 	}
 
-	_startReader() {
-		this._decodeFromCamera();
+	_fireCloseEvent() {
+		this._closeDialog();
 	}
 
 	_resetReader() {
-		const videoElement = this._getVideoElement();
-		videoElement.pause();
-		this._codeReader.reset();
-	}
+		const video = this._getVideoElement();
+		if (!video) {
+			return;
+		}
 
-	_decodeFromCamera() {
-		const videoElement = this._getVideoElement();
-		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
-			this.loading = false;
-			if (result) {
-				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
-					{
-						text: result.getText(),
-						rawBytes: result.getRawBytes(),
-					});
-			}
-			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
-			}
-		}).catch((err: Error) => this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
-	}
+		video.pause();
 
-	get _cancelButtonText() {
-		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT);
-	}
+		if (video.srcObject) {
+			const stream = video.srcObject as MediaStream;
+			const tracks = stream.getTracks();
+			tracks.forEach(track => track.stop());
+		}
 
-	get _busyIndicatorText() {
-		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
+		video.srcObject = null;
+		video.removeEventListener("loadeddata", this._handleVideoPlayingBound);
+
+		if (this._scanInterval) {
+			clearInterval(this._scanInterval);
+			this._scanInterval = null;
+		}
+
+		if (this._codeReader) {
+			this._codeReader.reset();
+		}
+
+		const overlay = this._getOverlayElement();
+		if (overlay) {
+			overlay.style.display = "none";
+		}
 	}
 }
 
