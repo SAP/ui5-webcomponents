@@ -146,4 +146,14 @@ describe("Split Button general interaction", () => {
 
 		assert.strictEqual(await field.getValue(), "ui5-arrow-click", "'arrow-click' is fired");
 	});
+
+	it("tests arrow button aria attributes", async () => {
+		await browser.url(`test/pages/SplitButton.html`);
+		const splitButton = await browser.$("#splitBtnWithMenuDefaultActionDefaultAction");
+		const arrowButton = await splitButton.shadow$(".ui5-split-arrow-button");
+		const innerArrowButton = await arrowButton.shadow$("button");
+
+		assert.strictEqual(await arrowButton.getAttribute("tooltip"), "Open Menu", "Tooltip is set");
+		assert.strictEqual(await innerArrowButton.getAttribute("aria-haspopup"), "menu", "Aria attributes set");
+	});
 });
