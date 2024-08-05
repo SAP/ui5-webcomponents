@@ -65,7 +65,7 @@ class Text extends UI5Element {
 
 	/**
 	 * Specifies if an empty indicator should be displayed when there is no text.
-	 * @default EmptyIndicatorMode.Off
+	 * @default "Off"
 	 * @since 2.2.0
 	 * @public
 	 */
@@ -97,7 +97,7 @@ class Text extends UI5Element {
 		return !this.hasText && this.emptyIndicatorMode === EmptyIndicatorMode.On;
 	}
 
-	get _ariaLabelText() {
+	get _emptyIndicatorAriaLabel() {
 		return Text.i18nBundle.getText(EMPTY_INDICATOR_ACCESSIBLE_TEXT);
 	}
 

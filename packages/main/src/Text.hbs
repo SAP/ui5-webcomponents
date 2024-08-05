@@ -1,8 +1,8 @@
-
 <span>
 {{#if _renderEmptyIndicator}}
-	<span class="empty-indicator" aria-label={{_ariaLabelText}}>{{_emptyIndicatorSymbol}}</span>
+	<span class="empty-indicator" aria-hidden="true">{{_emptyIndicatorSymbol}}</span>
+	<span class="empty-indicator-aria-label">{{_emptyIndicatorAriaLabel}}</span>
 {{else}}
-<slot></slot>
+	<slot></slot>
 {{/if}}
 </span>

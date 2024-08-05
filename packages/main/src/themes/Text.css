@@ -18,3 +18,12 @@
 	overflow: hidden;
 	white-space: normal;
 }
+
+.empty-indicator-aria-label {
+	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px);
+	user-select: none;
+	left: 0;
+	top: 0;
+	font-size: 0;
+}
