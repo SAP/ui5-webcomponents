@@ -22,7 +22,7 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
@@ -37,7 +37,7 @@ import type {
 } from "./types.js";
 import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -934,10 +934,14 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
-		const camelCaseEventName = kebabToCamelCase(name);
+		const pascalCaseEventName = kebabToPascalCase(name);
 
-		if (camelCaseEventName !== name) {
-			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable, bubbles);
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
 		}
 
 		return eventResult;
@@ -1220,6 +1224,10 @@ abstract class UI5Element extends HTMLElement {
 		const features = this.getMetadata().getFeatures();
 
 		features.forEach(feature => {
+			if (getComponentFeature(feature)) {
+				this.cacheUniqueDependencies();
+			}
+
 			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
 		});
 
