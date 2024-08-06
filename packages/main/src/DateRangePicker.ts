@@ -14,7 +14,6 @@ import DateRangePickerTemplate from "./generated/templates/DateRangePickerTempla
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-// todo - update? import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {

@@ -99,19 +99,18 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates: Array<number> = [];
 
 	/**
-	 * Defines the type of selection used in the day picker component.
-	 * Accepted property values are:<br>
-	 * <ul>
-	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
-	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
-	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
-	 * </ul>
+	 * Defines the type of selection used in the month picker component.
+	 * Accepted property values are:
 	 *
+	 * - `CalendarSelectionMode.Single` - enables election of a single month.
+	 * - `CalendarSelectionMode.Range` - enables selection of a month range.
+	 *
+	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Month Picker!
 	 * @default "Single"
 	 * @public
 	 */
-	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: `${CalendarSelectionMode}`; // todo - update
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	@property({ type: Array })
 	_months: MonthInterval = [];
@@ -124,7 +123,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 *
 	 * @private
 	 */
-	@property()
+	@property({ type: Number })
 	_secondTimestamp?: number;
 
 	static i18nBundle: I18nBundle;
@@ -184,8 +183,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
-				selected: isSelected,
-				ariaSelected: isSelected ? "true" : "false",
+				selected: isSelected || isSelectedBetween,
+				ariaSelected: String(isSelected || isSelectedBetween),
 				name: monthsNames[i],
 				nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
 				disabled: isDisabled,
@@ -200,6 +199,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelectedBetween) {
 				month.classes += " ui5-mp-item--selected-between";
+				month.parts += " month-cell-selected-between";
 			}
 
 			if (isDisabled) {
@@ -347,7 +347,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
-	 * Selects a month, when the user clicks or presses "Enter" or "Space".
+	 * Selects a month, when user made selection with mouse or using Space/Enter.
 	 * @param e
 	 * @private
 	 */
@@ -355,24 +355,18 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		e.preventDefault();
 		const target = e.target as HTMLElement;
 
-		if (target.className.indexOf("ui5-mp-item") === -1) {
+		if (!target.classList.contains("ui5-mp-item")) {
 			return;
 		}
 
-		const timestamp = this._getTimestampFromDom(target); // this.timestamp
+		const timestamp = this._getTimestampFromDom(target);
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
 
-		if (this.selectionMode === CalendarSelectionMode.Single) {
-			this.selectedDates = [timestamp];
-		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
-			if (this.selectedDates.length > 0) {
-				// this._multipleSelection(timestamp);
-			} else {
-				// this._toggleTimestampInSelection(timestamp);
-			}
-		} else {
+		if (this.selectionMode === CalendarSelectionMode.Range) {
 			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp] as Array<number> : [timestamp] as Array<number>;
+		} else {
+			this.selectedDates = [timestamp];
 		}
 
 		this.fireEvent<MonthPickerChangeEventDetail>("change", {

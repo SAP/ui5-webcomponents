@@ -95,19 +95,18 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates: Array<number> = [];
 
 	/**
-	 * Defines the type of selection used in the day picker component.
-	 * Accepted property values are:<br>
-	 * <ul>
-	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
-	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
-	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
-	 * </ul>
+	 * Defines the type of selection used in the year picker component.
+	 * Accepted property values are:
 	 *
+	 * - `CalendarSelectionMode.Single` - enables election of a single year.
+	 * - `CalendarSelectionMode.Range` - enables selection of a year range.
+	 *
+	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
 	 * @default "Single"
 	 * @public
 	 */
-	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: `${CalendarSelectionMode}`; // todo - update
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	@property({ type: Array })
 	_years: YearInterval = [];
@@ -120,7 +119,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 *
 	 * @private
 	 */
-	@property()
+	@property({ type: Number })
 	_secondTimestamp?: number;
 
 	_firstYear?: number;
@@ -195,8 +194,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				timestamp: timestamp.toString(),
 				_tabIndex: isFocused ? "0" : "-1",
 				focusRef: isFocused,
-				selected: isSelected,
-				ariaSelected: isSelected ? "true" : "false",
+				selected: isSelected || isSelectedBetween,
+				ariaSelected: String(isSelected || isSelectedBetween),
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
@@ -211,6 +210,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelectedBetween) {
 				year.classes += " ui5-yp-item--selected-between";
+				year.parts += " year-cell-selected-between";
 			}
 
 			if (isDisabled) {
@@ -412,16 +412,10 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
 
-		if (this.selectionMode === CalendarSelectionMode.Single) {
-			this.selectedDates = [timestamp];
-		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
-			if (this.selectedDates.length > 0) {
-				// this._multipleSelection(timestamp);
-			} else {
-				// this._toggleTimestampInSelection(timestamp);
-			}
-		} else {
+		if (this.selectionMode === CalendarSelectionMode.Range) {
 			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp] as Array<number> : [timestamp] as Array<number>;
+		} else {
+			this.selectedDates = [timestamp];
 		}
 
 		this.fireEvent<YearPickerChangeEventDetail>("change", {

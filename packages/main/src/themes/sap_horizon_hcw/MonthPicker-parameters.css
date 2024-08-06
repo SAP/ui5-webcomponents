@@ -9,4 +9,6 @@
 	--_ui5_monthpicker_item_focus_after_height: calc(100% - 0.5rem);
 	--_ui5_monthpicker_item_focus_after_border: 2px dotted var(--sapContent_FocusColor);
 	--_ui5_monthpicker_item_focus_after_offset: 0;
+	--_ui5_monthpicker_item_selected_hover_color: var(--sapList_Hover_Background);
+	--_ui5_monthpicker_item_selected_border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }
