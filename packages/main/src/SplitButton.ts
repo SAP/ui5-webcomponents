@@ -23,10 +23,12 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import Button from "./Button.js";
+import HasPopup from "./types/HasPopup.js";
 
 import {
 	SPLIT_BUTTON_DESCRIPTION,
 	SPLIT_BUTTON_KEYBOARD_HINT,
+	SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -491,15 +493,24 @@ class SplitButton extends UI5Element {
 		return this.getDomRef()?.querySelector<Button>(".ui5-split-arrow-button");
 	}
 
-	get accessibilityInfo() {
+	get accInfo() {
 		return {
-			// affects arrow button
-			ariaExpanded: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaExpanded,
-			ariaHaspopup: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaHaspopup,
-			// affects root element
-			description: SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
-			keyboardHint: SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			root: {
+				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
+				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			},
+			arrowButton: {
+				"title": this.arrowButtonTooltip,
+				"accessibilityAttributes": {
+					"hasPopup": (this._splitButtonAccInfo && this._splitButtonAccInfo.ariaHaspopup) || HasPopup.Menu.toLocaleLowerCase(),
+					"expanded": this._splitButtonAccInfo && this._splitButtonAccInfo.ariaExpanded,
+				},
+			},
 		};
+	}
+
+	get arrowButtonTooltip() {
+		return SplitButton.i18nBundle.getText(SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP);
 	}
 
 	get ariaLabelText() {
