@@ -541,6 +541,34 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 0, "Long token should be deleted" );
 		});
 
+		it("tests if clicking delete icon of a token removes it from the selection (mcb with grouping)", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-grouping");
+			const inner = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await inner.click();
+
+			await inner.keys("a");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			await firstItem.click();
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 1, "Token should be added");
+
+			const token = await mcb.shadow$("ui5-tokenizer ui5-token");
+			const deleteIcon = await token.shadow$(".ui5-token--icon");
+
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 0, "Token should be deleted");
+		});
+
 		it("prevents selection change event when clicking an item", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 

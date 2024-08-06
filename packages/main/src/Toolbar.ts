@@ -558,7 +558,8 @@ class Toolbar extends UI5Element {
 
 	getItemsInfo(items: Array<ToolbarItem>) {
 		return items.map((item: ToolbarItem) => {
-			const ElementClass = getRegisteredToolbarItem(item.constructor.name);
+			const ctor = item.constructor as typeof ToolbarItem;
+			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
 
 			if (!ElementClass) {
 				return null;

@@ -1,0 +1,6 @@
+@import "../base/TimelineGroupItem-parameters.css";
+
+:root {
+	--_ui5_timeline_tlgi_line_horizontal_height: 16.375rem;
+	--_ui5_timeline_tlgi_root_horizontal_height: 21.53125rem;
+}
