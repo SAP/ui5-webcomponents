@@ -298,7 +298,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 				// add the control to the existing group
 				RadioButtonGroup.addToGroup(this, currentGroup);
 			}
-		} else if (currentGroup) {
+		} else if (currentGroup && this.isConnected) {
 			RadioButtonGroup.enforceSingleSelection(this, currentGroup);
 		}
 

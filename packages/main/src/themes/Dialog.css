@@ -126,10 +126,16 @@
 
 .ui5-popup-resize-handle {
 	position: absolute;
-	bottom: var(--_ui5_dialog_resize_handle_bottom);
-	inset-inline-end: var(--_ui5_dialog_resize_handle_right);
+	bottom: -0.5rem;
+	inset-inline-end: -0.5rem;
 	cursor: var(--_ui5_dialog_resize_cursor);
-	color: var(--_ui5_dialog_resize_handle_color);
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+}
+
+.ui5-popup-resize-handle [ui5-icon] {
+	color: var(--sapButton_Lite_TextColor);
 }
 
 ::slotted([slot="footer"]) {

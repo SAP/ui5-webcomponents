@@ -386,5 +386,31 @@ describe("Menu interaction", () => {
 				.find("li .ui5-li-additional-text")
 				.should("have.attr", "aria-hidden", "true", "aria-hidden attribute is set to true")
 		});
+
+		it("Menu popover has an accessible name", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			<ui5-menu open opener="btnOpen">
+				<ui5-menu-item text="Item 1.0" icon="open-folder">
+					<ui5-menu-item text="1.1"></ui5-menu-item>
+				</ui5-menu-item>
+			</ui5-menu>`)
+	
+			cy.get("[ui5-menu]")
+				.ui5MenuOpened();
+
+			cy.get("[ui5-menu]")
+				.shadow()
+				.find("[ui5-responsive-popover]")
+				.should("have.attr", "accessible-name", "Select an option from the menu", "test accessible name");
+	
+			cy.get("[ui5-menu-item][text='Item 1.0']")
+				.as("item")
+				.ui5MenuItemClick();
+	
+			cy.get("@item")
+				.shadow()
+				.find("[ui5-responsive-popover]")
+				.should("have.attr", "accessible-name", "Select an option from the menu", "test accessible name");
+		});
 	})
 })

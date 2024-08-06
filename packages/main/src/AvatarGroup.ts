@@ -369,7 +369,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get firstAvatarSize() {
-		return this.items[0].size;
+		return this.items[0]?.size ?? AvatarSize.S;
 	}
 
 	get classes() {
