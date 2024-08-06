@@ -193,6 +193,13 @@ type VSDInternalSettings = {
  * @public
  */
 @event("before-open")
+
+/**
+ * Fired when reset button is pressed.
+ * @public
+ * @allowPreventDefault
+ */
+@event("reset")
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -647,6 +654,11 @@ class ViewSettingsDialog extends UI5Element {
 	 * Resets the control settings to their initial state.
 	 */
 	 _resetSettings() {
+		const prevented = !this.fireEvent("reset", {}, true, false);
+		if (prevented) {
+			return;
+		}
+
 		this._restoreSettings(this._initialSettings);
 		this._recentlyFocused = this._sortOrder!;
 		this._focusRecentlyUsedControl();
