@@ -3,6 +3,7 @@ import { html } from 'lit';
 describe("Select - Accessibility", () => {
 	it("tests options tooltip is set displayed", () => {
 		const EXPECTED_TOOLTIP = "Tooltip";
+		const EXPECTED_ROLE = "option";
 		cy.mount(html`
 			<ui5-select>
 				<ui5-option value="1" tooltip="${EXPECTED_TOOLTIP}">Option 1</ui5-option>
@@ -10,6 +11,18 @@ describe("Select - Accessibility", () => {
 			</ui5-select>
 		`);
 
+		// Check if the role is set to option
+		cy
+			.get("[ui5-option]")
+			.shadow()
+			.find("li.ui5-li-root")
+			.should("have.attr", "role", EXPECTED_ROLE)
+			.get("[ui5-option-custom]")
+			.shadow()
+			.find("li.ui5-li-root")
+			.should("have.attr", "role", EXPECTED_ROLE);
+
+		// Check if the tooltip is set
 		cy
 			.get("[ui5-option][tooltip]")
 			.shadow()
