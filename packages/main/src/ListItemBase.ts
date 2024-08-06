@@ -101,9 +101,9 @@ class ListItemBase extends UI5Element implements ITabbable {
 			this._internals = this.attachInternals();
 		}
 
-		if (this.actionable && !this._internals.states.has("actionable")) {
+		if (this.actionable) {
 			this._internals.states.add("actionable");
-		} else if (!this.actionable && this._internals.states.has("actionable")) {
+		} else {
 			this._internals.states.delete("actionable");
 		}
 	}
