@@ -1,5 +1,6 @@
 const kebabToCamelMap = new Map<string, string>();
 const camelToKebabMap = new Map<string, string>();
+const kebabToPascalMap = new Map<string, string>();
 
 const kebabToCamelCase = (string: string) => {
 	if (!kebabToCamelMap.has(string)) {
@@ -23,4 +24,16 @@ const toCamelCase = (parts: Array<string>) => {
 	}).join("");
 };
 
-export { kebabToCamelCase, camelToKebabCase };
+const kebabToPascalCase = (src: string) => {
+	const cachedName = kebabToPascalMap.get(src);
+	if (cachedName) {
+		return cachedName;
+	}
+
+	const camelStr = kebabToCamelCase(src);
+	const result = camelStr.charAt(0).toUpperCase() + camelStr.slice(1);
+	kebabToPascalMap.set(src, result);
+	return result;
+};
+
+export { kebabToCamelCase, camelToKebabCase, kebabToPascalCase };
