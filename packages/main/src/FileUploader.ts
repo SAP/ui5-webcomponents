@@ -364,7 +364,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * Checks whether all files are below `maxFileSize` (if set),
 	 * and fires a `fileSizeExceeded` event if any file exceeds it.
 	 *
-	 * @returns {boolean} true if all files are below `maxFileSize`
+	 * @returns true if all files are below `maxFileSize`
 	 * @private
 	 */
 	_validateFileSize(files: FileList | null): boolean {
