@@ -101,7 +101,14 @@ module.exports = defineConfig(async () => {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader()
+		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
+			checker({
+				// e.g. use TypeScript check
+				typescript: {
+					tsconfigPath: "packages/fiori/tsconfig.json",
+					buildMode: true,
+				},
+		  	}),
 		],
 
 		resolve: {

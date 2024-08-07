@@ -3,9 +3,9 @@ test
 lib
 dist
 src/generated
+test/test-elements/generated
 src/thirdparty
 bundle.esm.js
-bundle.common.js
 bundle.es5.js
 rollup.config*.js
 wdio.conf.cjs

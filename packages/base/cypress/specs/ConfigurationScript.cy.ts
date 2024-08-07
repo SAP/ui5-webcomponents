@@ -5,6 +5,7 @@ import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "../../src/c
 import { getLanguage } from "../../src/config/Language.js";
 import { getNoConflict } from "../../src/config/NoConflict.js";
 import { getTheme } from "../../src/config/Theme.js";
+import { getEnableDefaultTooltips } from "../../src/config/Tooltips.js";
 import { resetConfiguration } from "../../src/InitialConfiguration.js";
 
 describe("Configuration script", () => {
@@ -38,6 +39,7 @@ describe("Configuration script", () => {
 			"events": ["selection-change", "header-click"],
 		},
 		"defaultFontLoading": false,
+		"enableDefaultTooltips": false,
 	};
 
 	before(() => {
@@ -86,7 +88,7 @@ describe("Configuration script", () => {
 			.should("equal", configurationObject.animationMode);
 	});
 
-	it("getTheme", () => {
+	it("getEnableDefaultTooltips", () => {
 		cy.wrap({ getTheme })
 			.invoke("getTheme")
 			.should("equal", configurationObject.theme);
@@ -103,6 +105,12 @@ describe("Configuration script", () => {
 	it("getDefaultFontLoading", () => {
 		cy.wrap({ getDefaultFontLoading })
 			.invoke("getDefaultFontLoading")
+			.should("equal", false);
+	});
+
+	it("getEnableDefaultTooltips", () => {
+		cy.wrap({ getEnableDefaultTooltips })
+			.invoke("getEnableDefaultTooltips")
 			.should("equal", false);
 	});
 });
