@@ -662,7 +662,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	onBeforeRendering() {
 		if (!this._keepInnerValue) {
-			this._innerValue = this.value;
+			this._innerValue = this.value === null ? "" : this.value;
 		}
 
 		if (this.showSuggestions) {
@@ -1087,7 +1087,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				&& this.value.startsWith("-")
 				&& this.value.length === 2
 				&& (e.inputType === "deleteContentForward" || e.inputType === "deleteContentBackward");
-
+			debugger;
 			if (delimiterCase || eNotationCase || minusRemovalCase) {
 				this.value = (e.target as HTMLInputElement).value;
 				this._keepInnerValue = true;
