@@ -10,7 +10,13 @@
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 
-<link rel="stylesheet" type="text/css" href="./styles/List_test_page.css">
+	<link rel="stylesheet" type="text/css" href="./styles/List_test_page.css">
+
+	<style>
+		[ui5-avatar] img {
+			object-fit: contain;
+		}
+	</style>
 </head>
 
 <body class="list_test_page1auto">
@@ -122,24 +128,36 @@
 	<br><br><br>
 	<ui5-list id="list1" header-text="API: ListItemGroupHeader">
 		<ui5-li-group header-text="New Items">
-			<ui5-li image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-			<ui5-li image="./img/HT-1010.jpg" >Laptop Lenovo</ui5-li>
-			<ui5-li image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
+			<ui5-li >Laptop HP</ui5-li>
+			<ui5-li >Laptop Lenovo</ui5-li>
+			<ui5-li >IPhone 3</ui5-li>
 		</ui5-li-group>
 
 		<ui5-li-group header-text="Discounted Items">
-			<ui5-li image="./img/HT-1030.jpg"  icon="navigation-right-arrow">HP Monitor 24</ui5-li>
-			<ui5-li image="./img/HT-2026.jpg"  icon="navigation-right-arrow">Audio cabel</ui5-li>
-			<ui5-li image="./img/HT-2002.jpg"  icon="navigation-right-arrow">DVD set</ui5-li>
+			<ui5-li icon="navigation-right-arrow">HP Monitor 24</ui5-li>
+			<ui5-li icon="navigation-right-arrow">Audio cabel</ui5-li>
+			<ui5-li icon="navigation-right-arrow">DVD set</ui5-li>
 		</ui5-li-group>
 	</ui5-list>
 
 	<label id="lblResult">0</label>
 
 	<ui5-list id="listWithDesc">
-		<ui5-li image="./img/HT-1000.jpg"  description="2GB RAM, Intel i7 4.5 GHz">Laptop HP</ui5-li>
-		<ui5-li image="./img/HT-2026.jpg"  description="2GB RAM, Intel i7 4.5 GHz">Audio cabel</ui5-li>
-		<ui5-li image="./img/HT-2002.jpg"  description="2GB RAM, Intel i7 4.5 GHz">DVD set</ui5-li>
+		<ui5-li description="2GB RAM, Intel i7 4.5 GHz">Laptop HP
+			<ui5-avatar slot="image" shape="Square">
+				<img src="./img/HT-1000.jpg" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li description="2GB RAM, Intel i7 4.5 GHz">Audio cabel
+			<ui5-avatar slot="image" shape="Square">
+				<img src="./img/HT-2026.jpg" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+		<ui5-li description="2GB RAM, Intel i7 4.5 GHz">DVD set
+			<ui5-avatar slot="image" shape="Square">
+				<img src="./img/HT-2002.jpg" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
 	</ui5-list>
 
 	<ui5-list id="listMultiSel" selection-mode="Multiple">
@@ -210,12 +228,19 @@
 	<br/><br/>
 
 	<ui5-list>
-		<ui5-li id="imageContent-slot-li"> Avatar inside imageContent slot
-			<div slot="imageContent">
-				<ui5-avatar id="imageContent-slot-avatar">
-					<img src="./img/woman_avatar_5.png" alt="Woman image">
-				</ui5-avatar>
-			</div>
+		<ui5-li id="image-slot-li2"> Avatar inside image slot
+			<ui5-avatar id="image-slot-img" slot="image">
+				<img src="./img/woman_avatar_5.png" alt="Woman image">
+			</ui5-avatar>
+		</ui5-li>
+
+	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list>
+		<ui5-li id="image-slot-li"> Img tag inside image slot
+			<img slot="image" src="./img/woman_avatar_5.png" alt="Woman image">
 		</ui5-li>
 
 	</ui5-list>
@@ -332,10 +357,10 @@
 	</ui5-list>
 
 	<ui5-list id="highlight">
-		<ui5-li highlight="Negative" image="./img/HT-1000.jpg" >Laptop HP</ui5-li>
-		<ui5-li highlight="Information" image="./img/HT-1010.jpg" >laptop Lenovo</ui5-li>
-		<ui5-li highlight="Positive" image="./img/HT-1022.jpg" >IPhone 3</ui5-li>
-		<ui5-li highlight="Critical" image="./img/HT-2002.jpg" >DVD set</ui5-li>
+		<ui5-li highlight="Negative">Laptop HP</ui5-li>
+		<ui5-li highlight="Information">laptop Lenovo</ui5-li>
+		<ui5-li highlight="Positive">IPhone 3</ui5-li>
+		<ui5-li highlight="Critical">DVD set</ui5-li>
 	</ui5-list>
 
 	<input id="customListItemSelectResult" value="0"/>
@@ -363,7 +388,7 @@
 		listEvents.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			selectionChangeResultField.value = `${selectionChangeCounter}`;
-			selectionChangeResultFieldRadio.value = event.detail.selectionComponentPressed;
+			selectionChangeResultFieldRadio.value = `${event.detail.selectionComponentPressed}`;
 		});
 
 		listEvents.addEventListener("ui5-selection-change", function(event) {
@@ -458,14 +483,14 @@
 
 	<ui5-list growing="Scroll">
 		<ui5-li-group header-text="New Items">
-			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa.</ui5-li>
-			<ui5-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
-			<ui5-li id="listItem" image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+			<ui5-li icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa.</ui5-li>
+			<ui5-li icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
+			<ui5-li id="listItem" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
 		</ui5-li-group>
 		<ui5-li-group header-text="Discounted Items">
-			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
-			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
-			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Required" additional-text-state="Critical">DVD set</ui5-li>
+			<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
+			<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
+			<ui5-li icon-end icon="navigation-right-arrow" additional-text="Required" additional-text-state="Critical">DVD set</ui5-li>
 		</ui5-li-group>
 	</ui5-list>
 

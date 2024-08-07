@@ -25,11 +25,11 @@
 </head>
 
 <body class="popover2auto">
-	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
+	<iframe id="clickThisIframe" src="./Test.html"></iframe>
 	<div id="host">
 		<template shadowrootmode="open">
 			<span>I'm in the shadow DOM</span>
-			<iframe id="clickThisIframeInsideShadowRoot" src="//localhost:8080"></iframe>
+			<iframe id="clickThisIframeInsideShadowRoot" src="./Test.html"></iframe>
 		</template>
 	</div>
 	<ui5-button id="btn">Click me !</ui5-button>
@@ -349,9 +349,9 @@ z-index: 1;
 				<ui5-li>OData API Audit</ui5-li>
 			</ui5-li-group>
 			<ui5-li-group header-text="Products">
-				<ui5-li image="./img/HT-1010.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
-				<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Negative">IPhone 3</ui5-li>
-				<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
+				<ui5-li icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li>
+				<ui5-li icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Negative">IPhone 3</ui5-li>
+				<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
 			</ui5-li-group>
 		</ui5-list>
 	</ui5-popover>
@@ -376,10 +376,14 @@ z-index: 1;
 	<br>
 	<br>
 
+	<h2>Dynamic</h2>
+	<ui5-label>Create popover and open it</ui5-label>
 	<div class="popover12auto">
 		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
 	</div>
-
+	<ui5-label>Create popover and open it by dynamic opener</ui5-label>
+	<ui5-button id="btnDynamicOpenerAndPopover" icon="overflow"></ui5-button>
+	<div id="dynamicOpenerList"></div>
 	<br>
 
 	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
@@ -676,6 +680,24 @@ z-index: 1;
 			document.body.appendChild(popover);
 
 			popover.opener = btnOpenDynamic;
+			popover.open = true;
+		});
+
+		let dynamicOpenerCounter = 0;
+		btnDynamicOpenerAndPopover.addEventListener("click", function () {
+			var popover = document.createElement("ui5-popover"),
+				list = document.createElement("ui5-list"),
+				opener = document.createElement("ui5-li");
+
+			popover.setAttribute("placement", "Bottom");
+			popover.setAttribute("id", `dynamic-popover-dynamic-opener${dynamicOpenerCounter}`);
+			opener.textContent = `Opener ${dynamicOpenerCounter++}`;
+			
+			document.getElementById("dynamicOpenerList").appendChild(list);
+			list.appendChild(opener);
+			document.body.appendChild(popover);
+
+			popover.opener = opener;
 			popover.open = true;
 		});
 

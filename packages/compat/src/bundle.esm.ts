@@ -9,6 +9,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import Link from "@ui5/webcomponents/dist/Link.js";
 
 import * as defaultFioriTexts from "./generated/i18n/i18n-defaults.js";
 

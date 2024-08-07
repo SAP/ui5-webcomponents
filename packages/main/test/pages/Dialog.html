@@ -150,7 +150,7 @@
 	<ui5-dialog id="dialog" accessible-name="Resizable" stretch>
 		<div slot="header">
 			<ui5-button id="header-button">focus stop</ui5-button>
-			<ui5-title id="tt" level="H1">Resizable</ui5-title>
+			<ui5-title level="H1" id="tt" level="H1">Resizable</ui5-title>
 
 		</div>
 
@@ -623,7 +623,7 @@
 			const listContainerDialog = document.getElementById("listContainerDialogId");
 			const listContainerDialogCloseBtn = document.getElementById("listContainerDialogCloseBtnId");
 
-			listContainer.addEventListener("ui5-selectionChange", function (event) {
+			listContainer.addEventListener("ui5-selection-change", function (event) {
 				listContainerDialog.open = true;
 			});
 
@@ -644,7 +644,6 @@
 		});
 
 		cbScrollable.addEventListener("ui5-change", function () {
-			console.error("change");
 			scrollHelper.style.display = cbScrollable.checked ? "block" : "none";
 		});
 
@@ -701,7 +700,7 @@
 			window["msg-dialog"].open = true;
 		});
 
-		window["prevent-dialog"].addEventListener("ui5-beforeClose", function (event) {
+		window["prevent-dialog"].addEventListener("ui5-before-close", function (event) {
 			if (preventClosing) {
 				event.preventDefault();
 				window["confirm-dialog"].open = true;
@@ -724,8 +723,8 @@
 		});
 
 		window["modals-open"].addEventListener("click", function (event) {
-			op.opener = event.target;
-			op.open = true;
+			pop.opener = event.target;
+			pop.open = true;
 		});
 
 		dangerDialogBtn.addEventListener('click', function (event) {

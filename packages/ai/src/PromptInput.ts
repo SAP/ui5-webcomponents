@@ -8,7 +8,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/paper-plane.js";
-import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import type { IInputSuggestionItem, InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -40,6 +40,7 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @constructor
  * @public
  * @extends UI5Element
+ * @experimental The **@ui5/webcomponents-ai** package is under development and considered experimental - components' APIs are subject to change.
  */
 @customElement({
 	tag: "ui5-ai-prompt-input",
@@ -177,6 +178,35 @@ class PromptInput extends UI5Element {
 	valueState: `${ValueState}` = "None"
 
 	/**
+	 * Defines whether the component should show suggestions, if such are present.
+	 *
+	 * **Note:** You need to import the `InputSuggestions` module
+	 * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showSuggestions = false;
+
+	/**
+	 * Defines the suggestion items.
+	 *
+	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
+	 * property is set to `true`.
+	 *
+	 * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
+	 *
+	 * **Note:** Importing the Input Suggestions Support feature:
+	 *
+	 * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
+	 *
+	 * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
+	 * @public
+	 */
+		@slot({ type: HTMLElement, "default": true })
+		suggestionItems!: Array<IInputSuggestionItem>;
+
+	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 * The value state message slot should contain only one root element.
 	 *
@@ -200,10 +230,6 @@ class PromptInput extends UI5Element {
 		PromptInput.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
 	}
 
-	constructor() {
-		super();
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this.fireEvent("submit");
@@ -222,6 +248,10 @@ class PromptInput extends UI5Element {
 
 	_onButtonClick() {
 		this.fireEvent("submit");
+	}
+
+	_onTypeAhead(e: CustomEvent): void {
+		this.value = (e.target as Input).value;
 	}
 
 	get _exceededText() {

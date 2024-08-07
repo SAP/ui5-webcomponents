@@ -337,6 +337,24 @@ describe("Popover general interaction", () => {
 		await browser.keys("Escape");
 	});
 
+	it("tests that dynamically created popover opened by dynamically created opener is opened", async () => {
+		const btnDynamicOpenerAndPopover = await browser.$("#btnDynamicOpenerAndPopover");
+		await btnDynamicOpenerAndPopover.click();
+		const popover = await browser.$("#dynamic-popover-dynamic-opener0");
+
+		await browser.waitUntil(
+			async () => (await popover.getCSSProperty("top")).parsed.value > 0 && (await popover.getCSSProperty("left")).parsed.value > 0,
+			{
+				timeout: 500,
+				timeoutMsg: "popover was not opened after a timeout"
+			}
+		);
+
+		assert.ok(true, "popover is opened");
+
+		await browser.keys("Escape");
+	});
+
 	it("tests that ENTER on list item that opens another popover doesn't trigger click event inside the focused element of that popover", async () => {
 		const openChainedPopover1 = await browser.$("#openChainedPopover1");
 		await openChainedPopover1.scrollIntoView();

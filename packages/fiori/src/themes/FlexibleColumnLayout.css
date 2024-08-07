@@ -80,6 +80,9 @@
 .ui5-fcl-separator:hover .ui5-fcl-grip:after {
 	height: 50%;
 }
+.ui5-fcl-separator:hover {
+	overflow: hidden;
+}
 
 [aria-hidden] ::slotted([slot="startColumn"]),
 [aria-hidden] ::slotted([slot="midColumn"]),

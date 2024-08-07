@@ -24,6 +24,8 @@
 		position: absolute;
 		display: flex;
 		gap: 0.5rem;
+		/* We need the z-index to be lower than in the header, to avoid overlapping by snap on scroll */
+		z-index: 1;
 
 		&:before,
 		&:after {

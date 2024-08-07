@@ -22,7 +22,6 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
-import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
@@ -32,6 +31,7 @@ import type {
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
+	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -104,7 +104,6 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 		List,
 		MenuItem,
 		MenuSeparator,
-		Icon,
 		BusyIndicator,
 	],
 })
@@ -229,7 +228,7 @@ class Menu extends UI5Element {
 	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
 	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
-	 * @default ""
+	 * @default undefined
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
@@ -269,6 +268,10 @@ class Menu extends UI5Element {
 
 	get _menuItems() {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
+
+	get acessibleNameText() {
+		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	onBeforeRendering() {
@@ -344,7 +347,7 @@ class Menu extends UI5Element {
 		if (!item._popover) {
 			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 				"item": item,
-				"text": item.text,
+				"text": item.text || "",
 			}, true, false);
 
 			if (!prevented && this._popover) {
@@ -387,7 +390,6 @@ class Menu extends UI5Element {
 	}
 
 	_afterPopoverOpen() {
-		this.open = true;
 		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}

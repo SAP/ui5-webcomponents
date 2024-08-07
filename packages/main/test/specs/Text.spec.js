@@ -8,7 +8,7 @@ describe("Text", () => {
 	it("tests root element is bdi", async () => {
 		const rootElement = await browser.$("#text1").shadow$(":first-child");
 
-		assert.strictEqual(await rootElement.getTagName(), "bdi", "Root item should be bdi");
+		assert.strictEqual(await rootElement.getTagName(), "span", "Root item should be span");
 	});
 
 	it("tests default wrapping behavior", async () => {
@@ -27,5 +27,13 @@ describe("Text", () => {
 		const text = await browser.$("#text2");
 
 		assert.strictEqual((await text.getCSSProperty("-webkit-line-clamp")).value, 1, "-webkit-line-clamp should be 1");
+	});
+
+	it("tests emptyIndicatorMode", async () => {
+		const text = await browser.$("#emptyText").shadow$(".empty-indicator");
+		const label = await browser.$("#emptyText").shadow$(".empty-indicator-aria-label");
+
+		assert.strictEqual(await text.getText(), "–", "'–' should be rendered");
+		assert.strictEqual(await label.getText(), "Empty value", "Aria label is properly set");
 	});
 });

@@ -22,7 +22,7 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
@@ -37,6 +37,7 @@ import type {
 } from "./types.js";
 import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
+import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -365,10 +366,9 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		const canSlotText = metadata.canSlotText();
-		const hasClonedSlot = Object.keys(metadata.getSlots()).some(slotName => metadata.getSlots()[slotName].cloned);
 		const mutationObserverOptions = {
 			childList: true,
-			subtree: canSlotText || hasClonedSlot,
+			subtree: canSlotText,
 			characterData: canSlotText,
 		};
 		observeDOMNode(this, this._processChildren.bind(this) as MutationCallback, mutationObserverOptions);
@@ -645,16 +645,20 @@ abstract class UI5Element extends HTMLElement {
 				// eslint-disable-next-line
 				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
 			}
+			if (typeof newValue === "string" && propData.type && propData.type !== String) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] string value for property [${name}] of component [${tag}] which has a non-string type [${propData.type}] in its property decorator. Attribute conversion will stop and keep the string value in the property.`);
+			}
 		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
+		this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 		if (newAttrValue === null || newAttrValue === undefined) { // null means there must be no attribute for the current value of the property
-			this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
-			this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 		} else {
-			this.setAttribute(attrName, newAttrValue);
+			this.setAttribute(attrName, newAttrValue); // setting attributes from properties should not trigger the property setter again
 		}
+		this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 	}
 
 	/**
@@ -794,17 +798,20 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		this.onBeforeRendering();
-		if (!this._rendered) {
-			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
-			this.updateAttributes();
+		try	{
+			this.onBeforeRendering();
+
+			if (!this._rendered) {
+				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				this.updateAttributes();
+			}
+
+			// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+			this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
+		} finally {
+			// always resume normal invalidation handling
+			this._suppressInvalidation = false;
 		}
-
-		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
-
-		// resume normal invalidation handling
-		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
 		/*
@@ -934,10 +941,14 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
-		const camelCaseEventName = kebabToCamelCase(name);
+		const pascalCaseEventName = kebabToPascalCase(name);
 
-		if (camelCaseEventName !== name) {
-			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable, bubbles);
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
 		}
 
 		return eventResult;
@@ -1169,6 +1180,11 @@ abstract class UI5Element extends HTMLElement {
 		return [];
 	}
 
+	static cacheUniqueDependencies(this: typeof UI5Element): void {
+		const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+		uniqueDependenciesCache.set(this, filtered);
+	}
+
 	/**
 	 * Returns a list of the unique dependencies for this UI5 Web Component
 	 *
@@ -1176,8 +1192,7 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static getUniqueDependencies(this: typeof UI5Element): Array<typeof UI5Element> {
 		if (!uniqueDependenciesCache.has(this)) {
-			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
-			uniqueDependenciesCache.set(this, filtered);
+			this.cacheUniqueDependencies();
 		}
 
 		return uniqueDependenciesCache.get(this) || [];
@@ -1212,6 +1227,16 @@ abstract class UI5Element extends HTMLElement {
 		]);
 
 		const tag = this.getMetadata().getTag();
+
+		const features = this.getMetadata().getFeatures();
+
+		features.forEach(feature => {
+			if (getComponentFeature(feature)) {
+				this.cacheUniqueDependencies();
+			}
+
+			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
+		});
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);

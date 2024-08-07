@@ -68,22 +68,11 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
 	 *
-	 * **Note:** If `image` is set, the `icon` would be displayed after the `image`.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
 	iconEnd = false;
-
-	/**
-	 * Defines the `image` source URI.
-	 *
-	 * **Note:** The `image` would be displayed in the beginning of the list item.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	image?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the list item.
@@ -122,7 +111,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	declare accessibleName: string;
+	declare accessibleName?: string;
 
 	/**
 	 * Defines if the text of the component should wrap, they truncate by default.
@@ -143,7 +132,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	hasTitle = false;
 
 	@property({ type: Boolean })
-	_hasImageContent = false;
+	_hasImage = false;
 
 	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
@@ -151,20 +140,16 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 *
 	 * **Note:** If bigger `ui5-avatar` needs to be used, then the size of the
 	 * `ui5-li` should be customized in order to fit.
-	 * @since 1.10.0
+	 * @since 2.0.0
 	 * @public
 	 */
 	@slot()
-	imageContent!: Array<HTMLElement>;
+	image!: Array<HTMLElement>;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
-		this._hasImageContent = this.hasImageContent;
-	}
-
-	get displayImage(): boolean {
-		return !!this.image;
+		this._hasImage = this.hasImage;
 	}
 
 	get displayIconBegin(): boolean {
@@ -175,8 +160,8 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 		return !!(this.icon && this.iconEnd);
 	}
 
-	get hasImageContent(): boolean {
-		return !!this.imageContent.length;
+	get hasImage(): boolean {
+		return !!this.image.length;
 	}
 }
 

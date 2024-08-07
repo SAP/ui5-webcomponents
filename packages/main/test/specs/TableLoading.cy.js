@@ -17,6 +17,8 @@ describe("Table - loading", () => {
 		cy.get("[ui5-table]")
 			.shadow()
 			.find("#loading")
+			.shadow()
+			.find(".ui5-busy-indicator-busy-area")
 			.should("exist");
 
 		cy.get("#before")
@@ -27,10 +29,8 @@ describe("Table - loading", () => {
 
 		cy.realPress("Tab");
 
-		cy.get("[ui5-table]")
-			.shadow()
-			.find("#loading")
-			.should("be.focused");
+		cy.focused()
+			.should("have.class", "ui5-busy-indicator-busy-area")
 
 		cy.realPress("Tab");
 

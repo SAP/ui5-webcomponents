@@ -14,17 +14,17 @@ import type MultiComboBoxItem from "./MultiComboBoxItem.js";
  * @abstract
  * @public
  * @implements {IMultiComboBoxItem}
- * @since 2.0
+ * @since 2.0.0
  */
 @customElement("ui5-mcb-item-group")
 class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	headerText?: string;
 
 	/**
 	 * Defines the items of the <code>ui5-mcb-item-group</code>.

@@ -10,7 +10,13 @@
 
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
-<link rel="stylesheet" type="text/css" href="./styles/ListGrowing_Button.css">
+	<link rel="stylesheet" type="text/css" href="./styles/ListGrowing_Button.css">
+
+	<style>
+		[ui5-avatar] img {
+			object-fit: contain;
+		}
+	</style>
 </head>
 
 <body class="listgrowing_button1auto">
@@ -18,14 +24,38 @@
 	<br>
 	<ui5-list id="infiniteScrollEx" growing="Button">
 		<ui5-li-group header-text="New Items">
-			<ui5-li image="./img/HT-1000.jpg" icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.</ui5-li>
-			<ui5-li-li image="./img/portrait.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo</ui5-li-li>
-			<ui5-li image="./img/HT-1022.jpg" icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3</ui5-li>
+			<ui5-li icon="navigation-right-arrow" additional-text="Available">Voluptate do eu cupidatat elit est culpa. Reprehenderit eiusmod voluptate ex est dolor nostrud Lorem Lorem do nisi laborum veniam. Sint do non culpa aute occaecat labore ipsum veniam minim tempor est. Duis pariatur aute culpa irure ad excepteur pariatur culpa culpa ea duis occaecat aute irure. Ipsum velit culpa non exercitation ex laboris deserunt in eu non officia in. Laborum sunt aliqua labore cupidatat sunt labore.
+				<ui5-avatar slot="image" shape="Square">
+					<img src="./img/HT-1000.jpg" alt="Woman image">
+				</ui5-avatar>
+			</ui5-li>
+			<ui5-li icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131" additional-text-state="Negative">Laptop Lenovo
+				<ui5-avatar slot="image" shape="Square">
+					<img src="./img/portrait.jpg" alt="Woman image">
+				</ui5-avatar>
+			</ui5-li>
+			<ui5-li icon="navigation-right-arrow" additional-text="Re-stock" description="#12331232131"  additional-text-state="Information">IPhone 3
+				<ui5-avatar slot="image" shape="Square">
+					<img src="./img/HT-1022.jpg" alt="Woman image">
+				</ui5-avatar>
+			</ui5-li>
 		</ui5-li-group>
 		<ui5-li-group header-text="Discounted Items">
-			<ui5-li image="./img/HT-1030.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24</ui5-li>
-			<ui5-li image="./img/HT-2026.jpg"  icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel</ui5-li>
-			<ui5-li image="./img/HT-2002.jpg"  icon-end icon="navigation-right-arrow" additional-text="Required" additional-text-state="Critical">DVD set</ui5-li>
+			<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Required" additional-text-state="Negative">HP Monitor 24
+				<ui5-avatar slot="image" shape="Square">
+					<img src="./img/HT-1030.jpg" alt="Woman image">
+				</ui5-avatar>
+			</ui5-li>
+			<ui5-li icon-end icon="navigation-right-arrow" description="#12331232131"  additional-text="Available" additional-text-state="Positive">Audio cabel
+				<ui5-avatar slot="image" shape="Square">
+					<img src="./img/HT-2026.jpg" alt="Woman image">
+				</ui5-avatar>
+			</ui5-li>
+			<ui5-li icon-end icon="navigation-right-arrow" additional-text="Required" additional-text-state="Critical">DVD set
+				<ui5-avatar slot="image" shape="Square">
+					<img src="./img/HT-2002.jpg" alt="Woman image">
+				</ui5-avatar>
+			</ui5-li>
 		</ui5-li-group>
 </ui5-list>
 

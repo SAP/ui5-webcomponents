@@ -3,6 +3,149 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page-title:** separator fixed ([#9621](https://github.com/SAP/ui5-webcomponents/issues/9621)) ([5240c0b](https://github.com/SAP/ui5-webcomponents/commit/5240c0b46e781abaa54afc014a7861d85622206b))
+* **ui5-timeline:** fix javascript error ([#9634](https://github.com/SAP/ui5-webcomponents/issues/9634)) ([ac2c014](https://github.com/SAP/ui5-webcomponents/commit/ac2c0148f7d41f52f01c50a42322b8d150633d2d)), closes [#9633](https://github.com/SAP/ui5-webcomponents/issues/9633)
+
+
+
+
+
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** fixed wrong overlapping in header area ([#9568](https://github.com/SAP/ui5-webcomponents/issues/9568)) ([9d55094](https://github.com/SAP/ui5-webcomponents/commit/9d550946c4708ee2e124307344837a0ce38ca682)), closes [#9560](https://github.com/SAP/ui5-webcomponents/issues/9560)
+* **ui5-page:** replace resize observer with container query ([#9576](https://github.com/SAP/ui5-webcomponents/issues/9576)) ([67b9ce1](https://github.com/SAP/ui5-webcomponents/commit/67b9ce1a8cab83fe7a943ddb8c963fdb9f249d4c))
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([2691670](https://github.com/SAP/ui5-webcomponents/commit/269167087c69f31cdce96f9c04464de40bc5054b)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+* **ui5-shellbar:** remove aria attribute from search button ([#9597](https://github.com/SAP/ui5-webcomponents/issues/9597)) ([43c03e7](https://github.com/SAP/ui5-webcomponents/commit/43c03e7510a82b189d3729062089f2a0dcbb12c8))
+
+
+### Features
+
+* **core:** fire PascalCase events for easier react usage ([#9608](https://github.com/SAP/ui5-webcomponents/issues/9608)) ([43e28fa](https://github.com/SAP/ui5-webcomponents/commit/43e28fa5da370bde06cc23d78a3508321673ca54))
+* **ui5-timeline-group-item:** introduce new component ([#9407](https://github.com/SAP/ui5-webcomponents/issues/9407)) ([aea62ef](https://github.com/SAP/ui5-webcomponents/commit/aea62ef38b55107f7dfd63c468bc1936d426ae42))
+
+
+
+
+
+# [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** improved readability ([#9527](https://github.com/SAP/ui5-webcomponents/issues/9527)) ([ea60331](https://github.com/SAP/ui5-webcomponents/commit/ea60331ece11a9ff1c2097108b83ee006768cc2c)), closes [#9296](https://github.com/SAP/ui5-webcomponents/issues/9296)
+
+
+
+
+
+# [2.1.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* **ui5-li-notification:** fix aria-level value ([#9504](https://github.com/SAP/ui5-webcomponents/issues/9504)) ([ca153d0](https://github.com/SAP/ui5-webcomponents/commit/ca153d01317286164e39a119c43c7ecaddffdeef))
+* **ui5-upload-collection:** make empty upload collection focusable ([#9403](https://github.com/SAP/ui5-webcomponents/issues/9403)) ([16d7bef](https://github.com/SAP/ui5-webcomponents/commit/16d7bef464be7b3e1b2d11484a5145d8d526855a))
+
+
+
+
+
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** correct separator visualization ([#9478](https://github.com/SAP/ui5-webcomponents/issues/9478)) ([1be8d6c](https://github.com/SAP/ui5-webcomponents/commit/1be8d6c094827aeedcc6742a6aae81ce6cd2d966)), closes [#9477](https://github.com/SAP/ui5-webcomponents/issues/9477)
+* **ui5-wizard:** disabled steps are no longer clickable ([#9459](https://github.com/SAP/ui5-webcomponents/issues/9459)) ([2ea26ca](https://github.com/SAP/ui5-webcomponents/commit/2ea26caa0b4457a3b79edbbdfbbe206ad5713135))
+
+
+
+
+
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+
+### Bug Fixes
+
+* **ui5-li-notification-group:** suspend nested item navigation ([#9361](https://github.com/SAP/ui5-webcomponents/issues/9361)) ([90f5f11](https://github.com/SAP/ui5-webcomponents/commit/90f5f11c6353a894a34b8275c331660730e1443e))
+* **ui5-notification-list-item:** focus is no longer trapped in loading item ([#8969](https://github.com/SAP/ui5-webcomponents/issues/8969)) ([fa37d92](https://github.com/SAP/ui5-webcomponents/commit/fa37d92f30931a1ac38d6efadf4439ba3d3d555e)), closes [#8768](https://github.com/SAP/ui5-webcomponents/issues/8768)
+* **ui5-notification-list:** fixed show more test ([#9419](https://github.com/SAP/ui5-webcomponents/issues/9419)) ([4ba9173](https://github.com/SAP/ui5-webcomponents/commit/4ba917317a6cf48e7606e9988635fd45cb293dd1))
+* **ui5-upload-collection-item:** delete can be triggered by keyboard now ([#9392](https://github.com/SAP/ui5-webcomponents/issues/9392)) ([b3de325](https://github.com/SAP/ui5-webcomponents/commit/b3de325d58e566b7be19978952501d4be99aeb5c))
+
+
+
+
+
+## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
+
+
+### Bug Fixes
+
+* **ui5-notification-list:** fixed show more test ([#9400](https://github.com/SAP/ui5-webcomponents/issues/9400)) ([c19c5e3](https://github.com/SAP/ui5-webcomponents/commit/c19c5e3f3a756bdd8323a73b59c94b44167f16f7))
+
+
+
+
+
+# [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
+
+
+### Bug Fixes
+
+* **dynamic-page:** some remarks fixed ([#9341](https://github.com/SAP/ui5-webcomponents/issues/9341)) ([eb99114](https://github.com/SAP/ui5-webcomponents/commit/eb991145f0029d00c41c37a1b3a7e1e7229be647))
+* **ui5-tag:** fix styling issues ([#9305](https://github.com/SAP/ui5-webcomponents/issues/9305)) ([24dd42b](https://github.com/SAP/ui5-webcomponents/commit/24dd42b16f6889f9ea54402f4b664c84fdf92bfa))
+
+
+### Code Refactoring
+
+* **ui5-illustrated-message:** rename IllustrationMessageSize enum ([#9302](https://github.com/SAP/ui5-webcomponents/issues/9302)) ([6fe2a02](https://github.com/SAP/ui5-webcomponents/commit/6fe2a023772f34550a3d7f433017b1f8f2c5cd0c)), closes [#8605](https://github.com/SAP/ui5-webcomponents/issues/8605) [#8461](https://github.com/SAP/ui5-webcomponents/issues/8461) [#7887](https://github.com/SAP/ui5-webcomponents/issues/7887)
+* **ui5-view-settings-dialog:** change opening api to open property ([#9249](https://github.com/SAP/ui5-webcomponents/issues/9249)) ([52106cc](https://github.com/SAP/ui5-webcomponents/commit/52106ccffba64d13949764339a71225b33dac3a3))
+
+
+### Features
+
+* add property initializers ([#8846](https://github.com/SAP/ui5-webcomponents/issues/8846)) ([eef0cc9](https://github.com/SAP/ui5-webcomponents/commit/eef0cc9b663fda6268b98e516ed46439435fa2b0))
+* **ui5-flexible-column-layout:** enable resize via separators drag-and-drop ([#9160](https://github.com/SAP/ui5-webcomponents/issues/9160)) ([9b54af4](https://github.com/SAP/ui5-webcomponents/commit/9b54af42b6dccfee5781ef45f66d2003a71f7e5b))
+
+
+### BREAKING CHANGES
+
+* **ui5-illustrated-message:** The enum IllustrationMessageSize is renamed to IllustrationMessageDesign.
+If you have previously imported the enum:
+
+import IllustrationMessageSize from "@ui5/webcomponents-base/dist/types/IllustrationMessageSize.js";
+Now import IllustrationMessageDesign instead:
+
+import IllustrationMessageDesign from "@ui5/webcomponents-base/dist/types/IllustrationMessageDesign.js";
+* **ui5-view-settings-dialog:** Removed `show` and `close` methods.
+
+Before, the ui5-view-settings-dialog could be opened and closed by calling `show()` and `close()`:
+```ts
+const viewSettingsDialog = document.getElementById("exampleID");
+viewSettingsDialog.show();
+viewSettingsDialog.close();
+```
+Now, the dialog is opened and closed by setting the open property to true or false:
+```ts
+const viewSettingsDialog = document.getElementById("exampleID");
+viewSettingsDialog.open = true;
+viewSettingsDialog.open = false;
+```
+fixes: https://github.com/SAP/ui5-webcomponents/issues/9240
+* @property decorator must be adapted according to new type parameter
+
+
+
+
+
 # [2.0.0-rc.6](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2024-06-17)
 
 

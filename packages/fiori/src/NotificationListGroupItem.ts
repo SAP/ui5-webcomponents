@@ -10,6 +10,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationListItem from "./NotificationListItem.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -103,10 +104,15 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<NotificationListItemBase>
+	items!: Array<NotificationListItem>
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
+
+		this.items.forEach(item => {
+			item._ariaLevel = "2";
+		});
+
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
@@ -145,11 +151,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
-		const ids = [];
 
-		if (this.isLoading) {
-			ids.push(`${id}-loading`);
+		if (this.loading) {
+			return `${id}-loading`;
 		}
+
+		const ids = [];
 
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);

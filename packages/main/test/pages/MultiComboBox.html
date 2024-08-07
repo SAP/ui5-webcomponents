@@ -145,7 +145,7 @@
 			<ui5-mcb-item text="Compact"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Condensed"></ui5-mcb-item>
 			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
-			<div slot="valueStateMessage">Information message. This is a <a href="#">Link</a>. Extra long text used as
+			<div slot="valueStateMessage">Information message. This is a <a href="#" target="_blank">Link</a>. Extra long text used as
 				an information message. Extra long text used as an information message - 2. Extra long text used as an
 				information message - 3.</div>
 		</ui5-multi-combobox>
@@ -235,6 +235,33 @@
 
 		<br>
 
+		<div class="demo-section">
+			<span>Select all with groups</span>
+
+			<br>
+			<ui5-multi-combobox show-select-all id="mcb-select-all-grouping" value-state="Critical">
+				<ui5-mcb-item-group header-text="Asia">
+					<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
+					<ui5-mcb-item text="China"></ui5-mcb-item>
+					<ui5-mcb-item text="India"></ui5-mcb-item>
+					<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
+				</ui5-mcb-item-group>
+				<ui5-mcb-item-group header-text="Europe">
+					<ui5-mcb-item text="Austria"></ui5-mcb-item>
+					<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
+					<ui5-mcb-item text="Germany"></ui5-mcb-item>
+					<ui5-mcb-item text="Italy"></ui5-mcb-item>
+				</ui5-mcb-item-group>
+				<ui5-mcb-item-group header-text="North America">
+					<ui5-mcb-item text="Canada"></ui5-mcb-item>
+					<ui5-mcb-item text="Granada"></ui5-mcb-item>
+					<ui5-mcb-item text="Haiti"></ui5-mcb-item>
+					<ui5-mcb-item text="United States"></ui5-mcb-item>
+				</ui5-mcb-item-group>
+			</ui5-multi-combobox>
+
+			<br>
+
 		<ui5-multi-combobox show-select-all id="mcb-select-all">
 			<ui5-mcb-item text="Qui minim"></ui5-mcb-item>
 			<ui5-mcb-item text="minim amet"></ui5-mcb-item>
@@ -270,7 +297,7 @@
 		<span id="select-all-event">Selected items count: <span>0</span></span>
 
 		<script>
-			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selectionChange", e => {
+			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selection-change", e => {
 				console.log("selection change")
 				document.querySelector("#select-all-event span").textContent = e.detail.items.length;
 			});
@@ -363,19 +390,19 @@
 
 		<br>
 		<ui5-multi-combobox id="mcb-grouping" no-validation placeholder="Select a country">
-			<ui5-mcb-item-group text="Asia">
+			<ui5-mcb-item-group header-text="Asia">
 				<ui5-mcb-item text="Afghanistan"></ui5-mcb-item>
 				<ui5-mcb-item text="China"></ui5-mcb-item>
 				<ui5-mcb-item text="India"></ui5-mcb-item>
 				<ui5-mcb-item text="Indonesia"></ui5-mcb-item>
 			</ui5-mcb-item-group>
-			<ui5-mcb-item-group text="Europe">
+			<ui5-mcb-item-group header-text="Europe">
 				<ui5-mcb-item text="Austria"></ui5-mcb-item>
 				<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
 				<ui5-mcb-item text="Germany"></ui5-mcb-item>
 				<ui5-mcb-item text="Italy"></ui5-mcb-item>
 			</ui5-mcb-item-group>
-			<ui5-mcb-item-group text="North America">
+			<ui5-mcb-item-group header-text="North America">
 				<ui5-mcb-item text="Canada"></ui5-mcb-item>
 				<ui5-mcb-item text="Granada"></ui5-mcb-item>
 				<ui5-mcb-item text="Haiti"></ui5-mcb-item>
@@ -571,7 +598,7 @@
 		var closeCounter = 0;
 		const multiComboBox = document.querySelector("#mcb-prevent");
 
-		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
+		document.getElementById("mcb").addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;

@@ -3365,10 +3365,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@openui5/sap.ui.core@1.120.5":
-  version "1.120.5"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.120.5.tgz#845d961628285500534969beb26622bb58b12b6c"
-  integrity sha512-NsEaubmKHuLgMnzoRr/RFDr2ZauGQx6LDVA+9dnSsdAb069+w2SO5G8IUj5iWZ9o3FhUf8eNr/hSl6QWN1fI/Q==
+"@openui5/sap.ui.core@1.120.17":
+  version "1.120.17"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.120.17.tgz#0fac0d9a86336046974070ff7725b6e0a9e65356"
+  integrity sha512-zxOeGSLxOGGxUoZ1YT1x5gEZZDfwlpBY7TFqHJbqWcaOByUEWayfME5uwUQTa5RJ7jCeyNdpjrreTPGtrSU+bA==
 
 "@parcel/watcher@2.0.4":
   version "2.0.4"
@@ -3409,10 +3409,10 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.24.tgz#58601079e11784d20f82d0585865bb42305c4df3"
   integrity sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==
 
-"@sap-theming/theming-base-content@11.12.0":
-  version "11.12.0"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.12.0.tgz#e62d2b6f9cc923447d2a3813b214ba6f0bedc7e4"
-  integrity sha512-kPHlziH8e6W8VjzljOiNjgBz81GuvC8WUAi7K6F5k+ZaRc1DUkDU12x9k6B0l4u9nPtprdZTse55r3PFGuELdQ==
+"@sap-theming/theming-base-content@11.17.1":
+  version "11.17.1"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.17.1.tgz#82665ba782f39e419e67993379ce3d7b9d154de6"
+  integrity sha512-C13DbCBGkLYRZtQU7d6TmDHChA+S7bs26xk+fqHL0pBJTOm4V8NP1sj1SPfI9mbkUp+f5QLcWaENwUoTF00ElA==
 
 "@sideway/address@^4.1.5":
   version "4.1.5"
@@ -6044,7 +6044,7 @@ chokidar@3.5.3, chokidar@^3.0.0, chokidar@^3.3.0, chokidar@^3.5.1, chokidar@^3.5
   optionalDependencies:
     fsevents "~2.3.2"
 
-chokidar@^3.4.2:
+chokidar@^3.4.2, chokidar@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.6.0.tgz#197c6cc669ef2a8dc5e7b4d97ee4e092c3eb0d5b"
   integrity sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==
@@ -6094,10 +6094,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromedriver@^125.0.0:
-  version "125.0.0"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-125.0.0.tgz#1fed0351865bf45a3417cbdac45e2dc4257cb876"
-  integrity sha512-wWXrxWLWqXRTmRZDtPigs+ys44srlpHTpsL7MHnZc9iaE1oIB0hslSVeem6TcsEb1Ou8nvPx3vs5bPwCI6+VHg==
+chromedriver@^126.0.0:
+  version "126.0.5"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-126.0.5.tgz#5db6f463c7557e3a76b7fe7fb73aaf2f06fd07e6"
+  integrity sha512-xXVxwxd8CJ6yg2KEvFqLQi7V0RvF78xFnLB+xo9g9MoJNHMQccD7b4OWaxtKDy5RXrMgQ6Jb6vUN3SjTYXHLEQ==
   dependencies:
     "@testim/chrome-version" "^1.1.4"
     axios "^1.6.7"

@@ -25,7 +25,7 @@ import {
 class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Defines the `titleText` of the item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -67,10 +67,6 @@ class NotificationListItemBase extends ListItemBase {
 
 	get loadingText() {
 		return NotificationListItemBase.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOADING);
-	}
-
-	get isLoading() {
-		return this.loading;
 	}
 
 	/**

@@ -4,6 +4,9 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import "@ui5/webcomponents-icons/dist/nav-back.js";
+import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
@@ -14,6 +17,7 @@ import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
+	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import type { IMenuItem } from "./Menu.js";
@@ -23,6 +27,8 @@ import menuItemCss from "./generated/themes/MenuItem.css.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
+
+type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeyShortcuts" | "role"> & ListItemAccessibilityAttributes;
 
 /**
  * @class
@@ -60,11 +66,11 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines the text of the tree item.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
@@ -74,12 +80,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	 *
 	 * The priority of what will be displayed at the end of the menu item is as follows:
 	 * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText = "";
+	additionalText?: string;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -126,12 +132,12 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	/**
 	 * Defines the accessible ARIA name of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.7.0
 	 */
 	@property()
-	accessibleName = "";
+	accessibleName?: string;
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
@@ -141,6 +147,21 @@ class MenuItem extends ListItem implements IMenuItem {
 	 */
 	@property()
 	tooltip?: string;
+
+	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
+	 *
+	 * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
+	 *
+	 * @public
+	 * @since 2.1.0
+	 * @default {}
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: MenuItemAccessibilityAttributes = {};
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
@@ -189,7 +210,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get hasSubmenu() {
-		return !!(this.items.length || this.loading);
+		return !!(this.items.length || this.loading) && !this.disabled;
 	}
 
 	get hasEndContent() {
@@ -224,6 +245,10 @@ class MenuItem extends ListItem implements IMenuItem {
 		return MenuItem.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
 	}
 
+	get acessibleNameText() {
+		return MenuItem.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
+	}
+
 	get isSeparator(): boolean {
 		return false;
 	}
@@ -242,8 +267,10 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: "menuitem",
+			role: this.accessibilityAttributes.role || "menuitem",
 			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
+			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
@@ -296,6 +323,9 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.selected = false;
 		if (e.detail.escPressed) {
 			this.focus();
+			if (isPhone()) {
+				this.fireEvent("close-menu", {});
+			}
 		}
 	}
 
@@ -311,4 +341,5 @@ export default MenuItem;
 export type {
 	MenuBeforeCloseEventDetail,
 	MenuBeforeOpenEventDetail,
+	MenuItemAccessibilityAttributes,
 };

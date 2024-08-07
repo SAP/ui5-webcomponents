@@ -61,7 +61,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * `import "@ui5/webcomponents-fiori/dist/NotificationList.js";``
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  */
 @customElement({

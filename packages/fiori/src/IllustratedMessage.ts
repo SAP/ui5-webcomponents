@@ -11,7 +11,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
-import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
+import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
 import "./illustrations/BeforeSearch.js";
 
@@ -121,10 +121,10 @@ class IllustratedMessage extends UI5Element {
 	* elements of the component are displayed differently on the different breakpoints/illustration designs.
 	* @default "Auto"
 	* @public
-	* @since 1.5.0
+	* @since 2.0.0
 	*/
 	@property()
-	design: `${IllustrationMessageSize}` = "Auto";
+	design: `${IllustrationMessageDesign}` = "Auto";
 
 	/**
 	* Defines the subtitle of the component.
@@ -300,7 +300,7 @@ class IllustratedMessage extends UI5Element {
 		this.illustrationTitle = IllustratedMessage.i18nBundle.getText(illustrationData!.title);
 		this.illustrationSubtitle = IllustratedMessage.i18nBundle.getText(illustrationData!.subtitle);
 
-		if (this.design !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageDesign.Auto) {
 			this._handleCustomSize();
 		}
 	}
@@ -314,7 +314,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	handleResize() {
-		if (this.design !== IllustrationMessageSize.Auto) {
+		if (this.design !== IllustrationMessageDesign.Auto) {
 			this._adjustHeightToFitContainer();
 			return;
 		}
@@ -393,16 +393,16 @@ class IllustratedMessage extends UI5Element {
 	 */
 	_handleCustomSize() {
 		switch (this.design) {
-		case IllustrationMessageSize.Base:
+		case IllustrationMessageDesign.Base:
 			this.media = IllustratedMessage.MEDIA.BASE;
 			return;
-		case IllustrationMessageSize.Dot:
+		case IllustrationMessageDesign.Dot:
 			this.media = IllustratedMessage.MEDIA.DOT;
 			return;
-		case IllustrationMessageSize.Spot:
+		case IllustrationMessageDesign.Spot:
 			this.media = IllustratedMessage.MEDIA.SPOT;
 			return;
-		case IllustrationMessageSize.Dialog:
+		case IllustrationMessageDesign.Dialog:
 			this.media = IllustratedMessage.MEDIA.DIALOG;
 			return;
 		default:

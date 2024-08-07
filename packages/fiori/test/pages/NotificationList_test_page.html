@@ -171,45 +171,62 @@
 			</ui5-li-notification-group>
 
 			<ui5-li-notification-group
-			id="nlgi4"
-			title-text="Collapsed loading"
-			collapsed
-			loading
-		>
-			<ui5-li-notification
-				id="nli5"
-				wrapping-type="Normal"
-				show-close
-				title-text="New payment #2900"
-				state="Negative"
+				id="nlgi4"
+				title-text="Collapsed loading"
+				collapsed
+				loading
 			>
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+				<ui5-li-notification
+					id="nli5"
+					wrapping-type="Normal"
+					show-close
+					title-text="New payment #2900"
+					state="Negative"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
 
-				<span slot="footnotes">Office Notifications</span>
-				<span slot="footnotes">3 Days</span>
+					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">3 Days</span>
 
-				<ui5-menu slot="menu">
-					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
-					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
-				</ui5-menu>
-			</ui5-li-notification>
-		</ui5-li-notification-group>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+				</ui5-li-notification>
+			</ui5-li-notification-group>
+
+			<ui5-li-notification-group
+				id="nlgi5"
+				title-text="Expanded loading"
+				loading
+			>
+				<ui5-li-notification
+					wrapping-type="Normal"
+					show-close
+					title-text="New payment #2900"
+					state="Negative"
+				>
+					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+				</ui5-li-notification>
+			</ui5-li-notification-group>
+
 		</ui5-notification-list>
 	</div>
 	<br >
 	<br >
 	<ui5-button>Some button</ui5-button>
 	<script>
-		notificationList.addEventListener("ui5-itemClick", function(event) {
+		notificationList.addEventListener("ui5-item-click", function(event) {
 			clickInput.value = event.detail.item.titleText;
 		});
 
-		notificationList.addEventListener("ui5-itemClose", function(event) {
+		notificationList.addEventListener("ui5-item-close", function(event) {
 			closeInput.value = event.detail.item.titleText;
 		});
 
-		notificationList.addEventListener("ui5-itemToggle", function(event) {
+		notificationList.addEventListener("ui5-item-toggle", function(event) {
 			toggleInput.value = event.detail.item.titleText;
 		});
 

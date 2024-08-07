@@ -113,6 +113,12 @@ class DynamicPageTitle extends UI5Element {
 	/**
 	 * Defines the content of the Heading of the Dynamic Page.
 	 *
+	 * The font size of the title within the `heading` slot can be adjusted to the recommended values using the following CSS variables:
+	 *
+	 * **Expanded:** `var(--sapObjectHeader_Title_FontSize)`
+	 *
+	 * **Collapsed:** `var(--sapObjectHeader_Title_SnappedFontSize)`
+	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
@@ -251,6 +257,10 @@ class DynamicPageTitle extends UI5Element {
 		if (hasAnyHeading) {
 			return `${this._id}-heading`;
 		}
+	}
+
+	get _needsSeparator() {
+		return (this.navigationBar.length && this.actionsBar.length);
 	}
 
 	prepareLayoutActions() {

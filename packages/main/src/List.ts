@@ -39,7 +39,7 @@ import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
-import ListSeparators from "./types/ListSeparators.js";
+import ListSeparator from "./types/ListSeparator.js";
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template
@@ -381,7 +381,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	separators: `${ListSeparators}`= "All";
+	separators: `${ListSeparator}`= "All";
 
 	/**
 	 * Defines whether the component will have growing capability either by pressing a `More` button,
@@ -715,22 +715,6 @@ class List extends UI5Element {
 		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
-	get loadingIndPosition() {
-		if (!this.grows) {
-			return "absolute";
-		}
-
-		return this._inViewport ? "absolute" : "sticky";
-	}
-
-	get styles() {
-		return {
-			loadingInd: {
-				position: this.loadingIndPosition,
-			},
-		};
-	}
-
 	get listAccessibleRole() {
 		return this.accessibleRole.toLowerCase();
 	}
@@ -749,8 +733,8 @@ class List extends UI5Element {
 
 		slottedItems.forEach((item, key) => {
 			const isLastChild = key === slottedItems.length - 1;
-			const showBottomBorder = this.separators === ListSeparators.All
-				|| (this.separators === ListSeparators.Inner && !isLastChild);
+			const showBottomBorder = this.separators === ListSeparator.All
+				|| (this.separators === ListSeparator.Inner && !isLastChild);
 
 			if (item.hasConfigurableMode) {
 				(item as ListItem)._selectionMode = this.selectionMode;

@@ -25,20 +25,20 @@ import styles from "./generated/themes/SuggestionItem.css.js";
 class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelectable {
 	/**
 	 * Defines the text of the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
-	text = "";
+	text?: string;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the item.
-	 * @default ""
+	 * @default undefined
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
 	@property()
-	additionalText = "";
+	additionalText?: string;
 
 	/**
 	 * Defines the markup text that will be displayed as suggestion.

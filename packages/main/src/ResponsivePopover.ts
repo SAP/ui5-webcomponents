@@ -11,7 +11,6 @@ import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
-import Title from "./Title.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Styles
@@ -48,7 +47,6 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 		...Popover.dependencies,
 		Button,
 		Dialog,
-		Title,
 	],
 })
 class ResponsivePopover extends Popover {

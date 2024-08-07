@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -69,7 +70,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * Defines the tooltip of the component.
 	 *
 	 * **Note:** A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -87,7 +88,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -100,7 +101,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 *
 	 * Example:
 	 * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -206,7 +207,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	static async onDefine() {

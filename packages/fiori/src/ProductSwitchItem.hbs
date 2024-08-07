@@ -8,7 +8,7 @@
 		@keyup="{{_onkeyup}}"
 		tabindex={{forcedTabIndex}}
 		href="{{targetSrc}}"
-		target="{{target}}">
+		target="{{_effectiveTarget}}">
 		{{> item}}
 	</a>
 {{else}}

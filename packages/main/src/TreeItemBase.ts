@@ -122,7 +122,7 @@ class TreeItemBase extends ListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable!: boolean;
+	movable = false;
 
 	/**
 	* Defines whether the selection of a tree node is displayed as partially selected.
@@ -141,7 +141,7 @@ class TreeItemBase extends ListItem {
 	* @since 1.1.0
 	*/
 	@property({ type: Boolean })
-	declare indeterminate
+	declare indeterminate: boolean;
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
@@ -173,7 +173,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	declare accessibleName
+	declare accessibleName?: string;
 
 	/**
 	 * @private

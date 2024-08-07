@@ -3,6 +3,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -257,9 +258,20 @@ class NotificationListItem extends NotificationListItemBase {
 	@slot({ type: Node, "default": true })
 	description!: Array<Node>;
 
+	@query(".ui5-nli-title-text")
+	titleTextDOM?: HTMLElement;
+
+	@query(".ui5-nli-menu-btn")
+	menuButtonDOM?: HTMLElement;
+
+	@query(".ui5-nli-description")
+	descriptionDOM?: HTMLElement;
+
 	_titleTextOverflowHeight: number;
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
+
+	_ariaLevel : string | undefined;
 
 	constructor() {
 		super();
@@ -331,14 +343,6 @@ class NotificationListItem extends NotificationListItemBase {
 		return true;
 	}
 
-	get descriptionDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-description");
-	}
-
-	get titleTextDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-title-text");
-	}
-
 	get titleTextHeight() {
 		return (this.titleTextDOM as HTMLElement).offsetHeight;
 	}
@@ -378,6 +382,11 @@ class NotificationListItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
+
+		if (this.loading) {
+			return `${id}-loading`;
+		}
+
 		const ids = [];
 
 		if (this.hasImportance) {
@@ -386,10 +395,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
-		}
-
-		if (this.isLoading) {
-			ids.push(`${id}-loading`);
 		}
 
 		ids.push(`${id}-read`);
@@ -474,10 +479,6 @@ class NotificationListItem extends NotificationListItemBase {
 				expanded: this._showMorePressed,
 			},
 		};
-	}
-
-	get menuButtonDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-menu-btn")!;
 	}
 
 	get showMenu() {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script type="importmap">
+		{
+			"imports": {
+				"@ui5/webcomponents-localization/": "/packages/localization/",
+				"@ui5/webcomponents/": "/packages/main/",
+				"@ui5/webcomponents-theming/": "/packages/theming/",
+				"@ui5/webcomponents-icons/": "/packages/icons/",
+				"@ui5/webcomponents-base/": "/packages/base/",
+				"lit-html": "/node_modules/lit-html/lit-html.js",
+				"lit-html/": "/node_modules/lit-html/"
+			}
+		}
+  </script>
+  <style>
+	body {
+		background-color: var(--sapBackgroundColor);
+	}
+  </style>
+</head>
+
+<body>
+	<!-- run a build and start a normal serve in the root folder to test CDN scenario with asset fetch -->
+	<script type="module">
+		import "@ui5/webcomponents/dist/Link.js";
+		import "@ui5/webcomponents/dist/Button.js";
+		import "@ui5/webcomponents/dist/DatePicker.js";
+		import "@ui5/webcomponents/dist/TextArea.js";
+		import "@ui5/webcomponents/dist/Icon.js";
+		import "@ui5/webcomponents/dist/Assets-fetch.js";
+		import "@ui5/webcomponents-icons/dist/AllIcons-fetch.js";
+	</script>
+	<ui5-link href="?sap-ui-language=en">English</ui5-link>
+	<ui5-link href="?sap-ui-language=de">German</ui5-link>
+	<br>
+	<ui5-link href="?sap-ui-theme=sap_horizon">Horizon</ui5-link>
+	<ui5-link href="?sap-ui-theme=sap_horizon_dark">Horizon Dark</ui5-link>
+	<ui5-textarea maxlength="10" show-exceeded-text value="more than 10 characters">Submit</ui5-textarea>
+	<ui5-button>Submit</ui5-button>
+	<ui5-date-picker></ui5-date-picker>
+    <ui5-icon name="home"></ui5-icon>
+    <ui5-icon name="account"></ui5-icon>
+</body>
+
+</html>

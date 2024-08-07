@@ -164,12 +164,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	size: `${AvatarSize}` = "S";
 
 	/**
-	 * @private
-	 */
-	@property()
-	_size: `${AvatarSize}` = "S";
-
-	/**
 	 * Defines the background color of the desired image.
 	 * @default "Accent6"
 	 * @public
@@ -259,7 +253,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 */
 	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
-		return this.getAttribute("size") as AvatarSize || this._size;
+		return this.getAttribute("size") as AvatarSize;
 	}
 
 	/**
