@@ -795,7 +795,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._isValueStateFocused = false;
 
 		this._announceSelectedItem(indexOfItem);
-		this._scrollToItem(indexOfItem, isForward);
+		this._scrollToItem(indexOfItem);
 
 		if (isGroupItem && this.open) {
 			return;
@@ -1205,7 +1205,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		item._isVisible = true;
 	}
 
-	_scrollToItem(indexOfItem: number, forward: boolean) {
+	_scrollToItem(indexOfItem: number) {
 		const picker = this._getPicker();
 		const list = this._getItemsList();
 		const listItem = list?.listItems[indexOfItem];
@@ -1216,7 +1216,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
 
 			if (!isListItemInVisibleArea) {
-				listItem.scrollIntoView({ behavior: "instant", block: forward ? "end" : "start", inline: "nearest" });
+				listItem.scrollIntoView({
+					behavior: "auto",
+					block: "nearest",
+					inline: "nearest",
+				});
 			}
 		}
 	}
