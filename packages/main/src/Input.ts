@@ -190,6 +190,7 @@ type InputSuggestionScrollEventDetail = {
  * @csspart input - Used to style the native input element
  * @csspart clear-icon - Used to style the clear icon, which can be pressed to clear user input text
  *
+ *
  * @constructor
  * @extends UI5Element
  * @public
