@@ -794,17 +794,20 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		this.onBeforeRendering();
-		if (!this._rendered) {
-			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
-			this.updateAttributes();
+		try	{
+			this.onBeforeRendering();
+
+			if (!this._rendered) {
+				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				this.updateAttributes();
+			}
+
+			// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+			this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
+		} finally {
+			// always resume normal invalidation handling
+			this._suppressInvalidation = false;
 		}
-
-		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
-
-		// resume normal invalidation handling
-		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
 		/*

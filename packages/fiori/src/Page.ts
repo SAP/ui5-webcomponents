@@ -126,6 +126,7 @@ class Page extends UI5Element {
 		return {
 			content: {
 				"padding-bottom": this.footer.length && this._contentPaddingBottom,
+				"scroll-padding-bottom": this.footer.length && this._contentPaddingBottom,
 				"bottom": this.footer.length && this._contentBottom,
 				"top": this._contentTop,
 			},

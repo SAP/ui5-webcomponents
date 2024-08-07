@@ -85,4 +85,12 @@ describe("Configuration script has effect", () => {
 		});
 		assert.strictEqual(res, false, "defaultFontLoading is false");
 	});
+
+	it("Tests that enableDefaultTooltips is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getEnableDefaultTooltips());
+		});
+		assert.strictEqual(res, false, "enableDefaultTooltips is false");
+	});
 });
