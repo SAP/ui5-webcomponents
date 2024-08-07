@@ -6,7 +6,7 @@ const { existsSync } = require('fs');
 const { dirname, join, resolve } = require('path');
 const path = require('path');
 const tsconfigPaths = require('vite-tsconfig-paths').default;
-const {checker} = require('vite-plugin-checker');
+const { checker } = require('vite-plugin-checker');
 
 // use after path.join and path.resolve as they turn paths to windows separators and comparisons and replacements stop working
 const toPosixPath = (pathStr) => {
@@ -97,20 +97,31 @@ const customResolver = (id, source, options) => {
 }
 
 module.exports = defineConfig(async () => {
+	const plugins = [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
+	process.env.UI5_BASE ? null : checker({
+		// e.g. use TypeScript check
+		typescript: {
+			tsconfigPath: "packages/fiori/tsconfig.json",
+			buildMode: true,
+		},
+	}),
+	]
+
+	if (process.env.UI5_BASE) {
+		plugins.push(checker({
+			// e.g. use TypeScript check
+			typescript: {
+				tsconfigPath: "packages/fiori/tsconfig.json",
+				buildMode: true,
+			},
+		}))
+	}
+
 	return {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
-			checker({
-				// e.g. use TypeScript check
-				typescript: {
-					tsconfigPath: "packages/fiori/tsconfig.json",
-					buildMode: true,
-				},
-		  	}),
-		],
-
+		plugins,
 		resolve: {
 			alias: [
 				// { find: /\@ui5\/webcomponents-base\/dist\/(.*)/, replacement: "../base/src/$1" },
