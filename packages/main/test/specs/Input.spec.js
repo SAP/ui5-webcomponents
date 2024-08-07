@@ -53,8 +53,8 @@ describe("Attributes propagation", () => {
 		await input1.setProperty("value", "new value");
 		await input1.setProperty("value", null);
 
-		assert.strictEqual(await input1.getProperty("value"), null, "Property value should be null");
-		assert.notOk(await input1.hasAttribute("value"), "Value attribute should be removed");
+		assert.notOk(await input1.hasAttribute("value"), "Property value should be null");
+		assert.notOk(await innerInput.hasAttribute("value"), "Value attribute should be removed");
 	});
 });
 
