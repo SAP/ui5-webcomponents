@@ -97,23 +97,23 @@ const customResolver = (id, source, options) => {
 }
 
 module.exports = defineConfig(async () => {
-	const plugins = [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader()]
-
-	if (!process.env.UI5_BASE) {
-		plugins.push(checker({
-			// e.g. use TypeScript check
-			typescript: {
-				tsconfigPath: "packages/fiori/tsconfig.json",
-				buildMode: true,
-			},
-		}))
-	}
-
 	return {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins,
+		plugins: [
+			await virtualIndex(),
+			tsconfigPaths(),
+			customHotUpdate(),
+			ssrDomShimLoader(),
+			!process.env.UI5_BASE && checker({
+				// e.g. use TypeScript check
+				typescript: {
+					tsconfigPath: "packages/fiori/tsconfig.json",
+					buildMode: true,
+				}
+			})
+		],
 		resolve: {
 			alias: [
 				// { find: /\@ui5\/webcomponents-base\/dist\/(.*)/, replacement: "../base/src/$1" },
