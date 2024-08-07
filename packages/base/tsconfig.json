@@ -1,20 +1,20 @@
 {
-    "include": ["src/**/*", "src/global.d.ts"],
-    // ssr-dom is imported with bare specifier so that conditional exports are used, but this treats it as input and output, so ignore it
-    "exclude": ["src/ssr-dom.ts"],
-    "compilerOptions": {
-      "target": "ES2021",
-      "lib": ["DOM", "DOM.Iterable", "ES2023"],
-      // Generate d.ts files
-      "declaration": true,
-      "outDir": "dist",
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "inlineSources": true,
-      "strict": true,
-      "moduleResolution": "node",
-      "composite": true,
-      "rootDir": "src",
-      "tsBuildInfoFile": "dist/.tsbuildinfo",
-    },
+	"extends": "@ui5/webcomponents-tools/tsconfig.json",
+	"include": [
+		"src/**/*",
+		"src/global.d.ts",
+	],
+	// ssr-dom is imported with bare specifier so that conditional exports are used, but this treats it as input and output, so ignore it
+	"exclude": [
+		"src/ssr-dom.ts",
+		"src/generated/template/WithComplexTemplateTemplate.lit.ts"
+	],
+	"compilerOptions": {
+		"types": ["@ui5/webcomponents-tools"],
+		"outDir": "dist",
+		"composite": true,
+		"rootDir": "src",
+		"experimentalDecorators": true,
+		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+	},
 }

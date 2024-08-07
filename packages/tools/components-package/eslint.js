@@ -14,7 +14,10 @@ const overrides = tsMode ? [{
 		"plugin:@typescript-eslint/recommended-requiring-type-checking"
 	],
 	parserOptions: {
-	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
+	  "project": [
+		"./tsconfig.json",
+		"./cypress/tsconfig.json",
+	],
 	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
 	},
 	rules: {

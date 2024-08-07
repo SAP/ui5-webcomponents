@@ -10,6 +10,7 @@
     "sapui5",
     "ui5"
   ],
+  "types": "./types/index.d.ts",
   "scripts": {},
   "bin": {
     "wc-dev": "bin/dev.js",
