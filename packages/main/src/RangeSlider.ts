@@ -11,12 +11,15 @@ import {
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
 import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
+import Input from "./Input.js";
 
 // Texts
 import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
+	RANGE_SLIDER_TOOLTIP_INPUT_LABEL,
+	RANGE_SLIDER_TOOLTIP_INPUT_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -88,7 +91,7 @@ type AffectedValue = "startValue" | "endValue";
 	languageAware: true,
 	formAssociated: true,
 	template: RangeSliderTemplate,
-	dependencies: [Icon],
+	dependencies: [Icon, Input],
 	styles: [SliderBase.styles, rangeSliderStyles],
 })
 class RangeSlider extends SliderBase implements IFormInputElement {
@@ -428,7 +431,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -483,7 +486,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		e.preventDefault();
 
 		// If 'step' is 0 no interaction is available as there is no constant quantitative representation of the value
-		if (this.disabled || this._effectiveStep === 0) {
+		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -524,7 +527,11 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.update(undefined, newValues[0], newValues[1]);
 	}
 
-	_handleUp() {
+	_handleUp(e: MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(undefined);
 
@@ -538,6 +545,20 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.rangePressed = false;
 		this._startValueAtBeginningOfAction = undefined;
 		this._endValueAtBeginningOfAction = undefined;
+	}
+
+	_onInputChange(e: Event) {
+		const ctor = this.constructor as typeof RangeSlider;
+
+		const input = e.target as HTMLInputElement;
+		const value = ctor.clipValue(parseFloat(input.value), this._effectiveMin, this._effectiveMax);
+
+		if (input.hasAttribute("start-value")) {
+			this.startValue = value;
+			return;
+		}
+
+		this.endValue = value;
 	}
 
 	/**
@@ -839,6 +860,14 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	get _ariaLabelledByProgressBarRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	}
+
+	get _ariaLabelledByInputText() {
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_TOOLTIP_INPUT_LABEL);
+	}
+
+	get _ariaDescribedByInputText() {
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_TOOLTIP_INPUT_DESCRIPTION);
 	}
 
 	get styles() {

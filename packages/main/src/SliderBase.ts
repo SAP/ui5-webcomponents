@@ -8,7 +8,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
-	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
+	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
@@ -109,6 +109,14 @@ abstract class SliderBase extends UI5Element {
 	showTooltip = false;
 
 	/**
+	 * Enables handle tooltip displaying the current value.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	inputTooltip = false;
+
+	/**
 	 * Defines whether the slider is in disabled state.
 	 * @default false
 	 * @public
@@ -139,7 +147,7 @@ abstract class SliderBase extends UI5Element {
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
-	_upHandler: () => void;
+	_upHandler: (e: TouchEvent | MouseEvent) => void;
 	_stateStorage: StateStorage;
 	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
@@ -180,7 +188,7 @@ abstract class SliderBase extends UI5Element {
 
 	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
-	_handleUp() {}
+	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
@@ -281,7 +289,13 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this.disabled || this._effectiveStep === 0) {
+		const target = e.target as HTMLElement;
+
+		if (isF2(e) && target.classList.contains("ui5-slider-handle")) {
+			(this.shadowRoot?.querySelector("ui5-input") as HTMLElement).focus();
+		}
+
+		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-slider-handle")) {
 			return;
 		}
 
@@ -403,9 +417,10 @@ abstract class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_handleFocusOnMouseDown(e: TouchEvent | MouseEvent) {
-		const focusedElement = this.shadowRoot!.activeElement;
+		const currentlyFocusedElement = this.shadowRoot!.activeElement;
+		const elementToBeFocused = e.target as HTMLElement;
 
-		if (!focusedElement || focusedElement !== e.target) {
+		if ((!currentlyFocusedElement || currentlyFocusedElement !== elementToBeFocused) && !elementToBeFocused.hasAttribute("ui5-input")) {
 			this._preserveFocus(true);
 			this.focusInnerElement();
 		}
@@ -727,6 +742,22 @@ abstract class SliderBase extends UI5Element {
 
 	get _ariaLabelledByHandleRefs() {
 		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	}
+
+	get _ariaDescribedByHandleRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderInputDesc`].join(" ").trim();
+	}
+
+	get _ariaLabelledByInputRefs() {
+		return [`${this._id}-accName`, `${this._id}-sliderInputLabel`].join(" ").trim();
+	}
+
+	get _ariaDescribedByInputText() {
+		return "";
+	}
+
+	get _ariaLabelledByInputText() {
+		return "";
 	}
 }
 

@@ -6,6 +6,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
+import Input from "./Input.js";
 
 // Template
 import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
@@ -13,6 +14,8 @@ import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 // Texts
 import {
 	SLIDER_ARIA_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_DESCRIPTION,
+	SLIDER_TOOLTIP_INPUT_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -74,7 +77,7 @@ import {
 	languageAware: true,
 	formAssociated: true,
 	template: SliderTemplate,
-	dependencies: [Icon],
+	dependencies: [Icon, Input],
 })
 class Slider extends SliderBase implements IFormInputElement {
 	/**
@@ -161,7 +164,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
-		if (this.disabled || this.step === 0) {
+		if (this.disabled || this.step === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
 			return;
 		}
 
@@ -195,7 +198,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		}
 	}
 
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		// Prevent focusout when the focus is getting set within the slider internal
 		// element (on the handle), before the Slider' customElement itself is finished focusing
 		if (this._isFocusing()) {
@@ -207,7 +210,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		// value that was saved when it was first focused in
 		this._valueInitial = undefined;
 
-		if (this.showTooltip) {
+		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-input")) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 	}
@@ -217,6 +220,10 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @private
 	 */
 	_handleMove(e: TouchEvent | MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		e.preventDefault();
 
 		// If step is 0 no interaction is available because there is no constant
@@ -236,13 +243,25 @@ class Slider extends SliderBase implements IFormInputElement {
 	/** Called when the user finish interacting with the slider
 	 * @private
 	 */
-	_handleUp() {
+	_handleUp(e: TouchEvent | MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-input")) {
+			return;
+		}
+
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireEvent("change");
 		}
 
 		this.handleUpBase();
 		this._valueOnInteractionStart = undefined;
+	}
+
+	_onInputChange(e: Event) {
+		const ctor = this.constructor as typeof Slider;
+		const input = e.target as HTMLInputElement;
+		const value = parseFloat(input.value);
+
+		this.value = ctor.clipValue(value, this._effectiveMin, this._effectiveMax);
 	}
 
 	/** Determines if the press is over the handle
@@ -278,6 +297,10 @@ class Slider extends SliderBase implements IFormInputElement {
 			this.value = newValue!;
 			this.updateStateStorageAndFireInputEvent("value");
 		}
+	}
+
+	get inputValue() {
+		return this.value.toString();
 	}
 
 	get styles() {
@@ -318,6 +341,14 @@ class Slider extends SliderBase implements IFormInputElement {
 
 	get _ariaLabelledByText() {
 		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
+	}
+
+	get _ariaDescribedByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_DESCRIPTION);
+	}
+
+	get _ariaLabelledByInputText() {
+		return Slider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
 	}
 
 	static async onDefine() {
