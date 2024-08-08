@@ -1,0 +1,17 @@
+{
+	"extends": "@ui5/webcomponents-tools/tsconfig.json",
+	"include": [
+		"./**/*"
+	],
+	"compilerOptions": {
+		"types": ["@ui5/webcomponents-tools"],
+		"outDir": "dist",
+		"composite": true,
+		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
+	},
+	"references": [
+		{
+			"path": "../"
+		}
+	]
+}

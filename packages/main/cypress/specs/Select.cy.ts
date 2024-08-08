@@ -1,10 +1,12 @@
-import { html } from 'lit';
+import "../../src/Select.js";
+import "../../src/Option.js";
+import "../../src/OptionCustom.js";
 
 describe("Select - Accessibility", () => {
 	it("tests options tooltip is set displayed", () => {
 		const EXPECTED_TOOLTIP = "Tooltip";
 		const EXPECTED_ROLE = "option";
-		cy.mount(html`
+		cy.mount(`
 			<ui5-select>
 				<ui5-option value="1" tooltip="${EXPECTED_TOOLTIP}">Option 1</ui5-option>
 				<ui5-option-custom value="2" tooltip="${EXPECTED_TOOLTIP}">Option 2</ui5-option-custom>

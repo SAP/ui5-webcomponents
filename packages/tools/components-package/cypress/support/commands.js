@@ -37,11 +37,3 @@
 // }
 
 import "cypress-real-events";
-
-import { internals } from "../../../../base/src/Device.ts";
-
-Cypress.Commands.add("forceMobile", () => {
-    cy.stub(internals, "isForcedMobile", () => {
-        return true;
-    })
-})

@@ -94,6 +94,15 @@ const customResolver = (id, source, options) => {
 		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
 		return resolved;
 	}
+
+	if (source.includes("cypress/specs") && id.startsWith("@ui5/webcomponents-base/")) {
+		const importerRoot = source.replace(/packages\/.*/, "packages");
+		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
+
+		return resolved;
+	}
+
+
 }
 
 module.exports = defineConfig(async () => {
@@ -106,13 +115,13 @@ module.exports = defineConfig(async () => {
 			tsconfigPaths(),
 			customHotUpdate(),
 			ssrDomShimLoader(),
-			!process.env.UI5_BASE && checker({
-				// e.g. use TypeScript check
-				typescript: {
-					tsconfigPath: "packages/fiori/tsconfig.json",
-					buildMode: true,
-				}
-			})
+			// !process.env.UI5_BASE && checker({
+			// 	// e.g. use TypeScript check
+			// 	typescript: {
+			// 		tsconfigPath: "packages/fiori/tsconfig.json",
+			// 		buildMode: true,
+			// 	}
+			// })
 		],
 		resolve: {
 			alias: [

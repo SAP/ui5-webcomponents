@@ -36,4 +36,4 @@
 //   }
 // }
 
-import "../../../test/specs/commands/Menu.commands.js";
+import "./commands/Menu.commands.js";

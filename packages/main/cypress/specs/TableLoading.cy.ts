@@ -1,8 +1,11 @@
-import { html } from 'lit';
+import "../../src/Table.js";
+import "../../src/TableHeaderRow.js";
+import "../../src/TableCell.js";
+import "../../src/TableRow.js";
 
 describe("Table - loading", () => {
 	it("tests busy indicator is displayed", () => {
-		cy.mount(html`
+		cy.mount(`
 		<input id="before">
 		<ui5-table loading loading-delay="0">
 		<ui5-table-header-row slot="headerRow">
@@ -12,7 +15,7 @@ describe("Table - loading", () => {
 			<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
 		</ui5-table-row>
 	</ui5-table>
-	<input id="after">`)
+	<input id="after">`);
 
 		cy.get("[ui5-table]")
 			.shadow()
@@ -30,7 +33,7 @@ describe("Table - loading", () => {
 		cy.realPress("Tab");
 
 		cy.focused()
-			.should("have.class", "ui5-busy-indicator-busy-area")
+			.should("have.class", "ui5-busy-indicator-busy-area");
 
 		cy.realPress("Tab");
 
