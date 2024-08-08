@@ -1,5 +1,6 @@
 <div
 	class="ui5-input-root ui5-input-focusable-element"
+	part="root"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
@@ -8,6 +9,7 @@
 
 		<input
 			id="inner"
+			part="input"
 			class="ui5-input-inner"
 			style="{{styles.innerInput}}"
 			type="{{inputType}}"
@@ -44,7 +46,7 @@
 
 		{{#if _effectiveShowClearIcon}}
 			<div @click={{_clear}} @mousedown={{_iconMouseDown}} class="ui5-input-clear-icon-wrapper inputIcon" tabindex="-1">
-				<ui5-icon tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
+				<ui5-icon part="clear-icon" tabindex="-1" class="ui5-input-clear-icon" name="decline" accessible-name="{{clearIconAccessibleName}}"></ui5-icon>
 			</div>
 		{{/if}}
 
