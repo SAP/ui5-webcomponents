@@ -115,13 +115,13 @@ module.exports = defineConfig(async () => {
 			tsconfigPaths(),
 			customHotUpdate(),
 			ssrDomShimLoader(),
-			// !process.env.UI5_BASE && checker({
-			// 	// e.g. use TypeScript check
-			// 	typescript: {
-			// 		tsconfigPath: "packages/fiori/tsconfig.json",
-			// 		buildMode: true,
-			// 	}
-			// })
+			!process.env.UI5_BASE && checker({
+				// e.g. use TypeScript check
+				typescript: {
+					tsconfigPath: "packages/fiori/tsconfig.json",
+					buildMode: true,
+				}
+			})
 		],
 		resolve: {
 			alias: [
