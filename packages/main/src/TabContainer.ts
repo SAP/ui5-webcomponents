@@ -674,15 +674,16 @@ class TabContainer extends UI5Element {
 	}
 
 	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
-		const { destination } = e.detail;
-		const draggedElement = DragRegistry.getDraggedElement()!;
+		const { destination, source } = e.detail;
 
-		let destinationElement = (destination.element as TabInStrip).realTabReference;
-		let nextPlacement;
+		const realTabReference = (source.element as TabInStrip).realTabReference;
+		const sourceElement = realTabReference || source.element;
+		let destinationElement : HTMLElement = (destination.element as TabInStrip).realTabReference;
 
-		if (draggedElement.contains(destinationElement)) {
-			nextPlacement = findNextPlacement(this._findSiblings(draggedElement as Tab), draggedElement, destination.placement === "After" ? new KeyboardEvent("keydown", { key: "ArrowDown" }) : new KeyboardEvent("keydown", { key: "ArrowUp" }));
-			destinationElement = nextPlacement.dropTarget as Tab;
+		if (e.detail.originalEvent instanceof KeyboardEvent) {
+			const items = (sourceElement.parentElement as Tab | TabContainer).items;
+			const nextPlacement = findNextPlacement(items, sourceElement, e.detail.originalEvent);
+			destinationElement = nextPlacement.dropTarget;
 		}
 
 		if (!destinationElement) {
@@ -693,7 +694,7 @@ class TabContainer extends UI5Element {
 
 		this.fireEvent<TabContainerMoveEventDetail>("move", {
 			source: {
-				element: draggedElement,
+				element: sourceElement,
 			},
 			destination: {
 				element: destinationElement,
@@ -702,7 +703,7 @@ class TabContainer extends UI5Element {
 		}, true);
 
 		this.dropIndicatorDOM!.targetReference = null;
-		draggedElement.focus();
+		sourceElement.focus();
 	}
 
 	async _onTabStripClick(e: Event) {
@@ -818,12 +819,6 @@ class TabContainer extends UI5Element {
 			if (tab.realTabReference.isSingleClickArea) {
 				this._onTabStripClick(e);
 			}
-		}
-	}
-
-	_onPopoverKeyDown(e: KeyboardEvent) {
-		if (isCtrl(e)) {
-			this._setDraggedElement!((e.target as TabInOverflow).realTabReference);
 		}
 	}
 
@@ -1413,18 +1408,6 @@ class TabContainer extends UI5Element {
 
 	get dropIndicatorDOM(): DropIndicator | null {
 		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
-	}
-
-	_findSiblings(tab: Tab) {
-		let parent: Tab;
-
-		walk(this.items, item => {
-			if (item.items && item.items.includes(tab)) {
-				parent = item as Tab;
-			}
-		});
-
-		return (parent! ?? this).items;
 	}
 
 	get classes() {
