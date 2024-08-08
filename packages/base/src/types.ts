@@ -60,6 +60,7 @@ type AccessibilityAttributes = {
 	name?: string,
 	role?: ARIARoles,
 	ariaKeyShortcuts?: string,
+	current?: "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean
 }
 
 export type {

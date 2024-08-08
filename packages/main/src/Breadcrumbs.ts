@@ -628,9 +628,10 @@ class Breadcrumbs extends UI5Element {
 		return this._overflowItemsData.length === 0;
 	}
 
-	get linkAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup"> {
+	get linkAccessibilityAttributes() {
 		return {
 			hasPopup: this._isOverflowEmpty ? undefined : "listbox",
+			current: "page",
 		};
 	}
 
