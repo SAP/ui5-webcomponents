@@ -205,7 +205,6 @@
 .ui5-split-arrow-button {
 	border-start-start-radius: var(--_ui5_split_button_hover_border_radius);
 	border-end-start-radius: var(--_ui5_split_button_hover_border_radius);
-	width: 2.25rem;
 	border-color: var(--_ui5_split_text_button_border_color);
 	background-color: var(--_ui5_split_text_button_background_color);
 	position: relative;
