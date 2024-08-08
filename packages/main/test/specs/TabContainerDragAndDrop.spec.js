@@ -234,6 +234,42 @@ describe("Keyboard drag and drop tests", () => {
 		assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
 	});
 
+	it("Moving strip item beyond the end with Arrow Right", async () => {
+		for (let i = 0; i < 20; i++) {
+			await browser.keys(["Control", "ArrowRight"]);
+		}
+
+		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is last in the strip");
+	});
+
+	it("Moving strip item beyond the beginning with Arrow Left", async () => {
+		for (let i = 0; i < 20; i++) {
+			await browser.keys(["Control", "ArrowLeft"]);
+		}
+
+		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
+	});
+
+	it("Moving strip item with End", async () => {
+		await browser.keys(["Control", "End"]);
+
+		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is the first in the strip");
+	});
+
+	it("Moving strip item with Home", async () => {
+		await browser.keys(["Control", "Home"]);
+
+		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
+	});
+
 	it("Moving sub items", async () => {
 		await browser.$("#tabContainerDnd").shadow$(".ui5-tab-strip-item:nth-child(3) [ui5-button]").click();
 

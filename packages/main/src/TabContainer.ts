@@ -611,12 +611,13 @@ class TabContainer extends UI5Element {
 		draggedElement.focus();
 	}
 
-	_moveItem(tab: Tab, e: KeyboardEvent) {
+	_moveHeaderItem(tab: Tab, e: KeyboardEvent) {
 		if (!tab.movable) {
 			return;
 		}
 
-		const { placement, dropTarget } = findNextPlacement(this.items, tab, e);
+		const headerItems = this.items.filter(item => !item.getDomRefInStrip()?.hasAttribute("hidden"));
+		const { placement, dropTarget } = findNextPlacement(headerItems, tab, e);
 
 		if (!dropTarget || !placement) {
 			return;
@@ -792,7 +793,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isCtrl(e)) {
-			this._moveItem(tab.realTabReference, e);
+			this._moveHeaderItem(tab.realTabReference, e);
 			return;
 		}
 
