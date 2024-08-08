@@ -695,7 +695,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const tokenizerNMore = await cb.shadow$("[ui5-tokenizer]");
 			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
-			
+
 			await nMoreLabel.click();
 
 			assert.ok(await popover.$(".ui5-mcb-select-all-checkbox").getProperty("checked"), "Select All CheckBox should be selected");
@@ -1757,24 +1757,24 @@ describe("MultiComboBox general interaction", () => {
 
 		it ("Should check clear icon availability", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			const cb = await $("#clear-icon-cb");
 			const inner = cb.shadow$("input");
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
-	
+
 			assert.notOk(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to false when mcb has no value");
 
 			await inner.click();
 			await inner.keys("c");
-	
+
 			assert.ok(await cb.getProperty("_effectiveShowClearIcon"), "_effectiveShowClearIcon should be set to true upon typing");
 		});
-	
+
 		it ("Should check clear icon events", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			const cb = await $("#clear-icon-cb");
-			
+
 			await cb.shadow$("input").click();
 			await cb.shadow$("input").keys("c");
 
@@ -1782,7 +1782,7 @@ describe("MultiComboBox general interaction", () => {
 
 			// focus out the combo
 			await clearIcon.click();
-	
+
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
@@ -1926,6 +1926,23 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
+		});
+
+		it("Should apply aria-controls pointing to the responsive popover", async () => {
+			const mcb = await browser.$("#mcb-predefined-value");
+			const innerInput = await mcb.shadow$("input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+
+			await mcb.scrollIntoView();
+
+			assert.strictEqual(await innerInput.getAttribute("aria-controls"), await popover.getAttribute("id"), "aria-controls attribute is correct.");
+		});
+
+		it("Should render aria-haspopup attribute with value 'dialog'", async () => {
+			const mcb = await browser.$("#mcb-compact");
+			const innerInput = await mcb.shadow$("input");
+
+			assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 		});
 
 		it("Value state type should be added to the screen readers default value states announcement", async () => {

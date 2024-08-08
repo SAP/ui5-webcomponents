@@ -1921,6 +1921,10 @@ class MultiComboBox extends UI5Element {
 		return MultiComboBox.i18nBundle.getText(MCB_SELECTED_ITEMS, selected.length, items.length);
 	}
 
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
+	}
+
 	get classes(): ClassMap {
 		return {
 			popover: {
