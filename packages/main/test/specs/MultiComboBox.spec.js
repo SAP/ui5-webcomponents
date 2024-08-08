@@ -1778,6 +1778,16 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
 		});
 
+		it("Should apply aria-controls pointing to the responsive popover", async () => {
+			const mcb = await browser.$("#mcb-predefined-value");
+			const innerInput = await mcb.shadow$("input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+
+			await mcb.scrollIntoView();
+
+			assert.strictEqual(await innerInput.getAttribute("aria-controls"), await popover.getAttribute("id"), "aria-controls attribute is correct.");
+		});
+
 		it("Should render aria-haspopup attribute with value 'dialog'", async () => {
 			const mcb = await browser.$("#mcb-compact");
 			const innerInput = await mcb.shadow$("input");
