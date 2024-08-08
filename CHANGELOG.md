@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
+
+
+### Bug Fixes
+
+* **core:** invalidation no longer leaves component broken after error in onBeforeRendering ([#9635](https://github.com/SAP/ui5-webcomponents/issues/9635)) ([136bd5a](https://github.com/SAP/ui5-webcomponents/commit/136bd5acef5dcf25bb3ec9f46b66e33aa819f49a))
+* stop attribute change calling property setter when coming from a setter ([#9592](https://github.com/SAP/ui5-webcomponents/issues/9592)) ([95e61dd](https://github.com/SAP/ui5-webcomponents/commit/95e61ddc097658c49509889c8454901a8a8ef0b4))
+* **ui5-combobox:** correct scrolling behavior ([#9632](https://github.com/SAP/ui5-webcomponents/issues/9632)) ([aa5f9e9](https://github.com/SAP/ui5-webcomponents/commit/aa5f9e94adc887e2d7fd9f10f044fa870eeeea39))
+* **ui5-dynamic-side-content:** retrieve correct width ([#9642](https://github.com/SAP/ui5-webcomponents/issues/9642)) ([02f55f7](https://github.com/SAP/ui5-webcomponents/commit/02f55f77bb88d3e0080c09b67294c922b59eb52a)), closes [#9462](https://github.com/SAP/ui5-webcomponents/issues/9462)
+* **ui5-menu:** provide accessible name to the popover ([#9574](https://github.com/SAP/ui5-webcomponents/issues/9574)) ([a14f6a1](https://github.com/SAP/ui5-webcomponents/commit/a14f6a13a572d6f196a9b902f988f5b259aece36))
+* **ui5-multi-comboBox:** delete token from mcb with grouping ([#9623](https://github.com/SAP/ui5-webcomponents/issues/9623)) ([b3c38f8](https://github.com/SAP/ui5-webcomponents/commit/b3c38f8d3bf7c3af59f239bc702170030f678c2a)), closes [#9544](https://github.com/SAP/ui5-webcomponents/issues/9544)
+* **ui5-page:** focused content is visible with floating footer ([#9643](https://github.com/SAP/ui5-webcomponents/issues/9643)) ([4364e03](https://github.com/SAP/ui5-webcomponents/commit/4364e03ff61bed17b9cde68d6edba96024b4bb38))
+* **ui5-select:** remove the cloning of the value state message ([#9654](https://github.com/SAP/ui5-webcomponents/issues/9654)) ([1466076](https://github.com/SAP/ui5-webcomponents/commit/146607618c245d236c19797c308e83da0395336d)), closes [#9347](https://github.com/SAP/ui5-webcomponents/issues/9347)
+* **ui5-split-button:** provide aria attributes for the arrow button ([#9598](https://github.com/SAP/ui5-webcomponents/issues/9598)) ([2af2cf2](https://github.com/SAP/ui5-webcomponents/commit/2af2cf25161b028be677c9ab594d0d5c3351267f)), closes [#9295](https://github.com/SAP/ui5-webcomponents/issues/9295)
+
+
+### Features
+
+* add `enableDefaultTooltips ` config option ([#9559](https://github.com/SAP/ui5-webcomponents/issues/9559)) ([a672788](https://github.com/SAP/ui5-webcomponents/commit/a6727880e9fc648a8999643a2d2dac4eaff5c58c)), closes [#9494](https://github.com/SAP/ui5-webcomponents/issues/9494)
+* **core:** add asset files with fetch URLs ([#9591](https://github.com/SAP/ui5-webcomponents/issues/9591)) ([f039cf6](https://github.com/SAP/ui5-webcomponents/commit/f039cf6e96e43fbc45e55e53871c91c9ee8e4179))
+* **framework:** add `[@query](https://github.com/query)(All)` decorators ([#9567](https://github.com/SAP/ui5-webcomponents/issues/9567)) ([242024c](https://github.com/SAP/ui5-webcomponents/commit/242024c38a0703809840cd0c9ef9e38a4b2613c8)), closes [#6743](https://github.com/SAP/ui5-webcomponents/issues/6743)
+* **ui5-dialog:** increase resize handle size ([#9628](https://github.com/SAP/ui5-webcomponents/issues/9628)) ([ec8904b](https://github.com/SAP/ui5-webcomponents/commit/ec8904bc03862cf91fac772185d665650027f3f0))
+* **ui5-text:** add "emptyIndicatorMode" property and update samples ([#9578](https://github.com/SAP/ui5-webcomponents/issues/9578)) ([cb218f0](https://github.com/SAP/ui5-webcomponents/commit/cb218f02be50b378f3ebffd91fb36061c5c4c3a9))
+
+
+
+
+
 ## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
 
 
