@@ -10,7 +10,7 @@ export default `{
 	  "preview": "vite preview"
 	},
 	"devDependencies": {
-	  "typescript": "^5.2.2",
+	  "typescript": "^5.5.4",
 	  "vite": "^5.1.6"
 	},
 	"dependencies": {
