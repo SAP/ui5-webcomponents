@@ -16,7 +16,7 @@ import {
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -392,6 +392,10 @@ class MultiInput extends Input implements IFormInputElement {
 				"ariaDescribedBy": ariaDescribedBy,
 			},
 		};
+	}
+
+	get valueHelpLabel() {
+		return MultiInput.i18nBundle.getText(MULTIINPUT_VALUE_HELP_LABEL);
 	}
 
 	get ariaRoleDescription() {

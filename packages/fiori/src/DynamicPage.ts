@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -194,6 +195,12 @@ class DynamicPage extends UI5Element {
 
 	_updateMediaRange: ResizeObserverCallback;
 
+	@query(".ui5-dynamic-page-scroll-container")
+	scrollContainer?: HTMLElement;
+
+	@query("[ui5-dynamic-page-header-actions]")
+	headerActions?: DynamicPageHeaderActions;
+
 	constructor() {
 		super();
 
@@ -225,14 +232,6 @@ class DynamicPage extends UI5Element {
 
 	get dynamicPageHeader(): DynamicPageHeader | null {
 		return this.querySelector<DynamicPageHeader>("[ui5-dynamic-page-header]");
-	}
-
-	get scrollContainer(): HTMLElement | null {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-dynamic-page-scroll-container");
-	}
-
-	get headerActions(): DynamicPageHeaderActions | null {
-		return this.shadowRoot!.querySelector<DynamicPageHeaderActions>("ui5-dynamic-page-header-actions");
 	}
 
 	get actionsInTitle(): boolean {

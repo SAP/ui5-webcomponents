@@ -927,6 +927,18 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await innerInput.getAttribute("aria-haspopup"), "dialog", "Should render aria-haspopup attribute with value 'dialog'");
 	});
+
+	it("Should apply aria-controls pointing to the responsive popover", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combo");
+		const innerInput = await combo.shadow$("input");
+		const popover = await combo.shadow$("ui5-responsive-popover");
+	
+		await combo.scrollIntoView();
+	
+		assert.strictEqual(await innerInput.getAttribute("aria-controls"), await popover.getAttribute("id"), "aria-controls attribute is correct.");
+	});
 });
 
 describe("Keyboard navigation", async () => {
