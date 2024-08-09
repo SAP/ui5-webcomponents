@@ -24,57 +24,66 @@
 </head>
 
 <body>
-	<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
-	<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialogWithInput">Open Dialog with Input</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialog">Open Stretched Dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialogNoPaddings">Open Stretched Dialog - no paddings</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="btnOpenDialogWithAttr">Open with Attribute</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="message">Open Message Dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="prevent">Open Prevent closing Dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="modals-open">Open Multiple modals</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="wide-open">Open wide dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="wide-open2">Open wide dialog 2</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="draggable-open">Open draggable dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="resizable-custom-header-open">Open resizable dialog with custom header</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="draggable-and-resizable-open">Open draggable & resizable dialog</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
-	<br>
-	<br>
-	<ui5-button id="multiple-show">Open dialog calling ".open = true" multiple times</ui5-button>
-
+	<div class="wrapper">
+		<div>
+			<ui5-segmented-button id="theme-switch">
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon" selected>Morning</ui5-segmented-button-item>
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_dark">Evening</ui5-segmented-button-item>
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcb">HCB</ui5-segmented-button-item>
+				<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcw">HCW</ui5-segmented-button-item>
+			</ui5-segmented-button>
+		</div>
+		<ui5-checkbox text="Compact size" id="cbCompact"></ui5-checkbox>
+		<ui5-checkbox text="Scrollable page" id="cbScrollable"></ui5-checkbox>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialogWithInput">Open Dialog with Input</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialog">Open Stretched Dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialogNoPaddings">Open Stretched Dialog - no paddings</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="btnOpenDialogWithAttr">Open with Attribute</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="message">Open Message Dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="prevent">Open Prevent closing Dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="modals-open">Open Multiple modals</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="empty-open">Open empty dialog (no focusable element)</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="wide-open">Open wide dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="wide-open2">Open wide dialog 2</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="draggable-open">Open draggable dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="resizable-custom-header-open">Open resizable dialog with custom header</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="draggable-and-resizable-open">Open draggable & resizable dialog</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="dynamic-open">Open dialog which is created dynamically</ui5-button>
+		<br>
+		<br>
+		<ui5-button id="multiple-show">Open dialog calling ".open = true" multiple times</ui5-button>
+	</div>
 	<ui5-block-layer></ui5-block-layer>
 
 	<ui5-dialog id="dialogInput" header-text="Dialog">
@@ -854,6 +863,9 @@
 			window["dialogAutofocus"].open = false;
 		});
 
+		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
+			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItems[0].getAttribute("data-ui5-theme-name"));
+		});
 	</script>
 </body>
 
