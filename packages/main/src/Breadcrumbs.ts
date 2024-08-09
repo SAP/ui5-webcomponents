@@ -6,6 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { locationOpen } from "@ui5/webcomponents-base/dist/Location.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -19,7 +20,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { locationReload } from "@ui5/webcomponents-base/dist/Location.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
@@ -438,7 +438,7 @@ class Breadcrumbs extends UI5Element {
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
 
 		if (this.fireEvent("item-click", { item }, true)) {
-			window.open(item.href, item.target || "_self", "noopener,noreferrer");
+			locationOpen(item.href, item.target || "_self", "noopener,noreferrer");
 			this.responsivePopover!.open = false;
 		}
 	}
