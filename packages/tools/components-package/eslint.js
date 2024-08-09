@@ -39,8 +39,24 @@ const overrides = tsMode ? [
 	},
 	{
 		"files": ["**/cypress/**/*.ts"],
+		"plugins": [
+			"cypress"
+		],
+		extends: [
+			"plugin:cypress/recommended"
+		],
+		"env": {
+			"cypress/globals": true
+		},
 		"rules": {
-			"max-nested-callbacks": 0
+			"max-nested-callbacks": 0,
+			"cypress/no-assigning-return-values": "error",
+			"cypress/no-unnecessary-waiting": "error",
+			"cypress/assertion-before-screenshot": "warn",
+			"cypress/no-force": "warn",
+			"cypress/no-async-tests": "error",
+			"cypress/no-async-before": "error",
+			"cypress/no-pause": "error"
 		}
 	}
 ] : [];

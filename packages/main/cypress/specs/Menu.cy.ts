@@ -252,7 +252,9 @@ describe("Menu interaction", () => {
 
 		it("Prevent menu closing on item press", () => {
 			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen" @ui5-item-click="${(e: Event) => e.preventDefault()}">
+			<ui5-menu open opener="btnOpen" @ui5-item-click="${
+	// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+	(e: Event) => e.preventDefault()}">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
 

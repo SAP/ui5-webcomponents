@@ -39,11 +39,26 @@
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Menu.commands.js";
 
-const deviceFuncForStub = {
+type SimulationDevices = "phone"
+
+declare global {
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace Cypress {
+		interface Chainable {
+			ui5SimulateDevice(device?: SimulationDevices): Chainable<void>
+			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
+			ui5MenuOpened(): Chainable<void>
+			ui5MenuItemClick(): Chainable<void>
+			ui5MenuItemPress(key: any): Chainable<void>
+		}
+	}
+}
+
+const deviceFuncForStub: Record<string, keyof typeof internals> = {
 	phone: "_isPhone",
 };
 
-Cypress.Commands.add("ui5SimulateDevice", (device = "phone") => {
+Cypress.Commands.add("ui5SimulateDevice", (device: string = "phone") => {
 	cy.stub(internals, deviceFuncForStub[device])
 		.callsFake(() => {
 			return true;
