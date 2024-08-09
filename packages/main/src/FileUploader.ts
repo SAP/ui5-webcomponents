@@ -105,7 +105,7 @@ type FileUploaderChangeEventDetail = {
 /**
  * Event is fired when the size of a file is above the `maxFileSize` property value.
  * @param {FileData} filesData An array of `FileData` objects containing the`fileName` and `fileSize` in MB of each file that exceeds the upload limit
- * @since 2.3.0
+ * @since 2.2.0
  * @public
  */
 @event<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
