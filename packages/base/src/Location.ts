@@ -45,6 +45,14 @@ const getLocationSearch = () => {
 	return internals.search();
 };
 
+const locationOpen = (url?: string | URL, target?: string, features?: string) => {
+	if (isSSR) {
+		return;
+	}
+
+	window.open(url, target, features);
+};
+
 const locationReload = () => {
 	if (!isSSR) {
 		window.location.reload();
@@ -59,4 +67,5 @@ export {
 	getLocationHostname,
 	getLocationPort,
 	getLocationProtocol,
+	locationOpen,
 };
