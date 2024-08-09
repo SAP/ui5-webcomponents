@@ -3,6 +3,6 @@ import path from "path";
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-cypressConfig.component.supportFile = path.join(__dirname, "cypress/support/component.js");
+cypressConfig.component.supportFile = path.join(__dirname, "cypress/support/component.ts");
 
 export default cypressConfig;
