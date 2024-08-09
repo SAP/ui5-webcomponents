@@ -912,6 +912,8 @@ class List extends UI5Element {
 			return;
 		}
 
+		e.preventDefault();
+
 		this.fireEvent<ListMoveEventDetail>("move", {
 			originalEvent: e,
 			source: {

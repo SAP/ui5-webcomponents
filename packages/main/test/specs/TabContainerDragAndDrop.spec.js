@@ -216,97 +216,119 @@ describe("Keyboard drag and drop tests", () => {
 		await browser.setWindowSize(1024, 1000);
 	});
 
-	it("Moving strip items", async () => {
-		assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
+	describe("Moving strip items", () => {
+		it("Moving strip items with arrow keys", async () => {
+			assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
 
-		await browser.$("#tabContainerDnd").shadow$(".ui5-tab-strip-item").click();
+			await browser.$("#tabContainerDnd").shadow$(".ui5-tab-strip-item").click();
 
-		await browser.keys(["Control", "ArrowRight"]);
-		assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
-
-		await browser.keys(["Control", "ArrowDown"]);
-		assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabThree", "TabOne is after tabThree");
-
-		await browser.keys(["Control", "ArrowLeft"]);
-		assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
-
-		await browser.keys(["Control", "ArrowUp"]);
-		assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
-	});
-
-	it("Moving strip item beyond the end with Arrow Right", async () => {
-		for (let i = 0; i < 20; i++) {
 			await browser.keys(["Control", "ArrowRight"]);
-		}
+			assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
 
-		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+			await browser.keys(["Control", "ArrowDown"]);
+			assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabThree", "TabOne is after tabThree");
 
-		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is last in the strip");
-	});
-
-	it("Moving strip item beyond the beginning with Arrow Left", async () => {
-		for (let i = 0; i < 20; i++) {
 			await browser.keys(["Control", "ArrowLeft"]);
-		}
+			assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
 
-		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+			await browser.keys(["Control", "ArrowUp"]);
+			assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
+		});
 
-		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
+		it("Moving strip item beyond the end with Arrow Right", async () => {
+			for (let i = 0; i < 20; i++) {
+				await browser.keys(["Control", "ArrowRight"]);
+			}
+
+			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is last in the strip");
+		});
+
+		it("Moving strip item beyond the beginning with Arrow Left", async () => {
+			for (let i = 0; i < 20; i++) {
+				await browser.keys(["Control", "ArrowLeft"]);
+			}
+
+			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
+		});
+
+		it("Moving strip item with End", async () => {
+			await browser.keys(["Control", "End"]);
+
+			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is the first in the strip");
+		});
+
+		it("Moving strip item with Home", async () => {
+			await browser.keys(["Control", "Home"]);
+
+			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+
+			assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
+		});
 	});
 
-	it("Moving strip item with End", async () => {
-		await browser.keys(["Control", "End"]);
+	describe("Moving items in popover", () => {
+		it("Moving sub items with arrow keys", async () => {
+			await browser.$("#tabContainerDnd").shadow$(".ui5-tab-strip-item:nth-child(3) [ui5-button]").click();
 
-		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+			assert.notOk(await browser.$("#tabThree1").previousElement().isExisting(), "tabThree1 is the first tab");
 
-		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(-1)), "tabOne", "TabOne is the first in the strip");
-	});
+			await browser.keys(["Control", "ArrowDown"]);
+			assert.strictEqual(await browser.$("#tabThree1").previousElement().getAttribute("id"), "tabThree2", "tabThree1 is after tabThree2");
 
-	it("Moving strip item with Home", async () => {
-		await browser.keys(["Control", "Home"]);
+			await browser.keys(["Control", "ArrowUp"]);
+			assert.notOk(await browser.$("#tabThree1").previousElement().isExisting(), "tabThree1 is the first tab");
 
-		const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+			assert.notOk(await browser.$("#tabThree21").previousElement().isExisting(), "tabThree21 is the first tab");
 
-		assert.strictEqual(await tabContainer.getRealTabId(displayedStripItems.at(0)), "tabOne", "TabOne is the first in the strip");
-	});
+			await browser.keys(["Control", "ArrowDown"]);
+			assert.strictEqual(await browser.$("#tabThree21").previousElement().getAttribute("id"), "tabThree22", "tabThree21 is after tabThree22");
 
-	it("Moving sub items", async () => {
-		await browser.$("#tabContainerDnd").shadow$(".ui5-tab-strip-item:nth-child(3) [ui5-button]").click();
+			await browser.keys(["Control", "ArrowDown"]);
+			assert.strictEqual(await browser.$("#tabThree21").previousElement().getAttribute("id"), "tabThree22", "tabThree21 is after tabThree22");
 
-		assert.notOk(await browser.$("#tabThree1").previousElement().isExisting(), "tabThree1 is the first tab");
+			await browser.keys(["Control", "ArrowUp"]);
+			assert.notOk(await browser.$("#tabThree21").previousElement().isExisting(), "tabThree21 is the first tab");
+		});
 
-		await browser.keys(["Control", "ArrowDown"]);
-		assert.strictEqual(await browser.$("#tabThree1").previousElement().getAttribute("id"), "tabThree2", "tabThree1 is after tabThree2");
+		it("Moving overflow items with arrow keys", async () => {
+			await tabContainer.getEndOverflow("tabContainerDnd").click();
 
-		await browser.keys(["Control", "ArrowUp"]);
-		assert.notOk(await browser.$("#tabThree1").previousElement().isExisting(), "tabThree1 is the first tab");
+			let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			let id = await displayedPopoverItems[0].getAttribute("id");
 
-		await browser.keys("ArrowDown");
-		await browser.keys("ArrowDown");
-		assert.notOk(await browser.$("#tabThree21").previousElement().isExisting(), "tabThree21 is the first tab");
+			await browser.keys(["Control", "ArrowDown"]);
+			displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			assert.strictEqual(await displayedPopoverItems[1].getAttribute("id"), id, "item was moved down");
 
-		await browser.keys(["Control", "ArrowDown"]);
-		assert.strictEqual(await browser.$("#tabThree21").previousElement().getAttribute("id"), "tabThree22", "tabThree21 is after tabThree22");
+			await browser.keys(["Control", "ArrowUp"]);
+			displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			assert.strictEqual(await displayedPopoverItems[0].getAttribute("id"), id, "item was moved up");
+		});
 
-		await browser.keys(["Control", "ArrowDown"]);
-		assert.strictEqual(await browser.$("#tabThree21").previousElement().getAttribute("id"), "tabThree22", "tabThree21 is after tabThree22");
+		it("Moving overflow item with End", async () => {
+			let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			const id = await displayedPopoverItems[0].getAttribute("id");
 
-		await browser.keys(["Control", "ArrowUp"]);
-		assert.notOk(await browser.$("#tabThree21").previousElement().isExisting(), "tabThree21 is the first tab");
-	});
+			await browser.keys(["Control", "End"]);
+			displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			assert.strictEqual(await displayedPopoverItems.at(-1).getAttribute("id"), id, "item was moved last");
+		});
 
-	it("Moving overflow items", async () => {
-		await tabContainer.getEndOverflow("tabContainerDnd").click();
+		it("Moving overflow item with Home", async () => {
+			let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			const id = await displayedPopoverItems.at(-1).getAttribute("id");
 
-		let displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
-		let id = await displayedPopoverItems[0].getAttribute("id");
-
-		await browser.keys(["Control", "ArrowDown"]);
-		displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
-		assert.strictEqual(await displayedPopoverItems[1].getAttribute("id"), id, "item was moved down");
-
-		await browser.keys(["Control", "ArrowUp"]);
-		displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
-		assert.strictEqual(await displayedPopoverItems[0].getAttribute("id"), id, "item was moved up");
+			await browser.keys(["Control", "Home"]);
+			displayedPopoverItems = await tabContainer.getCurrentPopoverItems("tabContainerDnd");
+			assert.strictEqual(await displayedPopoverItems.at(0).getAttribute("id"), id, "item was moved first");
+		});
 	});
 });
