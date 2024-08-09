@@ -38,9 +38,9 @@ const overrides = tsMode ? [
 		}
 	},
 	{
-		"files": ["**/cypress/*.ts"],
+		"files": ["**/cypress/**/*.ts"],
 		"rules": {
-			"max-nested-callbacks": "10"
+			"max-nested-callbacks": 0
 		}
 	}
 ] : [];
