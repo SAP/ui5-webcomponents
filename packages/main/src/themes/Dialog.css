@@ -152,6 +152,7 @@
 
 :host::backdrop {
 	background-color: var(--_ui5_popup_block_layer_background);
+	opacity: var(--_ui5_dialog_block_layer_opacity);
 }
 
 .ui5-block-layer {
