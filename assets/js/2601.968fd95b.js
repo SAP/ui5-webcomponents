@@ -1,0 +1,1 @@
+(self.webpackChunk_ui5_webcomponents_website=self.webpackChunk_ui5_webcomponents_website||[]).push([[2601],{99108:(e,s,n)=>{"use strict";n.d(s,{A:()=>b});var t=n(61998);const b=t},11580:()=>{}}]);

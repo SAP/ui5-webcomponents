@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "spike-arrest";
+const pathData = "M510 70l-65 63 65 65-32 32-63-65-65 65-32-32 65-65-65-63 32-32 65 64 63-64zM339 389l104-101h1c1-1 1-1 2-1s1 0 1 1c1 1 2 2 3 4v188c0 19-13 32-32 32H34c-19 0-32-13-32-32V160c0-19 13-32 32-32h192v32H34v212l36-37c-3-5-4-10-4-15 0-19 13-32 32-32s32 13 32 32c0 5-1 10-4 15l53 53c5-3 10-4 15-4l46-102c-9-7-14-16-14-26 0-19 13-32 32-32s32 13 32 32c0 8-3 16-9 23l39 105c8 0 14 2 19 5zm79 91V335l-68 66c3 7 4 12 4 15 0 19-13 32-32 32s-32-13-32-32c0-11 5-20 15-27l-39-103c-3 1-5 2-8 2-1 0-2-1-3-1l-45 102c9 5 16 15 16 27 0 19-13 32-32 32s-32-13-32-32c0-6 2-12 5-17l-52-52c-5 3-11 5-17 5s-12-2-17-5l-47 47v86h384z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/spike-arrest";
+export { pathData, ltr, accData };

@@ -1,0 +1,1 @@
+const _="[[[{0} ċĥąŗąċţēŗş ŗēɱąįŋįŋğ]]]",E="[[[{0} ċĥąŗąċţēŗş ŏʋēŗ ĺįɱįţ]]]",T={PROMPT_INPUT_CHARACTERS_LEFT:_,PROMPT_INPUT_CHARACTERS_EXCEEDED:E};export{E as PROMPT_INPUT_CHARACTERS_EXCEEDED,_ as PROMPT_INPUT_CHARACTERS_LEFT,T as default};

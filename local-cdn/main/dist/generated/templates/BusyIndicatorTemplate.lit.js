@@ -1,0 +1,11 @@
+/* eslint no-unused-vars: 0 */
+import { html, classMap, ifDefined, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="${classMap(this.classes.root)}">${this._isBusy ? block1.call(this, context, tags, suffix) : undefined}<slot></slot>${this._isBusy ? block6.call(this, context, tags, suffix) : undefined}</div> `; }
+function block1(context, tags, suffix) { return html `<div class="ui5-busy-indicator-busy-area" title="${ifDefined(this.ariaTitle)}" tabindex="0" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuetext="Busy" aria-labelledby="${ifDefined(this.labelId)}" data-sap-focus-ref>${this.textPosition.top ? block2.call(this, context, tags, suffix) : undefined}<div class="ui5-busy-indicator-circles-wrapper"><div class="ui5-busy-indicator-circle circle-animation-0"></div><div class="ui5-busy-indicator-circle circle-animation-1"></div><div class="ui5-busy-indicator-circle circle-animation-2"></div></div>${this.textPosition.bottom ? block4.call(this, context, tags, suffix) : undefined}</div>`; }
+function block2(context, tags, suffix) { return html `${this.text ? block3.call(this, context, tags, suffix) : undefined}`; }
+function block3(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-label", tags, suffix)} id="${ifDefined(this._id)}-label" class="ui5-busy-indicator-text">${ifDefined(this.text)}</${scopeTag("ui5-label", tags, suffix)}>` : html `<ui5-label id="${ifDefined(this._id)}-label" class="ui5-busy-indicator-text">${ifDefined(this.text)}</ui5-label>`; }
+function block4(context, tags, suffix) { return html `${this.text ? block5.call(this, context, tags, suffix) : undefined}`; }
+function block5(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-label", tags, suffix)} id="${ifDefined(this._id)}-label" class="ui5-busy-indicator-text">${ifDefined(this.text)}</${scopeTag("ui5-label", tags, suffix)}>` : html `<ui5-label id="${ifDefined(this._id)}-label" class="ui5-busy-indicator-text">${ifDefined(this.text)}</ui5-label>`; }
+function block6(context, tags, suffix) { return html `<span data-ui5-focus-redirect tabindex="0" @focusin="${this._redirectFocus}"></span>`; }
+export default block0;
+//# sourceMappingURL=BusyIndicatorTemplate.lit.js.map

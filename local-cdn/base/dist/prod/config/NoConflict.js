@@ -1,0 +1,2 @@
+"use strict";import{getNoConflict as i}from"../InitialConfiguration.js";const r=["value-changed","click"];let e;const c=t=>r.includes(t),s=t=>{const n=o();return!(typeof n!="boolean"&&n.events&&n.events.includes&&n.events.includes(t))},o=()=>(e===void 0&&(e=i()),e),l=t=>{e=t},a=t=>{const n=o();return c(t)?!1:n===!0?!0:!s(t)};export{o as getNoConflict,l as setNoConflict,a as skipOriginalEvent};
+//# sourceMappingURL=NoConflict.js.map

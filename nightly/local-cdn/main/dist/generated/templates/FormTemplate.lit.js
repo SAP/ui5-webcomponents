@@ -1,0 +1,13 @@
+/* eslint no-unused-vars: 0 */
+import { html, repeat, ifDefined, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<div class="ui5-form-root" role="form" aria-labelledby="${ifDefined(this.ariaLabelledByID)}">${this.hasHeader ? block1.call(this, context, tags, suffix) : undefined}<div class="ui5-form-layout" part="layout">${this.hasGroupItems ? block4.call(this, context, tags, suffix) : block7.call(this, context, tags, suffix)}</div></div>`; }
+function block1(context, tags, suffix) { return html `<div class="ui5-form-header" part="header">${this.hasCustomHeader ? block2.call(this, context, tags, suffix) : block3.call(this, context, tags, suffix)}</div>`; }
+function block2(context, tags, suffix) { return html `<slot name="header"></slot>`; }
+function block3(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-title", tags, suffix)} id="${ifDefined(this._id)}-header-text" level="H4">${ifDefined(this.headerText)}</${scopeTag("ui5-title", tags, suffix)}>` : html `<ui5-title id="${ifDefined(this._id)}-header-text" level="H4">${ifDefined(this.headerText)}</ui5-title>`; }
+function block4(context, tags, suffix) { return html `${repeat(this.groupItemsInfo, (item, index) => item._id || index, (item, index) => block5.call(this, context, tags, suffix, item, index))}`; }
+function block5(context, tags, suffix, item, index) { return html `<div class="ui5-form-column ${ifDefined(item.classes)}" part="column"><div class="ui5-form-group">${item.groupItem.headerText ? block6.call(this, context, tags, suffix, item, index) : undefined}<div class="ui5-form-group-layout"><slot name="${ifDefined(item.groupItem._individualSlot)}"></slot></div></div></div>`; }
+function block6(context, tags, suffix, item, index) { return suffix ? html `<div class="ui5-form-group-heading"><${scopeTag("ui5-title", tags, suffix)} level="H6">${ifDefined(item.groupItem.headerText)}</${scopeTag("ui5-title", tags, suffix)}></div>` : html `<div class="ui5-form-group-heading"><ui5-title level="H6">${ifDefined(item.groupItem.headerText)}</ui5-title></div>`; }
+function block7(context, tags, suffix) { return html `${repeat(this.itemsInfo, (item, index) => item._id || index, (item, index) => block8.call(this, context, tags, suffix, item, index))}`; }
+function block8(context, tags, suffix, item, index) { return html `<div class="ui5-form-item ${ifDefined(item.classes)}"><slot name="${ifDefined(item.item._individualSlot)}"></slot></div>`; }
+export default block0;
+//# sourceMappingURL=FormTemplate.lit.js.map
