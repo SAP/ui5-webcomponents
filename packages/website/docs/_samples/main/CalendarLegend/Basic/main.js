@@ -9,7 +9,7 @@ function updateSpecialDates() {
     const year = currentDate.getFullYear();
     const formattedMonth = (currentDate.getMonth() + 1).toString().padStart(2, "0");
     const specialDates = document.querySelectorAll("ui5-special-date");
-    const types = ["Type05", "Type07", "Type13"];
+    const types = ["Type05", "Type07", "Type13", "NonWorking"];
     const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
     let assignedDays = new Set();
 

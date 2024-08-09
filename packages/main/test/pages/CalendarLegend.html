@@ -47,6 +47,17 @@
 		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
 		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
 		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
+		<ui5-special-date slot="specialDates" value="" type=""></ui5-special-date>
 
 		<ui5-calendar-legend 
 			slot="calendarLegend"
@@ -94,13 +105,17 @@
 				const formattedDay = day < 10 ? "0" + day : day.toString();
 				const newValue = year + "-" + formattedMonth + "-" + formattedDay;
 				specDate.setAttribute("value", newValue);
-				specDate.setAttribute("type", `Type${formattedDay}`);
+				
+				if (day <= 20) {
+					specDate.setAttribute("type", `Type${formattedDay}`);
+				} else {
+					specDate.setAttribute("type", "NonWorking");
+				}
 			});
 		}
 	
 		updateSpecialDates();
 	</script>
-	
 
 </body>
 </html>
