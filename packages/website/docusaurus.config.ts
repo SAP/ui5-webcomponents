@@ -116,6 +116,11 @@ const config: Config = {
           activeBasePath: 'icons',
         },
         {
+          to: 'illustrations/',
+          label: 'Illustrations',
+          activeBasePath: 'illustrations',
+        },
+        {
           to: 'play/',
           label: 'Playground',
           activeBasePath: 'play',
