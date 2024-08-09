@@ -7,7 +7,12 @@ describe("API", () => {
 
 	it("Files property", async () => {
 		const fileUploader = await browser.$("ui5-file-uploader");
-		assert.ok(await fileUploader.getProperty("files"), "Property 'files' should return FileList with 0 files.")
+		assert.ok(await fileUploader.getProperty("files"), "Property 'files' should return FileList with 0 files.");
+	});
+
+	it("MaxFileSize property", async () => {
+		const fileUploader = await browser.$("#file-uploader-max-size");
+		assert.strictEqual(await fileUploader.getProperty("maxFileSize"), 1, "Property 'maxFileSize' should return 1 (MB).");
 	});
 
 	it("File upload with no input", async () => {
