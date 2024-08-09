@@ -65,10 +65,15 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 	sortDescending: boolean,
 }
 
+type ViewSettingsDialogSelectionChange = VSDSettings & {
+	sortByItem: SortItem,
+	sortDescending: boolean,
+}
+
 // Common properties for several VSDInternalSettings fields
 type VSDItem = {text?: string, selected: boolean}
 
-// Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
+// Used for the private properties _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
 	sortOrder: Array<VSDItem>,
 	sortBy: Array<VSDItem & {index: number}>,
@@ -205,6 +210,41 @@ type VSDInternalSettings = {
  * @public
  */
 @event("close")
+/**
+ * Fired when reset button is pressed.
+ * @since 2.2.0
+ * @public
+ */
+@event("reset")
+/**
+ * Fired when item is pressed.
+ * @since 2.2.0
+ * @public
+ */
+@event<ViewSettingsDialogSelectionChange>("selection-change", {
+	detail: {
+		/**
+		 * @public
+		 */
+		sortOrder: { type: String },
+		/**
+		 * @public
+		 */
+		sortBy: { type: String },
+		/**
+		 * @public
+		 */
+		sortByItem: { type: HTMLElement },
+		/**
+		 * @public
+		 */
+		sortDescending: { type: Boolean },
+		/**
+		 * @public
+		 */
+		filters: { type: Array },
+	},
+})
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -224,6 +264,15 @@ class ViewSettingsDialog extends UI5Element {
 	open = false;
 
 	/**
+	 * Indicates if the reset button is disabled.
+	 * @public
+	 * @default false
+	 * @since 2.2.0
+	 */
+	@property({ type: Boolean })
+	resetButtonDisabled = false;
+
+	/**
 	 * Keeps recently focused list in order to focus it on next dialog open.
 	 * @private
 	 */
@@ -240,13 +289,6 @@ class ViewSettingsDialog extends UI5Element {
 		sortBy: [],
 		filters: [],
 	};
-
-	/**
-	 * Stores settings of the dialog before the initial open.
-	 * @private
-	 */
-	@property({ type: Object })
-	_initialSettings: VSDInternalSettings = this._currentSettings;
 
 	/**
 	 * Stores settings of the dialog after confirmation.
@@ -408,33 +450,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Determines disabled state of the `Reset` button.
 	 */
 	get _disableResetButton() {
-		return this._dialog && this._sortSetttingsAreInitial && this._filteresAreInitial;
-	}
-
-	get _sortSetttingsAreInitial() {
-		let settingsAreInitial = true;
-		["sortBy", "sortOrder"].forEach(sortList => {
-			this._currentSettings[sortList as keyof VSDInternalSettings].forEach((item, index) => {
-				if (item.selected !== this._initialSettings[sortList as keyof VSDInternalSettings][index].selected) {
-					settingsAreInitial = false;
-				}
-			});
-		});
-
-		return settingsAreInitial;
-	}
-
-	get _filteresAreInitial() {
-		let filtersAreInitial = true;
-		this._currentSettings.filters.forEach((filter, index) => {
-			for (let i = 0; i < filter.filterOptions.length; i++) {
-				if (filter.filterOptions[i].selected !== this._initialSettings.filters[index].filterOptions[i].selected) {
-					filtersAreInitial = false;
-				}
-			}
-		});
-
-		return filtersAreInitial;
+		return this._dialog && this.resetButtonDisabled;
 	}
 
 	/**
@@ -519,7 +535,6 @@ class ViewSettingsDialog extends UI5Element {
 			this._sortBy = this._sortByList;
 
 			// Sorting
-			this._initialSettings = this._settings;
 			this._currentSettings = this._settings;
 			this._confirmedSettings = this._settings;
 
@@ -562,6 +577,8 @@ class ViewSettingsDialog extends UI5Element {
 		});
 
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+
+		this.fireEvent<ViewSettingsDialogSelectionChange>("selection-change", this.eventsParams);
 	}
 
 	_navigateToFilters() {
@@ -663,10 +680,8 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Resets the control settings to their initial state.
 	 */
-	 _resetSettings() {
-		this._restoreSettings(this._initialSettings);
-		this._recentlyFocused = this._sortOrder!;
-		this._focusRecentlyUsedControl();
+	 _resetButtonPress() {
+		this.fireEvent("reset");
 	}
 
 	/**
@@ -691,6 +706,8 @@ class ViewSettingsDialog extends UI5Element {
 
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+
+		this.fireEvent<ViewSettingsDialogSelectionChange>("selection-change", this.eventsParams);
 	}
 
 	/**
@@ -705,6 +722,8 @@ class ViewSettingsDialog extends UI5Element {
 		});
 		// Invalidate
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+
+		this.fireEvent<ViewSettingsDialogSelectionChange>("selection-change", this.eventsParams);
 	}
 
 	/**
@@ -768,5 +787,6 @@ export default ViewSettingsDialog;
 export type {
 	ViewSettingsDialogConfirmEventDetail,
 	ViewSettingsDialogCancelEventDetail,
+	ViewSettingsDialogSelectionChange,
 	VSDSettings,
 };
