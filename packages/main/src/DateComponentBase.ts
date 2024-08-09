@@ -13,6 +13,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import CalendarWeekNumbering from "./types/CalendarWeekNumbering.js";
 
 /**
  * @class
@@ -80,6 +81,16 @@ class DateComponentBase extends UI5Element {
 	 */
 	@property()
 	maxDate = "";
+
+	/**
+	 * Defines how to calculate calendar weeks and first day of the week.
+	 * If not set, the calendar will be displayed according to the currently set global configuration.
+	 * @default undefined
+	 * @since 2.2.0
+	 * @public
+	 */
+	@property()
+	calendarWeekNumbering?: `${CalendarWeekNumbering}`;
 
 	static i18nBundle?: I18nBundle;
 
