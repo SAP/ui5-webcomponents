@@ -313,7 +313,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		this.fireEvent<FileUploaderChangeEventDetail>("change", {
 			files: validatedFiles,
 		});
-	
 	}
 
 	_onfocusin() {
