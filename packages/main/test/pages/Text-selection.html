@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>Text</title>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<style>
+		.aiButton {
+			display: none;
+			position: fixed;
+		}
+
+		.aiButtonShow {
+			display: inline-block;
+		}
+	</style>
+
+</head>
+
+<body>
+	<ui5-text>Simple text</ui5-text>
+
+	<ui5-button class="aiButton" onclick="document.getElementById('popover').open = true;" id="aiButton" icon="ai"></ui5-button>
+
+	<br><br>
+	<ui5-popover id="popover" opener="aiButton" header-text="AI Popover" prevent-initial-focus>
+		<div id="popoverContent"></div>
+	</ui5-popover>
+
+	<ui5-title level="H5">Long text</ui5-title>
+	<ui5-text id="text1">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+	</ui5-text>
+
+	<br><br>
+
+	<ui5-title level="H5">Long text and max-lines 1</ui5-title>
+	<ui5-text id="text2" max-lines="1">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+	</ui5-text>
+
+	<br><br>
+
+	<ui5-title level="H5">Long text and max-lines 2</ui5-title>
+	<ui5-text max-lines="2">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+	</ui5-text>
+
+	<br><br>
+
+	<ui5-title level="H5">Long text and max-lines 3</ui5-title>
+	<ui5-text max-lines="3">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+	</ui5-text>
+
+	<br><br>
+
+	<ui5-title level="H5">Long text and max-lines 4</ui5-title>
+	<ui5-text max-lines="4">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
+	</ui5-text>
+	<script>
+		function mouseUpHandler(event) {
+			const selection = document.getSelection();
+			const button = document.getElementById("aiButton");
+
+			if (!selection.toString().length) {
+				button.classList.remove("aiButtonShow");
+				return;
+			}
+
+			button.classList.add("aiButtonShow");
+
+			const scrollTop = document.documentElement.scrollTop;
+
+			const posX = event.clientX - 16;
+			const posY = event.clientY + 16 + scrollTop;
+
+			popoverContent.innerText = selection.toString();
+
+			button.style.left = `${posX}px`;
+			button.style.top = `${posY}px`;
+		}
+
+		document.getElementById("text1").addEventListener("mouseup", mouseUpHandler);
+	</script>
+</body>
+</html>
