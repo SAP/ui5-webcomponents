@@ -32,6 +32,8 @@
 			<ui5-suggestion-item text="excepteur"></ui5-suggestion-item>
 		</ui5-multi-input>
 
+		<ui5-input id="suggestion-token-counter" type="Number" value="0"></ui5-input>
+
 		<ui5-dialog id="dialog" header-text="Add Competency">
 
 			<ui5-list id="tokens-list">
@@ -95,6 +97,10 @@
 			});
 
 			document.getElementById("dialog").open = true;
+		});
+
+		document.getElementById("suggestion-token").addEventListener("ui5-change", () => {
+			document.getElementById("suggestion-token-counter").value++;
 		});
 
 		document.getElementById("suggestion-token").addEventListener("ui5-selection-change", function (event) {
