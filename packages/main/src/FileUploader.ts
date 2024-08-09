@@ -31,13 +31,19 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 
-type FileUploaderChangeEventDetail = {
-	files: FileList | null,
+const convertBytesToMegabytes = (bytes: number) => (bytes / 1024) / 1024;
+
+type FileData = {
+	fileName: string,
+	fileSize: number,
 }
 
 type FileUploaderFileSizeExceededEventDetail = {
-	fileName: string,
-	fileSize: number,
+	filesData: FileData[],
+}
+
+type FileUploaderChangeEventDetail = {
+	files: FileList | null,
 }
 
 /**
@@ -97,10 +103,9 @@ type FileUploaderFileSizeExceededEventDetail = {
 	},
 })
 /**
- * Event is fired when the size of a file is above the `maxFileSize` property.
- * @param {string} fileName The name of a file to be uploaded.
- * @param {number} fileSize The size in MB of a file to be uploaded.
- * @since 2.2.0
+ * Event is fired when the size of a file is above the `maxFileSize` property value.
+ * @param {FileData} filesData An array of `FileData` objects containing the`fileName` and `fileSize` in MB of each file that exceeds the upload limit
+ * @since 2.3.0
  * @public
  */
 @event<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
@@ -108,11 +113,7 @@ type FileUploaderFileSizeExceededEventDetail = {
 		/**
 		 * @public
 		 */
-		fileName: { type: String },
-		/**
-		 * @public
-		 */
-		fileSize: { type: Number },
+		filesData: { type: Array },
 	},
 })
 class FileUploader extends UI5Element implements IFormInputElement {
@@ -181,7 +182,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	value = "";
 
 	/**
-	 * Defines the maximum file size limit in megabytes which prevents the upload if at least one file exceeds it.
+	 * Defines the maximum file size in megabytes which prevents the upload if at least one file exceeds it.
 	 * @default undefined
 	 * @since 2.2.0
 	 * @public
@@ -297,13 +298,22 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		e.stopPropagation();
 		const files = e.dataTransfer?.files;
 
-		if (files && this._validateFileSize(files)) {
-			this._input.files = files;
-			this._updateValue(files);
-			this.fireEvent<FileUploaderChangeEventDetail>("change", {
-				files,
-			});
+		if (!files) {
+			return;
 		}
+
+		const validatedFiles = this._validateFiles(files);
+
+		if (!this.value && !validatedFiles.length) {
+			return;
+		}
+
+		this._input.files = validatedFiles;
+		this._updateValue(validatedFiles);
+		this.fireEvent<FileUploaderChangeEventDetail>("change", {
+			files: validatedFiles,
+		});
+	
 	}
 
 	_onfocusin() {
@@ -338,14 +348,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	_onChange(e: Event) {
 		let changedFiles = (e.target as HTMLInputElement).files;
 
-		const validFileSizes = this._validateFileSize(changedFiles);
-
-		if (!this.value && !validFileSizes) {
-			return;
+		if (changedFiles) {
+			changedFiles = this._validateFiles(changedFiles);
 		}
 
-		if (!validFileSizes) {
-			changedFiles = new DataTransfer().files;
+		if (!this.value && !changedFiles?.length) {
+			return;
 		}
 
 		this._updateValue(changedFiles);
@@ -363,28 +371,27 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	/**
 	 * Checks whether all files are below `maxFileSize` (if set),
 	 * and fires a `fileSizeExceeded` event if any file exceeds it.
-	 *
-	 * @returns true if all files are below `maxFileSize`
 	 * @private
 	 */
-	_validateFileSize(files: FileList | null): boolean {
-		if (!this.maxFileSize || !files) {
-			return true;
+	_validateFiles(changedFiles: FileList): FileList {
+		const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
+
+		if (exceededFilesData.length) {
+			this.fireEvent<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
+				filesData: exceededFilesData,
+			});
+			changedFiles = new DataTransfer().files;
 		}
 
-		const convertBytesToMegabytes = (bytes: number) => (bytes / 1024) / 1024;
+		return changedFiles;
+	}
 
-		for (let i = 0; i < files.length; i++) {
-			const fileSize = convertBytesToMegabytes(files[i].size);
-			if (fileSize > this.maxFileSize) {
-				this.fireEvent<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
-					fileName: files[i].name,
-					fileSize,
-				});
-				return false;
-			}
-		}
-		return true;
+	_getExceededFiles(files: FileList): FileData[] {
+		return Array.from(files)
+			.filter(file => convertBytesToMegabytes(file.size) > this.maxFileSize!)
+			.map(file => {
+				return { fileName: file.name, fileSize: convertBytesToMegabytes(file.size) };
+			});
 	}
 
 	toggleValueStatePopover(open: boolean) {
@@ -520,6 +527,7 @@ FileUploader.define();
 
 export default FileUploader;
 export type {
+	FileData,
 	FileUploaderChangeEventDetail,
 	FileUploaderFileSizeExceededEventDetail,
 };

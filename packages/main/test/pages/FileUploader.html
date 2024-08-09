@@ -111,9 +111,7 @@
 				<label>Event "fileSizeExceeded" thrown count:</label>
 				<span id="file-size-exceeded-count">0</span>
 			</div>
-			<div>
-				<span id="file-size-exceeded-result"></span>
-			</div>
+			<div id="file-size-exceeded-result"></div>
 		</div>
 	</div>
 	<div>
@@ -179,8 +177,26 @@
 		
 		maxSizeFileUploader.addEventListener("fileSizeExceeded", function (event) {
 			eventCount.innerHTML = parseFloat(eventCount.innerHTML) + 1;
-			eventResult.innerHTML = "File Name: '" + event.detail.fileName + "', Size: " + event.detail.fileSize.toFixed(2) + " MB";
-		});
+	
+			const uploaderMaxSize = maxSizeFileUploader.maxFileSize;
+			const filesData = event.detail.filesData;
+
+			filesData.forEach(fileData => {
+				const fileSizeDifference = (fileData.fileSize - uploaderMaxSize).toFixed(2);
+				const errorMessage = "Can't upload file '" + fileData.fileName + "' because it exceeds the maximum upload size by " + fileSizeDifference + " MB.";
+
+				const messageStrip = document.createElement('ui5-message-strip');
+				messageStrip.addEventListener("close", handleMessageClose);
+				eventResult.append(messageStrip);
+
+				messageStrip.design = "Negative";
+				messageStrip.innerHTML = errorMessage;
+			})
+		})
+
+		function handleMessageClose(event) {
+			event.target.remove();
+		}
 
 	</script>
 </body>

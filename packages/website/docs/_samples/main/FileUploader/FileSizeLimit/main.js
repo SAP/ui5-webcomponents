@@ -7,17 +7,22 @@ import "@ui5/webcomponents-icons/dist/upload.js";
 const fileUploader = document.querySelector("#fileuploader");
 const resultDiv = document.querySelector("#file-exceeded-result");
 
-fileUploader.addEventListener("fileSizeExceeded", (event) => {
-    const maxSize = fileUploader.maxFileSize;
-    const fileSize = event.detail.fileSize.toFixed(2);
-    const errorMessage = "File too big! Max file size is " + maxSize + " MB, this file is " + fileSize + " MB";
+fileUploader.addEventListener("fileSizeExceeded", function (event) {
+    const uploaderMaxSize = fileUploader.maxFileSize;
+    const filesData = event.detail.filesData;
 
-    const messageStrip = document.createElement('ui5-message-strip');
-    messageStrip.addEventListener("close", handleMessageClose);
-    resultDiv.append(messageStrip);
+    filesData.forEach(fileData => {
+        const fileName = fileData.fileName;
+        const fileSizeDifference = (fileData.fileSize - uploaderMaxSize).toFixed(2);
+        const errorMessage = "Can't upload file '" + fileName + "' because it exceeds the maximum upload size by " + fileSizeDifference + " MB.";
 
-    messageStrip.design = "Negative";
-    messageStrip.innerHTML = errorMessage;
+        const messageStrip = document.createElement('ui5-message-strip');
+        messageStrip.addEventListener("close", handleMessageClose);
+        resultDiv.append(messageStrip);
+
+        messageStrip.design = "Negative";
+        messageStrip.innerHTML = errorMessage;
+    })
 })
 
 function handleMessageClose(event) {
