@@ -36,4 +36,20 @@
 //   }
 // }
 
+import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Menu.commands.js";
+
+const deviceFuncForStub = {
+	phone: "_isPhone"
+}
+
+Cypress.Commands.add('ui5SimulateDevice', (device = "phone") => {
+	cy.stub(internals, deviceFuncForStub[device])
+		.callsFake(() => {
+			return true;
+		});
+
+	cy.wrap({ isPhone })
+		.invoke("isPhone")
+		.should("be.true");
+});

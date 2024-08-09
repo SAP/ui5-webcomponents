@@ -1,17 +1,10 @@
-import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "../../src/ResponsivePopover.js";
 import "../../src/Button.js";
 import "../../src/Input.js";
 
 describe("ResponsivePopover mobile general interaction", () => {
 	before(() => {
-		cy.stub(internals, "_isPhone", () => {
-			return true;
-		});
-
-		cy.wrap({ isPhone })
-			.invoke("isPhone")
-			.should("be.true");
+		cy.ui5SimulateDevice();
 	});
 
 	it("tests opening a popover from a responsive popover", () => {
@@ -27,9 +20,7 @@ describe("ResponsivePopover mobile general interaction", () => {
 
 describe("Accessibility", () => {
 	beforeEach(() => {
-		cy.stub(internals, "isForcedMobile", () => {
-			return true;
-		});
+		cy.ui5SimulateDevice();
 	});
 
 	it("tests accessible-role - Default", () => {

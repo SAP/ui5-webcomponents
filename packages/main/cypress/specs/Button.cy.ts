@@ -126,7 +126,8 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-expanded", "true", "Attribute is reflected");
+			.invoke("attr", "aria-expanded")
+			.should("be.equal", "true");
 
 		cy.get<Button>("@button")
 			.then($el => {
@@ -138,7 +139,8 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-expanded", "false", "Attribute is reflected");
+			.invoke("attr", "aria-expanded")
+			.should("be.equal", "false");
 	});
 
 	it("not setting accessible-role on the host keeps the correct role on the button tag", () => {
@@ -150,21 +152,24 @@ describe("Button general interaction", () => {
 			.as("button");
 
 		cy.get("@button")
-			.should("have.attr", "role", "button", "Attribute is reflected");
+			.invoke("attr", "role")
+			.should("be.equal", "button");
 	});
 
 	it("tests button's icon only rendering", () => {
 		cy.mount(`<ui5-button icon="home"><!----><!----></ui5-button>`)
 
 		cy.get("[ui5-button]")
-			.should("have.attr", "icon-only", "", "Button comment has attribute icon-only");
+			.invoke("attr", "icon-only")
+			.should("exist")
 	});
 
 	it("tests button's icon only rendering", () => {
 		cy.mount(`<ui5-button icon="text"> </ui5-button>`)
 
 		cy.get("[ui5-button]")
-			.should("have.attr", "icon-only", "", "Button blank text has attribute icon-only")
+			.invoke("attr", "icon-only")
+			.should("exist")
 	});
 
 	it("tests button's slot rendering", () => {
@@ -249,7 +254,8 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("[ui5-icon]")
-			.should("have.attr", "mode", "Decorative", "icon has proper role");
+			.invoke("attr", "mode")
+			.should("be.equal", "Decorative");
 	});
 
 	it("aria-describedby properly applied on the button tag", () => {
@@ -263,7 +269,8 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-describedby", hiddenTextTypeId);
+			.invoke("attr", "aria-describedby")
+			.should("be.equal", hiddenTextTypeId);
 
 		cy.get("@button")
 			.shadow()
@@ -281,7 +288,8 @@ describe("Button general interaction", () => {
 			.as("button");
 
 		cy.get("@button")
-			.should("have.attr", "aria-label", "Download Application", "Attribute is reflected");
+			.invoke("attr", "aria-label")
+			.should("be.equal", "Download Application");
 	});
 
 	it("aria-haspopup and aria-controls are properly applied on the button tag", () => {
@@ -301,8 +309,14 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.shadow()
 			.find("button")
-			.should("have.attr", "aria-haspopup", "dialog", "Attribute is reflected")
-			.and("have.attr", "aria-controls", "registration-dialog", "Attribute is reflected");
+			.invoke("attr", "aria-haspopup")
+			.should("be.equal", "dialog");
+
+		cy.get("@button")
+			.shadow()
+			.find("button")
+			.invoke("attr", "aria-controls")
+			.should("be.equal", "registration-dialog");
 	});
 
 	it("setting tooltip on the host is reflected on the button tag", () => {
@@ -314,7 +328,8 @@ describe("Button general interaction", () => {
 			.as("button");
 
 		cy.get("@button")
-			.should("have.attr", "title", "Go home", "Attribute is reflected");
+			.invoke("attr", "title")
+			.should("be.equal", "Go home");
 	});
 
 	it("tooltip from inner icon is propagated", () => {
@@ -326,7 +341,8 @@ describe("Button general interaction", () => {
 			.as("button");
 
 		cy.get("@button")
-			.should("have.attr", "title", "Download", "Icon tooltip is shown");
+			.invoke("attr", "title")
+			.should("be.equal", "Download");
 	});
 
 	it("setting accessible-role on the host is reflected on the button tag", () => {
@@ -338,6 +354,7 @@ describe("Button general interaction", () => {
 			.as("button");
 
 		cy.get("@button")
-			.should("have.attr", "role", "link", "Attribute is reflected");
+			.invoke("attr", "role")
+			.should("be.equal", "link");
 	});
 })

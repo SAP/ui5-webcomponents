@@ -11,8 +11,6 @@ Cypress.Commands.add('ui5MenuOpen', { prevSubject: 'element' }, (subject, option
 
 	cy.get("@menu")
 		.ui5MenuOpened()
-
-	return cy.wrap(subject)
 });
 
 Cypress.Commands.add('ui5MenuOpened', { prevSubject: 'element' }, (subject) => {
@@ -27,8 +25,6 @@ Cypress.Commands.add('ui5MenuOpened', { prevSubject: 'element' }, (subject) => {
 		.shadow()
 		.find("[ui5-responsive-popover]")
 		.and("have.attr", "open")
-
-	return cy.wrap(subject)
 });
 
 Cypress.Commands.add('ui5MenuItemClick', { prevSubject: 'element' }, (subject) => {
@@ -38,16 +34,12 @@ Cypress.Commands.add('ui5MenuItemClick', { prevSubject: 'element' }, (subject) =
 
 	cy.get("@item")
 		.realClick();
-
-	return cy.wrap(subject)
 });
 
-Cypress.Commands.add('ui5MenuItemPress', { prevSubject: 'element' }, (subject, keys) => {
+Cypress.Commands.add('ui5MenuItemPress', { prevSubject: 'element' }, (subject, key) => {
 	cy.get(subject)
 		.should("have.focused")
 		.and("be.visible");
 
-	cy.realPress(keys);
-
-	return cy.wrap(subject)
+	cy.realPress(key);
 });

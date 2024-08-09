@@ -1,9 +1,6 @@
 const isSSR = typeof document === "undefined";
 
 const internals = {
-	isForcedMobile() {
-		return false;
-	},
 	get userAgent() {
 		if (isSSR) {
 			return "";
@@ -14,7 +11,7 @@ const internals = {
 		if (isSSR) {
 			return false;
 		}
-		return internals.isForcedMobile() || "ontouchstart" in window || navigator.maxTouchPoints > 0;
+		return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 	},
 
 	get chrome() {
@@ -84,7 +81,7 @@ const internals = {
 	_isPhone() {
 		detectTablet();
 		return internals.touch && !tablet;
-	}
+	},
 };
 
 let windowsVersion: number;
