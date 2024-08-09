@@ -56,7 +56,7 @@ class TableHeaderRow extends TableRowBase {
 		type: HTMLElement,
 		"default": true,
 		invalidateOnChildChange: {
-			properties: ["width", "_popin"],
+			properties: ["width", "_popin", "hAlign"],
 			slots: false,
 		},
 		individualSlots: true,

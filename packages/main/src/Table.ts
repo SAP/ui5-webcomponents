@@ -206,7 +206,7 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: true, slots: true } })
 	headerRow!: Array<TableHeaderRow>;
 
 	/**
@@ -464,11 +464,17 @@ class Table extends UI5Element {
 	}
 
 	get styles() {
-		return {
+		const tableStyle = {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
 			},
-		};
+		} as any;
+
+		this.headerRow[0].cells.forEach(headerCell => {
+			tableStyle.table[`--h-align-${(headerCell as any)._individualSlot}`] = headerCell.hAlign;
+		});
+
+		return tableStyle;
 	}
 
 	get _gridTemplateColumns() {
