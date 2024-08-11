@@ -104,7 +104,7 @@ type FileUploaderChangeEventDetail = {
 })
 /**
  * Event is fired when the size of a file is above the `maxFileSize` property value.
- * @param {FileData} filesData An array of `FileData` objects containing the`fileName` and `fileSize` in MB of each file that exceeds the upload limit
+ * @param {Array<FileData>} filesData An array of `FileData` objects containing the`fileName` and `fileSize` in MB of each file that exceeds the upload limit
  * @since 2.2.0
  * @public
  */
@@ -386,11 +386,19 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_getExceededFiles(files: FileList): FileData[] {
-		return Array.from(files)
-			.filter(file => convertBytesToMegabytes(file.size) > this.maxFileSize!)
-			.map(file => {
-				return { fileName: file.name, fileSize: convertBytesToMegabytes(file.size) };
-			});
+		const filesArray = Array.from(files);
+		const exceededFiles: FileData[] = [];
+
+		for (let i = 0; i < filesArray.length; i++) {
+			const fileSize = convertBytesToMegabytes(filesArray[i].size);
+			if (fileSize > this.maxFileSize!) {
+				exceededFiles.push({
+					fileName: filesArray[i].name,
+					fileSize
+				})
+			}
+		}
+		return exceededFiles;
 	}
 
 	toggleValueStatePopover(open: boolean) {
