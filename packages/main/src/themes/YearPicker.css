@@ -83,6 +83,20 @@
 	border: var(--_ui5_yearpicker_item_selected_hover_border);
 }
 
+.ui5-yp-item:active,
+.ui5-yp-item.ui5-yp-item--selected:active,
+.ui5-yp-item.ui5-yp-item--selected-between:active,
+.ui5-yp-item.ui5-yp-item--selected:active .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between:active .ui5-yp-item-sec-type {
+	background: var(--sapButton_Active_Background);
+}
+
+.ui5-mp-item:active,
+.ui5-yp-item.ui5-yp-item--selected:active,
+.ui5-yp-item.ui5-yp-item--selected-between:active {
+	border: var(--_ui5_monthpicker_item_active_border);
+}
+
 .ui5-yp-item.ui5-yp-item--disabled {
 	pointer-events: none;
 	opacity: 0.5;
