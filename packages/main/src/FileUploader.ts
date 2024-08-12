@@ -394,8 +394,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 			if (fileSize > this.maxFileSize!) {
 				exceededFiles.push({
 					fileName: filesArray[i].name,
-					fileSize
-				})
+					fileSize,
+				});
 			}
 		}
 		return exceededFiles;
