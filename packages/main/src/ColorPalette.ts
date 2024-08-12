@@ -228,9 +228,12 @@ class ColorPalette extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this._shouldFocusRecentColors && this.hasRecentColors) {
-			this.recentColorsElements[0].selected = true;
-			this.recentColorsElements[0].focus();
+		if (this.hasRecentColors) {
+			const firstRecentColor = this.recentColorsElements[0];
+			firstRecentColor.selected = true;
+			if (this._shouldFocusRecentColors) {
+				firstRecentColor.focus();
+			}
 		}
 	}
 
@@ -479,8 +482,7 @@ class ColorPalette extends UI5Element {
 		const colorPicker = this.getColorPicker();
 		this._setColor(colorPicker.value);
 		this._closeDialog();
-		this._shouldFocusRecentColors = !this.popupMode;
-		this._currentlySelected = colorPicker.value ? this.recentColorsElements[0] : undefined;
+		this._shouldFocusRecentColors = true;
 	}
 
 	_addRecentColor(color: string) {
