@@ -15,12 +15,15 @@ import {
 
 function getVersion() {
     if (ExecutionEnvironment.canUseDOM) {
-        if (!location.pathname.includes("nightly") ) {
-            console.log("v1") // eslint-disable-line
+        if (location.pathname.includes("v1") ) {
             return "v1";
         }
-        console.log("Nightly") // eslint-disable-line
-        return "Nightly";
+
+        if (location.pathname.includes("nightly") ) {
+            return "Nightly";
+        }
+
+        return "v2";
     }
 }
 
@@ -67,12 +70,21 @@ function VersionNavbarItemDesktop() {
                 href="https://sap.github.io/ui5-webcomponents/nightly"
                 className={clsx({ 'menu__link--active': version === "Nightly" })}
             />
-            <NavbarItem
-                label="v1"
+              <NavbarItem
+                label="Version 2"
                 isDropdownItem
                 target="_self"
-                href="https://sap.github.io/ui5-webcomponents/"
-                className={clsx({ "menu__link--active": version === "v1" })}
+                href="https://sap.github.io/ui5-webcomponents"
+                onClick={() => { setVersion("v2") }}
+                className={clsx({ 'menu__link--active': version === "v2" })}
+            />
+            <NavbarItem
+                label="Version 1"
+                isDropdownItem
+                target="_self"
+                href="https://sap.github.io/ui5-webcomponents/v1"
+                onClick={() => { setVersion("v1") }}
+                className={clsx({ 'menu__link--active': version === "v1" })}
             />
         </ul>
     </div>;

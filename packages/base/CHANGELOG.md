@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
+
+
+### Reverts
+
+* Revert "chore: fix features loading" (#9573) ([f45c7a3](https://github.com/SAP/ui5-webcomponents/commit/f45c7a3a26bf8232cd6c31cde54593c466924bd4)), closes [#9573](https://github.com/SAP/ui5-webcomponents/issues/9573)
+
+
+
+
+
+## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.24.6](https://github.com/SAP/ui5-webcomponents/compare/v1.24.5...v1.24.6) (2024-07-01)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** fix focusing when dialog is open from OpenUI5 dialog ([#9204](https://github.com/SAP/ui5-webcomponents/issues/9204)) ([e2a19fa](https://github.com/SAP/ui5-webcomponents/commit/e2a19fad3960193aa05c868dfe8a4d86fd8f532f)), closes [#9028](https://github.com/SAP/ui5-webcomponents/issues/9028) [#9183](https://github.com/SAP/ui5-webcomponents/issues/9183)
+
+
+
+
+
+## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
+
+
+### Bug Fixes
+
+* **framework:** set dataTransfer.effectAllowed only for UI5 elements ([#9150](https://github.com/SAP/ui5-webcomponents/issues/9150)) ([b03f70c](https://github.com/SAP/ui5-webcomponents/commit/b03f70c3f46f726b33da7b167da5d7b787585413)), closes [#9136](https://github.com/SAP/ui5-webcomponents/issues/9136)
+
+
+
+
+
+## [1.24.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.3...v1.24.4) (2024-05-31)
+
+
+### Bug Fixes
+
+* register runtime in SSR usage ([#9013](https://github.com/SAP/ui5-webcomponents/issues/9013)) ([#9014](https://github.com/SAP/ui5-webcomponents/issues/9014)) ([099e50d](https://github.com/SAP/ui5-webcomponents/commit/099e50d05d74273aa59b6eccbaaaa1095c587434)), closes [#8886](https://github.com/SAP/ui5-webcomponents/issues/8886)
+
+
+
+
+
 ## [1.24.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.2...v1.24.3) (2024-05-14)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

@@ -228,4 +228,17 @@ describe("TimePicker general interaction", () => {
 		// assert that the value in the input is different than the string 'now'
 		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "now", "the value is not 'now'");
 	});
+
+	it("picker popover should have accessible name", async () => {
+		const timepicker = await browser.$("#timepicker");
+		await timepicker.click();
+		await browser.keys("F4");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Time", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
+	});
 });

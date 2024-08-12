@@ -130,7 +130,7 @@ class SegmentedButton extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
+			getItemsCallback: () => this.navigatableItems,
 		});
 		this.hasPreviouslyFocusedItem = false;
 	}
@@ -227,6 +227,10 @@ class SegmentedButton extends UI5Element {
 		const eventTarget = e.target as SegmentedButtonItem;
 		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
 
+		if (eventTarget.disabled || eventTarget === this.getDomRef() || !isTargetSegmentedButtonItem) {
+			return;
+		}
+
 		if (isTargetSegmentedButtonItem) {
 			eventTarget.focus();
 			this._itemNavigation.setCurrentItem(eventTarget);
@@ -278,6 +282,12 @@ class SegmentedButton extends UI5Element {
 
 	get ariaDescription() {
 		return SegmentedButton.i18nBundle.getText(SEGMENTEDBUTTON_ARIA_DESCRIPTION);
+	}
+
+	get navigatableItems() {
+		return this.getSlottedNodes<SegmentedButtonItem>("items").filter(item => {
+			return !item.disabled;
+		});
 	}
 }
 

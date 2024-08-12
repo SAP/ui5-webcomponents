@@ -14,8 +14,21 @@
 	</script>
 </head>
 <body>
+
 	<div>
-		<label>Single file upload:</label>
+		<ui5-button id="open-dialog-btn">open</ui5-button>
+		<ui5-dialog id="dialog" opener="open-dialog-btn" header-text="Upload file">
+			<ui5-file-uploader>
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
+			<div slot="footer" class="dialogFooter">
+				<ui5-button design="Emphasized">Close</ui5-button>
+			</div>
+		</ui5-dialog>
+	</div>
+
+	<div>
+		<ui5-label>Single file upload:</label>
 		<ui5-file-uploader placeholder="upload file">
 			<ui5-button>Upload</ui5-button>
 		</ui5-file-uploader>
@@ -112,6 +125,12 @@
 		</div>
 	</div>
 	<script>
+
+		const dialog = document.getElementById("dialog");
+		document.getElementById("open-dialog-btn").addEventListener("click", function() {
+			dialog.open = !dialog.open;
+		});
+
 		document.getElementById("uploadBtn").addEventListener("click", function() {
 			var fu = document.getElementById("fuFetch");
 			var data = new FormData();

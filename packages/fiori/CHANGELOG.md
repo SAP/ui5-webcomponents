@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** fix missing apostrophe in default (sub)titles ([49cf1cd](https://github.com/SAP/ui5-webcomponents/commit/49cf1cd5bb31fdec4644cb8d79e0887cf7b9426b))
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([986d133](https://github.com/SAP/ui5-webcomponents/commit/986d133b2ac89092d691138fb621a8e5329c6b75)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+* **ui5-shellbar:** add tooltip for shellbar items ([#9412](https://github.com/SAP/ui5-webcomponents/issues/9412)) ([7a82738](https://github.com/SAP/ui5-webcomponents/commit/7a8273843aec5f80671195be3059ce56af830805)), closes [#5885](https://github.com/SAP/ui5-webcomponents/issues/5885)
+* **ui5-shellbar:** improved readability ([#9528](https://github.com/SAP/ui5-webcomponents/issues/9528)) ([7604346](https://github.com/SAP/ui5-webcomponents/commit/7604346c7752a68d94a281449e9b4a4cba569dda)), closes [#9296](https://github.com/SAP/ui5-webcomponents/issues/9296)
+
+
+
+
+
+## [1.24.7](https://github.com/SAP/ui5-webcomponents/compare/v1.24.6...v1.24.7) (2024-07-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.6](https://github.com/SAP/ui5-webcomponents/compare/v1.24.5...v1.24.6) (2024-07-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.5](https://github.com/SAP/ui5-webcomponents/compare/v1.24.4...v1.24.5) (2024-06-18)
+
+
+### Bug Fixes
+
+* **ui5-side-navigation-item:** wholeItemToggleable works in Firefox ([#9153](https://github.com/SAP/ui5-webcomponents/issues/9153)) ([65cf1e1](https://github.com/SAP/ui5-webcomponents/commit/65cf1e127217bed557c3f05224250faff045379b)), closes [#9057](https://github.com/SAP/ui5-webcomponents/issues/9057)
+
+
+
+
+
+## [1.24.4](https://github.com/SAP/ui5-webcomponents/compare/v1.24.3...v1.24.4) (2024-05-31)
+
+
+### Bug Fixes
+
+* register runtime in SSR usage ([#9013](https://github.com/SAP/ui5-webcomponents/issues/9013)) ([#9014](https://github.com/SAP/ui5-webcomponents/issues/9014)) ([099e50d](https://github.com/SAP/ui5-webcomponents/commit/099e50d05d74273aa59b6eccbaaaa1095c587434)), closes [#8886](https://github.com/SAP/ui5-webcomponents/issues/8886)
+* **ui5-illustrated-mesasge:** update subtitle color ([#8986](https://github.com/SAP/ui5-webcomponents/issues/8986)) ([f2b91a9](https://github.com/SAP/ui5-webcomponents/commit/f2b91a97ce02b4149e5c24a7ebb3173cb7d84128)), closes [#8984](https://github.com/SAP/ui5-webcomponents/issues/8984)
+* **ui5-side-navigation-item:** "selected" is no longer announced on every focused item ([#9037](https://github.com/SAP/ui5-webcomponents/issues/9037)) ([880b71c](https://github.com/SAP/ui5-webcomponents/commit/880b71cf5a285b13f53c221399bf078e9966673c)), closes [#8790](https://github.com/SAP/ui5-webcomponents/issues/8790)
+* **ui5-side-navigation-item:** click event is no longer fired twice ([#8958](https://github.com/SAP/ui5-webcomponents/issues/8958)) ([f3e2d88](https://github.com/SAP/ui5-webcomponents/commit/f3e2d88668ce29dbca949d0e832f2715fba5df05)), closes [#8692](https://github.com/SAP/ui5-webcomponents/issues/8692)
+
+
+
+
+
 ## [1.24.3](https://github.com/SAP/ui5-webcomponents/compare/v1.24.2...v1.24.3) (2024-05-14)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

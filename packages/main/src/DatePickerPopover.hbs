@@ -3,10 +3,12 @@
 	allow-target-overlap
 	placement-type="Bottom"
 	horizontal-align="Left"
+	accessible-name="{{pickerAccessibleName}}"
 	hide-arrow
 	?_hide-header={{_shouldHideHeader}}
 	@keydown="{{_onkeydown}}"
 	@ui5-after-close="{{onResponsivePopoverAfterClose}}"
+	@ui5-before-open="{{onResponsivePopoverBeforeOpen}}"
 >
 	{{#if showHeader}}
 		{{> header}}
@@ -40,7 +42,6 @@
 		primary-calendar-type="{{_primaryCalendarType}}"
 		secondary-calendar-type="{{secondaryCalendarType}}"
 		format-pattern="{{_formatPattern}}"
-		timestamp="{{_calendarTimestamp}}"
 		.selectionMode="{{_calendarSelectionMode}}"
 		.minDate="{{minDate}}"
 		.maxDate="{{maxDate}}"

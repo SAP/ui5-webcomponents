@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -906,6 +907,13 @@ class Table extends UI5Element {
 		if (isSpace(e)) {
 			e.preventDefault();
 			this.isMultiSelect && this._selectAll();
+		}
+	}
+
+	onInvalidation(change: ChangeInfo) {
+		if (change.type === "property" && change.name === "growing") {
+			this.tableEndObserved = false;
+			this.getIntersectionObserver().disconnect();
 		}
 	}
 

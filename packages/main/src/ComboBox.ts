@@ -49,6 +49,7 @@ import {
 	VALUE_STATE_TYPE_ERROR,
 	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	COMBOBOX_AVAILABLE_OPTIONS,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
@@ -1115,6 +1116,10 @@ class ComboBox extends UI5Element {
 
 	get _headerTitleText() {
 		return ComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get _popupLabel() {
+		return ComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
 	}
 
 	get _iconAccessibleNameText() {

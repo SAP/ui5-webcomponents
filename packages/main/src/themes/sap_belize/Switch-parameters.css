@@ -1,0 +1,8 @@
+@import "../base/Switch-parameters.css";
+
+:root {
+	--_ui5_switch_track_active_background_color: var(--sapButton_Track_Background);
+	--_ui5_switch_track_hover_active_background_color: var(--sapButton_Track_Background);
+	--_ui5_switch_track_active_border_color: var(--sapContent_ForegroundBorderColor);
+	--_ui5_switch_track_hover_active_border_color: var(--sapButton_Hover_BorderColor);
+}

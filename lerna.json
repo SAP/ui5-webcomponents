@@ -13,7 +13,7 @@
     "packages/website",
     "packages/create-package"
   ],
-  "version": "1.24.3",
+  "version": "1.24.8",
   "command": {
     "publish": {
       "allowBranch": "*",
@@ -30,6 +30,5 @@
       "preid": "rc"
     }
   },
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "npmClient": "yarn"
 }

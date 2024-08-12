@@ -43,6 +43,11 @@ No properties available for this component.`
 | Type        | ${processType(property.type)}               |
 | Default     | ${property.default}                         |`
 
+
+        if (property.readonly) {
+            propertyResult += `\n| Readonly | true |`
+        }
+
         if (property._ui5since) {
             propertyResult += `\n| Since | ${property._ui5since} |`
         }

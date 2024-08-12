@@ -30,6 +30,7 @@
 .ui5-shellbar-menu-button,
 .ui5-shellbar-button,
 .ui5-shellbar-image-button,
+::slotted([ui5-toggle-button][slot="assistant"]),
 ::slotted([ui5-button][slot="startButton"]) {
 	height: 2.25rem;
 	padding: 0;
@@ -56,6 +57,7 @@
 	margin-inline-start: 0;
 }
 
+::slotted([ui5-toggle-button][slot="assistant"]:hover),
 ::slotted([ui5-button][slot="startButton"]:hover),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover,
 .ui5-shellbar-button:hover,
@@ -65,6 +67,12 @@
 	color: var(--sapShell_TextColor);
 }
 
+::slotted([ui5-toggle-button][slot="assistant"][pressed]),
+::slotted([ui5-toggle-button][slot="assistant"][pressed]:hover:not([active])) {
+	color: var(--sapShell_Assistant_ForegroundColor);
+}
+
+::slotted([ui5-toggle-button][slot="assistant"][active]),
 ::slotted([ui5-button][slot="startButton"][active]),
 .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:active,
 .ui5-shellbar-button[active],
@@ -74,7 +82,8 @@
 	color: var(--_ui5_shellbar_button_active_color);
 }
 
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus {
+:host([desktop]) .ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus,
+.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_outline_offset);
 }
@@ -142,7 +151,6 @@ slot[name="profile"] {
 	height: var(--_ui5_shellbar_overflow_container_middle_height);
 	width: 0;
 	flex-shrink: 0;
-	width: 7.5rem;
 }
 
 .ui5-shellbar-mid-content {
@@ -156,10 +164,6 @@ slot[name="profile"] {
 
 .ui5-shellbar-mid-content + .ui5-shellbar-overflow-container-right {
 	width: 33.3%;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-middle {
-	width: 0;
 }
 
 :host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {
@@ -208,7 +212,8 @@ slot[name="profile"] {
 	max-height: 2rem;
 }
 
-.ui5-shellbar-logo:focus {
+:host([desktop]) .ui5-shellbar-logo:focus,
+.ui5-shellbar-logo:focus-visible {
 	outline: var(--_ui5_shellbar_logo_outline);
 	outline-offset: var(--_ui5_shellbar_logo_outline_offset);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
@@ -466,8 +471,8 @@ slot[name="profile"] {
 	height: 2.75rem;
 }
 
-.ui5-shellbar-co-pilot-pressed,
-.ui5-shellbar-co-pilot-pressed:hover {
+.ui5-shellbar-coPilot-pressed,
+.ui5-shellbar-coPilot-pressed:hover {
 	color: var(--sapShell_Assistant_ForegroundColor);
 }
 

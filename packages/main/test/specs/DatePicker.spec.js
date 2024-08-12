@@ -770,8 +770,7 @@ describe("Date Picker Tests", () => {
 		}
 
 		await innerInput.keys("May 5, 2100");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await innerInput.keys("Enter");
 
 		const input = await datepicker.getInput();
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid");
@@ -1394,5 +1393,19 @@ describe("Date Picker Tests", () => {
 		currentPicker = await calendar.getProperty("_currentPicker");
 		assert.ok(await datepicker.isPickerOpen(), "Datepicker is open");
 		assert.equal(currentPicker, "day", "calendar is opened on days");
+	});
+
+	it("picker popover should have accessible name", async () => {
+		datepicker.id = "#dp";
+
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.click();
+		await browser.keys("F4");
+
+		const popover = await datepicker.getPopover();
+
+		assert.strictEqual(await popover.getAttribute("accessible-name"), "Choose Date", "Picker popover has an accessible name");
+
+		await browser.keys("Escape");
 	});
 });

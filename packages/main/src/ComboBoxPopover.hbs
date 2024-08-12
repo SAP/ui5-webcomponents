@@ -6,6 +6,7 @@
 	style="{{styles.suggestionsPopover}}"
 	@ui5-after-open={{_afterOpenPopover}}
 	@ui5-after-close={{_afterClosePopover}}
+	accessible-name="{{_popupLabel}}"
 >
 	<ui5-busy-indicator
 		?active={{loading}}
@@ -68,6 +69,7 @@
 		@ui5-item-focused={{_onItemFocus}}
 		@mousedown={{_itemMousedown}}
 		mode="SingleSelect"
+		accessible-role="listbox"
 	>
 		{{#each _filteredItems}}
 			{{#if isGroupItem}}
@@ -127,6 +129,7 @@
 			?selected={{this.selected}}
 			?focused={{this.focused}}
 			data-ui5-stable="{{this.stableDomRef}}"
+			accessible-role="option"
 	>
 		{{this.text}}
 	</ui5-li>

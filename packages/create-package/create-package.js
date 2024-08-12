@@ -154,7 +154,7 @@ const generateFilesContent = (packageName, componentName, namespace, typescript,
 	};
 
 	if (typescript) {
-		packageContent.devDependencies.typescript = "^4.9.4";
+		packageContent.devDependencies.typescript = "5.2.2";
 	}
 
 	// Update package.json

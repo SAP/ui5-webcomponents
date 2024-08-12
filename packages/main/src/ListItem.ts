@@ -351,8 +351,14 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_ondragstart(e: DragEvent) {
+		if (!e.dataTransfer) {
+			return;
+		}
+
 		if (e.target === this._listItem) {
 			this.setAttribute("data-moving", "");
+			e.dataTransfer.dropEffect = "move";
+			e.dataTransfer.effectAllowed = "move";
 		}
 	}
 

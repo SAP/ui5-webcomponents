@@ -11,6 +11,7 @@ import type {
 
 import {
 	TIMEPICKER_INPUT_DESCRIPTION,
+	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -143,6 +144,10 @@ class TimePicker extends TimePickerBase {
 
 	get dateAriaDescription() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+	}
+
+	get pickerAccessibleName() {
+		return TimePicker.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 }
 

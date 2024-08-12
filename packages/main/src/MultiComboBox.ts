@@ -86,6 +86,7 @@ import {
 	SELECT_OPTIONS,
 	SHOW_SELECTED_BUTTON,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
+	COMBOBOX_AVAILABLE_OPTIONS,
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 	MCB_SELECTED_ITEMS,
 	INPUT_CLEAR_ICON_ACC_NAME,
@@ -659,6 +660,12 @@ class MultiComboBox extends UI5Element {
 
 		if (cursorPosition === 0 && !isTextSelected) {
 			this._tokenizer._focusLastToken();
+		}
+	}
+
+	_onPopoverFocusOut() {
+		if (!isPhone()) {
+			this._tokenizer.expanded = this.open;
 		}
 	}
 
@@ -1440,11 +1447,12 @@ class MultiComboBox extends UI5Element {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
 			this._dialogInputValueState = this.valueState;
+			this._tokenizer.expanded = false;
 			this.blur();
 		}
 
 		this._toggle();
-
+		this._tokenizer.expanded = this.focused;
 		this._iconPressed = false;
 		this._preventTokenizerToggle = false;
 		this.filterSelected = false;
@@ -1849,7 +1857,7 @@ class MultiComboBox extends UI5Element {
 	get _innerInput(): HTMLInputElement {
 		if (isPhone()) {
 			if (this.allItemsPopover?.opened) {
-				return this.allItemsPopover.querySelector("ui5-input")!.shadowRoot!.querySelector("input")!;
+				return this.allItemsPopover.querySelector("[ui5-input]")!.shadowRoot!.querySelector("input")!;
 			}
 		}
 
@@ -1858,6 +1866,10 @@ class MultiComboBox extends UI5Element {
 
 	get _headerTitleText() {
 		return MultiComboBox.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+	}
+
+	get _popupLabel() {
+		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
 	}
 
 	get _iconAccessibleNameText() {

@@ -348,7 +348,7 @@ class StepInput extends UI5Element implements IFormElement {
 			return this.value.toFixed(this.valuePrecision);
 		}
 
-		if (this.value === Number(this.input.value)) { // For the cases where the number is fractional and is ending with 0s.
+		if (this.input && this.value === Number(this.input.value)) { // For the cases where the number is fractional and is ending with 0s.
 			return this.input.value;
 		}
 
