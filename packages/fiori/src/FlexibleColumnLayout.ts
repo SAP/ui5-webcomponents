@@ -61,7 +61,7 @@ const COLUMN = {
 	END: 2,
 } as const;
 
-const COLUMN_MIN_WIDTH = 312;
+const COLUMN_MIN_WIDTH = 248;
 
 type SeparatorMovementSession = {
 	separator: HTMLElement,
