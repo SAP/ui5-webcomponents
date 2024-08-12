@@ -3,9 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
@@ -93,14 +90,6 @@ class Page extends UI5Element {
 	hideFooter = false;
 
 	/**
-	 * Defines the current media query size.
-	 * @private
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	mediaRange = "S";
-
-	/**
 	 * Defines the header HTML Element.
 	 * @public
 	 */
@@ -121,26 +110,6 @@ class Page extends UI5Element {
 	@slot()
 	footer!: Array<HTMLElement>;
 
-	_updateMediaRange: ResizeObserverCallback;
-
-	constructor() {
-		super();
-
-		this._updateMediaRange = this.updateMediaRange.bind(this);
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this, this._updateMediaRange);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._updateMediaRange);
-	}
-
-	updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
-	}
-
 	get _contentBottom() {
 		return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";
 	}
@@ -157,6 +126,7 @@ class Page extends UI5Element {
 		return {
 			content: {
 				"padding-bottom": this.footer.length && this._contentPaddingBottom,
+				"scroll-padding-bottom": this.footer.length && this._contentPaddingBottom,
 				"bottom": this.footer.length && this._contentBottom,
 				"top": this._contentTop,
 			},

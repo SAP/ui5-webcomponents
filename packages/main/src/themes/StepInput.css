@@ -31,6 +31,7 @@
 
 :host .ui5-step-input-input {
 	text-align: inherit;
+	height: inherit;
 }
 
 :host(:not([value-state]):not([readonly]):not([disabled])){
@@ -166,6 +167,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	height: inherit;
 }
 
 :host .ui5-step-input-input[text-align=left] {

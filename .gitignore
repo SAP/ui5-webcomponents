@@ -4,6 +4,7 @@
 !packages/website/.gitignore
 dist
 **/src/generated
+**/test/test-elements/generated
 .dev-server-port
 
 # scoping feature generated entry points for vite consumption

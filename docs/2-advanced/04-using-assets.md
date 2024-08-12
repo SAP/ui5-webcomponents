@@ -17,6 +17,9 @@ These assets are important for **accessibility** and **globalization**.
 Import the `dist/Assets.js` file of the respective NPM package:
 
 `import "@ui5/<PACKAGE-NAME>/dist/Assets.js`
+`import "@ui5/<PACKAGE-NAME>/dist/Assets-fetch.js`
+
+** Note: read "Techcnocal aspects" below on how to choose which one to use**
 
 | Project                | NPM Package                                                                                                      | Assets           | Module                                           | Notes                                                                                                                                                                                                            |
 |------------------------|------------------------------------------------------------------------------------------------------------------|------------------|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -56,6 +59,20 @@ The `ui5-date-picker` component will have all translatable texts in Spanish, and
 
 ## Technical Aspects
 
-Additional assets are `.json` files with the respective data. When you import the `dist/Assets.js` file of a given package, assets are only **registered**, but not yet fetched.
-When they are needed, they are loaded on the fly with **dymamic imports**, and then used.
+Additional assets are `.json` files with the respective data.
 
+There are two ways to reference them.
+
+### Assets.js
+When you import the `dist/Assets.js` file of a given package, assets are only **registered**, but not yet fetched. When they are needed, they are loaded on the fly with **dymamic imports**, and then used. This only works with bundlers which copy the JSON file as a JS file and rewrite the import URL to the correct location.
+
+One drawback with this is that it doesn't work with CDN usage when the JSON files are hosted directly as JSON - the import expects a JS file and the browser gets a JSON content-type back with leads to an error.
+
+Use this approach only with a bundler.
+
+### Assets-fetch.js
+When you import the `dist/Assets-fetch.js` file of a given package, assets are only **registered**, but not yet fetched. When they are needed, they are loaded on the fly with **fetch**, and then used.
+
+The issue is how to get the correct URL for the fetch to work and this is solved by using `import.meta.url` to resolve a relative path from a module to a JSON file
+
+The approach can be used with a bundler and for CDN usage.

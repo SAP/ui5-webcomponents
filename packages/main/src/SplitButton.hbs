@@ -32,6 +32,8 @@
 		design="{{design}}"
 		icon="slim-arrow-down"
 		tabindex="-1"
+		tooltip="{{accInfo.arrowButton.title}}"
+		.accessibilityAttributes={{accInfo.arrowButton.accessibilityAttributes}}
 		?disabled="{{disabled}}"
 		?active="{{effectiveActiveArrowButton}}"
 		@click="{{_handleArrowButtonAction}}"
@@ -41,7 +43,7 @@
 		@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
 	>
 	</ui5-button>
-	<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accessibilityInfo.description}} {{accessibilityInfo.keyboardHint}} {{accessibleName}}</span>
+	<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInfo.root.description}} {{accInfo.root.keyboardHint}} {{accessibleName}}</span>
 	<span id="{{_id}}-invisibleTextDefault" class="ui5-hidden-text">{{textButtonAccText}}</span>
 
 </div>

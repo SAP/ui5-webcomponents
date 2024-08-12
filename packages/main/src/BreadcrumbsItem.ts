@@ -65,6 +65,7 @@ class BreadcrumbsItem extends UI5Element {
 
 	_accessibleNameText?: string;
 	_isCurrentPageItem?: boolean;
+	_needsSeparator?: boolean;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
