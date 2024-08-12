@@ -51,6 +51,7 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const DAYS_IN_WEEK = 7;
@@ -306,8 +307,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			week.push(day);
 
 			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
+				const weekNumber2 = this._calculateWeekNumber(tempDate.toLocalJSDate(), localeData);
+				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType);
+				console.log(weekNumber + " ----------- " + weekNumber2);
+				
 				week.unshift({
-					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType),
+					weekNum: weekNumber,
 					isHidden: this.shouldHideWeekNumbers,
 				});
 			}
@@ -323,6 +328,28 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		}
 	}
+
+	_calculateWeekNumber (date: Date, localeData: LocaleData): number {
+		let endDate = new Date(date);
+		endDate.setDate(date.getDate() + 6)
+		let weekNumber;
+
+		const oDateFormat = DateFormat.getDateInstance({pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering});
+
+		const bIsRegionUS = localeData.firstDayStartsFirstWeek();
+
+		const bStartsInFirstMonth = date.getMonth() === 0;
+		const bEndsInFirstMonth = endDate.getMonth() === 0;
+		const bEndsInSecondMonth = endDate.getMonth() === 1;
+
+		if (bStartsInFirstMonth && bIsRegionUS && (bEndsInFirstMonth || bEndsInSecondMonth)) {
+			weekNumber = oDateFormat.format(endDate);
+		} else {
+			weekNumber = oDateFormat.format(date);
+		}
+
+		return Number(weekNumber);
+	};
 
 	/**
 	 * Builds the dayNames object (header of the month).
