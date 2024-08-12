@@ -114,7 +114,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	inputTooltip = false;
+	editableTooltip = false;
 
 	/**
 	 * Defines whether the slider is in disabled state.
@@ -741,7 +741,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	get _ariaLabelledByHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+		return ["ui5-slider-accName", "ui5-sliderDesc"].join(" ").trim();
 	}
 
 	get _ariaDescribedByHandleRefs() {
