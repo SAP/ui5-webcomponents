@@ -720,6 +720,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("placeholder, set by the user", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp15";
 
 		const placeholder = "Delivery date";
@@ -750,6 +751,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Going over the maximum date changes value state", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
