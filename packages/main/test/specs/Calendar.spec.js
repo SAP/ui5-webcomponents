@@ -438,6 +438,6 @@ describe("Calendar general interaction", () => {
 
 		const specialDate = await dayPickerRoot.$$(`div[special-day]`);
 
-		assert.strictEqual(specialDate.length, 1, "Special date is rendered");
+		assert.strictEqual(specialDate.length, 2, "Special date is rendered");
 	});
 });

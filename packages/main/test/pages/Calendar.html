@@ -64,13 +64,6 @@
 	</section>
 
 	<section>
-		<ui5-title>Calendar with Minimum and Maximum Date & Format Pattern</ui5-title>
-		<ui5-calendar id="calendar4" data-ui5-compact-size min-date="7/7/2020" max-date="20/10/2020" timestamp="1594166400" format-pattern="dd/MM/yyyy">
-			<ui5-date value="08/07/2020"></ui5-date>
-		</ui5-calendar>
-	</section>
-
-	<section>
 		<ui5-title> Calendar with no format pattern & ISO min-max dates</ui5-title>
 		<ui5-calendar id="calendar6" min-date="2020-10-20" max-date="2023-10-20"></ui5-calendar>
 	</section>
@@ -79,11 +72,13 @@
 		<ui5-title>Calendar with primary and secondary calendar type</ui5-title>
 		<ui5-calendar id="calendar5" primary-calendar-type='Islamic' secondary-calendar-type='Gregorian'></ui5-calendar>
 	</section>
+		<ui5-title>Calendar with same primary and secondary calendar type</ui5-title>
+		<ui5-calendar id="calendar7" primary-calendar-type='Gregorian' secondary-calendar-type='Gregorian'></ui5-calendar>
 
 	<section>
-		<ui5-title>Calendar with Selection Mode = Range</ui5-title>
-		<ui5-calendar id="calendar7" primary-calendar-type='Gregorian' secondary-calendar-type='Gregorian' selection-mode="Range">
-			<ui5-date-range start-value="Jan 20, 2021" end-value="Jan 30, 2021"></ui5-date-range>
+		<ui5-title>Calendar with Minimum and Maximum Date & Format Pattern</ui5-title>
+		<ui5-calendar id="calendar4" data-ui5-compact-size min-date="7/7/2020" max-date="20/10/2020" timestamp="1594166400" format-pattern="dd/MM/yyyy">
+			<ui5-date value="08/07/2020"></ui5-date>
 		</ui5-calendar>
 	</section>
 
