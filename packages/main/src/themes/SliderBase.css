@@ -177,7 +177,7 @@
 	padding: 0;
 }
 
-.ui5-slider-tooltip ui5-input {
+.ui5-slider-tooltip [ui5-input] {
 	background: transparent;
 	border: none;
 	box-shadow: none;
