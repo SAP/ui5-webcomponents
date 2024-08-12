@@ -349,6 +349,26 @@ describe("Preserves column min-width", () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
+	it("complies with min-width requiremet on smallest desktop", async () => {
+		await browser.setWindowSize(1045, 1080); // size is just above tablet
+
+		const fcl = await browser.$("#fcl3"),
+			smallestDesktopWidth = 1024,
+			smallestColumnWidth = 248;
+
+		// set initial state
+		await fcl.setProperty("layout", "ThreeColumnsMidExpanded");
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+
+		const startColumn = await fcl.shadow$(".ui5-fcl-column--start");
+		const startColumnWidth = await startColumn.getSize("width");
+		const fclWidth = await fcl.getSize("width");
+
+		// assert
+		assert.strictEqual(fclWidth, smallestDesktopWidth, "fcl is the smallest desktop width");
+		assert.strictEqual(startColumnWidth, smallestColumnWidth, "min-width is respected");
+	});
+
 	it("preserves min-width of begin column", async () => {
 		await browser.setWindowSize(1400, 1080);
 		
