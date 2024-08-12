@@ -15,7 +15,12 @@ import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isEnter, isEscape, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isDelete,
+	isEnter,
+	isEscape,
+	isSpace,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import UploadState from "./types/UploadState.js";
 import "@ui5/webcomponents-icons/dist/refresh.js";
 import "@ui5/webcomponents-icons/dist/stop.js";
@@ -238,6 +243,14 @@ class UploadCollectionItem extends ListItem implements IUploadCollectionItem {
 		if (inpFocusDomRef) {
 			inpFocusDomRef.focus();
 			inpFocusDomRef.setSelectionRange(0, this._fileNameWithoutExtension.length);
+		}
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
+
+		if (isDelete(e) && !this.disableDeleteButton && !this.hideDeleteButton && !this.disabled) {
+			this._onDelete();
 		}
 	}
 
