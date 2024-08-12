@@ -811,7 +811,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM;
+		return this.stepsInHeaderDOM.filter(step => !step.disabled);
 	}
 
 	get navAriaRoleDescription() {

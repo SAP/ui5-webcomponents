@@ -83,6 +83,7 @@
 .ui5-tc__overflow > [ui5-button] {
 	border-radius: 0.75rem;
 	height: 1.5rem;
+	--_ui5_button_focused_border_radius: 0.75rem;
 }
 
 .ui5-tc__overflow > [ui5-button]:not([active]) {

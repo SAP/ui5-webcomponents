@@ -76,6 +76,7 @@ type Day = {
 	weekNum?: number,
 	isHidden?: boolean,
 	type?: string,
+	parts: string,
 }
 
 type WeekNumber = {
@@ -171,7 +172,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
 	 * @private
 	 */
-	 @property()
+	 @property({ type: Number })
 	_secondTimestamp?: number;
 
 	/**
@@ -263,6 +264,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				ariaDisabled: isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
 				type: specialDayType,
+				parts: "day-cell",
 			};
 
 			if (isFirstDayOfWeek) {
@@ -271,10 +273,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelected) {
 				day.classes += " ui5-dp-item--selected";
+				day.parts += " day-cell-selected";
 			}
 
 			if (isSelectedBetween) {
 				day.classes += " ui5-dp-item--selected-between";
+				day.parts += " day-cell-selected-between";
 			}
 
 			if (isToday) {
@@ -285,8 +289,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				day.classes += " ui5-dp-item--othermonth";
 			}
 
-			if (isWeekend) {
-				day.classes += " ui5-dp-item--weeekend";
+			if ((isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working") {
+				day.classes += " ui5-dp-item--weekend";
 			}
 
 			if (isDisabled) {

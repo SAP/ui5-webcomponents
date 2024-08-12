@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
+
+
+### Bug Fixes
+
+* **core:** invalidation no longer leaves component broken after error in onBeforeRendering ([#9635](https://github.com/SAP/ui5-webcomponents/issues/9635)) ([136bd5a](https://github.com/SAP/ui5-webcomponents/commit/136bd5acef5dcf25bb3ec9f46b66e33aa819f49a))
+* stop attribute change calling property setter when coming from a setter ([#9592](https://github.com/SAP/ui5-webcomponents/issues/9592)) ([95e61dd](https://github.com/SAP/ui5-webcomponents/commit/95e61ddc097658c49509889c8454901a8a8ef0b4))
+
+
+### Features
+
+* add `enableDefaultTooltips ` config option ([#9559](https://github.com/SAP/ui5-webcomponents/issues/9559)) ([a672788](https://github.com/SAP/ui5-webcomponents/commit/a6727880e9fc648a8999643a2d2dac4eaff5c58c)), closes [#9494](https://github.com/SAP/ui5-webcomponents/issues/9494)
+* **framework:** add `[@query](https://github.com/query)(All)` decorators ([#9567](https://github.com/SAP/ui5-webcomponents/issues/9567)) ([242024c](https://github.com/SAP/ui5-webcomponents/commit/242024c38a0703809840cd0c9ef9e38a4b2613c8)), closes [#6743](https://github.com/SAP/ui5-webcomponents/issues/6743)
+
+
+
+
+
+## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+
+### Features
+
+* **core:** fire PascalCase events for easier react usage ([#9608](https://github.com/SAP/ui5-webcomponents/issues/9608)) ([43e28fa](https://github.com/SAP/ui5-webcomponents/commit/43e28fa5da370bde06cc23d78a3508321673ca54))
+
+
+
+
+
+# [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
+
+
+### Features
+
+* enhance feature initialization ([#9479](https://github.com/SAP/ui5-webcomponents/issues/9479)) ([d55eba8](https://github.com/SAP/ui5-webcomponents/commit/d55eba85ff4860bacaff1988c5e1aa56eaa4a225)), closes [#8175](https://github.com/SAP/ui5-webcomponents/issues/8175)
+
+
+
+
+
+# [2.1.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2024-07-25)
+
+
+### Features
+
+* **framework:** add configuration to prevent font loading ([#9483](https://github.com/SAP/ui5-webcomponents/issues/9483)) ([d188638](https://github.com/SAP/ui5-webcomponents/commit/d18863868dafc6d96193b11a410ab295a783bc16))
+
+
+
+
+
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
 
 

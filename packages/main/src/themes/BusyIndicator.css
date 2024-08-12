@@ -2,10 +2,6 @@
 	display: inline-block;
 }
 
-:host {
-	border-radius: unset;
-}
-
 :host([_is-busy]) {
 	color: var(--_ui5_busy_indicator_color);
 }
@@ -103,7 +99,6 @@
 .ui5-busy-indicator-busy-area:focus-visible {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
-	border-radius: var(--_ui5_busy_indicator_focus_border_radius);
 }
 
 .ui5-busy-indicator-circles-wrapper {

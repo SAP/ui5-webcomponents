@@ -84,6 +84,7 @@ import {
 	SELECT_OPTIONS,
 	SHOW_SELECTED_BUTTON,
 	MULTICOMBOBOX_DIALOG_OK_BUTTON,
+	COMBOBOX_AVAILABLE_OPTIONS,
 	VALUE_STATE_ERROR_ALREADY_SELECTED,
 	MCB_SELECTED_ITEMS,
 	INPUT_CLEAR_ICON_ACC_NAME,
@@ -561,7 +562,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
-		if (!this.open) {
+		if (!this.open || this.readonly) {
 			return;
 		}
 
@@ -707,7 +708,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		this._previouslySelectedItems = this._getSelectedItems();
 		const token: Token[] = e.detail.tokens;
-		const deletingItems = this.items.filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
+		const deletingItems = this._getItems().filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
 
 		deletingItems.forEach(item => {
 			item.selected = false;
@@ -1905,7 +1906,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get shouldDisplayOnlyValueStateMessage() {
-		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
+		return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed && !this.open;
 	}
 
 	get valueStateTypeMappings(): ValueStateTypeAnnouncement {
@@ -1988,6 +1989,14 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const selected = items.filter(item => item.selected);
 
 		return MultiComboBox.i18nBundle.getText(MCB_SELECTED_ITEMS, selected.length, items.length);
+	}
+
+	get _popupLabel() {
+		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
+	}
+
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
 	}
 
 	get classes(): ClassMap {

@@ -414,7 +414,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
-	@property()
+	@property({ noAttribute: true })
 	set value(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
 
@@ -570,14 +570,15 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_select(index: number) {
+		const selectedIndex = this._selectedIndex;
 		if (index < 0 || index >= this.options.length || this.options.length === 0) {
 			return;
 		}
-		if (this.options[this._selectedIndex]) {
-			this.options[this._selectedIndex].selected = false;
+		if (this.options[selectedIndex]) {
+			this.options[selectedIndex].selected = false;
 		}
 
-		if (this._selectedIndex !== index) {
+		if (selectedIndex !== index) {
 			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
@@ -761,7 +762,7 @@ class Select extends UI5Element implements IFormInputElement {
 		if (this.shouldDisplayDefaultValueStateMessage) {
 			valueStateText = this.valueStateDefaultText;
 		} else {
-			valueStateText = this.valueStateMessageText.map(el => el.textContent).join(" ");
+			valueStateText = this.valueStateMessage.map(el => el.textContent).join(" ");
 		}
 
 		return `${this.valueStateTypeText} ${valueStateText}`;
@@ -853,12 +854,8 @@ class Select extends UI5Element implements IFormInputElement {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
-	}
-
 	get shouldDisplayDefaultValueStateMessage() {
-		return !this.valueStateMessageText.length && this.hasValueStateText;
+		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
 
 	get hasValueStateText() {

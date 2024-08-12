@@ -34,7 +34,9 @@
       style="{{styles.actions}}">
       <slot name="actionsBar"></slot>
       {{#unless mobileNavigationActions}}
-        <div class="ui5-dynamic-page-title--actions-separator"></div>
+        {{#if _needsSeparator}}
+          <div class="ui5-dynamic-page-title--actions-separator"></div>
+        {{/if}}
         <slot name="navigationBar"></slot>
       {{/unless}}
     </div>

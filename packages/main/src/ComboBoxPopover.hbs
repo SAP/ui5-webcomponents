@@ -12,6 +12,8 @@
 	@ui5-close={{_afterClosePopover}}
 	@keydown={{_handlePopoverKeydown}}
 	@focusout={{_handlePopoverFocusout}}
+	accessible-name="{{_popupLabel}}"
+	id="{{responsivePopoverId}}"
 	.open={{open}}
 	.opener={{this}}
 >
@@ -55,7 +57,9 @@
 		{{#if hasValueStateText}}
 			<div class="{{classes.popoverValueState}}" style="{{styles.popoverValueStateMessage}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+				{{#if open}}
 					{{> valueStateMessage}}
+				{{/if}}
 			</div>
 		{{/if}}
 	{{/if}}
@@ -64,7 +68,9 @@
 		{{#if hasValueStateText}}
 			<div slot="header" class="ui5-responsive-popover-header {{classes.popoverValueState}}" ?focused={{_isValueStateFocused}} style="{{styles.suggestionPopoverHeader}}">
 				<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageIcon}}"></ui5-icon>
+				{{#if open}}
 					{{> valueStateMessage}}
+				{{/if}}
 			</div>
 		{{/if}}
 	{{/unless}}
@@ -132,9 +138,7 @@
 	{{#if shouldDisplayDefaultValueStateMessage}}
 		{{valueStateDefaultText}}
 	{{else}}
-		{{#each valueStateMessageText}}
-			{{this}}
-		{{/each}}
+		<slot name="valueStateMessage"></slot>
 	{{/if}}
 {{/inline}}
 

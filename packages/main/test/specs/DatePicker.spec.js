@@ -758,8 +758,7 @@ describe("Date Picker Tests", () => {
 		}
 
 		await innerInput.keys("May 5, 2100");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await innerInput.keys("Enter");
 
 		const input = await datepicker.getInput();
 		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");

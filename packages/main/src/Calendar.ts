@@ -177,6 +177,13 @@ type SpecialCalendarDateT = {
  * @constructor
  * @extends CalendarPart
  * @public
+ * @csspart day-cell - Used to style the day cells.
+ * @csspart day-cell-selected - Used to style the day cells when selected.
+ * @csspart day-cell-selected-between - Used to style the day cells in between of selected dates in range.
+ * @csspart month-cell - Used to style the month cells.
+ * @csspart month-cell-selected - Used to style the month cells when selected.
+ * @csspart year-cell - Used to style the year cells.
+ * @csspart year-cell-selected - Used to style the year cells when selected.
  * @since 1.0.0-rc.11
  */
 @customElement({
@@ -405,16 +412,15 @@ class Calendar extends CalendarPart {
 	}
 
 	get _specialCalendarDates() {
+		const hasSelectedType = this._specialDates.some(date => date.type === this._selectedItemType);
 		const validSpecialDates = this._specialDates.filter(date => {
 			const dateType = date.type;
 			const dateValue = date.value;
-			const isTypeMatch = this._selectedItemType !== "None" ? dateType === this._selectedItemType : true;
+			const isTypeMatch = hasSelectedType
+				? (dateType === this._selectedItemType || dateType === "Working" || dateType === "NonWorking")
+				: true;
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
-
-		if (validSpecialDates.length === 0) {
-			this._selectedItemType = "None";
-		}
 
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
@@ -435,7 +441,12 @@ class Calendar extends CalendarPart {
 	}
 
 	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
+		const defaultTypes = ["Working", "NonWorking", "Selected", "Today"];
 		this._selectedItemType = e.detail.item.type;
+
+		if (defaultTypes.includes(this._selectedItemType)) {
+			this._selectedItemType = "None"; // In order to avoid filtering of default types
+		}
 		this._currentPickerDOM._autoFocus = false;
 	}
 
