@@ -115,7 +115,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	_hidden = false;
 
 	/**
-	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
+	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered or focused day.
 	 *
 	 * @private
 	 */
@@ -273,23 +273,19 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
-	  * Tells if the month is inside a selection range (light blue).
-	  *
-	  * @param timestamp
+	  * Returns true if year timestamp is inside the selection range.
 	  * @private
 	  */
 	_isYearInsideSelectionRange(timestamp: number): boolean {
-		// No selection at all (or not in range selection mode)
 		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
 			return false;
 		}
 
-		// Only one date selected - the user is hovering with the mouse or navigating with the keyboard to select the second one
+		// Only one date selected - second is hovered or focused
 		if (this.selectedDates.length === 1 && this._secondTimestamp) {
 			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
 		}
 
-		// Two dates selected - stable range
 		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
@@ -340,9 +336,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
-	 * During range selection, when the user is navigating with the keyboard,
-	 * the currently focused day is considered the "second day".
-	 *
+	 * In range selection, the currently focused or hovered day is considered the "second day".
 	 * @private
 	 */
 	_updateSecondTimestamp() {
