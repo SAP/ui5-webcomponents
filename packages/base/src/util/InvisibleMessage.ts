@@ -50,8 +50,10 @@ const announce = (message: string, mode: InvisibleMessageMode) => {
 	const span = mode === InvisibleMessageMode.Assertive ? assertiveSpan : politeSpan;
 
 	// Set textContent to empty string in order to trigger screen reader's announcement.
+	span.popover = "manual";
 	span.textContent = "";
 	span.textContent = message;
+	span.showPopover();
 
 	if (mode !== InvisibleMessageMode.Assertive && mode !== InvisibleMessageMode.Polite) {
 		console.warn(`You have entered an invalid mode. Valid values are: "Polite" and "Assertive". The framework will automatically set the mode to "Polite".`); // eslint-disable-line
@@ -62,6 +64,7 @@ const announce = (message: string, mode: InvisibleMessageMode) => {
 		// ensure that we clear the text node only if no announce is made in the meantime
 		if (span.textContent === message) {
 			span.textContent = "";
+			span.hidePopover();
 		}
 	}, 3000);
 };
