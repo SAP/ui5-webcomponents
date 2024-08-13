@@ -39,7 +39,7 @@ type FileData = {
 }
 
 type FileUploaderFileSizeExceededEventDetail = {
-	filesData: FileData[],
+	filesData: Array<FileData>,
 }
 
 type FileUploaderChangeEventDetail = {
@@ -113,7 +113,7 @@ type FileUploaderChangeEventDetail = {
 		/**
 		 * @public
 		 */
-		filesData: { type: Array },
+		filesData: { type: Array<FileData> },
 	},
 })
 class FileUploader extends UI5Element implements IFormInputElement {
@@ -385,9 +385,9 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return changedFiles;
 	}
 
-	_getExceededFiles(files: FileList): FileData[] {
+	_getExceededFiles(files: FileList): Array<FileData> {
 		const filesArray = Array.from(files);
-		const exceededFiles: FileData[] = [];
+		const exceededFiles: Array<FileData> = [];
 
 		for (let i = 0; i < filesArray.length; i++) {
 			const fileSize = convertBytesToMegabytes(filesArray[i].size);
