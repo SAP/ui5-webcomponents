@@ -350,7 +350,7 @@ describe("Preserves column min-width", () => {
 	});
 
 	it("complies with min-width requiremet on smallest desktop", async () => {
-		await browser.setWindowSize(1045, 1080); // size is just above tablet
+		await browser.setWindowSize(1400, 1080);
 
 		const fcl = await browser.$("#fcl3"),
 			smallestDesktopWidth = 1024,
@@ -359,6 +359,12 @@ describe("Preserves column min-width", () => {
 		// set initial state
 		await fcl.setProperty("layout", "ThreeColumnsMidExpanded");
 		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+
+		// set FCL width to the smallest desktop width
+		await browser.executeAsync(async (newWidth, done) => {
+			document.getElementById("fcl3").style.width = `${newWidth}px`;
+			done();
+		}, smallestDesktopWidth);
 
 		const startColumn = await fcl.shadow$(".ui5-fcl-column--start");
 		const startColumnWidth = await startColumn.getSize("width");
