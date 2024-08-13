@@ -168,18 +168,6 @@ describe("UploadCollection", () => {
 			await browser.keys("Enter")
 		});
 
-		it("upload collection should fire 'item-delete' in Delete mode", async () => {
-			const uploadCollection = await browser.$("#uploadCollection");
-			const firstItem = await browser.$("#firstItem");
-
-			await uploadCollection.setAttribute("mode", "Delete");
-
-			const deleteBtn = await firstItem.shadow$(".ui5-upload-collection-deletebtn");
-			await deleteBtn.click();
-
-			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
-		});
-
 		it("upload collection should fire 'item-delete' regardless of the mode", async () => {
 			const uploadCollection = await browser.$("#uploadCollection");
 			const item = await browser.$("#latestReportsPdf");
