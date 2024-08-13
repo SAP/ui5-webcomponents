@@ -64,9 +64,9 @@ import Link from '@docusaurus/Link';
 `
 
 const additionalImports = `
-import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
-import AcceptSvg from "../local-cdn/local-cdn/icons/dist/v5/accept.svg";
-import PictureSvg from "../local-cdn/local-cdn/icons/dist/v5/picture.svg";
+import CopySvg from "../../icons/dist/v5/copy.svg";
+import AcceptSvg from "../../icons/dist/v5/accept.svg";
+import PictureSvg from "../../icons/dist/v5/picture.svg";
 `;
 
 
@@ -81,10 +81,10 @@ const _generateIconsPage = (sourceDir, config) => {
 
             const iconNameImport = `${fileNameImportName}SvgName`;
             const svgImport = `${capitalize(fileNameImportName)}Svg`;
-    
+
             imports += `
-            import ${iconNameImport} from "../local-cdn/local-cdn/${config.dir}/dist/${fileName}.js";
-            import ${svgImport} from "../local-cdn/local-cdn/${config.dir}/dist/${config.version}/${fileName}.svg";
+            import ${iconNameImport} from "../../${config.dir}/dist/${fileName}.js";
+            import ${svgImport} from "../../${config.dir}/dist/${config.version}/${fileName}.svg";
             `;
 
         icons += `
@@ -187,6 +187,6 @@ ${classDef}`;
 };
 
 
-generateIconsPage(path.join(path.resolve(), "./local-cdn/local-cdn/icons/dist/v5"), SAPIconsConfig);
-generateIconsPage(path.join(path.resolve(), "./local-cdn/local-cdn/icons-tnt/dist/v3"), SAPTNTIconsConfig);
-generateIconsPage(path.join(path.resolve(), "./local-cdn/local-cdn/icons-business-suite/dist/v2"), SAPBSIconsConfig);
+generateIconsPage(path.join(path.resolve(), "../icons/dist/v5"), SAPIconsConfig);
+generateIconsPage(path.join(path.resolve(), "../icons-tnt/dist/v3"), SAPTNTIconsConfig);
+generateIconsPage(path.join(path.resolve(), "../icons-business-suite/dist/v2"), SAPBSIconsConfig);
