@@ -48,7 +48,7 @@
 .ui5-mp-item.ui5-mp-item--selected,
 .ui5-mp-item.ui5-mp-item--selected-between,
 .ui5-mp-item.ui5-mp-item--selected .ui5-dp-monthsectext,
-.ui5-mp-item.ui5-mp-item--selected-between .ui5-dp-monthsectext  {
+.ui5-mp-item.ui5-mp-item--selected-between .ui5-dp-monthsectext {
 	background: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
@@ -59,6 +59,7 @@
 }
 
 .ui5-mp-item:hover {
+	color: var(--sapButton_Lite_Hover_TextColor);
 	background: var(--sapButton_Lite_Hover_Background);
 	border: var(--_ui5_monthpicker_item_hover_border);
 }
@@ -67,6 +68,7 @@
 .ui5-mp-item.ui5-mp-item--selected-between:hover,
 .ui5-mp-item.ui5-mp-item--selected:hover .ui5-dp-monthsectext,
 .ui5-mp-item.ui5-mp-item--selected-between:hover .ui5-dp-monthsectext {
+	color: var(--sapButton_Selected_TextColor);
 	background: var(--sapButton_Selected_Hover_Background);
 }
 
@@ -76,10 +78,12 @@
 }
 
 .ui5-mp-item:active,
+.ui5-mp-item:active .ui5-dp-monthsectext,
 .ui5-mp-item.ui5-mp-item--selected:active,
 .ui5-mp-item.ui5-mp-item--selected-between:active,
 .ui5-mp-item.ui5-mp-item--selected:active .ui5-dp-monthsectext,
 .ui5-mp-item.ui5-mp-item--selected-between:active .ui5-dp-monthsectext {
+	color: var(--sapButton_Active_TextColor);
 	background: var(--sapButton_Active_Background);
 }
 
