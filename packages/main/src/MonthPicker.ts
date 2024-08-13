@@ -119,7 +119,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	_hidden = false;
 
 	/**
-	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered or focused day.
+	 * When selectionMode="Range" and the first month in the range is selected, this is the currently hovered or focused month.
 	 *
 	 * @private
 	 */
@@ -295,7 +295,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
-	 * In range selection, the currently focused or hovered day is considered the "second day".
+	 * In range selection, the currently focused or hovered month is considered the "second day".
 	 * @private
 	 */
 	_updateSecondTimestamp() {

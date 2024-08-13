@@ -115,7 +115,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	_hidden = false;
 
 	/**
-	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered or focused day.
+	 * When selectionMode="Range" and the first year in the range is selected, this is the currently hovered or focused year.
 	 *
 	 * @private
 	 */
@@ -336,7 +336,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
-	 * In range selection, the currently focused or hovered day is considered the "second day".
+	 * In range selection, the currently focused or hovered year is considered the "second day".
 	 * @private
 	 */
 	_updateSecondTimestamp() {
