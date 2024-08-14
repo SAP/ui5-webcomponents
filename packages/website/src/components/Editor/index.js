@@ -8,12 +8,12 @@ import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
 import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
-import ShareIcon from "../../../../icons/dist/v5/share-2.svg";
+import ShareIcon from "@ui5/webcomponents-icons/dist/v5/share-2.svg";
 import { Splitter } from 'react-splitter-light';
-import DownloadIcon from "../../../../icons/dist/v5/download-from-cloud.svg";
-import EditIcon from "../../../../icons/dist/v5/edit.svg";
-import ActionIcon from "../../../../icons/dist/v5/action.svg";
-import HideIcon from "../../../../icons/dist/v5/hide.svg";
+import DownloadIcon from "@ui5/webcomponents-icons/dist/v5/download-from-cloud.svg";
+import EditIcon from "@ui5/webcomponents-icons/dist/v5/edit.svg";
+import ActionIcon from "@ui5/webcomponents-icons/dist/v5/action.svg";
+import HideIcon from "@ui5/webcomponents-icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
 import ExamplesMenu from '../ExamplesMenu/index.tsx';
 

@@ -64,9 +64,9 @@ import Link from '@docusaurus/Link';
 `
 
 const additionalImports = `
-import CopySvg from "../../icons/dist/v5/copy.svg";
-import AcceptSvg from "../../icons/dist/v5/accept.svg";
-import PictureSvg from "../../icons/dist/v5/picture.svg";
+import CopySvg from "@ui5/webcomponents-icons/dist/v5/copy.svg";
+import AcceptSvg from "@ui5/webcomponents-icons/dist/v5/accept.svg";
+import PictureSvg from "@ui5/webcomponents-icons/dist/v5/picture.svg";
 `;
 
 
@@ -83,8 +83,8 @@ const _generateIconsPage = (sourceDir, config) => {
             const svgImport = `${capitalize(fileNameImportName)}Svg`;
 
             imports += `
-            import ${iconNameImport} from "../../${config.dir}/dist/${fileName}.js";
-            import ${svgImport} from "../../${config.dir}/dist/${config.version}/${fileName}.svg";
+            import ${iconNameImport} from "${config.npmPackage}/dist/${fileName}.js";
+            import ${svgImport} from "${config.npmPackage}/dist/${config.version}/${fileName}.svg";
             `;
 
         icons += `
@@ -186,7 +186,10 @@ ${classDef}`;
     writeFile(config.dir, content);
 };
 
+function findRoot(pkgName) {
+    return path.dirname(import.meta.resolve(`${pkgName}/package.json`)).replace("file://", "");
+}
 
-generateIconsPage(path.join(path.resolve(), "../icons/dist/v5"), SAPIconsConfig);
-generateIconsPage(path.join(path.resolve(), "../icons-tnt/dist/v3"), SAPTNTIconsConfig);
-generateIconsPage(path.join(path.resolve(), "../icons-business-suite/dist/v2"), SAPBSIconsConfig);
+generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons"), "dist/v5"), SAPIconsConfig);
+generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons-tnt"), "dist/v3"), SAPTNTIconsConfig);
+generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons-business-suite"), "dist/v2"), SAPBSIconsConfig);
