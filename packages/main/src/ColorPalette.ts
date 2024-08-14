@@ -203,7 +203,7 @@ class ColorPalette extends UI5Element {
 	onBeforeRendering() {
 		this._ensureSingleSelectionOrDeselectAll();
 
-		const selectedItem = this.allColorsInPalette.find(item => item.selected);
+		const selectedItem = this.selectedItem;
 
 		if (selectedItem && !this.showRecentColors) {
 			this._selectedColor = selectedItem.value;
@@ -234,7 +234,9 @@ class ColorPalette extends UI5Element {
 			this._currentlySelected = firstRecentColor;
 			this._currentlySelected.focus();
 			this._shouldFocusRecentColors = false;
-			this._ensureSingleSelectionOrDeselectAll();
+			if (this.selectedItem) {
+				this.selectedItem.selected = false;
+			}
 		}
 	}
 
