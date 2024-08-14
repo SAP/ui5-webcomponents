@@ -1995,6 +1995,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
 	}
 
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
+	}
+
 	get classes(): ClassMap {
 		return {
 			popover: {

@@ -185,9 +185,13 @@ type InputSuggestionScrollEventDetail = {
  * `import "@ui5/webcomponents/dist/Input.js";`
  *
  * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
+ *
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart root - Used to style the root DOM element of the Input component
+ * @csspart input - Used to style the native input element
+ * @csspart clear-icon - Used to style the clear icon, which can be pressed to clear user input text
  */
 @customElement({
 	tag: "ui5-input",
@@ -662,7 +666,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	onBeforeRendering() {
 		if (!this._keepInnerValue) {
-			this._innerValue = this.value;
+			this._innerValue = this.value === null ? "" : this.value;
 		}
 
 		if (this.showSuggestions) {
@@ -1038,7 +1042,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail as InputEventDetail).inputType
+			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType)
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1283,7 +1287,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.valueBeforeSelectionStart = inputValue;
 
 		if (isUserInput) { // input
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
+			const inputType = e.inputType || "";
+			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 			this.fireResetSelectionChange();

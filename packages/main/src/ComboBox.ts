@@ -1351,6 +1351,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		return ComboBox.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
 	}
 
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
+	}
+
 	static async onDefine() {
 		ComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
