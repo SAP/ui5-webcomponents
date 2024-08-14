@@ -45,6 +45,7 @@
 					type="Number"
 					accessible-name-ref="{{_ariaLabelledByInputRefs}}"
 					@ui5-change="{{_onInputChange}}"
+					@focusout="{{_onInputFocusOut}}"
 					data-sap-ui-end-value
 				></ui5-input>
 			{{else}}

@@ -264,6 +264,10 @@ class Slider extends SliderBase implements IFormInputElement {
 		this.value = ctor.clipValue(value, this._effectiveMin, this._effectiveMax);
 	}
 
+	_onInputFocusOut() {
+		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+	}
+
 	/** Determines if the press is over the handle
 	 * @private
 	 */

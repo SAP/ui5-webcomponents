@@ -46,23 +46,24 @@
 			aria-disabled="{{_ariaDisabled}}"
 		>
 			<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
+		</div>
 
 			{{#if showTooltip}}
-				<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
-					{{#if inputTooltip}}
-						<ui5-input
-							type="Number"
-							value="{{startValue}}"
-							accessible-name-ref="{{_ariaLabelledByInputRefs}}"
-							@change="{{_onInputChange}}"
-							start-value
-						></ui5-input>
-					{{else}}
-						<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
-					{{/if}}
-				</div>
+		<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
+			{{#if editableTooltip}}
+				<ui5-input
+					type="Number"
+					value="{{startValue}}"
+					accessible-name-ref="{{_ariaLabelledByInputRefs}}"
+					@ui5-change="{{_onInputChange}}"
+					@focusout="{{_onInputFocusOut}}"
+					start-value
+				></ui5-input>
+			{{else}}
+				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
 			{{/if}}
 		</div>
+		{{/if}}
 	</div>
 	<div class="ui5-slider-handle-container" style="{{styles.endHandle}}">
 		<div class="ui5-slider-handle ui5-slider-handle--end"
@@ -79,22 +80,23 @@
 			aria-disabled="{{_ariaDisabled}}"
 		>
 			<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
+		</div>
 
-			{{#if showTooltip}}
-			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
-				{{#if editableTooltip}}
-					<ui5-input
-						type="Number"
-						value="{{endValue}}"
-						accessible-name-ref="{{_ariaLabelledByInputRefs}}"
-						@ui5-change="{{_onInputChange}}"
-						data-sap-ui-end-value
-					></ui5-input>
-				{{else}}
-					<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
-				{{/if}}
-			</div>
+		{{#if showTooltip}}
+		<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
+			{{#if editableTooltip}}
+				<ui5-input
+					type="Number"
+					value="{{endValue}}"
+					accessible-name-ref="{{_ariaLabelledByInputRefs}}"
+					@ui5-change="{{_onInputChange}}"
+					@focusout="{{_onInputFocusOut}}"
+					data-sap-ui-end-value
+				></ui5-input>
+			{{else}}
+				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
 			{{/if}}
 		</div>
+		{{/if}}
 	</div>
 {{/inline}}

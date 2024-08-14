@@ -292,7 +292,7 @@ abstract class SliderBase extends UI5Element {
 		const target = e.target as HTMLElement;
 
 		if (isF2(e) && target.classList.contains("ui5-slider-handle")) {
-			(this.shadowRoot?.querySelector("ui5-input") as HTMLElement).focus();
+			(target.parentNode!.querySelector(".ui5-slider-handle-container ui5-input") as HTMLElement).focus();
 		}
 
 		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-slider-handle")) {

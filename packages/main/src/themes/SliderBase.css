@@ -173,14 +173,12 @@
 	box-sizing: var(--_ui5_slider_tooltip_border_box);
 }
 
-:host([input-tooltip]) .ui5-slider-tooltip {
+:host([editable-tooltip]) .ui5-slider-tooltip {
 	padding: 0;
+	box-shadow: none;
 }
 
 .ui5-slider-tooltip [ui5-input] {
-	background: transparent;
-	border: none;
-	box-shadow: none;
 	height: 100%;
 	width: 100%;
 	margin: 0;

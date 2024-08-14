@@ -281,7 +281,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * Resets the stored Range Slider's initial values saved when it was first focused
 	 * @private
 	 */
-	_onfocusout() {
+	_onfocusout(e: FocusEvent) {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
 			return;
@@ -291,9 +291,13 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._startValueInitial = undefined;
 		this._endValueInitial = undefined;
 
-		if (this.showTooltip) {
+		if (this.showTooltip && !(e.relatedTarget as HTMLInputElement)?.hasAttribute("ui5-input")) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
+	}
+
+	_onInputFocusOut() {
+		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 	}
 
 	/**
@@ -851,15 +855,15 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	get _ariaLabelledByStartHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-startHandleDesc`].join(" ").trim();
+		return ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join(" ").trim();
 	}
 
 	get _ariaLabelledByEndHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-endHandleDesc`].join(" ").trim();
+		return ["ui5-slider-accName", "ui5-slider-endHandleDesc"].join(" ").trim();
 	}
 
 	get _ariaLabelledByProgressBarRefs() {
-		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+		return ["ui5-slider-accName", "ui5-slider-sliderDesc"].join(" ").trim();
 	}
 
 	get _ariaLabelledByInputText() {
