@@ -19,7 +19,7 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
     "ci:build": "dotenv -e .env.latest -- yarn build",
-    "ci:build:nightly": "dotenv -e .env -- yarn build:with:cdn"
+    "ci:build:nightly": "dotenv -e .env -- yarn build"
   },
   "dependencies": {
     "@docusaurus/core": "3.1.1",
