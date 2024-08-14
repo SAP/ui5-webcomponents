@@ -228,12 +228,12 @@ class ColorPalette extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this.hasRecentColors) {
+		if (this.hasRecentColors && this._shouldFocusRecentColors) {
 			const firstRecentColor = this.recentColorsElements[0];
 			firstRecentColor.selected = true;
-			if (this._shouldFocusRecentColors) {
-				firstRecentColor.focus();
-			}
+			this._currentlySelected = firstRecentColor;
+			this._currentlySelected.focus();
+			this._shouldFocusRecentColors = false;
 		}
 	}
 
