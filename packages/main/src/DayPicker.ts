@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
-import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -29,10 +28,10 @@ import {
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import CalendarUtils from "@ui5/webcomponents-localization/dist/CalendarUtils.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
 import type {
@@ -51,7 +50,6 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 
 const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const DAYS_IN_WEEK = 7;
@@ -307,10 +305,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			week.push(day);
 
 			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
-				const weekNumber2 = this._calculateWeekNumber(tempDate.toLocalJSDate(), localeData);
-				const weekNumber = calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType);
-				console.log(weekNumber + " ----------- " + weekNumber2);
-				
+				const weekNumber = this._calculateWeekNumber(tempDate.toLocalJSDate());
+
 				week.unshift({
 					weekNum: weekNumber,
 					isHidden: this.shouldHideWeekNumbers,
@@ -329,27 +325,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
-	_calculateWeekNumber (date: Date, localeData: LocaleData): number {
-		let endDate = new Date(date);
-		endDate.setDate(date.getDate() + 6)
-		let weekNumber;
-
-		const oDateFormat = DateFormat.getDateInstance({pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering});
-
-		const bIsRegionUS = localeData.firstDayStartsFirstWeek();
-
-		const bStartsInFirstMonth = date.getMonth() === 0;
-		const bEndsInFirstMonth = endDate.getMonth() === 0;
-		const bEndsInSecondMonth = endDate.getMonth() === 1;
-
-		if (bStartsInFirstMonth && bIsRegionUS && (bEndsInFirstMonth || bEndsInSecondMonth)) {
-			weekNumber = oDateFormat.format(endDate);
-		} else {
-			weekNumber = oDateFormat.format(date);
-		}
+	_calculateWeekNumber(date: Date): number {
+		const oDateFormat = DateFormat.getDateInstance({ pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering });
+		const weekNumber = oDateFormat.format(date);
 
 		return Number(weekNumber);
-	};
+	}
 
 	/**
 	 * Builds the dayNames object (header of the month).

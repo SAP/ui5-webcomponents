@@ -16,7 +16,7 @@ enum CalendarWeekNumbering {
      * The default calendar week numbering:
      *
      * The framework determines the week numbering scheme; currently it is derived from the
-     * active format locale. Future versions of UI5 might select a different week numbering
+     * active format locale. Future versions of ui5-webcomponents might select a different week numbering
      * scheme.
      *
      * @public
@@ -25,10 +25,7 @@ enum CalendarWeekNumbering {
 
     /**
      * Official calendar week numbering in most of Europe (ISO 8601 standard):
-     * <ul>
-     * <li>Monday is first day of the week,
-     * <li>the week containing January 4th is first week of the year.
-     * </ul>
+     * Monday is first day of the week, the week containing January 4th is first week of the year.
      *
      * @public
      */
@@ -36,10 +33,7 @@ enum CalendarWeekNumbering {
 
     /**
      * Official calendar week numbering in much of the Middle East (Middle Eastern calendar):
-     * <ul>
-     * <li>Saturday is first day of the week,
-     * <li>the week containing January 1st is first week of the year.
-     * </ul>
+     * Saturday is first day of the week, the week containing January 1st is first week of the year.
      *
      * @public
      */
@@ -48,14 +42,11 @@ enum CalendarWeekNumbering {
     /**
      * Official calendar week numbering in the United States, Canada, Brazil, Israel, Japan, and
      * other countries (Western traditional calendar):
-     * <ul>
-     * <li>Sunday is first day of the week,
-     * <li>the week containing January 1st is first week of the year.
-     * </ul>
+     * Sunday is first day of the week, the week containing January 1st is first week of the year.
      *
      * @public
      */
-    WesternTraditional = "WesternTraditional"
-};
+    WesternTraditional = "WesternTraditional",
+}
 
 export default CalendarWeekNumbering;
