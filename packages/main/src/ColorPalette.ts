@@ -234,6 +234,7 @@ class ColorPalette extends UI5Element {
 			this._currentlySelected = firstRecentColor;
 			this._currentlySelected.focus();
 			this._shouldFocusRecentColors = false;
+			this._ensureSingleSelectionOrDeselectAll();
 		}
 	}
 
