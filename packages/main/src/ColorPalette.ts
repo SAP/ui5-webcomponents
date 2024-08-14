@@ -523,7 +523,7 @@ class ColorPalette extends UI5Element {
 	 * Returns the selected item.
 	 */
 	get selectedItem() {
-		return [...this.effectiveColorItems, ...this.recentColorsElements].find(item => item.selected);
+		return this.allColorsInPalette.find(item => item.selected);
 	}
 
 	get allColorsInPalette() {
