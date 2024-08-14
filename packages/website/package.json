@@ -7,9 +7,9 @@
     "generate-api-reference": "rimraf ./docs/components/fiori && rimraf ./docs/components/main && node ./build-scripts/api-reference-generation/index.mjs",
     "generate-documentation": "rimraf ./docs/docs && node ./build-scripts/documentation-generation/index.mjs",
     "generate-icons": "rimraf ./icons && rimraf ./icons-tnt && rimraf ./icons-business-suite && node ./build-scripts/icons-generation/index.mjs",
-    "generate-all": "yarn generate-api-reference && yarn generate-documentation && yarn generate-local-cdn && yarn generate-icons",
+    "generate-all": "yarn generate-api-reference && yarn generate-documentation && yarn generate-icons",
     "docusaurus": "docusaurus",
-    "start": "yarn generate-all && docusaurus start",
+    "start": "yarn generate-all && yarn generate-local-cdn && docusaurus start",
     "build": "yarn generate-all && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -19,7 +19,7 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
     "ci:build": "dotenv -e .env.latest -- yarn build",
-    "ci:build:nightly": "dotenv -e .env -- yarn build"
+    "ci:build:nightly": "dotenv -e .env -- yarn build:with:cdn"
   },
   "dependencies": {
     "@docusaurus/core": "3.1.1",
