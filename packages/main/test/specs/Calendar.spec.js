@@ -443,4 +443,24 @@ describe("Calendar general interaction", () => {
 		await yearButton.click();
 		assert.ok(yearButton.hasAttribute("hidden"), "The year button is hidden");
 	});
+
+	it("Check calendar week numbers with specific CalendarWeekNumbering configuration", async () => {
+		const calendarIsoFirstWeekNumber = await browser.$("#calendar8").shadow$("[ui5-daypicker]").shadow$(".ui5-dp-weekname");
+		const calendarHeaderMiddleEasternFirstWeekNumber = await browser.$("#calendar9").shadow$("[ui5-daypicker]").shadow$(".ui5-dp-weekname");
+		const calendarHeaderWesternTraditionalFirstWeekNumber = await browser.$("#calendar10").shadow$("[ui5-daypicker]").shadow$(".ui5-dp-weekname");
+
+		assert.strictEqual(await calendarIsoFirstWeekNumber.getText(), "52", "first week in ISO_8601 is correct");
+		assert.strictEqual(await calendarHeaderMiddleEasternFirstWeekNumber.getText(), "1", "first week in MiddleEastern is correct");
+		assert.strictEqual(await calendarHeaderWesternTraditionalFirstWeekNumber.getText(), "1", "first week in WesternTraditional is correct");
+	});
+
+	it("Check calendar week day names with specific CalendarWeekNumbering configuration", async () => {
+		const calendarIsoFirstWeekDayName = await browser.$("#calendar8").shadow$("[ui5-daypicker]").shadow$(".ui5-dp-firstday");
+		const calendarHeaderMiddleEasternFirstWeekDayName = await browser.$("#calendar9").shadow$("[ui5-daypicker]").shadow$(".ui5-dp-firstday");
+		const calendarHeaderWesternTraditionalFirstWeekDayName = await browser.$("#calendar10").shadow$("[ui5-daypicker]").shadow$(".ui5-dp-firstday");
+
+		assert.strictEqual(await calendarIsoFirstWeekDayName.getText(), "Mon", "first week in ISO_8601 is correct");
+		assert.strictEqual(await calendarHeaderMiddleEasternFirstWeekDayName.getText(), "Sat", "first week in MiddleEastern is correct");
+		assert.strictEqual(await calendarHeaderWesternTraditionalFirstWeekDayName.getText(), "Sun", "first week in WesternTraditional is correct");
+	});
 });
