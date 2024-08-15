@@ -85,12 +85,12 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Defines how to calculate calendar weeks and first day of the week.
 	 * If not set, the calendar will be displayed according to the currently set global configuration.
-	 * @default undefined
+	 * @default "Default"
 	 * @since 2.2.0
 	 * @public
 	 */
 	@property()
-	calendarWeekNumbering?: `${CalendarWeekNumbering}`;
+	calendarWeekNumbering?: `${CalendarWeekNumbering}` = "Default";
 
 	static i18nBundle?: I18nBundle;
 

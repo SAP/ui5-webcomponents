@@ -417,7 +417,12 @@ describe("Calendar general interaction", () => {
 		await browser.url(`test/pages/Calendar.html`);
 
 		const calendar = await browser.$("#calendar7");
+		const calendarHeader = await browser.$("#calendar7").shadow$(".ui5-calheader");
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
+		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
+		monthButton.click();
+		const januaryCell = await calendar.shadow$("ui5-monthpicker").shadow$(`[data-sap-timestamp="1611100800"]`);
+		januaryCell.click();
 		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="1611100800"]`);
 
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
