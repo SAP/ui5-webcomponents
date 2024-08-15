@@ -469,7 +469,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				this._toggleTimestampInSelection(timestamp);
 			}
 			return;
-		} 
+		}
 
 		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this.selectedDates = [this.selectedDates[0], timestamp];
