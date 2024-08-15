@@ -34,7 +34,7 @@ import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js"
 import yearPickerStyles from "./generated/themes/YearPicker.css.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
-const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
+const isBetween = (x: number, num1: number, num2: number) => (x > num1 && x < num2) || (x > num2 && x < num1);
 
 type Year = {
 	timestamp: string;
@@ -405,17 +405,21 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const timestamp = this._getTimestampFromDom(target);
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
-
-		if (this.selectionMode === CalendarSelectionMode.Range) {
-			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp] as Array<number> : [timestamp] as Array<number>;
-		} else {
-			this.selectedDates = [timestamp];
-		}
+		this._updateSelectedDates(timestamp);
 
 		this.fireEvent<YearPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp!,
 			dates: this.selectedDates,
 		});
+	}
+
+	_updateSelectedDates(timestamp: number) {
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this.selectedDates = [this.selectedDates[0], timestamp];
+			return;
+		}
+
+		this.selectedDates = [timestamp];
 	}
 
 	/**

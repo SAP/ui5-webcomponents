@@ -51,7 +51,7 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
-const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
+const isBetween = (x: number, num1: number, num2: number) => (x > num1 && x < num2) || (x > num2 && x < num1);
 const DAYS_IN_WEEK = 7;
 
 type DayName = {
@@ -453,23 +453,30 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
-
-		if (this.selectionMode === CalendarSelectionMode.Single) {
-			this.selectedDates = [timestamp];
-		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
-			if (this.selectedDates.length > 0 && isShift) {
-				this._multipleSelection(timestamp);
-			} else {
-				this._toggleTimestampInSelection(timestamp);
-			}
-		} else {
-			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	as Array<number> : [timestamp] as Array<number>;
-		}
+		this._updateSelectedDates(timestamp, isShift);
 
 		this.fireEvent<DayPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
+	}
+
+	_updateSelectedDates(timestamp: number, isShift: boolean) {
+		if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			if (this.selectedDates.length > 0 && isShift) {
+				this._multipleSelection(timestamp);
+			} else {
+				this._toggleTimestampInSelection(timestamp);
+			}
+			return;
+		} 
+
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this.selectedDates = [this.selectedDates[0], timestamp];
+			return;
+		}
+
+		this.selectedDates = [timestamp];
 	}
 
 	/**

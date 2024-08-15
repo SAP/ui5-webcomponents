@@ -19,6 +19,13 @@
 	align-items: center;
 }
 
+.ui5-mp-quarter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
 .ui5-mp-item {
 	display: flex;
 	flex-direction: column;
@@ -46,51 +53,47 @@
 }
 
 .ui5-mp-item.ui5-mp-item--selected,
-.ui5-mp-item.ui5-mp-item--selected-between,
-.ui5-mp-item.ui5-mp-item--selected .ui5-dp-monthsectext,
-.ui5-mp-item.ui5-mp-item--selected-between .ui5-dp-monthsectext {
+.ui5-mp-item.ui5-mp-item--selected-between {
 	background: var(--sapButton_Selected_Background);
+	border: var(--_ui5_monthpicker_item_selected_border);
 	color: var(--sapButton_Selected_TextColor);
 }
 
-.ui5-mp-item.ui5-mp-item--selected,
-.ui5-mp-item.ui5-mp-item--selected-between {
-	border: var(--_ui5_monthpicker_item_selected_border);
+.ui5-mp-item.ui5-mp-item--selected .ui5-dp-monthsectext,
+.ui5-mp-item.ui5-mp-item--selected-between .ui5-dp-monthsectext {
+	color: var(--sapButton_Selected_TextColor);
 }
 
 .ui5-mp-item:hover {
-	color: var(--sapButton_Lite_Hover_TextColor);
 	background: var(--sapButton_Lite_Hover_Background);
 	border: var(--_ui5_monthpicker_item_hover_border);
-}
-
-.ui5-mp-item.ui5-mp-item--selected:hover,
-.ui5-mp-item.ui5-mp-item--selected-between:hover,
-.ui5-mp-item.ui5-mp-item--selected:hover .ui5-dp-monthsectext,
-.ui5-mp-item.ui5-mp-item--selected-between:hover .ui5-dp-monthsectext {
-	color: var(--sapButton_Selected_TextColor);
-	background: var(--sapButton_Selected_Hover_Background);
+	color: var(--sapButton_Lite_Hover_TextColor);
 }
 
 .ui5-mp-item.ui5-mp-item--selected:hover,
 .ui5-mp-item.ui5-mp-item--selected-between:hover {
+	background: var(--sapButton_Selected_Hover_Background);
 	border: var(--_ui5_monthpicker_item_selected_hover_border);
+	color: var(--sapButton_Selected_TextColor);
 }
 
-.ui5-mp-item:active,
-.ui5-mp-item:active .ui5-dp-monthsectext,
-.ui5-mp-item.ui5-mp-item--selected:active,
-.ui5-mp-item.ui5-mp-item--selected-between:active,
-.ui5-mp-item.ui5-mp-item--selected:active .ui5-dp-monthsectext,
-.ui5-mp-item.ui5-mp-item--selected-between:active .ui5-dp-monthsectext {
-	color: var(--sapButton_Active_TextColor);
-	background: var(--sapButton_Active_Background);
+.ui5-mp-item.ui5-mp-item--selected:hover .ui5-dp-monthsectext,
+.ui5-mp-item.ui5-mp-item--selected-between:hover .ui5-dp-monthsectext {
+	color: var(--sapButton_Selected_TextColor);
 }
 
 .ui5-mp-item:active,
 .ui5-mp-item.ui5-mp-item--selected:active,
 .ui5-mp-item.ui5-mp-item--selected-between:active {
+	background: var(--sapButton_Active_Background);
 	border: var(--_ui5_monthpicker_item_active_border);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-mp-item:active .ui5-dp-monthsectext,
+.ui5-mp-item.ui5-mp-item--selected:active .ui5-dp-monthsectext,
+.ui5-mp-item.ui5-mp-item--selected-between:active .ui5-dp-monthsectext {
+	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-mp-item.ui5-mp-item--disabled {
@@ -104,13 +107,6 @@
 	inset: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
 	border-radius: var(--_ui5_button_focused_border_radius);
-}
-
-.ui5-mp-quarter {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
 }
 
 /* Switching to a two column layout */

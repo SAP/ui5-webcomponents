@@ -55,51 +55,47 @@
 }
 
 .ui5-yp-item.ui5-yp-item--selected,
-.ui5-yp-item.ui5-yp-item--selected-between,
-.ui5-yp-item.ui5-yp-item--selected .ui5-yp-item-sec-type,
-.ui5-yp-item.ui5-yp-item--selected-between .ui5-yp-item-sec-type {
+.ui5-yp-item.ui5-yp-item--selected-between {
 	background: var(--sapButton_Selected_Background);
+	border: var(--_ui5_yearpicker_item_selected_border);
 	color: var(--sapButton_Selected_TextColor);
 }
 
-.ui5-yp-item.ui5-yp-item--selected,
-.ui5-yp-item.ui5-yp-item--selected-between {
-	border: var(--_ui5_yearpicker_item_selected_border);
+.ui5-yp-item.ui5-yp-item--selected .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between .ui5-yp-item-sec-type {
+	color: var(--sapButton_Selected_TextColor);
 }
 
 .ui5-yp-item:hover {
-	color: var(--sapButton_Lite_Hover_TextColor);
 	background: var(--sapButton_Lite_Hover_Background);
 	border: var(--_ui5_yearpicker_item_hover_border);
-}
-
-.ui5-yp-item.ui5-yp-item--selected:hover,
-.ui5-yp-item.ui5-yp-item--selected-between:hover,
-.ui5-yp-item.ui5-yp-item--selected:hover .ui5-yp-item-sec-type,
-.ui5-yp-item.ui5-yp-item--selected-between:hover .ui5-yp-item-sec-type {
-	color: var(--sapButton_Selected_TextColor);
-	background: var(--sapButton_Selected_Hover_Background);
+	color: var(--sapButton_Lite_Hover_TextColor);
 }
 
 .ui5-yp-item.ui5-yp-item--selected:hover,
 .ui5-yp-item.ui5-yp-item--selected-between:hover {
+	background: var(--sapButton_Selected_Hover_Background);
 	border: var(--_ui5_yearpicker_item_selected_hover_border);
+	color: var(--sapButton_Selected_TextColor);
+}
+
+.ui5-yp-item.ui5-yp-item--selected:hover .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between:hover .ui5-yp-item-sec-type {
+	color: var(--sapButton_Selected_TextColor);
 }
 
 .ui5-yp-item:active,
-.ui5-yp-item:active .ui5-yp-item-sec-type,
-.ui5-yp-item.ui5-yp-item--selected:active,
-.ui5-yp-item.ui5-yp-item--selected-between:active,
-.ui5-yp-item.ui5-yp-item--selected:active .ui5-yp-item-sec-type,
-.ui5-yp-item.ui5-yp-item--selected-between:active .ui5-yp-item-sec-type {
-	color: var(--sapButton_Active_TextColor);
-	background: var(--sapButton_Active_Background);
-}
-
-.ui5-mp-item:active,
 .ui5-yp-item.ui5-yp-item--selected:active,
 .ui5-yp-item.ui5-yp-item--selected-between:active {
+	background: var(--sapButton_Active_Background);
 	border: var(--_ui5_monthpicker_item_active_border);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-yp-item:active .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected:active .ui5-yp-item-sec-type,
+.ui5-yp-item.ui5-yp-item--selected-between:active .ui5-yp-item-sec-type  {
+	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-yp-item.ui5-yp-item--disabled {
