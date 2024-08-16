@@ -913,7 +913,7 @@ class List extends UI5Element {
 
 		e.preventDefault();
 
-		this.fireEvent<ListMoveEventDetail>("move", {
+		const placementAccepted = !this.fireEvent<ListMoveEventDetail>("move-over", {
 			originalEvent: e,
 			source: {
 				element: item,
@@ -922,9 +922,22 @@ class List extends UI5Element {
 				element,
 				placement,
 			},
-		});
+		}, true);
 
-		item.focus();
+		if (placementAccepted) {
+			this.fireEvent<ListMoveEventDetail>("move", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element,
+					placement,
+				},
+			});
+
+			item.focus();
+		}
 	}
 
 	_onLoadMoreKeydown(e: KeyboardEvent) {
