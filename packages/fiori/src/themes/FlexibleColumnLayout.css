@@ -78,10 +78,7 @@
 
 .ui5-fcl-separator:hover .ui5-fcl-grip:before,
 .ui5-fcl-separator:hover .ui5-fcl-grip:after {
-	height: 50%;
-}
-.ui5-fcl-separator:hover {
-	overflow: hidden;
+	height: calc(50% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),
