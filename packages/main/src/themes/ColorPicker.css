@@ -62,9 +62,12 @@
     width: 0.9375rem;
     height: 1.5rem;
     background: transparent;
+    box-sizing: border-box;
+}
+
+[ui5-slider]::part(handle-container) {
     margin-inline-start: -2px;
     margin-top: var(--_ui5_color_picker_slider_handle_margin_top);
-    box-sizing: border-box;
 }
 
 [ui5-slider]::part(handle)::after {

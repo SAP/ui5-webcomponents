@@ -29,7 +29,7 @@
 {{/inline}}
 
 {{#*inline "handles"}}
-	<div class="ui5-slider-handle-container" style="{{styles.startHandle}}">
+	<div class="ui5-slider-handle-container" style="{{styles.startHandle}}" part="handle-container">
 
 		<div class="ui5-slider-handle ui5-slider-handle--start"
 			part="handle"
@@ -65,7 +65,7 @@
 		</div>
 		{{/if}}
 	</div>
-	<div class="ui5-slider-handle-container" style="{{styles.endHandle}}">
+	<div class="ui5-slider-handle-container" style="{{styles.endHandle}}" part="handle-container">
 		<div class="ui5-slider-handle ui5-slider-handle--end"
 			part="handle"
 			@focusin="{{_onfocusin}}"
