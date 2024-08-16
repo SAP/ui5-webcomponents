@@ -331,4 +331,16 @@ describe("Keyboard drag and drop tests", () => {
 			assert.strictEqual(await displayedPopoverItems.at(0).getAttribute("id"), id, "item was moved first");
 		});
 	});
+
+	describe("Moving strip items when there are fixed tabs", () => {
+		it("Moving strip items with arrow keys", async () => {
+			await tabContainer.focusItem("fixedTabsTabSeven");
+
+			for (let i = 0; i < 20; i++) {
+				await browser.keys(["Control", "ArrowLeft"]);
+			}
+
+			assert.strictEqual(await browser.$("#fixedTabsTabSeven").previousElement().getAttribute("id"), "fixedTabsSeparatorOne", "Tab seven has stopped when reached fixed tabs");
+		});
+	});
 });

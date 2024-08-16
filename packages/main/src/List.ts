@@ -17,8 +17,7 @@ import {
 	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
-import findNextPlacement from "@ui5/webcomponents-base/dist/util/dragAndDrop/findNextPlacement.js";
+import { findClosestPosition, findClosestPositionByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -906,9 +905,9 @@ class List extends UI5Element {
 			return;
 		}
 
-		const { placement, dropTarget } = findNextPlacement(this.items, item, e);
+		const { placement, element } = findClosestPositionByKey(this.items, item, e);
 
-		if (!dropTarget || !placement) {
+		if (!element || !placement) {
 			return;
 		}
 
@@ -920,8 +919,8 @@ class List extends UI5Element {
 				element: item,
 			},
 			destination: {
-				element: dropTarget,
-				placement: placement as `${MovePlacement}`,
+				element,
+				placement,
 			},
 		});
 

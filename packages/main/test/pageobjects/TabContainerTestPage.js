@@ -56,6 +56,13 @@ class TabContainerTestPage {
 
 		return popover.$$("[ui5-li-custom]");
 	}
+
+	async focusItem(tabId) {
+		await browser.executeAsync((tabId, done) => {
+			document.getElementById(tabId).getDomRefInStrip().focus();
+			done();
+		}, tabId);
+	}
 }
 
 export default new TabContainerTestPage()

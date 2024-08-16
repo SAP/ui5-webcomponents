@@ -79,15 +79,15 @@
 			<ui5-tab id="tabThirty" movable text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
 		<h2>No-Go Area</h2>
-		<ui5-tabcontainer id="tabContainerDndNoGoArea" collapsed overflow-mode="End">
-			<ui5-tab id="noGoTabOne" movable design="Positive" text="One"></ui5-tab>
-			<ui5-tab id="noGoTabTwo" movable design="Negative" text="Two" disabled></ui5-tab>
-			<ui5-tab id="noGoTabThree" movable design="Critical" text="Three"></ui5-tab>
-			<ui5-tab-separator></ui5-tab-separator>
+		<ui5-tabcontainer id="tabContainerDndFixedTabs" collapsed overflow-mode="End">
+			<ui5-tab id="fixedTabsTabOne" movable design="Positive" text="One" data-fixed="true"></ui5-tab>
+			<ui5-tab id="fixedTabsTabTwo" movable design="Negative" text="Two" disabled data-fixed="true"></ui5-tab>
+			<ui5-tab id="fixedTabsTabThree" movable design="Critical" text="Three" data-fixed="true"></ui5-tab>
+			<ui5-tab-separator id="fixedTabsSeparatorOne"></ui5-tab-separator>
 			<ui5-tab movable text="Four"></ui5-tab>
 			<ui5-tab movable text="Five"></ui5-tab>
 			<ui5-tab movable text="Six"></ui5-tab>
-			<ui5-tab movable text="Seven"></ui5-tab>
+			<ui5-tab id="fixedTabsTabSeven" movable text="Seven"></ui5-tab>
 			<ui5-tab movable design="Positive" text="Eight"></ui5-tab>
 			<ui5-tab movable design="Negative" text="Nine"></ui5-tab>
 			<ui5-tab movable design="Critical" text="Ten"></ui5-tab>
@@ -103,7 +103,7 @@
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
 		let maxNestingLevel = 2;
 		maxNestingLevelInput.value = maxNestingLevel;
-		const tcNoGoArea = document.getElementById("tabContainerDndNoGoArea");
+		const tcFixedTabs = document.getElementById("tabContainerDndFixedTabs");
 
 		const getTabLevel = (element) => {
 			if (element.hasAttribute("ui5-tabcontainer")) {
@@ -180,22 +180,22 @@
 			maxNestingLevel = e.target.value;
 		});
 
-		tcNoGoArea.addEventListener("ui5-move-over", (e) => {
+		tcFixedTabs.addEventListener("ui5-move-over", (e) => {
 			const { source, destination } = e.detail;
 
-			if (!tcNoGoArea.contains(source.element)) {
+			if (!tcFixedTabs.contains(source.element)) {
 				return;
 			}
 
 			console.log(`Dragging "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
 
-			if (destination.element.id.startsWith("noGo")) {
+			if (destination.element.dataset.fixed) {
 				return;
 			}
 
 			e.preventDefault();
 		});
-		tcNoGoArea.addEventListener("ui5-move", handleMove);
+		tcFixedTabs.addEventListener("ui5-move", handleMove);
 	</script>
 </body>
 

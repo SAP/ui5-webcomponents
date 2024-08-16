@@ -29,12 +29,11 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
-import findNextPlacement from "@ui5/webcomponents-base/dist/util/dragAndDrop/findNextPlacement.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import {
 	TABCONTAINER_PREVIOUS_ICON_ACC_NAME,
@@ -616,24 +615,36 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const headerItems = this.items.filter(item => !item.getDomRefInStrip()?.hasAttribute("hidden"));
-		const { placement, dropTarget } = findNextPlacement(headerItems, tab, e);
+		const headerItems = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
+		const { placement, element } = findClosestPositionByKey(headerItems, tab.getDomRefInStrip()!, e);
 
-		if (!dropTarget || !placement) {
+		if (!element || !placement) {
 			return;
 		}
 
-		this.fireEvent<TabContainerMoveEventDetail>("move", {
+		const placementAccepted = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
 			source: {
 				element: tab,
 			},
 			destination: {
-				element: dropTarget,
-				placement: placement as `${MovePlacement}`,
+				element: (element as TabInStrip).realTabReference,
+				placement,
 			},
-		});
+		}, true);
 
-		tab.focus();
+		if (placementAccepted) {
+			this.fireEvent<TabContainerMoveEventDetail>("move", {
+				source: {
+					element: tab,
+				},
+				destination: {
+					element: (element as TabInStrip).realTabReference,
+					placement,
+				},
+			});
+
+			tab.focus();
+		}
 	}
 
 	_onHeaderDragLeave(e: DragEvent) {
@@ -690,8 +701,8 @@ class TabContainer extends UI5Element {
 				});
 			}
 
-			const nextPlacement = findNextPlacement(items, realTabReference, e.detail.originalEvent);
-			destinationElement = nextPlacement.dropTarget;
+			const nextPlacement = findClosestPositionByKey(items, realTabReference, e.detail.originalEvent);
+			destinationElement = nextPlacement.element;
 		}
 
 		if (!destinationElement) {
