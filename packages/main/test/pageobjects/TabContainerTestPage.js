@@ -59,7 +59,7 @@ class TabContainerTestPage {
 
 	async focusItem(tabId) {
 		await browser.executeAsync((tabId, done) => {
-			document.getElementById(tabId).getDomRefInStrip().focus();
+			document.getElementById(tabId).focus();
 			done();
 		}, tabId);
 	}

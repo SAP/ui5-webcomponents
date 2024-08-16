@@ -13,10 +13,11 @@
 <body class="tabcontainer1auto">
 	<ui5-checkbox id="reorder" text="Movable tabs" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel"></ui5-step-input>
-
+	
 	<section>
 		<h2>Max Nesting Level</h2>
+		<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel"></ui5-step-input>
+		<br>
 		<ui5-tabcontainer id="tabContainerDnd" collapsed overflow-mode="End">
 			<ui5-tab id="tabOne" movable design="Positive" text="One"></ui5-tab>
 			<ui5-tab id="tabTwo" movable design="Negative" text="Two" disabled>
@@ -78,7 +79,7 @@
 			<ui5-tab id="tabTwentyNine" movable text="Twenty Nine"></ui5-tab>
 			<ui5-tab id="tabThirty" movable text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
-		<h2>No-Go Area</h2>
+		<h2>Fixed Tabs</h2>
 		<ui5-tabcontainer id="tabContainerDndFixedTabs" collapsed overflow-mode="End">
 			<ui5-tab id="fixedTabsTabOne" design="Positive" text="One" data-fixed="true"></ui5-tab>
 			<ui5-tab id="fixedTabsTabTwo" design="Negative" text="Two" disabled data-fixed="true"></ui5-tab>
@@ -101,7 +102,7 @@
 	<script>
 		const tc = document.getElementById("tabContainerDnd");
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
-		let maxNestingLevel = 2;
+		let maxNestingLevel = 3;
 		maxNestingLevelInput.value = maxNestingLevel;
 		const tcFixedTabs = document.getElementById("tabContainerDndFixedTabs");
 

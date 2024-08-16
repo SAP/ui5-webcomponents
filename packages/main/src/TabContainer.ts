@@ -656,15 +656,34 @@ class TabContainer extends UI5Element {
 	}
 
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
-		const { destination } = e.detail;
+		const { destination, source } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement()!;
-		const dropTarget = (destination.element as TabInStrip | TabSeparatorInStrip).realTabReference;
+		let destinationElement: HTMLElement = (destination.element as TabInStrip | TabSeparatorInStrip).realTabReference;
 
-		if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
+		if (e.detail.originalEvent instanceof KeyboardEvent) {
+			const realTabReference = (source.element as TabInOverflow).realTabReference;
+			const siblings = this._findSiblings(realTabReference);
+			let items = siblings;
+
+			if (this.items.includes(realTabReference)) {
+				items = siblings.filter(sibling => {
+					return ((e.target as List).items as Array<TabInOverflow>).some(el => el.realTabReference === sibling);
+				});
+			}
+
+			const nextPlacement = findClosestPositionByKey(items, realTabReference, e.detail.originalEvent);
+			destinationElement = nextPlacement.element;
+		}
+
+		if (!destinationElement) {
 			return;
 		}
 
-		if (draggedElement !== dropTarget && draggedElement.contains(dropTarget)) {
+		if (destination.placement === MovePlacement.On && (destinationElement.hasAttribute("ui5-tab-separator") || draggedElement === destinationElement)) {
+			return;
+		}
+
+		if (draggedElement !== destinationElement && draggedElement.contains(destinationElement)) {
 			return;
 		}
 
@@ -673,7 +692,7 @@ class TabContainer extends UI5Element {
 				element: draggedElement,
 			},
 			destination: {
-				element: dropTarget,
+				element: destinationElement,
 				placement: destination.placement,
 			},
 		}, true);

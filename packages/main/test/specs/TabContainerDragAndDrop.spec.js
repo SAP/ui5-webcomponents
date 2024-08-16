@@ -218,21 +218,22 @@ describe("Keyboard drag and drop tests", () => {
 
 	describe("Moving strip items", () => {
 		it("Moving strip items with arrow keys", async () => {
-			assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
-
 			await browser.$("#tabContainerDnd").shadow$(".ui5-tab-strip-item").click();
+			const tab = await browser.$("#tabOne");
+
+			assert.notOk(await tab.previousElement().isExisting(), "TabOne is the first tab");
 
 			await browser.keys(["Control", "ArrowRight"]);
-			assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
+			assert.strictEqual(await tab.previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
 
 			await browser.keys(["Control", "ArrowDown"]);
-			assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabThree", "TabOne is after tabThree");
+			assert.strictEqual(await tab.previousElement().getAttribute("id"), "tabThree", "TabOne is after tabThree");
 
 			await browser.keys(["Control", "ArrowLeft"]);
-			assert.strictEqual(await browser.$("#tabOne").previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
+			assert.strictEqual(await tab.previousElement().getAttribute("id"), "tabTwo", "TabOne is after tabTwo");
 
 			await browser.keys(["Control", "ArrowUp"]);
-			assert.notOk(await browser.$("#tabOne").previousElement().isExisting(), "TabOne is the first tab");
+			assert.notOk(await tab.previousElement().isExisting(), "TabOne is the first tab");
 		});
 
 		it("Moving strip item beyond the end with Arrow Right", async () => {
@@ -256,6 +257,7 @@ describe("Keyboard drag and drop tests", () => {
 		});
 
 		it("Moving strip item with End", async () => {
+			await tabContainer.focusItem("tabOne");
 			await browser.keys(["Control", "End"]);
 
 			const displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
