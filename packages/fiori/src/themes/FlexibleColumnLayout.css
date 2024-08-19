@@ -37,6 +37,7 @@
 	border-inline-start: var(--_ui5_fcl_column_border);
 	border-inline-end: var(--_ui5_fcl_column_border);
 	position: relative;
+	box-sizing: border-box;
 }
 
 .ui5-fcl-separator:focus {
