@@ -1,3 +1,4 @@
+import { html } from "lit";
 import "../../src/Button.js";
 import "../../src/Menu.js";
 import "../../src/MenuItem.js";
@@ -5,7 +6,7 @@ import type MenuItem from "../../src/MenuItem.js";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="New File"></ui5-menu-item>
 		</ui5-menu>`);
@@ -15,7 +16,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Menu opens after button click", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu>
 			<ui5-menu-item text="New File"></ui5-menu-item>
 		</ui5-menu>`);
@@ -25,7 +26,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Menu icons appearance", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu open opener="btnOpen">
 			<ui5-menu-item text="Item 1.0" icon="open-folder">
 				<ui5-menu-item text="1.1"></ui5-menu-item>
@@ -53,7 +54,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Restore focus to previous element after close", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu open opener="btnOpen">
 			<ui5-menu-item text="Item 1.0" icon="open-folder">
 				<ui5-menu-item text="1.1"></ui5-menu-item>
@@ -74,7 +75,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Enable navigaion over disabled items", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen" open>
 			<ui5-menu-item text="Item 1"></ui5-menu-item>
 			<ui5-menu-item text="Item 2" disabled></ui5-menu-item>
@@ -98,7 +99,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Add endContent to a menu item", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen" open>
 			<ui5-menu-item text="Item 1">
 				<ui5-button slot="endContent">endContent</ui5-button>
@@ -127,7 +128,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Menu and Menu items busy indication - with items", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen" open>
 			<ui5-menu-item text="Item 1" loading-delay="500" loading>
 				<ui5-menu-item text="Item 1.1"></ui5-menu-item>
@@ -145,7 +146,7 @@ describe("Menu interaction", () => {
 	});
 
 	it("Menu and Menu items busy indication - without items", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen" open>
 			<ui5-menu-item text="Item 1" loading-delay="500" loading></ui5-menu-item>
 		</ui5-menu>`);
@@ -157,8 +158,8 @@ describe("Menu interaction", () => {
 			.and("have.attr", "active");
 	});
 
-	it("Menu and Menu items busy indication - without items", () => {
-		cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+	it("Restore focus on close", () => {
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu">
 			<ui5-menu-item text="Item 1"></ui5-menu-item>
 		</ui5-menu>`);
@@ -188,7 +189,7 @@ describe("Menu interaction", () => {
 
 	describe("Event firing", () => {
 		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu open opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
@@ -209,7 +210,7 @@ describe("Menu interaction", () => {
 		});
 
 		it("Event firing - 'ui5-item-click' after 'Space' on menu item", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu open opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
@@ -230,7 +231,7 @@ describe("Menu interaction", () => {
 		});
 
 		it("Event firing - 'ui5-item-click' after 'Enter' on menu item", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu open opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
@@ -251,10 +252,8 @@ describe("Menu interaction", () => {
 		});
 
 		it("Prevent menu closing on item press", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen" @ui5-item-click="${
-	// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-	(e: Event) => e.preventDefault()}">
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			<ui5-menu open opener="btnOpen" @ui5-item-click="${(e: CustomEvent) => e.preventDefault()}">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
 
@@ -281,7 +280,7 @@ describe("Menu interaction", () => {
 		});
 
 		it("Events firing on open/close of the menu", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu id="menu" opener="btnOpen">
 				<ui5-menu-item text="New File"></ui5-menu-item>
 			</ui5-menu>`);
@@ -335,7 +334,7 @@ describe("Menu interaction", () => {
 
 	describe("Accessibility", () => {
 		it("Menu and Menu items accessibility attributes", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu open opener="btnOpen">
 				<ui5-menu-item text="Item 1.0" accessible-name="test accessible name">
 					<ui5-menu-item text="Item 1.1"></ui5-menu-item>
@@ -400,7 +399,7 @@ describe("Menu interaction", () => {
 		});
 
 		it("Menu popover has an accessible name", () => {
-			cy.mount(`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu open opener="btnOpen">
 				<ui5-menu-item text="Item 1.0" icon="open-folder">
 					<ui5-menu-item text="1.1"></ui5-menu-item>

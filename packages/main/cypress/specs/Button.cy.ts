@@ -1,3 +1,4 @@
+import { html } from "lit";
 import "../../src/Button.js";
 import type Button from "../../src/Button.js";
 import "@ui5/webcomponents-icons/dist/download.js";
@@ -5,7 +6,7 @@ import "@ui5/webcomponents-icons/dist/employee.js";
 
 describe("Button general interaction", () => {
 	it("tests button's text rendering", () => {
-		cy.mount(`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
+		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
 
 		cy.get<Button>("[ui5-button]")
 			.shadow()
@@ -14,7 +15,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button's icon rendering", () => {
-		cy.mount(`<ui5-button>Action Bar Button</ui5-button>`);
+		cy.mount(html`<ui5-button>Action Bar Button</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -41,7 +42,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button's endIon rendering", () => {
-		cy.mount(`<ui5-button>Action Bar Button</ui5-button>`);
+		cy.mount(html`<ui5-button>Action Bar Button</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -68,7 +69,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests click event", () => {
-		cy.mount(`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
+		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -90,7 +91,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests keyboard shortcuts used to prevent a click event", () => {
-		cy.mount(`<ui5-button>Text</ui5-button>`);
+		cy.mount(html`<ui5-button>Text</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -111,7 +112,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("aria-expanded is properly applied on the button tag", () => {
-		cy.mount(`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
+		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -144,7 +145,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("not setting accessible-role on the host keeps the correct role on the button tag", () => {
-		cy.mount(`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
+		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.shadow()
@@ -157,7 +158,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button's icon only rendering", () => {
-		cy.mount(`<ui5-button icon="home"><!----><!----></ui5-button>`);
+		cy.mount(html`<ui5-button icon="home"><!----><!----></ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.invoke("attr", "icon-only")
@@ -165,7 +166,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button's icon only rendering", () => {
-		cy.mount(`<ui5-button icon="text"> </ui5-button>`);
+		cy.mount(html`<ui5-button icon="text"> </ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.invoke("attr", "icon-only")
@@ -173,7 +174,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button's slot rendering", () => {
-		cy.mount(`
+		cy.mount(html`
 	<ui5-button>
 		<ui5-avatar id="btnImage" size="XS">
 			<img src="https://sdk.openui5.org/test-resources/sap/f/images/Woman_avatar_01.png" />
@@ -184,7 +185,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests clicking on disabled button", () => {
-		cy.mount(`<ui5-button disabled>Inactive</ui5-button>`);
+		cy.mount(html`<ui5-button disabled>Inactive</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -216,7 +217,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests clicking on disabled button with Icon", () => {
-		cy.mount(`<ui5-button icon="employee" disabled></ui5-button>`);
+		cy.mount(html`<ui5-button icon="employee" disabled></ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -246,7 +247,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tests button with text icon role", () => {
-		cy.mount(`<ui5-button design="Attention" icon="message-warning">Warning</ui5-button>`);
+		cy.mount(html`<ui5-button design="Attention" icon="message-warning">Warning</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -261,7 +262,7 @@ describe("Button general interaction", () => {
 	it("aria-describedby properly applied on the button tag", () => {
 		const hiddenTextTypeId = "ui5-button-hiddenText-type";
 
-		cy.mount(`<ui5-button design="Attention">Content</ui5-button>`);
+		cy.mount(html`<ui5-button design="Attention">Content</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -279,7 +280,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("setting accessible-name-ref on the host is reflected on the button tag", () => {
-		cy.mount(`<ui5-button icon="download" accessible-name="Help me" accessible-name-ref="1download-text"></ui5-button>
+		cy.mount(html`<ui5-button icon="download" accessible-name="Help me" accessible-name-ref="1download-text"></ui5-button>
 		<ui5-label id="1download-text">Download Application</ui5-label>`);
 
 		cy.get("[ui5-button]")
@@ -293,7 +294,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("aria-haspopup and aria-controls are properly applied on the button tag", () => {
-		cy.mount(`<ui5-button>Show Registration Dialog</ui5-button>`);
+		cy.mount(html`<ui5-button>Show Registration Dialog</ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.as("button");
@@ -320,7 +321,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("setting tooltip on the host is reflected on the button tag", () => {
-		cy.mount(`<ui5-button icon="message-information" tooltip="Go home"></ui5-button>`);
+		cy.mount(html`<ui5-button icon="message-information" tooltip="Go home"></ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.shadow()
@@ -333,7 +334,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("tooltip from inner icon is propagated", () => {
-		cy.mount(`<ui5-button icon="download" accessible-name="Download application"></ui5-button>`);
+		cy.mount(html`<ui5-button icon="download" accessible-name="Download application"></ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.shadow()
@@ -346,7 +347,7 @@ describe("Button general interaction", () => {
 	});
 
 	it("setting accessible-role on the host is reflected on the button tag", () => {
-		cy.mount(`<ui5-button accessible-role="Link"> Navigation Button </ui5-button>`);
+		cy.mount(html`<ui5-button accessible-role="Link"> Navigation Button </ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.shadow()

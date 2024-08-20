@@ -39,6 +39,7 @@ const overrides = tsMode ? [
 	},
 	{
 		"files": ["**/cypress/**/*.ts"],
+
 		"plugins": [
 			"cypress"
 		],
@@ -56,7 +57,15 @@ const overrides = tsMode ? [
 			"cypress/no-force": "warn",
 			"cypress/no-async-tests": "error",
 			"cypress/no-async-before": "error",
-			"cypress/no-pause": "error"
+			"cypress/no-pause": "error",
+			"import/no-extraneous-dependencies": [
+				"error",
+				{
+					"devDependencies": [
+						"**/cypress/**/*.ts"
+					]
+				}
+			]
 		}
 	}
 ] : [];

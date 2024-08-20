@@ -1,10 +1,10 @@
-Cypress.Commands.add("ui5MenuOpen", { prevSubject: true }, (prevSubject, opener) => {
+Cypress.Commands.add("ui5MenuOpen", { prevSubject: true }, (prevSubject, options) => {
 	cy.wrap(prevSubject)
 		.as("menu")
 		.then($menu => {
-			if (opener) {
+			if (options?.opener) {
 				cy.wrap($menu)
-					.invoke("attr", "opener", opener);
+					.invoke("attr", "opener", options.opener);
 			}
 
 			cy.wrap($menu)
