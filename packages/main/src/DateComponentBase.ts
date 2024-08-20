@@ -90,7 +90,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	calendarWeekNumbering?: `${CalendarWeekNumbering}` = "Default";
+	calendarWeekNumbering: `${CalendarWeekNumbering}` = "Default";
 
 	static i18nBundle?: I18nBundle;
 

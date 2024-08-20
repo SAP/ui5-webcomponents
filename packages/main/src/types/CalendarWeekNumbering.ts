@@ -1,10 +1,8 @@
 /**
  * The <code>CalendarWeekNumbering</code> enum defines how to calculate calendar weeks. Each
  * value defines:
- * <ul>
- * <li>The first day of the week,</li>
- * <li>the first week of the year.</li>
- * </ul>
+ * - The first day of the week,
+ * - The first week of the year.
  *
  * @public
  * @since 2.2.0
