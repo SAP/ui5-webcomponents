@@ -203,7 +203,7 @@ class ColorPalette extends UI5Element {
 	onBeforeRendering() {
 		this._ensureSingleSelectionOrDeselectAll();
 
-		const selectedItem = this.allColorsInPalette.find(item => item.selected);
+		const selectedItem = this.selectedItem;
 
 		if (selectedItem && !this.showRecentColors) {
 			this._selectedColor = selectedItem.value;
@@ -228,9 +228,15 @@ class ColorPalette extends UI5Element {
 	}
 
 	onAfterRendering() {
-		if (this._shouldFocusRecentColors && this.hasRecentColors) {
-			this.recentColorsElements[0].selected = true;
-			this.recentColorsElements[0].focus();
+		if (this.hasRecentColors && this._shouldFocusRecentColors) {
+			if (this.selectedItem) {
+				this.selectedItem.selected = false;
+			}
+			const firstRecentColor = this.recentColorsElements[0];
+			firstRecentColor.selected = true;
+			this._currentlySelected = firstRecentColor;
+			this._currentlySelected.focus();
+			this._shouldFocusRecentColors = false;
 		}
 	}
 
@@ -479,9 +485,7 @@ class ColorPalette extends UI5Element {
 		const colorPicker = this.getColorPicker();
 		this._setColor(colorPicker.value);
 		this._closeDialog();
-		this._shouldFocusRecentColors = !this.popupMode;
-		this.recentColorsElements[0].selected = true;
-		this._currentlySelected = colorPicker.value ? this.recentColorsElements[0] : undefined;
+		this._shouldFocusRecentColors = true;
 	}
 
 	_addRecentColor(color: string) {
@@ -519,7 +523,7 @@ class ColorPalette extends UI5Element {
 	 * Returns the selected item.
 	 */
 	get selectedItem() {
-		return [...this.effectiveColorItems, ...this.recentColorsElements].find(item => item.selected);
+		return this.allColorsInPalette.find(item => item.selected);
 	}
 
 	get allColorsInPalette() {
