@@ -226,6 +226,30 @@ class DynamicPage extends UI5Element {
 		}
 	}
 
+	onAfterRendering(): void {
+		this.calcStickyElements();
+	}
+
+	calcStickyElements() {
+		let firstElementTop = 0;
+		const stickyElements = this.querySelectorAll("[sticky]") as unknown as Array<HTMLElement>;
+
+		if (this._headerExpanded && this.scrollContainer!.scrollTop > 0) { // needed to adjust sticky elements when we expand header on already scrolled container
+			firstElementTop = this.dynamicPageHeader!.getBoundingClientRect().bottom;
+		} else {
+			firstElementTop = this.dynamicPageTitle!.getBoundingClientRect().bottom;
+		}
+
+		stickyElements[0].style.top = `${firstElementTop}px`;
+
+		for (let index = 1; index < stickyElements.length; index++) {
+			const element = stickyElements[index];
+			const previousStickyElement = stickyElements[index - 1];
+
+			element.style.top = `${previousStickyElement.getBoundingClientRect().height + parseInt(previousStickyElement.style.top)}px`;
+		}
+	}
+
 	get dynamicPageTitle(): DynamicPageTitle | null {
 		return this.querySelector<DynamicPageTitle>("[ui5-dynamic-page-title]");
 	}
