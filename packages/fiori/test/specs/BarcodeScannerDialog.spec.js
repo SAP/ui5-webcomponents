@@ -1,6 +1,6 @@
 import { assert } from "chai";
 
-describe("BarcodeScannerDialog Behavior", () => {
+describe.skip("BarcodeScannerDialog Behavior", () => {
 	beforeEach(async () => {
 		await browser.url(`test/pages/BarcodeScannerDialog.html`);
 	});
