@@ -42,8 +42,7 @@ import "./commands/Menu.commands.js";
 type SimulationDevices = "phone"
 
 declare global {
-	// eslint-disable-next-line @typescript-eslint/no-namespace
-	namespace Cypress {
+	module Cypress {
 		interface Chainable {
 			ui5SimulateDevice(device?: SimulationDevices): Chainable<void>
 			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
