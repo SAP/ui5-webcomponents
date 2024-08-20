@@ -51,6 +51,7 @@ const overrides = tsMode ? [
 		},
 		"rules": {
 			"max-nested-callbacks": 0,
+			"@typescript-eslint/no-namespace": "off",
 			"cypress/no-assigning-return-values": "error",
 			"cypress/no-unnecessary-waiting": "error",
 			"cypress/assertion-before-screenshot": "warn",

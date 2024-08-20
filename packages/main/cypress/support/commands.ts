@@ -42,7 +42,7 @@ import "./commands/Menu.commands.js";
 type SimulationDevices = "phone"
 
 declare global {
-	module Cypress {
+	namespace Cypress {
 		interface Chainable {
 			ui5SimulateDevice(device?: SimulationDevices): Chainable<void>
 			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
