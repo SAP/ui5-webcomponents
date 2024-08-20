@@ -145,6 +145,9 @@ abstract class SliderBase extends UI5Element {
 	@property({ type: Boolean })
 	_hiddenTickmarks = false;
 
+	@property({ type: Boolean })
+	_isArrowChange = false;
+
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: (e: TouchEvent | MouseEvent) => void;
@@ -299,11 +302,25 @@ abstract class SliderBase extends UI5Element {
 			return;
 		}
 
-		if (SliderBase._isActionKey(e)) {
+		if (SliderBase._isActionKey(e) && target && !target.hasAttribute("ui5-input")) {
 			e.preventDefault();
 
 			this._isUserInteraction = true;
 			this._handleActionKeyPress(e);
+		}
+	}
+	_onInputKeydown(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+
+		const isUpAction = SliderBase._isIncreaseValueAction(e);
+		const isDownAction = SliderBase._isDecreaseValueAction(e);
+
+		if (isUpAction || isDownAction) {
+			this._isArrowChange = true;
+		}
+
+		if (isF2(e) && target.hasAttribute("ui5-input")) {
+			(target.parentNode!.parentNode!.querySelector(".ui5-slider-handle") as HTMLElement).focus();
 		}
 	}
 

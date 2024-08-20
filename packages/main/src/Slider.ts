@@ -261,7 +261,11 @@ class Slider extends SliderBase implements IFormInputElement {
 		const input = e.target as HTMLInputElement;
 		const value = parseFloat(input.value);
 
-		this.value = ctor.clipValue(value, this._effectiveMin, this._effectiveMax);
+		if (!this._isArrowChange) {
+			this.value = ctor.clipValue(value, this._effectiveMin, this._effectiveMax);
+		}
+
+		this._isArrowChange = false;
 	}
 
 	_onInputFocusOut() {
