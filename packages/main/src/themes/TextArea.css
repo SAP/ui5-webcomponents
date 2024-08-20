@@ -142,8 +142,8 @@
 	box-sizing: border-box;
 	height: 100%;
  	position: absolute;
-	top: 0;
-	left: 0;
+	top: var(--_ui5_textarea_wrapper_padding);
+	left: var(--_ui5_textarea_wrapper_padding);
 }
 
 .ui5-textarea-mirror {
@@ -156,6 +156,8 @@
 	word-break: break-all;
 	padding-top: var(--_ui5_textarea_padding_top);
 	padding-bottom: var(--_ui5_textarea_padding_bottom);
+	padding-left:  var(--_ui5_textarea_padding_right_and_left);
+	padding-right:  var(--_ui5_textarea_padding_right_and_left);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	white-space: pre-wrap;
@@ -203,6 +205,8 @@
 :host([value-state="Critical"]) .ui5-textarea-mirror {
 	padding-top: var(--_ui5_textarea_padding_top_error_warning);
 	padding-bottom: var(--_ui5_textarea_padding_bottom_error_warning);
+	padding-left: var(--_ui5_textarea_padding_right_and_left_error_warning);
+	padding-right: var(--_ui5_textarea_padding_right_and_left_error_warning);
 	min-height: calc(var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
 }
 
@@ -311,7 +315,9 @@
 }
 
 :host([value-state="Negative"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
-:host([value-state="Critical"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
+:host([value-state="Critical"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
+:host([value-state="Negative"]:not([readonly]):not([disabled])) .ui5-textarea-mirror,
+:host([value-state="Critical"]:not([readonly]):not([disabled])) .ui5-textarea-mirror{
 	font-style: var(--_ui5_textarea_error_warning_font_style);
 	font-weight: var(--_ui5_textarea_error_warning_font_weight);
 	padding: var(--_ui5_textarea_padding_top_error_warning) var(--_ui5_textarea_padding_right_and_left_error_warning) var(--_ui5_textarea_padding_bottom_error_warning);
@@ -379,7 +385,8 @@
 	border-radius: var(--sapField_BorderCornerRadius);
 }
 
-:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
+:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
+:host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-mirror {
 	padding: var(--_ui5_textarea_padding_top_information) var(--_ui5_textarea_padding_right_and_left_information) var(--_ui5_textarea_padding_bottom_information);
 }
 
