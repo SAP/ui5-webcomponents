@@ -261,7 +261,6 @@ class Slider extends SliderBase implements IFormInputElement {
 	}
 
 	_updateValueFromInput(e: Event) {
-		const ctor = this.constructor as typeof Slider;
 		const input = e.target as HTMLInputElement;
 		const value = parseFloat(input.value);
 		const isValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
