@@ -150,12 +150,20 @@ class WizardTab extends UI5Element implements ITabbable {
 		this.fireEvent("focused");
 	}
 
-	get tabIndex() {
-		return Number(this.forcedTabIndex);
-	}
-
 	get hasTexts() {
 		return this.titleText || this.subtitleText;
+	}
+
+	get effectiveTabIndex() {
+		if (this.disabled) {
+			return;
+		}
+
+		if (this.selected || this.forcedTabIndex === "0") {
+			return "0";
+		}
+
+		return "-1";
 	}
 
 	get accInfo() {

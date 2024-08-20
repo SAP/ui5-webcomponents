@@ -65,7 +65,13 @@ describe("Wizard general interaction", () => {
 		const wiz = await $("#wizTest");
 		const disabledStep = await wiz.shadow$(`[data-ui5-index="2"]`);
 
-		assert.notOk(await disabledStep.isClickable(), "Disabled step should not be clickable");
+		await disabledStep.click();
+
+		const isTabActiveElement = await browser.executeAsync((done) => {
+			done(document.activeElement.shadowRoot.activeElement === document.querySelector("#wizTest").shadowRoot.querySelector("[data-ui5-index='2']"));
+		});
+
+		assert.notOk(isTabActiveElement, "Second tab should not be active element");
 	});
 
 	it("move to next step by API", async () => {
