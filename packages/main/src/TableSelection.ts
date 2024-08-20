@@ -1,6 +1,5 @@
 import {
 	isUpShift,
-	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
