@@ -432,15 +432,12 @@ describe("Calendar general interaction", () => {
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 	});
 
-	it("Calendar header buttons visibility", async  () => {
-		const calendarHeader = await browser.$("#calendar1").shadow$("ui5-calendar-header");
-		const monthButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-month]`);
-		const yearButton = await calendarHeader.shadow$(`[data-ui5-cal-header-btn-year]`);
+	it("Special date respects format-pattern given to the calendar", async  () => {
+		const calendar = await browser.$("#calendar3");
+		const dayPickerRoot = await calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-root");
 
-		await monthButton.click();
-		assert.ok(monthButton.hasAttribute("hidden"), "The month button is hidden");
+		const specialDate = await dayPickerRoot.$$(`div[special-day]`);
 
-		await yearButton.click();
-		assert.ok(yearButton.hasAttribute("hidden"), "The year button is hidden");
+		assert.strictEqual(specialDate.length, 2, "Special date is rendered");
 	});
 });
