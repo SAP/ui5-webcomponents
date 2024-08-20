@@ -1,4 +1,4 @@
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -422,6 +422,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return isPhone();
 	}
 
+	get _isMobileDevice() {
+		return !isDesktop() && (isPhone() || isTablet());
+	}
+
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
@@ -503,7 +507,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+		if (this._isMobileDevice && target && !target.hasAttribute("ui5-icon")) {
 			this.toggleInputsPopover();
 		}
 
@@ -559,7 +563,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_canOpenInputsPopover() {
-		return !this.disabled && this._isPhone;
+		return !this.disabled && this._isMobileDevice;
 	}
 
 	_getPopover() {
@@ -580,7 +584,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this._isPhone && !this.isInputsPopoverOpen()) {
+		if (this._isMobileDevice && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
 		if (isShow(e)) {
@@ -710,7 +714,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		if (this._isPhone) {
+		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
 				const popover = this._getInputsPopover();
