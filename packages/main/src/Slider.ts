@@ -94,6 +94,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
+	_lastValidInputValue: string;
 
 	get formFormattedValue() {
 		return this.value.toString();
@@ -104,6 +105,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	constructor() {
 		super();
 		this._stateStorage.value = undefined;
+		this._lastValidInputValue = this.min.toString();
 	}
 
 	/**
@@ -118,6 +120,8 @@ class Slider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
+		this._updateInputValue();
+
 		if (!this.isCurrentStateOutdated()) {
 			return;
 		}
@@ -256,20 +260,33 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = undefined;
 	}
 
-	_onInputChange(e: Event) {
+	_updateValueFromInput(e: Event) {
 		const ctor = this.constructor as typeof Slider;
 		const input = e.target as HTMLInputElement;
 		const value = parseFloat(input.value);
+		const isValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
 
-		if (!this._isArrowChange) {
-			this.value = ctor.clipValue(value, this._effectiveMin, this._effectiveMax);
+		if (!isValueValid) {
+			return;
 		}
 
-		this._isArrowChange = false;
+		this.value = value;
 	}
 
-	_onInputFocusOut() {
+	_onInputFocusOut(e: FocusEvent) {
 		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		this._updateValueFromInput(e);
+	}
+
+	_updateInputValue() {
+		const tooltipInput = this.shadowRoot!.querySelector("ui5-input") as Input;
+
+		if (this.editableTooltip && tooltipInput) {
+			const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+
+			tooltipInput.value = tooltipInput.value ? tooltipInput.value : this._lastValidInputValue;
+			this._lastValidInputValue = (!!tooltipInput.value && isTooltipInputValueValid) ? tooltipInput.value : this._lastValidInputValue;
+		}
 	}
 
 	/** Determines if the press is over the handle

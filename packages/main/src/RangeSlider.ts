@@ -131,6 +131,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_secondHandlePositionFromStart?: number;
 	_selectedRange?: number;
 	_reversedValues = false;
+	_lastValidStartValue: string;
+	_lastValidEndValue: string;
 
 	static i18nBundle: I18nBundle;
 
@@ -151,6 +153,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		super();
 		this._stateStorage.startValue = undefined;
 		this._stateStorage.endValue = undefined;
+		this._lastValidStartValue = this.min.toString();
+		this._lastValidEndValue = this.max.toString();
 	}
 
 	get tooltipStartValue() {
@@ -204,6 +208,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
+		this._updateInputValues();
+
 		if (this.startValue > this.endValue) {
 			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
 
@@ -296,8 +302,9 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
-	_onInputFocusOut() {
+	_onInputFocusOut(e: FocusEvent) {
 		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
+		this._updateValueFromInput(e);
 	}
 
 	/**
@@ -551,13 +558,18 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._endValueAtBeginningOfAction = undefined;
 	}
 
-	_onInputChange(e: Event) {
+	_updateValueFromInput(e: Event) {
 		const ctor = this.constructor as typeof RangeSlider;
 
 		const input = e.target as HTMLInputElement;
 		const value = ctor.clipValue(parseFloat(input.value), this._effectiveMin, this._effectiveMax);
+		const isValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
 
-		if (input.hasAttribute("start-value")) {
+		if (!isValueValid) {
+			return;
+		}
+
+		if (input.hasAttribute("data-sap-ui-start-value")) {
 			this.startValue = value;
 			return;
 		}
@@ -771,6 +783,22 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			this._selectedRange = ((this.endValue - this.startValue)) / (max - min);
 			this._firstHandlePositionFromStart = ((this.startValue - min) / (max - min)) * 100;
 			this._secondHandlePositionFromStart = ((this.endValue - min) / (max - min)) * 100;
+		}
+	}
+
+	_updateInputValues() {
+		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
+
+		if (this.editableTooltip && startValueInput && endValueInput) {
+			const isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
+			const isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
+
+			startValueInput.value = startValueInput.value ? startValueInput.value : this._lastValidStartValue;
+			endValueInput.value = endValueInput.value ? endValueInput.value : this._lastValidEndValue;
+
+			this._lastValidStartValue = (!!startValueInput.value && isStartValueValid) ? startValueInput.value : this._lastValidStartValue;
+			this._lastValidEndValue = (!!endValueInput.value && isEndValueValid) ? endValueInput.value : this._lastValidEndValue;
 		}
 	}
 

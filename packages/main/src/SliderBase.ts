@@ -9,6 +9,7 @@ import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/ty
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
@@ -145,9 +146,6 @@ abstract class SliderBase extends UI5Element {
 	@property({ type: Boolean })
 	_hiddenTickmarks = false;
 
-	@property({ type: Boolean })
-	_isArrowChange = false;
-
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: (e: TouchEvent | MouseEvent) => void;
@@ -194,6 +192,8 @@ abstract class SliderBase extends UI5Element {
 	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
+
+	_updateValueFromInput(e: KeyboardEvent | FocusEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
@@ -312,15 +312,12 @@ abstract class SliderBase extends UI5Element {
 	_onInputKeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 
-		const isUpAction = SliderBase._isIncreaseValueAction(e);
-		const isDownAction = SliderBase._isDecreaseValueAction(e);
-
-		if (isUpAction || isDownAction) {
-			this._isArrowChange = true;
-		}
-
 		if (isF2(e) && target.hasAttribute("ui5-input")) {
 			(target.parentNode!.parentNode!.querySelector(".ui5-slider-handle") as HTMLElement).focus();
+		}
+
+		if (isEnter(e)) {
+			this._updateValueFromInput(e);
 		}
 	}
 

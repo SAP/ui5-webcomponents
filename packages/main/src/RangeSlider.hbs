@@ -48,17 +48,17 @@
 			<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
 		</div>
 
-			{{#if showTooltip}}
+		{{#if showTooltip}}
 		<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
 			{{#if editableTooltip}}
 				<ui5-input
 					type="Number"
 					value="{{startValue}}"
 					accessible-name-ref="{{_ariaLabelledByInputRefs}}"
-					@ui5-change="{{_onInputChange}}"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
-					start-value
+					data-sap-ui-start-value
+					tabindex="-1"
 				></ui5-input>
 			{{else}}
 				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
@@ -90,10 +90,10 @@
 					type="Number"
 					value="{{endValue}}"
 					accessible-name-ref="{{_ariaLabelledByInputRefs}}"
-					@ui5-change="{{_onInputChange}}"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
 					data-sap-ui-end-value
+					tabindex="-1"
 				></ui5-input>
 			{{else}}
 				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>

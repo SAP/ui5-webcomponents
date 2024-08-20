@@ -44,10 +44,10 @@
 					value="{{value}}"
 					type="Number"
 					accessible-name-ref="{{_ariaLabelledByInputRefs}}"
-					@ui5-change="{{_onInputChange}}"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
 					data-sap-ui-end-value
+					tabindex="-1"
 				></ui5-input>
 			{{else}}
 				<span class="ui5-slider-tooltip-value">{{tooltipValue}}</span>
