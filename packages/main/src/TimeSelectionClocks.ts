@@ -118,18 +118,13 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 */
 	_clocksFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
-		this._focused = true;
 		if (target.id === this._id) {
 			this._switchClock(this._activeIndex);
 		}
 	}
 
-	_clocksFocusOut() {
-		this._focused = false;
-	}
-
 	/**
-	 * ToggleSpinButton focusin event handler.Switches to clock which button is being focused.
+	 * ToggleSpinButton focusin event handler. Switches to clock which button is being focused.
 	 * @param evt Event object
 	 */
 	_buttonFocusIn(evt: Event) {
@@ -377,7 +372,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 			});
 		}
 		this._entities[this._activeIndex].active = true;
-		this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 		this._createPeriodComponent();
 	}
 
@@ -401,10 +395,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		if (this._entities.length && clockIndex < this._entities.length && newButton) {
 			this._entities[this._activeIndex].active = false;
-			this._entities[this._activeIndex].focused = false;
 			this._activeIndex = clockIndex;
 			this._entities[this._activeIndex].active = true;
-			this._entities[this._activeIndex].focused = this._focused && !this._amPmFocused;
 			newButton.focus();
 		}
 	}
