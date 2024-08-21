@@ -602,7 +602,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 
 		if (isEnter(e)) {
-			if (this._internals?.form) {
+			if (this._internals.form) {
 				submitForm(this);
 			}
 		} else if (isPageUpShiftCtrl(e)) {
