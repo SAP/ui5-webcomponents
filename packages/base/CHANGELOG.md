@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.1.2) (2024-08-21)
+
+
+### Bug Fixes
+
+* **framework:** attach element internals only once ([#9714](https://github.com/SAP/ui5-webcomponents/issues/9714)) ([10b797b](https://github.com/SAP/ui5-webcomponents/commit/10b797b1366cc18e8dddff1a9f8996893c0f46cf)), closes [#9713](https://github.com/SAP/ui5-webcomponents/issues/9713)
+
+
+
+
+
 ## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
