@@ -360,7 +360,7 @@ class Link extends UI5Element implements ITabbable {
 		}
 	}
 
-	_onfocusin(e: FocusEvent) { //todo - remove too? whats the mark event for? 
+	_onfocusin(e: FocusEvent) {
 		markEvent(e, "link");
 	}
 
