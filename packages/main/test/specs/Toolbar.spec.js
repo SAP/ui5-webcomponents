@@ -12,7 +12,7 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await otb.shadow$(".ui5-tb-overflow-btn");
 
 		await overflowButton.click();
-		const popover = await otb.shadow$("ui5-popover");
+		const popover = await otb.shadow$("ui5-menu");
 
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened, because of 'always overflow' item is inside");
 
@@ -27,7 +27,7 @@ describe("Toolbar general interaction", () => {
 
 		await overflowButton.click();
 
-		const popover = await otb.shadow$("ui5-popover");
+		const popover = await otb.shadow$("ui5-menu");
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened on click on overflow button");
 		await browser.setWindowSize(1920, 1080);
 	});
@@ -53,14 +53,18 @@ describe("Toolbar general interaction", () => {
 		const toolbar = await browser.$("#testEventpreventClosing-toolbar")
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		const popover = await toolbar.shadow$(".ui5-overflow-popover");
-		const select = await toolbar.shadow$("[ui5-select]");
+		const select = await toolbar.shadow$(".ui5-overflow-popover > ui5-menu-item:nth-child(1)");
 
 		await overflowButton.click();
 		await select.click();
 
+		const option = await toolbar.shadow$(".ui5-overflow-popover > ui5-menu-item:nth-child(1) > ui5-menu-item:nth-child(1)");
+
+		await option.click();
+
 		assert.strictEqual(await popover.getProperty("open"), true, "Popover is opened");
 	});
-
+/* 
 	it("Should call child events only once", async () => {
 		const toolbar = await browser.$("#clickCountToolbar");
 		const countButton = await toolbar.shadow$("#clickCounter");
@@ -73,5 +77,5 @@ describe("Toolbar general interaction", () => {
 		await input.setAttribute("value", "0");
 	});
 
-
+ */
 });

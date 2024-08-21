@@ -15,6 +15,7 @@ import Select from "./Select.js";
 import Option from "./Option.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
+import type { MenuItemClickEventDetail } from "./Menu.js";
 
 type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
@@ -138,6 +139,7 @@ class ToolbarSelect extends ToolbarItem {
 
 		map.set("click", { preventClosing: true });
 		map.set("ui5-change", { preventClosing: false });
+		map.set("ui5-item-click", { preventClosing: false }); // change from the overflow popover
 		map.set("ui5-open", { preventClosing: true });
 		map.set("ui5-close", { preventClosing: true });
 
@@ -174,15 +176,36 @@ class ToolbarSelect extends ToolbarItem {
 		if (e.type === "ui5-change") {
 			// update options
 			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
-			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-			this.options.forEach((option: ToolbarSelectOption, index: number) => {
-				if (index === selectedOptionIndex) {
-					option.setAttribute("selected", "");
-				} else {
-					option.removeAttribute("selected");
-				}
-			});
+			this.selectOption(selectedOption);
+		} else if (e.type === "ui5-item-click") {
+			// update select
+			const selectedOption = (e as CustomEvent<MenuItemClickEventDetail>).detail.item;
+			this.selectOption(selectedOption);
 		}
+	}
+
+	/**
+	 * Selects an option.
+	 * @param option the option to be selected.
+	 * @public
+	 */
+	selectOption(selectedOption: HTMLElement): void {
+		const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
+		this.options.forEach((option: ToolbarSelectOption, index: number) => {
+			if (index === selectedOptionIndex) {
+				option.setAttribute("selected", "");
+			} else {
+				option.removeAttribute("selected");
+			}
+		});
+	}
+
+	get textForSelectedOption() {
+		let selectedOption = this.options.find(option => option.selected);
+		if (!selectedOption && this.options.length) {
+			selectedOption = this.options[0];
+		}
+		return selectedOption?.textContent;
 	}
 
 	get styles() {

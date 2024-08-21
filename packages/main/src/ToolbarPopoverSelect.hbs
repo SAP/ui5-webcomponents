@@ -1,12 +1,15 @@
-<ui5-select 
-	class="ui5-tb-popover-item"
-	data-ui5-external-action-item-id="{{this._id}}"
-	value-state="{{this.valueState}}"
+<ui5-menu-item
 	?disabled="{{this.disabled}}"
 	accessible-name="{{this.accessibleName}}"
 	accessible-name-ref="{{this.accessibleNameRef}}"
+	text="{{textForSelectedOption}}"
 >
 	{{#each options}}
-		<ui5-option ?selected="{{this.selected}}" data-ui5-external-action-item-index="{{@index}}">{{this.textContent}}</ui5-option>
+		<ui5-menu-item
+			class="ui5-tb-popover-item"
+			data-ui5-external-action-item-id="{{../_id}}"
+			?selected="{{this.selected}}"
+			data-ui5-external-action-item-index="{{@index}}"
+			text="{{this.textContent}}"></ui5-menu-item>
 	{{/each}}
-</ui5-select>
+</ui5-menu-item>

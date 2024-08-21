@@ -167,6 +167,10 @@ class ToolbarButton extends ToolbarItem {
 		return true;
 	}
 
+	get _textContent() {
+		return this.text || this.tooltip;
+	}
+
 	static get toolbarTemplate() {
 		return ToolbarButtonTemplate;
 	}
@@ -178,6 +182,7 @@ class ToolbarButton extends ToolbarItem {
 	get subscribedEvents(): Map<string, IEventOptions> {
 		const map = new Map();
 		map.set("click", { preventClosing: false });
+		map.set("ui5-item-click", { preventClosing: false }); // click from the overflow popover
 		return map;
 	}
 }

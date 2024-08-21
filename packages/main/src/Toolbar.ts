@@ -39,6 +39,8 @@ import {
 
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+import Menu from "./Menu.js";
+import MenuItem from "./MenuItem.js";
 
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
@@ -170,6 +172,8 @@ class Toolbar extends UI5Element {
 		const deps = getRegisteredDependencies();
 		return [
 			Popover,
+			Menu,
+			MenuItem,
 			Button,
 			...deps,
 		];
@@ -500,7 +504,9 @@ class Toolbar extends UI5Element {
 	onInteract(e: CustomEvent) {
 		e.stopImmediatePropagation();
 		const target = e.target as HTMLElement;
-		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
+		const item = target.closest<ToolbarItem>(".ui5-tb-item")
+			|| target.closest<ToolbarItem>(".ui5-tb-popover-item")
+			|| (e.detail?.item as HTMLElement)?.closest<ToolbarItem>(".ui5-tb-popover-item");
 
 		if (target === this.overflowButtonDOM) {
 			this.toggleOverflow();
@@ -511,7 +517,12 @@ class Toolbar extends UI5Element {
 			return;
 		}
 
-		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
+		if (target === this.getOverflowPopover() && e.type === "ui5-item-click") {
+			e.preventDefault(); // prevent the auto-closing of the menu after item click
+		}
+
+		const refItemId = target.getAttribute("data-ui5-external-action-item-id")
+			|| item.getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
