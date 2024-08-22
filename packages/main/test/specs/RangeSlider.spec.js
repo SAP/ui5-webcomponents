@@ -149,7 +149,67 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await rangeSliderEndTooltipValue.getText(), "115", "Range Slider end tooltip should display value of 65");
 	});
 
+	it("Tooltip input is displayed showing the current value", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderEndTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
+
+		await rangeSlider.setProperty("startValue", 8);
+		const rangeSliderStartTooltipInputValue = await rangeSliderStartTooltipInput.getProperty("value");
+
+		await rangeSlider.setProperty("endValue", 12);
+		const rangeSliderEndTooltipInputValue = await rangeSliderEndTooltipInput.getProperty("value");
+
+		assert.strictEqual(await rangeSliderStartTooltipInputValue, "8", "Slider input has the correct value");
+		assert.strictEqual(await rangeSliderEndTooltipInputValue, "12", "Slider input has the correct value");
+	});
+
+	it("Tooltip input should not be closed on focusout if input tooltip is clicked", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+
+		await rangeSlider.click();
+		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+
+		await rangeSliderStartTooltipInput.click();
+
+		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("focused"), true, "The tooltip is not closed and the input is focused");
+	});
+
+	it("Input tooltips value change should change the range slider's value", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await rangeSlider.setProperty("startValue", 4);
+
+		await rangeSliderHandle.click();
+		await rangeSliderStartTooltipInput.click();
+		await rangeSliderStartTooltipInput.setProperty("value", "8");
+
+		await browser.keys("Enter");
+
+		assert.strictEqual(await rangeSlider.getProperty("startValue"), 8, "The input value is reflected in the slider");
+	});
+
+	it("Input tooltip should become hidden when input is looses focus", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const anotherSlider = await browser.$("#basic-range-slider");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+
+		await rangeSlider.click();
+		await rangeSliderStartTooltipInput.click();
+
+		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+
+		await anotherSlider.click();
+
+		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
+	});
+
 	it("Range Slider tooltips should become visible when range slider is focused", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
 		const rangeSlider = await browser.$("#basic-range-slider-with-tooltip");
 		const rangeSliderStartTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--start");
 		const rangeSliderEndTooltip = await rangeSlider.shadow$(".ui5-slider-tooltip--end");
@@ -394,6 +454,14 @@ describe("Accessibility", async () => {
 			`${await rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuenow"),
 			`${await rangeSlider.getProperty("endValue")}`, "aria-valuenow is set correctly");
+	});
+
+	it("Aria attributes are set correctly to the tooltip input", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+
+		assert.strictEqual(await rangeSliderStartTooltipInput.getAttribute("accessible-name-ref"),
+			"ui5-slider-accName ui5-slider-InputLabel");
 	});
 
 	it("Aria-labelledby text is mapped correctly when values are swapped", async () => {
@@ -992,12 +1060,16 @@ describe("Testing resize handling and RTL support", () => {
 	});
 
 	it("Testing RTL KBH support", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle-container");
 		const endHandle = await rangeSlider.shadow$$(".ui5-slider-inner .ui5-slider-handle-container")[1];
 		const rangeSliderSelection = await rangeSlider.shadow$(".ui5-slider-progress");
 
 		await rangeSlider.setAttribute("dir", "rtl");
+		await rangeSlider.scrollIntoView();
+
 		await rangeSlider.setProperty("min", 0);
 		await rangeSlider.setProperty("max", 10);
 		await rangeSlider.setProperty("step", 1);
