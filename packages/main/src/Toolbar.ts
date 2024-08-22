@@ -38,7 +38,6 @@ import {
 } from "./ToolbarRegistry.js";
 
 import Button from "./Button.js";
-import Popover from "./Popover.js";
 import Menu from "./Menu.js";
 import MenuItem from "./MenuItem.js";
 
@@ -171,7 +170,6 @@ class Toolbar extends UI5Element {
 	static get dependencies() {
 		const deps = getRegisteredDependencies();
 		return [
-			Popover,
 			Menu,
 			MenuItem,
 			Button,
@@ -350,7 +348,7 @@ class Toolbar extends UI5Element {
 		const overflowPopover = this.getOverflowPopover();
 		overflowPopover!.opener = this.overflowButtonDOM!;
 		overflowPopover!.open = true;
-		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
+		this.reverseOverflow = overflowPopover!._popover.actualPlacement === "Top";
 	}
 
 	closeOverflow() {
@@ -366,8 +364,8 @@ class Toolbar extends UI5Element {
 		}
 	}
 
-	getOverflowPopover(): Popover | null {
-		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
+	getOverflowPopover(): Menu | null {
+		return this.shadowRoot!.querySelector<Menu>(".ui5-overflow-popover");
 	}
 
 	/**
