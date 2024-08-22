@@ -1,6 +1,7 @@
 import html from '!!raw-loader!./sample.html';
 import js from '!!raw-loader!./main.js';
 
-If your table is located inside of a scrollable container and you have other sticky content, you can use `sticky-top` to define the header's top offset.
+If your table is located inside of a scrollable container, you have other sticky content and your table is in `Scroll` mode,
+provide a height for the table for the sticky header to work as expected.
 
 <Editor html={html} js={js} />

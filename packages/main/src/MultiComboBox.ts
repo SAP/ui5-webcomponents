@@ -1283,7 +1283,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
-		if (this._internals?.form) {
+		if (this._internals.form) {
 			submitForm(this);
 		}
 
