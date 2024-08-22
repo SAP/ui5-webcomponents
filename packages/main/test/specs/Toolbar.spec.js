@@ -53,12 +53,12 @@ describe("Toolbar general interaction", () => {
 		const toolbar = await browser.$("#testEventpreventClosing-toolbar")
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		const popover = await toolbar.shadow$(".ui5-overflow-popover");
-		const select = await toolbar.shadow$(".ui5-overflow-popover > ui5-menu-item:nth-child(1)");
+		const select = await popover.$("ui5-menu-item");
 
 		await overflowButton.click();
 		await select.click();
 
-		const option = await toolbar.shadow$(".ui5-overflow-popover > ui5-menu-item:nth-child(1) > ui5-menu-item:nth-child(1)");
+		const option = await select.$("ui5-menu-item");
 
 		await option.click();
 
