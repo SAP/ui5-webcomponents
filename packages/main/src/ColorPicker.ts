@@ -80,6 +80,7 @@ type ColorCoordinates = {
 		Slider,
 		Label,
 	],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the the selected color is changed

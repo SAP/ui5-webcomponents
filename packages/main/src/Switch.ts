@@ -60,6 +60,7 @@ import switchCss from "./generated/themes/Switch.css.js";
 	renderer: litRender,
 	template: SwitchTemplate,
 	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component checked state changes.
