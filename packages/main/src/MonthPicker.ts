@@ -36,7 +36,7 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
-const isBetween = (x: number, num1: number, num2: number) => (x > num1 && x < num2) || (x > num2 && x < num1);
+const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const PAGE_SIZE = 12; // total months on a single page
 
 type Month = {
@@ -108,6 +108,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Month Picker!
 	 * @default "Single"
 	 * @public
+	 * @since 2.2.0
 	 */
 	@property()
 	selectionMode: `${CalendarSelectionMode}` = "Single";

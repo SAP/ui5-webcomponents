@@ -51,7 +51,7 @@ import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
-const isBetween = (x: number, num1: number, num2: number) => (x > num1 && x < num2) || (x > num2 && x < num1);
+const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const DAYS_IN_WEEK = 7;
 
 type DayName = {
