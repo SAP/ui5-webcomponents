@@ -64,7 +64,7 @@ describe("Toolbar general interaction", () => {
 
 		assert.strictEqual(await popover.getProperty("open"), true, "Popover is opened");
 	});
-/* 
+
 	it("Should call child events only once", async () => {
 		const toolbar = await browser.$("#clickCountToolbar");
 		const countButton = await toolbar.shadow$("#clickCounter");
@@ -77,5 +77,4 @@ describe("Toolbar general interaction", () => {
 		await input.setAttribute("value", "0");
 	});
 
- */
 });

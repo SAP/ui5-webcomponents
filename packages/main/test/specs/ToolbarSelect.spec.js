@@ -57,16 +57,16 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const popover = await toolbar.shadow$("ui5-popover");
-		const valueState = await popover.$("ui5-select").getAttribute("value-state");
-		const disabled = await popover.$("ui5-select[disabled]").getAttribute("disabled");
+		const popover = await toolbar.shadow$("ui5-menu");
+		// const valueState = await popover.$("ui5-menu-item").getAttribute("value-state"); // no corresponsing property in the menu-item
+		const disabled = await popover.$("ui5-menu-item[disabled]").getAttribute("disabled");
 
-		assert.strictEqual(valueState, "Critical", "Select value state is correct");
+		//assert.strictEqual(valueState, "Critical", "Select value state is correct");
 		assert.strictEqual(disabled, "true", "Disabled select is rendered correctly");
 
 		// Accessibility
 
-		const accessibleNameSelect = await popover.$("ui5-select");
+		const accessibleNameSelect = await popover.$("ui5-menu-item");
 		const accessibleName = await accessibleNameSelect.getAttribute("accessible-name");
 		const accessibleNameRef = await accessibleNameSelect.getAttribute("accessible-name-ref");
 

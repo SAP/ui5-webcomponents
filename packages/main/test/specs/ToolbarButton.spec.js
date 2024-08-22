@@ -47,19 +47,19 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const popover = await toolbar.shadow$("ui5-popover");
-		const buttonText = await popover.$("ui5-button").getText();
-		const buttonDesign = await popover.$("ui5-button").getAttribute("design");
-		const buttonDisabled = await popover.$("ui5-button").getAttribute("disabled");
-		const buttonIcon = await popover.$("ui5-button").getAttribute("icon");
-		const buttonEndIcon = await popover.$("ui5-button").getAttribute("end-icon");
-		const buttonTooltip = await popover.$("ui5-button").getAttribute("tooltip");
+		const popover = await toolbar.shadow$("ui5-menu");
+		const buttonText = await popover.$("ui5-menu-item").getText();
+		//const buttonDesign = await popover.$("ui5-menu-item").getAttribute("design"); // no corresponding poperty in the menu-item
+		const buttonDisabled = await popover.$("ui5-menu-item").getAttribute("disabled");
+		const buttonIcon = await popover.$("ui5-menu-item").getAttribute("icon");
+		//const buttonEndIcon = await popover.$("ui5-menu-item").getAttribute("end-icon"); // no corresponding poperty in the menu-item
+		const buttonTooltip = await popover.$("ui5-menu-item").getAttribute("tooltip");
 
 		assert.strictEqual(buttonText, "Back", "Button's text is correct inside popover");
-		assert.strictEqual(buttonDesign, "Emphasized", "Button's design is correct inside popover");
+		//assert.strictEqual(buttonDesign, "Emphasized", "Button's design is correct inside popover");
 		assert.strictEqual(buttonDisabled, "true", "Button is disabled inside popover");
 		assert.strictEqual(buttonIcon, "sap-icon://add", "Button's icon is correct inside popover");
-		assert.strictEqual(buttonEndIcon, "sap-icon://employee", "Button's end-icon is correct inside popover");
+		//assert.strictEqual(buttonEndIcon, "sap-icon://employee", "Button's end-icon is correct inside popover");
 		assert.strictEqual(buttonTooltip, "Add", "Button's tooltip is correct inside popover");
 	});
 
@@ -70,8 +70,8 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const popover = await toolbar.shadow$("ui5-popover");
-		const buttonAccName = await popover.$("ui5-button[accessible-name]");
+		const popover = await toolbar.shadow$("ui5-menu");
+		const buttonAccName = await popover.$("ui5-menu-item[accessible-name]");
 		const buttonAccessibleName = await buttonAccName.getAttribute("accessible-name");
 		const buttonAccessibleNameRef = await buttonAccName.getAttribute("accessible-name-ref");
 
@@ -86,8 +86,8 @@ describe("Toolbar general interaction", () => {
 		const overflowButton = await toolbar.shadow$(".ui5-tb-overflow-btn");
 		await overflowButton.click();
 
-		const popover = await toolbar.shadow$("ui5-popover");
-		const buttonAccAttributes = await popover.$("ui5-button[accessible-name]").getProperty("accessibilityAttributes");
+		const popover = await toolbar.shadow$("ui5-menu");
+		const buttonAccAttributes = await popover.$("ui5-menu-item[accessible-name]").getProperty("accessibilityAttributes");
 
 		assert.strictEqual(buttonAccAttributes.expanded, "true", "Button accessibilityAttributes is correct inside popover");
 	});
