@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import LinkDesign from "./types/LinkDesign.js";
 
 /**
@@ -73,6 +74,12 @@ class BreadcrumbsItem extends UI5Element {
 
 	get _linkDesign() {
 		return this._isCurrentPageItem ? LinkDesign.Emphasized : LinkDesign.Default;
+	}
+
+	get accessibilityAttributes(): Pick<AccessibilityAttributes, "current"> {
+		return {
+			current: this._isCurrentPageItem ? "page" : false,
+		};
 	}
 }
 
