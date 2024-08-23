@@ -1629,6 +1629,22 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
+
+		it("Should not fire submit event when confirming selection", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const cb = await browser.$("#mcb-form");
+
+			await cb.shadow$("input").click();
+			await cb.shadow$("input").keys("A");
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "0", "submit event is not fired");
+
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "1", "submit event is now fired");
+		});
 	});
 
 	describe("MultiComboBox Truncated Token", () => {
