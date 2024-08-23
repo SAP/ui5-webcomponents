@@ -17,6 +17,9 @@
     align-items: center;
     justify-content: center;
     height:inherit;
+}
+
+.ui5-illustrated-message-text-and-actions-container {
     flex-basis: content;
 }
 

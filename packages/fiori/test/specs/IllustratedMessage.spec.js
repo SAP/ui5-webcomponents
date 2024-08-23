@@ -182,4 +182,19 @@ describe("Dot design resource handling", () => {
 		// Check
 		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Dot-AddPeople", "Dot is present, therefore used");
 	});
+
+	it("Illustration visible, when container fit content height", async () => {
+
+		const illustratedMsgContainer = await browser.$(".illustratedmessage1auto");
+		const illustratedMsg = await browser.$("#illustratedMsg1");
+		await illustratedMsg.setProperty("design", "Scene");
+
+		// Act
+		await illustratedMsgContainer.setAttribute("style", "height: 440px");
+		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
+
+		// Check
+		assert.notEqual(await illustration.getProperty("scrollHeight"), 0, "Illustration fits its container inherited height");
+		await illustratedMsgContainer.setAttribute("style", "");
+	});
 });
