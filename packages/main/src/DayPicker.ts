@@ -261,7 +261,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel,
 				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isOtherMonth ? "true" : undefined,
+				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
 				type: specialDayType,
 				parts: "day-cell",
