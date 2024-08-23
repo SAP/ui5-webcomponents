@@ -192,6 +192,22 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 8, "The input value is reflected in the slider");
 	});
 
+	it("Input tooltips value state should change to 'Negative' if value is invalid", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await rangeSlider.setProperty("startValue", 1);
+
+		await rangeSliderHandle.click();
+		await rangeSliderStartTooltipInput.click();
+		await browser.keys(["2", "3"]);
+
+		await browser.keys("Enter");
+
+		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("valueState"), "Negative", "The input value state is negative when the value is invalid");
+	});
+
 	it("Input tooltip should become hidden when input is looses focus", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
 		const anotherSlider = await browser.$("#basic-range-slider");

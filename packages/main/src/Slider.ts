@@ -120,7 +120,9 @@ class Slider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
-		this._updateInputValue();
+		if (this.editableTooltip) {
+			this._updateInputValue();
+		}
 
 		if (!this.isCurrentStateOutdated()) {
 			return;
@@ -273,19 +275,36 @@ class Slider extends SliderBase implements IFormInputElement {
 	}
 
 	_onInputFocusOut(e: FocusEvent) {
+		const tooltipInput = e.target as Input;
+
 		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		this._updateValueFromInput(e);
+		this._updateInputValue();
+
+		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+
+		if (!isTooltipInputValueValid) {
+			tooltipInput.value = this._lastValidInputValue;
+			tooltipInput.valueState = "None";
+		}
 	}
 
 	_updateInputValue() {
 		const tooltipInput = this.shadowRoot!.querySelector("ui5-input") as Input;
 
-		if (this.editableTooltip && tooltipInput) {
-			const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
-
-			tooltipInput.value = tooltipInput.value ? tooltipInput.value : this._lastValidInputValue;
-			this._lastValidInputValue = (!!tooltipInput.value && isTooltipInputValueValid) ? tooltipInput.value : this._lastValidInputValue;
+		if (!tooltipInput) {
+			return;
 		}
+
+		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+
+		if (!isTooltipInputValueValid) {
+			tooltipInput.valueState = "Negative";
+			return;
+		}
+
+		this._lastValidInputValue = tooltipInput.value;
+		tooltipInput.valueState = "None";
 	}
 
 	/** Determines if the press is over the handle

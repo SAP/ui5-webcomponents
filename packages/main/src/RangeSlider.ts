@@ -208,7 +208,9 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
-		this._updateInputValues();
+		if (this.editableTooltip) {
+			this._updateInputValue();
+		}
 
 		if (this.startValue > this.endValue) {
 			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
@@ -303,8 +305,18 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	_onInputFocusOut(e: FocusEvent) {
+		const tooltipInput = e.target as Input;
+
 		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		this._updateValueFromInput(e);
+		this._updateInputValue();
+
+		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+
+		if (!isTooltipInputValueValid) {
+			tooltipInput.value = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this._lastValidStartValue : this._lastValidEndValue;
+			tooltipInput.valueState = "None";
+		}
 	}
 
 	/**
@@ -559,22 +571,20 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	_updateValueFromInput(e: Event) {
-		const ctor = this.constructor as typeof RangeSlider;
-
 		const input = e.target as HTMLInputElement;
-		const value = ctor.clipValue(parseFloat(input.value), this._effectiveMin, this._effectiveMax);
-		const isValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
+		const inputValue = parseFloat(input.value);
+		const isValueValid = inputValue >= this._effectiveMin && inputValue <= this._effectiveMax;
 
 		if (!isValueValid) {
 			return;
 		}
 
 		if (input.hasAttribute("data-sap-ui-start-value")) {
-			this.startValue = value;
+			this.startValue = inputValue;
 			return;
 		}
 
-		this.endValue = value;
+		this.endValue = inputValue;
 	}
 
 	/**
@@ -786,20 +796,32 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
-	_updateInputValues() {
+	_updateInputValue() {
 		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
 		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
 
-		if (this.editableTooltip && startValueInput && endValueInput) {
-			const isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
-			const isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
-
-			startValueInput.value = startValueInput.value ? startValueInput.value : this._lastValidStartValue;
-			endValueInput.value = endValueInput.value ? endValueInput.value : this._lastValidEndValue;
-
-			this._lastValidStartValue = (!!startValueInput.value && isStartValueValid) ? startValueInput.value : this._lastValidStartValue;
-			this._lastValidEndValue = (!!endValueInput.value && isEndValueValid) ? endValueInput.value : this._lastValidEndValue;
+		if (!startValueInput && !endValueInput) {
+			return;
 		}
+
+		const isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
+		const isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
+
+		if (!isStartValueValid) {
+			startValueInput.valueState = "Negative";
+			return;
+		}
+
+		if (!isEndValueValid) {
+			endValueInput.valueState = "Negative";
+			return;
+		}
+
+		this._lastValidStartValue = startValueInput.value;
+		this._lastValidEndValue = endValueInput.value;
+
+		startValueInput.valueState = "None";
+		endValueInput.valueState = "None";
 	}
 
 	/**

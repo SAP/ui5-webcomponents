@@ -203,15 +203,30 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
+		await slider.setProperty("value", 1);
+
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["2"]);
+		await browser.keys("Enter");
+
+		assert.strictEqual(await slider.getProperty("value"), 21, "The input value is reflected in the slider");
+	});
+
+	it("Input tooltip should change the value state to error if it is invalid", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
 		await slider.setProperty("value", 16);
 		await sliderTooltipInput.setProperty("value", "");
 
 		await sliderHandle.click();
 		await sliderTooltipInput.click();
-		await browser.keys(["1", "2"]);
+		await browser.keys(["1", "2", "3"]);
 		await browser.keys("Enter");
 
-		assert.strictEqual(await slider.getProperty("value"), 12, "The input value is reflected in the slider");
+		assert.strictEqual(await sliderTooltipInput.getProperty("valueState"), "Negative", "Value state is changed to negative when the value is invalid");
 	});
 
 	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", async () => {

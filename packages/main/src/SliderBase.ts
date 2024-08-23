@@ -197,6 +197,8 @@ abstract class SliderBase extends UI5Element {
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
+	_updateInputValue() {} // eslint-disable-line
+
 	// used in base template, but implemented in subclasses
 	abstract styles: {
 		label: object,
@@ -318,6 +320,7 @@ abstract class SliderBase extends UI5Element {
 
 		if (isEnter(e)) {
 			this._updateValueFromInput(e);
+			this._updateInputValue();
 		}
 	}
 
