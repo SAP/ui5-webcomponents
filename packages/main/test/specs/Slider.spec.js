@@ -293,7 +293,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		await browser.keys(["1", "2", "3"]);
 
 		await nextSlider.click();
-		assert.strictEqual(await sliderTooltipInput.getProperty("value"), 10, "Value is reset to the last valid one");
+		assert.strictEqual(await sliderTooltipInput.getProperty("value"), "10", "Value is reset to the last valid one");
 	});
 
 	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", async () => {
