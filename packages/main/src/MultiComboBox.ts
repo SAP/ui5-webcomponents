@@ -1283,7 +1283,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
-
 		if (matchingItem) {
 			if (matchingItem.selected) {
 				if (this._validationTimeout) {
@@ -1992,6 +1991,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	get _popupLabel() {
 		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
+	}
+
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
 	}
 
 	get classes(): ClassMap {

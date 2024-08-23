@@ -4,17 +4,7 @@ import EventProvider from "./dist/EventProvider.js";
 // ESM bundle targets browsers with native support
 import "./dist/features/OpenUI5Support.js";
 
-// Test components
-import "./test/elements/Accessor.js";
-import "./test/elements/Generic.js";
-import "./test/elements/NoShadowDOM.js";
-import "./test/elements/Parent.js";
-import "./test/elements/Child.js";
-import "./test/elements/WithComplexTemplate.js";
-import "./test/elements/GenericExt.js";
-
 // Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark themes
-import "./test/assets/Themes.js";
 
 // used in test pages
 import { renderFinished } from "./dist/Render.js";

@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** correct min-width constraint ([#9673](https://github.com/SAP/ui5-webcomponents/issues/9673)) ([08fa1b9](https://github.com/SAP/ui5-webcomponents/commit/08fa1b95879bdab853f6378ca09192c0abeb7b20))
+* **ui5-flexible-column-layout:** correct separator height ([#9698](https://github.com/SAP/ui5-webcomponents/issues/9698)) ([e4c48cf](https://github.com/SAP/ui5-webcomponents/commit/e4c48cf41432c3e5a8399f7633dc9c3955ba7260))
+
+
+
+
+
+# [2.2.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.0...v2.2.0-rc.1) (2024-08-15)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** buttons now have equal styles ([#9664](https://github.com/SAP/ui5-webcomponents/issues/9664)) ([38a446a](https://github.com/SAP/ui5-webcomponents/commit/38a446a73d68b5b9ec872cb2f377c4ffb896d3af))
+
+
+
+
+
+# [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-side-content:** retrieve correct width ([#9642](https://github.com/SAP/ui5-webcomponents/issues/9642)) ([02f55f7](https://github.com/SAP/ui5-webcomponents/commit/02f55f77bb88d3e0080c09b67294c922b59eb52a)), closes [#9462](https://github.com/SAP/ui5-webcomponents/issues/9462)
+* **ui5-page:** focused content is visible with floating footer ([#9643](https://github.com/SAP/ui5-webcomponents/issues/9643)) ([4364e03](https://github.com/SAP/ui5-webcomponents/commit/4364e03ff61bed17b9cde68d6edba96024b4bb38))
+
+
+### Features
+
+* **framework:** add `[@query](https://github.com/query)(All)` decorators ([#9567](https://github.com/SAP/ui5-webcomponents/issues/9567)) ([242024c](https://github.com/SAP/ui5-webcomponents/commit/242024c38a0703809840cd0c9ef9e38a4b2613c8)), closes [#6743](https://github.com/SAP/ui5-webcomponents/issues/6743)
+
+
+
+
+
 ## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
 
 

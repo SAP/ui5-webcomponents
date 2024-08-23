@@ -349,12 +349,38 @@ describe("Preserves column min-width", () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
+	it("complies with min-width requiremet on smallest desktop", async () => {
+		await browser.setWindowSize(1400, 1080);
+
+		const fcl = await browser.$("#fcl3"),
+			smallestDesktopWidth = 1024,
+			smallestColumnWidth = 248;
+
+		// set initial state
+		await fcl.setProperty("layout", "ThreeColumnsMidExpanded");
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "new layout set");
+
+		// set FCL width to the smallest desktop width
+		await browser.executeAsync(async (newWidth, done) => {
+			document.getElementById("fcl3").style.width = `${newWidth}px`;
+			done();
+		}, smallestDesktopWidth);
+
+		const startColumn = await fcl.shadow$(".ui5-fcl-column--start");
+		const startColumnWidth = await startColumn.getSize("width");
+		const fclWidth = await fcl.getSize("width");
+
+		// assert
+		assert.strictEqual(fclWidth, smallestDesktopWidth, "fcl is the smallest desktop width");
+		assert.strictEqual(startColumnWidth, smallestColumnWidth, "min-width is respected");
+	});
+
 	it("preserves min-width of begin column", async () => {
 		await browser.setWindowSize(1400, 1080);
 		
 		const fcl = await browser.$("#fcl3"),
 			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
-			smallestColumnWidth = 312;
+			smallestColumnWidth = 248;
 
 		// set initial state
 		await fcl.setProperty("layout", "TwoColumnsMidExpanded");
@@ -375,7 +401,7 @@ describe("Preserves column min-width", () => {
 	it("preserves min-width of mid column in 2-column layout", async () => {
 		const fcl = await browser.$("#fcl3"),
 			startSeparator = await fcl.shadow$(".ui5-fcl-separator-start"),
-			smallestColumnWidth = 312;
+			smallestColumnWidth = 248;
 
 		// set initial state
 		await fcl.setProperty("layout", "TwoColumnsStartExpanded");
@@ -396,7 +422,7 @@ describe("Preserves column min-width", () => {
 	it("preserves min-width of mid column in 3-column layout", async () => {
 		const fcl = await browser.$("#fcl3"),
 			endSeparator = await fcl.shadow$(".ui5-fcl-separator-end"),
-			smallestColumnWidth = 312;
+			smallestColumnWidth = 248;
 
 		// set initial state
 		await fcl.setProperty("layout", "ThreeColumnsMidExpanded");
@@ -417,7 +443,7 @@ describe("Preserves column min-width", () => {
 	it("preserves min-width of end column", async () => {
 		const fcl = await browser.$("#fcl3"),
 			endSeparator = await fcl.shadow$(".ui5-fcl-separator-end"),
-			smallestColumnWidth = 312;
+			smallestColumnWidth = 248;
 
 		// set initial state
 		await fcl.setProperty("layout", "ThreeColumnsMidExpanded");
@@ -439,7 +465,7 @@ describe("Preserves column min-width", () => {
 		const fcl = await browser.$("#fcl3"),
 			endSeparator = await fcl.shadow$(".ui5-fcl-separator-end"),
 			endColumn = await fcl.shadow$(".ui5-fcl-column--end"),
-			smallestColumnWidth = 312;
+			smallestColumnWidth = 248;
 
 		// set initial state
 		await fcl.setProperty("layout", "ThreeColumnsMidExpandedEndHidden");

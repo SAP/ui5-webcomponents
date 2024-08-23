@@ -49,6 +49,15 @@ describe("Attributes propagation", () => {
 
 		assert.strictEqual(await input1.getValue(), "", "Property value should be empty");
 		assert.strictEqual(await innerInput.getValue(), "", "Inner's property value should be empty");
+	
+		await input1.setProperty("value", "new value");
+		await browser.executeAsync(done => {
+			document.getElementById("input1").value = null;
+			done();
+		});
+
+		assert.strictEqual(await input1.getAttribute("value"), null, "Property value should be null");
+		assert.strictEqual(await innerInput.getAttribute("value"), null, "Value attribute should be null");
 	});
 });
 
@@ -233,6 +242,21 @@ describe("Input general interaction", () => {
 
 		// Assert
 		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called for the changed value");
+	});
+
+	it("Input event is fired when user uses arrow keys to increase/decrease numeric value", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await browser.$("#input-number3");
+		await input.scrollIntoView();
+		await input.click();
+
+		await input.keys("ArrowUp");
+		await input.keys("ArrowDown");
+
+		const inputChangeCount = await browser.$("#input-number3-change-count");
+
+		assert.strictEqual( await inputChangeCount.getProperty("value"), "2", "Input event is fired when navigating with arrow keys");
 	});
 
 	it("tests value removal when Input type is 'Number'", async () => {
