@@ -615,10 +615,24 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const headerItems = [...this._getTabStrip().querySelectorAll<HTMLElement>(`[role="tab"]:not([hidden])`)];
-		const { placement, element } = findClosestPositionByKey(headerItems, tab.getDomRefInStrip()!, e);
+		const headerItems = this.items.map(item => item.getDomRefInStrip()).filter((item): item is TabInStrip => !item?.hasAttribute("hidden"));
+		let { placement, element } = findClosestPositionByKey(headerItems, tab.getDomRefInStrip()!, e);
 
 		if (!element || !placement) {
+			return;
+		}
+
+		while (element && (element as TabInStrip).realTabReference.hasAttribute("ui5-tab-separator") && placement === MovePlacement.Before) {
+			element = element.previousElementSibling as HTMLElement;
+			placement = MovePlacement.After;
+		}
+
+		while (element && (element as TabInStrip).realTabReference.hasAttribute("ui5-tab-separator") && placement === MovePlacement.After) {
+			element = element.nextElementSibling as HTMLElement;
+			placement = MovePlacement.Before;
+		}
+
+		if (!element) {
 			return;
 		}
 
