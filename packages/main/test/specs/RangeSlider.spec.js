@@ -223,6 +223,80 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await rangeSlider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
 	});
 
+	it("F2 should switch the focus between the handle and the tooltip input", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+
+		await rangeSliderHandle.click();
+		await browser.keys("F2");
+
+		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("focused"), true, "Slider tooltip is focused on F2");
+
+		await browser.keys("F2");
+
+		const isHandleFocused = await browser.executeAsync(done => {
+			const focusedElement = document.getElementById("range-slider-tickmarks-labels").shadowRoot.activeElement;
+			const isHandleFocused = focusedElement.classList.contains("ui5-slider-handle");
+			done(isHandleFocused);
+		});
+
+		assert.strictEqual(await isHandleFocused, true, "Slider tooltip visibility property should be 'visible'");
+	});
+
+	it("Arrow up/down should not increase/decrease the value of the input", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderStartHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSliderEndHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSliderEndTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
+
+		await rangeSlider.setProperty("startValue", 1);
+		await rangeSliderStartHandle.click();
+		await rangeSliderStartTooltipInput.click();
+
+		await browser.keys("ArrowUp");
+		assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The start value is not changed on arrow up");
+		
+		await browser.keys("ArrowDown");
+		assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The start value is not changed on arrow down");
+	
+		await rangeSlider.setProperty("endValue", 10);
+		await rangeSliderEndHandle.click();
+		await rangeSliderEndTooltipInput.click();
+
+		await browser.keys("ArrowUp");
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 10, "The end value is not changed on arrow up");
+		
+		await browser.keys("ArrowDown");
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 10, "The end value is not changed on arrow down");
+	});
+
+	it("Tab on slider handle should not move the focus to the tooltip input", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderEndTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
+
+		assert.strictEqual(await rangeSliderStartTooltipInput.getAttribute("tabindex"), "-1", "The tooltip input is not tabbable");
+		assert.strictEqual(await rangeSliderEndTooltipInput.getAttribute("tabindex"), "-1", "The tooltip input is not tabbable");
+	});
+
+	it("Focus out with invalid value should reset it", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const nextSlider = await browser.$("#test-slider");
+
+		await rangeSlider.setProperty("startValue", 2);
+		await rangeSliderStartHandle.click();
+		await rangeSliderStartTooltipInput.click();
+		await browser.keys(["2", "3"]);
+
+		await nextSlider.click();
+		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("value"), "2", "Value is reset to the last valid one");
+	});
+
 	it("Range Slider tooltips should become visible when range slider is focused", async () => {
 		await browser.url(`test/pages/RangeSlider.html`);
 

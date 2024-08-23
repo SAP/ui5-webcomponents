@@ -229,6 +229,73 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await sliderTooltipInput.getProperty("valueState"), "Negative", "Value state is changed to negative when the value is invalid");
 	});
 
+	it("F2 should switch the focus between the handle and the tooltip input", async () => {
+		await browser.url(`test/pages/Slider.html`);
+
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
+		await sliderHandle.click();
+		await browser.keys("F2");
+
+		assert.strictEqual(await sliderTooltipInput.getProperty("focused"), true, "The focus is on the input");
+
+		await browser.keys("F2");
+
+		const isHandleFocused = await browser.executeAsync(done => {
+			const focusedElement = document.getElementById("slider-tickmarks-labels").shadowRoot.activeElement;
+			const isHandleFocused = focusedElement.classList.contains("ui5-slider-handle");
+			done(isHandleFocused);
+		});
+
+		assert.strictEqual(isHandleFocused, true, "The focus is on the handle");
+	});
+
+	it("Arrow up/down should not increase/decrease the value of the input", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
+		await slider.setProperty("value", 1);
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+
+		await browser.keys("ArrowUp");
+
+		assert.strictEqual(await slider.getProperty("value"), 1, "The value is not changed on arrow up");
+		
+		await browser.keys("ArrowDown");
+
+		assert.strictEqual(await slider.getProperty("value"), 1, "The value is not changed on arrow down");
+	});
+
+	it("Tab on slider handle should not move the focus to the tooltip input", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const nextSlider = await browser.$("#slider-tickmarks-tooltips-labels");
+
+		await sliderHandle.click();
+		await browser.keys("Tab");
+
+		assert.strictEqual(await nextSlider.isFocused(), true, "The next component is focused and not the tooltip input");
+	});
+
+	it("Focus out with invalid value should reset it", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const nextSlider = await browser.$("#slider-tickmarks-tooltips-labels");
+
+		await slider.setProperty("value", 10);
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["1", "2", "3"]);
+
+		await nextSlider.click();
+		assert.strictEqual(await sliderTooltipInput.getProperty("value"), 10, "Value is reset to the last valid one");
+	});
+
 	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", async () => {
 		const slider = await browser.$("#basic-slider-with-tooltip");
 		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
