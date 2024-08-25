@@ -311,6 +311,7 @@ abstract class SliderBase extends UI5Element {
 			this._handleActionKeyPress(e);
 		}
 	}
+
 	_onInputKeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 
@@ -319,12 +320,12 @@ abstract class SliderBase extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this._updateValueFromInput(e);
 			this._updateInputValue();
+			this._updateValueFromInput(e);
 		}
 	}
 
-	_onkeyup() {
+	_onkeyup(e: KeyboardEvent) {
 		if (this.disabled) {
 			return;
 		}
