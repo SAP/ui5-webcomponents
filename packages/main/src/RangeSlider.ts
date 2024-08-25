@@ -120,6 +120,12 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	@property({ type: Boolean })
 	rangePressed = false;
 
+	@property({ type: Boolean })
+	_isStartValueValid = false;
+
+	@property({ type: Boolean })
+	_isEndValueValid = false;
+
 	_startValueInitial?: number;
 	_endValueInitial?: number;
 	_valueAffected?: AffectedValue;
@@ -850,15 +856,15 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			return;
 		}
 
-		const isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
-		const isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
+		this._isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
+		this._isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
 
-		if (!isStartValueValid) {
+		if (!this._isStartValueValid) {
 			startValueInput.valueState = "Negative";
 			return;
 		}
 
-		if (!isEndValueValid) {
+		if (!this._isEndValueValid) {
 			endValueInput.valueState = "Negative";
 			return;
 		}

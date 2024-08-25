@@ -758,18 +758,6 @@ abstract class SliderBase extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get _ariaLabelledByHandleRefs() {
-		return ["ui5-slider-accName", "ui5-sliderDesc"].join(" ").trim();
-	}
-
-	get _ariaDescribedByHandleRefs() {
-		return ["ui5-slider-accName", `ui5-slider-sliderInputDesc`].join(" ").trim();
-	}
-
-	get _ariaLabelledByInputRefs() {
-		return ["ui5-slider-accName", "ui5-slider-InputLabel"].join(" ").trim();
-	}
-
 	get _ariaDescribedByInputText() {
 		return "";
 	}

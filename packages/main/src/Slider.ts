@@ -90,6 +90,9 @@ class Slider extends SliderBase implements IFormInputElement {
 	@property({ type: Number })
 	value = 0;
 
+	@property({ type: Boolean })
+	_isInputValueValid = false;
+
 	_valueInitial?: number;
 	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
@@ -265,9 +268,9 @@ class Slider extends SliderBase implements IFormInputElement {
 	_updateValueFromInput(e: Event) {
 		const input = e.target as HTMLInputElement;
 		const value = parseFloat(input.value);
-		const isValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
+		this._isInputValueValid  = value >= this._effectiveMin && value <= this._effectiveMax;
 
-		if (!isValueValid) {
+		if (!this._isInputValueValid) {
 			return;
 		}
 
@@ -281,9 +284,9 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._updateValueFromInput(e);
 		this._updateInputValue();
 
-		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+		this._isInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
 
-		if (!isTooltipInputValueValid) {
+		if (!this._isInputValueValid ) {
 			tooltipInput.value = this._lastValidInputValue;
 			tooltipInput.valueState = "None";
 		}
@@ -296,9 +299,9 @@ class Slider extends SliderBase implements IFormInputElement {
 			return;
 		}
 
-		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
+		this._isInputValueValid  = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
 
-		if (!isTooltipInputValueValid) {
+		if (!this._isInputValueValid) {
 			tooltipInput.valueState = "Negative";
 			return;
 		}
