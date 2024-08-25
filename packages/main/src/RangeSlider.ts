@@ -117,12 +117,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	@property({ type: Number })
 	endValue = 100;
 
-	@property({ type: Number })
-	_inputStartValue = 0;
-
-	@property({ type: Number })
-	_inputEndValue = 100;
-
 	@property({ type: Boolean })
 	rangePressed = false;
 
@@ -141,7 +135,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_reversedValues = false;
 	_lastValidStartValue: string;
 	_lastValidEndValue: string;
-	_inputValueUpdated = false;
+	_areInputValuesSwapped = false;
 
 	static i18nBundle: I18nBundle;
 
@@ -311,8 +305,20 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = e.target as Input;
+		const otherInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
+	
+		if (this.startValue > this.endValue) {
+			this._areInputValuesSwapped = true;
+			otherInput.focus();
+		}
 
-		if (!this._inputValueUpdated) {		
+		if (tooltipInput.hasAttribute("data-sap-ui-start-value")) {
+			this._setAffectedValue("startValue");
+		} else {
+			this._setAffectedValue("endValue");
+		}
+
+		if (!this._areInputValuesSwapped) {		
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 
@@ -326,11 +332,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			tooltipInput.valueState = "None";
 		}
 
-		if (tooltipInput.hasAttribute("data-sap-ui-start-value")) {
-				this._setAffectedValue("startValue");
-		}
-
-		this._setAffectedValue("endValue");
+		this.update(this._valueAffected, parseFloat(this._lastValidStartValue), parseFloat(this._lastValidEndValue));
 	}
 
 	/**
@@ -345,7 +347,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		if (!isEnter(e)) {
 			this._setAffectedValue(undefined);
 		} else {
-			this._inputValueUpdated = false;
+			this._areInputValuesSwapped = false;
 		}
 
 
@@ -591,7 +593,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	_updateValueFromInput(e: Event) {
-		if (this._inputValueUpdated) {
+		if (this._areInputValuesSwapped) {
 			return;
 		}
 
@@ -611,7 +613,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this.endValue = inputValue;
 
 		if (this.startValue > this.endValue) {
-			this._inputValueUpdated = true;
+			this._areInputValuesSwapped = true;
 		}
 	}
 
@@ -831,11 +833,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		const affectedValue = input.hasAttribute("data-sap-ui-start-value") ? "startValue" : "endValue";
 		const otherInput: Input = input.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
 
-		if (isEnter(e)) {
-			this._setAffectedValue(affectedValue);
-			
+		if (isEnter(e)) {			
 			if (this.startValue > this.endValue) {
-				this._inputValueUpdated = true;
+				this._areInputValuesSwapped = true;
+				this._setAffectedValue(affectedValue);
 				otherInput.focus();
 			}
 		}
@@ -848,9 +849,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		if (!startValueInput && !endValueInput) {
 			return;
 		}
-
-		this._inputStartValue = parseFloat(startValueInput.value);
-		this._inputEndValue = parseFloat(endValueInput.value);
 
 		const isStartValueValid = parseFloat(startValueInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
 		const isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
@@ -907,7 +905,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._setValuesAreReversed();
 		this._updateHandlesAndRange(this[affectedValue]);
 
-		if (!this._inputValueUpdated) {
+		if (!this._areInputValuesSwapped) {
 			this.focusInnerElement();
 		}
 		
