@@ -25,7 +25,6 @@ import {
 
 // Styles
 import rangeSliderStyles from "./generated/themes/RangeSlider.css.js";
-import Slider from "./Slider.js";
 
 type AriaHandlesText = {
 	startHandleText?: string,
@@ -217,6 +216,15 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
+		const isStartValueValid = this.startValue >= this.min && this.startValue <= this.max;
+		const isEndValueValid = this.endValue >= this.min && this.endValue <= this.max;
+
+		this._lastValidStartValue = isStartValueValid ? this.startValue.toString() : this._lastValidStartValue;
+		this._lastValidEndValue = isEndValueValid ? this.endValue.toString() : this._lastValidEndValue;
+
+		this.startValue = isStartValueValid ? this.startValue : parseFloat(this._lastValidStartValue);
+		this.endValue = isEndValueValid ? this.endValue : parseFloat(this._lastValidEndValue);
+
 		if (this.startValue > this.endValue) {
 			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
 
@@ -312,7 +320,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = e.target as Input;
 		const otherInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
-	
+		const relatedTarget = e.relatedTarget as HTMLElement;
+
 		if (this.startValue > this.endValue) {
 			this._areInputValuesSwapped = true;
 			otherInput.focus();
@@ -324,12 +333,13 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			this._setAffectedValue("endValue");
 		}
 
-		if (!this._areInputValuesSwapped) {		
+		if (!this._areInputValuesSwapped || !this.shadowRoot!.contains(relatedTarget)) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 
 		this._updateValueFromInput(e);
 		this._updateInputValue();
+		this.update(this._valueAffected, parseFloat(this._lastValidStartValue), parseFloat(this._lastValidEndValue));
 
 		const isTooltipInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
 
@@ -337,8 +347,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			tooltipInput.value = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this._lastValidStartValue : this._lastValidEndValue;
 			tooltipInput.valueState = "None";
 		}
-
-		this.update(this._valueAffected, parseFloat(this._lastValidStartValue), parseFloat(this._lastValidEndValue));
 	}
 
 	/**
@@ -347,6 +355,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	* user interaction.
 	* @private
 	*/
+
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
@@ -355,7 +364,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		} else {
 			this._areInputValuesSwapped = false;
 		}
-
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
 			this.fireEvent("change");
@@ -717,6 +725,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @protected
 	 */
 	focusInnerElement() {
+		if (this.editableTooltip && this._tooltipVisibility === SliderBase.TOOLTIP_VISIBILITY.HIDDEN) {
+			return;
+		}
+
 		const isReversed = this._areValuesReversed();
 		const affectedValue = this._valueAffected;
 
@@ -839,7 +851,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		const affectedValue = input.hasAttribute("data-sap-ui-start-value") ? "startValue" : "endValue";
 		const otherInput: Input = input.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
 
-		if (isEnter(e)) {			
+		if (isEnter(e)) {
 			if (this.startValue > this.endValue) {
 				this._areInputValuesSwapped = true;
 				this._setAffectedValue(affectedValue);
@@ -914,7 +926,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		if (!this._areInputValuesSwapped) {
 			this.focusInnerElement();
 		}
-		
+
 		this.syncUIAndState();
 	}
 

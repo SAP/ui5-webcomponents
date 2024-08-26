@@ -325,7 +325,7 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent) {
+	_onkeyup(e: KeyboardEvent) { // eslint-disable-line
 		if (this.disabled) {
 			return;
 		}
