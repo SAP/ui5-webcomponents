@@ -94,15 +94,6 @@ const customResolver = (id, source, options) => {
 		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
 		return resolved;
 	}
-
-	if (source.includes("cypress") && id.startsWith("@ui5/webcomponents-base/")) {
-		const importerRoot = source.replace(/packages\/.*/, "packages");
-		const resolved = join(importerRoot, "base/src", id.replace("@ui5/webcomponents-base/dist/", "")).replace(".js", ".ts");
-
-		return resolved;
-	}
-
-
 }
 
 module.exports = defineConfig(async () => {
