@@ -893,10 +893,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 			const isStartValueValid = inputStartValue >= this.min && inputStartValue <= this.max;
 			const isEndValueValid = inputEndValue >= this.min && inputEndValue <= this.max;
-	
+
 			this._lastValidStartValue = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
 			this._lastValidEndValue = isEndValueValid ? inputStartValue.toString() : this._lastValidEndValue;
-	
+
 			startValueInput.value = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
 			endValueInput.value = isEndValueValid ? inputEndValue.toString() : this._lastValidEndValue;
 		}
