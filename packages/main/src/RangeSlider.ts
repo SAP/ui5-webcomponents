@@ -216,14 +216,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
-		const isStartValueValid = this.startValue >= this.min && this.startValue <= this.max;
-		const isEndValueValid = this.endValue >= this.min && this.endValue <= this.max;
-
-		this._lastValidStartValue = isStartValueValid ? this.startValue.toString() : this._lastValidStartValue;
-		this._lastValidEndValue = isEndValueValid ? this.endValue.toString() : this._lastValidEndValue;
-
-		this.startValue = isStartValueValid ? this.startValue : parseFloat(this._lastValidStartValue);
-		this.endValue = isEndValueValid ? this.endValue : parseFloat(this._lastValidEndValue);
+		this._saveInputValues();
 
 		if (this.startValue > this.endValue) {
 			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
@@ -355,7 +348,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	* user interaction.
 	* @private
 	*/
-
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
@@ -889,6 +881,25 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 		this.storePropertyState("_inputStartValue");
 		this.storePropertyState("_inputEndValue");
+	}
+
+	_saveInputValues() {
+		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
+
+		if (this.editableTooltip && startValueInput && endValueInput) {
+			const inputStartValue = parseFloat(startValueInput.value);
+			const inputEndValue = parseFloat(endValueInput.value);
+
+			const isStartValueValid = inputStartValue >= this.min && inputStartValue <= this.max;
+			const isEndValueValid = inputEndValue >= this.min && inputEndValue <= this.max;
+	
+			this._lastValidStartValue = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
+			this._lastValidEndValue = isEndValueValid ? inputStartValue.toString() : this._lastValidEndValue;
+	
+			startValueInput.value = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
+			endValueInput.value = isEndValueValid ? inputEndValue.toString() : this._lastValidEndValue;
+		}
 	}
 
 	/**
