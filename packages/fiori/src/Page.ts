@@ -47,7 +47,7 @@ import PageCss from "./generated/themes/Page.css.js";
 	languageAware: true,
 	renderer: litRender,
 	get styles() {
-		let styles = [
+		const styles = [
 			browserScrollbarCSS,
 			PageCss,
 		];

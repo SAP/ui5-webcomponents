@@ -188,7 +188,7 @@ type StepInfo = {
 	fastNavigation: true,
 	renderer: litRender,
 	get styles() {
-		let styles = [
+		const styles = [
 			WizardCss,
 			WizardPopoverCss,
 		];

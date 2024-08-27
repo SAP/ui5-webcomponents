@@ -82,7 +82,7 @@ type CalculatedPlacement = {
 @customElement({
 	tag: "ui5-popover",
 	get styles() {
-		let styles = [
+		const styles = [
 			Popup.styles,
 			PopupsCommonCss,
 			PopoverCss,

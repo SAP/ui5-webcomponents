@@ -164,7 +164,7 @@ type ListItemClickEventDetail = {
 	renderer: litRender,
 	template: ListTemplate,
 	get styles() {
-		let styles = [listCss];
+		const styles = [listCss];
 
 		if (!getEffectiveScrollbarStyle()) {
 			styles.push(browserScrollbarCSS);

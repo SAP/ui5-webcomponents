@@ -77,9 +77,9 @@ type ExceededText = {
 	formAssociated: true,
 	languageAware: true,
 	get styles() {
-		let styles = [
+		const styles = [
 			textareaStyles,
-			valueStateMessageStyles
+			valueStateMessageStyles,
 		];
 
 		if (!getEffectiveScrollbarStyle()) {

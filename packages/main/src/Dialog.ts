@@ -110,7 +110,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	get styles() {
-		let styles = [
+		const styles = [
 			Popup.styles,
 			PopupsCommonCss,
 			dialogCSS,
