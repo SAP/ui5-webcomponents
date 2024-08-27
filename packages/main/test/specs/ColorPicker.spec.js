@@ -89,10 +89,12 @@ describe("Color Picker general interaction", () => {
 		await colorPicker.scrollIntoView();
 		await colorPicker.setAttribute("value", "rgba(182, 67, 67, 1)");
 
+		await hueSliderHandle.click();
 		await hueSliderHandle.dragAndDrop({ x: 100, y: 0 });
-		await alphaSliderHandle.dragAndDrop({ x: 100, y: 0 });
+		await alphaSliderHandle.click();
+		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 67, 68, 1)", "Alpha value propely changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 67, 169, 0.83)", "Alpha value propely changed without chaning the hue value");
 	});
 
 	it("tests color property", async () => {
