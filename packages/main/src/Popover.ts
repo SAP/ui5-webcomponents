@@ -6,6 +6,7 @@ import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 
@@ -80,12 +81,18 @@ type CalculatedPlacement = {
  */
 @customElement({
 	tag: "ui5-popover",
-	styles: [
-		Popup.styles,
-		browserScrollbarCSS,
-		PopupsCommonCss,
-		PopoverCss,
-	],
+	get styles() {
+		let styles = [
+			Popup.styles,
+			PopupsCommonCss,
+			PopoverCss,
+		];
+
+		if (!getEffectiveScrollbarStyle()) {
+			styles.push(browserScrollbarCSS);
+		}
+		return styles;
+	},
 	template: PopoverTemplate,
 })
 class Popover extends Popup {

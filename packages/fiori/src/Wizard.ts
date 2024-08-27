@@ -187,11 +187,17 @@ type StepInfo = {
 	languageAware: true,
 	fastNavigation: true,
 	renderer: litRender,
-	styles: [
-		browserScrollbarCSS,
-		WizardCss,
-		WizardPopoverCss,
-	],
+	get styles() {
+		let styles = [
+			WizardCss,
+			WizardPopoverCss,
+		];
+
+		if (!getEffectiveScrollbarStyle()) {
+			styles.push(browserScrollbarCSS);
+		}
+		return styles;
+	},
 	template: WizardTemplate,
 	dependencies: [
 		WizardTab,
@@ -343,7 +349,6 @@ class Wizard extends UI5Element {
 		return {
 			root: {
 				"ui5-wiz-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			popover: {
 				"ui5-wizard-responsive-popover": true,

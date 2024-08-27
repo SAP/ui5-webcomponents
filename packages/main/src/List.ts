@@ -163,7 +163,14 @@ type ListItemClickEventDetail = {
 	fastNavigation: true,
 	renderer: litRender,
 	template: ListTemplate,
-	styles: [browserScrollbarCSS, listCss],
+	get styles() {
+		let styles = [listCss];
+
+		if (!getEffectiveScrollbarStyle()) {
+			styles.push(browserScrollbarCSS);
+		}
+		return styles;
+	},
 	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
@@ -723,7 +730,6 @@ class List extends UI5Element {
 		return {
 			root: {
 				"ui5-list-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
 	}
