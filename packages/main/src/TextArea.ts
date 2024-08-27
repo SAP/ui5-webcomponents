@@ -40,7 +40,6 @@ import {
 // Styles
 import textareaStyles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 type TokenizedText = Array<string>;
 type IndexedTokenizedText = Array<{
@@ -76,17 +75,11 @@ type ExceededText = {
 	tag: "ui5-textarea",
 	formAssociated: true,
 	languageAware: true,
-	get styles() {
-		const styles = [
-			textareaStyles,
-			valueStateMessageStyles,
-		];
-
-		if (!getEffectiveScrollbarStyle()) {
-			styles.push(browserScrollbarCSS);
-		}
-		return styles;
-	},
+	styles: [
+		textareaStyles,
+		valueStateMessageStyles,
+		getEffectiveScrollbarStyle(),
+	],
 	renderer: litRender,
 	template: TextAreaTemplate,
 	dependencies: [Popover, Icon],

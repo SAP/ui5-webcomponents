@@ -21,7 +21,6 @@ import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegi
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
@@ -81,18 +80,12 @@ type CalculatedPlacement = {
  */
 @customElement({
 	tag: "ui5-popover",
-	get styles() {
-		const styles = [
-			Popup.styles,
-			PopupsCommonCss,
-			PopoverCss,
-		];
-
-		if (!getEffectiveScrollbarStyle()) {
-			styles.push(browserScrollbarCSS);
-		}
-		return styles;
-	},
+	styles: [
+		Popup.styles,
+		PopupsCommonCss,
+		PopoverCss,
+		getEffectiveScrollbarStyle(),
+	],
 	template: PopoverTemplate,
 })
 class Popover extends Popup {

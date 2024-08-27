@@ -4,7 +4,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -46,17 +45,10 @@ import PageCss from "./generated/themes/Page.css.js";
 	tag: "ui5-page",
 	languageAware: true,
 	renderer: litRender,
-	get styles() {
-		const styles = [
-			browserScrollbarCSS,
-			PageCss,
-		];
-
-		if (!getEffectiveScrollbarStyle()) {
-			styles.push(browserScrollbarCSS);
-		}
-		return styles;
-	},
+	styles: [
+		PageCss,
+		getEffectiveScrollbarStyle(),
+	],
 	template: PageTemplate,
 })
 class Page extends UI5Element {

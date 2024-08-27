@@ -47,7 +47,6 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -163,14 +162,10 @@ type ListItemClickEventDetail = {
 	fastNavigation: true,
 	renderer: litRender,
 	template: ListTemplate,
-	get styles() {
-		const styles = [listCss];
-
-		if (!getEffectiveScrollbarStyle()) {
-			styles.push(browserScrollbarCSS);
-		}
-		return styles;
-	},
+	styles: [
+		listCss,
+		getEffectiveScrollbarStyle(),
+	],
 	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**

@@ -29,7 +29,6 @@ import {
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -109,18 +108,12 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 @customElement({
 	tag: "ui5-dialog",
 	template: DialogTemplate,
-	get styles() {
-		const styles = [
-			Popup.styles,
-			PopupsCommonCss,
-			dialogCSS,
-		];
-
-		if (!getEffectiveScrollbarStyle()) {
-			styles.push(browserScrollbarCSS);
-		}
-		return styles;
-	},
+	styles: [
+		Popup.styles,
+		PopupsCommonCss,
+		dialogCSS,
+		getEffectiveScrollbarStyle(),
+	],
 	dependencies: [
 		Icon,
 		...Popup.dependencies,
