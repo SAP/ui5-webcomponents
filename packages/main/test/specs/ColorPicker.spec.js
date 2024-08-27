@@ -87,7 +87,7 @@ describe("Color Picker general interaction", () => {
 		const hueSliderHandle = await colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
 
 		await colorPicker.scrollIntoView();
-		await colorPicker.setAttribute("value", "rgba(182, 67, 67, 0)");
+		await colorPicker.setAttribute("value", "rgba(182, 67, 67, 1)");
 
 		await hueSliderHandle.dragAndDrop({ x: 100, y: 0 });
 		await alphaSliderHandle.dragAndDrop({ x: 100, y: 0 });
