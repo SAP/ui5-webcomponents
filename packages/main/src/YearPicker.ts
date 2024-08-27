@@ -43,6 +43,7 @@ type Year = {
 	year: string;
 	yearInSecType: string | undefined;
 	disabled: boolean;
+	ariaDisabled: string | undefined;
 	classes: string;
 }
 
@@ -176,6 +177,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
+				ariaDisabled: isDisabled ? "true" : undefined,
 				classes: "ui5-yp-item",
 			};
 
