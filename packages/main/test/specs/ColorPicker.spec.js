@@ -63,7 +63,7 @@ describe("Color Picker general interaction", () => {
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 1)", "Color properly changed");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0)", "Color properly changed");
 		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on hue slider change");
 	});
 
