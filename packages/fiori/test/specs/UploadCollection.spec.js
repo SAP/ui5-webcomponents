@@ -96,6 +96,7 @@ describe("UploadCollection", () => {
 			await select.click(); // open select
 			await select.keys("m"); // for "Multiple"
 			await browser.keys("Enter");
+			await browser.pause(1000) // wait for typed chars timeout in ui5-select
 
 			const firstItem = await browser.$("#firstItem");
 
@@ -112,7 +113,6 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await select.keys("n"); // always start from "None"
 			await select.keys("ArrowDown"); // for "Single"
 			await select.keys("ArrowDown"); // for "SingleStart"
 			await browser.keys("Enter");
