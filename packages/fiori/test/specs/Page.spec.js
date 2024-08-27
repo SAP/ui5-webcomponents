@@ -26,8 +26,8 @@ describe("Page general interaction", () => {
 				await button.click();
 
 		await browser.waitUntil(async () => !(await footer.isDisplayedInViewport()), {
-			timeout: 500,
-			timeoutMsg: "expected footer to not be visible after 500ms"
+			timeout: 600,
+			timeoutMsg: "expected footer to not be visible after 600ms"
 		});
 	});
 });

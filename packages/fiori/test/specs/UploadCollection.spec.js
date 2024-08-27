@@ -112,6 +112,7 @@ describe("UploadCollection", () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
+			await select.keys("n"); // always start from "None"
 			await select.keys("ArrowDown"); // for "Single"
 			await select.keys("ArrowDown"); // for "SingleStart"
 			await browser.keys("Enter");
