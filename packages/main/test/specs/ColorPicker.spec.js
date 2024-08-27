@@ -59,7 +59,7 @@ describe("Color Picker general interaction", () => {
 
 		await stepInput.setAttribute("value", 0);
 		await colorPicker.scrollIntoView();
-		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 1)");
+		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 0)");
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
