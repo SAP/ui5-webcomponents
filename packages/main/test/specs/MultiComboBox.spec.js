@@ -541,6 +541,34 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 0, "Long token should be deleted" );
 		});
 
+		it("tests if clicking delete icon of a token removes it from the selection (mcb with grouping)", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-grouping");
+			const inner = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await inner.click();
+
+			await inner.keys("a");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			await firstItem.click();
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 1, "Token should be added");
+
+			const token = await mcb.shadow$("ui5-tokenizer ui5-token");
+			const deleteIcon = await token.shadow$(".ui5-token--icon");
+
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 0, "Token should be deleted");
+		});
+
 		it("prevents selection change event when clicking an item", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
@@ -1601,6 +1629,22 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
+
+		it("Should not fire submit event when confirming selection", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const cb = await browser.$("#mcb-form");
+
+			await cb.shadow$("input").click();
+			await cb.shadow$("input").keys("A");
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "0", "submit event is not fired");
+
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "1", "submit event is now fired");
+		});
 	});
 
 	describe("MultiComboBox Truncated Token", () => {
@@ -1748,6 +1792,16 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
+		});
+
+		it("Should apply aria-controls pointing to the responsive popover", async () => {
+			const mcb = await browser.$("#mcb-predefined-value");
+			const innerInput = await mcb.shadow$("input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+
+			await mcb.scrollIntoView();
+
+			assert.strictEqual(await innerInput.getAttribute("aria-controls"), await popover.getAttribute("id"), "aria-controls attribute is correct.");
 		});
 
 		it("Should render aria-haspopup attribute with value 'dialog'", async () => {

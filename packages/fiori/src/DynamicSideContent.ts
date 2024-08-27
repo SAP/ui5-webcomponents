@@ -367,7 +367,7 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get containerWidth() {
-		return (this.parentElement as HTMLElement).clientWidth;
+		return (this.parentElement as HTMLElement).getBoundingClientRect().width;
 	}
 
 	get breakpoint() {

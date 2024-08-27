@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
+
+
+### Features
+
+* **ui5-file-uploader:** add maxFileSize property ([#9622](https://github.com/SAP/ui5-webcomponents/issues/9622)) ([4624f87](https://github.com/SAP/ui5-webcomponents/commit/4624f87fd776bcb92cebd0506d79d0e74fafdb1c)), closes [#9187](https://github.com/SAP/ui5-webcomponents/issues/9187)
+
+
+
+
+
+# [2.2.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.0...v2.2.0-rc.1) (2024-08-15)
+
+
+### Bug Fixes
+
+* **ui5-special-date:** add visual representation for Working/NonWorking types ([#9524](https://github.com/SAP/ui5-webcomponents/issues/9524)) ([296373d](https://github.com/SAP/ui5-webcomponents/commit/296373d7fdbaf4f7c948b26d4642b22010f0af20))
+
+
+
+
+
+# [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** correct scrolling behavior ([#9632](https://github.com/SAP/ui5-webcomponents/issues/9632)) ([aa5f9e9](https://github.com/SAP/ui5-webcomponents/commit/aa5f9e94adc887e2d7fd9f10f044fa870eeeea39))
+
+
+### Features
+
+* **ui5-text:** add "emptyIndicatorMode" property and update samples ([#9578](https://github.com/SAP/ui5-webcomponents/issues/9578)) ([cb218f0](https://github.com/SAP/ui5-webcomponents/commit/cb218f02be50b378f3ebffd91fb36061c5c4c3a9))
+
+
+
+
+
+## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** add missing icon dependency ([#9618](https://github.com/SAP/ui5-webcomponents/issues/9618)) ([2691670](https://github.com/SAP/ui5-webcomponents/commit/269167087c69f31cdce96f9c04464de40bc5054b)), closes [#9580](https://github.com/SAP/ui5-webcomponents/issues/9580) [#9534](https://github.com/SAP/ui5-webcomponents/issues/9534)
+
+
+### Features
+
+* **ui5-timeline-group-item:** introduce new component ([#9407](https://github.com/SAP/ui5-webcomponents/issues/9407)) ([aea62ef](https://github.com/SAP/ui5-webcomponents/commit/aea62ef38b55107f7dfd63c468bc1936d426ae42))
+
+
+
+
+
 # [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
 
 **Note:** Version bump only for package @ui5/webcomponents-website

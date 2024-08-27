@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
-import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -29,9 +28,10 @@ import {
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import CalendarUtils from "@ui5/webcomponents-localization/dist/CalendarUtils.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
 import type {
@@ -261,7 +261,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel,
 				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isOtherMonth ? "true" : undefined,
+				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
 				disabled: isDisabled,
 				type: specialDayType,
 				parts: "day-cell",
@@ -278,7 +278,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			if (isSelectedBetween) {
 				day.classes += " ui5-dp-item--selected-between";
-
 				day.parts += " day-cell-selected-between";
 			}
 
@@ -290,8 +289,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				day.classes += " ui5-dp-item--othermonth";
 			}
 
-			if (isWeekend) {
-				day.classes += " ui5-dp-item--weeekend";
+			if ((isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working") {
+				day.classes += " ui5-dp-item--weekend";
 			}
 
 			if (isDisabled) {
@@ -305,8 +304,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			week.push(day);
 
 			if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
+				const weekNumber = this._calculateWeekNumber(tempDate.toLocalJSDate());
+
 				week.unshift({
-					weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType as CalendarType),
+					weekNum: weekNumber,
 					isHidden: this.shouldHideWeekNumbers,
 				});
 			}
@@ -321,6 +322,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				tempSecondDate.setDate(tempSecondDate.getDate() + 1);
 			}
 		}
+	}
+
+	_calculateWeekNumber(date: Date): number {
+		const oDateFormat = DateFormat.getDateInstance({ pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering });
+		const weekNumber = oDateFormat.format(date);
+
+		return Number(weekNumber);
 	}
 
 	/**
@@ -801,9 +809,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_getFirstDayOfWeek(): number {
+		const result = CalendarUtils.getWeekConfigurationValues(this.calendarWeekNumbering);
+
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		const confFirstDayOfWeek = getFirstDayOfWeek();
-		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek! : localeData.getFirstDayOfWeek();
+		return result?.firstDayOfWeek ? result.firstDayOfWeek : localeData.getFirstDayOfWeek();
 	}
 
 	get styles() {

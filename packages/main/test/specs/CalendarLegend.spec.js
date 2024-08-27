@@ -56,7 +56,7 @@ describe("Calendar Legend with standard items", () => {
 		const dayPicker = await calendar.$("#ui5wc_22-daypicker");
 		const filteredDays = await dayPicker.shadow$$("[special-day]");
 
-		assert.strictEqual(filteredDays.length, 1, "Only one day is filtered");
+		assert.strictEqual(filteredDays.length, 12, "Only one day is filtered");
 	});
 
 	it("Focusing item in the legend and then focus out, reset filtered days", async () => {
@@ -73,13 +73,13 @@ describe("Calendar Legend with standard items", () => {
 		const dayPicker = await calendar.$("#ui5wc_22-daypicker");
 		let filteredDays = await dayPicker.shadow$$("[special-day]");
 
-		assert.strictEqual(filteredDays.length, 1, "Days are filtered");
+		assert.strictEqual(filteredDays.length, 12, "Days are filtered");
 
 		await calendar.click();
 
 		// get the items again
 		filteredDays = await dayPicker.shadow$$("[special-day]");
 
-		assert.strictEqual(filteredDays.length, 20, "Days are un-filtered")
+		assert.strictEqual(filteredDays.length, 31, "Days are un-filtered")
 	});
 })

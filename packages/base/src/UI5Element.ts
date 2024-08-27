@@ -35,7 +35,7 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 
@@ -158,7 +158,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	_internals?: ElementInternals;
+	_internals: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -203,6 +203,7 @@ abstract class UI5Element extends HTMLElement {
 				this.initializedProperties.set(propertyName, value);
 			}
 		});
+		this._internals = this.attachInternals();
 
 		this._initShadowRoot();
 	}
@@ -613,7 +614,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		attachFormElementInternals(this);
+		updateFormValue(this);
 	}
 
 	static get formAssociated() {
@@ -645,16 +646,20 @@ abstract class UI5Element extends HTMLElement {
 				// eslint-disable-next-line
 				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
 			}
+			if (typeof newValue === "string" && propData.type && propData.type !== String) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] string value for property [${name}] of component [${tag}] which has a non-string type [${propData.type}] in its property decorator. Attribute conversion will stop and keep the string value in the property.`);
+			}
 		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
+		this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 		if (newAttrValue === null || newAttrValue === undefined) { // null means there must be no attribute for the current value of the property
-			this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
-			this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 		} else {
-			this.setAttribute(attrName, newAttrValue);
+			this.setAttribute(attrName, newAttrValue); // setting attributes from properties should not trigger the property setter again
 		}
+		this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 	}
 
 	/**
@@ -794,17 +799,20 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		this.onBeforeRendering();
-		if (!this._rendered) {
-			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
-			this.updateAttributes();
+		try	{
+			this.onBeforeRendering();
+
+			if (!this._rendered) {
+				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				this.updateAttributes();
+			}
+
+			// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+			this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
+		} finally {
+			// always resume normal invalidation handling
+			this._suppressInvalidation = false;
 		}
-
-		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
-
-		// resume normal invalidation handling
-		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
 		/*
@@ -1266,10 +1274,10 @@ abstract class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	get validity() { return this._internals?.validity; }
-	get validationMessage() { return this._internals?.validationMessage; }
-	checkValidity() { return this._internals?.checkValidity(); }
-	reportValidity() { return this._internals?.reportValidity(); }
+	get validity() { return this._internals.validity; }
+	get validationMessage() { return this._internals.validationMessage; }
+	checkValidity() { return this._internals.checkValidity(); }
+	reportValidity() { return this._internals.reportValidity(); }
 }
 
 /**
