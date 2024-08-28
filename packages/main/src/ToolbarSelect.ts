@@ -13,9 +13,9 @@ import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSe
 import ToolbarItem from "./ToolbarItem.js";
 import Select from "./Select.js";
 import Option from "./Option.js";
+import MenuItem from "./MenuItem.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
-import type { MenuItemClickEventDetail } from "./Menu.js";
 
 type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
@@ -38,7 +38,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @customElement({
 	tag: "ui5-toolbar-select",
-	dependencies: [Select, Option],
+	dependencies: [Select, Option, MenuItem],
 })
 
 /**
@@ -139,7 +139,6 @@ class ToolbarSelect extends ToolbarItem {
 
 		map.set("click", { preventClosing: true });
 		map.set("ui5-change", { preventClosing: false });
-		map.set("ui5-item-click", { preventClosing: false }); // change from the overflow popover
 		map.set("ui5-open", { preventClosing: true });
 		map.set("ui5-close", { preventClosing: true });
 
@@ -172,32 +171,45 @@ class ToolbarSelect extends ToolbarItem {
 		});
 	}
 
+	_handleOpenInOverflow(e: Event) {
+		if (!e.bubbles) {
+			// bubble the event for central handling in the toolbar
+			(e.target as MenuItem)!.fireEvent("ui5-open", {});
+		}
+	}
+
+	_handleCloseInOverflow(e: Event) {
+		if (!e.bubbles) {
+			// bubble the event for central handling in the toolbar
+			(e.target as MenuItem)!.fireEvent("ui5-close", {});
+		}
+	}
+
+	_handleChangeInOverflow(e: Event) {
+		// update select
+		const selectedOption = (e.target as HTMLElement).closest(".ui5-tb-popover-select-option") as MenuItem;
+		if (selectedOption && !selectedOption.selected) {
+			const selectMenuItem = selectedOption?.closest(".ui5-tb-popover-item") as MenuItem;
+			if (selectedOption.text) {
+				selectedOption.textContent = selectedOption.text;
+			}
+			selectMenuItem.fireEvent("change", { selectedOption }, true);
+		}
+	}
+
 	_onEventHandler(e: Event): void {
 		if (e.type === "ui5-change") {
 			// update options
 			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
-			this.selectOption(selectedOption);
-		} else if (e.type === "ui5-item-click") {
-			// update select
-			const selectedOption = (e as CustomEvent<MenuItemClickEventDetail>).detail.item;
-			this.selectOption(selectedOption);
+			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
+			this.options.forEach((option: ToolbarSelectOption, index: number) => {
+				if (index === selectedOptionIndex) {
+					option.setAttribute("selected", "");
+				} else {
+					option.removeAttribute("selected");
+				}
+			});
 		}
-	}
-
-	/**
-	 * Selects an option.
-	 * @param option the option to be selected.
-	 * @public
-	 */
-	selectOption(selectedOption: HTMLElement): void {
-		const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
-		this.options.forEach((option: ToolbarSelectOption, index: number) => {
-			if (index === selectedOptionIndex) {
-				option.setAttribute("selected", "");
-			} else {
-				option.removeAttribute("selected");
-			}
-		});
 	}
 
 	get textForSelectedOption() {

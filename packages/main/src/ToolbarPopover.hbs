@@ -1,10 +1,8 @@
 <ui5-menu
 	class="ui5-overflow-popover"
-	placement="Bottom"
-	horizontal-align="End"
 	@ui5-close="{{onOverflowPopoverClosed}}"
 	@ui5-open="{{onOverflowPopoverOpened}}"
-	hide-arrow
+	@ui5-item-click="{{onOverflowPopoverItemClick}}"
 >
 	{{#each overflowItems}}
 		{{this.toolbarPopoverTemplate}}

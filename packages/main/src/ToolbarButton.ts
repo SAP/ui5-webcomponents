@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Button from "./Button.js";
+import MenuItem from "./MenuItem.js";
 import type { ButtonAccessibilityAttributes } from "./Button.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
 
@@ -33,7 +34,7 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  */
 @customElement({
 	tag: "ui5-toolbar-button",
-	dependencies: [Button],
+	dependencies: [Button, MenuItem],
 	styles: ToolbarButtonPopoverCss,
 })
 
@@ -182,7 +183,6 @@ class ToolbarButton extends ToolbarItem {
 	get subscribedEvents(): Map<string, IEventOptions> {
 		const map = new Map();
 		map.set("click", { preventClosing: false });
-		map.set("ui5-item-click", { preventClosing: false }); // click from the overflow popover
 		return map;
 	}
 }

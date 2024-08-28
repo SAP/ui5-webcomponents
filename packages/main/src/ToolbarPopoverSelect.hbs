@@ -1,12 +1,17 @@
 <ui5-menu-item
+	class="ui5-tb-popover-item"
+	data-ui5-external-action-item-id="{{this._id}}"
 	?disabled="{{this.disabled}}"
 	accessible-name="{{this.accessibleName}}"
 	accessible-name-ref="{{this.accessibleNameRef}}"
 	text="{{textForSelectedOption}}"
+	@ui5-open="{{_handleOpenInOverflow}}"
+	@ui5-close="{{_handleCloseInOverflow}}"
+	@click="{{this._handleChangeInOverflow}}"
 >
 	{{#each options}}
 		<ui5-menu-item
-			class="ui5-tb-popover-item"
+			class="ui5-tb-popover-select-option"
 			data-ui5-external-action-item-id="{{../_id}}"
 			?selected="{{this.selected}}"
 			data-ui5-external-action-item-index="{{@index}}"
