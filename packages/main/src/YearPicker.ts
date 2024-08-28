@@ -76,13 +76,11 @@ type YearPickerNavigateEventDetail = {
 })
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
- * @public
  */
 @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
- * @public
  */
 @event("navigate")
 class YearPicker extends CalendarPart implements ICalendarPicker {
@@ -90,7 +88,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
 	 * @default []
-	 * @public
 	 */
 	@property({ type: Array })
 	selectedDates: Array<number> = [];
@@ -104,8 +101,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 *
 	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
 	 * @default "Single"
-	 * @public
-	 * @since 2.2.0
 	 */
 	@property()
 	selectionMode: `${CalendarSelectionMode}` = "Single";
