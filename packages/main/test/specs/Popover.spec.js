@@ -380,6 +380,7 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 
 		await iframe.click();
+		await browser.pause(500);
 
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
@@ -394,6 +395,7 @@ describe("Popover general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 
 		await iframe.click();
+		await browser.pause(500);
 
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
