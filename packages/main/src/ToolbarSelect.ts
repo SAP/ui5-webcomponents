@@ -186,13 +186,14 @@ class ToolbarSelect extends ToolbarItem {
 	}
 
 	_handleChangeInOverflow(e: Event) {
-		// update select
 		const selectedOption = (e.target as HTMLElement).closest(".ui5-tb-popover-select-option") as MenuItem;
-		if (selectedOption && !selectedOption.selected) {
+		if (selectedOption && !selectedOption.selected) { // a new option is selected
 			const selectMenuItem = selectedOption?.closest(".ui5-tb-popover-item") as MenuItem;
 			if (selectedOption.text) {
+				// workaround to allow apps obtain the text using native/generic API
 				selectedOption.textContent = selectedOption.text;
 			}
+			// fire mock 'change' event for central handling in the toolbar
 			selectMenuItem.fireEvent("change", { selectedOption }, true);
 		}
 	}

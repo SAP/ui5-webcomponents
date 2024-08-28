@@ -491,7 +491,9 @@ class Toolbar extends UI5Element {
 	}
 
 	onOverflowPopoverItemClick(e: Event) {
-		e.preventDefault(); // prevent the auto-closing of the menu after item click
+		// prevent the auto-closing of the overflow menu upon item click
+		// as we are handling its closing ourselves in <code>closeOverflow</code>
+		e.preventDefault();
 	}
 
 	onResize() {
@@ -506,8 +508,7 @@ class Toolbar extends UI5Element {
 	onInteract(e: CustomEvent) {
 		e.stopImmediatePropagation();
 		const target = e.target as HTMLElement;
-		const item = target.closest<ToolbarItem>(".ui5-tb-item")
-			|| target.closest<ToolbarItem>(".ui5-tb-popover-item");
+		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
 
 		if (target === this.overflowButtonDOM) {
 			this.toggleOverflow();
