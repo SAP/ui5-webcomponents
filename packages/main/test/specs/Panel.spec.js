@@ -70,18 +70,18 @@ describe("Panel general interaction", () => {
 			timeoutMsg: "Press called"
 		});
 
-		await header.keys("Space");
+		await browser.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
 
-		await header.keys("Enter");
+		await browser.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -134,9 +134,16 @@ describe("Panel general interaction", () => {
 		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
 		assert.strictEqual((await content.getCSSProperty('overflow')).value, "auto", "Check if the overflow property is set to 'auto'");
 
-		const initialScrollPosition = await browser.execute("return document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollTop");
-		await browser.execute("document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollBy(0, 200)");
-		const finalScrollPosition = await browser.execute("return document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollTop");
+		const initialScrollPosition = await browser.executeAsync(done => {
+			done(document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollTop);
+		});
+		await browser.executeAsync(done => {
+			document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollBy(0, 200);
+			done();
+		});
+		const finalScrollPosition = await browser.executeAsync(done => {
+			done(document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollTop);
+		});
 		assert.ok(initialScrollPosition < finalScrollPosition, "Initial scroll position of the inner div should be less than the final");
 		assert.strictEqual(await panelHeader.isDisplayedInViewport(), true, "Assert that the header is still visible after scroll - it's sticky");
 	});
