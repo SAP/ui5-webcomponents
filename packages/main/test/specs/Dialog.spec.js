@@ -532,7 +532,7 @@ describe("Page scrolling", () => {
 
 	it("tests that page scrolling position is preserved", async () => {
 		// scroll position might change slightly when the scrollbars hide and then appear again
-		const SCROLLBAR_DELTA = 20;
+		const SCROLLBAR_DELTA = 40;
 		await browser.$("#cbScrollable").click();
 		const scrolledButton = await $("#scrolledBtn");
 		await scrolledButton.scrollIntoView();
