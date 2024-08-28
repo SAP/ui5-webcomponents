@@ -6,18 +6,6 @@ describe("FlexibleColumnLayout Behavior", () => {
 		await browser.url(`test/pages/FCL.html?sap-ui-animationMode=none`);
 	});
 
-	it("tests Desktop size 1400px", async () => {
-		// act
-		await browser.setWindowSize(1400, 1080);
-
-		const layoutChangeCounter = await browser.$("#testLayoutChange");
-		const visibleColumns = await browser.$("#fcl3").getAttribute("_visible-columns");
-
-		// assert
-		assert.strictEqual(visibleColumns, "3", "3 columns are visible");
-		assert.strictEqual(await layoutChangeCounter.getValue(), "1", "The event layout-change is not fired.");
-	});
-
 	it("tests Tablet Size 1000px", async () => {
 		// act
 		await browser.setWindowSize(1000, 1080);
@@ -27,7 +15,7 @@ describe("FlexibleColumnLayout Behavior", () => {
 
 		// assert
 		assert.strictEqual(visibleColumns, "2", "2 columns are visible");
-		assert.strictEqual(await layoutChangeCounter.getValue(), "2", "The event layout-change after resizing.");
+		assert.strictEqual(await layoutChangeCounter.getValue(), "1", "The event layout-change after resizing.");
 	});
 
 	it("tests Phone size 500px", async () => {
@@ -39,7 +27,19 @@ describe("FlexibleColumnLayout Behavior", () => {
 
 		// assert
 		assert.strictEqual(visibleColumns, "1", "1 columns are visible");
-		assert.strictEqual(await layoutChangeCounter.getValue(), "3", "The event layout-change after resizing.");
+		assert.strictEqual(await layoutChangeCounter.getValue(), "2", "The event layout-change after resizing.");
+	});
+
+	it("tests Desktop size 1400px", async () => {
+		// act
+		await browser.setWindowSize(1400, 1080);
+
+		const layoutChangeCounter = await browser.$("#testLayoutChange");
+		const visibleColumns = await browser.$("#fcl3").getAttribute("_visible-columns");
+
+		// assert
+		assert.strictEqual(visibleColumns, "3", "3 columns are visible");
+		assert.strictEqual(await layoutChangeCounter.getValue(), "3", "The event layout-change is not fired.");
 
 		// reset
 		await browser.setWindowSize(1400, 1080);
