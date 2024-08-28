@@ -112,7 +112,7 @@
 
 :host([selected]:not([_disabled]):not([on-phone]):not(:focus):not(:hover)) .ui5-cp-item::after,
 :host([selected]:not([_disabled]):not([on-phone]):not(:focus):hover) .ui5-cp-item::after,
-:host(:not([selected]):hover) .ui5-cp-item::after {
+:host(:not([selected]):not([on-phone]):hover) .ui5-cp-item::after {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
@@ -134,5 +134,47 @@
 	inset: var(--_ui5_color-palette-item-selected-focused-border-before);
 	border: var(--_ui5_color-palette-item-before-focus-color);
 	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
+	pointer-events: none;
+}
+
+/* Focus on mobile ONLY with external keyboard/mouse */
+:host(:not([disabled])) .ui5-cp-item:focus-visible::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: calc(100% - var(--_ui5_color_palette_item_height) + var(--_ui5-color-palette-item-mobile-focus-inset)) var(--_ui5_color-palette-item-mobile-focus-sides-inset);
+	border: var(--_ui5_color-palette-item-before-focus-color);
+	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
+	pointer-events: none;
+}
+
+:host([selected]:not([disabled])[on-phone]) .ui5-cp-item:focus-visible:not(:hover)::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: calc(100% - var(--_ui5_color_palette_item_height) + var(--_ui5-color-palette-item-mobile-focus-inset)) var(--_ui5_color-palette-item-mobile-focus-sides-inset);
+	border: var(--_ui5_color-palette-item-before-focus-color);
+	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
+	pointer-events: none;
+}
+
+:host([selected]:not([disabled])[on-phone]) .ui5-cp-item:focus-visible:not(:hover)::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: calc(100% - var(--_ui5_color_palette_item_height) + var(--_ui5-color-palette-item-mobile-focus-inset, 0)) var(--_ui5_color-palette-item-mobile-focus-sides-inset);
+	border: var(--_ui5_color-palette-item-after-mobile-focus-border);
+	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
+	pointer-events: none;
+}
+
+:host(:not([disabled])) .ui5-cp-item:focus-visible::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: calc(100% - var(--_ui5_color_palette_item_height) + var(--_ui5-color-palette-item-mobile-focus-inset))
+			var(--_ui5_color-palette-item-mobile-focus-sides-inset);
+	border: var(--_ui5_color-palette-item-after-mobile-focus-border);
+	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
 	pointer-events: none;
 }
