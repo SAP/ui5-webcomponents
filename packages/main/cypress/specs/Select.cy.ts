@@ -1,4 +1,7 @@
-import { html } from 'lit';
+import { html } from "lit";
+import "../../src/Select.js";
+import "../../src/Option.js";
+import "../../src/OptionCustom.js";
 
 describe("Select - Accessibility", () => {
 	it("tests options tooltip is set displayed", () => {
