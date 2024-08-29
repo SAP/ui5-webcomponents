@@ -254,8 +254,7 @@ describe("Page general interaction", () => {
         await page.setProperty("headerSnapped", false);
 
         // act: click to snap
-        // click at random position to avoid clicking of toolbar buttons
-        await focusArea.click({ x: 50, y: 50 });
+        await focusArea.click();
 
         assert.strictEqual(await page.getProperty("headerSnapped"), true, "Header is snapped");
     });
