@@ -36,4 +36,30 @@ describe("Select - Accessibility", () => {
 			.find("li.ui5-li-root")
 			.should("have.attr", "title", EXPECTED_TOOLTIP);
 	});
+
+	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used",   {
+		viewportHeight: 100,
+		viewportWidth: 600,
+	  }, () => {
+		cy.mount(html`
+			<ui5-select>
+				<ui5-option value="1">Option 1</ui5-option>
+				<ui5-option value="2">Option 2</ui5-option>
+				<ui5-option value="3">Option 3</ui5-option>
+				<ui5-option id="optionUnderTest" value="4">Option 4</ui5-option>
+			</ui5-select>
+		`);
+
+		// Open the select
+		cy.get("ui5-select").click();
+
+		// Move focus to to the forth item using the arrow down key
+		cy.get("ui5-select").shadow().find('[tabindex][role="combobox"]')
+			.type("{downArrow}")
+			.type("{downArrow}")	
+			.type("{downArrow}");
+
+		cy.get("#optionUnderTest")
+			.ui5IsWithinViewport();
+	});
 });

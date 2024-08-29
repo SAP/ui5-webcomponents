@@ -611,24 +611,4 @@ describe("Select general interaction", () => {
 		await firstItem.click();
 		assert.notOk(await popover.getProperty("open"), "Select is closed.");
 	});
-
-	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
-		await browser.setWindowSize(600, 100);
-
-		const select = await browser.$("#warningSelect");
-		const popover = await select.shadow$("ui5-responsive-popover");
-
-		await browser.pause(500);
-		await select.click();
-		await browser.pause(500);
-		assert.ok(await popover.getProperty("open"), "Select is opened.");
-
-		await select.keys("ArrowDown");
-		await select.keys("ArrowDown");
-		await select.keys("ArrowDown");
-
-		const selectedOption = await browser.$("#warningSelect ui5-option[selected]");
-		await browser.pause(500);
-		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
-	});
 });

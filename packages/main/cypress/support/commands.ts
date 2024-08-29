@@ -49,6 +49,7 @@ declare global {
 			ui5MenuOpened(): Chainable<void>
 			ui5MenuItemClick(): Chainable<void>
 			ui5MenuItemPress(key: any): Chainable<void>
+			ui5IsWithinViewport(): Chainable<void>
 		}
 	}
 }
@@ -67,3 +68,23 @@ Cypress.Commands.add("ui5SimulateDevice", (device: string = "phone") => {
 		.invoke("isPhone")
 		.should("be.true");
 });
+
+Cypress.Commands.add("ui5IsWithinViewport", { prevSubject: true }, subject => {
+	const windowInnerWidth = Cypress.config(`viewportWidth`);
+	const windowInnerHeight = Cypress.config(`viewportHeight`);
+  
+	const bounding = subject[0].getBoundingClientRect();
+  
+	const rightBoundOfWindow = windowInnerWidth;
+	const bottomBoundOfWindow = windowInnerHeight;
+ 
+	const message = `Element is within the viewport. Bounding rect: ${JSON.stringify(bounding)}`;
+
+	expect(subject).to.be.visible;
+	expect(bounding.top, message).to.be.at.least(0);
+	expect(bounding.left, message).to.be.at.least(0);
+	expect(bounding.right, message).to.be.lessThan(rightBoundOfWindow);
+	expect(bounding.bottom, message).to.be.lessThan(bottomBoundOfWindow);
+  
+	return subject;
+  })
