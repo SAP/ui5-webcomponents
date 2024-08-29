@@ -11,7 +11,12 @@ describe("Table - Keyboard Navigation", async () => {
 		const growing = await browser.$("#growing");
 		const rowsLength = rows.length;
 
+		await browser.pause(500);
+
 		await rows[1].click();
+
+		await browser.pause(500);
+
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("ArrowLeft");
@@ -73,7 +78,12 @@ describe("Table - Keyboard Navigation", async () => {
 			return rowCells[rowIndex][cellIndex];
 		}
 
+		await browser.pause(500);
+
 		await rows[1].click();
+
+		await browser.pause(500);
+
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("ArrowRight");
@@ -162,8 +172,10 @@ describe("Table - Keyboard Navigation", async () => {
 		const getCell = (rowIndex, cellIndex) => {
 			return rowCells[rowIndex][cellIndex];
 		}
-
+		await browser.pause(500);
 		await rows[1].click();
+		await browser.pause(500);
+
 		assert.ok(await rows[1].isFocused(), `Click: Row 1 is focused.`);
 
 		await browser.keys("F2");
@@ -261,16 +273,31 @@ describe("Table - Keyboard Navigation", async () => {
 		const rowButton = await browser.$("#row2-button");
 		const anotherRow = await browser.$("#notinteractive-row");
 
+		await browser.pause(500);
+
 		await row.click();
+
+		await browser.pause(500);
+
 		assert.equal(await input.getValue(), "1", `Interactive row is clicked and the row-click event result is correct.`);
 
 		await browser.keys("Enter");
 		assert.equal(await input.getValue(), "2", `Enter is presed for the interactive row and the row-click event result is correct.`);
 
+		await browser.pause(500);
+
 		await anotherRow.click();
+
+		await browser.pause(500);
+
 		assert.equal(await input.getValue(), "2", `Not interactive row is clicked and there is no row-click event triggered.`);
 
+		await browser.pause(500);
+
 		await rowButton.click();
+
+		await browser.pause(500);
+
 		assert.equal(await input.getValue(), "2", `Button in a row is clicked and there is no row-click event triggered.`);
 
 		await browser.keys("Enter");
@@ -298,7 +325,13 @@ describe("Table - Keyboard Navigation with Fixed Headers", async() => {
 		const lastRow = await browser.$("#row-21");
 
 		await lastRow.scrollIntoView();
+
+		await browser.pause(500);
+
 		await lastRow.click();
+
+		await browser.pause(500);
+
 		assert.ok(await lastRow.isFocused(), `Click: Row 21 (last row) is focused.`);
 
 		const headerRow = await table.$("ui5-table-header-row");
@@ -321,7 +354,13 @@ describe("Table - Keyboard Navigation with Fixed Headers", async() => {
 		const lastRow = await browser.$("#row-21-1");
 
 		await lastRow.scrollIntoView();
+
+		await browser.pause(500);
+
 		await lastRow.click();
+
+		await browser.pause(500);
+
 		assert.ok(await lastRow.isFocused(), `Click: Row 21 (last row) is focused.`);
 
 		const headerRow = await table.$("ui5-table-header-row");
@@ -344,7 +383,13 @@ describe("Table - Keyboard Navigation with Fixed Headers", async() => {
 		const lastRow = await browser.$("#row-100-2");
 
 		await lastRow.scrollIntoView();
+
+		await browser.pause(500);
+
 		await lastRow.click();
+
+		await browser.pause(500);
+
 		assert.ok(await lastRow.isFocused(), `Click: Row 100 (last row) is focused.`);
 
 		const headerRow = await table.$("ui5-table-header-row");
