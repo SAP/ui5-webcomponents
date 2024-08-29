@@ -62,6 +62,7 @@ exports.config = {
 			args: [
 				'--headless',
 				'--start-maximized',
+				'--disable-search-engine-choice-screen',
 				'--no-sandbox',
 				'--disable-gpu',
 				'--disable-infobars',
