@@ -147,7 +147,8 @@
 }
 
 :host(:not([disabled])) .ui5-cp-item:focus-visible::before {
-	inset: calc(100% - var(--_ui5_color_palette_item_height) + var(--_ui5-color-palette-item-mobile-focus-inset)) var(--_ui5_color-palette-item-mobile-focus-sides-inset);
+	inset: calc(100% - var(--_ui5_color_palette_item_height) + var(--_ui5-color-palette-item-mobile-focus-inset))
+			var(--_ui5_color-palette-item-mobile-focus-sides-inset);
 	border: var(--_ui5_color-palette-item-before-focus-color);
 	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
 }
