@@ -432,4 +432,14 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step2.isDisplayedInViewport(), false,
 			"Second step should not be visible.");
 	});
+
+	it("WizardPageMode: prevent page change upon scrolling", async () => {
+		browser.url(`test/pages/Wizard_inline_page_mode.html`);
+
+		await $('ui5-message-strip').click();
+		await browser.keys("End");
+		await browser.pause(1000);
+
+		assert.notOk(await $$("ui5-wizard-step")[1].getProperty("selected"), "Second step should not be selected");
+	});
 });

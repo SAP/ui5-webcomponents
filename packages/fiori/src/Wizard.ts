@@ -482,7 +482,9 @@ class Wizard extends UI5Element {
 			return;
 		}
 
-		debounce(this.changeSelectionByScroll.bind(this, (e.target as HTMLElement).scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		if (this.contentLayout !== "SingleStep") {
+			debounce(this.changeSelectionByScroll.bind(this, (e.target as HTMLElement).scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		}
 	}
 
 	/**
