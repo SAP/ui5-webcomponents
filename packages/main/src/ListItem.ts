@@ -253,6 +253,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if ((isSpace(e) || isEnter(e)) && this.onSpacePressForInputs(e)) {
+			return;
+		}
+
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -359,6 +363,13 @@ abstract class ListItem extends ListItemBase {
 
 	onDetailClick() {
 		this.fireEvent("detail-click", { item: this, selected: this.selected });
+	}
+
+	onSpacePressForInputs(e: KeyboardEvent): boolean {
+		const target = e.target as HTMLElement,
+			focusDomRef = this.getFocusDomRef();
+
+		return target !== focusDomRef;
 	}
 
 	fireItemPress(e: Event) {
