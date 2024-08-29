@@ -618,7 +618,9 @@ describe("Select general interaction", () => {
 		const select = await browser.$("#warningSelect");
 		const popover = await select.shadow$("ui5-responsive-popover");
 
+		await browser.pause(500);
 		await select.click();
+		await browser.pause(500);
 		assert.ok(await popover.getProperty("open"), "Select is opened.");
 
 		await select.keys("ArrowDown");
@@ -626,6 +628,7 @@ describe("Select general interaction", () => {
 		await select.keys("ArrowDown");
 
 		const selectedOption = await browser.$("#warningSelect ui5-option[selected]");
+		await browser.pause(500);
 		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
 	});
 });
