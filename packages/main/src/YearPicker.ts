@@ -101,6 +101,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 *
 	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
 	 * @default "Single"
+	 * @since 2.2.0
 	 */
 	@property()
 	selectionMode: `${CalendarSelectionMode}` = "Single";
