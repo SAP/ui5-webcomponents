@@ -107,14 +107,12 @@ describe("UploadCollection", () => {
 			await select.click(); // open select
 			await select.keys("n");
 			await browser.keys("Enter")
-			await browser.pause(2000);
 		});
 
 		it("in 'SingleStart' mode there should be a radio button", async () => {
 			// change the UCI type to "Detail"
 			const select = await browser.$("#changeMode");
 			await select.click(); // open select
-			await select.keys("n"); // always start from "None"
 			await select.keys("ArrowDown"); // for "Single"
 			await select.keys("ArrowDown"); // for "SingleStart"
 			await browser.keys("Enter");
