@@ -301,6 +301,10 @@
 				console.log("selection change")
 				document.querySelector("#select-all-event span").textContent = e.detail.items.length;
 			});
+
+			document.getElementById("mcb-error").addEventListener("ui5-selection-change", e => {
+				event.target.valueState = "None";
+			});
 		</script>
 	</div>
 
