@@ -1813,7 +1813,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get hasValueState() {
-		return (this.valueState !== ValueState.None) || (this._dialogInputValueState !== ValueState.None);
+		const isValueStateSet = this.valueState !== ValueState.None;
+
+		if (isPhone()) {
+			return isValueStateSet || (this._dialogInputValueState !== ValueState.None);
+		}
+
+		return isValueStateSet;
 	}
 
 	get hasValueStateMessage() {

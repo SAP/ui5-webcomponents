@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** current link aria-current ([#9668](https://github.com/SAP/ui5-webcomponents/issues/9668)) ([87732a1](https://github.com/SAP/ui5-webcomponents/commit/87732a151562d6e387dcf85baefca23b265774ac))
+
+
+
+
+
 # [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
 
 

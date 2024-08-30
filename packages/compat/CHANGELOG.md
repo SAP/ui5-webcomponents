@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Bug Fixes
+
+* **ui5-table:** busy indicator overlay (compat) ([#9737](https://github.com/SAP/ui5-webcomponents/issues/9737)) ([9de42b0](https://github.com/SAP/ui5-webcomponents/commit/9de42b01cd471fcf0411290c004c80c860c0eddc)), closes [#9438](https://github.com/SAP/ui5-webcomponents/issues/9438)
+* **ui5-table:** fix border and focus overlap (compat) ([#9726](https://github.com/SAP/ui5-webcomponents/issues/9726)) ([e51d35e](https://github.com/SAP/ui5-webcomponents/commit/e51d35e7cd3b860a963255271050a1f996b300f6)), closes [#9526](https://github.com/SAP/ui5-webcomponents/issues/9526)
+
+
+
+
+
 # [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
 
 **Note:** Version bump only for package @ui5/webcomponents-compat
