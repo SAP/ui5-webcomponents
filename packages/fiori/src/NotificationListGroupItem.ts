@@ -8,6 +8,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
 import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationListItem from "./NotificationListItem.js";
@@ -89,6 +90,14 @@ type NotificationListGroupItemToggleEventDetail = {
  */
 @event("toggle")
 
+/**
+ * Fired when the user clicks on "More button".
+ *
+ * @public
+ * @since ...
+ */
+@event("load-more")
+
 class NotificationListGroupItem extends NotificationListItemBase {
 	/**
 	 * Defines if the group is collapsed or expanded.
@@ -97,6 +106,15 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	@property({ type: Boolean })
 	collapsed = false;
+
+	/**
+	 * Defines whether the component will have growing capability by pressing a `More` button.
+	 * When button is pressed `load-more` event will be fired.
+	 * @default false
+	 * @public
+	 */
+	@property()
+	growing: `${NotificationListGrowingMode}` = "None";
 
 	/**
 	 * Defines the items of the `ui5-li-notification-group`,
@@ -149,6 +167,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
 	}
 
+	get growingType() {
+		return this.growing;
+	}
+
 	get ariaLabelledBy() {
 		const id = this._id;
 
@@ -188,6 +210,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	_onHeaderToggleClick() {
 		this.toggleCollapsed();
+	}
+
+	_onLoadMore() {
+		this.fireEvent("load-more");
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
