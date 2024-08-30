@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
+
+
+### Bug Fixes
+
+* **ui5-special-date:** add visual representation for Working/NonWorking types ([#9676](https://github.com/SAP/ui5-webcomponents/issues/9676)) ([19ab7d8](https://github.com/SAP/ui5-webcomponents/commit/19ab7d8e03756de49d0374a991a10460fcae38dd))
+
+
+
+
+
 ## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
 
 
