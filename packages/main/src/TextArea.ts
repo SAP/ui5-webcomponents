@@ -529,7 +529,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return {
 			root: {
 				"ui5-textarea-root": true,
-				"ui5-content-custom-scrollbars": !getEffectiveScrollbarStyle(),
+				"ui5-content-custom-scrollbars": !!getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,
