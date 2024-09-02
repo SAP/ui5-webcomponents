@@ -28,6 +28,7 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -370,7 +371,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 
-		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
+		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
 	_onclick(e: MouseEvent) {
@@ -507,6 +508,14 @@ class Button extends UI5Element implements IFormElement, IButton {
 		};
 	}
 
+	getDefaultTooltip() {
+		if (!getEnableDefaultTooltips()) {
+			return;
+		}
+
+		return getIconAccessibleName(this.icon);
+	}
+
 	get buttonTypeText() {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
@@ -530,7 +539,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {

@@ -47,15 +47,27 @@ describe("Panel general interaction", () => {
 
 		await header.click();
 
-		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
+		await browser.waitUntil(async () => await content.isDisplayedInViewport() === false, {
+			timeout: 2000, // GH Actions
+			interval: 100,
+			timeoutMsg: "The content is not visible"
+		});
 
 		await header.keys("Space");
 
-		assert.ok(await content.isDisplayedInViewport(), "The content is visible");
+		await browser.waitUntil(async () => await content.isDisplayedInViewport() === true, {
+			timeout: 2000, // GH Actions
+			interval: 100,
+			timeoutMsg: "The content is visible"
+		});
 
 		await header.keys("Enter");
 
-		assert.notOk(await content.isDisplayedInViewport(), "The content is not visible");
+		await browser.waitUntil(async () => await content.isDisplayedInViewport() === false, {
+			timeout: 2000, // GH Actions
+			interval: 100,
+			timeoutMsg: "The content is not visible"
+		});
 	});
 
 	it("tests toggle event upon header click", async () => {
@@ -73,7 +85,7 @@ describe("Panel general interaction", () => {
 		await header.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -81,7 +93,7 @@ describe("Panel general interaction", () => {
 		await header.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -102,7 +114,7 @@ describe("Panel general interaction", () => {
 		await icon.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -110,7 +122,7 @@ describe("Panel general interaction", () => {
 		await icon.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});

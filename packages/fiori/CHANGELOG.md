@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** remove aria attribute from search button ([#9629](https://github.com/SAP/ui5-webcomponents/issues/9629)) ([3153e6e](https://github.com/SAP/ui5-webcomponents/commit/3153e6ed10b4b2f032abd915d778b09fecab2c28)), closes [#7123](https://github.com/SAP/ui5-webcomponents/issues/7123)
+* **ui5-table:** fix border and focus overlap ([#9752](https://github.com/SAP/ui5-webcomponents/issues/9752)) ([f7085b5](https://github.com/SAP/ui5-webcomponents/commit/f7085b512e4b5f6bd0bda4b0defcb7ebebdc4ffc)), closes [#9526](https://github.com/SAP/ui5-webcomponents/issues/9526)
+
+
+
+
+
 ## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
 
 

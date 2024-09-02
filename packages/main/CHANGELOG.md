@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** adjust aria-disabled attribute ([#9732](https://github.com/SAP/ui5-webcomponents/issues/9732)) ([#9734](https://github.com/SAP/ui5-webcomponents/issues/9734)) ([8cea6e8](https://github.com/SAP/ui5-webcomponents/commit/8cea6e873c50a9442aed1118cff2dcc5cf28f92c)), closes [#9719](https://github.com/SAP/ui5-webcomponents/issues/9719)
+* **ui5-special-date:** add visual representation for Working/NonWorking types ([#9676](https://github.com/SAP/ui5-webcomponents/issues/9676)) ([19ab7d8](https://github.com/SAP/ui5-webcomponents/commit/19ab7d8e03756de49d0374a991a10460fcae38dd))
+* **ui5-split-button:** adjust arrow part width ([#9661](https://github.com/SAP/ui5-webcomponents/issues/9661)) ([86e8152](https://github.com/SAP/ui5-webcomponents/commit/86e815265b53dd4eb67b0b915e59850b910285d4)), closes [#7642](https://github.com/SAP/ui5-webcomponents/issues/7642)
+* **ui5-split-button:** provide aria attributes for the arrow button (… ([#9644](https://github.com/SAP/ui5-webcomponents/issues/9644)) ([89640be](https://github.com/SAP/ui5-webcomponents/commit/89640beabd3373d441dd78e497938af3077969f2)), closes [#9295](https://github.com/SAP/ui5-webcomponents/issues/9295)
+* **ui5-table:** busy indicator overlay ([#9768](https://github.com/SAP/ui5-webcomponents/issues/9768)) ([3d374fa](https://github.com/SAP/ui5-webcomponents/commit/3d374fa71e61a6f31dade7b2e58c541b102a119d)), closes [#9438](https://github.com/SAP/ui5-webcomponents/issues/9438)
+* **ui5-table:** fix border and focus overlap ([#9752](https://github.com/SAP/ui5-webcomponents/issues/9752)) ([f7085b5](https://github.com/SAP/ui5-webcomponents/commit/f7085b512e4b5f6bd0bda4b0defcb7ebebdc4ffc)), closes [#9526](https://github.com/SAP/ui5-webcomponents/issues/9526)
+* **ui5-toolbar:** update ToolbarRegistry to use metadata tag instead … ([#9638](https://github.com/SAP/ui5-webcomponents/issues/9638)) ([8c89c42](https://github.com/SAP/ui5-webcomponents/commit/8c89c427819ee905da567c6fabe0756137dcebbf)), closes [#9607](https://github.com/SAP/ui5-webcomponents/issues/9607)
+
+
+
+
+
 ## [1.24.8](https://github.com/SAP/ui5-webcomponents/compare/v1.24.7...v1.24.8) (2024-08-02)
 
 
