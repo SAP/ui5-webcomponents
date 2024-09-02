@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Features
+
+* **ui5-calendar:** implement calendar week numbering ([#9694](https://github.com/SAP/ui5-webcomponents/issues/9694)) ([efc8053](https://github.com/SAP/ui5-webcomponents/commit/efc8053e756156cca5e239f1886469c6b92c2cf7))
+
+
+
+
+
+# [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
+# [2.2.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.0...v2.2.0-rc.1) (2024-08-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
 # [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
 
 

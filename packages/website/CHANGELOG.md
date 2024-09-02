@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Features
+
+* **ui5-calendar:** implement calendar week numbering ([#9694](https://github.com/SAP/ui5-webcomponents/issues/9694)) ([efc8053](https://github.com/SAP/ui5-webcomponents/commit/efc8053e756156cca5e239f1886469c6b92c2cf7))
+* **ui5-daterange-picker:** implement month and year range selection ([#9680](https://github.com/SAP/ui5-webcomponents/issues/9680)) ([0a150dd](https://github.com/SAP/ui5-webcomponents/commit/0a150dd6808dbd7ec7e4e599eab2ff4abf9396f0)), closes [#8177](https://github.com/SAP/ui5-webcomponents/issues/8177) [#8187](https://github.com/SAP/ui5-webcomponents/issues/8187)
+
+
+
+
+
+# [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
+
+
+### Features
+
+* **ui5-file-uploader:** add maxFileSize property ([#9622](https://github.com/SAP/ui5-webcomponents/issues/9622)) ([4624f87](https://github.com/SAP/ui5-webcomponents/commit/4624f87fd776bcb92cebd0506d79d0e74fafdb1c)), closes [#9187](https://github.com/SAP/ui5-webcomponents/issues/9187)
+
+
+
+
+
+# [2.2.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.0...v2.2.0-rc.1) (2024-08-15)
+
+
+### Bug Fixes
+
+* **ui5-special-date:** add visual representation for Working/NonWorking types ([#9524](https://github.com/SAP/ui5-webcomponents/issues/9524)) ([296373d](https://github.com/SAP/ui5-webcomponents/commit/296373d7fdbaf4f7c948b26d4642b22010f0af20))
+
+
+
+
+
 # [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
 
 

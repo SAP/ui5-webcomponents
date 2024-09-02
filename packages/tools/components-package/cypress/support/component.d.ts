@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 import { RenderOptions, HTMLTemplateResult } from 'lit';
+import "cypress-real-events";
+
 export type Renderable = HTMLTemplateResult;
 export interface MountUI5Options extends MountLitTemplateOptions {
     ui5Configuration: object;
@@ -18,3 +20,4 @@ declare global {
         }
     }
 }
+
