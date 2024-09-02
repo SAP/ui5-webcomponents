@@ -96,6 +96,7 @@ describe("UploadCollection", () => {
 			await select.click(); // open select
 			await select.keys("m"); // for "MultiSelect"
 			await browser.keys("Enter");
+			await browser.pause(1000) // wait for typed chars timeout in ui5-select
 
 			const firstItem = await browser.$("#firstItem");
 
