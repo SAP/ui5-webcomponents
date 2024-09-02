@@ -20,9 +20,9 @@ describe("Table general interaction", () => {
 
 	it("ARIA - aria-label should be calculated correctly.", async () => {
 		const groupRows = await browser.$$("ui5-table-group-row");
-		const ariaText1 = "Group Header Row. Country: Bulgaria. 2 of 7";
+		const ariaText1 = "Group Header Row Country: Bulgaria. 2 of 7";
 		const ariaLabel1 = await groupRows[0].shadow$("tr").getAttribute("aria-label");
-		const ariaText2 = "Group Header Row. Country: USA. 5 of 7";
+		const ariaText2 = "Group Header Row Country: USA. 5 of 7";
 		const ariaLabel2 = await groupRows[1].shadow$("tr").getAttribute("aria-label");
 
 		assert.strictEqual(ariaLabel1, ariaText1, "Initially the aria-label is set correctly.");
