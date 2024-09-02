@@ -16,11 +16,11 @@ const getEffectiveScrollbarStyle = () => {
 
 ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
-	border-left: none;
+	border-left: var(--browser_scrollbar_border, none);
 }
 
 ::-webkit-scrollbar-thumb {
-	border-radius: var(--sapElement_BorderCornerRadius);
+	border-radius: var(--browser_scrollbar_border_radius, var(--sapElement_BorderCornerRadius));
 	background-color: var(--sapScrollBar_FaceColor);
 }
 
