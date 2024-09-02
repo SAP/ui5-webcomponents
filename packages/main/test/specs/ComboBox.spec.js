@@ -1041,7 +1041,7 @@ describe("Keyboard navigation", async () => {
 
 		await arrow.click();
 
-		assert.strictEqual(await combo.getProperty("focused"), true, "The next combobox should be focused");
+		assert.strictEqual(await combo.getProperty("focused"), true, "Initial combobox should be focused");
 
 		await combo.keys("Tab");
 
@@ -1049,7 +1049,7 @@ describe("Keyboard navigation", async () => {
 
 		await arrow.click();
 
-		assert.strictEqual(await combo.getProperty("focused"), true, "The next combobox should be focused");
+		assert.strictEqual(await combo.getProperty("focused"), true, "Initial combobox should be focused");
 
 		await browser.keys(["Shift", "Tab"]);
 
