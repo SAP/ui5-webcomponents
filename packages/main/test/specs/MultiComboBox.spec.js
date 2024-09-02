@@ -1745,8 +1745,9 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby has a reference for the value state and the tokens count");
 		});
 
-		it.skip("aria-describedby value according to the tokens count", async () => {
+		it.only("aria-describedby value according to the tokens count", async () => {
 			const mcb = await browser.$("#mcb-compact");
+			const nextComponent = await browser.$("#mcb-two-column-layout");
 
 			await mcb.scrollIntoView();
 
@@ -1765,6 +1766,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.click();
 			await innerInput.keys("Backspace");
 			await innerInput.keys("Backspace");
+			await nextComponent.click();
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			invisibleText = await mcb.shadow$(".ui5-hidden-text");
@@ -1779,8 +1781,11 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 1, "should have one token");
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 
+			await innerInput.click();
+			await innerInput.keys("Backspace");
 			await innerInput.keys("Backspace");
 			await innerInput.keys("Tab");
+			await nextComponent.click();
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			invisibleText = await mcb.shadow$(".ui5-hidden-text");
