@@ -53,15 +53,23 @@ declare global {
 	}
 }
 
-const deviceFuncForStub: Record<string, keyof typeof internals> = {
+const deviceFuncForStub: Record<SimulationDevices, keyof typeof internals> = {
 	phone: "_isPhone",
 };
 
-Cypress.Commands.add("ui5SimulateDevice", (device: string = "phone") => {
+const deviceName: Record<SimulationDevices, Cypress.ViewportPreset> = {
+	phone: "iphone-x",
+};
+
+Cypress.Commands.add("ui5SimulateDevice", (device: SimulationDevices = "phone") => {
 	cy.stub(internals, deviceFuncForStub[device])
 		.callsFake(() => {
 			return true;
 		});
+
+	cy.wait(5000);
+
+	cy.viewport(deviceName[device]);
 
 	cy.wrap({ isPhone })
 		.invoke("isPhone")
