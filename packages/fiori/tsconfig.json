@@ -5,6 +5,7 @@
 		"global.d.ts"
 	],
 	"compilerOptions": {
+		"composite": true,
 		"outDir": "dist",
 		"experimentalDecorators": true,
 		"importsNotUsedAsValues": "preserve",
