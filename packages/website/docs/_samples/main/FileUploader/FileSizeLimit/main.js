@@ -7,7 +7,7 @@ import "@ui5/webcomponents-icons/dist/upload.js";
 const fileUploader = document.querySelector("#fileuploader");
 const resultDiv = document.querySelector("#file-exceed-result");
 
-fileUploader.addEventListener("fileSizeExceed", function (event) {
+fileUploader.addEventListener("file-size-exceed", function (event) {
     const uploaderMaxSize = fileUploader.maxFileSize;
     const filesData = event.detail.filesData;
 

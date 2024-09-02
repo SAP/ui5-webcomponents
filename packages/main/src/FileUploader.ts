@@ -108,7 +108,7 @@ type FileUploaderChangeEventDetail = {
  * @since 2.2.0
  * @public
  */
-@event<FileUploaderFileSizeExceedEventDetail>("fileSizeExceed", {
+@event<FileUploaderFileSizeExceedEventDetail>("file-size-exceed", {
 	detail: {
 		/**
 		 * @public
@@ -369,14 +369,14 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Checks whether all files are below `maxFileSize` (if set),
-	 * and fires a `fileSizeExceed` event if any file exceeds it.
+	 * and fires a `file-size-exceed` event if any file exceeds it.
 	 * @private
 	 */
 	_validateFiles(changedFiles: FileList): FileList {
 		const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
 
 		if (exceededFilesData.length) {
-			this.fireEvent<FileUploaderFileSizeExceedEventDetail>("fileSizeExceed", {
+			this.fireEvent<FileUploaderFileSizeExceedEventDetail>("file-size-exceed", {
 				filesData: exceededFilesData,
 			});
 			changedFiles = new DataTransfer().files;
