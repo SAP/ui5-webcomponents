@@ -5,8 +5,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -50,7 +50,7 @@ import PageCss from "./generated/themes/Page.css.js";
 	languageAware: true,
 	renderer: litRender,
 	styles: [
-		browserScrollbarCSS,
+		getEffectiveScrollbarStyle(),
 		PageCss,
 	],
 	template: PageTemplate,
