@@ -414,7 +414,11 @@ class Wizard extends UI5Element {
 		this.selectedStepIndex = this.getSelectedStepIndex();
 
 		if (this.selectedStep && this.stepsInHeaderDOM.length) {
-			this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM.find(el => el.selected) as WizardTab);
+			if (this._itemNavigation._getItems().includes(this.stepsInHeaderDOM[this.selectedStepIndex])) {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM[this.selectedStepIndex]);
+			} else {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM.find(el => el.selected) as WizardTab);
+			}
 		}
 	}
 
