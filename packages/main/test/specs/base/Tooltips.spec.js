@@ -9,8 +9,8 @@ describe("Default Tooltips", () => {
 		const btn = await browser.$("#btn").shadow$(".ui5-button-root");
 		const btnIcon = await browser.$("#btn").shadow$(".ui5-button-icon");
 		const rt = await browser.$("#rt").shadow$(".ui5-rating-indicator-root");
-		const segBtnItem = await browser.$("#segBtnItem").shadow$(".ui5-segmented-button-item-root");
-		const segBtnItemIcon = await browser.$("#segBtnItem").shadow$(".ui5-segmented-button-item-icon");
+		const segBtnItem = await browser.$("#segBtnItem").shadow$(".ui5-button-root");
+		const segBtnItemIcon = await browser.$("#segBtnItem").shadow$(".ui5-button-icon");
 
 		const btnTitle = await btn.getAttribute("title");
 		const btnIconTitle = await btnIcon.getAttribute("title");
