@@ -73,7 +73,7 @@ describe("Panel general interaction", () => {
 		await header.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -81,7 +81,7 @@ describe("Panel general interaction", () => {
 		await header.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -102,7 +102,7 @@ describe("Panel general interaction", () => {
 		await icon.keys("Space");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "2", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
@@ -110,7 +110,7 @@ describe("Panel general interaction", () => {
 		await icon.keys("Enter");
 
 		await browser.waitUntil(async () => await field.getProperty("value") === "3", {
-			timeout: 500,
+			timeout: 2000, // GH Actions
 			interval: 100,
 			timeoutMsg: "Press called"
 		});
