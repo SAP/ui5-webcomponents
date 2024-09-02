@@ -11,3 +11,11 @@ declare global {
 		};
 	}
 }
+
+// declare module globalThis {
+// 	// interface ZXing {
+// 	// 	BrowserMultiFormatReader: typeof BrowserMultiFormatReader;
+// 	// 	NotFoundException: typeof NotFoundException;
+// 	// }
+// 	const ZXing = {};
+// }

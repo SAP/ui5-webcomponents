@@ -4,6 +4,10 @@
 		"src/**/*",
 		"global.d.ts"
 	],
+	// // ssr-dom is imported with bare specifier so that conditional exports are used, but this treats it as input and output, so ignore it
+	// "exclude": [
+	// 	"src/ssr-zxing.ts",
+	// ],
 	"compilerOptions": {
 		"outDir": "dist",
 		"experimentalDecorators": true,
@@ -25,9 +29,7 @@
 			"@ui5/webcomponents-theming/dist/*": [
 				"../theming/src/*"
 			],
-			// "@ui5/webcomponents-icons/dist/*": ["../icons/src/*"],
-			// "@ui5/webcomponents-icons-business-suite/dist/*": ["../icons-business-suite/src/*"],
-			// "@ui5/webcomponents-icons-tnt/dist/*": ["../icons-tnt/src/*"]
+			"@ui5/webcomponents-fiori/dist/ssr-zxing.js": ["./src/ssr-zxing.ts"],
 		},
 	},
 	"references": [

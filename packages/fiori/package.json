@@ -16,6 +16,11 @@
     "ui5"
   ],
   "exports": {
+    "./dist/ssr-zxing.js": {
+      "browser": "./dist/ssr-zxing.js",
+      "node": "./dist/ssr-zxing-shim.js",
+      "default": "./dist/ssr-zxing.js"
+    },
     "./.port": "./.port",
     "./src/*": "./src/*",
     "./dist/*": "./dist/*",
