@@ -102,9 +102,8 @@ const getSelectionCoordinates = (element: HTMLInputElement | HTMLTextAreaElement
 	return { ...rectObject, selectedText };
 };
 
-const getElementSelection = (element: Input | TextArea) => {
-	const innerElement = element.shadowRoot!.querySelector("textarea")
-		|| element.shadowRoot!.querySelector("input");
+const getElementSelection = (element: HTMLElement ) => {
+	const innerElement = element.shadowRoot!.querySelector("textarea")|| element.shadowRoot!.querySelector("input");
 
 	if (!document.getElementById("ui5-selection-mirror")) {
 		createCopy();
@@ -114,7 +113,7 @@ const getElementSelection = (element: Input | TextArea) => {
 		"ui5-selection-mirror",
 	)!;
 
-	copiedElement.textContent = element.value;
+	copiedElement.textContent = innerElement!.value;
 
 	if (innerElement) {
 		copyAndApplyStyles(innerElement, copiedElement)!;
