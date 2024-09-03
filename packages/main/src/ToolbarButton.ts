@@ -169,7 +169,7 @@ class ToolbarButton extends ToolbarItem {
 	}
 
 	get _textContent() {
-		return this.text || this.tooltip;
+		return this.text || this.tooltip || this.accessibleName;
 	}
 
 	static get toolbarTemplate() {
