@@ -1745,7 +1745,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby has a reference for the value state and the tokens count");
 		});
 
-		it.only("aria-describedby value according to the tokens count", async () => {
+		it("aria-describedby value according to the tokens count", async () => {
 			const mcb = await browser.$("#mcb-compact");
 
 			await mcb.scrollIntoView();
