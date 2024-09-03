@@ -22,6 +22,7 @@ enum PopoverVerticalAlign {
 
 	/**
 	 * Popover will be streched
+	 * If popover placement is Start or End, popover will be stretched with the height of the opener
 	 * @public
 	 */
 	Stretch = "Stretch",
