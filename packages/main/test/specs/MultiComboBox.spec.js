@@ -1765,7 +1765,7 @@ describe("MultiComboBox general interaction", () => {
 			await innerInput.click();
 			await innerInput.keys("Backspace");
 			await innerInput.keys("Backspace");
-			await innerInput.keys("Tab");
+			await innerInput.click();
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			invisibleText = await mcb.shadow$(".ui5-hidden-text");
@@ -1780,7 +1780,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 1, "should have one token");
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 
-			await innerInput.click();
 			await innerInput.keys("Backspace");
 			await innerInput.keys("Backspace");
 			await innerInput.keys("Tab");
