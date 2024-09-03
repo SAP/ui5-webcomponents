@@ -1,6 +1,3 @@
-import type Input from "@ui5/webcomponents/dist/Input.js";
-import type TextArea from "@ui5/webcomponents/dist/TextArea.js";
-
 const copyAndApplyStyles = (element: HTMLElement, copiedElement: HTMLElement) => {
 	const computedStyles = getComputedStyle(element);
 
@@ -102,8 +99,9 @@ const getSelectionCoordinates = (element: HTMLInputElement | HTMLTextAreaElement
 	return { ...rectObject, selectedText };
 };
 
-const getElementSelection = (element: HTMLElement ) => {
-	const innerElement = element.shadowRoot!.querySelector("textarea")|| element.shadowRoot!.querySelector("input");
+const getElementSelection = (element: HTMLElement) => {
+	const innerElement = element.shadowRoot!.querySelector("textarea")
+		|| element.shadowRoot!.querySelector("input");
 
 	if (!document.getElementById("ui5-selection-mirror")) {
 		createCopy();
