@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9751](https://github.com/SAP/ui5-webcomponents/issues/9751)) ([a4b4028](https://github.com/SAP/ui5-webcomponents/commit/a4b4028e344fb9546687cec0efbed065dde47b29)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+* **ui5-color-picker:** adjust hue slider update ([#9735](https://github.com/SAP/ui5-webcomponents/issues/9735)) ([e046755](https://github.com/SAP/ui5-webcomponents/commit/e046755de48881edf77d8868974d79443af3e562)), closes [#9693](https://github.com/SAP/ui5-webcomponents/issues/9693)
+* **ui5-menu-item:** add hover and active styles ([#9774](https://github.com/SAP/ui5-webcomponents/issues/9774)) ([55a4179](https://github.com/SAP/ui5-webcomponents/commit/55a41793467a8594401103bff35a3ae46445deb6))
+* **ui5-wizard:** improve focus and keyboard handling ([#9758](https://github.com/SAP/ui5-webcomponents/issues/9758)) ([6573a6e](https://github.com/SAP/ui5-webcomponents/commit/6573a6ecf318715c422617ea8ec2fa0cef62713b)), closes [#9670](https://github.com/SAP/ui5-webcomponents/issues/9670) [#9571](https://github.com/SAP/ui5-webcomponents/issues/9571)
+
+
+
+
+
 # [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
 
 
