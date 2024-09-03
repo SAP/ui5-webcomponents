@@ -18,7 +18,6 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
@@ -190,7 +189,7 @@ type StepInfo = {
 	fastNavigation: true,
 	renderer: litRender,
 	styles: [
-		browserScrollbarCSS,
+		getEffectiveScrollbarStyle(),
 		WizardCss,
 	],
 	staticAreaStyles: WizardPopoverCss,
@@ -345,7 +344,6 @@ class Wizard extends UI5Element {
 		return {
 			root: {
 				"ui5-wiz-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			popover: {
 				"ui5-wizard-responsive-popover": true,

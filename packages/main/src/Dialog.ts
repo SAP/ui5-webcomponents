@@ -9,6 +9,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
@@ -29,7 +30,6 @@ import {
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -116,7 +116,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	tag: "ui5-dialog",
 	template: DialogTemplate,
 	styles: [
-		browserScrollbarCSS,
+		getEffectiveScrollbarStyle(),
 		PopupsCommonCss,
 		dialogCSS,
 	],
