@@ -14,9 +14,10 @@ import {
 	isSpace,
 	isEnter,
 	isTabPrevious,
+	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -80,6 +81,7 @@ type ListItemDeleteEventDetail = {
 }
 
 type ListMoveEventDetail = {
+	originalEvent: Event,
 	source: {
 		element: HTMLElement,
 	},
@@ -305,6 +307,10 @@ type ListItemClickEventDetail = {
 		/**
 		 * @public
 		 */
+		originalEvent: { type: Event },
+		/**
+		 * @public
+		 */
 		source: { type: Object },
 		/**
 		 * @public
@@ -324,6 +330,10 @@ type ListItemClickEventDetail = {
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
+		/**
+		 * @public
+		 */
+		originalEvent: { type: Event },
 		/**
 		 * @public
 		 */
@@ -881,8 +891,53 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isCtrl(e)) {
+			this._moveItem(e.target as ListItemBase, e);
+			return;
+		}
+
 		if (isTabNext(e)) {
 			this._handleTabNext(e);
+		}
+	}
+
+	_moveItem(item: ListItemBase, e: KeyboardEvent) {
+		if (!item || !item.movable) {
+			return;
+		}
+
+		const { placement, element } = findClosestPositionByKey(this.items, item, e);
+
+		if (!element || !placement) {
+			return;
+		}
+
+		e.preventDefault();
+
+		const placementAccepted = !this.fireEvent<ListMoveEventDetail>("move-over", {
+			originalEvent: e,
+			source: {
+				element: item,
+			},
+			destination: {
+				element,
+				placement,
+			},
+		}, true);
+
+		if (placementAccepted) {
+			this.fireEvent<ListMoveEventDetail>("move", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element,
+					placement,
+				},
+			});
+
+			item.focus();
 		}
 	}
 
@@ -1037,6 +1092,7 @@ class List extends UI5Element {
 
 		const placementAccepted = placements.some(placement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
+				originalEvent: e,
 				source: {
 					element: draggedElement,
 				},
@@ -1066,6 +1122,7 @@ class List extends UI5Element {
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		this.fireEvent<ListMoveEventDetail>("move", {
+			originalEvent: e,
 			source: {
 				element: draggedElement,
 			},
