@@ -108,10 +108,10 @@
 				</ui5-file-uploader>
 			</div>
 			<div>
-				<label>Event "fileSizeExceeded" thrown count:</label>
-				<span id="file-size-exceeded-count">0</span>
+				<label>Event "file-size-exceed" thrown count:</label>
+				<span id="file-size-exceed-count">0</span>
 			</div>
-			<div id="file-size-exceeded-result"></div>
+			<div id="file-size-exceed-result"></div>
 		</div>
 	</div>
 	<div>
@@ -171,11 +171,11 @@
 			})
 		});
 
-		const eventCount = document.getElementById("file-size-exceeded-count");
-		const eventResult = document.getElementById("file-size-exceeded-result");
+		const eventCount = document.getElementById("file-size-exceed-count");
+		const eventResult = document.getElementById("file-size-exceed-result");
 		const maxSizeFileUploader = document.getElementById("file-uploader-max-size")
 		
-		maxSizeFileUploader.addEventListener("fileSizeExceeded", function (event) {
+		maxSizeFileUploader.addEventListener("file-size-exceed", function (event) {
 			eventCount.innerHTML = parseFloat(eventCount.innerHTML) + 1;
 	
 			const uploaderMaxSize = maxSizeFileUploader.maxFileSize;
