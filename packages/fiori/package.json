@@ -37,6 +37,8 @@
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "test:ssr": "node -e \"import('./test/ssr/component-imports.js')\"",
+    "test:cypress": "nps test-cy-ci",
+    "test:cypress:open": "nps test-cy-open",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "tsc -b"
   },
@@ -54,6 +56,7 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "2.2.0",
-    "chromedriver": "^127.0.3"
+    "chromedriver": "^127.0.3",
+    "lit": "^2.0.0"
   }
 }
