@@ -344,5 +344,12 @@ describe("Keyboard drag and drop tests", () => {
 
 			assert.strictEqual(await browser.$("#fixedTabsTabSeven").previousElement().getAttribute("id"), "fixedTabsSeparatorOne", "Tab seven has stopped when reached fixed tabs");
 		});
+
+		it("Moving strip item with Home", async () => {
+			await tabContainer.focusItem("fixedTabsTabSix");
+			await browser.keys(["Control", "Home"]);
+
+			assert.strictEqual(await browser.$("#fixedTabsTabSix").previousElement().getAttribute("id"), "fixedTabsSeparatorOne", "Tab six is placed after fixed tabs");
+		});
 	});
 });
