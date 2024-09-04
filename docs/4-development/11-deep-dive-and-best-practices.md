@@ -100,10 +100,10 @@ or another type of selector (for example by ID):
 
 The framework will create a getter/setter pair on your component's prototype for each property, defined with `@property` decorator.
 
-For example, defining text property:
+For example, defining `text` property:
 
 ```ts
-@property
+@property()
 text = ""
 ```
 
@@ -118,8 +118,24 @@ Whenever `text` is read or set, the framework-defined getter/setter will be call
 
 #### Properties vs attributes
 
-The `properties` section defines both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
+The `properties` defined via the `@property` decorator results in both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
 same name but in `kebab-case` is supported. Properties of type `Object` have no attribute counterparts. If you wish to not have an attribute for a given property regardless of type, you can configure it with `noAttribute: true` setting.
+
+For example, defining `headerText` property:
+
+```ts
+@property()
+headerText = ""
+```
+
+you can use both the `headerText` property and `header-text` attribute:
+
+```ts
+let t = myComponent.text;
+myComponent.headerText = "New text";
+myComponent.setAttrbite("header-text", "New text");
+```
+
 
 #### Public vs private properties
 
@@ -131,11 +147,9 @@ are *component state*, therefore cause the component to be invalidated and subse
 
 The most common types of properties are `String`, `Boolean`, `Object`and `Number`.
 
-Most property types can have a default but `Boolean` should always `false` by default.
+Most property types can have a default value, but `Boolean `properties should always default to `false`. When a boolean attribute is absent, it's treated as false, therefore, the default value of an attribute must be always false.
 
-#### Examples
-
-Example of defining properties:
+For example, defining different types of properties:
 
 ```ts
 class MyComponent extends UI5Element {
@@ -155,7 +169,7 @@ class MyComponent extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isPhone = {};
+	_isPhone = false;
 }
 ```
 
@@ -163,12 +177,14 @@ Here `text`, `width`, `scale` and `data` are public properties, and `_isPhone` p
 
 #### Best practices for using properties
 
-The best practice is to **never** change public properties from within the component (they are owned by the application) unless the property changes due to user interaction (f.e. the user typed in an input - so you change the `value` property; or the user clicked a checkbox - and you flip the `checked` property). It is also
-a best practice to always **fire an event** if you change a public property due to user interaction, to let the application know and synchronize its own state.
+- **avoid directly modifying public properties** from within a component, as these properties are typically controlled by the parent application. The only exception to this rule is when the property change results directly from user interaction (e.g., updating a value after a user types in an input field, or toggling a checked property after a user clicks a checkbox). Additionally, whenever you modify a public property due to user interaction, it's important to **fire an event** to notify the parent application. This ensures that the application can synchronize its state accordingly..
 
-As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
+- As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
 
-Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors:
+- Using attribute selectors isntead of setting and using CSS classes on your component. Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors.
+
+For example, using the `size` property (respectively the attribute with the same name) to change component's dimensions for certain values - `size="XS"`:
+
 
 ```css
 :host {
@@ -186,8 +202,6 @@ Both public and private properties are great ways to create CSS selectors for yo
 <my-comopnent size="XS"></my-comopnent> <!-- :host() targets my-component -->
 ```
 
-Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component's dimensions will be changed from `5rem` to `2rem`. 
-Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute. 
 
 #### Metadata properties vs standard JS properties
 
@@ -204,6 +218,114 @@ constructor() {
 However, only metadata-defined properties are managed by the framework: cause invalidation and are converted to/from attributes.
 Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
 that they will not be managed by the framework.
+
+
+## Events
+
+Most UI5 components emit events to inform the application about user interactions. Defining and firing events involves several key aspects:
+
+### Describing the Event
+
+Use the `@event` decorator to define the event. If the event name consists of multiple words, use kebab-case:
+
+```ts
+@event("selection-change", {
+    detail: {
+        valid: { type: Boolean },
+    },
+})
+class MyDemoComponent extends UI5Element {
+}
+```
+
+### Firing the Event
+
+Use the `UI5Element#fireEvent` method to trigger the event:
+
+```ts
+@event("selection-change", {
+    detail: {
+        valid: { type: Boolean },
+    },
+})
+class MyDemoComponent extends UI5Element {
+
+	onItemSelected(e: Event) {
+        this.fireEvent("selection-change", {
+            valid: true,
+        });
+    }
+}
+```
+
+### Describing the Event Detail
+
+When an event includes a detail it's recommended to create a TypeScript type that describes the event detail and use it in the `fireEvent` (as it's a generic method) to force static checks ensuring that proper event detail is passed.
+The naming convention for the type is a combination of the component class name ("MyDemoComponent"), the event name ("SelectionChange"), followed by "EventDetail", written in PascalCase, e.g "MyDemoComponentSelectionChangeEventDetail":
+
+
+```ts
+export type MyDemoComponentSelectionChangeEventDetail = {
+    valid: boolean;
+};
+
+
+@event<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
+    detail: {
+        valid: { type: Boolean },
+    },
+})
+class MyDemoComponent extends UI5Element {
+
+	onItemSelected(e: Event) {
+        this.fireEvent<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
+            valid: true,
+        });
+    }
+}
+```
+
+ **Note:** it's a best practice to export the type to make it available for outside usage.
+
+
+### Handling Events in Templates
+
+ When attaching event handlers within your component's template for events fired by other web components, use the `ui5-` prefix for the event name.
+For example, if a ui5-list component emits a `selection-change` event, handle it using the `ui5-selection-change` event name:
+
+```handlebars
+<div class="my-component">
+		<ui5-list @ui5-selection-change="{{onSelectionChange}}"></ui5-list>
+</div>
+```
+
+By default, events are fired in pairs: one with the standard name and another prefixed with `ui5-`. While the `ui5-` prefixed event is always emitted, the non-prefixed event can be suppressed if the `noConflict` configuration setting is enabled. In this case, only the prefixed event will be triggered. For more details on the `noConflict` setting, refer to the [Configuration](../2-advanced/01-configuration.md) section.
+
+### Preventable Events 
+
+It's common to prevent certain events in an application. You must enable the `cancelable` flag to make the event preventable. 
+
+```ts
+this.fireEvent("change", null, true /* cancelable */);
+```
+
+Sometimes, you may also need to update (or revert) the component's state when an event is prevented by the consuming side. To determine if an event was prevented, check the return value of the `fireEvent` method. It returns false if the event was cancelled (`preventDefault` was called) and true otherwise:
+
+```ts
+class Switch extends UI5Element {
+	toggle() {
+		this.checked = !this.checked;
+		const changePrevented = !this.fireEvent("change", null, true /* cancelable */);
+
+		if (changePrevented) {
+			this.checked = !this.checked;
+		}
+	}
+}
+```
+
+
+## Slots
 
 ## Understanding rendering
 
@@ -244,7 +366,7 @@ renders HTML corresponding to each of its children (`ui5-date` instances) as par
 Invalidation means scheduling an already rendered component for asynchronous re-rendering (in the next animation frame). If an already invalidated component gets changed
 again, before having been re-rendered, this will have no downside - it's in the queue of components to be re-rendered anyway.
 
-Important: when a component is re-rendered, only the parts of its shadow DOM, dependent on the changed properties/slots are changed, which makes most updates very fast.
+**Important:** when a component is re-rendered, only the parts of its shadow DOM, dependent on the changed properties/slots are changed, which makes most updates very fast.
 
 A component becomes *invalidated* whenever:
  - a *metadata-defined* **property** changes (not regular properties that f.e. you define in the constructor)
