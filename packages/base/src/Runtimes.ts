@@ -104,6 +104,9 @@ const compareRuntimes = (index1: number, index2: number) => {
 	return result;
 };
 
+/**
+ * Compares all registered runtimes and returns true if the current runtime is the latest one.
+ */
 const isLatestVersionRuntime = (): boolean => {
 	const currIdx = getCurrentRuntimeIndex();
 	const currentRuntimes = Runtimes.filter((runtime, idx) => compareRuntimes(idx, currIdx) > 0);
