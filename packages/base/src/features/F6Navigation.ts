@@ -4,6 +4,7 @@ import { instanceOfUI5Element } from "../UI5Element.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
 import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
+import { isLatestVersionRuntime } from "../Runtimes.js";
 
 class F6Navigation {
 	static _instance: F6Navigation;
@@ -116,6 +117,12 @@ class F6Navigation {
 			return;
 		}
 
+		// Only latest runtime should execute fast navigation
+		if (!isLatestVersionRuntime()) {
+			return;
+		}
+
+		event.stopImmediatePropagation();
 		this.updateGroups();
 
 		if (this.groups.length < 1) {
