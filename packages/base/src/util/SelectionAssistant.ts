@@ -1,4 +1,4 @@
-import getEffectiveScrollbarStyle from "../util/getEffectiveScrollbarStyle.js"
+import getEffectiveScrollbarStyle from "../util/getEffectiveScrollbarStyle.js";
 
 const copyAndApplyStyles = (element: HTMLElement, copiedElement: HTMLElement) => {
 	const computedStyles = getComputedStyle(element);
@@ -35,7 +35,7 @@ const setInputSpecificStyles = (element: HTMLElement) => {
 
 const applyScrollStylings = () => {
 	const sheet = new CSSStyleSheet();
-	const styles = getEffectiveScrollbarStyle()
+	const styles = getEffectiveScrollbarStyle();
 
 	sheet.replaceSync(styles);
 
