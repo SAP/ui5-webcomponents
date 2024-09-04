@@ -94,6 +94,20 @@ const compareRuntimes = (index1: number, index2: number) => {
 };
 
 /**
+ * Compares all registered runtimes and returns true if the current runtime is the latest one.
+ */
+const isLatestVersionRuntime = (): boolean => {
+	const currIdx = getCurrentRuntimeIndex();
+	const currentRuntimes = Runtimes.filter((runtime, idx) => compareRuntimes(idx, currIdx) > 0);
+
+	if (currentRuntimes.length > 0) {
+		return false;
+	}
+
+	return true;
+};
+
+/**
  * Set an alias for the the current app/library/microfrontend which will appear in debug messages and console warnings
  * @param alias
  */
@@ -106,6 +120,7 @@ const getAllRuntimes = () => {
 };
 
 export {
+	isLatestVersionRuntime,
 	getCurrentRuntimeIndex,
 	registerCurrentRuntime,
 	compareRuntimes,
