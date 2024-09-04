@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9751](https://github.com/SAP/ui5-webcomponents/issues/9751)) ([a4b4028](https://github.com/SAP/ui5-webcomponents/commit/a4b4028e344fb9546687cec0efbed065dde47b29)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+* **ui5-wizard:** improve focus and keyboard handling ([#9758](https://github.com/SAP/ui5-webcomponents/issues/9758)) ([6573a6e](https://github.com/SAP/ui5-webcomponents/commit/6573a6ecf318715c422617ea8ec2fa0cef62713b)), closes [#9670](https://github.com/SAP/ui5-webcomponents/issues/9670) [#9571](https://github.com/SAP/ui5-webcomponents/issues/9571)
+
+
+
+
+
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** improve accessibility ([#9738](https://github.com/SAP/ui5-webcomponents/issues/9738)) ([d8a1196](https://github.com/SAP/ui5-webcomponents/commit/d8a1196586535034bfe87e0583f250543d02b3ba))
+
+
+
+
+
 # [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
 
 

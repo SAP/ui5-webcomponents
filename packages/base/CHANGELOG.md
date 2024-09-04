@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9751](https://github.com/SAP/ui5-webcomponents/issues/9751)) ([a4b4028](https://github.com/SAP/ui5-webcomponents/commit/a4b4028e344fb9546687cec0efbed065dde47b29)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+
+
+
+
+
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** current link aria-current ([#9668](https://github.com/SAP/ui5-webcomponents/issues/9668)) ([87732a1](https://github.com/SAP/ui5-webcomponents/commit/87732a151562d6e387dcf85baefca23b265774ac))
+
+
+
+
+
 # [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
 
 
