@@ -285,6 +285,24 @@ describe("Page general interaction", () => {
 
         assert.strictEqual(await page.getProperty("headerSnapped"), true, "Header is snapped");
     });
+
+	it("should not display snapped title on non-mobile devices even if snappedTitleOnMobile is true", async () => {
+		const dynamicPage = await browser.$("#page");
+		const title = await browser.$("#page ui5-dynamic-page-title");
+
+		// Set snappedTitleOnMobile to true and snap the header
+		await title.setProperty("snappedTitleOnMobile", true);
+		await title.setProperty("snappedTitleOnMobileText", "Snapped Title");
+		await dynamicPage.setProperty("headerSnapped", true);
+
+		// Check if the snapped title on mobile is not visible
+		const snappedTitleOnMobile = await title.shadow$(".ui5-dynamic-page--snapped-title-on-mobile");
+		assert.strictEqual(
+			await snappedTitleOnMobile.isExisting(),
+			false,
+			"Snapped title on mobile should not be displayed on desktop devices even when snappedTitleOnMobile is true."
+		);
+	});
 });
 
 describe("Page layout when content has 100% height", () => {

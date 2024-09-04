@@ -12,7 +12,9 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 
 // Template
 import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
@@ -63,6 +65,7 @@ import {
 	renderer: litRender,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
+	dependencies: [Title, Icon],
 })
 
 /**
@@ -80,6 +83,33 @@ class DynamicPageTitle extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	snapped = false;
+
+	/**
+	 * Defines if snapped title on mobile is enabled.
+	 *
+	 * Using this property enables you to provide a simple, single-line title that takes less space
+	 * on the smaller phone screens when the DynamicPageHeader is in its collapsed (snapped) state.
+	 *
+	 * **Note:** The content set in `snappedTitleOnMobileText` overrides all other content set in the `DynamicPageTitle` slots
+	 * and is only visible on phone screen sizes when the header is in snapped state.
+	 *
+	 * @public
+	 */
+	@property({ type: Boolean })
+	snappedTitleOnMobile = false;
+
+	/**
+	 * Defines the text of the snapped title on mobile.
+	 *
+	 * The only content that is displayed in the DynamicPageTitle when it is viewed on a mobile device
+	 * and the DynamicPageHeader is in collapsed (snapped) state.
+	 *
+	 * **Note:** This property takes effect if the `snappedTitleOnMobile` property is set to `true`.
+	 *
+	 * @public
+	 */
+	@property({ type: String })
+	snappedTitleOnMobileText = "";
 
 	/**
 	 * Defines if the mobileNavigationActions are shown.
@@ -242,6 +272,12 @@ class DynamicPageTitle extends UI5Element {
 
 	get _tabIndex() {
 		return this.interactive ? "0" : undefined;
+	}
+
+	get hasSnappedTitleOnMobile() {
+		return isPhone()
+			&& this.snapped
+			&& (this.snappedTitleOnMobile ?? false);
 	}
 
 	get _headerExpanded() {

@@ -35,6 +35,10 @@
     box-shadow: var(--sapContent_HeaderShadow);
 }
 
+:host([snapped][snapped-title-on-mobile]) {
+	min-height: var(--_ui5_dynamic_page_snapped_title_on_mobile_min_height);
+}
+
 /* breadcrumbs */
 ::slotted([ui5-breadcrumbs][slot="breadcrumbs"]) {
     padding: var(--_ui5_dynamic_page_title_breadcrumbs_padding_top) 0
@@ -86,6 +90,17 @@
 .ui5-dynamic-page-title--heading {
     flex-shrink: 1;
     min-width: 1px;
+}
+
+.ui5-dynamic-page--snapped-title-on-mobile {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	pointer-events: none;
+
+	[ui5-title] {
+		line-height: var(--_ui5_dynamic_page_snapped_title_on_mobile_line_height);
+	}
 }
 
 .ui5-dynamic-page-title--content {
