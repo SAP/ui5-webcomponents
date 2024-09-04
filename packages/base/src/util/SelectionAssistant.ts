@@ -1,3 +1,5 @@
+import getEffectiveScrollbarStyle from "../util/getEffectiveScrollbarStyle.js"
+
 const copyAndApplyStyles = (element: HTMLElement, copiedElement: HTMLElement) => {
 	const computedStyles = getComputedStyle(element);
 
@@ -32,25 +34,12 @@ const setInputSpecificStyles = (element: HTMLElement) => {
 };
 
 const applyScrollStylings = () => {
-	const styleTag = document.createElement("style");
-	const styles = `#ui5-selection-mirror::-webkit-scrollbar:horizontal {
-			height: var(--sapScrollBar_Dimension);
-		}
+	const sheet = new CSSStyleSheet();
+	const styles = getEffectiveScrollbarStyle()
 
-		#ui5-selection-mirror::-webkit-scrollbar:vertical {
-			width: var(--sapScrollBar_Dimension);
-		}
+	sheet.replaceSync(styles);
 
-		#ui5-selection-mirror::-webkit-scrollbar {
-			border-left: var(--browser_scrollbar_border);
-		}
-
-		#ui5-selection-mirror::-webkit-scrollbar-thumb {
-			border-radius: var(--browser_scrollbar_border_radius);
-		}`;
-
-	styleTag.appendChild(document.createTextNode(styles));
-	document.body.appendChild(styleTag);
+	document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
 };
 
 const createCopy = () => {
