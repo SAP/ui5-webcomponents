@@ -325,8 +325,6 @@ class Switch extends UI5Element {
 ```
 
 
-## Slots
-
 ## Understanding rendering
 
 ### What is rendering? <a name="rendering_def"></a>

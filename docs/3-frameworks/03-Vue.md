@@ -64,7 +64,7 @@ In order to use two-way data binding, use `v-model` as follows:
 <ui5-input v-model="inputValue"></ui5-input>
 ```
 
-For `CheckBox` and `RadioButton` web components, you need to include an additional `type` attribute. This informs the Vue compiler that these components use the `checked` property (unlike most input-type components that use the `value` property).
+For the `CheckBox` and `RadioButton` web components, you need to include an additional `type` attribute. This informs the Vue compiler that these components use the `checked` property (unlike most input-type components that use the `value` property).
 
 ```html
 <ui5-radio-button type="radio" v-model="rbValue"></ui5-radio-button>
