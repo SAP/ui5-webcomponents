@@ -324,6 +324,202 @@ class Switch extends UI5Element {
 }
 ```
 
+## Slots
+
+Web Components offer a `slot` mechanism for component composition, allowing components to render children
+or other components in specific locations within their shadow root.
+
+To enable slotting for your component, simply add a `<slot>` element within your `.hbs` template. 
+This acts as a placeholder that can be filled with any HTML markup.
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<slot></slot>
+</div>
+```
+
+On the consuming side, you can insert HTML elements into your component:
+
+```html
+<!-- index.html -->
+<my-demo-component>
+    <span>Hello World</span>
+</my-demo-component>
+```
+
+For documentation purposes and to inform component consumers about the available slot,
+we should describe it with a brief JSDoc comment at component class level as shown below:
+
+```ts
+/*
+ * @slot {Array<Node>} default - Defines the content of the component.
+ */
+@customElement({
+	tag: "ui5-demo-component",
+})
+class MyDemoComponent extends UI5Element {
+```
+
+### Slot as Class Member
+
+We can define our slots as class members via the `@slot` decorator as follows: 
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot()
+    items!: Array<HTMLElement>;
+}
+```
+
+We need this when we need to access the slotted children for some reason. For example, to get the slotted elements count:
+
+```ts
+   const itemsCount = this.items.length;
+```
+
+Or, to read some state of the slotted elements:
+
+
+```ts
+const hasDisabledItem = this.items.some(el => el.disabled);
+```
+
+Or, sometimes even set some private state on the slotted elements:
+
+```ts
+this.items.forEach((item, key) => {
+	const isLastChild = key ===  this.items..length - 1;
+	item.showBorder = isLastChild;
+});
+```
+
+All slots, declared with the `@slot` decorator, are arrays with elements of type Node or HTMLElement.
+So, you can safely and **must** declare slots (by convention) with `!:` as the accessor will return an empty array in the worst case.
+
+Also, when you declare slots as class members, you can document them in place - you don't need to describe them at class level as mentioned in the previous section.
+
+```ts
+/**
+ * Defines the items of the component.
+ * @public
+ */
+@slot()
+items: Array<HTMLElement>
+```
+
+
+### Default and Named Slot
+
+Default slot is the one that can be used without setting the `slot` attribute of the slotted elements, while 
+named slot requires setting the `slot` attribute: 
+
+- Default slot
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<slot></slot>
+</div>
+```
+
+```html
+<!-- index.html -->
+<my-demo-component>
+    <span>Hello World</span>
+</my-demo-component>
+```
+
+- Named slot
+
+The named slot requires a small change in the component's template. You must pass the `name` attrbite to the `slot` element:
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<slot name="content"></slot>
+</div>
+
+```html
+<!-- index.html -->
+<my-demo-component>
+    <span slot="content">Hello World</span>
+</my-demo-component>
+```
+
+
+- Declare default slot
+
+All slots are named if you simply use the `@slot` decorator without any settings, while the default slots must be explicitly marked as such with the `"default"` setting:
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot({ type: HTMLElement, "default": true })
+    content!: Array<HTMLElement>;
+}
+```
+
+- Declare named slot
+
+Simply use the `@slot` decorator without any settings:
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot()
+    content!: Array<HTMLElement>;
+}
+```
+
+
+
+It's a good practice is to make use of the default slot as it requires less code to use your component.
+And, if your component has multiple slots - to pick the most important and used one as the default.
+
+For example, here we assume that the "content" slot is more important and we declared it as default.
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<div class="my-component-heading">
+		<slot name="heading"></slot>
+	</div>
+
+	<slot></slot>
+</div>
+```
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<h1 slot="heading">Heading</h1>
+    <span>Hello World</span>
+</my-demo-component>
+```
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot({ type: HTMLElement, "default": true })
+    content!: Array<HTMLElement>;
+
+	@slot()
+    heading!: Array<HTMLElement>;
+}
+```
+
+**Note:** If the slot configuration object is not provided (e.g. `@slot()`), `HTMLElement` will be used as the default type.
+However, if you provide this object, the `type` field is mandatory.
+
 
 ## Understanding rendering
 
