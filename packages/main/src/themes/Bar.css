@@ -25,9 +25,7 @@
 }
 
 .ui5-bar-root .ui5-bar-content-container {
-	min-width: calc(30% - calc(var(--_ui5_bar-start-container-padding-start)
-							 + var(--_ui5_bar-end-container-padding-end)
-						  + (2*var(--_ui5_bar-mid-container-padding-start-end))));
+	min-width: 30%;
 }
 
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
@@ -74,27 +72,27 @@
 
 :host([media-range="S"]) .ui5-bar-startcontent-container,
 :host([media-range="S"]) .ui5-bar-endcontent-container {
-	padding-inline-start: 1rem;
+	padding-inline-start: var(--_ui5_bar-start-container-padding-start_S);
 }
 
 :host([media-range="M"]) .ui5-bar-startcontent-container,
 :host([media-range="L"]) .ui5-bar-startcontent-container {
-	padding-inline-start: 2rem;
+	padding-inline-start: var(--_ui5_bar-start-container-padding-start_M_L);
 }
 
 :host([media-range="XL"]) .ui5-bar-startcontent-container {
-	padding-inline-start: 3rem;
+	padding-inline-start: var(--_ui5_bar-start-container-padding-start_X_L);
 }
 
 :host([media-range="S"]) .ui5-bar-endcontent-container {
-	padding-inline-end: 1rem;
+	padding-inline-end: var(--_ui5_bar-end-container-padding-end_S);
 }
 
 :host([media-range="M"]) .ui5-bar-endcontent-container,
 :host([media-range="L"]) .ui5-bar-endcontent-container {
-	padding-inline-end: 2rem;
+	padding-inline-end: var(--_ui5_bar-end-container-padding-end_M_L);
 }
 
 :host([media-range="XL"]) .ui5-bar-endcontent-container {
-	padding-inline-end: 3rem;
+	padding-inline-end: var(--_ui5_bar-end-container-padding-end_XL);
 }
