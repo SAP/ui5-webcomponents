@@ -24,10 +24,6 @@
 	justify-content: flex-start;
 }
 
-.ui5-bar-root .ui5-bar-content-container {
-	min-width: 30%;
-}
-
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
 	min-width: 0px;
 	overflow: hidden;
