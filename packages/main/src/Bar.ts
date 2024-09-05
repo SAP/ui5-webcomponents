@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import type BarDesign from "./types/BarDesign.js";
 
 // Template
@@ -83,6 +84,13 @@ class Bar extends UI5Element {
 	@slot({ type: HTMLElement })
 	endContent!: Array<HTMLElement>
 
+	/**
+	 * Defines the current media query size.
+	 * @private
+	 */
+	@property()
+	mediaRange?: string;
+
 	_handleResizeBound: () => void;
 
 	get accInfo() {
@@ -100,6 +108,8 @@ class Bar extends UI5Element {
 	handleResize() {
 		const bar = this.getDomRef()!;
 		const barWidth = bar.offsetWidth;
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, barWidth);
+
 		const needShrinked = Array.from(bar.children).some(child => {
 			return (child as HTMLElement).offsetWidth > barWidth / 3;
 		});

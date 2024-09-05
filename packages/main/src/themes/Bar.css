@@ -18,7 +18,6 @@
 }
 
 .ui5-bar-root .ui5-bar-startcontent-container {
-	padding-inline-start: var(--_ui5_bar-start-container-padding-start);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -38,7 +37,6 @@
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
-	padding-inline-end: var(--_ui5_bar-end-container-padding-end);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -72,4 +70,31 @@
 
 ::slotted(*) {
 	margin: 0 0.25rem;
+}
+
+:host([media-range="S"]) .ui5-bar-startcontent-container,
+:host([media-range="S"]) .ui5-bar-endcontent-container {
+	padding-inline-start: 1rem;
+}
+
+:host([media-range="M"]) .ui5-bar-startcontent-container,
+:host([media-range="L"]) .ui5-bar-startcontent-container {
+	padding-inline-start: 2rem;
+}
+
+:host([media-range="XL"]) .ui5-bar-startcontent-container {
+	padding-inline-start: 3rem;
+}
+
+:host([media-range="S"]) .ui5-bar-endcontent-container {
+	padding-inline-end: 1rem;
+}
+
+:host([media-range="M"]) .ui5-bar-endcontent-container,
+:host([media-range="L"]) .ui5-bar-endcontent-container {
+	padding-inline-end: 2rem;
+}
+
+:host([media-range="XL"]) .ui5-bar-endcontent-container {
+	padding-inline-end: 3rem;
 }
