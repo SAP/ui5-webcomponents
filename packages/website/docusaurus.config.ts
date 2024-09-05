@@ -81,10 +81,31 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-  plugins: ['docusaurus-lunr-search'],
-
-
+  plugins: [],
   themeConfig: {
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '622UUS4QSN',
+
+      // Public API key: it is safe to commit it
+      apiKey: '27580e2427e91972e5385a935bafb0a1',
+
+      indexName: 'sapio',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+      // Optional: Algolia search parameters
+      searchParameters: {},
+
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+
+      // // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+      // insights: false,
+
+      //... other Algolia params
+    },
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,
