@@ -40,13 +40,13 @@ tabContainer.addEventListener("move", (event) => {
 	const { source, destination } = event.detail;
 
 	switch (destination.placement) {
-		case "Before":
+		case MovePlacement.Before:
 			destination.element.before(source.element);
 			break;
-		case "After":
+		case MovePlacement.After:
 			destination.element.after(source.element);
 			break;
-		case "On":
+		case MovePlacement.On:
 			destination.element.prepend(source.element);
 			break;
 	}

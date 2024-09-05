@@ -2,7 +2,7 @@ import "@ui5/webcomponents/dist/Tree.js";
 import "@ui5/webcomponents/dist/TreeItem.js";
 import "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents/dist/Label.js";
-
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 const tree = document.getElementById("tree");
 const handleBeforeItemMove = (e) => {
@@ -33,13 +33,13 @@ const handleMove = (e) => {
     const { destination, source } = e.detail;
 
     switch (destination.placement) {
-        case "Before":
+        case MovePlacement.Before:
             destination.element.before(source.element);
             break;
-        case "After":
+        case MovePlacement.After:
             destination.element.after(source.element);
             break;
-        case "On":
+        case MovePlacement.On:
             destination.element.prepend(source.element);
             break;
     }
