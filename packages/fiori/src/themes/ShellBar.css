@@ -129,7 +129,6 @@ slot[name="profile"] {
 	display: inline-block;
 	font-size: var(--sapFontSmallSize);
 	color: var(--sapShell_TextColor);
-	/* line-height: 1rem; */
 	font-weight: normal;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -177,9 +176,32 @@ slot[name="profile"] {
 	width: 33.3%;
 }
 
-:host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {
+:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {
 	width: 35rem;
 }
+
+:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-overflow-container-right-child,
+:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-overflow-container-additional-content,
+:host([breakpoint-size="XL"][show-search-field]) .ui5-shellbar-overflow-container-right-child,
+:host([breakpoint-size="XL"][show-search-field]) .ui5-shellbar-overflow-container-additional-content  {
+	max-width: 50%;
+}
+
+:host([breakpoint-size="L"][show-search-field]) .ui5-shellbar-overflow-container-additional-content,
+:host([breakpoint-size="M"][show-search-field]) .ui5-shellbar-overflow-container-additional-content {
+	flex-shrink: 1;
+}
+
+:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-overflow-container-right-child,
+:host([breakpoint-size="XL"][show-search-field]) .ui5-shellbar-overflow-container-right-child,
+:host([breakpoint-size="L"][show-search-field]) .ui5-shellbar-overflow-container-right-child {
+	position: relative;
+}
+
+:host([breakpoint-size="S"][show-search-field]) .ui5-shellbar-overflow-container-right {
+	position: static;
+}
+
 
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-left {
 	flex-shrink: 0;
@@ -261,7 +283,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-button {
 	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
-	/* width: 2.5rem; */
+	width: 2.5rem;
 	box-sizing: border-box;
 }
 
@@ -344,13 +366,9 @@ slot[name="profile"] {
 	white-space: nowrap;
 	flex: 1 1 auto;
 	width: 100%;
-	align-content: flex-end;
+	justify-content: flex-end;
 	overflow: hidden;
 }
-/*
-:host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
-	padding-inline-start: 8rem;
-} */
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
 	display: flex;
@@ -359,29 +377,38 @@ slot[name="profile"] {
 	align-items: center;
 	overflow: hidden;
 	flex: 1 1 auto;
-	min-width: 88px;
 }
 
 .ui5-shellbar-overflow-container-additional-content {
 	align-items: center;
 	display: flex;
-	justify-content: flex-start;
+	justify-content: flex-end;
 	flex: 1 0 auto;
+	overflow: hidden;
+	min-width: 0;
 }
+
+.ui5-shellbar-spacer {
+	flex-grow: 1;
+	height: 1px
+}
+
+.ui5-shellbar-separator {
+	flex-grow: 0;
+	height: 1rem;
+	width: 1px;
+	background-color: gray;
+}
+.ui5-shellbar-separator:not(:first-child) {
+	margin-inline-start: 0.5rem;
+}
+
 
 .ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before {
 	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
 .ui5-shellbar-overflow-button {
-	display: none;
-}
-
-:host([breakpoint-size="M"]) .ui5-shellbar-secondary-title {
-	display: none;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-secondary-title {
 	display: none;
 }
 
@@ -396,6 +423,7 @@ slot[name="profile"] {
 .ui5-shellbar-hidden-button,
 .ui5-shellbar-invisible-button {
 	visibility: hidden;
+	order: -1;
 }
 
 ::slotted([hidden]) {
@@ -404,8 +432,11 @@ slot[name="profile"] {
 	position: absolute;
 }
 
-::slotted([slot="additionalContent"]:not(:first-child)) {
+::slotted([slot^="additionalContext"]) {
 	flex-shrink: 0;
+}
+
+::slotted([slot^="additionalContext"]:not(:first-child):not(ui5-menu)) {
 	margin-inline-start: 1rem;
 }
 
@@ -459,7 +490,7 @@ slot[name="profile"] {
 .ui5-shellbar-search-field {
 	align-items: center;
 	flex-grow: 1;
-	min-width: 240px;
+	min-width: 40%;
 	margin-inline-start: 0.5rem;
 	max-width: 25rem;
 }
