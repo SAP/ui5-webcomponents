@@ -110,19 +110,16 @@ type DayPickerNavigateEventDetail = {
 })
 /**
  * Fired when the selected date(s) change
- * @public
  */
 @event("change")
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
- * @public
  */
 @event("navigate")
 class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @default []
-	 * @public
 	 */
 	@property({ type: Array })
 	selectedDates: Array<number> = [];
@@ -135,7 +132,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * - `CalendarSelectionMode.Range` - enables selection of a date range.
 	 * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
 	 * @default "Single"
-	 * @public
 	 */
 	@property()
 	selectionMode: `${CalendarSelectionMode}` = "Single";
@@ -146,7 +142,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 * @default false
-	 * @public
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
@@ -461,23 +456,30 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 		this._safelySetTimestamp(timestamp);
 		this._updateSecondTimestamp();
-
-		if (this.selectionMode === CalendarSelectionMode.Single) {
-			this.selectedDates = [timestamp];
-		} else if (this.selectionMode === CalendarSelectionMode.Multiple) {
-			if (this.selectedDates.length > 0 && isShift) {
-				this._multipleSelection(timestamp);
-			} else {
-				this._toggleTimestampInSelection(timestamp);
-			}
-		} else {
-			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	as Array<number> : [timestamp] as Array<number>;
-		}
+		this._updateSelectedDates(timestamp, isShift);
 
 		this.fireEvent<DayPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
+	}
+
+	_updateSelectedDates(timestamp: number, isShift: boolean) {
+		if (this.selectionMode === CalendarSelectionMode.Multiple) {
+			if (this.selectedDates.length > 0 && isShift) {
+				this._multipleSelection(timestamp);
+			} else {
+				this._toggleTimestampInSelection(timestamp);
+			}
+			return;
+		}
+
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this.selectedDates = [this.selectedDates[0], timestamp];
+			return;
+		}
+
+		this.selectedDates = [timestamp];
 	}
 
 	/**
