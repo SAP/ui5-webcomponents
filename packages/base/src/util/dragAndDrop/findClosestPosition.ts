@@ -74,4 +74,38 @@ const findClosestPosition = (elements: Array<HTMLElement>, point: number, layout
 	};
 };
 
-export default findClosestPosition;
+const findClosestPositionByKey = (elements: Array<HTMLElement>, element: HTMLElement, e: KeyboardEvent) => {
+	let placement;
+	let index = elements.indexOf(element);
+
+	switch (e.key) {
+	case "ArrowLeft":
+	case "ArrowUp":
+		placement = MovePlacement.Before;
+		index--;
+		break;
+	case "ArrowRight":
+	case "ArrowDown":
+		placement = MovePlacement.After;
+		index++;
+		break;
+	case "Home":
+		placement = MovePlacement.Before;
+		index = 0;
+		break;
+	case "End":
+		placement = MovePlacement.After;
+		index = elements.length - 1;
+		break;
+	}
+
+	return {
+		element: elements[index],
+		placement,
+	};
+};
+
+export {
+	findClosestPosition,
+	findClosestPositionByKey,
+};

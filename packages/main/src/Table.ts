@@ -416,7 +416,7 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	_refreshPopinState() {
-		this.headerRow[0].cells.forEach((header, index) => {
+		this.headerRow[0]?.cells.forEach((header, index) => {
 			this.rows.forEach(row => {
 				const cell = row.cells[index];
 				if (cell && cell._popin !== header._popin) {
@@ -481,6 +481,10 @@ class Table extends UI5Element {
 	}
 
 	get _gridTemplateColumns() {
+		if (!this.headerRow[0]) {
+			return;
+		}
+
 		const widths = [];
 		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
 		if (this._getSelection()?.hasRowSelector()) {

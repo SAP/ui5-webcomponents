@@ -259,6 +259,10 @@ class DynamicPageTitle extends UI5Element {
 		}
 	}
 
+	get _needsSeparator() {
+		return (this.navigationBar.length && this.actionsBar.length);
+	}
+
 	prepareLayoutActions() {
 		// all navigation/layout actions should have the NeverOverflow behavior
 		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");

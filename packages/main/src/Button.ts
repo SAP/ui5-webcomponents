@@ -25,7 +25,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
@@ -107,7 +107,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @private
  */
 @event("_active-state-change")
-class Button extends UI5Element implements IButton, IFormElement {
+class Button extends UI5Element implements IButton {
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -359,7 +359,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
+		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
 	_onclick(e: MouseEvent) {
@@ -501,6 +501,14 @@ class Button extends UI5Element implements IButton, IFormElement {
 		};
 	}
 
+	getDefaultTooltip() {
+		if (!getEnableDefaultTooltips()) {
+			return;
+		}
+
+		return getIconAccessibleName(this.icon);
+	}
+
 	get buttonTypeText() {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
@@ -524,7 +532,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {

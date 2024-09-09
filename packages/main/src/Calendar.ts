@@ -182,8 +182,10 @@ type SpecialCalendarDateT = {
  * @csspart day-cell-selected-between - Used to style the day cells in between of selected dates in range.
  * @csspart month-cell - Used to style the month cells.
  * @csspart month-cell-selected - Used to style the month cells when selected.
+ * @csspart month-cell-selected-between - Used to style the day cells in between of selected months in range.
  * @csspart year-cell - Used to style the year cells.
  * @csspart year-cell-selected - Used to style the year cells when selected.
+ * @csspart year-cell-selected-between - Used to style the day cells in between of selected years in range.
  * @since 1.0.0-rc.11
  */
 @customElement({
@@ -412,16 +414,15 @@ class Calendar extends CalendarPart {
 	}
 
 	get _specialCalendarDates() {
+		const hasSelectedType = this._specialDates.some(date => date.type === this._selectedItemType);
 		const validSpecialDates = this._specialDates.filter(date => {
 			const dateType = date.type;
 			const dateValue = date.value;
-			const isTypeMatch = this._selectedItemType !== "None" ? dateType === this._selectedItemType : true;
+			const isTypeMatch = hasSelectedType
+				? (dateType === this._selectedItemType || dateType === "Working" || dateType === "NonWorking")
+				: true;
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
-
-		if (validSpecialDates.length === 0) {
-			this._selectedItemType = "None";
-		}
 
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
@@ -442,7 +443,12 @@ class Calendar extends CalendarPart {
 	}
 
 	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
+		const defaultTypes = ["Working", "NonWorking", "Selected", "Today"];
 		this._selectedItemType = e.detail.item.type;
+
+		if (defaultTypes.includes(this._selectedItemType)) {
+			this._selectedItemType = "None"; // In order to avoid filtering of default types
+		}
 		this._currentPickerDOM._autoFocus = false;
 	}
 
@@ -641,7 +647,7 @@ class Calendar extends CalendarPart {
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
-			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
 		this._currentPickerDOM._autoFocus = true;
@@ -655,7 +661,7 @@ class Calendar extends CalendarPart {
 		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
-			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
 		this._currentPickerDOM._autoFocus = true;

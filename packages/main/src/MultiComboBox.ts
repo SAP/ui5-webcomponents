@@ -708,7 +708,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		this._previouslySelectedItems = this._getSelectedItems();
 		const token: Token[] = e.detail.tokens;
-		const deletingItems = this.items.filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
+		const deletingItems = this._getItems().filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
 
 		deletingItems.forEach(item => {
 			item.selected = false;
@@ -1283,10 +1283,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
-		if (this._internals?.form) {
-			submitForm(this);
-		}
-
 		if (matchingItem) {
 			if (matchingItem.selected) {
 				if (this._validationTimeout) {
@@ -1311,6 +1307,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 			innerInput.setSelectionRange(matchingItem.text!.length, matchingItem.text!.length);
 			this._open = false;
+		} else if (this._internals?.form) {
+			submitForm(this);
 		}
 	}
 
@@ -1815,7 +1813,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	get hasValueState() {
-		return (this.valueState !== ValueState.None) || (this._dialogInputValueState !== ValueState.None);
+		const isValueStateSet = this.valueState !== ValueState.None;
+
+		if (isPhone()) {
+			return isValueStateSet || (this._dialogInputValueState !== ValueState.None);
+		}
+
+		return isValueStateSet;
 	}
 
 	get hasValueStateMessage() {
@@ -1993,6 +1997,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 	get _popupLabel() {
 		return MultiComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
+	}
+
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
 	}
 
 	get classes(): ClassMap {

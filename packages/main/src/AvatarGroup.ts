@@ -54,7 +54,7 @@ const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
 const offsets = {
 	[AvatarSize.XS]: {
 		[AvatarGroupType.Individual]: "0.0625rem",
-		[AvatarGroupType.Group]: "-0.75rem",
+		[AvatarGroupType.Group]: "-0.5rem",
 	},
 	[AvatarSize.S]: {
 		[AvatarGroupType.Individual]: "0.125rem",
@@ -369,7 +369,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get firstAvatarSize() {
-		return this.items[0].size;
+		return this.items[0]?.size ?? AvatarSize.S;
 	}
 
 	get classes() {
