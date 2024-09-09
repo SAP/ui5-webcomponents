@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 import packageJson from "./package.json";
 
 
-console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
+console.log("DEPLOYMENT_TYPE", process.env.DEPLOYMENT_TYPE); // eslint-disable-line
 
 const LATEST_URL_PARTH = "/ui5-webcomponents/";
 const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nightly/";
@@ -28,6 +28,8 @@ const getFullURL = () => {
   return DEVELOPMENT_ENVIRONMENT ? `${BASE_URL}` : `https://sap.github.io${BASE_URL}`
 }
 
+// ["v1", "nightly", "current"]
+const siteVersion = LATEST_DEPLOYMENT ? (packageJson.version.startsWith("1") ? "v1" : "current") : "nightly";
 
 const config: Config = {
   customFields: {
@@ -96,7 +98,9 @@ const config: Config = {
       contextualSearch: true,
 
       // Optional: Algolia search parameters
-      searchParameters: {},
+      searchParameters: {
+        facetFilters: [`version:${siteVersion}`],
+      },
 
       // Optional: path for search page that enabled by default (`false` to disable it)
       searchPagePath: 'search',
