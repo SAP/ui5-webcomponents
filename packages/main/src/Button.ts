@@ -99,7 +99,6 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * **Note:** The event will not be fired if the `disabled`
  * property is set to `true`.
  * @public
- * @native
  */
 @event("click")
 /**
@@ -367,7 +366,12 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
-		markEvent(e, "button");
+		e.stopPropagation();
+
+		if (!this.fireEvent("click", true, true)) {
+			return;
+		}
+
 		if (this._isSubmit) {
 			submitForm(this);
 		}
