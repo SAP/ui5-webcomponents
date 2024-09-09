@@ -21,7 +21,7 @@
 	flex-direction: column;
 }
 
-:host [ui5-busy-indicator] {
+[ui5-busy-indicator] {
 	width: 100%;
 }
 
