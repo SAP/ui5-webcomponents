@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Shell Bar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/ShellBar.css">
+</head>
+
+<body class="shellbar1auto">
+
+	<ui5-shellbar
+		id="shellbarWithLogoClick"
+		class="shellbar-example"
+		data-ui5-static-stable="shellbarWithLogoClickStatic"
+		primary-title="SAP Labs Bulgaria"
+		secondary-title="Solution name"
+		show-notifications
+		show-product-switch
+	>
+		<ui5-button icon="menu2" slot="startButton" id="btnOpenStart"></ui5-button>
+		<ui5-button id="btnOpenBasic" end-icon="slim-arrow-down" slot="additionalContextStart" data-priority="10">Open Menu</ui5-button>
+		<ui5-menu id="menuSubs" opener="btnOpenBasic" slot="additionalContextStart" data-priority="10">
+			<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
+			<ui5-menu-item text="New Folder" icon="add-folder" disabled></ui5-menu-item>
+			<ui5-menu-item text="Open" icon="open-folder" starts-section>
+				<ui5-menu-item text="Open Locally" icon="open-folder">
+					<ui5-menu-item text="Open from C"></ui5-menu-item>
+					<ui5-menu-item text="Open from D"></ui5-menu-item>
+					<ui5-menu-item text="Open from E"></ui5-menu-item>
+				</ui5-menu-item>
+				<ui5-menu-item text="Open from Cloud"></ui5-menu-item>
+			</ui5-menu-item>
+			<ui5-menu-item text="Save" icon="save">
+				<ui5-menu-item text="Save Locally" icon="save">
+					<ui5-menu-item text="Save on C" icon="save"></ui5-menu-item>
+					<ui5-menu-item text="Save on D" icon="save"></ui5-menu-item>
+					<ui5-menu-item text="Save on E" icon="save"></ui5-menu-item>
+				</ui5-menu-item>
+				<ui5-menu-item text="Save on Cloud" icon="upload-to-cloud"></ui5-menu-item>
+			</ui5-menu-item>
+			<ui5-menu-item text="Close"></ui5-menu-item>
+			<ui5-menu-item text="Preferences" icon="action-settings" starts-section></ui5-menu-item>
+			<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
+		</ui5-menu>
+		<ui5-tag color-scheme="7" slot="additionalContextStart" data-priority="4">Special 157.4M EUR</ui5-tag>
+		<ui5-text slot="additionalContextStart" data-priority="3">Under construction</ui5-text>
+
+		<ui5-switch design="Textual" text-on="On" text-off="Off" slot="additionalContextStart"></ui5-switch>
+
+
+		<ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
+			<div slot="valueStateMessage">Instructions</div>
+		</ui5-input>
+		<ui5-toggle-button icon="sap-icon://product" slot="additionalContextEnd" text="Button3" data-priority="2"></ui5-toggle-button>
+
+		<ui5-toggle-button icon="sap-icon://product" slot="additionalContextEnd" text="Button3" data-priority="1"></ui5-toggle-button>
+
+		<ui5-toggle-button icon="sap-icon://product" slot="additionalContextEnd" text="Button3" data-priority="6"></ui5-toggle-button>
+
+		<ui5-toggle-button icon="sap-icon://product" slot="additionalContextEnd" text="Button3" data-priority="7"></ui5-toggle-button>
+
+		<ui5-toggle-button icon="sap-icon://product" slot="additionalContextEnd" text="Button3" data-priority="8"></ui5-toggle-button>
+
+		<ui5-toggle-button icon="sap-icon://product" slot="additionalContextEnd" text="Button3" data-priority="9"></ui5-toggle-button>
+
+
+		<ui5-avatar slot="profile" icon="customer"></ui5-avatar>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" slot="logo"/>
+		<ui5-shellbar-item icon="activities" text="Button4"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="thing-type" text="Button5"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="action-settings" text="Button8"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="sys-help" text="Button9"></ui5-shellbar-item>
+		<ui5-toggle-button id="assistant" icon="sap-icon://da" slot="assistant" text="Button3"></ui5-toggle-button>
+
+	</ui5-shellbar>
+	<ui5-side-navigation collapsed>
+		<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="People" expanded icon="group">
+			<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="From Other Team"></ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+		<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="Events" icon="calendar">
+			<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+			<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank">
+			</ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+		<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link">
+			<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank">
+			</ui5-side-navigation-sub-item>
+		</ui5-side-navigation-item>
+		<ui5-side-navigation-item slot="fixedItems" text="History" icon="history">
+		</ui5-side-navigation-item>
+	</ui5-side-navigation>
+	<div class="content"></div>
+	<script>
+		const btnOpenBasic = document.getElementById("btnOpenBasic");
+		const btnOpenStart = document.getElementById("btnOpenStart");
+
+		const menuBasic = document.getElementById("menuSubs");
+		const sidenav = document.querySelector("ui5-side-navigation");
+
+		btnOpenBasic.addEventListener("click", function(event) {
+			menuBasic.open = !menuBasic.open;
+		});
+		btnOpenStart.addEventListener("click", () => {
+			sidenav.toggleAttribute("collapsed");
+		});
+
+		assistant.addEventListener("click", event => {
+			const toggleButton = event.target;
+			toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
+		});
+	</script>
+
+</body>
+</html>

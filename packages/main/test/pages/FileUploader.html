@@ -28,7 +28,7 @@
 	</div>
 
 	<div>
-		<ui5-label>Single file upload:</label>
+		<label>Single file upload:</label>
 		<ui5-file-uploader placeholder="upload file">
 			<ui5-button>Upload</ui5-button>
 		</ui5-file-uploader>
@@ -95,6 +95,26 @@
 		</ui5-file-uploader>
 	</div>
 	<div>
+		<ui5-title>Maximum File Size</ui5-title>
+		<div class="fileuploader1auto">
+			<label>Accepts maximum file size of 1 MB:</label>
+			<div>
+				<ui5-file-uploader 
+					placeholder="Upload"
+					max-file-size="1"
+					multiple
+					id="file-uploader-max-size">
+					<ui5-button>Upload</ui5-button>
+				</ui5-file-uploader>
+			</div>
+			<div>
+				<label>Event "file-size-exceed" thrown count:</label>
+				<span id="file-size-exceed-count">0</span>
+			</div>
+			<div id="file-size-exceed-result"></div>
+		</div>
+	</div>
+	<div>
 		<ui5-title>Form support</ui5-title>
 		<form
 			class="fileuploader1auto"
@@ -150,6 +170,34 @@
 				console.log("Error")
 			})
 		});
+
+		const eventCount = document.getElementById("file-size-exceed-count");
+		const eventResult = document.getElementById("file-size-exceed-result");
+		const maxSizeFileUploader = document.getElementById("file-uploader-max-size")
+		
+		maxSizeFileUploader.addEventListener("file-size-exceed", function (event) {
+			eventCount.innerHTML = parseFloat(eventCount.innerHTML) + 1;
+	
+			const uploaderMaxSize = maxSizeFileUploader.maxFileSize;
+			const filesData = event.detail.filesData;
+
+			filesData.forEach(fileData => {
+				const fileSizeDifference = (fileData.fileSize - uploaderMaxSize).toFixed(2);
+				const errorMessage = "Can't upload file '" + fileData.fileName + "' because it exceeds the maximum upload size by " + fileSizeDifference + " MB.";
+
+				const messageStrip = document.createElement('ui5-message-strip');
+				messageStrip.addEventListener("close", handleMessageClose);
+				eventResult.append(messageStrip);
+
+				messageStrip.design = "Negative";
+				messageStrip.innerHTML = errorMessage;
+			})
+		})
+
+		function handleMessageClose(event) {
+			event.target.remove();
+		}
+
 	</script>
 </body>
 </html>

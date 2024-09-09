@@ -1,8 +1,8 @@
 <header
 	class="{{classes.wrapper}}"
 	aria-label="{{_shellbarText}}"
-	part="root"
->
+	@focusin={{_onfocusin}}
+	part="root">
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 
 		{{#if startButton.length}}
@@ -12,22 +12,22 @@
 			{{/if}}
 		{{/if}}
 
-		{{!-- {{#if hasMenuItems}} --}}
-		{{!-- {{#unless showLogoInMenuButton}} --}}
-		{{!-- <span class="ui5-shellbar-logo" role="{{accLogoRole}}" aria-label="{{_logoText}}" title="{{_logoText}}"
+		{{#if hasMenuItems}}
+		{{#unless showLogoInMenuButton}}
+		<span class="ui5-shellbar-logo" role="{{accLogoRole}}" aria-label="{{_logoText}}" title="{{_logoText}}"
 			@click="{{_logoPress}}" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}" tabindex="0"
 			data-ui5-stable="logo">
 			<slot name="logo"></slot>
-		</span> --}}
-		{{!-- {{/unless}} --}}
+		</span>
+		{{/unless}}
 
-		{{!-- {{#if showTitleInMenuButton}}
+		{{#if showTitleInMenuButton}}
 		<h1 class="ui5-hidden-text">
 			{{primaryTitle}}
 		</h1>
-		{{/if}} --}}
+		{{/if}}
 
-		{{!-- {{#if showMenuButton}}
+		{{#if showMenuButton}}
 		<button class="{{classes.button}}" @click="{{_headerPress}}" aria-haspopup="menu"
 			aria-expanded="{{_menuPopoverExpanded}}" data-ui5-stable="menu">
 			{{#if showLogoInMenuButton}}
@@ -46,14 +46,14 @@
 			<ui5-icon class="ui5-shellbar-menu-button-arrow" name="slim-arrow-down">
 			</ui5-icon>
 		</button>
-		{{/if}} --}}
-		{{!-- {{/if}} --}}
+		{{/if}}
+		{{/if}}
 
-		{{!-- {{#unless hasMenuItems}} --}}
+		{{#unless hasMenuItems}}
 		{{#if hasMenuItems}}
 			<slot name="menuItems"></slot>
 		{{/if}}
-		<div class="ui5-shellbar-logo-area" @click="{{_logoPress}}" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}">
+		<div class="ui5-shellbar-logo-area" @click="{{_logoPress}}" tabindex="0" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}">
 			{{#if hasLogo}}
 				<span class="ui5-shellbar-logo"
 					role="{{accLogoRole}}"
@@ -62,12 +62,12 @@
 					@click="{{_logoPress}}"
 					@keydown="{{_logoKeydown}}"
 					@keyup="{{_logoKeyup}}"
-					tabindex="0"
 					data-ui5-stable="logo"
 				>
 					<slot name="logo"></slot>
 				</span>
 			{{/if}}
+			{{#unless _isSBreakpoint}}
 			<div class="ui5-shellbar-headings">
 				{{#if primaryTitle}}
 				<h1 class="ui5-shellbar-title">
@@ -80,25 +80,45 @@
 					{{/if}}
 				{{/if}}
 			</div>
+			{{/unless}}
 		</div>
-		{{!-- {{/unless}} --}}
+		{{/unless}}
 
 
 
 	</div>
+	{{#if hasMidContent}}
+		<div class="ui5-shellbar-overflow-container ui5-shellbar-mid-content">
+			<slot name="midContent"></slot>
+		</div>
+	{{/if}}
 		<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-				{{!-- {{#if hasMidContent}}
 
-				<slot name="midContent"></slot>
-
-				{{else}} --}}
 
 				{{#if _isFullVariant}}
-					{{#if additionalContent}}
-						<div class="ui5-shellbar-overflow-container-additional-content">
-							<slot name="additionalContent"></slot>
-						</div>
-					{{/if}}
+					{{#unless _isSBreakpoint}}
+						{{#if hasAdditionalContext}}
+							<div class="ui5-shellbar-overflow-container-additional-content">
+								{{!-- {{#if additionalContextStart}}
+									{{#if hasVisibleAdditionalContextStart}}
+										<div class="ui5-shellbar-separator"></div>
+									{{/if}}
+								{{/if}} --}}
+								{{#each additionalContextStart}}
+									<slot name="{{this._individualSlot}}"></slot>
+								{{/each}}
+									<div class="ui5-shellbar-spacer"></div>
+								{{#each additionalContextEnd}}
+									<slot name="{{this._individualSlot}}"></slot>
+								{{/each}}
+								{{!-- {{#if additionalContextEnd}}
+									{{#if hasVisibleAdditionalContextEnd}}
+										<div class="ui5-shellbar-separator"></div>
+									{{/if}}
+								{{/if}} --}}
+							</div>
+						{{/if}}
+					{{/unless}}
 				{{/if}}
 					<div class="ui5-shellbar-overflow-container-right-child">
 				{{#if _isFullVariant}}
@@ -147,7 +167,20 @@
 					{{#if hasAssistant}}
 						<slot name="assistant"></slot>
 					{{/if}}
-					{{#each customItemsInfo}}
+				{{/if}}
+				{{#if showNotifications}}
+					{{#if _isFullVariant}}
+						<ui5-button id="{{this._id}}-item-2" style="{{styles.items.notification}}"
+							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
+							icon="sap-icon://bell" data-ui5-text="Notifications"
+							data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
+							tooltip="{{_notificationsText}}"
+							.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
+							data-ui5-stable="notifications"></ui5-button>
+					{{/if}}
+				{{/if}}
+				{{#each customItemsInfo}}
+					{{#unless this.shouldBeHidden}}
 					<ui5-button
 						id="{{this.id}}"
 						style="{{this.styles}}"
@@ -160,47 +193,40 @@
 						data-ui5-stable="{{stableDomRef}}"
 						@click={{this.press}}
 					></ui5-button>
-					{{/each}}
+					{{/unless}}
+				{{/each}}
 
-					{{#if showNotifications}}
-					<ui5-button id="{{this._id}}-item-2" style="{{styles.items.notification}}"
-						class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
-						icon="sap-icon://bell" data-ui5-text="Notifications"
-						data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
-						tooltip="{{_notificationsText}}"
-						.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
-						data-ui5-stable="notifications"></ui5-button>
-					{{/if}}
 
+				{{#if _isFullVariant}}
+					<ui5-button
+						id="{{this._id}}-item-5"
+						style="{{styles.items.overflow}}"
+						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
+						icon="sap-icon://overflow"
+						@click="{{_handleOverflowPress}}"
+						tooltip="{{_overflowText}}"
+						.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
+						data-ui5-stable="overflow"
+					></ui5-button>
 				{{/if}}
-			{{#if _isFullVariant}}
-				<ui5-button
-					id="{{this._id}}-item-5"
-					style="{{styles.items.overflow}}"
-					class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
-					icon="sap-icon://overflow"
-					@click="{{_handleOverflowPress}}"
-					tooltip="{{_overflowText}}"
-					.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
-					data-ui5-stable="overflow"
-				></ui5-button>
-			{{/if}}
-			{{#if hasProfile}}
+\			{{#if hasProfile}}
 				{{> profileButton}}
 			{{/if}}
 
 			{{#if showProductSwitch}}
-			<ui5-button
-				id="{{this._id}}-item-4"
-				style="{{styles.items.product}}"
-				class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch"
-				icon="sap-icon://grid"
-				data-ui5-text="Product Switch"
-				@click={{_handleProductSwitchPress}}
-				tooltip="{{_productsText}}"
-				.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
-				data-ui5-stable="product-switch"
-			></ui5-button>
+				{{#if _isFullVariant}}
+					<ui5-button
+						id="{{this._id}}-item-4"
+						style="{{styles.items.product}}"
+						class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-no-overflow-button"
+						icon="sap-icon://grid"
+						data-ui5-text="Product Switch"
+						@click={{_handleProductSwitchPress}}
+						tooltip="{{_productsText}}"
+						.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
+						data-ui5-stable="product-switch"
+					></ui5-button>
+				{{/if}}
 			{{/if}}
 			</div>
 		</div>
@@ -213,7 +239,7 @@
 		@click={{_handleProfilePress}}
 		style="{{styles.items.profile}}"
 		tooltip="{{_profileText}}"
-		class="ui5-shellbar-button ui5-shellbar-image-button"
+		class="ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-no-overflow-button"
 		.accessibilityAttributes={{accInfo.profile.accessibilityAttributes}}
 		data-ui5-stable="profile"
 	>

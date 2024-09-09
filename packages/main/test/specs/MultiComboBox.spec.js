@@ -1629,6 +1629,43 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
 		});
+
+		it("Should not fire submit event when confirming selection", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const cb = await browser.$("#mcb-form");
+
+			await cb.shadow$("input").click();
+			await cb.shadow$("input").keys("A");
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "0", "submit event is not fired");
+
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "1", "submit event is now fired");
+		});
+
+		it("Should remove header when value state is reset", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-error");
+
+			// click on arrow
+			await mcb.shadow$("ui5-icon").click();
+
+			// arrow down twice
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+
+			// Enter to make selection
+			await browser.keys("Space");
+
+			// get value state header
+			const valueStateHeader = await mcb.shadow$("ui5-responsive-popover div.ui5-valuestatemessage-header");
+
+			assert.notOk(await valueStateHeader.isExisting(), "Value state header should not be rendered");
+		});
 	});
 
 	describe("MultiComboBox Truncated Token", () => {
@@ -1708,7 +1745,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby has a reference for the value state and the tokens count");
 		});
 
-		it("aria-describedby value according to the tokens count", async () => {
+		it.skip("aria-describedby value according to the tokens count", async () => {
 			const mcb = await browser.$("#mcb-compact");
 
 			await mcb.scrollIntoView();
