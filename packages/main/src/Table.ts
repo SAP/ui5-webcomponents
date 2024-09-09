@@ -465,7 +465,7 @@ class Table extends UI5Element {
 	}
 
 	get styles() {
-		const headerStyleMap = this.headerRow[0].cells.reduce((headerStyles, headerCell) => {
+		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
 			if (headerCell.horizontalAlign !== undefined && Object.values(TableCellHorizontalAlign).includes(headerCell.horizontalAlign as TableCellHorizontalAlign)) {
 				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
 			}
