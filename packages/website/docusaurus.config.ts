@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 import packageJson from "./package.json";
 
 
-console.log(process.env.DEPLOYMENT_TYPE); // eslint-disable-line
+console.log("DEPLOYMENT_TYPE", process.env.DEPLOYMENT_TYPE); // eslint-disable-line
 
 const LATEST_URL_PARTH = "/ui5-webcomponents/";
 const NIGHTLY_URL_PARTH = "/ui5-webcomponents/nightly/";
@@ -28,8 +28,14 @@ const getFullURL = () => {
   return DEVELOPMENT_ENVIRONMENT ? `${BASE_URL}` : `https://sap.github.io${BASE_URL}`
 }
 
+// ["v1", "nightly", "current"]
+const siteVersion = LATEST_DEPLOYMENT ? (packageJson.version.startsWith("1") ? "v1" : "current") : "nightly";
 
 const config: Config = {
+  customFields: {
+    ui5Version: packageJson.version,
+    ui5DeploymentType: process.env.DEPLOYMENT_TYPE,
+  },
   title: 'UI5 Web Components',
   tagline: 'An open-source UI components library for building enterprise-ready applications!',
   favicon: 'img/favicon.ico',
@@ -77,10 +83,33 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-  plugins: ['docusaurus-lunr-search'],
-
-
+  plugins: [],
   themeConfig: {
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '622UUS4QSN',
+
+      // Public API key: it is safe to commit it
+      apiKey: '27580e2427e91972e5385a935bafb0a1',
+
+      indexName: 'sapio',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+      // Optional: Algolia search parameters
+      searchParameters: {
+        facetFilters: [`version:${siteVersion}`],
+      },
+
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+
+      // // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+      // insights: false,
+
+      //... other Algolia params
+    },
     colorMode: {
       defaultMode: 'light',
       disableSwitch: true,

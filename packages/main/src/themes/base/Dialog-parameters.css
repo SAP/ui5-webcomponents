@@ -9,4 +9,5 @@
 	--_ui5_dialog_header_success_state_icon_color: var(--sapPositiveElementColor);
 	--_ui5_dialog_header_warning_state_icon_color: var(--sapCriticalElementColor);
 	--_ui5_dialog_header_state_line_height: 0.0625rem;
+	--_ui5_dialog_block_layer_opacity: 0.2;
 }

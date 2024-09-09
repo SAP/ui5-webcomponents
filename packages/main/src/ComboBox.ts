@@ -946,7 +946,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
-			} else if (this._internals?.form) {
+			} else if (this._internals.form) {
 				submitForm(this);
 			}
 		}

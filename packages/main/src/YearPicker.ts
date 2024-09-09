@@ -32,6 +32,9 @@ import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js"
 
 // Styles
 import yearPickerStyles from "./generated/themes/YearPicker.css.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+
+const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 
 type Year = {
 	timestamp: string;
@@ -42,6 +45,7 @@ type Year = {
 	year: string;
 	yearInSecType: string | undefined;
 	disabled: boolean;
+	ariaDisabled: string | undefined;
 	classes: string;
 	parts: string;
 }
@@ -49,6 +53,7 @@ type Year = {
 type YearInterval = Array<Array<Year>>;
 
 type YearPickerChangeEventDetail = {
+	dates: Array<number>,
 	timestamp: number,
 }
 
@@ -71,13 +76,11 @@ type YearPickerNavigateEventDetail = {
 })
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
- * @public
  */
 @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
- * @public
  */
 @event("navigate")
 class YearPicker extends CalendarPart implements ICalendarPicker {
@@ -85,16 +88,37 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
 	 * @default []
-	 * @public
 	 */
 	@property({ type: Array })
 	selectedDates: Array<number> = [];
+
+	/**
+	 * Defines the type of selection used in the year picker component.
+	 * Accepted property values are:
+	 *
+	 * - `CalendarSelectionMode.Single` - enables election of a single year.
+	 * - `CalendarSelectionMode.Range` - enables selection of a year range.
+	 *
+	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
+	 * @default "Single"
+	 * @since 2.2.0
+	 */
+	@property()
+	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	@property({ type: Array })
 	_years: YearInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden = false;
+
+	/**
+	 * When selectionMode="Range" and the first year in the range is selected, this is the currently hovered or focused year.
+	 *
+	 * @private
+	 */
+	@property({ type: Number })
+	_secondTimestamp?: number;
 
 	_firstYear?: number;
 	_lastYear?: number;
@@ -155,6 +179,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 			});
 			const isFocused = tempDate.getYear() === calendarDate.getYear();
 			const isDisabled = tempDate.getYear() < minDate.getYear() || tempDate.getYear() > maxDate.getYear();
+			const isSelectedBetween = this._isYearInsideSelectionRange(timestamp);
 
 			if (this.hasSecondaryCalendarType) {
 				tempDateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp, true);
@@ -167,11 +192,12 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				timestamp: timestamp.toString(),
 				_tabIndex: isFocused ? "0" : "-1",
 				focusRef: isFocused,
-				selected: isSelected,
-				ariaSelected: isSelected ? "true" : "false",
+				selected: isSelected || isSelectedBetween,
+				ariaSelected: String(isSelected || isSelectedBetween),
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
+				ariaDisabled: isDisabled ? "true" : undefined,
 				classes: "ui5-yp-item",
 				parts: "year-cell",
 			};
@@ -179,6 +205,11 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 			if (isSelected) {
 				year.classes += " ui5-yp-item--selected";
 				year.parts += " year-cell-selected";
+			}
+
+			if (isSelectedBetween) {
+				year.classes += " ui5-yp-item--selected-between";
+				year.parts += " year-cell-selected-between";
 			}
 
 			if (isDisabled) {
@@ -240,6 +271,23 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
+	/**
+	  * Returns true if year timestamp is inside the selection range.
+	  * @private
+	  */
+	_isYearInsideSelectionRange(timestamp: number): boolean {
+		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
+			return false;
+		}
+
+		// Only one date selected - second is hovered or focused
+		if (this.selectedDates.length === 1 && this._secondTimestamp) {
+			return isBetween(timestamp, this.selectedDates[0], this._secondTimestamp);
+		}
+
+		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 		const pageSize = this._getPageSize();
@@ -287,6 +335,30 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	/**
+	 * In range selection, the currently focused or hovered year is considered the "second day".
+	 * @private
+	 */
+	_updateSecondTimestamp() {
+		if (this.selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
+			this._secondTimestamp = this.timestamp;
+		}
+	}
+
+	/**
+	 * Set the hovered day as the "_secondTimestamp".
+	 *
+	 * @param e
+	 * @private
+	 */
+	_onmouseover(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const hoveredItem = target.closest(".ui5-yp-item") as HTMLElement;
+		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
+		}
+	}
+
+	/**
 	 * Sets the timestamp to an absolute value.
 	 * @param value
 	 * @private
@@ -304,6 +376,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	_modifyTimestampBy(amount: number) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "year");
+		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
@@ -323,11 +396,29 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	_selectYear(e: Event) {
 		e.preventDefault();
 		const target = e.target as HTMLElement;
-		if (target.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this._getTimestampFromDom(target);
-			this._safelySetTimestamp(timestamp);
-			this.fireEvent<YearPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
+
+		if (target.className.indexOf("ui5-yp-item") === -1) {
+			return;
 		}
+
+		const timestamp = this._getTimestampFromDom(target);
+		this._safelySetTimestamp(timestamp);
+		this._updateSecondTimestamp();
+		this._updateSelectedDates(timestamp);
+
+		this.fireEvent<YearPickerChangeEventDetail>("change", {
+			timestamp: this.timestamp!,
+			dates: this.selectedDates,
+		});
+	}
+
+	_updateSelectedDates(timestamp: number) {
+		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+			this.selectedDates = [this.selectedDates[0], timestamp];
+			return;
+		}
+
+		this.selectedDates = [timestamp];
 	}
 
 	/**

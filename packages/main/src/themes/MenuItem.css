@@ -25,13 +25,23 @@
 	background: var(--ui5-listitem-background-color);
 }
 
+:host([active]:not([disabled])),
+:host([active]:not([disabled])):hover {
+	background-color: var(--sapList_Active_Background);
+}
+
+:host(:not([active]):not([selected]):not([disabled]):hover) {
+	background-color: var(--sapList_Hover_Background);
+}
+
 /* active */
 :host([disabled][active][actionable]) .ui5-li-root .ui5-li-icon {
 	color: var(--sapContent_NonInteractiveIconColor);
 }
 
-:host([active][actionable]:not([disabled]))::part(content),
-:host([active][actionable]:not([disabled]))::part(additional-text)  {
+:host([active]:not([disabled]))::part(content),
+:host([active]:not([disabled]))::part(additional-text),
+:host([active]:not([disabled])) .ui5-li-root .ui5-li-icon {
 	color: var(--sapList_Active_TextColor);
 }
 

@@ -13,7 +13,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
@@ -252,6 +251,10 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.tabIndex = -1;
+
+		if (this.open) {
+			this.showPopover();
+		}
 	}
 
 	onExitDOM() {
@@ -621,7 +624,6 @@ abstract class Popup extends UI5Element {
 		return {
 			root: {
 				"ui5-popup-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			content: {
 				"ui5-popup-content": true,

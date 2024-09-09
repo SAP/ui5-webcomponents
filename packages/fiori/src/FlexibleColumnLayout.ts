@@ -61,7 +61,7 @@ const COLUMN = {
 	END: 2,
 } as const;
 
-const COLUMN_MIN_WIDTH = 312;
+const COLUMN_MIN_WIDTH = 248;
 
 type SeparatorMovementSession = {
 	separator: HTMLElement,
@@ -133,7 +133,7 @@ type UserDefinedColumnLayouts = {
  * The component would display 1 column for window size smaller than 599px, up to two columns between 599px and 1023px,
  * and 3 columns for sizes bigger than 1023px.
  *
- * **Note:** When the component displays more than one column, the minimal width of each column is 312px. Consequently, when the user drags a column separator to resize the columns, the minimal allowed width of any resized column is 312px.
+ * **Note:** When the component displays more than one column, the minimal width of each column is 248px. Consequently, when the user drags a column separator to resize the columns, the minimal allowed width of any resized column is 248px.
  *
  * ### Keyboard Handling
  *

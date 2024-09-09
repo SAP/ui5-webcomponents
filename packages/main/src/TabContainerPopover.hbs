@@ -14,6 +14,7 @@
 		@ui5-item-click="{{_onOverflowListItemClick}}"
 		@ui5-move-over="{{_onPopoverListMoveOver}}"
 		@ui5-move="{{_onPopoverListMove}}"
+		@keydown="{{_onPopoverListKeyDown}}"
 	>
 		{{#each _popoverItemsFlat}}
 			{{overflowPresentation}}

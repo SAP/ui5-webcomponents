@@ -52,33 +52,31 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
 	});
 
-	it("Alpha value change via the slider", async () => {
-		const colorPicker = await browser.$("#cp1");
-		const alphaSliderHandle = await colorPicker.shadow$(".ui5-color-picker-alpha-slider").shadow$(".ui5-slider-handle");
-		const stepInput = await browser.$("#changeEventCounter");
-
-		await stepInput.setAttribute("value", 0);
-		await colorPicker.scrollIntoView();
-		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 1)");
-
-		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
-
-		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(183, 61, 61, 0.83)", "Alpha value propely changed");
-		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on alpha slider change");
-	});
-
 	it("Hue value change via the slider", async () => {
 		const colorPicker = await browser.$("#cp1");
 		const hueSliderHandle = await colorPicker.shadow$(".ui5-color-picker-hue-slider").shadow$(".ui5-slider-handle");
 		const stepInput = await browser.$("#changeEventCounter");
 
+		await stepInput.setAttribute("value", 0);
 		await colorPicker.scrollIntoView();
-		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 0.83)");
+		await colorPicker.setAttribute("value", "rgba(183, 61, 61, 0)");
 
 		await hueSliderHandle.dragAndDrop({ x: 200, y: 0 });
 
-		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0.83)", "Color properly changed");
-		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on hue slider change");
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0)", "Color properly changed");
+		assert.strictEqual(await stepInput.getAttribute("value"), "1", "Change event gets fired on hue slider change");
+	});
+
+	it("Alpha value change via the slider", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const alphaSliderHandle = await colorPicker.shadow$(".ui5-color-picker-alpha-slider").shadow$(".ui5-slider-handle");
+		const stepInput = await browser.$("#changeEventCounter");
+
+		await colorPicker.scrollIntoView();
+		await alphaSliderHandle.dragAndDrop({ x: 200, y: 0 });
+
+		assert.strictEqual(await colorPicker.getAttribute("value"), "rgba(182, 61, 184, 0.83)", "Alpha value propely changed");
+		assert.strictEqual(await stepInput.getAttribute("value"), "2", "Change event gets fired on alpha slider change");
 	});
 
 	it("tests color property", async () => {

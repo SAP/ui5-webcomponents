@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "node:url";
 
 let counter = 0;
 
@@ -64,9 +65,9 @@ import Link from '@docusaurus/Link';
 `
 
 const additionalImports = `
-import CopySvg from "../local-cdn/local-cdn/icons/dist/v5/copy.svg";
-import AcceptSvg from "../local-cdn/local-cdn/icons/dist/v5/accept.svg";
-import PictureSvg from "../local-cdn/local-cdn/icons/dist/v5/picture.svg";
+import CopySvg from "@ui5/webcomponents-icons/dist/v5/copy.svg";
+import AcceptSvg from "@ui5/webcomponents-icons/dist/v5/accept.svg";
+import PictureSvg from "@ui5/webcomponents-icons/dist/v5/picture.svg";
 `;
 
 
@@ -81,10 +82,10 @@ const _generateIconsPage = (sourceDir, config) => {
 
             const iconNameImport = `${fileNameImportName}SvgName`;
             const svgImport = `${capitalize(fileNameImportName)}Svg`;
-    
+
             imports += `
-            import ${iconNameImport} from "../local-cdn/local-cdn/${config.dir}/dist/${fileName}.js";
-            import ${svgImport} from "../local-cdn/local-cdn/${config.dir}/dist/${config.version}/${fileName}.svg";
+            import ${iconNameImport} from "${config.npmPackage}/dist/${fileName}.js";
+            import ${svgImport} from "${config.npmPackage}/dist/${config.version}/${fileName}.svg";
             `;
 
         icons += `
@@ -186,7 +187,10 @@ ${classDef}`;
     writeFile(config.dir, content);
 };
 
+function findRoot(pkgName) {
+    return path.dirname(fileURLToPath(import.meta.resolve(`${pkgName}/package.json`)));
+}
 
-generateIconsPage(path.join(path.resolve(), "./local-cdn/local-cdn/icons/dist/v5"), SAPIconsConfig);
-generateIconsPage(path.join(path.resolve(), "./local-cdn/local-cdn/icons-tnt/dist/v3"), SAPTNTIconsConfig);
-generateIconsPage(path.join(path.resolve(), "./local-cdn/local-cdn/icons-business-suite/dist/v2"), SAPBSIconsConfig);
+generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons"), "dist/v5"), SAPIconsConfig);
+generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons-tnt"), "dist/v3"), SAPTNTIconsConfig);
+generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons-business-suite"), "dist/v2"), SAPBSIconsConfig);

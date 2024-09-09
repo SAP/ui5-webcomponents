@@ -37,6 +37,7 @@
 	border-inline-start: var(--_ui5_fcl_column_border);
 	border-inline-end: var(--_ui5_fcl_column_border);
 	position: relative;
+	box-sizing: border-box;
 }
 
 .ui5-fcl-separator:focus {
@@ -78,10 +79,7 @@
 
 .ui5-fcl-separator:hover .ui5-fcl-grip:before,
 .ui5-fcl-separator:hover .ui5-fcl-grip:after {
-	height: 50%;
-}
-.ui5-fcl-separator:hover {
-	overflow: hidden;
+	height: calc(50% - 1rem);
 }
 
 [aria-hidden] ::slotted([slot="startColumn"]),

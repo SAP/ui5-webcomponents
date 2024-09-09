@@ -32,7 +32,6 @@ import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
@@ -393,13 +392,6 @@ class Table extends UI5Element {
 	_columnHeader: TableColumnHeaderInfo;
 
 	/**
-	 * Defines if the entire table is in view port.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_inViewport = false;
-
-	/**
 	 * Defines whether all rows are selected or not when table is in MultiSelect mode.
 	 * @default false
 	 * @since 2.0.0
@@ -543,8 +535,6 @@ class Table extends UI5Element {
 		if (this.growsOnScroll) {
 			this.observeTableEnd();
 		}
-
-		this.checkTableInViewport();
 	}
 
 	onEnterDOM() {
@@ -1070,13 +1060,9 @@ class Table extends UI5Element {
 	}
 
 	handleResize() {
-		this.checkTableInViewport();
 		this.popinContent();
 	}
 
-	checkTableInViewport() {
-		this._inViewport = isElementInView(this.getDomRef()!);
-	}
 	popinContent() {
 		const clientRect: DOMRect = this.getDomRef()!.getBoundingClientRect();
 		const tableWidth: number = clientRect.width;
@@ -1144,14 +1130,6 @@ class Table extends UI5Element {
 		return this.growingIntersectionObserver;
 	}
 
-	get styles() {
-		return {
-			busy: {
-				position: this.busyIndPosition,
-			},
-		};
-	}
-
 	get growsWithButton(): boolean {
 		return this.growing === TableGrowingMode.Button;
 	}
@@ -1192,10 +1170,6 @@ class Table extends UI5Element {
 
 	get tableEndDOM(): Element {
 		return this.shadowRoot!.querySelector(".ui5-table-end-marker")!;
-	}
-
-	get busyIndPosition(): string {
-		return this._inViewport ? "absolute" : "sticky";
 	}
 
 	get isMultiSelect(): boolean {

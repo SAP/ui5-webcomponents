@@ -1,25 +1,25 @@
-:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar:horizontal {
+::-webkit-scrollbar:horizontal {
 	height: var(--sapScrollBar_Dimension);
 }
 
-:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar:vertical {
+::-webkit-scrollbar:vertical {
 	width: var(--sapScrollBar_Dimension);
 }
 
-:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
-	border-left: var(--browser_scrollbar_border);
+	border-left: none;
 }
 
-:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-thumb {
-	border-radius: var(--browser_scrollbar_border_radius);
+::-webkit-scrollbar-thumb {
+	border-radius: var(--sapElement_BorderCornerRadius);
 	background-color: var(--sapScrollBar_FaceColor);
 }
 
-:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
 	background-color: var(--sapScrollBar_Hover_FaceColor);
 }
 
-:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-corner {
+::-webkit-scrollbar-corner {
 	background-color: var(--sapScrollBar_TrackColor);
 }

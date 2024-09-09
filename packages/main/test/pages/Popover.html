@@ -515,8 +515,22 @@ z-index: 1;
 			</ui5-popover>
 		</div>
 	</div>
+
 	<br>
 	<br>
+
+	<ui5-button id="btnVerticalStretch">Open vertical stretch</ui5-button>
+	<ui5-popover id="vertical" placement="End" vertical-align="Stretch"  opener="btn" header-text="Newsletter subscription">
+		<div class="popover-content" >
+			<ui5-input/>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br><br>
+	<br><br>
+	<br>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.opener = btn;
@@ -692,7 +706,7 @@ z-index: 1;
 			popover.setAttribute("placement", "Bottom");
 			popover.setAttribute("id", `dynamic-popover-dynamic-opener${dynamicOpenerCounter}`);
 			opener.textContent = `Opener ${dynamicOpenerCounter++}`;
-			
+
 			document.getElementById("dynamicOpenerList").appendChild(list);
 			list.appendChild(opener);
 			document.body.appendChild(popover);
@@ -824,6 +838,10 @@ z-index: 1;
 
 			window.scrollTo(0, 1000);
 			popover.setAttribute("open", "");
+		});
+		document.getElementById("btnVerticalStretch").addEventListener("click", (e) => {
+			document.getElementById("vertical").opener = e.currentTarget;
+			document.getElementById("vertical").open = true;
 		});
 
 	</script>

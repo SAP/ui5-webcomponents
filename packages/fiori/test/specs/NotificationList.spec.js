@@ -258,11 +258,11 @@ describe("Notification List Item Tests", () => {
 
 		// assert
 		assert.strictEqual(await invisibleTextStatus1.getText(), "Status Positive", "The invisible text for the status is correct.");
-		assert.strictEqual(await invisibleTextItem1.getText(), "unread", "The invisible text for the Notification item  is correct.");
+		assert.strictEqual(await invisibleTextItem1.getText(), "Unread", "The invisible text for the Notification item  is correct.");
 		assert.strictEqual(await tooltipStatus1.getAttribute("accessible-name"), "Status Positive", "The tooltip (aria-label) text for the status is correct.");
 
 		assert.strictEqual(await invisibleTextStatus2.getText(), "Status Critical", "The invisible text for the status is correct.");
-		assert.strictEqual(await invisibleTextItem2.getText(), "read", "The invisible text for the Notification item  is correct.");
+		assert.strictEqual(await invisibleTextItem2.getText(), "Read", "The invisible text for the Notification item  is correct.");
 		assert.strictEqual(await tooltipStatus2.getAttribute("accessible-name"), "Status Critical", "The tooltip (aria-label) text for the status is correct.");
 	});
 
@@ -334,9 +334,9 @@ describe("Notification List Item Tests", () => {
 
 	it("tests Group Item 'aria-description' and 'aria-level'", async () => {
 		const firstGroupItemRoot = await browser.$("#nlgi1").shadow$(".ui5-nli-group-root");
-		const EXPECTED_TEXT_1 = "Notification group Expanded";
+		const EXPECTED_TEXT_1 = "Notification Group Expanded";
 		const thirdGroupItemRoot = await browser.$("#nlgi3").shadow$(".ui5-nli-group-root");
-		const EXPECTED_TEXT_3 = "Notification group Collapsed";
+		const EXPECTED_TEXT_3 = "Notification Group Collapsed";
 
 		assert.strictEqual(await firstGroupItemRoot.getAttribute("aria-description"), EXPECTED_TEXT_1, "The aria-description text is correct.");
 		assert.strictEqual(await thirdGroupItemRoot.getAttribute("aria-description"), EXPECTED_TEXT_3, "The aria-description text is correct.");

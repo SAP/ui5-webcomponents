@@ -281,6 +281,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		if (Number.isNaN(this._alpha)) {
 			this._alpha = 1;
 		}
+		this._isHueValueChanged = true;
 		this._setColor(this._value);
 	}
 

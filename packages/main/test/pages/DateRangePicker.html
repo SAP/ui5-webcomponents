@@ -50,7 +50,26 @@
 		<h3>DateRange Picker with no format pattern & min-max dates in ISO format</h3>
 		<ui5-daterange-picker id="daterange-picker8" min-date="2023-02-10" max-date="2023-07-22"></ui5-daterange-picker>
 
+		<h3>daterange-picker with format pattern MM.yyyy</h3>
+		<ui5-daterange-picker id="daterange-picker9" format-pattern="MM.yyyy"></ui5-daterange-picker>
+		<h3>daterange-picker with format pattern yyyy</h3>
+		<ui5-daterange-picker id="daterange-picker10" format-pattern="yyyy"></ui5-daterange-picker>
 
+		<h3>daterange-picker with format pattern MM.yyyy islamic</h3>
+		<ui5-daterange-picker id="daterange-picker11" secondary-calendar-type="Islamic" format-pattern="MM.yyyy"></ui5-daterange-picker>
+		<h3>daterange-picker with format pattern yyyy islamic</h3>
+		<ui5-daterange-picker id="daterange-picker12" secondary-calendar-type="Islamic" format-pattern="yyyy"></ui5-daterange-picker>
+
+		<section>
+			<ui5-title>DateRangePicker with CalendarWeekNumbering ISO_8601</ui5-title>
+			<ui5-daterange-picker id="daterange-picker13" calendar-week-numbering="ISO_8601"></ui5-daterange-picker>
+
+			<ui5-title>DateRangePicker with CalendarWeekNumbering MiddleEastern</ui5-title>
+			<ui5-daterange-picker id="daterange-picker14" calendar-week-numbering="MiddleEastern"></ui5-daterange-picker>
+
+			<ui5-title>DateRangePicker with CalendarWeekNumbering WesternTraditional</ui5-title>
+			<ui5-daterange-picker id="daterange-picker15" calendar-week-numbering="WesternTraditional"></ui5-daterange-picker>
+		</section>
 	</div>
 	<script>
 		document.getElementById('daterange-picker1').addEventListener('ui5-change', function(e) {

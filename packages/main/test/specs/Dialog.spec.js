@@ -744,3 +744,13 @@ describe("Block layers", () => {
 		await browser.keys("Escape");
 	});
 });
+
+describe("Dialog initially open", () => {
+	before(async () => {
+		await browser.url(`test/pages/DialogInitiallyOpen.html`);
+	});
+
+	it("test :popover-open selector", async () => {
+		assert.ok(await browser.$("#dialogOpen").matches(":popover-open"), "popover is opened correctly");
+	});
+});

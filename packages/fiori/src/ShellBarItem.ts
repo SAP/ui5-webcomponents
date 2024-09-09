@@ -65,15 +65,6 @@ class ShellBarItem extends UI5Element {
 	@property()
 	count?: string;
 
-	/**
-	 * Defines if the item belongs to additional content sequence.
-	 * @default undefined
-	 * @since 2.0.1
-	 * @public
-	 */
-	@property()
-	additionalContent?: Boolean;
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}

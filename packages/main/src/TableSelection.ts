@@ -1,6 +1,5 @@
 import {
 	isUpShift,
-	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -252,11 +251,9 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return;
 		}
 
-		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !isShift(e)) {
-			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
-			if (isSelectionCheckbox(e)) {
-				this._stopRangeSelection();
-			}
+		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !e.shiftKey) {
+			// Stop range selection if a) Shift is relased or b) the event target is not a row
+			this._stopRangeSelection();
 		}
 
 		if (this._rangeSelection) {

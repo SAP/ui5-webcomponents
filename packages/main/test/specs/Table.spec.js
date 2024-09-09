@@ -2,6 +2,29 @@ import { assert } from "chai";
 
 const ROLE_COLUMN_HEADER = "columnheader";
 
+describe("Table - Rendering", async () => {
+	it("tests if table is rendered", async () => {
+		await browser.url(`test/pages/Table.html`);
+
+		const table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		assert.ok(headerRow.isExisting(), "Header row exists");
+
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		assert.equal(headerCells.length, 5, "5 columns exist");
+	});
+
+	it ("tests if initial empty table renders without errors", async () => {
+		await browser.url(`test/pages/TableEmpty.html`);
+
+		const errorInput = await browser.$("#error");
+		assert.ok(await errorInput.isExisting(), "Error input exists");
+		assert.equal(await errorInput.getValue(), "", "Exception was not thrown");
+	});
+});
+
 describe("Table - Popin Mode", async () => {
 	before(async () => {
 		await browser.url(`test/pages/TablePopin.html`);

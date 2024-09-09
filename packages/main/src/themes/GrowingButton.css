@@ -57,7 +57,7 @@
 
 [growing-button-text] {
 	height: var(--_ui5_load_more_text_height);
-	padding: 0.875rem 1rem 0 1rem;
+	padding: 0.875rem 1rem 1rem;
 	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
 }

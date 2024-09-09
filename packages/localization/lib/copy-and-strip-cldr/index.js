@@ -34,7 +34,6 @@ const removeFields = object => {
 
 	// remove all deny-listed fields
 	[
-		"languages",
 		"territories",
 		"scripts",
 		"timezoneNames",

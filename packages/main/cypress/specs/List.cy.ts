@@ -1,6 +1,8 @@
-import { html } from 'lit';
+import { html } from "lit";
+import "../../src/List.js";
+import type List from "../../src/List.js";
 
-describe("List Tests", async () => {
+describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
 		cy.mount(html`
 		<ui5-list style="height: 300px;"  growing="Scroll">
@@ -12,19 +14,19 @@ describe("List Tests", async () => {
 			<ui5-li>HP Monitor 24</ui5-li>
 			<ui5-li>Audio cabel</ui5-li>
 			<ui5-li id="lastItem">Last Item</ui5-li>
-		</ui5-list>`)
+		</ui5-list>`);
 
 		cy.get("[ui5-list]")
 			.as("list");
 
-		cy.get("@list")
-			.then((list) => {
-				list.get(0).addEventListener('ui5-load-more', cy.stub().as('loadMore'))
+		cy.get<List>("@list")
+			.then(list => {
+				list.get(0).addEventListener("ui5-load-more", cy.stub().as("loadMore"));
 			})
 			.shadow()
 			.find(".ui5-list-scroll-container")
 			.as("scrollContainer")
-			.scrollTo('bottom', { duration: 100 })
+			.scrollTo("bottom", { duration: 100 });
 
 		cy.get("@loadMore")
 			.should("have.been.calledOnce");

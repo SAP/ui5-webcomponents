@@ -4,6 +4,7 @@
 	aria-roledescription="{{roleDescription}}"
 	aria-readonly="false"
 	aria-multiselectable="false"
+	@mouseover={{_onmouseover}}
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
 	@click={{_selectMonth}}
@@ -20,6 +21,7 @@
 					part="{{this.parts}}"
 					role="gridcell"
 					aria-selected="{{this.ariaSelected}}"
+					aria-disabled="{{this.ariaDisabled}}"
 				>
 					<span class="ui5-dp-monthtext">
 						{{this.name}}

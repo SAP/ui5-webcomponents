@@ -249,7 +249,7 @@ describe("DateRangePicker general interaction", () => {
 		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
 	});
 
-	it("picker popover should have accessible name", async () => {
+	it("Picker popover should have accessible name", async () => {
 		const daterangepicker = await browser.$("#daterange-picker3");
 		await daterangepicker.click();
 		await browser.keys("F4");
@@ -293,5 +293,71 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("Enter");
 
 		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Negative", "Min and max dates are set correctly");
+	});
+
+	it("Should open month picker if format-pattern is 'MM.yyyy'", async () => {
+		const daterangepicker = await browser.$("#daterange-picker9");
+
+		const calendar = await daterangepicker.shadow$(`ui5-calendar`);
+		await daterangepicker.setProperty("open", true);
+
+		let currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "month", "calendar is opened on months");
+
+		await daterangepicker.setProperty("open", false);
+	});
+
+	it("Select month range in MonthPicker", async () => {
+		const daterangepicker = await browser.$("#daterange-picker9");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("09.2024 - 11.2024");
+		await daterangepicker.keys("Enter");
+		await browser.keys("F4");
+
+		const monthPicker = await browser.$(`#daterange-picker9`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`);
+		const months = await monthPicker.shadow$(`.ui5-mp-root`).$$("div > .ui5-mp-item");
+		const startSelectionMonth = await months[8];
+		const monthInBetween = await months[9];
+		const endSelectionMonth = await months[10];
+
+		assert.ok((await startSelectionMonth.getAttribute("class")).includes("ui5-mp-item--selected"), "The start month has the correct selection class");
+		assert.ok((await monthInBetween.getAttribute("class")).includes("ui5-mp-item--selected-between"), "The in-between month has the correct selection class");
+		assert.ok((await endSelectionMonth.getAttribute("class")).includes("ui5-mp-item--selected"), "The end month has the correct selection class");
+
+		await daterangepicker.setProperty("open", false);
+	});
+
+	it("Should open year picker if format-pattern is 'yyyy'", async () => {
+		const daterangepicker = await browser.$("#daterange-picker10");
+
+		const calendar = await daterangepicker.shadow$(`ui5-calendar`);
+		await daterangepicker.setProperty("open", true);
+
+		let currentPicker = await calendar.getProperty("_currentPicker");
+		assert.equal(currentPicker, "year", "calendar is opened on years");
+
+		await daterangepicker.setProperty("open", false);
+	});
+
+	it("Select year range in YearPicker", async () => {
+		const daterangepicker = await browser.$("#daterange-picker10");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("2024 - 2028");
+		await daterangepicker.keys("Enter");
+		await browser.keys("F4");
+
+		const yearPicker = await browser.$(`#daterange-picker10`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`);
+		const years = await yearPicker.shadow$(`.ui5-yp-root`).$$("div > .ui5-yp-item");
+		const startSelectionYear = await years[10];
+		const yearInBetween = await years[12];
+		const endSelectionYear = await years[14];
+
+		assert.ok((await startSelectionYear.getAttribute("class")).includes("ui5-yp-item--selected"), "The start year has the correct selection class");
+		assert.ok((await yearInBetween.getAttribute("class")).includes("ui5-yp-item--selected-between"), "The in-between year has the correct selection class");
+		assert.ok((await endSelectionYear.getAttribute("class")).includes("ui5-yp-item--selected"), "The end year has the correct selection class");
+
+		await daterangepicker.setProperty("open", false);
 	});
 });
