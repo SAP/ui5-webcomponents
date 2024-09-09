@@ -177,7 +177,7 @@ Here `text`, `width`, `scale` and `data` are public properties, and `_isPhone` p
 
 #### Best practices for using properties
 
-- **avoid directly modifying public properties** from within a component, as these properties are typically controlled by the parent application. The only exception to this rule is when the property change results directly from user interaction (e.g., updating a value after a user types in an input field, or toggling a checked property after a user clicks a checkbox). Additionally, whenever you modify a public property due to user interaction, it's important to **fire an event** to notify the parent application. This ensures that the application can synchronize its state accordingly..
+- **Аvoid directly modifying public properties** from within a component, as these properties are typically controlled by the parent application. The only exception to this rule is when the property change results directly from user interaction (e.g., updating a value after a user types in an input field, or toggling a checked property after a user clicks a checkbox). Additionally, whenever you modify a public property due to user interaction, it's important to **fire an event** to notify the parent application. This ensures that the application can synchronize its state accordingly..
 
 - As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
 
@@ -477,9 +477,7 @@ class MyDemoComponent extends UI5Element {
     content!: Array<HTMLElement>;
 }
 ```
-
-
-
+	
 It's a good practice is to make use of the default slot as it requires less code to use your component.
 And, if your component has multiple slots - to pick the most important and used one as the default.
 
