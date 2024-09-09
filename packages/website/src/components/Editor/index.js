@@ -299,9 +299,15 @@ ${fixAssetPaths(_js)}`,
     window.addEventListener("message", messageHandler);
 
     tabBarRef.current.project = projectRef.current;
-    fileEditorRef.current.isContentEditable = true; // algolia search opens the search on key `/` because this element is the event target but has no `isContentEditable`
     fileEditorRef.current.project = projectRef.current;
     previewRef.current.project = projectRef.current;
+	  
+    // algolia search opens the search on key `/` because this custom element is the event target but has no `isContentEditable`
+    Object.defineProperty(fileEditorRef.current, "isContentEditable", {
+        get() {
+            return true;
+        },
+    });
 
     tabBarRef.current.editor = fileEditorRef.current;
 
