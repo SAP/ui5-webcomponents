@@ -88,7 +88,7 @@ const loadThemePropertiesCompat = async (themeName) => {
     }
 };
 const loadAndCheckCompat = async (themeName) => {
-    const data = await loadThemePropertiesFiori(themeName);
+    const data = await loadThemePropertiesCompat(themeName);
     if (typeof data === "string" && data.endsWith(".json")) {
         throw new Error("error");
     }

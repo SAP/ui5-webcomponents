@@ -182,8 +182,10 @@ type SpecialCalendarDateT = {
  * @csspart day-cell-selected-between - Used to style the day cells in between of selected dates in range.
  * @csspart month-cell - Used to style the month cells.
  * @csspart month-cell-selected - Used to style the month cells when selected.
+ * @csspart month-cell-selected-between - Used to style the day cells in between of selected months in range.
  * @csspart year-cell - Used to style the year cells.
  * @csspart year-cell-selected - Used to style the year cells when selected.
+ * @csspart year-cell-selected-between - Used to style the day cells in between of selected years in range.
  * @since 1.0.0-rc.11
  */
 @customElement({
@@ -645,7 +647,7 @@ class Calendar extends CalendarPart {
 		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
-			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
 		this._currentPickerDOM._autoFocus = true;
@@ -659,7 +661,7 @@ class Calendar extends CalendarPart {
 		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
-			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+			this._fireEventAndUpdateSelectedDates(e.detail.dates);
 		}
 
 		this._currentPickerDOM._autoFocus = true;

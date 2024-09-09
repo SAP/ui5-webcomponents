@@ -31,7 +31,7 @@ type LinkClickEventDetail = {
 	shiftKey: boolean;
 }
 
-type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup">;
+type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "current">;
 
 /**
  * @class

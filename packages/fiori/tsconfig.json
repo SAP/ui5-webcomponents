@@ -7,6 +7,9 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"experimentalDecorators": true,
+		"composite": true,
+		"rootDir": "src",
+		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"importsNotUsedAsValues": "preserve",
 		"ignoreDeprecations": "5.0",
 		"paths": {
