@@ -91,10 +91,10 @@ type NotificationListGroupItemToggleEventDetail = {
 @event("toggle")
 
 /**
- * Fired when the user clicks on "More button".
+ * Fired when additional items are requested.
  *
  * @public
- * @since ...
+ * @since 2.2.0
  */
 @event("load-more")
 
@@ -167,10 +167,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
 	}
 
-	get growingType() {
-		return this.growing;
-	}
-
 	get ariaLabelledBy() {
 		const id = this._id;
 
@@ -214,6 +210,11 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	_onLoadMore() {
 		this.fireEvent("load-more");
+	}
+
+	get loadMoreButton() {
+		const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]") as NotificationListGroupList;
+		return innerList.getDomRef()?.querySelector("[growing-button-inner]") as HTMLElement;
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
