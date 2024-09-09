@@ -521,6 +521,151 @@ class MyDemoComponent extends UI5Element {
 However, if you provide this object, the `type` field is mandatory.
 
 
+### Individual Slots
+
+The `@slot` decorator provides an option called `individualSlots`, which is of boolean type. This option determines if each child element will be placed in its own slot, allowing for flexible arrangement or wrapping of the children within the component. When `individualSlots` is enabled, the framework assigns a unique `_individualSlot` property to each child element. This property can then be used within the component's template, as shown in the following example.
+
+First, enable `individualSlots` by setting it to `true`:
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot({ type: HTMLElement, individualSlots: true })
+    content!: Array<HTMLElement>;
+}
+```
+
+Next, iterate over the child elements in the template, using the `_individualSlot` property in the name attribute of the slot element:
+```hbs
+{{#each mySlot}}
+    <slot name="{{this._individualSlot}}"></slot>
+{{/each}}
+```
+
+Here is an example using the `Carousel` web component, which leverages `individualSlots` to wrap each slotted child within the content slot to achieve a specific design:
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("ui5-carousel")
+class Carousel extends UI5Element {
+    @slot({ type: HTMLElement, individualSlots: true })
+    content!: Array<HTMLElement>;
+}
+```
+
+```hbs
+{{!-- Carousel.hbs --}}
+<div>
+	{{#each content}}
+		<div
+			class="ui5-carousel-item"
+			role="option"
+			aria-posinset="{{posinset}}"
+			aria-setsize="{{setsize}}"
+			aria-selected = "{{selected}}"
+		>
+			<slot name="{{this.item._individualSlot}}"></slot>
+		</div>
+	{{/each}}
+</div>
+```
+
+**Note**: When `individualSlots` is enabled, the `_individualSlot` property is assigned to each direct child. The value of `_individualSlot` follows the pattern `{nameOfTheSlot}-{index}`, and the slot attribute is updated accordingly.
+
+
+### Invalidation on Child Change
+
+The `@slot` decorator offers an `invalidateOnChildChange` option, which can be set as a boolean or a configuration object. This option determines whether a component should be invalidated when changes occur within its child elements.
+
+By default, if child elements are added or removed from a slot, the component will be invalidated automatically. The `invalidateOnChildChange` option goes a step further by triggering invalidation even when properties or slots of the child elements change. This is useful if the state of parent component depends on the state of its children.
+
+The simplest way to use this option is to set `invalidateOnChildChange` to `"true"`. This configuration ensures that the `my-demo-component` web component will be invalidated whenever any of the UI5Element instances slotted into the content slot are updated, whether due to a property or slot change.
+
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot({ type: HTMLElement, invalidateOnChildChange: true })
+    content!: Array<HTMLElement>;
+}
+```
+
+For more specific scenarios, you can use a more detailed configuration. The following example demonstrates how to invalidate the `"my-demo-component"` web component only when certain properties or slots of the slotted UI5Element instances change. In this case, the component will be invalidated if the "myProp" property or the "mySlot" slot of the child elements are modified.
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot({ type: HTMLElement, invalidateOnChildChange: { properties: ["myProp"], slots: ["mySlot"] }})
+    content!: Array<HTMLElement>;
+}
+```
+
+The `invalidateOnChildChange` option is especially useful when working with "abstract" elements option is particularly useful when dealing with "abstract" elements, such as UI5Element instances that do not have their own templates. In these cases, the parent component is responsible for rendering the content based on the state of its child elements.
+
+For instance, consider a `Wizard` web component that accepts `WizardStep` elements in its `"steps"` slot. Since `WizardStep` does not have its own template, the `Wizard` must handle rendering based on the properties and state of the steps. Therefore, the `Wizard` needs to be invalidated whenever any changes occur within its child elements to ensure proper rendering.
+
+```ts
+class Wizard extends UI5Element {
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+	})
+	steps!: Array<WizardStep>
+}
+```
+
+```html
+<ui5-wizard>
+	<ui5-wizard-step title-text="Product type" icon="sap-icon://product" selected></ui5-wizard-step>
+	<ui5-wizard-step title-text="Options"></ui5-wizard-step>
+	<ui5-wizard-step title-text="Pricing" disabled></ui5-wizard-step>
+</ui5-wizard>
+```
+
+```hbs
+{{!-- Wizard.hbs --}}
+<div class="ui5-wizard-root">
+	<nav>
+	    {{!-- _steps is a calculated state based on the steps slot --}}
+		{{#each _steps}}
+			<div class="ui5-wiz-step-root">
+			</div>
+		{{/each}}
+	</nav>
+</div>
+```
+
+**Note**: The `invalidateOnChildChange` option is meant to be used with slots that are UI5Element instances.
+
+### Styling of Slotted Children 
+
+The `:slotted` CSS selector applies to any element that has been placed into a slot.
+It works when used inside CSS placed within the shadow DOM of the component that offers the slot.
+
+For example:
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<h1 slot="heading">Heading</h1>
+    <span>Hello World</span>
+</my-demo-component>
+```
+
+```css
+/* MyDemoComponent.css */
+::slotted([slot="heading"]) {
+    width: 200px;
+	height: 100px;
+}
+```
+
 ## Understanding rendering
 
 ### What is rendering? <a name="rendering_def"></a>

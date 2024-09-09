@@ -130,9 +130,7 @@ To render individual slots, you have to iterate all children in that slot and us
 
 The `invalidateOnChildChange` option accepts a boolean value or an object literal containing a configuration with more specific settings, determining whether the component should be invalidated on child change.
 
-**NOTE: This is an experimental option and should not be used.**
-
-Important: `invalidateOnChildChange` is not meant to be used with standard DOM elements and is not to be confused with MutationObserver-like functionality. It targets the use case of components that slot abstract items (UI5Element instances without a template) and require invalidation whenever these items are invalidated.
+**Note**: `invalidateOnChildChange` is not meant to be used with standard DOM elements and is not to be confused with MutationObserver-like functionality. It targets the use case of components that slot UI5Element instances and require invalidation whenever these items are invalidated.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
