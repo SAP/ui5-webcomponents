@@ -207,6 +207,7 @@ class Popover extends Popup {
 	_left?: number;
 	_oldPlacement?: CalculatedPlacement;
 	_width?: string;
+	_height?: string;
 
 	static get VIEWPORT_MARGIN() {
 		return 10; // px
@@ -436,6 +437,10 @@ class Popover extends Popup {
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
 		}
+
+		if (this.verticalAlign === PopoverVerticalAlign.Stretch && this._height) {
+			this.style.height = this._height;
+		}
 	}
 
 	/**
@@ -518,6 +523,7 @@ class Popover extends Popup {
 			this._width = `${targetRect.width}px`;
 		} else if (this.verticalAlign === PopoverVerticalAlign.Stretch && !isVertical) {
 			popoverSize.height = targetRect.height;
+			this._height = `${targetRect.height}px`;
 		}
 
 		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
