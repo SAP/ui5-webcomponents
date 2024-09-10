@@ -137,6 +137,12 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * @private
 	 */
+	@property({ type: Number })
+	value = 0;
+
+	/**
+	 * @private
+	 */
 	@property()
 	_tooltipVisibility = "hidden";
 
@@ -145,6 +151,9 @@ abstract class SliderBase extends UI5Element {
 
 	@property({ type: Boolean })
 	_hiddenTickmarks = false;
+
+	@property({ type: Boolean })
+	_isInputValueValid = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
@@ -193,11 +202,9 @@ abstract class SliderBase extends UI5Element {
 
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
-	_updateValueFromInput(e: KeyboardEvent | FocusEvent) {} // eslint-disable-line
-
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
-	_updateInputValue() {} // eslint-disable-line
+	_updateInputValue() {}
 
 	// used in base template, but implemented in subclasses
 	abstract styles: {
@@ -325,7 +332,19 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent) { // eslint-disable-line
+	_updateValueFromInput(e: Event) {
+		const input = e.target as HTMLInputElement;
+		const value = parseFloat(input.value);
+		this._isInputValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
+
+		if (!this._isInputValueValid) {
+			return;
+		}
+
+		this.value = value;
+	}
+
+	_onKeyupBase() {
 		if (this.disabled) {
 			return;
 		}

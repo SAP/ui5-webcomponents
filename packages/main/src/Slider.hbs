@@ -41,7 +41,8 @@
 		<div class="ui5-slider-tooltip" style="{{styles.tooltip}}">
 			{{#if editableTooltip}}
 				<ui5-input
-					value="{{value}}"
+					value="{{_tooltipInputValue}}"
+					value-state="{{_tooltipInputValueState}}"
 					type="Number"
 					accessible-name-ref="ui5-slider-accName ui5-slider-InputLabel"
 					@focusout="{{_onInputFocusOut}}"

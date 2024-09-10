@@ -141,6 +141,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_lastValidStartValue: string;
 	_lastValidEndValue: string;
 	_areInputValuesSwapped = false;
+	_tooltipInputStartValue: string;
+	_tooltipInputEndValue: string;
+	_tooltipInputStartValueState: string = "None";
+	_tooltipInputEndValueState: string = "None";
 
 	static i18nBundle: I18nBundle;
 
@@ -163,6 +167,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._stateStorage.endValue = undefined;
 		this._lastValidStartValue = this.min.toString();
 		this._lastValidEndValue = this.max.toString();
+		this._tooltipInputStartValue = this.startValue.toString();
+		this._tooltipInputEndValue = this.endValue.toString();
 	}
 
 	get tooltipStartValue() {
@@ -216,8 +222,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
-		this._saveInputValues();
-
+		if (this.editableTooltip) {
+			console.error(this.endValue.toString());
+			this._saveInputValues();
+		}
 		if (this.startValue > this.endValue) {
 			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
 
@@ -349,7 +357,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	* @private
 	*/
 	_onkeyup(e: KeyboardEvent) {
-		super._onkeyup(e);
+		super._onKeyupBase();
 
 		if (!isEnter(e)) {
 			this._setAffectedValue(undefined);
@@ -864,23 +872,20 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
 
 		if (!this._isStartValueValid) {
-			startValueInput.valueState = "Negative";
+			this._tooltipInputStartValueState = "Negative";
 			return;
 		}
 
 		if (!this._isEndValueValid) {
-			endValueInput.valueState = "Negative";
+			this._tooltipInputEndValueState = "Negative";
 			return;
 		}
 
 		this._lastValidStartValue = startValueInput.value;
 		this._lastValidEndValue = endValueInput.value;
 
-		startValueInput.valueState = "None";
-		endValueInput.valueState = "None";
-
-		this.storePropertyState("_inputStartValue");
-		this.storePropertyState("_inputEndValue");
+		this._tooltipInputStartValueState = "None";
+		this._tooltipInputEndValueState = "None";
 	}
 
 	_saveInputValues() {
@@ -897,8 +902,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			this._lastValidStartValue = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
 			this._lastValidEndValue = isEndValueValid ? inputStartValue.toString() : this._lastValidEndValue;
 
-			startValueInput.value = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
-			endValueInput.value = isEndValueValid ? inputEndValue.toString() : this._lastValidEndValue;
+			this._tooltipInputStartValue = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
+			this._tooltipInputEndValue = isEndValueValid ? inputEndValue.toString() : this._lastValidEndValue;
 		}
 	}
 

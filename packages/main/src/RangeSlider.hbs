@@ -52,7 +52,8 @@
 			{{#if editableTooltip}}
 				<ui5-input
 					type="Number"
-					value="{{startValue}}"
+					value="{{_tooltipInputStartValue}}"
+					value-state="{{_tooltipInputStartValueState}}"
 					accessible-name-ref="ui5-slider-accName ui5-slider-InputLabel"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
@@ -87,7 +88,8 @@
 			{{#if editableTooltip}}
 				<ui5-input
 					type="Number"
-					value="{{endValue}}"
+					value="{{_tooltipInputEndValue}}"
+					value-state="{{_tooltipInputEndValueState}}"
 					accessible-name-ref="ui5-slider-accName ui5-slider-InputLabel"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"

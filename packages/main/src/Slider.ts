@@ -90,14 +90,13 @@ class Slider extends SliderBase implements IFormInputElement {
 	@property({ type: Number })
 	value = 0;
 
-	@property({ type: Boolean })
-	_isInputValueValid = false;
-
 	_valueInitial?: number;
 	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 	_lastValidInputValue: string;
+	_tooltipInputValue: string = this.value.toString();
+	_tooltipInputValueState: string = "None";
 
 	get formFormattedValue() {
 		return this.value.toString();
@@ -265,30 +264,16 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = undefined;
 	}
 
-	_updateValueFromInput(e: Event) {
-		const input = e.target as HTMLInputElement;
-		const value = parseFloat(input.value);
-		this._isInputValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
-
-		if (!this._isInputValueValid) {
-			return;
-		}
-
-		this.value = value;
-	}
-
 	_onInputFocusOut(e: FocusEvent) {
-		const tooltipInput = e.target as Input;
+		const tooltipInput = this.shadowRoot!.querySelector("ui5-input") as Input;
 
 		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		this._updateValueFromInput(e);
-		this._updateInputValue();
-
-		this._isInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
 
 		if (!this._isInputValueValid) {
 			tooltipInput.value = this._lastValidInputValue;
-			tooltipInput.valueState = "None";
+			this._isInputValueValid = true;
+			this._tooltipInputValueState = "None";
 		}
 	}
 
@@ -302,12 +287,16 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._isInputValueValid = parseFloat(tooltipInput.value) >= this.min && parseFloat(tooltipInput.value) <= this.max;
 
 		if (!this._isInputValueValid) {
-			tooltipInput.valueState = "Negative";
+			this._tooltipInputValue = this._lastValidInputValue;
+			this._isInputValueValid = true;
+			this._tooltipInputValueState = "Negative";
+
 			return;
 		}
 
-		this._lastValidInputValue = tooltipInput.value;
-		tooltipInput.valueState = "None";
+		this._tooltipInputValue = this.value.toString();
+		this._lastValidInputValue = this._tooltipInputValue;
+		this._tooltipInputValueState = "None";
 	}
 
 	/** Determines if the press is over the handle
