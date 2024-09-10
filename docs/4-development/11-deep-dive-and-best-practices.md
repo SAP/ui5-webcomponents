@@ -177,11 +177,11 @@ Here `text`, `width`, `scale` and `data` are public properties, and `_isPhone` p
 
 #### Best practices for using properties
 
-- **Аvoid directly modifying public properties** from within a component, as these properties are typically controlled by the parent application. The only exception to this rule is when the property change results directly from user interaction (e.g., updating a value after a user types in an input field, or toggling a checked property after a user clicks a checkbox). Additionally, whenever you modify a public property due to user interaction, it's important to **fire an event** to notify the parent application. This ensures that the application can synchronize its state accordingly..
+- **Аvoid directly modifying public properties** from within a component, as these properties are typically controlled by the parent application. The only exception to this rule is when the property change results directly from user interaction (e.g., updating a value after a user types in an input field, or toggling a checked property after a user clicks a checkbox). Additionally, whenever you modify a public property due to user interaction, it's important to **fire an event** to notify the parent application. This ensures that the application can synchronize its state accordingly.
 
 - As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
 
-- Using attribute selectors isntead of setting and using CSS classes on your component. Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors.
+- Using attribute selectors instead of setting and using CSS classes on your component. Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors.
 
 For example, using the `size` property (respectively the attribute with the same name) to change component's dimensions for certain values - `size="XS"`:
 
@@ -230,9 +230,9 @@ Use the `@event` decorator to define the event. If the event name consists of mu
 
 ```ts
 @event("selection-change", {
-    detail: {
-        valid: { type: Boolean },
-    },
+	detail: {
+		valid: { type: Boolean },
+	},
 })
 class MyDemoComponent extends UI5Element {
 }
@@ -244,17 +244,16 @@ Use the `UI5Element#fireEvent` method to trigger the event:
 
 ```ts
 @event("selection-change", {
-    detail: {
-        valid: { type: Boolean },
-    },
+	detail: {
+		valid: { type: Boolean },
+	},
 })
 class MyDemoComponent extends UI5Element {
-
 	onItemSelected(e: Event) {
-        this.fireEvent("selection-change", {
-            valid: true,
-        });
-    }
+		this.fireEvent("selection-change", {
+			valid: true,
+		});
+	}
 }
 ```
 
@@ -266,26 +265,26 @@ The naming convention for the type is a combination of the component class name 
 
 ```ts
 export type MyDemoComponentSelectionChangeEventDetail = {
-    valid: boolean;
+	valid: boolean;
 };
 
 
 @event<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
-    detail: {
-        valid: { type: Boolean },
-    },
+	detail: {
+		valid: { type: Boolean },
+	},
 })
 class MyDemoComponent extends UI5Element {
 
 	onItemSelected(e: Event) {
-        this.fireEvent<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
-            valid: true,
-        });
-    }
+		this.fireEvent<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
+			valid: true,
+		});
+	}
 }
 ```
 
- **Note:** it's a best practice to export the type to make it available for outside usage.
+**Note:** it's a best practice to export the type to make it available for outside usage.
 
 
 ### Handling Events in Templates
@@ -295,7 +294,7 @@ For example, if a ui5-list component emits a `selection-change` event, handle it
 
 ```handlebars
 <div class="my-component">
-		<ui5-list @ui5-selection-change="{{onSelectionChange}}"></ui5-list>
+	<ui5-list @ui5-selection-change="{{onSelectionChange}}"></ui5-list>
 </div>
 ```
 
@@ -344,7 +343,7 @@ On the consuming side, you can insert HTML elements into your component:
 ```html
 <!-- index.html -->
 <my-demo-component>
-    <span>Hello World</span>
+	<span>Hello World</span>
 </my-demo-component>
 ```
 
@@ -358,7 +357,7 @@ we should describe it with a brief JSDoc comment at component class level as sho
 @customElement({
 	tag: "ui5-demo-component",
 })
-class MyDemoComponent extends UI5Element {
+class MyDemoComponent extends UI5Element {}
 ```
 
 ### Slot as Class Member
@@ -369,8 +368,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot()
-    items!: Array<HTMLElement>;
+	@slot()
+	items!: Array<HTMLElement>;
 }
 ```
 
@@ -382,7 +381,7 @@ Also, we define slots as class members when we need to access the slotted childr
 For example, to get the slotted elements count:
 
 ```ts
-   const itemsCount = this.items.length;
+const itemsCount = this.items.length;
 ```
 
 Or, to read some state of the slotted elements:
@@ -433,7 +432,7 @@ named slot requires setting the `slot` attribute:
 ```html
 <!-- index.html -->
 <my-demo-component>
-    <span>Hello World</span>
+	<span>Hello World</span>
 </my-demo-component>
 ```
 
@@ -450,7 +449,7 @@ The named slot requires a small change in the component's template. You must pas
 ```html
 <!-- index.html -->
 <my-demo-component>
-    <span slot="content">Hello World</span>
+	<span slot="content">Hello World</span>
 </my-demo-component>
 ```
 
@@ -464,8 +463,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot({ type: HTMLElement, "default": true })
-    content!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
 }
 ```
 
@@ -478,8 +477,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot()
-    content!: Array<HTMLElement>;
+	@slot()
+	content!: Array<HTMLElement>;
 }
 ```
 	
@@ -503,7 +502,7 @@ For example, here we assume that the "content" slot is more important and we dec
 <!-- index.html -->
 <my-demo-component>
 	<h1 slot="heading">Heading</h1>
-    <span>Hello World</span>
+	<span>Hello World</span>
 </my-demo-component>
 ```
 
@@ -512,11 +511,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot({ type: HTMLElement, "default": true })
-    content!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
 
 	@slot()
-    heading!: Array<HTMLElement>;
+	heading!: Array<HTMLElement>;
 }
 ```
 
@@ -534,15 +533,15 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot({ type: HTMLElement, individualSlots: true })
-    content!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, individualSlots: true })
+	content!: Array<HTMLElement>;
 }
 ```
 
 Next, iterate over the child elements in the template, using the `_individualSlot` property in the name attribute of the slot element:
 ```hbs
 {{#each mySlot}}
-    <slot name="{{this._individualSlot}}"></slot>
+	<slot name="{{this._individualSlot}}"></slot>
 {{/each}}
 ```
 
@@ -552,8 +551,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("ui5-carousel")
 class Carousel extends UI5Element {
-    @slot({ type: HTMLElement, individualSlots: true })
-    content!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, individualSlots: true })
+	content!: Array<HTMLElement>;
 }
 ```
 
@@ -603,8 +602,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot({ type: HTMLElement, invalidateOnChildChange: { properties: ["myProp"], slots: ["mySlot"] }})
-    content!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: ["myProp"], slots: ["mySlot"] }})
+	content!: Array<HTMLElement>;
 }
 ```
 
@@ -635,7 +634,7 @@ class Wizard extends UI5Element {
 {{!-- Wizard.hbs --}}
 <div class="ui5-wizard-root">
 	<nav>
-	    {{!-- _steps is a calculated state based on the steps slot --}}
+		{{!-- _steps is a calculated state based on the steps slot --}}
 		{{#each _steps}}
 			<div class="ui5-wiz-step-root">
 			</div>
@@ -657,14 +656,14 @@ For example:
 <!-- index.html -->
 <my-demo-component>
 	<h1 slot="heading">Heading</h1>
-    <span>Hello World</span>
+	<span>Hello World</span>
 </my-demo-component>
 ```
 
 ```css
 /* MyDemoComponent.css */
 ::slotted([slot="heading"]) {
-    width: 200px;
+	width: 200px;
 	height: 100px;
 }
 ```
@@ -685,7 +684,7 @@ Example:
 import MyComponentTemplate from "./generated/templates/MyComponentTemplate.lit.js";
 
 @customElement({
-    template: MyComponentTemplate
+	template: MyComponentTemplate
 })
 ```
 
