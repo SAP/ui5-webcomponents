@@ -656,13 +656,15 @@
 		};
 
 		notificationsListGroupGrowing.addEventListener("load-more", (e) => {
+			const focusIndex = notificationsListGroupGrowing.items.length;
+
 			notificationsListGroupGrowing.loading = true; // as in the ui5-list (the whole list gets 'busy')
 			setTimeout(() => {
 				insertItems(notificationsListGroupGrowing);
 				notificationsListGroupGrowing.loading = false;
 
 				setTimeout(() => {
-					notificationsListGroupGrowing.loadMoreButton?.focus();
+					notificationsListGroupGrowing.items[focusIndex].focus();
 				}, 1000);
 			}, 1000);
 		});
