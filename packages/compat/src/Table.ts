@@ -1161,7 +1161,7 @@ class Table extends UI5Element {
 	}
 
 	get loadMoreAriaLabelledBy(): string {
-		if (this.moreDataText) {
+		if (this.growingButtonSubtext) {
 			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
 		}
 
