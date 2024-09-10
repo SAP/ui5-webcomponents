@@ -77,7 +77,7 @@
 }
 
 :host([media-range="XL"]) .ui5-bar-startcontent-container {
-	padding-inline-start: var(--_ui5_bar-start-container-padding-start_X_L);
+	padding-inline-start: var(--_ui5_bar-start-container-padding-start_XL);
 }
 
 :host([media-range="S"]) .ui5-bar-endcontent-container {
