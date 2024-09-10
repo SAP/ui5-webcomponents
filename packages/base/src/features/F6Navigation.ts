@@ -21,7 +21,6 @@ const shouldUpdate = (runtimeIndex: number | undefined) => {
 };
 
 class F6Navigation {
-	static _instance: F6Navigation;
 	keydownHandler: (event: KeyboardEvent) => void;
 	selectedGroup: HTMLElement | null = null;
 	groups: Array<HTMLElement> = [];
