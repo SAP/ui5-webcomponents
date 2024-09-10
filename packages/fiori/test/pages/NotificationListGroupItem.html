@@ -25,8 +25,7 @@
 				class="notificationsPopover"
 				horizontal-align="End">
 		<div class="notificationsPopoverContent">
-			<ui5-bar id="notificationsPopoverBarGrowingAndSticky"
-					 class="notificationsPopoverBar"
+			<ui5-bar class="notificationsPopoverBar"
 					 design="Header">
 				<ui5-title level="H5" slot="startContent">Notifications</ui5-title>
 				<ui5-button id="show-message-strip" design="Emphasized" slot="endContent">Show M. Strip</ui5-button>
@@ -487,8 +486,7 @@
 	<ui5-toast id="wcToastBS" duration="2000"></ui5-toast>
 
 	<ui5-popover id="notificationsPopover" class="notificationlistgroupitem2auto" placement="Bottom" horizontal-align="End">
-		<ui5-bar id="notificationsPopoverBar"
-				 class="notificationsPopoverBar"
+		<ui5-bar class="notificationsPopoverBar"
 				 design="Header">
 			<ui5-title level="H5" slot="startContent">Notifications</ui5-title>
 			<ui5-button design="Transparent" slot="endContent">Clear All</ui5-button>
@@ -665,8 +663,8 @@
 
 				setTimeout(() => {
 					notificationsListGroupGrowing.items[focusIndex].focus();
-				}, 1000);
-			}, 1000);
+				}, 500);
+			}, 500);
 		});
 
 		btnShowMessageStrip.addEventListener("click", function() {

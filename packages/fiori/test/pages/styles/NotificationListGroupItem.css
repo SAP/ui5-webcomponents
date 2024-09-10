@@ -26,6 +26,7 @@
 
 .notificationsPopover {
     max-width: 27rem;
+    max-height: 40rem;
 }
 
 .notificationsPopover::part(content) {
@@ -45,6 +46,7 @@
     min-height: 0;
 }
 
+.notificationsPopoverBar,
 .notificationsPopoverBar::part(bar) {
     box-shadow: none; /* remove the default box-shadow to achieve the target design */
 }

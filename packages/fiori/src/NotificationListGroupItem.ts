@@ -112,6 +112,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 * When button is pressed `load-more` event will be fired.
 	 * @default false
 	 * @public
+	 * @since 2.2.0
 	 */
 	@property()
 	growing: `${NotificationListGrowingMode}` = "None";
