@@ -31,28 +31,28 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 2nd group is focused
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused agian
 			cy.get("#first")
@@ -86,21 +86,21 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 2nd group is focused (an empty group is skipped)
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused agian
 			cy.get("#first")
@@ -129,28 +129,28 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 2nd group is focused (an empty group is skipped)
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused agian
 			cy.get("#first")
@@ -186,14 +186,14 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 2nd group is focused (an empty group is skipped)
 			cy.get("#second")
@@ -207,7 +207,7 @@ describe("F6 navigation", () => {
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused agian
 			cy.get("#first")
@@ -239,7 +239,7 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused
 			cy.get("#first")
@@ -253,14 +253,14 @@ describe("F6 navigation", () => {
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused agian
 			cy.get("#first")
@@ -296,7 +296,7 @@ describe("F6 navigation", () => {
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress("F6");
+			cy.realPress("F6");
 
 			// assert same button remains focused as there is no fasnav group with focusable elements
 			cy.get("#first")
@@ -322,7 +322,7 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress("F6");
+			cy.realPress("F6");
 
 			// assert 1st group is focused
 			cy.get("#first")
@@ -358,28 +358,28 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 2nd group is focused
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused agian
 			cy.get("#third")
@@ -413,21 +413,21 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 2nd group is focused
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused (an empty group is skipped)
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused agian
 			cy.get("#second")
@@ -456,28 +456,28 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 2nd group is focused (an empty group is skipped)
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused agian
 			cy.get("#third")
@@ -513,28 +513,28 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 2nd group is focused (an empty group is skipped)
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused agian
 			cy.get("#third")
@@ -566,28 +566,28 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused
 			cy.get("#third")
 				.should("be.focused");
 
 			// act
-			cy.get("#third").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 2nd group is focused (an empty group is skipped)
 			cy.get("#second")
 				.should("be.focused");
 
 			// act
-			cy.get("#second").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused
 			cy.get("#first")
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 3rd group is focused agian
 			cy.get("#third")
@@ -623,7 +623,7 @@ describe("F6 navigation", () => {
 				.should("be.focused");
 
 			// act
-			cy.get("#first").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert same button remains focused as there is no fasnav group with focusable elements
 			cy.get("#first")
@@ -649,7 +649,7 @@ describe("F6 navigation", () => {
 
 			// act
 			cy.get("#before").focus();
-			cy.get("#before").realPress(["Shift", "F6"]);
+			cy.realPress(["Shift", "F6"]);
 
 			// assert 1st group is focused
 			cy.get("#first")
