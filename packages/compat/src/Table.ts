@@ -440,7 +440,6 @@ class Table extends UI5Element {
 	fnOnRowFocused: (e: CustomEvent) => void;
 	_handleResize: ResizeObserverCallback;
 
-	moreDataText?: string;
 	tableEndObserved: boolean;
 	visibleColumns: Array<TableColumn>;
 	visibleColumnsCount?: number;
