@@ -440,7 +440,6 @@ class Table extends UI5Element {
 	fnOnRowFocused: (e: CustomEvent) => void;
 	_handleResize: ResizeObserverCallback;
 
-	moreDataText?: string;
 	tableEndObserved: boolean;
 	visibleColumns: Array<TableColumn>;
 	visibleColumnsCount?: number;
@@ -1161,7 +1160,7 @@ class Table extends UI5Element {
 	}
 
 	get loadMoreAriaLabelledBy(): string {
-		if (this.moreDataText) {
+		if (this.growingButtonSubtext) {
 			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
 		}
 

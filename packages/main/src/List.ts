@@ -17,7 +17,7 @@ import {
 	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -908,27 +908,16 @@ class List extends UI5Element {
 			return;
 		}
 
-		const { placement, element } = findClosestPositionByKey(this.items, item, e);
+		const closestPositions = findClosestPositionsByKey(this.items, item, e);
 
-		if (!element || !placement) {
+		if (!closestPositions.length) {
 			return;
 		}
 
 		e.preventDefault();
 
-		const placementAccepted = !this.fireEvent<ListMoveEventDetail>("move-over", {
-			originalEvent: e,
-			source: {
-				element: item,
-			},
-			destination: {
-				element,
-				placement,
-			},
-		}, true);
-
-		if (placementAccepted) {
-			this.fireEvent<ListMoveEventDetail>("move", {
+		const acceptedPosition = closestPositions.find(({ element, placement }) => {
+			return !this.fireEvent<ListMoveEventDetail>("move-over", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -936,6 +925,19 @@ class List extends UI5Element {
 				destination: {
 					element,
 					placement,
+				},
+			}, true);
+		});
+
+		if (acceptedPosition) {
+			this.fireEvent<ListMoveEventDetail>("move", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element: acceptedPosition.element,
+					placement: acceptedPosition.placement,
 				},
 			});
 
