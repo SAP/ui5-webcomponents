@@ -1,7 +1,7 @@
 import "@ui5/webcomponents/dist/List.js";
 import "@ui5/webcomponents/dist/ListItemStandard.js";
-
 import "@ui5/webcomponents-icons/dist/checklist-item.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 const list = document.getElementById('listDnd1');
 const handleBeforeItemMove = (e) => {
@@ -25,18 +25,17 @@ const handleMoveOver = (e) => {
 
 const handleMove = (e) => {
   const { destination, source } = e.detail;
-  const parent = destination.element.closest('[ui5-list]');
 
-  if (destination.placement === 'Before') {
-    parent.insertBefore(source.element, destination.element);
-  } else if (destination.placement === 'After') {
-    const nextElement = Array.from(parent.children).at(
-      Array.from(parent.children).indexOf(destination.element) + 1
-    );
-
-    parent.insertBefore(source.element, nextElement);
-  } else if (destination.placement === 'On') {
-    destination.element.prepend(source.element);
+  switch (destination.placement) {
+    case MovePlacement.Before:
+      destination.element.before(source.element);
+      break;
+    case MovePlacement.After:
+      destination.element.after(source.element);
+      break;
+    case MovePlacement.On:
+      destination.element.prepend(source.element);
+      break;
   }
 };
 

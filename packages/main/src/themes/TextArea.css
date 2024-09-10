@@ -153,7 +153,6 @@
 	width: 100%;
 	max-height: 94vh;
 	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize) + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	word-break: break-all;
 	padding-top: var(--_ui5_textarea_padding_top);
 	padding-bottom: var(--_ui5_textarea_padding_bottom);
 	padding-left:  var(--_ui5_textarea_padding_right_and_left);
@@ -422,27 +421,27 @@
 	display: none;
 }
 
-:host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
 }
 
-:host([value-state="Negative"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Negative"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Critical"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Critical"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Information"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Information"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Positive"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([value-state="Positive"]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([focused]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host([focused]) .ui5-content-custom-scrollbars ::-webkit-scrollbar {
 	background-image: none;
 }
