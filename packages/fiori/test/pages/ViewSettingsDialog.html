@@ -93,7 +93,29 @@
 	<ui5-input id="sortByItem" style="display: none"></ui5-input>
 	<ui5-input id="sortOrder" style="display: none"></ui5-input>
 
+	<h3>ViewSettingsDialog with item-keys</h3>
+
+	<ui5-button id="btnOpenDialogWithItemKey">Show ViewSettingsDialog</ui5-button>
+	<ui5-view-settings-dialog id="vsdWithItemKey">
+		<ui5-sort-item slot="sortItems" text="Name" item-key="sortName"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Position" item-key="sortPosition"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Company" item-key="sortCompany"></ui5-sort-item>
+
+		<ui5-filter-item slot="filterItems" text="Filter 1" item-key="filter1">
+			<ui5-filter-item-option slot="values" text="Some filter 1" item-key="filterOption1"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 2" item-key="filterOption2"></ui5-filter-item-option>
+		</ui5-filter-item>
+		<ui5-filter-item slot="filterItems" text="Filter 2" item-key="filter2">
+			<ui5-filter-item-option slot="values" text="Some filter 3" item-key="filterOption3"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Some filter 4" item-key="filterOption4"></ui5-filter-item-option>
+		</ui5-filter-item>
+	</ui5-view-settings-dialog>
+
 	<script>
+		btnOpenDialogWithItemKey.addEventListener("click", function () {
+			vsdWithItemKey.open = true;
+		});
+
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.open = true;
 		});

@@ -139,7 +139,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
 
 		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();
-		assert.include(sortByLiText, "Name", "sortBy should  have an option selected");
+		assert.include(sortByLiText, "Name", "sortBy should have an option selected");
 
 		await browser.keys("Escape");
 	});
@@ -175,5 +175,37 @@ describe("ViewSettingsDialog general interaction", () => {
 		assert.strictEqual(await vsdSegmentedButton.isDisplayed(), false, "Segmented button is not built when there is only set of items");
 
 		await browser.keys("Escape");
+	});
+
+	it("should access the same sort item via item-key, after text being changed", async () => {
+		const btnOpenDialog = await browser.$("#btnOpenDialogWithItemKey");
+		const viewSettingsDialog = await browser.$("#vsdWithItemKey");
+
+		await btnOpenDialog.click();
+
+		// Access the sort item using item-key
+		const sortItem = await viewSettingsDialog.$(`[item-key="sortCompany"]`);
+		const secondSortItemLi = await viewSettingsDialog.shadow$("[sort-by]").$$("ui5-li")[1];
+
+		// Get the text of the list item
+		let sortItemLiText = await viewSettingsDialog.shadow$("[sort-by]").$$("ui5-li")[2].getText();
+		sortItemLiText = sortItemLiText.split("\n")[0]; // Trim the text because it returns 'Company\nNot Selected';
+
+		let sortItemText = await sortItem.getAttribute("text");
+
+		assert.strictEqual(sortItemLiText, sortItemText, "The sort item text is the same as the li text before update");
+
+		// Change the text of the item
+		await sortItem.setAttribute("text", "Cooperation");
+
+		await browser.keys("Escape");
+		await btnOpenDialog.click();
+		secondSortItemLi.click(); // Click on another item to re-render, so the text changes successfully.
+
+		sortItemLiText = await viewSettingsDialog.shadow$("[sort-by]").$$("ui5-li")[2].getText();
+		sortItemLiText = sortItemLiText.split("\n")[0];
+		sortItemText = await sortItem.getAttribute("text");
+
+		assert.strictEqual(sortItemLiText, sortItemText, "The sort item text is the same as the li text after update");
 	});
 });
