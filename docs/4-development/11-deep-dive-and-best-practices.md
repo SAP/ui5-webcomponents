@@ -396,7 +396,7 @@ Or, sometimes even set some private state on the slotted elements:
 
 ```ts
 this.items.forEach((item, key) => {
-	const isLastChild = key ===  this.items..length - 1;
+	const isLastChild = key === this.items.length - 1;
 	item.showBorder = isLastChild;
 });
 ```
