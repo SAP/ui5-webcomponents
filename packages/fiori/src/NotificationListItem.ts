@@ -17,6 +17,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
@@ -300,7 +301,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hasDesc() {
-		return !!this.description.length;
+		return willShowContent(this.description);
 	}
 
 	get hasImportance() {
