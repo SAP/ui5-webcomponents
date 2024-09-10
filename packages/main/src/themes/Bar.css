@@ -66,8 +66,7 @@
 	margin: 0 0.25rem;
 }
 
-:host([media-range="S"]) .ui5-bar-startcontent-container,
-:host([media-range="S"]) .ui5-bar-endcontent-container {
+:host([media-range="S"]) .ui5-bar-startcontent-container {
 	padding-inline-start: var(--_ui5_bar-start-container-padding-start_S);
 }
 
