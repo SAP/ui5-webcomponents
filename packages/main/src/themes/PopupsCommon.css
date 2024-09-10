@@ -79,8 +79,12 @@
     display: none;
 }
 
-:host([no-scrolling]) .ui5-popup-content {
-    overflow: hidden;
+:host([no-horizontal-scrolling]) .ui5-popup-content {
+    overflow-x: hidden;
+}
+
+:host([no-vertical-scrolling]) .ui5-popup-content {
+	overflow-y: hidden;
 }
 
 /*** Responsive paddings for the content***/

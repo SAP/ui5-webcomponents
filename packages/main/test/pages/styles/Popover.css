@@ -92,3 +92,14 @@ ui5-date-picker,
 #divOpenAndScroll > div {
     height: 2000px;
 }
+
+.popoverContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.popoverContentList {
+    flex: 1;
+    min-height: 0;
+}

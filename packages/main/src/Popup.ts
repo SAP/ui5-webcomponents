@@ -188,6 +188,28 @@ abstract class Popup extends UI5Element {
 	preventInitialFocus = false;
 
 	/**
+	 * Indicates whether the component has its own horizontal scroll when the content
+	 * exceeds the content area. However, if a scrollable component is present
+	 * within the content area, this property must be set to `true` to disable
+	 * the default scrolling.
+	 * @default false
+	 * @since 2.2.0
+	 */
+	@property({ type: Boolean })
+	noHorizontalScrolling = false;
+
+	/**
+	 * Indicates whether the component has its own vertical scroll when the content
+	 * exceeds the content area. However, if a scrollable component is present
+	 * within the content area, this property must be set to `true` to disable
+	 * the default scrolling.
+	 * @default false
+	 * @since 2.2.0
+	 */
+	@property({ type: Boolean })
+	noVerticalScrolling = false;
+
+	/**
 	 * Indicates if the element is the top modal popup
 	 *
 	 * This property is calculated automatically
