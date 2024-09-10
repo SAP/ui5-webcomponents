@@ -374,7 +374,12 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-We need this when we need to access the slotted children for some reason. For example, to get the slotted elements count:
+Defining a slot with the `@slot` decorator means that this slot will be managed by the framework:
+- If any of the children are custom elements, the framework will wait until they are all defined and upgraded before rendering the component.
+- The component will be re-rendered when its children are added, removed, or rearranged.
+
+Also, we define slots as class members when we need to access the slotted children for some reason.
+For example, to get the slotted elements count:
 
 ```ts
    const itemsCount = this.items.length;
