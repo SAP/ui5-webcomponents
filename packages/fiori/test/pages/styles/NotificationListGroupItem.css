@@ -29,19 +29,22 @@
     max-height: 40rem;
 }
 
+.notificationsPopover::part(header) {
+    padding: 0;
+    box-shadow: none;
+}
+
 .notificationsPopover::part(content) {
     padding: 0;
 }
 
-.notificationsPopoverContent {
+.notificationsPopoverHeader {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .notificationsPopoverList {
-    flex: 1;
-    min-height: 0;
+    height: 100%;
 }
 
 .notificationsPopoverBar,
