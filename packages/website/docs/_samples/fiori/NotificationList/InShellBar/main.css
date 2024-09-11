@@ -1,12 +1,30 @@
-#popover-with-notifications {
-    max-width: 27rem;
-    max-height: 40rem;
+.notificationsPopover {
+	max-width: 27rem;
+	max-height: 40rem;
 }
 
-#popover-with-notifications::part(content) {
-    padding: 0;
+.notificationsPopover::part(content) {
+	padding: 0;
 }
 
-#notificationsPopoverBar::part(bar) {
-    box-shadow: none;
+.notificationsPopoverContent {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.notificationsPopoverList {
+	flex: 1;
+	min-height: 0;
+}
+
+.notificationsPopoverBar,
+.notificationsPopoverBar::part(bar) {
+	box-shadow: none;
+}
+
+.notificationsMessageStrip {
+	display: none;
+	margin: 0.5rem;
+	width: auto;
 }

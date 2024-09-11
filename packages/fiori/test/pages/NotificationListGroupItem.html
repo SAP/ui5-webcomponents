@@ -33,7 +33,9 @@
 				<ui5-button design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
 				<ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
 			</ui5-bar>
-			<ui5-message-strip id="message-strip-error" design="Negative">Something went wrong.</ui5-message-strip>
+			<ui5-message-strip id="message-strip-error"
+							   class="notificationsMessageStrip"
+							   design="Negative">Something went wrong.</ui5-message-strip>
 			<ui5-notification-list class="notificationsPopoverList">
 				<ui5-li-notification-group id="notificationsListGroupGrowing" title-text="Orders" growing="Button">
 					<ui5-li-notification show-close
