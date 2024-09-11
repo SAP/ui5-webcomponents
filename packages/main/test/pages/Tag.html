@@ -15,7 +15,7 @@
 	</script>
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/Tag.css">
-	<script src="./Tag.js"></script>
+	<script src="./modules/Tag.js" type="module"></script>
 </head>
 
 <body class="tag1auto">
@@ -99,7 +99,7 @@
 	</section>
 	<section class="group gaps">
 		<ui5-title level="H2">Large Tags</ui5-title>
-		<ui5-tag id="tagIconOnly" size="L" design="Negative" wrapping-type="None">
+		<ui5-tag id="tagIconOnlyL" size="L" design="Negative" wrapping-type="None">
 		</ui5-tag>
 		<ui5-tag design="Neutral" size="L" wrapping-type="None">
 			Planned
@@ -109,6 +109,10 @@
 		</ui5-tag>
 		<ui5-tag design="Set1" color-scheme="3" size="L" wrapping-type="None">
 			<ui5-icon name="error" slot="icon"></ui5-icon>
+		</ui5-tag>
+		<ui5-tag design="Set1" color-scheme="3" size="L" class="width200px">
+			<ui5-icon name="error" slot="icon"></ui5-icon>
+			Some big text that will wrap in multiple lines
 		</ui5-tag>
 	</section>
 	<section class="group gaps">

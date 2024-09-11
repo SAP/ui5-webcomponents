@@ -720,6 +720,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("placeholder, set by the user", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp15";
 
 		const placeholder = "Delivery date";
@@ -734,6 +735,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Going under the minimum date changes value state", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
@@ -749,6 +751,7 @@ describe("Date Picker Tests", () => {
 	});
 
 	it("Going over the maximum date changes value state", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const innerInput = await datepicker.getInnerInput();
@@ -758,8 +761,7 @@ describe("Date Picker Tests", () => {
 		}
 
 		await innerInput.keys("May 5, 2100");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await innerInput.keys("Enter");
 
 		const input = await datepicker.getInput();
 		assert.equal(await input.getProperty("valueState"), "Negative", "value state of the input is Negative");
@@ -989,7 +991,7 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 
 		const data = Array.from(await datepicker.getDayPickerDatesRow(2));
-		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 18", "First columnheader have Week number aria-label");
+		assert.strictEqual(await data[0].getAttribute("aria-label"), "Calendar Week 19", "First columnheader have Week number aria-label");
 		assert.strictEqual(await data[1].getAttribute("aria-label"), "Non-Working Day May 2, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 		assert.strictEqual(await data[2].getAttribute("aria-label"), "May 3, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
 		assert.strictEqual(await data[3].getAttribute("aria-label"), "May 4, 2100", "Each date have the full date's info in Month Date, Year in aria-label");
@@ -1089,24 +1091,24 @@ describe("Date Picker Tests", () => {
 		assert.strictEqual(date.getFullYear(), 2000, "Correct year value");
 	});
 
-	// it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
-	// 	datepicker.id = "#dp33";
-	// 	const innerInput = await datepicker.getInnerInput();
-	// 	await innerInput.doubleClick();
-	// 	await browser.keys("Jan 1, 2000");
+	it("Keyboard navigation works when there are disabled dates in the calendar grid", async () => {
+		datepicker.id = "#dp33";
+		const innerInput = await datepicker.getInnerInput();
+		await innerInput.doubleClick();
+		await browser.keys("Jan 1, 2000");
 
-	// 	const valueHelpIcon = await datepicker.getValueHelpIcon();
-	// 	await valueHelpIcon.click();
+		const valueHelpIcon = await datepicker.getValueHelpIcon();
+		await valueHelpIcon.click();
 
-	// 	await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
 
-	// 	const displayedDay = await datepicker.getDisplayedDay(13);
-	// 	assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
+		const displayedDay = await datepicker.getDisplayedDay(13);
+		assert.ok(await displayedDay.isFocusedDeep(), "Successfully navigated");
 
-	// 	await browser.keys("Escape");
-	// 	await innerInput.doubleClick();
-	// 	await browser.keys("Backspace");
-	// });
+		await browser.keys("Escape");
+		await innerInput.doubleClick();
+		await browser.keys("Backspace");
+	});
 
 	it("Value state changes only on submit", async () => {
 		await browser.url(`test/pages/DatePicker.html?sap-ui-language=en`);

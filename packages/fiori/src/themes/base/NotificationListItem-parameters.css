@@ -18,6 +18,7 @@
 	--_ui5-notification_item-description-margin-top: 0.75rem;
 	--_ui5-notification_item-footer-margin-top: 0.75rem;
 	--_ui5-notification_item-focus-offset: 0;
+	--_ui5-notification_item-outline-offset: 0;
 }
 
 [data-ui5-compact-size],

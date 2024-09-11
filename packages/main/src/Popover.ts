@@ -6,6 +6,7 @@ import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 
@@ -20,7 +21,6 @@ import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegi
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 
@@ -70,12 +70,6 @@ type CalculatedPlacement = {
  *
  * `import "@ui5/webcomponents/dist/Popover.js";`
  *
- * **Note: ** We recommend placing popup-like components (`ui5-dialog` and `ui5-popover`)
- * outside any other components. Preferably, the popup-like components should be placed
- * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
- * the position and/or z-index management of the popup-like components.
- *
- * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
  * @constructor
  * @extends Popup
  * @since 1.0.0-rc.6
@@ -88,9 +82,9 @@ type CalculatedPlacement = {
 	tag: "ui5-popover",
 	styles: [
 		Popup.styles,
-		browserScrollbarCSS,
 		PopupsCommonCss,
 		PopoverCss,
+		getEffectiveScrollbarStyle(),
 	],
 	template: PopoverTemplate,
 })
@@ -213,6 +207,7 @@ class Popover extends Popup {
 	_left?: number;
 	_oldPlacement?: CalculatedPlacement;
 	_width?: string;
+	_height?: string;
 
 	static get VIEWPORT_MARGIN() {
 		return 10; // px
@@ -370,6 +365,12 @@ class Popover extends Popup {
 	async _show() {
 		super._show();
 
+		const opener = this.getOpenerHTMLElement(this.opener);
+
+		if (opener && this._isUI5Element(opener) && !opener.getDomRef()) {
+			return;
+		}
+
 		if (!this._opened) {
 			this._showOutsideViewport();
 		}
@@ -384,10 +385,10 @@ class Popover extends Popup {
 
 		if (this.open) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = this.getOpenerHTMLElement(this.opener)!.getBoundingClientRect();
+			this._openerRect = opener!.getBoundingClientRect();
 		}
 
-		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin() && this._oldPlacement) {
+		if (this._oldPlacement && this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
 			// reuse the old placement as the opener is not available,
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
@@ -435,6 +436,10 @@ class Popover extends Popup {
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
+		}
+
+		if (this.verticalAlign === PopoverVerticalAlign.Stretch && this._height) {
+			this.style.height = this._height;
 		}
 	}
 
@@ -484,6 +489,10 @@ class Popover extends Popup {
 		});
 	}
 
+	_isUI5Element(el: HTMLElement): el is UI5Element {
+		return "isUI5Element" in el;
+	}
+
 	get arrowDOM() {
 		return this.shadowRoot!.querySelector(".ui5-popover-arrow")!;
 	}
@@ -514,6 +523,7 @@ class Popover extends Popup {
 			this._width = `${targetRect.width}px`;
 		} else if (this.verticalAlign === PopoverVerticalAlign.Stretch && !isVertical) {
 			popoverSize.height = targetRect.height;
+			this._height = `${targetRect.height}px`;
 		}
 
 		const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;

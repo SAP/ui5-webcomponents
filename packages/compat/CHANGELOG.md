@@ -3,6 +3,120 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0...v2.3.0-rc.0) (2024-09-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
+
+
+### Bug Fixes
+
+* **ui5-table:** busy indicator overlay (compat) ([#9737](https://github.com/SAP/ui5-webcomponents/issues/9737)) ([9de42b0](https://github.com/SAP/ui5-webcomponents/commit/9de42b01cd471fcf0411290c004c80c860c0eddc)), closes [#9438](https://github.com/SAP/ui5-webcomponents/issues/9438)
+* **ui5-table:** fix border and focus overlap (compat) ([#9726](https://github.com/SAP/ui5-webcomponents/issues/9726)) ([e51d35e](https://github.com/SAP/ui5-webcomponents/commit/e51d35e7cd3b860a963255271050a1f996b300f6)), closes [#9526](https://github.com/SAP/ui5-webcomponents/issues/9526)
+
+
+
+
+
+# [2.2.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.1...v2.2.0-rc.2) (2024-08-22)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.2.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.0...v2.2.0-rc.1) (2024-08-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.2.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.1...v2.2.0-rc.0) (2024-08-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+## [2.1.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0...v2.1.1) (2024-08-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.1.0](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.3...v2.1.0) (2024-08-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.1.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.2...v2.1.0-rc.3) (2024-08-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.1.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.1...v2.1.0-rc.2) (2024-07-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.1.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.1.0-rc.0...v2.1.0-rc.1) (2024-07-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
+# [2.1.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.1...v2.1.0-rc.0) (2024-07-11)
+
+
+### Bug Fixes
+
+* **ui5-table:** access interactive content inside popin cell ([#9428](https://github.com/SAP/ui5-webcomponents/issues/9428)) ([60c5b98](https://github.com/SAP/ui5-webcomponents/commit/60c5b98845b56295306d6aeaf7a0b0933599c737)), closes [#9288](https://github.com/SAP/ui5-webcomponents/issues/9288)
+* **ui5-table:** correct announced row count ([#9442](https://github.com/SAP/ui5-webcomponents/issues/9442)) ([011815b](https://github.com/SAP/ui5-webcomponents/commit/011815b8cdd8318d61e61e68cb571fd09a40f2b2))
+* **ui5-table:** correct font weight ([#9417](https://github.com/SAP/ui5-webcomponents/issues/9417)) ([9cc7aeb](https://github.com/SAP/ui5-webcomponents/commit/9cc7aeb3baa927518f9cb4eea10698e6297b58a8)), closes [#9046](https://github.com/SAP/ui5-webcomponents/issues/9046)
+* **ui5-table:** correct load-more event on mode change ([#9434](https://github.com/SAP/ui5-webcomponents/issues/9434)) ([55aa134](https://github.com/SAP/ui5-webcomponents/commit/55aa13481ad69703032f48fe16ad8f7f148a7967))
+
+
+
+
+
+## [2.0.1](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0...v2.0.1) (2024-07-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-compat
+
+
+
+
+
 # [2.0.0](https://github.com/SAP/ui5-webcomponents/compare/v2.0.0-rc.6...v2.0.0) (2024-07-03)
 
 

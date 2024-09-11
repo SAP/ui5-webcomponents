@@ -8,8 +8,10 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
 import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationListItem from "./NotificationListItem.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -88,6 +90,14 @@ type NotificationListGroupItemToggleEventDetail = {
  */
 @event("toggle")
 
+/**
+ * Fired when additional items are requested.
+ *
+ * @public
+ * @since 2.2.0
+ */
+@event("load-more")
+
 class NotificationListGroupItem extends NotificationListItemBase {
 	/**
 	 * Defines if the group is collapsed or expanded.
@@ -98,15 +108,30 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	collapsed = false;
 
 	/**
+	 * Defines whether the component will have growing capability by pressing a `More` button.
+	 * When button is pressed `load-more` event will be fired.
+	 * @default false
+	 * @public
+	 * @since 2.2.0
+	 */
+	@property()
+	growing: `${NotificationListGrowingMode}` = "None";
+
+	/**
 	 * Defines the items of the `ui5-li-notification-group`,
 	 * usually `ui5-li-notification` items.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<NotificationListItemBase>
+	items!: Array<NotificationListItem>
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
+
+		this.items.forEach(item => {
+			item._ariaLevel = "2";
+		});
+
 		if (this.loading) {
 			this.clearChildBusyIndicator();
 		}
@@ -145,11 +170,12 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get ariaLabelledBy() {
 		const id = this._id;
-		const ids = [];
 
-		if (this.isLoading) {
-			ids.push(`${id}-loading`);
+		if (this.loading) {
+			return `${id}-loading`;
 		}
+
+		const ids = [];
 
 		if (this.hasTitleText) {
 			ids.push(`${id}-title-text`);
@@ -181,6 +207,15 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	_onHeaderToggleClick() {
 		this.toggleCollapsed();
+	}
+
+	_onLoadMore() {
+		this.fireEvent("load-more");
+	}
+
+	get loadMoreButton() {
+		const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]") as NotificationListGroupList;
+		return innerList.getDomRef()?.querySelector("[growing-button-inner]") as HTMLElement;
 	}
 
 	async _onkeydown(e: KeyboardEvent) {

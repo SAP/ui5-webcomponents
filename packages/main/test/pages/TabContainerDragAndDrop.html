@@ -13,18 +13,31 @@
 <body class="tabcontainer1auto">
 	<ui5-checkbox id="reorder" text="Movable tabs" checked></ui5-checkbox>
 	<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-	<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel"></ui5-step-input>
-
+	
 	<section>
-		<h2>Drag and drop</h2>
-		<ui5-tabcontainer id="tabContainerDnd" collapsed overflow-mode="StartAndEnd">
+		<h2>Max Nesting Level</h2>
+		<ui5-step-input id="maxNestingLevelInput" placeholder="maxNestingLevel"></ui5-step-input>
+		<br>
+		<ui5-tabcontainer id="tabContainerDnd" collapsed overflow-mode="End">
 			<ui5-tab id="tabOne" movable design="Positive" text="One"></ui5-tab>
 			<ui5-tab id="tabTwo" movable design="Negative" text="Two" disabled>
 				<ui5-tab slot="items" movable text="2.1"></ui5-tab>
 			</ui5-tab>
 			<ui5-tab id="tabThree" movable design="Critical" text="Three">
-				<ui5-tab slot="items" movable design="Positive" text="3.1">
-					<ui5-button>Button 3</ui5-button>
+				<ui5-tab id="tabThree1" slot="items" movable design="Positive" text="3.1">
+					<ui5-button>Button 3.1</ui5-button>
+				</ui5-tab>
+				<ui5-tab id="tabThree2" slot="items" movable design="Positive" text="3.2">
+					<ui5-tab id="tabThree21" slot="items" movable design="Positive" text="3.2.1">
+						<ui5-button>Button 3.2.1</ui5-button>
+					</ui5-tab>
+					<ui5-tab id="tabThree22" slot="items" movable design="Positive" text="3.2.2">
+						<ui5-button>Button 3.2.2</ui5-button>
+					</ui5-tab>
+					<ui5-button>Button 3.2</ui5-button>
+				</ui5-tab>
+				<ui5-tab id="tabThree3" slot="items" movable design="Positive" text="3.3">
+					<ui5-button>Button 3.3</ui5-button>
 				</ui5-tab>
 				content
 			</ui5-tab>
@@ -66,13 +79,32 @@
 			<ui5-tab id="tabTwentyNine" movable text="Twenty Nine"></ui5-tab>
 			<ui5-tab id="tabThirty" movable text="Thirty"></ui5-tab>
 		</ui5-tabcontainer>
+		<h2>Fixed Tabs</h2>
+		<ui5-tabcontainer id="tabContainerDndFixedTabs" collapsed overflow-mode="End">
+			<ui5-tab id="fixedTabsTabOne" design="Positive" text="One" data-fixed="true"></ui5-tab>
+			<ui5-tab id="fixedTabsTabTwo" design="Negative" text="Two" disabled data-fixed="true"></ui5-tab>
+			<ui5-tab id="fixedTabsTabThree" design="Critical" text="Three" data-fixed="true"></ui5-tab>
+			<ui5-tab-separator id="fixedTabsSeparatorOne"></ui5-tab-separator>
+			<ui5-tab movable text="Four"></ui5-tab>
+			<ui5-tab movable text="Five"></ui5-tab>
+			<ui5-tab id="fixedTabsTabSix" movable text="Six"></ui5-tab>
+			<ui5-tab id="fixedTabsTabSeven" movable text="Seven"></ui5-tab>
+			<ui5-tab movable design="Positive" text="Eight"></ui5-tab>
+			<ui5-tab movable design="Negative" text="Nine"></ui5-tab>
+			<ui5-tab movable design="Critical" text="Ten"></ui5-tab>
+			<ui5-tab movable text="Eleven"></ui5-tab>
+			<ui5-tab movable text="Twelve"></ui5-tab>
+			<ui5-tab movable text="Thirteen" selected></ui5-tab>
+			<ui5-tab movable text="Fourteen"></ui5-tab>
+		</ui5-tabcontainer>
 	</section>
 
 	<script>
 		const tc = document.getElementById("tabContainerDnd");
 		const maxNestingLevelInput = document.getElementById("maxNestingLevelInput");
-		let maxNestingLevel = 2;
-		maxNestingLevelInput.value = `${maxNestingLevel}`;
+		let maxNestingLevel = 3;
+		maxNestingLevelInput.value = maxNestingLevel;
+		const tcFixedTabs = document.getElementById("tabContainerDndFixedTabs");
 
 		const getTabLevel = (element) => {
 			if (element.hasAttribute("ui5-tabcontainer")) {
@@ -108,24 +140,20 @@
 			e.preventDefault();
 		});
 
-		tc.addEventListener("ui5-move", (e) => {
+		const handleMove = (e) => {
 			// TODO: validate source.element
 			const { destination, source } = e.detail;
-			const currentParent = destination.element.parentElement;
 
-			if (destination.placement === "Before") {
-				currentParent.insertBefore(
-					source.element,
-					destination.element
-				);
-			} else if (destination.placement === "After") {
-				const nextElement = Array.from(currentParent.children).at(Array.from(currentParent.children).indexOf(destination.element) + 1);
-				currentParent.insertBefore(
-					source.element,
-					nextElement
-				);
-			} else if (destination.placement === "On") {
-				destination.element.prepend(source.element);
+			switch (destination.placement) {
+				case "Before":
+					destination.element.before(source.element);
+					break;
+				case "After":
+					destination.element.after(source.element);
+					break;
+				case "On":
+					destination.element.prepend(source.element);
+					break;
 			}
 
 			const newParent = source.element.parentElement;
@@ -135,7 +163,9 @@
 			} else {
 				source.element.slot = "";
 			}
-		});
+		};
+
+		tc.addEventListener("ui5-move", handleMove);
 
 		const densityCb = document.getElementById("density");
 		densityCb.addEventListener("ui5-change", e => {
@@ -150,6 +180,23 @@
 		maxNestingLevelInput.addEventListener("ui5-change", (e) => {
 			maxNestingLevel = e.target.value;
 		});
+
+		tcFixedTabs.addEventListener("ui5-move-over", (e) => {
+			const { source, destination } = e.detail;
+
+			if (!tcFixedTabs.contains(source.element)) {
+				return;
+			}
+
+			console.log(`Dragging "${source.element.id}" ${destination.placement.toLowerCase()} "${destination.element.id}"`);
+
+			if (destination.element.dataset.fixed) {
+				return;
+			}
+
+			e.preventDefault();
+		});
+		tcFixedTabs.addEventListener("ui5-move", handleMove);
 	</script>
 </body>
 

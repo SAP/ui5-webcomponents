@@ -49,6 +49,7 @@ import {
 	VALUE_STATE_TYPE_ERROR,
 	VALUE_STATE_TYPE_WARNING,
 	INPUT_SUGGESTIONS_TITLE,
+	COMBOBOX_AVAILABLE_OPTIONS,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
 	LIST_ITEM_GROUP_HEADER,
@@ -402,7 +403,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the `ui5-combobox` is in `Information`, `Warning` or `Error` value state.
+	 * when the `ui5-combobox` is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.9
 	 * @public
 	 */
@@ -522,7 +523,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._fireChangeEvent();
 
 		const focusedOutToItemsPicker = this.open && this._getPicker().contains(toBeFocused);
-		const focusedOutToValueState = this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused);
+		const focusedOutToValueState = this.valueStateOpen && this.contains(toBeFocused);
 
 		if (focusedOutToItemsPicker || focusedOutToValueState) {
 			e.stopImmediatePropagation();
@@ -794,7 +795,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._isValueStateFocused = false;
 
 		this._announceSelectedItem(indexOfItem);
-		this._scrollToItem(indexOfItem, isForward);
+		this._scrollToItem(indexOfItem);
 
 		if (isGroupItem && this.open) {
 			return;
@@ -945,7 +946,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 				this._closeRespPopover();
 				this.focused = true;
 				this.inner.setSelectionRange(this.value.length, this.value.length);
-			} else if (this._internals?.form) {
+			} else if (this._internals.form) {
 				submitForm(this);
 			}
 		}
@@ -1204,7 +1205,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		item._isVisible = true;
 	}
 
-	_scrollToItem(indexOfItem: number, forward: boolean) {
+	_scrollToItem(indexOfItem: number) {
 		const picker = this._getPicker();
 		const list = this._getItemsList();
 		const listItem = list?.listItems[indexOfItem];
@@ -1215,13 +1216,17 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			const isListItemInVisibleArea = listItemRect.top >= pickerRect.top && listItemRect.bottom <= pickerRect.bottom;
 
 			if (!isListItemInVisibleArea) {
-				listItem.scrollIntoView({ behavior: "instant", block: forward ? "end" : "start", inline: "nearest" });
+				listItem.scrollIntoView({
+					behavior: "auto",
+					block: "nearest",
+					inline: "nearest",
+				});
 			}
 		}
 	}
 
 	_announceValueStateText() {
-		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
+		const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessage.map(el => el.textContent).join(" ");
 
 		if (valueStateText) {
 			announce(valueStateText, InvisibleMessageMode.Polite);
@@ -1234,6 +1239,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	get _iconAccessibleNameText() {
 		return ComboBox.i18nBundle.getText(SELECT_OPTIONS);
+	}
+
+	get _popupLabel() {
+		return ComboBox.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
 	}
 
 	get inner(): HTMLInputElement {
@@ -1277,7 +1286,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
-		return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 	}
 
 	get valueStateDefaultText(): string | undefined {
@@ -1286,10 +1295,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		return this.valueStateTextMappings[this.valueState];
-	}
-
-	get valueStateMessageText(): Array<Node> {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
 	}
 
 	get valueStateTextMappings(): ValueStateAnnouncement {
@@ -1344,6 +1349,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	get clearIconAccessibleName() {
 		return ComboBox.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
+	}
+
+	get responsivePopoverId() {
+		return `${this._id}-popover`;
 	}
 
 	static async onDefine() {

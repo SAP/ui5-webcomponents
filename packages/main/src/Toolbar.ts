@@ -498,6 +498,7 @@ class Toolbar extends UI5Element {
 	}
 
 	onInteract(e: CustomEvent) {
+		e.stopImmediatePropagation();
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
 
@@ -557,7 +558,8 @@ class Toolbar extends UI5Element {
 
 	getItemsInfo(items: Array<ToolbarItem>) {
 		return items.map((item: ToolbarItem) => {
-			const ElementClass = getRegisteredToolbarItem(item.constructor.name);
+			const ctor = item.constructor as typeof ToolbarItem;
+			const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
 
 			if (!ElementClass) {
 				return null;

@@ -13,7 +13,7 @@ import type { IMenuItem } from "./Menu.js";
  * @extends ListItemBase
  * @implements {IMenuItem}
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 @customElement({
 	tag: "ui5-menu-separator",

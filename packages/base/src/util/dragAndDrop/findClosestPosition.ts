@@ -74,4 +74,53 @@ const findClosestPosition = (elements: Array<HTMLElement>, point: number, layout
 	};
 };
 
-export default findClosestPosition;
+const findClosestPositionsByKey = (elements: Array<HTMLElement>, element: HTMLElement, e: KeyboardEvent) => {
+	let index = elements.indexOf(element);
+	const positions = [];
+
+	switch (e.key) {
+	case "ArrowLeft":
+	case "ArrowUp":
+		index--;
+		if (index >= 0) {
+			positions.push({
+				element: elements[index],
+				placement: MovePlacement.Before,
+			});
+		}
+		break;
+	case "ArrowRight":
+	case "ArrowDown":
+		index++;
+		if (index < elements.length) {
+			positions.push({
+				element: elements[index],
+				placement: MovePlacement.After,
+			});
+		}
+		break;
+	case "Home":
+		elements.forEach(el => {
+			positions.push({
+				element: el,
+				placement: MovePlacement.Before,
+			});
+		});
+		break;
+	case "End":
+		elements.reverse().forEach(el => {
+			positions.push({
+				element: el,
+				placement: MovePlacement.After,
+			});
+		});
+		break;
+	}
+
+	return positions;
+};
+
+export {
+	findClosestPosition,
+	findClosestPositionsByKey,
+};

@@ -1,4 +1,4 @@
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -6,16 +6,19 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
 	isShow,
+	isEnter,
 	isPageUp,
 	isPageDown,
 	isPageUpShift,
@@ -44,6 +47,7 @@ import {
 	TIMEPICKER_CANCEL_BUTTON,
 	TIMEPICKER_INPUT_DESCRIPTION,
 	TIMEPICKER_POPOVER_ACCESSIBLE_NAME,
+	FORM_TEXTFIELD_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -275,10 +279,37 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * Defines the open or closed state of the popover.
 	 * @public
 	 * @default false
-	 * @since 2.0
+	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
 	open = false;
+
+	/**
+	 * Defines whether the component is required.
+	 * @since 2.1.0
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	required = false;
+
+	/**
+	 * Defines the aria-label attribute for the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.1.0
+	 */
+	@property()
+	accessibleName?: string;
+
+	/**
+	 * Receives id (or many ids) of the elements that label the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.1.0
+	 */
+	@property()
+	accessibleNameRef?: string;
 
 	@property({ type: Boolean, noAttribute: true })
 	_isInputsPopoverOpen = false;
@@ -289,7 +320,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * **Note:** If not specified, a default text (in the respective language) will be displayed.
 	 *
 	 * **Note:** The `valueStateMessage` would be displayed,
-	 * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
+	 * when the `ui5-time-picker` is in `Information`, `Critical` or `Negative` value state.
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
@@ -306,9 +337,16 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
 	}
+	get formValidityMessage() {
+		return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+	}
+
+	get formValidity(): ValidityStateFlags {
+		return { valueMissing: this.required && !this.value };
+	}
 
 	async formElementAnchor() {
-		return this.getFocusDomRefAsync();
+		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();
 	}
 
 	get formFormattedValue(): FormData | string | null {
@@ -335,6 +373,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
+			"ariaRequired": this.required,
+			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
 	}
 
@@ -380,6 +420,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	get _isPhone() {
 		return isPhone();
+	}
+
+	get _isMobileDevice() {
+		return !isDesktop() && (isPhone() || isTablet());
 	}
 
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
@@ -463,7 +507,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+		if (this._isMobileDevice && target && !target.hasAttribute("ui5-icon")) {
 			this.toggleInputsPopover();
 		}
 
@@ -519,7 +563,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_canOpenInputsPopover() {
-		return !this.disabled && this._isPhone;
+		return !this.disabled && this._isMobileDevice;
 	}
 
 	_getPopover() {
@@ -540,7 +584,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this._isPhone && !this.isInputsPopoverOpen()) {
+		if (this._isMobileDevice && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
 		if (isShow(e)) {
@@ -556,7 +600,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		if (this.open) {
 			return;
 		}
-		if (isPageUpShiftCtrl(e)) {
+
+		if (isEnter(e)) {
+			if (this._internals.form) {
+				submitForm(this);
+			}
+		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
 			this._modifyValueBy(1, "second");
 		} else if (isPageUpShift(e)) {
@@ -665,7 +714,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		if (this._isPhone) {
+		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
 				const popover = this._getInputsPopover();

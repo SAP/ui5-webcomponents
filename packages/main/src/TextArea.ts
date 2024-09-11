@@ -38,9 +38,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/TextArea.css.js";
+import textareaStyles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 type TokenizedText = Array<string>;
 type IndexedTokenizedText = Array<{
@@ -76,7 +75,11 @@ type ExceededText = {
 	tag: "ui5-textarea",
 	formAssociated: true,
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
+	styles: [
+		textareaStyles,
+		valueStateMessageStyles,
+		getEffectiveScrollbarStyle(),
+	],
 	renderer: litRender,
 	template: TextAreaTemplate,
 	dependencies: [Popover, Icon],
@@ -161,8 +164,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * Defines the value state of the component.
 	 *
 	 * **Note:** If `maxlength` property is set,
-	 * the component turns into "Warning" state once the characters exceeds the limit.
-	 * In this case, only the "Error" state is considered and can be applied.
+	 * the component turns into "Critical" state once the characters exceeds the limit.
+	 * In this case, only the "Negative" state is considered and can be applied.
 	 * @default "None"
 	 * @since 1.0.0-rc.7
 	 * @public
@@ -395,7 +398,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget?.shadowRoot?.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget && this.contains(eTarget);
 
 		this.focused = false;
 
@@ -526,7 +529,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return {
 			root: {
 				"ui5-textarea-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+				"ui5-content-custom-scrollbars": !!getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,
@@ -577,7 +580,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		}
 
 		if (this.hasCustomValueState) {
-			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
 		}
 
 		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
@@ -609,10 +612,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get hasValueState() {
 		return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
-	}
-
-	get valueStateMessageText() {
-		return this.valueStateMessage.map(x => x.cloneNode(true));
 	}
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {

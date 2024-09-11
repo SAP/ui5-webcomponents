@@ -20,7 +20,6 @@
 
 
 	<link rel="stylesheet" type="text/css" href="./styles/Calendar.css">
-
 </head>
 <body class="calendar1auto">
 
@@ -84,6 +83,23 @@
 		<ui5-title>Calendar with Selection Mode = Range</ui5-title>
 		<ui5-calendar id="calendar7" primary-calendar-type='Gregorian' secondary-calendar-type='Gregorian' selection-mode="Range">
 			<ui5-date-range start-value="Jan 20, 2021" end-value="Jan 30, 2021"></ui5-date-range>
+		</ui5-calendar>
+	</section>
+
+	<section>
+		<ui5-title>Calendar with CalendarWeekNumbering ISO_8601</ui5-title>
+		<ui5-calendar id="calendar8" calendar-week-numbering="ISO_8601">
+			<ui5-date value="Jan 1, 2023"></ui5-date-range>
+		</ui5-calendar>
+
+		<ui5-title>Calendar with CalendarWeekNumbering MiddleEastern</ui5-title>
+		<ui5-calendar id="calendar9" calendar-week-numbering="MiddleEastern">
+			<ui5-date value="Jan 1, 2023"></ui5-date-range>
+		</ui5-calendar>
+
+		<ui5-title>Calendar with CalendarWeekNumbering WesternTraditional</ui5-title>
+		<ui5-calendar id="calendar10" calendar-week-numbering="WesternTraditional">
+			<ui5-date value="Jan 1, 2023"></ui5-date-range>
 		</ui5-calendar>
 	</section>
 

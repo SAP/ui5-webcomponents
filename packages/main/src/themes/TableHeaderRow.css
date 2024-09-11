@@ -1,6 +1,5 @@
 :host {
     background: var(--sapList_HeaderBackground);
-    grid-template-rows: var(--_ui5_list_item_base_height);
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
 }
 
@@ -11,7 +10,7 @@
 :host([sticky]) {
     position: sticky;
     top: var(--ui5_grid_sticky_top, 0);
-    z-index: 1;
+    z-index: 2;
 }
 
 #popin-cell {

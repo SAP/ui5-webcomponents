@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
@@ -28,7 +29,6 @@ import {
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -60,7 +60,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
  *
- * The `ui5-dialog` is modal, which means that an user action is required before it is possible to return to the parent window.
+ * The `ui5-dialog` is modal, which means that a user action is required before it is possible to return to the parent window.
  * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
  * The content of the `ui5-dialog` is fully customizable.
  *
@@ -98,12 +98,6 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  *
  * `import "@ui5/webcomponents/dist/Dialog";`
  *
- * **Note:** We recommend placing popup-like components (`ui5-dialog` and `ui5-popover`)
- * outside any other components. Preferably, the popup-like components should be placed
- * in an upper level HTML element. Otherwise, in some cases the parent HTML elements can break
- * the position and/or z-index management of the popup-like components.
- *
- * **Note:** We don't recommend nesting popup-like components (`ui5-dialog`, `ui5-popover`).
  * @constructor
  * @extends Popup
  * @public
@@ -116,12 +110,13 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	template: DialogTemplate,
 	styles: [
 		Popup.styles,
-		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,
+		getEffectiveScrollbarStyle(),
 	],
 	dependencies: [
 		Icon,
+		...Popup.dependencies,
 	],
 })
 class Dialog extends Popup {
@@ -424,8 +419,6 @@ class Dialog extends Popup {
 		if (!this._movable || !this.draggable || !Dialog._isHeader(e.target as HTMLElement)) {
 			return;
 		}
-
-		e.preventDefault();
 
 		const {
 			top,

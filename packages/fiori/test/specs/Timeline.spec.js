@@ -26,3 +26,63 @@ describe("Timeline general interaction", () => {
 		assert.ok(timelineItem, "Item within Timeline Item is rendered");
 	})
 });
+
+describe("Timeline with group items interactions", () => {
+	before(async () => {
+		await browser.url(`test/pages/Timeline.html`);
+	});
+
+	it("Group items are rendered", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Events']");
+		const groupItemsLength = await groupItem[0].$$("ui5-timeline-item").length;
+
+
+		assert.strictEqual(groupItemsLength, 4, "Group items are rendered");
+	})
+
+	it("Group items are collapsed on button click", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Events']");
+		const groupItemButton = await groupItem[0].shadow$("ui5-toggle-button");
+
+		await groupItemButton.click();
+
+		await browser.keys("Tab");
+
+		const nextGroupItem = await timeline.$$("ui5-timeline-group-item[group-name='Meetings']");
+		const nextGroupItemButton = nextGroupItem[0].shadow$("ui5-toggle-button");
+
+		assert.ok(nextGroupItemButton.matches(":focus"), "Items are hidden on group collapse");
+	})
+
+	it("Group items are navigatable", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Events']");
+
+		await browser.keys("Tab");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowDown");
+		await browser.keys("ArrowUp");
+
+		const secondItemInGroup = await groupItem[0].$$("ui5-timeline-item");
+
+		assert.ok(secondItemInGroup[1].matches(":focus"), "Group items are navigatable with tab and arrow keys");
+	})
+
+	it("Group can be collapsed/expanded using keyboard", async () => {
+		const timeline = await browser.$("#verticalWithGrps");
+		const groupItem = await timeline.$$("ui5-timeline-group-item[group-name='Meetings']");
+		const groupItemButton = await groupItem[0].shadow$("ui5-toggle-button");
+
+		await groupItemButton.click();
+		await browser.keys("Enter");
+
+		assert.strictEqual(await groupItem[0].hasAttribute("collapsed"), false, "Group can be expanded with keyboard");
+
+		await browser.keys("Space");
+
+		assert.strictEqual(await groupItem[0].hasAttribute("collapsed"), true, "Group can be collapsed with keyboard");
+		} 
+	);
+})

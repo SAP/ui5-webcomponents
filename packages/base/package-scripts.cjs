@@ -42,7 +42,8 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	// these files are ignored in TS because the import in UI5Elments tries to load them from the dist and throws an error. create them empty here
 	generateSsrDom: `yarn nodetouch dist/ssr-dom.js dist/ssr-dom.d.ts`,
-	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
+	generateTemplates: ``,
+	generateTestTemplates: `mkdirp test/test-elements/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/test-elements -o test/test-elements/generated/templates`,
 	generateProd: {
 		"default": "nps generateProd.remove-dev-mode generateProd.copy-prod",
 		"remove-dev-mode": `node "${LIB}/remove-dev-mode/remove-dev-mode.mjs"`,
@@ -61,10 +62,11 @@ const scripts = {
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	test: {
-		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2"',
+		default: 'concurrently "nps test.ssr" "nps test.ssr2" "nps test.test-cy-ci"',
 		ssr: `mocha test/ssr`,
 		ssr2: "node -e \"import('./dist/Device.js')\"",
-		wdio: `node "${LIB}/test-runner/test-runner.js"`
+		"test-cy-ci": `nps generate && nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress run --component --browser chrome`,
+		"test-cy-open": `nps generate && nps generateTestTemplates && cross-env UI5_BASE=true yarn cypress open --component --browser chrome`,
 	},
 };
 

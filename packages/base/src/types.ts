@@ -57,8 +57,10 @@ type AccessibilityAttributes = {
 	controls?: LowercaseString<string>
 	expanded?: "true" | "false" | boolean,
 	hasPopup?: ARIAHasPopup,
-	name?: string
+	name?: string,
 	role?: ARIARoles,
+	ariaKeyShortcuts?: string,
+	current?: "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean
 }
 
 export type {

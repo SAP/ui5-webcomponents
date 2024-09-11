@@ -17,7 +17,6 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import type WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
@@ -93,7 +92,6 @@ type StepInfo = {
 	pos: number,
 	accInfo: AccessibilityInformation,
 	refStepId: string,
-	tabIndex: string,
 	styles: object,
 }
 
@@ -188,9 +186,9 @@ type StepInfo = {
 	fastNavigation: true,
 	renderer: litRender,
 	styles: [
-		browserScrollbarCSS,
 		WizardCss,
 		WizardPopoverCss,
+		getEffectiveScrollbarStyle(),
 	],
 	template: WizardTemplate,
 	dependencies: [
@@ -343,7 +341,6 @@ class Wizard extends UI5Element {
 		return {
 			root: {
 				"ui5-wiz-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			popover: {
 				"ui5-wizard-responsive-popover": true,
@@ -411,6 +408,14 @@ class Wizard extends UI5Element {
 
 		// Place for improvement: If the selected step is not the first, enable all the prior steps
 		this.selectedStepIndex = this.getSelectedStepIndex();
+
+		if (this.selectedStep && this.stepsInHeaderDOM.length) {
+			if (this._itemNavigation._getItems().includes(this.stepsInHeaderDOM[this.selectedStepIndex])) {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM[this.selectedStepIndex]);
+			} else {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM.find(el => el.selected) as WizardTab);
+			}
+		}
 	}
 
 	/**
@@ -811,7 +816,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM;
+		return this.stepsInHeaderDOM.filter(step => !step.disabled);
 	}
 
 	get navAriaRoleDescription() {
@@ -902,7 +907,6 @@ class Wizard extends UI5Element {
 				pos,
 				accInfo,
 				refStepId: step._id,
-				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: {
 					zIndex: isAfterCurrent ? --inintialZIndex : 1,
 				},

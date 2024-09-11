@@ -14,9 +14,10 @@ import {
 	isSpace,
 	isEnter,
 	isTabPrevious,
+	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -47,7 +48,6 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -81,6 +81,7 @@ type ListItemDeleteEventDetail = {
 }
 
 type ListMoveEventDetail = {
+	originalEvent: Event,
 	source: {
 		element: HTMLElement,
 	},
@@ -157,13 +158,18 @@ type ListItemClickEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart growing-button - Used to style the button, that is used for growing of the component
+ * @csspart growing-button-inner - Used to style the button inner element
  */
 @customElement({
 	tag: "ui5-list",
 	fastNavigation: true,
 	renderer: litRender,
 	template: ListTemplate,
-	styles: [browserScrollbarCSS, listCss],
+	styles: [
+		listCss,
+		getEffectiveScrollbarStyle(),
+	],
 	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
@@ -303,6 +309,10 @@ type ListItemClickEventDetail = {
 		/**
 		 * @public
 		 */
+		originalEvent: { type: Event },
+		/**
+		 * @public
+		 */
 		source: { type: Object },
 		/**
 		 * @public
@@ -322,6 +332,10 @@ type ListItemClickEventDetail = {
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
+		/**
+		 * @public
+		 */
+		originalEvent: { type: Event },
 		/**
 		 * @public
 		 */
@@ -715,22 +729,6 @@ class List extends UI5Element {
 		return this.growingButtonText || List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
-	get loadingIndPosition() {
-		if (!this.grows) {
-			return "absolute";
-		}
-
-		return this._inViewport ? "absolute" : "sticky";
-	}
-
-	get styles() {
-		return {
-			loadingInd: {
-				position: this.loadingIndPosition,
-			},
-		};
-	}
-
 	get listAccessibleRole() {
 		return this.accessibleRole.toLowerCase();
 	}
@@ -739,7 +737,6 @@ class List extends UI5Element {
 		return {
 			root: {
 				"ui5-list-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
 	}
@@ -896,8 +893,55 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isCtrl(e)) {
+			this._moveItem(e.target as ListItemBase, e);
+			return;
+		}
+
 		if (isTabNext(e)) {
 			this._handleTabNext(e);
+		}
+	}
+
+	_moveItem(item: ListItemBase, e: KeyboardEvent) {
+		if (!item || !item.movable) {
+			return;
+		}
+
+		const closestPositions = findClosestPositionsByKey(this.items, item, e);
+
+		if (!closestPositions.length) {
+			return;
+		}
+
+		e.preventDefault();
+
+		const acceptedPosition = closestPositions.find(({ element, placement }) => {
+			return !this.fireEvent<ListMoveEventDetail>("move-over", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element,
+					placement,
+				},
+			}, true);
+		});
+
+		if (acceptedPosition) {
+			this.fireEvent<ListMoveEventDetail>("move", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element: acceptedPosition.element,
+					placement: acceptedPosition.placement,
+				},
+			});
+
+			item.focus();
 		}
 	}
 
@@ -1052,6 +1096,7 @@ class List extends UI5Element {
 
 		const placementAccepted = placements.some(placement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
+				originalEvent: e,
 				source: {
 					element: draggedElement,
 				},
@@ -1081,6 +1126,7 @@ class List extends UI5Element {
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		this.fireEvent<ListMoveEventDetail>("move", {
+			originalEvent: e,
 			source: {
 				element: draggedElement,
 			},

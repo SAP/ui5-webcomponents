@@ -14,7 +14,6 @@ import DateRangePickerTemplate from "./generated/templates/DateRangePickerTempla
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
@@ -71,7 +70,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	delimiter = DEFAULT_DELIMITER;
+	delimiter = "-";
 
 	 /**
 	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
@@ -380,13 +379,6 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		}
 
 		return "";
-	}
-
-	/**
-	 * @override
-	 */
-	get _calendarPickersMode() {
-		return CalendarPickersMode.DAY_MONTH_YEAR;
 	}
 }
 
