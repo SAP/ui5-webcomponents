@@ -45,7 +45,6 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -160,7 +159,7 @@ type ListItemClickEventDetail = {
 	fastNavigation: true,
 	renderer: litRender,
 	template: ListTemplate,
-	styles: [browserScrollbarCSS, listCss],
+	styles: [getEffectiveScrollbarStyle(), listCss],
 	dependencies: [BusyIndicator, DropIndicator],
 })
 /**
@@ -645,7 +644,6 @@ class List extends UI5Element {
 		return {
 			root: {
 				"ui5-list-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
 	}
