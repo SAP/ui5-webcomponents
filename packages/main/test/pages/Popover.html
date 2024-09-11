@@ -485,6 +485,17 @@ z-index: 1;
 		<div>Content</div>
 		<div slot="footer">Footer</div>
 	</ui5-popover>
+
+	<br>
+	<br>
+
+	<ui5-button id="btnVerticalStretch">Open vertical stretch</ui5-button>
+	<ui5-popover id="vertical" placement-type="Right" vertical-align="Stretch" header-text="Newsletter subscription">
+		<div class="popover-content" >
+			<ui5-input/>
+		</div>
+	</ui5-popover>
+
 	<br>
 	<br>
 
@@ -727,6 +738,10 @@ z-index: 1;
 
 		document.getElementById("btn4-footer-position").addEventListener("click", (e) => {
 		document.getElementById("popover4-footer-position").showAt(e.currentTarget);
+		});
+
+		document.getElementById("btnVerticalStretch").addEventListener("click", (e) => {
+			document.getElementById("vertical").showAt(e.currentTarget);
 		});
 
 	</script>
