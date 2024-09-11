@@ -325,6 +325,10 @@ class Menu extends UI5Element {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
+	get menuHasSubMenus() {
+		return !!this.items.filter(item => item.hasSubmenu).length;
+	}
+
 	get itemsWithChildren() {
 		return !!this._currentItems.filter(item => item.item.items.length).length;
 	}
@@ -498,7 +502,7 @@ class Menu extends UI5Element {
 	_getSubmenuReference(item: MenuItem) {
 		const index = (item.parentElement as Menu)?.items.indexOf(item);
 		return this.staticAreaItem
-			? this.staticAreaItem.shadowRoot!.querySelector(".ui5-menu-submenus")!.children[index] as Menu
+			? this.staticAreaItem.shadowRoot?.querySelector(".ui5-menu-submenus")?.children[index] as Menu
 			: undefined;
 	}
 
