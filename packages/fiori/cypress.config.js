@@ -5,6 +5,6 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-cypressConfig.component.supportFile = path.join(__dirname, "cypress/support/component.js");
+cypressConfig.component.supportFile = path.join(__dirname, "cypress/support/component.ts");
 
 export default cypressConfig;
