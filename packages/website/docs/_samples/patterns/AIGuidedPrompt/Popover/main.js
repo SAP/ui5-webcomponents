@@ -119,6 +119,7 @@ sendButton.addEventListener("click", function() {
 		toast.open = true;
 		output.valueState = "None";
 		output.value = "";
+		aiButton.state = "generate";
 	}
 });
 
