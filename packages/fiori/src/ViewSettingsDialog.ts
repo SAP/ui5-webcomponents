@@ -66,7 +66,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 }
 
 // Common properties for several VSDInternalSettings fields
-type VSDItem = {text?: string, selected: boolean}
+type VSDItem = {text?: string, itemKey?: string, selected: boolean}
 
 // Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
@@ -447,10 +447,12 @@ class ViewSettingsDialog extends UI5Element {
 			filters: this.filterItems.map(item => {
 				return {
 					text: item.text || "",
+					itemKey: item.itemKey || "",
 					selected: false,
 					filterOptions: item.values.map(optionValue => {
 						return {
 							text: optionValue.text || "",
+							itemKey: optionValue.itemKey || "",
 							selected: optionValue.selected,
 						};
 					}),
@@ -635,13 +637,13 @@ class ViewSettingsDialog extends UI5Element {
 
 			filter.filterOptions.forEach(option => {
 				if (option.selected) {
-					selectedOptions.push(option.text || "");
+					selectedOptions.push(option.itemKey || option.text || "");
 				}
 			});
 
 			if (selectedOptions.length) {
 				result.push({});
-				result[result.length - 1][filter.text || ""] = selectedOptions;
+				result[result.length - 1][filter.itemKey || filter.text || ""] = selectedOptions;
 			}
 		});
 

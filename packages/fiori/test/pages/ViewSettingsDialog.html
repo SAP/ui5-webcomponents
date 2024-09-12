@@ -101,19 +101,31 @@
 		<ui5-sort-item slot="sortItems" text="Position" item-key="sortPosition"></ui5-sort-item>
 		<ui5-sort-item slot="sortItems" text="Company" item-key="sortCompany"></ui5-sort-item>
 
-		<ui5-filter-item slot="filterItems" text="Filter 1" item-key="filter1">
-			<ui5-filter-item-option slot="values" text="Some filter 1" item-key="filterOption1"></ui5-filter-item-option>
-			<ui5-filter-item-option slot="values" text="Some filter 2" item-key="filterOption2"></ui5-filter-item-option>
+		<ui5-filter-item slot="filterItems" text="Category" item-key="filterCategory">
+			<ui5-filter-item-option slot="values" text="Electronics" item-key="filterOptionElectronics"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Clothing" item-key="filterOptionClothing"></ui5-filter-item-option>
 		</ui5-filter-item>
-		<ui5-filter-item slot="filterItems" text="Filter 2" item-key="filter2">
-			<ui5-filter-item-option slot="values" text="Some filter 3" item-key="filterOption3"></ui5-filter-item-option>
-			<ui5-filter-item-option slot="values" text="Some filter 4" item-key="filterOption4"></ui5-filter-item-option>
+		<ui5-filter-item slot="filterItems" text="Color" item-key="filterColor">
+			<ui5-filter-item-option slot="values" text="Red" item-key="filterOptionRed"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Blue" item-key="filterOptionBlue"></ui5-filter-item-option>
 		</ui5-filter-item>
 	</ui5-view-settings-dialog>
 
 	<script>
 		btnOpenDialogWithItemKey.addEventListener("click", function () {
 			vsdWithItemKey.open = true;
+		});
+
+		vsdWithItemKey.addEventListener("ui5-confirm", function(e) {
+			const filters = e.detail.filters || [];
+
+			filters.forEach(filter => {
+				const filterKey = Object.keys(filter)[0];
+				const selectedOptions = filter[filterKey];
+
+				console.log(`Filter Key: ${filterKey}, Selected Options: ${selectedOptions.join(", ")}`);
+				alert(`Filter: ${filterKey}, Selected Options: ${selectedOptions.join(", ")}`);
+			});
 		});
 
 		btnOpenDialog.addEventListener("click", function () {
