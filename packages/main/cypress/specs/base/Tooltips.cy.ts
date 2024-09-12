@@ -1,14 +1,13 @@
-import { html } from "lit";
-
 import { setEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
-setEnableDefaultTooltips(false);
-
+import { html } from "lit";
 import "../../../src/Icon.js";
 import "../../../src/Button.js";
 import "../../../src/ToggleButton.js";
 import "../../../src/SegmentedButton.js";
 import "../../../src/SegmentedButtonItem.js";
 import "../../../src/RatingIndicator.js";
+
+setEnableDefaultTooltips(false);
 
 describe("Default Tooltips", () => {
 	it("tests navigation", () => {
