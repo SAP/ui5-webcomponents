@@ -1203,7 +1203,6 @@ abstract class UI5Element extends HTMLElement {
 		return uniqueDependenciesCache.get(this) || [];
 	}
 
-
 	/**
 	 * Hook that will be called upon custom element definition
 	 *
