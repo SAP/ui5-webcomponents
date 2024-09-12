@@ -30,6 +30,7 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
+@import "./PopupBlockLayer-parameters.css";
 @import "./PopupsCommon-parameters.css";
 @import "../base/PopupBlockLayer-parameters.css";
 @import "./ProgressIndicator-parameters.css";
