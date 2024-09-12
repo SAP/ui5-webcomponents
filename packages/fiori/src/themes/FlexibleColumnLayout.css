@@ -21,7 +21,7 @@
 
 /* disable pointer events on columns while dragging the separator
  to prevent unintended interaction with the columns content */
-:host([_resize-mode]) .ui5-fcl-column {
+:host([_resizing]) .ui5-fcl-column {
 	pointer-events: none;
 }
 

@@ -299,7 +299,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @private
 	*/
 	@property({ type: Boolean })
-	_resizeMode = false;
+	_resizing = false;
 
 	/**
 	* Allows the user to replace the whole layouts configuration
@@ -566,7 +566,7 @@ class FlexibleColumnLayout extends UI5Element {
 	initSeparatorMovementSession(separator: HTMLElement, cursorPositionX: number, isTouch: boolean) {
 		this.attachMoveListeners(isTouch);
 		this.toggleSideAnimations(separator, false); // disable animations for side colmns to prevent slowdown while dragging
-		this._resizeMode = true;
+		this._resizing = true;
 
 		return {
 			separator,
@@ -581,7 +581,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 		this.detachMoveListeners();
 		this.toggleSideAnimations(movedSeparator, hasAnimation); // restore animations for side columns
-		this._resizeMode = false;
+		this._resizing = false;
 
 		movedSeparator.focus();
 		this.separatorMovementSession = null;
