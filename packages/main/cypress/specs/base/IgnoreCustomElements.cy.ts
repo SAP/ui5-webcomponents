@@ -13,22 +13,23 @@ describe("Ignore Custom Elements", () => {
 		<ui5-card-header
 			slot="header"
 			status="4 of 10"
-			title-text="Product"></ui5-card-header>
+			title-text="Product">
+		</ui5-card-header>
 
 		<app-trip-calendar class="myCard-trip-calendar"></app-trip-calendar>
 		<my-trip-calendar class="myCard-trip-calendar"></app-trip-calendar>
 	</ui5-card>`);
 
-		cy.wrap({ _shouldIgnoreCustomElement: shouldIgnoreCustomElement })
-			.invoke("_shouldIgnoreCustomElement", "app-trip-calendar")
+		cy.wrap({ shouldIgnoreCustomElement })
+			.invoke("shouldIgnoreCustomElement", "app-trip-calendar")
 			.should("be.eq", true);
 
-		cy.wrap({ _shouldIgnoreCustomElement: shouldIgnoreCustomElement })
-			.invoke("_shouldIgnoreCustomElement", "my-trip-calendar")
+		cy.wrap({ shouldIgnoreCustomElement })
+			.invoke("shouldIgnoreCustomElement", "my-trip-calendar")
 			.should("be.eq", true);
 
-		cy.wrap({ _shouldIgnoreCustomElement: shouldIgnoreCustomElement })
-			.invoke("_shouldIgnoreCustomElement", "ui5-card-header")
+		cy.wrap({ shouldIgnoreCustomElement })
+			.invoke("shouldIgnoreCustomElement", "ui5-card-header")
 			.should("be.eq", false);
 	});
 });
