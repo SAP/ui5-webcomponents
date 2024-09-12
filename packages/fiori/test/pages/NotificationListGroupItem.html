@@ -208,8 +208,10 @@
 
 	<ui5-notification-list id="notificationList">
 		<ui5-li-notification-group
+			id="notificationListFirstGroup"
 			show-close
 			show-counter
+			growing="Button"
 			title-text="Orders - test deprecated properties"
 			priority="High"
 		>
@@ -669,6 +671,20 @@
 
 		btnShowMessageStrip.addEventListener("click", function() {
 			notificationsPopoverMessageStrip.style.display = "inline-block";
+		});
+
+		notificationListFirstGroup.addEventListener("ui5-load-more", (e) => {
+			const focusIndex = notificationListFirstGroup.items.length;
+
+			notificationListFirstGroup.loading = true; // as in the ui5-list (the whole list gets 'busy')
+			setTimeout(() => {
+				insertItems(notificationListFirstGroup);
+				notificationListFirstGroup.loading = false;
+
+				setTimeout(() => {
+					notificationListFirstGroup.items[focusIndex].focus();
+				}, 500);
+			}, 500);
 		});
 	</script>
 </body>
