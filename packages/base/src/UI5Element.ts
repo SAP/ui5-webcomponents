@@ -1203,12 +1203,6 @@ abstract class UI5Element extends HTMLElement {
 		return uniqueDependenciesCache.get(this) || [];
 	}
 
-	/**
-	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
-	 */
-	static whenDependenciesDefined(): Promise<Array<typeof UI5Element>> {
-		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
-	}
 
 	/**
 	 * Hook that will be called upon custom element definition
@@ -1220,7 +1214,7 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	static asyncFinished: boolean;
-	static definePromise: Promise<[void, (typeof UI5Element)[], void]> | undefined;
+	static definePromise: Promise<[void, void]> | undefined;
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
@@ -1229,7 +1223,6 @@ abstract class UI5Element extends HTMLElement {
 	static async define(): Promise<typeof UI5Element> {
 		this.definePromise = Promise.all([
 			boot(),
-			this.whenDependenciesDefined(),
 			this.onDefine(),
 		]);
 
