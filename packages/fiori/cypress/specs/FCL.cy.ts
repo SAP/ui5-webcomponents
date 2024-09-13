@@ -11,7 +11,7 @@ describe("Columns resize", () => {
 `);
 	});
 
-	it("disables column pointer events during separator drag'n'drop", () => {
+	it("toggles _resizing property during separator drag'n'drop", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-start")
@@ -25,11 +25,10 @@ describe("Columns resize", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-start")
-			.realMouseUp()
-			.then(() => {
-				cy.get("[ui5-flexible-column-layout]")
-					.invoke("prop", "_resizing")
-					.should("be.equal", false);
-			});
+			.realMouseUp();
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "_resizing")
+			.should("be.equal", false);
 	});
 });
