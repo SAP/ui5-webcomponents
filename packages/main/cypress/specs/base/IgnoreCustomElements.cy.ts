@@ -22,14 +22,14 @@ describe("Ignore Custom Elements", () => {
 
 		cy.wrap({ shouldIgnoreCustomElement })
 			.invoke("shouldIgnoreCustomElement", "app-trip-calendar")
-			.should("be.eq", true);
+			.should("be.true");
 
 		cy.wrap({ shouldIgnoreCustomElement })
 			.invoke("shouldIgnoreCustomElement", "my-trip-calendar")
-			.should("be.eq", true);
+			.should("be.true");
 
 		cy.wrap({ shouldIgnoreCustomElement })
 			.invoke("shouldIgnoreCustomElement", "ui5-card-header")
-			.should("be.eq", false);
+			.should("be.false");
 	});
 });
