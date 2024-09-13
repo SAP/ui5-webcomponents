@@ -466,18 +466,17 @@ class Table extends UI5Element {
 
 	get styles() {
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
-			if (headerCell.horizontalAlign !== undefined && Object.values(TableCellHorizontalAlign).includes(headerCell.horizontalAlign as TableCellHorizontalAlign)) {
+			if (headerCell.horizontalAlign !== undefined) {
 				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
 			}
 			return headerStyles;
 		}, {} as { [key: string]: string });
-
-		  return {
+		return {
 			table: {
-			  "grid-template-columns": this._gridTemplateColumns,
-			  ...headerStyleMap,
+				"grid-template-columns": this._gridTemplateColumns,
+				...headerStyleMap,
 			},
-		  };
+		};
 	}
 
 	get _gridTemplateColumns() {
