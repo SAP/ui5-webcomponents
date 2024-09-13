@@ -16,12 +16,11 @@ describe("Columns resize", () => {
 			.shadow()
 			.find(".ui5-fcl-separator-start")
 			.realMouseDown()
-			.realMouseMove(10, 0)
-			.then(() => {
-				cy.get("[ui5-flexible-column-layout]")
-					.invoke("prop", "_resizing")
-					.should("be.equal", true);
-			});
+			.realMouseMove(10, 0);
+
+		cy.get("[ui5-flexible-column-layout]")
+			.invoke("prop", "_resizing")
+			.should("be.equal", true);
 
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
