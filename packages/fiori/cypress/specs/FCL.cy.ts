@@ -14,19 +14,14 @@ describe("Columns resize", () => {
 	it("disables column pointer events during separator drag'n'drop", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
-			.find(".ui5-fcl-column--start")
-			.should("have.css", "pointer-events", "auto");
-
-		cy.get("[ui5-flexible-column-layout]")
-			.shadow()
 			.find(".ui5-fcl-separator-start")
 			.realMouseDown()
-			.realMouseMove(10, 0); // offset;
-
-		cy.get("[ui5-flexible-column-layout]")
-			.shadow()
-			.find(".ui5-fcl-column--start")
-			.should("have.css", "pointer-events", "none");
+			.realMouseMove(10, 0)
+			.then(() => {
+				cy.get("[ui5-flexible-column-layout]")
+					.invoke("prop", "_resizing")
+					.should("be.equal", true);
+			});
 
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
@@ -34,9 +29,8 @@ describe("Columns resize", () => {
 			.realMouseUp()
 			.then(() => {
 				cy.get("[ui5-flexible-column-layout]")
-					.shadow()
-					.find(".ui5-fcl-column--start")
-					.should("have.css", "pointer-events", "auto");
+					.invoke("prop", "_resizing")
+					.should("be.equal", false);
 			});
 	});
 });
