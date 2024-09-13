@@ -94,11 +94,101 @@ describe("AriaLabelHelper", () => {
 			.should("eq", "SecondDesc");
 	});
 
-	// TODO: more test cases to be added
-	// it('Input accessibleName and accessibleNameRef Tests', () => {
-	// });
+	it("Input accessibleName and accessibleNameRef Tests", () => {
+		cy.mount(html`
+			<div class="info">
+				lblEnterDesc1: &nbsp; <ui5-label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</ui5-label>
+			</div>
+			<div class="info">
+				lblEnterDesc3: &nbsp; <ui5-label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</ui5-label>
+			</div>
+			<div class="info">
+				<ui5-input id="inputEnterDesc" accessible-name="Some description added by accessibleName" placeholder="Enter description"
+					class="field"></ui5-input>
+			</div>
+		`);
+
+		const INITIAL_ACCESSIBLE_NAME = "Some description added by accessibleName";
+		const UPDATED_ACCESSIBLE_NAME = "Another description added by accessibleName";
+		const ACCESSIBLE_NAME_REF = "lblEnterDesc3";
+		const ACCESSIBLE_NAME_REF_TEXT = "Label to be added/removed as accessible-name-ref";
+
+		cy.get("#inputEnterDesc")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// assert
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", INITIAL_ACCESSIBLE_NAME);
+
+		cy.get("#inputEnterDesc")
+			.invoke("attr", "accessible-name", UPDATED_ACCESSIBLE_NAME);
+
+		// assert
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", UPDATED_ACCESSIBLE_NAME);
+
+		// act - remove acccessible-name
+		cy.get("#inputEnterDesc")
+			.invoke("removeAttr", "accessible-name");
+
+		// assert - aria-label fallbacks to use the label's for, pointing to this input
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", "Label for inputEnterDesc");
+
+		// act - add acccessible-name-ref
+		cy.get("#inputEnterDesc")
+			.invoke("attr", "accessible-name-ref", ACCESSIBLE_NAME_REF);
+
+		// assert - the text of the elment labelled with accessible-name-ref is used
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", ACCESSIBLE_NAME_REF_TEXT);
+
+		// act - add acccessible-name once again
+		cy.get("#inputEnterDesc")
+			.invoke("attr", "accessible-name", INITIAL_ACCESSIBLE_NAME);
+
+		// assert - the text of the elment labelled with accessible-name-ref is still used
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", ACCESSIBLE_NAME_REF_TEXT);
+
+		// act - remove acccessible-name-ref
+		cy.get("#inputEnterDesc")
+			.invoke("removeAttr", "accessible-name-ref");
+
+		// assert - after acccessible-name-ref is removed, fallbacks to use acccessible-name
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", INITIAL_ACCESSIBLE_NAME);
+
+		// act - remove acccessible-name
+		cy.get("#inputEnterDesc")
+			.invoke("removeAttr", "accessible-name");
+
+		// assert - aria-label fallbacks to use the label's for, pointing to this input
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", "Label for inputEnterDesc");
+
+		// act - remove ui5-label's for
+		cy.get("#lblEnterDesc1")
+			.invoke("removeAttr", "for");
+
+		// assert - aria-label is undefined
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", undefined);
+	});
+
 	// it('Three inputs with same label accessibleNameRef Tests', () => {
 	// });
+
 	// it('Tests generic html elements with for attribute', () => {
 	// });
 });
