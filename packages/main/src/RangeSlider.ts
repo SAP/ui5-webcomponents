@@ -893,12 +893,39 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 			const isStartValueValid = inputStartValue >= this.min && inputStartValue <= this.max;
 			const isEndValueValid = inputEndValue >= this.min && inputEndValue <= this.max;
 
-			this._lastValidStartValue = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
-			this._lastValidEndValue = isEndValueValid ? inputStartValue.toString() : this._lastValidEndValue;
+			if (this._isUserInteraction) {
+				startValueInput.value = isStartValueValid ? this._getFormattedValue(this.startValue.toString()) : this._getFormattedValue(this._lastValidStartValue);
+				endValueInput.value = isEndValueValid ? this._getFormattedValue(this.endValue.toString()) : this._getFormattedValue(this._lastValidEndValue);
 
-			startValueInput.value = isStartValueValid ? inputStartValue.toString() : this._lastValidStartValue;
-			endValueInput.value = isEndValueValid ? inputEndValue.toString() : this._lastValidEndValue;
+				this.startValue = parseFloat(this._getFormattedValue(this.startValue.toString()));
+				this.endValue = parseFloat(this._getFormattedValue(this.endValue.toString()));
+
+				if (this.startValue > this.endValue) {
+					this._areInputValuesSwapped = true;
+					this._setValuesAreReversed();
+				}
+
+				this.syncUIAndState();
+				this._updateHandlesAndRange(0);
+				this.update(this._valueAffected, this.startValue, this.endValue);
+
+				return;
+			}
+
+			this._lastValidStartValue = isStartValueValid ? this._getFormattedValue(inputStartValue.toString()) : this._getFormattedValue(this._lastValidStartValue);
+			this._lastValidEndValue = isEndValueValid ? this._getFormattedValue(inputStartValue.toString()) : this._getFormattedValue(this._lastValidEndValue);
+
+			startValueInput.value = isStartValueValid ? this._getFormattedValue(inputStartValue.toString()) : this._getFormattedValue(this._lastValidStartValue);
+			endValueInput.value = isEndValueValid ? this._getFormattedValue(inputEndValue.toString()) : this._getFormattedValue(this._lastValidEndValue);
 		}
+	}
+
+	_getFormattedValue(value: string) {
+		const valueNumber = parseFloat(value);
+		const ctor = this.constructor as typeof RangeSlider;
+		const stepPrecision = ctor._getDecimalPrecisionOfNumber(this._effectiveStep);
+
+		return valueNumber.toFixed(stepPrecision).toString();
 	}
 
 	/**
