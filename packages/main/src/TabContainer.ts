@@ -855,6 +855,7 @@ class TabContainer extends UI5Element {
 
 		if (isCtrl(e)) {
 			this._moveHeaderItem(tab.realTabReference, e);
+			e.preventDefault();
 			return;
 		}
 
