@@ -19,6 +19,7 @@
 	--_ui5-notification_item-footer-margin-top: 0.75rem;
 	--_ui5-notification_item-focus-offset: 0;
 	--_ui5-notification_item-outline-offset: 0;
+	--_ui5-notification_item-growing-btn-background-color-active: var(--sapList_Active_Background);
 }
 
 [data-ui5-compact-size],
