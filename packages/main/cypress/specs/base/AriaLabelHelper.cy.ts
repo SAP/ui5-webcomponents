@@ -4,12 +4,12 @@ import "../../../src/Input.js";
 
 describe("AriaLabelHelper", () => {
 	it("Label-for tests", () => {
-		cy.mount(html`<div class="wrapper">
+		cy.mount(html`
 			<ui5-input id="myInput" placeholder="input placeholder" class="field"></ui5-input>
 			<ui5-label id="lblDesc1" for="myInput">Desc1</ui5-label>
 			<ui5-label id="lblDesc2" for="myInput">Desc2</ui5-label>
 			<ui5-label id="lblDesc3" for="myInput">Desc3</ui5-label>
-			<div class="info"><label id="lblDesc4" for="myInput">Desc4</label></div>
+			<label id="lblDesc4" for="myInput">Desc4</label>
 		`);
 
 		// assert
@@ -35,20 +35,12 @@ describe("AriaLabelHelper", () => {
 	});
 
 	it("Input accessibleNameRef Tests", () => {
-		cy.mount(html`<div class="fields">
-            <div class="info">
-                lblEnterName1: &nbsp;<ui5-label id="lblEnterName1">FirstDesc</ui5-label>
-            </div>
-            <div class="info">
-                lblEnterName2: &nbsp; <ui5-label id="lblEnterName2">SecondDesc</ui5-label>
-            </div>
-            <div class="info">
-                lblEnterName3: &nbsp; <ui5-label id="lblEnterName3">ThirdDesc</ui5-label>
-            </div>
-            <div class="info">
-                <ui5-input id="inputEnterName" accessible-name-ref="lblEnterName1 lblEnterName3" placeholder="Enter your name" class="field"></ui5-input>
-            </div>
-        </div>`);
+		cy.mount(html`
+            <ui5-label id="lblEnterName1">FirstDesc</ui5-label>
+            <ui5-label id="lblEnterName2">SecondDesc</ui5-label>
+            <ui5-label id="lblEnterName3">ThirdDesc</ui5-label>
+            <ui5-input id="inputEnterName" accessible-name-ref="lblEnterName1 lblEnterName3" placeholder="Enter your name"></ui5-input>
+        `);
 
 		// assert
 		cy.get("#inputEnterName")
@@ -95,16 +87,9 @@ describe("AriaLabelHelper", () => {
 
 	it("Input accessibleName and accessibleNameRef Tests", () => {
 		cy.mount(html`
-			<div class="info">
-				lblEnterDesc1: &nbsp; <ui5-label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</ui5-label>
-			</div>
-			<div class="info">
-				lblEnterDesc3: &nbsp; <ui5-label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</ui5-label>
-			</div>
-			<div class="info">
-				<ui5-input id="inputEnterDesc" accessible-name="Some description added by accessibleName" placeholder="Enter description"
-					class="field"></ui5-input>
-			</div>
+			<ui5-label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</ui5-label>
+			<ui5-label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</ui5-label>
+			<ui5-input id="inputEnterDesc" accessible-name="Some description added by accessibleName" placeholder="Enter description"></ui5-input>
 		`);
 
 		const INITIAL_ACCESSIBLE_NAME = "Some description added by accessibleName";
@@ -185,9 +170,136 @@ describe("AriaLabelHelper", () => {
 			.should("eq", undefined);
 	});
 
-	// it('Three inputs with same label accessibleNameRef Tests', () => {
-	// });
+	it("Three inputs with same label accessibleNameRef Tests", () => {
+		cy.mount(html`
+			<ui5-label id="lblTestDesc" for="testInput1">Label for testInput1 Desc</ui5-label>
+			<ui5-input id="testInput1" placeholder="Enter description1"></ui5-input>
+			<ui5-input id="testInput2" accessible-name-ref="lblTestDesc" accessible-name="Hello" placeholder="Enter description2"></ui5-input>
+			<ui5-input id="testInput3" accessible-name-ref="lblTestDesc" placeholder="Enter description3"></ui5-input>
+		`);
 
-	// it('Tests generic html elements with for attribute', () => {
-	// });
+		const LBL_TEXT_CONTENT = "Label for testInput1 Desc";
+		const LBL_TEXT_CONTENT_UPDATED = "Another description for testing";
+
+		cy.get("#testInput1")
+			.shadow()
+			.find("input")
+			.as("input1");
+
+		cy.get("#testInput2")
+			.shadow()
+			.find("input")
+			.as("input2");
+
+		cy.get("#testInput3")
+			.shadow()
+			.find("input")
+			.as("input3");
+
+		// assert
+		cy.get("@input1")
+			.invoke("attr", "aria-label")
+			.should("eq", LBL_TEXT_CONTENT);
+
+		cy.get("@input2")
+			.invoke("attr", "aria-label")
+			.should("eq", LBL_TEXT_CONTENT);
+
+		cy.get("@input3")
+			.invoke("attr", "aria-label")
+			.should("eq", LBL_TEXT_CONTENT);
+
+		// act
+
+		cy.get("#lblTestDesc")
+			.then($el => {
+				$el.get(0).innerHTML = LBL_TEXT_CONTENT_UPDATED;
+			});
+
+		// assert
+		cy.get("@input1")
+			.invoke("attr", "aria-label")
+			.should("eq", LBL_TEXT_CONTENT_UPDATED);
+
+		cy.get("@input2")
+			.invoke("attr", "aria-label")
+			.should("eq", LBL_TEXT_CONTENT_UPDATED);
+
+		cy.get("@input3")
+			.invoke("attr", "aria-label")
+			.should("eq", LBL_TEXT_CONTENT_UPDATED);
+
+		// act - remove "for" attribute
+		cy.get("#lblTestDesc")
+			.invoke("removeAttr", "for");
+
+		// assert - aria-label is undefined
+		cy.get("@input1")
+			.invoke("attr", "aria-label")
+			.should("eq", undefined);
+
+		// act - remove accessible-name-ref
+		cy.get("#testInput2")
+			.invoke("removeAttr", "accessible-name-ref");
+
+		// assert - aria-label is the existing accessible-name
+		cy.get("@input2")
+			.invoke("attr", "aria-label")
+			.should("eq", "Hello");
+
+		// act - remove accessible-name-ref
+		cy.get("#testInput3")
+			.invoke("removeAttr", "accessible-name-ref");
+
+		// assert - shouldn't be any aria-label
+		cy.get("@input3")
+			.invoke("attr", "aria-label")
+			.should("eq", undefined);
+	});
+
+	it("Tests generic html elements with for attribute", () => {
+		cy.mount(html`
+			<label id="elId1" for="myInput2">Desc1</label>
+			<label id="elId2" for="myInput2">Desc2</label>
+			<ui5-input id="myInput2" placeholder="input placeholder"></ui5-input>
+			<div id="elId3" for="myInput2">Desc3</div>
+			<span id="elId4" for="myInput2">Desc4</span>
+			<span id="elId5" for="myInput2">Desc5</span>
+		`);
+
+		cy.get("#myInput2")
+			.shadow()
+			.find("input")
+			.as("input");
+
+		// assert
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", "Desc1 Desc2 Desc3 Desc4 Desc5");
+
+		// act
+		cy.get("#elId1")
+			.then($el => {
+				$el.get(0).innerHTML = `${$el.get(0).innerHTML}X`;
+			});
+
+		cy.get("#elId2")
+			.invoke("remove");
+
+		cy.get("#elId3")
+			.invoke("attr", "for", "other");
+
+		cy.get("#elId4")
+			.then($el => {
+				$el.get(0).innerHTML = `${$el.get(0).innerHTML}X`;
+			});
+
+		cy.get("#elId5")
+			.invoke("removeAttr", "for");
+
+		// assert
+		cy.get("@input")
+			.invoke("attr", "aria-label")
+			.should("eq", "Desc1X Desc4X");
+	});
 });
