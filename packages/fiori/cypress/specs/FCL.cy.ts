@@ -13,22 +13,26 @@ describe("Columns resize", () => {
 
 	it("toggles _resizing property during separator drag'n'drop", () => {
 		cy.get("[ui5-flexible-column-layout]")
-			.shadow()
-			.find(".ui5-fcl-separator-start")
-			.realMouseDown()
-			.realMouseMove(10, 0);
+			.as("fcl");
 
 		cy.get("[ui5-flexible-column-layout]")
+			.shadow()
+			.find(".ui5-fcl-separator-start")
+			.as("separator");
+
+		cy.get("@separator")
+			.realMouseDown();
+
+		cy.get("@fcl")
 			.invoke("prop", "_resizing")
 			.should("be.equal", true);
 
-		cy.get("[ui5-flexible-column-layout]")
-			.shadow()
-			.find(".ui5-fcl-separator-start")
-			.realMouseUp();
-
-		cy.get("[ui5-flexible-column-layout]")
-			.invoke("prop", "_resizing")
-			.should("be.equal", false);
+		cy.get("@separator")
+			.realMouseUp()
+			.then(() => {
+				cy.get("@fcl")
+					.invoke("prop", "_resizing")
+					.should("be.equal", false);
+			});
 	});
 });
