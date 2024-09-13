@@ -1,7 +1,6 @@
 import { html } from "lit";
 import "../../../src/Label.js";
 import "../../../src/Input.js";
-import "../../../src/Button.js";
 
 describe("AriaLabelHelper", () => {
 	it("Label-for tests", () => {
