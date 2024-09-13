@@ -777,7 +777,7 @@ abstract class SliderBase extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get _ariaDescribedByHandleText {
+	get _ariaDescribedByHandleText() {
 		return this.editableTooltip ? "ui5-slider-accName ui5-slider-InputDesc" : "ui5-slider-accName";
 	}
 
