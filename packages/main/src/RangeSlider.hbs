@@ -57,6 +57,8 @@
 					accessible-name-ref="ui5-slider-accName ui5-slider-InputLabel"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
+					@ui5-change="{{_onInputChange}}"
+					@ui5-input="{{_onInputInput}}"
 					data-sap-ui-start-value
 					tabindex="-1"
 				></ui5-input>
@@ -93,6 +95,8 @@
 					accessible-name-ref="ui5-slider-accName ui5-slider-InputLabel"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
+					@ui5-change="{{_onInputChange}}"
+					@ui5-input="{{_onInputInput}}"
 					data-sap-ui-end-value
 					tabindex="-1"
 				></ui5-input>

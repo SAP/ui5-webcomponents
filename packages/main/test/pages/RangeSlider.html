@@ -71,6 +71,7 @@
 		<script>
 			const eventTargetSlider = document.getElementById("test-slider");
 			const eventResultSlider = document.getElementById("test-result-slider");
+			const inputTooltipSlider = document.getElementById("range-slider-tickmarks-labels");
 
 			eventTargetSlider.addEventListener("ui5-input", () => {
 				eventResultSlider.setAttribute("end-value", parseInt(eventResultSlider.getAttribute("end-value")) + 1);
@@ -88,6 +89,14 @@
 			eventTargetSlider.addEventListener("ui5-input", (e) => {
 				document.getElementById("input-event-startValue").innerText = e.target.startValue;
 				document.getElementById("input-event-endValue").innerText = e.target.endValue;
+			});
+
+			inputTooltipSlider.addEventListener("ui5-input", () => {
+				eventResultSlider.setAttribute("end-value", parseInt(eventResultSlider.getAttribute("end-value")) + 1);
+			});
+
+			inputTooltipSlider.addEventListener("ui5-change", () => {
+				eventResultSlider.setAttribute("end-value", parseInt(eventResultSlider.getAttribute("end-value")) + 1);
 			});
 		</script>
 	</body>

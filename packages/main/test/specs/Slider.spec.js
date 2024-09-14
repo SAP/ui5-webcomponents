@@ -213,6 +213,24 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await slider.getProperty("value"), 21, "The input value is reflected in the slider");
 	});
 
+	it("Input tooltip value change should fire change event", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const eventResultSlider = await browser.$("#test-result-slider");
+
+		await slider.setProperty("value", 1);
+		await eventResultSlider.setProperty("value", 1);
+
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["2"]);
+		await browser.keys("Enter");
+
+		assert.strictEqual(await slider.getProperty("value"), 21, "The input value is reflected in the slider");
+		assert.strictEqual(await eventResultSlider.getProperty("value") , 3, "'input' and 'change' events are fired on input 'change' and 'input' events");
+	});
+
 	it("Input tooltip should change the value state to error if it is invalid", async () => {
 		const slider = await browser.$("#slider-tickmarks-labels");
 		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
@@ -369,6 +387,7 @@ describe("Testing events", () => {
 		const slider = await browser.$("#test-slider");
 		const eventResultSlider = await browser.$("#test-result-slider");
 
+		await eventResultSlider.setProperty("value", 1);
 		await slider.click();
 
 		assert.strictEqual(await eventResultSlider.getProperty("value") , 3, "Both input event and change event are fired after user interaction");

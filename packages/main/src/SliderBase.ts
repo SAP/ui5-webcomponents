@@ -168,6 +168,7 @@ abstract class SliderBase extends UI5Element {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
+	_valueOnInteractionStart?: number;
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
@@ -330,6 +331,16 @@ abstract class SliderBase extends UI5Element {
 			this._updateInputValue();
 			this._updateValueFromInput(e);
 		}
+	}
+
+	_onInputChange() {
+		if (this._valueOnInteractionStart !== this.value) {
+			this.fireEvent("change");
+		}
+	}
+
+	_onInputInput() {
+		this.fireEvent("input");
 	}
 
 	_updateValueFromInput(e: Event) {

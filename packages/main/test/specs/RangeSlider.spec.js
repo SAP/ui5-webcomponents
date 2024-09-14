@@ -190,6 +190,23 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 8, "The input value is reflected in the slider");
 	});
 
+	it("Input tooltip value change should fire change event", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
+		const rangeSliderHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const eventResultSlider = await browser.$("#test-result-slider");
+
+		await rangeSlider.setProperty("startValue", 1);
+
+		await rangeSliderHandle.click();
+		await rangeSliderStartTooltipInput.click();
+		await eventResultSlider.setProperty("endValue", 2);
+		await browser.keys("2");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await eventResultSlider.getProperty("endValue") , 4, "'change' and 'input' events are fired");
+	});
+
 	it("Input tooltips value state should change to 'Negative' if value is invalid", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
 		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
@@ -470,6 +487,9 @@ describe("Testing events", () => {
 	it("Should fire input event on use interaction and change event after user interaction finish", async () => {
 		const rangeSlider = await browser.$("#test-slider");
 		const eventResultRangeSlider = await browser.$("#test-result-slider");
+
+		await eventResultRangeSlider.setProperty("startValue", 1);
+		await eventResultRangeSlider.setProperty("endValue", 2);
 
 		await rangeSlider.click();
 
