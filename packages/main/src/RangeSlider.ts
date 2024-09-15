@@ -216,16 +216,16 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 *
 	 */
 	onBeforeRendering() {
-		if (this.editableTooltip) {
-			this._saveInputValues();
-		}
-
 		if (this.startValue > this.endValue) {
 			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
 
 			this._swapValues();
 			this._setAffectedValue(affectedValue);
 			this.update(affectedValue, this.startValue, this.endValue);
+		}
+
+		if (this.editableTooltip) {
+			this._saveInputValues();
 		}
 
 		if (!this.isCurrentStateOutdated()) {
@@ -900,15 +900,9 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 				this.startValue = parseFloat(this._getFormattedValue(this.startValue.toString()));
 				this.endValue = parseFloat(this._getFormattedValue(this.endValue.toString()));
 
-				if (this.startValue > this.endValue) {
-					this._areInputValuesSwapped = true;
-					this._setValuesAreReversed();
-				}
-
 				this.syncUIAndState();
 				this._updateHandlesAndRange(0);
 				this.update(this._valueAffected, this.startValue, this.endValue);
-
 				return;
 			}
 
