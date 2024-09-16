@@ -25,52 +25,56 @@ const notificationsPopoverMessageStrip = document.querySelector(".notificationsM
 const btnShowMessageStrip = document.querySelector("#show-message-strip");
 const notificationsListGroupGrowing = document.querySelector("#notificationsListGroupGrowing");
 
+const itemsToLoad = 5;
+let itemsLoaded = 30;
+
 notificationList.addEventListener("item-close", e => {
-    var visibleItems = 0;
+	let visibleItems = 0;
 
-    // hide the closed Notification item
-    e.detail.item.hidden = true;
+	// hide the closed Notification item
+	e.detail.item.hidden = true;
 
-    Array.from(e.detail.item.parentElement.childNodes).forEach((element) => {
-        if (element.nodeName === "UI5-LI-NOTIFICATION" && !element.hidden) {
-            visibleItems++;
-        }
-    });
+	Array.from(e.detail.item.parentElement.childNodes).forEach((element) => {
+		if (element.nodeName === "UI5-LI-NOTIFICATION" && !element.hidden) {
+			visibleItems++;
+		}
+	});
 
-    // hide the Notification group if empty
-    if (visibleItems === 0) {
-        e.detail.item.parentElement.hidden = true;
-    }
+	// hide the Notification group if empty
+	if (visibleItems === 0) {
+		e.detail.item.parentElement.hidden = true;
+	}
 });
 
 shellbar.addEventListener("notifications-click", e => {
-    e.preventDefault();
-    notificationsPopover.opener = e.detail.targetRef;
+	e.preventDefault();
+	notificationsPopover.opener = e.detail.targetRef;
 	notificationsPopover.open = true;
 });
-let itemsLoaded = 0;
-const itemToLoad = 5;
-
-const notificationListItemTemplate = (index) => {
-	var notificationLi = document.createElement("ui5-li-notification");
-	notificationLi.titleText = "New notification";
-	notificationLi.state = "Critical";
-
-	return notificationLi;
-}
 
 const insertItems = (list) => {
-	for (var i = itemsLoaded; i < itemsLoaded + itemToLoad; i++) {
-		list.appendChild(notificationListItemTemplate(i));
+	for (var i = itemsLoaded + 1; i <= itemsLoaded + itemsToLoad; i++) {
+		list.insertAdjacentHTML("beforeend",
+			`<ui5-li-notification title-text="Notification Title ${i}" show-close>
+				<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+				<span slot="footnotes">Notification</span>
+				<span slot="footnotes">3 Days</span>
+				<ui5-menu slot="menu">
+					<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+					<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+				</ui5-menu>
+				Description ${i}
+			</ui5-li-notification>`);
 	}
 
-	itemsLoaded += itemToLoad;
+	itemsLoaded += itemsToLoad;
 };
 
 notificationsListGroupGrowing.addEventListener("load-more", (e) => {
 	const focusIndex = notificationsListGroupGrowing.items.length;
 
-	notificationsListGroupGrowing.loading = true; // as in the ui5-list (the whole list gets 'busy')
+	notificationsListGroupGrowing.loading = true;
+	notificationsListGroupGrowing.loadingDelay = 0;
 	setTimeout(() => {
 		insertItems(notificationsListGroupGrowing);
 		notificationsListGroupGrowing.loading = false;

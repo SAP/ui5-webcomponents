@@ -9,14 +9,13 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 
-<body style="background-color: var(--sapBackgroundColor); height: 350px;">
+<body style="background-color: var(--sapBackgroundColor); height: 50rem;">
 	<!-- playground-fold-end -->
-
 	<ui5-shellbar
 		primary-title="Corporate Portal"
 		logo="../assets/images/sap-logo-svg.svg"
 		show-notifications
-		notifications-count="6"
+		notifications-count="30"
 	></ui5-shellbar>
 	<ui5-popover
 		id="popover-with-notifications"
@@ -38,171 +37,345 @@
 							   design="Negative">Something went wrong.</ui5-message-strip>
 		</div>
 		<ui5-notification-list class="notificationsPopoverList">
-			<ui5-li-notification-group id="notificationsListGroupGrowing" title-text="Orders" growing="Button">
-				<ui5-li-notification show-close
-									 title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-									 state="Positive">
+			<ui5-li-notification-group id="notificationsListGroupGrowing"
+									   title-text="Today"
+									   growing="Button">
+				<ui5-li-notification title-text="Notification Title 1"
+									 show-close>
 					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">Notification</span>
 					<span slot="footnotes">3 Days</span>
 					<ui5-menu slot="menu">
 						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
 						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
 					</ui5-menu>
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
+					Description 1
 				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="Single line notification."
-									 state="Information">
+				<ui5-li-notification title-text="Notification Title 2"
+									 show-close>
 					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="Single line notification."
-									 state="Information">
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="Single line notification."
-									 state="Information">
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="Single line notification."
-									 state="Information">
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="Single line notification."
-									 state="Information">
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-									 state="Critical">
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">Notification</span>
 					<span slot="footnotes">3 Days</span>
 					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
 						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
-						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
 					</ui5-menu>
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
+					Description 2
 				</ui5-li-notification>
-			</ui5-li-notification-group>
-			<ui5-li-notification-group title-text="Deliveries" collapsed>
-				<ui5-li-notification show-close
-									 title-text="New Delivery (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-									 state="Information">
+				<ui5-li-notification title-text="Notification Title 3"
+									 show-close>
 					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">Notification</span>
 					<span slot="footnotes">3 Days</span>
 					<ui5-menu slot="menu">
 						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
 					</ui5-menu>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
+					Description 3
 				</ui5-li-notification>
-
-				<ui5-li-notification show-close
-									 title-text="New Delivery (#29001) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
-									 state="None">
+				<ui5-li-notification title-text="Notification Title 4"
+									 show-close>
 					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">Notification</span>
 					<span slot="footnotes">3 Days</span>
 					<ui5-menu slot="menu">
 						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
 					</ui5-menu>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
+					Description 4
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 5"
+									 show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 5
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 6"
+									 show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 6
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 7"
+									 show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 7
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 8"
+									 show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 8
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 9"
+									 show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 9
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 10"
+									 show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 10
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 11" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 11
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 12" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 12
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 13" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 13
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 14" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 14
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 15" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 15
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 16" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 16
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 17" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 17
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 18" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 18
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 19" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 19
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 20" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 20
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 21" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 21
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 22" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 22
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 23" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 23
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 24" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 24
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 25" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 25
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 26" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 26
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 27" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 27
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 28" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 28
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 29" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 29
+				</ui5-li-notification>
+				<ui5-li-notification title-text="Notification Title 30" show-close>
+					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+					<span slot="footnotes">Notification</span>
+					<span slot="footnotes">3 Days</span>
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Description 30
 				</ui5-li-notification>
 			</ui5-li-notification-group>
-
-			<ui5-li-notification-group collapsed
-									   title-text="Meetings With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
-				<ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Positive" read>
+			<ui5-li-notification-group title-text="Yesterday"
+									   collapsed>
+				<ui5-li-notification title-text="Yesterday Notification 1"
+									 read
+									 show-close>
 					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">Notification</span>
 					<span slot="footnotes">3 Days</span>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Yesterday Notification Description 1
 				</ui5-li-notification>
-
-				<ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Negative" read>
+				<ui5-li-notification title-text="Yesterday Notification 2"
+									 read
+									 show-close>
 					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
+					<span slot="footnotes">Notification</span>
 					<span slot="footnotes">3 Days</span>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Negative" read>
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Negative" read>
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Negative" read>
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
-				</ui5-li-notification>
-
-				<ui5-li-notification show-close title-text="New meeting at Building (#35001)" state="Negative" read>
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-					And with a very long description - Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula
-					dolor,
-					nec elementum lectus turpis at nunc.
+					<ui5-menu slot="menu">
+						<ui5-menu-item icon="accept" text="Accept"></ui5-menu-item>
+						<ui5-menu-item icon="message-error" text="Reject"></ui5-menu-item>
+					</ui5-menu>
+					Yesterday Notification Description 2
 				</ui5-li-notification>
 			</ui5-li-notification-group>
 		</ui5-notification-list>
