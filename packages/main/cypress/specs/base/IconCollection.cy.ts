@@ -5,9 +5,12 @@ import { html } from "lit";
 import "../../../src/Assets.js";
 import "../../../src/Icon.js";
 
-setTheme("sap_fiori_3_dark");
-
 describe("Icon collection", () => {
+	before(() => {
+		cy.wrap({ setTheme })
+			.invoke("setTheme", "sap_fiori_3_dark");
+	});
+
 	it("tests the icon collection in built-in themes", () => {
 		cy.mount(html`<ui5-icon name="home"></ui5-icon>`);
 

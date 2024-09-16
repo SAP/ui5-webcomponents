@@ -16,8 +16,7 @@ describe("AriaLabelHelper", () => {
 		cy.get("#myInput")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-label")
-			.should("eq", "Desc1 Desc2 Desc3 Desc4");
+			.should("have.attr", "aria-label", "Desc1 Desc2 Desc3 Desc4");
 
 		// act
 		cy.get("#lblDesc2")
@@ -30,8 +29,7 @@ describe("AriaLabelHelper", () => {
 		cy.get("#myInput")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-label")
-			.should("eq", "Desc1 Desc4");
+			.should("have.attr", "aria-label", "Desc1 Desc4");
 	});
 
 	it("Input accessibleNameRef Tests", () => {
@@ -46,8 +44,7 @@ describe("AriaLabelHelper", () => {
 		cy.get("#inputEnterName")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-label")
-			.should("eq", "FirstDesc ThirdDesc");
+			.should("have.attr", "aria-label", "FirstDesc ThirdDesc");
 
 		// act - update text of referenced label
 		cy.get("#lblEnterName1")
@@ -59,8 +56,7 @@ describe("AriaLabelHelper", () => {
 		cy.get("#inputEnterName")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-label")
-			.should("eq", "First Label Desc ThirdDesc");
+			.should("have.attr", "aria-label", "First Label Desc ThirdDesc");
 
 		// act - update accessible-name-ref
 		cy.get("#inputEnterName")
@@ -70,8 +66,7 @@ describe("AriaLabelHelper", () => {
 		cy.get("#inputEnterName")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-label")
-			.should("eq", "ThirdDesc First Label Desc");
+			.should("have.attr", "aria-label", "ThirdDesc First Label Desc");
 
 		// act - update accessible-name-ref
 		cy.get("#inputEnterName")
@@ -81,8 +76,7 @@ describe("AriaLabelHelper", () => {
 		cy.get("#inputEnterName")
 			.shadow()
 			.find("input")
-			.invoke("attr", "aria-label")
-			.should("eq", "SecondDesc");
+			.should("have.attr", "aria-label", "SecondDesc");
 	});
 
 	it("Input accessibleName and accessibleNameRef Tests", () => {
@@ -104,8 +98,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", INITIAL_ACCESSIBLE_NAME);
+			.should("have.attr", "aria-label", INITIAL_ACCESSIBLE_NAME);
 
 		cy.get("#inputEnterDesc")
 			.invoke("attr", "accessible-name", UPDATED_ACCESSIBLE_NAME);
@@ -130,8 +123,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - the text of the elment labelled with accessible-name-ref is used
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", ACCESSIBLE_NAME_REF_TEXT);
+			.should("have.attr", "aria-label", ACCESSIBLE_NAME_REF_TEXT);
 
 		// act - add acccessible-name once again
 		cy.get("#inputEnterDesc")
@@ -139,8 +131,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - the text of the elment labelled with accessible-name-ref is still used
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", ACCESSIBLE_NAME_REF_TEXT);
+			.should("have.attr", "aria-label", ACCESSIBLE_NAME_REF_TEXT);
 
 		// act - remove acccessible-name-ref
 		cy.get("#inputEnterDesc")
@@ -148,8 +139,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - after acccessible-name-ref is removed, fallbacks to use acccessible-name
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", INITIAL_ACCESSIBLE_NAME);
+			.should("have.attr", "aria-label", INITIAL_ACCESSIBLE_NAME);
 
 		// act - remove acccessible-name
 		cy.get("#inputEnterDesc")
@@ -157,8 +147,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - aria-label fallbacks to use the label's for, pointing to this input
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", "Label for inputEnterDesc");
+			.should("have.attr", "aria-label", "Label for inputEnterDesc");
 
 		// act - remove ui5-label's for
 		cy.get("#lblEnterDesc1")
@@ -166,8 +155,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - aria-label is undefined
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", undefined);
+			.should("not.have.attr", "aria-label");
 	});
 
 	it("Three inputs with same label accessibleNameRef Tests", () => {
@@ -198,16 +186,13 @@ describe("AriaLabelHelper", () => {
 
 		// assert
 		cy.get("@input1")
-			.invoke("attr", "aria-label")
-			.should("eq", LBL_TEXT_CONTENT);
+			.should("have.attr", "aria-label", LBL_TEXT_CONTENT);
 
 		cy.get("@input2")
-			.invoke("attr", "aria-label")
-			.should("eq", LBL_TEXT_CONTENT);
+			.should("have.attr", "aria-label", LBL_TEXT_CONTENT);
 
 		cy.get("@input3")
-			.invoke("attr", "aria-label")
-			.should("eq", LBL_TEXT_CONTENT);
+			.should("have.attr", "aria-label", LBL_TEXT_CONTENT);
 
 		// act
 
@@ -218,16 +203,13 @@ describe("AriaLabelHelper", () => {
 
 		// assert
 		cy.get("@input1")
-			.invoke("attr", "aria-label")
-			.should("eq", LBL_TEXT_CONTENT_UPDATED);
+			.should("have.attr", "aria-label", LBL_TEXT_CONTENT_UPDATED);
 
 		cy.get("@input2")
-			.invoke("attr", "aria-label")
-			.should("eq", LBL_TEXT_CONTENT_UPDATED);
+			.should("have.attr", "aria-label", LBL_TEXT_CONTENT_UPDATED);
 
 		cy.get("@input3")
-			.invoke("attr", "aria-label")
-			.should("eq", LBL_TEXT_CONTENT_UPDATED);
+			.should("have.attr", "aria-label", LBL_TEXT_CONTENT_UPDATED);
 
 		// act - remove "for" attribute
 		cy.get("#lblTestDesc")
@@ -235,8 +217,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - aria-label is undefined
 		cy.get("@input1")
-			.invoke("attr", "aria-label")
-			.should("eq", undefined);
+			.should("not.have.attr", "aria-label");
 
 		// act - remove accessible-name-ref
 		cy.get("#testInput2")
@@ -244,8 +225,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - aria-label is the existing accessible-name
 		cy.get("@input2")
-			.invoke("attr", "aria-label")
-			.should("eq", "Hello");
+			.should("have.attr", "aria-label", "Hello");
 
 		// act - remove accessible-name-ref
 		cy.get("#testInput3")
@@ -253,8 +233,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - shouldn't be any aria-label
 		cy.get("@input3")
-			.invoke("attr", "aria-label")
-			.should("eq", undefined);
+			.should("not.have.attr", "aria-label");
 	});
 
 	it("Tests generic html elements with for attribute", () => {
@@ -274,8 +253,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", "Desc1 Desc2 Desc3 Desc4 Desc5");
+			.should("have.attr", "aria-label", "Desc1 Desc2 Desc3 Desc4 Desc5");
 
 		// act
 		cy.get("#elId1")
@@ -299,7 +277,6 @@ describe("AriaLabelHelper", () => {
 
 		// assert
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", "Desc1X Desc4X");
+			.should("have.attr", "aria-label", "Desc1X Desc4X");
 	});
 });
