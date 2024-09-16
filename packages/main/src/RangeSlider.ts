@@ -314,12 +314,12 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = e.target as Input;
-		const otherInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
+		const oppositeTooltipInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
 		const relatedTarget = e.relatedTarget as HTMLElement;
 
 		if (this.startValue > this.endValue) {
 			this._areInputValuesSwapped = true;
-			otherInput.focus();
+			oppositeTooltipInput.focus();
 		}
 
 		if (tooltipInput.hasAttribute("data-sap-ui-start-value")) {
@@ -1004,14 +1004,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	get _progressBar() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
-	}
-
-	get _ariaLabelledByStartHandleRefs() {
-		return ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join(" ").trim();
-	}
-
-	get _ariaLabelledByEndHandleRefs() {
-		return ["ui5-slider-accName", "ui5-slider-endHandleDesc"].join(" ").trim();
 	}
 
 	get _ariaLabelledByProgressBarRefs() {
