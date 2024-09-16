@@ -5,7 +5,6 @@ import TableCellBase from "./TableCellBase.js";
 import type TableRow from "./TableRow.js";
 import type Table from "./Table.js";
 import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
-import TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 
 /**
  * @class

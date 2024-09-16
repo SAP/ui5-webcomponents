@@ -6,7 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
-import TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
+import type TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 
 /**
  * @class
