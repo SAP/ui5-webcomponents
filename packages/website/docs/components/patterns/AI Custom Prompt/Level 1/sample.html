@@ -1,0 +1,39 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./main.css">
+	<title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: fit-content;">
+
+	<div id="app">
+
+		<ui5-title>AI Pattern / Level 1</ui5-title>
+
+		<ui5-panel id="myPanel" fixed>
+			<div id="panelContent">
+				<ui5-avatar size="XS">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP Logo">
+				</ui5-avatar>
+				<ui5-input id="myInput" placeholder="Input prompt ...">
+					<ui5-icon slot="icon" name="error" id="inputClearIcon"></ui5-icon>
+				</ui5-input>
+				<ui5-ai-button id="myAiButton" state="generate">
+					<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
+					<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
+				</ui5-ai-button>
+			</div>
+		</ui5-panel>
+	</div>
+
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
+</body>
+	
+</html>
+<!-- playground-fold-end -->
