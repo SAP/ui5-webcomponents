@@ -75,6 +75,13 @@ type VSDInternalSettings = {
 	filters: Array<VSDItem & {filterOptions: Array<VSDItem>}>,
 }
 
+type FilterSelection = {
+	filterItem: VSDItem & {
+		filterOptions: Array<VSDItem>;
+	};
+	filterItemSelectedOptions: VSDItem[];
+};
+
 /**
  * @class
  * ### Overview
@@ -626,6 +633,7 @@ class ViewSettingsDialog extends UI5Element {
 			sortBy,
 			sortByItem,
 			filters: this.selectedFilters,
+			filterItems: this.selectedFilterItems,
 		};
 	}
 
@@ -637,13 +645,38 @@ class ViewSettingsDialog extends UI5Element {
 
 			filter.filterOptions.forEach(option => {
 				if (option.selected) {
-					selectedOptions.push(option.itemKey || option.text || "");
+					selectedOptions.push(option.text || "");
 				}
 			});
 
 			if (selectedOptions.length) {
 				result.push({});
-				result[result.length - 1][filter.itemKey || filter.text || ""] = selectedOptions;
+				result[result.length - 1][filter.text || ""] = selectedOptions;
+			}
+		});
+
+		return result;
+	}
+
+	get selectedFilterItems() {
+		const result: Array<FilterSelection> = [];
+
+		this._currentSettings.filters.forEach(filter => {
+			const selectedOptions: Array<VSDItem> = [];
+
+			filter.filterOptions.forEach(option => {
+				if (option.selected) {
+					selectedOptions.push(option);
+				}
+			});
+
+			if (selectedOptions.length) {
+				const filterItemObject: FilterSelection = {
+					filterItem: filter,
+					filterItemSelectedOptions: selectedOptions,
+				};
+
+				result.push(filterItemObject);
 			}
 		});
 

@@ -105,10 +105,12 @@
 			<ui5-filter-item-option slot="values" text="Electronics" item-key="filterOptionElectronics"></ui5-filter-item-option>
 			<ui5-filter-item-option slot="values" text="Clothing" item-key="filterOptionClothing"></ui5-filter-item-option>
 		</ui5-filter-item>
+
 		<ui5-filter-item slot="filterItems" text="Color" item-key="filterColor">
 			<ui5-filter-item-option slot="values" text="Red" item-key="filterOptionRed"></ui5-filter-item-option>
 			<ui5-filter-item-option slot="values" text="Blue" item-key="filterOptionBlue"></ui5-filter-item-option>
 		</ui5-filter-item>
+
 	</ui5-view-settings-dialog>
 
 	<script>
@@ -118,14 +120,11 @@
 
 		vsdWithItemKey.addEventListener("ui5-confirm", function(e) {
 			const filters = e.detail.filters || [];
-
-			filters.forEach(filter => {
-				const filterKey = Object.keys(filter)[0];
-				const selectedOptions = filter[filterKey];
-
-				console.log(`Filter Key: ${filterKey}, Selected Options: ${selectedOptions.join(", ")}`);
-				alert(`Filter: ${filterKey}, Selected Options: ${selectedOptions.join(", ")}`);
-			});
+			console.log("Selected Filters: ", filters);
+			console.log("First Filter Item Key: ", e.detail.filterItems[0].filterItem.itemKey);
+			console.log("First Selected Option Text: ", e.detail.filterItems[0].filterItemSelectedOptions[0].text);
+			console.log("First Selected Option Key: ", e.detail.filterItems[0].filterItemSelectedOptions[0].itemKey);
+			alert("OK button clicked, returned info is: " + JSON.stringify(e.detail));
 		});
 
 		btnOpenDialog.addEventListener("click", function () {
