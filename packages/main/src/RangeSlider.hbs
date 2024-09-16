@@ -1,8 +1,8 @@
 {{>include "./SliderBase.hbs"}}
 
 {{#*inline "handlesAriaText"}}
-	<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
-	<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
+	<span id="ui5-slider-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
+	<span id="ui5-slider-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
 {{/inline}}
 
 {{#*inline "progressBar"}}
@@ -41,11 +41,11 @@
 			aria-valuemin="{{min}}"
 			aria-valuemax="{{max}}"
 			aria-valuenow="{{startValue}}"
-			aria-labelledby="{{_ariaLabelledByStartHandleRefs}}"
+			aria-labelledby="ui5-slider-startHandleDesc"
 			aria-disabled="{{_ariaDisabled}}"
-			aria-describedby="{{_ariaDescribedByHandleText}}"
+			.aria-describedby="{{_ariaDescribedByHandleText}}"
 		>
-			<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
+			<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
 		</div>
 
 		{{#if showTooltip}}
@@ -79,11 +79,11 @@
 			aria-valuemin="{{min}}"
 			aria-valuemax="{{max}}"
 			aria-valuenow="{{endValue}}"
-			aria-labelledby="{{_ariaLabelledByEndHandleRefs}}"
-			aria-describedby="{{_ariaDescribedByHandleText}}"
+			aria-labelledby="ui5-slider-endHandleDesc"
+			.aria-describedby="{{_ariaDescribedByHandleText}}"
 			aria-disabled="{{_ariaDisabled}}"
 		>
-			<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
+			<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
 		</div>
 
 		{{#if showTooltip}}

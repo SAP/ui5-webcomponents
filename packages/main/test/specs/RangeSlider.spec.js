@@ -583,7 +583,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await startHandle.getAttribute("aria-labelledby"),
-			"ui5-slider-accName ui5-slider-startHandleDesc", "aria-labelledby is set correctly");
+			"ui5-slider-startHandleDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await startHandle.getAttribute("aria-valuemax"),
@@ -598,7 +598,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await endHandle.getAttribute("aria-labelledby"),
-			"ui5-slider-accName ui5-slider-endHandleDesc", "aria-labelledby is set correctly");
+			"ui5-slider-endHandleDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await endHandle.getAttribute("aria-valuemax"),
@@ -619,8 +619,8 @@ describe("Accessibility", async () => {
 		const rangeSlider = await browser.$("#range-slider-tickmarks");
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
-		const rangeSliderStartHandleSpan = await rangeSlider.shadow$(`#${rangeSliderId}-startHandleDesc`);
-		const rangeSliderEndHandleSpan = await rangeSlider.shadow$(`#${rangeSliderId}-endHandleDesc`);
+		const rangeSliderStartHandleSpan = await rangeSlider.shadow$(`#ui5-slider-startHandleDesc`);
+		const rangeSliderEndHandleSpan = await rangeSlider.shadow$(`#ui5-slider-endHandleDesc`);
 
 		await rangeSlider.setProperty("endValue", 9);
 		await startHandle.dragAndDrop({ x: 100, y: 1 });
