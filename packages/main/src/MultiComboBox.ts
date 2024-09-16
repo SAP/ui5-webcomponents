@@ -497,6 +497,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_isOpenedByKeyboard?: boolean;
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
+	_tokenCount: number | undefined;
 	selectedItems: Array<IMultiComboBoxItem>;
 	static i18nBundle: I18nBundle;
 
@@ -706,6 +707,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
+		this._tokenCount = this._tokenizer.tokens.length - e.detail.tokens.length;
 		this._previouslySelectedItems = this._getSelectedItems();
 		const token: Token[] = e.detail.tokens;
 		const deletingItems = this._getItems().filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
@@ -1318,6 +1320,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._dialogInputValueState = valueState;
 			this.valueState = valueState;
 			this._validationTimeout = null;
+			this._innerInput.focus();
 
 			callback && callback();
 		}, 2000);
@@ -1890,7 +1893,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!this._tokenizer) {
 			return;
 		}
-		return getTokensCountText(this._tokenizer.tokens.length);
+
+		this._tokenCount = this._tokenCount !== undefined ? this._tokenCount : this._tokenizer.tokens.length;
+		return getTokensCountText(this._tokenCount);
 	}
 
 	get _tokensCountTextId() {

@@ -243,8 +243,8 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("value-state"), "Negative", "Value state is changed to Negative");
 
 			await browser.waitUntil(async () => {
-				return await mcb.getAttribute("_dialog-input-value-state") === "None";
-			}, 2500, "expect _dialog-input-value-state to be reset after 2.5 seconds");
+				return await mcb.getAttribute("_dialog-input-value-state") === "None" && await mcb.hasAttribute("focused") === true;
+			}, 2500, "expect _dialog-input-value-state to be reset after 2.5 seconds and the MultiComboBox to be focused");
 		});
 
 		it("tests if entering valid text is possible while validation is triggered", async () => {
@@ -1745,7 +1745,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("aria-describedby"), ariaDescribedBy, "aria-describedby has a reference for the value state and the tokens count");
 		});
 
-		it.skip("aria-describedby value according to the tokens count", async () => {
+		it("aria-describedby value according to the tokens count", async () => {
 			const mcb = await browser.$("#mcb-compact");
 
 			await mcb.scrollIntoView();
@@ -1780,7 +1780,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 
 			await innerInput.keys("Backspace");
-			await innerInput.keys("Tab");
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			invisibleText = await mcb.shadow$(".ui5-hidden-text");

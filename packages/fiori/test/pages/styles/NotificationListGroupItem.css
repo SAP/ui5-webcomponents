@@ -23,3 +23,36 @@
 #ACCtestGroup {
     width: 300px;
 }
+
+.notificationsPopover {
+    max-width: 27rem;
+    max-height: 40rem;
+}
+
+.notificationsPopover::part(content) {
+    padding: 0; /* remove the default padding to achieve the target design */
+    overflow: hidden; /* remove the scroll from the popover to show it only on the Notification List */
+}
+
+/* styles for the additional div to move the scrollbar from the whole Popover to only the Notification List */
+.notificationsPopoverContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.notificationsPopoverList {
+    flex: 1;
+    min-height: 0;
+}
+
+.notificationsPopoverBar,
+.notificationsPopoverBar::part(bar) {
+    box-shadow: none; /* remove the default box-shadow to achieve the target design */
+}
+
+#message-strip-error {
+    display: none;
+    margin: 0.5rem;
+    width: auto;
+}

@@ -16,6 +16,7 @@
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";
 @import "./FileUploader-parameters.css";
+@import "../base/Form-parameters.css";
 @import "../base/ListItemGroupHeader-parameters.css";
 @import "./Input-parameters.css";
 @import "./InputIcon-parameters.css";
@@ -28,8 +29,8 @@
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
 @import "../base/Popover-parameters.css";
+@import "./PopupBlockLayer-parameters.css";
 @import "./PopupsCommon-parameters.css";
-@import "../base/PopupBlockLayer-parameters.css";
 @import "../sap_horizon_hcb/ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
 @import "./RatingIndicator-parameters.css";
