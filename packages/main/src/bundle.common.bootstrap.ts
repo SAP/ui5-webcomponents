@@ -73,6 +73,7 @@ import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/direc
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { ignoreCustomElements, shouldIgnoreCustomElement } from "@ui5/webcomponents-base/dist/IgnoreCustomElements.js";
+import getElementSelection from "@ui5/webcomponents-base/dist/util/SelectionAssistant.js";
 
 import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 
@@ -106,6 +107,7 @@ const testAssets = {
 	invisibleMessage: {
 		announce,
 	},
+	getElementSelection,
 	getLocaleData,
 	applyDirection,
 	attachDirectionChange,
