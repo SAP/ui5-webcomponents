@@ -4,6 +4,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -109,6 +112,12 @@ class Page extends UI5Element {
 	 */
 	@slot()
 	footer!: Array<HTMLElement>;
+
+	constructor() {
+		super();
+
+		this.style.setProperty(getScopedVarName("--_ui5-page-animation-duration"), getAnimationMode() === AnimationMode.None ? "0s" : "0.35s");
+	}
 
 	get _contentBottom() {
 		return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";
