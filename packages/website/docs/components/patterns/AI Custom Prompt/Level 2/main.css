@@ -2,10 +2,6 @@ body {
 	background-color: var(--sapBackgroundColor)
 }
 
-#myInput {
-	flex: 1;
-}
-
 #panelContent,
 #panelContentFirstRow {
 	display: flex;

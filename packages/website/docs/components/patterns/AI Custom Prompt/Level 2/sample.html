@@ -21,13 +21,7 @@
 					<ui5-avatar size="XS">
 						<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP Logo">
 					</ui5-avatar>
-					<ui5-input id="myInput" placeholder="Input prompt ...">
-						<ui5-icon slot="icon" name="error" id="inputClearIcon"></ui5-icon>
-					</ui5-input>
-					<ui5-ai-button id="myAiButton" state="generate">
-						<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
-						<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
-					</ui5-ai-button>
+					<ui5-ai-prompt-input id="promptInput" show-clear-icon placeholder="Ask me anything..." label="User prompt:" show-exceeded-text></ui5-ai-prompt-input>
 				</div>
 	
 				<ui5-toolbar align-content="Start">

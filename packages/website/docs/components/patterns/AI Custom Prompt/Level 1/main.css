@@ -1,14 +1,9 @@
 body {
 	background-color: var(--sapBackgroundColor);
-  }
-  
-  #myInput {
-	flex: 1;
-  }
-  
-  #panelContent {
+}
+
+#panelContent {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-  }
-  
+}
