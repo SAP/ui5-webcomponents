@@ -79,7 +79,6 @@ type FilterSelection = {
 	filterItem: VSDItem & {
 		filterOptions: Array<VSDItem>;
 	};
-	filterItemSelectedOptions: Array<VSDItem>;
 };
 
 /**
@@ -673,7 +672,6 @@ class ViewSettingsDialog extends UI5Element {
 			if (selectedOptions.length) {
 				const filterItemObject: FilterSelection = {
 					filterItem: filter,
-					filterItemSelectedOptions: selectedOptions,
 				};
 
 				result.push(filterItemObject);
