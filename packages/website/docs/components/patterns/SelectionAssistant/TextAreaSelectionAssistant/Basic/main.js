@@ -43,7 +43,7 @@ textArea.addEventListener('ui5-select', (e) => {
 	}
 });
 
-textArea.addEventListener('click', () => {
+textArea.addEventListener('mousedown', () => {
 	hideButton();
 });
 

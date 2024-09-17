@@ -44,7 +44,7 @@ input.addEventListener('ui5-select', (e) => {
 	}
 });
 
-input.addEventListener('click', (e) => {
+input.addEventListener('mousedown', (e) => {
 	hideButton();
 });
 
