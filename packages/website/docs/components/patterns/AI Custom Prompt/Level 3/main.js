@@ -15,6 +15,7 @@ import '@ui5/webcomponents/dist/Input.js';
 import '@ui5/webcomponents/dist/Panel.js';
 
 import '@ui5/webcomponents/dist/Label.js';
+import '@ui5/webcomponents/dist/Text.js';
 import '@ui5/webcomponents/dist/Toolbar.js';
 import '@ui5/webcomponents/dist/Menu.js';
 import '@ui5/webcomponents/dist/MenuItem.js';
