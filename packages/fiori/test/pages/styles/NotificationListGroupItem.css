@@ -29,29 +29,30 @@
     max-height: 40rem;
 }
 
-.notificationsPopover::part(content) {
-    padding: 0; /* remove the default padding to achieve the target design */
-    overflow: hidden; /* remove the scroll from the popover to show it only on the Notification List */
+.notificationsPopover::part(header) {
+    padding: 0;
+    box-shadow: none;
 }
 
-/* styles for the additional div to move the scrollbar from the whole Popover to only the Notification List */
-.notificationsPopoverContent {
+.notificationsPopover::part(content) {
+    padding: 0;
+}
+
+.notificationsPopoverHeader {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .notificationsPopoverList {
-    flex: 1;
-    min-height: 0;
+    height: 100%;
 }
 
 .notificationsPopoverBar,
 .notificationsPopoverBar::part(bar) {
-    box-shadow: none; /* remove the default box-shadow to achieve the target design */
+    box-shadow: none;
 }
 
-#message-strip-error {
+.notificationsMessageStrip {
     display: none;
     margin: 0.5rem;
     width: auto;
