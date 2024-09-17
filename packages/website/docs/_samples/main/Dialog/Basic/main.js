@@ -3,6 +3,8 @@ import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents/dist/Input.js";
 import "@ui5/webcomponents/dist/Link.js";
 import "@ui5/webcomponents/dist/Label.js";
+import "@ui5/webcomponents/dist/Toolbar.js"
+import "@ui5/webcomponents/dist/ToolbarButton.js"
 
 var dialogOpener = document.getElementById("dialogOpener");
 var dialog = document.getElementById("dialog");
