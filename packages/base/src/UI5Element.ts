@@ -1293,6 +1293,7 @@ export {
 };
 export type {
 	ChangeInfo,
+	InvalidationInfo,
 	Renderer,
 	RendererOptions,
 };
