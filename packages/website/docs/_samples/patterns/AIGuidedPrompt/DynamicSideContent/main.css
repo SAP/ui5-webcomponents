@@ -1,4 +1,4 @@
-ui5-card {
+[ui5-card] {
 	width: 961px;
 }
 
@@ -27,6 +27,10 @@ ui5-card {
 
 .guidedPromptFormGroup {
 	margin-top: 1rem;
+}
+
+.guidedPromptForm [ui5-select] {
+	width: 100%;
 }
 
 .guidedPromptForm [ui5-range-slider] {
