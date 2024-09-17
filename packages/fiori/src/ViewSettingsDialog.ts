@@ -79,7 +79,7 @@ type FilterSelection = {
 	filterItem: VSDItem & {
 		filterOptions: Array<VSDItem>;
 	};
-	filterItemSelectedOptions: VSDItem[];
+	filterItemSelectedOptions: Array<VSDItem>;
 };
 
 /**
