@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -144,6 +145,7 @@ enum ClipboardDataOperation {
 		ResponsivePopoverCommonCss,
 		SuggestionsCss,
 		TokenizerPopoverCss,
+		getEffectiveScrollbarStyle(),
 	],
 	dependencies: [
 		ResponsivePopover,
@@ -204,6 +206,12 @@ class Tokenizer extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	readonly = false;
+
+	@property({ type: Boolean })
+	multiLine = false;
+
+	@property({ type: Boolean })
+	showClearAll = false;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -317,7 +325,7 @@ class Tokenizer extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_resizeHandler: ResizeObserverCallback;
 	_itemNav: ItemNavigation;
-	_scrollEnablement: ScrollEnablement;
+	_scrollEnablement: ScrollEnablement | undefined;
 	_expandedScrollWidth?: number;
 	_tokenDeleting = false;
 	_preventCollapse = false;
@@ -340,16 +348,23 @@ class Tokenizer extends UI5Element {
 			getItemsCallback: this._getVisibleTokens.bind(this),
 		});
 
-		this._scrollEnablement = new ScrollEnablement(this);
 		this._deletedDialogItems = [];
 	}
 
+	handleClearAll() {
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._tokens });
+	}
+
 	onBeforeRendering() {
+		if (!this.multiLine) {
+			this._scrollEnablement = new ScrollEnablement(this);
+		}
+
 		const tokensLength = this._tokens.length;
 		this._tokensCount = tokensLength;
 
 		this._tokens.forEach(token => {
-			token.singleToken = tokensLength === 1;
+			token.singleToken = (tokensLength === 1) || this.multiLine;
 			token.readonly = this.readonly;
 		});
 	}
@@ -399,12 +414,18 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	onTokenSelect() {
+	onTokenSelect(e: CustomEvent) {
 		const tokens = this._tokens;
 		const firstToken = tokens[0];
+		const targetToken = e.target as Token;
 
 		if (tokens.length === 1 && firstToken.isTruncatable) {
 			this.open = firstToken.selected;
+		}
+
+		if (this.multiLine && targetToken.isTruncatable) {
+			this.opener = targetToken;
+			this.open = targetToken.selected;
 		}
 	}
 
@@ -428,7 +449,9 @@ class Tokenizer extends UI5Element {
 			firstToken.forcedTabIndex = "0";
 		}
 
-		this._scrollEnablement.scrollContainer = this.contentDom;
+		if (this._scrollEnablement) {
+			this._scrollEnablement.scrollContainer = this.contentDom;
+		}
 
 		if (this.expanded) {
 			this._expandedScrollWidth = this.contentDom.scrollWidth;
@@ -568,9 +591,15 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleBeforeOpen() {
-		this._tokens.forEach(token => {
-			token._isVisible = true;
-		});
+		if (this.multiLine) {
+			this._tokens.forEach(token => {
+				token._isVisible = this._selectedTokens[0] === token;
+			});
+		} else {
+			this._tokens.forEach(token => {
+				token._isVisible = true;
+			});
+		}
 
 		const list = this._getList();
 		const firstListItem = list.querySelectorAll("[ui5-li]")[0]! as ListItem;
@@ -931,6 +960,14 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
+	get hasTokens() {
+		return this._tokens.length > 0;
+	}
+
+	get showEffectiveClearAll() {
+		return this.showClearAll && this.hasTokens;
+	}
+
 	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<IToken>) {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
@@ -953,8 +990,8 @@ class Tokenizer extends UI5Element {
 	 * @protected
 	 */
 	scrollToStart() {
-		if (this._scrollEnablement.scrollContainer) {
-			this._scrollEnablement.scrollTo(0, 0);
+		if (this._scrollEnablement?.scrollContainer) {
+			this._scrollEnablement?.scrollTo(0, 0);
 		}
 	}
 
@@ -965,8 +1002,8 @@ class Tokenizer extends UI5Element {
 	 */
 	scrollToEnd() {
 		const expandedTokenizerScrollWidth = this.contentDom && (this.effectiveDir !== "rtl" ? this.contentDom.scrollWidth : -this.contentDom.scrollWidth);
-		if (this._scrollEnablement.scrollContainer) {
-			this._scrollEnablement.scrollTo(expandedTokenizerScrollWidth, 0, 5, 10);
+		if (this._scrollEnablement?.scrollContainer) {
+			this._scrollEnablement?.scrollTo(expandedTokenizerScrollWidth, 0, 5, 10);
 		}
 	}
 
@@ -984,9 +1021,9 @@ class Tokenizer extends UI5Element {
 		const tokenContainerRect = this.contentDom.getBoundingClientRect();
 
 		if (tokenRect.left < tokenContainerRect.left) {
-			this._scrollEnablement.scrollTo(this.contentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 5), 0);
+			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft - (tokenContainerRect.left - tokenRect.left + 5), 0);
 		} else if (tokenRect.right > tokenContainerRect.right) {
-			this._scrollEnablement.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
+			this._scrollEnablement?.scrollTo(this.contentDom.scrollLeft + (tokenRect.right - tokenContainerRect.right + 5), 0);
 		}
 	}
 
