@@ -300,6 +300,10 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
+		if (!ctor.asyncFinished) {
+			await ctor.definePromise;
+		}
+
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve!();
 		this._fullyConnected = true;
@@ -1200,13 +1204,6 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
-	 */
-	static whenDependenciesDefined(): Promise<Array<typeof UI5Element>> {
-		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
-	}
-
-	/**
 	 * Hook that will be called upon custom element definition
 	 *
 	 * @protected
@@ -1215,15 +1212,16 @@ abstract class UI5Element extends HTMLElement {
 		return Promise.resolve();
 	}
 
+	static asyncFinished: boolean;
+	static definePromise: Promise<[void, void]> | undefined;
+
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 */
 	static async define(): Promise<typeof UI5Element> {
-		await boot();
-
-		await Promise.all([
-			this.whenDependenciesDefined(),
+		this.definePromise = Promise.all([
+			boot(),
 			this.onDefine(),
 		]);
 
@@ -1249,6 +1247,10 @@ abstract class UI5Element extends HTMLElement {
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
 		}
+
+		await this.definePromise;
+		this.asyncFinished = true;
+
 		return this;
 	}
 
