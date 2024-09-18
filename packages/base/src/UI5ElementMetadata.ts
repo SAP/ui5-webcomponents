@@ -39,7 +39,7 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
-	cldr?: true,
+	cldr?: boolean,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
 	features?: Array<string>
