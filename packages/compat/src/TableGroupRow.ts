@@ -79,7 +79,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	}
 
 	get ariaLabelText() {
-		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this.forcedAriaPosition}`;
+		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.textContent}. ${this.forcedAriaPosition}`;
 	}
 
 	visibleColCount(): number {

@@ -70,7 +70,7 @@ const boot = async (): Promise<void> => {
 		resolve();
 
 		booted = true;
-		await eventProvider.fireEventAsync("boot");
+		eventProvider.fireEvent("boot");
 	};
 
 	bootPromise = new Promise(bootExecutor as (resolve: PromiseResolve) => void);

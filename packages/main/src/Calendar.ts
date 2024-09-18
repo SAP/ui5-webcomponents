@@ -322,7 +322,10 @@ class Calendar extends CalendarPart {
 	}
 
 	static async onDefine() {
-		Calendar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		[Calendar.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 
 	/**
