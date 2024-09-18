@@ -167,7 +167,7 @@ abstract class UI5Element extends HTMLElement {
 	_state: State;
 	_internals: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
-	_fireInvalidations = false;
+	_fireInvalidations?: boolean;
 
 	static template?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
