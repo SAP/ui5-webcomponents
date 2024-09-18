@@ -581,12 +581,15 @@ abstract class UI5Element extends HTMLElement {
 	 * Callback that is executed whenever a monitored child changes its state
 	 *
 	 * @param slotName the slot in which a child was invalidated
-	 * @param childChangeInfo the changeInfo object for the child in the given slot
+	 * @param e the changeInfo object for the child in the given slot
 	 * @private
 	 */
 	_onChildChange(slotName: string, e: CustomEvent<ChangeInfo>) {
 		// const slotName = (e.target as HTMLElement).slot;
 		const childChangeInfo = e.detail;
+		if ((childChangeInfo.target?.slot || "default") !== slotName) {
+			return;
+		}
 		if (!(this.constructor as typeof UI5Element).getMetadata().shouldInvalidateOnChildChange(slotName, childChangeInfo.type, childChangeInfo.name)) {
 			return;
 		}
