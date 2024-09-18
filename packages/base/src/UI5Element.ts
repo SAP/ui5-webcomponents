@@ -587,7 +587,8 @@ abstract class UI5Element extends HTMLElement {
 	_onChildChange(slotName: string, e: CustomEvent<ChangeInfo>) {
 		// const slotName = (e.target as HTMLElement).slot;
 		const childChangeInfo = e.detail;
-		if ((childChangeInfo.target?.slot || "default") !== slotName) {
+		// startsWith for individual slots
+		if (!(childChangeInfo.target?.slot || "default").startsWith(slotName)) {
 			return;
 		}
 		if (!(this.constructor as typeof UI5Element).getMetadata().shouldInvalidateOnChildChange(slotName, childChangeInfo.type, childChangeInfo.name)) {
