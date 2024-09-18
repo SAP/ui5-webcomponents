@@ -8,13 +8,25 @@ Currently, there are two types of slots: "named" and "unnamed". The difference b
 
 ## Unnamed slots
 
-Use unnamed slots when your component does not need to know if any children have been passed to a certain slot, or generally interact with its children from the said slot.
-
-To define an unnamed slot, you simply add a `<slot>` element inside your `.hbs` template, for example:
+Use unnamed slots when your component doesn't need to be aware of or interact with the children passed to a specific slot.
+To define an unnamed slot, simply add a `<slot>` element within your `.hbs` template. For example:
 
 ```hbs
-<slot name="mySlot"></slot>
+{{!-- MyDemoComponent.hbs --}}
+<div>
+   <slot name="mySlot"></slot>
+</div>
 ```
+
+On the consuming side, elements can be passed to this slot using the `slot` attribute:
+
+```html
+<!-- index.html -->
+<my-demo-component>
+    <span slot="mySlot">Hello World</span>
+</my-demo-component>
+```
+
 
 **Note:** It is recommended to describe your unnamed slots inside a JSDoc comment that describes your class using the `@slot` tag, following the pattern `@slot {type} name - description`.
 
@@ -39,15 +51,15 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot({ type: HTMLElement })
+    @slot()
     mySlot!: Array<HTMLElement>;
 }
 ```
 
 You can see the available options below.
 
-### type
-This option is required and accepts a type constructor (e.g., `HTMLElement`, `Node`) and is used to define the type of children that can be slotted inside the slot.
+### Type
+The `type` option accepts a type constructor (e.g., `HTMLElement`, `Node`) and is used to define the type of children that can be slotted inside the slot.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -67,10 +79,14 @@ Available types:
 | HTMLElement | Accepts HTML Elements only       |
 | Node        | Accepts both Text nodes and HTML Elements |
 
-### Default Slot
-This option accepts a boolean value and is used to define whether this slot is the default one.
+**Note**: If the slot configuration object is not provided (e.g. `@slot()`), `HTMLElement` will be used as the default type.
 
-**Note:** The default slot is defined simply as an empty slot tag: `<slot></slot>` (without a `name` attribute).
+
+### Default Slot
+
+The `"default"` option accepts a boolean value and is used to define whether this slot is the default one.
+
+**Note:** The default slot is defined simply as an empty slot tag `<slot></slot>` (without a `name` attribute) in the component's template.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -79,13 +95,14 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 @customElement("my-demo-component")
 class MyDemoComponent extends UI5Element {
-    @slot({ type: HTMLElement, default: true })
+    @slot({ type: HTMLElement, "default": true })
     mySlot!: Array<HTMLElement>;
 }
 ```
 
-### `individualSlots`
-This option accepts a boolean value and determines whether each child will have its own slot, allowing you to arrange or wrap the children arbitrarily. This means that you need to handle the rendering on your own.
+### Individual Slots
+
+The `individualSlots` option accepts a boolean value and determines whether each child will have its own slot, allowing you to arrange or wrap the children arbitrarily. This means that you need to handle the rendering on your own.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -99,7 +116,7 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-To render individual slots, you have to iterate all children in that slot and use the `_individualSlot` property that the framework sets automatically set on each child:
+To render individual slots, you have to iterate all children in that slot and use the `_individualSlot` property that the framework sets automatically on each child:
 
 ```hbs
 {{#each mySlot}}
@@ -109,12 +126,11 @@ To render individual slots, you have to iterate all children in that slot and us
 
 **Note:** When this option is set to `true`, the `_individualSlot` property is set to each direct child, where `_individualSlot` returns a string following the pattern `{nameOfTheSlot}-{index}` and the slot attribute is changed based on that pattern.
 
-### `invalidateOnChildChange`
-This option accepts a boolean value or an object literal containing a configuration with more specific settings, determining whether the component should be invalidated on child change.
+### Invalidation upon child changes
 
-**NOTE: This is an experimental option and should not be used.**
+The `invalidateOnChildChange` option accepts a boolean value or an object literal containing a configuration with more specific settings, determining whether the component should be invalidated on child change.
 
-Important: `invalidateOnChildChange` is not meant to be used with standard DOM elements and is not to be confused with MutationObserver-like functionality. It targets the use case of components that slot abstract items (UI5Element instances without a template) and require invalidation whenever these items are invalidated.
+**Note**: `invalidateOnChildChange` is not meant to be used with standard DOM elements and is not to be confused with MutationObserver-like functionality. It targets the use case of components that slot UI5Element instances and require invalidation whenever these items are invalidated.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";

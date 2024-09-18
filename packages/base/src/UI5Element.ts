@@ -35,7 +35,7 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 
@@ -158,7 +158,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	_internals?: ElementInternals;
+	_internals: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -203,6 +203,7 @@ abstract class UI5Element extends HTMLElement {
 				this.initializedProperties.set(propertyName, value);
 			}
 		});
+		this._internals = this.attachInternals();
 
 		this._initShadowRoot();
 	}
@@ -613,7 +614,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		attachFormElementInternals(this);
+		updateFormValue(this);
 	}
 
 	static get formAssociated() {
@@ -1273,10 +1274,10 @@ abstract class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	get validity() { return this._internals?.validity; }
-	get validationMessage() { return this._internals?.validationMessage; }
-	checkValidity() { return this._internals?.checkValidity(); }
-	reportValidity() { return this._internals?.reportValidity(); }
+	get validity() { return this._internals.validity; }
+	get validationMessage() { return this._internals.validationMessage; }
+	checkValidity() { return this._internals.checkValidity(); }
+	reportValidity() { return this._internals.reportValidity(); }
 }
 
 /**
@@ -1292,6 +1293,7 @@ export {
 };
 export type {
 	ChangeInfo,
+	InvalidationInfo,
 	Renderer,
 	RendererOptions,
 };

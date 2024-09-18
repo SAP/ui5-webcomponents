@@ -62,6 +62,19 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("Disabled step should not be interactive", async () => {
+		const wiz = await $("#wizTest");
+		const disabledStep = await wiz.shadow$(`[data-ui5-index="2"]`);
+
+		await disabledStep.click();
+
+		const isTabActiveElement = await browser.executeAsync((done) => {
+			done(document.activeElement.shadowRoot.activeElement === document.querySelector("#wizTest").shadowRoot.querySelector("[data-ui5-index='2']"));
+		});
+
+		assert.notOk(isTabActiveElement, "Second tab should not be active element");
+	});
+
+	it("Disabled step should not be interactive", async () => {
 		const wiz = await browser.$("#wizTest");
 		const disabledStep = await wiz.shadow$(`[data-ui5-index="2"]`);
 
@@ -325,6 +338,33 @@ describe("Wizard general interaction", () => {
 			"No scrolling occures after re-rendering when the selected step remains the same.");
 	});
 
+	it("Tests if initial focus is set on the second (selected) step", async () => {
+		browser.url("test/pages/WizardPageMode_test.html");
+
+		const wiz = await browser.$("#wiz2");
+
+		// open the dialog
+		const btnOpenDialog = await browser.$("#button");
+		await btnOpenDialog.click();
+
+		// go to second step
+		const step2 = await browser.$("#nextButton");
+		await step2.click();
+
+		// close the dialog by escape
+		await browser.keys("Escape");
+
+		// open the dialog again
+		await btnOpenDialog.click();
+
+		// check if second wizard tab is focused
+		const isTabActiveElement = await browser.executeAsync((done) => {
+			done(document.activeElement.shadowRoot.activeElement === document.querySelector("#wiz2").shadowRoot.querySelector("[data-ui5-index='2']"));
+		});
+
+		assert.ok(isTabActiveElement, "Second step is focused.");
+	});
+
 	it("Tests if second step is scrolled into view when first step's height is bigger than viewport", async () => {
 		await browser.url(`test/pages/WizardScrolling.html`);
 
@@ -431,5 +471,15 @@ describe("Wizard general interaction", () => {
 			"Second step in the content is not selected.");
 		assert.strictEqual(await step2.isDisplayedInViewport(), false,
 			"Second step should not be visible.");
+	});
+
+	it("WizardPageMode: prevent page change upon scrolling", async () => {
+		browser.url(`test/pages/Wizard_inline_page_mode.html`);
+
+		await $('ui5-message-strip').click();
+		await browser.keys("End");
+		await browser.pause(1000);
+
+		assert.notOk(await $$("ui5-wizard-step")[1].getProperty("selected"), "Second step should not be selected");
 	});
 });

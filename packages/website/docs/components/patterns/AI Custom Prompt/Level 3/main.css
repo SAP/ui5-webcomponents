@@ -1,0 +1,31 @@
+body {
+	background-color: var(--sapBackgroundColor)
+}
+
+#panelContent,
+#panelContentFirstRow,
+#panelHeader {
+	display: flex;
+	flex: 1;
+	width: 100%;
+	flex-direction: column;
+	align-items: center;
+}
+
+#panelContentFirstRow,
+#panelHeader {
+	flex-direction: row;
+	gap: .5rem;
+}
+
+#panelHeader {
+	justify-content: end;
+}
+
+#panelHeader > ui5-button {
+	margin-right: auto;
+}
+
+#promptCountWrapper {
+	display: flex
+}
