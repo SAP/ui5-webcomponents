@@ -39,9 +39,11 @@ type Metadata = {
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
+	cldr?: true,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
 	features?: Array<string>
+	i18n?: Record<string, string>
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -236,6 +238,13 @@ class UI5ElementMetadata {
 		return !!this.metadata.themeAware;
 	}
 
+	/**
+	 * Determines whether this UI5 Element needs CLDR assets to be fetched to work correctly
+	 */
+	needsCLDR(): boolean {
+		return !!this.metadata.cldr;
+	}
+
 	getShadowRootOptions(): Partial<ShadowRootInit> {
 		return this.metadata.shadowRootOptions || {};
 	}
@@ -312,6 +321,13 @@ class UI5ElementMetadata {
 		}
 
 		throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
+	}
+
+	getI18n(): Record<string, string> {
+		if (!this.metadata.i18n) {
+			this.metadata.i18n = {};
+		}
+		return this.metadata.i18n;
 	}
 }
 

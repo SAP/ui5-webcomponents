@@ -38,6 +38,10 @@ import type {
 import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getI18nBundle } from "./i18nBundle.js";
+import type I18nBundle from "./i18nBundle.js";
+import { fetchCldr } from "./asset-registries/LocaleData.js";
+import getLocale from "./locale/getLocale.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -1212,8 +1216,22 @@ abstract class UI5Element extends HTMLElement {
 		return Promise.resolve();
 	}
 
+	static fetchI18nBundles() {
+		return Promise.all(Object.entries(this.getMetadata().getI18n()).map(pair => {
+			const bundleName = pair[1];
+			return getI18nBundle(bundleName);
+		}));
+	}
+
+	static fetchCLDR() {
+		if (this.getMetadata().needsCLDR()) {
+			return fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript());
+		}
+		return Promise.resolve();
+	}
+
 	static asyncFinished: boolean;
-	static definePromise: Promise<[void, void]> | undefined;
+	static definePromise: Promise<[void, void, Array<I18nBundle>, void]> | undefined;
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
@@ -1223,6 +1241,8 @@ abstract class UI5Element extends HTMLElement {
 		this.definePromise = Promise.all([
 			boot(),
 			this.onDefine(),
+			this.fetchI18nBundles(),
+			this.fetchCLDR(),
 		]);
 
 		const tag = this.getMetadata().getTag();
@@ -1248,7 +1268,13 @@ abstract class UI5Element extends HTMLElement {
 			customElements.define(tag, this as unknown as CustomElementConstructor);
 		}
 
-		await this.definePromise;
+		const definePromiseResult = await this.definePromise;
+		const i18nBundles = definePromiseResult[2];
+		Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
+			const propertyName = pair[0];
+			// @ts-ignore
+			this[propertyName as keyof typeof this] = i18nBundles[index];
+		});
 		this.asyncFinished = true;
 
 		return this;
