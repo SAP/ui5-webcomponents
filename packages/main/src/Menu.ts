@@ -568,7 +568,9 @@ class Menu extends UI5Element {
 		if (menuItem && menuItem.hasSubmenu) {
 			// create new sub-menu
 			this._createSubMenu(menuItem, opener);
-			this._openItemSubMenu(menuItem, opener);
+			setTimeout(() => {
+				this._openItemSubMenu(menuItem, opener);
+			}, 0);
 		}
 		if (parentMenuItem) {
 			parentMenuItem._preventSubMenuClose = true;
