@@ -28,6 +28,8 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import type ListAccessibleRole from "./types/ListAccessibleRole.js";
@@ -1186,26 +1188,28 @@ class List extends UI5Element {
 	}
 
 	onForwardBefore(e: CustomEvent) {
+		const activeElement = getActiveElement() as HTMLElement;
 		const item = e.detail.item as ListItemBase;
-		const target = getNormalizedTarget(e.target as HTMLElement);
+		const isFirstItem = this.getItems().indexOf(item) === 0;
+		const isFirstTabbable = getTabbableElements(item).shift() === getActiveElement();
+		const isItemFocused = item.getFocusDomRef() === activeElement;
 
 		this.setPreviouslyFocusedItem(e.target as ListItemBase);
 
-		if (target !== item.getFocusDomRef()) {
-			return;
+		if (isItemFocused && (isFirstItem && !isFirstTabbable)) {
+			this.focusBeforeElement();
+			e.stopPropagation();
 		}
-
-		this.focusBeforeElement();
-		e.stopPropagation();
 	}
 
 	onForwardAfter(e: CustomEvent) {
 		const item = e.detail.item as ListItemBase;
-		const target = getNormalizedTarget(e.target as HTMLElement);
+		const isLastItem = this.getItems().indexOf(item) === this.getItems().length - 1;
+		const isLastTabbable = isLastItem && getTabbableElements(item).pop() === getActiveElement();
 
 		this.setPreviouslyFocusedItem(item);
 
-		if (target !== item.getFocusDomRef()) {
+		if (!isLastTabbable) {
 			return;
 		}
 
