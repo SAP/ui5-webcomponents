@@ -893,12 +893,7 @@ class List extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		if (isCtrl(e)) {
 			this._moveItem(e.target as ListItemBase, e);
-			return;
 		}
-
-		// if (isTabNext(e)) {
-		// 	this._handleTabNext(e);
-		// }
 	}
 
 	_moveItem(item: ListItemBase, e: KeyboardEvent) {
