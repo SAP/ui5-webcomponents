@@ -205,13 +205,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	get _effectiveTabIndex() {
-		if (!this._focusable) {
-			return -1;
-		}
-		if (this.selected) {
-			return 0;
-		}
-		return this.forcedTabIndex;
+		return -1;
 	}
 }
 

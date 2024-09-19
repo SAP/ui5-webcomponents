@@ -546,8 +546,6 @@ class List extends UI5Element {
 
 		this._handleResize = this.checkListInViewport.bind(this);
 
-		this._handleResize = this.checkListInViewport.bind(this);
-
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
