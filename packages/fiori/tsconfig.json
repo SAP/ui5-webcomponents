@@ -4,10 +4,6 @@
 		"src/**/*",
 		"global.d.ts"
 	],
-	// // ssr-dom is imported with bare specifier so that conditional exports are used, but this treats it as input and output, so ignore it
-	// "exclude": [
-	// 	"src/ssr-zxing.ts",
-	// ],
 	"compilerOptions": {
 		"outDir": "dist",
 		"experimentalDecorators": true,
