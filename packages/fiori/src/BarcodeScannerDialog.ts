@@ -26,8 +26,8 @@ import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css
 
 // some tools handle named exports from UMD files and the window object is not assigned but the imports work (vitejs)
 // other tools do not handle named exports (they are undefined after the import), but the window global is assigned and can be used (web dev server)
-const windowZXing = typeof window === "undefined" ? {} : { ...window.ZXing };
-const effectiveZXing = { ...ZXing, windowZXing };
+const windowZXing = typeof window === "undefined" ? {} : window.ZXing;
+const effectiveZXing = { ...ZXing, ...windowZXing };
 const { BrowserMultiFormatReader, NotFoundException } = effectiveZXing;
 
 const defaultMediaConstraints = {
