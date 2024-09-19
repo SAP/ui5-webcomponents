@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import {
 	isEnter,
@@ -13,7 +12,6 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 
 // Styles
@@ -165,29 +163,13 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
-		if (this.shouldForwardTabAfter()) {
-			if (!this.fireEvent("_forward-after", {}, true)) {
-				e.preventDefault();
-			}
+		if (!this.fireEvent("_forward-after", { item: this, target: e.target }, true)) {
+			e.preventDefault();
 		}
 	}
 
 	_handleTabPrevious(e: KeyboardEvent) {
-		const target = e.target as HTMLElement;
-
-		if (this.shouldForwardTabBefore(target)) {
-			this.fireEvent("_forward-before");
-		}
-	}
-
-	/**
-	 * Determines if th current list item either has no tabbable content or
-	 * [Tab] is performed onto the last tabbale content item.
-	 */
-	shouldForwardTabAfter() {
-		const aContent = getTabbableElements(this.getFocusDomRef()!);
-
-		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
+		this.fireEvent("_forward-before", { item: this, target: e.target });
 	}
 
 	/**

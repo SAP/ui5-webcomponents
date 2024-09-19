@@ -266,6 +266,7 @@ abstract class ListItem extends ListItemBase {
 			const activeElement = getActiveElement();
 			const focusDomRef = this.getFocusDomRef()!;
 
+			console.error(activeElement, focusDomRef);
 			if (activeElement === focusDomRef) {
 				const firstFocusable = await getFirstFocusableElement(focusDomRef);
 				firstFocusable?.focus();

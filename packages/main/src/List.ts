@@ -896,9 +896,9 @@ class List extends UI5Element {
 			return;
 		}
 
-		if (isTabNext(e)) {
-			this._handleTabNext(e);
-		}
+		// if (isTabNext(e)) {
+		// 	this._handleTabNext(e);
+		// }
 	}
 
 	_moveItem(item: ListItemBase, e: KeyboardEvent) {
@@ -993,31 +993,6 @@ class List extends UI5Element {
 
 	loadMore() {
 		this.fireEvent("load-more");
-	}
-
-	/*
-	* KEYBOARD SUPPORT
-	*/
-	_handleTabNext(e: KeyboardEvent) {
-		let lastTabbableEl;
-		const target = getNormalizedTarget(e.target as HTMLElement);
-
-		if (!lastTabbableEl) {
-			return;
-		}
-
-		if (lastTabbableEl === target) {
-			if (this.getFirstItem(x => x.selected && x._focusable)) {
-				this.focusFirstSelectedItem();
-			} else if (this.getPreviouslyFocusedItem()) {
-				this.focusPreviouslyFocusedItem();
-			} else {
-				this.focusFirstItem();
-			}
-
-			e.stopImmediatePropagation();
-			e.preventDefault();
-		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -1218,13 +1193,28 @@ class List extends UI5Element {
 	}
 
 	onForwardBefore(e: CustomEvent) {
+		const item = e.detail.item as ListItemBase;
+		const target = getNormalizedTarget(e.target as HTMLElement);
+
 		this.setPreviouslyFocusedItem(e.target as ListItemBase);
+
+		if (target !== item.getFocusDomRef()) {
+			return;
+		}
+
 		this.focusBeforeElement();
 		e.stopPropagation();
 	}
 
 	onForwardAfter(e: CustomEvent) {
-		this.setPreviouslyFocusedItem(e.target as ListItemBase);
+		const item = e.detail.item as ListItemBase;
+		const target = getNormalizedTarget(e.target as HTMLElement);
+
+		this.setPreviouslyFocusedItem(item);
+
+		if (target !== item.getFocusDomRef()) {
+			return;
+		}
 
 		if (!this.growsWithButton) {
 			this.focusAfterElement();
