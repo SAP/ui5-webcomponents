@@ -111,12 +111,17 @@
 	outline: var(--_ui5_link_outline);
 	border-radius: var(--_ui5_link_focus_border-radius);
 	text-shadow: none;
-	color:  var(--_ui5_link_focus_color);
+	color: var(--_ui5_link_focus_color);
+}
+
+:host(:not([desktop])) .ui5-link-root:focus-visible,
+:host([desktop]:focus-within),
+:host([design="Subtle"][desktop]:focus-within) {
 	text-decoration: var(--_ui5_link_focus_text_decoration);
 }
 
-.ui5-link-root:focus-visible:hover:not(:active),
-:host([desktop]) .ui5-link-root:focus-within:hover:not(:active) {
+:host([desktop]:hover:not(:active):focus-within),
+:host([design="Subtle"][desktop]:hover:not(:active):focus-within) {
 	color: var(--_ui5_link_focused_hover_text_color);
 	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }
