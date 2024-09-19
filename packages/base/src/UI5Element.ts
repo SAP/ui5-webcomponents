@@ -157,8 +157,6 @@ abstract class UI5Element extends HTMLElement {
 	_changedState: Array<ChangeInfo>;
 	_invalidationEventProvider: EventProvider<InvalidationInfo, void>;
 	_componentStateFinalizedEventProvider: EventProvider<void, void>;
-	_inDOM: boolean;
-	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
 	_slotsAssignedNodes: WeakMap<HTMLSlotElement, Array<SlotValue>>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
@@ -186,8 +184,6 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		this._changedState = []; // Filled on each invalidation, cleared on re-render (used for debugging)
 		this._suppressInvalidation = true; // A flag telling whether all invalidations should be ignored. Initialized with "true" because a UI5Element can not be invalidated until it is rendered for the first time
-		this._inDOM = false; // A flag telling whether the UI5Element is currently in the DOM tree of the document or not
-		this._fullyConnected = false; // A flag telling whether the UI5Element's onEnterDOM hook was called (since it's possible to have the element removed from DOM before that)
 		this._childChangeListeners = new Map(); // used to store lazy listeners per slot for the child change event of every child inside that slot
 		this._slotChangeListeners = new Map(); // used to store lazy listeners per slot for the slotchange event of all slot children inside that slot
 		this._invalidationEventProvider = new EventProvider(); // used by parent components for listening to changes to child components
@@ -286,6 +282,7 @@ abstract class UI5Element extends HTMLElement {
 				}
 			}
 		}
+		this.onEnterDOM();
 
 		const ctor = this.constructor as typeof UI5Element;
 
@@ -296,16 +293,10 @@ abstract class UI5Element extends HTMLElement {
 
 		const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 
-		this._inDOM = true;
-
 		if (slotsAreManaged) {
 			// always register the observer before yielding control to the main thread (await)
 			this._startObservingDOMChildren();
 			this._processChildren();
-		}
-
-		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
-			return;
 		}
 
 		if (!ctor.asyncFinished) {
@@ -314,8 +305,6 @@ abstract class UI5Element extends HTMLElement {
 
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve!();
-		this._fullyConnected = true;
-		this.onEnterDOM();
 	}
 
 	/**
@@ -326,16 +315,11 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 
-		this._inDOM = false;
-
 		if (slotsAreManaged) {
 			this._stopObservingDOMChildren();
 		}
 
-		if (this._fullyConnected) {
-			this.onExitDOM();
-			this._fullyConnected = false;
-		}
+		this.onExitDOM();
 
 		this._domRefReadyPromise._deferredResolve!();
 
