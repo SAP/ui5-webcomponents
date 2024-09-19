@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import {
-	isSpace, isEnter, isDelete, isF2,
+	isSpace, isEnter, isDelete, isF2, isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -262,11 +262,10 @@ abstract class ListItem extends ListItemBase {
 			this.activate();
 		}
 
-		if (isF2(e)) {
+		if (isF2(e) || isF7(e)) {
 			const activeElement = getActiveElement();
 			const focusDomRef = this.getFocusDomRef()!;
 
-			console.error(activeElement, focusDomRef);
 			if (activeElement === focusDomRef) {
 				const firstFocusable = await getFirstFocusableElement(focusDomRef);
 				firstFocusable?.focus();
