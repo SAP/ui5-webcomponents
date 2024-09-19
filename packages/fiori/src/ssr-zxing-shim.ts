@@ -1,2 +1,2 @@
-const ZXing = {}
+const ZXing = {};
 export default ZXing;
