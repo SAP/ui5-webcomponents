@@ -7,7 +7,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { resolvePath } from "@ui5/webcomponents-base/dist/util/ComposedPathResolver.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -268,8 +268,8 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		});
 	}
 
-	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_onclick() {
+		if (!resolvePath(this)) {
 			this._input.click();
 		}
 	}

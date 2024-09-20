@@ -8,7 +8,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { resolvePath } from "@ui5/webcomponents-base/dist/util/ComposedPathResolver.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
@@ -489,8 +489,8 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Event handlers
 	 */
-	_onclick(e: MouseEvent) {
-		this.fireItemPress(e);
+	_onclick() {
+		this.fireItemPress();
 	}
 
 	_onShowMoreClick(e: MouseEvent) {
@@ -542,12 +542,14 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 	}
 
+	get showMoreLink() {
+		return document.querySelector("#show-more-link");
+	}
+
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
-
 		const space = isSpace(e);
-
-		if (space && getEventMark(e) === "link") {
+		if (space && e.target === this.showMoreLink) {
 			this._onShowMoreClick(e as unknown as MouseEvent);
 			return;
 		}
@@ -589,8 +591,8 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Private
 	 */
-	fireItemPress(e: Event) {
-		if (getEventMark(e) === "button" || getEventMark(e) === "link") {
+	fireItemPress() {
+		if (!resolvePath(this)) {
 			return;
 		}
 
