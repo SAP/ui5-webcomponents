@@ -1,5 +1,5 @@
-// OpenUI5's Element.js subset
-type Element = {
+// OpenUI5's Control.js subset
+type Control = {
 	getDomRef: () => HTMLElement | null,
 }
 
@@ -9,7 +9,7 @@ type OpenUI5Popup = {
 		open: (...args: any[]) => void,
 		_closed: (...args: any[]) => void,
 		getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING",
-		getContent: () => Element, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
+		getContent: () => Control | HTMLElement, // this is the OpenUI5 Element/Control instance that opens the Popup (usually sap.m.Popover/sap.m.Dialog)
 		onFocusEvent: (e: FocusEvent) => void,
 	}
 };
@@ -35,7 +35,7 @@ const patchOpen = (Popup: OpenUI5Popup) => {
 		if (openingInitiated && topLayerAlreadyInUse) {
 			const element = this.getContent();
 			if (element) {
-				const domRef = element.getDomRef();
+				const domRef = element instanceof HTMLElement ? element : element.getDomRef();
 				if (domRef) {
 					openNativePopover(domRef);
 				}
@@ -48,7 +48,7 @@ const patchClosed = (Popup: OpenUI5Popup) => {
 	const _origClosed = Popup.prototype._closed;
 	Popup.prototype._closed = function _closed(...args: any[]) {
 		const element = this.getContent();
-		const domRef = element.getDomRef();
+		const domRef = element instanceof HTMLElement ? element : element.getDomRef();
 		_origClosed.apply(this, args); // only then call _close
 		if (domRef) {
 			closeNativePopover(domRef); // unset the popover attribute and close the native popover, but only if still in DOM
