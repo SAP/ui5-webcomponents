@@ -261,7 +261,6 @@ class TableRow extends UI5Element implements ITableRow {
 		// If the user tab over a button on IOS device, the document.activeElement
 		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
 		// the row will not be selected.
-		console.log(e.target)
 		if (resolvePath(this)) {
 			return;
 		}
