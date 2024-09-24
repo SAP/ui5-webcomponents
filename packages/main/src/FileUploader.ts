@@ -475,10 +475,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
-	}
-
 	get shouldDisplayDefaultValueStateMessage(): boolean {
 		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
