@@ -61,14 +61,14 @@ class ResizeHandler {
 	 * @param callback Callback to be executed
 	 */
 	static register(element: HTMLElement, callback: ResizeObserverCallback): void {
-		// let effectiveElement: HTMLElement | undefined = element;
+		let effectiveElement: HTMLElement | undefined = element;
 
-		// if (instanceOfUI5Element(effectiveElement)) {
-		// 	effectiveElement = effectiveElement.getDomRef();
-		// }
+		if (instanceOfUI5Element(effectiveElement)) {
+			effectiveElement = effectiveElement.getDomRef();
+		}
 
-		if (element instanceof HTMLElement) {
-			observe(element, callback);
+		if (effectiveElement instanceof HTMLElement) {
+			observe(effectiveElement, callback);
 		} else {
 			console.warn("Cannot register ResizeHandler for element", element); // eslint-disable-line
 		}
