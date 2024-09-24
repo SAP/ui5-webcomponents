@@ -1218,7 +1218,7 @@ abstract class UI5Element extends HTMLElement {
 
 	static fetchI18nBundles() {
 		return Promise.all(Object.entries(this.getMetadata().getI18n()).map(pair => {
-			const bundleName = pair[1];
+			const { bundleName } = pair[1];
 			return getI18nBundle(bundleName);
 		}));
 	}
@@ -1231,7 +1231,7 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	static asyncFinished: boolean;
-	static definePromise: Promise<[void, void, Array<I18nBundle>, void]> | undefined;
+	static definePromise: Promise<[Array<I18nBundle>, void, void, void]> | undefined;
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
@@ -1239,10 +1239,10 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static async define(): Promise<typeof UI5Element> {
 		this.definePromise = Promise.all([
-			boot(),
-			this.onDefine(),
 			this.fetchI18nBundles(),
 			this.fetchCLDR(),
+			boot(),
+			this.onDefine(),
 		]);
 
 		const tag = this.getMetadata().getTag();
@@ -1268,12 +1268,11 @@ abstract class UI5Element extends HTMLElement {
 			customElements.define(tag, this as unknown as CustomElementConstructor);
 		}
 
-		const definePromiseResult = await this.definePromise;
-		const i18nBundles = definePromiseResult[2];
+		const [i18nBundles] = await this.definePromise;
 		Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
 			const propertyName = pair[0];
-			// @ts-ignore
-			this[propertyName as keyof typeof this] = i18nBundles[index];
+			const targetClass = pair[1].target;
+			(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
 		});
 		this.asyncFinished = true;
 

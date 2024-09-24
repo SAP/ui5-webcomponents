@@ -20,7 +20,10 @@ const i18n = (bundleName: string): i18nDecorator => {
 		if (!target.metadata.i18n) {
 			target.metadata.i18n = {};
 		}
-		target.metadata.i18n[propertyName] = bundleName;
+		target.metadata.i18n[propertyName] = {
+			bundleName,
+			target,
+		};
 	};
 };
 

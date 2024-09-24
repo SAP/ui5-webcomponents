@@ -1,6 +1,7 @@
 import { camelToKebabCase, kebabToCamelCase } from "./util/StringHelper.js";
 import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
+import type UI5Element from "./UI5Element.js";
 
 type SlotInvalidation = {
 	properties: boolean | Array<string>,
@@ -30,6 +31,13 @@ type PropertyValue = boolean | number | string | object | undefined | null;
 
 type EventData = Record<string, object>;
 
+type I18nBundleAccessorValue = {
+	bundleName: string,
+	target: typeof UI5Element
+};
+
+type I18nBundleAccessors = Record<string, I18nBundleAccessorValue>;
+
 type Metadata = {
 	tag?: string,
 	managedSlots?: boolean,
@@ -43,7 +51,7 @@ type Metadata = {
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>
 	features?: Array<string>
-	i18n?: Record<string, string>
+	i18n?: I18nBundleAccessors
 };
 
 type State = Record<string, PropertyValue | Array<SlotValue>>;
@@ -323,7 +331,7 @@ class UI5ElementMetadata {
 		throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
 	}
 
-	getI18n(): Record<string, string> {
+	getI18n(): I18nBundleAccessors {
 		if (!this.metadata.i18n) {
 			this.metadata.i18n = {};
 		}
