@@ -18,7 +18,8 @@ describe("Columns resize", () => {
 		cy.get("[ui5-flexible-column-layout]")
 			.shadow()
 			.find(".ui5-fcl-separator-start")
-			.as("separator");
+			.as("separator")
+			.should("be.visible");
 
 		// act: mock the user starting to drag the separator
 		cy.get("@separator")
@@ -27,15 +28,14 @@ describe("Columns resize", () => {
 		// assert that the property is set
 		cy.get("@fcl")
 			.invoke("prop", "_resizing")
-			.should("be.equal", true)
-			// act: mock the user releasing the mouse button; use "then" to ensure it happens after the above check has completed
-			.then(() => {
-				cy.get("@separator")
-					.realMouseUp();
-				// assert that the property is reset
-				cy.get("@fcl")
-					.invoke("prop", "_resizing")
-					.should("be.equal", false);
-			});
+			.should("be.equal", true);
+
+		// act: mock the user releasing the mouse button; use "then" to ensure it happens after the above check has completed
+		cy.get("@separator")
+			.realMouseUp();
+		// assert that the property is reset
+		cy.get("@fcl")
+			.invoke("prop", "_resizing")
+			.should("be.equal", false);
 	});
 });
