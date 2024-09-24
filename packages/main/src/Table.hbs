@@ -4,6 +4,9 @@
     style="{{styles.table}}"
     aria-label="{{_ariaLabel}}"
     aria-multiselectable="{{_ariaMultiSelectable}}"
+    @dragover="{{_ondragover}}"
+    @drop="{{_ondrop}}"
+    @dragleave="{{_ondragleave}}"
 >
     <slot name="headerRow"></slot>
     <slot></slot>
@@ -24,6 +27,11 @@
             {{> growingRow}}
         </div>
     {{/if}}
+
+    <ui5-drop-indicator
+		orientation="Horizontal"
+		.ownerReference="{{this}}"
+	></ui5-drop-indicator>
 
     {{> tableEndRow}}
 </div>
