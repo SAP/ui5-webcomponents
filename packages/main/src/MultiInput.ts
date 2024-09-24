@@ -337,6 +337,10 @@ class MultiInput extends Input implements IFormInputElement {
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+
+		if (this.tokenizer) {
+			this.tokenizer.readonly = this.readonly;
+		}
 	}
 
 	onAfterRendering() {
