@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.10](https://github.com/SAP/ui5-webcomponents/compare/v1.24.9...v1.24.10) (2024-09-20)
+
+
+### Bug Fixes
+
+* **f6 navigation:** work properly when multiple runtimes ([#9811](https://github.com/SAP/ui5-webcomponents/issues/9811)) ([e51deb6](https://github.com/SAP/ui5-webcomponents/commit/e51deb6d0f1c72cc9bbbfb47c9673b2842661d97)), closes [#9795](https://github.com/SAP/ui5-webcomponents/issues/9795)
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9790](https://github.com/SAP/ui5-webcomponents/issues/9790)) ([f70cc11](https://github.com/SAP/ui5-webcomponents/commit/f70cc11f8424dfe22d5168dbb43c86309976f4ac)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+
+
+
+
+
 ## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
 
 
