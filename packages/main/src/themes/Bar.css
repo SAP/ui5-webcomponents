@@ -74,6 +74,11 @@
 	.ui5-bar-endcontent-container {
 		padding-inline-end: var(--_ui5_bar-end-container-padding-end_S);
 	}
+	.ui5-bar-root .ui5-bar-content-container {
+		min-width: calc(30% - calc(var(--_ui5_bar-start-container-padding-start_S)
+								 + var(--_ui5_bar-end-container-padding-end_S)
+							  + (2*var(--_ui5_bar-mid-container-padding-start-end))));
+	}
 }
 
 @container (width > 599px) and (width < 1440px) {
@@ -83,6 +88,11 @@
 	.ui5-bar-endcontent-container {
 		padding-inline-end: var(--_ui5_bar-end-container-padding-end_M_L);
 	}
+	.ui5-bar-root .ui5-bar-content-container {
+		min-width: calc(30% - calc(var(--_ui5_bar-start-container-padding-start_M_L)
+								 + var(--_ui5_bar-end-container-padding-end_M_L)
+							  + (2*var(--_ui5_bar-mid-container-padding-start-end))));
+	}
 }
 
 @container (width > 1439px) {
@@ -91,5 +101,10 @@
 	}
 	.ui5-bar-endcontent-container {
 		padding-inline-end: var(--_ui5_bar-end-container-padding-end_XL);
+	}
+	.ui5-bar-root .ui5-bar-content-container {
+		min-width: calc(30% - calc(var(--_ui5_bar-start-container-padding-start_XL)
+								 + var(--_ui5_bar-end-container-padding-end_XL)
+							  + (2*var(--_ui5_bar-mid-container-padding-start-end))));
 	}
 }
