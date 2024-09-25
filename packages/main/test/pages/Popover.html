@@ -25,6 +25,19 @@
 </head>
 
 <body class="popover2auto">
+	<div>
+		<ui5-button id="btn-popover-no-space-top">Open Popover</ui5-button>
+		<ui5-popover id="popover-no-space-top" opener="btn-popover-no-space-top" header-text="Newsletter subscription">
+			<div class="popover-content">
+				<ui5-label for="emailInput" required show-colon>Email</ui5-label>
+				<ui5-input id="emailInput" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+				<ui5-label>Note: If you open the page in mobile, a dialog would be displayed.</ui5-label>
+			</div>
+			<div slot="footer" class="popover-footer">
+				<ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
+			</div>
+		</ui5-popover>
+	</div>
 	<iframe id="clickThisIframe" src="./Test.html"></iframe>
 	<div id="host">
 		<template shadowrootmode="open">
@@ -531,6 +544,21 @@ z-index: 1;
 	<br><br>
 	<br>
 
+	<ui5-button id="btn-popover-no-space-bottom">Open Popover</ui5-button>
+	<ui5-popover id="popover-no-space-bottom" opener="btn-popover-no-space-bottom" header-text="Newsletter subscription">
+		<div class="popover-content">
+			<ui5-label for="emailInput" required show-colon>Email</ui5-label>
+			<ui5-input id="emailInput" style="min-width: 150px;" placeholder="Enter Email"></ui5-input>
+			<ui5-label>Note: If you open the page in mobile, a dialog would be displayed.</ui5-label>
+		</div>
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="closePopoverButton" design="Emphasized">Subscribe</ui5-button>
+		</div>
+	</ui5-popover>
+
+	<br>
+	<br>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.opener = btn;
@@ -842,6 +870,16 @@ z-index: 1;
 		document.getElementById("btnVerticalStretch").addEventListener("click", (e) => {
 			document.getElementById("vertical").opener = e.currentTarget;
 			document.getElementById("vertical").open = true;
+		});
+
+		document.getElementById("btn-popover-no-space-top").addEventListener("click", (e) => {
+			document.getElementById("popover-no-space-top").opener = e.currentTarget;
+			document.getElementById("popover-no-space-top").open = true;
+		});
+
+		document.getElementById("btn-popover-no-space-bottom").addEventListener("click", (e) => {
+			document.getElementById("popover-no-space-bottom").opener = e.currentTarget;
+			document.getElementById("popover-no-space-bottom").open = true;
 		});
 
 	</script>
