@@ -9,11 +9,9 @@ describe("RTL", () => {
 </section>`);
 
 		cy.get("#cbRTL")
-			.invoke("prop", "effectiveDir")
-			.should("be.equal", "rtl");
+			.should("have.prop", "effectiveDir", "rtl");
 
 		cy.get("#cbLTR")
-			.invoke("prop", "effectiveDir")
-			.should("be.equal", "ltr");
+			.should("have.prop", "effectiveDir", "ltr");
 	});
 });
