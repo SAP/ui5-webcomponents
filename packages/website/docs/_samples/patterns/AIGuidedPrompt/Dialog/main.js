@@ -148,7 +148,6 @@ sendButton.addEventListener("click", function() {
 		toast.open = true;
 		output.valueState = "None";
 		output.value = "";
-		aiDialogButton.state = "generate";
 	}
 });
 
