@@ -105,7 +105,7 @@ const getScripts = (options) => {
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			typescript: tsWatchCommandStandalone,
 			props: 'nps "copyProps --watch --safe --skip-initial-copy"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -132,7 +132,7 @@ const getScripts = (options) => {
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
 			watch: 'concurrently "nps watch.templates" "nps watch.props" "nps watch.styles"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
 			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",

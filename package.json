@@ -8,6 +8,7 @@
     "sapui5",
     "ui5"
   ],
+  "type": "module",
   "scripts": {
     "generate": "wsrun --exclude-missing generate",
     "generateAPI": "wsrun --exclude-missing generateAPI",
@@ -31,7 +32,7 @@
     "scopeWatch:fiori": "yarn workspace @ui5/webcomponents-fiori nps scope.watch",
     "startWithScope": "npm-run-all --sequential generate scopePrepare:main scopePrepare:compat  scopePrepare:ai scopePrepare:fiori scopeStart:all",
     "start:all": "npm-run-all --parallel watch:allWithDelay dev",
-    "dev": "node packages/tools/lib/dev-server/dev-server.js",
+    "dev": "node packages/tools/lib/dev-server/dev-server.mjs",
     "scopeStart:all": "npm-run-all --parallel watch:base scopeWatch:main scopeWatch:compat scopeWatch:ai scopeWatch:fiori dev",
     "start:website": "yarn ci:releasebuild && yarn workspace @ui5/webcomponents-website start",
 
