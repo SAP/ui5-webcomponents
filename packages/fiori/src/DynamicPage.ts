@@ -280,9 +280,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	get hasSnappedTitleOnMobile() {
-		return isPhone()
-			&& this.headerSnapped
-			&& (this.dynamicPageTitle?.snappedTitleOnMobile ?? false);
+		return isPhone() && this.headerSnapped && this.dynamicPageTitle?.snappedTitleOnMobile.length;
 	}
 
 	/**

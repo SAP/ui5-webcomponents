@@ -85,33 +85,6 @@ class DynamicPageTitle extends UI5Element {
 	snapped = false;
 
 	/**
-	 * Defines if snapped title on mobile is enabled.
-	 *
-	 * Using this property enables you to provide a simple, single-line title that takes less space
-	 * on the smaller phone screens when the DynamicPageHeader is in its collapsed (snapped) state.
-	 *
-	 * **Note:** The content set in `snappedTitleOnMobileText` overrides all other content set in the `DynamicPageTitle` slots
-	 * and is only visible on phone screen sizes when the header is in snapped state.
-	 *
-	 * @public
-	 */
-	@property({ type: Boolean })
-	snappedTitleOnMobile = false;
-
-	/**
-	 * Defines the text of the snapped title on mobile.
-	 *
-	 * The only content that is displayed in the DynamicPageTitle when it is viewed on a mobile device
-	 * and the DynamicPageHeader is in collapsed (snapped) state.
-	 *
-	 * **Note:** This property takes effect if the `snappedTitleOnMobile` property is set to `true`.
-	 *
-	 * @public
-	 */
-	@property({ type: String })
-	snappedTitleOnMobileText = "";
-
-	/**
 	 * Defines if the mobileNavigationActions are shown.
 	 *
 	 * @private
@@ -161,6 +134,30 @@ class DynamicPageTitle extends UI5Element {
 	 */
 	@slot({ type: HTMLElement })
 	snappedHeading!: HTMLElement[];
+
+	/**
+	 * Defines the content of the snapped title on mobile devices.
+	 *
+	 * This slot is displayed only when the `DynamicPageTitle` is in the snapped state on mobile devices.
+	 * It should be used to provide a simplified, single-line title that takes up less space on smaller screens.
+	 *
+	 * **Note:**
+	 * - The content set in this slot overrides all other content set in the `DynamicPageTitle` slots when displayed.
+	 * - The slot is intended for a single `ui5-title` component.
+	 *
+	 * **Usage Example:**
+	 * ```html
+	 * <ui5-dynamic-page-title>
+	 *   <!-- Other slots like heading, subheading, etc. -->
+	 *   <ui5-title slot="snappedTitleOnMobile" size="H4" wrapping-type="None">My Snapped Mobile Title</ui5-title>
+	 * </ui5-dynamic-page-title>
+	 * ```
+	 *
+	 * @public
+	 * @since 2.3.0
+	 */
+	@slot({ type: Title })
+	snappedTitleOnMobile!: Array<Title>;
 
 	/**
 	 * Defines the bar with actions in the Dynamic page title.
@@ -242,6 +239,12 @@ class DynamicPageTitle extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareLayoutActions();
+
+		if (this.hasSnappedTitleOnMobile) {
+			this.setAttribute("_snapped-title-on-mobile", "");
+		} else {
+			this.removeAttribute("_snapped-title-on-mobile");
+		}
 	}
 
 	get styles() {
@@ -275,9 +278,7 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	get hasSnappedTitleOnMobile() {
-		return isPhone()
-			&& this.snapped
-			&& (this.snappedTitleOnMobile ?? false);
+		return isPhone() && this.snapped && this.snappedTitleOnMobile.length;
 	}
 
 	get _headerExpanded() {

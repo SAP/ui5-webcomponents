@@ -12,8 +12,8 @@
 
   {{#if hasSnappedTitleOnMobile}}
     <div id="{{_id}}-heading" class="ui5-dynamic-page--snapped-title-on-mobile">
-      <ui5-title size="H4">{{snappedTitleOnMobileText}}</ui5-title>
-      <ui5-icon name="slim-arrow-down" mode="Decorative"></ui5-icon>
+        <slot name="snappedTitleOnMobile"></slot>
+        <ui5-icon name="slim-arrow-down" mode="Decorative"></ui5-icon>
     </div>
   {{else}}
     <div class="ui5-dynamic-page-title--top-area">
