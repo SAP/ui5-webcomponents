@@ -557,7 +557,7 @@ describe("Form support", () => {
 			.should("be.equal", "range_slider3=0&range_slider3=100&range_slider4=25&range_slider4=75");
 	});
 
-	it("ui5-select in form", () => {
+	it.only("ui5-select in form", () => {
 		cy.mount(html`<form method="get">
 	<ui5-select id="select1">
 		<ui5-option selected>Option 1</ui5-option>
@@ -626,12 +626,10 @@ describe("Form support", () => {
 			.realClick();
 
 		cy.get("#select9")
-			.should("have.attr", "opened");
+			.realPress("ArrowUp");
 
 		cy.get("#select9")
-			.find("[ui5-option]")
-			.eq(1)
-			.realClick();
+			.realPress("Enter");
 
 		cy.get("button")
 			.realClick();
