@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.10](https://github.com/SAP/ui5-webcomponents/compare/v1.24.9...v1.24.10) (2024-09-20)
+
+
+### Bug Fixes
+
+* **f6 navigation:** work properly when multiple runtimes ([#9811](https://github.com/SAP/ui5-webcomponents/issues/9811)) ([e51deb6](https://github.com/SAP/ui5-webcomponents/commit/e51deb6d0f1c72cc9bbbfb47c9673b2842661d97)), closes [#9795](https://github.com/SAP/ui5-webcomponents/issues/9795)
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9790](https://github.com/SAP/ui5-webcomponents/issues/9790)) ([f70cc11](https://github.com/SAP/ui5-webcomponents/commit/f70cc11f8424dfe22d5168dbb43c86309976f4ac)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+* **ui5-menu:** adjust loading items display ([#9910](https://github.com/SAP/ui5-webcomponents/issues/9910)) ([3d99796](https://github.com/SAP/ui5-webcomponents/commit/3d9979620647f9c815dee87cd9d7c3729487f5a0)), closes [#7391](https://github.com/SAP/ui5-webcomponents/issues/7391)
+* **ui5-popover:** adjust height when vertical-align=stretch ([#9843](https://github.com/SAP/ui5-webcomponents/issues/9843)) ([dacbad6](https://github.com/SAP/ui5-webcomponents/commit/dacbad68b60d2af03fff9284e698a9287c704411)), closes [#9552](https://github.com/SAP/ui5-webcomponents/issues/9552)
+* **ui5-popover:** fix arrow placement  ([#9846](https://github.com/SAP/ui5-webcomponents/issues/9846)) ([ae60643](https://github.com/SAP/ui5-webcomponents/commit/ae60643bb0fe086f156b9816e7be1c0d39f79729)), closes [#9799](https://github.com/SAP/ui5-webcomponents/issues/9799)
+* **ui5-table:** add aria reference to growing btn sub text ([b6995dd](https://github.com/SAP/ui5-webcomponents/commit/b6995dd9aadddbd2a38f47dbe329475a2ddc4219))
+
+
+
+
+
 ## [1.24.9](https://github.com/SAP/ui5-webcomponents/compare/v1.24.8...v1.24.9) (2024-08-28)
 
 

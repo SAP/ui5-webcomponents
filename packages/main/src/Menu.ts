@@ -502,7 +502,7 @@ class Menu extends UI5Element {
 	_getSubmenuReference(item: MenuItem) {
 		const index = (item.parentElement as Menu)?.items.indexOf(item);
 		return this.staticAreaItem
-			? this.staticAreaItem.shadowRoot?.querySelector(".ui5-menu-submenus")?.children[index] as Menu
+			? this.staticAreaItem.shadowRoot!.querySelector(`.ui5-menu-submenus > ui5-menu[id$=menu-item-${index}]`) as Menu
 			: undefined;
 	}
 
