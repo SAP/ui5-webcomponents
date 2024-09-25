@@ -19,6 +19,12 @@
 	overflow-y: auto;
 }
 
+/* disable pointer events on columns while dragging the separator
+ to prevent unintended interaction with the columns content */
+:host([_resizing]) .ui5-fcl-column {
+	pointer-events: none;
+}
+
 .ui5-fcl-column-animation {
 	transition: width 560ms cubic-bezier(0.1, 0, 0.05, 1), visibility 560ms ease-in;
 }
