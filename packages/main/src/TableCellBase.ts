@@ -35,7 +35,7 @@ abstract class TableCellBase extends UI5Element {
 	/**
 	 * Determines the horizontal alignment of table cells.
 	 * Note: All values valid for justify-content can be used not just the ones inside the enum.
-	 * @default "Normal"
+	 * @default undefined
 	 * @public
 	 */
 	@property()
