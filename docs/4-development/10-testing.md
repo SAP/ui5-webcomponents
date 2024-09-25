@@ -257,8 +257,7 @@ Use Cypress's `invoke` command to interact with component properties and attribu
 ```typescript
 // Read a property
 cy.get("[ui5-button]")
-  .invoke("prop", "myProp")
-  .should("equal", "expectedValue");
+  .should("have.prop", "myProp", "expectedValue");
 
 // Set a property
 cy.get("[ui5-button]")
@@ -270,8 +269,7 @@ cy.get("[ui5-button]")
 ```typescript
 // Read an attribute
 cy.get("[ui5-button]")
-  .invoke("attr", "my-attr")
-  .should("equal", "expectedValue");
+  .should("have.attr", "my-attr", "expectedValue");
 
 // Set an attribute
 cy.get("[ui5-button]")
@@ -309,7 +307,7 @@ cy.get("[ui5-button]").then(($button) => {
   cy.spy($button[0], "click").as("clickEvent");
 });
 
-cy.get("[ui5-button]").click();
+cy.get("[ui5-button]").realClick();
 
 cy.get("@clickEvent").should("have.been.called");
 ```
@@ -338,11 +336,15 @@ describe("Configuration Example", () => {
       ui5Configuration: config,
     });
 
-    resetConfiguration(true);
+    cy.wrap({ resetConfiguration })
+      .invoke("resetConfiguration", true);
+
   });
 
   it("should apply the new theme", () => {
-    expect(getTheme()).to.equal(config.theme);
+    cy.wrap({ getTheme })
+      .invoke("getTheme")
+      .should("be.equal", config.theme)
   });
 });
 ```
@@ -360,9 +362,12 @@ describe("Direct Configuration", () => {
   it("should change the theme", () => {
     const newTheme = "sap_horizon_hcb";
 
-    setTheme(newTheme);
+    cy.wrap({ setTheme })
+      .invoke("setTheme", newTheme)
 
-    expect(getTheme()).to.equal(newTheme);
+    cy.wrap({ getTheme })
+      .invoke("getTheme")
+      .should("be.equal", newTheme)
   });
 });
 ```
