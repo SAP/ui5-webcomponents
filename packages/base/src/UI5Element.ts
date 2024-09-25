@@ -303,7 +303,9 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		await ctor.definePromise;
+		if (!ctor.asyncFinished) {
+			await ctor.definePromise;
+		}
 
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve!();
@@ -1227,6 +1229,7 @@ abstract class UI5Element extends HTMLElement {
 		return Promise.resolve();
 	}
 
+	static asyncFinished: boolean;
 	static definePromise: Promise<void> | undefined;
 
 	/**
@@ -1246,6 +1249,7 @@ abstract class UI5Element extends HTMLElement {
 				const targetClass = pair[1].target;
 				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
 			});
+			this.asyncFinished = true;
 		});
 
 		const tag = this.getMetadata().getTag();
