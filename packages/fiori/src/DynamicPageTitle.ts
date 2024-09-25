@@ -142,16 +142,8 @@ class DynamicPageTitle extends UI5Element {
 	 * It should be used to provide a simplified, single-line title that takes up less space on smaller screens.
 	 *
 	 * **Note:**
-	 * - The content set in this slot overrides all other content set in the `DynamicPageTitle` slots when displayed.
+	 * - The content set in this slot **overrides** all other content set in the `DynamicPageTitle` slots when displayed.
 	 * - The slot is intended for a single `ui5-title` component.
-	 *
-	 * **Usage Example:**
-	 * ```html
-	 * <ui5-dynamic-page-title>
-	 *   <!-- Other slots like heading, subheading, etc. -->
-	 *   <ui5-title slot="snappedTitleOnMobile" size="H4" wrapping-type="None">My Snapped Mobile Title</ui5-title>
-	 * </ui5-dynamic-page-title>
-	 * ```
 	 *
 	 * @public
 	 * @since 2.3.0
