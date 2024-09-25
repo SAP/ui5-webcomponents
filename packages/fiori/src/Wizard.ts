@@ -94,7 +94,6 @@ type StepInfo = {
 	pos: number,
 	accInfo: AccessibilityInformation,
 	refStepId: string,
-	tabIndex: string,
 	styles: object,
 }
 
@@ -411,6 +410,14 @@ class Wizard extends UI5Element {
 
 		// Place for improvement: If the selected step is not the first, enable all the prior steps
 		this.selectedStepIndex = this.getSelectedStepIndex();
+
+		if (this.selectedStep && this.stepsInHeaderDOM.length) {
+			if (this._itemNavigation._getItems().includes(this.stepsInHeaderDOM[this.selectedStepIndex])) {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM[this.selectedStepIndex]);
+			} else {
+				this._itemNavigation.setCurrentItem(this.stepsInHeaderDOM.find(el => el.selected) as WizardTab);
+			}
+		}
 	}
 
 	/**
@@ -809,7 +816,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledStepsInHeaderDOM() {
-		return this.stepsInHeaderDOM;
+		return this.stepsInHeaderDOM.filter(step => !step.disabled);
 	}
 
 	get navAriaRoleDescription() {
@@ -900,7 +907,6 @@ class Wizard extends UI5Element {
 				pos,
 				accInfo,
 				refStepId: step._id,
-				tabIndex: this.selectedStepIndex === idx ? "0" : "-1",
 				styles: {
 					zIndex: isAfterCurrent ? --inintialZIndex : 1,
 				},
