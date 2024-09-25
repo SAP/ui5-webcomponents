@@ -264,13 +264,17 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	prepareLayoutActions() {
-		// all navigation/layout actions should have the NeverOverflow behavior
-		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");
+		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']"),
+			isWideScreen = this.offsetWidth >= 1280;
+
 		if (!navigationBar) {
 			return;
 		}
+
 		navigationBar.items.forEach(action => {
-			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
+			action.overflowPriority = isWideScreen
+				? ToolbarItemOverflowBehavior.NeverOverflow
+				: ToolbarItemOverflowBehavior.Default;
 		});
 	}
 

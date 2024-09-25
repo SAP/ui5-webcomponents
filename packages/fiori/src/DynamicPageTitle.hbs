@@ -21,6 +21,7 @@
     @ui5-_min-content-width-change={{onMinContentWidthChange}}>
     <div id="{{_id}}-heading" class="ui5-dynamic-page-title--heading">
       <slot name="{{headingSlotName}}"></slot>
+      <slot name="{{subheadingSlotName}}"></slot>
     </div>
 
     {{#if hasContent}}
@@ -42,6 +43,5 @@
     </div>
   </div>
 
-  <slot name="{{subheadingSlotName}}"></slot>
   <span id="{{_id}}-toggle-description" class="ui5-hidden-text">{{_ariaDescribedbyText}}</span>
 </div>
