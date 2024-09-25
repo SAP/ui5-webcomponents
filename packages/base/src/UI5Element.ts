@@ -39,7 +39,6 @@ import { updateFormValue, setFormValue } from "./features/InputElementsFormSuppo
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 import { getI18nBundle } from "./i18nBundle.js";
-import type I18nBundle from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
 
@@ -304,9 +303,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		if (!ctor.asyncFinished) {
-			await ctor.definePromise;
-		}
+		await ctor.definePromise;
 
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve!();
@@ -1230,20 +1227,26 @@ abstract class UI5Element extends HTMLElement {
 		return Promise.resolve();
 	}
 
-	static asyncFinished: boolean;
-	static definePromise: Promise<[Array<I18nBundle>, void, void, void]> | undefined;
+	static definePromise: Promise<void> | undefined;
 
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 */
-	static async define(): Promise<typeof UI5Element> {
+	static define(): typeof UI5Element {
 		this.definePromise = Promise.all([
 			this.fetchI18nBundles(),
 			this.fetchCLDR(),
 			boot(),
 			this.onDefine(),
-		]);
+		]).then(result => {
+			const [i18nBundles] = result;
+			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
+				const propertyName = pair[0];
+				const targetClass = pair[1].target;
+				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+			});
+		});
 
 		const tag = this.getMetadata().getTag();
 
@@ -1267,14 +1270,6 @@ abstract class UI5Element extends HTMLElement {
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
 		}
-
-		const [i18nBundles] = await this.definePromise;
-		Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
-			const propertyName = pair[0];
-			const targetClass = pair[1].target;
-			(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
-		});
-		this.asyncFinished = true;
 
 		return this;
 	}
