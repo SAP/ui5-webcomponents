@@ -22,7 +22,7 @@
 			aria-valuemax="{{max}}"
 			aria-valuenow="{{_ariaValueNow}}"
 			aria-valuetext="From {{startValue}} to {{endValue}}"
-			aria-labelledby="ui5-slider-accName ui5-slider-sliderDesc"
+			aria-labelledby="ui5-slider-sliderDesc"
 			aria-disabled="{{_ariaDisabled}}"
 		></div>
 	</div>
@@ -54,7 +54,7 @@
 				<ui5-input
 					type="Number"
 					value="{{startValue}}"
-					accessible-name-ref="ui5-slider-accName ui5-slider-InputLabel"
+					accessible-name-ref="ui5-slider-InputLabel"
 					@focusout="{{_onInputFocusOut}}"
 					@keydown="{{_onInputKeydown}}"
 					@ui5-change="{{_onInputChange}}"

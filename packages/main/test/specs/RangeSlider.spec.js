@@ -330,6 +330,14 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 20, "The start value is now end value");
 		assert.strictEqual(await rangeSliderEndTooltipInput.getProperty("value"), "20", "The start input value is now end value");
+
+		await rangeSliderEndHandle.click();
+		await rangeSliderEndTooltipInput.click();
+		await rangeSliderEndTooltipInput.setProperty("value", "3");
+
+		await browser.keys("Enter");
+
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 3, "Slider value is changed on a followup input after initial swap interaction");
 	});
 
 
@@ -353,6 +361,24 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 1, "The end value is now start value");
 		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("value"), "1", "The end input value is now start value");
+	});
+	
+	it("Invalid tooltip value should not be changed on 'Enter'", async () => {
+		const rangeSlider = await browser.$("#range-slider-tickmarks-labels");
+		const rangeSliderTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--end ui5-input");
+		const rangeSliderHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		await rangeSlider.setProperty("endValue", 12);
+
+		await rangeSliderHandle.click();
+		await rangeSliderTooltipInput.click();
+		await rangeSliderTooltipInput.setProperty("value", "60");
+
+		await browser.keys("Enter");
+
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 12, "The slider's value is not changed when invalid");
+		assert.strictEqual(await rangeSliderTooltipInput.getProperty("valueState"), "Negative", "The input value is not changed when invalid");
+		assert.strictEqual(await rangeSliderTooltipInput.getProperty("value"), "60", "The input value is not changed when invalid");
 	});
 
 	it("Range Slider tooltips should become visible when range slider is focused", async () => {
@@ -567,7 +593,7 @@ describe("Accessibility", async () => {
 		const rangeSliderId = await rangeSlider.getProperty("_id");
 
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-labelledby"),
-			"ui5-slider-accName ui5-slider-sliderDesc", "aria-labelledby is set correctly");
+			"ui5-slider-sliderDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemin"),
 			`${await rangeSlider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuemax"),
@@ -612,7 +638,7 @@ describe("Accessibility", async () => {
 		const rangeSliderStartTooltipInput = await rangeSlider.shadow$(".ui5-slider-tooltip--start ui5-input");
 
 		assert.strictEqual(await rangeSliderStartTooltipInput.getAttribute("accessible-name-ref"),
-			"ui5-slider-accName ui5-slider-InputLabel");
+			"ui5-slider-InputLabel");
 	});
 
 	it("Aria-labelledby text is mapped correctly when values are swapped", async () => {
