@@ -611,6 +611,8 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	_handleSelectionChange(index = this._selectedIndex) {
+		this._typedChars = "";
+
 		this._select(index);
 
 		this._toggleRespPopover();
