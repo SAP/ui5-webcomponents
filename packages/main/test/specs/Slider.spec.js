@@ -424,7 +424,7 @@ describe("Accessibility", async () => {
 		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
 
 		assert.strictEqual(await sliderTooltipInput.getAttribute("accessible-name-ref"),
-			"ui5-slider-accName ui5-slider-InputLabel");
+			"ui5-slider-InputLabel");
 	});
 
 	it("Click anywhere in the Slider should focus the Slider's handle", async () => {
