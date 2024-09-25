@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
+
+
+### Features
+
+* **selectionAssistant:** introduce SelectionAssistant ([#9797](https://github.com/SAP/ui5-webcomponents/issues/9797)) ([de59eac](https://github.com/SAP/ui5-webcomponents/commit/de59eac1df149caa7541a3bbd3ddad5ae2c298a6))
+
+
+
+
+
+# [2.3.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.0...v2.3.0-rc.1) (2024-09-12)
+
+
+### Features
+
+* **ui5-li-notification-group:** add new features - growing and sticky header ([#9783](https://github.com/SAP/ui5-webcomponents/issues/9783)) ([a40a451](https://github.com/SAP/ui5-webcomponents/commit/a40a45160d4efe1e1ebb8c43ee3216a2f758558c))
+
+
+
+
+
+# [2.3.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0...v2.3.0-rc.0) (2024-09-05)
+
+
+### Bug Fixes
+
+* **ui5-segmented-button:** add accessible name in the sample ([#9809](https://github.com/SAP/ui5-webcomponents/issues/9809)) ([604fd5e](https://github.com/SAP/ui5-webcomponents/commit/604fd5e8b64453f26d68ee3f0bb160f6dd7a927f)), closes [#9011](https://github.com/SAP/ui5-webcomponents/issues/9011)
+
+
+
+
+
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-website
+
+
+
+
+
 # [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
 
 

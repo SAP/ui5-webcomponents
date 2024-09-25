@@ -3,7 +3,6 @@
 In this tutorial you will learn how to add UI5 Web Components to your application. You can add UI5 Web Components both to new Vue.js applications and to already existing ones.
 
 ## Setting up a Vite and Vue.js project with UI5 Web Components
-<br/>
 
 ### Step 1. Setup a Vue project with Vite.
 
@@ -55,15 +54,20 @@ import "@ui5/webcomponents/dist/Button.js";
 ```bash
 npm run dev
 ```
-## Additional Info
 
-### Two-Way Data Binding
 
-`v-model` binding doesn't work for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:
+## Two-Way Data Binding
+
+In order to use two-way data binding, use `v-model` as follows:
 
 ```html
-<ui5-input
-	:value="inputValue"
-	@input="inputValue = $event.target.value">
-</ui5-input>
+<ui5-input v-model="inputValue"></ui5-input>
 ```
+
+For the `CheckBox` and `RadioButton` web components, you need to include an additional `type` attribute. This informs the Vue compiler that these components use the `checked` property (unlike most input-type components that use the `value` property).
+
+```html
+<ui5-radio-button type="radio" v-model="rbValue"></ui5-radio-button>
+<ui5-checkbox type="checkbox" v-model="cbValue"></ui5-checkbox>
+```
+

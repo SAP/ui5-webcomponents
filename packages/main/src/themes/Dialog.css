@@ -150,9 +150,13 @@
 	box-shadow: none;
 }
 
+::slotted([slot="footer"][ui5-toolbar]) {
+	border: 0;
+}
+
 :host::backdrop {
 	background-color: var(--_ui5_popup_block_layer_background);
-	opacity: var(--_ui5_dialog_block_layer_opacity);
+	opacity: var(--_ui5_popup_block_layer_opacity);
 }
 
 .ui5-block-layer {

@@ -30,4 +30,17 @@ describe("Page general interaction", () => {
 			timeoutMsg: "expected footer to not be visible after 500ms"
 		});
 	});
+	
+	it("tests animation off footer toggling" , async () => {
+		await browser.url(`test/pages/Page.html?sap-ui-animationMode=none`);
+
+		const footer = await $("#page").shadow$(".ui5-page-footer-root");
+		const button = await $("#toggleVisibility");
+
+		assert.ok(await footer.isDisplayedInViewport(), "Footer should be visible.");
+
+		await button.click();
+
+		assert.ok(!(await footer.isDisplayedInViewport()), "Footer should not be visible.");
+	});
 });

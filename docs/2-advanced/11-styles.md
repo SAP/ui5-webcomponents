@@ -17,7 +17,7 @@ We designed some components such as Title, Label, Tag, Button, Input, and a few 
     background: purple;
   }
 ```
-You can try this yourself on the Input [test page](https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Input/). 
+You can try this yourself using the Input [sample](https://sap.github.io/ui5-webcomponents/components/Input/#custom-styling/). 
 
 Unfortunately, this can't be done for all components because it depends on the complexity of the DOM structure.
 

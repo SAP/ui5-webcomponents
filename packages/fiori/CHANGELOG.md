@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-side-content:** fix scrollbar styling ([#9842](https://github.com/SAP/ui5-webcomponents/issues/9842)) ([c5d0249](https://github.com/SAP/ui5-webcomponents/commit/c5d02499a849b09cd076b9419c723a81b642bf17))
+* **ui5-illustrated-message:** illustration fixed ([#9739](https://github.com/SAP/ui5-webcomponents/issues/9739)) ([0b57512](https://github.com/SAP/ui5-webcomponents/commit/0b575120c079a3726320046d033aeb1ba4a4dee5))
+* **ui5-wizard:** prevent step selection upon scrolling on Single Step layout ([#9766](https://github.com/SAP/ui5-webcomponents/issues/9766)) ([82f6afc](https://github.com/SAP/ui5-webcomponents/commit/82f6afc2fab521d114ee534c12939b44a9ca69fa)), closes [#9083](https://github.com/SAP/ui5-webcomponents/issues/9083)
+
+
+
+
+
+# [2.3.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.0...v2.3.0-rc.1) (2024-09-12)
+
+
+### Features
+
+* **ui5-li-notification-group:** add new features - growing and sticky header ([#9783](https://github.com/SAP/ui5-webcomponents/issues/9783)) ([a40a451](https://github.com/SAP/ui5-webcomponents/commit/a40a45160d4efe1e1ebb8c43ee3216a2f758558c))
+
+
+
+
+
+# [2.3.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0...v2.3.0-rc.0) (2024-09-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.2.0](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.3...v2.2.0) (2024-09-03)
+
+
+### Bug Fixes
+
+* **ui5-*:** make ui5-content-native-scrollbar to take effect ([#9751](https://github.com/SAP/ui5-webcomponents/issues/9751)) ([a4b4028](https://github.com/SAP/ui5-webcomponents/commit/a4b4028e344fb9546687cec0efbed065dde47b29)), closes [#9720](https://github.com/SAP/ui5-webcomponents/issues/9720) [#9695](https://github.com/SAP/ui5-webcomponents/issues/9695)
+* **ui5-wizard:** improve focus and keyboard handling ([#9758](https://github.com/SAP/ui5-webcomponents/issues/9758)) ([6573a6e](https://github.com/SAP/ui5-webcomponents/commit/6573a6ecf318715c422617ea8ec2fa0cef62713b)), closes [#9670](https://github.com/SAP/ui5-webcomponents/issues/9670) [#9571](https://github.com/SAP/ui5-webcomponents/issues/9571)
+
+
+
+
+
 # [2.2.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.2.0-rc.2...v2.2.0-rc.3) (2024-08-29)
 
 

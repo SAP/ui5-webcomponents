@@ -1,0 +1,9 @@
+body {
+	background-color: var(--sapBackgroundColor);
+}
+
+#panelContent {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}

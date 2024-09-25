@@ -1318,6 +1318,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._dialogInputValueState = valueState;
 			this.valueState = valueState;
 			this._validationTimeout = null;
+			this._innerInput.focus();
 
 			callback && callback();
 		}, 2000);
@@ -1890,7 +1891,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!this._tokenizer) {
 			return;
 		}
-		return getTokensCountText(this._tokenizer.tokens.length);
+
+		return getTokensCountText(this.selectedValues.length);
 	}
 
 	get _tokensCountTextId() {
