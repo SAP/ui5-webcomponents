@@ -8,7 +8,6 @@
 		"outDir": "dist",
 		"experimentalDecorators": true,
 		"verbatimModuleSyntax": true,
-		// "ignoreDeprecations": "5.0",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [
 				"../base/src/*"
