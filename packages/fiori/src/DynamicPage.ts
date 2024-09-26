@@ -13,6 +13,7 @@ import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
@@ -223,6 +224,7 @@ class DynamicPage extends UI5Element {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this._headerSnapped;
 			this.dynamicPageTitle.interactive = this.hasHeading;
+			this.dynamicPageTitle.hasSnappedTitleOnMobile = !!this.hasSnappedTitleOnMobile;
 		}
 	}
 
@@ -278,6 +280,10 @@ class DynamicPage extends UI5Element {
 		return this._headerSnapped;
 	}
 
+	get hasSnappedTitleOnMobile() {
+		return isPhone() && this.headerSnapped && this.dynamicPageTitle?.snappedTitleOnMobile.length;
+	}
+
 	/**
 	 * Defines if the header is snapped.
 	 *
@@ -327,6 +333,11 @@ class DynamicPage extends UI5Element {
 		this.fireEvent("title-toggle");
 		await renderFinished();
 		this.headerActions?.focusExpandButton();
+
+		if (this.hasSnappedTitleOnMobile) {
+			this.dynamicPageTitle?.focus();
+		}
+
 		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
