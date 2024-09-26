@@ -1210,6 +1210,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Hook that will be called upon custom element definition
 	 *
 	 * @protected
+	 * @deprecated use the "i18n" decorator for fetching message bundles and the "cldr" option in the "customElements" decorator for fetching CLDR
 	 */
 	static async onDefine(): Promise<void> {
 		return Promise.resolve();
