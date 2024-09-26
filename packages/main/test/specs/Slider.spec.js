@@ -101,7 +101,7 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual((await slider.getProperty("_labels"))[0], "-20", "Initial slider start label is -20.");
 		assert.strictEqual((await slider.getProperty("_labels"))[labelLength - 1], "20", "Initial slider end label is 20.");
 
-		// simulate the synchronous update of min and max made programatically 
+		// simulate the synchronous update of min and max made programatically
 		await browser.executeAsync(done => {
 			const slider = document.getElementById("slider-tickmarks-labels");
 			slider.min = 0;
@@ -463,6 +463,13 @@ describe("Accessibility", async () => {
 
 		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+
+	it("icon should be correctly displayed", async () => {
+		const slider = await browser.$("#basic-slider");
+		const iconName = await slider.shadow$("ui5-icon").getAttribute("name");
+
+		assert.strictEqual(iconName, "direction-arrows", "The icon name is correctly set.");
 	});
 });
 
