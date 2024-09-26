@@ -189,8 +189,9 @@ type VSDInternalSettings = {
 })
 
 /**
- * Fired before the component is opened. **This event does not bubble.**
+ * Fired before the component is opened.
  * @public
+ * @nonBubbling
  */
 @event("before-open")
 /**

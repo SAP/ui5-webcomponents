@@ -181,9 +181,11 @@ type SelectLiveChangeEventDetail = {
  * @public
  */
 @event("open")
+
 /**
  * Fired after the component's dropdown menu closes.
  * @public
+ * @nonBubbling
  */
 @event("close")
 class Select extends UI5Element implements IFormInputElement {
@@ -722,7 +724,7 @@ class Select extends UI5Element implements IFormInputElement {
 			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-		this.fireEvent<CustomEvent>("close");
+		this.fireEvent<CustomEvent>("close", undefined, false, false);
 	}
 
 	get hasCustomLabel() {

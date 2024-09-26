@@ -152,6 +152,10 @@ No events available for this component.`
             eventResult += `\n| Parameters | ${processDescription(paramsText)} |`
         }
 
+        if (event._ui5nonBubbling) {
+            eventResult += `\n| Bubbling | The <code>${event.name}</code> event does not bubble |`
+        }
+
         if (event._ui5since) {
             eventResult += `\n| Since | ${event._ui5since} |`
         }

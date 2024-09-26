@@ -818,6 +818,10 @@
           "description": "Whether the parameter is optional. Undefined implies non-optional.",
           "type": "boolean"
         },
+        "_ui5nonBubbling": {
+          "description": "Whether the event is bubbling or not.",
+          "type": "boolean"
+        },
         "_ui5since": {
           "description": "Marks when the field was introduced",
           "type": "string"

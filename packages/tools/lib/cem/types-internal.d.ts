@@ -319,9 +319,15 @@ export interface Event {
   _ui5parameters?: Parameter[]
   _ui5privacy?: Privacy
   /**
-   * Whether the parameter is optional. Undefined implies non-optional.
+   * Whether the event is preventable. Undefined meants the event is not preventable.
    */
   _ui5allowPreventDefault?: boolean
+
+  /**
+   * Whether the event is bubbling. Undefined means the event is bubbling.
+   */
+  _ui5nonBubbling?: boolean
+
   /**
    * Marks when the field was introduced
    */

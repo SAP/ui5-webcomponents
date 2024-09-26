@@ -78,6 +78,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const sinceTag = findTag(eventParsedComment, "since");
 	const commentParams = findAllTags(eventParsedComment, "param");
 	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault") || undefined;
+	const nonBubbling = hasTag(eventParsedComment, "nonBubbling") || undefined;
 	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
@@ -88,6 +89,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 
 	result.description = description;
 	result._ui5allowPreventDefault = allowPreventDefault;
+	result._ui5nonBubbling = nonBubbling;
 
 	if (native) {
 		result.type = { text: "Event" };
