@@ -517,12 +517,12 @@ class Menu extends UI5Element {
 		return fragment;
 	}
 
-	_openItemSubMenu(item: MenuItem, opener: HTMLElement) {
+	async _openItemSubMenu(item: MenuItem, opener: HTMLElement) {
 		const mainMenu = this._findMainMenu(item);
 		mainMenu?.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._subMenu!.showAt(opener);
+		await item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
 		this._subMenuOpenerId = opener.id;
@@ -557,7 +557,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_prepareSubMenu(item: MenuItem, opener: HTMLElement) {
+	async _prepareSubMenu(item: MenuItem, opener: HTMLElement) {
 		const menuItem = item.parentElement ? item : (opener as OpenerStandardListItem).associatedItem;
 		const parentMenuItem = this._getParentMenuItem(menuItem);
 
@@ -568,9 +568,7 @@ class Menu extends UI5Element {
 		if (menuItem && menuItem.hasSubmenu) {
 			// create new sub-menu
 			this._createSubMenu(menuItem, opener);
-			setTimeout(() => {
-				this._openItemSubMenu(menuItem, opener);
-			}, 0);
+			await this._openItemSubMenu(menuItem, opener);
 		}
 		if (parentMenuItem) {
 			parentMenuItem._preventSubMenuClose = true;
