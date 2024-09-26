@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -8,6 +7,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { Result, Exception } from "@zxing/library/esm5/index.js";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ZXing from "@ui5/webcomponents-fiori/dist/ssr-zxing.js";
@@ -152,15 +152,13 @@ class BarcodeScannerDialog extends UI5Element {
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
+
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 		this._codeReader = new BrowserMultiFormatReader();
-	}
-
-	static async onDefine() {
-		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onAfterRendering() {
