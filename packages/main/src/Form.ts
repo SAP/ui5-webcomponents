@@ -59,7 +59,7 @@ type ItemsInfo = {
  * The Form is a layout component that arranges labels and form fields (like input fields) pairs
  * into a specific number of columns.
  *
- * **Note:** The Form web component is a layout, it isn't a replacement for the `form` HTML element.
+ * **Note:** The Form web component is a layout component, it isn't a replacement for the native `form` HTML element.
  * The Form web component does not provide any APIs for form submission.
  *
  * ### Structure
