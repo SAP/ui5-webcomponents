@@ -1,5 +1,5 @@
 import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import Dialog from "../Dialog.js";
@@ -21,7 +21,6 @@ class ColorPaletteMoreColors extends ComponentFeature {
 		];
 	}
 
-	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	static async define() {

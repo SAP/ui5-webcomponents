@@ -129,7 +129,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Object })
-	_value: ColorRGB = getRGBColor(this.value);;
+	_value: ColorRGB = getRGBColor(this.value);
 
 	/**
 	 * @private
