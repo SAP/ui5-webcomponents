@@ -152,7 +152,7 @@
 	top: var(--_ui5_slider_handle_top);
 }
 
-.ui5-slider-handle-container .ui5-slider-tooltip {
+:host(:not([hidden])) .ui5-slider-handle-container .ui5-slider-tooltip {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -173,16 +173,19 @@
 	box-sizing: var(--_ui5_slider_tooltip_border_box);
 }
 
+:host(:not([hidden])):host([editable-tooltip]) .ui5-slider-handle-container .ui5-slider-tooltip {
+	border: none;
+	background: none;
+	box-shadow: none;
+}
+
 :host([editable-tooltip]) .ui5-slider-tooltip {
 	padding: 0;
 	box-shadow: none;
 }
 
 .ui5-slider-tooltip [ui5-input] {
-	height: 100%;
 	width: 100%;
-	margin: 0;
-	padding: 0;
 	text-align: center;
 }
 
