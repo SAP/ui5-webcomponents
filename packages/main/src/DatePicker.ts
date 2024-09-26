@@ -374,6 +374,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 	responsivePopover?: ResponsivePopover;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {

@@ -1,7 +1,7 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
@@ -56,6 +56,7 @@ class Suggestions extends ComponentFeature {
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
 	attachedAfterClose?: boolean;
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	static SCROLL_STEP = 60;
 

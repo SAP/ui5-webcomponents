@@ -11,7 +11,7 @@ import {
 	isUp,
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
@@ -284,6 +284,7 @@ class Carousel extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
 	content!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	static get pageTypeLimit() {
@@ -736,10 +737,6 @@ class Carousel extends UI5Element {
 		});
 
 		return visibleItemsIndices;
-	}
-
-	static async onDefine() {
-		Carousel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
