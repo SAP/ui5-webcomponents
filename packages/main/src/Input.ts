@@ -1299,7 +1299,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
-			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType }, true, true);
+			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType }, true);
 
 			if (prevented) {
 				this.value = valueBeforeInput;
