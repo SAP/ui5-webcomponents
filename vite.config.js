@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import virtualIndex from "@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js";
 import customHotUpdate from "@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js";
-import ssrDomShimLoader from "@ui5/webcomponents-tools/lib/dev-server/ssr-dom-shim-loader.js";
 import path, { dirname, join, resolve } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { checker } from 'vite-plugin-checker';
@@ -103,7 +102,6 @@ export default defineConfig(async () => {
 			await virtualIndex(),
 			tsconfigPaths(),
 			customHotUpdate(),
-			ssrDomShimLoader(),
 			!process.env.UI5_BASE && checker({
 				// e.g. use TypeScript check
 				typescript: {
