@@ -12,7 +12,7 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
-import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 
@@ -114,6 +114,13 @@ class DynamicPageTitle extends UI5Element {
 	minActionsWidth?: number;
 
 	/**
+	 * Indicates whether the title has snapped on mobile devices.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasSnappedTitleOnMobile = false;
+
+	/**
 	 * Defines the content of the Heading of the Dynamic Page.
 	 *
 	 * The font size of the title within the `heading` slot can be adjusted to the recommended values using the following CSS variables:
@@ -148,7 +155,7 @@ class DynamicPageTitle extends UI5Element {
 	 * @public
 	 * @since 2.3.0
 	 */
-	@slot({ type: Title })
+	@slot({ type: HTMLElement })
 	snappedTitleOnMobile!: Array<Title>;
 
 	/**
@@ -231,12 +238,6 @@ class DynamicPageTitle extends UI5Element {
 
 	onBeforeRendering() {
 		this.prepareLayoutActions();
-
-		if (this.hasSnappedTitleOnMobile) {
-			this.setAttribute("_snapped-title-on-mobile", "");
-		} else {
-			this.removeAttribute("_snapped-title-on-mobile");
-		}
 	}
 
 	get styles() {
@@ -267,10 +268,6 @@ class DynamicPageTitle extends UI5Element {
 
 	get _tabIndex() {
 		return this.interactive ? "0" : undefined;
-	}
-
-	get hasSnappedTitleOnMobile() {
-		return isPhone() && this.snapped && this.snappedTitleOnMobile.length;
 	}
 
 	get _headerExpanded() {

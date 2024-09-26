@@ -35,7 +35,7 @@
     box-shadow: var(--sapContent_HeaderShadow);
 }
 
-:host([snapped][_snapped-title-on-mobile]) {
+:host([has-snapped-title-on-mobile]) {
 	min-height: var(--_ui5_dynamic_page_snapped_title_on_mobile_min_height);
 	line-height: var(--_ui5_dynamic_page_snapped_title_on_mobile_line_height);
 }
