@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.2...v2.3.0-rc.3) (2024-09-26)
+
+
+### Bug Fixes
+
+* **ui5-barcode-scanner-dialog:** can be imported in server environments with a shim ([#9901](https://github.com/SAP/ui5-webcomponents/issues/9901)) ([40dc4eb](https://github.com/SAP/ui5-webcomponents/commit/40dc4eb3f103a1d979ea7bb9849f3a4f3a68680b))
+* **ui5-flexible-column-layout:** iframe content no longer hinders resize ([#9859](https://github.com/SAP/ui5-webcomponents/issues/9859)) ([d594ae7](https://github.com/SAP/ui5-webcomponents/commit/d594ae7c4b89849f0cd296cac29fdab7b5c2a8c0))
+* **ui5-page:** fix double footer and adjust animation timing ([#9885](https://github.com/SAP/ui5-webcomponents/issues/9885)) ([e8beb76](https://github.com/SAP/ui5-webcomponents/commit/e8beb76ea28f76eb39af40df9c0cc5c603a365d2)), closes [#9755](https://github.com/SAP/ui5-webcomponents/issues/9755) [#9756](https://github.com/SAP/ui5-webcomponents/issues/9756)
+
+
+
+
+
 # [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
 
 
