@@ -78,7 +78,6 @@ class TableHeaderCell extends TableCellBase {
 
 	protected ariaRole: string = "columnheader";
 	_popinWidth: number = 0;
-	_individualSlot?: string;
 
 	onEnterDOM() {
 		super.onEnterDOM();
