@@ -73,7 +73,7 @@
   },
   "peerDependencies": {
     "chromedriver": "*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.6.2"
   },
   "peerDependenciesMeta": {
     "typescript": {
