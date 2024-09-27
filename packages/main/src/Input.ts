@@ -219,6 +219,12 @@ type InputSuggestionScrollEventDetail = {
 @event("change")
 
 /**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed")
+
+/**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
  * @public
@@ -281,14 +287,18 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event("open")
+@event("open", {
+	bubbles: false,
+})
 
 /**
  * Fired when the suggestions picker is closed.
  * @public
  * @since 2.0.0
  */
-@event("close")
+@event("close", {
+	bubbles: false,
+})
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	/**
 	 * Defines whether the component is in disabled state.
@@ -1196,12 +1206,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handlePickerAfterOpen() {
 		this.Suggestions?._onOpen();
-		this.fireEvent("open", null, false, false);
+		this.fireEvent("open");
 	}
 
 	_handlePickerAfterClose() {
 		this.Suggestions?._onClose();
-		this.fireEvent("close", null, false, false);
+		this.fireEvent("close");
 	}
 
 	openValueStatePopover() {

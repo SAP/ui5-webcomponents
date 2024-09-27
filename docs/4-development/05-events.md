@@ -4,7 +4,7 @@ In this article, we will discuss events in the context of UI5 Web Components.
 
 Components use `CustomEvent` to inform developers of important state changes in the components. For example, the `change` event is fired whenever the value of a `ui5-input` is changed.
 
-## `@event` Decorator
+## The `@event` Decorator
 
 To define your own custom event, you need to use the `@event` decorator.
 
@@ -28,7 +28,7 @@ class MyDemoComponent extends UI5Element {}
 
 **Note:** This decorator is used only to describe the events of the component and is not meant to create emitters.
 
-## How to use events
+## Usage
 
 As mentioned earlier, the `@event` decorator doesn't create event emitters. To notify developers of component changes, we have to fire events ourselves. This can be done using the `fireEvent` method that comes from the `UI5Element` class.
 
@@ -51,15 +51,10 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
-Events fired by the `fireEvent` method can be configurable, meaning you can decide whether the event should be cancelable or able to bubble. This can be done by setting the third and fourth parameters of the function to true, respectively.
-
-```ts
-this.fireEvent("change", {}, cancelable, bubbles);
-```
-
 **Note:** By default, the `fireEvent` method returns a boolean value that helps you understand whether the event was canceled (i.e., if the `preventDefault` method was called).
 
-## Types
+## Event Detail
+
 The `@event` decorator is generic and accepts a TypeScript type that describes its detail. This type is crucial for preventing incorrect detail data when the event is fired using `fireEvent` (which is also generic) and for ensuring type safety when listening for the event, so you know what kind of detail data to expect.
 
 **Note:** It's required to export all types that describe specific event details for all public events.
@@ -97,7 +92,36 @@ class MyDemoComponent extends UI5Element {
 export { MyDemoComponent };
 ```
 
-## noConflict mode
+## Event Configuration
+
+### Bubbles
+
+Whether the events should be cancelable or able to bubble is configurable.
+by setting `cancelable` and `bubbles` in the `@event` decorator:
+
+```ts
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+
+@customElement("my-demo-component")
+@event("change", {
+    bubbles: false // true by default
+    cancelable: true // false by default
+})
+class MyDemoComponent extends UI5Element {}
+```
+
+Or, this can be `lso` done by setting the third and fourth parameters of the function to true, respectively.
+
+```ts
+this.fireEvent("change", {}, cancelable, bubbles);
+```
+
+**Note:** The parameters, given to the `fireEvent` have higher priority than the configuration in the `@event` decorator.
+
+### noConflict mode
+
 By default, UI5 Web Components fire all custom events twice: once with their name (e.g., `change`) and once more with a `ui5-` prefix (e.g., `ui5-change`). For example, when the `ui5-switch` is toggled, it fires a `change` event and a `ui5-change` event.
 
 This `noConflict` setting allows us to prevent clashes between native and custom events.

@@ -66,7 +66,16 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @public
  * @allowPreventDefault
  */
-@event("change")
+@event("change", {
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	cancelable: true,
+})
 class Switch extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the component design.

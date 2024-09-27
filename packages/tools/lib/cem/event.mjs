@@ -82,8 +82,8 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
 	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
-
-	if (event?.expression?.arguments?.[1] && !event?.expression?.typeArguments) {
+	
+	if (eventDetails && !event?.expression?.typeArguments) {
 		logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described using generics. Add type via generics to the decorator: @event<TypeForDetails>("${name}", {details}).`)
 	}
 

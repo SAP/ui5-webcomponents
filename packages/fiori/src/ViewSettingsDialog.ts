@@ -191,9 +191,10 @@ type VSDInternalSettings = {
 /**
  * Fired before the component is opened.
  * @public
- * @nonBubbling
  */
-@event("before-open")
+@event("before-open", {
+	bubbles: false,
+})
 /**
  * Fired after the dialog is opened.
  * @since 2.0.0

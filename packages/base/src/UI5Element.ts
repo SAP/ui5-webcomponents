@@ -944,8 +944,12 @@ abstract class UI5Element extends HTMLElement {
 	 * @param bubbles - true, if the event bubbles
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
-		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
+	fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean {
+		const eventData = this.getEventData(name);
+		const _cancellable = cancelable === undefined ? eventData.cancelable : cancelable;
+		const _bubbles = bubbles === undefined ? eventData.bubbles : bubbles;
+
+		const eventResult = this._fireEvent(name, data, _cancellable, _bubbles);
 		const pascalCaseEventName = kebabToPascalCase(name);
 
 		// pascal events are more convinient for native react usage
@@ -986,6 +990,12 @@ abstract class UI5Element extends HTMLElement {
 
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && noConflictEventResult;
+	}
+
+	getEventData(name: string) {
+		const ctor = this.constructor as typeof UI5Element;
+		const eventMap = ctor.getMetadata().getEvents();
+		return eventMap[name];
 	}
 
 	/**

@@ -160,6 +160,7 @@ type SelectLiveChangeEventDetail = {
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
@@ -185,9 +186,16 @@ type SelectLiveChangeEventDetail = {
 /**
  * Fired after the component's dropdown menu closes.
  * @public
- * @nonBubbling
  */
-@event("close")
+@event("close", {
+	bubbles: false,
+})
+
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("selected-item-changed")
 class Select extends UI5Element implements IFormInputElement {
 	static i18nBundle: I18nBundle;
 
@@ -724,7 +732,7 @@ class Select extends UI5Element implements IFormInputElement {
 			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-		this.fireEvent<CustomEvent>("close", undefined, false, false);
+		this.fireEvent<CustomEvent>("close");
 	}
 
 	get hasCustomLabel() {
@@ -732,7 +740,7 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_fireChangeEvent(selectedOption: IOption) {
-		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
+		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
 
 		//  Angular two way data binding
 		this.fireEvent("selected-item-changed");

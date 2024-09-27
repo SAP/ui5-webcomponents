@@ -92,8 +92,16 @@ let activeCb: CheckBox;
  * @public
  * @allowPreventDefault
  */
-@event("change")
-
+@event("change", {
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	cancelable: true,
+})
 class CheckBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
@@ -330,11 +338,11 @@ class CheckBox extends UI5Element implements IFormInputElement {
 				this.checked = !this.checked;
 			}
 
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireEvent("change");
 			// Angular two way data binding
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireEvent("value-changed");
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = lastState.checked;
 				this.indeterminate = lastState.indeterminate;
 			}

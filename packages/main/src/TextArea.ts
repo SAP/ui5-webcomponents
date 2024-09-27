@@ -89,6 +89,11 @@ type ExceededText = {
  * @public
  */
 @event("change")
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed")
 
 /**
  * Fired when the value of the component changes at each keystroke or when
