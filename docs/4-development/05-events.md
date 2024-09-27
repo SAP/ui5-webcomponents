@@ -94,10 +94,14 @@ export { MyDemoComponent };
 
 ## Event Configuration
 
-### Bubbles
+### Bubbling and Preventing
 
 Whether the events should be cancelable or able to bubble is configurable.
-by setting `cancelable` and `bubbles` in the `@event` decorator:
+by setting `cancelable` and `bubbles` in the `@event` decorator.
+
+- `cancelable: true` means the event can be prevented by calling the native `preventDefault()` method in the event handler. By default, `cancelable` is `false`, e.g. events are not preventable/cancelable.
+
+- `bubbles: false` means the event will not bubble, while by default it's `true` as all events bubble.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";

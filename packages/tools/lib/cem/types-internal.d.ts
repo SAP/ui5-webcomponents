@@ -324,11 +324,6 @@ export interface Event {
   _ui5allowPreventDefault?: boolean
 
   /**
-   * Whether the event is bubbling. Undefined means the event is bubbling.
-   */
-  _ui5nonBubbling?: boolean
-
-  /**
    * Marks when the field was introduced
    */
   _ui5since?: string
