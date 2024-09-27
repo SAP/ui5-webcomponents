@@ -81,14 +81,6 @@
 		--_ui5_bar-end-container-padding-end: var(--_ui5_bar-end-container-padding-end_S)
 	}
 }
-
-@container (width > 599px) and (width < 1440px) {
-	* {
-		--_ui5_bar-start-container-padding-start: var(--_ui5_bar-start-container-padding-start_M_L);
-		--_ui5_bar-end-container-padding-end: var(--_ui5_bar-end-container-padding-end_M_L);
-	}
-}
-
 @container (width > 1439px) {
 	* {
 		--_ui5_bar-start-container-padding-start: var(--_ui5_bar-start-container-padding-start_XL);
