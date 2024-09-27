@@ -28,6 +28,7 @@
 }
 
 :host([open]) {
+	z-index: 110;
 	display: block;
 }
 
