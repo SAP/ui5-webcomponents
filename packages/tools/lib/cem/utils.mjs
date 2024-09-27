@@ -222,7 +222,7 @@ const commonTags = ["public", "protected", "private", "since", "deprecated"];
 const allowedTags = {
     field: [...commonTags, "formEvents", "formProperty", "default"],
     slot: [...commonTags, "default"],
-    event: [...commonTags, "param", "allowPreventDefault", "nonBubbling", "native"],
+    event: [...commonTags, "param", "allowPreventDefault", "native"],
     eventParam: [...commonTags],
     method: [...commonTags, "param", "returns", "override"],
     class: [...commonTags, "constructor", "class", "abstract", "experimental", "implements", "extends", "slot", "csspart"],
@@ -283,7 +283,7 @@ const findAllTags = (jsDoc, tagName) => {
 };
 
 const validateJSDocTag = (tag) => {
-    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "nonBubbling", "native", "formProperty", "constructor", "override"];
+    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "native", "formProperty", "constructor", "override"];
     let tagName = tag.tag;
 
     if (booleanTags.includes(tag.tag)) {
