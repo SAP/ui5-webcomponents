@@ -2,6 +2,7 @@
 	--_ui5-notification_item-border-radius: 0px;
 	--_ui5-notification_group_header-border-bottom-width: 0.0625rem;
 	--_ui5-notification_group_header-margin: 0px;
+	--_ui5-notification_group_header-margin_collapsed: 0.05rem;
 	--_ui5-notification_group_header-padding: 1rem 0.5rem;
 	--_ui5-notification_item-state-icon-padding: 0.625rem;
 	--_ui5-notification_item-border-bottom: var(--ui5-listitem-border-bottom);
