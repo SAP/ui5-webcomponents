@@ -59,24 +59,23 @@
     </ui5-tree>
 
     <ui5-table id="table" overflow-mode="Popin" style="margin-top: 1rem">
-      <ui5-table-reorder slot="features"></ui5-table-reorder>
       <ui5-table-selection slot="features"></ui5-table-selection>
       <ui5-table-header-row slot="headerRow">
         <ui5-table-header-cell width="400px">Column A</ui5-table-header-cell>
         <ui5-table-header-cell width="200px">Column B</ui5-table-header-cell>
         <ui5-table-header-cell min-width="150px">Column C</ui5-table-header-cell>
       </ui5-table-header-row>
-      <ui5-table-row row-key="1" draggable="true">
+      <ui5-table-row row-key="1" movable>
         <ui5-table-cell>Test 1</ui5-table-cell>
         <ui5-table-cell>Test 2</ui5-table-cell>
         <ui5-table-cell>Test 3</ui5-table-cell>
       </ui5-table-row>
-      <ui5-table-row row-key="2" draggable="true">
+      <ui5-table-row row-key="2" movable>
         <ui5-table-cell>Test 4</ui5-table-cell>
         <ui5-table-cell>Test 5</ui5-table-cell>
         <ui5-table-cell>Test 6</ui5-table-cell>
       </ui5-table-row>
-      <ui5-table-row row-key="3" draggable="true">
+      <ui5-table-row row-key="3" movable>
         <ui5-table-cell>Test 7</ui5-table-cell>
         <ui5-table-cell>Test 8</ui5-table-cell>
         <ui5-table-cell>Test 9</ui5-table-cell>
@@ -91,6 +90,49 @@
 		function listMoveOver(e) {
 			e.preventDefault();
 		}
+
+    function tableMoveOver(e) {
+      const { source, destination } = e.detail;
+
+      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row") && destination.placement !== "On") {
+        e.preventDefault();
+      }
+    }
+
+    function tableMove(e) {
+      const { source, destination } = e.detail;
+
+      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row")) {
+        reorderRow(source.element, destination.element, destination.placement);
+      }
+    }
+
+    function reorderRow(source, destination, placement) {
+      if (!table) {
+        return;
+      }
+
+      const sourceIndex = table.rows.indexOf(source);
+      const destinationIndex = table.rows.indexOf(destination);
+
+      if (sourceIndex === -1 || destinationIndex === -1) {
+        return;
+      }
+
+      switch (placement) {
+      case "Before":
+        table.insertBefore(source, destination);
+        break;
+      case "After":
+        table.insertBefore(source, destination.nextElementSibling);
+        break;
+      default:
+        break;
+      }
+    }
+    
+    table.addEventListener('move-over', tableMoveOver);
+    table.addEventListener('move', tableMove);
 
 		tree.addEventListener('move-over', treeMoveOver);
 		list.addEventListener('move-over', listMoveOver);
