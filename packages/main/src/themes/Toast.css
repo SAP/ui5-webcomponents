@@ -17,6 +17,7 @@
 	text-overflow: ellipsis;
 	white-space: pre-line;
 	padding: 1rem;
+	z-index: 110;
 }
 
 .ui5-toast-root {
@@ -28,7 +29,6 @@
 }
 
 :host([open]) {
-	z-index: 110;
 	display: block;
 }
 
