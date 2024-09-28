@@ -180,9 +180,6 @@ class Carousel extends UI5Element {
 	/**
 	 * Defines the visibility of the page indicator.
 	 * If set to true the page indicator will be hidden.
-	 *
-	 * **Note:** The navigation arrows are always displayed on touch devices
-	 * in the page indicator area.
 	 * @since 1.0.0-rc.15
 	 * @default false
 	 * @public
@@ -245,8 +242,6 @@ class Carousel extends UI5Element {
 	 *
 	 * - `Content` - the arrows are placed on the sides of the current page.
 	 * - `Navigation` - the arrows are placed on the sides of the page indicator.
-	 *
-	 * **Note:** On touch devices the arrows are always displayed in the page indicator area.
 	 * @default "Content"
 	 * @public
 	 */
@@ -309,7 +304,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation || !isDesktop()) {
 			this._visibleNavigationArrows = true;
 		}
 
@@ -597,11 +592,7 @@ class Carousel extends UI5Element {
 			return false;
 		}
 
-		if (!isDesktop()) {
-			return true;
-		}
-
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop())) {
 			return true;
 		}
 
@@ -635,11 +626,11 @@ class Carousel extends UI5Element {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.suppressAnimation,
 				"ui5-carousel-content-has-navigation": this.renderNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
+				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop()),
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
+				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop()),
 				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
 				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
 			},
@@ -680,21 +671,10 @@ class Carousel extends UI5Element {
 	}
 
 	get showArrows() {
-		const displayArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
-		let showInContent;
-		let showInNavigation;
-
-		if (!isDesktop()) {
-			showInContent = false;
-			showInNavigation = this.hasManyPages;
-		} else {
-			showInContent = !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content;
-			showInNavigation = !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation;
-		}
-
+		const displayArrows = this._visibleNavigationArrows && this.hasManyPages;
 		return {
-			content: showInContent,
-			navigation: showInNavigation,
+			content: (!this.hideNavigationArrows || !isDesktop()) && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: (!this.hideNavigationArrows || !isDesktop()) && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
