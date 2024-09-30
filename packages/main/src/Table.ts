@@ -30,6 +30,7 @@ import {
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import { dragOver, dropRow } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRowUtil.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -485,53 +486,6 @@ class Table extends UI5Element {
 		e.preventDefault();
 	}
 
-	_ondragover(e: DragEvent) {
-		const draggedElement = DragRegistry.getDraggedElement();
-
-		if (!(e.target instanceof HTMLElement) || !draggedElement) {
-			return;
-		}
-
-		const closestPosition = findClosestPosition(
-			this.rows,
-			e.clientY,
-			Orientation.Vertical,
-		);
-
-		if (!closestPosition) {
-			this.dropIndicatorDOM!.targetReference = null;
-			return;
-		}
-		const placements = closestPosition.placements;
-
-		this.dropIndicatorDOM!.targetReference = e.target;
-		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<TableMoveEventDetail>("move-over", {
-				originalEvent: e,
-				source: {
-					element: draggedElement,
-				},
-				destination: {
-					element: closestPosition.element,
-					placement,
-				},
-			}, true);
-
-			if (beforeItemMovePrevented) {
-				e.preventDefault();
-				this.dropIndicatorDOM!.targetReference = closestPosition.element;
-				this.dropIndicatorDOM!.placement = placement;
-				return true;
-			}
-
-			return false;
-		});
-
-		if (!placementAccepted) {
-			this.dropIndicatorDOM!.targetReference = null;
-		}
-	}
-
 	_ondragleave(e: DragEvent) {
 		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
 			return;
@@ -540,27 +494,15 @@ class Table extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
+	_ondragover(e: DragEvent) {
+		const { targetReference, placement } = dragOver(e, this, this.rows);
+		this.dropIndicatorDOM!.targetReference = targetReference;
+		this.dropIndicatorDOM!.placement = placement;
+	}
+
 	_ondrop(e: DragEvent) {
-		e.preventDefault();
-		const draggedElement = DragRegistry.getDraggedElement();
-
-		if (!draggedElement) {
-			return;
-		}
-
-		this.fireEvent<TableMoveEventDetail>("move", {
-			originalEvent: e,
-			source: {
-				element: draggedElement,
-			},
-			destination: {
-				element: this.dropIndicatorDOM!.targetReference!,
-				placement: this.dropIndicatorDOM!.placement,
-			},
-		});
-
+		dropRow(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
 		this.dropIndicatorDOM!.targetReference = null;
-		draggedElement?.focus();
 	}
 
 	get styles() {
