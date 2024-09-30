@@ -946,7 +946,7 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean {
 		const _cancellable = cancelable !== undefined ? cancelable : this.eventCancelable(name);
-		const _bubbles = bubbles !== undefined ? bubbles: this.eventBubbles(name);
+		const _bubbles = bubbles !== undefined ? bubbles : this.eventBubbles(name);
 
 		const eventResult = this._fireEvent(name, data, _cancellable, _bubbles);
 		const pascalCaseEventName = kebabToPascalCase(name);
