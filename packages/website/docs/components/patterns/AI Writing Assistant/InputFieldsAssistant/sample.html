@@ -7,20 +7,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Input with AI writing assistant Sample</title>
 	<style>
-		.hide-icon, #menu, .hide-item {
+		.hide{
 			display: none;
 		}
 
-		.show-icon, .show-icon {
+		.show {
     		display: block;
   		}
 
-		.icon-clicked {
-			border: 1px solid #1969DA;
-			background-color: #e1f4ff;
+		.icon {
+			color: #1969DA;
 		}
 
-		.generating-input {
+		.icon-clicked {
+			border: 1px solid #1969DA;
+			background-color: white;
+		}
+
+		.loading-input {
 			background-color: #e1f4ff;
 		}
 
@@ -32,28 +36,27 @@
 	<script type="module" src="main.js"></script>
 	<ui5-label for="ai-wa-input">Input with AI writing assistant.</ui5-label>
 	<br>
-	<ui5-input id="ai-wa-input"
-		placeholder="Placeholder">
-		<ui5-icon id="ai-wa-icon" slot="icon" name="ai" class="hide-icon" design="Information"></ui5-icon>
-		<ui5-icon id="stop-wa-icon" slot="icon" name="stop" class="hide-icon" design="Information"></ui5-icon>
+	<ui5-input id="ai-wa-input" placeholder="Placeholder" >
+		<ui5-icon id="ai-wa-icon" slot="icon" name="ai" class="hide icon"></ui5-icon>
 	</ui5-input>
-	<ui5-menu id="ai-wa-menu" opener="ai-wa-icon">
-		<ui5-menu-item id="generate-item" text="Generate" additional-text="Ctrl+Enter"></ui5-menu-item>
-		<ui5-menu-item text="Regenerate" additional-text="Ctrl+Enter" class="hide-item" ></ui5-menu-item>
-        <ui5-menu-separator class="hide-item"></ui5-menu-separator>
-        <ui5-menu-item text="Fix Spelling & Grammar" starts-section class="hide-item"></ui5-menu-item>
-        <ui5-menu-item text="Translate" class="hide-item">
+	<ui5-menu id="ai-wa-menu-generate" opener="ai-wa-icon" class="hide">
+		<ui5-menu-item text="Generate" additional-text="Ctrl+Enter"></ui5-menu-item>
+	</ui5-menu>
+
+	<ui5-menu id="ai-wa-menu-regenerate" opener="ai-wa-icon" class="hide">
+		<ui5-menu-item text="Regenerate" additional-text="Ctrl+Enter" ></ui5-menu-item>
+        <ui5-menu-separator ></ui5-menu-separator>
+        <ui5-menu-item text="Fix Spelling & Grammar" starts-section ></ui5-menu-item>
+        <ui5-menu-item text="Translate" >
             <ui5-menu-item text="English"></ui5-menu-item>
             <ui5-menu-item text="German"></ui5-menu-item>
             <ui5-menu-item text="Spanish"></ui5-menu-item>
         </ui5-menu-item>
-		<ui5-menu-item id="pagination-menu-item" text="" icon="navigation-left-arrow">
+		<!-- <ui5-menu-item id="pagination-menu-item" text="" icon="navigation-left-arrow">
 			<ui5-icon slot="endContent" name="navigation-right-arrow" id="right-arrow-icon"></ui5-icon>
-		  </ui5-menu-item>
+		</ui5-menu-item> -->
 	</ui5-menu>
 
-
-	
 </body>
 
 </html>
