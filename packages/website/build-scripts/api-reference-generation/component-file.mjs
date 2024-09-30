@@ -157,11 +157,11 @@ No events available for this component.`
         }
 
         if (typeof event._ui5Bubbles === "boolean") {
-            eventResult += `\n| Bubbles | The event ${event._ui5Bubbles ? "Yes" : "No"}. |`
+            eventResult += `\n| Bubbles | ${event._ui5Bubbles ? "Yes" : "No"}. |`
         }
 
         if (typeof event._ui5Cancelable === "boolean") {
-            eventResult += `\n| Cancelable | The event ${event._ui5Cancelable ? "Yes - by calling <code>preventDefault()</code>." : "No."} |`
+            eventResult += `\n| Cancelable | ${event._ui5Cancelable ? "Yes - by calling <code>preventDefault()</code>." : "No."} |`
         }
 
         if (event.deprecated) {
