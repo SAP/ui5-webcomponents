@@ -79,7 +79,18 @@ type TableRowF7PressEventDetail = {
  * @private
  */
 @event("row-click")
+/**
+ * @private
+ */
 @event("_focused")
+/**
+ * @private
+ */
+@event("_forward-before")
+/**
+ * @private
+ */
+@event("_forward-after")
 /**
  * Fired on selection change of an active row.
  * @since 2.0.0
