@@ -945,9 +945,8 @@ abstract class UI5Element extends HTMLElement {
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean {
-		const eventData = this.getEventData(name);
-		const _cancellable = cancelable === undefined ? eventData.cancelable : cancelable;
-		const _bubbles = bubbles === undefined ? eventData.bubbles : bubbles;
+		const _cancellable = cancelable !== undefined ? cancelable : this.eventCancelable(name);
+		const _bubbles = bubbles !== undefined ? bubbles: this.eventBubbles(name);
 
 		const eventResult = this._fireEvent(name, data, _cancellable, _bubbles);
 		const pascalCaseEventName = kebabToPascalCase(name);
@@ -957,7 +956,7 @@ abstract class UI5Element extends HTMLElement {
 		//	 Before: onlive-change
 		//	 After: onLiveChange
 		if (pascalCaseEventName !== name) {
-			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
+			return eventResult && this._fireEvent(pascalCaseEventName, data, _cancellable, _bubbles);
 		}
 
 		return eventResult;
@@ -996,6 +995,14 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const eventMap = ctor.getMetadata().getEvents();
 		return eventMap[name];
+	}
+	eventCancelable(name: string): boolean {
+		const eventData = this.getEventData(name);
+		return eventData ? eventData.cancelable : false;
+	}
+	eventBubbles(name: string): boolean {
+		const eventData = this.getEventData(name);
+		return eventData ? eventData.bubbles : true;
 	}
 
 	/**

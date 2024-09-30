@@ -86,11 +86,23 @@ type TableRowF7PressEventDetail = {
 /**
  * @private
  */
-@event("_forward-before")
+@event<TableRowForwardBeforeEventDetail>("_forward-before", {
+	detail: {
+		target: {
+			type: HTMLElement,
+		},
+	},
+})
 /**
  * @private
  */
-@event("_forward-after")
+@event<TableRowForwardAfterEventDetail>("_forward-after", {
+	detail: {
+		target: {
+			type: HTMLElement,
+		},
+	},
+})
 /**
  * Fired on selection change of an active row.
  * @since 2.0.0
