@@ -185,7 +185,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 
 	hasGrowingComponent(): boolean {
 		if (this._hasScrollToLoad()) {
-			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight) ?? true;
+			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight);
 		}
 
 		return this.type === TableGrowingMode.Button && !this.disabled;

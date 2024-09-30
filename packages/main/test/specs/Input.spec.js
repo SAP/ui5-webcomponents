@@ -1196,6 +1196,30 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is still called once");
 		assert.strictEqual(await suggestionsInput.getValue(), "Afghanistan", "Input's value should be the text of the selected item");
 	});
+
+	it("Tests prevented input event", async () => {
+		const input = await $("#prevent-input-event");
+		const innerInput = await input.shadow$("input");
+
+		await input.click();
+		
+		await innerInput.keys("a");
+		await innerInput.keys("b");
+		await innerInput.keys("c");
+		await innerInput.keys("d");
+
+		// forth input should be prevented
+		assert.strictEqual(await input.getValue(), "abc", "The value is correct");
+	});
+
+	it("Tests prevented input event with clear icon", async () => {
+		const input = await $("#prevent-input-event-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
+		await clearIcon.click();
+
+		assert.strictEqual(await input.getValue(), "Test", "The value is not cleared");
+	});
 });
 
 describe("Input arrow navigation", () => {

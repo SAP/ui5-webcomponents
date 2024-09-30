@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.2...v2.3.0-rc.3) (2024-09-26)
+
+
+### Bug Fixes
+
+* patchPopup now correctly handles getContent ([#9913](https://github.com/SAP/ui5-webcomponents/issues/9913)) ([84f4cfa](https://github.com/SAP/ui5-webcomponents/commit/84f4cfa98d7486d9a462677a2833a74270848338))
+* **ui5-color-picker:** add missing hex value to RGBtoHEX method ([#9906](https://github.com/SAP/ui5-webcomponents/issues/9906)) ([90acd68](https://github.com/SAP/ui5-webcomponents/commit/90acd68d5a143f31bb28ca0b0d795a9108e8e93f))
+
+
+
+
+
 # [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
 
 

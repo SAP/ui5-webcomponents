@@ -221,6 +221,7 @@ type InputSuggestionScrollEventDetail = {
 /**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
+ * @allowPreventDefault
  * @public
  */
 @event("input")
@@ -1014,8 +1015,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_clear() {
+		const valueBeforeClear = this.value;
 		this.value = "";
-		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
+		const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" }, true);
+
+		if (prevented) {
+			this.value = valueBeforeClear;
+			return;
+		}
+
 		if (!this._isPhone) {
 			this.fireResetSelectionChange();
 			this.focus();
@@ -1275,6 +1283,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	fireEventByAction(action: INPUT_ACTIONS, e: InputEvent) {
+		const valueBeforeInput = this.value;
+		const inputRef = this.getInputDOMRefSync();
+
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -1288,7 +1299,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
+			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType }, true);
+
+			if (prevented) {
+				this.value = valueBeforeInput;
+				inputRef && (inputRef.value = valueBeforeInput);
+			}
+
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 			this.fireResetSelectionChange();
