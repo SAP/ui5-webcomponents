@@ -319,9 +319,19 @@ export interface Event {
   _ui5parameters?: Parameter[]
   _ui5privacy?: Privacy
   /**
-   * Whether the event is preventable. Undefined meants the event is not preventable.
+   * Whether the event is preventable.
    */
-  _ui5allowPreventDefault?: boolean
+  _ui5allowPreventDefault?: boolean;
+
+  /**
+   * Whether the event is cancelable.
+   */
+  _ui5Cancelable?: boolean;
+
+  /**
+   * Whether the event is bubbles.
+   */
+  _ui5Bubbles?: boolean;
 
   /**
    * Marks when the field was introduced

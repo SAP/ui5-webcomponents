@@ -818,6 +818,14 @@
           "description": "Whether the parameter is optional. Undefined implies non-optional.",
           "type": "boolean"
         },
+        "_ui5Cancelable": {
+          "description": "Whether the event is cancelable or not.",
+          "type": "boolean"
+        },
+        "_ui5Bubbles": {
+          "description": "Whether the event bubbles or not.",
+          "type": "boolean"
+        },
         "_ui5since": {
           "description": "Marks when the field was introduced",
           "type": "string"
