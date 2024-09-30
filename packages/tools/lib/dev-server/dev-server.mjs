@@ -1,7 +1,7 @@
-const fs = require("fs/promises");
-const { createServer } = require('vite');
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
+import fs from "fs/promises";
+import { createServer } from 'vite';
+import yargs from 'yargs/yargs';
+import { hideBin }  from 'yargs/helpers';
 
 const argv = yargs(hideBin(process.argv))
 	.alias("c", "config")

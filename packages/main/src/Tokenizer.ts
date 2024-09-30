@@ -461,7 +461,7 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this._tokenDeleting = true;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] || [target] });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {

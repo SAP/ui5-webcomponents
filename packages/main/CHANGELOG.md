@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.2...v2.3.0-rc.3) (2024-09-26)
+
+
+### Bug Fixes
+
+* **ui5-file-uploader:** remove the cloning of the value state message ([#9915](https://github.com/SAP/ui5-webcomponents/issues/9915)) ([a73dd60](https://github.com/SAP/ui5-webcomponents/commit/a73dd60ee9449656272895057ded3b8afee9ab8c))
+* **ui5-input:** arrow up scrolls the suggestion items when item is behind value state header ([#9893](https://github.com/SAP/ui5-webcomponents/issues/9893)) ([5cb56c5](https://github.com/SAP/ui5-webcomponents/commit/5cb56c54acbe3e57da91aafd45b52f619ce0600e)), closes [#9674](https://github.com/SAP/ui5-webcomponents/issues/9674)
+* **ui5-multi-combobox:** fix aria-describedby token count ([#9888](https://github.com/SAP/ui5-webcomponents/issues/9888)) ([d8fff1a](https://github.com/SAP/ui5-webcomponents/commit/d8fff1a36555ac2ab8789f160c19e2d4dfb5f0d2))
+* **ui5-multi-input:** tokens are not deletable when multi-input is readonly ([#9905](https://github.com/SAP/ui5-webcomponents/issues/9905)) ([2178b12](https://github.com/SAP/ui5-webcomponents/commit/2178b12bfeada2899cb3d831d02a5d6a8d482413)), closes [#9862](https://github.com/SAP/ui5-webcomponents/issues/9862)
+* **ui5-page:** fix double footer and adjust animation timing ([#9885](https://github.com/SAP/ui5-webcomponents/issues/9885)) ([e8beb76](https://github.com/SAP/ui5-webcomponents/commit/e8beb76ea28f76eb39af40df9c0cc5c603a365d2)), closes [#9755](https://github.com/SAP/ui5-webcomponents/issues/9755) [#9756](https://github.com/SAP/ui5-webcomponents/issues/9756)
+* **ui5-select:** improve selection change handling ([#9865](https://github.com/SAP/ui5-webcomponents/issues/9865)) ([d11054b](https://github.com/SAP/ui5-webcomponents/commit/d11054b0e354b5e0f19bb258eee097ab5d2e692b))
+* **ui5-slider:** correct icon name ([#9924](https://github.com/SAP/ui5-webcomponents/issues/9924)) ([bd809a5](https://github.com/SAP/ui5-webcomponents/commit/bd809a5dc30aa1bc8df027b9aff61d90e7960aed))
+
+
+
+
+
 # [2.3.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.3.0-rc.1...v2.3.0-rc.2) (2024-09-19)
 
 
