@@ -6,6 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
+import type TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 
 /**
  * @class
@@ -30,6 +31,17 @@ abstract class TableCellBase extends UI5Element {
 
 	@property({ type: Boolean })
 	_popin = false;
+
+	/**
+	 * Determines the horizontal alignment of table cells.
+	 * Note: All values valid for justify-content can be used not just the ones inside the enum.
+	 * @default undefined
+	 * @public
+	 */
+	@property()
+    horizontalAlign?: `${TableCellHorizontalAlign}`;
+
+	_individualSlot?: string;
 
 	protected ariaRole: string = "gridcell";
 
