@@ -1,0 +1,59 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./main.css">
+	<title>Sample</title>
+	<style>
+		.focused-icon, #menu {
+			display: none;
+		}
+
+		.show-icon {
+    		display: inline-flex;
+			color:#1969DA;
+            border-color:#1969DA;
+			border-radius: 4px;
+  		}
+
+		.icon-clicked {
+			border-left: 1px solid;
+			background-color: #e1f4ff;
+		}
+
+		.generating-input {
+			background-color: #e1f4ff;
+		}
+
+		.pagination-hidden {
+			display: none;
+		}
+		
+		.pagination-shown {
+			display: none;
+		}
+
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 300px;">
+	<!-- playground-fold-end -->
+
+	<ui5-label for="ai-wa-input">Input with AI writing assistant.</ui5-label>
+	<br>
+	<ui5-input id="ai-wa-input"
+		placeholder="Placeholder">
+		<ui5-icon id="ai-wa-icon" slot="icon" name="ai" class="focused-icon"></ui5-icon>
+	</ui5-input>
+	<ui5-menu id="ai-wa-menu" opener="ai-wa-icon">
+	</ui5-menu>
+
+
+	<script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
