@@ -1,8 +1,8 @@
 import type UI5Element from "../../UI5Element";
+import type MovePlacement from "../../types/MovePlacement";
 import DragRegistry from "./DragRegistry.js";
 import { findClosestPosition } from "./findClosestPosition.js";
 import Orientation from "../../types/Orientation.js";
-import MovePlacement from "../../types/MovePlacement.js";
 
 type DragOverResult = {
 	targetReference: HTMLElement | null;

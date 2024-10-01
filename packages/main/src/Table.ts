@@ -501,8 +501,12 @@ class Table extends UI5Element {
 	}
 
 	_ondrop(e: DragEvent) {
+		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
+			return;
+		}
+
 		dropRow(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
-		this.dropIndicatorDOM!.targetReference = null;
+		this.dropIndicatorDOM.targetReference = null;
 	}
 
 	get styles() {
