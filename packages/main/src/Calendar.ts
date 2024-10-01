@@ -4,6 +4,7 @@ import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDateComponent from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -14,9 +15,9 @@ import {
 	isF4Shift,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
@@ -315,17 +316,13 @@ class Calendar extends CalendarPart {
 	@property()
 	_selectedItemType: `${CalendarLegendItemType}` = "None";
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 
 		this._valueIsProcessed = false;
-	}
-
-	static async onDefine() {
-		[Calendar.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			super.onDefine(),
-		]);
 	}
 
 	/**

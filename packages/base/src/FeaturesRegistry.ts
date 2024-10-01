@@ -4,6 +4,10 @@ import type UI5Element from "./UI5Element.js";
 abstract class ComponentFeature {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty-function
 	constructor(...args: any[]) {}
+
+	/**
+	 * @deprecated assign the feature's "i18nBundle" static member directly from the component that uses the feature
+	 */
 	static define?: () => Promise<void>;
 	static dependencies?: Array<typeof UI5Element>
 }
