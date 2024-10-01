@@ -26,7 +26,7 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
@@ -196,6 +196,7 @@ type SelectLiveChangeEventDetail = {
  */
 @event("selected-item-changed")
 class Select extends UI5Element implements IFormInputElement {
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -924,10 +925,6 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_getPopover() {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]");
-	}
-
-	static async onDefine() {
-		Select.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

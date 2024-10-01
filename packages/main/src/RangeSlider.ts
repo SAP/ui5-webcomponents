@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -129,6 +129,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_selectedRange?: number;
 	_reversedValues = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formFormattedValue() {
@@ -865,10 +866,6 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 				"visibility": `${this._tooltipVisibility}`,
 			},
 		};
-	}
-
-	static async onDefine() {
-		RangeSlider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

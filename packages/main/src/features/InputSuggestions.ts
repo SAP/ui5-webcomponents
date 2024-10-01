@@ -1,7 +1,6 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
@@ -560,10 +559,6 @@ class Suggestions extends ComponentFeature {
 			Button,
 			Icon,
 		];
-	}
-
-	static async define() {
-		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

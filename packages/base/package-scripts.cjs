@@ -56,7 +56,7 @@ const scripts = {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',
 		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
-		bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+		bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	test: {

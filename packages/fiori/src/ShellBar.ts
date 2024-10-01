@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
@@ -18,7 +19,6 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/search.js";
@@ -452,6 +452,7 @@ class ShellBar extends UI5Element {
 	@slot()
 	midContent!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 	overflowPopover?: Popover | null;
 	menuPopover?: Popover | null;
@@ -1202,10 +1203,6 @@ class ShellBar extends UI5Element {
 
 	get accLogoRole() {
 		return this.accessibilityAttributes.logo?.role || "button";
-	}
-
-	static async onDefine() {
-		ShellBar.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

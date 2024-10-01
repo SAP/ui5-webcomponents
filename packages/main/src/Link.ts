@@ -6,7 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -272,6 +272,7 @@ class Link extends UI5Element implements ITabbable {
 
 	_dummyAnchor: HTMLAnchorElement;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -331,10 +332,6 @@ class Link extends UI5Element implements ITabbable {
 
 	get _hasPopup() {
 		return this.accessibilityAttributes.hasPopup;
-	}
-
-	static async onDefine() {
-		Link.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_onclick(e: MouseEvent | KeyboardEvent) {

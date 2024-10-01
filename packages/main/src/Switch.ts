@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -185,6 +185,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	@property()
 	name?: string;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -293,10 +294,6 @@ class Switch extends UI5Element implements IFormInputElement {
 
 	get ariaLabelText() {
 		return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ").trim();
-	}
-
-	static async onDefine() {
-		Switch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
