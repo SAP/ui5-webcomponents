@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isIOS, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import TableRowBase from "./TableRowBase.js";
@@ -81,14 +80,6 @@ class TableRow extends TableRowBase {
 
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
-
-	static async onDefine() {
-		await super.onDefine();
-		if (isSafari() && isIOS()) {
-			// Safari on iOS does not use the :active state unless there is a touchstart event handler on the <body> element
-			document.body.addEventListener("touchstart", () => {});
-		}
-	}
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

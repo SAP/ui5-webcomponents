@@ -3,8 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type {
 	ListItemClickEventDetail,
@@ -141,6 +141,7 @@ class NotificationList extends UI5Element {
 		return NotificationList.i18nFioriBundle.getText(NOTIFICATION_LIST_ACCESSIBLE_NAME);
 	}
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nFioriBundle: I18nBundle;
 
 	getEnabledItems() {
@@ -177,10 +178,6 @@ class NotificationList extends UI5Element {
 
 	_onLoadMore() {
 		this.fireEvent("load-more");
-	}
-
-	static async onDefine() {
-		NotificationList.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

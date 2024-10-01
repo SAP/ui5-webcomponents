@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
 	isSpace,
 	isEnter,
@@ -131,11 +131,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	_currentLastRow?: HTMLElement;
 	_shouldFocusRow?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		TableGrowing.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	onTableActivate(table: Table): void {
 		this._table = table;

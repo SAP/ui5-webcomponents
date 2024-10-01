@@ -4,7 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import TableCellBaseStyles from "./generated/themes/TableCellBase.css.js";
 import type TableCellHorizontalAlign from "./types/TableCellHorizontalAlign.js";
 
@@ -45,10 +45,8 @@ abstract class TableCellBase extends UI5Element {
 
 	protected ariaRole: string = "gridcell";
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-	static async onDefine() {
-		TableCellBase.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	onEnterDOM() {
 		this.toggleAttribute("ui5-table-cell-base", true);

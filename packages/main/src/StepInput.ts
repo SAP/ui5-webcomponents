@@ -17,7 +17,7 @@ import {
 	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -287,6 +287,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	_initialValueState?: `${ValueState}`;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
@@ -295,10 +296,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue(): FormData | string | null {
 		return this.value.toString();
-	}
-
-	static async onDefine() {
-		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get type() {
