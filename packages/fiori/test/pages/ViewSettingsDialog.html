@@ -95,8 +95,8 @@
 
 	<h3>ViewSettingsDialog with dataset properties</h3>
 
-	<ui5-button id="btnOpenDialogWithItemKey">Show ViewSettingsDialog</ui5-button>
-	<ui5-view-settings-dialog id="vsdWithDatasetItemKey">
+	<ui5-button id="btnOpenDialogWithDataSet">Show ViewSettingsDialog</ui5-button>
+	<ui5-view-settings-dialog id="vsdWithDataSet">
 		<ui5-sort-item slot="sortItems" text="Name" data-key="sortName"></ui5-sort-item>
 		<ui5-sort-item slot="sortItems" text="Position" data-key="sortPosition"></ui5-sort-item>
 		<ui5-sort-item slot="sortItems" text="Company" data-key="sortCompany"></ui5-sort-item>
@@ -114,11 +114,11 @@
 	</ui5-view-settings-dialog>
 
 	<script>
-		btnOpenDialogWithItemKey.addEventListener("click", function () {
-			vsdWithDatasetItemKey.open = true;
+		btnOpenDialogWithDataSet.addEventListener("click", function () {
+			vsdWithDataSet.open = true;
 		});
 
-		vsdWithDatasetItemKey.addEventListener("ui5-confirm", function(e) {
+		vsdWithDataSet.addEventListener("ui5-confirm", function(e) {
 			const filterItems = e.detail.filterItems || [];
 
 			// Get all selected filter item options
