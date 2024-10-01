@@ -33,7 +33,6 @@ import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
 
 // Styles
 import TreeCss from "./generated/themes/Tree.css.js";
-import { dragOver } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRowUtil.js";
 
 type TreeMoveEventDetail = {
 	source: {
