@@ -24,8 +24,8 @@
     height: inherit;
 }
 
-:host:host([interactive]:hover),
-:host:host([interactive][hovered]) {
+:host([interactive]:hover),
+:host([interactive][hovered]) {
     background-color: var(--_ui5_dynamic_page_title_hover_background);
     cursor: pointer;
     border-bottom: var(--_ui5_dynamic_page_title_hover_border);
