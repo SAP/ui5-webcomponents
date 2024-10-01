@@ -28,6 +28,8 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
+import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import type ListAccessibleRole from "./types/ListAccessibleRole.js";
@@ -548,8 +550,6 @@ class List extends UI5Element {
 
 		this._handleResize = this.checkListInViewport.bind(this);
 
-		this._handleResize = this.checkListInViewport.bind(this);
-
 		// Indicates the List bottom most part has been detected by the IntersectionObserver
 		// for the first time.
 		this.initialIntersection = true;
@@ -895,11 +895,6 @@ class List extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		if (isCtrl(e)) {
 			this._moveItem(e.target as ListItemBase, e);
-			return;
-		}
-
-		if (isTabNext(e)) {
-			this._handleTabNext(e);
 		}
 	}
 
@@ -995,31 +990,6 @@ class List extends UI5Element {
 
 	loadMore() {
 		this.fireEvent("load-more");
-	}
-
-	/*
-	* KEYBOARD SUPPORT
-	*/
-	_handleTabNext(e: KeyboardEvent) {
-		let lastTabbableEl;
-		const target = getNormalizedTarget(e.target as HTMLElement);
-
-		if (!lastTabbableEl) {
-			return;
-		}
-
-		if (lastTabbableEl === target) {
-			if (this.getFirstItem(x => x.selected && x._focusable)) {
-				this.focusFirstSelectedItem();
-			} else if (this.getPreviouslyFocusedItem()) {
-				this.focusPreviouslyFocusedItem();
-			} else {
-				this.focusFirstItem();
-			}
-
-			e.stopImmediatePropagation();
-			e.preventDefault();
-		}
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -1220,13 +1190,30 @@ class List extends UI5Element {
 	}
 
 	onForwardBefore(e: CustomEvent) {
+		const activeElement = getActiveElement() as HTMLElement;
+		const item = e.detail.item as ListItemBase;
+		const isFirstItem = this.getItems().indexOf(item) === 0;
+		const isFirstTabbable = getTabbableElements(item).shift() === getActiveElement();
+		const isItemFocused = item.getFocusDomRef() === activeElement;
+
 		this.setPreviouslyFocusedItem(e.target as ListItemBase);
-		this.focusBeforeElement();
-		e.stopPropagation();
+
+		if (isItemFocused && (isFirstItem && !isFirstTabbable)) {
+			this.focusBeforeElement();
+			e.stopPropagation();
+		}
 	}
 
 	onForwardAfter(e: CustomEvent) {
-		this.setPreviouslyFocusedItem(e.target as ListItemBase);
+		const item = e.detail.item as ListItemBase;
+		const isLastItem = this.getItems().indexOf(item) === this.getItems().length - 1;
+		const isLastTabbable = isLastItem && getTabbableElements(item).pop() === getActiveElement();
+
+		this.setPreviouslyFocusedItem(item);
+
+		if (!isLastTabbable) {
+			return;
+		}
 
 		if (!this.growsWithButton) {
 			this.focusAfterElement();
