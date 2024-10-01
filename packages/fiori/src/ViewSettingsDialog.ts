@@ -66,7 +66,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 }
 
 // Common properties for several VSDInternalSettings fields
-type VSDItem = {text?: string, itemKey?: string, selected: boolean}
+type VSDItem = {text?: string, selected: boolean}
 
 // Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
 type VSDInternalSettings = {
@@ -74,12 +74,6 @@ type VSDInternalSettings = {
 	sortBy: Array<VSDItem & {index: number}>,
 	filters: Array<VSDItem & {filterOptions: Array<VSDItem>}>,
 }
-
-type FilterSelection = {
-	filterItem: VSDItem & {
-		filterOptions: Array<VSDItem>;
-	};
-};
 
 /**
  * @class
@@ -453,12 +447,10 @@ class ViewSettingsDialog extends UI5Element {
 			filters: this.filterItems.map(item => {
 				return {
 					text: item.text || "",
-					itemKey: item.itemKey || "",
 					selected: false,
 					filterOptions: item.values.map(optionValue => {
 						return {
 							text: optionValue.text || "",
-							itemKey: optionValue.itemKey || "",
 							selected: optionValue.selected,
 						};
 					}),
@@ -569,7 +561,24 @@ class ViewSettingsDialog extends UI5Element {
 			return filter;
 		});
 
+		this._setSelectedProp(e);
+
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+	}
+
+	/**
+	 * Sets the selected property of the clicked item.
+	 * @param e
+	 * @private
+	 */
+	_setSelectedProp(e: CustomEvent<ListItemClickEventDetail>) {
+		this.filterItems.forEach(filterItem => {
+			filterItem.values.forEach(option => {
+				if (option.text === e.detail.item.innerText) {
+					option.selected = !option.selected;
+				}
+			});
+		});
 	}
 
 	_navigateToFilters() {
@@ -632,7 +641,7 @@ class ViewSettingsDialog extends UI5Element {
 			sortBy,
 			sortByItem,
 			filters: this.selectedFilters,
-			filterItems: this.selectedFilterItems,
+			filterItems: this.filterItems,
 		};
 	}
 
@@ -651,30 +660,6 @@ class ViewSettingsDialog extends UI5Element {
 			if (selectedOptions.length) {
 				result.push({});
 				result[result.length - 1][filter.text || ""] = selectedOptions;
-			}
-		});
-
-		return result;
-	}
-
-	get selectedFilterItems() {
-		const result: Array<FilterSelection> = [];
-
-		this._currentSettings.filters.forEach(filter => {
-			const selectedOptions: Array<VSDItem> = [];
-
-			filter.filterOptions.forEach(option => {
-				if (option.selected) {
-					selectedOptions.push(option);
-				}
-			});
-
-			if (selectedOptions.length) {
-				const filterItemObject: FilterSelection = {
-					filterItem: filter,
-				};
-
-				result.push(filterItemObject);
 			}
 		});
 

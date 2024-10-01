@@ -36,15 +36,6 @@ class SortItem extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	selected = false;
-
-	/**
-	 * Defines a unique identifier for the component.
-	 * @default undefined
-	 * @public
-	 * @since 2.3.0
-	 */
-	@property()
-	itemKey?: string;
 }
 
 SortItem.define();

@@ -45,15 +45,6 @@ class FilterItem extends UI5Element {
 	 */
 	@slot()
 	values!: Array<FilterItemOption>;
-
-	/**
-	 * Defines a unique identifier for the component.
-	 * @default undefined
-	 * @public
-	 * @since 2.3.0
-	 */
-	@property()
-	itemKey?: string;
 }
 
 FilterItem.define();

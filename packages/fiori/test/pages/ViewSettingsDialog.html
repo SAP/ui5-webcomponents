@@ -93,48 +93,75 @@
 	<ui5-input id="sortByItem" style="display: none"></ui5-input>
 	<ui5-input id="sortOrder" style="display: none"></ui5-input>
 
-	<h3>ViewSettingsDialog with item-keys</h3>
+	<h3>ViewSettingsDialog with dataset properties</h3>
 
 	<ui5-button id="btnOpenDialogWithItemKey">Show ViewSettingsDialog</ui5-button>
-	<ui5-view-settings-dialog id="vsdWithItemKey">
-		<ui5-sort-item slot="sortItems" text="Name" item-key="sortName"></ui5-sort-item>
-		<ui5-sort-item slot="sortItems" text="Position" item-key="sortPosition"></ui5-sort-item>
-		<ui5-sort-item slot="sortItems" text="Company" item-key="sortCompany"></ui5-sort-item>
+	<ui5-view-settings-dialog id="vsdWithDatasetItemKey">
+		<ui5-sort-item slot="sortItems" text="Name" data-key="sortName"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Position" data-key="sortPosition"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Company" data-key="sortCompany"></ui5-sort-item>
 
-		<ui5-filter-item slot="filterItems" text="Category" item-key="filterCategory">
-			<ui5-filter-item-option slot="values" text="Electronics" item-key="filterOptionElectronics"></ui5-filter-item-option>
-			<ui5-filter-item-option slot="values" text="Clothing" item-key="filterOptionClothing"></ui5-filter-item-option>
+		<ui5-filter-item slot="filterItems" text="Category" data-key="filterCategory">
+			<ui5-filter-item-option slot="values" text="Electronics" data-key="filterOptionElectronics" selected></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Clothing" data-key="filterOptionClothing"></ui5-filter-item-option>
 		</ui5-filter-item>
 
-		<ui5-filter-item slot="filterItems" text="Color" item-key="filterColor">
-			<ui5-filter-item-option slot="values" text="Red" item-key="filterOptionRed"></ui5-filter-item-option>
-			<ui5-filter-item-option slot="values" text="Blue" item-key="filterOptionBlue"></ui5-filter-item-option>
+		<ui5-filter-item slot="filterItems" text="Color" data-key="filterColor">
+			<ui5-filter-item-option slot="values" text="Red" data-key="filterOptionRed"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Blue" data-key="filterOptionBlue"></ui5-filter-item-option>
 		</ui5-filter-item>
 
 	</ui5-view-settings-dialog>
 
 	<script>
 		btnOpenDialogWithItemKey.addEventListener("click", function () {
-			vsdWithItemKey.open = true;
+			vsdWithDatasetItemKey.open = true;
 		});
 
-		vsdWithItemKey.addEventListener("ui5-confirm", function(e) {
+		vsdWithDatasetItemKey.addEventListener("ui5-confirm", function(e) {
 			const filterItems = e.detail.filterItems || [];
-			const selectedFilterItems = filterItems.flatMap(item => item.filterItem.filterOptions.filter(option => option.selected));
-			console.log("Selected Filters: ", e.detail.filters || []);
 
-			if (filterItems.length > 0) {
-				console.log("First Filter Item Key: ", filterItems[0].filterItem.itemKey);
-			}
+			// Get all selected filter item options
+			const selectedFilterItems = filterItems.map(filterItem => {
+				return {
+					text: filterItem.text,
+					values: filterItem.values.filter(filterItemOption => filterItemOption.selected)
+				};
+			}).filter(filterItem => filterItem.values.length > 0);
+
+			// Get all NOT selected filter item options
+			const notSelectedFilterItems = filterItems.map(filterItem => {
+				return {
+					text: filterItem.text,
+					values: filterItem.values.filter(filterItemOption => !filterItemOption.selected)
+				};
+			}).filter(filterItem => filterItem.values.length > 0);
 
 			if (selectedFilterItems.length > 0) {
-				console.log("First Selected Option Text: ", selectedFilterItems[0].text);
-				console.log("First Selected Option Item Key: ", selectedFilterItems[0].itemKey);
+				const firstSelectedFilterItem = selectedFilterItems[0];
+				const firstSelectedFilterItemKey = firstSelectedFilterItem.values[0].dataset.key;
+				const firstSelectedFilterItemText = firstSelectedFilterItem.values[0].text;
+				
+				console.log(`First selected filter item key: ${firstSelectedFilterItemKey}`);
+				console.log(`First selected filter item text: ${firstSelectedFilterItemText}`);
+			} else {
+				console.log("No filters selected");
+			}
+
+			if (notSelectedFilterItems.length > 0) {
+				const firstNotSelectedFilterItem = notSelectedFilterItems[0];
+				const firstNotSelectedFilterItemKey = firstNotSelectedFilterItem.values[0].dataset.key;
+				const firstNotSelectedFilterItemText = firstNotSelectedFilterItem.values[0].text;
+				
+				console.log(`First not selected filter item key: ${firstNotSelectedFilterItemKey}`);
+				console.log(`First not selected filter item text: ${firstNotSelectedFilterItemText}`);
+			} else {
+				console.log("No filters not selected");
 			}
 
 			alert("OK button clicked, returned info is: " + JSON.stringify(e.detail));
 		});
-
+	
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.open = true;
 		});
@@ -142,6 +169,7 @@
 			vsd.setConfirmedSettings(JSON.parse(vsdSettings.value));
 		});
 		vsd.addEventListener("ui5-confirm", function(evt) {
+			debugger;
 			var sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
 			sortByItem.value = `${sortByItemTagName} with text ${evt.detail.sortBy}`;
 			sortOrder.value = `${evt.detail.sortDescending}`;
