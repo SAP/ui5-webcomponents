@@ -77,7 +77,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 
 /**
  * Fired when an item is clicked.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
@@ -88,11 +87,11 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 		 */
 		item: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
  * Fired when the `Close` button of any item is clicked.
- *
  * @param {HTMLElement} item the item about to be closed.
  * @public
  */
@@ -103,6 +102,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 		 */
 		item: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
@@ -154,7 +154,7 @@ class NotificationList extends UI5Element {
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireEvent<NotificationItemClickEventDetail>("item-click", { item }, true)) {
+		if (!this.fireEvent<NotificationItemClickEventDetail>("item-click", { item })) {
 			e.preventDefault();
 		}
 	}
@@ -162,7 +162,7 @@ class NotificationList extends UI5Element {
 	_onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireEvent<NotificationItemCloseEventDetail>("item-close", { item }, true)) {
+		if (!this.fireEvent<NotificationItemCloseEventDetail>("item-close", { item })) {
 			e.preventDefault();
 		}
 	}

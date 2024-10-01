@@ -64,7 +64,6 @@ import switchCss from "./generated/themes/Switch.css.js";
 /**
  * Fired when the component checked state changes.
  * @public
- * @allowPreventDefault
  */
 @event("change", {
 	cancelable: true,
@@ -231,9 +230,9 @@ class Switch extends UI5Element implements IFormInputElement {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireEvent("change");
 			// Angular two way data binding;
-			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireEvent("value-changed");
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;

@@ -78,7 +78,6 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
 	const sinceTag = findTag(eventParsedComment, "since");
 	const commentParams = findAllTags(eventParsedComment, "param");
-	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault") || undefined;
 	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
 	const eventArgs =  event?.expression?.arguments;
@@ -103,9 +102,9 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	}
 
 	result.description = description;
-	result._ui5allowPreventDefault = allowPreventDefault;
-	result._ui5Cancelable = eventCancelable !== undefined ? eventCancelable : undefined;
-	result._ui5Bubbles = eventBubbles !== undefined ? eventBubbles : undefined;
+	result._ui5Cancelable = eventCancelable !== undefined ? eventCancelable : false;
+	result._ui5allowPreventDefault = result._ui5Cancelable;
+	result._ui5Bubbles = eventBubbles !== undefined ? eventBubbles : true;
 
 	if (native) {
 		result.type = { text: "Event" };

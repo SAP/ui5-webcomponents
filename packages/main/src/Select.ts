@@ -149,7 +149,6 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired when the selected option changes.
- * @allowPreventDefault
  * @param {IOption} selectedOption the selected option.
  * @public
  */

@@ -209,7 +209,6 @@ type SpecialCalendarDateT = {
  *
  * **Note:** If you call `preventDefault()` for this event, the component will not
  * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
- * @allowPreventDefault
  * @param {Array<string>} selectedValues The selected dates
  * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
@@ -227,6 +226,7 @@ type SpecialCalendarDateT = {
 
 		timestamp: { type: Number },
 	},
+	cancelable: true,
 })
 
 @event("show-month-view")
@@ -633,7 +633,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}

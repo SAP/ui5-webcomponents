@@ -123,7 +123,6 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * Fired when the selection has changed via user interaction
  *
  * @param {SideNavigationSelectableItemBase} item the clicked item.
- * @allowPreventDefault
  * @public
  */
 @event<SideNavigationSelectionChangeEventDetail>("selection-change", {
@@ -133,6 +132,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 		 */
 		item: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 class SideNavigation extends UI5Element {
 	/**
@@ -603,7 +603,7 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item })) {
 			return;
 		}
 

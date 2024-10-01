@@ -162,7 +162,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  *
  * Fired, when the notification icon is activated.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -173,6 +172,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
@@ -193,7 +193,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when the product switch icon is activated.
  *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -204,6 +203,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
@@ -242,7 +242,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * Fired, when the search button is activated.
  *
  * **Note:** You can prevent expanding/collapsing of the search field by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @param {Boolean} searchFieldVisible whether the search field is visible
  * @public
@@ -253,6 +252,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		targetRef: { type: HTMLElement },
 		searchFieldVisible: { type: Boolean },
 	},
+	cancelable: true,
 })
 
 class ShellBar extends UI5Element {
@@ -734,7 +734,7 @@ class ShellBar extends UI5Element {
 		const defaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
-		}, true);
+		});
 
 		if (defaultPrevented) {
 			return;
@@ -796,7 +796,7 @@ class ShellBar extends UI5Element {
 
 		this._defaultItemPressPrevented = !this.fireEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
-		}, true);
+		});
 	}
 
 	_handleProfilePress() {
@@ -815,7 +815,7 @@ class ShellBar extends UI5Element {
 
 		this._defaultItemPressPrevented = !this.fireEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
-		}, true);
+		});
 	}
 
 	/**

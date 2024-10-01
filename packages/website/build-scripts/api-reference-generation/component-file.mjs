@@ -156,13 +156,9 @@ No events available for this component.`
             eventResult += `\n| Since | ${event._ui5since} |`
         }
 
-        if (typeof event._ui5Bubbles === "boolean") {
-            eventResult += `\n| Bubbles | ${event._ui5Bubbles ? "Yes" : "No"}. |`
-        }
+        eventResult += `\n| Bubbles | ${event._ui5Bubbles ? "Yes" : "No"} |`
 
-        if (typeof event._ui5Cancelable === "boolean") {
-            eventResult += `\n| Cancelable | ${event._ui5Cancelable ? "Yes - by calling <code>preventDefault()</code>." : "No."} |`
-        }
+        eventResult += `\n| Cancelable | ${event._ui5Cancelable ? "Yes - via <code>preventDefault()</code>" : "No"} |`
 
         if (event.deprecated) {
             eventResult += `\n| Deprecated | ${processDescription(typeof event.deprecated === "boolean" ? "true" : event.deprecated)} |`

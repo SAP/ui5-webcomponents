@@ -84,7 +84,6 @@ type PopupBeforeCloseEventDetail = {
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening.
  * @public
- * @allowPreventDefault
  */
 @event("before-open", {
 	bubbles: false,
@@ -102,7 +101,6 @@ type PopupBeforeCloseEventDetail = {
 /**
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing.
  * @public
- * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
 @event<PopupBeforeCloseEventDetail>("before-close", {

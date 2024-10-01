@@ -175,7 +175,6 @@ type ListItemClickEventDetail = {
 /**
  * Fired when an item is activated, unless the item's `type` property
  * is set to `Inactive`.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
@@ -186,6 +185,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
@@ -243,7 +243,6 @@ type ListItemClickEventDetail = {
 /**
  * Fired when selection is changed by user interaction
  * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
- * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
  * @public
@@ -273,6 +272,7 @@ type ListItemClickEventDetail = {
 		 */
 		key: { type: String },
 	},
+	cancelable: true,
 })
 
 /**
@@ -301,7 +301,6 @@ type ListItemClickEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.0.0
- * @allowPreventDefault
  */
 
 @event<ListMoveEventDetail>("move-over", {
@@ -319,6 +318,7 @@ type ListItemClickEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	cancelable: true,
 })
 
 /**
@@ -328,7 +328,6 @@ type ListItemClickEventDetail = {
  * @param {object} source Contains information about the moved element under `element` property.
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
- * @allowPreventDefault
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
@@ -345,6 +344,7 @@ type ListItemClickEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	cancelable: true,
 })
 class List extends UI5Element {
 	/**
@@ -803,7 +803,7 @@ class List extends UI5Element {
 				selectionComponentPressed: e.detail.selectionComponentPressed,
 				targetItem: e.detail.item,
 				key: e.detail.key,
-			}, true);
+			});
 			if (changePrevented) {
 				this._revertSelection(previouslySelectedItems);
 			}
@@ -926,7 +926,7 @@ class List extends UI5Element {
 					element,
 					placement,
 				},
-			}, true);
+			});
 		});
 
 		if (acceptedPosition) {
@@ -1104,7 +1104,7 @@ class List extends UI5Element {
 					element: closestPosition.element,
 					placement,
 				},
-			}, true);
+			});
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();
@@ -1186,7 +1186,7 @@ class List extends UI5Element {
 	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
-		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
+		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem })) {
 			return;
 		}
 

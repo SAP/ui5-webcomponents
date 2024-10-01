@@ -42,7 +42,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
 /**
  * Fired when the selected option changes.
- * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
@@ -53,6 +52,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
@@ -60,12 +60,14 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @public
  */
 @event("open")
+
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
-@event("close")
-
+@event("close", {
+	bubbles: false,
+})
 class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the width of the select.

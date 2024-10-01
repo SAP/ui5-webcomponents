@@ -61,7 +61,6 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.1.0
- * @allowPreventDefault
  */
 
 @event<ListItemGroupMoveEventDetail>("move-over", {
@@ -75,6 +74,7 @@ type ListItemGroupMoveEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	cancelable: true,
 })
 
 /**
@@ -85,7 +85,6 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.1.0
- * @allowPreventDefault
  */
 @event<ListItemGroupMoveEventDetail>("move", {
 	detail: {
@@ -98,6 +97,7 @@ type ListItemGroupMoveEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	cancelable: true,
 })
 
 class ListItemGroup extends UI5Element {
@@ -217,7 +217,7 @@ class ListItemGroup extends UI5Element {
 					element: closestPosition.element,
 					placement,
 				},
-			}, true);
+			});
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();

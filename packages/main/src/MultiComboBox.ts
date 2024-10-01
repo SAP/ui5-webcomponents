@@ -237,7 +237,6 @@ type MultiComboboxItemWithSelection = {
  * Fired when selection is changed by user interaction.
  * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
- * @allowPreventDefault
  */
 @event<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
@@ -246,6 +245,7 @@ type MultiComboboxItemWithSelection = {
 		 */
 		items: { type: Array<IMultiComboBoxItem> },
 	},
+	cancelable: true,
 })
 
 class MultiComboBox extends UI5Element implements IFormInputElement {
@@ -1482,7 +1482,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	fireSelectionChange() {
 		const changePrevented = !this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 			items: this._getSelectedItems(),
-		}, true);
+		});
 
 		// Angular 2 way data binding
 		this.fireEvent("value-changed");

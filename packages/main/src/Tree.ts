@@ -122,7 +122,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
  * Even if you prevented the event's default behavior, you can always manually call `toggle()` on a tree item.
  * @param {HTMLElement} item the toggled item.
- * @allowPreventDefault
  * @public
  */
 @event<TreeItemToggleEventDetail>("item-toggle", {
@@ -132,6 +131,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 /**
  * Fired when the mouse cursor enters the tree item borders.
@@ -163,7 +163,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 })
 /**
  * Fired when a tree item is activated.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
@@ -174,6 +173,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	cancelable: true,
 })
 
 /**
@@ -447,7 +447,7 @@ class Tree extends UI5Element {
 
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
-		const defaultPrevented = !this.fireEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem }, true);
+		const defaultPrevented = !this.fireEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem });
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -456,7 +456,7 @@ class Tree extends UI5Element {
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 
-		if (!this.fireEvent<TreeItemClickEventDetail>("item-click", { item: treeItem }, true)) {
+		if (!this.fireEvent<TreeItemClickEventDetail>("item-click", { item: treeItem })) {
 			e.preventDefault();
 		}
 	}

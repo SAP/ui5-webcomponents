@@ -90,7 +90,6 @@ let activeCb: CheckBox;
 /**
  * Fired when the component checked state changes.
  * @public
- * @allowPreventDefault
  */
 @event("change", {
 	cancelable: true,

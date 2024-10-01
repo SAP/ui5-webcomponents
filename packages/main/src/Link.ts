@@ -85,7 +85,6 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
  * @public
- * @allowPreventDefault
  * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
@@ -110,6 +109,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 		 */
 		shiftKey: { type: Boolean },
 	},
+	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
 	/**
@@ -353,7 +353,7 @@ class Link extends UI5Element implements ITabbable {
 			ctrlKey,
 			metaKey,
 			shiftKey,
-		}, true);
+		});
 
 		if (!executeEvent) {
 			e.preventDefault();

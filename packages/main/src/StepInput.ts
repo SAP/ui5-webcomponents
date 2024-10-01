@@ -108,7 +108,6 @@ type StepInputValueStateChangeEventDetail = {
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- * @allowPreventDefault
  * @since 1.23.0
  * @public
  * @param {string} valueState The new `valueState` that will be set.
@@ -129,6 +128,7 @@ type StepInputValueStateChangeEventDetail = {
 			type: Boolean,
 		},
 	},
+	cancelable: true,
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	/**
@@ -426,7 +426,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
 			valueState: this.valueState,
 			valid: isValid,
-		}, true);
+		});
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;
