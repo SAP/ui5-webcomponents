@@ -56,7 +56,7 @@ type CarouselNavigateEventDetail = {
  * There are several ways to perform navigation:
  *
  * - on desktop - the user can navigate using the navigation arrows or with keyboard shortcuts.
- * - on mobile - the user can use swipe gestures.
+ * - on touch devices - the user can navigate using the navigation arrows (always visible) or can use swipe gestures.
  *
  * ### Usage
  *
@@ -169,8 +169,7 @@ class Carousel extends UI5Element {
 	 * Defines the visibility of the navigation arrows.
 	 * If set to true the navigation arrows will be hidden.
 	 *
-	 * **Note:** The navigation arrows are never displayed on touch devices.
-	 * In this case, the user can swipe to navigate through the items.
+	 * **Note:** The navigation arrows are always displayed on touch devices.
 	 * @since 1.0.0-rc.15
 	 * @default false
 	 * @public
@@ -306,7 +305,7 @@ class Carousel extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation || !isDesktop()) {
 			this._visibleNavigationArrows = true;
 		}
 
@@ -594,7 +593,7 @@ class Carousel extends UI5Element {
 			return false;
 		}
 
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop())) {
 			return true;
 		}
 
@@ -628,11 +627,11 @@ class Carousel extends UI5Element {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.suppressAnimation,
 				"ui5-carousel-content-has-navigation": this.renderNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
+				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop()),
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
+				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop()),
 				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
 				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
 			},
@@ -673,11 +672,10 @@ class Carousel extends UI5Element {
 	}
 
 	get showArrows() {
-		const displayArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
-
+		const displayArrows = this._visibleNavigationArrows && this.hasManyPages;
 		return {
-			content: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: (!this.hideNavigationArrows || !isDesktop()) && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: (!this.hideNavigationArrows || !isDesktop()) && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
