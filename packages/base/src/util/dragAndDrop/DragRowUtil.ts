@@ -1,5 +1,5 @@
-import type UI5Element from "../../UI5Element";
-import type MovePlacement from "../../types/MovePlacement";
+import type UI5Element from "../../UI5Element.js";
+import type MovePlacement from "../../types/MovePlacement.js";
 import DragRegistry from "./DragRegistry.js";
 import { findClosestPosition } from "./findClosestPosition.js";
 import Orientation from "../../types/Orientation.js";
