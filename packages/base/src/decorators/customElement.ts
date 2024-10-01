@@ -17,6 +17,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 	dependencies?: Array<typeof UI5Element>,
 	languageAware?: boolean,
 	themeAware?: boolean,
+	cldr?: boolean,
 	fastNavigation?: boolean,
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
@@ -36,6 +37,7 @@ const customElement = (tagNameOrComponentSettings: string | {
 			tag,
 			languageAware,
 			themeAware,
+			cldr,
 			fastNavigation,
 			formAssociated,
 			shadowRootOptions,
@@ -45,6 +47,9 @@ const customElement = (tagNameOrComponentSettings: string | {
 		target.metadata.tag = tag;
 		if (languageAware) {
 			target.metadata.languageAware = languageAware;
+		}
+		if (cldr) {
+			target.metadata.cldr = cldr;
 		}
 
 		if (features) {

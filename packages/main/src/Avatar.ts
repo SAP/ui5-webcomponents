@@ -3,9 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -230,16 +230,15 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	badge!: Array<HTMLElement>;
 
 	_onclick?: (e: MouseEvent) => void;
+
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
+
 	_handleResizeBound: ResizeObserverCallback;
 
 	constructor() {
 		super();
 		this._handleResizeBound = this.handleResize.bind(this);
-	}
-
-	static async onDefine() {
-		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get tabindex() {

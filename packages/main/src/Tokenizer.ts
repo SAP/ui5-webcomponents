@@ -14,7 +14,7 @@ import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import {
 	isSpace,
@@ -314,6 +314,7 @@ class Tokenizer extends UI5Element {
 	})
 	tokens!: Array<Token>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_resizeHandler: ResizeObserverCallback;
 	_itemNav: ItemNavigation;
@@ -460,7 +461,7 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this._tokenDeleting = true;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] || [target] });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -1114,10 +1115,6 @@ class Tokenizer extends UI5Element {
 
 		const lastToken = tokens[tokens.length - 1];
 		lastToken.focus();
-	}
-
-	static async onDefine() {
-		Tokenizer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	getPopover() {

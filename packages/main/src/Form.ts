@@ -465,6 +465,6 @@ class Form extends UI5Element {
 Form.define();
 
 export default Form;
-export {
+export type {
 	IFormItem,
 };
