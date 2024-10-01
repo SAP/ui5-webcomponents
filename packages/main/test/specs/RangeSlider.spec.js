@@ -338,6 +338,21 @@ describe("Range Slider elements - tooltip, step, tickmarks, labels", () => {
 		await browser.keys("Enter");
 
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 3, "Slider value is changed on a followup input after initial swap interaction");
+
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
+
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
+
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 1, "Slider value is changed on a followup keyboard actions after initial swap interaction");
+		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "Slider value is changed on a followup keyboard actions after initial swap interaction");
+
+		assert.strictEqual(await rangeSliderEndTooltipInput.getProperty("value"), "1", "Slider end value is changed on a followup keyboard actions after initial swap interaction");
+		assert.strictEqual(await rangeSliderStartTooltipInput.getProperty("value"), "0", "Slider start value is changed on a followup keyboard actions after initial swap interaction");
 	});
 
 

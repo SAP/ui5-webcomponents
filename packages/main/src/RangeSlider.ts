@@ -839,20 +839,38 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	_onInputKeydown(e: KeyboardEvent): void {
-		const input = e.target as Input;
+		const targetedInput = e.target as Input;
+		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
+
+		const startValue = parseFloat(startValueInput.value);
+		const endValue = parseFloat(endValueInput.value);
+		const affectedValue = targetedInput.hasAttribute("data-sap-ui-start-value") ? "startValue" : "endValue";
 
 		super._onInputKeydown(e);
-		const otherInput: Input = input.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
 
-		if (isEnter(e) && this.startValue > this.endValue) {
+		if (isEnter(e) && startValue > endValue) {
+			const swappedInput = affectedValue === "startValue" ? endValueInput : startValueInput;
+			const isValueValid = parseFloat(targetedInput.value) >= this.min && parseFloat(startValueInput.value) <= this.max;
+
+			if (!isValueValid) {
+				targetedInput.valueState = "Negative";
+				return;
+			}
+
+			this._isEndValueValid = parseFloat(endValueInput.value) >= this.min && parseFloat(endValueInput.value) <= this.max;
+
 			this._areInputValuesSwapped = true;
-			this._setAffectedValue(input.hasAttribute("data-sap-ui-start-value") ? "endValue" : "startValue");
+			this._setAffectedValue(affectedValue === "startValue" ? "endValue" : "startValue");
 
-			otherInput.focus();
+			startValueInput.value = this._getFormattedValue(this.endValue.toString());
+			endValueInput.value = this._getFormattedValue(this.startValue.toString());
+			swappedInput.focus();
+
 			return;
 		}
 
-		this._setAffectedValue(input.hasAttribute("data-sap-ui-start-value") ? "startValue" : "endValue");
+		this._setAffectedValue(affectedValue);
 	}
 
 	_updateInputValue() {
