@@ -140,6 +140,7 @@ type FocusAdaptor = ITabbable & {
 		 */
 		shiftKey: { type: Boolean },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 class Breadcrumbs extends UI5Element {
@@ -403,7 +404,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		if (!this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -424,7 +425,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e;
 
-		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -438,7 +439,7 @@ class Breadcrumbs extends UI5Element {
 			items = this._getItems(),
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
 
-		if (this.fireEvent("item-click", { item })) {
+		if (this.fireDecoratorEvent("item-click", { item })) {
 			locationOpen(item.href, item.target || "_self", "noopener,noreferrer");
 			this.responsivePopover!.open = false;
 		}

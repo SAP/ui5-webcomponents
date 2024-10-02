@@ -159,6 +159,7 @@ type SelectLiveChangeEventDetail = {
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -175,26 +176,29 @@ type SelectLiveChangeEventDetail = {
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 /**
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
-@event("close", {
-	bubbles: false,
-})
+@event("close")
 
 /**
  * Fired to make Angular two way data binding work properly.
  * @private
  */
-@event("selected-item-changed")
+@event("selected-item-changed", {
+	bubbles: true,
+})
 class Select extends UI5Element implements IFormInputElement {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -589,7 +593,7 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		if (selectedIndex !== index) {
-			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
+			this.fireDecoratorEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
 		this.options[index].selected = true;
@@ -685,7 +689,7 @@ class Select extends UI5Element implements IFormInputElement {
 		nextOption.selected = true;
 		nextOption.focused = true;
 
-		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
+		this.fireDecoratorEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
@@ -708,7 +712,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_afterOpen() {
 		this.opened = true;
-		this.fireEvent<CustomEvent>("open");
+		this.fireDecoratorEvent<CustomEvent>("open");
 		this.itemSelectionAnnounce();
 		this._scrollSelectedItem();
 		this._applyFocusToSelectedItem();
@@ -732,7 +736,7 @@ class Select extends UI5Element implements IFormInputElement {
 			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-		this.fireEvent<CustomEvent>("close");
+		this.fireDecoratorEvent<CustomEvent>("close");
 	}
 
 	get hasCustomLabel() {
@@ -740,10 +744,10 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_fireChangeEvent(selectedOption: IOption) {
-		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
+		const changePrevented = !this.fireDecoratorEvent<SelectChangeEventDetail>("change", { selectedOption });
 
 		//  Angular two way data binding
-		this.fireEvent("selected-item-changed");
+		this.fireDecoratorEvent("selected-item-changed");
 
 		if (changePrevented) {
 			this._select(this._selectedIndexBeforeOpen);

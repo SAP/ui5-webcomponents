@@ -194,6 +194,7 @@ interface ITab extends UI5Element {
 		 */
 		tabIndex: { type: Number },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -216,6 +217,7 @@ interface ITab extends UI5Element {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -237,7 +239,7 @@ interface ITab extends UI5Element {
 		 */
 		destination: { type: Object },
 	},
-	cancelable: true,
+	bubbles: true,
 })
 class TabContainer extends UI5Element {
 	/**
@@ -555,7 +557,7 @@ class TabContainer extends UI5Element {
 			}
 
 			const acceptedPlacement = placements.find(placement => {
-				const dragOverPrevented = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+				const dragOverPrevented = !this.fireDecoratorEvent<TabContainerMoveEventDetail>("move-over", {
 					source: {
 						element: draggedElement!,
 					},
@@ -597,7 +599,7 @@ class TabContainer extends UI5Element {
 		e.preventDefault();
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
-		this.fireEvent<TabContainerMoveEventDetail>("move", {
+		this.fireDecoratorEvent<TabContainerMoveEventDetail>("move", {
 			source: {
 				element: draggedElement,
 			},
@@ -638,7 +640,7 @@ class TabContainer extends UI5Element {
 		});
 
 		const acceptedPosition = positions.find(({ element, placement }) => {
-			return !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent<TabContainerMoveEventDetail>("move-over", {
 				source: {
 					element: tab,
 				},
@@ -650,7 +652,7 @@ class TabContainer extends UI5Element {
 		});
 
 		if (acceptedPosition) {
-			this.fireEvent<TabContainerMoveEventDetail>("move", {
+			this.fireDecoratorEvent<TabContainerMoveEventDetail>("move", {
 				source: {
 					element: tab,
 				},
@@ -705,7 +707,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const placementAccepted = !this.fireEvent<TabContainerMoveEventDetail>("move-over", {
+		const placementAccepted = !this.fireDecoratorEvent<TabContainerMoveEventDetail>("move-over", {
 			source: {
 				element: draggedElement,
 			},
@@ -749,7 +751,7 @@ class TabContainer extends UI5Element {
 
 		e.preventDefault();
 
-		this.fireEvent<TabContainerMoveEventDetail>("move", {
+		this.fireDecoratorEvent<TabContainerMoveEventDetail>("move", {
 			source: {
 				element: draggedElement,
 			},
@@ -968,7 +970,7 @@ class TabContainer extends UI5Element {
 	 * @returns true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {
-		if (!this.fireEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex })) {
+		if (!this.fireDecoratorEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex })) {
 			return false;
 		}
 

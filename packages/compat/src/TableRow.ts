@@ -78,11 +78,15 @@ type TableRowF7PressEventDetail = {
  * @since 2.0.0
  * @private
  */
-@event("row-click")
+@event("row-click", {
+	bubbles: true,
+})
 /**
  * @private
  */
-@event("_focused")
+@event("_focused", {
+	bubbles: true,
+})
 /**
  * @private
  */
@@ -92,6 +96,7 @@ type TableRowF7PressEventDetail = {
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
 })
 /**
  * @private
@@ -102,19 +107,24 @@ type TableRowF7PressEventDetail = {
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
 })
 /**
  * Fired on selection change of an active row.
  * @since 2.0.0
  * @private
  */
-@event("selection-requested")
+@event("selection-requested", {
+	bubbles: true,
+})
 /**
  * Fired when F7 is pressed.
  * @since 2.0.0
  * @private
  */
-@event("f7-pressed")
+@event("f7-pressed", {
+	bubbles: true,
+})
 class TableRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the visual indication and behavior of the component.
@@ -227,11 +237,11 @@ class TableRow extends UI5Element implements ITableRow {
 		const lastFocusableElement = elements.pop();
 
 		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {
-			this.fireEvent<TableRowForwardAfterEventDetail>("_forward-after", { target: activeElement });
+			this.fireDecoratorEvent<TableRowForwardAfterEventDetail>("_forward-after", { target: activeElement });
 		}
 
 		if (isTabPrevious(e) && activeElement === this.root) {
-			this.fireEvent<TableRowForwardBeforeEventDetail>("_forward-before", { target: activeElement });
+			this.fireDecoratorEvent<TableRowForwardBeforeEventDetail>("_forward-before", { target: activeElement });
 		}
 
 		if (isSpace(e) && target.tagName.toLowerCase() === "tr") {
@@ -240,11 +250,11 @@ class TableRow extends UI5Element implements ITableRow {
 
 		if (isRowFocused && !checkboxPressed) {
 			if ((isSpace(e) && itemSelectable) || (isEnter(e) && isSingleSelect)) {
-				this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
+				this.fireDecoratorEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 			}
 
 			if (isEnter(e) && itemActive) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
+				this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row: this });
 				if (!isSingleSelect) {
 					this.activate();
 				}
@@ -253,7 +263,7 @@ class TableRow extends UI5Element implements ITableRow {
 
 		if (isF7(e)) {
 			e.preventDefault();
-			this.fireEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
+			this.fireDecoratorEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
 		}
 	}
 
@@ -277,7 +287,7 @@ class TableRow extends UI5Element implements ITableRow {
 			this.activate();
 		}
 
-		this.fireEvent("_focused");
+		this.fireDecoratorEvent("_focused");
 	}
 
 	_onrowclick(e: MouseEvent) {
@@ -305,13 +315,13 @@ class TableRow extends UI5Element implements ITableRow {
 			}
 
 			if (this.type === TableRowType.Active && !checkboxPressed) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
+				this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row: this });
 			}
 		}
 	}
 
 	_handleSelection() {
-		this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
+		this.fireDecoratorEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 	}
 
 	_activeElementHasAttribute(attr: string): boolean {

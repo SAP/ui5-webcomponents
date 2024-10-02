@@ -112,6 +112,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * Fired when an item is being clicked.
  *
  * **Note:** Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
+ * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
  * @public
@@ -131,15 +132,14 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 			type: String,
 		},
 	},
-	bubbles: false,
-	cancelable: true,
 })
 
 /**
- * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening.
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
  *
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
+ * @allowPreventDefault
  * @since 1.10.0
  * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
@@ -153,19 +153,19 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 			type: HTMLElement,
 		},
 	},
-	cancelable: true,
 })
 
 /**
- * Fired after the menu is opened.
+ * Fired after the menu is opened. **This event does not bubble.**
  * @public
  * @since 1.10.0
  */
 @event("open")
 
 /**
- * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
  * @public
+ * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
@@ -178,11 +178,10 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 			type: Boolean,
 		},
 	},
-	cancelable: true,
 })
 
 /**
- * Fired after the menu is closed.
+ * Fired after the menu is closed. **This event does not bubble.**
  * @public
  * @since 1.10.0
  */
@@ -291,8 +290,6 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		// Menu "before-open" event should be fired always with the same config for cancelable and bubbles.
-		// Currently we configure it as cancelable and bubbling, while here we fire it as not cancelable and not bubbling.
 		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
@@ -348,7 +345,7 @@ class Menu extends UI5Element {
 			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 				"item": item,
 				"text": item.text || "",
-			});
+			}, true, false);
 
 			if (!prevented && this._popover) {
 				item.fireEvent("close-menu", {});
@@ -381,7 +378,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open");
+		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
 
 		if (prevented) {
 			this.open = false;
@@ -391,11 +388,11 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
-		this.fireEvent("open");
+		this.fireEvent("open", {}, false, true);
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed });
+		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
 
 		if (prevented) {
 			this.open = true;
@@ -405,7 +402,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("close");
+		this.fireEvent("close", {}, false, true);
 	}
 }
 

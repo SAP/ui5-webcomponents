@@ -173,6 +173,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		targetRef: { type: HTMLElement },
 	},
 	cancelable: true,
+	bubbles: true,
 })
 
 /**
@@ -187,6 +188,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -204,6 +206,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		targetRef: { type: HTMLElement },
 	},
 	cancelable: true,
+	bubbles: true,
 })
 
 /**
@@ -219,6 +222,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -236,6 +240,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -253,6 +259,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		searchFieldVisible: { type: Boolean },
 	},
 	cancelable: true,
+	bubbles: true,
 })
 
 class ShellBar extends UI5Element {
@@ -528,16 +535,16 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		const shouldContinue = this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+		const shouldContinue = this.fireDecoratorEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 			item: e.detail.selectedItems[0],
-		}, true);
+		});
 		if (shouldContinue) {
 			this.menuPopover!.open = false;
 		}
 	}
 
 	_logoPress() {
-		this.fireEvent<ShellBarLogoClickEventDetail>("logo-click", {
+		this.fireDecoratorEvent<ShellBarLogoClickEventDetail>("logo-click", {
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo")!,
 		});
 	}
@@ -732,7 +739,7 @@ class ShellBar extends UI5Element {
 
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
-		const defaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+		const defaultPrevented = !this.fireDecoratorEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
 		});
@@ -795,13 +802,13 @@ class ShellBar extends UI5Element {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
 		});
 	}
 
 	_handleProfilePress() {
-		this.fireEvent<ShellBarProfileClickEventDetail>("profile-click", {
+		this.fireDecoratorEvent<ShellBarProfileClickEventDetail>("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
 	}
@@ -814,7 +821,7 @@ class ShellBar extends UI5Element {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
 		});
 	}

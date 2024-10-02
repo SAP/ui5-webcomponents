@@ -74,6 +74,7 @@ type ListItemGroupMoveEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 
@@ -97,7 +98,7 @@ type ListItemGroupMoveEventDetail = {
 		 */
 		destination: { type: Object },
 	},
-	cancelable: true,
+	bubbles: true,
 })
 
 class ListItemGroup extends UI5Element {
@@ -209,7 +210,7 @@ class ListItemGroup extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<ListItemGroupMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},
@@ -237,7 +238,7 @@ class ListItemGroup extends UI5Element {
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 
-		this.fireEvent<ListItemGroupMoveEventDetail>("move", {
+		this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move", {
 			source: {
 				element: DragRegistry.getDraggedElement()!,
 			},

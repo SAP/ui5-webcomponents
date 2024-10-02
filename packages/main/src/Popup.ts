@@ -86,7 +86,6 @@ type PopupBeforeCloseEventDetail = {
  * @public
  */
 @event("before-open", {
-	bubbles: false,
 	cancelable: true,
 })
 
@@ -94,9 +93,7 @@ type PopupBeforeCloseEventDetail = {
  * Fired after the component is opened.
  * @public
  */
-@event("open", {
-	bubbles: false,
-})
+@event("open")
 
 /**
  * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing.
@@ -113,22 +110,21 @@ type PopupBeforeCloseEventDetail = {
 		},
 	},
 	cancelable: true,
-	bubbles: false,
 })
 
 /**
  * Fired after the component is closed.
  * @public
  */
-@event("close", {
-	bubbles: false,
-})
+@event("close")
 
 /**
  * Fired whenever the popup content area is scrolled
  * @private
  */
-@event("scroll")
+@event("scroll", {
+	bubbles: true,
+})
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
@@ -303,7 +299,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent("before-open", {}, true, false);
+		const prevented = !this.fireDecoratorEvent("before-open", {});
 
 		if (prevented || this._opened) {
 			return;
@@ -336,7 +332,7 @@ abstract class Popup extends UI5Element {
 		await this.applyInitialFocus();
 
 		if (this.isConnected) {
-			this.fireEvent("open", {}, false, false);
+			this.fireDecoratorEvent("open", {});
 		}
 	}
 
@@ -380,7 +376,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<PopupScrollEventDetail>("scroll", {
+		this.fireDecoratorEvent<PopupScrollEventDetail>("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -519,7 +515,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.fireDecoratorEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed });
 		if (prevented) {
 			return;
 		}
@@ -541,7 +537,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("close", {}, false, false);
+		this.fireDecoratorEvent("close", {});
 	}
 
 	/**

@@ -50,7 +50,9 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
 /**
  * @private
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	/**
 	 * Defines the selected state of the component.
@@ -257,7 +259,7 @@ class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
 	}
 
 	_fireItemClick() {
-		this.fireEvent("click", { item: this });
+		this.fireDecoratorEvent("click", { item: this });
 	}
 }
 

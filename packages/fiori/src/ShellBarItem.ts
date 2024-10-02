@@ -34,6 +34,7 @@ type ShellBarItemClickEventDetail = {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 
@@ -70,7 +71,7 @@ class ShellBarItem extends UI5Element {
 	}
 
 	fireClickEvent(e: MouseEvent) {
-		return this.fireEvent<ShellBarItemClickEventDetail>("click", {
+		return this.fireDecoratorEvent<ShellBarItemClickEventDetail>("click", {
 			targetRef: (e.target as HTMLElement),
 		});
 	}

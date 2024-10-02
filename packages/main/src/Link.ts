@@ -109,6 +109,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 		 */
 		shiftKey: { type: Boolean },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
@@ -345,7 +346,7 @@ class Link extends UI5Element implements ITabbable {
 		e.stopImmediatePropagation();
 		markEvent(e, "link");
 
-		const executeEvent = this.fireEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
 			altKey,
 			ctrlKey,
 			metaKey,

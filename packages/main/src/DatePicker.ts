@@ -197,6 +197,7 @@ type DatePickerInputEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -220,6 +221,7 @@ type DatePickerInputEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -245,6 +247,7 @@ type DatePickerInputEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
 	cancelable: true,
 })
 class DatePicker extends DateComponentBase implements IFormInputElement {
@@ -545,7 +548,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 
 		events.forEach((e: string) => {
-			if (!this.fireEvent<DatePickerChangeEventDetail>(e, { value, valid })) {
+			if (!this.fireDecoratorEvent<DatePickerChangeEventDetail>(e, { value, valid })) {
 				executeEvent = false;
 			}
 		});
@@ -567,7 +570,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		this.valueState = valid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid });
+		const eventPrevented = !this.fireDecoratorEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid });
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;

@@ -18,8 +18,8 @@ const event = <EventDetail>(name: string, data: { detail?: Record<keyof EventDet
 
 		const eventsMetadata = metadata.events;
 		if (!eventsMetadata[name]) {
-			data.bubbles = data.bubbles === undefined ? true : data.bubbles;
-			data.cancelable = data.cancelable === undefined ? false : data.cancelable;
+			data.bubbles = !!data.bubbles;
+			data.cancelable = !!data.cancelable;
 			eventsMetadata[name] = data;
 		}
 	};

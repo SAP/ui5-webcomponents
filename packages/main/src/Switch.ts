@@ -66,6 +66,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @public
  */
 @event("change", {
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -73,6 +74,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @private
  */
 @event("value-changed", {
+	bubbles: true,
 	cancelable: true,
 })
 class Switch extends UI5Element implements IFormInputElement {
@@ -231,9 +233,9 @@ class Switch extends UI5Element implements IFormInputElement {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.fireEvent("change");
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding;
-			const valueChangePrevented = !this.fireEvent("value-changed");
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;

@@ -87,6 +87,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 
@@ -102,6 +103,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 
@@ -118,6 +120,8 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 class NotificationList extends UI5Element {
@@ -155,7 +159,7 @@ class NotificationList extends UI5Element {
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireEvent<NotificationItemClickEventDetail>("item-click", { item })) {
+		if (!this.fireDecoratorEvent<NotificationItemClickEventDetail>("item-click", { item })) {
 			e.preventDefault();
 		}
 	}
@@ -163,7 +167,7 @@ class NotificationList extends UI5Element {
 	_onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireEvent<NotificationItemCloseEventDetail>("item-close", { item })) {
+		if (!this.fireDecoratorEvent<NotificationItemCloseEventDetail>("item-close", { item })) {
 			e.preventDefault();
 		}
 	}
@@ -171,13 +175,13 @@ class NotificationList extends UI5Element {
 	_onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireEvent<NotificationItemToggleEventDetail>("item-toggle", { item }, true)) {
+		if (!this.fireDecoratorEvent<NotificationItemToggleEventDetail>("item-toggle", { item })) {
 			e.preventDefault();
 		}
 	}
 
 	_onLoadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 }
 

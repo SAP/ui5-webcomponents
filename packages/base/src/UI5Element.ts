@@ -947,11 +947,8 @@ abstract class UI5Element extends HTMLElement {
 	 * @param bubbles - true, if the event bubbles
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean {
-		const _cancellable = cancelable !== undefined ? cancelable : this.eventCancelable(name);
-		const _bubbles = bubbles !== undefined ? bubbles : this.eventBubbles(name);
-
-		const eventResult = this._fireEvent(name, data, _cancellable, _bubbles);
+	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
+		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
 		const pascalCaseEventName = kebabToPascalCase(name);
 
 		// pascal events are more convinient for native react usage
@@ -959,7 +956,33 @@ abstract class UI5Element extends HTMLElement {
 		//	 Before: onlive-change
 		//	 After: onLiveChange
 		if (pascalCaseEventName !== name) {
-			return eventResult && this._fireEvent(pascalCaseEventName, data, _cancellable, _bubbles);
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
+		}
+
+		return eventResult;
+	}
+
+	/**
+	 * Fires a custom event, configured via the "event" decorator.
+	 * @public
+	 * @param name - name of the event
+	 * @param data - additional data for the event
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 */
+	fireDecoratorEvent<T>(name: string, data?: T): boolean {
+		const eventData = this.getEventData(name);
+		const cancellable = eventData ? eventData.cancelable : false;
+		const bubbles = eventData ? eventData.bubbles : false;
+
+		const eventResult = this._fireEvent(name, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name);
+
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancellable, bubbles);
 		}
 
 		return eventResult;
@@ -998,14 +1021,6 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const eventMap = ctor.getMetadata().getEvents();
 		return eventMap[name];
-	}
-	eventCancelable(name: string): boolean {
-		const eventData = this.getEventData(name);
-		return eventData ? eventData.cancelable : false;
-	}
-	eventBubbles(name: string): boolean {
-		const eventData = this.getEventData(name);
-		return eventData ? eventData.bubbles : true;
 	}
 
 	/**

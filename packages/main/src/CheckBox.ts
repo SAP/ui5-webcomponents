@@ -92,6 +92,7 @@ let activeCb: CheckBox;
  * @public
  */
 @event("change", {
+	bubbles: true,
 	cancelable: true,
 })
 /**
@@ -99,6 +100,7 @@ let activeCb: CheckBox;
  * @private
  */
 @event("value-changed", {
+	bubbles: true,
 	cancelable: true,
 })
 class CheckBox extends UI5Element implements IFormInputElement {
@@ -338,9 +340,9 @@ class CheckBox extends UI5Element implements IFormInputElement {
 				this.checked = !this.checked;
 			}
 
-			const changePrevented = !this.fireEvent("change");
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding
-			const valueChangePrevented = !this.fireEvent("value-changed");
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = lastState.checked;

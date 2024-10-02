@@ -132,6 +132,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 class SideNavigation extends UI5Element {
@@ -604,7 +605,7 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item })) {
+		if (!this.fireDecoratorEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item })) {
 			return;
 		}
 

@@ -52,6 +52,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	bubbles: true,
 	cancelable: true,
 })
 
@@ -59,15 +60,15 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
-@event("close", {
-	bubbles: false,
-})
+@event("close")
 class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the width of the select.
