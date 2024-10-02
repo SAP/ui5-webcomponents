@@ -195,6 +195,7 @@
 	text-align: center;
 	display: inline-block;
 	color: var(--_ui5_slider_label_color);
+	font-family: var(--sapFontFamily);
 	font-size: var(--_ui5_slider_label_fontsize);
 	padding-top: 0;
 	box-sizing: border-box;
