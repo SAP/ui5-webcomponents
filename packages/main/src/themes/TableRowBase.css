@@ -26,9 +26,15 @@
 }
 
 /** Focus outline for the selection cell */
-:host([tabindex]:focus) #selection-cell {
+:host([tabindex]:focus) #selection-cell:not(:has(~ #popin-cell)) {
     outline: none;
     box-shadow: var(--_ui5_table_shadow_border_top),
 				var(--_ui5_table_shadow_border_left),
 				var(--_ui5_table_shadow_border_bottom); /* There is a 1px difference between row and cell, therefore the outline is also 1px difference between their outline offsets */
+}
+
+:host([tabindex]:focus) #selection-cell:has(~ #popin-cell) {
+    outline: none;
+    box-shadow: var(--_ui5_table_shadow_border_top),
+				var(--_ui5_table_shadow_border_left);
 }
