@@ -652,6 +652,10 @@ class List extends UI5Element {
 		return this.getItems().length !== 0;
 	}
 
+	get showBusyIndicatorOverlay() {
+		return !this.growsWithButton && this.loading;
+	}
+
 	get showNoDataText() {
 		return !this.hasData && this.noDataText;
 	}
