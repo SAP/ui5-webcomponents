@@ -85,7 +85,6 @@
 
 .ui5-dynamic-page-title--wrapper {
     display: flex;
-    align-items: center;
 }
 
 .ui5-dynamic-page-title--heading {
@@ -101,10 +100,11 @@
 }
 
 .ui5-dynamic-page-title--content {
-    padding: 0 0 0 1rem;
+    padding: 0.6rem 0 0 1rem;
     flex-shrink: 1.6;
     min-width: 3rem;
     flex-grow: 1;
+    display: flex;
 }
 
 .ui5-dynamic-page-title--actions {
@@ -112,7 +112,6 @@
     min-width: 3rem;
     flex-grow: 1;
     display: flex;
-    align-items: center;
 }
 
 .ui5-dynamic-page-title--actions ::slotted([slot="actionsBar"]) {
@@ -130,7 +129,7 @@
         width: 0.0625rem;
         vertical-align: middle;
         background: var(--sapToolbar_SeparatorColor);
-        margin: 0 0.5rem 0 0.25rem;
+        margin: 0.5rem 0.5rem 0 0.25rem;
     }
 }
 
@@ -140,6 +139,10 @@
     flex: 0 1;
     padding-left: 0;
     padding-right: 0;
+}
+
+.ui5-dynamic-page-title--top-area ::slotted([slot="navigationBar"]) {
+    flex: 0 1.6 auto;
 }
 
 .ui5-dynamic-page-title--top-area {

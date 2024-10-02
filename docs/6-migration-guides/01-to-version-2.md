@@ -1786,16 +1786,16 @@ If you previously used the `disabled` property, it won't take effect:
 
 If you previously used it like:
 ```html
-<ui5-rogress-indicator value-state="Error"></ui5-rogress-indicator>
-<ui5-rogress-indicator value-state="Warning"></ui5-rogress-indicator>
-<ui5-rogress-indicator value-state="Success"></ui5-rogress-indicator>
+<ui5-progress-indicator value-state="Error"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Warning"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Success"></ui5-progress-indicator>
 ```
 
 Now you have to use it like:
 ```html
-<ui5-rogress-indicator value-state="Negative"></ui5-rogress-indicator>
-<ui5-rogress-indicator value-state="Critical"></ui5-rogress-indicator>
-<ui5-rogress-indicator value-state="Positive"></ui5-rogress-indicator>
+<ui5-progress-indicator value-state="Negative"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Critical"></ui5-progress-indicator>
+<ui5-progress-indicator value-state="Positive"></ui5-progress-indicator>
 ```
 
 ### ui5-radio-button
