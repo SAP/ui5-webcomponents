@@ -41,7 +41,6 @@ import {
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 
-
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
 };
@@ -84,7 +83,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 /**
  * @private
 */
-@event("_min-content-width-change", {
+@event<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
 	detail: {
 		minWidth: {
 			type: Number,

@@ -300,7 +300,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireDecoratorEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
+		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
 
 		if (prevented) {
 			e.preventDefault();
