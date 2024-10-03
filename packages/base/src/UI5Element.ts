@@ -946,6 +946,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @param cancelable - true, if the user can call preventDefault on the event object
 	 * @param bubbles - true, if the event bubbles
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 * @deprecated
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);

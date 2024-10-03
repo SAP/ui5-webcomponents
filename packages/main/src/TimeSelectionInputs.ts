@@ -24,7 +24,6 @@ import TimeSelectionInputsTemplate from "./generated/templates/TimeSelectionInpu
 
 // Styles
 import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.js";
-import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 
 /**
  * @class
