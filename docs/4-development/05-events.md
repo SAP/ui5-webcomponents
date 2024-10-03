@@ -30,7 +30,7 @@ class MyDemoComponent extends UI5Element {}
 
 ## Usage
 
-As mentioned earlier, the `@event` decorator doesn't create event emitters. To notify developers of component changes, we have to fire events ourselves. This can be done using the `fireEvent` method that comes from the `UI5Element` class.
+As mentioned earlier, the `@event` decorator doesn't create event emitters. To notify developers of component changes, we have to fire events ourselves. This can be done using the `fireEvent` and the newer `fireDecoratorEvent` methods that comes from the `UI5Element` class. The difference between the methods is explained below.
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -46,16 +46,16 @@ class MyDemoComponent extends UI5Element {
 
     onNativeInputChange(e) {
         this.value = e.target.value;
-        this.fireEvent("change");
+        this.fireDecoratorEvent("change"); // or this.fireEvent("change");
     }
 }
 ```
 
-**Note:** By default, the `fireEvent` method returns a boolean value that helps you understand whether the event was canceled (i.e., if the `preventDefault` method was called).
+**Note:** By default, the `fireDecoratorEvent` (and `fireEvent`) method returns a boolean value that helps you understand whether the event was canceled (i.e., if the `preventDefault` method was called).
 
 ## Event Detail
 
-The `@event` decorator is generic and accepts a TypeScript type that describes its detail. This type is crucial for preventing incorrect detail data when the event is fired using `fireEvent` (which is also generic) and for ensuring type safety when listening for the event, so you know what kind of detail data to expect.
+The `@event` decorator is generic and accepts a TypeScript type that describes its detail. This type is crucial for preventing incorrect detail data when the event is fired using `fireDecoratorEvent` and `fireEvent` methods (both generic) and for ensuring type safety when listening for the event, so you know what kind of detail data to expect.
 
 **Note:** It's required to export all types that describe specific event details for all public events.
 
@@ -83,7 +83,7 @@ class MyDemoComponent extends UI5Element {
     value = "";
 
     onNativeInputChange(e: Event) {
-        this.fireEvent<MyDemoComponentChangeEventDetail>("change", {
+        this.fireDecoratorEvent<MyDemoComponentChangeEventDetail>("change", {
             valid: true,
         });
     }
@@ -99,9 +99,11 @@ export { MyDemoComponent };
 Whether the events should be cancelable or able to bubble is configurable.
 by setting `cancelable` and `bubbles` in the `@event` decorator.
 
-- `cancelable: true` means the event can be prevented by calling the native `preventDefault()` method in the event handler. By default, `cancelable` is `false`, e.g. events are not preventable/cancelable.
+- `cancelable: true` means the event can be prevented by calling the native `preventDefault()` method in the event handler- by default it's `false`.
 
-- `bubbles: false` means the event will not bubble, while by default it's `true` as all events bubble.
+- `bubbles: true` means the event will bubble - by default it's `false`.
+
+Since `v2.4.0` this can be configured in the `@event` decorator:
 
 ```ts
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -110,19 +112,71 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 @customElement("my-demo-component")
 @event("change", {
-    bubbles: false // true by default
+    bubbles: true // false by default
     cancelable: true // false by default
 })
-class MyDemoComponent extends UI5Element {}
+class MyDemoComponent extends UI5Element {
+
+    onSomeAction() {
+        this.fireDecoratorEvent("change")
+    }
+}
 ```
 
-Or, this can be `lso` done by setting the third and fourth parameters of the function to true, respectively.
+### The `fireDecoratorEvent` method
+
+The method is available since version `v2.4.0` and it fires a custom event and gets the configuration for the event from the `@event` decorator. In case you rely on the decorator settings, you must use the `fireDecoratorEvent` method.
+
+Keep in mind that `cancelable` and `bubbles` are `false` by default and you must explicitly enable them in the `@event` decorator if required.
+
+- Fire event with default configuration
 
 ```ts
-this.fireEvent("change", {}, cancelable, bubbles);
+@event("change")
 ```
 
-**Note:** The parameters, given to the `fireEvent` have higher priority than the configuration in the `@event` decorator.
+```ts
+// Fires the event as NOT preventable and NOT bubbling
+this.fireDecoratorEvent("change");
+```
+
+- Fire event with non-default configuration
+
+```ts
+@event("change", {
+    bubbles: true // false by default
+    cancelable: true // false by default
+})
+```
+
+```ts
+// Fires the event as preventable and bubbling
+this.fireDecoratorEvent("change");
+```
+
+**Note:** since `v2.4.0` it's recommended to describe the event in the `@event` decorator and use the `fireDecoratorEvent` method. 
+
+### The `fireEvent` method
+
+The method is available since the very beginning of the project and like `fireDecoratorEvent` fires a custom event, but does not consider the settings in the `@event` decorator. So, if you set `cancelable` and `bubbles` in the `@event` decorator, but fire the component events via `fireEvent`, the configured values won't be considered.
+
+Another difference is the default values of the event settings. When using `fireEvent` by default it assumes the event is bubbling (bubbles: true) and not preventable (cancelable: false).
+
+- Fire event with default configuration
+
+```ts
+// Fires the event as NOT preventable and bubbling
+this.fireEvent("change");
+```
+
+- Fire event with non-default configuration
+
+The method allows configuring the `cancelable` and `bubbles` fields via function arguments - the third and fourth parameters respectively.
+
+```ts
+// Fires the event as preventable and non-bubbling
+this.fireEvent("change", {}, true, false);
+```
 
 ### noConflict mode
 
