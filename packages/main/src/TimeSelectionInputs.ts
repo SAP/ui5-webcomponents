@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
 	isEnter,
@@ -24,6 +24,7 @@ import TimeSelectionInputsTemplate from "./generated/templates/TimeSelectionInpu
 
 // Styles
 import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 
 /**
  * @class
@@ -52,7 +53,9 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 		SegmentedButtonItem,
 	],
 })
-
+@event("close-inputs", {
+	bubbles: true,
+})
 class TimeSelectionInputs extends TimePickerInternals {
 	@property({ type: Number })
 	_editedInput = -1;
@@ -245,7 +248,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 		}
 		if (isEnter(evt)) {
 			// Accept the time and close the popover
-			this.fireEvent("close-inputs");
+			this.fireDecoratorEvent("close-inputs");
 		} else if (isNumber(evt) && this._entities[this._activeIndex]) {
 			const char = evt.key;
 			const buffer = this._keyboardBuffer + char;

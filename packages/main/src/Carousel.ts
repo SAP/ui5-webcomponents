@@ -121,6 +121,7 @@ type CarouselNavigateEventDetail = {
 		 */
 		selectedIndex: { type: Number },
 	},
+	bubbles: true,
 })
 
 class Carousel extends UI5Element {
@@ -352,7 +353,7 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -471,7 +472,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -491,7 +492,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 

@@ -82,7 +82,9 @@ type MultiInputTokenDeleteEventDetail = {
  * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
  * @public
  */
-@event("value-help-trigger")
+@event("value-help-trigger", {
+	bubbles: true,
+})
 
 /**
  * Fired when tokens are being deleted.
@@ -96,6 +98,7 @@ type MultiInputTokenDeleteEventDetail = {
 		 */
 		tokens: { type: Array },
 	},
+	bubbles: true,
 })
 
 class MultiInput extends Input implements IFormInputElement {
@@ -172,7 +175,7 @@ class MultiInput extends Input implements IFormInputElement {
 
 	valueHelpPress() {
 		this.closeValueStatePopover();
-		this.fireEvent("value-help-trigger");
+		this.fireDecoratorEvent("value-help-trigger");
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -185,7 +188,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 
 		if (deletedTokens) {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
+			this.fireDecoratorEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
 
 			if (shouldFocusInput) {
 				this.focus();

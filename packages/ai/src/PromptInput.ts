@@ -61,7 +61,9 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @since 2.0.0
  * @public
  */
-@event("submit")
+@event("submit", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke,
@@ -70,7 +72,9 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @since 2.0.0
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * Fired when the input operation has finished by pressing Enter
@@ -79,7 +83,9 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @since 2.0.0
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 class PromptInput extends UI5Element {
 	/**
 	 * Defines the value of the component.
@@ -229,22 +235,22 @@ class PromptInput extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
-			this.fireEvent("submit");
+			this.fireDecoratorEvent("submit");
 		}
 	}
 
 	_onInnerInput(e: CustomEvent<InputEventDetail>) {
 		this.value = (e.target as Input).value;
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_onInnerChange() {
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	_onButtonClick() {
-		this.fireEvent("submit");
+		this.fireDecoratorEvent("submit");
 	}
 
 	_onTypeAhead(e: CustomEvent): void {

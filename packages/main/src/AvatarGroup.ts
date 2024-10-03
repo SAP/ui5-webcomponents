@@ -434,7 +434,7 @@ class AvatarGroup extends UI5Element {
 	_fireGroupEvent(targetRef: HTMLElement) {
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
-		this.fireEvent<AvatarGroupClickEventDetail>("click", {
+		this.fireDecoratorEvent<AvatarGroupClickEventDetail>("click", {
 			targetRef,
 			overflowButtonClicked: isOverflowButtonClicked,
 		});
@@ -573,7 +573,7 @@ class AvatarGroup extends UI5Element {
 		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
 
 		if (shouldFireEvent) {
-			this.fireEvent("overflow");
+			this.fireDecoratorEvent("overflow");
 		}
 	}
 

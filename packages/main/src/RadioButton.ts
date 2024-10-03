@@ -84,7 +84,9 @@ let activeRadio: RadioButton;
  * @public
  * @since 1.0.0-rc.15
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RadioButton extends UI5Element implements IFormInputElement {
 	/**
@@ -383,7 +385,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 		if (!this.name) {
 			this.checked = !this.checked;
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 			return this;
 		}
 

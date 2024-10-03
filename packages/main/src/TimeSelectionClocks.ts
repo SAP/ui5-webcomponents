@@ -36,7 +36,9 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 /**
  * Fired when the picker is being closed.
  */
-@event("close-picker")
+@event("close-picker", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -174,7 +176,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		if (isEnter(evt)) {
 			// Accept the time and close the popover
-			this.fireEvent("close-picker");
+			this.fireDecoratorEvent("close-picker");
 		} else if (isSpace(evt) && toggleSpinButtonTarget && !this._spacePressed) {
 			evt.preventDefault();
 			this._spacePressed = true;

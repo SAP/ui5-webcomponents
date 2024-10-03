@@ -92,13 +92,17 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * Fired when the user clicks on the default action.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the user clicks on the arrow action.
  * @public
  */
-@event("arrow-click")
+@event("arrow-click", {
+	bubbles: true,
+})
 class SplitButton extends UI5Element {
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -303,7 +307,7 @@ class SplitButton extends UI5Element {
 	_fireClick(e?: Event) {
 		e?.stopPropagation();
 		if (!this._shiftOrEscapePressed) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 		this._shiftOrEscapePressed = false;
 	}
@@ -311,7 +315,7 @@ class SplitButton extends UI5Element {
 	_fireArrowClick(e?: Event) {
 		e?.stopPropagation();
 
-		this.fireEvent("arrow-click");
+		this.fireDecoratorEvent("arrow-click");
 	}
 
 	_textButtonRelease() {

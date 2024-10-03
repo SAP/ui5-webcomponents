@@ -39,6 +39,7 @@ import {
 
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+import { event } from "@ui5/webcomponents-base/dist/decorators.js";
 
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
@@ -78,6 +79,17 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	languageAware: true,
 	renderer: litRender,
 	template: ToolbarTemplate,
+})
+/**
+ * @private
+*/
+@event("_min-content-width-change", {
+	detail: {
+		minWidth: {
+			type: Number,
+		}
+	},
+	bubbles: true,
 })
 class Toolbar extends UI5Element {
 	@i18n("@ui5/webcomponents")
@@ -397,7 +409,7 @@ class Toolbar extends UI5Element {
 
 		if (minWidth !== this.minContentWidth) {
 			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
-			this.fireEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
+			this.fireDecoratorEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
 				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
 			});
 		}

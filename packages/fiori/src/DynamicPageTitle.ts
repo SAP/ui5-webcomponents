@@ -72,7 +72,9 @@ import {
  * Event is fired when the title is toggled.
  * @private
  */
-@event("_toggle-title")
+@event("_toggle-title", {
+	bubbles: true,
+})
 
 class DynamicPageTitle extends UI5Element {
 	/**
@@ -315,13 +317,13 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	onTitleClick() {
-		this.fireEvent("_toggle-title");
+		this.fireDecoratorEvent("_toggle-title");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("_toggle-title");
+			this.fireDecoratorEvent("_toggle-title");
 		}
 	}
 }

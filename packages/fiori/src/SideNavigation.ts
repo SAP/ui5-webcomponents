@@ -556,7 +556,7 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 			return;
 		}
 
@@ -571,7 +571,7 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 
 			if (!item.selected) {
 				this._selectItem(item);
