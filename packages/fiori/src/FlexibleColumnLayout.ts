@@ -510,7 +510,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		const isTouch = e instanceof TouchEvent,
+		const isTouch = supportsTouch() && e instanceof TouchEvent,
 			cursorPositionX = this.getPageXValueFromEvent(e);
 
 		this.separatorMovementSession = this.initSeparatorMovementSession(pressedSeparator, cursorPositionX, isTouch);
