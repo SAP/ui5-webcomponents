@@ -9,7 +9,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -38,9 +38,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/TextArea.css.js";
+import textareaStyles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 type TokenizedText = Array<string>;
 type IndexedTokenizedText = Array<{
@@ -76,7 +75,11 @@ type ExceededText = {
 	tag: "ui5-textarea",
 	formAssociated: true,
 	languageAware: true,
-	styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
+	styles: [
+		textareaStyles,
+		valueStateMessageStyles,
+		getEffectiveScrollbarStyle(),
+	],
 	renderer: litRender,
 	template: TextAreaTemplate,
 	dependencies: [Popover, Icon],
@@ -302,6 +305,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	previousValue: string;
 	valueStatePopover?: Popover;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -318,10 +322,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue(): FormData | string | null {
 		return this.value;
-	}
-
-	static async onDefine() {
-		TextArea.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -526,7 +526,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return {
 			root: {
 				"ui5-textarea-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+				"ui5-content-custom-scrollbars": !!getEffectiveScrollbarStyle(),
 			},
 			valueStateMsg: {
 				"ui5-valuestatemessage-header": true,

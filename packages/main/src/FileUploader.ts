@@ -5,7 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -38,7 +38,7 @@ type FileData = {
 	fileSize: number,
 }
 
-type FileUploaderFileSizeExceededEventDetail = {
+type FileUploaderFileSizeExceedEventDetail = {
 	filesData: Array<FileData>,
 }
 
@@ -108,7 +108,7 @@ type FileUploaderChangeEventDetail = {
  * @since 2.2.0
  * @public
  */
-@event<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
+@event<FileUploaderFileSizeExceedEventDetail>("file-size-exceed", {
 	detail: {
 		/**
 		 * @public
@@ -229,6 +229,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	static emptyInput: HTMLInputElement;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
@@ -369,14 +370,14 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Checks whether all files are below `maxFileSize` (if set),
-	 * and fires a `fileSizeExceeded` event if any file exceeds it.
+	 * and fires a `file-size-exceed` event if any file exceeds it.
 	 * @private
 	 */
 	_validateFiles(changedFiles: FileList): FileList {
 		const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
 
 		if (exceededFilesData.length) {
-			this.fireEvent<FileUploaderFileSizeExceededEventDetail>("fileSizeExceeded", {
+			this.fireEvent<FileUploaderFileSizeExceedEventDetail>("file-size-exceed", {
 				filesData: exceededFilesData,
 			});
 			changedFiles = new DataTransfer().files;
@@ -475,10 +476,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.hasValueState && this.valueState !== ValueState.Positive;
 	}
 
-	get valueStateMessageText() {
-		return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
-	}
-
 	get shouldDisplayDefaultValueStateMessage(): boolean {
 		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
@@ -524,10 +521,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	get ui5Input() {
 		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
 	}
-
-	static async onDefine() {
-		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 }
 
 FileUploader.define();
@@ -536,5 +529,5 @@ export default FileUploader;
 export type {
 	FileData,
 	FileUploaderChangeEventDetail,
-	FileUploaderFileSizeExceededEventDetail,
+	FileUploaderFileSizeExceedEventDetail,
 };

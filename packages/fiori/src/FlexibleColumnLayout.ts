@@ -3,11 +3,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type AriaLandmarkRole from "@ui5/webcomponents-base/dist/types/AriaLandmarkRole.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -294,6 +294,14 @@ class FlexibleColumnLayout extends UI5Element {
 	_visibleColumns = 1;
 
 	/**
+	* Defines if the user is currently resizing the columns by dragging their separator.
+	* @default false
+	* @private
+	*/
+	@property({ type: Boolean })
+	_resizing = false;
+
+	/**
 	* Allows the user to replace the whole layouts configuration
 	* @private
 	*/
@@ -325,7 +333,10 @@ class FlexibleColumnLayout extends UI5Element {
 	_handleResize: () => void;
 	_onSeparatorMove: (e: TouchEvent | MouseEvent) => void;
 	_onSeparatorMoveEnd: (e: TouchEvent | MouseEvent) => void;
+
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
+
 	_prevLayout: `${FCLLayout}` | null;
 	_userDefinedColumnLayouts: UserDefinedColumnLayouts = {
 		tablet: {},
@@ -351,10 +362,6 @@ class FlexibleColumnLayout extends UI5Element {
 			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
-	}
-
-	static async onDefine() {
-		FlexibleColumnLayout.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get ANIMATION_DURATION() {
@@ -503,7 +510,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		const isTouch = e instanceof TouchEvent,
+		const isTouch = supportsTouch() && e instanceof TouchEvent,
 			cursorPositionX = this.getPageXValueFromEvent(e);
 
 		this.separatorMovementSession = this.initSeparatorMovementSession(pressedSeparator, cursorPositionX, isTouch);
@@ -557,7 +564,8 @@ class FlexibleColumnLayout extends UI5Element {
 
 	initSeparatorMovementSession(separator: HTMLElement, cursorPositionX: number, isTouch: boolean) {
 		this.attachMoveListeners(isTouch);
-		this.toggleSideAnimations(separator, false); // toggle animations for side colmns
+		this.toggleSideAnimations(separator, false); // disable animations for side colmns to prevent slowdown while dragging
+		this._resizing = true;
 
 		return {
 			separator,
@@ -572,6 +580,7 @@ class FlexibleColumnLayout extends UI5Element {
 
 		this.detachMoveListeners();
 		this.toggleSideAnimations(movedSeparator, hasAnimation); // restore animations for side columns
+		this._resizing = false;
 
 		movedSeparator.focus();
 		this.separatorMovementSession = null;

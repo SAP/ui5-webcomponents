@@ -4,10 +4,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -15,7 +15,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import {
 	isShow,
 	isEnter,
@@ -128,6 +127,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 @customElement({
 	tag: "ui5-time-picker",
 	languageAware: true,
+	cldr: true,
 	formAssociated: true,
 	renderer: litRender,
 	template: TimePickerTemplate,
@@ -329,14 +329,9 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	tempValue?: string;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	static async onDefine() {
-		[TimePicker.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-		]);
-	}
 	get formValidityMessage() {
 		return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
 	}

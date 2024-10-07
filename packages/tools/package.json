@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "2.2.0-rc.3",
+  "version": "2.3.1-rc.0",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -68,12 +68,12 @@
     "resolve": "^1.20.0",
     "rimraf": "^3.0.2",
     "slash": "3.0.0",
-    "vite": "^4.4.9",
+    "vite": "^5.4.8",
     "wdio-chromedriver-service": "^7.3.2"
   },
   "peerDependencies": {
     "chromedriver": "*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.6.2"
   },
   "peerDependenciesMeta": {
     "typescript": {

@@ -34,6 +34,6 @@ describe("Text", () => {
 		const label = await browser.$("#emptyText").shadow$(".empty-indicator-aria-label");
 
 		assert.strictEqual(await text.getText(), "–", "'–' should be rendered");
-		assert.strictEqual(await label.getText(), "Empty value", "Aria label is properly set");
+		assert.strictEqual(await label.getText(), "Empty Value", "Aria label is properly set");
 	});
 });

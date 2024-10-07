@@ -4,6 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -30,7 +31,6 @@ import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalized
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
@@ -430,17 +430,13 @@ class Table extends UI5Element {
 	})
 	columns!: Array<TableColumn>;
 
-	static async onDefine() {
-		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	fnHandleF7: (e: CustomEvent) => void;
 	fnOnRowFocused: (e: CustomEvent) => void;
 	_handleResize: ResizeObserverCallback;
 
-	moreDataText?: string;
 	tableEndObserved: boolean;
 	visibleColumns: Array<TableColumn>;
 	visibleColumnsCount?: number;
@@ -1161,7 +1157,7 @@ class Table extends UI5Element {
 	}
 
 	get loadMoreAriaLabelledBy(): string {
-		if (this.moreDataText) {
+		if (this.growingButtonSubtext) {
 			return `${this._id}-growingButton-text ${this._id}-growingButton-subtext`;
 		}
 

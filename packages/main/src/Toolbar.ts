@@ -11,7 +11,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
@@ -80,6 +80,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	template: ToolbarTemplate,
 })
 class Toolbar extends UI5Element {
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -173,10 +174,6 @@ class Toolbar extends UI5Element {
 			Button,
 			...deps,
 		];
-	}
-
-	static async onDefine() {
-		Toolbar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {

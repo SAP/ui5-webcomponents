@@ -59,6 +59,9 @@ type ItemsInfo = {
  * The Form is a layout component that arranges labels and form fields (like input fields) pairs
  * into a specific number of columns.
  *
+ * **Note:** The Form web component is a layout component, it isn't a replacement for the native `form` HTML element.
+ * The Form web component does not provide any APIs for form submission.
+ *
  * ### Structure
  *
  * - **Form** (`ui5-form`) is the top-level container component, responsible for the content layout and responsiveness.
@@ -73,7 +76,7 @@ type ItemsInfo = {
  * This is enabled by the FormGroup (`ui5-form-group`) component.
  * In this case, the Form is structured into FormGroups and each FormGroup consists of FormItems.
  *
- *  ### Responsiveness
+ * ### Responsiveness
  *
  * The Form component reacts and changes its layout on predefined breakpoints.
  * Depending on its size, the Form content (FormGroups and FormItems) gets divided into one or more columns as follows:
@@ -462,6 +465,6 @@ class Form extends UI5Element {
 Form.define();
 
 export default Form;
-export {
+export type {
 	IFormItem,
 };

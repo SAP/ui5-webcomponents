@@ -31,7 +31,8 @@ const generate = async () => {
 	// (2) as the messagebundle.properties file is always written in English,
 	// it makes sense to consider the messagebundle.properties content only when the default language is "en".
 	if (defaultLanguage === "en") {
-		defaultLanguageProperties = Object.assign({}, defaultLanguageProperties, properties);
+		// use messagebundle_en.properties to overwrite all developer properties, only the not translated ones will remain
+		defaultLanguageProperties = Object.assign({}, properties, defaultLanguageProperties);
 	}
 
 	/*
@@ -68,7 +69,7 @@ const generate = async () => {
 		const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties && defaultLanguageProperties[prop])).join('');
 
 		// tabs are intentionally mixed to have proper identation in the produced file
-		return `${tsMode ? `import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";` : ""}
+		return `${tsMode ? `import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";` : ""}
 ${texts}
 export {${textKeys.join()}};`;
 	};

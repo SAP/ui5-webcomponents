@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type LocaleT from "sap/ui/core/Locale";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import {
@@ -21,7 +22,6 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker } from "./Calendar.js";
@@ -76,13 +76,11 @@ type YearPickerNavigateEventDetail = {
 })
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
- * @public
  */
 @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
- * @public
  */
 @event("navigate")
 class YearPicker extends CalendarPart implements ICalendarPicker {
@@ -90,7 +88,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
 	 * @default []
-	 * @public
 	 */
 	@property({ type: Array })
 	selectedDates: Array<number> = [];
@@ -104,7 +101,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 *
 	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
 	 * @default "Single"
-	 * @public
 	 * @since 2.2.0
 	 */
 	@property()
@@ -127,11 +123,8 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	_firstYear?: number;
 	_lastYear?: number;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		YearPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get roleDescription() {
 		return YearPicker.i18nBundle.getText(YEAR_PICKER_DESCRIPTION);

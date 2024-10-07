@@ -1,15 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { Result, Exception } from "@zxing/library/esm5/index.js";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import ZXing from "@ui5/webcomponents-fiori/dist/ssr-zxing.js";
 
 // Texts
 import {
@@ -25,7 +26,8 @@ import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css
 
 // some tools handle named exports from UMD files and the window object is not assigned but the imports work (vitejs)
 // other tools do not handle named exports (they are undefined after the import), but the window global is assigned and can be used (web dev server)
-const effectiveZXing = { ...ZXing, ...window.ZXing };
+const windowZXing = typeof window === "undefined" ? {} : window.ZXing;
+const effectiveZXing = { ...ZXing, ...windowZXing };
 const { BrowserMultiFormatReader, NotFoundException } = effectiveZXing;
 
 const defaultMediaConstraints = {
@@ -150,15 +152,13 @@ class BarcodeScannerDialog extends UI5Element {
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
+
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 		this._codeReader = new BrowserMultiFormatReader();
-	}
-
-	static async onDefine() {
-		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onAfterRendering() {

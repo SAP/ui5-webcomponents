@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -21,7 +22,6 @@ import {
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	MONTH_PICKER_DESCRIPTION,
@@ -80,20 +80,17 @@ type MonthPickerNavigateEventDetail = {
 })
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
- * @public
  */
 @event("change")
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
- * @public
  */
 @event("navigate")
 class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
-	 * @public
 	 * @default []
 	 */
 	@property({ type: Array })
@@ -108,7 +105,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 *
 	 * Note that 'CalendarSelectionMode.Multiple` is not supported for Month Picker!
 	 * @default "Single"
-	 * @public
 	 * @since 2.2.0
 	 */
 	@property()
@@ -128,11 +124,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Number })
 	_secondTimestamp?: number;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		MonthPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get roleDescription() {
 		return MonthPicker.i18nBundle.getText(MONTH_PICKER_DESCRIPTION);

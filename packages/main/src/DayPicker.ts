@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -110,19 +111,16 @@ type DayPickerNavigateEventDetail = {
 })
 /**
  * Fired when the selected date(s) change
- * @public
  */
 @event("change")
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
- * @public
  */
 @event("navigate")
 class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @default []
-	 * @public
 	 */
 	@property({ type: Array })
 	selectedDates: Array<number> = [];
@@ -135,7 +133,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * - `CalendarSelectionMode.Range` - enables selection of a date range.
 	 * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
 	 * @default "Single"
-	 * @public
 	 */
 	@property()
 	selectionMode: `${CalendarSelectionMode}` = "Single";
@@ -146,7 +143,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * **Note:** For calendars other than Gregorian,
 	 * the week numbers are not displayed regardless of what is set.
 	 * @default false
-	 * @public
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
@@ -184,6 +180,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	_autoFocus?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {

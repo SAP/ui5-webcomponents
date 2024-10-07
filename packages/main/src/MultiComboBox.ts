@@ -43,7 +43,7 @@ import {
 	isFirefox,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -498,6 +498,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -1318,6 +1319,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._dialogInputValueState = valueState;
 			this.valueState = valueState;
 			this._validationTimeout = null;
+			this._innerInput.focus();
 
 			callback && callback();
 		}, 2000);
@@ -1890,7 +1892,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		if (!this._tokenizer) {
 			return;
 		}
-		return getTokensCountText(this._tokenizer.tokens.length);
+
+		return getTokensCountText(this.selectedValues.length);
 	}
 
 	get _tokensCountTextId() {
@@ -2037,10 +2040,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 		};
-	}
-
-	static async onDefine() {
-		MultiComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

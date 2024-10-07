@@ -33,10 +33,20 @@
                 <ui5-input id="address"></ui5-input>
             </div>
         </section>
-        <div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
-            <div style="flex: 1;"></div>
-            <ui5-button class="dialogCloser" design="Emphasized">Register</ui5-button>
-        </div>
+        <ui5-toolbar slot="footer">
+            <ui5-toolbar-button
+                class="dialogCloser"
+                design="Emphasized"
+                text="Submit"
+            >
+            </ui5-toolbar-button>
+            <ui5-toolbar-button
+                class="dialogCloser"
+                design="Transparent"
+                text="Cancel"
+            >
+            </ui5-toolbar-button>
+        </ui5-toolbar>
     </ui5-dialog>
     <!-- playground-fold -->
     <script type="module" src="main.js"></script>

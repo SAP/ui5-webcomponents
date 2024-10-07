@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "node:url";
 
 let counter = 0;
 
@@ -187,7 +188,7 @@ ${classDef}`;
 };
 
 function findRoot(pkgName) {
-    return path.dirname(import.meta.resolve(`${pkgName}/package.json`)).replace("file://", "");
+    return path.dirname(fileURLToPath(import.meta.resolve(`${pkgName}/package.json`)));
 }
 
 generateIconsPage(path.join(findRoot("@ui5/webcomponents-icons"), "dist/v5"), SAPIconsConfig);

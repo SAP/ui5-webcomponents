@@ -6,7 +6,6 @@
 	],
 	"compilerOptions": {
 		"outDir": "dist",
-		"module": "es2022",
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"composite": true,

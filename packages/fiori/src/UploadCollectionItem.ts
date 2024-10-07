@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
@@ -214,14 +214,8 @@ class UploadCollectionItem extends ListItem {
 	@slot({ type: HTMLElement })
 	thumbnail!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nFioriBundle: I18nBundle;
-
-	static async onDefine() {
-		[UploadCollectionItem.i18nFioriBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents-fiori"),
-			super.onDefine(),
-		]);
-	}
 
 	/**
 	 * @override

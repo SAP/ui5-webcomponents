@@ -7,6 +7,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -14,14 +15,14 @@ import {
 	isSpace,
 	isEnter,
 	isTabPrevious,
+	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -47,7 +48,6 @@ import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 // Texts
 import {
@@ -81,6 +81,7 @@ type ListItemDeleteEventDetail = {
 }
 
 type ListMoveEventDetail = {
+	originalEvent: Event,
 	source: {
 		element: HTMLElement,
 	},
@@ -157,13 +158,18 @@ type ListItemClickEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart growing-button - Used to style the button, that is used for growing of the component
+ * @csspart growing-button-inner - Used to style the button inner element
  */
 @customElement({
 	tag: "ui5-list",
 	fastNavigation: true,
 	renderer: litRender,
 	template: ListTemplate,
-	styles: [browserScrollbarCSS, listCss],
+	styles: [
+		listCss,
+		getEffectiveScrollbarStyle(),
+	],
 	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
@@ -303,6 +309,10 @@ type ListItemClickEventDetail = {
 		/**
 		 * @public
 		 */
+		originalEvent: { type: Event },
+		/**
+		 * @public
+		 */
 		source: { type: Object },
 		/**
 		 * @public
@@ -322,6 +332,10 @@ type ListItemClickEventDetail = {
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
+		/**
+		 * @public
+		 */
+		originalEvent: { type: Event },
 		/**
 		 * @public
 		 */
@@ -490,6 +504,7 @@ class List extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
@@ -507,10 +522,6 @@ class List extends UI5Element {
 	onForwardAfterBound: (e: CustomEvent) => void;
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
-
-	static async onDefine() {
-		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -723,7 +734,6 @@ class List extends UI5Element {
 		return {
 			root: {
 				"ui5-list-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
 	}
@@ -880,8 +890,55 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isCtrl(e)) {
+			this._moveItem(e.target as ListItemBase, e);
+			return;
+		}
+
 		if (isTabNext(e)) {
 			this._handleTabNext(e);
+		}
+	}
+
+	_moveItem(item: ListItemBase, e: KeyboardEvent) {
+		if (!item || !item.movable) {
+			return;
+		}
+
+		const closestPositions = findClosestPositionsByKey(this.items, item, e);
+
+		if (!closestPositions.length) {
+			return;
+		}
+
+		e.preventDefault();
+
+		const acceptedPosition = closestPositions.find(({ element, placement }) => {
+			return !this.fireEvent<ListMoveEventDetail>("move-over", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element,
+					placement,
+				},
+			}, true);
+		});
+
+		if (acceptedPosition) {
+			this.fireEvent<ListMoveEventDetail>("move", {
+				originalEvent: e,
+				source: {
+					element: item,
+				},
+				destination: {
+					element: acceptedPosition.element,
+					placement: acceptedPosition.placement,
+				},
+			});
+
+			item.focus();
 		}
 	}
 
@@ -1036,6 +1093,7 @@ class List extends UI5Element {
 
 		const placementAccepted = placements.some(placement => {
 			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
+				originalEvent: e,
 				source: {
 					element: draggedElement,
 				},
@@ -1065,6 +1123,7 @@ class List extends UI5Element {
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
 		this.fireEvent<ListMoveEventDetail>("move", {
+			originalEvent: e,
 			source: {
 				element: draggedElement,
 			},
