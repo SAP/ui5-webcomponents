@@ -188,6 +188,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return !this.collapsed;
 	}
 
+	get _expanded() {
+		return !this.collapsed;
+	}
+
 	get _pressable() {
 		return false;
 	}
