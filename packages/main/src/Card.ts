@@ -2,8 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
@@ -105,6 +105,7 @@ class Card extends UI5Element {
 	@property({ type: Number })
 	loadingDelay = 1000;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get classes() {
@@ -129,10 +130,6 @@ class Card extends UI5Element {
 
 	get _ariaCardContentLabel() {
 		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
-	}
-
-	static async onDefine() {
-		Card.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

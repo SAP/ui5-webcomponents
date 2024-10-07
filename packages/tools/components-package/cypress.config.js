@@ -1,6 +1,5 @@
 const { defineConfig } = require('cypress')
 const path = require("path");
-const rootConfig = require("../../../vite.config.js");
 
 module.exports = defineConfig({
 	component: {
@@ -10,7 +9,6 @@ module.exports = defineConfig({
 		devServer: {
 			framework: 'cypress-ct-lit',
 			bundler: 'vite',
-			viteConfig: rootConfig,
 		}
 	},
 	video: false,

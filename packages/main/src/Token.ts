@@ -13,7 +13,7 @@ import {
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
@@ -152,6 +152,7 @@ class Token extends UI5Element implements IToken {
 	@slot()
 	closeIcon!: Array<IIcon>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_handleSelect() {
@@ -222,10 +223,6 @@ class Token extends UI5Element implements IToken {
 		}
 
 		return description;
-	}
-
-	static async onDefine() {
-		Token.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

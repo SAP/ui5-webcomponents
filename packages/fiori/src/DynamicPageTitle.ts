@@ -3,8 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -212,6 +212,7 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	interactive = false;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
@@ -219,10 +220,6 @@ class DynamicPageTitle extends UI5Element {
 	constructor() {
 		super();
 		this._handleResize = this.handleResize.bind(this);
-	}
-
-	static async onDefine() {
-		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onEnterDOM() {
@@ -290,13 +287,17 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	prepareLayoutActions() {
-		// all navigation/layout actions should have the NeverOverflow behavior
-		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");
+		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']"),
+			isWideScreen = this.offsetWidth >= 1280;
+
 		if (!navigationBar) {
 			return;
 		}
+
 		navigationBar.items.forEach(action => {
-			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
+			action.overflowPriority = isWideScreen
+				? ToolbarItemOverflowBehavior.NeverOverflow
+				: ToolbarItemOverflowBehavior.Default;
 		});
 	}
 

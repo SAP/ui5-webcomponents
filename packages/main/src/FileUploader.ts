@@ -5,7 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -229,6 +229,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	static emptyInput: HTMLInputElement;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
@@ -519,10 +520,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	get ui5Input() {
 		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
-	}
-
-	static async onDefine() {
-		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
