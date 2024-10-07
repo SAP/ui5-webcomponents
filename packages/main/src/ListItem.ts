@@ -254,6 +254,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
+			return;
+		}
+
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -326,6 +330,13 @@ abstract class ListItem extends ListItemBase {
 		if (e.target === this._listItem) {
 			this.removeAttribute("data-moving");
 		}
+	}
+
+	_isTargetSelfFocusDomRef(e: KeyboardEvent): boolean {
+		const target = e.target as HTMLElement,
+			focusDomRef = this.getFocusDomRef();
+
+		return target !== focusDomRef;
 	}
 
 	/**
