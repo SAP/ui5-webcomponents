@@ -1,0 +1,205 @@
+import { html } from "lit";
+import "../../../src/Dialog.js";
+import "../../../src/Select.js";
+import "../../../src/Option.js";
+import "../../../src/Input.js";
+import "../../../src/SuggestionItem.js";
+import "../../../src/features/InputSuggestions.js";
+import "../../../src/MessageStrip.js";
+import "../../../src/Panel.js";
+import "../../../src/CheckBox.js";
+import "../../../src/Label.js";
+
+describe("Event bubbling", () => {
+	it("test bubbling events", () => {
+		cy.mount(html`
+			<div id="app">
+				<ui5-dialog id="myDialog" header-text="Dialog">
+					<ui5-message-strip id="myMsgStrip">(Information) with default icon and close button:</ui5-message-strip>
+
+					<ui5-panel id="panel" header-text="Panel">
+						<ui5-label>
+							Lorem ipsum dolor sit amet, tamquam invidunt cu sed, unum regione mel ea, quo ea alia novum. Ne qui illud zril
+							nostrum, vel ea sint dicant postea.
+						</ui5-label>
+					</ui5-panel>
+				</ui5-dialog>
+			</div>
+		`);
+
+		cy.get("#app")
+			.as("app");
+		cy.get("[ui5-dialog]")
+			.as("dialog");
+		cy.get("[ui5-panel]")
+			.as("panel");
+		cy.get("[ui5-message-strip]")
+			.as("messageStrip");
+
+		cy.get("@app")
+			.then(app => {
+				app.get(0).addEventListener("close", cy.stub().as("appClosed"));
+				app.get(0).addEventListener("toggle", cy.stub().as("appToggled"));
+			});
+
+		cy.get("@dialog")
+			.then(dialog => {
+				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed"));
+			});
+
+		cy.get("@messageStrip")
+			.then(messageStrip => {
+				messageStrip.get(0).addEventListener("close", cy.stub().as("msgClosed"));
+			});
+
+		cy.get("@panel")
+			.then(panel => {
+				panel.get(0).addEventListener("toggle", cy.stub().as("panelToggled"));
+			});
+
+		cy.get("@dialog").invoke("attr", "open", true);
+
+		// act - close MessageStrip
+		cy.get("@messageStrip")
+			.shadow()
+			.find(".ui5-message-strip-close-button")
+			.realClick();
+
+		// assert - the close event of the MessageStrip bubbles:  MessageStrip -> Dialog -> App
+		cy.get("@msgClosed")
+			.should("have.been.calledOnce");
+		cy.get("@dialogClosed")
+			.should("have.been.calledOnce");
+		cy.get("@appClosed")
+			.should("have.been.calledOnce");
+
+		// act - toggle Panel
+		cy.get("@panel")
+			.shadow()
+			.find(".ui5-panel-header")
+			.realClick();
+
+		// assert - the toggle event of the Panel bubbles: Panel -> App
+		cy.get("@panelToggled")
+			.should("have.been.calledOnce");
+		cy.get("@appToggled")
+			.should("have.been.calledOnce");
+	});
+
+	it("test non-bubbling events", () => {
+		cy.mount(html`
+			<div id="app">
+				<ui5-dialog id="myDialog" header-text="Dialog">
+					<ui5-select id="mySelect">
+						<ui5-option>Hello</ui5-option>
+						<ui5-option>World</ui5-option>
+						<ui5-option>Hello</ui5-option>
+					</ui5-select>
+			
+					<ui5-input id="myInput" show-suggestions>
+						<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+						<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+						<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+					</ui5-input>
+				</ui5-dialog>
+			</div>
+		`);
+
+		cy.get("#app")
+			.as("app");
+		cy.get("[ui5-dialog]")
+			.as("dialog");
+		cy.get("[ui5-select]")
+			.as("select");
+		cy.get("[ui5-input]")
+			.as("input");
+
+		cy.get("@app")
+			.then(app => {
+				app.get(0).addEventListener("close", cy.stub().as("appClosed"));
+			});
+
+		cy.get("@dialog")
+			.then(dialog => {
+				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed")); // non-bubbling
+			});
+
+		cy.get("@input")
+			.then(input => {
+				input.get(0).addEventListener("close", cy.stub().as("inpClosed")); // non-bubbling
+			});
+
+		cy.get("@select")
+			.then(select => {
+				select.get(0).addEventListener("close", cy.stub().as("selClosed")); // non-bubbling
+			});
+
+		cy.get("@dialog").invoke("attr", "open", true);
+
+		// act - open and close Select
+		cy.get("@select")
+			.realClick();
+
+		cy.get("@select")
+			.find("[ui5-option]")
+			.eq(1)
+			.realClick();
+
+		// assert - the close event of the Select does not bubble
+		cy.get("@selClosed")
+			.should("have.been.calledOnce");
+		cy.get("@dialogClosed")
+			.should("not.be.called");
+		cy.get("@appClosed")
+			.should("not.be.called");
+
+		// act - open and close Input suggestions
+		cy.get("@input")
+			.realClick()
+			.realType("a");
+
+		cy.get("@input")
+			.find("[ui5-suggestion-item]")
+			.eq(1)
+			.realClick();
+
+		// assert - the close event of the Input does not bubble
+		cy.get("@inpClosed")
+			.should("have.been.calledOnce");
+		cy.get("@dialogClosed")
+			.should("not.be.called");
+		cy.get("@appClosed")
+			.should("not.be.called");
+	});
+
+	it("test cancelable events", () => {
+		cy.mount(html`
+			<div id="app">
+				<ui5-checkbox id="cb"></ui5-checkbox>
+				<ui5-checkbox id="cb2"></ui5-checkbox>
+			</div>
+		`);
+
+		cy.get("#cb")
+			.as("checkbox");
+		cy.get("#cb2")
+			.as("checkbox2");
+
+		cy.get("@checkbox")
+			.then(checkbox => {
+				checkbox.get(0).addEventListener("change", e => e.preventDefault());
+			});
+
+		cy.get("@checkbox")
+			.realClick();
+		cy.get("@checkbox")
+			.invoke("prop", "checked")
+			.should("be.equal", false);
+
+		cy.get("@checkbox2")
+			.realClick();
+		cy.get("@checkbox2")
+			.invoke("prop", "checked")
+			.should("be.equal", true);
+	});
+});
