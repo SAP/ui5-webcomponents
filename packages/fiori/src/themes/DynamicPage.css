@@ -127,3 +127,10 @@
 :host([media-range="XL"]) ::slotted([slot="headerArea"]) {
     padding: var(--_ui5_dynamic_page_header_padding_XL);
 }
+
+/* snappedTitleOnMobile */
+:host([_header-snapped]) ::slotted([slot="headerArea"]) {
+	height: 0;
+	padding: 0;
+	visibility: hidden;
+}

@@ -2,9 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import type { IColorPaletteItem } from "./ColorPalette.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
@@ -31,6 +32,7 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 	renderer: litRender,
 	styles: ColorPaletteItemCss,
 	template: ColorPaletteItemTemplate,
+	shadowRootOptions: { delegatesFocus: true },
 })
 class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	/**
@@ -84,11 +86,8 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	@property({ type: Boolean })
 	_disabled = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		ColorPaletteItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -98,6 +97,10 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 		this._disabled = !this.value;
 		this.onPhone = isPhone();
 		this.setAttribute("style", `background-color: ${this.value}`);
+
+		// since height is dynamically determined by padding-block-start
+		const itemHeight = this.offsetHeight + 4; // adding 4px for the offsets on top and bottom
+		this.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
 	}
 
 	get colorLabel() {

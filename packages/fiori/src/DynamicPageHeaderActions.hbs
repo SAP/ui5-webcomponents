@@ -6,7 +6,7 @@
             icon="{{arrowButtonIcon}}"
             accessible-name="{{expandLabel}}"
             .accessibilityAttributes="{{accessibilityAttributes}}"
-            title="{{expandLabel}}"
+            tooltip="{{expandLabel}}"
             @mouseover="{{onExpandHoverIn}}"
             @mouseout="{{onExpandHoverOut}}"
         ></ui5-button>
@@ -18,7 +18,7 @@
             ?pressed="{{pinned}}"
             .accessibilityAttributes="{{accessibilityAttributes}}"
             accessible-name="{{pinLabel}}"
-            title="{{pinLabel}}"
+            tooltip="{{pinLabel}}"
         ></ui5-toggle-button>
     {{/if}}
     </div>

@@ -9,7 +9,7 @@ import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
@@ -202,6 +202,7 @@ class Panel extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
@@ -388,10 +389,6 @@ class Panel extends UI5Element {
 				display: this._contentExpanded ? "block" : "none",
 			},
 		};
-	}
-
-	static async onDefine() {
-		Panel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

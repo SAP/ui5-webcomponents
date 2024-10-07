@@ -68,7 +68,7 @@ const getScripts = (options) => {
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all copyProps prepare.typescript generateAPI`,
+			default: `${tsCrossEnv} nps clean prepare.all ${options.legacy ? "copy" : ""} copyProps prepare.typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
@@ -100,12 +100,18 @@ const getScripts = (options) => {
 			illustrations: createIllustrationsJSImportsScript,
 		},
 		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
+		copy: {
+			default: "nps copy.src copy.props",
+			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
+			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
+		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" ${options.legacy ? '"nps watch.src"' : ""} "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
+			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommandStandalone,
 			props: 'nps "copyProps --watch --safe --skip-initial-copy"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -132,7 +138,7 @@ const getScripts = (options) => {
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
 			watch: 'concurrently "nps watch.templates" "nps watch.props" "nps watch.styles"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
 			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",

@@ -32,7 +32,7 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -221,6 +221,7 @@ type InputSuggestionScrollEventDetail = {
 /**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
+ * @allowPreventDefault
  * @public
  */
 @event("input")
@@ -584,6 +585,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_changeToBeFired?: boolean; // used to wait change event firing after suggestion item selection
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -1014,8 +1016,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_clear() {
+		const valueBeforeClear = this.value;
 		this.value = "";
-		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
+		const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" }, true);
+
+		if (prevented) {
+			this.value = valueBeforeClear;
+			return;
+		}
+
 		if (!this._isPhone) {
 			this.fireResetSelectionChange();
 			this.focus();
@@ -1226,6 +1235,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
+		Suggestions.i18nBundle = Input.i18nBundle;
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		}
@@ -1275,6 +1285,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	fireEventByAction(action: INPUT_ACTIONS, e: InputEvent) {
+		const valueBeforeInput = this.value;
+		const inputRef = this.getInputDOMRefSync();
+
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -1288,7 +1301,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
+			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType }, true);
+
+			if (prevented) {
+				this.value = valueBeforeInput;
+				inputRef && (inputRef.value = valueBeforeInput);
+			}
+
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 			this.fireResetSelectionChange();
@@ -1687,10 +1706,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		return value;
-	}
-
-	static async onDefine() {
-		Input.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

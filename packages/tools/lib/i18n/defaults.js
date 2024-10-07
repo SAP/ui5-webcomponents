@@ -69,7 +69,7 @@ const generate = async () => {
 		const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties && defaultLanguageProperties[prop])).join('');
 
 		// tabs are intentionally mixed to have proper identation in the produced file
-		return `${tsMode ? `import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";` : ""}
+		return `${tsMode ? `import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";` : ""}
 ${texts}
 export {${textKeys.join()}};`;
 	};

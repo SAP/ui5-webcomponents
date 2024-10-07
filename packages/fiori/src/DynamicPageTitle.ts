@@ -3,8 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -13,6 +13,8 @@ import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 
 // Template
 import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
@@ -63,6 +65,7 @@ import {
 	renderer: litRender,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
+	dependencies: [Title, Icon],
 })
 
 /**
@@ -111,6 +114,13 @@ class DynamicPageTitle extends UI5Element {
 	minActionsWidth?: number;
 
 	/**
+	 * Indicates whether the title has snapped on mobile devices.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hasSnappedTitleOnMobile = false;
+
+	/**
 	 * Defines the content of the Heading of the Dynamic Page.
 	 *
 	 * The font size of the title within the `heading` slot can be adjusted to the recommended values using the following CSS variables:
@@ -131,6 +141,22 @@ class DynamicPageTitle extends UI5Element {
 	 */
 	@slot({ type: HTMLElement })
 	snappedHeading!: HTMLElement[];
+
+	/**
+	 * Defines the content of the snapped title on mobile devices.
+	 *
+	 * This slot is displayed only when the `DynamicPageTitle` is in the snapped state on mobile devices.
+	 * It should be used to provide a simplified, single-line title that takes up less space on smaller screens.
+	 *
+	 * **Note:**
+	 * - The content set in this slot **overrides** all other content set in the `DynamicPageTitle` slots when displayed.
+	 * - The slot is intended for a single `ui5-title` component.
+	 *
+	 * @public
+	 * @since 2.3.0
+	 */
+	@slot({ type: HTMLElement })
+	snappedTitleOnMobile!: Array<Title>;
 
 	/**
 	 * Defines the bar with actions in the Dynamic page title.
@@ -186,6 +212,7 @@ class DynamicPageTitle extends UI5Element {
 	@property({ type: Boolean })
 	interactive = false;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	_handleResize: ResizeObserverCallback;
@@ -193,10 +220,6 @@ class DynamicPageTitle extends UI5Element {
 	constructor() {
 		super();
 		this._handleResize = this.handleResize.bind(this);
-	}
-
-	static async onDefine() {
-		DynamicPageTitle.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onEnterDOM() {
@@ -264,13 +287,17 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	prepareLayoutActions() {
-		// all navigation/layout actions should have the NeverOverflow behavior
-		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");
+		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']"),
+			isWideScreen = this.offsetWidth >= 1280;
+
 		if (!navigationBar) {
 			return;
 		}
+
 		navigationBar.items.forEach(action => {
-			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
+			action.overflowPriority = isWideScreen
+				? ToolbarItemOverflowBehavior.NeverOverflow
+				: ToolbarItemOverflowBehavior.Default;
 		});
 	}
 

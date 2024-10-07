@@ -4,7 +4,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
@@ -214,6 +215,9 @@ class TreeItemBase extends ListItem {
 	})
 	items!: Array<TreeItemBase>;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	onBeforeRendering() {
 		this.showToggleButton = this.requiresToggleButton;
 	}
@@ -312,13 +316,6 @@ class TreeItemBase extends ListItem {
 
 	get iconAccessibleName(): string {
 		return this.expanded ? TreeItemBase.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
-	}
-
-	static async onDefine() {
-		[TreeItemBase.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			super.onDefine(),
-		]);
 	}
 }
 
