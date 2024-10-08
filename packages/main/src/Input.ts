@@ -300,14 +300,18 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired when the suggestions picker is closed.
  * @public
  * @since 2.0.0
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	/**
 	 * Defines whether the component is in disabled state.

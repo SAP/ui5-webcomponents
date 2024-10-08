@@ -15,6 +15,12 @@ describe("Event bubbling", () => {
 		cy.mount(html`
 			<div id="app">
 				<ui5-dialog id="myDialog" header-text="Dialog">
+					<ui5-input id="myInput" show-suggestions>
+						<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
+						<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+						<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
+					</ui5-input>
+
 					<ui5-message-strip id="myMsgStrip">(Information) with default icon and close button:</ui5-message-strip>
 
 					<ui5-panel id="panel" header-text="Panel">
@@ -35,6 +41,8 @@ describe("Event bubbling", () => {
 			.as("panel");
 		cy.get("[ui5-message-strip]")
 			.as("messageStrip");
+		cy.get("[ui5-input]")
+			.as("input");
 
 		cy.get("@app")
 			.then(app => {
@@ -45,6 +53,11 @@ describe("Event bubbling", () => {
 		cy.get("@dialog")
 			.then(dialog => {
 				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed"));
+			});
+
+		cy.get("@input")
+			.then(input => {
+				input.get(0).addEventListener("close", cy.stub().as("inpClosed"));
 			});
 
 		cy.get("@messageStrip")
@@ -59,19 +72,36 @@ describe("Event bubbling", () => {
 
 		cy.get("@dialog").invoke("attr", "open", true);
 
+		// act - toggle Input suggestions
+		cy.get("@input")
+			.realClick()
+			.realType("a");
+
+		cy.get("@input")
+			.find("[ui5-suggestion-item]")
+			.eq(1)
+			.realClick();
+
+		cy.get("@inpClosed")
+			.should("have.been.calledOnce");
+
 		// act - close MessageStrip
 		cy.get("@messageStrip")
 			.shadow()
 			.find(".ui5-message-strip-close-button")
 			.realClick();
 
-		// assert - the close event of the MessageStrip bubbles:  MessageStrip -> Dialog -> App
+		// assert
+		// - the close event of the MessageStrip bubbles:  MessageStrip -> Dialog -> App
+		// - the close event of the Input bubbles: Input -> Dialog -> App
+		cy.get("@inpClosed")
+			.should("have.been.calledOnce");
 		cy.get("@msgClosed")
 			.should("have.been.calledOnce");
 		cy.get("@dialogClosed")
-			.should("have.been.calledOnce");
+			.should("have.been.calledTwice");
 		cy.get("@appClosed")
-			.should("have.been.calledOnce");
+			.should("have.been.calledTwice");
 
 		// act - toggle Panel
 		cy.get("@panel")
@@ -94,13 +124,7 @@ describe("Event bubbling", () => {
 						<ui5-option>Hello</ui5-option>
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
-					</ui5-select>
-			
-					<ui5-input id="myInput" show-suggestions>
-						<ui5-suggestion-item text="Cozy"></ui5-suggestion-item>
-						<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
-						<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
-					</ui5-input>
+					</ui5-select>					
 				</ui5-dialog>
 			</div>
 		`);
@@ -111,8 +135,6 @@ describe("Event bubbling", () => {
 			.as("dialog");
 		cy.get("[ui5-select]")
 			.as("select");
-		cy.get("[ui5-input]")
-			.as("input");
 
 		cy.get("@app")
 			.then(app => {
@@ -122,11 +144,6 @@ describe("Event bubbling", () => {
 		cy.get("@dialog")
 			.then(dialog => {
 				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed")); // non-bubbling
-			});
-
-		cy.get("@input")
-			.then(input => {
-				input.get(0).addEventListener("close", cy.stub().as("inpClosed")); // non-bubbling
 			});
 
 		cy.get("@select")
@@ -152,24 +169,6 @@ describe("Event bubbling", () => {
 			.should("not.be.called");
 		cy.get("@appClosed")
 			.should("not.be.called");
-
-		// act - open and close Input suggestions
-		cy.get("@input")
-			.realClick()
-			.realType("a");
-
-		cy.get("@input")
-			.find("[ui5-suggestion-item]")
-			.eq(1)
-			.realClick();
-
-		// assert - the close event of the Input does not bubble
-		cy.get("@inpClosed")
-			.should("have.been.calledOnce");
-		cy.get("@dialogClosed")
-			.should("not.be.called");
-		cy.get("@appClosed")
-			.should("not.be.called");
 	});
 
 	it("test cancelable events", () => {
@@ -190,14 +189,17 @@ describe("Event bubbling", () => {
 				checkbox.get(0).addEventListener("change", e => e.preventDefault());
 			});
 
+		// act
 		cy.get("@checkbox")
 			.realClick();
-		cy.get("@checkbox")
-			.invoke("prop", "checked")
-			.should("be.equal", false);
 
 		cy.get("@checkbox2")
 			.realClick();
+
+		// assert
+		cy.get("@checkbox")
+			.invoke("prop", "checked")
+			.should("be.equal", false);
 		cy.get("@checkbox2")
 			.invoke("prop", "checked")
 			.should("be.equal", true);
