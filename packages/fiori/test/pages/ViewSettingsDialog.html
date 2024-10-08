@@ -169,7 +169,6 @@
 			vsd.setConfirmedSettings(JSON.parse(vsdSettings.value));
 		});
 		vsd.addEventListener("ui5-confirm", function(evt) {
-			debugger;
 			var sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
 			sortByItem.value = `${sortByItemTagName} with text ${evt.detail.sortBy}`;
 			sortOrder.value = `${evt.detail.sortDescending}`;
