@@ -1,3 +1,6 @@
+import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -10,6 +13,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -19,12 +23,14 @@ import TableExtension from "./TableExtension.js";
 import type TableSelection from "./TableSelection.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
+import DropIndicator from "./DropIndicator.js";
 import {
 	TABLE_NO_DATA,
 } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import { dragOver, dropRow } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRowUtil.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -71,6 +77,17 @@ interface ITableGrowing extends ITableFeature {
 type TableRowClickEventDetail = {
 	row: TableRow,
 };
+
+type TableMoveEventDetail = {
+	originalEvent: Event,
+	source: {
+		element: HTMLElement,
+	},
+	destination: {
+		element: HTMLElement,
+		placement: `${MovePlacement}`,
+	}
+}
 
 /**
  * @class
@@ -164,6 +181,7 @@ type TableRowClickEventDetail = {
 		TableHeaderRow,
 		TableCell,
 		TableRow,
+		DropIndicator,
 	],
 })
 
@@ -322,6 +340,7 @@ class Table extends UI5Element {
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
 		this.features.forEach(feature => feature.onTableActivate(this));
 		this._tableNavigation = new TableNavigation(this);
+		DragRegistry.subscribe(this);
 	}
 
 	onExitDOM() {
@@ -330,6 +349,7 @@ class Table extends UI5Element {
 		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}
+		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering(): void {
@@ -462,6 +482,33 @@ class Table extends UI5Element {
 		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
+	_ondragenter(e: DragEvent) {
+		e.preventDefault();
+	}
+
+	_ondragleave(e: DragEvent) {
+		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
+			return;
+		}
+
+		this.dropIndicatorDOM!.targetReference = null;
+	}
+
+	_ondragover(e: DragEvent) {
+		const { targetReference, placement } = dragOver(e, this, this.rows);
+		this.dropIndicatorDOM!.targetReference = targetReference;
+		this.dropIndicatorDOM!.placement = placement;
+	}
+
+	_ondrop(e: DragEvent) {
+		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
+			return;
+		}
+
+		dropRow(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
+		this.dropIndicatorDOM.targetReference = null;
+	}
+
 	get styles() {
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
 			if (headerCell.horizontalAlign !== undefined) {
@@ -563,6 +610,10 @@ class Table extends UI5Element {
 	get isTable() {
 		return true;
 	}
+
+	get dropIndicatorDOM(): DropIndicator | null {
+		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
+	}
 }
 
 Table.define();
@@ -573,4 +624,5 @@ export type {
 	ITableFeature,
 	ITableGrowing,
 	TableRowClickEventDetail,
+	TableMoveEventDetail,
 };
