@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+* **ui5-wizard:** disabled steps are no longer clickable ([#9706](https://github.com/SAP/ui5-webcomponents/issues/9706)) ([8136497](https://github.com/SAP/ui5-webcomponents/commit/8136497b68dec6e656b54e7fa8ae9dc0ddea6163)), closes [#9571](https://github.com/SAP/ui5-webcomponents/issues/9571)
+
+
+
+
+
 ## [1.24.10](https://github.com/SAP/ui5-webcomponents/compare/v1.24.9...v1.24.10) (2024-09-20)
 
 
