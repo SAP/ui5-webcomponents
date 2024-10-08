@@ -11,6 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 import type WrappingType from "./types/WrappingType.js";
@@ -263,13 +264,6 @@ class Link extends UI5Element implements ITabbable {
 	@property({ noAttribute: true })
 	forcedTabIndex?: string;
 
-	/**
-	 * Indicates if the element is on focus.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused = false;
-
 	_dummyAnchor: HTMLAnchorElement;
 
 	@i18n("@ui5/webcomponents")
@@ -278,6 +272,12 @@ class Link extends UI5Element implements ITabbable {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onBeforeRendering() {
@@ -359,11 +359,6 @@ class Link extends UI5Element implements ITabbable {
 
 	_onfocusin(e: FocusEvent) {
 		markEvent(e, "link");
-		this.focused = true;
-	}
-
-	_onfocusout() {
-		this.focused = false;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
