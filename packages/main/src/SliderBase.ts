@@ -110,7 +110,8 @@ abstract class SliderBase extends UI5Element {
 	showTooltip = false;
 
 	/**
-	 * Enables handle tooltip displaying the current value.
+	 *
+Indicates whether input fields should be used as tooltips for the handles. Note: Setting this option to true will only work if showTooltip is set to true.
 	 * @default false
 	 * @public
 	 */
