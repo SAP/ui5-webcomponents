@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -96,6 +96,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		return this.value.toString();
 	}
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -238,7 +239,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	 */
 	_handleUp() {
 		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this.handleUpBase();
@@ -318,10 +319,6 @@ class Slider extends SliderBase implements IFormInputElement {
 
 	get _ariaLabelledByText() {
 		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
-	}
-
-	static async onDefine() {
-		Slider.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get tickmarksObject() {

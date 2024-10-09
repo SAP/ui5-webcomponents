@@ -3,12 +3,12 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 import {
@@ -231,6 +231,7 @@ class AvatarGroup extends UI5Element {
 	@slot()
 	overflowButton!: Array<IButton>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
 	_colorIndex = 0;
@@ -246,10 +247,6 @@ class AvatarGroup extends UI5Element {
 			},
 		});
 		this._onResizeHandler = this._onResize.bind(this);
-	}
-
-	static async onDefine() {
-		AvatarGroup.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
@@ -437,7 +434,7 @@ class AvatarGroup extends UI5Element {
 	_fireGroupEvent(targetRef: HTMLElement) {
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
-		this.fireEvent<AvatarGroupClickEventDetail>("click", {
+		this.fireDecoratorEvent<AvatarGroupClickEventDetail>("click", {
 			targetRef,
 			overflowButtonClicked: isOverflowButtonClicked,
 		});
@@ -576,7 +573,7 @@ class AvatarGroup extends UI5Element {
 		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
 
 		if (shouldFireEvent) {
-			this.fireEvent("overflow");
+			this.fireDecoratorEvent("overflow");
 		}
 	}
 

@@ -3,11 +3,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type AriaLandmarkRole from "@ui5/webcomponents-base/dist/types/AriaLandmarkRole.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -215,6 +215,7 @@ type UserDefinedColumnLayouts = {
 		*/
 		resized: { type: Boolean },
 	},
+	bubbles: true,
 })
 class FlexibleColumnLayout extends UI5Element {
 	/**
@@ -333,7 +334,10 @@ class FlexibleColumnLayout extends UI5Element {
 	_handleResize: () => void;
 	_onSeparatorMove: (e: TouchEvent | MouseEvent) => void;
 	_onSeparatorMoveEnd: (e: TouchEvent | MouseEvent) => void;
+
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
+
 	_prevLayout: `${FCLLayout}` | null;
 	_userDefinedColumnLayouts: UserDefinedColumnLayouts = {
 		tablet: {},
@@ -359,10 +363,6 @@ class FlexibleColumnLayout extends UI5Element {
 			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
-	}
-
-	static async onDefine() {
-		FlexibleColumnLayout.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get ANIMATION_DURATION() {
@@ -494,7 +494,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
-		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
+		this.fireDecoratorEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
@@ -511,7 +511,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		const isTouch = e instanceof TouchEvent,
+		const isTouch = supportsTouch() && e instanceof TouchEvent,
 			cursorPositionX = this.getPageXValueFromEvent(e);
 
 		this.separatorMovementSession = this.initSeparatorMovementSession(pressedSeparator, cursorPositionX, isTouch);

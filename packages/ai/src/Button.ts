@@ -59,7 +59,9 @@ import ButtonCss from "./generated/themes/Button.css.js";
  * mouse/tap or by using the Enter or Space key.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class Button extends UI5Element {
 	/**
 	 * Defines the component design.
@@ -216,7 +218,7 @@ class Button extends UI5Element {
 	 */
 	_onclick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
-		this.fireEvent("click");
+		this.fireDecoratorEvent("click");
 	}
 
 	get _mainButton() {
