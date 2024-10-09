@@ -79,13 +79,16 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 			type: String,
 		},
 	},
+	bubbles: true,
 })
 /**
  * Fired when the `ui5-color-palette-popover` is closed due to user interaction.
  * @since 1.21.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
@@ -171,7 +174,7 @@ class ColorPalettePopover extends UI5Element {
 
 	onAfterClose() {
 		this.closePopover();
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	onAfterOpen() {
@@ -193,7 +196,7 @@ class ColorPalettePopover extends UI5Element {
 
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
-		this.fireEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
+		this.fireDecoratorEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
 	}
 
 	get _colorPalette() {

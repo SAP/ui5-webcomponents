@@ -72,7 +72,9 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
  * @private
  * @since 1.0.0-rc.11
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	/**
 	 * Defines whether the component is disabled.
@@ -390,7 +392,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	_fireClick() {
-		this.fireEvent("click");
+		this.fireDecoratorEvent("click");
 	}
 
 	_getAriaHasPopup() {

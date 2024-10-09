@@ -90,7 +90,9 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * click/tap or by using the Enter or Space key.
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 
 class MessageStrip extends UI5Element {
 	/**
@@ -151,7 +153,7 @@ class MessageStrip extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	_closeClick() {
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	static designAnnouncementMappings(): DesignTypeAnnouncemnt {

@@ -10,7 +10,9 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  *
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -165,7 +167,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		e.stopPropagation();
 
 		if (this.isOverflow) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);
 		}

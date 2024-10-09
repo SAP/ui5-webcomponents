@@ -40,7 +40,7 @@ Consider what makes the most sense in your particular use case.
  - Did I **describe my event's details**?
 
 If an event that your component fires has event details, you should create a Typescript type, use it in the `@event` decorator,
-use it with `fireEvent`, and finally, export it as a named type export.
+use it with `fireEvent` or `fireDecoratorEvent`, and finally, export it as a named type export.
 
 ## CSS
 

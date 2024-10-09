@@ -70,7 +70,9 @@ import {
  *
  * @public
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 class TableGrowing extends UI5Element implements ITableGrowing {
 	/**
@@ -199,7 +201,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		}
 		this._shouldFocusRow = true;
 
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_hasScrollToLoad() {
