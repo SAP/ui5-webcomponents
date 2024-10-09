@@ -150,6 +150,7 @@
 
 .ui5-slider-tooltip {
 	display: flex;
+	font-family: var(--sapFontFamily);
 	justify-content: center;
 	align-items: center;
 	visibility: hidden;
