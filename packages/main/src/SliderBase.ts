@@ -111,7 +111,9 @@ abstract class SliderBase extends UI5Element {
 
 	/**
 	 *
-Indicates whether input fields should be used as tooltips for the handles. Note: Setting this option to true will only work if showTooltip is set to true.
+	 * Indicates whether input fields should be used as tooltips for the handles. Note: Setting this option to true will only work if showTooltip is set to true.
+	 *
+	 * **Note:** In order for the component to comply with the accessibility standard, it is recommended to set the editableTooltip property to true.
 	 * @default false
 	 * @public
 	 */
