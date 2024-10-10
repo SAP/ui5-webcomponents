@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "o-data";
+const pathData = "M128 320c21 0 38 13 45 32h19v-64h-79c-19 0-33-15-33-34v-60c0-19 14-34 33-34h223V93c-19-7-32-24-32-45 0-27 21-48 48-48s48 21 48 48c0 21-13 38-32 45v67h30c19 0 34 15 34 34v60c0 19-15 34-34 34h-78v64h19c7-19 24-32 45-32 27 0 48 21 48 48s-21 48-48 48c-21 0-38-13-45-32h-35c-11 0-16-5-16-16v-80h-16v131c19 7 32 24 32 45 0 27-21 48-48 48s-48-21-48-48c0-21 13-38 32-45V288h-16v80c0 11-5 16-16 16h-35c-7 19-24 32-45 32-27 0-48-21-48-48s21-48 48-48zM336 48c0 11 5 16 16 16s16-5 16-16-5-16-16-16-16 5-16 16zm64 144H112v64h288v-64zm-32 176c0 11 5 16 16 16s16-5 16-16-5-16-16-16-16 5-16 16zm-240 16c11 0 16-5 16-16s-5-16-16-16-16 5-16 16 5 16 16 16zm128 96c11 0 16-5 16-16s-5-16-16-16-16 5-16 16 5 16 16 16z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/o-data";
+export { pathData, ltr, accData };
