@@ -1,8 +1,8 @@
 {{>include "./SliderBase.hbs"}}
 
 {{#*inline "handlesAriaText"}}
-	<span id="{{_id}}-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
-	<span id="{{_id}}-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
+	<span id="ui5-slider-startHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.startHandleText}}</span>
+	<span id="ui5-slider-endHandleDesc" class="ui5-hidden-text">{{_ariaHandlesText.endHandleText}}</span>
 {{/inline}}
 
 {{#*inline "progressBar"}}
@@ -22,56 +22,88 @@
 			aria-valuemax="{{max}}"
 			aria-valuenow="{{_ariaValueNow}}"
 			aria-valuetext="From {{startValue}} to {{endValue}}"
-			aria-labelledby="{{_ariaLabelledByProgressBarRefs}}"
+			aria-labelledby="ui5-slider-sliderDesc"
 			aria-disabled="{{_ariaDisabled}}"
 		></div>
 	</div>
 {{/inline}}
 
 {{#*inline "handles"}}
-	<div class="ui5-slider-handle ui5-slider-handle--start"
-		part="handle"
-		style="{{styles.startHandle}}"
-		@focusin="{{_onfocusin}}"
-		@focusout="{{_onfocusout}}"
-		role="slider"
-		tabindex="{{_tabIndex}}"
-		aria-orientation="horizontal"
-		aria-valuemin="{{min}}"
-		aria-valuemax="{{max}}"
-		aria-valuenow="{{startValue}}"
-		aria-labelledby="{{_ariaLabelledByStartHandleRefs}}"
-		aria-disabled="{{_ariaDisabled}}"
-	>
-		<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
+	<div class="ui5-slider-handle-container" style="{{styles.startHandle}}" part="handle-container">
+
+		<div class="ui5-slider-handle ui5-slider-handle--start"
+			part="handle"
+			@focusin="{{_onfocusin}}"
+			@focusout="{{_onfocusout}}"
+			role="slider"
+			tabindex="{{_tabIndex}}"
+			aria-orientation="horizontal"
+			aria-valuemin="{{min}}"
+			aria-valuemax="{{max}}"
+			aria-valuenow="{{startValue}}"
+			aria-labelledby="ui5-slider-startHandleDesc"
+			aria-disabled="{{_ariaDisabled}}"
+			.aria-describedby="{{_ariaDescribedByHandleText}}"
+		>
+			<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
+		</div>
 
 		{{#if showTooltip}}
-			<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
+		<div class="ui5-slider-tooltip ui5-slider-tooltip--start" style="{{styles.tooltip}}">
+			{{#if editableTooltip}}
+				<ui5-input
+					type="Number"
+					value="{{startValue}}"
+					accessible-name-ref="ui5-slider-InputLabel"
+					@focusout="{{_onInputFocusOut}}"
+					@keydown="{{_onInputKeydown}}"
+					@ui5-change="{{_onInputChange}}"
+					@ui5-input="{{_onInputInput}}"
+					data-sap-ui-start-value
+					tabindex="-1"
+				></ui5-input>
+			{{else}}
 				<span class="ui5-slider-tooltip-value">{{tooltipStartValue}}</span>
-			</div>
+			{{/if}}
+		</div>
 		{{/if}}
 	</div>
-
-	<div class="ui5-slider-handle ui5-slider-handle--end"
-		part="handle"
-		style="{{styles.endHandle}}"
-		@focusin="{{_onfocusin}}"
-		@focusout="{{_onfocusout}}"
-		role="slider"
-		tabindex="{{_tabIndex}}"
-		aria-orientation="horizontal"
-		aria-valuemin="{{min}}"
-		aria-valuemax="{{max}}"
-		aria-valuenow="{{endValue}}"
-		aria-labelledby="{{_ariaLabelledByEndHandleRefs}}"
-		aria-disabled="{{_ariaDisabled}}"
-	>
-		<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
+	<div class="ui5-slider-handle-container" style="{{styles.endHandle}}" part="handle-container">
+		<div class="ui5-slider-handle ui5-slider-handle--end"
+			part="handle"
+			@focusin="{{_onfocusin}}"
+			@focusout="{{_onfocusout}}"
+			role="slider"
+			tabindex="{{_tabIndex}}"
+			aria-orientation="horizontal"
+			aria-valuemin="{{min}}"
+			aria-valuemax="{{max}}"
+			aria-valuenow="{{endValue}}"
+			aria-labelledby="ui5-slider-endHandleDesc"
+			.aria-describedby="{{_ariaDescribedByHandleText}}"
+			aria-disabled="{{_ariaDisabled}}"
+		>
+			<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
+		</div>
 
 		{{#if showTooltip}}
-			<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
+		<div class="ui5-slider-tooltip ui5-slider-tooltip--end" style="{{styles.tooltip}}">
+			{{#if editableTooltip}}
+				<ui5-input
+					type="Number"
+					value="{{endValue}}"
+					accessible-name-ref="ui5-slider-InputLabel"
+					@focusout="{{_onInputFocusOut}}"
+					@keydown="{{_onInputKeydown}}"
+					@ui5-change="{{_onInputChange}}"
+					@ui5-input="{{_onInputInput}}"
+					data-sap-ui-end-value
+					tabindex="-1"
+				></ui5-input>
+			{{else}}
 				<span class="ui5-slider-tooltip-value">{{tooltipEndValue}}</span>
-			</div>
+			{{/if}}
+		</div>
 		{{/if}}
 	</div>
 {{/inline}}
