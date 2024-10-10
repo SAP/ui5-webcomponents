@@ -531,6 +531,24 @@ z-index: 1;
 	<br><br>
 	<br>
 
+	<div dir="rtl" style="height: 420px; overflow-y: scroll;">
+		<div style="height: 100%; width: 100%">
+			<span>RTL sample with scrollbar</span>
+			<br>
+			<div class="centered-button">
+				<ui5-button id="btnRTLScroll">Open</ui5-button>
+			</div>
+			<ui5-popover id="RTLScroll" placement="Bottom" horizontalAlign="Center" opener="btnRTLScroll">
+				<div>
+					<ui5-input/>
+				</div>
+			</ui5-popover>
+			<div style="height: 1000px;"></div>
+		</div>
+	</div>
+
+	<iframe src="./PopoverRTL.html"></iframe>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.opener = btn;
@@ -842,6 +860,11 @@ z-index: 1;
 		document.getElementById("btnVerticalStretch").addEventListener("click", (e) => {
 			document.getElementById("vertical").opener = e.currentTarget;
 			document.getElementById("vertical").open = true;
+		});
+
+		document.getElementById("btnRTLScroll").addEventListener("click", (e) => {
+			document.getElementById("RTLScroll").opener = e.currentTarget;
+			document.getElementById("RTLScroll").open = true;
 		});
 
 	</script>

@@ -619,6 +619,7 @@ class Popover extends Popup {
 	getArrowPosition(targetRect: DOMRect, popoverSize: PopoverSize, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPosition {
 		const horizontalAlign = this._actualHorizontalAlign;
 		let arrowXCentered = horizontalAlign === PopoverHorizontalAlign.Center || horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
 		if (horizontalAlign === PopoverHorizontalAlign.End && left <= targetRect.left) {
 			arrowXCentered = true;
@@ -631,6 +632,10 @@ class Popover extends Popup {
 		let arrowTranslateX = 0;
 		if (isVertical && arrowXCentered) {
 			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
+
+			if (this.isInsideIframe() && this.isRTL() && this.hasVerticalScrollbar()) {
+				arrowTranslateX -= scrollbarWidth;
+			}
 		}
 
 		let arrowTranslateY = 0;
@@ -717,14 +722,31 @@ class Popover extends Popup {
 		return actualPlacement;
 	}
 
+	isInsideIframe() {
+		return window !== window.top;
+	}
+
+	isRTL() {
+		return document.documentElement.getAttribute("dir") === "rtl";
+	}
+
+	hasVerticalScrollbar() {
+        return  document.documentElement.scrollHeight > document.documentElement.clientHeight;
+	}
+
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		const horizontalAlign = this._actualHorizontalAlign;
 		let left = Popover.VIEWPORT_MARGIN;
+		const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
 		switch (horizontalAlign) {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
+			if (this.isInsideIframe() && this.isRTL() && this.hasVerticalScrollbar()) {
+				left -= scrollbarWidth;
+			}
+
 			break;
 		case PopoverHorizontalAlign.Start:
 			left = targetRect.left;
