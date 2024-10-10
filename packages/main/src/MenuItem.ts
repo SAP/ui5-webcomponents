@@ -25,6 +25,7 @@ import type { IMenuItem } from "./Menu.js";
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
@@ -167,6 +168,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	_siblingsWithIcon = false;
 
 	/**
+	 * Indicates if the menu item has a submenu.
+	 */
+	@property({ type: Boolean, noAttribute: true})
+	_newItemsAdded?: boolean;
+
+	/**
 	 * Defines the items of this component.
 	 *
 	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
@@ -259,7 +266,27 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+		
+		if (this._newItemsAdded) {
+			if (this._menuItems.length > 0) {
+				const hasSelectedOrFocusedItem = this._menuItems.some(item => item.selected);
+
+				if (!hasSelectedOrFocusedItem) {
+					this._menuItems[0].focus();
+				}
+				if (this._menuItems[0].focused) {
+					this._newItemsAdded = false;
+				}
+			}
+		}
 	}
+
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.reason === "children" && changeInfo.type === "slot") {
+			this._newItemsAdded = true;
+		}
+	}
+
 
 	get _focusable() {
 		return true;

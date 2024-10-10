@@ -235,6 +235,12 @@ class Menu extends UI5Element {
 	opener?: HTMLElement | string;
 
 	/**
+	 * Indicates if the menu item has a submenu.
+	 */
+	@property({ type: Boolean, noAttribute: true})
+	_newItemsAdded?: boolean;
+
+	/**
 	 * Defines the items of this component.
 	 *
 	 * **Note:** Use `ui5-menu-item` and `ui5-menu-separator` for their intended design.
@@ -246,7 +252,6 @@ class Menu extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_timeout?: Timeout;
-	private _newItems: any;
 
 	get isRtl() {
 		return this.effectiveDir === "rtl";
@@ -279,7 +284,7 @@ class Menu extends UI5Element {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
 
-		if (this._newItems) {
+		if (this._newItemsAdded) {
 			if (this._menuItems.length > 0) {
 				const hasSelectedOrFocusedItem = this._menuItems.some(item => item.selected);
 
@@ -287,7 +292,7 @@ class Menu extends UI5Element {
 					this._menuItems[0].focus();
 				}
 				if (this._menuItems[0].focused) {
-					this._newItems = false;
+					this._newItemsAdded = false;
 				}
 			}
 		}
@@ -295,7 +300,7 @@ class Menu extends UI5Element {
 
 	onInvalidation(changeInfo: ChangeInfo) {
 		if (changeInfo.reason === "children" && changeInfo.type === "slot") {
-			this._newItems = true;
+			this._newItemsAdded = true;
 		}
 	}
 
