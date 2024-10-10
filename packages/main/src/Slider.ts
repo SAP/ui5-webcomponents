@@ -239,7 +239,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	 */
 	_handleUp() {
 		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this.handleUpBase();

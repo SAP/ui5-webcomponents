@@ -178,7 +178,6 @@ type DatePickerInputEventDetail = {
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
- * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -198,10 +197,11 @@ type DatePickerInputEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when the value of the component is changed at each key stroke.
- * @allowPreventDefault
  * @public
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -221,12 +221,13 @@ type DatePickerInputEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- * @allowPreventDefault
  * @public
  * @param {string} valueState The new `valueState` that will be set.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -246,6 +247,8 @@ type DatePickerInputEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
@@ -545,7 +548,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		}
 
 		events.forEach((e: string) => {
-			if (!this.fireEvent<DatePickerChangeEventDetail>(e, { value, valid }, true)) {
+			if (!this.fireDecoratorEvent<DatePickerChangeEventDetail>(e, { value, valid })) {
 				executeEvent = false;
 			}
 		});
@@ -567,7 +570,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		this.valueState = valid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid }, true);
+		const eventPrevented = !this.fireDecoratorEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid });
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;

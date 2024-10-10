@@ -305,7 +305,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._setAffectedValue(undefined);
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this._startValueAtBeginningOfAction = undefined;
@@ -530,7 +530,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		this._setAffectedValue(undefined);
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this._setIsPressInCurrentRange(false);

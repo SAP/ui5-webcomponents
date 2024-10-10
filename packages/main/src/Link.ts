@@ -11,6 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 import type WrappingType from "./types/WrappingType.js";
@@ -85,7 +86,6 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
  * @public
- * @allowPreventDefault
  * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
@@ -110,6 +110,8 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 		 */
 		shiftKey: { type: Boolean },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
 	/**
@@ -263,13 +265,6 @@ class Link extends UI5Element implements ITabbable {
 	@property({ noAttribute: true })
 	forcedTabIndex?: string;
 
-	/**
-	 * Indicates if the element is on focus.
-	 * @private
-	 */
-	@property({ type: Boolean })
-	focused = false;
-
 	_dummyAnchor: HTMLAnchorElement;
 
 	@i18n("@ui5/webcomponents")
@@ -278,6 +273,12 @@ class Link extends UI5Element implements ITabbable {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
+	}
+
+	onEnterDOM() {
+		if (isDesktop()) {
+			this.setAttribute("desktop", "");
+		}
 	}
 
 	onBeforeRendering() {
@@ -345,12 +346,12 @@ class Link extends UI5Element implements ITabbable {
 		e.stopImmediatePropagation();
 		markEvent(e, "link");
 
-		const executeEvent = this.fireEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
 			altKey,
 			ctrlKey,
 			metaKey,
 			shiftKey,
-		}, true);
+		});
 
 		if (!executeEvent) {
 			e.preventDefault();
@@ -359,11 +360,6 @@ class Link extends UI5Element implements ITabbable {
 
 	_onfocusin(e: FocusEvent) {
 		markEvent(e, "link");
-		this.focused = true;
-	}
-
-	_onfocusout() {
-		this.focused = false;
 	}
 
 	_onkeydown(e: KeyboardEvent) {

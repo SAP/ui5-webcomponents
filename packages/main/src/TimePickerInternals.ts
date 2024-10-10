@@ -89,6 +89,7 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
 		value: { type: String },
 		valid: { type: Boolean },
 	},
+	bubbles: true,
 })
 
 class TimePickerInternals extends UI5Element {
@@ -300,7 +301,7 @@ class TimePickerInternals extends UI5Element {
 
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
-			this.fireEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
+			this.fireDecoratorEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
 		}
 	}
 

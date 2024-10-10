@@ -211,33 +211,40 @@ type MultiComboboxItemWithSelection = {
  * Fired when the input operation has finished by pressing Enter or on focusout.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke or clear icon is pressed.
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * Fired when the dropdown is opened.
  * @since 2.0.0
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired when the dropdown is closed.
  * @since 2.0.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 
 /**
  * Fired when selection is changed by user interaction.
  * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
- * @allowPreventDefault
  */
 @event<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
@@ -246,6 +253,8 @@ type MultiComboboxItemWithSelection = {
 		 */
 		items: { type: Array<IMultiComboBoxItem> },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 class MultiComboBox extends UI5Element implements IFormInputElement {
@@ -580,13 +589,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._shouldFilterItems = true;
 		this.valueBeforeAutoComplete = value;
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_inputChange() {
 		if (!this._clearingValue && this._lastValue !== this.value) {
 			this._lastValue = this.value;
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -703,7 +712,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			}
 		}
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -1390,7 +1399,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._getResponsivePopover().focus();
 		}
 
-		this.fireEvent(action);
+		this.fireDecoratorEvent(action);
 
 		this._previouslySelectedItems = this._getSelectedItems();
 		this._isOpenedByKeyboard = false;
@@ -1463,7 +1472,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				}
 			}
 
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 			return;
 		}
 
@@ -1481,12 +1490,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	fireSelectionChange() {
-		const changePrevented = !this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
+		const changePrevented = !this.fireDecoratorEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 			items: this._getSelectedItems(),
-		}, true);
+		});
 
 		// Angular 2 way data binding
-		this.fireEvent("value-changed");
+		this.fireDecoratorEvent("value-changed");
 
 		return changePrevented;
 	}
@@ -1528,7 +1537,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._tokenizer.expanded = false;
 		}
 
-		this.fireEvent(action);
+		this.fireDecoratorEvent(action);
 
 		this._iconPressed = false;
 		this._preventTokenizerToggle = false;
@@ -1675,7 +1684,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_clear() {
 		this.value = "";
 		this._inputDom.value = "";
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 
 		if (!this._isPhone) {
 			this.focus();

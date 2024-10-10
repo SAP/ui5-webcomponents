@@ -101,12 +101,17 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @public
  * @native
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 /**
  * Fired whenever the active state of the component changes.
  * @private
  */
-@event("_active-state-change")
+@event("_active-state-change", {
+	bubbles: true,
+	cancelable: true,
+})
 class Button extends UI5Element implements IButton {
 	/**
 	 * Defines the component design.
@@ -457,7 +462,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_setActiveState(active: boolean) {
-		const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+		const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
 
 		if (eventPrevented) {
 			return;

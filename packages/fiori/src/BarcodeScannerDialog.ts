@@ -88,7 +88,9 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * Fired when the user closes the component.
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 
 /**
  * Fires when the scan is completed successfuuly.
@@ -107,6 +109,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		*/
 		rawBytes: { type: Object },
 	},
+	bubbles: true,
 })
 
 /**
@@ -121,6 +124,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		*/
 		message: { type: String },
 	},
+	bubbles: true,
 })
 
 class BarcodeScannerDialog extends UI5Element {
@@ -168,7 +172,7 @@ class BarcodeScannerDialog extends UI5Element {
 			}
 
 			if (!this._hasGetUserMedia()) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+				this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
 				return;
 			}
 
@@ -181,7 +185,7 @@ class BarcodeScannerDialog extends UI5Element {
 					this.permissionsGranted = true;
 				})
 				.catch(err => {
-					this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
+					this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
 					this.loading = false;
 				});
 		} else {
@@ -215,7 +219,7 @@ class BarcodeScannerDialog extends UI5Element {
 
 	_fireCloseEvent() {
 		this.open = false;
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	_startReader() {
@@ -233,16 +237,16 @@ class BarcodeScannerDialog extends UI5Element {
 		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {
-				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
+				this.fireDecoratorEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
 					{
 						text: result.getText(),
 						rawBytes: result.getRawBytes(),
 					});
 			}
 			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
+				this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
 			}
-		}).catch((err: Error) => this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
+		}).catch((err: Error) => this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
 	}
 
 	get _cancelButtonText() {

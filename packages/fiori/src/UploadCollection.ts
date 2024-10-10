@@ -86,7 +86,9 @@ type UploadCollectionItemDeleteEventDetail = {
  * @public
  * @native
  */
-@event("drop")
+@event("drop", {
+	bubbles: true,
+})
 
 /**
  * Fired when the delete button of any item is pressed.
@@ -100,6 +102,7 @@ type UploadCollectionItemDeleteEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -115,6 +118,7 @@ type UploadCollectionItemDeleteEventDetail = {
 		 */
 		selectedItems: { type: Array },
 	},
+	bubbles: true,
 })
 class UploadCollection extends UI5Element {
 	/**
@@ -264,11 +268,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(e: CustomEvent) {
-		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
+		this.fireDecoratorEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
 	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
+		this.fireDecoratorEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {

@@ -240,6 +240,9 @@ class MyDemoComponent extends UI5Element {
 
 ### Firing the Event
 
+
+#### The `fireEvent` method
+
 Use the `UI5Element#fireEvent` method to trigger the event:
 
 ```ts
@@ -257,9 +260,63 @@ class MyDemoComponent extends UI5Element {
 }
 ```
 
+By defualt when using `fireEvent` it assumes the event is bubbling (bubbles: true) and not preventable (cancelable: false).
+
+- Fire event with default configuration
+
+```ts
+// Fires the event as NOT preventable and bubbling
+this.fireEvent("change");
+```
+
+- Fire event with non-default configuration
+
+The method allows configuring the `cancelable` and `bubbles` fields via function arguments - the third and fourth parameters respectively.
+
+```ts
+// Fires the event as preventable and non-bubbling
+this.fireEvent("change", {}, true, false);
+```
+
+#### The `fireDecoratorEvent` method
+
+Use the `UI5Element#fireDecoratorEvent` method to trigger the event.
+
+The method is available since version `v2.4.0` and it is similar to `fireEvent`. It fires a custom event, but gets the configuration for the event from the `@event` decorator. In case you rely on the decorator settings, you must use the `fireDecoratorEvent` method.
+
+Keep in mind that `cancelable` and `bubbles` are `false` by default and you must explicitly enable them in the `@event` decorator if required.
+
+- Fire event with default configuration
+
+```ts
+@event("change")
+```
+
+```ts
+// Fires the event as NOT preventable and NOT bubbling
+this.fireDecoratorEvent("change");
+```
+
+- Fire event with non-default configuration
+
+```ts
+@event("change", {
+    bubbles: true // false by default
+    cancelable: true // false by default
+})
+```
+
+```ts
+// Fires the event as preventable and bubbling
+this.fireDecoratorEvent("change");
+```
+
+**Note:** since `v2.4.0` it's recommended to describe the event in the `@event` decorator and use the `fireDecoratorEvent` method. 
+
+
 ### Describing the Event Detail
 
-When an event includes a detail it's recommended to create a TypeScript type that describes the event detail and use it in the `fireEvent` (as it's a generic method) to force static checks ensuring that proper event detail is passed.
+When an event includes a detail it's recommended to create a TypeScript type that describes the event detail and use it in the `fireEvent` or `fireDecoratorEvent` (as generic methods) to force static checks ensuring that proper event detail is passed.
 The naming convention for the type is a combination of the component class name ("MyDemoComponent"), the event name ("SelectionChange"), followed by "EventDetail", written in PascalCase, e.g "MyDemoComponentSelectionChangeEventDetail":
 
 
@@ -277,7 +334,7 @@ export type MyDemoComponentSelectionChangeEventDetail = {
 class MyDemoComponent extends UI5Element {
 
 	onItemSelected(e: Event) {
-		this.fireEvent<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
 			valid: true,
 		});
 	}
@@ -302,19 +359,24 @@ By default, events are fired in pairs: one with the standard name and another pr
 
 ### Preventable Events 
 
-It's common to prevent certain events in an application. You must enable the `cancelable` flag to make the event preventable. 
+It's common to prevent certain events in an application. You must configure the `cancelable` setting in the `@event` decorator to make the event preventable. 
 
 ```ts
-this.fireEvent("change", null, true /* cancelable */);
+@event("change", {
+    cancelable: true // false by default
+})
 ```
 
-Sometimes, you may also need to update (or revert) the component's state when an event is prevented by the consuming side. To determine if an event was prevented, check the return value of the `fireEvent` method. It returns false if the event was cancelled (`preventDefault` was called) and true otherwise:
+You most likely will need to update (or revert) the component's state when an event is prevented by the consuming side. To determine if an event was prevented, check the return value of the `fireDecoratorEvent` method. It returns false if the event was cancelled (`preventDefault` was called) and true otherwise:
 
 ```ts
+@event("change", {
+    cancelable: true // false by default
+})
 class Switch extends UI5Element {
 	toggle() {
 		this.checked = !this.checked;
-		const changePrevented = !this.fireEvent("change", null, true /* cancelable */);
+		const changePrevented = !this.fireDecoratorEvent("change");
 
 		if (changePrevented) {
 			this.checked = !this.checked;

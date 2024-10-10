@@ -77,12 +77,16 @@ type YearPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
@@ -362,7 +366,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -376,7 +380,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -403,7 +407,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp);
 
-		this.fireEvent<YearPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent<YearPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp!,
 			dates: this.selectedDates,
 		});

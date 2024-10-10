@@ -101,6 +101,7 @@ type FileUploaderChangeEventDetail = {
 		 */
 		files: { type: FileList },
 	},
+	bubbles: true,
 })
 /**
  * Event is fired when the size of a file is above the `maxFileSize` property value.
@@ -115,6 +116,7 @@ type FileUploaderChangeEventDetail = {
 		 */
 		filesData: { type: Array<FileData> },
 	},
+	bubbles: true,
 })
 class FileUploader extends UI5Element implements IFormInputElement {
 	/**
@@ -311,7 +313,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 		this._input.files = validatedFiles;
 		this._updateValue(validatedFiles);
-		this.fireEvent<FileUploaderChangeEventDetail>("change", {
+		this.fireDecoratorEvent<FileUploaderChangeEventDetail>("change", {
 			files: validatedFiles,
 		});
 	}
@@ -357,7 +359,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 
 		this._updateValue(changedFiles);
-		this.fireEvent<FileUploaderChangeEventDetail>("change", {
+		this.fireDecoratorEvent<FileUploaderChangeEventDetail>("change", {
 			files: changedFiles,
 		});
 	}
@@ -377,7 +379,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
 
 		if (exceededFilesData.length) {
-			this.fireEvent<FileUploaderFileSizeExceedEventDetail>("file-size-exceed", {
+			this.fireDecoratorEvent<FileUploaderFileSizeExceedEventDetail>("file-size-exceed", {
 				filesData: exceededFilesData,
 			});
 			changedFiles = new DataTransfer().files;

@@ -215,6 +215,7 @@ type UserDefinedColumnLayouts = {
 		*/
 		resized: { type: Boolean },
 	},
+	bubbles: true,
 })
 class FlexibleColumnLayout extends UI5Element {
 	/**
@@ -493,7 +494,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
-		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
+		this.fireDecoratorEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,

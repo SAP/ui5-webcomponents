@@ -152,6 +152,7 @@ type VSDInternalSettings = {
 		 */
 		filters: { type: Array },
 	},
+	bubbles: true,
 })
 
 /**
@@ -186,25 +187,32 @@ type VSDInternalSettings = {
 		 */
 		filters: { type: Array },
 	},
+	bubbles: true,
 })
 
 /**
- * Fired before the component is opened. **This event does not bubble.**
+ * Fired before the component is opened.
  * @public
  */
-@event("before-open")
+@event("before-open", {
+	cancelable: true,
+})
 /**
  * Fired after the dialog is opened.
  * @since 2.0.0
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 /**
  * Fired after the dialog is closed.
  * @since 2.0.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -525,7 +533,7 @@ class ViewSettingsDialog extends UI5Element {
 			this._restoreSettings(this._confirmedSettings);
 		}
 
-		this.fireEvent("before-open", {}, true, false);
+		this.fireDecoratorEvent("before-open", {});
 	}
 
 	afterDialogOpen(): void {
@@ -533,11 +541,11 @@ class ViewSettingsDialog extends UI5Element {
 
 		this._focusRecentlyUsedControl();
 
-		this.fireEvent("open");
+		this.fireDecoratorEvent("open");
 	}
 
 	afterDialogClose(): void {
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
@@ -594,7 +602,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.open = false;
 		this._confirmedSettings = this._currentSettings;
 
-		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
+		this.fireDecoratorEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
 	}
 
 	/**
@@ -603,7 +611,7 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 
-		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
+		this.fireDecoratorEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
 		this.open = false;
 	}
 

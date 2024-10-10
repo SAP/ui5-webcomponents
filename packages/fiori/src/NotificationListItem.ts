@@ -147,7 +147,9 @@ const ICON_PER_STATUS_DESIGN = {
 	],
 })
 
-@event("_press")
+@event("_press", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `Close` button is pressed.
@@ -163,6 +165,7 @@ const ICON_PER_STATUS_DESIGN = {
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
@@ -553,7 +556,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (isDelete(e)) {
-			this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -566,7 +569,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
@@ -594,7 +597,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 
 	onResize() {

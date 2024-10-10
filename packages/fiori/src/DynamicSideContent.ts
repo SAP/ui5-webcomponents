@@ -148,6 +148,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
 	/**
@@ -465,7 +466,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
+			this.fireDecoratorEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 

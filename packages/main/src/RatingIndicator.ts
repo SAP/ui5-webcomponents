@@ -83,7 +83,9 @@ type Star = {
  * The event is fired when the value changes.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RatingIndicator extends UI5Element {
 	/**
@@ -232,7 +234,7 @@ class RatingIndicator extends UI5Element {
 			}
 
 			if (this._liveValue !== this.value) {
-				this.fireEvent("change");
+				this.fireDecoratorEvent("change");
 				this._liveValue = this.value;
 			}
 		}
@@ -270,7 +272,7 @@ class RatingIndicator extends UI5Element {
 				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
 
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 	}
 

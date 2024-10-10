@@ -19,7 +19,7 @@
 	<ui5-busy-indicator
 		id="{{_id}}-busyIndicator"
 		delay="{{loadingDelay}}"
-		?active="{{loading}}"
+		?active="{{showBusyIndicatorOverlay}}"
 		class="ui5-list-busy-indicator"
 	>
 	<div class="ui5-list-scroll-container">
@@ -96,6 +96,12 @@
 			@mouseup="{{_onLoadMoreMouseup}}"
 			growing-button-inner
 		>
+			{{#if loading}}
+				<ui5-busy-indicator
+					delay="{{loadingDelay}}"
+					active>
+				</ui5-busy-indicator>
+			{{/if}}
 			<span id="{{_id}}-growingButton-text" growing-button-text>{{_growingButtonText}}</span>
 		</div>
 	</div>

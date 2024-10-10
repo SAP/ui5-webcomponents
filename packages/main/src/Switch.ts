@@ -60,13 +60,24 @@ import switchCss from "./generated/themes/Switch.css.js";
 	renderer: litRender,
 	template: SwitchTemplate,
 	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component checked state changes.
  * @public
- * @allowPreventDefault
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+	cancelable: true,
+})
 class Switch extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the component design.
@@ -223,9 +234,9 @@ class Switch extends UI5Element implements IFormInputElement {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding;
-			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;

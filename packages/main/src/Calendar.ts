@@ -210,7 +210,6 @@ type SpecialCalendarDateT = {
  *
  * **Note:** If you call `preventDefault()` for this event, the component will not
  * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
- * @allowPreventDefault
  * @param {Array<string>} selectedValues The selected dates
  * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
@@ -228,10 +227,16 @@ type SpecialCalendarDateT = {
 
 		timestamp: { type: Number },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
-@event("show-month-view")
-@event("show-year-view")
+@event("show-month-view", {
+	bubbles: true,
+})
+@event("show-year-view", {
+	bubbles: true,
+})
 class Calendar extends CalendarPart {
 	/**
 	 * Defines the type of selection used in the calendar component.
@@ -511,7 +516,7 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderShowMonthPress(e: CustomEvent) {
 		this.showMonth();
-		this.fireEvent("show-month-view", e);
+		this.fireDecoratorEvent("show-month-view", e);
 	}
 
 	showMonth() {
@@ -524,7 +529,7 @@ class Calendar extends CalendarPart {
 	 */
 	onHeaderShowYearPress(e: CustomEvent) {
 		this.showYear();
-		this.fireEvent("show-year-view", e);
+		this.fireDecoratorEvent("show-year-view", e);
 	}
 
 	showYear() {
@@ -630,7 +635,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues }, true);
+		const defaultPrevented = !this.fireDecoratorEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -674,12 +679,12 @@ class Calendar extends CalendarPart {
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
-			this.fireEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view", e);
 		}
 
 		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
-			this.fireEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view", e);
 		}
 	}
 
@@ -732,7 +737,7 @@ class Calendar extends CalendarPart {
 
 		if (isEnter(e)) {
 			this.showMonth();
-			this.fireEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view", e);
 		}
 	}
 
@@ -740,7 +745,7 @@ class Calendar extends CalendarPart {
 		if (isSpace(e)) {
 			e.preventDefault();
 			this.showMonth();
-			this.fireEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view", e);
 		}
 	}
 
@@ -751,14 +756,14 @@ class Calendar extends CalendarPart {
 
 		if (isEnter(e)) {
 			this.showYear();
-			this.fireEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view", e);
 		}
 	}
 
 	onYearButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.showYear();
-			this.fireEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view", e);
 		}
 	}
 

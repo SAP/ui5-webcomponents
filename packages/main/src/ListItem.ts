@@ -96,9 +96,15 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  * Fired when the user clicks on the detail button when type is `Detail`.
  * @public
  */
-@event("detail-click")
-@event("_focused")
-@event("_selection-requested")
+@event("detail-click", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
+@event("_selection-requested", {
+	bubbles: true,
+})
 abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
@@ -254,6 +260,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
+			return;
+		}
+
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -328,6 +338,13 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	_isTargetSelfFocusDomRef(e: KeyboardEvent): boolean {
+		const target = e.target as HTMLElement,
+			focusDomRef = this.getFocusDomRef();
+
+		return target !== focusDomRef;
+	}
+
 	/**
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
@@ -337,7 +354,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
@@ -345,7 +362,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -355,11 +372,11 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDelete() {
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick() {
-		this.fireEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(e: Event) {

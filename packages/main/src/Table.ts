@@ -180,6 +180,7 @@ type TableRowClickEventDetail = {
 		 */
 		row: { type: TableRow },
 	},
+	bubbles: true,
 })
 
 class Table extends UI5Element {
@@ -459,7 +460,7 @@ class Table extends UI5Element {
 	}
 
 	_onRowPress(row: TableRow) {
-		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
+		this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
 	get styles() {

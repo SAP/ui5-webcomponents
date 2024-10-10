@@ -61,7 +61,6 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.1.0
- * @allowPreventDefault
  */
 
 @event<ListItemGroupMoveEventDetail>("move-over", {
@@ -75,6 +74,8 @@ type ListItemGroupMoveEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -85,7 +86,6 @@ type ListItemGroupMoveEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.1.0
- * @allowPreventDefault
  */
 @event<ListItemGroupMoveEventDetail>("move", {
 	detail: {
@@ -98,6 +98,7 @@ type ListItemGroupMoveEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
 })
 
 class ListItemGroup extends UI5Element {
@@ -209,7 +210,7 @@ class ListItemGroup extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<ListItemGroupMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},
@@ -217,7 +218,7 @@ class ListItemGroup extends UI5Element {
 					element: closestPosition.element,
 					placement,
 				},
-			}, true);
+			});
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();
@@ -237,7 +238,7 @@ class ListItemGroup extends UI5Element {
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 
-		this.fireEvent<ListItemGroupMoveEventDetail>("move", {
+		this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move", {
 			source: {
 				element: DragRegistry.getDraggedElement()!,
 			},

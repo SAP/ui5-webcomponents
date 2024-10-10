@@ -103,12 +103,13 @@ type StepInputValueStateChangeEventDetail = {
  * Fired when the input operation has finished by pressing Enter or on focusout.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- * @allowPreventDefault
  * @since 1.23.0
  * @public
  * @param {string} valueState The new `valueState` that will be set.
@@ -129,6 +130,8 @@ type StepInputValueStateChangeEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	/**
@@ -420,10 +423,10 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 		this.valueState = isValid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
+		const eventPrevented = !this.fireDecoratorEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
 			valueState: this.valueState,
 			valid: isValid,
-		}, true);
+		});
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;
@@ -438,7 +441,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_fireChangeEvent() {
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change", { value: this.value });
 		}
 	}
 

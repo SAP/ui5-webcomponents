@@ -123,7 +123,6 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * Fired when the selection has changed via user interaction
  *
  * @param {SideNavigationSelectableItemBase} item the clicked item.
- * @allowPreventDefault
  * @public
  */
 @event<SideNavigationSelectionChangeEventDetail>("selection-change", {
@@ -133,6 +132,8 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class SideNavigation extends UI5Element {
 	/**
@@ -555,7 +556,7 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 			return;
 		}
 
@@ -570,7 +571,7 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 
 			if (!item.selected) {
 				this._selectItem(item);
@@ -604,7 +605,7 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+		if (!this.fireDecoratorEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item })) {
 			return;
 		}
 

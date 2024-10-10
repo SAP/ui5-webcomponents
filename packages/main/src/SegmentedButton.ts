@@ -75,6 +75,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
 		 */
 		selectedItems: { type: Array },
 	},
+	bubbles: true,
 })
 
 class SegmentedButton extends UI5Element {
@@ -176,7 +177,7 @@ class SegmentedButton extends UI5Element {
 			this._applySingleSelection(target);
 		}
 
-		this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
 			selectedItems: this.selectedItems,
 		});
 

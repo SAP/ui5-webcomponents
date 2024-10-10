@@ -24,13 +24,17 @@ type DirectionStart = "left" | "right";
  * Fired when the value changes and the user has finished interacting with the slider.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -435,7 +439,7 @@ abstract class SliderBase extends UI5Element {
 	updateStateStorageAndFireInputEvent(valueType: string) {
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 		}
 	}
 
