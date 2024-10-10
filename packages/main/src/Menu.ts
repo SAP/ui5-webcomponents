@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { type ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -246,6 +246,7 @@ class Menu extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_timeout?: Timeout;
+	private _newItems: any;
 
 	get isRtl() {
 		return this.effectiveDir === "rtl";
@@ -277,6 +278,25 @@ class Menu extends UI5Element {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+
+		if (this._newItems) {
+			if (this._menuItems.length > 0) {
+				const hasSelectedOrFocusedItem = this._menuItems.some(item => item.selected);
+
+				if (!hasSelectedOrFocusedItem) {
+					this._menuItems[0].focus();
+				}
+				if (this._menuItems[0].focused) {
+					this._newItems = false;
+				}
+			}
+		}
+	}
+
+	onInvalidation(changeInfo: ChangeInfo) {
+		if (changeInfo.reason === "children" && changeInfo.type === "slot") {
+			this._newItems = true;
+		}
 	}
 
 	_close() {

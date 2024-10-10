@@ -43,6 +43,9 @@
 		<ui5-menu-item id="menuItemExit" text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
 
+	<ui5-menu id="delaymenu" loading-delay="100" loading>
+	</ui5-menu>
+
 	<ui5-title level="H5" class="header-title">Clicked menu item text</ui5-title>
 	<ui5-input id="selectionInput"></ui5-input>
 
@@ -119,6 +122,9 @@
 			<ui5-link id="detailsLink" href="https://en.wikipedia.org/wiki/Google_logo" target="_blank"></ui5-link>
 	</ui5-popover>
 
+
+	<ui5-button id="btnAddOpenerDelay">Delayed</ui5-button>
+
 	<script>
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "menu",
@@ -144,6 +150,24 @@
 
 		btnToggleOpen.addEventListener("click", function() {
 			menu.open = btnToggleOpen.pressed;
+		});
+
+		btnAddOpenerDelay.addEventListener("click", function() {
+			delaymenu.opener = "btnAddOpenerDelay";
+			delaymenu.open = !delaymenu.open;
+		});
+
+		delaymenu.addEventListener("ui5-before-open", function(event) {
+			setTimeout(function() {
+				delaymenu.removeAttribute("loading");
+				delaymenu.removeAttribute("loading-delay");
+				let oneNode = document.createElement("ui5-menu-item");
+				oneNode.setAttribute("text", "Open from Amazon Cloud");
+				let twoNode = document.createElement("ui5-menu-item");
+				twoNode.setAttribute("text", "Open from Google Cloud");
+				delaymenu.append(oneNode, twoNode);
+				fetched = true;
+			}, 1000);
 		});
 
 		let fetched = false;
