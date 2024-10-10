@@ -111,6 +111,24 @@
 	border-color: var(--sapContent_ContrastFocusColor);
 }
 
+:host([design="Emphasized"][desktop]) .ui5-split-button-root:focus-within .ui5-split-text-button[active]::part(button):after,
+:host([design="Emphasized"]) .ui5-split-button-root:focus-visible .ui5-split-text-button[active]::part(button):after {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	left: 0.0625rem;
+	top: 0.0625rem;
+	right: 0.0625rem;
+	bottom: 0.0625rem;
+	border: var(--_ui5_split_button_focused_border);
+	border-radius: var(--_ui5_split_button_focused_border_radius);
+}
+
+:host([design="Emphasized"][desktop]) .ui5-split-button-root:has(.ui5-split-text-button[active]):after,
+:host([design="Emphasized"]) .ui5-split-button-root:has(.ui5-split-text-button[active]):after {
+	border-color: transparent;
+}
+
 .ui5-split-button-root {
 	display: inline-flex;
 	position: relative;
