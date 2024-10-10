@@ -380,22 +380,19 @@ describe("Menu interaction", () => {
 				.eq(2)
 				.shadow()
 				.find("li")
-				.invoke("attr", "aria-keyshortcuts")
-				.should("be.equal", "Ctrl+A");
+				.should("have.attr", "aria-keyshortcuts", "Ctrl+A");
 
 			cy.get("@items")
 				.eq(2)
 				.shadow()
 				.find("li")
-				.invoke("attr", "role")
-				.should("be.equal", "alertdialog");
+				.should("have.attr", "role", "alertdialog");
 
 			cy.get("@items")
 				.eq(2)
 				.shadow()
 				.find("li .ui5-li-additional-text")
-				.invoke("attr", "aria-hidden")
-				.should("be.equal", "true");
+				.should("have.attr", "aria-hidden", "true");
 		});
 
 		it("Menu popover has an accessible name", () => {
@@ -412,8 +409,7 @@ describe("Menu interaction", () => {
 			cy.get("[ui5-menu]")
 				.shadow()
 				.find("[ui5-responsive-popover]")
-				.invoke("attr", "accessible-name")
-				.should("be.equal", "Select an option from the menu");
+				.should("have.attr", "accessible-name", "Select an option from the menu");
 
 			cy.get("[ui5-menu-item][text='Item 1.0']")
 				.as("item")
@@ -422,8 +418,7 @@ describe("Menu interaction", () => {
 			cy.get("@item")
 				.shadow()
 				.find("[ui5-responsive-popover]")
-				.invoke("attr", "accessible-name")
-				.should("be.equal", "Select an option from the menu");
+				.should("have.attr", "accessible-name", "Select an option from the menu");
 		});
 	});
 });
