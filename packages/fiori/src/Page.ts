@@ -115,7 +115,9 @@ class Page extends UI5Element {
 
 	constructor() {
 		super();
+	}
 
+	onEnterDOM(): void {
 		this.style.setProperty(getScopedVarName("--_ui5-page-animation-duration"), getAnimationMode() === AnimationMode.None ? "0s" : "0.35s");
 	}
 
