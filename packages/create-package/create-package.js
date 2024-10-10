@@ -108,6 +108,7 @@ const generateFilesContent = (packageName, componentName, skipSubfolder) => {
 		ui5: {
 			webComponentsPackage: true,
 		},
+		type: "module",
 		scripts: {
 			"clean": "wc-dev clean",
 			"lint": "wc-dev lint",

@@ -1,4 +1,4 @@
-const assert = require("assert");
+import { assert } from "chai";
 
 describe("INIT_PACKAGE_VAR_TAG rendering", async () => {
 	before(async () => {

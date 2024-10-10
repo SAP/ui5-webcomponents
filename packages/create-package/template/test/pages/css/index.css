@@ -22,6 +22,11 @@ h2 {
 	flex-direction: column;
 }
 
+.app-logo {
+	height: 230px;
+	width: 230px;
+}
+
 .app-first-component {
 	margin-bottom: 3rem;
 }
