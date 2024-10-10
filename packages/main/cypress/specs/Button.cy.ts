@@ -345,4 +345,26 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.should("have.attr", "role", "link");
 	});
+
+	it("form submission when click event is prevented", () => {
+		cy.mount(html`<form method="get">
+	<ui5-button submits>Submit</ui5-button>
+</form>`);
+
+		cy.get("form")
+			.then($item => {
+				$item.get(0).addEventListener("submit", cy.stub().as("submit"));
+			});
+
+		cy.get("[ui5-button]")
+			.then($item => {
+				$item.get(0).addEventListener("click", e => e.preventDefault());
+			});
+
+		cy.get("[ui5-button]")
+			.realClick();
+
+		cy.get("@submit")
+			.should("have.not.been.called");
+	});
 });
