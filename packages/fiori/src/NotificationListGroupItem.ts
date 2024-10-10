@@ -188,10 +188,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return ids.join(" ");
 	}
 
-	get _ariaExpanded() {
-		return !this.collapsed;
-	}
-
 	get _expanded() {
 		return !this.collapsed;
 	}
