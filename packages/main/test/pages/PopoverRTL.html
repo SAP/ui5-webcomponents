@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Popover</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webc.main",
+			"rtl": true
+		}
+	</script>
+
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/Popover.css">
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+</head>
+
+<body>
+	<style>
+
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			width: 100%;
+		}
+	</style>
+
+	<div class="center">
+		<ui5-button id="btn1">Open</ui5-button>
+	</div>
+
+	<ui5-responsive-popover id="respPopover1" opener="btn1" placement="Bottom" horizontalAlign="Center">
+		<div class="popover-content">
+			<ui5-label for="emailInput" required show-colon>Email</ui5-label>
+		</div>
+	</ui5-responsive-popover>
+
+	<div style="height: 1000px;"></div>
+
+	<script>
+		const btn1 = document.getElementById("btn1");
+		const respPopover1 = document.getElementById("respPopover1");
+
+
+		btn1.addEventListener("click", () => {
+			respPopover1.open = !respPopover1.open;
+		});
+	</script>
+</body>
+
+</html>
