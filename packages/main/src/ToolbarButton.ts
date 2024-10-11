@@ -156,6 +156,13 @@ class ToolbarButton extends ToolbarItem {
 	@property()
 	width?: string;
 
+	onEnterDOM() {
+		const toolbar = this.parentElement as HTMLElement;
+		this._getRealDomRef = () => {
+			return toolbar.shadowRoot!.querySelector<HTMLElement>(`[data-ui5-stable="${this.stableDomRef}"]`)!;
+		};
+	}
+
 	get styles() {
 		return {
 			width: this.width,
