@@ -15,7 +15,7 @@
 
 .ui5-form-header {
 	display: flex;
-	height: 2.75rem;
+	min-height: 2.75rem;
 	align-items: center;
 	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
 	padding: 0 1rem 0 1rem;
