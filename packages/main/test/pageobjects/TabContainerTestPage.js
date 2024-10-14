@@ -58,8 +58,8 @@ class TabContainerTestPage {
 	}
 
 	async focusItem(tabId) {
-		await browser.executeAsync((tabId, done) => {
-			document.getElementById(tabId).focus();
+		await browser.executeAsync(async (tabId, done) => {
+			await document.getElementById(tabId).focus();
 			done();
 		}, tabId);
 	}

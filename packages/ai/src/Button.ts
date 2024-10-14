@@ -59,7 +59,9 @@ import ButtonCss from "./generated/themes/Button.css.js";
  * mouse/tap or by using the Enter or Space key.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class Button extends UI5Element {
 	/**
 	 * Defines the component design.
@@ -150,7 +152,7 @@ class Button extends UI5Element {
 	async _fadeOut(): Promise<void> {
 		const fadeOutDuration = 180;
 
-		const button = this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
+		const button = this._mainButton;
 		const newStateObject = this._effectiveStateObject;
 
 		if (!newStateObject) {
@@ -202,6 +204,12 @@ class Button extends UI5Element {
 			this.fadeMid = false;
 			this.fadeIn = false;
 		}, fadeResetDuration);
+
+		// reset the button's width after animations
+		const button = this._mainButton;
+		if (button) {
+			button.style.width = "";
+		}
 	}
 
 	/**
@@ -210,7 +218,11 @@ class Button extends UI5Element {
 	 */
 	_onclick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
-		this.fireEvent("click");
+		this.fireDecoratorEvent("click");
+	}
+
+	get _mainButton() {
+		return this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
 	}
 
 	get _effectiveState() {

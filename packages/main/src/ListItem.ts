@@ -4,13 +4,13 @@ import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -96,9 +96,15 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  * Fired when the user clicks on the detail button when type is `Detail`.
  * @public
  */
-@event("detail-click")
-@event("_focused")
-@event("_selection-requested")
+@event("detail-click", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
+@event("_selection-requested", {
+	bubbles: true,
+})
 abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
@@ -207,6 +213,7 @@ abstract class ListItem extends ListItemBase {
 	// Used in UploadCollectionItem
 	disableDeleteButton?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -253,6 +260,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
+			return;
+		}
+
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -327,6 +338,13 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	_isTargetSelfFocusDomRef(e: KeyboardEvent): boolean {
+		const target = e.target as HTMLElement,
+			focusDomRef = this.getFocusDomRef();
+
+		return target !== focusDomRef;
+	}
+
 	/**
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
@@ -336,7 +354,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
@@ -344,7 +362,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -354,11 +372,11 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDelete() {
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick() {
-		this.fireEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(e: Event) {
@@ -490,10 +508,6 @@ abstract class ListItem extends ListItemBase {
 
 	get _listItem() {
 		return this.shadowRoot!.querySelector("li");
-	}
-
-	static async onDefine() {
-		ListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

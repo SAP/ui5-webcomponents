@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -13,7 +14,6 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -101,12 +101,17 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @public
  * @native
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 /**
  * Fired whenever the active state of the component changes.
  * @private
  */
-@event("_active-state-change")
+@event("_active-state-change", {
+	bubbles: true,
+	cancelable: true,
+})
 class Button extends UI5Element implements IButton {
 	/**
 	 * Defines the component design.
@@ -316,6 +321,7 @@ class Button extends UI5Element implements IButton {
 
 	_ontouchstart: PassiveEventListenerObject;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -456,7 +462,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_setActiveState(active: boolean) {
-		const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+		const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
 
 		if (eventPrevented) {
 			return;
@@ -549,10 +555,6 @@ class Button extends UI5Element implements IButton {
 
 	get _isReset() {
 		return this.type === ButtonType.Reset;
-	}
-
-	static async onDefine() {
-		Button.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

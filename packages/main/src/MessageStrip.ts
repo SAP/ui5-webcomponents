@@ -7,7 +7,7 @@ import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -90,7 +90,9 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * click/tap or by using the Enter or Space key.
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 
 class MessageStrip extends UI5Element {
 	/**
@@ -147,14 +149,11 @@ class MessageStrip extends UI5Element {
 	@slot()
 	icon!: Array<IIcon>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_closeClick() {
-		this.fireEvent("close");
-	}
-
-	static async onDefine() {
-		MessageStrip.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		this.fireDecoratorEvent("close");
 	}
 
 	static designAnnouncementMappings(): DesignTypeAnnouncemnt {

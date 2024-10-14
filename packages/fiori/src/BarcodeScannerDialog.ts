@@ -1,15 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { Result, Exception } from "@zxing/library/esm5/index.js";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import ZXing from "@ui5/webcomponents-fiori/dist/ssr-zxing.js";
 
 // Texts
 import {
@@ -25,7 +26,8 @@ import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css
 
 // some tools handle named exports from UMD files and the window object is not assigned but the imports work (vitejs)
 // other tools do not handle named exports (they are undefined after the import), but the window global is assigned and can be used (web dev server)
-const effectiveZXing = { ...ZXing, ...window.ZXing };
+const windowZXing = typeof window === "undefined" ? {} : window.ZXing;
+const effectiveZXing = { ...ZXing, ...windowZXing };
 const { BrowserMultiFormatReader, NotFoundException } = effectiveZXing;
 
 const defaultMediaConstraints = {
@@ -86,7 +88,9 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * Fired when the user closes the component.
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 
 /**
  * Fires when the scan is completed successfuuly.
@@ -105,6 +109,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		*/
 		rawBytes: { type: Object },
 	},
+	bubbles: true,
 })
 
 /**
@@ -119,6 +124,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		*/
 		message: { type: String },
 	},
+	bubbles: true,
 })
 
 class BarcodeScannerDialog extends UI5Element {
@@ -150,15 +156,13 @@ class BarcodeScannerDialog extends UI5Element {
 
 	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
+
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 		this._codeReader = new BrowserMultiFormatReader();
-	}
-
-	static async onDefine() {
-		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	onAfterRendering() {
@@ -168,7 +172,7 @@ class BarcodeScannerDialog extends UI5Element {
 			}
 
 			if (!this._hasGetUserMedia()) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+				this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
 				return;
 			}
 
@@ -181,7 +185,7 @@ class BarcodeScannerDialog extends UI5Element {
 					this.permissionsGranted = true;
 				})
 				.catch(err => {
-					this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
+					this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
 					this.loading = false;
 				});
 		} else {
@@ -215,7 +219,7 @@ class BarcodeScannerDialog extends UI5Element {
 
 	_fireCloseEvent() {
 		this.open = false;
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	_startReader() {
@@ -233,16 +237,16 @@ class BarcodeScannerDialog extends UI5Element {
 		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {
-				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
+				this.fireDecoratorEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
 					{
 						text: result.getText(),
 						rawBytes: result.getRawBytes(),
 					});
 			}
 			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
+				this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
 			}
-		}).catch((err: Error) => this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
+		}).catch((err: Error) => this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
 	}
 
 	get _cancelButtonText() {

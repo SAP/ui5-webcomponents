@@ -110,7 +110,9 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
  * @private
  * @since 1.0.0-rc.8
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
@@ -215,7 +217,7 @@ class Icon extends UI5Element implements IIcon {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 
 		if (isSpace(e)) {
@@ -225,7 +227,7 @@ class Icon extends UI5Element implements IIcon {
 
 	_onkeyup(e: KeyboardEvent) {
 		if (this.mode === IconMode.Interactive && isSpace(e)) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 	}
 

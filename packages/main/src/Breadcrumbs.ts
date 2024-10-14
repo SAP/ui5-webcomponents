@@ -4,6 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { locationOpen } from "@ui5/webcomponents-base/dist/Location.js";
@@ -16,7 +17,6 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -110,7 +110,6 @@ type FocusAdaptor = ITabbable & {
  * Fires when a `BreadcrumbsItem` is clicked.
  *
  * **Note:** You can prevent browser location change by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
@@ -141,6 +140,8 @@ type FocusAdaptor = ITabbable & {
 		 */
 		shiftKey: { type: Boolean },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class Breadcrumbs extends UI5Element {
 	/**
@@ -189,6 +190,7 @@ class Breadcrumbs extends UI5Element {
 	_dropdownArrowLinkWidth = 0;
 	_labelFocusAdaptor: FocusAdaptor;
 	responsivePopover?: ResponsivePopover;
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -402,13 +404,13 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		if (!this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
 			metaKey,
 			shiftKey,
-		}, true)) {
+		})) {
 			e.preventDefault();
 		}
 	}
@@ -423,7 +425,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e;
 
-		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -437,7 +439,7 @@ class Breadcrumbs extends UI5Element {
 			items = this._getItems(),
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
 
-		if (this.fireEvent("item-click", { item }, true)) {
+		if (this.fireDecoratorEvent("item-click", { item })) {
 			locationOpen(item.href, item.target || "_self", "noopener,noreferrer");
 			this.responsivePopover!.open = false;
 		}
@@ -648,10 +650,6 @@ class Breadcrumbs extends UI5Element {
 
 	get _cancelButtonText() {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
-	}
-
-	static async onDefine() {
-		Breadcrumbs.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

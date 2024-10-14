@@ -257,7 +257,7 @@ class Popover extends Popup {
 		if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
 			await renderFinished();
 			this.open = false;
-			this.fireEvent("close", {}, false, false);
+			this.fireDecoratorEvent("close");
 			return;
 		}
 
@@ -576,10 +576,10 @@ class Popover extends Popup {
 				left = clientWidth - Popover.VIEWPORT_MARGIN - popoverSize.width;
 			}
 		} else {
-			if (popoverSize.height > clientHeight || top < 0) { // eslint-disable-line
-				top = 0;
-			} else if (top + popoverSize.height > clientHeight) {
-				top -= top + popoverSize.height - clientHeight;
+			if (popoverSize.height > clientHeight || top < Popover.VIEWPORT_MARGIN) { // eslint-disable-line
+				top = Popover.VIEWPORT_MARGIN;
+			} else if (top + popoverSize.height > clientHeight - Popover.VIEWPORT_MARGIN) {
+				top = clientHeight - Popover.VIEWPORT_MARGIN - popoverSize.height;
 			}
 		}
 

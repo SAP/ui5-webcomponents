@@ -48,4 +48,18 @@ describe("API", () => {
 
 		assert.notOk(await fileUploader.isFocused(), "Uploader isn't focusable");
 	});
+
+	it("Value state message of type 'Critical' is opened on focusing the File Uploader button", async () => {
+		await browser.url(`test/pages/FileUploader.html`);
+
+		const fileUploader = await browser.$("#fu-valuestate-test");
+		await browser.keys("Tab");
+		await browser.keys("Tab");
+		await browser.keys("Tab");
+
+		const valueState = await fileUploader.shadow$("ui5-popover");
+
+		assert.ok(await valueState.isExisting(), "Value state message exists.");
+		assert.ok(await valueState.getProperty("open"), "File Uploader in focus should have open value state message.");
+	});
 });

@@ -3,8 +3,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -222,6 +222,7 @@ type StepInfo = {
 		*/
 		withScroll: { type: Boolean },
 	},
+	bubbles: true,
 })
 
 class Wizard extends UI5Element {
@@ -289,6 +290,7 @@ class Wizard extends UI5Element {
 	})
 	steps!: Array<WizardStep>
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	stepScrollOffsets: Array<number>;
@@ -348,10 +350,6 @@ class Wizard extends UI5Element {
 				"ui5-wizard-dialog": isPhone(),
 			},
 		};
-	}
-
-	static async onDefine() {
-		Wizard.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
@@ -487,7 +485,9 @@ class Wizard extends UI5Element {
 			return;
 		}
 
-		debounce(this.changeSelectionByScroll.bind(this, (e.target as HTMLElement).scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		if (this.contentLayout !== "SingleStep") {
+			debounce(this.changeSelectionByScroll.bind(this, (e.target as HTMLElement).scrollTop), Wizard.SCROLL_DEBOUNCE_RATE);
+		}
 	}
 
 	/**
@@ -1037,7 +1037,7 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireEvent<WizardStepChangeEventDetail>("step-change", {
+			this.fireDecoratorEvent<WizardStepChangeEventDetail>("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
 				withScroll,
