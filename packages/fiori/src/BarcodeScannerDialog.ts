@@ -180,7 +180,7 @@ class BarcodeScannerDialog extends UI5Element {
 
 	async onAfterRendering() {
 		if (!this._hasGetUserMedia()) {
-			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+			this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
 			return;
 		}
 
@@ -202,7 +202,7 @@ class BarcodeScannerDialog extends UI5Element {
 			video.addEventListener("loadeddata", this._handleVideoPlayingBound);
 			video.srcObject = stream;
 		} catch (error) {
-			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: (error as Error).message });
+			this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: (error as Error).message });
 			this.loading = false;
 		}
 	}
@@ -383,7 +383,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_handleScanSuccess(result: Result) {
-		this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
+		this.fireDecoratorEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
 			text: result.getText(),
 			rawBytes: result.getRawBytes(),
 		});
@@ -394,7 +394,7 @@ class BarcodeScannerDialog extends UI5Element {
 			return;
 		}
 
-		this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: error.message });
+		this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: error.message });
 	}
 
 	_handleVideoPlaying() {
