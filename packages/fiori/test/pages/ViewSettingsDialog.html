@@ -121,44 +121,12 @@
 		vsdWithDataSet.addEventListener("ui5-confirm", function(e) {
 			const filterItems = e.detail.filterItems || [];
 
-			// Get all selected filter item options
-			const selectedFilterItems = filterItems.map(filterItem => {
-				return {
-					text: filterItem.text,
-					values: filterItem.values.filter(filterItemOption => filterItemOption.selected)
-				};
-			}).filter(filterItem => filterItem.values.length > 0);
-
-			// Get all NOT selected filter item options
-			const notSelectedFilterItems = filterItems.map(filterItem => {
-				return {
-					text: filterItem.text,
-					values: filterItem.values.filter(filterItemOption => !filterItemOption.selected)
-				};
-			}).filter(filterItem => filterItem.values.length > 0);
-
-			if (selectedFilterItems.length > 0) {
-				const firstSelectedFilterItem = selectedFilterItems[0];
-				const firstSelectedFilterItemKey = firstSelectedFilterItem.values[0].dataset.key;
-				const firstSelectedFilterItemText = firstSelectedFilterItem.values[0].text;
-				
-				console.log(`First selected filter item key: ${firstSelectedFilterItemKey}`);
-				console.log(`First selected filter item text: ${firstSelectedFilterItemText}`);
-			} else {
-				console.log("No filters selected");
+			// Get the first selected filter and its selected item
+			if (filterItems.length > 0 && filterItems[0].values.length > 0) {
+				console.log("First Selected Filter: ", filterItems[0]);
+				console.log("Selected item within the first filter: ", filterItems[0].values[0]);
+				console.log("Selected item key within the first filter: ", filterItems[0].values[0].dataset.key);
 			}
-
-			if (notSelectedFilterItems.length > 0) {
-				const firstNotSelectedFilterItem = notSelectedFilterItems[0];
-				const firstNotSelectedFilterItemKey = firstNotSelectedFilterItem.values[0].dataset.key;
-				const firstNotSelectedFilterItemText = firstNotSelectedFilterItem.values[0].text;
-				
-				console.log(`First not selected filter item key: ${firstNotSelectedFilterItemKey}`);
-				console.log(`First not selected filter item text: ${firstNotSelectedFilterItemText}`);
-			} else {
-				console.log("No filters remain unselected");
-			}
-
 			alert("OK button clicked, returned info is: " + JSON.stringify(e.detail));
 		});
 	

@@ -639,14 +639,15 @@ class ViewSettingsDialog extends UI5Element {
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
 			sortBy = _currentSortBySelected && (_currentSortBySelected.text || ""),
 			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
-			sortByItem = this.sortItems[sortByElementIndex];
+			sortByItem = this.sortItems[sortByElementIndex],
+			selectedFilterItems = this.filterItems.filter(filterItem => filterItem.values.some(item => item.selected));
 		return {
 			sortOrder,
 			sortDescending,
 			sortBy,
 			sortByItem,
 			filters: this.selectedFilters,
-			filterItems: this.filterItems,
+			filterItems: selectedFilterItems,
 		};
 	}
 
