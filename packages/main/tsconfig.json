@@ -10,6 +10,8 @@
 		"composite": true,
 		"rootDir": "src",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"verbatimModuleSyntax": true,
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [
