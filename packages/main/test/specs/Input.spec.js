@@ -255,6 +255,21 @@ describe("Input general interaction", () => {
 		await input.keys("Enter");
 	});
 
+	it("Input event is fired when user uses arrow keys to increase/decrease numeric value", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await browser.$("#input-number3");
+		await input.scrollIntoView();
+		await input.click();
+
+		await input.keys("ArrowUp");
+		await input.keys("ArrowDown");
+
+		const inputChangeCount = await browser.$("#input-number3-change-count");
+
+		assert.strictEqual( await inputChangeCount.getProperty("value"), "2", "Input event is fired when navigating with arrow keys");
+	});
+
 	it("tests value removal when Input type is 'Number'", async () => {
 		const input = await browser.$("#input-number3");
 		const btn = await browser.$("#input-number3-focusout");
