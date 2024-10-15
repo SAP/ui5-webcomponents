@@ -16,7 +16,7 @@ import { setCustomElementsScopingSuffix } from "@ui5/webcomponents-base/dist/Cus
 setCustomElementsScopingSuffix("demo");
 ```
 
-** NOTE: ** Setting the scoping suffix should be done before importing any components, as they use the suffix at the top-level of the module - meaning when a component is imported, the suffix has to be known. For this to work, calling the method should be done in a separate module ()`scoping-config.js` in the example above) and this module should be imported before any components are imported.
+** NOTE: ** Setting the scoping suffix should be done before importing any components, as they use the suffix at the top-level of the module - meaning when a component is imported, the suffix has to be known. For this to work, calling the method should be done in a separate module (`scoping-config.js` in the example above) and this module should be imported before any components are imported.
 
 Then all names can only be used with the supplied suffix:
 
