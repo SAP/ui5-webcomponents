@@ -1,6 +1,3 @@
-import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -30,7 +27,7 @@ import {
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
-import { dragOver, dropRow } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRowUtil.js";
+import TableDragAndDrop from "./TableDragAndDrop.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -322,6 +319,7 @@ class Table extends UI5Element {
 	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
 	_tableNavigation?: TableNavigation;
+	_tableDragAndDrop?: TableDragAndDrop;
 	_poppedIn: Array<{col: TableHeaderCell, width: float}>;
 	_containerWidth: number;
 
@@ -340,16 +338,16 @@ class Table extends UI5Element {
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
 		this.features.forEach(feature => feature.onTableActivate(this));
 		this._tableNavigation = new TableNavigation(this);
-		DragRegistry.subscribe(this);
+		this._tableDragAndDrop = new TableDragAndDrop(this);
 	}
 
 	onExitDOM() {
 		this._tableNavigation = undefined;
-		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
+		this._tableDragAndDrop = undefined;
+		this._events.forEach(eventType => this.removeEventListener(eventType, this._onEventBound));
 		if (this.overflowMode === TableOverflowMode.Popin) {
 			ResizeHandler.deregister(this, this._onResizeBound);
 		}
-		DragRegistry.unsubscribe(this);
 	}
 
 	onBeforeRendering(): void {
@@ -480,33 +478,6 @@ class Table extends UI5Element {
 
 	_onRowPress(row: TableRow) {
 		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
-	}
-
-	_ondragenter(e: DragEvent) {
-		e.preventDefault();
-	}
-
-	_ondragleave(e: DragEvent) {
-		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
-			return;
-		}
-
-		this.dropIndicatorDOM!.targetReference = null;
-	}
-
-	_ondragover(e: DragEvent) {
-		const { targetReference, placement } = dragOver(e, this, this.rows);
-		this.dropIndicatorDOM!.targetReference = targetReference;
-		this.dropIndicatorDOM!.placement = placement;
-	}
-
-	_ondrop(e: DragEvent) {
-		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-			return;
-		}
-
-		dropRow(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
-		this.dropIndicatorDOM.targetReference = null;
 	}
 
 	get styles() {
