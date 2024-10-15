@@ -483,6 +483,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
+		if ((e as MouseEvent)?.button && (e as MouseEvent)?.button !== 0) {
+			return;
+		}
+
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
