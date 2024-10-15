@@ -236,8 +236,9 @@ class Menu extends UI5Element {
 
 	/**
 	 * Indicates if the menu item has a submenu.
+	 * @private
 	 */
-	@property({ type: Boolean, noAttribute: true})
+	@property({ type: Boolean, noAttribute: true })
 	_newItemsAdded?: boolean;
 
 	/**
@@ -286,11 +287,12 @@ class Menu extends UI5Element {
 
 		if (this._newItemsAdded) {
 			if (this._menuItems.length > 0) {
-				const hasSelectedOrFocusedItem = this._menuItems.some(item => item.selected);
+				const hasSelectedItem = this._menuItems.some(item => item.selected);
 
-				if (!hasSelectedOrFocusedItem) {
+				if (!hasSelectedItem) {
 					this._menuItems[0].focus();
 				}
+
 				if (this._menuItems[0].focused) {
 					this._newItemsAdded = false;
 				}
@@ -299,6 +301,7 @@ class Menu extends UI5Element {
 	}
 
 	onInvalidation(changeInfo: ChangeInfo) {
+		// if the change is due to a new item being added, focus the first item
 		if (changeInfo.reason === "children" && changeInfo.type === "slot") {
 			this._newItemsAdded = true;
 		}
