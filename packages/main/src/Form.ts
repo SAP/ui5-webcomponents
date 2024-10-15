@@ -158,7 +158,7 @@ class Form extends UI5Element {
 	 * - `L` - 2 columns by default (up to 3 columns are recommended)
 	 * - `XL` - 3 columns by default (up to 6 columns  are recommended)
 	 *
-	 * @default "S1 M1 L2 XL2"
+	 * @default "S1 M1 L2 XL3"
 	 * @public
 	 */
 	@property()

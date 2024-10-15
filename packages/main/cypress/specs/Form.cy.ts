@@ -4,6 +4,66 @@ import "../../src/FormItem.js";
 import "../../src/FormGroup.js";
 
 describe("General API", () => {
+	it("tests calculated state of Form with default layout and label-span", () => {
+		cy.mount(html`<ui5-form class="addressForm" header-text="Default form">
+			<ui5-form-group header-text="Address">
+				<ui5-form-item>
+					<span slot="labelContent">Name:</span>
+					<span class="text">Red Point Stores</span>
+				</ui5-form-item>
+			</ui5-form-group>
+
+			<ui5-form-group id="testFormGroup2" header-text="Contact">
+				<ui5-form-item>
+					<span slot="labelContent">Twitter:</span>
+					<span class="text">@sap</span>
+				</ui5-form-item>
+			</ui5-form-group>
+
+			<ui5-form-group id="testFormGroup3" header-text="Other info">
+				<ui5-form-item>
+					<span slot="labelContent">Name:</span>
+					<span class="text">Red Point Stores</span>
+				</ui5-form-item>
+			</ui5-form-group>
+		</ui5-form>`);
+
+		cy.get("[ui5-form]")
+			.as("form");
+
+		cy.get("@form")
+			.invoke("prop", "columnsS")
+			.should("be.equal", 1);
+
+		cy.get("@form")
+			.invoke("prop", "labelSpanS")
+			.should("be.equal", 12);
+
+		cy.get("@form")
+			.invoke("prop", "columnsM")
+			.should("be.equal", 1);
+
+		cy.get("@form")
+			.invoke("prop", "labelSpanM")
+			.should("be.equal", 4);
+
+		cy.get("@form")
+			.invoke("prop", "columnsL")
+			.should("be.equal", 2);
+
+		cy.get("@form")
+			.invoke("prop", "labelSpanL")
+			.should("be.equal", 4);
+
+		cy.get("@form")
+			.invoke("prop", "columnsXl")
+			.should("be.equal", 3);
+
+		cy.get("@form")
+			.invoke("prop", "labelSpanXl")
+			.should("be.equal", 4);
+	});
+
 	it("tests calculated state of Form with layout='S1 M2 L3 XL6' and label-span='S12 M4 L4 XL4'", () => {
 		cy.mount(html`<ui5-form class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
 	<ui5-form-group header-text="Address">
