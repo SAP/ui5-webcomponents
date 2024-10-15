@@ -1,19 +1,11 @@
-<ui5-dialog stretch
-	class="ui5-barcode-scanner-dialog-root"
-	.open="{{_open}}"
-	@ui5-before-open={{_startReader}}
-	@ui5-before-close={{_fireCloseEvent}}
-	@ui5-close={{_resetReader}}>
+<ui5-dialog stretch class="ui5-barcode-scanner-dialog-root" .open="{{_open}}" @ui5-close="{{_closeDialog}}">
 	<div class="ui5-barcode-scanner-dialog-video-wrapper">
-		<video class="ui5-barcode-scanner-dialog-video"></video>
+		<video autoplay playsinline muted class="ui5-barcode-scanner-dialog-video"></video>
+		<canvas class="ui5-barcode-scanner-dialog-overlay"></canvas>
 	</div>
 	<div slot="footer" class="ui5-barcode-scanner-dialog-footer">
 		<ui5-button design="Transparent" @click={{_closeDialog}}>{{_cancelButtonText}}</ui5-button>
 	</div>
-	<ui5-busy-indicator
-		?active={{loading}}
-		size="L"
-		text="{{_busyIndicatorText}}"
-		class="ui5-barcode-scanner-dialog-busy">
-	</ui5-busy-indicator>
 </ui5-dialog>
+<ui5-busy-indicator class="ui5-barcode-scanner-dialog-busy" ?active={{loading}} size="L"
+	text="{{_busyIndicatorText}}"></ui5-busy-indicator>
