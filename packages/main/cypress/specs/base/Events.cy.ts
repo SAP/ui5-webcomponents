@@ -144,25 +144,29 @@ describe("Event bubbling", () => {
 			.as("select");
 		cy.get("[ui5-multi-combobox]")
 			.as("multiCombobox");
+		cy.get("[ui5-multi-combobox]")
+			.shadow()
+			.find(".inputIcon")
+			.as("multiComboboxIcon");
 
 		cy.get("@app")
 			.then(app => {
-				app.get(0).addEventListener("close", cy.stub().as("appClosed"));
+				app.get(0).addEventListener("ui5-close", cy.stub().as("appClosed"));
 			});
 
 		cy.get("@dialog")
 			.then(dialog => {
-				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed"));
+				dialog.get(0).addEventListener("ui5-close", cy.stub().as("dialogClosed"));
 			});
 
 		cy.get("@select")
 			.then(select => {
-				select.get(0).addEventListener("close", cy.stub().as("selClosed"));
+				select.get(0).addEventListener("ui5-close", cy.stub().as("selClosed"));
 			});
 
 		cy.get("@multiCombobox")
 			.then(multiCombobox => {
-				multiCombobox.get(0).addEventListener("close", cy.stub().as("mcbClosed"));
+				multiCombobox.get(0).addEventListener("ui5-close", cy.stub().as("mcbClosed"));
 			});
 
 		cy.get("@dialog").invoke("attr", "open", true);
@@ -176,16 +180,17 @@ describe("Event bubbling", () => {
 			.eq(1)
 			.realClick();
 
-		// act - open and close MultiComboBox
-		cy.get("@multiCombobox")
-			.shadow()
-			.find(".inputIcon")
+		// act - open the  MultiComboBox
+		cy.get("@multiComboboxIcon")
 			.realClick();
 
 		cy.get("@multiCombobox")
 			.shadow()
-			.find("[ui5-responsive-popover] [ui5-list] [ui5-li]")
-			.eq(0)
+			.find("[ui5-responsive-popover]")
+			.should("be.visible");
+
+		// act - close the MultiComboBox
+		cy.get("@multiComboboxIcon")
 			.realClick();
 
 		// assert - the close events of the Select and MultiComboBox do not bubble
@@ -214,7 +219,7 @@ describe("Event bubbling", () => {
 
 		cy.get("@checkbox")
 			.then(checkbox => {
-				checkbox.get(0).addEventListener("change", e => e.preventDefault());
+				checkbox.get(0).addEventListener("ui5-change", e => e.preventDefault());
 			});
 
 		// act
