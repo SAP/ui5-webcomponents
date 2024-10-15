@@ -21,6 +21,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import type { IMenuItem } from "./Menu.js";
+import type MenuItemGroup from "./MenuItemGroup.js";
+import ItemSelectionMode from "./types/ItemSelectionMode.js";
 
 // Styles
 import menuItemCss from "./generated/themes/MenuItem.css.js";
@@ -101,6 +103,17 @@ class MenuItem extends ListItem implements IMenuItem {
 	icon?: string;
 
 	/**
+	 * Defines whether `ui5-menu-item` is in selected state.
+	 *
+	 * **Note:** selected state is only taken into account when `ui5-menu-item` is added to `ui5-menu-item-group` with `itemSelectionMode` other than `None`.
+	 * **Note:** A selected `ui5-menu-item` have selection mark displayed ad its end.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	isSelected = false;
+
+	/**
 	 * Defines whether `ui5-menu-item` is in disabled state.
 	 *
 	 * **Note:** A disabled `ui5-menu-item` is noninteractive.
@@ -168,6 +181,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_siblingsWithIcon = false;
+
+	/**
+	 * Keeps the previous selected state of the item.
+	 */
+	@property({ noAttribute: true })
+	_prevSelected?: boolean;
 
 	/**
 	 * Defines the items of this component.
@@ -253,12 +272,68 @@ class MenuItem extends ListItem implements IMenuItem {
 		return false;
 	}
 
-	onBeforeRendering() {
-		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+	get isGroup(): boolean {
+		return false;
+	}
 
-		this._menuItems.forEach(item => {
+	get _parentGroup() {
+		const parent = this.parentElement;
+		return parent && "isGroup" in parent && parent.isGroup ? parent as MenuItemGroup : null;
+	}
+
+	get _parentItemSelectionMode() {
+		return this._parentGroup ? this._parentGroup?.itemSelectionMode : ItemSelectionMode.None;
+	}
+
+	get _list() {
+		return this.shadowRoot!.querySelector<List>("[ui5-list]")!;
+	}
+
+	get _menuItemsNavigation() {
+		const items: MenuItem[] = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (item.isGroup) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!item.isSeparator) {
+				items.push(item);
+			}
+		});
+
+		return items;
+	}
+
+	get _markSelected() {
+		return this.isSelected && this._parentItemSelectionMode !== ItemSelectionMode.None;
+	}
+
+	onBeforeRendering() {
+		const siblingsWithIcon = this._menuItemsAll.some(menuItem => !!menuItem.icon);
+		const itemSelectionMode = this._parentItemSelectionMode;
+
+		this._menuItemsAll.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+
+		if (this._prevSelected === undefined) {
+			this._prevSelected = this.isSelected;
+		}
+
+		if (itemSelectionMode === ItemSelectionMode.None) {
+			return;
+		}
+		if (itemSelectionMode === ItemSelectionMode.SingleSelect && this.isSelected) {
+			this._parentGroup?._clearSelectedItems();
+			this.isSelected = true;
+		}
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._menuItemsNavigation;
+		}
 	}
 
 	get _focusable() {
@@ -280,8 +355,27 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
+	get _menuItemGroups() {
+		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
+	}
+
 	get _menuItems() {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
+
+	// Return only the menu items, including items that belong to groups, but excluding separators
+	get _menuItemsAll() {
+		const items: MenuItem[] = [];
+
+		this.items.forEach(item => {
+			if (item.isGroup) {
+				items.push(...(item as MenuItemGroup)._menuItems);
+			} else if (!item.isSeparator) {
+				items.push(item as MenuItem);
+			}
+		});
+
+		return items;
 	}
 
 	_closeAll() {
@@ -308,7 +402,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_afterPopoverOpen() {
-		this.items[0]?.focus();
+		this._menuItemsAll[0]?.focus();
 		this.fireEvent("open", {}, false, false);
 	}
 

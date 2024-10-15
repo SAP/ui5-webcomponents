@@ -73,6 +73,18 @@
 	visibility: hidden;
 }
 
+.ui5-menu-item-selected {
+	padding-inline-start: 0.5rem;
+	padding-inline-end: 0;
+	font-weight: normal;
+	text-align: center;
+}
+
+.ui5-menu-item-icon-selected {
+	color: var(--sapContent_BusyColor);
+	padding-top: 0.25rem;
+}
+
 :host::part(title) {
 	font-size: var(--sapFontSize);
 	padding-top: 0.125rem;

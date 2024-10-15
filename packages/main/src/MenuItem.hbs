@@ -20,14 +20,28 @@
 			>
 			</ui5-icon>
 		</div>
-	{{else if hasEndContent}}
-		<slot name="endContent"></slot>
-	{{else if additionalText}}
-		<span
-			part="additional-text"
-			class="ui5-li-additional-text"
-			aria-hidden="{{_accInfo.ariaHidden}}"
-		>{{additionalText}}</span>
+	{{else}}
+		{{#if hasEndContent}}
+			<slot name="endContent"></slot>
+		{{else if additionalText}}
+			<span
+				part="additional-text"
+				class="ui5-li-additional-text"
+				aria-hidden="{{_accInfo.ariaHidden}}"
+			>{{additionalText}}</span>
+		{{/if}}
+		{{#if _markSelected}}
+			<div
+				class="ui5-menu-item-selected"
+			>
+				<ui5-icon
+					part="selected"
+					name="accept"
+					class="ui5-menu-item-icon-selected"
+				>
+				</ui5-icon>
+			</div>
+		{{/if}}
 	{{/if}}
 
 {{/inline}}
