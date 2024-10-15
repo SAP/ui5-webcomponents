@@ -8,6 +8,8 @@
 		"outDir": "dist",
 		"experimentalDecorators": true,
 		"verbatimModuleSyntax": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [
 				"../base/src/*"

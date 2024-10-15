@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"module": "NodeNext",
 		"target": "ES2021",
 		"lib": [
 			"DOM",
@@ -12,5 +11,6 @@
 		"sourceMap": true,
 		"inlineSources": true,
 		"strict": true,
+		"moduleResolution": "node",
 	}
 }
