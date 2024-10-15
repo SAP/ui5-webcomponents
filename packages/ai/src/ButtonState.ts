@@ -24,7 +24,9 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @public
  * @experimental The Button and ButtonState web components are availabe since 2.0 under an experimental flag and their API and behaviour are subject to change.
  */
-@customElement("ui5-ai-button-state")
+@customElement({
+	tag: "ui5-ai-button-state"
+})
 class ButtonState extends UI5Element {
 	/**
 	 * Defines the name of the button state.
