@@ -16,7 +16,6 @@ import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/w
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
@@ -339,7 +338,7 @@ class Button extends UI5Element implements IButton {
 		}
 
 		const handleTouchStartEvent = (e: TouchEvent) => {
-			markEvent(e, "button");
+			e.stopPropagation();
 
 			if (this.nonInteractive) {
 				return;
@@ -373,7 +372,7 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
-		markEvent(e, "button");
+		e.stopPropagation();
 		if (this._isSubmit) {
 			submitForm(this);
 		}
@@ -392,7 +391,7 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
-		markEvent(e, "button");
+		e.stopPropagation();
 		this._setActiveState(true);
 		activeButton = this; // eslint-disable-line
 	}
@@ -413,12 +412,12 @@ class Button extends UI5Element implements IButton {
 	}
 
 	_onmouseup(e: MouseEvent) {
-		markEvent(e, "button");
+		e.stopPropagation();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		this._cancelAction = isShift(e) || isEscape(e);
-		markEvent(e, "button");
+		e.stopPropagation();
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
@@ -433,7 +432,7 @@ class Button extends UI5Element implements IButton {
 		}
 
 		if (isSpace(e)) {
-			markEvent(e, "button");
+			e.stopPropagation();
 		}
 
 		if (isSpace(e) || isEnter(e)) {
@@ -458,7 +457,7 @@ class Button extends UI5Element implements IButton {
 			return;
 		}
 
-		markEvent(e, "button");
+		e.stopPropagation();
 	}
 
 	_setActiveState(active: boolean) {

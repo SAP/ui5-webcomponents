@@ -13,7 +13,6 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
@@ -171,7 +170,7 @@ class Timeline extends UI5Element {
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ITimelineItem;
 
-		if (target.nameClickable && getEventMark(e) !== "link") {
+		if (target.nameClickable) {
 			return;
 		}
 
