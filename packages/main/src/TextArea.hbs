@@ -7,11 +7,8 @@
 
 	<div class="ui5-textarea-wrapper">
 		{{#if growing}}
-			<div id="{{_id}}-mirror" class="ui5-textarea-mirror" aria-hidden="true" >
-				{{#each _mirrorText}}
-					{{this.text}}
-					<br />
-				{{/each}}
+			<div id="{{_id}}-mirror" class="ui5-textarea-mirror" aria-hidden="true" contenteditable="true">
+				{{this.value}}
 			</div>
 		{{/if}}
 		<textarea

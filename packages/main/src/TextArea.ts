@@ -363,7 +363,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 		}
 
 		this._exceededTextProps = this._calcExceededText();
-		this._mirrorText = this._tokenizeText(this.value);
 
 		this.exceeding = !!this._exceededTextProps.leftCharactersCount && this._exceededTextProps.leftCharactersCount < 0;
 		this._setCSSParams();
