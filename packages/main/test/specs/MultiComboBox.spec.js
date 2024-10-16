@@ -243,8 +243,8 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await innerInput.getAttribute("value-state"), "Negative", "Value state is changed to Negative");
 
 			await browser.waitUntil(async () => {
-				return await mcb.getAttribute("_dialog-input-value-state") === "None";
-			}, 2500, "expect _dialog-input-value-state to be reset after 2.5 seconds");
+				return await mcb.getAttribute("_dialog-input-value-state") === "None" && await mcb.hasAttribute("focused") === true;
+			}, 2500, "expect _dialog-input-value-state to be reset after 2.5 seconds and the MultiComboBox to be focused");
 		});
 
 		it("tests if entering valid text is possible while validation is triggered", async () => {
@@ -539,6 +539,34 @@ describe("MultiComboBox general interaction", () => {
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 0, "Long token should be deleted" );
+		});
+
+		it("tests if clicking delete icon of a token removes it from the selection (mcb with grouping)", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-grouping");
+			const inner = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await inner.click();
+
+			await inner.keys("a");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			await firstItem.click();
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 1, "Token should be added");
+
+			const token = await mcb.shadow$("ui5-tokenizer ui5-token");
+			const deleteIcon = await token.shadow$(".ui5-token--icon");
+
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 0, "Token should be deleted");
 		});
 
 		it("prevents selection change event when clicking an item", async () => {
@@ -1521,6 +1549,35 @@ describe("MultiComboBox general interaction", () => {
 			assert.notOk(await popover.getProperty("open"), "Popover with valueStateMessage should not be opened.");
 		});
 
+		it("Should not open value state popup when popover is open after clicking n more link", async () => {
+			const mcb = await browser.$("#mcb-select-all-vs");
+
+			await mcb.scrollIntoView();
+			await mcb.click();
+
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			const valueStatePopover = await mcb.shadow$("ui5-popover");
+
+			assert.notOk(await popover.getProperty("open"), "Popover with value state message header should not be opened.");
+			assert.ok(await valueStatePopover.getProperty("open"), "Value state popover should be opened.");
+
+			await mcb.keys("F4");
+			await browser.keys("ArrowUp");
+			await browser.keys("Enter");
+			await browser.keys("Tab");
+
+			const nMoreText = await mcb.shadow$("ui5-tokenizer").shadow$(".ui5-tokenizer-more-text");
+			nMoreText.click();
+
+			await browser.waitUntil(async () => mcb.getProperty("open"), {
+				timeout: 1000,
+				timeoutMsg: "Popover is open"
+			});
+
+			assert.ok(await popover.getProperty("open"), "Popover with value state message header should be opened.");
+			assert.notOk(await valueStatePopover.getProperty("open"), "Value state popover should not be opened.");
+		});
+
 		it("Should apply correct text to the tokens overflow indicator", async () => {
 			const mcNItems = await browser.$("#mc-items");
 			const mcNMore = await browser.$("#mc-more");
@@ -1571,6 +1628,43 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(await $("#clear-icon-change-count").getText(), "0", "change event is not fired");
 			assert.strictEqual(await $("#clear-icon-input-count").getText(), "2", "input event is fired twice");
+		});
+
+		it("Should not fire submit event when confirming selection", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const cb = await browser.$("#mcb-form");
+
+			await cb.shadow$("input").click();
+			await cb.shadow$("input").keys("A");
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "0", "submit event is not fired");
+
+			await cb.shadow$("input").keys("Enter");
+
+			assert.strictEqual(await $("#mcb-form-submit").getText(), "1", "submit event is now fired");
+		});
+
+		it("Should remove header when value state is reset", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-error");
+
+			// click on arrow
+			await mcb.shadow$("ui5-icon").click();
+
+			// arrow down twice
+			await browser.keys("ArrowDown");
+			await browser.keys("ArrowDown");
+
+			// Enter to make selection
+			await browser.keys("Space");
+
+			// get value state header
+			const valueStateHeader = await mcb.shadow$("ui5-responsive-popover div.ui5-valuestatemessage-header");
+
+			assert.notOk(await valueStateHeader.isExisting(), "Value state header should not be rendered");
 		});
 	});
 
@@ -1659,6 +1753,8 @@ describe("MultiComboBox general interaction", () => {
 			const innerInput = await mcb.shadow$("input");
 			let invisibleText = await mcb.shadow$(".ui5-hidden-text");
 			const inivisbleTextId = await invisibleText.getProperty("id");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			let firstItem = await popover.$("ui5-list").$("ui5-li");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
 
@@ -1686,7 +1782,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 
 			await innerInput.keys("Backspace");
-			await innerInput.keys("Tab");
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			invisibleText = await mcb.shadow$(".ui5-hidden-text");
@@ -1700,6 +1795,17 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(tokens.length, 0, "should not have tokens");
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
+
+			await innerInput.click();
+			await innerInput.keys("i");
+			await firstItem.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			ariaHiddenText = await invisibleText.getHTML(false);
+
+			assert.strictEqual(tokens.length, 1, "Token should be added");
+			assert.ok(await ariaHiddenText.includes("Contains 1 token"),  "aria-describedby text is correct after adding token again");
+
 		});
 
 		it("Should apply aria-label from the accessibleName property", async () => {
@@ -1719,6 +1825,16 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.scrollIntoView();
 
 			assert.strictEqual(await innerInput.getAttribute("aria-label"), await mcbLabel.getHTML(false), "aria-label attribute is correct.");
+		});
+
+		it("Should apply aria-controls pointing to the responsive popover", async () => {
+			const mcb = await browser.$("#mcb-predefined-value");
+			const innerInput = await mcb.shadow$("input");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+
+			await mcb.scrollIntoView();
+
+			assert.strictEqual(await innerInput.getAttribute("aria-controls"), await popover.getAttribute("id"), "aria-controls attribute is correct.");
 		});
 
 		it("Should render aria-haspopup attribute with value 'dialog'", async () => {

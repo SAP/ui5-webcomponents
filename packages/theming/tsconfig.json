@@ -1,25 +1,25 @@
 {
-    "include": ["src/**/*"],
-    "compilerOptions": {
-      "target": "ES2021",
-      "lib": ["DOM", "DOM.Iterable", "ES2023"],
-      // Generate d.ts files
-      "declaration": true,
-      "outDir": "dist",
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "inlineSources": true,
-      "strict": true,
-      "moduleResolution": "node",
-      "experimentalDecorators": true,
-      "composite": true,
-      "rootDir": "src",
-      "tsBuildInfoFile": "dist/.tsbuildinfo",
-      "paths": {
-        "@ui5/webcomponents-base/dist/*": ["../base/src/*"],
-      },
-    },
-    "references": [
-      { "path": "../base" },
-    ],
+	"extends": "@ui5/webcomponents-tools/tsconfig.json",
+	"include": [
+		"src/**/*"
+	],
+	"compilerOptions": {
+		"outDir": "dist",
+		"experimentalDecorators": true,
+		"composite": true,
+		"rootDir": "src",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"tsBuildInfoFile": "dist/.tsbuildinfo",
+		"paths": {
+			"@ui5/webcomponents-base/dist/*": [
+				"../base/src/*"
+			],
+		},
+	},
+	"references": [
+		{
+			"path": "../base"
+		},
+	],
 }

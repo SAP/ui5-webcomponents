@@ -19,7 +19,7 @@
 	<ui5-busy-indicator
 		id="{{_id}}-busyIndicator"
 		delay="{{loadingDelay}}"
-		?active="{{loading}}"
+		?active="{{showBusyIndicatorOverlay}}"
 		class="ui5-list-busy-indicator"
 	>
 	<div class="ui5-list-scroll-container">
@@ -48,7 +48,7 @@
 			<slot></slot>
 
 			{{#if showNoDataText}}
-				<li id="{{_id}}-nodata" class="ui5-list-nodata">
+				<li tabindex="0" id="{{_id}}-nodata" class="ui5-list-nodata">
 					<div id="{{_id}}-nodata-text" class="ui5-list-nodata-text">
 						{{noDataText}}
 					</div>
@@ -81,8 +81,9 @@
 
 
 {{#*inline "moreRow"}}
-	<div growing-button>
+	<div growing-button part="growing-button">
 		<div
+			part="growing-button-inner"
 			tabindex="0"
 			role="button"
 			id="{{_id}}-growing-btn"
@@ -95,6 +96,12 @@
 			@mouseup="{{_onLoadMoreMouseup}}"
 			growing-button-inner
 		>
+			{{#if loading}}
+				<ui5-busy-indicator
+					delay="{{loadingDelay}}"
+					active>
+				</ui5-busy-indicator>
+			{{/if}}
 			<span id="{{_id}}-growingButton-text" growing-button-text>{{_growingButtonText}}</span>
 		</div>
 	</div>

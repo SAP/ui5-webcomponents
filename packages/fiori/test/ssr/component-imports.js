@@ -1,5 +1,4 @@
-// zxing is using window
-// import BarcodeScannerDialog from "../../dist/BarcodeScannerDialog.js";
+import BarcodeScannerDialog from "../../dist/BarcodeScannerDialog.js";
 import DynamicSideContent from "../../dist/DynamicSideContent.js";
 import FilterItem from "../../dist/FilterItem.js";
 import FilterItemOption from "../../dist/FilterItemOption.js";

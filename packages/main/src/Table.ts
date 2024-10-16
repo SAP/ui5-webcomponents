@@ -9,7 +9,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -144,13 +144,14 @@ type TableRowClickEventDetail = {
  *
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
  * Currently, it's considered experimental as its API is subject to change.
  * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
  * For compatibility reasons, we moved the previous Table implementation to the **@ui5/webcomponents-compat** package
  * and will be maintained until the new Table is experimental.
+ * Keep in mind that you can use either the compat/Table, or the main/Table - you can't use them both as they both define the `ui5-table` tag name.
  */
 @customElement({
 	tag: "ui5-table",
@@ -179,6 +180,7 @@ type TableRowClickEventDetail = {
 		 */
 		row: { type: TableRow },
 	},
+	bubbles: true,
 })
 
 class Table extends UI5Element {
@@ -296,10 +298,8 @@ class Table extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-	static async onDefine() {
-		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	_events = ["keydown", "keyup", "click", "focusin", "focusout"];
 	_onEventBound: (e: Event) => void;
@@ -415,7 +415,7 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	_refreshPopinState() {
-		this.headerRow[0].cells.forEach((header, index) => {
+		this.headerRow[0]?.cells.forEach((header, index) => {
 			this.rows.forEach(row => {
 				const cell = row.cells[index];
 				if (cell && cell._popin !== header._popin) {
@@ -460,18 +460,29 @@ class Table extends UI5Element {
 	}
 
 	_onRowPress(row: TableRow) {
-		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
+		this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
 	get styles() {
+		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
+			if (headerCell.horizontalAlign !== undefined) {
+				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
+			}
+			return headerStyles;
+		}, {} as { [key: string]: string });
 		return {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
+				...headerStyleMap,
 			},
 		};
 	}
 
 	get _gridTemplateColumns() {
+		if (!this.headerRow[0]) {
+			return;
+		}
+
 		const widths = [];
 		const visibleHeaderCells = this.headerRow[0]._visibleCells as TableHeaderCell[];
 		if (this._getSelection()?.hasRowSelector()) {

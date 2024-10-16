@@ -61,7 +61,7 @@
 		let counter = 0;
 		growing.addEventListener("ui5-load-more", (e) => {
 			counter++;
-			document.getElementById("load-more-counter").value = counter;
+			document.getElementById("load-more-counter").value = `${counter}`;
 			let count = table.rows.length;
 
 			if (table._skipRowCreation) {

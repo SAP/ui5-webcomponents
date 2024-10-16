@@ -39,11 +39,19 @@ type WizardTabInfo = {
 })
 
 /**
+ * Fired when focus on a step.
+ * @private
+ */
+@event("focused", {
+	bubbles: true,
+})
+/**
  * Fired when clicking on none disabled step.
  * @private
  */
-@event("selection-change-requested")
-
+@event("selection-change-requested", {
+	bubbles: true,
+})
 class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the `icon` of the step.
@@ -131,7 +139,7 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	_onclick() {
 		if (!this.disabled) {
-			this.fireEvent("selection-change-requested");
+			this.fireDecoratorEvent("selection-change-requested");
 		}
 	}
 
@@ -142,16 +150,24 @@ class WizardTab extends UI5Element implements ITabbable {
 
 		if ((isSpace(e) || isEnter(e)) && !isSpaceShift(e)) {
 			e.preventDefault();
-			this.fireEvent("selection-change-requested");
+			this.fireDecoratorEvent("selection-change-requested");
 		}
 	}
 
-	_onfocusin() {
-		this.fireEvent("focused");
+	get effectiveTabIndex() {
+		if (this.disabled) {
+			return;
+		}
+
+		if (this.selected || this.forcedTabIndex === "0") {
+			return "0";
+		}
+
+		return "-1";
 	}
 
-	get tabIndex() {
-		return Number(this.forcedTabIndex);
+	_onfocusin() {
+		this.fireDecoratorEvent("focused");
 	}
 
 	get hasTexts() {

@@ -1,3 +1,4 @@
 :root {
-	--_ui5_popup_block_layer_background: color-mix(in oklch, transparent, var(--sapBlockLayer_Background) 60%);
+	--_ui5_popup_block_layer_background: var(--sapBlockLayer_Background);
+	--_ui5_popup_block_layer_opacity: 0.2;
 }

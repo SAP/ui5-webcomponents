@@ -1,12 +1,9 @@
-const { defineConfig } = require('vite');
-const virtualIndex = require("@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js");
-const customHotUpdate = require("@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js");
-const ssrDomShimLoader = require("@ui5/webcomponents-tools/lib/dev-server/ssr-dom-shim-loader.js");
-const { existsSync } = require('fs');
-const { dirname, join, resolve } = require('path');
-const path = require('path');
-const tsconfigPaths = require('vite-tsconfig-paths').default;
-const {checker} = require('vite-plugin-checker');
+import { defineConfig } from 'vite';
+import virtualIndex from "@ui5/webcomponents-tools/lib/dev-server/virtual-index-html-plugin.js";
+import customHotUpdate from "@ui5/webcomponents-tools/lib/dev-server/custom-hot-update-plugin.js";
+import path, { dirname, join, resolve } from 'path';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { checker } from 'vite-plugin-checker';
 
 // use after path.join and path.resolve as they turn paths to windows separators and comparisons and replacements stop working
 const toPosixPath = (pathStr) => {
@@ -96,21 +93,23 @@ const customResolver = (id, source, options) => {
 	}
 }
 
-module.exports = defineConfig(async () => {
+export default defineConfig(async () => {
 	return {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex(), tsconfigPaths(), customHotUpdate(), ssrDomShimLoader(),
-			checker({
+		plugins: [
+			await virtualIndex(),
+			tsconfigPaths(),
+			customHotUpdate(),
+			!process.env.UI5_BASE && checker({
 				// e.g. use TypeScript check
 				typescript: {
 					tsconfigPath: "packages/fiori/tsconfig.json",
 					buildMode: true,
-				},
-		  	}),
+				}
+			})
 		],
-
 		resolve: {
 			alias: [
 				// { find: /\@ui5\/webcomponents-base\/dist\/(.*)/, replacement: "../base/src/$1" },

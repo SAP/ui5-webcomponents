@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
 	isSpace,
 	isEnter,
@@ -54,7 +54,7 @@ import {
  *
  * @constructor
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
@@ -70,7 +70,9 @@ import {
  *
  * @public
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 class TableGrowing extends UI5Element implements ITableGrowing {
 	/**
@@ -131,11 +133,8 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	_currentLastRow?: HTMLElement;
 	_shouldFocusRow?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		TableGrowing.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	onTableActivate(table: Table): void {
 		this._table = table;
@@ -185,7 +184,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 
 	hasGrowingComponent(): boolean {
 		if (this._hasScrollToLoad()) {
-			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight) ?? true;
+			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight);
 		}
 
 		return this.type === TableGrowingMode.Button && !this.disabled;
@@ -202,7 +201,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		}
 		this._shouldFocusRow = true;
 
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_hasScrollToLoad() {

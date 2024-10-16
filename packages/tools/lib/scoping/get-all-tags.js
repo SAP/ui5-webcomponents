@@ -4,8 +4,15 @@ const glob = require("glob");
 
 const getTag = file => {
 	const fileContent = String(fs.readFileSync(file)).replace(/\n/g, "");
-	const matches = fileContent.match(/\btag\b:\s*\"(.*?)\"/);
-	return matches ? matches[1] : undefined;
+	let matches = fileContent.match(/\btag\b:\s*\"(.*?)\"/);
+	if (matches) {
+		return matches[1];
+	}
+	matches = fileContent.match(/@customElement\("(.*?)"\)/);
+	if (matches) {
+		return matches[1];
+	}
+	return undefined;
 };
 
 const getPackageTags = (packageDir) => {

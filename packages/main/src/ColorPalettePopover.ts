@@ -4,9 +4,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
 // Styles
@@ -78,13 +79,16 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 			type: String,
 		},
 	},
+	bubbles: true,
 })
 /**
  * Fired when the `ui5-color-palette-popover` is closed due to user interaction.
  * @since 1.21.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class ColorPalettePopover extends UI5Element {
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
@@ -149,11 +153,8 @@ class ColorPalettePopover extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
 	colors!: Array<IColorPaletteItem>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		ColorPalettePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -173,23 +174,29 @@ class ColorPalettePopover extends UI5Element {
 
 	onAfterClose() {
 		this.closePopover();
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	onAfterOpen() {
 		const colorPalette = this._colorPalette;
-		if (colorPalette.showDefaultColor && !colorPalette._currentlySelected) {
-			colorPalette.colorPaletteNavigationElements[0].focus();
-		} else if (colorPalette._shouldFocusRecentColors && colorPalette.showRecentColors) {
-			colorPalette.recentColorsElements[0].focus();
-		} else {
+		if (colorPalette._currentlySelected) {
 			colorPalette._currentlySelected?.focus();
+		} else if (colorPalette.showRecentColors && colorPalette.recentColorsElements.length) {
+			colorPalette.recentColorsElements[0].focus();
+		} else if (colorPalette.showDefaultColor) {
+			colorPalette.colorPaletteNavigationElements[0].focus();
 		}
+
+		// since height is dynamically determined by padding-block-start
+		colorPalette.allColorsInPalette.forEach((item: IColorPaletteItem) => {
+			const itemHeight = item.offsetHeight + 4; // adding 4px for the offsets on top and bottom
+			item.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
+		});
 	}
 
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
-		this.fireEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
+		this.fireDecoratorEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
 	}
 
 	get _colorPalette() {

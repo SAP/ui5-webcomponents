@@ -15,7 +15,6 @@
 					._wizardTabAccInfo="{{accInfo}}"
 					data-ui5-content-ref-id="{{this.refStepId}}"
 					data-ui5-index="{{pos}}"
-					_tab-index="{{tabIndex}}"
 					@ui5-selection-change-requested="{{../onSelectionChangeRequested}}"
 					@ui5-focused="{{../onStepInHeaderFocused}}"
 					@click="{{../_onGroupedTabClick}}"
@@ -25,7 +24,7 @@
 		</div>
 	</nav>
 
-	<span id="wiz-nav-descr" class="ui5-hidden-text">{{navAriaDescribedbyText}}</span>
+	<span id="wiz-nav-descr" class="ui5-hidden-text" aria-hidden="true">{{navAriaDescribedbyText}}</span>
 
 	<div id="{{_id}}-wiz-content" class="ui5-wiz-content" @scroll="{{onScroll}}">
 	{{#each _steps}}

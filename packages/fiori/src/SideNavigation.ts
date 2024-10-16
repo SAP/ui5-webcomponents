@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
@@ -8,7 +9,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -123,7 +123,6 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * Fired when the selection has changed via user interaction
  *
  * @param {SideNavigationSelectableItemBase} item the clicked item.
- * @allowPreventDefault
  * @public
  */
 @event<SideNavigationSelectionChangeEventDetail>("selection-change", {
@@ -133,6 +132,8 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class SideNavigation extends UI5Element {
 	/**
@@ -188,7 +189,7 @@ class SideNavigation extends UI5Element {
 	@property({ type: Array })
 	_menuPopoverItems: Array<HTMLElement> = [];
 
-	_isOverflow = false;;
+	_isOverflow = false;
 	_flexibleItemNavigation: ItemNavigation;
 	_fixedItemNavigation: ItemNavigation;
 
@@ -198,6 +199,7 @@ class SideNavigation extends UI5Element {
 	@property({ type: Boolean })
 	isTouchDevice = false;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -554,7 +556,7 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 			return;
 		}
 
@@ -569,7 +571,7 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
-			item.fireEvent("click");
+			item.fireDecoratorEvent("click");
 
 			if (!item.selected) {
 				this._selectItem(item);
@@ -603,7 +605,7 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+		if (!this.fireDecoratorEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item })) {
 			return;
 		}
 
@@ -644,12 +646,6 @@ class SideNavigation extends UI5Element {
 		if (isSpace(e)) {
 			this._handleOverflowClick();
 		}
-	}
-	static async onDefine() {
-		[SideNavigation.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents-fiori"),
-			super.onDefine(),
-		]);
 	}
 }
 

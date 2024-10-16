@@ -16,7 +16,8 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -27,6 +28,7 @@ import Button from "./Button.js";
 import {
 	SPLIT_BUTTON_DESCRIPTION,
 	SPLIT_BUTTON_KEYBOARD_HINT,
+	SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -90,13 +92,17 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * Fired when the user clicks on the default action.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the user clicks on the arrow action.
  * @public
  */
-@event("arrow-click")
+@event("arrow-click", {
+	bubbles: true,
+})
 class SplitButton extends UI5Element {
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -199,11 +205,8 @@ class SplitButton extends UI5Element {
 	_isDefaultActionPressed = false;
 	_isKeyDownOperation = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -304,7 +307,7 @@ class SplitButton extends UI5Element {
 	_fireClick(e?: Event) {
 		e?.stopPropagation();
 		if (!this._shiftOrEscapePressed) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 		this._shiftOrEscapePressed = false;
 	}
@@ -312,7 +315,7 @@ class SplitButton extends UI5Element {
 	_fireArrowClick(e?: Event) {
 		e?.stopPropagation();
 
-		this.fireEvent("arrow-click");
+		this.fireDecoratorEvent("arrow-click");
 	}
 
 	_textButtonRelease() {
@@ -440,12 +443,23 @@ class SplitButton extends UI5Element {
 		return this.getDomRef()?.querySelector<Button>(".ui5-split-arrow-button");
 	}
 
-	get accessibilityInfo() {
+	get accInfo() {
 		return {
-			// affects root element
-			description: SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
-			keyboardHint: SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			root: {
+				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
+				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
+			},
+			arrowButton: {
+				"title": this.arrowButtonTooltip,
+				"accessibilityAttributes": {
+					"hasPopup": AriaHasPopup.Menu.toLocaleLowerCase(),
+				},
+			},
 		};
+	}
+
+	get arrowButtonTooltip() {
+		return SplitButton.i18nBundle.getText(SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP);
 	}
 
 	get ariaLabelText() {

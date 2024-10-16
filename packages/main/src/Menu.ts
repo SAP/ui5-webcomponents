@@ -12,7 +12,7 @@ import {
 	isPhone,
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -31,6 +31,7 @@ import type {
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
+	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -242,12 +243,9 @@ class Menu extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<IMenuItem>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_timeout?: Timeout;
-
-	static async onDefine() {
-		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get isRtl() {
 		return this.effectiveDir === "rtl";
@@ -267,6 +265,10 @@ class Menu extends UI5Element {
 
 	get _menuItems() {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	}
+
+	get acessibleNameText() {
+		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
 	onBeforeRendering() {

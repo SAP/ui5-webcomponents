@@ -16,7 +16,7 @@ import {
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -82,7 +82,9 @@ type MultiInputTokenDeleteEventDetail = {
  * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
  * @public
  */
-@event("value-help-trigger")
+@event("value-help-trigger", {
+	bubbles: true,
+})
 
 /**
  * Fired when tokens are being deleted.
@@ -96,6 +98,7 @@ type MultiInputTokenDeleteEventDetail = {
 		 */
 		tokens: { type: Array },
 	},
+	bubbles: true,
 })
 
 class MultiInput extends Input implements IFormInputElement {
@@ -172,7 +175,7 @@ class MultiInput extends Input implements IFormInputElement {
 
 	valueHelpPress() {
 		this.closeValueStatePopover();
-		this.fireEvent("value-help-trigger");
+		this.fireDecoratorEvent("value-help-trigger");
 	}
 
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -185,7 +188,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 
 		if (deletedTokens) {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
+			this.fireDecoratorEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
 
 			if (shouldFocusInput) {
 				this.focus();
@@ -337,6 +340,10 @@ class MultiInput extends Input implements IFormInputElement {
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+
+		if (this.tokenizer) {
+			this.tokenizer.readonly = this.readonly;
+		}
 	}
 
 	onAfterRendering() {
@@ -392,6 +399,10 @@ class MultiInput extends Input implements IFormInputElement {
 				"ariaDescribedBy": ariaDescribedBy,
 			},
 		};
+	}
+
+	get valueHelpLabel() {
+		return MultiInput.i18nBundle.getText(MULTIINPUT_VALUE_HELP_LABEL);
 	}
 
 	get ariaRoleDescription() {

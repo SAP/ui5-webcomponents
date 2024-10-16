@@ -20,7 +20,7 @@ import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
  *
  * @constructor
  * @extends TableCellBase
- * @since 2.0
+ * @since 2.0.0
  * @public
  * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
@@ -84,6 +84,12 @@ class TableHeaderCell extends TableCellBase {
 		this.style.minWidth = this.minWidth;
 		this.style.maxWidth = this.maxWidth;
 		this.style.width = this.width;
+	}
+
+	onBeforeRendering() {
+		super.onBeforeRendering();
+		// overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
+		this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
 	}
 }
 

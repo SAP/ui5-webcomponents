@@ -3,9 +3,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
@@ -109,7 +110,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
 @customElement({
 	tag: "ui5-dynamic-side-content",
 	renderer: litRender,
-	styles: DynamicSideContentCss,
+	styles: [DynamicSideContentCss, getEffectiveScrollbarStyle()],
 	template: DynamicSideContentTemplate,
 })
 /**
@@ -147,6 +148,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
 	/**
@@ -246,11 +248,8 @@ class DynamicSideContent extends UI5Element {
 
 	_handleResizeBound: () => void;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		DynamicSideContent.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
 
 	onAfterRendering() {
 		this._resizeContents();
@@ -367,7 +366,7 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get containerWidth() {
-		return (this.parentElement as HTMLElement).clientWidth;
+		return (this.parentElement as HTMLElement).getBoundingClientRect().width;
 	}
 
 	get breakpoint() {
@@ -467,7 +466,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
+			this.fireDecoratorEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 

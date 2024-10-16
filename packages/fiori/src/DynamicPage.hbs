@@ -17,7 +17,7 @@
 				{{> header-actions}}
 			{{/if}}
 		</header>
-
+		
 		{{#if headerInContent}}
 			<slot tabindex="{{headerTabIndex}}" ?aria-hidden="{{headerAriaHidden}}" name="headerArea"></slot>
 		{{/if}}
@@ -42,17 +42,19 @@
 </div>
 
 {{#*inline "header-actions"}}
-	{{#if hasHeading}}
-		<ui5-dynamic-page-header-actions
-			?snapped="{{headerSnapped}}"
-			?pinned="{{headerPinned}}"
-			?hide-pin-button="{{hidePinButton}}"
-			.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
-			@ui5-expand-button-click={{onExpandClick}}
-			@ui5-pin-button-click={{onPinClick}}
-			@ui5-expand-button-hover-in={{onExpandHoverIn}}
-			@ui5-expand-button-hover-out={{onExpandHoverOut}}
-			>
-		</ui5-dynamic-page-header-actions>
-	{{/if}}
+	{{#unless hasSnappedTitleOnMobile}}
+		{{#if hasHeading}}
+			<ui5-dynamic-page-header-actions
+				?snapped="{{headerSnapped}}"
+				?pinned="{{headerPinned}}"
+				?hide-pin-button="{{hidePinButton}}"
+				.accessibilityAttributes="{{_accAttributesForHeaderActions}}"
+				@ui5-expand-button-click={{onExpandClick}}
+				@ui5-pin-button-click={{onPinClick}}
+				@ui5-expand-button-hover-in={{onExpandHoverIn}}
+				@ui5-expand-button-hover-out={{onExpandHoverOut}}
+				>
+			</ui5-dynamic-page-header-actions>
+		{{/if}}
+	{{/unless}}
 {{/inline}}

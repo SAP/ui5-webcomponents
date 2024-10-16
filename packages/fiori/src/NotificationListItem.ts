@@ -3,6 +3,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -16,6 +17,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
@@ -145,7 +147,9 @@ const ICON_PER_STATUS_DESIGN = {
 	],
 })
 
-@event("_press")
+@event("_press", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `Close` button is pressed.
@@ -161,6 +165,7 @@ const ICON_PER_STATUS_DESIGN = {
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
@@ -257,6 +262,15 @@ class NotificationListItem extends NotificationListItemBase {
 	@slot({ type: Node, "default": true })
 	description!: Array<Node>;
 
+	@query(".ui5-nli-title-text")
+	titleTextDOM?: HTMLElement;
+
+	@query(".ui5-nli-menu-btn")
+	menuButtonDOM?: HTMLElement;
+
+	@query(".ui5-nli-description")
+	descriptionDOM?: HTMLElement;
+
 	_titleTextOverflowHeight: number;
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
@@ -290,7 +304,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hasDesc() {
-		return !!this.description.length;
+		return willShowContent(this.description);
 	}
 
 	get hasImportance() {
@@ -331,14 +345,6 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		return true;
-	}
-
-	get descriptionDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-description");
-	}
-
-	get titleTextDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-title-text");
 	}
 
 	get titleTextHeight() {
@@ -479,10 +485,6 @@ class NotificationListItem extends NotificationListItemBase {
 		};
 	}
 
-	get menuButtonDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-menu-btn")!;
-	}
-
 	get showMenu() {
 		return !!this.getMenu();
 	}
@@ -554,7 +556,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (isDelete(e)) {
-			this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -567,7 +569,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
@@ -595,7 +597,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 
 	onResize() {

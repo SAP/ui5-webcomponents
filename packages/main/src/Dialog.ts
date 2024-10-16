@@ -2,12 +2,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
@@ -28,7 +29,6 @@ import {
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
@@ -110,12 +110,13 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	template: DialogTemplate,
 	styles: [
 		Popup.styles,
-		browserScrollbarCSS,
 		PopupsCommonCss,
 		dialogCSS,
+		getEffectiveScrollbarStyle(),
 	],
 	dependencies: [
 		Icon,
+		...Popup.dependencies,
 	],
 })
 class Dialog extends Popup {
@@ -224,6 +225,7 @@ class Dialog extends Popup {
 	@slot()
 	footer!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -238,10 +240,6 @@ class Dialog extends Popup {
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 
 		this._dragStartHandler = this._handleDragStart.bind(this);
-	}
-
-	static async onDefine() {
-		Dialog.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	static _isHeader(element: HTMLElement) {

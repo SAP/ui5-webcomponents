@@ -109,6 +109,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 		 */
 		finalChange: { type: Boolean },
 	},
+	bubbles: true,
 })
 
 class TimePickerClock extends UI5Element {
@@ -222,7 +223,19 @@ class TimePickerClock extends UI5Element {
 	 * Keeps variables used in interaction calculations.
 	 */
 	@property({ type: Object })
-	_dimensionParameters!: TimePickerClockDimensions;
+	_dimensionParameters: TimePickerClockDimensions = {
+		radius: 0,
+		centerX: 0,
+		centerY: 0,
+		dotHeight: 0,
+		numberHeight: 0,
+		outerMax: 0,
+		outerMin: 0,
+		innerMax: 0,
+		innerMin: 0,
+		offsetX: 0,
+		offsetY: 0,
+	};
 
 	/**
 	 * Mousedown or Touchstart event flag.
@@ -607,7 +620,7 @@ class TimePickerClock extends UI5Element {
 		} else {
 			// the new value is set, fire event
 			setTimeout(() => {
-				this.fireEvent<TimePickerClockChangeEventDetail>("change", {
+				this.fireDecoratorEvent<TimePickerClockChangeEventDetail>("change", {
 					"value": newValue,
 					"stringValue": this._getStringValue(newValue),
 					"finalChange": true,
@@ -659,7 +672,7 @@ class TimePickerClock extends UI5Element {
 	_setSelectedValue(value: number) {
 		const realValue: number = this._fixReplacementValue(value);
 		this.selectedValue = realValue;
-		this.fireEvent<TimePickerClockChangeEventDetail>("change", {
+		this.fireDecoratorEvent<TimePickerClockChangeEventDetail>("change", {
 			"value": realValue,
 			"stringValue": this._getStringValue(realValue),
 			"finalChange": false,

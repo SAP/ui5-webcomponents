@@ -2,7 +2,7 @@ import "@ui5/webcomponents/dist/Tree.js";
 import "@ui5/webcomponents/dist/TreeItem.js";
 import "@ui5/webcomponents/dist/Title.js";
 import "@ui5/webcomponents/dist/Label.js";
-
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 
 const tree = document.getElementById("tree");
 const handleBeforeItemMove = (e) => {
@@ -31,23 +31,17 @@ const handleMoveOver = (e) => {
 
 const handleMove = (e) => {
     const { destination, source } = e.detail;
-    const parent = destination.element.parentNode.closest("[ui5-tree-item]") ||
-        destination.element.closest("[ui5-tree]");
 
-    if (destination.placement === "Before") {
-        parent.insertBefore(
-            source.element,
-            destination.element
-        );
-    } else if (destination.placement === "After") {
-        const nextElement = Array.from(parent.children).at(Array.from(parent.children).indexOf(destination.element) + 1);
-
-        parent.insertBefore(
-            source.element,
-            nextElement,
-        );
-    } else if (destination.placement === "On") {
-        destination.element.prepend(source.element);
+    switch (destination.placement) {
+        case MovePlacement.Before:
+            destination.element.before(source.element);
+            break;
+        case MovePlacement.After:
+            destination.element.after(source.element);
+            break;
+        case MovePlacement.On:
+            destination.element.prepend(source.element);
+            break;
     }
 };
 

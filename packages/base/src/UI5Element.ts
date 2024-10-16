@@ -22,7 +22,7 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
@@ -35,9 +35,12 @@ import type {
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
-import { subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getI18nBundle } from "./i18nBundle.js";
+import { fetchCldr } from "./asset-registries/LocaleData.js";
+import getLocale from "./locale/getLocale.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -158,7 +161,7 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	_internals?: ElementInternals;
+	_internals: ElementInternals;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -203,6 +206,7 @@ abstract class UI5Element extends HTMLElement {
 				this.initializedProperties.set(propertyName, value);
 			}
 		});
+		this._internals = this.attachInternals();
 
 		this._initShadowRoot();
 	}
@@ -297,6 +301,10 @@ abstract class UI5Element extends HTMLElement {
 
 		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
 			return;
+		}
+
+		if (!ctor.asyncFinished) {
+			await ctor.definePromise;
 		}
 
 		renderImmediately(this);
@@ -613,7 +621,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		attachFormElementInternals(this);
+		updateFormValue(this);
 	}
 
 	static get formAssociated() {
@@ -645,16 +653,20 @@ abstract class UI5Element extends HTMLElement {
 				// eslint-disable-next-line
 				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
 			}
+			if (typeof newValue === "string" && propData.type && propData.type !== String) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] string value for property [${name}] of component [${tag}] which has a non-string type [${propData.type}] in its property decorator. Attribute conversion will stop and keep the string value in the property.`);
+			}
 		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
+		this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 		if (newAttrValue === null || newAttrValue === undefined) { // null means there must be no attribute for the current value of the property
-			this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
-			this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 		} else {
-			this.setAttribute(attrName, newAttrValue);
+			this.setAttribute(attrName, newAttrValue); // setting attributes from properties should not trigger the property setter again
 		}
+		this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 	}
 
 	/**
@@ -794,17 +806,20 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		this.onBeforeRendering();
-		if (!this._rendered) {
-			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
-			this.updateAttributes();
+		try	{
+			this.onBeforeRendering();
+
+			if (!this._rendered) {
+				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				this.updateAttributes();
+			}
+
+			// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+			this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
+		} finally {
+			// always resume normal invalidation handling
+			this._suppressInvalidation = false;
 		}
-
-		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
-
-		// resume normal invalidation handling
-		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
 		/*
@@ -931,13 +946,44 @@ abstract class UI5Element extends HTMLElement {
 	 * @param cancelable - true, if the user can call preventDefault on the event object
 	 * @param bubbles - true, if the event bubbles
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 * @deprecated use fireDecoratorEvent instead
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
-		const camelCaseEventName = kebabToCamelCase(name);
+		const pascalCaseEventName = kebabToPascalCase(name);
 
-		if (camelCaseEventName !== name) {
-			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable, bubbles);
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
+		}
+
+		return eventResult;
+	}
+
+	/**
+	 * Fires a custom event, configured via the "event" decorator.
+	 * @public
+	 * @param name - name of the event
+	 * @param data - additional data for the event
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 */
+	fireDecoratorEvent<T>(name: string, data?: T): boolean {
+		const eventData = this.getEventData(name);
+		const cancellable = eventData ? eventData.cancelable : false;
+		const bubbles = eventData ? eventData.bubbles : false;
+
+		const eventResult = this._fireEvent(name, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name);
+
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancellable, bubbles);
 		}
 
 		return eventResult;
@@ -970,6 +1016,12 @@ abstract class UI5Element extends HTMLElement {
 
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && noConflictEventResult;
+	}
+
+	getEventData(name: string) {
+		const ctor = this.constructor as typeof UI5Element;
+		const eventMap = ctor.getMetadata().getEvents();
+		return eventMap[name];
 	}
 
 	/**
@@ -1188,38 +1240,61 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
-	 */
-	static whenDependenciesDefined(): Promise<Array<typeof UI5Element>> {
-		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
-	}
-
-	/**
 	 * Hook that will be called upon custom element definition
 	 *
 	 * @protected
+	 * @deprecated use the "i18n" decorator for fetching message bundles and the "cldr" option in the "customElements" decorator for fetching CLDR
 	 */
 	static async onDefine(): Promise<void> {
 		return Promise.resolve();
 	}
 
+	static fetchI18nBundles() {
+		return Promise.all(Object.entries(this.getMetadata().getI18n()).map(pair => {
+			const { bundleName } = pair[1];
+			return getI18nBundle(bundleName);
+		}));
+	}
+
+	static fetchCLDR() {
+		if (this.getMetadata().needsCLDR()) {
+			return fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript());
+		}
+		return Promise.resolve();
+	}
+
+	static asyncFinished: boolean;
+	static definePromise: Promise<void> | undefined;
+
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 */
-	static async define(): Promise<typeof UI5Element> {
-		await boot();
-
-		await Promise.all([
-			this.whenDependenciesDefined(),
+	static define(): typeof UI5Element {
+		this.definePromise = Promise.all([
+			this.fetchI18nBundles(),
+			this.fetchCLDR(),
+			boot(),
 			this.onDefine(),
-		]);
+		]).then(result => {
+			const [i18nBundles] = result;
+			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
+				const propertyName = pair[0];
+				const targetClass = pair[1].target;
+				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+			});
+			this.asyncFinished = true;
+		});
 
 		const tag = this.getMetadata().getTag();
 
 		const features = this.getMetadata().getFeatures();
 
 		features.forEach(feature => {
+			if (getComponentFeature(feature)) {
+				this.cacheUniqueDependencies();
+			}
+
 			subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
 		});
 
@@ -1233,6 +1308,7 @@ abstract class UI5Element extends HTMLElement {
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
 		}
+
 		return this;
 	}
 
@@ -1258,10 +1334,10 @@ abstract class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	get validity() { return this._internals?.validity; }
-	get validationMessage() { return this._internals?.validationMessage; }
-	checkValidity() { return this._internals?.checkValidity(); }
-	reportValidity() { return this._internals?.reportValidity(); }
+	get validity() { return this._internals.validity; }
+	get validationMessage() { return this._internals.validationMessage; }
+	checkValidity() { return this._internals.checkValidity(); }
+	reportValidity() { return this._internals.reportValidity(); }
 }
 
 /**
@@ -1277,6 +1353,7 @@ export {
 };
 export type {
 	ChangeInfo,
+	InvalidationInfo,
 	Renderer,
 	RendererOptions,
 };

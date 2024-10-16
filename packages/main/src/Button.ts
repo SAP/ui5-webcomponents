@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -13,7 +14,6 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -25,7 +25,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import type { IFormElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
@@ -101,13 +101,18 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @public
  * @native
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 /**
  * Fired whenever the active state of the component changes.
  * @private
  */
-@event("_active-state-change")
-class Button extends UI5Element implements IButton, IFormElement {
+@event("_active-state-change", {
+	bubbles: true,
+	cancelable: true,
+})
+class Button extends UI5Element implements IButton {
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -316,6 +321,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	_ontouchstart: PassiveEventListenerObject;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -359,7 +365,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 		this.hasEndIcon = !!this.endIcon;
 		this.iconOnly = this.isIconOnly;
 
-		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
+		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
 	_onclick(e: MouseEvent) {
@@ -456,7 +462,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	_setActiveState(active: boolean) {
-		const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+		const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
 
 		if (eventPrevented) {
 			return;
@@ -501,6 +507,14 @@ class Button extends UI5Element implements IButton, IFormElement {
 		};
 	}
 
+	getDefaultTooltip() {
+		if (!getEnableDefaultTooltips()) {
+			return;
+		}
+
+		return getIconAccessibleName(this.icon);
+	}
+
 	get buttonTypeText() {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
@@ -524,7 +538,7 @@ class Button extends UI5Element implements IButton, IFormElement {
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 
 	get ariaLabelText() {
@@ -541,10 +555,6 @@ class Button extends UI5Element implements IButton, IFormElement {
 
 	get _isReset() {
 		return this.type === ButtonType.Reset;
-	}
-
-	static async onDefine() {
-		Button.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
