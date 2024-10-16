@@ -494,20 +494,20 @@ describe("Testing resize handling and RTL support", () => {
 
 	it("Testing RTL KBH support - arrow up and down", async () => {
 		const slider = await browser.$("#basic-slider-rtl");
-		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
 		await slider.setProperty("value", 0);
-		assert.strictEqual((await sliderHandleContainer.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
+		assert.strictEqual((await sliderHandle.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
 		await slider.keys("ArrowUp");
 		await slider.keys("ArrowUp");
 
-		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 2, "Slider current value should be 2");
 
 		await slider.keys("ArrowDown");
 
-		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
+		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 1, "Slider current value should be 1");
 	});
 
