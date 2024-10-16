@@ -68,7 +68,7 @@ class NavigationLayout extends UI5Element {
 			return;
 		}
 
-		const sideNavigation = this.querySelector("[ui5-side-navigation]") as SideNavigation;
+		const sideNavigation = this.sideContent[0] as SideNavigation;
 
 		if (sideNavigation) {
 			sideNavigation.collapsed = value;
@@ -99,6 +99,14 @@ class NavigationLayout extends UI5Element {
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	content!: Array<HTMLElement>;
+
+	onBeforeRendering() {
+		const sideNavigation = this.sideContent[0] as SideNavigation;
+
+		if (sideNavigation) {
+			sideNavigation.collapsed = this.sideCollapsed;
+		}
+	}
 }
 
 NavigationLayout.define();
