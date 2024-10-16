@@ -32,36 +32,28 @@ describe("General API", () => {
 			.as("form");
 
 		cy.get("@form")
-			.invoke("prop", "columnsS")
-			.should("be.equal", 1);
+			.should("have.prop", "columnsS", 1);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanS")
-			.should("be.equal", 12);
+			.should("have.prop", "labelSpanS", 12);
 
 		cy.get("@form")
-			.invoke("prop", "columnsM")
-			.should("be.equal", 1);
+			.should("have.prop", "columnsM", 1);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanM")
-			.should("be.equal", 4);
+			.should("have.prop", "labelSpanM", 4);
 
 		cy.get("@form")
-			.invoke("prop", "columnsL")
-			.should("be.equal", 2);
+			.should("have.prop", "columnsL", 2);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanL")
-			.should("be.equal", 4);
+			.should("have.prop", "labelSpanL", 4);
 
 		cy.get("@form")
-			.invoke("prop", "columnsXl")
-			.should("be.equal", 3);
+			.should("have.prop", "columnsXl", 3);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanXl")
-			.should("be.equal", 4);
+			.should("have.prop", "labelSpanXl", 4);
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L3 XL6' and label-span='S12 M4 L4 XL4'", () => {
@@ -92,36 +84,28 @@ describe("General API", () => {
 			.as("form");
 
 		cy.get("@form")
-			.invoke("prop", "columnsS")
-			.should("be.equal", 1);
+			.should("have.prop", "columnsS", 1);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanS")
-			.should("be.equal", 12);
+			.should("have.prop", "labelSpanS", 12);
 
 		cy.get("@form")
-			.invoke("prop", "columnsM")
-			.should("be.equal", 2);
+			.should("have.prop", "columnsM", 2);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanM")
-			.should("be.equal", 4);
+			.should("have.prop", "labelSpanM", 4);
 
 		cy.get("@form")
-			.invoke("prop", "columnsL")
-			.should("be.equal", 3);
+			.should("have.prop", "columnsL", 3);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanL")
-			.should("be.equal", 4);
+			.should("have.prop", "labelSpanL", 4);
 
 		cy.get("@form")
-			.invoke("prop", "columnsXl")
-			.should("be.equal", 6);
+			.should("have.prop", "columnsXl", 6);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanXl")
-			.should("be.equal", 4);
+			.should("have.prop", "labelSpanXl", 4);
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L2 XL3' label-span='S12 M12 L12 XL12'", () => {
@@ -163,36 +147,28 @@ describe("General API", () => {
 			.as("form");
 
 		cy.get("@form")
-			.invoke("prop", "columnsS")
-			.should("be.equal", 1);
+			.should("have.prop", "columnsS", 1);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanS")
-			.should("be.equal", 12);
+			.should("have.prop", "labelSpanS", 12);
 
 		cy.get("@form")
-			.invoke("prop", "columnsM")
-			.should("be.equal", 2);
+			.should("have.prop", "columnsM", 2);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanM")
-			.should("be.equal", 12);
+			.should("have.prop", "labelSpanM", 12);
 
 		cy.get("@form")
-			.invoke("prop", "columnsL")
-			.should("be.equal", 2);
+			.should("have.prop", "columnsL", 2);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanL")
-			.should("be.equal", 12);
+			.should("have.prop", "labelSpanL", 12);
 
 		cy.get("@form")
-			.invoke("prop", "columnsXl")
-			.should("be.equal", 3);
+			.should("have.prop", "columnsXl", 3);
 
 		cy.get("@form")
-			.invoke("prop", "labelSpanXl")
-			.should("be.equal", 12);
+			.should("have.prop", "labelSpanXl", 12);
 	});
 
 	it("tests calculated state of two FormGroups in layout='S1 M2 L3 XL4'", () => {
@@ -223,36 +199,28 @@ describe("General API", () => {
 			.as("formGr2");
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsL")
-			.should("be.equal", 2);
+			.should("have.prop", "colsL", 2);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 2);
+			.should("have.prop", "colsXl", 2);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 2);
+			.should("have.prop", "colsXl", 2);
 	});
 
 	it("tests calculated state of three FormGroups in layout='S1 M2 L3 XL6'", () => {
@@ -304,52 +272,40 @@ describe("General API", () => {
 			.as("formGr3");
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 2);
+			.should("have.prop", "colsXl", 2);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 2);
+			.should("have.prop", "colsXl", 2);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 2);
+			.should("have.prop", "colsXl", 2);
 	});
 
 	it("tests calculated state of three FormGroups in layout='S1 M2 L3 XL4'", () => {
@@ -391,51 +347,39 @@ describe("General API", () => {
 			.as("formGr3");
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsS")
-			.should("be.equal", 1);
+			.should("have.prop", "colsS", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsM")
-			.should("be.equal", 1);
+			.should("have.prop", "colsM", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsL")
-			.should("be.equal", 1);
+			.should("have.prop", "colsL", 1);
 
 		cy.get("@formGr1")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 1);
+			.should("have.prop", "colsXl", 1);
 
 		cy.get("@formGr2")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 2);
+			.should("have.prop", "colsXl", 2);
 
 		cy.get("@formGr3")
-			.invoke("prop", "colsXl")
-			.should("be.equal", 1);
+			.should("have.prop", "colsXl", 1);
 	});
 });

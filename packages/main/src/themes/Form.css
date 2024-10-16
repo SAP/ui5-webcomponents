@@ -18,7 +18,8 @@
 	min-height: 2.75rem;
 	align-items: center;
 	border-bottom: 1px solid var(--sapGroup_TitleBorderColor);
-	padding: 0 1rem 0 1rem;
+	padding: 0.875rem 1rem;
+	box-sizing: border-box;
 }
 
 .ui5-form-layout {
