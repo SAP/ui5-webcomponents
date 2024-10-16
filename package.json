@@ -57,7 +57,7 @@
     "lint:scope": "wsrun --exclude-missing lint:scope",
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
-    "release": "node ./.github/actions/release.js",
+    "release": "node ./.github/actions/release.cjs",
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
     "husky:pre-push": "npm-run-all --sequential husky:commit-msg",
