@@ -409,7 +409,7 @@ describe("Accessibility", async () => {
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
 		assert.strictEqual(await sliderHandle.getAttribute("aria-labelledby"),
-			"ui5-slider-accName ui5-sliderDesc", "aria-labelledby is set correctly");
+			"ui5-slider-accName ui5-slider-sliderDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemin"),
 			`${await slider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemax"),

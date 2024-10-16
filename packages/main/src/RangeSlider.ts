@@ -1033,8 +1033,12 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
 	}
 
-	get _ariaLabelledByRangeHandleText() {
-		return this.accessibleName ? "ui5-slider-accName" : "";
+	get _ariaLabelledByStartHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join().trim() : "ui5-slider-startHandleDesc";
+	}
+
+	get _ariaLabelledByEndHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join().trim() : "ui5-slider-endHandleDesc";
 	}
 
 	get _ariaLabelledByInputText() {
