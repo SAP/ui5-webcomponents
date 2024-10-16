@@ -266,7 +266,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	}
 
 	_onInputFocusOut(e: FocusEvent) {
-		const tooltipInput = this.shadowRoot!.querySelector("ui5-input") as Input;
+		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
 
 		this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		this._updateValueFromInput(e);
@@ -279,7 +279,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	}
 
 	_updateInputValue() {
-		const tooltipInput = this.shadowRoot!.querySelector("ui5-input") as Input;
+		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
 
 		if (!tooltipInput) {
 			return;
