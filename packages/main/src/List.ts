@@ -7,6 +7,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -22,7 +23,6 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -175,7 +175,6 @@ type ListItemClickEventDetail = {
 /**
  * Fired when an item is activated, unless the item's `type` property
  * is set to `Inactive`.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
@@ -186,6 +185,8 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -204,6 +205,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -221,6 +223,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -238,12 +241,12 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
  * Fired when selection is changed by user interaction
  * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
- * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
  * @public
@@ -273,6 +276,8 @@ type ListItemClickEventDetail = {
 		 */
 		key: { type: String },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -282,7 +287,9 @@ type ListItemClickEventDetail = {
  * @public
  * @since 1.0.0-rc.6
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 /**
  * @private
@@ -291,6 +298,7 @@ type ListItemClickEventDetail = {
 	detail: {
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -301,7 +309,6 @@ type ListItemClickEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.0.0
- * @allowPreventDefault
  */
 
 @event<ListMoveEventDetail>("move-over", {
@@ -319,6 +326,8 @@ type ListItemClickEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -328,7 +337,6 @@ type ListItemClickEventDetail = {
  * @param {object} source Contains information about the moved element under `element` property.
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
- * @allowPreventDefault
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
@@ -345,6 +353,7 @@ type ListItemClickEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
 })
 class List extends UI5Element {
 	/**
@@ -504,6 +513,7 @@ class List extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
@@ -521,10 +531,6 @@ class List extends UI5Element {
 	onForwardAfterBound: (e: CustomEvent) => void;
 	onForwardBeforeBound: (e: CustomEvent) => void;
 	onItemTabIndexChangeBound: (e: CustomEvent) => void;
-
-	static async onDefine() {
-		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -653,6 +659,10 @@ class List extends UI5Element {
 
 	get hasData() {
 		return this.getItems().length !== 0;
+	}
+
+	get showBusyIndicatorOverlay() {
+		return !this.growsWithButton && this.loading;
 	}
 
 	get showNoDataText() {
@@ -797,13 +807,13 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			const changePrevented = !this.fireEvent<ListSelectionChangeEventDetail>("selection-change", {
+			const changePrevented = !this.fireDecoratorEvent<ListSelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
 				targetItem: e.detail.item,
 				key: e.detail.key,
-			}, true);
+			});
 			if (changePrevented) {
 				this._revertSelection(previouslySelectedItems);
 			}
@@ -839,7 +849,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item: ListItemBase): boolean {
-		this.fireEvent<ListItemDeleteEventDetail>("item-delete", { item });
+		this.fireDecoratorEvent<ListItemDeleteEventDetail>("item-delete", { item });
 
 		return true;
 	}
@@ -917,7 +927,7 @@ class List extends UI5Element {
 		e.preventDefault();
 
 		const acceptedPosition = closestPositions.find(({ element, placement }) => {
-			return !this.fireEvent<ListMoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent<ListMoveEventDetail>("move-over", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -926,11 +936,11 @@ class List extends UI5Element {
 					element,
 					placement,
 				},
-			}, true);
+			});
 		});
 
 		if (acceptedPosition) {
-			this.fireEvent<ListMoveEventDetail>("move", {
+			this.fireDecoratorEvent<ListMoveEventDetail>("move", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -994,7 +1004,7 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	/*
@@ -1095,7 +1105,7 @@ class List extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireEvent<ListMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireDecoratorEvent<ListMoveEventDetail>("move-over", {
 				originalEvent: e,
 				source: {
 					element: draggedElement,
@@ -1104,7 +1114,7 @@ class List extends UI5Element {
 					element: closestPosition.element,
 					placement,
 				},
-			}, true);
+			});
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();
@@ -1125,7 +1135,7 @@ class List extends UI5Element {
 		e.preventDefault();
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
-		this.fireEvent<ListMoveEventDetail>("move", {
+		this.fireDecoratorEvent<ListMoveEventDetail>("move", {
 			originalEvent: e,
 			source: {
 				element: draggedElement,
@@ -1169,7 +1179,7 @@ class List extends UI5Element {
 		e.stopPropagation();
 
 		this._itemNavigation.setCurrentItem(target);
-		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
+		this.fireDecoratorEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
 		if (this.selectionMode === ListSelectionMode.SingleAuto) {
 			const detail: SelectionRequestEventDetail = {
@@ -1186,7 +1196,7 @@ class List extends UI5Element {
 	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
-		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
+		if (!this.fireDecoratorEvent<ListItemClickEventDetail>("item-click", { item: pressedItem })) {
 			return;
 		}
 
@@ -1211,12 +1221,12 @@ class List extends UI5Element {
 		const shouldFireItemClose = target?.hasAttribute("ui5-li-notification") || target?.hasAttribute("ui5-li-notification-group");
 
 		if (shouldFireItemClose) {
-			this.fireEvent<ListItemCloseEventDetail>("item-close", { item: e.detail?.item });
+			this.fireDecoratorEvent<ListItemCloseEventDetail>("item-close", { item: e.detail?.item });
 		}
 	}
 
 	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
-		this.fireEvent<ListItemToggleEventDetail>("item-toggle", { item: e.detail.item });
+		this.fireDecoratorEvent<ListItemToggleEventDetail>("item-toggle", { item: e.detail.item });
 	}
 
 	onForwardBefore(e: CustomEvent) {

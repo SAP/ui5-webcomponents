@@ -3,9 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isFirefox,
@@ -58,7 +58,9 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * **Note:** The event would be fired only if the `interactive` property is set to true.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class CardHeader extends UI5Element {
 	/**
 	 * Defines the title text.
@@ -120,6 +122,7 @@ class CardHeader extends UI5Element {
 	@slot()
 	action!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onEnterDOM() {
@@ -185,10 +188,6 @@ class CardHeader extends UI5Element {
 		return !!this.action.length;
 	}
 
-	static async onDefine() {
-		CardHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
 	_actionsFocusin() {
 		this._root.classList.add("ui5-card-header-hide-focus");
 	}
@@ -202,7 +201,7 @@ class CardHeader extends UI5Element {
 		e.stopImmediatePropagation();
 
 		if (this.interactive && this._root.contains(e.target as HTMLElement)) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 	}
 
@@ -217,7 +216,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 			return;
 		}
 
@@ -236,7 +235,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 	}
 }

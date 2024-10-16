@@ -1,5 +1,5 @@
-import type Table from "./Table";
-import type TableRow from "./TableRow";
+import type Table from "./Table.js";
+import type TableRow from "./TableRow.js";
 
 const isInstanceOfTable = (obj: any): obj is Table => {
 	return "isTable" in obj && !!obj.isTable;

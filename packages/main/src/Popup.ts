@@ -82,22 +82,22 @@ type PopupBeforeCloseEventDetail = {
 	],
 })
 /**
- * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
+ * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening.
  * @public
- * @allowPreventDefault
  */
-@event("before-open")
+@event("before-open", {
+	cancelable: true,
+})
 
 /**
- * Fired after the component is opened. **This event does not bubble.**
+ * Fired after the component is opened.
  * @public
  */
 @event("open")
 
 /**
- * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
+ * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing.
  * @public
- * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
 @event<PopupBeforeCloseEventDetail>("before-close", {
@@ -109,10 +109,11 @@ type PopupBeforeCloseEventDetail = {
 			type: Boolean,
 		},
 	},
+	cancelable: true,
 })
 
 /**
- * Fired after the component is closed. **This event does not bubble.**
+ * Fired after the component is closed.
  * @public
  */
 @event("close")
@@ -121,7 +122,9 @@ type PopupBeforeCloseEventDetail = {
  * Fired whenever the popup content area is scrolled
  * @private
  */
-@event("scroll")
+@event("scroll", {
+	bubbles: true,
+})
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
@@ -296,7 +299,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent("before-open", {}, true, false);
+		const prevented = !this.fireDecoratorEvent("before-open", {});
 
 		if (prevented || this._opened) {
 			return;
@@ -329,7 +332,7 @@ abstract class Popup extends UI5Element {
 		await this.applyInitialFocus();
 
 		if (this.isConnected) {
-			this.fireEvent("open", {}, false, false);
+			this.fireDecoratorEvent("open", {});
 		}
 	}
 
@@ -373,7 +376,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<PopupScrollEventDetail>("scroll", {
+		this.fireDecoratorEvent<PopupScrollEventDetail>("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -512,7 +515,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.fireDecoratorEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed });
 		if (prevented) {
 			return;
 		}
@@ -534,7 +537,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("close", {}, false, false);
+		this.fireDecoratorEvent("close", {});
 	}
 
 	/**

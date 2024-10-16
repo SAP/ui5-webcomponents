@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
@@ -122,6 +122,7 @@ class BusyIndicator extends UI5Element {
 	_busyTimeoutId?: Timeout;
 	focusForward?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -150,10 +151,6 @@ class BusyIndicator extends UI5Element {
 
 		this.removeEventListener("keydown", this._keydownHandler, true);
 		this.removeEventListener("keyup", this._preventEventHandler, true);
-	}
-
-	static async onDefine() {
-		BusyIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get ariaTitle() {

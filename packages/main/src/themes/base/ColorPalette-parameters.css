@@ -24,4 +24,7 @@
 	--_ui5_color-palette-item-after-focus-not-selected-border: 0.0625rem dotted black;
 	--_ui5_color-palette-item-after-not-focus-color: 0.0625rem solid var(--sapGroup_ContentBackground);
 	--_ui5_color-palette-item-selected-focused-border: 0.0625rem solid var(--sapGroup_ContentBackground);
+	--_ui5-color-palette-item-mobile-focus-inset: 0.625rem;
+	--_ui5_color-palette-item-mobile-focus-sides-inset: 0.25rem 0.25rem;
+	--_ui5_color-palette-item-after-mobile-focus-border: var(--_ui5_color-palette-item-after-focus-color);
 }

@@ -44,7 +44,9 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * Fired when the group item is expanded or collapsed.
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	/**
 	 * Defines the text of the button that expands and collapses the group.
@@ -150,7 +152,7 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 	onGroupItemClick() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent("toggle");
+		this.fireDecoratorEvent("toggle");
 	}
 
 	get isGroupItem() {

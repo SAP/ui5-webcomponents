@@ -33,12 +33,17 @@
 	background: var(--sapList_GroupHeaderBackground);
 	display: flex;
 	align-items: center;
-	margin-block: var(--_ui5-notification_group_header-margin);
+
 	padding-inline: var(--_ui5-notification_group_header-padding);
 	width: 100%;
 	border-bottom: var(--_ui5-notification_group_header-border-bottom-width) solid var(--sapList_GroupHeaderBorderColor);
 	box-sizing: border-box;
 	cursor: pointer;
+	margin-bottom: var(--_ui5-notification_group_header-margin-expanded)
+}
+
+.ui5-nli-group-header[expanded="false"] {
+	margin-bottom: var(--_ui5-notification_group_header-margin);
 }
 
 /* The focus is on the whole group but should be visualized on the Group Header */
@@ -47,11 +52,16 @@
 	content: "";
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
+	top: var(--_ui5-notification_group_header-margin);
+	bottom: var(--_ui5-notification_group_header-margin);
 	left: 0;
+	right: 0;
 	pointer-events: none;
+}
+
+:host([desktop]) .ui5-nli-focusable.ui5-nli-group-root:focus .ui5-nli-group-header[expanded="false"]::before,
+.ui5-nli-focusable.ui5-nli-group-root:focus-visible .ui5-nli-group-header[expanded="false"]::before {
+	margin-bottom: var(--_ui5-notification_group_header-margin);
 }
 
 .ui5-nli-group-toggle-icon {
@@ -105,7 +115,7 @@
 
 [ui5-notification-group-list]::part(growing-button-inner):focus:active,
 [ui5-notification-group-list]::part(growing-button-inner):focus-visible:active {
-	background-color: var(--_ui5-notification_item-background-color-active);
+	background-color: var(--_ui5-notification_item-growing-btn-background-color-active);
 	border-radius: var(--_ui5-notification_item-border-radius);
 	border: var(--_ui5-notification_item-border-active);
 }

@@ -8,7 +8,7 @@ import {
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
@@ -225,6 +225,7 @@ class Dialog extends Popup {
 	@slot()
 	footer!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -239,10 +240,6 @@ class Dialog extends Popup {
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 
 		this._dragStartHandler = this._handleDragStart.bind(this);
-	}
-
-	static async onDefine() {
-		Dialog.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	static _isHeader(element: HTMLElement) {

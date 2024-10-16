@@ -3,9 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -78,20 +78,53 @@ type TableRowF7PressEventDetail = {
  * @since 2.0.0
  * @private
  */
-@event("row-click")
-@event("_focused")
+@event("row-click", {
+	bubbles: true,
+})
+/**
+ * @private
+ */
+@event("_focused", {
+	bubbles: true,
+})
+/**
+ * @private
+ */
+@event<TableRowForwardBeforeEventDetail>("_forward-before", {
+	detail: {
+		target: {
+			type: HTMLElement,
+		},
+	},
+	bubbles: true,
+})
+/**
+ * @private
+ */
+@event<TableRowForwardAfterEventDetail>("_forward-after", {
+	detail: {
+		target: {
+			type: HTMLElement,
+		},
+	},
+	bubbles: true,
+})
 /**
  * Fired on selection change of an active row.
  * @since 2.0.0
  * @private
  */
-@event("selection-requested")
+@event("selection-requested", {
+	bubbles: true,
+})
 /**
  * Fired when F7 is pressed.
  * @since 2.0.0
  * @private
  */
-@event("f7-pressed")
+@event("f7-pressed", {
+	bubbles: true,
+})
 class TableRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the visual indication and behavior of the component.
@@ -162,6 +195,7 @@ class TableRow extends UI5Element implements ITableRow {
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	cells!: Array<TableCell>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	visibleCells: Array<TableCell> = [];
@@ -203,11 +237,11 @@ class TableRow extends UI5Element implements ITableRow {
 		const lastFocusableElement = elements.pop();
 
 		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {
-			this.fireEvent<TableRowForwardAfterEventDetail>("_forward-after", { target: activeElement });
+			this.fireDecoratorEvent<TableRowForwardAfterEventDetail>("_forward-after", { target: activeElement });
 		}
 
 		if (isTabPrevious(e) && activeElement === this.root) {
-			this.fireEvent<TableRowForwardBeforeEventDetail>("_forward-before", { target: activeElement });
+			this.fireDecoratorEvent<TableRowForwardBeforeEventDetail>("_forward-before", { target: activeElement });
 		}
 
 		if (isSpace(e) && target.tagName.toLowerCase() === "tr") {
@@ -216,11 +250,11 @@ class TableRow extends UI5Element implements ITableRow {
 
 		if (isRowFocused && !checkboxPressed) {
 			if ((isSpace(e) && itemSelectable) || (isEnter(e) && isSingleSelect)) {
-				this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
+				this.fireDecoratorEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 			}
 
 			if (isEnter(e) && itemActive) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
+				this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row: this });
 				if (!isSingleSelect) {
 					this.activate();
 				}
@@ -229,7 +263,7 @@ class TableRow extends UI5Element implements ITableRow {
 
 		if (isF7(e)) {
 			e.preventDefault();
-			this.fireEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
+			this.fireDecoratorEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
 		}
 	}
 
@@ -253,7 +287,7 @@ class TableRow extends UI5Element implements ITableRow {
 			this.activate();
 		}
 
-		this.fireEvent("_focused");
+		this.fireDecoratorEvent("_focused");
 	}
 
 	_onrowclick(e: MouseEvent) {
@@ -281,13 +315,13 @@ class TableRow extends UI5Element implements ITableRow {
 			}
 
 			if (this.type === TableRowType.Active && !checkboxPressed) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
+				this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row: this });
 			}
 		}
 	}
 
 	_handleSelection() {
-		this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
+		this.fireDecoratorEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 	}
 
 	_activeElementHasAttribute(attr: string): boolean {
@@ -430,10 +464,6 @@ class TableRow extends UI5Element implements ITableRow {
 
 	getNormilzedTextContent(textContent: string): string {
 		return textContent.replace(/[\n\r\t]/g, "").trim();
-	}
-
-	static async onDefine() {
-		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
