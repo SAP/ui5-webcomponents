@@ -1033,6 +1033,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
 	}
 
+	get _ariaLabelledByRangeHandleText() {
+		return this.accessibleName ? "ui5-slider-accName" : "";
+	}
+
 	get _ariaLabelledByInputText() {
 		return RangeSlider.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
 	}

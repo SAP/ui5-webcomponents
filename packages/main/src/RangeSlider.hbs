@@ -41,9 +41,10 @@
 			aria-valuemin="{{min}}"
 			aria-valuemax="{{max}}"
 			aria-valuenow="{{startValue}}"
-			aria-labelledby="ui5-slider-startHandleDesc"
+			aria-labelledby="{{_ariaLabelledByRangeHandleText}} ui5-slider-startHandleDesc"
 			aria-disabled="{{_ariaDisabled}}"
-			.aria-describedby="{{_ariaDescribedByHandleText}}"
+			aria-describedby="{{_ariaDescribedByHandleText}}"
+			aria-keyshortcuts="F2"
 		>
 			<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
 		</div>
@@ -79,9 +80,10 @@
 			aria-valuemin="{{min}}"
 			aria-valuemax="{{max}}"
 			aria-valuenow="{{endValue}}"
-			aria-labelledby="ui5-slider-endHandleDesc"
-			.aria-describedby="{{_ariaDescribedByHandleText}}"
+			aria-labelledby="{{_ariaLabelledByRangeHandleText}} ui5-slider-endHandleDesc"
+			aria-describedby="{{_ariaDescribedByHandleText}}"
 			aria-disabled="{{_ariaDisabled}}"
+			aria-keyshortcuts="F2"
 		>
 			<ui5-icon name="direction-arrows" mode="Decorative" slider-icon></ui5-icon>
 		</div>
