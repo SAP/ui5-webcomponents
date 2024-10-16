@@ -22,13 +22,14 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
  *
  * ### Overview
  *
- * The `ui5-tool-page` is a container ...
+ * The `ui5-navigation-layout` is a container, used to create a navigation
+ * layout that includes a header, side navigation, and content area.
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/NavigationLayout.js";`
  * @constructor
  * @extends UI5Element
- * @since 2.1.0
+ * @since 2.4.0
  * @public
  */
 @customElement({
@@ -57,7 +58,7 @@ class NavigationLayout extends UI5Element {
 	isTablet = isTablet() && !isCombi();
 
 	/**
-	 * Indicates whether if the side menu is collapsed.
+	 * Indicates whether the side menu is collapsed.
 	 * @default false
 	 * @public
 	 */

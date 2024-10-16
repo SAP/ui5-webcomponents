@@ -1,20 +1,16 @@
+<!-- playground-fold -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title>Navigation Layout</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<script data-ui5-config type="application/json">
-		{
-			"rtl": false
-		}
-	</script>
-	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/SideNavigation.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
 </head>
 
-<body class="sidenavigation1auto">
-
+<body style="background-color: var(--sapBackgroundColor)">
+    <!-- playground-fold-end -->
 	<ui5-navigation-layout id="nl1">
 		<ui5-shellbar
 			slot="header"
@@ -55,11 +51,9 @@
 			Content area
 		</div>
 	</ui5-navigation-layout>
-
-	<script>
-		document.querySelector("#startButton").addEventListener("click", function (event) {
-			nl1.sideCollapsed = !nl1.sideCollapsed;
-		});
-	</script>
+    <!-- playground-fold -->
+    <script type="module" src="main.js"></script>
 </body>
+
 </html>
+<!-- playground-fold-end -->
