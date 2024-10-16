@@ -76,7 +76,7 @@ class NavigationLayout extends UI5Element {
 		}
 	}
 
-	get sideCollapsed() {
+	get sideCollapsed() : boolean {
 		return this._sideCollapsed;
 	}
 
