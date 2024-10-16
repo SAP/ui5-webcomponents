@@ -58,6 +58,7 @@ class NavigationLayout extends UI5Element {
 
 	/**
 	 * Indicates whether if the side menu is collapsed.
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -80,21 +81,21 @@ class NavigationLayout extends UI5Element {
 	}
 
 	/**
-	 * Defines the header HTML Element.
+	 * Defines the header.
 	 * @public
 	 */
 	@slot()
 	header!: Array<HTMLElement>;
 
 	/**
-	 * Defines the side content HTML Element.
+	 * Defines the side content.
 	 * @public
 	 */
 	@slot()
 	sideContent!: Array<HTMLElement>;
 
 	/**
-	 * Defines the content HTML Element.
+	 * Defines the content.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
