@@ -192,7 +192,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 
 		await slider.click();
 		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
-		
+
 		await sliderTooltipInput.click();
 
 		assert.strictEqual(await sliderTooltipInput.getProperty("focused"), true, "The tooltip is not closed and the input is focused");
@@ -282,7 +282,7 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		await browser.keys("ArrowUp");
 
 		assert.strictEqual(await slider.getProperty("value"), 1, "The value is not changed on arrow up");
-		
+
 		await browser.keys("ArrowDown");
 
 		assert.strictEqual(await slider.getProperty("value"), 1, "The value is not changed on arrow down");
@@ -649,6 +649,25 @@ describe("Testing resize handling and RTL support", () => {
 		assert.strictEqual(await slider.getProperty("value"), 2, "Slider current value should be 2");
 
 		await slider.keys("ArrowRight");
+
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 1, "Slider current value should be 1");
+	});
+
+	it("Testing RTL KBH support - arrow up and down", async () => {
+		const slider = await browser.$("#basic-slider-rtl");
+		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
+
+		await slider.setProperty("value", 0);
+		assert.strictEqual((await sliderHandleContainer.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
+
+		await slider.keys("ArrowUp");
+		await slider.keys("ArrowUp");
+
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
+		assert.strictEqual(await slider.getProperty("value"), 2, "Slider current value should be 2");
+
+		await slider.keys("ArrowDown");
 
 		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 1, "Slider current value should be 1");
