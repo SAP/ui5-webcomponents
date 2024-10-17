@@ -1032,7 +1032,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
 		const eventType: string = (e as InputEvent).inputType
-			|| (e.detail as InputEventDetail).inputType
+			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType)
 			|| "";
 		this._keepInnerValue = false;
 
@@ -1344,7 +1344,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
-			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType }, true);
+			const inputType = e.inputType || "";
+			const prevented = !this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType }, true);
 
 			if (prevented) {
 				this.value = valueBeforeInput;
