@@ -262,8 +262,8 @@ describe("Input general interaction", () => {
 		await input.scrollIntoView();
 		await input.click();
 
-		await input.keys("ArrowUp");
-		await input.keys("ArrowDown");
+		await browser.keys("ArrowUp");
+		await browser.keys("ArrowDown");
 
 		const inputChangeCount = await browser.$("#input-number3-change-count");
 
