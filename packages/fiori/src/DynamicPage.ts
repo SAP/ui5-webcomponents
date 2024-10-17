@@ -195,6 +195,7 @@ class DynamicPage extends UI5Element {
 
 	skipSnapOnScroll = false;
 	showHeaderInStickArea = false;
+	isToggled = false;
 
 	@property({ type: Boolean })
 	_headerSnapped = false;
@@ -307,6 +308,11 @@ class DynamicPage extends UI5Element {
 			return;
 		}
 
+		if (this.isToggled) {
+			this.isToggled = false;
+			return;
+		}
+
 		const scrollTop = this.scrollContainer!.scrollTop;
 		const lastHeaderSnapped = this._headerSnapped;
 
@@ -330,6 +336,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onExpandClick() {
+		this.isToggled = true;
 		this._toggleHeader();
 		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
@@ -353,6 +360,7 @@ class DynamicPage extends UI5Element {
 		if (!this.hasHeading) {
 			return;
 		}
+		this.isToggled = true;
 		this._toggleHeader();
 		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
