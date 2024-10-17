@@ -1271,12 +1271,14 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	static define(): typeof UI5Element {
-		this.definePromise = Promise.all([
-			this.fetchI18nBundles(),
-			this.fetchCLDR(),
-			boot(),
-			this.onDefine(),
-		]).then(result => {
+		const defineSequence = async () => {
+			await boot();
+			const result = await Promise.all([
+				this.fetchI18nBundles(),
+				this.fetchCLDR(),
+				boot(),
+				this.onDefine(),
+			]);
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
 				const propertyName = pair[0];
@@ -1284,7 +1286,8 @@ abstract class UI5Element extends HTMLElement {
 				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
-		});
+		};
+		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
 
