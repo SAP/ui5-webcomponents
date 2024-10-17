@@ -396,6 +396,72 @@ describe("Table - Horizontal alignment of cells", async () => {
 			assert.equal(justifyContent.value, index === rowWithChangedCell ? customAlignmentCell : alignment, "justify-content correctly set.");
 		}
 	});
+
+	it("test horizontalAlign behavior with one by one popping in", async() => {
+		let table = await browser.$("#table");
+		assert.ok(table.isExisting(), "Table exists");
+
+		const headerRow = await table.$("ui5-table-header-row");
+		const headerCells = await headerRow.$$("ui5-table-header-cell");
+
+		const testWidths = [
+			{width: 1120, poppedIn: []},
+			{width: 900, poppedIn: ["priceCol"]},
+			{width: 800, poppedIn: ["priceCol", "weightCol"]},
+			{width: 500, poppedIn: ["priceCol", "weightCol", "dimensionsCol"]},
+			{width: 300, poppedIn: ["priceCol", "weightCol", "dimensionsCol", "supplierCol"]}
+		];
+
+		for (const testWidth of testWidths) {
+			await table.setProperty("style", `width: ${testWidth.width}px`);
+			assert.strictEqual(await table.getSize("width"), testWidth.width, `Table is ${testWidth.width} wide`);
+
+			for (const [index, headerCell] of headerCells.entries()) {
+				const headerRole = await headerCell.getAttribute("role");
+				const headerId = await headerCell.getAttribute("id");
+				const slotName = await headerCell.getAttribute("slot");
+
+				let expectRole = true;
+				if (testWidth.poppedIn.includes(headerId)) {
+					expectRole = false;
+				}
+
+				assert.strictEqual(headerRole === ROLE_COLUMN_HEADER, expectRole, `Cell has role (width: ${testWidth.width}): (${expectRole})`)
+				assert.strictEqual(await headerRow.shadow$(`slot[name=${slotName}]`).isExisting(), expectRole, `Header cell ${slotName} has been rendered (width: ${testWidth.width}): ${expectRole}`);
+
+				const style = await headerCell.getAttribute("style");
+				const justifyContentHeaderCellUncomputed = style.match(/justify-content: ([^;]+)/)[1];
+				const cssVariable = `var(--horizontal-align-default-${index+1})`;
+				assert.equal(justifyContentHeaderCellUncomputed, cssVariable);
+
+				// justify-content should be the default value in case the cell is inside the popin area
+				if (!expectRole) {
+					const tableRows = await table.$$("ui5-table-row");
+					for (const row of tableRows) {
+						const rowCells = await row.$$("ui5-table-cell");
+						const justifyContent = await rowCells[index].getCSSProperty("justify-content");
+			
+						assert.equal(justifyContent.value, "normal", "justify-content correctly set.");
+					}
+				}
+			}
+		}
+
+		/* const justifyContentHeaderCell = await headerCell.getCSSProperty("justify-content");
+		const style = await headerCell.getAttribute("style");
+  		const justifyContentHeaderCellUncomputed = style.match(/justify-content: ([^;]+)/)[1];
+		const cssVariable = "var(--horizontal-align-default-1)";
+		assert.equal(justifyContentHeaderCell.value, alignment, "justify-content correctly set.");
+		assert.equal(justifyContentHeaderCellUncomputed, cssVariable, "horizontalAlign not set");
+
+		const tableRows = await table.$$("ui5-table-row");
+		for (const row of tableRows) {
+			const rowCells = await row.$$("ui5-table-cell");
+			const justifyContent = await rowCells[3].getCSSProperty("justify-content");
+
+			assert.equal(justifyContent.value, alignment, "justify-content correctly set.");
+		} */
+	});
 });
 
 // Tests for the fixed header, whether it is shown correctly and behaves as expected
