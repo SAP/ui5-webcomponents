@@ -2,6 +2,8 @@ import { html } from "lit";
 import "../../src/Button.js";
 import "../../src/Menu.js";
 import "../../src/MenuItem.js";
+import "../../src/MenuSeparator.js";
+import "../../src/MenuItemGroup.js";
 import type MenuItem from "../../src/MenuItem.js";
 
 describe("Menu interaction", () => {
@@ -424,6 +426,321 @@ describe("Menu interaction", () => {
 				.find("[ui5-responsive-popover]")
 				.invoke("attr", "accessible-name")
 				.should("be.equal", "Select an option from the menu");
+		});
+	});
+
+	describe("Check mark is rendered for selectable and selected items", () => {
+		it("Selected items have check mark rendered when it is necessary", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+				<ui5-menu open opener="btnOpen">
+					<ui5-menu-item text="Item 1" is-selected></ui5-menu-item>
+					<ui5-menu-item-group item-selection-mode="SingleSelect" id="groupSingle">
+						<ui5-menu-item text="Item 2" is-selected></ui5-menu-item>
+						<ui5-menu-item text="Item 3" is-selected></ui5-menu-item>
+					</ui5-menu-item-group>
+					<ui5-menu-item-group id="groupMulti" item-selection-mode="MultiSelect">
+						<ui5-menu-item text="Item 4" is-selected></ui5-menu-item>
+						<ui5-menu-item text="Item 5" is-selected></ui5-menu-item>
+						<ui5-menu-item text="Item 6" is-selected>
+							<ui5-menu-item text="Item 6.1"></ui5-menu-item>
+						</ui5-menu-item>
+					</ui5-menu-item-group>
+					<ui5-menu-item-group id="groupNone" item-selection-mode="None">
+						<ui5-menu-item text="Item 7" is-selected></ui5-menu-item>
+						<ui5-menu-item text="Item 8" is-selected></ui5-menu-item>
+					</ui5-menu-item-group>
+				</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.as("menu");
+
+			cy.get("@menu")
+				.find("[text='Item 1']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+
+			cy.get("@menu")
+				.find("[id='groupSingle']")
+				.as("groupSingle");
+
+			cy.get("@groupSingle")
+				.find("[text='Item 2']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@groupSingle")
+				.find("[text='Item 3']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+
+			cy.get("@menu")
+				.find("[id='groupMulti']")
+				.as("groupMulti");
+
+			cy.get("@groupMulti")
+				.find("[text='Item 4']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@groupMulti")
+				.find("[text='Item 5']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@groupMulti")
+				.find("[text='Item 6']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+
+			cy.get("@menu")
+				.find("[id='groupNone']")
+				.as("groupNone");
+
+			cy.get("@groupNone")
+				.find("[text='Item 7']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+
+			cy.get("@groupNone")
+				.find("[text='Item 8']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+		});
+
+		it("Select item (outside of any group)", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+				<ui5-menu open opener="btnOpen">
+					<ui5-menu-item text="Item 1"></ui5-menu-item>
+				</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.as("menu");
+
+			cy.get("@menu")
+				.find("[text='Item 1']")
+				.as("item")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 1']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+		});
+
+		it("Select/deselect items (SingleSelect mode)", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+				<ui5-menu open opener="btnOpen">
+					<ui5-menu-item-group item-selection-mode="SingleSelect" id="groupSingle">
+						<ui5-menu-item text="Item 2"></ui5-menu-item>
+						<ui5-menu-item text="Item 3"></ui5-menu-item>
+					</ui5-menu-item-group>
+				</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.as("menu");
+
+			cy.get("@menu")
+				.find("[text='Item 2']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 2']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
+
+			cy.get("@menu")
+				.find("[text='Item 3']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 2']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+
+			cy.get("@menu")
+				.find("[text='Item 3']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
+
+			cy.get("@menu")
+				.find("[text='Item 3']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 3']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+		});
+
+		it("Select/deselect items (MultiSelect mode) ", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+				<ui5-menu open opener="btnOpen">
+					<ui5-menu-item-group id="groupMulti" item-selection-mode="MultiSelect">
+						<ui5-menu-item text="Item 4"></ui5-menu-item>
+						<ui5-menu-item text="Item 5"></ui5-menu-item>
+					</ui5-menu-item-group>
+				</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.as("menu");
+
+			cy.get("@menu")
+				.find("[text='Item 4']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 4']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
+
+			cy.get("@menu")
+				.find("[text='Item 5']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 4']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@menu")
+				.find("[text='Item 5']")
+				.shadow()
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
+
+			cy.get("@menu")
+				.find("[text='Item 5']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 5']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+		});
+
+		it("Select item (None mode) ", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+				<ui5-menu open opener="btnOpen">
+					<ui5-menu-item-group id="groupNone" item-selection-mode="None">
+						<ui5-menu-item text="Item 6"></ui5-menu-item>
+					</ui5-menu-item-group>
+				</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.as("menu");
+
+			cy.get("@menu")
+				.find("[text='Item 6']")
+				.ui5MenuItemClick();
+
+			cy.get("@menu")
+				.find("[text='Item 6']")
+				.shadow()
+				.find("[part='selected']")
+				.should("not.exist");
+		});
+
+		it("Accessibility attributes", () => {
+			it("Selected items have check mark rendered when it is necessary", () => {
+				cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+					<ui5-menu open opener="btnOpen">
+						<ui5-menu-item text="Item 1" is-selected></ui5-menu-item>
+						<ui5-menu-item-group item-selection-mode="SingleSelect" id="groupSingle">
+							<ui5-menu-item text="Item 2" is-selected></ui5-menu-item>
+							<ui5-menu-item text="Item 3"></ui5-menu-item>
+						</ui5-menu-item-group>
+						<ui5-menu-item-group id="groupMulti" item-selection-mode="MultiSelect">
+							<ui5-menu-item text="Item 4" is-selected></ui5-menu-item>
+							<ui5-menu-item text="Item 5"></ui5-menu-item>
+						</ui5-menu-item-group>
+						<ui5-menu-item-group id="groupNone" item-selection-mode="None">
+							<ui5-menu-item text="Item 6" is-selected></ui5-menu-item>
+							<ui5-menu-item text="Item 7"></ui5-menu-item>
+						</ui5-menu-item-group>
+					</ui5-menu>`);
+
+				cy.get("[ui5-menu]")
+					.as("menu");
+
+				cy.get("@menu")
+					.find("[text='Item 1']")
+					.shadow()
+					.find("li")
+					.should("have.attr", "role", "menuitem");
+
+				cy.get("@menu")
+					.find("[id='groupSingle']")
+					.as("groupSingle");
+
+				cy.get("@groupSingle")
+					.shadow()
+					.find("div")
+					.should("have.attr", "role", "group");
+
+				cy.get("@groupSingle")
+					.find("[text='Item 2']")
+					.shadow()
+					.find("li")
+					.should("have.attr", "role", "menuitemradio");
+
+				cy.get("@menu")
+					.find("[id='groupMulti']")
+					.as("groupMulti");
+
+				cy.get("@groupMulti")
+					.shadow()
+					.find("div")
+					.should("have.attr", "role", "group");
+
+				cy.get("@groupMulti")
+					.find("[text='Item 4']")
+					.shadow()
+					.find("[part='selected']")
+					.should("have.attr", "role", "menuitemcheckbox");
+
+				cy.get("@menu")
+					.find("[id='groupNone']")
+					.as("groupNone");
+
+				cy.get("@groupNone")
+					.shadow()
+					.find("div")
+					.should("have.attr", "role", "group");
+
+				cy.get("@groupNone")
+					.find("[text='Item 6']")
+					.shadow()
+					.find("[part='selected']")
+					.should("have.attr", "role", "menuitem");
+			});
 		});
 	});
 });

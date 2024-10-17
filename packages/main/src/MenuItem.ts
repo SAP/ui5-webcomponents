@@ -340,12 +340,24 @@ class MenuItem extends ListItem implements IMenuItem {
 		return true;
 	}
 
+	get _role() {
+		switch (this._parentItemSelectionMode) {
+		case ItemSelectionMode.SingleSelect:
+			return "menuitemradio";
+		case ItemSelectionMode.MultiSelect:
+			return "menuitemcheckbox";
+		default:
+			return "menuitem";
+		}
+	}
+
 	get _accInfo() {
 		const accInfoSettings = {
-			role: this.accessibilityAttributes.role || "menuitem",
+			role: this.accessibilityAttributes.role || this._role,
 			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
+			ariaChecked: this._markSelected ? true : undefined,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };
