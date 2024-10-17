@@ -1,0 +1,2 @@
+"use strict";const t=n=>{const e=getComputedStyle(n);return["size","inline-size"].indexOf(e.containerType)>-1||["transform","perspective"].indexOf(e.willChange)>-1||["layout","paint","strict","content"].indexOf(e.contain)>-1||e.transform&&e.transform!=="none"||e.perspective&&e.perspective!=="none"||e.backdropFilter&&e.backdropFilter!=="none"};export default t;
+//# sourceMappingURL=isElementContainingBlock.js.map
