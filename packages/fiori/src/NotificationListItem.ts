@@ -17,6 +17,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
@@ -146,7 +147,9 @@ const ICON_PER_STATUS_DESIGN = {
 	],
 })
 
-@event("_press")
+@event("_press", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `Close` button is pressed.
@@ -162,6 +165,7 @@ const ICON_PER_STATUS_DESIGN = {
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
@@ -300,7 +304,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hasDesc() {
-		return !!this.description.length;
+		return willShowContent(this.description);
 	}
 
 	get hasImportance() {
@@ -552,7 +556,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (isDelete(e)) {
-			this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -565,7 +569,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
@@ -593,7 +597,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 
 	onResize() {

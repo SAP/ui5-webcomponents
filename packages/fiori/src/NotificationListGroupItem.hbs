@@ -21,7 +21,8 @@
 				@click="{{_onHeaderToggleClick}}"
 				@keydown="{{_onkeydown}}"
 				role="button"
-				aria-expanded="{{_ariaExpanded}}"
+				aria-expanded="{{_expanded}}"
+				expanded="{{_expanded}}"
 				aria-controls="{{_id}}-notificationsList"
 				title="{{toggleIconAccessibleName}}">
 				<ui5-icon
@@ -43,7 +44,9 @@
 				id="{{_id}}-notificationsList"
 				class="ui5-nli-group-items"
 				role="list"
-				aria-labelledby="{{_id}}-title-text">
+				aria-labelledby="{{_id}}-title-text"
+				growing={{growing}}
+				@ui5-load-more="{{_onLoadMore}}">
 				<slot></slot>
 			</ui5-notification-group-list>
 		</div>

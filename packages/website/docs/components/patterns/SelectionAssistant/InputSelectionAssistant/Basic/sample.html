@@ -1,0 +1,39 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		#btn {
+			display: none;
+			position: absolute;
+		}
+	</style>
+	<title>Sample</title>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor); height: 300px;">
+	<!-- playground-fold-end -->
+
+	<ui5-label for="ai-input">Input with selection assistant.</ui5-label>
+	<br>
+	<ui5-input id="ai-input"
+		value="Ipsum enim esse ipsum cupidatat ex veniam labore quis irure. Eiusmod labore anim anim nulla aute ut."></ui5-input>
+	<br>
+	<br>
+
+	<ui5-label for="ai-native-input">Input with native API.</ui5-label>
+	<br>
+	<ui5-input id="ai-native-input"
+		value="Ipsum enim esse ipsum cupidatat ex veniam labore quis irure. Eiusmod labore anim anim nulla aute ut."></ui5-input>
+
+	<ui5-button id="btn" icon="ai"></ui5-button>
+	<ui5-toast id="toast"></ui5-toast>
+	<!-- playground-fold -->
+	<script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->

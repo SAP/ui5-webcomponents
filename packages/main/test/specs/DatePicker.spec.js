@@ -1412,4 +1412,20 @@ describe("Date Picker Tests", () => {
 
 		await datepicker.closePicker();
 	});
+
+	describe("Legacy date customization", () => {
+		it.only("Customization of legacy dates in Islamic calendar", async () => {
+			// According to the Islamic calendar, Rab. I 9, 1446 AH should be displayed on Thursday,
+			// but it needs to be configured using the legacyDateCalendarCustomizing setting.
+			datepicker.page = "test/pages/DatePicker_legacy_test_page.html";
+
+			await datepicker.open();
+
+			datepicker.id = "#dp";
+
+			const currentSelection = await datepicker.getDisplayedDay(11);
+
+			assert.strictEqual(await currentSelection.getText(), "9", "Legacy date customization is applied");
+		});
+	});
 });

@@ -408,12 +408,12 @@ describe("ARIA attributes", () => {
 
         assert.strictEqual(await expandButton.getProperty("accessibleName"), "Snap Header",
             "expand button accessible-name is correct");
-        assert.strictEqual(await expandButton.getProperty("title"), "Snap Header",
+        assert.strictEqual(await expandButton.getProperty("tooltip"), "Snap Header",
             "expand button accessible-name is correct");
 
         assert.strictEqual(await pinButton.getProperty("accessibleName"), "Pin Header",
             "pin button accessible-name is correct");
-        assert.strictEqual(await pinButton.getProperty("title"), "Pin Header",
+        assert.strictEqual(await pinButton.getProperty("tooltip"), "Pin Header",
             "pin button accessible-name is correct");
     });
 
@@ -447,7 +447,7 @@ describe("ARIA attributes", () => {
         assert.ok(await expandButton.isExisting(), "expand button is rendered");
         assert.strictEqual(await expandButton.getProperty("accessibleName"), "Expand Header",
             "expand button accessible-name is correct");
-        assert.strictEqual(await expandButton.getProperty("title"), "Expand Header",
+        assert.strictEqual(await expandButton.getProperty("tooltip"), "Expand Header",
             "expand button tooltip is correct");
     });
 });

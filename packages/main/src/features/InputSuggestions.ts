@@ -1,7 +1,6 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
@@ -453,8 +452,14 @@ class Suggestions extends ComponentFeature {
 		const rectItem = item.getDomRef()!.getBoundingClientRect();
 		const rectInput = this._getComponent().getDomRef()!.getBoundingClientRect();
 		const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+		let headerHeight = 0;
 
-		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
+		if (this._hasValueState) {
+			const valueStateHeader = this._getPicker().querySelector("[slot=header]")!;
+			headerHeight = valueStateHeader.getBoundingClientRect().height;
+		}
+
+		return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top + headerHeight);
 	}
 
 	_scrollItemIntoView(item: IInputSuggestionItem) {
@@ -554,10 +559,6 @@ class Suggestions extends ComponentFeature {
 			Button,
 			Icon,
 		];
-	}
-
-	static async define() {
-		Suggestions.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

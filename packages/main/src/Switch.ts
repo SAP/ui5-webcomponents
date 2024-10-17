@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -60,13 +60,24 @@ import switchCss from "./generated/themes/Switch.css.js";
 	renderer: litRender,
 	template: SwitchTemplate,
 	dependencies: [Icon],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the component checked state changes.
  * @public
- * @allowPreventDefault
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+	cancelable: true,
+})
 class Switch extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the component design.
@@ -177,6 +188,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	@property()
 	name?: string;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -222,9 +234,9 @@ class Switch extends UI5Element implements IFormInputElement {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding;
-			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
 			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;
@@ -285,10 +297,6 @@ class Switch extends UI5Element implements IFormInputElement {
 
 	get ariaLabelText() {
 		return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ").trim();
-	}
-
-	static async onDefine() {
-		Switch.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

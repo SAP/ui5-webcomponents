@@ -17,8 +17,7 @@ describe("Framework boot", () => {
 			.should("have.text", "true");
 
 		cy.get("@testAccessor")
-			.invoke("prop", "storage")
-			.should("be.true");
+			.should("have.prop", "storage", true);
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
@@ -33,8 +32,7 @@ describe("Framework boot", () => {
 			.should("have.text", "false");
 
 		cy.get("@testAccessor")
-			.invoke("prop", "storage")
-			.should("be.false");
+			.should("have.prop", "storage", false);
 	});
 
 	it("Setting attribute updates property, state and DOM", () => {
@@ -53,8 +51,7 @@ describe("Framework boot", () => {
 			.should("have.text", "true");
 
 		cy.get("@testAccessor")
-			.invoke("prop", "storage")
-			.should("be.true");
+			.should("have.prop", "storage", true);
 
 		cy.get("[ui5-test-accessor]")
 			.as("testAccessor")
@@ -69,8 +66,7 @@ describe("Framework boot", () => {
 			.should("have.text", "false");
 
 		cy.get("@testAccessor")
-			.invoke("prop", "storage")
-			.should("be.false");
+			.should("have.prop", "storage", false);
 	});
 
 	it("should stop searching for accessors when HTMLElement is reached", () => {

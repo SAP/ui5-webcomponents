@@ -9,7 +9,7 @@ import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
@@ -92,7 +92,9 @@ import panelCss from "./generated/themes/Panel.css.js";
  * Fired when the component is expanded/collapsed by user interaction.
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
 class Panel extends UI5Element {
 	/**
 	 * This property is used to set the header text of the component.
@@ -202,6 +204,7 @@ class Panel extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
@@ -275,7 +278,7 @@ class Panel extends UI5Element {
 		this.collapsed = !this.collapsed;
 
 		if (this.shouldNotAnimate()) {
-			this.fireEvent("toggle");
+			this.fireDecoratorEvent("toggle");
 			return;
 		}
 
@@ -295,7 +298,7 @@ class Panel extends UI5Element {
 		Promise.all(animations).then(() => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
-			this.fireEvent("toggle");
+			this.fireDecoratorEvent("toggle");
 		});
 	}
 
@@ -388,10 +391,6 @@ class Panel extends UI5Element {
 				display: this._contentExpanded ? "block" : "none",
 			},
 		};
-	}
-
-	static async onDefine() {
-		Panel.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

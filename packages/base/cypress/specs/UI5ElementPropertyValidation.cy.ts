@@ -11,7 +11,6 @@ describe("Properties can only have values, restricted to their types", () => {
 			.invoke("prop", "strProp", 5);
 
 		cy.get("@testGeneric")
-			.invoke("prop", "strProp")
-			.should("equal", 5);
+			.should("have.prop", "strProp", 5);
 	});
 });

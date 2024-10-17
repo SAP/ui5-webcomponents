@@ -120,7 +120,8 @@
 }
 
 /* switch focused */
-.ui5-switch--desktop.ui5-switch-root:focus::after {
+.ui5-switch-root:focus-visible::after,
+.ui5-switch--desktop.ui5-switch-root:focus-within::after {
 	content: "";
 	position: absolute;
 	inset-inline-start: var(--_ui5_switch_root_outline_left);

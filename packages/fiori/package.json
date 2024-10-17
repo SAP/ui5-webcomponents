@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-fiori",
-  "version": "2.3.0-rc.0",
+  "version": "2.4.0-rc.1",
   "description": "UI5 Web Components: webcomponents.fiori",
   "ui5": {
     "webComponentsPackage": true
@@ -16,6 +16,11 @@
     "ui5"
   ],
   "exports": {
+    "./dist/ssr-zxing.js": {
+      "browser": "./dist/ssr-zxing.js",
+      "node": "./dist/ssr-zxing-shim.js",
+      "default": "./dist/ssr-zxing.js"
+    },
     "./.port": "./.port",
     "./src/*": "./src/*",
     "./dist/*": "./dist/*",
@@ -48,15 +53,15 @@
     "directory": "packages/fiori"
   },
   "dependencies": {
-    "@ui5/webcomponents": "2.3.0-rc.0",
-    "@ui5/webcomponents-base": "2.3.0-rc.0",
-    "@ui5/webcomponents-icons": "2.3.0-rc.0",
-    "@ui5/webcomponents-theming": "2.3.0-rc.0",
+    "@ui5/webcomponents": "2.4.0-rc.1",
+    "@ui5/webcomponents-base": "2.4.0-rc.1",
+    "@ui5/webcomponents-icons": "2.4.0-rc.1",
+    "@ui5/webcomponents-theming": "2.4.0-rc.1",
     "@zxing/library": "^0.17.1"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "2.3.0-rc.0",
-    "chromedriver": "^127.0.3",
+    "@ui5/webcomponents-tools": "2.4.0-rc.1",
+    "chromedriver": "^128.0.3",
     "lit": "^2.0.0"
   }
 }
