@@ -7,8 +7,12 @@ import "../../../src/SuggestionItem.js";
 import "../../../src/features/InputSuggestions.js";
 import "../../../src/MessageStrip.js";
 import "../../../src/Panel.js";
+import "../../../src/Button.js";
 import "../../../src/CheckBox.js";
 import "../../../src/Label.js";
+import "../../../src/MenuItem.js";
+import "../../../src/Menu.js";
+import type Menu from "../../../src/Menu.js";
 
 describe("Event bubbling", () => {
 	it("test bubbling events", () => {
@@ -124,7 +128,13 @@ describe("Event bubbling", () => {
 						<ui5-option>Hello</ui5-option>
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
-					</ui5-select>					
+					</ui5-select>
+					
+					<ui5-button id="btnOpen">Open Menu</ui5-button>
+					<ui5-menu id="myMenu" header-text="Menu" opener="btnOpen">
+						<ui5-menu-item text="New File"></ui5-menu-item>
+						<ui5-menu-item text="New Folder"></ui5-menu-item>
+					</ui5-menu>
 				</ui5-dialog>
 			</div>
 		`);
@@ -135,6 +145,10 @@ describe("Event bubbling", () => {
 			.as("dialog");
 		cy.get("[ui5-select]")
 			.as("select");
+		cy.get("[ui5-button]")
+			.as("button");
+		cy.get("[ui5-menu]")
+			.as("menu");
 
 		cy.get("@app")
 			.then(app => {
@@ -143,12 +157,25 @@ describe("Event bubbling", () => {
 
 		cy.get("@dialog")
 			.then(dialog => {
-				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed")); // non-bubbling
+				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed"));
 			});
 
 		cy.get("@select")
 			.then(select => {
-				select.get(0).addEventListener("close", cy.stub().as("selClosed")); // non-bubbling
+				select.get(0).addEventListener("close", cy.stub().as("selClosed"));
+			});
+
+		cy.get("@menu")
+			.then(menu => {
+				menu.get(0).addEventListener("close", cy.stub().as("menuClosed"));
+			});
+
+		cy.get("@button")
+			.then(button => {
+				button.get(0).addEventListener("click", () => {
+					const menu = document.getElementById("myMenu") as Menu;
+					menu.open = !menu.open;
+				});
 			});
 
 		cy.get("@dialog").invoke("attr", "open", true);
@@ -162,8 +189,12 @@ describe("Event bubbling", () => {
 			.eq(1)
 			.realClick();
 
+		// act - open and close Menu
+
 		// assert - the close event of the Select does not bubble
 		cy.get("@selClosed")
+			.should("have.been.calledOnce");
+		cy.get("@menuClosed")
 			.should("have.been.calledOnce");
 		cy.get("@dialogClosed")
 			.should("not.be.called");
