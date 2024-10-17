@@ -1276,7 +1276,6 @@ abstract class UI5Element extends HTMLElement {
 			const result = await Promise.all([
 				this.fetchI18nBundles(),
 				this.fetchCLDR(),
-				boot(),
 				this.onDefine(),
 			]);
 			const [i18nBundles] = result;
