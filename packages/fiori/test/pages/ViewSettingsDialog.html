@@ -93,7 +93,43 @@
 	<ui5-input id="sortByItem" style="display: none"></ui5-input>
 	<ui5-input id="sortOrder" style="display: none"></ui5-input>
 
+	<h3>ViewSettingsDialog with dataset properties</h3>
+
+	<ui5-button id="btnOpenDialogWithDataSet">Show ViewSettingsDialog</ui5-button>
+	<ui5-view-settings-dialog id="vsdWithDataSet">
+		<ui5-sort-item slot="sortItems" text="Name" data-key="sortName"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Position" data-key="sortPosition"></ui5-sort-item>
+		<ui5-sort-item slot="sortItems" text="Company" data-key="sortCompany"></ui5-sort-item>
+
+		<ui5-filter-item slot="filterItems" text="Category" data-key="filterCategory">
+			<ui5-filter-item-option slot="values" text="Electronics" data-key="filterOptionElectronics" selected></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Clothing" data-key="filterOptionClothing"></ui5-filter-item-option>
+		</ui5-filter-item>
+
+		<ui5-filter-item slot="filterItems" text="Color" data-key="filterColor">
+			<ui5-filter-item-option slot="values" text="Red" data-key="filterOptionRed"></ui5-filter-item-option>
+			<ui5-filter-item-option slot="values" text="Blue" data-key="filterOptionBlue"></ui5-filter-item-option>
+		</ui5-filter-item>
+
+	</ui5-view-settings-dialog>
+
 	<script>
+		btnOpenDialogWithDataSet.addEventListener("click", function () {
+			vsdWithDataSet.open = true;
+		});
+
+		vsdWithDataSet.addEventListener("ui5-confirm", function(e) {
+			const filterItems = e.detail.filterItems || [];
+
+			// Get the first selected filter and its selected item
+			if (filterItems.length > 0 && filterItems[0].values.length > 0) {
+				console.log("First Selected Filter: ", filterItems[0]);
+				console.log("Selected item within the first filter: ", filterItems[0].values[0]);
+				console.log("Selected item key within the first filter: ", filterItems[0].values[0].dataset.key);
+			}
+			alert("OK button clicked, returned info is: " + JSON.stringify(e.detail));
+		});
+	
 		btnOpenDialog.addEventListener("click", function () {
 			vsd.open = true;
 		});
