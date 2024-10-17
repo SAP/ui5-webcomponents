@@ -16,6 +16,7 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -40,12 +41,6 @@ import {
 // Styles
 import textareaStyles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-
-type TokenizedText = Array<string>;
-type IndexedTokenizedText = Array<{
-	text: string;
-	last: boolean;
-}>;
 
 type ExceededText = {
 	exceededText?: string;
@@ -283,12 +278,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 	/**
 	 * @private
 	 */
-	@property({ type: Array })
-	_mirrorText: IndexedTokenizedText = [];
-
-	/**
-	 * @private
-	 */
 	@property({ noAttribute: true })
 	_maxHeight?: string;
 
@@ -487,27 +476,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	_getPopover() {
 		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
-	}
-
-	_tokenizeText(value: string) {
-		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "<")
-			.replace(/>/gm, ">")
-			.split("\n");
-
-		if (tokenizedText.length < this.rows) {
-			return this._mapTokenizedTextToObject([...tokenizedText, ...Array(this.rows - tokenizedText.length).fill("")] as TokenizedText);
-		}
-
-		return this._mapTokenizedTextToObject(tokenizedText);
-	}
-
-	_mapTokenizedTextToObject(tokenizedText: TokenizedText) {
-		return tokenizedText.map((token, index) => {
-			return {
-				text: token,
-				last: index === (tokenizedText.length - 1),
-			};
-		});
 	}
 
 	_calcExceededText() {
