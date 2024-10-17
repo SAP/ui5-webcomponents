@@ -27,6 +27,10 @@
 	margin: var(--_ui5_popover_upward_arrow_margin);
 }
 
+:host([actual-placement="Bottom"][special-positioning]) .ui5-popover-arrow:after {
+	margin: 4px 2px 0 0;
+}
+
 /* pointing right arrow */
 :host([actual-placement="Start"]) .ui5-popover-arrow {
 	top: calc(50% - 0.5625rem);
@@ -38,6 +42,10 @@
 	margin: var(--_ui5_popover_right_arrow_margin);
 }
 
+:host([actual-placement="Start"][special-positioning]) .ui5-popover-arrow:after {
+	margin: 2px 4px 0 0;
+}
+
 /* pointing downward arrow */
 :host([actual-placement="Top"]) .ui5-popover-arrow {
 	left: calc(50% - 0.5625rem);
@@ -47,6 +55,10 @@
 
 :host([actual-placement="Top"]) .ui5-popover-arrow:after {
 	margin: var(--_ui5_popover_downward_arrow_margin);
+}
+
+:host([actual-placement="Top"][special-positioning]) .ui5-popover-arrow:after {
+	margin: -7px 1px 0 0;
 }
 
 /* pointing left arrow */
@@ -61,6 +73,10 @@
 :host(:not([actual-placement])) .ui5-popover-arrow:after,
 :host([actual-placement="End"]) .ui5-popover-arrow:after {
 	margin: var(--_ui5_popover_left_arrow_margin);
+}
+
+:host([actual-placement="End"][special-positioning]) .ui5-popover-arrow:after {
+	margin: 2px -6px 0 0;
 }
 
 :host([hide-arrow]) .ui5-popover-arrow {
