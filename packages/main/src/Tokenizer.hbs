@@ -17,6 +17,10 @@
 		{{#each tokens}}
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
+
+		{{#if showEffectiveClearAll}}
+			<span @click={{handleClearAll}} class="ui5-tokenizer--clear-all">Clear All</span>
+		{{/if}}
 	</div>
 
 	{{#if showNMore}}
