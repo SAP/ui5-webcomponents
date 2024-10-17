@@ -1272,9 +1272,9 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static define(): typeof UI5Element {
 		const defineSequence = async () => {
-			await boot();
+			await boot(); // boot must finish first, because it initializes configuration
 			const result = await Promise.all([
-				this.fetchI18nBundles(),
+				this.fetchI18nBundles(), // uses configuration
 				this.fetchCLDR(),
 				this.onDefine(),
 			]);
