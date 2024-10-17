@@ -110,7 +110,7 @@ describe("Vertical responsiveness", () => {
 
 	it("content with fixed design fits the parent container", async () => {
 
-		const newContainerHeight = 200,
+		const newContainerHeight = 250,
 			expectedMedia = "dialog",
 			illustratedMsg = await browser.$("#illustratedMsg5");
 
@@ -150,6 +150,35 @@ describe("Vertical responsiveness", () => {
 
 		assert.strictEqual(cssHeight, "160px", "svg has expected height");
 	});
+
+	it("Illustration visible, when container fit content height", async () => {
+
+		const illustratedMsgContainer = await browser.$(".illustratedmessage1auto");
+		const illustratedMsg = await browser.$("#illustratedMsg1");
+		await illustratedMsg.setProperty("design", "Scene");
+
+		// Act
+		await illustratedMsgContainer.setAttribute("style", "height: 440px");
+		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
+
+		// Check
+		assert.notEqual(await illustration.getProperty("scrollHeight"), 0, "Illustration fits its container inherited height");
+		await illustratedMsgContainer.setAttribute("style", "");
+	});
+
+	it("Illustration visible, when IM slotted and container has fixed height", async () => {
+
+		const panel = await browser.$("#panel1");
+		const illustratedMsg = await browser.$("#illustratedMsg4");
+		const illustration = await illustratedMsg.shadow$(".ui5-illustrated-message-illustration svg");
+
+		// Act
+		await panel.setAttribute("style", "height: 19rem");
+
+		// Check
+		assert.notEqual(await illustration.getProperty("scrollHeight"), 0, "Illustration fits its container inherited height");
+		await panel.setAttribute("style", "");
+	});
 });
 
 describe("Dot design resource handling", () => {
@@ -182,4 +211,5 @@ describe("Dot design resource handling", () => {
 		// Check
 		assert.strictEqual(await illustration.getProperty("id"), "sapIllus-Dot-AddPeople", "Dot is present, therefore used");
 	});
+
 });

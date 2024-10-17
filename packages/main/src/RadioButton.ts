@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -84,7 +84,9 @@ let activeRadio: RadioButton;
  * @public
  * @since 1.0.0-rc.15
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RadioButton extends UI5Element implements IFormInputElement {
 	/**
@@ -243,6 +245,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		return this.checked ? (this.value || "on") : null;
 	}
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -258,10 +261,6 @@ class RadioButton extends UI5Element implements IFormInputElement {
 			document.addEventListener("mouseup", this._deactivate);
 			isGlobalHandlerAttached = true;
 		}
-	}
-
-	static async onDefine() {
-		RadioButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	onAfterRendering() {
@@ -386,7 +385,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 		if (!this.name) {
 			this.checked = !this.checked;
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 			return this;
 		}
 

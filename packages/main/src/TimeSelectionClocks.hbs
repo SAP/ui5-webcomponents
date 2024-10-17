@@ -5,7 +5,6 @@
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
 	@focusin={{_clocksFocusIn}}
-	@focusout={{_clocksFocusOut}}
 	format-pattern="{{formatPattern}}"
 >
 	<div
@@ -24,7 +23,6 @@
 			.valueText="{{this.textValue}}"
 			.accessibleName="{{this.label}}"
 			.pressed="{{this.active}}"
-			?focused="{{this.focused}}"
 			@focusin="{{../_buttonFocusIn}}"
 		>{{this.stringValue}}</ui5-toggle-spin-button>
 	{{/each}}

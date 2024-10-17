@@ -3,6 +3,22 @@ slug: ../../TableCell
 sidebar_class_name: newComponentBadge expComponentBadge
 ---
 
+import HAlign from "../../../_samples/main/Table/HAlign/HAlign.md";
+
 <%COMPONENT_OVERVIEW%>
 
 <%COMPONENT_METADATA%>
+
+## Horizontal cell alignment
+
+Control the horizontal alignment of cells by utilizing the `horizontalAlign` property.
+
+Please note that the behaviour of `horizontalAlign` depends on where you set it:
+1. `horizontalAlign` is set on `TableHeaderCell` level<br />
+Changes the horizontal alignment of the `TableHeaderCell` and their corresponding `TableCells`.
+2. `horizontalAlign` is set on `TableCell` level only<br />
+The horizontal alignment is only changed for this one `TableCell`
+3. `horizontalAlign` is set on `TableHeaderCell` and `TableCell` level<br />
+Changing the `horizontalAlign` property on `TableHeaderCell` level changes only the `TableHeaderCell` itself and those `TableCells` without a `horizontalAlign` property.
+
+<HAlign />

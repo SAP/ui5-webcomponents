@@ -59,6 +59,9 @@ type ItemsInfo = {
  * The Form is a layout component that arranges labels and form fields (like input fields) pairs
  * into a specific number of columns.
  *
+ * **Note:** The Form web component is a layout component, it isn't a replacement for the native `form` HTML element.
+ * The Form web component does not provide any APIs for form submission.
+ *
  * ### Structure
  *
  * - **Form** (`ui5-form`) is the top-level container component, responsible for the content layout and responsiveness.
@@ -73,14 +76,14 @@ type ItemsInfo = {
  * This is enabled by the FormGroup (`ui5-form-group`) component.
  * In this case, the Form is structured into FormGroups and each FormGroup consists of FormItems.
  *
- *  ### Responsiveness
+ * ### Responsiveness
  *
  * The Form component reacts and changes its layout on predefined breakpoints.
  * Depending on its size, the Form content (FormGroups and FormItems) gets divided into one or more columns as follows:
  * - **S** (< 600px) – 1 column is recommended (default: 1)
  * - **M** (600px - 1022px) – up to 2 columns are recommended (default: 1)
  * - **L** (1023px - 1439px) - up to 3 columns are recommended (default: 2)
- * - **XL** (> 1439px) – up to 6 columns are recommended (default: 2)
+ * - **XL** (> 1439px) – up to 6 columns are recommended (default: 3)
  *
  * To change the layout, use the `layout` property - f.e. layout="S1 M2 L3 XL6".
  *
@@ -153,13 +156,13 @@ class Form extends UI5Element {
 	 * - `S` - 1 column by default (1 column is recommended)
 	 * - `M` - 1 column by default (up to 2 columns are recommended)
 	 * - `L` - 2 columns by default (up to 3 columns are recommended)
-	 * - `XL` - 2 columns by default (up to 6 columns  are recommended)
+	 * - `XL` - 3 columns by default (up to 6 columns  are recommended)
 	 *
-	 * @default "S1 M1 L2 XL2"
+	 * @default "S1 M1 L2 XL3"
 	 * @public
 	 */
 	@property()
-	layout = "S1 M1 L2 XL2"
+	layout = "S1 M1 L2 XL3"
 
 	/**
 	 * Defines the width proportion of the labels and fields of a FormItem by breakpoint.
@@ -243,7 +246,7 @@ class Form extends UI5Element {
 	labelSpanL = 4;
 
 	@property({ type: Number })
-	columnsXl = 2;
+	columnsXl = 3;
 	@property({ type: Number })
 	labelSpanXl = 4;
 
@@ -462,6 +465,6 @@ class Form extends UI5Element {
 Form.define();
 
 export default Form;
-export {
+export type {
 	IFormItem,
 };

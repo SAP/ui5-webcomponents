@@ -309,7 +309,7 @@
 			console.log("Closed", e);
 		});
 
-		document.querySelector('body').addEventListener('click', (e) => {
+		clickCountToolbar.addEventListener('click', (e) => {
 			if (e.target.id === "clearCounter") {
 				input.setAttribute("value", "0");
 			} else  {

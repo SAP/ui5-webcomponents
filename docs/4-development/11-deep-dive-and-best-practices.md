@@ -100,10 +100,10 @@ or another type of selector (for example by ID):
 
 The framework will create a getter/setter pair on your component's prototype for each property, defined with `@property` decorator.
 
-For example, defining text property:
+For example, defining `text` property:
 
 ```ts
-@property
+@property()
 text = ""
 ```
 
@@ -118,8 +118,24 @@ Whenever `text` is read or set, the framework-defined getter/setter will be call
 
 #### Properties vs attributes
 
-The `properties` section defines both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
+The `properties` defined via the `@property` decorator results in both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
 same name but in `kebab-case` is supported. Properties of type `Object` have no attribute counterparts. If you wish to not have an attribute for a given property regardless of type, you can configure it with `noAttribute: true` setting.
+
+For example, defining `headerText` property:
+
+```ts
+@property()
+headerText = ""
+```
+
+you can use both the `headerText` property and `header-text` attribute:
+
+```ts
+let t = myComponent.text;
+myComponent.headerText = "New text";
+myComponent.setAttrbite("header-text", "New text");
+```
+
 
 #### Public vs private properties
 
@@ -131,11 +147,9 @@ are *component state*, therefore cause the component to be invalidated and subse
 
 The most common types of properties are `String`, `Boolean`, `Object`and `Number`.
 
-Most property types can have a default but `Boolean` should always `false` by default.
+Most property types can have a default value, but `Boolean `properties should always default to `false`. When a boolean attribute is absent, it's treated as false, therefore, the default value of an attribute must be always false.
 
-#### Examples
-
-Example of defining properties:
+For example, defining different types of properties:
 
 ```ts
 class MyComponent extends UI5Element {
@@ -155,7 +169,7 @@ class MyComponent extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isPhone = {};
+	_isPhone = false;
 }
 ```
 
@@ -163,12 +177,14 @@ Here `text`, `width`, `scale` and `data` are public properties, and `_isPhone` p
 
 #### Best practices for using properties
 
-The best practice is to **never** change public properties from within the component (they are owned by the application) unless the property changes due to user interaction (f.e. the user typed in an input - so you change the `value` property; or the user clicked a checkbox - and you flip the `checked` property). It is also
-a best practice to always **fire an event** if you change a public property due to user interaction, to let the application know and synchronize its own state.
+- **Аvoid directly modifying public properties** from within a component, as these properties are typically controlled by the parent application. The only exception to this rule is when the property change results directly from user interaction (e.g., updating a value after a user types in an input field, or toggling a checked property after a user clicks a checkbox). Additionally, whenever you modify a public property due to user interaction, it's important to **fire an event** to notify the parent application. This ensures that the application can synchronize its state accordingly.
 
-As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
+- As for private properties, the best practice is to **only** change them internally and never let the application know about their existence.
 
-Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors:
+- Using attribute selectors instead of setting and using CSS classes on your component. Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors.
+
+For example, using the `size` property (respectively the attribute with the same name) to change component's dimensions for certain values - `size="XS"`:
+
 
 ```css
 :host {
@@ -186,8 +202,6 @@ Both public and private properties are great ways to create CSS selectors for yo
 <my-comopnent size="XS"></my-comopnent> <!-- :host() targets my-component -->
 ```
 
-Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component's dimensions will be changed from `5rem` to `2rem`. 
-Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute. 
 
 #### Metadata properties vs standard JS properties
 
@@ -205,6 +219,517 @@ However, only metadata-defined properties are managed by the framework: cause in
 Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
 that they will not be managed by the framework.
 
+
+## Events
+
+Most UI5 components emit events to inform the application about user interactions. Defining and firing events involves several key aspects:
+
+### Describing the Event
+
+Use the `@event` decorator to define the event. If the event name consists of multiple words, use kebab-case:
+
+```ts
+@event("selection-change", {
+	detail: {
+		valid: { type: Boolean },
+	},
+})
+class MyDemoComponent extends UI5Element {
+}
+```
+
+### Firing the Event
+
+
+#### The `fireEvent` method
+
+Use the `UI5Element#fireEvent` method to trigger the event:
+
+```ts
+@event("selection-change", {
+	detail: {
+		valid: { type: Boolean },
+	},
+})
+class MyDemoComponent extends UI5Element {
+	onItemSelected(e: Event) {
+		this.fireEvent("selection-change", {
+			valid: true,
+		});
+	}
+}
+```
+
+By defualt when using `fireEvent` it assumes the event is bubbling (bubbles: true) and not preventable (cancelable: false).
+
+- Fire event with default configuration
+
+```ts
+// Fires the event as NOT preventable and bubbling
+this.fireEvent("change");
+```
+
+- Fire event with non-default configuration
+
+The method allows configuring the `cancelable` and `bubbles` fields via function arguments - the third and fourth parameters respectively.
+
+```ts
+// Fires the event as preventable and non-bubbling
+this.fireEvent("change", {}, true, false);
+```
+
+#### The `fireDecoratorEvent` method
+
+Use the `UI5Element#fireDecoratorEvent` method to trigger the event.
+
+The method is available since version `v2.4.0` and it is similar to `fireEvent`. It fires a custom event, but gets the configuration for the event from the `@event` decorator. In case you rely on the decorator settings, you must use the `fireDecoratorEvent` method.
+
+Keep in mind that `cancelable` and `bubbles` are `false` by default and you must explicitly enable them in the `@event` decorator if required.
+
+- Fire event with default configuration
+
+```ts
+@event("change")
+```
+
+```ts
+// Fires the event as NOT preventable and NOT bubbling
+this.fireDecoratorEvent("change");
+```
+
+- Fire event with non-default configuration
+
+```ts
+@event("change", {
+    bubbles: true // false by default
+    cancelable: true // false by default
+})
+```
+
+```ts
+// Fires the event as preventable and bubbling
+this.fireDecoratorEvent("change");
+```
+
+**Note:** since `v2.4.0` it's recommended to describe the event in the `@event` decorator and use the `fireDecoratorEvent` method. 
+
+
+### Describing the Event Detail
+
+When an event includes a detail it's recommended to create a TypeScript type that describes the event detail and use it in the `fireEvent` or `fireDecoratorEvent` (as generic methods) to force static checks ensuring that proper event detail is passed.
+The naming convention for the type is a combination of the component class name ("MyDemoComponent"), the event name ("SelectionChange"), followed by "EventDetail", written in PascalCase, e.g "MyDemoComponentSelectionChangeEventDetail":
+
+
+```ts
+export type MyDemoComponentSelectionChangeEventDetail = {
+	valid: boolean;
+};
+
+
+@event<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
+	detail: {
+		valid: { type: Boolean },
+	},
+})
+class MyDemoComponent extends UI5Element {
+
+	onItemSelected(e: Event) {
+		this.fireDecoratorEvent<MyDemoComponentSelectionChangeEventDetail>("selection-change", {
+			valid: true,
+		});
+	}
+}
+```
+
+**Note:** it's a best practice to export the type to make it available for outside usage.
+
+
+### Handling Events in Templates
+
+ When attaching event handlers within your component's template for events fired by other web components, use the `ui5-` prefix for the event name.
+For example, if a ui5-list component emits a `selection-change` event, handle it using the `ui5-selection-change` event name:
+
+```handlebars
+<div class="my-component">
+	<ui5-list @ui5-selection-change="{{onSelectionChange}}"></ui5-list>
+</div>
+```
+
+By default, events are fired in pairs: one with the standard name and another prefixed with `ui5-`. While the `ui5-` prefixed event is always emitted, the non-prefixed event can be suppressed if the `noConflict` configuration setting is enabled. In this case, only the prefixed event will be triggered. For more details on the `noConflict` setting, refer to the [Configuration](../2-advanced/01-configuration.md) section.
+
+### Preventable Events 
+
+It's common to prevent certain events in an application. You must configure the `cancelable` setting in the `@event` decorator to make the event preventable. 
+
+```ts
+@event("change", {
+    cancelable: true // false by default
+})
+```
+
+You most likely will need to update (or revert) the component's state when an event is prevented by the consuming side. To determine if an event was prevented, check the return value of the `fireDecoratorEvent` method. It returns false if the event was cancelled (`preventDefault` was called) and true otherwise:
+
+```ts
+@event("change", {
+    cancelable: true // false by default
+})
+class Switch extends UI5Element {
+	toggle() {
+		this.checked = !this.checked;
+		const changePrevented = !this.fireDecoratorEvent("change");
+
+		if (changePrevented) {
+			this.checked = !this.checked;
+		}
+	}
+}
+```
+
+## Slots
+
+Web Components offer a `slot` mechanism for component composition, allowing components to render children
+or other components in specific locations within their shadow root.
+
+To enable slotting for your component, simply add a `<slot>` element within your `.hbs` template. 
+This acts as a placeholder that can be filled with any HTML markup.
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<slot></slot>
+</div>
+```
+
+On the consuming side, you can insert HTML elements into your component:
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<span>Hello World</span>
+</my-demo-component>
+```
+
+For documentation purposes and to inform component consumers about the available slot,
+we should describe it with a brief JSDoc comment at component class level as shown below:
+
+```ts
+/*
+ * @slot {Array<Node>} default - Defines the content of the component.
+ */
+@customElement({
+	tag: "ui5-demo-component",
+})
+class MyDemoComponent extends UI5Element {}
+```
+
+### Slot as Class Member
+
+We can define our slots as class members via the `@slot` decorator as follows: 
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+	@slot()
+	items!: Array<HTMLElement>;
+}
+```
+
+Defining a slot with the `@slot` decorator means that this slot will be managed by the framework:
+- If any of the children are custom elements, the framework will wait until they are all defined and upgraded before rendering the component.
+- The component will be re-rendered when its children are added, removed, or rearranged.
+
+Also, we define slots as class members when we need to access the slotted children for some reason.
+For example, to get the slotted elements count:
+
+```ts
+const itemsCount = this.items.length;
+```
+
+Or, to read some state of the slotted elements:
+
+
+```ts
+const hasDisabledItem = this.items.some(el => el.disabled);
+```
+
+Or, sometimes even set some private state on the slotted elements:
+
+```ts
+this.items.forEach((item, key) => {
+	const isLastChild = key === this.items.length - 1;
+	item.showBorder = isLastChild;
+});
+```
+
+All slots, declared with the `@slot` decorator, are arrays with elements of type Node or HTMLElement.
+So, you can safely and **must** declare slots (by convention) with `!:` as the accessor will return an empty array in the worst case.
+
+Also, when you declare slots as class members, you can document them in place - you don't need to describe them at class level as mentioned in the previous section.
+
+```ts
+/**
+ * Defines the items of the component.
+ * @public
+ */
+@slot()
+items: Array<HTMLElement>
+```
+
+
+### Default and Named Slot
+
+Default slot is the one that can be used without setting the `slot` attribute of the slotted elements, while 
+named slot requires setting the `slot` attribute: 
+
+- Default slot
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<slot></slot>
+</div>
+```
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<span>Hello World</span>
+</my-demo-component>
+```
+
+- Named slot
+
+The named slot requires a small change in the component's template. You must pass the `name` attrbite to the `slot` element:
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<slot name="content"></slot>
+</div>
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<span slot="content">Hello World</span>
+</my-demo-component>
+```
+
+
+- Declare default slot
+
+All slots are named if you simply use the `@slot` decorator without any settings, while the default slots must be explicitly marked as such with the `"default"` setting:
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
+}
+```
+
+- Declare named slot
+
+Simply use the `@slot` decorator without any settings:
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+	@slot()
+	content!: Array<HTMLElement>;
+}
+```
+	
+It's a good practice is to make use of the default slot as it requires less code to use your component.
+And, if your component has multiple slots - to pick the most important and used one as the default.
+
+For example, here we assume that the "content" slot is more important and we declared it as default.
+
+```hbs
+{{!-- MyDemoComponent.hbs --}}
+<div class="my-component-root">
+	<div class="my-component-heading">
+		<slot name="heading"></slot>
+	</div>
+
+	<slot></slot>
+</div>
+```
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<h1 slot="heading">Heading</h1>
+	<span>Hello World</span>
+</my-demo-component>
+```
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
+
+	@slot()
+	heading!: Array<HTMLElement>;
+}
+```
+
+**Note:** If the slot configuration object is not provided (e.g. `@slot()`), `HTMLElement` will be used as the default type.
+However, if you provide this object, the `type` field is mandatory.
+
+
+### Individual Slots
+
+The `@slot` decorator provides an option called `individualSlots`, which is of boolean type. This option determines if each child element will be placed in its own slot, allowing for flexible arrangement or wrapping of the children within the component. When `individualSlots` is enabled, the framework assigns a unique `_individualSlot` property to each child element. This property can then be used within the component's template, as shown in the following example.
+
+First, enable `individualSlots` by setting it to `true`:
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+	@slot({ type: HTMLElement, individualSlots: true })
+	content!: Array<HTMLElement>;
+}
+```
+
+Next, iterate over the child elements in the template, using the `_individualSlot` property in the name attribute of the slot element:
+```hbs
+{{#each mySlot}}
+	<slot name="{{this._individualSlot}}"></slot>
+{{/each}}
+```
+
+Here is an example using the `Carousel` web component, which leverages `individualSlots` to wrap each slotted child within the content slot to achieve a specific design:
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("ui5-carousel")
+class Carousel extends UI5Element {
+	@slot({ type: HTMLElement, individualSlots: true })
+	content!: Array<HTMLElement>;
+}
+```
+
+```hbs
+{{!-- Carousel.hbs --}}
+<div>
+	{{#each content}}
+		<div
+			class="ui5-carousel-item"
+			role="option"
+			aria-posinset="{{posinset}}"
+			aria-setsize="{{setsize}}"
+			aria-selected = "{{selected}}"
+		>
+			<slot name="{{this.item._individualSlot}}"></slot>
+		</div>
+	{{/each}}
+</div>
+```
+
+**Note**: When `individualSlots` is enabled, the `_individualSlot` property is assigned to each direct child. The value of `_individualSlot` follows the pattern `{nameOfTheSlot}-{index}`, and the slot attribute is updated accordingly.
+
+
+### Invalidation on Child Change
+
+The `@slot` decorator offers an `invalidateOnChildChange` option, which can be set as a boolean or a configuration object. This option determines whether a component should be invalidated when changes occur within its child elements.
+
+By default, if child elements are added or removed from a slot, the component will be invalidated automatically. The `invalidateOnChildChange` option goes a step further by triggering invalidation even when properties or slots of the child elements change. This is useful if the state of parent component depends on the state of its children.
+
+The simplest way to use this option is to set `invalidateOnChildChange` to `"true"`. This configuration ensures that the `my-demo-component` web component will be invalidated whenever any of the UI5Element instances slotted into the content slot are updated, whether due to a property or slot change.
+
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+    @slot({ type: HTMLElement, invalidateOnChildChange: true })
+    content!: Array<HTMLElement>;
+}
+```
+
+For more specific scenarios, you can use a more detailed configuration. The following example demonstrates how to invalidate the `"my-demo-component"` web component only when certain properties or slots of the slotted UI5Element instances change. In this case, the component will be invalidated if the "myProp" property or the "mySlot" slot of the child elements are modified.
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+
+@customElement("my-demo-component")
+class MyDemoComponent extends UI5Element {
+	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: ["myProp"], slots: ["mySlot"] }})
+	content!: Array<HTMLElement>;
+}
+```
+
+The `invalidateOnChildChange` option is especially useful when working with "abstract" elements option is particularly useful when dealing with "abstract" elements, such as UI5Element instances that do not have their own templates. In these cases, the parent component is responsible for rendering the content based on the state of its child elements.
+
+For instance, consider a `Wizard` web component that accepts `WizardStep` elements in its `"steps"` slot. Since `WizardStep` does not have its own template, the `Wizard` must handle rendering based on the properties and state of the steps. Therefore, the `Wizard` needs to be invalidated whenever any changes occur within its child elements to ensure proper rendering.
+
+```ts
+class Wizard extends UI5Element {
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: true,
+	})
+	steps!: Array<WizardStep>
+}
+```
+
+```html
+<ui5-wizard>
+	<ui5-wizard-step title-text="Product type" icon="sap-icon://product" selected></ui5-wizard-step>
+	<ui5-wizard-step title-text="Options"></ui5-wizard-step>
+	<ui5-wizard-step title-text="Pricing" disabled></ui5-wizard-step>
+</ui5-wizard>
+```
+
+```hbs
+{{!-- Wizard.hbs --}}
+<div class="ui5-wizard-root">
+	<nav>
+		{{!-- _steps is a calculated state based on the steps slot --}}
+		{{#each _steps}}
+			<div class="ui5-wiz-step-root">
+			</div>
+		{{/each}}
+	</nav>
+</div>
+```
+
+**Note**: The `invalidateOnChildChange` option is meant to be used with slots that are UI5Element instances.
+
+### Styling of Slotted Children 
+
+The `:slotted` CSS selector applies to any element that has been placed into a slot.
+It works when used inside CSS placed within the shadow DOM of the component that offers the slot.
+
+For example:
+
+```html
+<!-- index.html -->
+<my-demo-component>
+	<h1 slot="heading">Heading</h1>
+	<span>Hello World</span>
+</my-demo-component>
+```
+
+```css
+/* MyDemoComponent.css */
+::slotted([slot="heading"]) {
+	width: 200px;
+	height: 100px;
+}
+```
+
 ## Understanding rendering
 
 ### What is rendering? <a name="rendering_def"></a>
@@ -221,7 +746,7 @@ Example:
 import MyComponentTemplate from "./generated/templates/MyComponentTemplate.lit.js";
 
 @customElement({
-    template: MyComponentTemplate
+	template: MyComponentTemplate
 })
 ```
 
@@ -244,7 +769,7 @@ renders HTML corresponding to each of its children (`ui5-date` instances) as par
 Invalidation means scheduling an already rendered component for asynchronous re-rendering (in the next animation frame). If an already invalidated component gets changed
 again, before having been re-rendered, this will have no downside - it's in the queue of components to be re-rendered anyway.
 
-Important: when a component is re-rendered, only the parts of its shadow DOM, dependent on the changed properties/slots are changed, which makes most updates very fast.
+**Important:** when a component is re-rendered, only the parts of its shadow DOM, dependent on the changed properties/slots are changed, which makes most updates very fast.
 
 A component becomes *invalidated* whenever:
  - a *metadata-defined* **property** changes (not regular properties that f.e. you define in the constructor)

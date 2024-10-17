@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -21,7 +22,6 @@ import {
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	MONTH_PICKER_DESCRIPTION,
@@ -81,12 +81,16 @@ type MonthPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
@@ -124,11 +128,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Number })
 	_secondTimestamp?: number;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		MonthPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get roleDescription() {
 		return MonthPicker.i18nBundle.getText(MONTH_PICKER_DESCRIPTION);
@@ -290,7 +291,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -330,7 +331,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -357,7 +358,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp);
 
-		this.fireEvent<MonthPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent<MonthPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp!,
 			dates: this.selectedDates,
 		});

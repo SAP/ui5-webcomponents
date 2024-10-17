@@ -32,7 +32,7 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -216,14 +216,27 @@ type InputSuggestionScrollEventDetail = {
  * Fired when the input operation has finished by pressing Enter or on focusout.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
+
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+	cancelable: true,
+})
 
 /**
  * Fired when some text has been selected.
@@ -231,7 +244,9 @@ type InputSuggestionScrollEventDetail = {
  * @since 2.0.0
  * @public
  */
-@event("select")
+@event("select", {
+	bubbles: true,
+})
 
 /**
  * Fired when the user navigates to a suggestion item via the ARROW keys,
@@ -247,6 +262,7 @@ type InputSuggestionScrollEventDetail = {
 	 	*/
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -254,7 +270,9 @@ type InputSuggestionScrollEventDetail = {
  *
  * @private
  */
-@event("type-ahead")
+@event("type-ahead", {
+	bubbles: true,
+})
 
 /**
  * Fired when the user scrolls the suggestion popover.
@@ -274,6 +292,7 @@ type InputSuggestionScrollEventDetail = {
 	 	*/
 		scrollContainer: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -281,14 +300,18 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired when the suggestions picker is closed.
  * @public
  * @since 2.0.0
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	/**
 	 * Defines whether the component is in disabled state.
@@ -584,6 +607,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_changeToBeFired?: boolean; // used to wait change event firing after suggestion item selection
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -740,7 +764,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
 			}
 
-			this.fireEvent("type-ahead");
+			this.fireDecoratorEvent("type-ahead");
 		}
 
 		this._performTextSelection = false;
@@ -998,7 +1022,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const fireChange = () => {
-			this.fireEvent(INPUT_EVENTS.CHANGE);
+			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 			this.previousValue = this.value;
 			this.typedInValue = this.value;
 		};
@@ -1014,8 +1038,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_clear() {
+		const valueBeforeClear = this.value;
 		this.value = "";
-		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
+		const prevented = !this.fireDecoratorEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
+
+		if (prevented) {
+			this.value = valueBeforeClear;
+			return;
+		}
+
 		if (!this._isPhone) {
 			this.fireResetSelectionChange();
 			this.focus();
@@ -1028,14 +1059,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
-		this.fireEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
+		this.fireDecoratorEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
 		});
 	}
 
 	_handleSelect() {
-		this.fireEvent("select", {});
+		this.fireDecoratorEvent("select", {});
 	}
 
 	_handleInput(e: InputEvent | CustomEvent<InputEventDetail>) {
@@ -1180,7 +1211,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		if (this._changeToBeFired) {
-			this.fireEvent(INPUT_EVENTS.CHANGE);
+			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 			this._changeToBeFired = false;
 		}
 
@@ -1196,12 +1227,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	_handlePickerAfterOpen() {
 		this.Suggestions?._onOpen();
-		this.fireEvent("open", null, false, false);
+		this.fireDecoratorEvent("open");
 	}
 
 	_handlePickerAfterClose() {
 		this.Suggestions?._onClose();
-		this.fireEvent("close", null, false, false);
+		this.fireDecoratorEvent("close");
 	}
 
 	openValueStatePopover() {
@@ -1226,6 +1257,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
+		Suggestions.i18nBundle = Input.i18nBundle;
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		}
@@ -1250,7 +1282,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 			this._performTextSelection = true;
 
-			this.fireEvent(INPUT_EVENTS.CHANGE);
+			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 
 			// value might change in the change event handler
 			this.typedInValue = this.value;
@@ -1275,6 +1307,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	}
 
 	fireEventByAction(action: INPUT_ACTIONS, e: InputEvent) {
+		const valueBeforeInput = this.value;
+		const inputRef = this.getInputDOMRefSync();
+
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -1288,9 +1323,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
+			const prevented = !this.fireDecoratorEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
+
+			if (prevented) {
+				this.value = valueBeforeInput;
+				inputRef && (inputRef.value = valueBeforeInput);
+			}
+
 			// Angular two way data binding
-			this.fireEvent("value-changed");
+			this.fireDecoratorEvent("value-changed");
 			this.fireResetSelectionChange();
 		}
 	}
@@ -1411,7 +1452,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	fireSelectionChange(item: IInputSuggestionItem | null, isValueFromSuggestions: boolean) {
 		if (this.Suggestions) {
-			this.fireEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item });
+			this.fireDecoratorEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item });
 			this._isLatestValueFromSuggestions = isValueFromSuggestions;
 		}
 	}
@@ -1687,10 +1728,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		return value;
-	}
-
-	static async onDefine() {
-		Input.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

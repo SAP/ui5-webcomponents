@@ -3,8 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/paper-plane.js";
@@ -61,7 +61,9 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @since 2.0.0
  * @public
  */
-@event("submit")
+@event("submit", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke,
@@ -70,7 +72,9 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @since 2.0.0
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * Fired when the input operation has finished by pressing Enter
@@ -79,7 +83,9 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @since 2.0.0
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 class PromptInput extends UI5Element {
 	/**
 	 * Defines the value of the component.
@@ -224,30 +230,27 @@ class PromptInput extends UI5Element {
 	})
 	valueStateMessage!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents-ai")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		PromptInput.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
-	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
-			this.fireEvent("submit");
+			this.fireDecoratorEvent("submit");
 		}
 	}
 
 	_onInnerInput(e: CustomEvent<InputEventDetail>) {
 		this.value = (e.target as Input).value;
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_onInnerChange() {
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	_onButtonClick() {
-		this.fireEvent("submit");
+		this.fireDecoratorEvent("submit");
 	}
 
 	_onTypeAhead(e: CustomEvent): void {

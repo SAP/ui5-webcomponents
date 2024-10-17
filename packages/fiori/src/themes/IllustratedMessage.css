@@ -16,7 +16,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height:inherit;
+    height: inherit;
+    min-height: 0;
     flex-basis: content;
 }
 

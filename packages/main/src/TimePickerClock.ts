@@ -109,6 +109,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 		 */
 		finalChange: { type: Boolean },
 	},
+	bubbles: true,
 })
 
 class TimePickerClock extends UI5Element {
@@ -619,7 +620,7 @@ class TimePickerClock extends UI5Element {
 		} else {
 			// the new value is set, fire event
 			setTimeout(() => {
-				this.fireEvent<TimePickerClockChangeEventDetail>("change", {
+				this.fireDecoratorEvent<TimePickerClockChangeEventDetail>("change", {
 					"value": newValue,
 					"stringValue": this._getStringValue(newValue),
 					"finalChange": true,
@@ -671,7 +672,7 @@ class TimePickerClock extends UI5Element {
 	_setSelectedValue(value: number) {
 		const realValue: number = this._fixReplacementValue(value);
 		this.selectedValue = realValue;
-		this.fireEvent<TimePickerClockChangeEventDetail>("change", {
+		this.fireDecoratorEvent<TimePickerClockChangeEventDetail>("change", {
 			"value": realValue,
 			"stringValue": this._getStringValue(realValue),
 			"finalChange": false,
