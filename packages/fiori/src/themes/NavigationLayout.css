@@ -54,3 +54,7 @@
 :host([side-collapsed][is-phone]) .ui5-nl-aside {
 	transform: translateX(-100%);
 }
+
+::slotted([ui5-shellbar])::part(header) {
+	padding-inline: 0.5rem;
+}
