@@ -7,9 +7,9 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
-import TextTemplate from "./generated/templates/TextTemplate.lit.js";
 import TextTemplate2 from "./TextTemplate.js";
 
 import {
@@ -19,7 +19,6 @@ import {
 
 // Styles
 import styles from "./generated/themes/Text.css.js";
-import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 
 /**
  * @class
