@@ -297,6 +297,8 @@ declare class RangeSlider extends SliderBase implements IFormInputElement {
     get _startHandle(): HTMLElement;
     get _endHandle(): HTMLElement;
     get _progressBar(): HTMLElement;
+    get _ariaLabelledByStartHandleText(): string;
+    get _ariaLabelledByEndHandleText(): string;
     get _ariaLabelledByInputText(): string;
     get _ariaDescribedByInputText(): string;
     get styles(): {

@@ -309,8 +309,8 @@ declare abstract class SliderBase extends UI5Element {
     get _effectiveMin(): number;
     get _effectiveMax(): number;
     get _tabIndex(): "-1" | "0";
-    get _ariaDescribedByHandleText(): "ui5-slider-accName ui5-slider-InputDesc" | undefined;
-    get _ariaLabelledByHandleText(): "ui5-slider-accName" | undefined;
+    get _ariaDescribedByHandleText(): "ui5-slider-InputDesc" | undefined;
+    get _ariaLabelledByHandleText(): "ui5-slider-accName ui5-slider-sliderDesc" | "ui5-slider-sliderDesc";
     get _ariaDescribedByInputText(): string;
     get _ariaLabelledByInputText(): string;
 }

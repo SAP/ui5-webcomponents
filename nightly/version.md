@@ -1,11 +1,10 @@
-commit d932abab5b40fcd6f649ae9a24711e86e537bb39
-Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Wed Oct 16 16:22:18 2024 +0300
+commit ed3abfcf2eec5469bd18ac5becf29e34e427a2f1
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Oct 17 14:19:03 2024 +0300
 
-    refactor(ui5-form): change default columns number in XL and header text wrapping (#10031)
+    fix(ui5-slider, ui5-range-slider): adjust aria-attributes (#10039)
     
-    Updates the Form web component to latest UX design:
-    1. New default layout
-    2. Header text wrapping
+    * fix(ui5-slider, ui5-range-slider): adjust aria-attributes
     
-    Related to: https://github.com/SAP/ui5-webcomponents/issues/9963
+    fix accessibility related attributes for slider and range slider
+    related to: #9547

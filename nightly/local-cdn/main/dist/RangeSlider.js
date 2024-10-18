@@ -834,6 +834,12 @@ let RangeSlider = RangeSlider_1 = class RangeSlider extends SliderBase {
     get _progressBar() {
         return this.shadowRoot.querySelector(".ui5-slider-progress");
     }
+    get _ariaLabelledByStartHandleText() {
+        return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join(" ").trim() : "ui5-slider-startHandleDesc";
+    }
+    get _ariaLabelledByEndHandleText() {
+        return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-endHandleDesc"].join(" ").trim() : "ui5-slider-endHandleDesc";
+    }
     get _ariaLabelledByInputText() {
         return RangeSlider_1.i18nBundle.getText(SLIDER_TOOLTIP_INPUT_LABEL);
     }
