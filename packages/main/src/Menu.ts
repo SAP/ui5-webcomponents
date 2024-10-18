@@ -402,12 +402,16 @@ class Menu extends UI5Element {
 		}, MENU_OPEN_DELAY);
 	}
 
+	_isGroupParent(parent: MenuItem | Menu | MenuItemGroup): boolean {
+		return parent && "isGroup" in parent && parent.isGroup;
+	}
+
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 		const prevSelected = item.isSelected;
 		const parent = item.parentElement as MenuItem | Menu | MenuItemGroup;
 
-		if (parent && "isGroup" in parent && parent.isGroup) {
+		if (this._isGroupParent(parent)) {
 			const itemSelectionMode = (parent as MenuItemGroup).itemSelectionMode;
 			if (itemSelectionMode === ItemSelectionMode.SingleSelect) {
 				(parent as MenuItemGroup)._clearSelectedItems();

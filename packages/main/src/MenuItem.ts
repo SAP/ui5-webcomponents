@@ -109,6 +109,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * **Note:** A selected `ui5-menu-item` have selection mark displayed ad its end.
 	 * @default false
 	 * @public
+	 * @since 2.4.0
 	 */
 	@property({ type: Boolean })
 	isSelected = false;

@@ -29,7 +29,7 @@ import type { IMenuItem } from "./Menu.js";
  * @constructor
  * @extends UI5Element
  * @implements {IMenuItem}
- * @since 2.3.0
+ * @since 2.4.0
  * @public
  */
 @customElement({
