@@ -113,6 +113,7 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 @event("click", {
 	bubbles: true,
 })
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
@@ -314,6 +315,18 @@ class Icon extends UI5Element implements IIcon {
 	get hasIconTooltip() {
 		return this.showTooltip && this.effectiveAccessibleName;
 	}
+}
+
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+
+// JSX support
+interface IconEvents {
+	onTabChange2: () => void
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+interface Icon {
+	_jsxProps: ElementProps<Icon> & Partial<IconEvents>;
 }
 
 Icon.define();
