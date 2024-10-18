@@ -1,19 +1,17 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 import type MultiComboBoxItem from "./MultiComboBoxItem.js";
 import MultiComboBoxItemGroupTemplate from "./generated/templates/MultiComboBoxItemGroupTemplate.lit.js";
-import ListItemGroup from "./ListItemGroup.js";
 import type ListItemGroupHeader from "./ListItemGroupHeader.js";
+import ComboBoxItemGroup from "./ComboBoxItemGroup.js";
 
 /**
  * @class
  * The `ui5-mcb-item-group` is type of suggestion item,
  * that can be used to split the `ui5-multi-combobox` suggestions into groups.
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends ComboBoxItemGroup
  * @public
  * @implements {IMultiComboBoxItem}
  * @since 2.0.0
@@ -22,15 +20,7 @@ import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 	tag: "ui5-mcb-item-group",
 	template: MultiComboBoxItemGroupTemplate,
 })
-class MultiComboBoxItemGroup extends ListItemGroup implements IMultiComboBoxItem {
-	/**
-	 * Defines the text of the component.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	headerText?: string;
-
+class MultiComboBoxItemGroup extends ComboBoxItemGroup implements IMultiComboBoxItem {
 	/**
 	 * Defines the items of the <code>ui5-mcb-item-group</code>.
 	 * @public

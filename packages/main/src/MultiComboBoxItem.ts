@@ -13,7 +13,6 @@ import type { SelectionRequestEventDetail } from "./ListItem.js";
  * The `ui5-mcb-item` represents the item for a `ui5-multi-combobox`.
  * @constructor
  * @extends ComboBoxItem
- * @abstract
  * @implements {IMultiComboBoxItem}
  * @public
  */

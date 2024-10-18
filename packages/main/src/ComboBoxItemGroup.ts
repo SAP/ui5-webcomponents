@@ -10,7 +10,7 @@ import ComboBoxItemGroupTemplate from "./generated/templates/ComboBoxItemGroupTe
  * The `ui5-cb-group-item` is type of suggestion item,
  * that can be used to split the `ui5-combobox` suggestions into groups.
  * @constructor
- * @extends UI5Element
+ * @extends ListItemGroup
  * @abstract
  * @public
  * @implements {IComboBoxItem}

@@ -8,8 +8,7 @@ import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit
  * @class
  * The `ui5-cb-item` represents the item for a `ui5-combobox`.
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends ListItemBase
  * @implements {IComboBoxItem}
  * @public
  */
