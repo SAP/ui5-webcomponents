@@ -18,8 +18,8 @@
   },
   "exports": {
     "./jsx-runtime":{
-      "types": "./src/jsx-dev-runtime.d.ts",
-      "default": "./src/jsx-runtime.js"
+      "types": "./src/jsx-runtime.d.ts",
+      "default": "./dist/jsx-runtime.js"
     },
     "./jsx-dev-runtime": {
       "types": "./src/jsx-dev-runtime.d.ts",
