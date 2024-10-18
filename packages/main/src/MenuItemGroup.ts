@@ -81,7 +81,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	_clearSelectedItems() {
 		this.items.forEach((item: IMenuItem) => {
 			if (!item.isSeparator && !item.isGroup) {
-				(item as MenuItem).isSelected = false;
+				item.isSelected = false;
 			}
 		});
 	}
@@ -91,11 +91,11 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_ensureSingleSelection() {
-		const lastSelectedItem = this.items.findLast((item: IMenuItem) => (item as MenuItem).isSelected);
+		const lastSelectedItem = this.items.findLast((item: IMenuItem) => item.isSelected);
 
 		this._clearSelectedItems();
 		if (lastSelectedItem) {
-			(lastSelectedItem as MenuItem).isSelected = true;
+			lastSelectedItem.isSelected = true;
 		}
 	}
 }

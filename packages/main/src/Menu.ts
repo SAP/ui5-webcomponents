@@ -50,6 +50,7 @@ const MENU_OPEN_DELAY = 300;
 interface IMenuItem extends UI5Element {
 	isSeparator: boolean;
 	isGroup: boolean;
+	isSelected?: boolean;
 }
 
 type MenuItemClickEventDetail = {
