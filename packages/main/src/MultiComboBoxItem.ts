@@ -4,7 +4,7 @@ import ComboBoxItem from "./ComboBoxItem.js";
 import CheckBox from "./CheckBox.js";
 import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 
-import styles from "./generated/themes/MultiComboBoxItem.css.js"
+import styles from "./generated/themes/MultiComboBoxItem.css.js";
 import MultiComboBoxItemTemplate from "./generated/templates/MultiComboBoxItemTemplate.lit.js";
 import type { SelectionRequestEventDetail } from "./ListItem.js";
 
