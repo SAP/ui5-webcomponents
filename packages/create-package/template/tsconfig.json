@@ -7,5 +7,7 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"experimentalDecorators": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 	},
 }

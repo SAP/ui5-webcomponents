@@ -316,7 +316,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = e.target as Input;
-		const oppositeTooltipInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]")!;
+		const oppositeTooltipInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]")!;
 		const relatedTarget = e.relatedTarget as HTMLElement;
 
 		if (this.startValue > this.endValue) {
@@ -483,6 +483,10 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @private
 	 */
 	_onmousedown(e: TouchEvent | MouseEvent) {
+		if ((e as MouseEvent)?.button && (e as MouseEvent)?.button !== 0) {
+			return;
+		}
+
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this._effectiveStep === 0 || (e.target as HTMLElement).hasAttribute("ui5-input")) {
@@ -841,8 +845,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	_onInputKeydown(e: KeyboardEvent): void {
 		const targetedInput = e.target as Input;
-		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
-		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
+		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]") as Input;
 
 		const startValue = parseFloat(startValueInput.value);
 		const endValue = parseFloat(endValueInput.value);
@@ -875,8 +879,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	_updateInputValue() {
-		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
-		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
+		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]") as Input;
 
 		if (!startValueInput && !endValueInput) {
 			return;
@@ -903,8 +907,8 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	}
 
 	_saveInputValues() {
-		const startValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-start-value]") as Input;
-		const endValueInput = this.shadowRoot!.querySelector("ui5-input[data-sap-ui-end-value]") as Input;
+		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;
+		const endValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]") as Input;
 
 		if (this.editableTooltip && startValueInput && endValueInput) {
 			const inputStartValue = parseFloat(startValueInput.value);
@@ -1027,6 +1031,14 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 
 	get _progressBar() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
+	}
+
+	get _ariaLabelledByStartHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-startHandleDesc"].join(" ").trim() : "ui5-slider-startHandleDesc";
+	}
+
+	get _ariaLabelledByEndHandleText() {
+		return this.accessibleName ? ["ui5-slider-accName", "ui5-slider-endHandleDesc"].join(" ").trim() : "ui5-slider-endHandleDesc";
 	}
 
 	get _ariaLabelledByInputText() {
