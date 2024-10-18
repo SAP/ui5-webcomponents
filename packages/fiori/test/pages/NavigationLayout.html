@@ -14,57 +14,105 @@
 </head>
 
 <body class="sidenavigation1auto">
-
 	<ui5-navigation-layout id="nl1">
 		<ui5-shellbar
 			slot="header"
 			primary-title="UI5 Web Components"
 			secondary-title="The Best Run SAP"
 		>
-			<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 			<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
 		</ui5-shellbar>
 		<ui5-side-navigation id="sn1" slot="sideContent">
 			<!-- Items -->
-			<ui5-side-navigation-item href="#home" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
-			<ui5-side-navigation-item  href="#people" id="item2" text="People" expanded icon="group">
-				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
-			</ui5-side-navigation-item>
-			<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-			<ui5-side-navigation-item id="item3" text="Events.............................................................." icon="calendar">
-				<ui5-side-navigation-sub-item text="Local" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
-			</ui5-side-navigation-item>
-			<ui5-side-navigation-item id="externalLinkItem" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
-			<ui5-side-navigation-item id="item4" text="Home" icon="home" tooltip="Home tooltip">
-				<ui5-side-navigation-sub-item text="Local" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
-			</ui5-side-navigation-item>
-			<ui5-side-navigation-item disabled id="item1" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Home" href="#home" icon="home"></ui5-side-navigation-item>
+			<ui5-side-navigation-group text="Group 1" expanded>
+				<ui5-side-navigation-item text="Item 1" href="#item1" icon="locate-me"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Item 2" href="#item2" icon="calendar"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Item 3" href="#item3" icon="activity-assigned-to-goal"></ui5-side-navigation-item>
+			</ui5-side-navigation-group>
+			<ui5-side-navigation-group text="Group 2" expanded>
+				<ui5-side-navigation-item text="Item 4" href="#item4" icon="history"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Item 5" href="#item5" icon="source-code"></ui5-side-navigation-item>
+				<ui5-side-navigation-item text="Item 6" href="#item6" icon="background"></ui5-side-navigation-item>
+			</ui5-side-navigation-group>
 			<!-- Fixed Items -->
-			<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" tooltip="Useful links tooltip">
-				<ui5-side-navigation-sub-item id="fixedItem11" text="Vacation Tool" tooltip="Vacation Tool tooltip"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item id="fixedItem12" text="HR tool"></ui5-side-navigation-sub-item>
-				<ui5-side-navigation-sub-item text="External Link" href="https://sap.com" target="_blank"></ui5-side-navigation-sub-item>
-			</ui5-side-navigation-item>
-			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
-			<ui5-side-navigation-item slot="fixedItems" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems"
+									  text="Legal"
+									  href="https://www.sap.com/about/legal/impressum.html"
+									  target="_blank"
+									  icon="compare"></ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems"
+									  text="Privacy"
+									  href="https://www.sap.com/about/legal/privacy.html"
+									  target="_blank"
+									  icon="locked"></ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems"
+									  text="Terms of Use"
+									  href="https://www.sap.com/terms-of-use"
+									  target="_blank"
+									  icon="document-text"></ui5-side-navigation-item>
 		</ui5-side-navigation>
 		<div class="content">
-			<div id="home" style="height:400px">
-				Home content
+			<div id="home" class="contentItem contentItemVisible">
+				<h2>Home</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
 			</div>
-			<div id="people" style="height:400px">
-				People content
+			<div id="item1" class="contentItem">
+				<h2 >Item 1</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
 			</div>
-
+			<div id="item2" class="contentItem">
+				<h2>Item 2</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item3" class="contentItem">
+				<h2>Item 3</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item4" class="contentItem">
+				<h2>Item 4</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item5" class="contentItem">
+				<h2>Item 5</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
+			<div id="item6" class="contentItem">
+				<h2>Item 6</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</p>
+			</div>
 		</div>
 	</ui5-navigation-layout>
 
 	<script>
 		document.querySelector("#startButton").addEventListener("click", function (event) {
 			nl1.sideCollapsed = !nl1.sideCollapsed;
+		});
+
+		document.querySelector("#sn1").addEventListener("selection-change", function (event) {
+			if (event.detail.item.getAttribute("target")) {
+				return;
+			}
+
+			const contentItems = document.querySelectorAll(".contentItem");
+			contentItems.forEach(item => {
+				item.classList.remove("contentItemVisible");
+			});
+			document.getElementById(event.detail.item.getAttribute("href").replace("#", "")).classList.add("contentItemVisible");
 		});
 	</script>
 </body>
