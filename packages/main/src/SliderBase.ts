@@ -633,14 +633,6 @@ abstract class SliderBase extends UI5Element {
 		return isUpAction ? step : step * -1;
 	}
 
-	static _isDecreaseValueAction(e: KeyboardEvent, directionStart: DirectionStart) {
-		if (directionStart === "right") {
-			isDown(e) || isDownCtrl(e) || isRight(e) || isRightCtrl(e) || isMinus(e) || isPageDown(e);
-		}
-
-		return isDown(e) || isDownCtrl(e) || isLeft(e) || isLeftCtrl(e) || isMinus(e) || isPageDown(e);
-	}
-
 	static _isIncreaseValueAction(e: KeyboardEvent, directionStart: DirectionStart) {
 		if (directionStart === "right") {
 			return isUp(e) || isUpCtrl(e) || isLeft(e) || isLeftCtrl(e) || isPlus(e) || isPageUp(e);
