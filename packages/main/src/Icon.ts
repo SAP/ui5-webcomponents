@@ -316,6 +316,17 @@ class Icon extends UI5Element implements IIcon {
 	}
 }
 
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+
+// JSX support
+interface IconEvents {
+	onTabChange2: () => void
+}
+
+interface Icon {
+	_jsxProps: ElementProps<Icon> & Partial<IconEvents>;
+}
+
 Icon.define();
 
 export default Icon;

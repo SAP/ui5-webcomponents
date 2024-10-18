@@ -16,8 +16,15 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git",
     "directory": "packages/base"
   },
-  "types": "./dist",
   "exports": {
+    "./jsx-runtime":{
+      "types": "./src/jsx-dev-runtime.d.ts",
+      "default": "./src/jsx-runtime.js"
+    },
+    "./jsx-dev-runtime": {
+      "types": "./src/jsx-dev-runtime.d.ts",
+      "default": "./src/jsx-dev-runtime.js"
+    },
     "./dist/ssr-dom.js": {
       "browser": "./dist/ssr-dom.js",
       "node": "./dist/ssr-dom-shim.js",
@@ -33,6 +40,7 @@
     "./bundle.esm.js": "./bundle.esm.js",
     "./*": "./dist/*"
   },
+  "types": "./dist",
   "scripts": {
     "clean": "nps clean",
     "lint": "nps lint",
@@ -48,7 +56,8 @@
   },
   "dependencies": {
     "@lit-labs/ssr-dom-shim": "^1.1.2",
-    "lit-html": "^2.0.1"
+    "lit-html": "^2.0.1",
+    "preact": "^10.24.3"
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.17",
