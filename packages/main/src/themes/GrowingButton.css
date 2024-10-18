@@ -61,7 +61,11 @@
 	font-weight: bold;
 }
 
-:host([loading]) [growing-button-text]{
+:host([loading]) .ui5-list-growing-button-busy-indicator:not([_is-busy]) {
+	display: none;
+}
+
+:host([loading]) .ui5-list-growing-button-busy-indicator[_is-busy] + [growing-button-text]{
 	padding-left: 0.5rem;
 }
 
