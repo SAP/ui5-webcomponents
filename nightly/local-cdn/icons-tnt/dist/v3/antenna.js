@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "antenna";
+const pathData = "M64 353L416 0c21 39 32 80 32 124 0 142-117 260-260 260-43 0-85-10-124-31zM406 56L120 342c21 7 43 10 68 10 124 0 228-102 228-227 0-24-3-47-10-69zM120 96c0-21 17-39 37-39h3c23 0 39 18 40 41v2c0 3-1 7-3 11l32 32-22 23-33-33c-4 2-9 3-14 3-23 0-40-17-40-40zm360 416H32v-32h208v-68c11-3 24-5 32-9v77h136l-82-99c11-5 19-10 28-17l94 116h32v32z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/antenna";
+export { pathData, ltr, accData };
