@@ -139,7 +139,7 @@ describe("ViewSettingsDialog general interaction", () => {
 		await viewSettingsDialog.shadow$("ui5-dialog").$(".ui5-vsd-header").$("ui5-button").click();
 
 		const sortByLiText = await viewSettingsDialog.shadow$("[sort-by]").$("ui5-li").getText();
-		assert.include(sortByLiText, "Name", "sortBy should  have an option selected");
+		assert.include(sortByLiText, "Name", "sortBy should have an option selected");
 
 		await browser.keys("Escape");
 	});
