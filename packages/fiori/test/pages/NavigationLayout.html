@@ -10,7 +10,7 @@
 		}
 	</script>
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-	<link rel="stylesheet" type="text/css" href="./styles/SideNavigation.css">
+	<link rel="stylesheet" type="text/css" href="./styles/NavigationLayout.css">
 </head>
 
 <body class="sidenavigation1auto">
@@ -26,8 +26,8 @@
 		</ui5-shellbar>
 		<ui5-side-navigation id="sn1" slot="sideContent">
 			<!-- Items -->
-			<ui5-side-navigation-item text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
-			<ui5-side-navigation-item id="item2" text="People" expanded icon="group">
+			<ui5-side-navigation-item href="#home" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
+			<ui5-side-navigation-item  href="#people" id="item2" text="People" expanded icon="group">
 				<ui5-side-navigation-sub-item id="item21" text="From My Team" icon="employee-approvals" tooltip="From My Team tooltip"></ui5-side-navigation-sub-item>
 				<ui5-side-navigation-sub-item id="item22" text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
@@ -52,7 +52,13 @@
 			<ui5-side-navigation-item slot="fixedItems" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
 		</ui5-side-navigation>
 		<div class="content">
-			Content area
+			<div id="home" style="height:400px">
+				Home content
+			</div>
+			<div id="people" style="height:400px">
+				People content
+			</div>
+
 		</div>
 	</ui5-navigation-layout>
 

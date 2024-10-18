@@ -1,7 +1,3 @@
-.content {
-	padding: 1rem;
-}
-
 ui5-shellbar::part(root) {
 	padding-inline: .5rem;
 }
