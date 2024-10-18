@@ -1,8 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IComboBoxItem } from "./ComboBox.js";
+import ListItemBase from "./ListItemBase.js";
 
+import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit.js";
 /**
  * @class
  * The `ui5-cb-item` represents the item for a `ui5-combobox`.
@@ -12,8 +13,12 @@ import type { IComboBoxItem } from "./ComboBox.js";
  * @implements {IComboBoxItem}
  * @public
  */
-@customElement("ui5-cb-item")
-class ComboBoxItem extends UI5Element implements IComboBoxItem {
+@customElement({
+	tag: "ui5-cb-item",
+	template: ComboBoxItemTemplate,
+	styles: [ListItemBase.styles],
+})
+class ComboBoxItem extends ListItemBase implements IComboBoxItem {
 	/**
 	 * Defines the text of the component.
 	 * @default undefined
@@ -52,8 +57,19 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	@property({ type: Boolean })
 	selected = false;
 
-	get stableDomRef() {
-		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	/**
+	 * Defines the markup text that will be displayed as suggestion.
+	 * Used for highlighting the matching parts of the text.
+	 *
+	 * @since 2.0.0
+	 * @private
+	 */
+	@property()
+	markupText = "";
+
+	onEnterDOM(): void {
+		super.onEnterDOM();
+		this.setAttribute("accessible-role", "Option");
 	}
 }
 

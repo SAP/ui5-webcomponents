@@ -1,7 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ComboBoxItem from "./ComboBoxItem.js";
+import CheckBox from "./CheckBox.js";
 import type { IMultiComboBoxItem } from "./MultiComboBox.js";
+
+import styles from "./generated/themes/MultiComboBoxItem.css.js"
+import MultiComboBoxItemTemplate from "./generated/templates/MultiComboBoxItemTemplate.lit.js";
+import type { SelectionRequestEventDetail } from "./ListItem.js";
 
 /**
  * @class
@@ -12,7 +17,12 @@ import type { IMultiComboBoxItem } from "./MultiComboBox.js";
  * @implements {IMultiComboBoxItem}
  * @public
  */
-@customElement("ui5-mcb-item")
+@customElement({
+	tag: "ui5-mcb-item",
+	template: MultiComboBoxItemTemplate,
+	styles: [ComboBoxItem.styles, styles],
+	dependencies: [...ComboBoxItem.dependencies, CheckBox],
+})
 class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	/**
 	 * Defines the selected state of the component.
@@ -31,6 +41,14 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 
 	get isMultiComboBoxItem() {
 		return true;
+	}
+
+	_onclick(e: MouseEvent) {
+		if ((e.target as HTMLElement)?.hasAttribute("ui5-checkbox")) {
+			return this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		}
+
+		super._onclick(e);
 	}
 }
 
