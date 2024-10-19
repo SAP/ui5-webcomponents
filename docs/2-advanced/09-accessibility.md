@@ -63,6 +63,46 @@ Theming is an important aspect when it comes to a UI5 Web Components application
 
 For more information regarding the available themes and how to use them, see the [Configuration](../2-advanced/01-configuration.md) section.
 
+### Theme selection according to OS settings
+
+
+The UI5 Web Components framework does not offer a built-in mechanism for selecting themes based on the user's OS settings. However, we recommend using standard APIs to implement OS-based theme selection in applications built with UI5 Web Components.
+
+#### Light | Dark
+
+To synchronize theme switching with the OS's light or dark mode, you can use the [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) CSS Media feature, as shown below:
+
+Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe light/dark themes (Horizon Morning, Horizon Evening, ect.)
+
+```ts
+    import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+	setTheme(darkMode ? "sap_horizon_dark" : "sap_horizon");
+```
+
+#### Contrast 
+
+To switch to a high contrast theme when the OS does, you can use both [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and [forced-colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) CSS Media features, as shown below:
+
+Check `prefers-color-scheme` for `dark` or `light` and  `forced-colors` for `active`
+apply one of the available high contrast themes (Horizon HCW, Horizon HCB, ect.)
+
+```ts
+    import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const contrastMode = window.matchMedia("(forced-colors: active)").matches;
+    const hcb = contrastMode && darkMode;
+
+	setTheme(hcb ? "sap_horizon_hcb" : "sap_horizon_hcw");
+```
+
+**Note:** In addition to detecting contrast mode, you also need to check for light and dark modes via `prefers-color-scheme` to pick between the High Contrast Black and High Contrast White themes.
+
+Although you've learned how to detect OS settings and apply the corresponding theme, we recommend allowing users to decide whether the theme should always match the OS setting by given application settings and not forcing the OS settings by default.
+
 
 ## Accessibility APIs
 
