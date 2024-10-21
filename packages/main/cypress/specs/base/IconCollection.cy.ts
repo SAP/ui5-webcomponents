@@ -1,7 +1,6 @@
 import "./css/redfish.custom.theme.css";
 import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import { html } from "lit";
 import "../../../src/Assets.js";
 import "../../../src/Icon.js";
 
@@ -12,7 +11,7 @@ describe("Icon collection", () => {
 	});
 
 	it("tests the icon collection in built-in themes", () => {
-		cy.mount(html`<ui5-icon name="home"></ui5-icon>`);
+		cy.mount(`<ui5-icon name="home"></ui5-icon>`);
 
 		cy.wrap({ getEffectiveIconCollection })
 			.invoke("getEffectiveIconCollection")
@@ -37,7 +36,7 @@ describe("Icon collection", () => {
 	});
 
 	it("tests the icon collection in built-in themes", () => {
-		cy.mount(html`<ui5-icon name="home"></ui5-icon>`);
+		cy.mount(`<ui5-icon name="home"></ui5-icon>`);
 
 		// act
 		cy.wrap({ setTheme })

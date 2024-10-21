@@ -1,11 +1,10 @@
-import { html } from "lit";
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import "../../src/Button.js";
 
 describe("F6 navigation", () => {
 	describe("F6 Forward navigation", () => {
 		it("tests navigation", () => {
-			cy.mount(html`<div>
+			cy.mount(`<div>
 				<div class="section">
 					<button id="before">Before element</button>
 				</div>
@@ -60,7 +59,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with empty group", () => {
-			cy.mount(html`<div>
+			cy.mount(`<div>
 				<div class="section">
 					<button id="before">Before element</button>
 				</div>
@@ -108,7 +107,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nested groups", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -158,7 +157,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nesting inside empty fastnav-group parent", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -215,7 +214,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with group as a focusable element", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -268,7 +267,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation without a focusable element", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<ui5-button id="first">Before element</ui5-button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -304,7 +303,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with a single group", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -332,7 +331,7 @@ describe("F6 navigation", () => {
 
 	describe("F6 Backward navigation", () => {
 		it("tests navigation", () => {
-			cy.mount(html`<div>
+			cy.mount(`<div>
 				<div class="section">
 					<button id="before">Before element</button>
 				</div>
@@ -387,7 +386,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with empty group", () => {
-			cy.mount(html`<div>
+			cy.mount(`<div>
 				<div class="section">
 					<button id="before">Before element</button>
 				</div>
@@ -435,7 +434,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nested groups", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -485,7 +484,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with nesting inside empty fastnav-group parent", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -542,7 +541,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with group as a focusable element", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -595,7 +594,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation without a focusable element", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<ui5-button id="first">Before element</ui5-button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">
@@ -631,7 +630,7 @@ describe("F6 navigation", () => {
 		});
 
 		it("tests navigation with a single group", () => {
-			cy.mount(html`<div class="section">
+			cy.mount(`<div class="section">
 				<button id="before">Before element</button>
 			</div>
 			<div class="section" data-sap-ui-fastnavgroup="true">

@@ -1,10 +1,9 @@
-import { html } from "lit";
 import "../../src/List.js";
 import type List from "../../src/List.js";
 
 describe("List Tests", () => {
 	it("tests 'loadMore' event fired upon infinite scroll", () => {
-		cy.mount(html`
+		cy.mount(`
 		<ui5-list style="height: 300px;"  growing="Scroll">
 			<ui5-li>Laptop Lenovo</ui5-li>
 			<ui5-li>IPhone 3</ui5-li>

@@ -1,4 +1,3 @@
-import { html } from "lit";
 import "../../../src/Card.js";
 import "../../../src/CardHeader.js";
 
@@ -9,7 +8,7 @@ ignoreCustomElements("my-");
 
 describe("Ignore Custom Elements", () => {
 	it("tests shouldIgnoreCustomElement method", () => {
-		cy.mount(html`<ui5-card>
+		cy.mount(`<ui5-card>
 		<ui5-card-header
 			slot="header"
 			status="4 of 10"

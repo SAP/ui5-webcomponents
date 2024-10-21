@@ -1,11 +1,10 @@
-import { html } from "lit";
 import "../../src/Form.js";
 import "../../src/FormItem.js";
 import "../../src/FormGroup.js";
 
 describe("General API", () => {
 	it("tests calculated state of Form with default layout and label-span", () => {
-		cy.mount(html`<ui5-form class="addressForm" header-text="Default form">
+		cy.mount(`<ui5-form class="addressForm" header-text="Default form">
 			<ui5-form-group header-text="Address">
 				<ui5-form-item>
 					<span slot="labelContent">Name:</span>
@@ -57,7 +56,7 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L3 XL6' and label-span='S12 M4 L4 XL4'", () => {
-		cy.mount(html`<ui5-form class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
+		cy.mount(`<ui5-form class="addressForm" header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
 	<ui5-form-group header-text="Address">
 		<ui5-form-item>
 			<span slot="labelContent">Name:</span>
@@ -109,7 +108,7 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L2 XL3' label-span='S12 M12 L12 XL12'", () => {
-		cy.mount(html`<ui5-form header-text="Labels on top" layout="S1 M2 L2 XL3" label-span="S12 M12 L12 XL12">
+		cy.mount(`<ui5-form header-text="Labels on top" layout="S1 M2 L2 XL3" label-span="S12 M12 L12 XL12">
 	<ui5-form-item>
 		<span slot="labelContent">Name:</span>
 		<input />
@@ -172,7 +171,7 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of two FormGroups in layout='S1 M2 L3 XL4'", () => {
-		cy.mount(html`<ui5-form header-text="WebC :: Supplier 2gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
+		cy.mount(`<ui5-form header-text="WebC :: Supplier 2gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
 	<ui5-form-group id="testFormGroup4" header-text="Address">
 		<ui5-form-item>
 			<span slot="labelContent">Name:</span>
@@ -224,7 +223,7 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of three FormGroups in layout='S1 M2 L3 XL6'", () => {
-		cy.mount(html`<ui5-form header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
+		cy.mount(`<ui5-form header-text="WebC :: Supplier 3gr (S1 M2 L3 XL6)" layout="S1 M2 L3 XL6">
 	<ui5-form-group id="testFormGroup1" header-text="Address">
 		<ui5-form-item>
 			<span slot="labelContent">Name:</span>
@@ -309,7 +308,7 @@ describe("General API", () => {
 	});
 
 	it("tests calculated state of three FormGroups in layout='S1 M2 L3 XL4'", () => {
-		cy.mount(html`<ui5-form header-text="WebC :: Supplier 3gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
+		cy.mount(`<ui5-form header-text="WebC :: Supplier 3gr (S1 M2 L3 XL4)" layout="S1 M2 L3 XL4">
 	<ui5-form-group id="testFormGroup6" header-text="Address">
 		<ui5-form-item>
 			<span slot="labelContent">Name:</span>

@@ -1,4 +1,3 @@
-import { html } from "lit";
 import "../../src/ResponsivePopover.js";
 import "../../src/Button.js";
 import "../../src/Input.js";
@@ -9,7 +8,7 @@ describe("ResponsivePopover mobile general interaction", () => {
 	});
 
 	it("tests opening a popover from a responsive popover", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open me</ui5-button>
+		cy.mount(`<ui5-button id="btnOpen">Open me</ui5-button>
 		<ui5-responsive-popover open opener="btnOpen"></ui5-responsive-popover>`);
 
 		cy.get("[ui5-responsive-popover]")
@@ -25,7 +24,7 @@ describe("Accessibility", () => {
 	});
 
 	it("tests accessible-role - Default", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open me</ui5-button>
+		cy.mount(`<ui5-button id="btnOpen">Open me</ui5-button>
 		<ui5-responsive-popover open opener="btnOpen"></ui5-responsive-popover>`);
 
 		cy.get("[ui5-responsive-popover]")
@@ -44,7 +43,7 @@ describe("Accessibility", () => {
 	});
 
 	it("tests accessible-role - AlertDialog", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open me</ui5-button>
+		cy.mount(`<ui5-button id="btnOpen">Open me</ui5-button>
 		<ui5-responsive-popover open opener="btnOpen" accessible-role="AlertDialog"></ui5-responsive-popover>`);
 
 		cy.get("[ui5-responsive-popover]")
@@ -63,7 +62,7 @@ describe("Accessibility", () => {
 	});
 
 	it("tests accessible-role - None", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open me</ui5-button>
+		cy.mount(`<ui5-button id="btnOpen">Open me</ui5-button>
 		<ui5-responsive-popover open opener="btnOpen" accessible-role="None"></ui5-responsive-popover>`);
 
 		cy.get("[ui5-responsive-popover]")
@@ -82,7 +81,7 @@ describe("Accessibility", () => {
 	});
 
 	it("tests initial focus", () => {
-		cy.mount(html`<ui5-button id="btnOpen">Open me</ui5-button>
+		cy.mount(`<ui5-button id="btnOpen">Open me</ui5-button>
 		<ui5-responsive-popover open opener="btnOpen" initial-focus="emailInput">
 			<ui5-input id="emailInput"></ui5-input>
 		</ui5-responsive-popover>`);

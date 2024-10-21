@@ -1,10 +1,9 @@
-import { html } from "lit";
 import "../../../src/Label.js";
 import "../../../src/Input.js";
 
 describe("AriaLabelHelper", () => {
 	it("Label-for tests", () => {
-		cy.mount(html`
+		cy.mount(`
 			<ui5-input id="myInput" placeholder="input placeholder" class="field"></ui5-input>
 			<ui5-label id="lblDesc1" for="myInput">Desc1</ui5-label>
 			<ui5-label id="lblDesc2" for="myInput">Desc2</ui5-label>
@@ -33,7 +32,7 @@ describe("AriaLabelHelper", () => {
 	});
 
 	it("Input accessibleNameRef Tests", () => {
-		cy.mount(html`
+		cy.mount(`
             <ui5-label id="lblEnterName1">FirstDesc</ui5-label>
             <ui5-label id="lblEnterName2">SecondDesc</ui5-label>
             <ui5-label id="lblEnterName3">ThirdDesc</ui5-label>
@@ -80,7 +79,7 @@ describe("AriaLabelHelper", () => {
 	});
 
 	it("Input accessibleName and accessibleNameRef Tests", () => {
-		cy.mount(html`
+		cy.mount(`
 			<ui5-label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</ui5-label>
 			<ui5-label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</ui5-label>
 			<ui5-input id="inputEnterDesc" accessible-name="Some description added by accessibleName" placeholder="Enter description"></ui5-input>
@@ -157,7 +156,7 @@ describe("AriaLabelHelper", () => {
 	});
 
 	it("Three inputs with same label accessibleNameRef Tests", () => {
-		cy.mount(html`
+		cy.mount(`
 			<ui5-label id="lblTestDesc" for="testInput1">Label for testInput1 Desc</ui5-label>
 			<ui5-input id="testInput1" placeholder="Enter description1"></ui5-input>
 			<ui5-input id="testInput2" accessible-name-ref="lblTestDesc" accessible-name="Hello" placeholder="Enter description2"></ui5-input>
@@ -235,7 +234,7 @@ describe("AriaLabelHelper", () => {
 	});
 
 	it("Tests generic html elements with for attribute", () => {
-		cy.mount(html`
+		cy.mount(`
 			<label id="elId1" for="myInput2">Desc1</label>
 			<label id="elId2" for="myInput2">Desc2</label>
 			<ui5-input id="myInput2" placeholder="input placeholder"></ui5-input>

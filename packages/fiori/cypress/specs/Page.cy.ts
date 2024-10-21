@@ -1,11 +1,10 @@
-import { html } from "lit";
 import "../../src/Page.js";
 import "@ui5/webcomponents/dist/Bar.js";
 import "@ui5/webcomponents/dist/Button.js";
 
 describe("Page general interaction", () => {
 	beforeEach(() => {
-		cy.mount(html`
+		cy.mount(`
 <ui5-page style="height: 300px;" show-footer>
 	<ui5-bar slot="header">
 		<ui5-button slot="startContent">Header button</ui5-button>
