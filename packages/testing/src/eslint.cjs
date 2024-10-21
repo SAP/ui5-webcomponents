@@ -1,4 +1,4 @@
-export default [{
+module.exports = [{
 	"files": ["**/cypress/**/*.ts"],
 
 	"plugins": [

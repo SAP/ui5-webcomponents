@@ -16,30 +16,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SAP/ui5-webcomponents.git",
-    "directory": "packages/tools"
+    "directory": "packages/testing"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
     "cypress": "^13.11.0",
     "cypress-real-events": "^1.12.0",
     "eslint": "^7.22.0",
-    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-cypress": "^3.4.0",
-    "eslint-plugin-import": "^2.22.1",
     "vite": "^5.4.8"
-  },
-  "peerDependencies": {
-    "chromedriver": "*",
-    "typescript": "^5.6.2"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    }
-  },
-  "devDependencies": {
-    "cypress-ct-lit": "^0.4.0",
-    "cypress-real-events": "^1.12.0"
   }
 }
