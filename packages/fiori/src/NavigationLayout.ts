@@ -103,6 +103,10 @@ class NavigationLayout extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onBeforeRendering() {
+		if (isPhone()) {
+			return;
+		}
+
 		const sideNavigation = this.sideContent[0] as SideNavigation;
 
 		if (sideNavigation) {
