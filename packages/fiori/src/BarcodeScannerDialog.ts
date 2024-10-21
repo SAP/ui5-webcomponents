@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
@@ -131,6 +132,34 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 })
 
 class BarcodeScannerDialog extends UI5Element {
+	/**
+	 * Defines the header HTML Element.
+	 *
+	 * **Note:** If `header` slot is provided, the labelling of the dialog is a responsibility of the application developer.
+	 * `accessibleName` should be used.
+	 *
+	 * @public
+	 * @since 2.4.0
+	 */
+	@slot()
+	header!: Array<HTMLElement>;
+
+	/**
+	 * Defines the footer HTML Element.
+	 *
+	 * **Note:** When you provide custom content for the `footer` slot, the default close button is not rendered.
+	 * This means you need to include your own mechanism within the custom `footer` to close the dialog,
+	 * such as a button with an event listener that closes the dialog.
+	 *
+	 * **Note:** If the `footer` slot is not provided, a default footer with a close button will be rendered automatically,
+	 * allowing users to close the dialog without any additional implementation.
+	 *
+	 * @public
+	 * @since 2.4.0
+	 */
+	@slot()
+	footer!: Array<HTMLElement>;
+
 	/**
 	 * Indicates whether the dialog is open.
 	 *
