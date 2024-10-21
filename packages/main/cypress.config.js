@@ -1,4 +1,4 @@
-import "@ui5/webcomponents-testing/src/cypress/support/component.js";
+import cypressConfig from "@ui5/webcomponents-testing/src/cypress.config.js";
 import path from "path";
 import { fileURLToPath } from "node:url";
 
