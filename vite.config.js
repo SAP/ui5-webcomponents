@@ -93,6 +93,8 @@ const customResolver = (id, source, options) => {
 	}
 }
 
+console.log("=============", "asdasdasd")
+
 export default defineConfig(async () => {
 	return {
 		build: {
