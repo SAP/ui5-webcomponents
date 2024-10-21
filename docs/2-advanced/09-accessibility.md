@@ -87,16 +87,17 @@ Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe
 To switch to a high contrast theme when the OS does, you can use both [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and [forced-colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) CSS Media features, as shown below:
 
 Check `prefers-color-scheme` for `dark` or `light` and  `forced-colors` for `active`
-apply one of the available high contrast themes (Horizon HCW, Horizon HCB, ect.)
+and apply one of the available high contrast themes (Horizon HCW, Horizon HCB, ect.)
 
 ```ts
     import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 	const contrastMode = window.matchMedia("(forced-colors: active)").matches;
-    const hcb = contrastMode && darkMode;
 
-	setTheme(hcb ? "sap_horizon_hcb" : "sap_horizon_hcw");
+	if (contrastMode) {
+        setTheme(hcb ? "sap_horizon_hcb" : "sap_horizon_hcw");
+    }
 ```
 
 **Note:** In addition to detecting contrast mode, you also need to check for light and dark modes via `prefers-color-scheme` to pick between the High Contrast Black and High Contrast White themes.
