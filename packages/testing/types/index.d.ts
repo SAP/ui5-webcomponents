@@ -1,1 +1,1 @@
-import "../components-package/cypress/support/component"
+import "../src/cypress/support/component"
