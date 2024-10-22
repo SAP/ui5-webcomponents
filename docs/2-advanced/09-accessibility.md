@@ -63,14 +63,14 @@ Theming is an important aspect when it comes to a UI5 Web Components application
 
 For more information regarding the available themes and how to use them, see the [Configuration](../2-advanced/01-configuration.md) section.
 
-### Theme selection according to OS settings
+### Theme Selection According to OS Settings
 
 
-The UI5 Web Components framework does not offer a built-in mechanism for selecting themes based on the user's OS settings. However, we recommend using standard APIs to implement OS-based theme selection in applications built with UI5 Web Components.
+The UI5 Web Components framework does not offer a built-in mechanism for selecting themes based on the users' OS settings. However, we recommend using standard APIs to implement OS-based theme selection in applications built with UI5 Web Components.
 
 #### Light | Dark
 
-To synchronize theme switching with the OS's light or dark mode, you can use the [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) CSS Media feature, as shown below:
+To synchronize theme switching with the OS's light or dark mode, you can use the [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) CSS Media feature, as shown in the next example:
 
 Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe light/dark themes (Horizon Morning, Horizon Evening, ect.)
 
@@ -84,7 +84,7 @@ Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe
 
 #### Contrast 
 
-To switch to a high contrast theme when the OS does, you can use [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme), [forced-colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) CSS Media features (detecting Windows High Contrast mode) and  [prefers-contrast](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast) (detecting MacOS contrast preferences), as shown below:
+To switch to a high contrast theme when the OS does, you can use [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme), [forced-colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) CSS Media features (detecting Windows High Contrast mode) and  [prefers-contrast](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast) (detecting MacOS contrast preferences), as shown in the next example:
 
 Check `prefers-color-scheme` for `dark` or `light`,  `forced-colors` for `active` and `prefers-contrast` for `more`, and apply one of the available high contrast themes (Horizon High Contrast White or Horizon High Contrast Black)
 
@@ -128,8 +128,7 @@ Here is the full solution, listening for changes of the OS settings and consider
     applyOSThemePreferences();
 ```
 
-Although you've learned how to detect OS settings and apply the corresponding theme, we recommend allowing users to decide whether the theme should always match the OS setting by given application settings and not forcing the OS settings by default.
-
+Although you've learned how to detect OS settings and apply the corresponding theme, we recommend allowing users to decide whether the theme should always match the OS setting OS settings by providing application settings and not forcing the OS settings by default.
 
 ## Accessibility APIs
 
