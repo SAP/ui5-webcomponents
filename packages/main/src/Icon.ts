@@ -13,6 +13,7 @@ import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTempla
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import type IconDesign from "./types/IconDesign.js";
 import IconMode from "./types/IconMode.js";
+import type { JSX } from "@ui5/webcomponents-base";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
@@ -113,6 +114,7 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 @event("click", {
 	bubbles: true,
 })
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
@@ -314,6 +316,18 @@ class Icon extends UI5Element implements IIcon {
 	get hasIconTooltip() {
 		return this.showTooltip && this.effectiveAccessibleName;
 	}
+}
+
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+
+// JSX support
+interface IconEvents {
+	onTabChange2: () => void
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+interface Icon {
+	_jsxProps: JSX.HTMLAttributes & ElementProps<Icon> & Partial<IconEvents>;
 }
 
 Icon.define();

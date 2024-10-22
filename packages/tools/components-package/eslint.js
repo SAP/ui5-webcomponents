@@ -121,6 +121,7 @@ module.exports = {
 		"curly": [2, "all"],
 		// "default-case": 1, // removed for UI5 WebComponents
 		"import/extensions": ["error", "always"], // override for UI5 WebComponents
+		"import/order": "off",
 		"no-alert": 2,
 		"no-caller": 2,
 		"no-div-regex": 2,

@@ -4,7 +4,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isEnter,
@@ -12,7 +13,7 @@ import {
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -26,10 +27,12 @@ import {
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
+import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import type { JSX } from "@ui5/webcomponents-base";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
-import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
+import ButtonTemplate from "./ButtonTemplate.js";
 import Icon from "./Icon.js";
 import IconMode from "./types/IconMode.js";
 
@@ -86,8 +89,8 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	tag: "ui5-button",
 	formAssociated: true,
 	languageAware: true,
-	renderer: litRender,
-	template: ButtonTemplate,
+	renderer: jsxRender,
+	template: ButtonTemplate as unknown as TemplateFunction,
 	styles: buttonCss,
 	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },
@@ -319,7 +322,7 @@ class Button extends UI5Element implements IButton {
 
 	_deactivate: () => void;
 
-	_ontouchstart: PassiveEventListenerObject;
+	// _ontouchstart: JSX.TouchEventHandler<HTMLButtonElement>;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -338,20 +341,32 @@ class Button extends UI5Element implements IButton {
 			isGlobalHandlerAttached = true;
 		}
 
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			markEvent(e, "button");
+		// const handleTouchStartEvent = (e: TouchEvent) => {
+		// 	markEvent(e, "button");
 
-			if (this.nonInteractive) {
-				return;
-			}
+		// 	if (this.nonInteractive) {
+		// 		return;
+		// 	}
 
-			this._setActiveState(true);
-		};
+		// 	this._setActiveState(true);
+		// };
 
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
+		// this._ontouchstart = {
+		// 	handleEvent: handleTouchStartEvent,
+		// 	passive: true,
+		// };
+	}
+
+	// @bound
+	@bound
+	_ontouchstart(e: TouchEvent) {
+		markEvent(e, "button");
+
+		if (this.nonInteractive) {
+			return;
+		}
+
+		this._setActiveState(true);
 	}
 
 	onEnterDOM() {
@@ -368,6 +383,7 @@ class Button extends UI5Element implements IButton {
 		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
+	@bound
 	_onclick(e: MouseEvent) {
 		if (this.nonInteractive) {
 			return;
@@ -387,6 +403,7 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onmousedown(e: MouseEvent) {
 		if (this.nonInteractive) {
 			return;
@@ -397,6 +414,7 @@ class Button extends UI5Element implements IButton {
 		activeButton = this; // eslint-disable-line
 	}
 
+	@bound
 	_ontouchend(e: TouchEvent) {
 		if (this.disabled) {
 			e.preventDefault();
@@ -412,10 +430,12 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onmouseup(e: MouseEvent) {
 		markEvent(e, "button");
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		this._cancelAction = isShift(e) || isEscape(e);
 		markEvent(e, "button");
@@ -427,6 +447,7 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this._cancelAction) {
 			e.preventDefault();
@@ -443,6 +464,7 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onfocusout() {
 		if (this.nonInteractive) {
 			return;
@@ -453,6 +475,7 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent) {
 		if (this.nonInteractive) {
 			return;
@@ -481,7 +504,7 @@ class Button extends UI5Element implements IButton {
 
 	get iconMode() {
 		if (!this.icon) {
-			return "";
+			return undefined;
 		}
 
 		return IconMode.Decorative;
@@ -489,7 +512,7 @@ class Button extends UI5Element implements IButton {
 
 	get endIconMode() {
 		if (!this.endIcon) {
-			return "";
+			return undefined;
 		}
 
 		return IconMode.Decorative;
@@ -519,8 +542,8 @@ class Button extends UI5Element implements IButton {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
-	get effectiveAccRole() {
-		return this.accessibleRole.toLowerCase();
+	get effectiveAccRole(): JSX.AriaRole {
+		return this.accessibleRole.toLowerCase() as "button" | "link";
 	}
 
 	get tabIndexValue() {
@@ -531,10 +554,10 @@ class Button extends UI5Element implements IButton {
 		const tabindex = this.getAttribute("tabindex");
 
 		if (tabindex) {
-			return tabindex;
+			return Number.parseInt(tabindex);
 		}
 
-		return this.nonInteractive ? "-1" : this.forcedTabIndex;
+		return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
 	}
 
 	get showIconTooltip() {
