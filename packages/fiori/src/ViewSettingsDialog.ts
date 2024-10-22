@@ -566,7 +566,24 @@ class ViewSettingsDialog extends UI5Element {
 			return filter;
 		});
 
+		this._setSelectedProp(e);
+
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+	}
+
+	/**
+	 * Sets the selected property of the clicked item.
+	 * @param e
+	 * @private
+	 */
+	_setSelectedProp(e: CustomEvent<ListItemClickEventDetail>) {
+		this.filterItems.forEach(filterItem => {
+			filterItem.values.forEach(option => {
+				if (option.text === e.detail.item.innerText) {
+					option.selected = !option.selected;
+				}
+			});
+		});
 	}
 
 	_navigateToFilters() {
@@ -622,13 +639,15 @@ class ViewSettingsDialog extends UI5Element {
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
 			sortBy = _currentSortBySelected && (_currentSortBySelected.text || ""),
 			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
-			sortByItem = this.sortItems[sortByElementIndex];
+			sortByItem = this.sortItems[sortByElementIndex],
+			selectedFilterItems = this.filterItems.filter(filterItem => filterItem.values.some(item => item.selected));
 		return {
 			sortOrder,
 			sortDescending,
 			sortBy,
 			sortByItem,
 			filters: this.selectedFilters,
+			filterItems: selectedFilterItems,
 		};
 	}
 
