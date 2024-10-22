@@ -151,7 +151,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * This means you need to include your own mechanism within the custom `footer` to close the dialog,
 	 * such as a button with an event listener that closes the dialog.
 	 *
-	 * **Note:** If the `footer` slot is not provided, a default footer with a close button will be rendered automatically,
+	 * **Note:** If the `footer` slot is not provided, a default footer with a close button is rendered automatically,
 	 * allowing users to close the dialog without any additional implementation.
 	 *
 	 * @public
