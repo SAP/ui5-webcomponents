@@ -53,7 +53,7 @@
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.17",
     "@ui5/webcomponents-tools": "2.4.0-rc.1",
-    "chromedriver": "^130.0.0",
+    "chromedriver": "^129.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",
