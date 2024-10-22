@@ -1,6 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { JSX } from "@ui5/webcomponents-base";
 
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
@@ -60,12 +62,13 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Override of the handler in order to prevent button toggle functionality
 	 */
+	@bound
 	_onclick() {}
 
 	/**
 	 * Override
 	 */
-	get effectiveAccRole() {
+	get effectiveAccRole(): JSX.AriaRole {
 		return "spinbutton";
 	}
 }

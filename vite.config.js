@@ -11,6 +11,13 @@ const toPosixPath = (pathStr) => {
 }
 
 const customResolver = (id, source, options) => {
+	// jsx-dev-runtime should be resolved as a .ts file so all of its imports are also fetched as .ts files
+	if (id === "@ui5/webcomponents-base/jsx-dev-runtime") {
+		console.log("jsx-dev-runtime.js");
+		const importerRoot = source.replace(/packages\/.*/, "packages");
+		const resolved = join(importerRoot, "base/src", "jsx-dev-runtime.ts");
+		return resolved;
+	}
 	const isIconImporter = source.includes("packages/icons") || source.includes("packages/icons-tnt/") || source.includes("packages/icons-business-suite/")
 	if (isIconImporter && id.startsWith("@ui5/webcomponents-base/dist")) {
 		const importerRoot = source.replace(/packages\/icons.*/, "packages");
