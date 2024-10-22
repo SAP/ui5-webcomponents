@@ -17,7 +17,7 @@ import {
 	isEscape,
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -103,12 +103,13 @@ type StepInputValueStateChangeEventDetail = {
  * Fired when the input operation has finished by pressing Enter or on focusout.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
- * @allowPreventDefault
  * @since 1.23.0
  * @public
  * @param {string} valueState The new `valueState` that will be set.
@@ -129,6 +130,8 @@ type StepInputValueStateChangeEventDetail = {
 			type: Boolean,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	/**
@@ -287,6 +290,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	_initialValueState?: `${ValueState}`;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
@@ -295,10 +299,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue(): FormData | string | null {
 		return this.value.toString();
-	}
-
-	static async onDefine() {
-		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get type() {
@@ -423,10 +423,10 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 		this.valueState = isValid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
+		const eventPrevented = !this.fireDecoratorEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
 			valueState: this.valueState,
 			valid: isValid,
-		}, true);
+		});
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;
@@ -441,7 +441,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_fireChangeEvent() {
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change", { value: this.value });
 		}
 	}
 

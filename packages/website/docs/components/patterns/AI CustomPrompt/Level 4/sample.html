@@ -12,8 +12,11 @@
 <body style="background-color: var(--sapBackgroundColor); height: fit-content;">
 
 	<div id="app">
- 
-		<ui5-title>AI Pattern / Level 3</ui5-title>
+		<ui5-button id="simSucc">Simulate Success</ui5-button>
+		<ui5-button id="simError">Simulate Error</ui5-button>
+		<ui5-button id="simWarn">Simulate Warning</ui5-button>
+	
+		<ui5-title>AI Pattern / Level 4</ui5-title>
 		
 		<ui5-panel>
 			<div slot="header" id="panelHeader">
@@ -45,10 +48,9 @@
 						<ui5-menu-item text="Option 2"></ui5-menu-item>
 						<ui5-menu-item text="Option 3"></ui5-menu-item>
 					</ui5-menu-item>
-					<ui5-menu-item text="Text Length">
-						<ui5-menu-item text="Short"></ui5-menu-item>
-						<ui5-menu-item text="Medium"></ui5-menu-item>
-						<ui5-menu-item text="Long"></ui5-menu-item>
+					<ui5-menu-item text="Adjust Length">
+						<ui5-menu-item text="Shorten text"></ui5-menu-item>
+						<ui5-menu-item text="Lengthen text"></ui5-menu-item>
 					</ui5-menu-item>
 					<ui5-menu-item text="Bulleted List"></ui5-menu-item>
 					<ui5-menu-item text="Translate">
@@ -57,6 +59,16 @@
 						<ui5-menu-item text="Spanish"></ui5-menu-item>
 					</ui5-menu-item>
 				</ui5-menu>
+	
+				<ui5-button id="feedbackOpener" end-icon="feedback">Give Feedback</ui5-button>
+	
+				<ui5-dialog id="dialog" header-text="Please give us your feedback">
+					<ui5-textarea></ui5-textarea>
+					<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
+						<div style="flex: 1;"></div>
+						<ui5-button class="dialogCloser" design="Emphasized">Submit</ui5-button>
+					</div>
+				</ui5-dialog>
 			</div>
 			<div id="panelContent">
 				<div id="panelContentFirstRow">
@@ -74,7 +86,13 @@
 				</ui5-toolbar>
 			</div>
 		</ui5-panel>
-	</div>	
+	
+		<ui5-message-strip hidden id="succStrip" design="Positive">Prompt Response Successful</ui5-message-strip>
+		<ui5-message-strip hidden id="errStrip" design="Negative">Error occurred while trying to receive response</ui5-message-strip>
+		<ui5-message-strip hidden id="warnStrip" design="Critical">Please use respectful language</ui5-message-strip>
+		
+		<ui5-textarea id="responseTextArea" rows="15" readonly placeholder="Awaiting response..."></ui5-textarea>
+	</div>
 
 	<!-- playground-fold -->
 	<script type="module" src="main.js"></script>

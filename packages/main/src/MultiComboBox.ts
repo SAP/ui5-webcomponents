@@ -43,7 +43,7 @@ import {
 	isFirefox,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -211,33 +211,40 @@ type MultiComboboxItemWithSelection = {
  * Fired when the input operation has finished by pressing Enter or on focusout.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke or clear icon is pressed.
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * Fired when the dropdown is opened.
  * @since 2.0.0
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired when the dropdown is closed.
  * @since 2.0.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 
 /**
  * Fired when selection is changed by user interaction.
  * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
- * @allowPreventDefault
  */
 @event<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 	detail: {
@@ -246,6 +253,8 @@ type MultiComboboxItemWithSelection = {
 		 */
 		items: { type: Array<IMultiComboBoxItem> },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 class MultiComboBox extends UI5Element implements IFormInputElement {
@@ -497,8 +506,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_isOpenedByKeyboard?: boolean;
 	_itemToFocus?: IMultiComboBoxItem;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
-	_tokenCount: number | undefined;
 	selectedItems: Array<IMultiComboBoxItem>;
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -580,13 +589,13 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		this._shouldFilterItems = true;
 		this.valueBeforeAutoComplete = value;
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_inputChange() {
 		if (!this._clearingValue && this._lastValue !== this.value) {
 			this._lastValue = this.value;
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 	}
 
@@ -703,11 +712,10 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			}
 		}
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
-		this._tokenCount = this._tokenizer.tokens.length - e.detail.tokens.length;
 		this._previouslySelectedItems = this._getSelectedItems();
 		const token: Token[] = e.detail.tokens;
 		const deletingItems = this._getItems().filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
@@ -1391,7 +1399,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._getResponsivePopover().focus();
 		}
 
-		this.fireEvent(action);
+		this.fireDecoratorEvent(action);
 
 		this._previouslySelectedItems = this._getSelectedItems();
 		this._isOpenedByKeyboard = false;
@@ -1464,7 +1472,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				}
 			}
 
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 			return;
 		}
 
@@ -1482,12 +1490,12 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	fireSelectionChange() {
-		const changePrevented = !this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
+		const changePrevented = !this.fireDecoratorEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
 			items: this._getSelectedItems(),
-		}, true);
+		});
 
 		// Angular 2 way data binding
-		this.fireEvent("value-changed");
+		this.fireDecoratorEvent("value-changed");
 
 		return changePrevented;
 	}
@@ -1529,7 +1537,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._tokenizer.expanded = false;
 		}
 
-		this.fireEvent(action);
+		this.fireDecoratorEvent(action);
 
 		this._iconPressed = false;
 		this._preventTokenizerToggle = false;
@@ -1676,7 +1684,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_clear() {
 		this.value = "";
 		this._inputDom.value = "";
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 
 		if (!this._isPhone) {
 			this.focus();
@@ -1894,8 +1902,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		this._tokenCount = this._tokenCount !== undefined ? this._tokenCount : this._tokenizer.tokens.length;
-		return getTokensCountText(this._tokenCount);
+		return getTokensCountText(this.selectedValues.length);
 	}
 
 	get _tokensCountTextId() {
@@ -2042,10 +2049,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 		};
-	}
-
-	static async onDefine() {
-		MultiComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

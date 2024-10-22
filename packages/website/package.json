@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-website",
-  "version": "2.3.0-rc.1",
+  "version": "2.4.0-rc.1",
   "private": true,
   "scripts": {
     "generate-local-cdn": "rimraf ./local-cdn && node ./build-scripts/local-cdn.mjs",
@@ -49,7 +49,7 @@
     "@docusaurus/types": "3.1.1",
     "copy-and-watch": "^0.1.5",
     "dotenv-cli": "^7.4.1",
-    "typescript": "~5.2.2"
+    "typescript": "~5.6.2"
   },
   "browserslist": {
     "production": [

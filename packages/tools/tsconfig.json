@@ -11,6 +11,6 @@
 		"sourceMap": true,
 		"inlineSources": true,
 		"strict": true,
-		"moduleResolution": "node"
+		"moduleResolution": "node",
 	}
 }

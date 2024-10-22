@@ -47,8 +47,12 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * click/tap or by using the Enter or Space key.
  * @public
  */
-@event("click")
-@event("_focused")
+@event("click", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
 class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	/**
 	 * Defines the title of the component.
@@ -192,11 +196,11 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireEvent("_focused", e);
+		this.fireDecoratorEvent("_focused", e);
 	}
 
 	_fireItemClick() {
-		this.fireEvent("click", { item: this });
+		this.fireDecoratorEvent("click", { item: this });
 	}
 }
 

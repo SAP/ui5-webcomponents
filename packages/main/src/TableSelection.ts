@@ -56,7 +56,9 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  *
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class TableSelection extends UI5Element implements ITableFeature {
 	/**
@@ -191,7 +193,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	_informRowSelectionChange(row: TableRow) {
 		const isRowSelected = this.isMultiSelect() ? !this.isSelected(row) : true;
 		this._selectRow(row, isRowSelected);
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	_informHeaderRowSelectionChange() {
@@ -202,7 +204,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
 		});
 		this.selectedAsSet = selectedSet;
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	_invalidateTableAndRows() {
@@ -357,7 +359,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			}, selectionChanged) || false;
 		}
 
-		selectionChanged && this._fireEvent("change");
+		selectionChanged && this.fireDecoratorEvent("change");
 	}
 
 	_stopRangeSelection() {

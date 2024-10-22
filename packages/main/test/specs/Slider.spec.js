@@ -6,33 +6,34 @@ describe("Slider basic interactions", () => {
 		await browser.url(`test/pages/Slider.html`);
 
 		const slider = await browser.$("#basic-slider");
+		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
 
-		assert.strictEqual((await sliderHandle.getCSSProperty("left")).value, "0px", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
+		assert.strictEqual((await sliderHandleContainer.getCSSProperty("left")).value, "0px", "Initially if no value is set, the Slider handle is at the beginning of the Slider");
 
 		await browser.setWindowSize(1257, 2000);
 		await slider.setProperty("value", 3);
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 30%;", "Slider handle should be 30% from the start");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "left: 30%;", "Slider handle should be 30% from the start");
 
 		await slider.click();
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 50%;", "Slider handle should be in the middle of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "left: 50%;", "Slider handle should be in the middle of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 5, "Slider current value should be 5");
 
 		await sliderHandle.dragAndDrop({ x: 300, y: 1 });
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be 80% from the start of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "left: 80%;", "Slider handle should be 80% from the start of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 
 		await sliderHandle.dragAndDrop({ x: 100, y: 1 });
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 90%;", "Slider handle should be 90% from the start");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "left: 90%;", "Slider handle should be 90% from the start");
 		assert.strictEqual(await slider.getProperty("value"), 9, "Slider current value should be 9");
 
 		await sliderHandle.dragAndDrop({ x:-100, y: 1 });
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "left: 80%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "left: 80%;", "Slider handle should be at the end of the slider and not beyond its boundaries");
 		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 	});
 
@@ -100,7 +101,7 @@ describe("Properties synchronization and normalization", () => {
 		assert.strictEqual((await slider.getProperty("_labels"))[0], "-20", "Initial slider start label is -20.");
 		assert.strictEqual((await slider.getProperty("_labels"))[labelLength - 1], "20", "Initial slider end label is 20.");
 
-		// simulate the synchronous update of min and max made programatically 
+		// simulate the synchronous update of min and max made programatically
 		await browser.executeAsync(done => {
 			const slider = document.getElementById("slider-tickmarks-labels");
 			slider.min = 0;
@@ -157,6 +158,16 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual(await sliderTooltipValue.getText(), "2", "Slider tooltip should display value of 2");
 	});
 
+	it("Tooltip input is displayed showing the current value", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+
+		await slider.setProperty("value", 8);
+		const sliderTooltipInputValue = await sliderTooltipInput.getProperty("value");
+
+		assert.strictEqual(await sliderTooltipInputValue, "8", "Slider input has the correct value");
+	});
+
 	it("Slider Tooltip should become visible when slider is focused", async () => {
 		const slider = await browser.$("#basic-slider-with-tooltip");
 		const sliderTooltip = await slider.shadow$(".ui5-slider-tooltip");
@@ -173,6 +184,134 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		// slider is focused
 		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
 		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "visible", "Slider tooltip should be shown");
+	});
+
+	it("Slider Tooltip should not be closed on focusout if input tooltip is clicked", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+
+		await slider.click();
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+		
+		await sliderTooltipInput.click();
+
+		assert.strictEqual(await sliderTooltipInput.getProperty("focused"), true, "The tooltip is not closed and the input is focused");
+	});
+
+	it("Input tooltip value change should change the slider's value", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
+		await slider.setProperty("value", 1);
+
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["2"]);
+		await browser.keys("Enter");
+
+		assert.strictEqual(await slider.getProperty("value"), 21, "The input value is reflected in the slider");
+	});
+
+	it("Input tooltip value change should fire change event", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const eventResultSlider = await browser.$("#test-result-slider");
+
+		await slider.setProperty("value", 1);
+		await eventResultSlider.setProperty("value", 1);
+
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["2"]);
+		await browser.keys("Enter");
+
+		assert.strictEqual(await slider.getProperty("value"), 21, "The input value is reflected in the slider");
+		assert.strictEqual(await eventResultSlider.getProperty("value") , 3, "'input' and 'change' events are fired on input 'change' and 'input' events");
+	});
+
+	it("Input tooltip should change the value state to error if it is invalid", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
+		await slider.setProperty("value", 16);
+		await sliderTooltipInput.setProperty("value", "");
+
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["1", "2", "3"]);
+		await browser.keys("Enter");
+
+		assert.strictEqual(await sliderTooltipInput.getProperty("valueState"), "Negative", "Value state is changed to negative when the value is invalid");
+	});
+
+	it("F2 should switch the focus between the handle and the tooltip input", async () => {
+		await browser.url(`test/pages/Slider.html`);
+
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
+		await sliderHandle.click();
+		await browser.keys("F2");
+
+		assert.strictEqual(await sliderTooltipInput.getProperty("focused"), true, "The focus is on the input");
+
+		await browser.keys("F2");
+
+		const isHandleFocused = await browser.executeAsync(done => {
+			const focusedElement = document.getElementById("slider-tickmarks-labels").shadowRoot.activeElement;
+			const isHandleFocused = focusedElement.classList.contains("ui5-slider-handle");
+			done(isHandleFocused);
+		});
+
+		assert.strictEqual(isHandleFocused, true, "The focus is on the handle");
+	});
+
+	it("Arrow up/down should not increase/decrease the value of the input", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+
+		await slider.setProperty("value", 1);
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+
+		await browser.keys("ArrowUp");
+
+		assert.strictEqual(await slider.getProperty("value"), 1, "The value is not changed on arrow up");
+		
+		await browser.keys("ArrowDown");
+
+		assert.strictEqual(await slider.getProperty("value"), 1, "The value is not changed on arrow down");
+	});
+
+	it("Tab on slider handle should not move the focus to the tooltip input", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const nextSlider = await browser.$("#slider-tickmarks-tooltips-labels");
+
+		await sliderHandle.click();
+		await browser.keys("Tab");
+
+		assert.strictEqual(await nextSlider.isFocused(), true, "The next component is focused and not the tooltip input");
+	});
+
+	it("Focus out with invalid value should reset it", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+		const nextSlider = await browser.$("#slider-tickmarks-tooltips-labels");
+
+		await slider.setProperty("value", 10);
+		await sliderHandle.click();
+		await sliderTooltipInput.click();
+		await browser.keys(["1", "2", "3"]);
+
+		await nextSlider.click();
+		assert.strictEqual(await sliderTooltipInput.getProperty("value"), "10", "Value is reset to the last valid one");
 	});
 
 	it("Slider Tooltip should stay visible when slider is focused and mouse moves away", async () => {
@@ -210,6 +349,21 @@ describe("Slider elements - tooltip, step, tickmarks, labels", () => {
 		assert.strictEqual((await sliderTooltip.getCSSProperty("visibility")).value, "hidden", "Slider tooltip should be shown");
 	});
 
+	it("Input tooltip should become hidden when input is looses focus", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const anotherSlider = await browser.$("#basic-slider");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+
+		await slider.click();
+		await sliderTooltipInput.click();
+
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "visible", "Slider tooltip visibility property should be 'visible'");
+
+		await anotherSlider.click();
+
+		assert.strictEqual(await slider.getProperty("_tooltipVisibility"), "hidden", "Slider tooltip visibility property should be 'visible'");
+	});
+
 	it("Slider have correct number of labels and tickmarks based on the defined step and labelInterval properties", async () => {
 		const slider = await browser.$("#slider-tickmarks-tooltips-labels");
 		const labelsContainer = await slider.shadow$(".ui5-slider-labels");
@@ -233,6 +387,7 @@ describe("Testing events", () => {
 		const slider = await browser.$("#test-slider");
 		const eventResultSlider = await browser.$("#test-result-slider");
 
+		await eventResultSlider.setProperty("value", 1);
 		await slider.click();
 
 		assert.strictEqual(await eventResultSlider.getProperty("value") , 3, "Both input event and change event are fired after user interaction");
@@ -252,16 +407,24 @@ describe("Accessibility", async () => {
 	it("Aria attributes are set correctly", async () => {
 		const slider = await browser.$("#basic-slider");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
-		const sliderId = await slider.getProperty("_id");
 
 		assert.strictEqual(await sliderHandle.getAttribute("aria-labelledby"),
-			`${sliderId}-accName ${sliderId}-sliderDesc`, "aria-labelledby is set correctly");
+			"ui5-slider-accName ui5-slider-sliderDesc", "aria-labelledby is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemin"),
 			`${await slider.getProperty("min")}`, "aria-valuemin is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuemax"),
 			`${await slider.getProperty("max")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(await sliderHandle.getAttribute("aria-valuenow"),
 			`${await slider.getProperty("value")}`, "aria-valuenow is set correctly");
+	});
+
+	it("Aria attributes are set correctly to the tooltip input", async () => {
+		const slider = await browser.$("#slider-tickmarks-labels");
+		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderTooltipInput = await slider.shadow$(".ui5-slider-tooltip ui5-input");
+
+		assert.strictEqual(await sliderTooltipInput.getAttribute("accessible-name-ref"),
+			"ui5-slider-InputLabel");
 	});
 
 	it("Click anywhere in the Slider should focus the Slider's handle", async () => {
@@ -300,6 +463,13 @@ describe("Accessibility", async () => {
 
 		assert.ok(await slider.isFocused(), "Slider component is focused");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await sliderHandle.getAttribute("class"), "Slider handle has the shadowDom focus");
+	});
+
+	it("icon should be correctly displayed", async () => {
+		const slider = await browser.$("#basic-slider");
+		const iconName = await slider.shadow$("ui5-icon").getAttribute("name");
+
+		assert.strictEqual(iconName, "direction-arrows", "The icon name is correctly set.");
 	});
 });
 
@@ -437,49 +607,50 @@ describe("Testing resize handling and RTL support", () => {
 	it("Testing RTL support", async () => {
 		const slider = await browser.$("#basic-slider-rtl");
 		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
 
-		assert.strictEqual((await sliderHandle.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
+		assert.strictEqual((await sliderHandleContainer.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
 		await slider.setProperty("value", 3);
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 30%;", "Slider handle should be 30% from the right");
 
 		await slider.click();
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 50%;", "Slider handle should be in the middle of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 50%;", "Slider handle should be in the middle of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 5, "Slider current value should be 5");
 
 		await sliderHandle.dragAndDrop({ x: -300, y: 1 });
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the right of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 80%;", "Slider handle should be 80% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 8, "Slider current value should be 8");
 
 		await sliderHandle.dragAndDrop({ x: -100, y: 1 });
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 90%;", "Slider handle should be 90% from the right");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 90%;", "Slider handle should be 90% from the right");
 		assert.strictEqual(await slider.getProperty("value"), 9, "Slider current value should be 9");
 
 		await sliderHandle.dragAndDrop({ x: -150, y: 1 });
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 100%;", "Slider handle should be at the left of the slider and not beyond its boundaries");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 100%;", "Slider handle should be at the left of the slider and not beyond its boundaries");
 		assert.strictEqual(await slider.getProperty("value"), 10, "Slider current value should be 10");
 	});
 
 	it("Testing RTL KBH support", async () => {
 		const slider = await browser.$("#basic-slider-rtl");
-		const sliderHandle = await slider.shadow$(".ui5-slider-handle");
+		const sliderHandleContainer = await slider.shadow$(".ui5-slider-handle-container");
 
 		await slider.setProperty("value", 0);
-		assert.strictEqual((await sliderHandle.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
+		assert.strictEqual((await sliderHandleContainer.getCSSProperty("right")).value, "0px", "Initially if no value is set, the Slider handle is at the right of the Slider");
 
 		await slider.keys("ArrowLeft");
 		await slider.keys("ArrowLeft");
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 20%;", "Slider handle should be 20% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 2, "Slider current value should be 2");
 
 		await slider.keys("ArrowRight");
 
-		assert.strictEqual(await sliderHandle.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
+		assert.strictEqual(await sliderHandleContainer.getAttribute("style"), "right: 10%;", "Slider handle should be 10% from the right of the slider");
 		assert.strictEqual(await slider.getProperty("value"), 1, "Slider current value should be 1");
 	});
 

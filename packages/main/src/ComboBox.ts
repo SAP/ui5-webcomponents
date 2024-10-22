@@ -18,7 +18,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -192,7 +192,9 @@ type ComboBoxSelectionChangeEventDetail = {
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 /**
  * Fired when typing in input or clear icon is pressed.
@@ -200,7 +202,9 @@ type ComboBoxSelectionChangeEventDetail = {
  * **Note:** filterValue property is updated, input is changed.
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 /**
  * Fired when selection is changed by user interaction
  * @param {IComboBoxItem} item item to be selected.
@@ -213,6 +217,7 @@ type ComboBoxSelectionChangeEventDetail = {
 		*/
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 class ComboBox extends UI5Element implements IFormInputElement {
@@ -427,6 +432,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	_lastValue: string;
 	_selectedItemText = "";
 	_userTypedValue = "";
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
@@ -638,7 +644,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const { target } = e;
 		this.filterValue = (target as Input).value;
 		this.value = (target as Input).value;
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_input(e: InputEvent) {
@@ -664,7 +670,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			this._handleTypeAhead(value, value, true);
 		}
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 
 		if (isPhone()) {
 			return;
@@ -803,7 +809,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		// autocomplete
 		this._handleTypeAhead(this.value, this.open ? this._userTypedValue : "", false);
 
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 	}
 
 	_handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean) {
@@ -816,7 +822,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._applyAtomicValueAndSelection(item, filterValue);
 
 		if (value !== "" && !item.selected && (!checkForGroupItem || !item.isGroupItem)) {
-			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item: item as ComboBoxItem,
 			});
 		}
@@ -1109,7 +1115,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_fireChangeEvent() {
 		if (this.value !== this._lastValue) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 			this._lastValue = this.value;
 		}
 	}
@@ -1139,7 +1145,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.value = this._selectedItemText;
 
 		if (!listItem.mappedItem.selected) {
-			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item: listItem.mappedItem,
 			});
 		}
@@ -1180,15 +1186,15 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const selectedItem = this.items.find(item => item.selected);
 
 		if (selectedItem?.text === this.value) {
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 
 		this.value = "";
-		this.fireEvent("input");
+		this.fireDecoratorEvent("input");
 
 		if (this._isPhone) {
 			this._lastValue = "";
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		} else {
 			this.focus();
 		}
@@ -1353,10 +1359,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	get responsivePopoverId() {
 		return `${this._id}-popover`;
-	}
-
-	static async onDefine() {
-		ComboBox.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	get styles() {

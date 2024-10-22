@@ -1753,6 +1753,8 @@ describe("MultiComboBox general interaction", () => {
 			const innerInput = await mcb.shadow$("input");
 			let invisibleText = await mcb.shadow$(".ui5-hidden-text");
 			const inivisbleTextId = await invisibleText.getProperty("id");
+			const popover = await mcb.shadow$("ui5-responsive-popover");
+			let firstItem = await popover.$("ui5-list").$("ui5-li");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
 
@@ -1793,6 +1795,17 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.strictEqual(tokens.length, 0, "should not have tokens");
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
+
+			await innerInput.click();
+			await innerInput.keys("i");
+			await firstItem.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			ariaHiddenText = await invisibleText.getHTML(false);
+
+			assert.strictEqual(tokens.length, 1, "Token should be added");
+			assert.ok(await ariaHiddenText.includes("Contains 1 token"),  "aria-describedby text is correct after adding token again");
+
 		});
 
 		it("Should apply aria-label from the accessibleName property", async () => {

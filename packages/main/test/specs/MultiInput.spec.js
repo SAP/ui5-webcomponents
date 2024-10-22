@@ -154,19 +154,45 @@ describe("MultiInput general interaction", () => {
 		assert.strictEqual(await mi2.getAttribute("placeholder"), "", "a token is added after selection");
 	});
 
-	it("should NOT fire token-delete when MI is readonly", async () => {
+	it("Tokens should not have delete icon when MI is readonly", async () => {
 		const input = await browser.$("#readonly-mi");
-		const deleteIcon = input.$$("ui5-token")[0].shadow$("ui5-icon");
 
-		// Act
-		await deleteIcon.click();
-		await browser.keys("Backspace");
-		await browser.keys("Backspace");
-		await browser.keys("Delete");
 		const tokens = await input.$$("ui5-token");
+		const length = tokens.length;
+		let numTokensWithDeleteIcon = 0;
+
+		for (const token of tokens) {
+			const icon = await token.shadow$("ui5-icon");
+			if (await icon.isExisting()){
+				numTokensWithDeleteIcon++;
+			}
+		};
 
 		// Assert
-		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
+		assert.strictEqual(length, 4, "The tokenizer has 4 tokens");
+		assert.strictEqual(numTokensWithDeleteIcon, 0, "Tokens should not have delete icon");
+	});
+
+	it("Tokens should not have delete icon when MI is readonly and displayed in n-more popover", async () => {
+		const input = await browser.$("#readonly-mi");
+		const tokenizer = await input.shadow$("ui5-tokenizer");
+		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+
+		await nMoreLabel.click();
+
+		const tokens = await tokenizer.shadow$("ui5-responsive-popover").$$("ui5-li");
+		let numTokensWithDeleteIcon = 0;
+
+		for (const listItem of tokens) {
+			const closeBtn = await listItem.shadow$("ui5-button");
+			if (await closeBtn.isExisting()){
+				numTokensWithDeleteIcon++;
+			}
+		};
+
+		// Assert
+		assert.strictEqual(tokens.length, 4, "The tokenizer popover has 4 tokens");
+		assert.strictEqual(numTokensWithDeleteIcon, 0, "Tokens in list should not have delete icon");
 	});
 
 	it("should empty the field when value is cleared in the change handler", async () => {

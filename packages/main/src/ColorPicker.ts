@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -80,12 +80,15 @@ type ColorCoordinates = {
 		Slider,
 		Label,
 	],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the the selected color is changed
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 class ColorPicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the currently selected color of the component.
@@ -129,7 +132,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Object })
-	_value: ColorRGB = getRGBColor(this.value);;
+	_value: ColorRGB = getRGBColor(this.value);
 
 	/**
 	 * @private
@@ -173,6 +176,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	mouseIn: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
@@ -181,10 +185,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	get formFormattedValue() {
 		return this.value;
-	}
-
-	static async onDefine() {
-		ColorPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	constructor() {
@@ -449,7 +449,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 		this._wrongHEX = !this.isValidRGBColor(color);
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	isValidRGBColor(color: ColorRGB) {
