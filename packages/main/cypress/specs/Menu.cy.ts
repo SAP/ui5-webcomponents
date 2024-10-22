@@ -53,13 +53,16 @@ describe("Menu interaction", () => {
 			.should("exist");
 	});
 
-	it("Restore focus to previous element after close", () => {
+	it("Sub-menu opening", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu open opener="btnOpen">
+		<ui5-menu opener="btnOpen">
 			<ui5-menu-item text="Item 1.0" icon="open-folder">
 				<ui5-menu-item text="1.1"></ui5-menu-item>
 			</ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
@@ -100,7 +103,7 @@ describe("Menu interaction", () => {
 
 	it("Add endContent to a menu item", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen" open>
+		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="Item 1">
 				<ui5-button slot="endContent">endContent</ui5-button>
 			</ui5-menu-item>
@@ -108,6 +111,9 @@ describe("Menu interaction", () => {
 
 		cy.get("[ui5-menu]")
 			.as("menu")
+			.ui5MenuOpen();
+
+		cy.get("@menu")
 			.ui5MenuOpened();
 
 		cy.get("@menu")
