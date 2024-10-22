@@ -318,17 +318,17 @@ class Icon extends UI5Element implements IIcon {
 	}
 }
 
-type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+// type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
 
-// JSX support
-interface IconEvents {
-	onTabChange2: () => void
-}
+// // JSX support
+// interface IconEvents {
+// 	onTabChange2: () => void
+// }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-interface Icon {
-	_jsxProps: JSX.HTMLAttributes & ElementProps<Icon> & Partial<IconEvents>;
-}
+// // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+// interface Icon {
+// 	_jsxProps: JSX.HTMLAttributes & ElementProps<Icon> & Partial<IconEvents>;
+// }
 
 Icon.define();
 

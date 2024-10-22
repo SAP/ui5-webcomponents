@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
+import type { JSX } from "./jsx-runtime.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -140,6 +141,9 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 	} while (proto && proto !== HTMLElement.prototype);
 }
 
+// JSX support
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+
 /**
  * @class
  * Base class for all UI5 Web Components
@@ -148,6 +152,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
+	_jsxProps!: JSX.HTMLAttributes & ElementProps<this>; // & Partial<ButtonEvents>;
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
