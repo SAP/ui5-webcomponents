@@ -7126,12 +7126,10 @@ custom-elements-manifest@1.0.0:
   resolved "https://registry.yarnpkg.com/custom-elements-manifest/-/custom-elements-manifest-1.0.0.tgz#b35c2129076a1dc9f95d720c6f7b5b71a857274b"
   integrity sha512-j59k0ExGCKA8T6Mzaq+7axc+KVHwpEphEERU7VZ99260npu/p/9kd+Db+I3cGKxHkM5y6q5gnlXn00mzRQkX2A==
 
-cypress-ct-lit@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/cypress-ct-lit/-/cypress-ct-lit-0.4.1.tgz#f21341ab0d37e30cea45a9ce44b959fe5db1b8fa"
-  integrity sha512-iYVoBU605anRDstyxVWxQKFoiuzeA0gvj4I80aj0cym7VUCoarYFMjYA2CBEynLzJxS4yoTZC+jdff8dWYdgiA==
-  dependencies:
-    "@cypress/mount-utils" "^4.0.0"
+cypress-ct-lit@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/cypress-ct-lit/-/cypress-ct-lit-0.5.0.tgz#97d45105293da60daa83d82ed64f6882f15e501a"
+  integrity sha512-g38dD7W4QtCyOS4O06kCzj74/BSa0IMut+WZwjXMPOb6yzqSaqN9EJLJTksNLRWy75IuNWM66mt9HVhRmdMR5Q==
 
 cypress-real-events@^1.12.0:
   version "1.12.0"
@@ -11427,17 +11425,17 @@ lit-element@^3.3.0:
     "@lit/reactive-element" "^1.3.0"
     lit-html "^2.7.0"
 
+lit-html@^2.0.0, lit-html@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.8.0.tgz#96456a4bb4ee717b9a7d2f94562a16509d39bffa"
+  integrity sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==
+  dependencies:
+    "@types/trusted-types" "^2.0.2"
+
 lit-html@^2.0.1, lit-html@^2.7.0:
   version "2.7.5"
   resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.7.5.tgz#0c1b9d381abe20c01475ae53ea4b07bf4c923eb8"
   integrity sha512-YqUzpisJodwKIlbMFCtyrp58oLloKGnnPLMJ1t23cbfIJjg/H9pvLWK4XS69YeubK5HUs1UE4ys9w5dP1zg6IA==
-  dependencies:
-    "@types/trusted-types" "^2.0.2"
-
-lit-html@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.8.0.tgz#96456a4bb4ee717b9a7d2f94562a16509d39bffa"
-  integrity sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==
   dependencies:
     "@types/trusted-types" "^2.0.2"
 

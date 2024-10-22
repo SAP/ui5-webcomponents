@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../../src/Dialog.js";
 import "../../../src/Select.js";
 import "../../../src/Option.js";
@@ -124,7 +124,7 @@ describe("Event bubbling", () => {
 						<ui5-option>Hello</ui5-option>
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
-					</ui5-select>					
+					</ui5-select>
 				</ui5-dialog>
 			</div>
 		`);

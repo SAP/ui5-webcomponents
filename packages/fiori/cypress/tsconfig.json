@@ -4,7 +4,7 @@
 		"./**/*"
 	],
 	"compilerOptions": {
-		"types": ["@ui5/webcomponents-tools"],
+		"types": ["@ui5/webcomponents-testing"],
 		"composite": true,
 		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
 		"paths": {

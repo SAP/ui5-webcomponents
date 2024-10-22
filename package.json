@@ -90,6 +90,7 @@
     "packages/main",
     "packages/compat",
     "packages/ai",
+    "packages/testing",
     "packages/fiori",
     "packages/icons",
     "packages/icons-business-suite",

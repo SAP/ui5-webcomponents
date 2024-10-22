@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../src/Form.js";
 import "../../src/FormItem.js";
 import "../../src/FormGroup.js";

@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../src/Button.js";
 import "../../src/CheckBox.js";
 import "../../src/ColorPicker.js";
