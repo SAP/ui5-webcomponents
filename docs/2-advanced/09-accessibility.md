@@ -96,7 +96,7 @@ and apply one of the available high contrast themes (Horizon HCW, Horizon HCB, e
 	const contrastMode = window.matchMedia("(forced-colors: active)").matches;
 
 	if (contrastMode) {
-        setTheme(hcb ? "sap_horizon_hcb" : "sap_horizon_hcw");
+        setTheme(darkMode ? "sap_horizon_hcb" : "sap_horizon_hcw");
     }
 ```
 
