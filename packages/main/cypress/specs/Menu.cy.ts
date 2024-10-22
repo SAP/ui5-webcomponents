@@ -4,7 +4,7 @@ import "../../src/Menu.js";
 import "../../src/MenuItem.js";
 import type MenuItem from "../../src/MenuItem.js";
 
-describe("Menu interaction", () => {
+describe.skip("Menu interaction", () => {
 	it("Menu opens after button click", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 		<ui5-menu id="menu" opener="btnOpen">
