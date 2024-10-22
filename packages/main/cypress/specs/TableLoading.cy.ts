@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../src/Table.js";
 import "../../src/TableHeaderRow.js";
 import "../../src/TableCell.js";

@@ -38,7 +38,6 @@
 
 import "cypress-real-events";
 import { setupHooks } from '@cypress/mount-utils';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { mount } from 'cypress-ct-lit'
 
 let dispose;
@@ -58,10 +57,6 @@ function ui5Mount(component, options = {}) {
 
 	dispose = () => {
 		configurationScript.innerHTML = "{}";
-	}
-
-	if (typeof component === "string") {
-		return mount(unsafeHTML(component), options)
 	}
 
 	return mount(component, options)

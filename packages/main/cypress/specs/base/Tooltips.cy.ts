@@ -1,5 +1,5 @@
 import { setEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../../src/Icon.js";
 import "../../../src/Button.js";
 import "../../../src/ToggleButton.js";

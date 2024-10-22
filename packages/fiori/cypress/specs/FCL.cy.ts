@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import "../../src/FlexibleColumnLayout.js";
 

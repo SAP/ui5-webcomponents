@@ -1,7 +1,7 @@
 import "./css/redfish.custom.theme.css";
 import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../../src/Assets.js";
 import "../../../src/Icon.js";
 

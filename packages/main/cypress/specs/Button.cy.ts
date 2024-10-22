@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../src/Button.js";
 import type Button from "../../src/Button.js";
 import "@ui5/webcomponents-icons/dist/download.js";

@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import "../../src/Button.js";
 
