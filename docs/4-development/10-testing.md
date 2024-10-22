@@ -233,10 +233,11 @@ We utilize component testing for UI5 web components, which involves mounting the
 **Example Test File:**
 
 ```typescript
+import { html } from "lit";
 
 describe("Demo", () => {
   it("Button exists", () => {
-    cy.mount(`<ui5-test-generic></ui5-test-generic>`);
+    cy.mount(html`<ui5-test-generic></ui5-test-generic>`);
 
     cy.get("[ui5-button]").should("exist");
   });

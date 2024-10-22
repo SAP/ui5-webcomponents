@@ -1,3 +1,4 @@
+import { html } from "lit";
 import { setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import "../../src/FlexibleColumnLayout.js";
 
@@ -6,7 +7,7 @@ describe("Columns resize", () => {
 		cy.wrap({ setAnimationMode })
 			.invoke("setAnimationMode", "none");
 
-		cy.mount(`
+		cy.mount(html`
 <ui5-flexible-column-layout id="fcl" style="height: 300px;" layout="TwoColumnsMidExpanded">
 	<div class="column" id="startColumn" slot="startColumn">some content</div>
 	<div class="column" id="midColumn" slot="midColumn">some content</div>

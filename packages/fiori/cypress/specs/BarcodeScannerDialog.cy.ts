@@ -1,3 +1,4 @@
+import { html } from "lit";
 import "@ui5/webcomponents-icons/dist/camera.js";
 import "../../src/BarcodeScannerDialog.js";
 import type BarcodeScannerDialog from "../../src/BarcodeScannerDialog.js";
@@ -7,7 +8,7 @@ describe("BarcodeScannerDialog", () => {
 	let handleScanError: (event: CustomEvent) => void;
 
 	beforeEach(() => {
-		cy.mount(`
+		cy.mount(html`
 			<ui5-barcode-scanner-dialog id="dlgScan"></ui5-barcode-scanner-dialog>
 			<ui5-button id="btnScan" icon="camera">Open Scanner Dialog</ui5-button>
 

@@ -1,3 +1,4 @@
+import { html } from "lit";
 import "../../src/Button.js";
 import "../../src/CheckBox.js";
 import "../../src/ColorPicker.js";
@@ -31,7 +32,7 @@ const getFormData = ($form: HTMLFormElement) => {
 
 describe("Form support", () => {
 	it("ui5-checkbox in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-checkbox id="cb1" text="ui5-checkbox without name"></ui5-checkbox>
 	<ui5-checkbox id="cb2" text="ui5-checkbox without name and value" checked></ui5-checkbox>
 	<ui5-checkbox id="cb3" name="checkbox3" text="ui5-checkbox with name and without value"></ui5-checkbox>
@@ -69,7 +70,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-color-picker in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-color-picker id="color_picker1"></ui5-color-picker>
 	<ui5-color-picker id="color_picker2" value="blue"></ui5-color-picker>
 	<ui5-color-picker id="color_picker3" name="color_picker3"></ui5-color-picker>
@@ -97,7 +98,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-combobox in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-combobox id="combobox1"></ui5-combobox>
 	<ui5-combobox id="combobox2" value="ok"></ui5-combobox>
 	<ui5-combobox id="combobox3" name="combobox3"></ui5-combobox>
@@ -138,7 +139,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-date-picker in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-date-picker id="date_picker1"></ui5-date-picker>
 	<ui5-date-picker id="date_picker2" value="ok"></ui5-date-picker>
 	<ui5-date-picker id="date_picker3" name="date_picker3"></ui5-date-picker>
@@ -179,7 +180,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-daterange-picker in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-daterange-picker id="daterange_picker1"></ui5-daterange-picker>
 	<ui5-daterange-picker id="daterange_picker2" value="ok"></ui5-daterange-picker>
 	<ui5-daterange-picker id="daterange_picker3" name="daterange_picker3"></ui5-daterange-picker>
@@ -220,7 +221,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-datetime-picker in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-datetime-picker id="datetime_picker1"></ui5-datetime-picker>
 	<ui5-datetime-picker id="datetime_picker2" value="ok"></ui5-datetime-picker>
 	<ui5-datetime-picker id="datetime_picker3" name="datetime_picker3"></ui5-datetime-picker>
@@ -261,7 +262,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-input in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-input id="input1"></ui5-input>
 	<ui5-input id="input2" value="ok"></ui5-input>
 	<ui5-input id="input3" name="input3"></ui5-input>
@@ -302,7 +303,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-multi-combobox in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-multi-combobox id="multi_combobox1"></ui5-multi-combobox>
 	<ui5-multi-combobox id="multi_combobox2" value="ok"></ui5-multi-combobox>
 	<ui5-multi-combobox id="multi_combobox3">
@@ -366,7 +367,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-multi-input in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-multi-input id="multi_input1"></ui5-multi-input>
 	<ui5-multi-input id="multi_input2" value="ok"></ui5-multi-input>
 	<ui5-multi-input id="multi_input3">
@@ -427,7 +428,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-radio-button in form 1", () => {
-		cy.mount(`<form  method="get">
+		cy.mount(html`<form  method="get">
 	<ui5-radio-button id="rb_1" required name="rb1"></ui5-radio-button>
 	<button type="submit">Submits forms</button>
 </form>`);
@@ -464,7 +465,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-radio-button in form 2", () => {
-		cy.mount(`<form  method="get">
+		cy.mount(html`<form  method="get">
 	<ui5-title>ui5-radio-button</ui5-title>
 	<ui5-radio-button required id="rb_2" required checked></ui5-radio-button>
 	<button type="submit">Submits forms</button>
@@ -490,7 +491,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-radio-button in form 3", () => {
-		cy.mount(`<form  method="get">
+		cy.mount(html`<form  method="get">
 	<ui5-radio-button required name="rb3" id="rb_3" value="A" text="A"></ui5-radio-button>
 	<ui5-radio-button required name="rb3" id="rb_4" value="B" text="B"></ui5-radio-button>
 	<ui5-radio-button required value="C" text="C" checked></ui5-radio-button>
@@ -529,7 +530,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-range-slider in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-range-slider id="range_slider1"></ui5-range-slider>
 	<ui5-range-slider id="range_slider2" start-value="25" end-value="75"></ui5-range-slider>
 	<ui5-range-slider id="range_slider3" name="range_slider3"></ui5-range-slider>
@@ -557,7 +558,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-select in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-select id="select1">
 		<ui5-option selected>Option 1</ui5-option>
 		<ui5-option value="option2">Option 2</ui5-option>
@@ -646,7 +647,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-slider in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-slider id="slider1"></ui5-slider>
 	<ui5-slider id="slider2" value="100"></ui5-slider>
 	<ui5-slider id="slider3" name="slider3"></ui5-slider>
@@ -674,7 +675,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-step-input in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-step-input id="step_input1"></ui5-step-input>
 	<ui5-step-input id="step_input2" value="4"></ui5-step-input>
 	<ui5-step-input id="step_input3" name="step_input3"></ui5-step-input>
@@ -702,7 +703,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-switch in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-switch id="switch1" text="ui5-switch without name"></ui5-switch>
 	<ui5-switch id="switch2" text="ui5-switch without name and value" checked></ui5-switch>
 	<ui5-switch id="switch3" name="switch3" text="ui5-switch with name and without value"></ui5-switch>
@@ -740,7 +741,7 @@ describe("Form support", () => {
 	});
 
 	it("ui5-textarea in form", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-textarea id="textarea1"></ui5-textarea>
 	<ui5-textarea id="textarea2" value="ok"></ui5-textarea>
 	<ui5-textarea id="textarea3" name="textarea3"></ui5-textarea>
@@ -782,7 +783,7 @@ describe("Form support", () => {
 
 	it("ui5-time-picker in form", () => {
 		/* eslint-disable no-irregular-whitespace */
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-time-picker id="time_picker1"></ui5-time-picker>
 	<ui5-time-picker id="time_picker2" value="1:10:10 PM"></ui5-time-picker>
 	<ui5-time-picker id="time_picker3" name="time_picker3" required></ui5-time-picker>
@@ -823,7 +824,7 @@ describe("Form support", () => {
 	});
 
 	it("Normal button does not submit forms", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-button id="b1">Does not submit forms</ui5-button>
 </form>`);
 
@@ -841,7 +842,7 @@ describe("Form support", () => {
 	});
 
 	it("Submit button does submit forms", () => {
-		cy.mount(`<form method="get">
+		cy.mount(html`<form method="get">
 	<ui5-input name="input" value="ok"></ui5-input>
 	<ui5-input name="input_disabled" disabled value="ok"></ui5-input>
 	<ui5-select name="sel">

@@ -1,3 +1,4 @@
+import { html } from "lit";
 import "../../../src/Dialog.js";
 import "../../../src/Select.js";
 import "../../../src/Option.js";
@@ -11,7 +12,7 @@ import "../../../src/Label.js";
 
 describe("Event bubbling", () => {
 	it("test bubbling events", () => {
-		cy.mount(`
+		cy.mount(html`
 			<div id="app">
 				<ui5-dialog id="myDialog" header-text="Dialog">
 					<ui5-input id="myInput" show-suggestions>
@@ -116,14 +117,14 @@ describe("Event bubbling", () => {
 	});
 
 	it("test non-bubbling events", () => {
-		cy.mount(`
+		cy.mount(html`
 			<div id="app">
 				<ui5-dialog id="myDialog" header-text="Dialog">
 					<ui5-select id="mySelect">
 						<ui5-option>Hello</ui5-option>
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
-					</ui5-select>
+					</ui5-select>					
 				</ui5-dialog>
 			</div>
 		`);
@@ -171,7 +172,7 @@ describe("Event bubbling", () => {
 	});
 
 	it("test cancelable events", () => {
-		cy.mount(`
+		cy.mount(html`
 			<div id="app">
 				<ui5-checkbox id="cb"></ui5-checkbox>
 				<ui5-checkbox id="cb2"></ui5-checkbox>

@@ -1,3 +1,4 @@
+import { html } from "lit";
 import "../../src/Table.js";
 import "../../src/TableHeaderRow.js";
 import "../../src/TableCell.js";
@@ -5,7 +6,7 @@ import "../../src/TableRow.js";
 
 describe("Table - loading", () => {
 	it("tests busy indicator is displayed", () => {
-		cy.mount(`
+		cy.mount(html`
 		<input id="before">
 		<ui5-table loading loading-delay="0">
 		<ui5-table-header-row slot="headerRow">
