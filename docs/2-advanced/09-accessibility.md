@@ -84,23 +84,49 @@ Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe
 
 #### Contrast 
 
-To switch to a high contrast theme when the OS does, you can use both [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and [forced-colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) CSS Media features, as shown below:
+To switch to a high contrast theme when the OS does, you can use [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme), [forced-colors](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors) CSS Media features (detecting Windows High Contrast mode) and  [prefers-contrast](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast) (detecting MacOS contrast preferences), as shown below:
 
-Check `prefers-color-scheme` for `dark` or `light` and  `forced-colors` for `active`
-and apply one of the available high contrast themes (Horizon HCW, Horizon HCB, ect.)
+Check `prefers-color-scheme` for `dark` or `light`,  `forced-colors` for `active` and `prefers-contrast` for `more`, and apply one of the available high contrast themes (Horizon High Contrast White or Horizon High Contrast Black)
 
 ```ts
     import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 	const contrastMode = window.matchMedia("(forced-colors: active)").matches;
+	const prefersContrast = window.matchMedia("(prefers-contrast: more)").matches;
 
-	if (contrastMode) {
+	if (contrastMode || prefersContrast) {
         setTheme(darkMode ? "sap_horizon_hcb" : "sap_horizon_hcw");
     }
 ```
 
-**Note:** In addition to detecting contrast mode, you also need to check for light and dark modes via `prefers-color-scheme` to pick between the High Contrast Black and High Contrast White themes.
+**Note:** In addition to detecting contrast mode, you need to check for light and dark modes via `prefers-color-scheme` to pick between the High Contrast Black and High Contrast White themes.
+
+The code examples above will work for initial loading. To react on dynamic changes of the user preferences, you can attach for the media query `change` event, fired when the status of media query support changes.
+
+Here is the full solution, listening for changes of the OS settings and considering light, dark and contrast preferences:
+
+```ts
+    import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+    const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
+    const contrastMode = window.matchMedia("(forced-colors: active)");
+    const prefersContrast = window.matchMedia("(prefers-contrast: more)");
+
+    const applyOSThemePreferences = () => {
+        if (contrastMode.matches || prefersContrast.matches) {
+            setTheme(darkMode.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
+        } else {
+            setTheme(darkMode.matches ? "sap_horizon_dark" : "sap_horizon");
+        }
+    }
+
+    darkMode.onchange = applyOSThemePreferences;
+    contrastMode.onchange = applyOSThemePreferences;
+    prefersContrast.onchange = applyOSThemePreferences;
+
+    applyOSThemePreferences();
+```
 
 Although you've learned how to detect OS settings and apply the corresponding theme, we recommend allowing users to decide whether the theme should always match the OS setting by given application settings and not forcing the OS settings by default.
 
