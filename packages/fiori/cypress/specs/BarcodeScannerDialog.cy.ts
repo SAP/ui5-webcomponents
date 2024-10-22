@@ -366,7 +366,7 @@ describe("BarcodeScannerDialog with Custom Slots", () => {
 			  <ui5-title level="H2">My Custom Header</ui5-title>
 			</div>
 			<div slot="footer" class="custom-dialog-footer">
-			  <ui5-button id="customCloseBtn">My Custom Button</ui5-button>
+			  <ui5-button id="customCloseBtn">My Custom Close Button</ui5-button>
 			</div>
 		  </ui5-barcode-scanner-dialog>
 		  <ui5-button id="btnScanCustom" icon="camera">Open Custom Scanner Dialog</ui5-button>
@@ -453,7 +453,7 @@ describe("BarcodeScannerDialog with Custom Slots", () => {
 		// Verify that the custom footer is rendered
 		cy.get("@customDialog")
 			.find("[slot=footer] ui5-button")
-			.should("contain.text", "My Custom Button");
+			.should("contain.text", "My Custom Close Button");
 
 		// Test that the custom button closes the dialog
 		cy.get("@customDialog")
