@@ -18,6 +18,7 @@
 
 .ui5-nl-header {
 	box-shadow: var(--sapShell_Shadow);
+	z-index: 2;
 }
 
 .ui5-nl-section {
@@ -32,11 +33,6 @@
 	z-index: 1;
 }
 
-:host([is-phone]) .ui5-nl-aside,
-:host([side-collapsed]) .ui5-nl-aside {
-	z-index: 3;
-}
-
 :host([is-phone]) .ui5-nl-aside {
 	position: absolute;
 	top: 0;
@@ -45,10 +41,14 @@
 	width: 100%;
 }
 
+:host([is-phone]) ::slotted([ui5-side-navigation]) {
+	width: 100%;
+	box-shadow: none;
+}
+
 .ui5-nl-content {
 	flex: 1;
 	min-width: 0;
-	z-index: 2;
 	overflow: auto;
 }
 
