@@ -38,21 +38,29 @@
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 
 	<script type="module">
-		const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
-    	const contrastMode = window.matchMedia("(forced-colors: active)");
-    	const prefersContrast = window.matchMedia("(prefers-contrast: more)");
+		const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+		const forcedColorsActive = window.matchMedia("(forced-colors: active)");
+		const prefersContrastMore = window.matchMedia("(prefers-contrast: more)");
+		const prefersContrastCustom = window.matchMedia("(prefers-contrast: custom)");
 
 		const applyOSThemePreferences = () => {
-			if (contrastMode.matches || prefersContrast.matches) {
-				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkMode.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
+			if (forcedColorsActive.matches || prefersContrastMore.matches) {
+				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkColorScheme.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
 			} else {
-				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkMode.matches ? "sap_horizon_dark" : "sap_horizon");
+				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkColorScheme.matches ? "sap_horizon_dark" : "sap_horizon");
 			}
+
+			console.log({
+				darkColorScheme, 
+				forcedColorsActive, 
+				prefersContrastMore, 
+				prefersContrastCustom,
+			})
 		}
 
-		darkMode.onchange = applyOSThemePreferences;
-		contrastMode.onchange = applyOSThemePreferences;
-		prefersContrast.onchange = applyOSThemePreferences;
+		darkColorScheme.onchange = applyOSThemePreferences;
+		forcedColorsActive.onchange = applyOSThemePreferences;
+		prefersContrastMore.onchange = applyOSThemePreferences;
 
 		applyOSThemePreferences();
 	</script>

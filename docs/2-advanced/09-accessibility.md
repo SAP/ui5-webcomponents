@@ -77,9 +77,9 @@ Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe
 ```ts
     import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
-	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-	setTheme(darkMode ? "sap_horizon_dark" : "sap_horizon");
+	setTheme(darkColorScheme ? "sap_horizon_dark" : "sap_horizon");
 ```
 
 #### Contrast 
@@ -91,12 +91,12 @@ Check `prefers-color-scheme` for `dark` or `light`,  `forced-colors` for `active
 ```ts
     import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
-	const darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	const contrastMode = window.matchMedia("(forced-colors: active)").matches;
+	const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	const forcedColorsActive = window.matchMedia("(forced-colors: active)").matches;
 	const prefersContrast = window.matchMedia("(prefers-contrast: more)").matches;
 
-	if (contrastMode || prefersContrast) {
-        setTheme(darkMode ? "sap_horizon_hcb" : "sap_horizon_hcw");
+	if (forcedColorsActive || prefersContrast) {
+        setTheme(darkColorScheme ? "sap_horizon_hcb" : "sap_horizon_hcw");
     }
 ```
 
@@ -109,21 +109,21 @@ Here is the full solution, listening for changes of the OS settings and consider
 ```ts
     import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
-    const darkMode = window.matchMedia("(prefers-color-scheme: dark)");
-    const contrastMode = window.matchMedia("(forced-colors: active)");
-    const prefersContrast = window.matchMedia("(prefers-contrast: more)");
+    const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const forcedColorsActive = window.matchMedia("(forced-colors: active)");
+    const prefersContrastMore = window.matchMedia("(prefers-contrast: more)");
 
     const applyOSThemePreferences = () => {
-        if (contrastMode.matches || prefersContrast.matches) {
-            setTheme(darkMode.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
+        if (forcedColorsActive.matches || prefersContrastMore.matches) {
+            setTheme(darkColorScheme.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
         } else {
-            setTheme(darkMode.matches ? "sap_horizon_dark" : "sap_horizon");
+            setTheme(darkColorScheme.matches ? "sap_horizon_dark" : "sap_horizon");
         }
     }
 
-    darkMode.onchange = applyOSThemePreferences;
-    contrastMode.onchange = applyOSThemePreferences;
-    prefersContrast.onchange = applyOSThemePreferences;
+    darkColorScheme.onchange = applyOSThemePreferences;
+    forcedColorsActive.onchange = applyOSThemePreferences;
+    prefersContrastMore.onchange = applyOSThemePreferences;
 
     applyOSThemePreferences();
 ```
