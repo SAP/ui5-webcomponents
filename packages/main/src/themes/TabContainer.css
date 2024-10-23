@@ -36,6 +36,7 @@
 	background-color: transparent;
 	--ui5_tc_header_active_background_color: transparent;
 	--_ui5_tc_header_box_shadow: var(--_ui5_tc_header_box_shadow_transparent);
+	border-bottom: 0.0625rem solid var(--sapObjectHeader_BorderColor);
 }
 
 :host([header-background-design="Translucent"]) .ui5-tc__header {
