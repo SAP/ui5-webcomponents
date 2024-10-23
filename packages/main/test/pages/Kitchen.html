@@ -39,27 +39,17 @@
 
 	<script type="module">
 		const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
-		const forcedColorsActive = window.matchMedia("(forced-colors: active)");
 		const prefersContrastMore = window.matchMedia("(prefers-contrast: more)");
-		const prefersContrastCustom = window.matchMedia("(prefers-contrast: custom)");
 
 		const applyOSThemePreferences = () => {
-			if (forcedColorsActive.matches || prefersContrastMore.matches) {
+			if (prefersContrastMore.matches) {
 				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkColorScheme.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
 			} else {
 				window["sap-ui-webcomponents-bundle"].configuration.setTheme(darkColorScheme.matches ? "sap_horizon_dark" : "sap_horizon");
 			}
-
-			console.log({
-				darkColorScheme, 
-				forcedColorsActive, 
-				prefersContrastMore, 
-				prefersContrastCustom,
-			})
 		}
 
 		darkColorScheme.onchange = applyOSThemePreferences;
-		forcedColorsActive.onchange = applyOSThemePreferences;
 		prefersContrastMore.onchange = applyOSThemePreferences;
 
 		applyOSThemePreferences();
