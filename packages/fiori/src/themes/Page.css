@@ -47,80 +47,38 @@
 }
 /*** Responsive paddings ***/
 
+::slotted([ui5-bar][design="FloatingFooter"][slot="footer"]) {
+	--_ui5_bar-end-container-padding-end: 0;
+	--_ui5_bar-end-container-padding-start: 0;
+}
+
 ::slotted([ui5-bar][design="FloatingFooter"]) {
 	margin: auto;
-	padding: 0;
+	width: calc(100% - (2 * var(--_ui5_page_side_padding)));
+}
+
+.ui5-page-content-root {
+	padding: 0 var(--_ui5_page_side_padding);
 }
 
 /* S Size */
 @container (max-width: 599px) {
-	:host([floating-footer]) .ui5-page-footer-root,
-	.ui5-page-content-root {
-		padding: 0 1rem;
-	}
-
-	::slotted([ui5-bar][slot="header"]),
-	::slotted([ui5-bar][design="Footer"]) {
-		box-sizing: border-box;
-		padding: 0 .25rem;
-	}
-
-	::slotted([ui5-bar][design="FloatingFooter"]) {
-		width: calc(100% - 0.5rem);
+	.ui5-page-root {
+		--_ui5_page_side_padding: 1rem;
 	}
 }
 
-/* M Size */
-@container (min-width: 600px) and (max-width: 1023px) {
-	:host([floating-footer]) .ui5-page-footer-root,
-	.ui5-page-content-root {
-		padding: 0 2rem;
-	}
-
-	::slotted([ui5-bar][slot="header"]),
-	::slotted([ui5-bar][slot="footer"]) {
-		box-sizing: border-box;
-		padding: 0 1.25rem;
-	}
-
-	::slotted([ui5-bar][design="FloatingFooter"]) {
-		width: calc(100% - 2.5rem);
-	}
-}
-
-/* L Size */
-@container (min-width: 1024px) and (max-width: 1439px) {
-	:host([floating-footer]) .ui5-page-footer-root,
-	.ui5-page-content-root {
-		padding: 0 2rem;
-	}
-
-	::slotted([ui5-bar][slot="header"]),
-	::slotted([ui5-bar][slot="footer"]) {
-		box-sizing: border-box;
-		padding: 0 1.25rem;
-	}
-
-	::slotted([ui5-bar][design="FloatingFooter"]) {
-		width: calc(100% - 2.5rem);
+/* M and L Size */
+@container (min-width: 600px) and (max-width: 1439px) {
+	.ui5-page-root {
+		--_ui5_page_side_padding: 2rem;
 	}
 }
 
 /* XL Size */
 @container (min-width: 1440px) {
-	:host([floating-footer]) .ui5-page-footer-root,
-	.ui5-page-content-root {
-		padding: 0 3rem;
-	}
-
-	::slotted([ui5-bar][slot="header"]),
-	::slotted([ui5-bar][slot="footer"]) {
-		box-sizing: border-box;
-		padding: 0 2.25rem;
-	}
-
-	::slotted([ui5-bar][design="FloatingFooter"]) {
-		width: calc(100% - 4.5rem);
+	.ui5-page-root {
+		--_ui5_page_side_padding: 3rem;
 	}
 }
 
