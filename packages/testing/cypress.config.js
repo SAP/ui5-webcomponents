@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { defineConfig } from 'cypress';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -7,8 +8,8 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
 	component: {
-		supportFile: path.join(__dirname, "cypress/support/component.js"),
-		indexHtmlFile: path.join(__dirname, "cypress/support/component-index.html"),
+		supportFile: path.join(__dirname, "../dist/cypress/support/component.js"),
+		indexHtmlFile: path.join(__dirname, "../dist/cypress/support/component-index.html"),
 		specPattern: ["**/specs/*.cy.{js,ts}", "**/specs/**/*.cy.{js,ts}"],
 		devServer: {
 			framework: 'cypress-ct-lit',
