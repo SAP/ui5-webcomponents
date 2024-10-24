@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Tokenizer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/Tokenizer.css">
+</head>
+
+<body>
+	<div class="wrapper">
+		<h1 class="sample-container-title">Multi Line</h1>
+		<ui5-tokenizer multi-line style="width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
+		</ui5-tokenizer>
+
+		<h1 class="sample-container-title">Multi Line with long token</h1>
+		<ui5-tokenizer multi-line style="width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Mexico Mexico Mexico Mexico Mexico Mexico Mexico"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
+			<ui5-token text="Mexico Mexico Mexico Mexico Mexico Mexico Mexico"></ui5-token>
+		</ui5-tokenizer>
+
+		<h1 class="sample-container-title">Multi Line with long token and restricted height</h1>
+		<ui5-tokenizer multi-line style="height: 100px; width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
+			<ui5-token text="Mexico Mexico Mexico Mexico Mexico Mexico Mexico"></ui5-token>
+		</ui5-tokenizer>
+
+		<h1 class="sample-container-title">Multi Line with clear all</h1>
+		<ui5-tokenizer id='clear-all' show-clear-all multi-line style="width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
+		</ui5-tokenizer>
+
+
+		<h1 class="sample-container-title">Multi Line with clear all</h1>
+		<ui5-tokenizer show-clear-all multi-line style="width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+		</ui5-tokenizer>
+	</div>
+
+
+	<script>
+		const clearAllTokenizer = document.getElementById('clear-all');
+
+		clearAllTokenizer.addEventListener('token-delete', (e) => {
+			clearAllTokenizer.innerHTML = '';
+		});
+	</script>
+</body>
+
+</html>
