@@ -44,7 +44,6 @@
 	cursor: pointer;
 	border-radius: var(--_ui5_shellbar_button_border_radius);
 	position: relative;
-	font-size: 0.75rem;
 	font-weight: bold;
 	white-space: initial;
 	overflow: initial;
