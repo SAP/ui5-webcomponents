@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "instance-specification";
+const pathData = "M0 421V123c0-7 4-11 11-14l85-27V67c4-27 32-29 56-29 21 0 35 2 48 13V29c7-25 31-29 56-29 27 0 49 4 56 29v22c3-4 22-8 45-8 27 0 55 5 59 24v15l85 27c7 2 11 7 11 14v298c0 7-4 12-11 14l-240 76c-1 1-2 1-5 1-2 0-4 0-5-1L11 435c-7-2-11-7-11-14zM227 29c13 3 22 5 30 5s16-2 27-5c-5-3-13-5-28-5-7 0-13 1-20 2zm-3 25v21c8-3 19-4 32-4 4 0 12 1 19 2 4 1 8 1 13 2V54c-11 3-22 4-33 4-12 0-22-1-31-4zm-43 13c-5-3-14-4-29-4s-24 1-29 4c5 3 17 4 29 4 13 0 26-1 29-4zm3 46V92c-11 3-22 4-33 4s-20-1-31-4v21c7 4 19 6 32 6 15 0 28-2 32-6zm209 0V92c-10 3-21 4-34 4-12 0-22-1-31-4v21c9 5 20 7 32 7 13 0 24-2 33-7zm-108-13c-5-3-14-5-29-5s-24 2-29 5c8 3 18 4 29 4s22-1 29-4zM96 114l-24 7 32 11c-4-5-8-10-8-18zm311 18l33-11-24-7c1 1 1 2 1 3s-1 4-4 8c-2 2-4 4-6 7zm-119 12v-21c-10 3-21 4-34 4-12 0-22-1-31-4v21c9 5 20 7 32 7 13 0 24-2 33-7zm-145 0l66 21c-9-9-9-9-9-34-17 13-24 12-57 13zm158 21l67-21c-3 1-6 1-11 1-17 0-34-5-45-14v17c0 7-3 14-11 17zM32 140v104l208 69V206zm240 170l208-69V140l-208 66v104zm-29-134l13 4 13-4h-26zm29 300l208-66V275l-208 68v133zM32 410l208 66V346L32 278v132z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/instance-specification";
+export { pathData, ltr, accData };
