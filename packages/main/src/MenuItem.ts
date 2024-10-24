@@ -7,6 +7,7 @@ import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -167,6 +168,13 @@ class MenuItem extends ListItem implements IMenuItem {
 	_siblingsWithIcon = false;
 
 	/**
+	 * Indicates if the menu item has a submenu.
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_newItemsAdded?: boolean;
+
+	/**
 	 * Defines the items of this component.
 	 *
 	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
@@ -259,6 +267,27 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+
+		if (this._newItemsAdded) {
+			if (this._menuItems.length > 0) {
+				const hasSelectedItem = this._menuItems.some(item => item.selected);
+
+				if (!hasSelectedItem) {
+					this._menuItems[0].focus();
+				}
+
+				if (this._menuItems[0].focused) {
+					this._newItemsAdded = false;
+				}
+			}
+		}
+	}
+
+	onInvalidation(changeInfo: ChangeInfo) {
+		// if the change is due to a new item being added, focus the first item
+		if (changeInfo.reason === "children" && changeInfo.type === "slot") {
+			this._newItemsAdded = true;
+		}
 	}
 
 	get _focusable() {

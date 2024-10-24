@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { type ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -235,6 +235,13 @@ class Menu extends UI5Element {
 	opener?: HTMLElement | string;
 
 	/**
+	 * Indicates if the menu item has a submenu.
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_newItemsAdded?: boolean;
+
+	/**
 	 * Defines the items of this component.
 	 *
 	 * **Note:** Use `ui5-menu-item` and `ui5-menu-separator` for their intended design.
@@ -277,6 +284,27 @@ class Menu extends UI5Element {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+
+		if (this._newItemsAdded) {
+			if (this._menuItems.length > 0) {
+				const hasSelectedItem = this._menuItems.some(item => item.selected);
+
+				if (!hasSelectedItem) {
+					this._menuItems[0].focus();
+				}
+
+				if (this._menuItems[0].focused) {
+					this._newItemsAdded = false;
+				}
+			}
+		}
+	}
+
+	onInvalidation(changeInfo: ChangeInfo) {
+		// if the change is due to a new item being added, focus the first item
+		if (changeInfo.reason === "children" && changeInfo.type === "slot") {
+			this._newItemsAdded = true;
+		}
 	}
 
 	_close() {
