@@ -134,6 +134,7 @@ slot[name="profile"] {
 	white-space: nowrap;
 	overflow: hidden;
 	margin: 0;
+	text-align: start;
 }
 
 .ui5-shellbar-headings {
@@ -242,6 +243,7 @@ slot[name="profile"] {
 .ui5-shellbar-logo {
 	cursor: pointer;
 	max-height: 2rem;
+	padding: .25rem;
 }
 
 .ui5-shellbar-logo-area {
@@ -257,6 +259,13 @@ slot[name="profile"] {
 :host([variant="Lean"]) .ui5-shellbar-logo-area {
 	cursor: default;
 	pointer-events: none;
+}
+
+.ui5-shellbar-logo:focus,
+.ui5-shellbar-logo-area:focus {
+	overflow: hidden;
+	outline: var(--_ui5_shellbar_logo_outline);
+	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
 
 .ui5-shellbar-logo-area:hover {
