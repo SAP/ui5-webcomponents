@@ -1,5 +1,7 @@
-commit 90e10568c8a4a37e8976964ef0ac272a2659aed7
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Wed Oct 2 13:17:05 2024 +0000
+commit 4b7687c6ed8c6d706cbb88b8c7f3835204dbe323
+Author: petyabegovska <pbegovska@gmail.com>
+Date:   Thu Oct 24 15:28:02 2024 +0300
 
-    chore(release): publish v1.24.11 [ci skip]
+    docs: update FAQ article (#10080)
+    
+    Update FAQ.md
