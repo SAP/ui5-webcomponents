@@ -24,7 +24,18 @@
 
 	<ui5-barcode-scanner-dialog id="dlgScan"></ui5-barcode-scanner-dialog>
 
-	<ui5-button id="btnScan" icon="camera" tooltip="Start Camera">Scan</ui5-button>
+	<ui5-barcode-scanner-dialog id="dlgScanCustom">
+		<div slot="header" class="custom-dialog-header">
+			<ui5-title level="H2">My Custom Header</ui5-title>
+		</div>
+		<div slot="footer" class="custom-dialog-footer">
+			<ui5-button id="btnCloseDialogCustom" icon="da" design="Attention">My Custom Close Button</ui5-button>
+		</div>
+	</ui5-barcode-scanner-dialog>
+
+	<ui5-button id="btnScan" icon="camera" tooltip="Start Camera">Open Default Dialog</ui5-button>
+	<ui5-button id="btnScanCustom" icon="camera" tooltip="Start Camera Custom" design="Emphasized">Open Custom Dialog</ui5-button>
+
 	<div>
 		<ui5-label id="scanResult"></ui5-label>
 		<ui5-label id="scanError"></ui5-label>
@@ -34,7 +45,10 @@
 
 	<script>
 		const dlgScan = document.getElementById("dlgScan");
+		const dlgScanCustom = document.getElementById("dlgScanCustom");
 		const btnScan = document.getElementById("btnScan");
+		const btnScanCustom = document.getElementById("btnScanCustom");
+		const btnCloseDialogCustom = document.getElementById("btnCloseDialogCustom");
 		const scanResult = document.getElementById("scanResult");
 		const scanError = document.getElementById("scanError");
 
@@ -43,9 +57,23 @@
 			document.querySelector(".open-state").textContent = `${dlgScan.open}`;
 		});
 
+		btnScanCustom.addEventListener("click", (event) => {
+			dlgScanCustom.open = true;
+			document.querySelector(".open-state").textContent = `${dlgScanCustom.open}`;
+		});
+
+		btnCloseDialogCustom.addEventListener("click", (event) => {
+			dlgScanCustom.open = false;
+		});
+
 		dlgScan.addEventListener("ui5-scan-success", (event) => {
 			scanResult.innerHTML = event.detail.text;
 			dlgScan.open = false;
+		});
+
+		dlgScanCustom.addEventListener("ui5-scan-success", (event) => {
+			scanResult.innerHTML = event.detail.text;
+			dlgScanCustom.open = false;
 		});
 
 		dlgScan.addEventListener("ui5-scan-error", (event) => {
@@ -53,8 +81,17 @@
 			dlgScan.open = false;
 		});
 
+		dlgScanCustom.addEventListener("ui5-scan-error", (event) => {
+			scanError.innerHTML = event.detail.message;
+			dlgScanCustom.open = false;
+		});
+
 		dlgScan.addEventListener("ui5-close", (event) => {
 			document.querySelector(".open-state").textContent = `${dlgScan.open}`;
+		});
+
+		dlgScanCustom.addEventListener("ui5-close", (event) => {
+			document.querySelector(".open-state").textContent = `${dlgScanCustom.open}`;
 		});
 	</script>
 </body>

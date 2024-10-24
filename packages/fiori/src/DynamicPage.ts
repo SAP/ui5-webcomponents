@@ -368,6 +368,21 @@ class DynamicPage extends UI5Element {
 	}
 
 	async _toggleHeader() {
+		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+		const currentScrollTop = this.scrollContainer!.scrollTop;
+
+		if (currentScrollTop > SCROLL_THRESHOLD && currentScrollTop < headerHeight) {
+			if (!this._headerSnapped) {
+				this._headerSnapped = true;
+				this.showHeaderInStickArea = true;
+				this.scrollContainer!.scrollTop = 0;
+			} else {
+				this.showHeaderInStickArea = false;
+				this._headerSnapped = false;
+			}
+			return;
+		}
+
 		if (this.scrollContainer!.scrollTop === SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = 0;
 		}

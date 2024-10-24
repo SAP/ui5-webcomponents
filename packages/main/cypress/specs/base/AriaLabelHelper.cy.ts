@@ -105,8 +105,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", UPDATED_ACCESSIBLE_NAME);
+			.should("have.attr", "aria-label", UPDATED_ACCESSIBLE_NAME);
 
 		// act - remove acccessible-name
 		cy.get("#inputEnterDesc")
@@ -114,8 +113,7 @@ describe("AriaLabelHelper", () => {
 
 		// assert - aria-label fallbacks to use the label's for, pointing to this input
 		cy.get("@input")
-			.invoke("attr", "aria-label")
-			.should("eq", "Label for inputEnterDesc");
+			.should("have.attr", "aria-label", "Label for inputEnterDesc");
 
 		// act - add acccessible-name-ref
 		cy.get("#inputEnterDesc")

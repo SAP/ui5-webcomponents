@@ -11,6 +11,7 @@ dist
 packages/compat/test/pages/scoped
 packages/main/test/pages/scoped
 packages/fiori/test/pages/scoped
+packages/ai/test/pages/scoped
 
 # Ignore npm files/folders
 node_modules

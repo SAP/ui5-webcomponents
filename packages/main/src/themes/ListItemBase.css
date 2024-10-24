@@ -15,7 +15,7 @@
 }
 
 /* actionable (type="Active" + desktop) */
-:host([actionable]:not([disabled]):not(ui5-li-group-header)) {
+:host([actionable]:not([disabled]):not([ui5-li-group-header])) {
 	cursor: pointer;
 }
 
@@ -30,7 +30,7 @@
 }
 
 /* hovered */
-:host([actionable]:not([active]):not([selected]):not(ui5-li-group-header):hover) {
+:host([actionable]:not([active]):not([selected]):not([ui5-li-group-header]):hover) {
     background-color: var(--sapList_Hover_Background);
 }
 

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+# [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
+
+
+### Features
+
+* **create-package:** produce packages of type="module" ([#9993](https://github.com/SAP/ui5-webcomponents/issues/9993)) ([b161f60](https://github.com/SAP/ui5-webcomponents/commit/b161f601253b966fc0bb7a01213165c0963c85ca))
+
+
+
+
+
 # [2.4.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.1-rc.0...v2.4.0-rc.0) (2024-10-10)
 
 **Note:** Version bump only for package @ui5/create-webcomponents-package
