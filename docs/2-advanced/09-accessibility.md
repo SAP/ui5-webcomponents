@@ -65,8 +65,9 @@ For more information regarding the available themes and how to use them, see the
 
 ### Theme Selection According to OS Settings
 
-
 The UI5 Web Components framework does not offer a built-in mechanism for selecting themes based on the users' OS settings. However, we recommend using standard APIs to implement OS-based theme selection in applications built with UI5 Web Components.
+
+In the next sections, we will demonstrate one of the possible approaches to detect and apply a theme that aligns with the user's OS preferences. However, you are free to explore and develop your own detection and matching algorithm.
 
 #### Light | Dark
 
