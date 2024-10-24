@@ -85,20 +85,7 @@
 		selection-mode="Single"
 	>
 		{{#each _filteredItems}}
-			{{#if isGroupItem}}
-				{{#if _isVisible}}
-					<ui5-li-group header-text="{{this.headerText}}" ?focused={{this.focused}}>
-						{{#each this.items}}
-							{{#if _isVisible}}
-								{{> listItem}}
-							{{/if}}
-						{{/each}}
-					</ui5-li-group>
-				{{/if}}
-			{{else}}
-				{{> listItem}}
-			{{/if}}
-
+			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
 	</ui5-list>
 
@@ -140,20 +127,4 @@
 	{{else}}
 		<slot name="valueStateMessage"></slot>
 	{{/if}}
-{{/inline}}
-
-{{#*inline "listItem"}}
-	<ui5-li
-			accessible-role="Option"
-			type="Active"
-			wrapping-type="Normal"
-			additional-text={{this.additionalText}}
-			group-name={{this.groupName}}
-			.mappedItem={{this}}
-			?selected={{this.selected}}
-			?focused={{this.focused}}
-			data-ui5-stable="{{this.stableDomRef}}"
-	>
-		{{this.text}}
-	</ui5-li>
 {{/inline}}

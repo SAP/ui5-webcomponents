@@ -98,17 +98,12 @@ interface IComboBoxItem extends UI5Element {
 	isGroupItem?: boolean,
 	selected?: boolean,
 	additionalText?: string,
-	stableDomRef: string,
 	_isVisible?: boolean,
 	items?: Array<IComboBoxItem>
 }
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
-
-type ComboBoxListItem = ListItemStandard & {
-	mappedItem: ComboBoxItem
-};
 
 enum ValueStateIconMapping {
 	Negative = "error",
@@ -398,7 +393,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * Defines the component items.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		individualSlots: true,
+		invalidateOnChildChange: true,
+	})
 	items!: Array<IComboBoxItem>;
 
 	/**
@@ -504,10 +504,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.storeResponsivePopoverWidth();
-
-		this.items.forEach(item => {
-			item._getRealDomRef = () => this._getPicker().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
-		});
 	}
 
 	_focusin(e: FocusEvent) {
@@ -1129,9 +1125,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
-		const listItem = e.detail.item as ComboBoxListItem;
+		const item = e.detail.item as ComboBoxItem;
 
-		this._selectedItemText = listItem.mappedItem.text || "";
+		this._selectedItemText = item.text || "";
 		this._selectionPerformed = true;
 
 		const sameItemSelected = this.value === this._selectedItemText;
@@ -1144,16 +1140,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this.value = this._selectedItemText;
 
-		if (!listItem.mappedItem.selected) {
+		if (!item.selected) {
 			this.fireDecoratorEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
-				item: listItem.mappedItem,
+				item,
 			});
 		}
-
-		this._filteredItems.map(item => {
-			item.selected = (item === listItem.mappedItem && !item.isGroupItem);
-			return item;
-		});
 
 		this._fireChangeEvent();
 		this._closeRespPopover();
