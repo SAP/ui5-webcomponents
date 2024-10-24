@@ -4,9 +4,7 @@
 	--_ui5_tc_header_height_text_only: var(--_ui5_tc_item_text_only_height);
 	--_ui5_tc_header_height_text_with_additional_text: var(--_ui5_tc_item_text_only_with_additional_text_height);
 	--_ui5_tc_header_box_shadow: var(--sapContent_HeaderShadow);
-	--_ui5_tc_header_box_shadow_transparent: none;
 	--_ui5_tc_header_border_bottom: 0.125rem solid var(--sapObjectHeader_Background);
-	--_ui5_tc_header_border_bottom_transparent: 0.0625rem solid var(--sapObjectHeader_BorderColor);
 	--_ui5_tc_header_background: var(--sapObjectHeader_Background);
 	--_ui5_tc_header_background_translucent: var(--sapObjectHeader_Background);
 	--_ui5_tc_content_background: var(--sapBackgroundColor);
