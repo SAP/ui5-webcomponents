@@ -11,9 +11,6 @@
 	--_ui5_side_navigation_navigation_separator_height: calc(2 * var(--sapList_BorderWidth));
 	--_ui5_side_navigation_triangle_color: var(--sapContent_IconColor);
 	--_ui5_side_navigation_border_right: 1px solid var(--sapGroup_ContentBorderColor);
-	--_ui5_side_navigation_border_radius: 0;
-	--_ui5_side_navigation_phone_border_radius: 0;
-	--_ui5_side_navigation_box_shadow: none;
 	--_ui5_side_navigation_triangle_display: block;
 	--_ui5_side_navigation_phone_width: var(--_ui5_side_navigation_width);
 
