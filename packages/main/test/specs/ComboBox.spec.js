@@ -179,7 +179,6 @@ describe("General interaction", () => {
 		// act
 		await input.click();
 		await input.keys("b");
-		await browser.pause(1000);
 
 		// assert
 		assert.ok(await popover.getProperty("open"), "Popover should be opened");
@@ -192,13 +191,11 @@ describe("General interaction", () => {
 
 		// act
 		await arrow.click();
-		await browser.pause(1000);
 
 		assert.ok(await popover.getProperty("open"), "Popover should be displayed")
 
 		listItems = await getVisibleItems(combo);
 		await (await listItems[0].shadow$("li")).click();
-		await browser.pause(1000);
 
 		// assert
 		assert.notOk(await popover.getProperty("open"), "Popover should be closed");
@@ -243,7 +240,6 @@ describe("General interaction", () => {
 		
 		await combo.scrollIntoView();
 		await arrow.click();
-		await browser.pause(1000);
 
 		// click on first item
 		await (await combo.$$("ui5-cb-item"))[0].click();
@@ -252,7 +248,6 @@ describe("General interaction", () => {
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
 		await arrow.click();
-		await browser.pause(1000);
 
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 
@@ -278,7 +273,6 @@ describe("General interaction", () => {
 
 		// open picker
 		await arrow.click();
-		await browser.pause(1000);
 
 		await combo.keys("B");
 		await combo.keys("a");
@@ -342,11 +336,9 @@ describe("General interaction", () => {
 		// Type something which is in the list
 		await input.click();
 		await input.keys("Bulgaria");
-		await browser.pause(1000);
 
 		// Click on the item
 		await ((await getVisibleItems(combo))[0]).click();
-		await browser.pause(1000);
 
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
 		assert.strictEqual(await changeValue.getText(), "Bulgaria", "The value should be changed accordingly");
@@ -390,13 +382,11 @@ describe("General interaction", () => {
 		const input = await combo.shadow$("[inner-input]");
 
 		await arrow.click();
-		await browser.pause(1000);
 		await input.keys("ArrowDown");
 
 		assert.strictEqual(await counter.getText(), "0", "Change event should not be fired on item navigation.");
 
 		await (await combo.$$("ui5-cb-item"))[0].click();
-		await browser.pause(1000);
 
 		assert.strictEqual(await counter.getText(), "1", "Change event should be fired on item selection.");
 	});
@@ -434,13 +424,11 @@ describe("General interaction", () => {
 
 		await input.click();
 		await input.keys("a");
-		await browser.pause(1000);
 
 		// click on first item
 		const items = await getVisibleItems(combo);
 
 		await items[0].click();
-		await browser.pause(1000);
 
 		assert.strictEqual(await placeholder.getText(), "Argentina", "Text should correspond to item.");
 		assert.strictEqual(await counter.getText(), "1", "Call count should be 1");
@@ -481,7 +469,6 @@ describe("General interaction", () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$(".inputIcon");
 		await arrow.click();
-		await browser.pause(1000);
 
 		let listItems = await getVisibleItems(combo);
 
@@ -510,7 +497,6 @@ describe("General interaction", () => {
 		const popover = await combo.shadow$("ui5-responsive-popover");
 		
 		await arrow.click();
-		await browser.pause(1000);
 		
 		let listItems = await getVisibleItems(combo);
 		assert.strictEqual(listItems.length, 4, "Items should be 4");
@@ -592,7 +578,6 @@ describe("General interaction", () => {
 		const listItem = (await getVisibleItems(combo))[0];
 
 		await arrow.click();
-		await browser.pause(1000);
 		assert.strictEqual(await listItem.shadow$(".ui5-li-additional-text").getText(), "DZ", "Additional item text should be displayed");
 	});
 
@@ -615,7 +600,6 @@ describe("General interaction", () => {
 
 		await btn.click();
 		await arrow.click();
-		await browser.pause(1000);
 
 		const initialListItems = await getVisibleItems(cb);
 
@@ -669,7 +653,6 @@ describe("General interaction", () => {
 		await input.click();
 		await input.keys("z");
 		await arrow.click();
-		await browser.pause(1000);
 
 		let listItems = await getVisibleItems(cb);
 
@@ -691,7 +674,6 @@ describe("Grouping", () => {
 		let groupItems;
 
 		await arrow.click();
-		await browser.pause(1000);
 
 		groupItems = (await getVisibleGroupItems(combo));
 		listItems = (await getVisibleItems(combo));
@@ -714,7 +696,6 @@ describe("Grouping", () => {
 		const arrow = await combo.shadow$(".inputIcon");
 
 		await arrow.click();
-		await browser.pause(1000);
 		await input.keys("ArrowDown");
 
 		const groupItem = (await getVisibleGroupItems(combo))[0];
@@ -734,7 +715,6 @@ describe("Grouping", () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
-		await browser.pause(1000);
 
 		const groupItem = (await getVisibleGroupItems(combo))[1];
 
@@ -752,7 +732,6 @@ describe("Grouping", () => {
 		await input.keys("a");
 		await input.keys("ArrowDown");
 		await input.keys("Enter");
-		await browser.pause(1000);
 
 		assert.ok(await popover.getProperty("open"), "Popover remains open");
 	});
@@ -765,13 +744,12 @@ describe("Grouping", () => {
 
 		await input.click();
 		await input.keys("a");
-		await browser.pause(1000);
 
 		const listItem = (await getVisibleItems(combo))[0];
 
 		assert.ok(await listItem, "The filtered item is shown");
 		assert.strictEqual(await list.getAttribute("accessible-role"), "ListBox", "The list item has the correct role attribute");
-		assert.strictEqual(await listItem.getAttribute("accessible-role"), "Option", "The list item has the correct role attribute");
+		assert.strictEqual(await listItem.shadow$("li").getAttribute("role"), "option", "The list item has the correct role attribute");
 		assert.strictEqual((await getVisibleItems(combo)).length, 5, "Group items are filtered correctly");
 	});
 });
@@ -982,7 +960,6 @@ describe("Keyboard navigation", async () => {
 
 		await arrow.click();
 		await input.keys("ArrowDown");
-		await browser.pause(1000);
 
 		groupItem = (await getVisibleGroupItems(combo))[0];
 
@@ -1014,7 +991,6 @@ describe("Keyboard navigation", async () => {
 
 		await arrow.click();
 		await input.keys("ArrowDown");
-		await browser.pause(1000);
 
 		valueStateHeader = await popover.$(".ui5-responsive-popover-header.ui5-valuestatemessage-root");
 
@@ -1045,14 +1021,12 @@ describe("Keyboard navigation", async () => {
 
 		await input.click();
 		await input.keys("A");
-		await browser.pause(1000);
 
 		listItem = (await getVisibleItems(combo))[1];
 
 		assert.strictEqual(await listItem.getProperty("focused"), false, "The selected item is not focused");
 
 		await arrow.click();
-		await browser.pause(1000);
 
 		// Got to the last item and press ENTER
 		await input.keys("ArrowDown");
@@ -1065,7 +1039,6 @@ describe("Keyboard navigation", async () => {
 		await input.keys("Enter");
 
 		await arrow.click();
-		await browser.pause(1000);
 
 		listItem = (await getVisibleItems(combo))[3];
 
@@ -1087,7 +1060,6 @@ describe("Keyboard navigation", async () => {
 
 		await input.click();
 		await input.keys("ArrowDown");
-		await browser.pause(1000);
 
 		assert.equal(await combo.getProperty("value"), "Argentina", "The value is updated with the first suggestion item text");
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
@@ -1108,7 +1080,6 @@ describe("Keyboard navigation", async () => {
 		assert.equal(await combo.getProperty("focused"), true, "The input is focused");
 
 		await arrow.click();
-		await browser.pause(1000);
 
 		prevListItem = (await getVisibleItems(combo))[5];
 
@@ -1167,7 +1138,6 @@ describe("Keyboard navigation", async () => {
 
 		// Opened picker
 		await pickerIcon.click();
-		await browser.pause(1000);
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 
@@ -1190,7 +1160,6 @@ describe("Keyboard navigation", async () => {
 
 		// Closed picker
 		await pickerIcon.click();
-		await browser.pause(1000);
 
 		// Clearing typed in value to prevent default behavior of HOME
 		await comboBox.setProperty("value", "");
@@ -1274,7 +1243,6 @@ describe("Keyboard navigation", async () => {
 
 		await comboBox.click();
 		await comboBox.keys("F4");
-		await browser.pause(1000);
 
 		const selectedListItem = (await getVisibleItems(comboBox))[8];
 
@@ -1289,10 +1257,8 @@ describe("Keyboard navigation", async () => {
 
 		await input.click();
 		await input.keys("test");
-		await browser.pause(1000);
 
 		await comboBox.keys("F4");
-		await browser.pause(1000);
 
 
 		const popover = await comboBox.shadow$("ui5-responsive-popover");
@@ -1312,7 +1278,6 @@ describe("Keyboard navigation", async () => {
 
 		await input.click();
 		await comboBox.keys("F4");
-		await browser.pause(1000);
 
 		const listItems = await getVisibleItems(comboBox);
 		const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
@@ -1332,7 +1297,6 @@ describe("Keyboard navigation", async () => {
 
 		await input.click();
 		await comboBox.keys("F4");
-		await browser.pause(1000);
 
 		const listItems = await getVisibleItems(comboBox);
 		const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
@@ -1416,7 +1380,6 @@ describe("Keyboard navigation", async () => {
 		await combo.scrollIntoView();
 
 		await arrow.click();
-		await browser.pause(1000);
 
 		let isInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");
@@ -1446,7 +1409,6 @@ describe("Keyboard navigation", async () => {
 		// click ArrowDown 16 times
 		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
 		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
-		await browser.pause(1000);
 
 		isInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");
@@ -1474,7 +1436,6 @@ describe("Keyboard navigation", async () => {
 		assert.ok(isInVisibleArea, "Item should be displayed in the viewport");
 
 		await input.keys("Home");
-		await browser.pause(1000);
 
 		let isFirstItemInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");

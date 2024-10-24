@@ -1371,7 +1371,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		const filteredItems = (Filters[this.filter] || Filters.StartsWithPerTerm)(str, itemsToFilter, "text");
 
 		this._getItems().forEach(item => {
-			item._isVisible = filteredItems.includes(item);
+			if (isInstanceOfMultiComboBoxItem(item)) {
+				item._isVisible = filteredItems.includes(item);
+			}
 		});
 
 		return this.items.filter(item => {
@@ -1641,7 +1643,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 
 		if (!input || !value) {
 			this._getItems().forEach(item => {
-				item._isVisible = true;
+				if (isInstanceOfMultiComboBoxItem(item)) {
+					item._isVisible = true;
+				}
 			});
 			return;
 		}

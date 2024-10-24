@@ -60,16 +60,11 @@ class ComboBoxItem extends ListItemBase implements IComboBoxItem {
 	 * Defines the markup text that will be displayed as suggestion.
 	 * Used for highlighting the matching parts of the text.
 	 *
-	 * @since 2.0.0
+	 * @since 2.4.0
 	 * @private
 	 */
 	@property()
 	markupText = "";
-
-	onEnterDOM(): void {
-		super.onEnterDOM();
-		this.setAttribute("accessible-role", "Option");
-	}
 }
 
 ComboBoxItem.define();
