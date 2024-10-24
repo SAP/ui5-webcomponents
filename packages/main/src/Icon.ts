@@ -114,7 +114,6 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 @event("click", {
 	bubbles: true,
 })
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.

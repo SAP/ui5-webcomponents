@@ -38,7 +38,7 @@ export default (props: Button, injectedProps?: { ariaPressed?: boolean }) => {
 				></Icon>
 			}
 
-			<span id="{_id}-content" class="ui5-button-text">
+			<span id={`${props._id}-content`} class="ui5-button-text">
 				<bdi>
 					<slot></slot>
 				</bdi>

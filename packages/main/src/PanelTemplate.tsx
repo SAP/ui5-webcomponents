@@ -1,4 +1,4 @@
-import clsx from "clsx/lite";
+import clsx from "clsx"
 import type Panel from "./Panel.js"
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -35,10 +35,10 @@ export default ({
 			{ hasHeaderOrHeaderText &&
 				// header: either header or h1 with header text
 				<div
-					class={clsx(
-						"ui5-panel-heading-wrapper",
-						stickyHeader && "ui5-panel-heading-wrapper-sticky",
-					)}
+					class={clsx({
+						"ui5-panel-heading-wrapper": true,
+						"ui5-panel-heading-wrapper-sticky": stickyHeader,
+					})}
 					role={headingWrapperRole}
 					aria-level={headingWrapperAriaLevel}
 				>
@@ -67,10 +67,10 @@ export default ({
 									>
 										<div class="ui5-panel-header-icon-wrapper">
 											<Icon
-												class={clsx(
-													"ui5-panel-header-icon",
-													!shouldNotAnimate && "ui5-panel-header-button-animated",
-												)}
+												class={clsx({
+													"ui5-panel-header-icon": true,
+													"ui5-panel-header-button-animated": !shouldNotAnimate,
+												})}
 												name="slim-arrow-right"
 											>
 											</Icon>
