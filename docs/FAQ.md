@@ -9,7 +9,7 @@
 
 **A:** There are several resources:
 - [Web Components APIs](https://sap.github.io/ui5-webcomponents/v1/components/)
-- [First speps](https://sap.github.io/ui5-webcomponents/v1/docs/getting-started/first-steps/)
+- [First steps](https://sap.github.io/ui5-webcomponents/v1/docs/getting-started/first-steps/)
 - [How to get started?](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/)
 
 **Q: Is there a CDN to load UI5 Web Components from?**
