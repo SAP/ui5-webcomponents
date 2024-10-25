@@ -1,10 +1,3 @@
-import cypressConfig from "@ui5/webcomponents-testing/cypress.config.js";
-import path from "path";
-import { fileURLToPath } from "node:url";
+import { defineConfig } from "@ui5/webcomponents-testing/cypress/config.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-cypressConfig.component.supportFile = path.join(__dirname, "cypress/support/component.ts");
-
-export default cypressConfig;
+export default defineConfig({});
