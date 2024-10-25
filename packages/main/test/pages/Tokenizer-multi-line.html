@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
 
-	<title>Tokenizer</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Tokenizer - multi-line</title>
+	<meta name="viewport" content="width=device-width">
 	<meta charset="utf-8">
 
 	<script data-ui5-config type="application/json">
@@ -86,11 +86,42 @@
 			<ui5-token text="Latvia"></ui5-token>
 		</ui5-tokenizer>
 
-
-		<h1 class="sample-container-title">Multi Line with clear all</h1>
-		<ui5-tokenizer show-clear-all multi-line style="width: 320px;">
+		<h1 class="sample-container-title">Multi Line with restricted height and clear all</h1>
+		<ui5-tokenizer id='clear-all' show-clear-all multi-line style="width: 320px; height:100px; border: solid 1px grey;">
 			<ui5-token text="Andora"></ui5-token>
 			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
+		</ui5-tokenizer>
+
+
+		<h1 class="sample-container-title">Multi Line with clear all - single token</h1>
+		<ui5-tokenizer show-clear-all multi-line style="width: 320px;">
+			<ui5-token text="Bulgaria"></ui5-token>
+		</ui5-tokenizer>
+
+		<h1 class="sample-container-title">Single Line with n-more</h1>
+		<ui5-tokenizer id='clear-all' style="width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
 		</ui5-tokenizer>
 	</div>
 

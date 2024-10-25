@@ -67,6 +67,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
 	TOKENIZER_SHOW_ALL_ITEMS,
+	TOKENIZER_CLEAR_ALL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -359,7 +360,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	handleClearAll() {
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._tokens });
+		this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._tokens });
 	}
 
 	onBeforeRendering() {
@@ -972,7 +973,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showEffectiveClearAll() {
-		return this.showClearAll && this.hasTokens;
+		return this.showClearAll && this.hasTokens && this.multiLine;
 	}
 
 	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<IToken>) {
@@ -1060,6 +1061,10 @@ class Tokenizer extends UI5Element {
 		}
 
 		return Tokenizer.i18nBundle.getText(TOKENIZER_SHOW_ALL_ITEMS, this._nMoreCount);
+	}
+
+	get _clearAllText() {
+		return Tokenizer.i18nBundle.getText(TOKENIZER_CLEAR_ALL);
 	}
 
 	get showNMore() {

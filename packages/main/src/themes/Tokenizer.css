@@ -11,6 +11,8 @@
 	height: auto;
 
 	.ui5-tokenizer--content {
+		display: flex;
+		align-content: baseline;
 		flex-wrap: wrap;
 		padding: .25rem;
 		box-sizing: border-box;
@@ -71,6 +73,10 @@
 	padding-inline-start: var(--_ui5_tokenizer_padding);
 	height: 100%;
 	box-sizing: border-box;
+}
+
+.ui5-tokenizer--list{
+	display: contents;
 }
 
 :host([_tokens-count="1"]) .ui5-tokenizer--content {
