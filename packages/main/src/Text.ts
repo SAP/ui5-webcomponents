@@ -69,7 +69,7 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property()
-	emptyIndicatorMode?: `${TextEmptyIndicatorMode}` = "Off";
+	emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
 
 	/**
 	 * Defines the text of the component.
