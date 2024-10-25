@@ -23,7 +23,7 @@ describe("Custom mount", () => {
 		cy.get("script[data-ui5-config]")
 			.should("exist")
 			.then($el => {
-				return ($el.get(0) as HTMLElement).innerHTML;
+				return $el.get(0).innerHTML;
 			})
 			.should("equal", JSON.stringify(configurationObject));
 
