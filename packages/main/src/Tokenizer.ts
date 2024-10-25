@@ -214,9 +214,19 @@ class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	readonly = false;
 
+	/**
+	 * **Note:** The multiLine property is in an experimental state and is a subject to change.
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	multiLine = false;
 
+	/**
+	 * **Note:** The showClearAll property is in an experimental state and is a subject to change.
+	 * @default false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	showClearAll = false;
 
