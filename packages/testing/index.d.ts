@@ -1,5 +1,6 @@
 import { mount, MountLitTemplateOptions as OriginalMountLitTemplateOptions } from "cypress-ct-lit";
 import "cypress";
+import "cypress-real-events";
 
 module "cypress-ct-lit" {
 	interface MountLitTemplateOptions extends OriginalMountLitTemplateOptions {
