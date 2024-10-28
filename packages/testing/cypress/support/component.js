@@ -12,14 +12,20 @@ function cleanup() {
 Cypress.Commands.overwrite("mount", (originalFn, template, options = {}) => {
 	const configurationScript = document.head.querySelector("script[data-ui5-config]")
 	cleanup();
+
+	if (!configurationScript) {
+		dispose = () => {}
+
+		return originalFn(template, options);
+	}
+
 	if (options?.ui5Configuration) {
 		configurationScript.innerHTML = JSON.stringify(options.ui5Configuration);
-
 	}
 
 	dispose = () => {
 		configurationScript.innerHTML = "{}";
 	}
 
-return originalFn(template, options)
+	return originalFn(template, options)
 })
