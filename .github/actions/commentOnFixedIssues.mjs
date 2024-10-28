@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs';
 import { success as issueCommenter } from '@semantic-release/github';
 
-const getRelease = async (version) => {
+const getRelease = async (github, version) => {
 	const releaseInfo = await github.request('GET /repos/{owner}/{repo}/releases/tags/{tag}', {
 		owner: context.repo.owner,
 		repo: context.repo.repo,
@@ -44,7 +44,7 @@ const getOctokitShim = (github) => {
 export default async function run({ github, context }) {
   const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
   const { version } = JSON.parse(lerna);
-  const release = await getRelease(version);
+  const release = await getRelease(github, version);
   const commits = getReleaseCommits(release);
   const Octokit = getOctokitShim(github);
 
