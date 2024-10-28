@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs';
 import { success as issueCommenter } from '@semantic-release/github';
 
-const getRelease = async (version) => {
+const getRelease = async (github, version) => {
 	const releaseInfo = await github.request('GET /repos/{owner}/{repo}/releases/tags/{tag}', {
 		owner: context.repo.owner,
 		repo: context.repo.repo,
