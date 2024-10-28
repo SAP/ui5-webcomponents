@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+* **ui5-input:** properly change numeric input value using the arrow keys ([#10018](https://github.com/SAP/ui5-webcomponents/issues/10018)) ([9acc0ae](https://github.com/SAP/ui5-webcomponents/commit/9acc0aeea0d2efe0b6f84d2059e50d4d259d98a7)), closes [#9616](https://github.com/SAP/ui5-webcomponents/issues/9616)
+* **ui5-menu-li:** add font-size to the menu item text ([#9991](https://github.com/SAP/ui5-webcomponents/issues/9991)) ([f1221c7](https://github.com/SAP/ui5-webcomponents/commit/f1221c797ba625b3e1bbde090d83967b78a54979)), closes [#9986](https://github.com/SAP/ui5-webcomponents/issues/9986)
+* **ui5-menu:** fix focus steal of ui5-wizard in mozilla ([#9845](https://github.com/SAP/ui5-webcomponents/issues/9845)) ([c0c90b2](https://github.com/SAP/ui5-webcomponents/commit/c0c90b2c9a1d3b2f92b1b8b73832430377499870))
+* **ui5-popup:** add role attribute to focus helper element ([#10044](https://github.com/SAP/ui5-webcomponents/issues/10044)) ([e8b1c2a](https://github.com/SAP/ui5-webcomponents/commit/e8b1c2a4a5a12cb7a46486772699476ff59205f1)), closes [#9982](https://github.com/SAP/ui5-webcomponents/issues/9982)
+
+
+
+
+
 ## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
 
 
