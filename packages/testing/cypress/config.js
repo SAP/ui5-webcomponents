@@ -35,7 +35,6 @@ const defineCypressConfig = (externalConrfig = {}) => {
 		indexHtmlFile = path.join(__dirname, indexHtmlFilePath);
 	}
 
-
 	if (!existsSync(path.join(__processDir, "vite.config.js")) && !externalConrfig.component?.devServer?.viteConfig) {
 		config.component.devServer.viteConfig = import.meta.resolve("@ui5/webcomponents-tools/components-package/vite.config.js");
 	}
