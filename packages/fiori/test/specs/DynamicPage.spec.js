@@ -450,16 +450,4 @@ describe("ARIA attributes", () => {
         assert.strictEqual(await expandButton.getProperty("tooltip"), "Expand Header",
             "expand button tooltip is correct");
     });
-
-    it("sets snapped state attributes", async () => {
-        const page = await browser.$("#page");
-        const title = await browser.$("#page ui5-dynamic-page-title");
-
-        // snap the header
-        await page.setProperty("headerSnapped", true);
-        await page.setProperty("headerSnapped", false);
-
-        assert.strictEqual(await title.getAttribute("hovered"), undefined,
-            "expand button tooltip is correct");
-    });
 });

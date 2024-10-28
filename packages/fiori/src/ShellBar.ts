@@ -1081,7 +1081,7 @@ class ShellBar extends UI5Element {
 				icon: "overflow",
 				text: "Overflow",
 				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button ui5-shellbar-button`,
-				priority: 0,
+				priority: 8,
 				styles: {
 					order: showOverflowButton ? 4 : -1,
 				},
@@ -1093,7 +1093,7 @@ class ShellBar extends UI5Element {
 			{
 				text: "Person",
 				classes: `${this.hasProfile ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-image-button ui5-shellbar-button`,
-				priority: 0,
+				priority: 9,
 				styles: {
 					order: this.hasProfile ? 5 : -10,
 				},
@@ -1107,7 +1107,7 @@ class ShellBar extends UI5Element {
 				icon: "grid",
 				text: this._productsText,
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-button-product-switch`,
-				priority: 0,
+				priority: 10,
 				styles: {
 					order: this.showProductSwitch ? 6 : -10,
 				},

@@ -226,7 +226,6 @@ class DynamicPage extends UI5Element {
 			this.dynamicPageTitle.snapped = this._headerSnapped;
 			this.dynamicPageTitle.interactive = this.hasHeading;
 			this.dynamicPageTitle.hasSnappedTitleOnMobile = !!this.hasSnappedTitleOnMobile;
-			this.dynamicPageTitle?.removeAttribute("hovered");
 		}
 	}
 
