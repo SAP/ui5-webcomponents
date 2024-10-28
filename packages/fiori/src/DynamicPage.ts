@@ -317,26 +317,26 @@ class DynamicPage extends UI5Element {
 		const lastHeaderSnapped = this._headerSnapped;
 
 		const shouldSnap = !this._headerSnapped && scrollTop > headerHeight + SCROLL_THRESHOLD;
-		const shouldUnsnap = this._headerSnapped
-			&& (scrollTop < headerHeight - SCROLL_THRESHOLD
+		const shouldExpand = this._headerSnapped && (scrollTop < headerHeight - SCROLL_THRESHOLD
 			|| (!scrollTop && !headerHeight));
 
 		if (shouldSnap) {
 			this.showHeaderInStickArea = false;
 			this._headerSnapped = true;
 
-			//* snappTitleOnMobile
+			//* snappedTitleOnMobile
 			// If the header is snapped and the scroll is at the top, scroll down a bit
-			// to make avoid ending in endless loop of snapping and unsnapping
+			// to avoid ending in an endless loop of snapping and unsnapping
 			requestAnimationFrame(() => {
 				if (this.scrollContainer!.scrollTop === 0) {
 					this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
 				}
 			});
-		} else if (shouldUnsnap) {
+		} else if (shouldExpand) {
 			this._headerSnapped = false;
 		}
 
+		// Fire event if snapped state changed
 		if (lastHeaderSnapped !== this._headerSnapped) {
 			this.fireDecoratorEvent("title-toggle");
 		}
