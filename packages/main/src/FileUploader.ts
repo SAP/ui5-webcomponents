@@ -7,7 +7,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -272,7 +271,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			this._input.click();
 		}
 	}
