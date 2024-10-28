@@ -246,7 +246,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	get headerInContent(): boolean {
-		return !this.showHeaderInStickArea && !this.headerInTitle;
+		return !this.showHeaderInStickArea && !this.headerInTitle && !this.hasSnappedTitleOnMobile;
 	}
 
 	get _headerLabel() {
@@ -308,6 +308,7 @@ class DynamicPage extends UI5Element {
 		}
 
 		const scrollTop = this.scrollContainer!.scrollTop;
+		const headerHeight = this.dynamicPageHeader.getBoundingClientRect().height;
 		const lastHeaderSnapped = this._headerSnapped;
 
 		if (this.skipSnapOnScroll) {
@@ -315,18 +316,29 @@ class DynamicPage extends UI5Element {
 			return;
 		}
 
-		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
+		// Snap if above threshold and not already snapped
+		if (!this._headerSnapped && scrollTop > headerHeight + SCROLL_THRESHOLD) {
 			this.showHeaderInStickArea = false;
 			this._headerSnapped = true;
-		} else {
+
+			// Wait for render to adjust scrollTop if necessary
+			requestAnimationFrame(() => {
+				if (this.scrollContainer!.scrollTop === 0) {
+					this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
+				}
+			});
+			return; // Early return to avoid further checks
+		}
+
+		// Unsnap if below threshold
+		if (scrollTop < headerHeight - SCROLL_THRESHOLD || (!scrollTop && !headerHeight && this._headerSnapped)) {
 			this._headerSnapped = false;
 		}
 
+		// Fire event if snapped state changed
 		if (lastHeaderSnapped !== this._headerSnapped) {
 			this.fireDecoratorEvent("title-toggle");
 		}
-
-		this.dynamicPageTitle.snapped = this._headerSnapped;
 	}
 
 	async onExpandClick() {
