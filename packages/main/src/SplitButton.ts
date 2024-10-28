@@ -232,7 +232,7 @@ class SplitButton extends UI5Element {
 		this._fireClick(e);
 	}
 
-	_onFocusOut(e: FocusEvent) {
+	_onFocusOut() {
 		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
@@ -241,7 +241,7 @@ class SplitButton extends UI5Element {
 		this._setTabIndexValue();
 	}
 
-	_onFocusIn(e: FocusEvent) {
+	_onFocusIn() {
 		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
