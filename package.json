@@ -60,6 +60,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@semantic-release/github": "^11.0.0",
     "@wdio/devtools-service": "^7.19.7",
     "command-line-args": "^5.1.1",
     "copy-and-watch": "^0.1.5",
