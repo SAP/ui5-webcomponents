@@ -43,7 +43,7 @@
     "ci:releasebuild": "npm-run-all --sequential generate ts generateProd generateAPI",
     "ci:lint": "npm-run-all --sequential generate lint",
     "ci:testbuild": "npm-run-all --sequential generate ts generateProd bundle",
-    "ci:deploy": "DEPOY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
+    "ci:deploy": "DEPLOY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build",
     "ci:deploy:nightly": "DEPLOY_NIGHTLY=true yarn ci:testbuild && yarn generateAPI && yarn workspace @ui5/webcomponents-website ci:build:nightly",
 
     "ci:test:base": "yarn workspace @ui5/webcomponents-base test",
@@ -66,6 +66,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@semantic-release/github": "^11.0.0",
     "@wdio/devtools-service": "^7.19.7",
     "command-line-args": "^5.1.1",
     "copy-and-watch": "^0.1.5",
