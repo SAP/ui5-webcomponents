@@ -13,78 +13,56 @@
 		{{/if}}
 
 		{{#if hasMenuItems}}
-		{{#unless showLogoInMenuButton}}
-		<span class="ui5-shellbar-logo" role="{{accLogoRole}}" aria-label="{{_logoText}}" title="{{_logoText}}"
-			@click="{{_logoPress}}" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}" tabindex="0"
-			data-ui5-stable="logo">
-			<slot name="logo"></slot>
-		</span>
-		{{/unless}}
-
-		{{#if showTitleInMenuButton}}
-		<h1 class="ui5-hidden-text">
-			{{primaryTitle}}
-		</h1>
-		{{/if}}
-
-		{{#if showMenuButton}}
-		<button class="{{classes.button}}" @click="{{_headerPress}}" aria-haspopup="menu"
-			aria-expanded="{{_menuPopoverExpanded}}" data-ui5-stable="menu">
-			{{#if showLogoInMenuButton}}
-			<span class="ui5-shellbar-logo" role="{{accLogoRole}}" aria-label="{{_logoText}}" title="{{_logoText}}">
-				<slot name="logo"></slot>
-			</span>
-			{{/if}}
-
+			{{#unless showLogoInMenuButton}}
+				{{#if hasLogo}}
+					{{> singleLogo}}
+				{{/if}}
+			{{/unless}}
 
 			{{#if showTitleInMenuButton}}
-			<div class="ui5-shellbar-menu-button-title">
+			<h1 class="ui5-hidden-text">
 				{{primaryTitle}}
-			</div>
+			</h1>
 			{{/if}}
 
-			<ui5-icon class="ui5-shellbar-menu-button-arrow" name="slim-arrow-down">
-			</ui5-icon>
-		</button>
-		{{/if}}
+			{{#if showMenuButton}}
+				<button class="{{classes.button}}" @click="{{_headerPress}}" aria-haspopup="menu"
+					aria-expanded="{{_menuPopoverExpanded}}" data-ui5-stable="menu">
+					{{#if showLogoInMenuButton}}
+					<span class="ui5-shellbar-logo" aria-label="{{_logoText}}" title="{{_logoText}}">
+						<slot name="logo"></slot>
+					</span>
+					{{/if}}
+
+
+					{{#if showTitleInMenuButton}}
+					<div class="ui5-shellbar-menu-button-title">
+						{{primaryTitle}}
+						{{#if secondaryTitle}}
+							<div style="display: block" class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</div>
+						{{/if}}
+					</div>
+					{{/if}}
+
+					<ui5-icon class="ui5-shellbar-menu-button-arrow" name="slim-arrow-down">
+					</ui5-icon>
+				</button>
+			{{/if}}
 		{{/if}}
 
 		{{#unless hasMenuItems}}
 		{{#if hasMenuItems}}
 			<slot name="menuItems"></slot>
 		{{/if}}
-		<div class="ui5-shellbar-logo-area" @click="{{_logoPress}}" tabindex="0" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}">
+
+		{{#if _isSBreakpoint}}
 			{{#if hasLogo}}
-				<span class="ui5-shellbar-logo"
-					role="{{accLogoRole}}"
-					aria-label="{{_logoText}}"
-					title="{{_logoText}}"
-					@click="{{_logoPress}}"
-					@keydown="{{_logoKeydown}}"
-					@keyup="{{_logoKeyup}}"
-					data-ui5-stable="logo"
-				>
-					<slot name="logo"></slot>
-				</span>
+				{{> singleLogo}}
 			{{/if}}
-			{{#unless _isSBreakpoint}}
-			<div class="ui5-shellbar-headings">
-				{{#if primaryTitle}}
-				<h1 class="ui5-shellbar-title">
-					<bdi>{{primaryTitle}}</bdi>
-				</h1>
-				{{/if}}
-				{{#if secondaryTitle}}
-					{{#if primaryTitle}}
-					<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
-					{{/if}}
-				{{/if}}
-			</div>
-			{{/unless}}
-		</div>
+		{{else}}
+			{{> combinedLogo}}
+		{{/if}}
 		{{/unless}}
-
-
 
 	</div>
 	{{#if hasMidContent}}
@@ -137,7 +115,7 @@
 									</div>
 									<ui5-button
 										@click={{_handleCancelButtonPress}}
-										class="ui5-shellbar-button"
+										class="ui5-shellbar-button ui5-shellbar-cancel-button"
 										data-ui5-stable="cancel-search"
 									>
 										{{_cancelBtnText}}
@@ -245,6 +223,45 @@
 	>
 		<slot name="profile"></slot>
 	</ui5-button>
+{{/inline}}
+
+
+{{#*inline "singleLogo"}}
+	<span class="ui5-shellbar-logo" role="{{accLogoRole}}" aria-label="{{_logoText}}" title="{{_logoText}}"
+		@click="{{_logoPress}}" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}" tabindex="0"
+		data-ui5-stable="logo">
+		<slot name="logo"></slot>
+	</span>
+{{/inline}}
+
+{{#*inline "combinedLogo"}}
+<div class="ui5-shellbar-logo-area" @click="{{_logoPress}}" tabindex="0" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}">
+	{{#if hasLogo}}
+		<span class="ui5-shellbar-logo"
+			role="{{accLogoRole}}"
+			aria-label="{{_logoText}}"
+			title="{{_logoText}}"
+			@click="{{_logoPress}}"
+			@keydown="{{_logoKeydown}}"
+			@keyup="{{_logoKeyup}}"
+			data-ui5-stable="logo"
+		>
+			<slot name="logo"></slot>
+		</span>
+	{{/if}}
+	<div class="ui5-shellbar-headings">
+		{{#if primaryTitle}}
+		<h1 class="ui5-shellbar-title">
+			<bdi>{{primaryTitle}}</bdi>
+		</h1>
+		{{/if}}
+		{{#if secondaryTitle}}
+			{{#if primaryTitle}}
+			<h2 class="ui5-shellbar-secondary-title" data-ui5-stable="secondary-title">{{secondaryTitle}}</h2>
+			{{/if}}
+		{{/if}}
+	</div>
+</div>
 {{/inline}}
 
 {{>include "./ShellBarPopover.hbs"}}
