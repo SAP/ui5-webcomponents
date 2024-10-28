@@ -334,10 +334,10 @@ slot[name="profile"] {
 	margin-inline-end: 0.5rem;
 }
 
-:host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-left {
+/* :host([breakpoint-size="XXL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-left {
 	flex-basis: 50%;
 	max-width: calc(50% - 18.25rem);
-}
+} */
 
 .ui5-shellbar-menu-button {
 	white-space: nowrap;
@@ -385,6 +385,7 @@ slot[name="profile"] {
 	align-items: center;
 	overflow: hidden;
 	flex: 1 1 auto;
+	max-width: max-content;
 }
 
 .ui5-shellbar-overflow-container-additional-content {
@@ -433,6 +434,8 @@ slot[name="profile"] {
 .ui5-shellbar-invisible-button {
 	visibility: hidden;
 	order: -1;
+	min-width: 0;
+    width: 0;
 }
 
 ::slotted([hidden]) {
