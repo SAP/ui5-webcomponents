@@ -3,8 +3,8 @@ import { success as issueCommenter } from '@semantic-release/github';
 
 const getRelease = async (github, version) => {
 	const releaseInfo = await github.request('GET /repos/{owner}/{repo}/releases/tags/{tag}', {
-		owner: context.repo.owner,
-		repo: context.repo.repo,
+		owner: "SAP",
+		repo: "ui5-webcomponents",
 		tag: `v${version}`
 	});
 	const release = releaseInfo.data;
@@ -38,10 +38,9 @@ const getOctokitShim = (github) => {
 /**
  * Publishes comments to issues that are fixed and released.
  * @param options.github
- * @param options.context
  * @returns {Promise<void>}
  */
-export default async function run({ github, context }) {
+export default async function run({ github }) {
   const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
   const { version } = JSON.parse(lerna);
   const release = await getRelease(github, version);
@@ -49,7 +48,7 @@ export default async function run({ github, context }) {
   const Octokit = getOctokitShim(github);
 
   await issueCommenter({}, {
-    options: { repositoryUrl: `https://github.com/${context.repo.owner}/${context.repo.repo}`},
+    options: { repositoryUrl: `https://github.com/SAP/ui5-webcomponents/`},
     commits,
     nextRelease: { version: `v${version}` },
     releases: [release],
