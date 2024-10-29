@@ -1,7 +1,8 @@
 import { promises as fs } from 'node:fs';
 import { success as issueCommenter } from '@semantic-release/github';
 
-const getRelease = async (github, context, version) => {
+const getReleaseCommits = async (github, context, version) => {
+	const commits = new Set();
 	const { owner, repo } = context.repo;
 	const releaseInfo = await github.request('GET /repos/{owner}/{repo}/releases/tags/{tag}', {
 		owner,
@@ -11,23 +12,17 @@ const getRelease = async (github, context, version) => {
 	const release = releaseInfo.data;
 	release.url = release.html_url;
 
-	return release;
-};
-
-const getReleaseCommits = (release) => {
-	const commits = [];
-	let counter = 0;
-
-	let result;
-	do {
-		result = /commit\/(?<sha>\w{40})/gm.exec(release.body);
-		if (result?.groups?.sha) {
-			commits.push({ hash: result.groups.sha });
+	// Using matchAll for all SHA matches and adding unique entries to a Set
+	const releaseBody = release.body || '';
+	const shaRegex = /commit\/(?<sha>\w{40})/g;
+	for (const match of releaseBody.matchAll(shaRegex)) {
+		if (match.groups?.sha) {
+			commits.add({ hash: match.groups.sha });
 		}
-		counter++
-	} while (result && counter < 50);
+	}
 
-	return commits;
+	// Converting Set back to an array to get unique commits as array
+	return Array.from(commits);
 };
 
 const getOctokitShim = (github) => {
@@ -47,27 +42,15 @@ const getOctokitShim = (github) => {
 export default async function run({ github, context }) {
   const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
   const { version } = JSON.parse(lerna);
-
   const { owner, repo } = context.repo;
-  const repositoryUrl =  `https://github.com/${context.repo.owner}/${context.repo.repo}/`;
-
-  console.log('Repository URL:', repositoryUrl);
-  console.log('Context owner:', owner);
-  console.log('Context repo:', repo);
-
-
-  const release = await getRelease(github, context, version);
-  const commits = getReleaseCommits(release);
+  const commits = await getReleaseCommits(github, context, version);
   const Octokit = getOctokitShim(github);
 
-  console.log('Commits:', commits.toString());
-  console.log('Version:', version);
-  console.log('Release:', release);
 
   try {
 	const semanticRleaseContext = {
 		options: { 
-			repositoryUrl: `https://github.com/${context.repo.owner}/${context.repo.repo}/` 
+			repositoryUrl: `https://github.com/${owner}/${repo}/` 
 		},
 		commits,
 		nextRelease: { version: `v${version}` },
@@ -76,6 +59,7 @@ export default async function run({ github, context }) {
 		env: process.env
 	};
 
+	console.log('Commits:', commits.toString());
 	console.log('semanticRleaseContext:', semanticRleaseContext);
 
 	await issueCommenter({}, semanticRleaseContext, { Octokit });
