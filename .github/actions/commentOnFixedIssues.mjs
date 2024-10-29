@@ -60,14 +60,29 @@ export default async function run({ github, context }) {
   const commits = getReleaseCommits(release);
   const Octokit = getOctokitShim(github);
 
-  await issueCommenter({}, {
-    options: { 
-		repositoryUrl: `https://github.com/${context.repo.owner}/${context.repo.repo}/` 
-	},
-    commits,
-    nextRelease: { version: `v${version}` },
-    releases: [release],
-    logger: console,
-    env: process.env
-  }, { Octokit });
+  console.log('Commits:', commits.toString());
+  console.log('Version:', version);
+  console.log('Release:', release);
+
+  try {
+	const semanticRleaseContext = {
+		options: { 
+			repositoryUrl: `https://github.com/${context.repo.owner}/${context.repo.repo}/` 
+		},
+		commits,
+		nextRelease: { version: `v${version}` },
+		releases: [release],
+		logger: console,
+		env: process.env
+	};
+
+	console.log('semanticRleaseContext:', semanticRleaseContext);
+
+	await issueCommenter({}, semanticRleaseContext, { Octokit });
+
+  } catch (error) {
+	console.error('Error in posting comment:', error);
+  }
+
+  
 }
