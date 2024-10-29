@@ -658,7 +658,7 @@ class ShellBar extends UI5Element {
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
 
 			return isHidden && isSet && !shouldStayOnScreen;
-		}).toReversed();
+		});
 
 		this._observeMenuItems();
 	}
@@ -765,9 +765,10 @@ class ShellBar extends UI5Element {
 		const itemsByPriority = this.itemsByPriority(items);
 
 		for (let i = 0; i < itemsByPriority.length; i++) {
+			const collection = itemsByPriority.toReversed();
 			if (i < overflowButtons.length) {
-				itemsByPriority[i].classes = `${itemsByPriority[i].classes} ui5-shellbar-hidden-button`;
-				itemsByPriority[i].styles = {
+				collection[i].classes = `${collection[i].classes} ui5-shellbar-hidden-button`;
+				collection[i].styles = {
 					order: -1,
 				};
 			}
@@ -1081,7 +1082,7 @@ class ShellBar extends UI5Element {
 				icon: "overflow",
 				text: "Overflow",
 				classes: `${showOverflowButton ? "" : "ui5-shellbar-hidden-button"} ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button ui5-shellbar-button`,
-				priority: 8,
+				priority: 0,
 				styles: {
 					order: showOverflowButton ? 4 : -1,
 				},
@@ -1093,7 +1094,7 @@ class ShellBar extends UI5Element {
 			{
 				text: "Person",
 				classes: `${this.hasProfile ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-image-button ui5-shellbar-button`,
-				priority: 9,
+				priority: 0,
 				styles: {
 					order: this.hasProfile ? 5 : -10,
 				},
@@ -1107,7 +1108,7 @@ class ShellBar extends UI5Element {
 				icon: "grid",
 				text: this._productsText,
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-button-product-switch`,
-				priority: 10,
+				priority: 0,
 				styles: {
 					order: this.showProductSwitch ? 6 : -10,
 				},
@@ -1377,7 +1378,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get accLogoRole() {
-		return this.accessibilityAttributes.logo?.role || "button";
+		return this.accessibilityAttributes.logo?.role || "link";
 	}
 }
 

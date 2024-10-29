@@ -6,3 +6,7 @@
 .ui5-shellbar-overflow-popover [ui5-li]::part(icon) {
 	color: var(--sapList_TextColor);
 }
+
+.ui5-shellbar-overflow-popover [ui5-li]::part(title) {
+	font-size: var(--sapFontSize);
+}
