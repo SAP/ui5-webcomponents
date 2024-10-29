@@ -9,7 +9,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
@@ -30,8 +30,6 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import type { Timeout, ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 // import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type ShellBarVariant from "./types/ShellBarVariant.js";
@@ -507,11 +505,11 @@ class ShellBar extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
-	_itemNavigation: ItemNavigation;
 	_currentIndex: number;
 	_navigatableItems: (HTMLElement)[];
 
 	_headerPress: () => void;
+	_onkeydownFn: (e: KeyboardEvent) => void;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -571,11 +569,83 @@ class ShellBar extends UI5Element {
 		};
 
 		this._currentIndex = 0;
+		this._onkeydownFn = this._onKeyDown.bind(this);
+	}
 
-		this._itemNavigation = new ItemNavigation(this, {
-			navigationMode: NavigationMode.Horizontal,
-			getItemsCallback: () => [...this.customItemsInfo, ...this.additionalContextStart, ...this.additionalContextEnd],
+	_onKeyDown(e: KeyboardEvent) {
+		const items = this._getShellbarVisibleAndInteractiveItems();
+		const activeElement = this._getActiveElement();
+		const currentIndex = items.findIndex(el => el === activeElement);
+
+		if (isLeft(e) || isRight(e)) {
+		    e.preventDefault();// Prevent the default behavior to avoid any further automatic focus movemen
+
+		    // Focus navigation based on the key pressed
+		    if (isLeft(e)) {
+		        this._focusPreviousItem(items, currentIndex);
+		    } else if (isRight(e)) {
+		      this._focusNextItem(items, currentIndex);
+		    }
+		}
+	}
+
+	_focusNextItem(items: HTMLElement[], currentIndex: number) {
+		if (currentIndex < items.length - 1) {
+			(items[currentIndex + 1] as HTMLElement).focus(); // Focus the next element
+		}
+	}
+
+	_focusPreviousItem(items: HTMLElement[], currentIndex: number) {
+		if (currentIndex > 0) {
+			(items[currentIndex - 1] as HTMLElement).focus(); // Focus the previous element
+		}
+	}
+
+	_isVisible(element: HTMLElement): boolean {
+		const style = getComputedStyle(element);
+
+		return style.display !== "none" && style.visibility !== "hidden" && element.offsetWidth > 0 && element.offsetHeight > 0;
+	}
+
+	_isInteractive(element: HTMLElement) {
+		const firstShadowRootChild = element.shadowRoot?.firstElementChild;
+
+		return (
+			firstShadowRootChild && firstShadowRootChild.hasAttribute("tabindex") && firstShadowRootChild.getAttribute("tabindex") === "0"
+		);
+	}
+
+	_getActiveElement() {
+		const activeElement = document.activeElement;
+
+		if (activeElement === this) {
+			return activeElement.shadowRoot!.activeElement;
+		}
+
+		return activeElement;
+	}
+
+	_getAllShellbarItems() {
+		return [
+			// ...this.startButton,
+			...this.logo,
+			...this.additionalContextStart,
+			...this.additionalContextEnd,
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-search-item-for-arrow-nav"),
+			...this.assistant,
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-items-for-arrow-nav"),
+			...this.profile,
+			// ...this.menuItems,
+		] as HTMLElement[];
+	}
+
+	_getShellbarVisibleAndInteractiveItems() {
+		const allShellbarItems = this._getAllShellbarItems();
+		const visibleAndInteractiveItems = allShellbarItems.filter(item => {
+			return this._isVisible(item) && this._isInteractive(item);
 		});
+
+		return visibleAndInteractiveItems;
 	}
 
 	_debounce(fn: () => void, delay: number) {
@@ -589,7 +659,6 @@ class ShellBar extends UI5Element {
 	_onfocusin(e: FocusEvent) {
 		const target = e.target as IShelBarAdditionalContext;
 
-		this._itemNavigation.setCurrentItem(target);
 		this._currentIndex = [...this.customItemsInfo, ...this.additionalContextStart, ...this.additionalContextEnd].indexOf(target);
 	}
 
@@ -867,6 +936,7 @@ class ShellBar extends UI5Element {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResize);
+		this.addEventListener("keydown", this._onkeydownFn);
 
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
@@ -879,6 +949,7 @@ class ShellBar extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResize);
 		clearTimeout(this._debounceInterval!);
 		this._debounceInterval = null;
+		this.removeEventListener("keydown", this._onkeydownFn);
 	}
 
 	_handleSearchIconPress() {
