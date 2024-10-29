@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs';
 import { success as issueCommenter } from '@semantic-release/github';
 
-const getReleaseCommits = async (releaseBody) => {
+const getReleaseCommits = (releaseBody) => {
 	const commits = new Set();
 
 	const shaRegex = /commit\/(?<sha>\w{40})/g;
@@ -47,9 +47,9 @@ export default async function run({ github, context }) {
 	
 	
 	try {
-		const semanticRleaseContext = {
+		const semanticReleaseContext = {
 			options: { 
-				repositoryUrl: `https://github.com/${owner}/${repo}/` 
+				repositoryUrl: `https://github.com/${owner}/${repo}` 
 			},
 			commits,
 			nextRelease: { version: `v${version}` },
@@ -60,9 +60,9 @@ export default async function run({ github, context }) {
 		const Octokit = getOctokitShim(github);
 
 		console.log('Commits:', commits.toString());
-		console.log('semanticRleaseContext:', semanticRleaseContext);
+		console.log('semanticReleaseContext:', semanticReleaseContext);
 
-		await issueCommenter({}, semanticRleaseContext, { Octokit });
+		await issueCommenter({}, semanticReleaseContext, { Octokit });
 
 	} catch (error) {
 		console.error('Error in posting comment:', error);
