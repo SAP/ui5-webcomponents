@@ -18,9 +18,9 @@
 	<script>
         sap.ui.getCore().attachInit(function() {
 			var oLayout1 = new sap.ui.layout.form.ColumnLayout("L1", {
-				// columnsM: 2,
-				// columnsL: 3,
-				// columnsXL: 4,
+				columnsM: 1,
+				columnsL: 2,
+				columnsXL: 3,
 			});
 			var oForm1 = new sap.ui.layout.form.Form("F1",{
 				title: "SAPUI5 Form :: Supplier",
@@ -127,8 +127,8 @@
 		<div class="controls">
 			<ui5-label>Column Layout:</ui5-label>
 			<ui5-select id="selLayout">
-				<ui5-option selected value="S1 M2 L2 XL2">S1 M1 L2 XL2</ui5-option>
 				<ui5-option value="S1 M2 L2 XL2">S1 M2 L2 XL2</ui5-option>
+				<ui5-option selected value="S1 M1 L2 XL3">S1 M1 L2 XL3</ui5-option>
 				<ui5-option value="S1 M2 L3 XL2">S1 M2 L3 XL2</ui5-option>
 				<ui5-option value="S1 M2 L3 XL3">S1 M2 L3 XL3</ui5-option>
 				<ui5-option value="S1 M2 L3 XL4">S1 M2 L3 XL4</ui5-option>

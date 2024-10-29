@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* boot sequence ([#10042](https://github.com/SAP/ui5-webcomponents/issues/10042)) ([106373d](https://github.com/SAP/ui5-webcomponents/commit/106373d4585dd2c5fa458ffccd513596289a2f79))
+* **ui5-list:** growing button loading layout fixed ([#10043](https://github.com/SAP/ui5-webcomponents/issues/10043)) ([efd7e6a](https://github.com/SAP/ui5-webcomponents/commit/efd7e6ad4f27befb5fb1316e8163456c6b77726f)), closes [#9977](https://github.com/SAP/ui5-webcomponents/issues/9977) [#10047](https://github.com/SAP/ui5-webcomponents/issues/10047)
+* **ui5-notification-list:** fix header bar visibility ([#10010](https://github.com/SAP/ui5-webcomponents/issues/10010)) ([95db5c6](https://github.com/SAP/ui5-webcomponents/commit/95db5c63a3c21ba2d948f5070f3bd1ba85e584ef)), closes [#9995](https://github.com/SAP/ui5-webcomponents/issues/9995)
+* **ui5-slider, ui5-range-slider:** adjust aria-attributes ([#10039](https://github.com/SAP/ui5-webcomponents/issues/10039)) ([ed3abfc](https://github.com/SAP/ui5-webcomponents/commit/ed3abfcf2eec5469bd18ac5becf29e34e427a2f1)), closes [#9547](https://github.com/SAP/ui5-webcomponents/issues/9547)
+* **ui5-split-button:** adjust focus outline on keydown ([#10001](https://github.com/SAP/ui5-webcomponents/issues/10001)) ([898db40](https://github.com/SAP/ui5-webcomponents/commit/898db4031d5710b890a0a9d76c34216cf35a969b))
+* **ui5-table:** wrong horiz. alignm. behavior and wrong texts ([#10040](https://github.com/SAP/ui5-webcomponents/issues/10040)) ([f3da992](https://github.com/SAP/ui5-webcomponents/commit/f3da99295b4255e8f22b58f4ed72561fa0bbe215)), closes [#9639](https://github.com/SAP/ui5-webcomponents/issues/9639) [#10017](https://github.com/SAP/ui5-webcomponents/issues/10017)
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** added support for custom header and footer slots ([#10066](https://github.com/SAP/ui5-webcomponents/issues/10066)) ([4d06b2e](https://github.com/SAP/ui5-webcomponents/commit/4d06b2e94024e1cf6e121650453362ca79fc8836)), closes [#8919](https://github.com/SAP/ui5-webcomponents/issues/8919)
+* **ui5-filter-item, ui5-sort-item,..:** add selected `filterItems` to `ui5-confirm` event details ([#9838](https://github.com/SAP/ui5-webcomponents/issues/9838)) ([56ad311](https://github.com/SAP/ui5-webcomponents/commit/56ad3115affe17f453a30ac0880ac879dbbd763b))
+
+
+
+
+
+# [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* **framework:** always fire languageChange regardless of boot status ([#10029](https://github.com/SAP/ui5-webcomponents/issues/10029)) ([9261ac9](https://github.com/SAP/ui5-webcomponents/commit/9261ac93211ac431b9c1d95d255a6bb8bc3ff815))
+* **localization:** legacy date customization ([#10026](https://github.com/SAP/ui5-webcomponents/issues/10026)) ([273c015](https://github.com/SAP/ui5-webcomponents/commit/273c01597ae483fdfe1996dad733d32e4c9a13a9))
+* scoping issues and document how scoping is used correctly ([#10023](https://github.com/SAP/ui5-webcomponents/issues/10023)) ([ee808c3](https://github.com/SAP/ui5-webcomponents/commit/ee808c309f316fe145b05d292c92328396c655ab))
+* **tools:** revert tsconfig moduleResolution to node ([#10014](https://github.com/SAP/ui5-webcomponents/issues/10014)) ([0724b92](https://github.com/SAP/ui5-webcomponents/commit/0724b9289ad04f88972d4978ed37e76f13abca13))
+* **ui5-notification-list-group:** group header hight is shorter when collapsed ([#9953](https://github.com/SAP/ui5-webcomponents/issues/9953)) ([4c8a76e](https://github.com/SAP/ui5-webcomponents/commit/4c8a76edb5699810addd5c77fac2eabd507568f3)), closes [#9911](https://github.com/SAP/ui5-webcomponents/issues/9911)
+* **ui5-page:** fix createElement error caused by adding new style property in the constructor ([#9998](https://github.com/SAP/ui5-webcomponents/issues/9998)) ([fd402e4](https://github.com/SAP/ui5-webcomponents/commit/fd402e41933da5e57456b736332872a0f0006cdf)), closes [#9981](https://github.com/SAP/ui5-webcomponents/issues/9981)
+* **ui5-popup:** add role attribute to focus helper element ([#10004](https://github.com/SAP/ui5-webcomponents/issues/10004)) ([82a95ce](https://github.com/SAP/ui5-webcomponents/commit/82a95cebfc93fb4be696b76110f2089be1593db8)), closes [#9982](https://github.com/SAP/ui5-webcomponents/issues/9982)
+* **ui5-range-slider:** right click on the slider handle does not throw ([#10015](https://github.com/SAP/ui5-webcomponents/issues/10015)) ([e92caf9](https://github.com/SAP/ui5-webcomponents/commit/e92caf96d9ab4548090820e6bbf7217c43d99fd4))
+* **ui5-slider, ui5-range-slider:** adjust styles according to Fiori specs ([#9973](https://github.com/SAP/ui5-webcomponents/issues/9973)) ([e1182a9](https://github.com/SAP/ui5-webcomponents/commit/e1182a9ee44c6975b93208c16ef584cf0d0104d6)), closes [#9614](https://github.com/SAP/ui5-webcomponents/issues/9614)
+
+
+### Features
+
+* **create-package:** produce packages of type="module" ([#9993](https://github.com/SAP/ui5-webcomponents/issues/9993)) ([b161f60](https://github.com/SAP/ui5-webcomponents/commit/b161f601253b966fc0bb7a01213165c0963c85ca))
+* **ui5-barcode-scanner-dialog:** added capture region overlay ([#9646](https://github.com/SAP/ui5-webcomponents/issues/9646)) ([19475eb](https://github.com/SAP/ui5-webcomponents/commit/19475eb897d08c5f09ae2583678cc79decca5adc))
+* **ui5-slider, ui5-range-slider:** add input as a tooltip ([#9547](https://github.com/SAP/ui5-webcomponents/issues/9547)) ([6a4dedf](https://github.com/SAP/ui5-webcomponents/commit/6a4dedf47431d7f7dda7c19f54170bc877c2a33d))
+
+
+
+
+
 # [2.4.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.1-rc.0...v2.4.0-rc.0) (2024-10-10)
 
 

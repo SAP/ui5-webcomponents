@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-theming
+
+
+
+
+
+# [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* **tools:** revert tsconfig moduleResolution to node ([#10014](https://github.com/SAP/ui5-webcomponents/issues/10014)) ([0724b92](https://github.com/SAP/ui5-webcomponents/commit/0724b9289ad04f88972d4978ed37e76f13abca13))
+
+
+
+
+
 # [2.4.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.3.1-rc.0...v2.4.0-rc.0) (2024-10-10)
 
 **Note:** Version bump only for package @ui5/webcomponents-theming

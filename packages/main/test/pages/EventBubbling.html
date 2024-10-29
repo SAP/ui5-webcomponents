@@ -28,6 +28,11 @@
 				<ui5-menu-item text="New Folder"></ui5-menu-item>
 			</ui5-menu>
 
+			<ui5-multi-combobox id="myMcb">
+				<ui5-mcb-item text="Cosy"></ui5-mcb-item>
+				<ui5-mcb-item selected text="Compact"></ui5-mcb-item>
+			</ui5-multi-combobox>
+
 			<ui5-message-strip id="myMsgStrip">(Information) with default icon and close button:</ui5-message-strip>
 
 			<ui5-panel id="myPanel" header-text="Panel">
@@ -56,6 +61,8 @@
 	});
 	myMenu.addEventListener("close", function(e) {
 		console.log("Menu on close")
+	myMcb.addEventListener("close", function(e) {
+		console.log("Mcb on close")
 	});
 	myInput.addEventListener("close", function(e) {
 		console.log("Input on close")
