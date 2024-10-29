@@ -1,19 +1,9 @@
 import { promises as fs } from 'node:fs';
 import { success as issueCommenter } from '@semantic-release/github';
 
-const getReleaseCommits = async (github, context, version) => {
+const getReleaseCommits = async (releaseBody) => {
 	const commits = new Set();
-	const { owner, repo } = context.repo;
-	const releaseInfo = await github.request('GET /repos/{owner}/{repo}/releases/tags/{tag}', {
-		owner,
-		repo,
-		tag: `v${version}`
-	});
-	const release = releaseInfo.data;
-	release.url = release.html_url;
 
-	// Using matchAll for all SHA matches and adding unique entries to a Set
-	const releaseBody = release.body || '';
 	const shaRegex = /commit\/(?<sha>\w{40})/g;
 	for (const match of releaseBody.matchAll(shaRegex)) {
 		if (match.groups?.sha) {
@@ -40,33 +30,41 @@ const getOctokitShim = (github) => {
  * @param options.context
  */
 export default async function run({ github, context }) {
-  const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
-  const { version } = JSON.parse(lerna);
-  const { owner, repo } = context.repo;
-  const commits = await getReleaseCommits(github, context, version);
-  const Octokit = getOctokitShim(github);
+	const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
+	const { version } = JSON.parse(lerna);
 
+	const { owner, repo } = context.repo;
+	const releaseInfo = await github.request('GET /repos/{owner}/{repo}/releases/tags/{tag}', {
+		owner,
+		repo,
+		tag: `v${version}`
+	});
+	const release = releaseInfo.data;
+	release.url = release.html_url;
+	
 
-  try {
-	const semanticRleaseContext = {
-		options: { 
-			repositoryUrl: `https://github.com/${owner}/${repo}/` 
-		},
-		commits,
-		nextRelease: { version: `v${version}` },
-		releases: [release],
-		logger: console,
-		env: process.env
-	};
+	const commits = await getReleaseCommits(release.body);
+	
+	
+	try {
+		const semanticRleaseContext = {
+			options: { 
+				repositoryUrl: `https://github.com/${owner}/${repo}/` 
+			},
+			commits,
+			nextRelease: { version: `v${version}` },
+			releases: [release],
+			logger: console,
+			env: process.env
+		};
+		const Octokit = getOctokitShim(github);
 
-	console.log('Commits:', commits.toString());
-	console.log('semanticRleaseContext:', semanticRleaseContext);
+		console.log('Commits:', commits.toString());
+		console.log('semanticRleaseContext:', semanticRleaseContext);
 
-	await issueCommenter({}, semanticRleaseContext, { Octokit });
+		await issueCommenter({}, semanticRleaseContext, { Octokit });
 
-  } catch (error) {
-	console.error('Error in posting comment:', error);
-  }
-
-  
+	} catch (error) {
+		console.error('Error in posting comment:', error);
+	}
 }
