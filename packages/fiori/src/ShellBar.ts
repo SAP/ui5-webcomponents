@@ -944,7 +944,7 @@ class ShellBar extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-		setTimeout(this._overflowActions.bind(this), 300);
+		setTimeout(this._overflowActions.bind(this), 100);
 	}
 
 	onExitDOM() {
