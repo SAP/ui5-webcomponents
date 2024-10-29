@@ -32,4 +32,4 @@ jobs:
           script: |
             const commentOnFixedIssues = (await import('${{ github.workspace }}/.github/actions/commentOnFixedIssues.mjs')).default;
 
-            await commentOnFixedIssues({ github })
+            await commentOnFixedIssues({ github , context });
