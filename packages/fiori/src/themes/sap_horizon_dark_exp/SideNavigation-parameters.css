@@ -2,9 +2,7 @@
 
 :root {
 	--_ui5_side_navigation_width: 16rem;
-	--_ui5_side_navigation_shadow_color1: color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
-	--_ui5_side_navigation_shadow_color2: color-mix(in srgb, var(--sapContent_ShadowColor) 32%, transparent);
-	--_ui5_side_navigation_box_shadow: 0 0 0.125rem 0 var(--_ui5_side_navigation_shadow_color1), 0 0.5rem 1rem 0 var(--_ui5_side_navigation_shadow_color2);
+	--_ui5_side_navigation_box_shadow: var(--sapContent_Shadow0);
 	--_ui5_side_navigation_popover_shadow_color1: color-mix(in srgb, var(--sapContent_ShadowColor) 48%, transparent);
 	--_ui5_side_navigation_popover_shadow_color2: color-mix(in srgb, var(--sapContent_ShadowColor) 64%, transparent);
 	--_ui5_side_navigation_popover_box_shadow: 0 0 0.125rem 0 var(--_ui5_side_navigation_popover_shadow_color1), 0 1rem 2rem 0 var(--_ui5_side_navigation_popover_shadow_color2);

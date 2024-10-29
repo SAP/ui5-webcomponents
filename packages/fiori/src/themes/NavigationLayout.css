@@ -41,7 +41,7 @@
 	width: 100%;
 }
 
-:host([is-phone]) ::slotted([ui5-side-navigation]) {
+:host([is-phone]) ::slotted([ui5-side-navigation][slot="sideContent"]) {
 	width: 100%;
 	box-shadow: none;
 }
@@ -54,4 +54,12 @@
 
 :host([side-collapsed][is-phone]) .ui5-nl-aside {
 	transform: translateX(-100%);
+}
+
+:host([side-collapsed][is-phone]) :dir(rtl) .ui5-nl-aside {
+	transform: translateX(100%);
+}
+
+::slotted([ui5-shellbar][slot="header"]) {
+	padding-inline: .5rem;
 }

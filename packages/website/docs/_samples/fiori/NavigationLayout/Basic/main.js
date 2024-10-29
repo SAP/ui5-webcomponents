@@ -1,5 +1,6 @@
 import "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents/dist/ToggleButton.js";
+import "@ui5/webcomponents/dist/Text.js";
+import "@ui5/webcomponents/dist/Title.js";
 
 import "@ui5/webcomponents-fiori/dist/NavigationLayout.js";
 import "@ui5/webcomponents-fiori/dist/SideNavigation.js";

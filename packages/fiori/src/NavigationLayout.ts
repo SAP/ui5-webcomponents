@@ -22,8 +22,19 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
  *
  * ### Overview
  *
- * The `ui5-navigation-layout` is a container, used to create a navigation
- * layout that includes a header, side navigation, and content area.
+ * The `ui5-navigation-layout` is a container component that can be used to
+ * create a layout with a header, a side navigation and a content area.
+ *
+ * ### Usage
+ *
+ * Use the `ui5-navigation-layout` to create whole screen of an application with vertical navigation.
+ *
+ * ### Responsive Behavior
+ *
+ * On desktop and tablet devices, the side navigation remains visible and can
+ * be expanded or collapsed using the `sideCollapsed` property. On phone devices, the side navigation
+ * is hidden by default but can be displayed using the same `sideCollapsed` property.
+ *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/NavigationLayout.js";`
@@ -58,7 +69,7 @@ class NavigationLayout extends UI5Element {
 	isTablet = isTablet() && !isCombi();
 
 	/**
-	 * Indicates whether the side menu is collapsed.
+	 * Indicates whether the side navigation is collapsed.
 	 * @default false
 	 * @public
 	 */
@@ -70,7 +81,7 @@ class NavigationLayout extends UI5Element {
 			return;
 		}
 
-		const sideNavigation = this.sideContent[0] as SideNavigation;
+		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
 			sideNavigation.collapsed = value;
@@ -93,7 +104,7 @@ class NavigationLayout extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	sideContent!: Array<HTMLElement>;
+	sideContent!: Array<SideNavigation>;
 
 	/**
 	 * Defines the content.
@@ -107,7 +118,7 @@ class NavigationLayout extends UI5Element {
 			return;
 		}
 
-		const sideNavigation = this.sideContent[0] as SideNavigation;
+		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
 			sideNavigation.collapsed = this.sideCollapsed;
