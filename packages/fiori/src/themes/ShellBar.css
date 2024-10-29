@@ -255,6 +255,10 @@ slot[name="profile"] {
 	overflow: hidden;
 }
 
+.ui5-shellbar-logo-area .ui5-shellbar-logo {
+	padding: 0;
+}
+
 :host([variant="Lean"]) .ui5-shellbar-logo-area {
 	cursor: default;
 	pointer-events: none;
@@ -504,7 +508,6 @@ slot[name="profile"] {
 	flex-grow: 1;
 	min-width: 40%;
 	margin-inline-start: 0.5rem;
-	max-width: 25rem;
 }
 
 .ui5-shellbar-search-full-width-wrapper .ui5-shellbar-search-full-field {
@@ -536,6 +539,7 @@ slot[name="profile"] {
 	color: var(--_ui5_shellbar_search_field_color);
 	height: 2.25rem;
 	width: 100%;
+	max-width: 25rem;
 }
 
 ::slotted([ui5-input]:hover) {
