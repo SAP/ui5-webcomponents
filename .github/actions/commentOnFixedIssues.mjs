@@ -15,6 +15,7 @@ const getRelease = async (github, version) => {
 
 const getReleaseCommits = (release) => {
 	const commits = [];
+	let counter = 0;
 
 	let result;
 	do {
@@ -22,7 +23,8 @@ const getReleaseCommits = (release) => {
 		if (result?.groups?.sha) {
 			commits.push({ hash: result.groups.sha });
 		}
-	} while (result);
+		counter++
+	} while (result && counter < 50);
 
 	return commits;
 };
@@ -37,8 +39,8 @@ const getOctokitShim = (github) => {
 
 /**
  * Publishes comments to issues that are fixed and released.
- * @param options.github
- * @returns {Promise<void>}
+ * @param options {object}
+ * @param options.github {import("@octokit/rest/dist-types/index.d.ts").Octokit}
  */
 export default async function run({ github }) {
   const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
