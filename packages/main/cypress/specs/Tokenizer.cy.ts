@@ -59,6 +59,23 @@ describe("Tokenizer - multi-line and Clear All", () => {
 			.should("not.exist");
 	});
 
+	it("'Clear All' link is not rendered for multi-line readonly tokenizer when show-clear-all 'true'", () => {
+		cy.mount(html`<ui5-tokenizer multi-line show-clear-all readonly>
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+		</ui5-tokenizer>`);
+
+		cy.get<Tokenizer>("[ui5-tokenizer]")
+			.shadow()
+			.find(".ui5-tokenizer--clear-all")
+			.should("not.exist");
+	});
+
 	it("'n-more' link is not rendered for multi-line tokenizer", () => {
 		cy.mount(html`<ui5-tokenizer multi-line style="width: 100px;">
 			<ui5-token text="Andora"></ui5-token>

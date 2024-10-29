@@ -983,7 +983,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showEffectiveClearAll() {
-		return this.showClearAll && this.hasTokens && this.multiLine;
+		return this.showClearAll && this.hasTokens && this.multiLine && !this.readonly;
 	}
 
 	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<IToken>) {

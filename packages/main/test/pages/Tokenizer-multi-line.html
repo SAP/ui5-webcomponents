@@ -36,7 +36,7 @@
 		</ui5-tokenizer>
 
 		<h1 class="sample-container-title">Multi Line with long token</h1>
-		<ui5-tokenizer multi-line style="width: 320px;">
+		<ui5-tokenizer multi-line style="width: 320px;" dir="rtl">
 			<ui5-token text="Andora"></ui5-token>
 			<ui5-token text="Bulgaria"></ui5-token>
 			<ui5-token text="Canada"></ui5-token>
@@ -108,8 +108,24 @@
 			<ui5-token text="Bulgaria"></ui5-token>
 		</ui5-tokenizer>
 
-		<h1 class="sample-container-title">Single Line with n-more</h1>
-		<ui5-tokenizer id='clear-all' style="width: 320px;">
+		<h1 class="sample-container-title">Multi Line in readonly mode</h1>
+		<ui5-tokenizer id='clear-all' multi-line show-clear-all readonly style="width: 320px;">
+			<ui5-token text="Andora"></ui5-token>
+			<ui5-token text="Bulgaria"></ui5-token>
+			<ui5-token text="Canada"></ui5-token>
+			<ui5-token text="Denmark"></ui5-token>
+			<ui5-token text="Estonia"></ui5-token>
+			<ui5-token text="Finland"></ui5-token>
+			<ui5-token text="Germany"></ui5-token>
+			<ui5-token text="Hungary"></ui5-token>
+			<ui5-token text="Ireland"></ui5-token>
+			<ui5-token text="Japan"></ui5-token>
+			<ui5-token text="Korea"></ui5-token>
+			<ui5-token text="Latvia"></ui5-token>
+		</ui5-tokenizer>
+
+		<h1 class="sample-container-title">Multi Line in disabled mode</h1>
+		<ui5-tokenizer id='clear-all' multi-line show-clear-all disabled style="width: 320px;">
 			<ui5-token text="Andora"></ui5-token>
 			<ui5-token text="Bulgaria"></ui5-token>
 			<ui5-token text="Canada"></ui5-token>
