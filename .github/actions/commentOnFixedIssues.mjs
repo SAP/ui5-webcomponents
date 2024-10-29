@@ -47,12 +47,23 @@ const getOctokitShim = (github) => {
 export default async function run({ github, context }) {
   const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
   const { version } = JSON.parse(lerna);
+
+  const { owner, repo } = context.repo;
+  const repositoryUrl =  `https://github.com/${context.repo.owner}/${context.repo.repo}/`;
+
+  console.log('Repository URL:', repositoryUrl);
+  console.log('Context owner:', owner);
+  console.log('Context repo:', repo);
+
+
   const release = await getRelease(github, context, version);
   const commits = getReleaseCommits(release);
   const Octokit = getOctokitShim(github);
 
   await issueCommenter({}, {
-    options: { repositoryUrl: `https://github.com/${context.repo.owner}/${context.repo.repo}/`},
+    options: { 
+		repositoryUrl: `https://github.com/${context.repo.owner}/${context.repo.repo}/` 
+	},
     commits,
     nextRelease: { version: `v${version}` },
     releases: [release],
