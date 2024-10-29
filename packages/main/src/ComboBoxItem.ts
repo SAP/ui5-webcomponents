@@ -4,6 +4,7 @@ import type { IComboBoxItem } from "./ComboBox.js";
 import ListItemBase from "./ListItemBase.js";
 
 import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit.js";
+import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
 /**
  * @class
  * The `ui5-cb-item` represents the item for a `ui5-combobox`.
@@ -15,7 +16,7 @@ import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit
 @customElement({
 	tag: "ui5-cb-item",
 	template: ComboBoxItemTemplate,
-	styles: [ListItemBase.styles],
+	styles: [ListItemBase.styles, ComboboxItemCss],
 })
 class ComboBoxItem extends ListItemBase implements IComboBoxItem {
 	/**

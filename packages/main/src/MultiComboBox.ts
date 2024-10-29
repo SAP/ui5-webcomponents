@@ -996,7 +996,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_handleSelectAll() {
-		const filteredItems = this._filteredItems.filter(item => !item.isGroupItem);
+		const filteredItems = this._getItems().filter(item => item._isVisible && !item.isGroupItem);
 		const allItemsSelected = filteredItems.every(item => item.selected);
 		this._previouslySelectedItems = filteredItems.filter(item => item.selected).map(item => item);
 

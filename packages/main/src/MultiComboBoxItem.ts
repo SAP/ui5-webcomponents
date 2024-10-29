@@ -1,8 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ComboBoxItem from "./ComboBoxItem.js";
 import CheckBox from "./CheckBox.js";
 import type { IMultiComboBoxItem } from "./MultiComboBox.js";
+import {
+	ARIA_LABEL_LIST_ITEM_CHECKBOX,
+} from "./generated/i18n/i18n-defaults.js";
 
 import styles from "./generated/themes/MultiComboBoxItem.css.js";
 import MultiComboBoxItemTemplate from "./generated/templates/MultiComboBoxItemTemplate.lit.js";
@@ -38,6 +43,9 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	@property({ type: Boolean, noAttribute: true })
 	_isVisible = false;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	get isMultiComboBoxItem() {
 		return true;
 	}
@@ -48,6 +56,10 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 		}
 
 		super._onclick(e);
+	}
+
+	get _accessibleName() {
+		return MultiComboBoxItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX);
 	}
 }
 
