@@ -20,6 +20,8 @@ const registeredElements = new WeakMap<UI5Element, RegisteredElement>();
 type AccessibleElement = HTMLElement & {
 	accessibleNameRef?: string;
 	accessibleName?: string;
+	accessibleDescriptionRef?: string;
+	accessibleDescription?: string;
 };
 
 const observerOptions = {
@@ -74,7 +76,11 @@ const _getAllAssociatedElementsFromDOM = (el: UI5Element): Array<HTMLElement> =>
 		set.add(itm);
 	});
 	// adding other elements that id is the same as accessibleNameRef value
-	const value = el["accessibleNameRef" as keyof typeof el] as string;
+	const ariaLabelledBy = el["accessibleNameRef" as keyof typeof el] as string;
+	const ariaDescribedBy = el["accessibleDescriptionRef" as keyof typeof el] as string;
+
+	const value = `${ariaLabelledBy} ${ariaDescribedBy}`;
+
 	const ids = value?.split(" ") ?? [];
 	ids.forEach(id => {
 		const refEl = _getReferencedElementById(el, id);
@@ -115,7 +121,9 @@ const getAssociatedLabelForTexts = (el: HTMLElement) => {
 
 const _createInvalidationCallback = (el: UI5Element) => {
 	const invalidationCallback = (changeInfo: ChangeInfo) => {
-		if (!(changeInfo && changeInfo.type === "property" && changeInfo.name === "accessibleNameRef")) {
+		const isAccessibleNameRefChange = changeInfo && changeInfo.type === "property" && changeInfo.name === "accessibleNameRef";
+		const isAccessibleDescriptionRefChange = changeInfo && changeInfo.type === "property" && changeInfo.name === "accessibleDescriptionRef";
+		if (!isAccessibleNameRefChange && !isAccessibleDescriptionRefChange) {
 			return;
 		}
 		const registeredElement = registeredElements.get(el);
@@ -210,10 +218,45 @@ const deregisterUI5Element = (el: UI5Element) => {
 	registeredElements.delete(el);
 };
 
+const getEffectiveAriaDescriptionText = (el: HTMLElement) => {
+	const accessibleEl = el as AccessibleElement;
+
+	if (!accessibleEl.accessibleDescriptionRef) {
+		if (accessibleEl.accessibleDescription) {
+			return accessibleEl.accessibleDescription;
+		}
+
+		return undefined;
+	}
+
+	return getAllAccessibleDescriptionRefTexts(el);
+};
+
+const getAllAccessibleDescriptionRefTexts = (el: HTMLElement) => {
+	const ids = (el as AccessibleElement).accessibleDescriptionRef?.split(" ") ?? [];
+	const owner = el.getRootNode() as HTMLElement;
+	let result = "";
+
+	ids.forEach((elementId: string, index: number) => {
+		const element = owner.querySelector(`[id='${elementId}']`);
+		const text = `${element && element.textContent ? element.textContent : ""}`;
+		if (text) {
+			result += text;
+			if (index < ids.length - 1) {
+				result += " ";
+			}
+		}
+	});
+
+	return result;
+};
+
 export {
 	getEffectiveAriaLabelText,
 	getAssociatedLabelForTexts,
 	registerUI5Element,
 	deregisterUI5Element,
 	getAllAccessibleNameRefTexts,
+	getEffectiveAriaDescriptionText,
+	getAllAccessibleDescriptionRefTexts,
 };
