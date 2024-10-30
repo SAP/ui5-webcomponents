@@ -173,7 +173,7 @@
 			contentItems.forEach(item => {
 				item.classList.remove("contentItemVisible");
 			});
-			document.getElementById(event.detail.item.getAttribute("href").replace("#", "")).classList.add("contentItemVisible");
+			document.getElementById(event.detail.item.getAttribute("href").replace("#", ""))?.classList.add("contentItemVisible");
 		});
 	</script>
 </body>
