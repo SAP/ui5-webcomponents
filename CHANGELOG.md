@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
+
+
+### Bug Fixes
+
+* dev-server correctly imports yargs ([#10048](https://github.com/SAP/ui5-webcomponents/issues/10048)) ([7b5aa5e](https://github.com/SAP/ui5-webcomponents/commit/7b5aa5ebdddbbc0493f4699c1a74db497e22368b))
+* **ui5-dynamic-page:** align header area with title and content ([#10053](https://github.com/SAP/ui5-webcomponents/issues/10053)) ([61e3dbd](https://github.com/SAP/ui5-webcomponents/commit/61e3dbd1f9a5b69c824cfcdae5c750d59585615a))
+
+
+### Features
+
+* **ui5-tabcontainer:** style adjustments for transparent header ([#10064](https://github.com/SAP/ui5-webcomponents/issues/10064)) ([b5e596e](https://github.com/SAP/ui5-webcomponents/commit/b5e596e542a4fbd3f0643b15d2f4023be2079f5a))
+
+
+
+
+
+# [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* boot sequence ([#10042](https://github.com/SAP/ui5-webcomponents/issues/10042)) ([106373d](https://github.com/SAP/ui5-webcomponents/commit/106373d4585dd2c5fa458ffccd513596289a2f79))
+* **ui5-list:** growing button loading layout fixed ([#10043](https://github.com/SAP/ui5-webcomponents/issues/10043)) ([efd7e6a](https://github.com/SAP/ui5-webcomponents/commit/efd7e6ad4f27befb5fb1316e8163456c6b77726f)), closes [#9977](https://github.com/SAP/ui5-webcomponents/issues/9977) [#10047](https://github.com/SAP/ui5-webcomponents/issues/10047)
+* **ui5-notification-list:** fix header bar visibility ([#10010](https://github.com/SAP/ui5-webcomponents/issues/10010)) ([95db5c6](https://github.com/SAP/ui5-webcomponents/commit/95db5c63a3c21ba2d948f5070f3bd1ba85e584ef)), closes [#9995](https://github.com/SAP/ui5-webcomponents/issues/9995)
+* **ui5-slider, ui5-range-slider:** adjust aria-attributes ([#10039](https://github.com/SAP/ui5-webcomponents/issues/10039)) ([ed3abfc](https://github.com/SAP/ui5-webcomponents/commit/ed3abfcf2eec5469bd18ac5becf29e34e427a2f1)), closes [#9547](https://github.com/SAP/ui5-webcomponents/issues/9547)
+* **ui5-split-button:** adjust focus outline on keydown ([#10001](https://github.com/SAP/ui5-webcomponents/issues/10001)) ([898db40](https://github.com/SAP/ui5-webcomponents/commit/898db4031d5710b890a0a9d76c34216cf35a969b))
+* **ui5-table:** wrong horiz. alignm. behavior and wrong texts ([#10040](https://github.com/SAP/ui5-webcomponents/issues/10040)) ([f3da992](https://github.com/SAP/ui5-webcomponents/commit/f3da99295b4255e8f22b58f4ed72561fa0bbe215)), closes [#9639](https://github.com/SAP/ui5-webcomponents/issues/9639) [#10017](https://github.com/SAP/ui5-webcomponents/issues/10017)
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** added support for custom header and footer slots ([#10066](https://github.com/SAP/ui5-webcomponents/issues/10066)) ([4d06b2e](https://github.com/SAP/ui5-webcomponents/commit/4d06b2e94024e1cf6e121650453362ca79fc8836)), closes [#8919](https://github.com/SAP/ui5-webcomponents/issues/8919)
+* **ui5-filter-item, ui5-sort-item,..:** add selected `filterItems` to `ui5-confirm` event details ([#9838](https://github.com/SAP/ui5-webcomponents/issues/9838)) ([56ad311](https://github.com/SAP/ui5-webcomponents/commit/56ad3115affe17f453a30ac0880ac879dbbd763b))
+
+
+
+
+
 # [2.4.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.0...v2.4.0-rc.1) (2024-10-17)
 
 

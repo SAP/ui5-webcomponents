@@ -93,7 +93,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     }
   }
 
-  function addImportMap(html) {
+  function addHeadContent(html) {
     return html.replace("<head>", `
 <head>
     <script type="importmap">
@@ -105,6 +105,10 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
       *:not(:defined) {
         display: none;
       }
+
+    html {
+      forced-color-adjust: none;
+    }
     </style>
 `)
   }
@@ -231,7 +235,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     let newConfig = {
       files: {
         "index.html": {
-          content: addImportMap(fixAssetPaths(_html)),
+          content: addHeadContent(fixAssetPaths(_html)),
         },
         "playground-support.js": {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
@@ -263,7 +267,7 @@ ${fixAssetPaths(_js)}`,
       if (savedProject) {
         try {
           const savedConfig = JSON.parse(savedProject);
-          savedConfig["index.html"].content = addImportMap(fixAssetPaths(savedConfig["index.html"].content));
+          savedConfig["index.html"].content = addHeadContent(fixAssetPaths(savedConfig["index.html"].content));
           if (savedConfig["main.js"] && newConfig.files["main.ts"]) {
             delete newConfig.files["main.ts"];
           }
@@ -278,7 +282,7 @@ ${fixAssetPaths(_js)}`,
     if (location.pathname.includes("/play") && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
-        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        sharedConfig["index.html"].content = addHeadContent(fixAssetPaths(sharedConfig["index.html"].content));
         if (sharedConfig["main.js"] && newConfig.files["main.ts"]) {
           delete newConfig.files["main.ts"];
         }
