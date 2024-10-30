@@ -145,6 +145,8 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
 type Convert<T> = { [Property in keyof T as `on${Capitalize<string & Property>}` ]: (e: CustomEvent<T[Property]>) => void }
 
+type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "slot" | "spellcheck" | "style" | "tabIndex" | "title" | "translate";
+
 /**
  * @class
  * Base class for all UI5 Web Components
@@ -156,7 +158,7 @@ abstract class UI5Element extends HTMLElement {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	_events!: {};	// no events in base class
 	_jsxEvents!: Convert<this["_events"]>
-	_jsxProps!: Omit<JSX.HTMLAttributes<HTMLElement>, "value"> & ElementProps<this> & Partial<this["_jsxEvents"]>; // & Partial<ButtonEvents>;
+	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & JSX.DOMAttributes<HTMLElement> & ElementProps<this> & Partial<this["_jsxEvents"]>; // & Partial<ButtonEvents>;
 	get events(): any {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return this._events;

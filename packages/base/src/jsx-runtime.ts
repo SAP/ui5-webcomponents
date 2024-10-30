@@ -17,6 +17,7 @@ declare namespace JSX {
 		_jsxProps: HTMLAttributes<T>;
 	}
 	export interface HTMLAttributes<T extends EventTarget> extends _JSX.HTMLAttributes<T> {}
+	export interface DOMAttributes<T extends EventTarget> extends _JSX.DOMAttributes<T> {}
 	export interface SVGAttributes extends _JSX.SVGAttributes {}
 	export type AriaRole = _JSX.AriaRole;
 	export type MouseEventHandler<T extends EventTarget> = _JSX.MouseEventHandler<T>;
