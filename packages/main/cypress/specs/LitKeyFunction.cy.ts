@@ -20,16 +20,11 @@ describe("Lit HTML key function for #each", () => {
 		cy.realPress("a");
 
 		cy.get("@mcb")
-			.shadow()
-			.find(".ui5-multi-combobox-all-items-responsive-popover")
-			.as("popover");
-
-		cy.get("@popover")
-			.find(".ui5-multi-combobox-all-items-list > ui5-li")
+			.find("[ui5-mcb-item]")
 			.as("items");
 
 		cy.get("@items")
-			.eq(0)
+			.eq(3)
 			.realClick();
 
 		cy.get("@mcb")
@@ -39,12 +34,12 @@ describe("Lit HTML key function for #each", () => {
 
 		cy.get("@items")
 			.eq(0)
-			.should("contain.text", "<empty>")
+			.invoke("attr", "text", "<empty>")
 			.should("not.have.attr", "selected");
 
 		cy.get("@items")
 			.eq(3)
-			.should("contain.text", "USA")
+			.invoke("attr", "text", "USA")
 			.should("have.attr", "selected");
 	});
 });

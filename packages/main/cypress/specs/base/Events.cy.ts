@@ -185,8 +185,7 @@ describe("Event bubbling", () => {
 			.realClick();
 
 		cy.get("@multiCombobox")
-			.shadow()
-			.find("[ui5-responsive-popover]")
+			.find("[ui5-mcb-item]")
 			.should("be.visible");
 
 		// act - close the MultiComboBox
