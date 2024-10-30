@@ -82,6 +82,10 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * The items can consist of text only or an icon with text. The use or non-use of icons must be consistent for all items on one level.
  * You must not combine entries with and without icons on the same level. We strongly recommend that you do not use icons on the second level.
  *
+ * The `ui5-side-navigation component` is intended for use within an `ui5-navigation-layout`.
+ * While it can function independently, it is recommended to use it with
+ * the `ui5-navigation-layout` for optimal user experience.
+ *
  * ### Keyboard Handling
  *
  * ### Fast Navigation
@@ -146,25 +150,22 @@ class SideNavigation extends UI5Element {
 	collapsed = false;
 
 	/**
-	 * Defines the main items of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
-	 * for the top-level items, and the `ui5-side-navigation-sub-item` component for second-level items, nested
-	 * inside the items.
+	 * Defines the main items of the component.
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<SideNavigationItemBase>;
+	items!: Array<SideNavigationGroup | SideNavigationItem>;
 
 	/**
-	 * Defines the fixed items at the bottom of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
-	 * for the fixed items, and optionally the `ui5-side-navigation-sub-item` component to provide second-level items inside them.
+	 * Defines the fixed items at the bottom of the component.
 	 *
 	 * **Note:** In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	fixedItems!: Array<SideNavigationItemBase>;
+	fixedItems!: Array<SideNavigationGroup | SideNavigationItem>;
 
 	/**
 	 * Defines the header of the `ui5-side-navigation`.
@@ -226,7 +227,7 @@ class SideNavigation extends UI5Element {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 
-		this._getAllItems(this.items as Array<SideNavigationItem | SideNavigationGroup>).concat(this._getAllItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>)).forEach(item => {
+		this._getAllItems(this.items).concat(this._getAllItems(this.fixedItems)).forEach(item => {
 			item.sideNavCollapsed = this.collapsed;
 			item.inPopover = this.inPopover;
 			item.sideNavigation = this;
@@ -238,7 +239,7 @@ class SideNavigation extends UI5Element {
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
 		const tree = this.getPickerTree();
-		const selectedItem = tree._findSelectedItem(tree.items as Array<SideNavigationItem | SideNavigationGroup>);
+		const selectedItem = tree._findSelectedItem(tree.items);
 		if (selectedItem) {
 			selectedItem.focus();
 		} else {
@@ -386,11 +387,11 @@ class SideNavigation extends UI5Element {
 	}
 
 	getEnabledFixedItems() : Array<ITabbable> {
-		return this.getEnabledItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>);
+		return this.getEnabledItems(this.fixedItems);
 	}
 
 	getEnabledFlexibleItems() : Array<ITabbable> {
-		const items = this.getEnabledItems(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+		const items = this.getEnabledItems(this.items);
 
 		if (this._overflowItem) {
 			items.push(this._overflowItem);
@@ -425,12 +426,12 @@ class SideNavigation extends UI5Element {
 
 	onAfterRendering() {
 		if (!this.getDomRef()?.matches(":focus-within")) {
-			let selectedItem = this._findSelectedItem(this.items as Array<SideNavigationItem | SideNavigationGroup>);
+			let selectedItem = this._findSelectedItem(this.items);
 			if (selectedItem) {
 				this._flexibleItemNavigation.setCurrentItem(selectedItem);
 			}
 
-			selectedItem = this._findSelectedItem(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>);
+			selectedItem = this._findSelectedItem(this.fixedItems);
 			if (selectedItem) {
 				this._fixedItemNavigation.setCurrentItem(selectedItem);
 			}
@@ -549,7 +550,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	get overflowItems() : Array<HTMLElement> {
-		return (this.items as Array<SideNavigationItem | SideNavigationGroup>).reduce((result, item) => {
+		return (this.items).reduce((result, item) => {
 			return result.concat(item.overflowItems);
 		}, new Array<HTMLElement>());
 	}
@@ -609,8 +610,8 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		let items = this._getSelectableItems(this.items as Array<SideNavigationItem | SideNavigationGroup>);
-		items = items.concat(this._getSelectableItems(this.fixedItems as Array<SideNavigationItem | SideNavigationGroup>));
+		let items = this._getSelectableItems(this.items);
+		items = items.concat(this._getSelectableItems(this.fixedItems));
 
 		items.forEach(current => {
 			current.selected = false;
