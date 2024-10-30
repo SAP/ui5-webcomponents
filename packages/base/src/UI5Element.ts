@@ -145,7 +145,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
 type Convert<T> = { [Property in keyof T as `on${Capitalize<string & Property>}` ]: (e: CustomEvent<T[Property]>) => void }
 
-type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "slot" | "spellcheck" | "style" | "tabIndex" | "title" | "translate";
+type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "slot" | "spellcheck" | "style" | "tabIndex" | "title" | "translate";
 
 /**
  * @class
