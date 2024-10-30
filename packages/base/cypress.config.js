@@ -1,3 +1,10 @@
-import cypressConfig from "@ui5/webcomponents-tools/components-package/cypress.config.js";
+import { defineCypressConfig } from "@ui5/webcomponents-testing/cypress/config.js";
+import viteConfig from "../../vite.config";
 
-export default cypressConfig;
+export default defineCypressConfig({
+	component: {
+		devServer: {
+			viteConfig: viteConfig
+		}
+	}
+});

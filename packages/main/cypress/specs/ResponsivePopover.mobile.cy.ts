@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../src/ResponsivePopover.js";
 import "../../src/Button.js";
 import "../../src/Input.js";

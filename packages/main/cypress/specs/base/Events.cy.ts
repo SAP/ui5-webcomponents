@@ -1,4 +1,4 @@
-import { html } from "lit";
+import { html } from "lit-html";
 import "../../../src/Dialog.js";
 import "../../../src/Select.js";
 import "../../../src/Option.js";
@@ -126,8 +126,8 @@ describe("Event bubbling", () => {
 						<ui5-option>Hello</ui5-option>
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
-					</ui5-select>	
-					
+					</ui5-select>
+
 					<ui5-multi-combobox id="myMCB">
 						<ui5-mcb-item text="Cosy"></ui5-mcb-item>
 						<ui5-mcb-item selected text="Compact"></ui5-mcb-item>

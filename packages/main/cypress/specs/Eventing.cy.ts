@@ -1,4 +1,4 @@
-// import { html } from "lit";
+// import { html } from "lit-html";
 import "../../src/Button.js";
 
 describe("Eventing", () => {
