@@ -8,7 +8,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-import EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
+import TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
 import TextTemplate2 from "./TextTemplate.js";
 
@@ -70,7 +70,7 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property()
-	emptyIndicatorMode: `${EmptyIndicatorMode}` = "Off";
+	emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
 
 	/**
 	 * Defines the text of the component.
@@ -91,7 +91,7 @@ class Text extends UI5Element {
 	}
 
 	get _renderEmptyIndicator() {
-		return !this.hasText && this.emptyIndicatorMode === EmptyIndicatorMode.On;
+		return !this.hasText && this.emptyIndicatorMode === TextEmptyIndicatorMode.On;
 	}
 
 	get _emptyIndicatorAriaLabel() {
