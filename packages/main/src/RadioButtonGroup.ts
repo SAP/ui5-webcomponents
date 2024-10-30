@@ -155,7 +155,7 @@ class RadioButtonGroup {
 	static updateSelectionInGroup(radioBtnToSelect: RadioButton, groupName: string) {
 		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
-		// if there is radio button, that is already checked or the new radio button is not readonly
+		// if there is radio button, that is already checked and the new radio button is not readonly
 		if (checkedRadio && !radioBtnToSelect.readonly) {
 			this._deselectRadio(checkedRadio);
 		}
