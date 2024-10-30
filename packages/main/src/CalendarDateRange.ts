@@ -35,8 +35,6 @@ class CalendarDateRange extends UI5Element implements ICalendarSelectedDates {
 	 */
 	@property()
 	endValue = "";
-
-	value?: string;
 }
 
 CalendarDateRange.define();

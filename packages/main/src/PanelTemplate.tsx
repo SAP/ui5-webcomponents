@@ -2,6 +2,15 @@ import clsx from "clsx"
 import type Panel from "./Panel.js"
 import Button from "./Button.js";
 import Icon from "./Icon.js";
+// import Token from "./Token.js";
+// import type { JSX } from "@ui5/webcomponents-base";
+declare module "@ui5/webcomponents-base" {
+	namespace JSX {
+		interface IntrinsicElements {
+			"my-comp": JSX.HTMLAttributes<HTMLDialogElement>;
+		}
+	}
+}
 
 export default ({
 	accRole,
@@ -26,12 +35,14 @@ export default ({
 	_contentExpanded,
 }: Panel) => {
 	return (<>
+		{/* <my-comp onClick={(e) => e.currentTarget}></my-comp> */}
 		<div
 			class="ui5-panel-root"
 			role={accRole}
 			aria-label={effectiveAccessibleName}
 			aria-labelledby={fixedPanelAriaLabelledbyReference}
 		>
+			{/* <Token text="abc" selected={false}></Token> */}
 			{ hasHeaderOrHeaderText &&
 				// header: either header or h1 with header text
 				<div

@@ -1,7 +1,9 @@
+// eslint-disable-next-line max-classes-per-file
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+// import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+// import event2 from "@ui5/webcomponents-base/dist/decorators/event2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -53,30 +55,28 @@ type TokenDeleteEventDetail = {
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
-
-/**
- * Fired when the the component is selected by user interaction with mouse or by clicking space.
- * @private
- */
-@event("select", {
-	bubbles: true,
-})
-
-/**
- * Fired when the backspace, delete or close icon of the token is pressed
- * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
- * @param {Boolean} delete Indicates whether token is deleted by delete key.
- * @private
- */
-@event<TokenDeleteEventDetail>("delete", {
-	detail: {
-		"backSpace": { type: Boolean },
-		"delete": { type: Boolean },
-	},
-	bubbles: true,
-})
-
 class Token extends UI5Element implements IToken {
+	// @event2("select", {
+	// 	bubbles: true,
+	// })
+	// @event2("delete", {
+	// 	bubbles: true,
+	// })
+	_events!: {
+		/**
+		 * Fired when the backspace, delete or close icon of the token is pressed
+		 * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
+		 * @param {Boolean} delete Indicates whether token is deleted by delete key.
+		 * @private
+		 */
+		"delete": TokenDeleteEventDetail
+		/**
+		 * Fired when the the component is selected by user interaction with mouse or by clicking space.
+		 * @private
+		 */
+		"select": void
+	};
+
 	/**
 	 * Defines the text of the token.
 	 * @default undefined
@@ -200,6 +200,7 @@ class Token extends UI5Element implements IToken {
 
 	onBeforeRendering() {
 		this.toBeDeleted = false;
+		// this.fireMyEvent("select");
 	}
 
 	get tokenDeletableText() {
@@ -227,6 +228,10 @@ class Token extends UI5Element implements IToken {
 
 		return description;
 	}
+
+	// fireMyEvent(name: keyof this["_events"]) {
+	// 	console.log(name);
+	// }
 }
 
 Token.define();

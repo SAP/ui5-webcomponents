@@ -143,6 +143,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 
 // JSX support
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+type Convert<T> = { [Property in keyof T as `on${Capitalize<string & Property>}` ]: (e: CustomEvent<T[Property]>) => void }
 
 /**
  * @class
@@ -152,7 +153,14 @@ type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
  * @public
  */
 abstract class UI5Element extends HTMLElement {
-	_jsxProps!: JSX.HTMLAttributes & ElementProps<this>; // & Partial<ButtonEvents>;
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	_events!: {};	// no events in base class
+	_jsxEvents!: Convert<this["_events"]>
+	_jsxProps!: Omit<JSX.HTMLAttributes<HTMLElement>, "value"> & ElementProps<this> & Partial<this["_jsxEvents"]>; // & Partial<ButtonEvents>;
+	get events(): any {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+		return this._events;
+	}
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;

@@ -19,7 +19,6 @@ import Icon from "./Icon.js";
 import type TitleLevel from "./types/TitleLevel.js";
 import type PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./PanelTemplate.js";
-
 import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -232,7 +231,9 @@ class Panel extends UI5Element {
 	}
 
 	@bound
-	_headerClick(e: MouseEvent) {
+	_headerClick(e: JSX.TargetedMouseEvent<HTMLDivElement>) {
+	// _headerClick(e: MouseEvent) {
+		// const a = e.currentTarget;
 		if (!this.shouldToggle(e.target as HTMLElement)) {
 			return;
 		}

@@ -8,7 +8,7 @@
 	{{#if hasHeaderOrHeaderText}}
 		{{! header: either header or h1 with header text}}
 		<div
-			class="ui5-panel-heading-wrapper{{classes.stickyHeaderClass}}"
+			class="ui5-panel-heading-wrapper {{classes.stickyHeaderClass}}"
 			role="{{headingWrapperRole}}"
 			aria-level="{{headingWrapperAriaLevel}}"
 		>
@@ -69,7 +69,6 @@
 		class="ui5-panel-content"
 		id="{{_id}}-content"
 		tabindex="-1"
-		style="{{styles.content}}"
 		part="content"
 	>
 		<slot></slot>

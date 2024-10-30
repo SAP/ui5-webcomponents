@@ -583,15 +583,11 @@ class Button extends UI5Element implements IButton {
 
 Button.define();
 
-// interface ButtonEvents {
-// 	onTabChange2: () => void
-// }
-
 declare module "@ui5/webcomponents-base/jsx-runtime" {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace JSX {
 		interface IntrinsicElements {
-			"ui5-button": typeof Button.prototype._jsxProps;
+			"ui5-button": Button["_jsxProps"];
 		}
 	}
 }

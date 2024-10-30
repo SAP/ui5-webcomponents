@@ -1,9 +1,8 @@
 import buttonTemplate from "./ButtonTemplate.js";
 import type ToggleButton from "./ToggleButton.js";
 
-export default (props: ToggleButton) => {
+export default function (this: ToggleButton) {
 	return (<>
-		{ buttonTemplate(props, { ariaPressed: props.pressed }) }
+		{ buttonTemplate.call(this, { ariaPressed: this.pressed }) }
 	</>);
 };
-
