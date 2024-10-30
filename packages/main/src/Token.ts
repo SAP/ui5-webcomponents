@@ -56,6 +56,20 @@ type TokenDeleteEventDetail = {
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
+/**
+ * Fired when the the component is selected by user interaction with mouse or by clicking space.
+ * @private
+ */
+@event("select", {
+	bubbles: true,
+})
+
+/**
+ * Fired when the backspace, delete or close icon of the token is pressed
+ * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
+ * @param {Boolean} delete Indicates whether token is deleted by delete key.
+ * @private
+ */
 @event<TokenDeleteEventDetail>("delete", {
 	detail: {
 		"backSpace": { type: Boolean },
