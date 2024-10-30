@@ -406,7 +406,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	}
 
 	get effectiveAriaDisabled() {
-		return this.disabled ? "true" : null;
+		return (this.disabled || this.readonly) ? "true" : null;
 	}
 
 	get ariaLabelText() {
