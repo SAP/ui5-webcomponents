@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 // import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 // import event2 from "@ui5/webcomponents-base/dist/decorators/event2.js";
@@ -54,6 +55,13 @@ type TokenDeleteEventDetail = {
 	template: TokenTemplate,
 	styles: tokenStyles,
 	dependencies: [Icon],
+})
+@event<TokenDeleteEventDetail>("delete", {
+	detail: {
+		"backSpace": { type: Boolean },
+		"delete": { type: Boolean },
+	},
+	bubbles: true,
 })
 class Token extends UI5Element implements IToken {
 	// @event2("select", {
