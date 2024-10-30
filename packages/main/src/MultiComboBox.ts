@@ -237,9 +237,7 @@ type MultiComboboxItemWithSelection = {
  * @since 2.0.0
  * @public
  */
-@event("close", {
-	bubbles: true,
-})
+@event("close")
 
 /**
  * Fired when selection is changed by user interaction.

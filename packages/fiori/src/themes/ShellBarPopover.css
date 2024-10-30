@@ -7,6 +7,10 @@
 	color: var(--sapList_TextColor);
 }
 
+.ui5-shellbar-overflow-popover [ui5-li]::part(title) {
+	font-size: var(--sapFontSize);
+}
+
 .ui5-shellbar-overflow-popover [ui5-li]:after {
 	position: relative;
 	width: fit-content;
