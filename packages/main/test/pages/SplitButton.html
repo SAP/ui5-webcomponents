@@ -40,6 +40,7 @@
 	</header>
 	<div class="samples-margin">
 		<ui5-split-button id="sbDefault" design="Default">Default</ui5-split-button>
+		<ui5-button id="hideButton">Hide arrow</ui5-button>
 		<ui5-split-button id="sbEmphasized" design="Emphasized">Emphasized</ui5-split-button>
 		<ui5-split-button id="sbPositive" design="Positive">Positive</ui5-split-button>
 		<ui5-split-button id="sbNegative" design="Negative">Negative</ui5-split-button>
@@ -105,12 +106,17 @@
 </body>
 <script>
 	const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAction");
+	const sbDefault = document.getElementById("sbDefault");
 	const menu = document.getElementById("menu");
 
 	splitBtn.addEventListener("ui5-arrow-click", function() {
 		menu.opener = splitBtn; 
 		menu.open = !menu.open;
 		splitBtn.activeArrowButton = !splitBtn.activeArrowButton;
+	});
+
+	hideButton.addEventListener("click", function() {
+		sbDefault.hideSecondButton = !sbDefault.hideSecondButton;
 	});
 
 	menu.addEventListener("close", function() {

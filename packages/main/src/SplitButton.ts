@@ -145,6 +145,13 @@ class SplitButton extends UI5Element {
 	disabled = false;
 
 	/**
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideSecondButton = false;
+
+	/**
 	 * Defines the accessible ARIA name of the component.
 	 * @default undefined
 	 * @public
