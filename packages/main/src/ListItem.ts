@@ -298,9 +298,6 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	_onmousedown() {
-		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
-			return;
-		}
 		this.activate();
 	}
 
@@ -315,7 +312,19 @@ abstract class ListItem extends ListItemBase {
 		this._onmouseup();
 	}
 
-	_onfocusout() {
+	_onfocusin(e: FocusEvent) {
+		super._onfocusin(e);
+
+		if (e.target !== this.getFocusDomRef()) {
+			this.deactivate();
+		}
+	}
+
+	_onfocusout(e: FocusEvent) {
+		if (e.target !== this.getFocusDomRef()) {
+			return;
+		}
+
 		this.deactivate();
 	}
 
