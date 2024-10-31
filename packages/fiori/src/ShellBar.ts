@@ -48,6 +48,7 @@ import {
 	SHELLBAR_LABEL,
 	SHELLBAR_LOGO,
 	SHELLBAR_NOTIFICATIONS,
+	SHELLBAR_NOTIFICATIONS_NO_COUNT,
 	SHELLBAR_CANCEL,
 	SHELLBAR_PROFILE,
 	SHELLBAR_PRODUCTS,
@@ -510,6 +511,7 @@ class ShellBar extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_currentIndex: number;
 	_navigatableItems: (HTMLElement)[];
+	_overflowNotifications: string | null;
 
 	_headerPress: () => void;
 
@@ -540,6 +542,7 @@ class ShellBar extends UI5Element {
 		this._hiddenIcons = [];
 		this._itemsInfo = [];
 		this._isInitialRendering = true;
+		this._overflowNotifications = null;
 
 		// marks if preventDefault() is called in item's press handler
 		this._defaultItemPressPrevented = false;
@@ -837,6 +840,7 @@ class ShellBar extends UI5Element {
 
 		const newItems = this._handleActionsOverflow();
 		this._updateItemsInfo(newItems);
+		this._updateOverflowNotifications();
 	}
 
 	_setContentPriority(items: Array<IShelBarAdditionalContext>) {
@@ -1067,7 +1071,9 @@ class ShellBar extends UI5Element {
 			}),
 			{
 				icon: "bell",
-				text: this._notificationsText,
+				title: this._notificationsText,
+				text: ShellBar.i18nBundle.getText(SHELLBAR_NOTIFICATIONS_NO_COUNT),
+				count: this.notificationsCount,
 				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
 				priority: 2,
 				styles: {
@@ -1134,6 +1140,25 @@ class ShellBar extends UI5Element {
 		if (isDifferent) {
 			this._itemsInfo = newItems;
 		}
+	}
+
+	_updateOverflowNotifications() {
+		const notificationsArr: Array<string> = [];
+		let overflowNotifications = null;
+
+		this._itemsInfo.forEach(item => {
+			if (item.count && this.isIconHidden(item.icon!)) {
+				notificationsArr.push(item.count);
+			}
+		});
+
+		if (notificationsArr.length === 1) {
+			overflowNotifications = notificationsArr[0];
+		} else if (notificationsArr.length > 1) {
+			overflowNotifications = " ";
+		}
+
+		this._overflowNotifications = overflowNotifications;
 	}
 
 	_updateClonedMenuItems() {
