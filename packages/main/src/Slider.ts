@@ -90,8 +90,8 @@ class Slider extends SliderBase implements IFormInputElement {
 	@property({ type: Number })
 	value = 0;
 
-	_valueInitial?: number;
-	_valueOnInteractionStart?: number;
+	_valueInitial?: number | undefined;
+	_valueOnInteractionStart?: number | undefined;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 	_lastValidInputValue: string;

@@ -351,7 +351,8 @@ class Select extends UI5Element implements IFormInputElement {
 	get formValidity(): ValidityStateFlags {
 		const selectedOption = this.selectedOption;
 
-		return { valueMissing: this.required && (selectedOption && selectedOption.getAttribute("value") === "") };
+		const valueMissing = (this.required && (selectedOption && selectedOption.getAttribute("value") === "")) ?? false;
+		return { valueMissing };
 	}
 
 	async formElementAnchor() {

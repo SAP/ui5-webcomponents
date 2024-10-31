@@ -23,8 +23,8 @@ class ScrollEnablement extends EventProvider<ScrollEnablementEventListenerParam,
 	_container?: HTMLElement;
 	supportsTouch = supportsTouch();
 	_canScroll?: boolean;
-	_prevDragX?: number;
-	_prevDragY?: number;
+	_prevDragX?: number | undefined;
+	_prevDragY?: number | undefined;
 
 	constructor(containerComponent: UI5Element) {
 		super();

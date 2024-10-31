@@ -141,7 +141,7 @@ class ColorPalette extends UI5Element {
 	 * @private
 	 */
 	@property()
-	_selectedColor?: string;
+	_selectedColor?: string | undefined;
 
 	/**
 	 * Defines if the palette is in Popup or Embeded mode.
@@ -174,7 +174,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
-	_currentlySelected?: ColorPaletteItem;
+	_currentlySelected?: ColorPaletteItem | undefined;
 	_shouldFocusRecentColors = false;
 
 	@i18n("@ui5/webcomponents")

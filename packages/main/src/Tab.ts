@@ -86,7 +86,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	text?: string | undefined;
 
 	/**
 	 * Disabled tabs can't be selected.
@@ -102,7 +102,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	additionalText?: string;
+	additionalText?: string | undefined;
 
 	/**
 	 * Defines the icon source URI to be displayed as graphical element within the component.
@@ -112,7 +112,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	icon?: string | undefined;
 
 	/**
 	 * Defines the component's design color.
@@ -153,7 +153,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_isTopLevelTab = false;
 
 	@property({ type: Object })
-	_selectedTabReference?: Tab;
+	_selectedTabReference?: Tab | undefined;
 
 	/**
 	 * Holds the content associated with this tab.
@@ -185,13 +185,13 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	})
 	items!: Array<ITab>
 
-	_isInline?: boolean;
-	_forcedMixedMode?: boolean;
+	_isInline?: boolean | undefined;
+	_forcedMixedMode?: boolean | undefined;
 	_getElementInStrip?: () => HTMLElement | undefined;
 	_getElementInOverflow?: () => HTMLElement | undefined;
 	_individualSlot?: string;
-	_forcedPosinset?: number;
-	_forcedSetsize?: number;
+	_forcedPosinset?: number | undefined;
+	_forcedSetsize?: number | undefined;
 	_forcedStyleInOverflow?: Record<string, any>;
 
 	@i18n("@ui5/webcomponents")

@@ -76,10 +76,10 @@ type Day = {
 	ariaSelected: string,
 	ariaDisabled: string | undefined,
 	disabled: boolean,
-	secondDay?: number,
-	weekNum?: number,
-	isHidden?: boolean,
-	type?: string,
+	secondDay?: number | undefined,
+	weekNum?: number | undefined,
+	isHidden?: boolean | undefined,
+	type?: string | undefined,
 	parts: string,
 }
 
@@ -92,7 +92,7 @@ type Week = Array<Day | WeekNumber>;
 
 type DayPickerChangeEventDetail = {
 	dates: Array<number>,
-	timestamp?: number,
+	timestamp?: number | undefined,
 }
 
 type DayPickerNavigateEventDetail = {
@@ -176,7 +176,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	 @property({ type: Number })
-	_secondTimestamp?: number;
+	_secondTimestamp?: number | undefined;
 
 	/**
 	 * Array of special calendar dates (if such are passed) from the calendar.
@@ -329,6 +329,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_calculateWeekNumber(date: Date): number {
+		// @ts-expect-error
 		const oDateFormat = DateFormat.getDateInstance({ pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering });
 		const weekNumber = oDateFormat.format(date);
 

@@ -192,7 +192,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @private
 	 */
 	@property({ type: Object, noAttribute: true })
-	accData?: I18nText;
+	accData?: I18nText | undefined;
 
 	/**
 	* @private
@@ -204,9 +204,9 @@ class Icon extends UI5Element implements IIcon {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	effectiveAccessibleName?: string;
+	effectiveAccessibleName?: string | undefined;
 
-	ltr?: boolean;
+	ltr?: boolean | undefined;
 	packageName?: string;
 	viewBox?: string;
 	customSvg?: object;
@@ -305,7 +305,7 @@ class Icon extends UI5Element implements IIcon {
 			this.effectiveAccessibleName = this.accessibleName;
 		} else if (this.accData) {
 			const i18nBundle = await getI18nBundle(this.packageName);
-			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
+			this.effectiveAccessibleName = i18nBundle.getText(this.accData);
 		} else {
 			this.effectiveAccessibleName = undefined;
 		}

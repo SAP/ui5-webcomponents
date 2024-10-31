@@ -73,7 +73,7 @@ type ListSelectionChangeEventDetail = {
 	previouslySelectedItems: Array<ListItemBase>;
 	selectionComponentPressed: boolean;
 	targetItem: ListItemBase;
-	key?: string;
+	key?: string | undefined;
 }
 
 type ListItemDeleteEventDetail = {

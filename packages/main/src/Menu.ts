@@ -194,7 +194,7 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	headerText?: string | undefined;
 
 	/**
 	 * Indicates if the menu is open
@@ -232,7 +232,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	opener?: HTMLElement | string | undefined;
 
 	/**
 	 * Defines the items of this component.

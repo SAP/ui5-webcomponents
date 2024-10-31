@@ -126,7 +126,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	@property({ type: Number })
-	_secondTimestamp?: number;
+	_secondTimestamp?: number | undefined;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;

@@ -45,9 +45,9 @@ import CalendarPickersMode from "./types/CalendarPickersMode.js";
 const PHONE_MODE_BREAKPOINT = 640; // px
 
 type PreviewValues = {
-	timeSelectionValue?: string,
-	calendarTimestamp?: number,
-	calendarValue?: string,
+	timeSelectionValue?: string | undefined,
+	calendarTimestamp?: number | undefined,
+	calendarValue?: string | undefined,
 }
 
 /**

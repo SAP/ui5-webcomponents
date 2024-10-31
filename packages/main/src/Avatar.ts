@@ -313,7 +313,9 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	onBeforeRendering() {
-		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
+		if (this._interactive) {
+			this._onclick = this._onClickHandler.bind(this);
+		}
 	}
 
 	async onAfterRendering() {

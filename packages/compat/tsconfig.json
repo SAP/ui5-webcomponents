@@ -5,6 +5,7 @@
 		"global.d.ts"
 	],
 	"compilerOptions": {
+		"exactOptionalPropertyTypes": true,
 		"outDir": "dist",
 		"experimentalDecorators": true,
 		"verbatimModuleSyntax": true,

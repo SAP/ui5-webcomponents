@@ -5,6 +5,7 @@
 		"src/global.d.ts",
 	],
 	"compilerOptions": {
+		"exactOptionalPropertyTypes": true,
 		"types": ["@ui5/webcomponents-tools"],
 		"outDir": "dist",
 		"composite": true,

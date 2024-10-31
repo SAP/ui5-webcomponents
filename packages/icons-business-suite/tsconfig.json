@@ -5,6 +5,7 @@
 		"src/generated/**/*.json"
 	],
 	"compilerOptions": {
+		"exactOptionalPropertyTypes": true,
 		"outDir": "dist",
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,

@@ -502,7 +502,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_shouldAutocomplete?: boolean;
 	_preventTokenizerToggle?: boolean;
 	_isOpenedByKeyboard?: boolean;
-	_itemToFocus?: IMultiComboBoxItem;
+	_itemToFocus?: IMultiComboBoxItem | undefined;
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
 	@i18n("@ui5/webcomponents")

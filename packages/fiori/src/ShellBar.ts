@@ -92,20 +92,20 @@ type ShellBarSearchButtonEventDetail = {
 
 interface IShelBarItemInfo {
 	id: string,
-	icon?: string,
-	text?: string,
+	icon?: string | undefined,
+	text?: string | undefined,
 	priority: number,
 	show: boolean,
-	count?: string,
-	custom?: boolean,
-	title?: string,
-	stableDomRef?: string,
-	refItemid?: string,
+	count?: string | undefined,
+	custom?: boolean | undefined,
+	title?: string | undefined,
+	stableDomRef?: string | undefined,
+	refItemid?: string | undefined,
 	press: (e: MouseEvent) => void,
 	styles: object,
 	domOrder: number,
 	classes: string,
-	order?: number,
+	order?: number | undefined,
 	profile?: boolean,
 }
 

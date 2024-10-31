@@ -61,11 +61,11 @@ type RendererOptions = {
 type ChangeInfo = {
 	type: "property" | "slot",
 	name: string,
-	reason?: string,
-	child?: SlotValue,
-	target?: UI5Element,
-	newValue?: PropertyValue,
-	oldValue?: PropertyValue,
+	reason?: string | undefined,
+	child?: SlotValue | undefined,
+	target?: UI5Element | undefined,
+	newValue?: PropertyValue | undefined,
+	oldValue?: PropertyValue | undefined,
 }
 
 type InvalidationInfo = ChangeInfo & { target: UI5Element };
@@ -158,7 +158,7 @@ abstract class UI5Element extends HTMLElement {
 	_childChangeListeners: Map<string, ChildChangeListener>;
 	_slotsAssignedNodes: WeakMap<HTMLSlotElement, Array<SlotValue>>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
-	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
+	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve | undefined };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
 	_internals: ElementInternals;
@@ -989,7 +989,7 @@ abstract class UI5Element extends HTMLElement {
 		return eventResult;
 	}
 
-	_fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
+	_fireEvent<T = any>(name: string, data: T = {} as T, cancelable = false, bubbles = true) {
 		const noConflictEvent = new CustomEvent<T>(`ui5-${name}`, {
 			detail: data,
 			composed: false,

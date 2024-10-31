@@ -18,17 +18,17 @@ type TimePickerClockChangeEventDetail = {
 }
 
 type TimePickerClockItem = {
-	angle?: number,
-	item?: string,
-	innerItem?: string,
-	outerStyles?: object,
-	innerStyles?: object,
+	angle?: number | undefined,
+	item?: string | undefined,
+	innerItem?: string | undefined,
+	outerStyles?: object | undefined,
+	innerStyles?: object | undefined,
 }
 
 type TimePickerClockSelection = {
-	showMarker?: boolean,
-	itemClasses?: string,
-	innerItemClasses?: string,
+	showMarker?: boolean | undefined,
+	itemClasses?: string | undefined,
+	innerItemClasses?: string | undefined,
 }
 
 type TimePickerClockDimensions = {

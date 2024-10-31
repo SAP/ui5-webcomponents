@@ -1,10 +1,10 @@
 import type UI5Element from "../UI5Element.js";
 
 interface IFormInputElement extends UI5Element {
-	name?: string;
+	name?: string | undefined;
 	formFormattedValue: FormData | string | null;
-	formValidityMessage?: string;
-	formValidity?: ValidityStateFlags;
+	formValidityMessage?: string | undefined;
+	formValidity?: ValidityStateFlags | undefined;
 	formElementAnchor?: () => HTMLElement | undefined | Promise<HTMLElement | undefined>;
 }
 

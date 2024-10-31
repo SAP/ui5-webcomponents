@@ -51,21 +51,21 @@ type SelectionRequestEventDetail = {
 }
 
 type AccInfo = {
-	role?: string;
-	ariaExpanded?: boolean;
-	ariaLevel?: number;
+	role?: string | undefined;
+	ariaExpanded?: boolean | undefined;
+	ariaLevel?: number | undefined;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
-	ariaSelectedText?: string;
-	ariaHaspopup?: `${Lowercase<AriaHasPopup>}`;
-	posinset?: number;
-	setsize?: number;
-	ariaSelected?: boolean;
-	ariaChecked?: boolean;
-	listItemAriaLabel?: string;
-	ariaOwns?: string;
-	tooltip?: string;
-	ariaKeyShortcuts?: string;
+	ariaSelectedText?: string | undefined;
+	ariaHaspopup?: `${Lowercase<AriaHasPopup>}` | undefined;
+	posinset?: number | undefined;
+	setsize?: number | undefined;
+	ariaSelected?: boolean | undefined;
+	ariaChecked?: boolean | undefined;
+	listItemAriaLabel?: string | undefined;
+	ariaOwns?: string | undefined;
+	tooltip?: string | undefined;
+	ariaKeyShortcuts?: string | undefined;
 }
 
 type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;

@@ -71,7 +71,7 @@ abstract class SliderBase extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	name?: string;
+	name?: string | undefined;
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
@@ -140,7 +140,7 @@ abstract class SliderBase extends UI5Element {
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName?: string | undefined;
 
 	/**
 	 * @private
@@ -176,7 +176,7 @@ abstract class SliderBase extends UI5Element {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
-	_valueOnInteractionStart?: number;
+	_valueOnInteractionStart?: number | undefined;
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();

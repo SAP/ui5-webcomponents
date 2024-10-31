@@ -304,7 +304,7 @@ class Table extends UI5Element {
 	_events = ["keydown", "keyup", "click", "focusin", "focusout"];
 	_onEventBound: (e: Event) => void;
 	_onResizeBound: ResizeObserverCallback;
-	_tableNavigation?: TableNavigation;
+	_tableNavigation?: TableNavigation | undefined;
 	_poppedIn: Array<{col: TableHeaderCell, width: float}>;
 	_containerWidth: number;
 

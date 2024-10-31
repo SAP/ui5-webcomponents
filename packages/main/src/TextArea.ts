@@ -48,9 +48,9 @@ type IndexedTokenizedText = Array<{
 }>;
 
 type ExceededText = {
-	exceededText?: string;
-	leftCharactersCount?: number;
-	calcedMaxLength?: number;
+	exceededText?: string | undefined;
+	leftCharactersCount?: number | undefined;
+	calcedMaxLength?: number | undefined;
 };
 
 /**

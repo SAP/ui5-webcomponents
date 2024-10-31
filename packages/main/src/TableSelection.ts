@@ -80,7 +80,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	selected = "";
 
 	readonly identifier = "TableSelection";
-	_table?: Table;
+	_table?: Table | undefined;
 	_rangeSelection?: {selected: boolean, isUp: boolean | null, rows: TableRow[], isMouse: boolean, shiftPressed: boolean} | null;
 
 	onTableActivate(table: Table) {

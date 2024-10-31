@@ -125,14 +125,14 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	@property({ type: Boolean })
 	_isEndValueValid = false;
 
-	_startValueInitial?: number;
-	_endValueInitial?: number;
-	_valueAffected?: AffectedValue;
+	_startValueInitial?: number | undefined;
+	_endValueInitial?: number | undefined;
+	_valueAffected?: AffectedValue | undefined;
 	_isPressInCurrentRange = false;
 	_handeIsPressed = false;
 	_initialPageXPosition?: number;
-	_startValueAtBeginningOfAction?: number;
-	_endValueAtBeginningOfAction?: number;
+	_startValueAtBeginningOfAction?: number | undefined;
+	_endValueAtBeginningOfAction?: number | undefined;
 	_initialStartHandlePageX?: number;
 	_firstHandlePositionFromStart?: number;
 	_secondHandlePositionFromStart?: number;

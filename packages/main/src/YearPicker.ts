@@ -122,7 +122,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	@property({ type: Number })
-	_secondTimestamp?: number;
+	_secondTimestamp?: number | undefined;
 
 	_firstYear?: number;
 	_lastYear?: number;
@@ -155,6 +155,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		const pageSize = this._getPageSize();
 		const locale = getLocale() as unknown as LocaleT;
 		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
+		// @ts-expect-error
 		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
 		this._calculateFirstYear();
 		this._lastYear = this._firstYear! + pageSize - 1;

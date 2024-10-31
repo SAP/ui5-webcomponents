@@ -45,20 +45,20 @@ type TimePickerEntityAttributes = {
 
 type TimePickerEntityProperties = {
 	label: string,
-	entity?: string,
-	itemMin?: number,
-	itemMax?: number,
+	entity?: string | undefined,
+	itemMin?: number | undefined,
+	itemMax?: number | undefined,
 	value: number,
-	stringValue?: string,
-	textValue?: string,
-	displayStep?: number,
-	lastItemReplacement?: number,
-	showInnerCircle?: boolean,
+	stringValue?: string | undefined,
+	textValue?: string | undefined,
+	displayStep?: number | undefined,
+	lastItemReplacement?: number | undefined,
+	showInnerCircle?: boolean | undefined,
 	prependZero: boolean,
-	active?: boolean,
-	focused?: boolean,
-	hasSeparator?: boolean,
-	attributes?: TimePickerEntityAttributes,
+	active?: boolean | undefined,
+	focused?: boolean | undefined,
+	hasSeparator?: boolean | undefined,
+	attributes?: TimePickerEntityAttributes | undefined,
 }
 
 const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
@@ -99,7 +99,7 @@ class TimePickerInternals extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value?: string;
+	value?: string | undefined;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -113,7 +113,7 @@ class TimePickerInternals extends UI5Element {
 	 * @public
 	 */
 	@property()
-	formatPattern?: string;
+	formatPattern?: string | undefined;
 
 	/**
 	 * The index of the active Clock/TogleSpinButton.
@@ -156,14 +156,14 @@ class TimePickerInternals extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_typeCooldownId?: ReturnType<typeof setTimeout>;
+	_typeCooldownId?: ReturnType<typeof setTimeout> | undefined;
 
 	/**
 	 * Exact match number buffer
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_exactMatch?: number;
+	_exactMatch?: number | undefined;
 
 	/**
 	 * Buffer for entered by keyboard numbers
@@ -319,11 +319,13 @@ class TimePickerInternals extends UI5Element {
 	getFormat() {
 		let dateFormat: DateFormat;
 		if (this._isPattern) {
+			// @ts-expect-error
 			dateFormat = DateFormat.getDateInstance({
 				calendarType: this._calendarType,
 				pattern: this._formatPattern,
 			});
 		} else {
+			// @ts-expect-error
 			dateFormat = DateFormat.getDateInstance({
 				calendarType: this._calendarType,
 				style: this._formatPattern,

@@ -189,7 +189,7 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName?: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -198,7 +198,7 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessibleNameRef?: string | undefined;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -283,7 +283,7 @@ class Button extends UI5Element implements IButton {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	buttonTitle?: string;
+	buttonTitle?: string | undefined;
 
 	/**
 	 * @private

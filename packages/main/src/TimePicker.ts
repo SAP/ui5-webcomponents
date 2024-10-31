@@ -333,7 +333,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
-	tempValue?: string;
+	tempValue?: string | undefined;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -635,10 +635,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		let dateFormat;
 
 		if (this._isPattern) {
+			// @ts-expect-error
 			dateFormat = DateFormat.getDateInstance({
 				pattern: this._formatPattern,
 			});
 		} else {
+			// @ts-expect-error
 			dateFormat = DateFormat.getDateInstance({
 				style: this._formatPattern,
 			});

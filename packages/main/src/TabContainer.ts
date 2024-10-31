@@ -375,7 +375,7 @@ class TabContainer extends UI5Element {
 	responsivePopover?: ResponsivePopover;
 	_hasScheduledPopoverOpen = false;
 	_handleResizeBound: () => void;
-	_setDraggedElement?: SetDraggedElementFunction;
+	_setDraggedElement?: SetDraggedElementFunction | undefined;
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);

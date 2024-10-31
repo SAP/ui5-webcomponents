@@ -33,10 +33,10 @@ interface SuggestionComponent extends UI5Element {
 
 type SuggestionsAccInfo = {
 	isGroup: boolean;
-	currentPos?: number;
-	listSize?: number;
+	currentPos?: number | undefined;
+	listSize?: number | undefined;
 	itemText: string;
-	additionalText?: string;
+	additionalText?: string | undefined;
 }
 
 /**
@@ -50,7 +50,7 @@ class Suggestions extends ComponentFeature {
 	handleFocus: boolean;
 	highlight: boolean;
 	selectedItemIndex: number;
-	accInfo?: SuggestionsAccInfo;
+	accInfo?: SuggestionsAccInfo | undefined;
 	_scrollContainer?: HTMLElement;
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;

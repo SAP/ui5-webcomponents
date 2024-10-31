@@ -80,9 +80,9 @@ type AccessibilityInformation = {
 }
 
 type StepInfo = {
-	icon?: string,
-	titleText?: string,
-	subtitleText?: string,
+	icon?: string | undefined,
+	titleText?: string | undefined,
+	subtitleText?: string | undefined,
 	number: number,
 	selected: boolean,
 	disabled: boolean,

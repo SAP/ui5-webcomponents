@@ -24,7 +24,7 @@ class CalendarPart extends DateComponentBase {
 	 * @protected
 	 */
 	@property({ type: Number })
-	timestamp?: number;
+	timestamp?: number | undefined;
 
 	get _minTimestamp() {
 		return this._minDate.valueOf() / 1000;

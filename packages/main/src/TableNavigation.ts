@@ -33,7 +33,7 @@ class TableNavigation extends TableExtension {
 	_colPosition: number = 0;
 	_tabPosition: number = 0;
 	_ignoreFocusIn?: boolean;
-	_lastFocusedItem?: HTMLElement;
+	_lastFocusedItem?: HTMLElement | undefined;
 	_onKeyDownCaptureBound: (e: KeyboardEvent) => void;
 
 	constructor(table: Table) {

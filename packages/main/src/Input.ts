@@ -342,7 +342,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	placeholder?: string | undefined;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -426,7 +426,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	name?: string;
+	name?: string | undefined;
 
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
@@ -448,7 +448,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property({ type: Number })
-	maxlength?: number;
+	maxlength?: number | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -457,7 +457,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName?: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
@@ -466,7 +466,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessibleNameRef?: string | undefined;
 
 	/**
 	 * Defines whether the clear icon of the input will be shown.
@@ -520,10 +520,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_nativeInputAttributes: NativeInputAttributes = {};
 
 	@property({ type: Number })
-	_inputWidth?: number;
+	_inputWidth?: number | undefined;
 
 	@property({ type: Number })
-	_listWidth?: number;
+	_listWidth?: number | undefined;
 
 	@property({ type: Boolean, noAttribute: true })
 	_inputIconFocused = false;
@@ -533,14 +533,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_associatedLabelsTexts?: string;
+	_associatedLabelsTexts?: string | undefined;
 
 	/**
 	 * Constantly updated value of texts collected from the accessibleNameRef elements
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_accessibleLabelsRefTexts?: string;
+	_accessibleLabelsRefTexts?: string | undefined;
 
 	/**
 	 * Defines the suggestion items.

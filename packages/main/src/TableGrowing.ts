@@ -127,10 +127,10 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	_activeState = false;
 
 	readonly identifier = "TableGrowing";
-	_table?: Table;
-	_observer?: IntersectionObserver;
+	_table?: Table | undefined;
+	_observer?: IntersectionObserver | undefined;
 	_individualSlot?: string;
-	_currentLastRow?: HTMLElement;
+	_currentLastRow?: HTMLElement | undefined;
 	_shouldFocusRow?: boolean;
 
 	@i18n("@ui5/webcomponents")

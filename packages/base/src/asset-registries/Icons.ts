@@ -27,10 +27,10 @@ type IconData = {
 	collection: string,
 	packageName: string,
 	pathData: string | Array<string>,
-	ltr?: boolean,
-	accData?: I18nText,
-	customTemplate?: TemplateFunction,
-	viewBox?: string,
+	ltr?: boolean | undefined,
+	accData?: I18nText | undefined,
+	customTemplate?: TemplateFunction | undefined,
+	viewBox?: string | undefined,
 };
 
 const loaders = new Map<string, IconLoader>();

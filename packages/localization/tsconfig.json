@@ -4,6 +4,7 @@
 		"src/**/*"
 	],
 	"compilerOptions": {
+		"exactOptionalPropertyTypes": true,
 		"outDir": "dist",
 		"composite": true,
 		"rootDir": "src",
