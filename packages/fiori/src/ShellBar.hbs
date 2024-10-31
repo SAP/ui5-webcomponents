@@ -131,7 +131,7 @@
 
 							<ui5-button
 								id="{{this._id}}-item-1"
-								class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button"
+								class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button ui5-shellbar-search-item-for-arrow-nav"
 								icon="sap-icon://search"
 								data-ui5-text="Search"
 								data-ui5-notifications-count="{{notificationsCount}}"
@@ -149,7 +149,7 @@
 				{{#if showNotifications}}
 					{{#if _isFullVariant}}
 						<ui5-button id="{{this._id}}-item-2" style="{{styles.items.notification}}"
-							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button"
+							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
 							icon="sap-icon://bell" data-ui5-text="Notifications"
 							data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
 							tooltip="{{_notificationsText}}"
@@ -162,7 +162,7 @@
 					<ui5-button
 						id="{{this.id}}"
 						style="{{this.styles}}"
-						class="{{this.classes}}"
+						class="{{this.classes}} ui5-shellbar-items-for-arrow-nav"
 						icon="{{this.icon}}"
 						tooltip="{{this.title}}"
 						data-count="{{this.count}}"
@@ -179,7 +179,7 @@
 					<ui5-button
 						id="{{this._id}}-item-5"
 						style="{{styles.items.overflow}}"
-						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button"
+						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
 						icon="sap-icon://overflow"
 						data-count="{{_overflowNotifications}}"
 						@click="{{_handleOverflowPress}}"
@@ -197,7 +197,7 @@
 					<ui5-button
 						id="{{this._id}}-item-4"
 						style="{{styles.items.product}}"
-						class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-no-overflow-button"
+						class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-no-overflow-button ui5-shellbar-items-for-arrow-nav"
 						icon="sap-icon://grid"
 						data-ui5-text="Product Switch"
 						@click={{_handleProductSwitchPress}}
@@ -218,7 +218,7 @@
 		@click={{_handleProfilePress}}
 		style="{{styles.items.profile}}"
 		tooltip="{{_profileText}}"
-		class="ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-no-overflow-button"
+		class="ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-no-overflow-button ui5-shellbar-items-for-arrow-nav"
 		.accessibilityAttributes={{accInfo.profile.accessibilityAttributes}}
 		data-ui5-stable="profile"
 	>
