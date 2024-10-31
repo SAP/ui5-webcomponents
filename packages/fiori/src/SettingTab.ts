@@ -65,34 +65,10 @@ class SettingTab extends UI5Element implements ITabbable {
 
 	@slot({
 		type: HTMLElement,
-		individualSlots: true,
-		invalidateOnChildChange: {
-			properties: true,
-			slots: false,
-		},
+		"default": true,
 	})
 	items!: Array<SettingTab>
 
-	@property({ type: Object })
-	_selectedSettingReference?: SettingTab;
-
-	_individualSlot?: string;
-
-	get settings(): Array<SettingTab> {
-		return this.items;
-	}
-
-	get _defaultSlotName() {
-		return this._selectedSettingReference === this ? "" : "disabled-slot";
-	}
-
-	get isSelectedSetting(): boolean {
-		return this._selectedSettingReference === this;
-	}
-
-	get _effectiveSlotName() {
-		return this.isSelectedSetting ? this._individualSlot : `disabled-${this._individualSlot}`;
-	}
 	get _isPhone() {
 		return isPhone();
 	}

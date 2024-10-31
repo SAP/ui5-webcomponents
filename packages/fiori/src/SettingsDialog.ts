@@ -69,13 +69,6 @@ class SettingDialog extends UI5Element {
 	@property({ type: Object })
 	_selectedSetting?: SettingItem;
 
-	/**
-	 * Defines the `ui5-input`, that will be used as a search field.
-	 * @public
-	 */
-	@slot()
-	searchField!: Array<Input>;
-
 	@slot({
 		"default": true,
 		type: HTMLElement,

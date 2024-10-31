@@ -106,7 +106,7 @@ class SettingItem extends UI5Element {
 	}
 
 	get _defaultSlotName() {
-		return this._selectedSettingReference === this ? "" : "disabled-slot";
+		return this.selected ? "" : "disabled-slot";
 	}
 
 	get isSelectedSetting(): boolean {
@@ -114,7 +114,7 @@ class SettingItem extends UI5Element {
 	}
 
 	get _effectiveSlotName() {
-		return this.isSelectedSetting ? this._individualSlot : `disabled-${this._individualSlot}`;
+		return this.selected ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
 	setSelectedItem(e: CustomEvent<ListItemClickEventDetail>) {
