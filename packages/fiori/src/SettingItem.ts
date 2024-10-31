@@ -65,6 +65,8 @@ class SettingItem extends UI5Element {
 	@property({ type: Boolean })
 	selected= false;
 
+	@property({ type: Boolean })
+	fixedItem= false;
 	/**
 	 * Defines the icon of the component.
 	 *

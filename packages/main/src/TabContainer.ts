@@ -417,6 +417,7 @@ class TabContainer extends UI5Element {
 			}
 		});
 
+
 		this._sendStripPresentationInfos(this.items);
 
 		if (!this._animationRunning) {

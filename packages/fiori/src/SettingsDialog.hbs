@@ -18,16 +18,18 @@
 			<div slot="menu" style="display:inline-block">
 			<ui5-list id="items" accessibleRole="Menu" separators="None">
 			{{#each items}}
-				{{#if this.tooltip}}
-					<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block" @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
-				{{else}}
-					<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block"  @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
-				{{/if}}
+				{{#unless this.fixedItem}}
+					{{#if this.tooltip}}
+						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block" @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+					{{else}}
+						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block"  @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+					{{/if}}
+				{{/unless}}
 			{{/each}}
 
-			{{#if fixedItems}}
-
+			{{#if fixedItems.length}}
 				<div role="separator" class="ui5-setting-spacer" style="margin: 0.25rem; height: 0.25rem; background-color: rgba(63,81,97,.2);"></div>
+
 				{{#each fixedItems}}
 					{{#if this.tooltip}}
 						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block" @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
@@ -35,6 +37,7 @@
 						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block"  @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
 					{{/if}}
 				{{/each}}
+
 			{{/if}}
 			</ui5-list>
 		</div>
@@ -45,7 +48,7 @@
 	<div style="display: inline-block; vertical-align: top;"></div>
 	<slot name="settingView">
 		<div slot="container" style="display:inline-block; background-color:white">
-		{{#each _items}}
+		{{#each items}}
 			<slot name={{this._id}}>
 			{{#if headerTitle}}
 				<ui5-title level="H3" size="H3">{{this.headerTitle}}</ui5-title>

@@ -3,7 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 import {
-	isPhone
+	isPhone,
 } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Templates
@@ -76,31 +76,37 @@ class SettingDialog extends UI5Element {
 	@slot()
 	searchField!: Array<Input>;
 
-	@slot()
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: true,
+			slots: true,
+		},
+	})
 	items!: Array<SettingItem>;
 
-	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	fixedItems!: Array<SettingItem>;
+	fixedItems: Array<SettingItem> = [];
+	// @slot({ type: HTMLElement, invalidateOnChildChange: true })
+	// fixedItems!: Array<SettingItem>;
 
-	_items: Array<SettingItem> = [];
-
+	// _items: Array<SettingItem> = [];
 
 	onBeforeRendering() {
-		this._items = this.items.concat(this.fixedItems);
-
-		if (!this._items.length) {
+		if (!this.items.length) {
 			return;
 		}
 
-		const selectedSetting = this._items.find((setting): setting is SettingItem => setting.selected);
+		this.fixedItems = this.items.filter(item => item.fixedItem);
+		const selectedSetting = this.items.find((setting): setting is SettingItem => setting.selected);
 
 		if (selectedSetting) {
 			this._selectedSetting = selectedSetting;
 		} else {
-			this._selectedSetting = this._items[0];
+			this._selectedSetting = this.items[0];
 		}
-		this._items[0]._selectedSettingReference = this._items[0];//TODO
-
+		this.items[0]._selectedSettingReference = this.items[0]; // TODO
 	}
 
 	get _isPhone() {
