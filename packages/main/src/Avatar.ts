@@ -244,7 +244,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	get tabindex() {
-		return this.forcedTabIndex || (this._interactive ? "0" : "-1");
+		return this.forcedTabIndex || (this._interactive ? "0" : undefined);
 	}
 
 	/**
