@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
+
+
+### Features
+
+* **ui5-navigation-layout:** add ui5-navigation-layout component ([#9517](https://github.com/SAP/ui5-webcomponents/issues/9517)) ([463c780](https://github.com/SAP/ui5-webcomponents/commit/463c780df03e95eacf82075f9a47007a5a088b01))
+
+
+
+
+
 # [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
 
 
