@@ -1,0 +1,7 @@
+<div class="ui5-setting-item" >
+	<slot name="{{this._defaultSlotName}}"></slot>
+
+	{{#each settings}}
+		<slot name="{{this._effectiveSlotName}}"></slot>
+	{{/each}}
+</div>

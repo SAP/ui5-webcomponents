@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>User Settings</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+	</script>
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+<!--	<link rel="stylesheet" type="text/css" href="./styles/UserSettings.css">-->
+</head>
+
+<body>
+			<ui5-settings-dialog slot="settings" header-title="Settings" show-search-field @close="{{onclose}}">
+				<!-- Item -->
+				<ui5-setting-item text="Setting 1" slot="items" tooltip="tooltip" icon="settings" header-title="header title setting item">
+					<ui5-setting-tab  busy tab-title="Tab Text 1" text="text1">
+						<ui5-button>Setting 1 Tab 1</ui5-button>
+					</ui5-setting-tab>
+					<ui5-setting-tab slot="tabs" tab-title="Tab Text 2s" text="text2">
+						<ui5-button>Setting 1 Tab 2 view 2</ui5-button>
+					</ui5-setting-tab>
+				</ui5-setting-item>
+
+				<!-- Item -->
+				<ui5-setting-item slot="fixedItems" text="Setting 2">
+					<ui5-setting-tab slot="tabs" tab-title="Tab Text 1" >
+						<ui5-button>Setting 2 Tab 1 view 1</ui5-button>
+						<ui5-button>Setting 2 Tab 1 view 2</ui5-button>
+					</ui5-setting-tab>
+				</ui5-setting-item>
+
+				<!-- Item -->
+				<ui5-setting-item text="Setting 3" slot="items" tooltip="tooltip" icon="accessibility" >
+					<ui5-setting-tab slot="tabs" tab-title="Tab Text 3" text="text3">
+						<ui5-setting-view>
+							<ui5-button>Setting 3 Tab 1 view 1</ui5-button>
+						</ui5-setting-view>
+					</ui5-setting-tab>
+				</ui5-setting-item>
+
+
+			</ui5-settings-dialog>
+</body>
+</html>
