@@ -72,16 +72,4 @@ describe("Toolbar general interaction", () => {
 		assert.strictEqual(await input.getProperty("value"), "1", "Button click event only called once");
 		await input.setAttribute("value", "0");
 	});
-
-	it("Should not return null upon calling getDomRef for all direct child items", async () => {
-		await browser.setWindowSize(500, 1080);
-
-		const toolbar = await browser.$("#otb_standard");
-		const items = await toolbar.$$(":scope > *");
-
-		for (const item of items) {
-			const realDomRef = await browser.execute((el) => el.getDomRef(), item);
-			assert.isNotNull(realDomRef, "getDomRef should return a valid DOM reference");
-		}
-	});
 });

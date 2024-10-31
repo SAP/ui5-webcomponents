@@ -333,6 +333,8 @@ class Toolbar extends UI5Element {
 	onBeforeRendering() {
 		this.detachListeners();
 		this.attachListeners();
+
+		this.preprocessItems();
 	}
 
 	async onAfterRendering() {
@@ -340,7 +342,6 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
-		this.preprocessItems();
 	}
 
 	/**
