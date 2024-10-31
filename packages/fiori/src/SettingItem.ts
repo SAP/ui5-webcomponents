@@ -4,12 +4,18 @@ import {
 	isPhone,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
-import { customElement, slot } from "@ui5/webcomponents-base/decorators.js";
+import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 
 // Templates
+import type ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
+import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import SettingItemTemplate from "./generated/templates/SettingItemTemplate.lit.js";
 import type SettingTab from "./SettingTab.js";
+import type SettingsDialog from "./SettingsDialog.js";
 
+type SettingListItem = ListItemStandard & {
+	mappedItem: SettingItem
+};
 @customElement({
 	tag: "ui5-setting-item",
 	renderer: litRender,
@@ -96,7 +102,7 @@ class SettingItem extends UI5Element {
 	}
 
 	get settings(): Array<SettingTab> {
-		return this.tabs;//when return correct item don't render  tabs
+		return this.tabs;// when return correct item don't render  tabs
 	}
 
 	get _defaultSlotName() {
@@ -111,10 +117,14 @@ class SettingItem extends UI5Element {
 		return this.isSelectedSetting ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
-	setSelectedItem() {
-		console.log("XXX");
-		//arguments[0].target.selected = true;
-
+	setSelectedItem(e: CustomEvent<ListItemClickEventDetail>) {
+		const setting = e.target as SettingListItem;
+		const settingItem = setting.mappedItem;
+		(this as unknown as SettingsDialog).items.forEach(item => {
+			item.selected = false;
+		});
+		(this as unknown as SettingsDialog)._selectedSetting = settingItem;
+		settingItem.selected = true;
 	}
 
 	get _isPhone() {

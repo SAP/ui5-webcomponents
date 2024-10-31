@@ -20,9 +20,21 @@
 			{{#each items}}
 				{{#unless this.fixedItem}}
 					{{#if this.tooltip}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block" @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						<ui5-li icon="sap-icon://{{this.icon}}"
+								tooltip="{{this.tooltip}}"
+								style="display:block"
+								.mappedItem={{this}}
+								?selected={{this.selected}}
+								@click="{{setSelectedItem}}"
+						>{{this.text}}</ui5-li>
 					{{else}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block"  @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						<ui5-li icon="sap-icon://{{this.icon}}"
+								tooltip="{{this.text}}"
+								style="display:block"
+								.mappedItem={{this}}
+								?selected={{this.selected}}
+								@click="{{setSelectedItem}}"
+						>{{this.text}}</ui5-li>
 					{{/if}}
 				{{/unless}}
 			{{/each}}
@@ -32,9 +44,21 @@
 
 				{{#each fixedItems}}
 					{{#if this.tooltip}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block" @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						<ui5-li icon="sap-icon://{{this.icon}}"
+								tooltip="{{this.tooltip}}"
+								style="display:block"
+								.mappedItem={{this}}
+								?selected={{this.selected}}
+								@click="{{setSelectedItem}}"
+						>{{this.text}}</ui5-li>
 					{{else}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block"  @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						<ui5-li icon="sap-icon://{{this.icon}}"
+								tooltip="{{this.text}}"
+								style="display:block"
+								.mappedItem={{this}}
+								?selected={{this.selected}}
+								@click="{{setSelectedItem}}"
+						>{{this.text}}</ui5-li>
 					{{/if}}
 				{{/each}}
 
@@ -50,16 +74,17 @@
 		<div slot="container" style="display:inline-block; background-color:white">
 		{{#each items}}
 			<slot name={{this._id}}>
-			{{#if headerTitle}}
-				<ui5-title level="H3" size="H3">{{this.headerTitle}}</ui5-title>
-			{{else}}
-				<ui5-title level="H3" size="H3">{{this.text}}</ui5-title>
+			{{#if this.selected}}
+				{{#if headerTitle}}
+					<ui5-title level="H3" size="H3">{{this.headerTitle}}</ui5-title>
+				{{else}}
+					<ui5-title level="H3" size="H3">{{this.text}}</ui5-title>
+				{{/if}}
+				</slot>
+				{{#each this.children}}
+					<div class={{this._id}}>{{this}}</div>
+				{{/each}}
 			{{/if}}
-			</slot>
-			{{#each this.children}}
-				<div class={{this._id}}>{{this}}</div>
-
-			{{/each}}
 		{{/each}}
 		</div>
 	</slot>

@@ -88,25 +88,21 @@ class SettingDialog extends UI5Element {
 	items!: Array<SettingItem>;
 
 	fixedItems: Array<SettingItem> = [];
-	// @slot({ type: HTMLElement, invalidateOnChildChange: true })
-	// fixedItems!: Array<SettingItem>;
-
-	// _items: Array<SettingItem> = [];
 
 	onBeforeRendering() {
 		if (!this.items.length) {
 			return;
 		}
 
-		this.fixedItems = this.items.filter(item => item.fixedItem);
+		this.fixedItems = this.items.filter((setting): setting is SettingItem => setting.fixedItem);
 		const selectedSetting = this.items.find((setting): setting is SettingItem => setting.selected);
 
 		if (selectedSetting) {
 			this._selectedSetting = selectedSetting;
 		} else {
 			this._selectedSetting = this.items[0];
+			this.items[0].selected = true;
 		}
-		this.items[0]._selectedSettingReference = this.items[0]; // TODO
 	}
 
 	get _isPhone() {
