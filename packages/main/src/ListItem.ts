@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -231,8 +230,8 @@ abstract class ListItem extends ListItemBase {
 			}
 		};
 
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e as unknown as MouseEvent);
+		const handleTouchStartEvent = () => {
+			this._onmousedown();
 		};
 
 		this._ontouchstart = {
@@ -298,25 +297,34 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
-			return;
-		}
+	_onmousedown() {
 		this.activate();
 	}
 
-	_onmouseup(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_onmouseup() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		this.deactivate();
 	}
 
-	_ontouchend(e: TouchEvent) {
-		this._onmouseup(e as unknown as MouseEvent);
+	_ontouchend() {
+		this._onmouseup();
 	}
 
-	_onfocusout() {
+	_onfocusin(e: FocusEvent) {
+		super._onfocusin(e);
+
+		if (e.target !== this.getFocusDomRef()) {
+			this.deactivate();
+		}
+	}
+
+	_onfocusout(e: FocusEvent) {
+		if (e.target !== this.getFocusDomRef()) {
+			return;
+		}
+
 		this.deactivate();
 	}
 
