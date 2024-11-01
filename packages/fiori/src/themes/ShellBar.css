@@ -249,7 +249,7 @@ slot[name="profile"] {
 .ui5-shellbar-logo-area {
 	display: flex;
 	align-items: center;
-	padding: .25rem;
+	padding: .25rem .5rem .25rem .25rem;
 	box-sizing: border-box;
 	cursor: pointer;
 	max-width: 100%;
@@ -329,7 +329,6 @@ slot[name="profile"] {
 .ui5-shellbar-overflow-container-left {
 	padding: 0 0.125rem;
 	justify-content: flex-start;
-	margin-inline-end: 0.5rem;
 	max-width: 75%;
 	flex-shrink: 0;
 	flex-grow: 0;
@@ -371,7 +370,6 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-right {
-	padding: 0 0.125rem;
 	display: flex;
 	overflow: hidden;
 	position: relative;
@@ -389,7 +387,7 @@ slot[name="profile"] {
 	height: inherit;
 	align-items: center;
 	overflow: hidden;
-	flex: 1 1 auto;
+	flex: 1 1.2 auto;
 	max-width: max-content;
 }
 
@@ -397,27 +395,33 @@ slot[name="profile"] {
 	align-items: center;
 	display: flex;
 	justify-content: flex-end;
-	flex: 1 0 auto;
+	flex: 1 0.01 auto;
 	overflow: hidden;
 	min-width: 0;
 }
 
 .ui5-shellbar-spacer {
 	flex-grow: 1;
-	height: 1px
+	height: 1px;
+	flex-basis: 1rem;
 }
 
 ::slotted(.ui5-shellbar-separator),
 .ui5-shellbar-separator {
 	flex-grow: 0;
+	flex-shrink: 0;
 	height: 1rem;
 	width: 1px;
-	background-color: gray;
-}
-.ui5-shellbar-separator:not(:first-child) {
-	margin-inline-start: 0.5rem;
+	background-color: var(--sapToolbar_SeparatorColor);
 }
 
+.ui5-shellbar-separator-start {
+	margin-inline-end: 0.5rem;
+}
+
+.ui5-shellbar-separator-end {
+	margin-inline-start: 0.5rem;
+}
 
 .ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before {
 	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
@@ -457,13 +461,17 @@ slot[name="profile"] {
 	margin-inline-start: 1rem;
 }
 
-:host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
+::slotted([slot="additionalContextStart-1"]:not(:first-child):not(ui5-menu)) {
+	margin-inline-start: 0;
+}
+
+/* :host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
 	padding-inline-start: 1rem;
 }
 
 :host([breakpoint-size="XL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
 	padding-inline-start: 1rem;
-}
+} */
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {
 	position: relative;

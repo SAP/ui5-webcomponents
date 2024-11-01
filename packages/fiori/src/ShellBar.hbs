@@ -76,12 +76,13 @@
 				{{#if _isFullVariant}}
 					{{#unless _isSBreakpoint}}
 						{{#if hasAdditionalContext}}
-							<div class="ui5-shellbar-overflow-container-additional-content">
-								{{!-- {{#if additionalContextStart}}
+						{{#if additionalContextStart}}
 									{{#if hasVisibleAdditionalContextStart}}
-										<div class="ui5-shellbar-separator"></div>
+										<div class="ui5-shellbar-separator ui5-shellbar-separator-start"></div>
 									{{/if}}
-								{{/if}} --}}
+								{{/if}}
+							<div class="ui5-shellbar-overflow-container-additional-content">
+
 								{{#each additionalContextStart}}
 									<slot name="{{this._individualSlot}}"></slot>
 								{{/each}}
@@ -89,12 +90,13 @@
 								{{#each additionalContextEnd}}
 									<slot name="{{this._individualSlot}}"></slot>
 								{{/each}}
-								{{!-- {{#if additionalContextEnd}}
-									{{#if hasVisibleAdditionalContextEnd}}
-										<div class="ui5-shellbar-separator"></div>
-									{{/if}}
-								{{/if}} --}}
+
 							</div>
+							{{#if additionalContextEnd}}
+									{{#if hasVisibleAdditionalContextEnd}}
+										<div class="ui5-shellbar-separator ui5-shellbar-separator-end"></div>
+									{{/if}}
+								{{/if}}
 						{{/if}}
 					{{/unless}}
 				{{/if}}
@@ -179,7 +181,7 @@
 					<ui5-button
 						id="{{this._id}}-item-5"
 						style="{{styles.items.overflow}}"
-						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button-shown ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
+						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
 						icon="sap-icon://overflow"
 						data-count="{{_overflowNotifications}}"
 						@click="{{_handleOverflowPress}}"
