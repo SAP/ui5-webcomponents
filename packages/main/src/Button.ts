@@ -141,7 +141,7 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	icon?: string | undefined;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the button text.
@@ -157,7 +157,7 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@property()
-	endIcon?: string;
+	endIcon?: string | undefined;
 
 	/**
 	 * When set to `true`, the component will

@@ -95,7 +95,7 @@ class Button extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_currentStateObject?: ButtonState;
+	_currentStateObject?: ButtonState | undefined;
 
 	/**
 	 * Initiates button elements fade-out phase.

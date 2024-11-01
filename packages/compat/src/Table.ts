@@ -80,16 +80,16 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 const PAGE_UP_DOWN_SIZE = 20;
 
 type TableColumnInfo = {
-	cell?: TableCell,
-	index?: number,
-	text?: string | null,
-	visible?: boolean,
-	demandPopin?: boolean,
-	popinText?: string,
-	popinDisplay?: `${TableColumnPopinDisplay}`,
-	popinDisplayInline?: boolean,
-	classes?: string,
-	minWidth?: number,
+	cell?: TableCell | undefined,
+	index?: number | undefined,
+	text?: string | null | undefined,
+	visible?: boolean | undefined,
+	demandPopin?: boolean | undefined,
+	popinText?: string | undefined,
+	popinDisplay?: `${TableColumnPopinDisplay}` | undefined,
+	popinDisplayInline?: boolean | undefined,
+	classes?: string | undefined,
+	minWidth?: number | undefined,
 }
 
 type TableColumnHeaderInfo = ITabbable;
