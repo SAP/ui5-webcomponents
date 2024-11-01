@@ -36,14 +36,14 @@
 	background-color: var(--sapButton_Hover_Background);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:not([disabled])),
-::slotted([ui5-segmented-button-item][active]:not([disabled])) {
+::slotted([ui5-segmented-button-item][pressed]),
+::slotted([ui5-segmented-button-item][active]) {
 	border-color: var(--sapButton_Selected_BorderColor);
 	background-color: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:not([disabled]):hover) {
+::slotted([ui5-segmented-button-item][pressed]):hover {
 	border-color: var(--sapButton_Selected_Hover_BorderColor);
 	background-color: var(--sapButton_Selected_Hover_Background);
 	color: var(--sapButton_Selected_TextColor);
