@@ -22,9 +22,6 @@ jobs:
     - name: Install Dependencies
       run: yarn --frozen-lockfile
 
-    - name: Print TypeScript verstion
-      run: yarn tsc -v
-
     - name: Test Build
       run: yarn ci:testbuild
 

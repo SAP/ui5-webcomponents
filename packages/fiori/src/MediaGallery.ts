@@ -220,7 +220,7 @@ class MediaGallery extends UI5Element {
 
 	_itemNavigation: ItemNavigation;
 	_onResize: () => void;
-	_selectedItem?: IMediaGalleryItem;
+	_selectedItem?: IMediaGalleryItem | undefined;
 
 	constructor() {
 		super();
