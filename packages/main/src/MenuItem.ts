@@ -184,12 +184,6 @@ class MenuItem extends ListItem implements IMenuItem {
 	_siblingsWithIcon = false;
 
 	/**
-	 * Keeps the previous selected state of the item.
-	 */
-	@property({ noAttribute: true })
-	_prevSelected?: boolean;
-
-	/**
 	 * Defines the items of this component.
 	 *
 	 * **Note:** The slot can hold `ui5-menu-item` and `ui5-menu-separator` items.
@@ -317,10 +311,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._menuItemsAll.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
-
-		if (this._prevSelected === undefined) {
-			this._prevSelected = this.isSelected;
-		}
 
 		if (itemSelectionMode === ItemSelectionMode.None) {
 			return;

@@ -287,7 +287,7 @@ class Menu extends UI5Element {
 	}
 
 	get _menuItemsAll() {
-		const items: MenuItem[] = [];
+		const items: Array<MenuItem> = [];
 
 		this.items.forEach(item => {
 			if (item.isGroup) {
@@ -303,7 +303,7 @@ class Menu extends UI5Element {
 	get _menuItemsNavigation() {
 		const parent = this._parent || this;
 
-		const items: MenuItem[] = [];
+		const items: Array<MenuItem> = [];
 		const slottedItems = parent.getSlottedNodes<MenuItem>("items");
 
 		slottedItems.forEach(item => {
