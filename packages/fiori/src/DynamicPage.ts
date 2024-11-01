@@ -195,6 +195,7 @@ class DynamicPage extends UI5Element {
 
 	skipSnapOnScroll = false;
 	showHeaderInStickArea = false;
+	isToggled = false;
 
 	@property({ type: Boolean })
 	_headerSnapped = false;
@@ -308,6 +309,11 @@ class DynamicPage extends UI5Element {
 			return;
 		}
 
+		if (this.isToggled) {
+			this.isToggled = false;
+			return;
+		}
+
 		if (this.skipSnapOnScroll) {
 			this.skipSnapOnScroll = false;
 			return;
@@ -344,6 +350,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	async onExpandClick() {
+		this.isToggled = true;
 		this._toggleHeader();
 		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
@@ -367,6 +374,7 @@ class DynamicPage extends UI5Element {
 		if (!this.hasHeading) {
 			return;
 		}
+		this.isToggled = true;
 		this._toggleHeader();
 		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
@@ -374,6 +382,21 @@ class DynamicPage extends UI5Element {
 	}
 
 	async _toggleHeader() {
+		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+		const currentScrollTop = this.scrollContainer!.scrollTop;
+
+		if (currentScrollTop > SCROLL_THRESHOLD && currentScrollTop < headerHeight) {
+			if (!this._headerSnapped) {
+				this._headerSnapped = true;
+				this.showHeaderInStickArea = true;
+				this.scrollContainer!.scrollTop = 0;
+			} else {
+				this.showHeaderInStickArea = false;
+				this._headerSnapped = false;
+			}
+			return;
+		}
+
 		if (this.scrollContainer!.scrollTop === SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = 0;
 		}
