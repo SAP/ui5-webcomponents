@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
+
+
+### Bug Fixes
+
+* **ui5-button:** adjust focus outline ([#10068](https://github.com/SAP/ui5-webcomponents/issues/10068)) ([2d2703e](https://github.com/SAP/ui5-webcomponents/commit/2d2703e6bb9e7dda56f455e5f0ebd01f20ef1eed)), closes [#9894](https://github.com/SAP/ui5-webcomponents/issues/9894)
+* **ui5-slider:** up and down arrow behavior in RTL mode ([#10037](https://github.com/SAP/ui5-webcomponents/issues/10037)) ([aebce92](https://github.com/SAP/ui5-webcomponents/commit/aebce924ab829f003cc1b4873a165e205f2914aa)), closes [#9967](https://github.com/SAP/ui5-webcomponents/issues/9967)
+
+
+### Features
+
+* **ui5-navigation-layout:** add ui5-navigation-layout component ([#9517](https://github.com/SAP/ui5-webcomponents/issues/9517)) ([463c780](https://github.com/SAP/ui5-webcomponents/commit/463c780df03e95eacf82075f9a47007a5a088b01))
+
+
+
+
+
+# [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
+
+
+### Bug Fixes
+
+* dev-server correctly imports yargs ([#10048](https://github.com/SAP/ui5-webcomponents/issues/10048)) ([7b5aa5e](https://github.com/SAP/ui5-webcomponents/commit/7b5aa5ebdddbbc0493f4699c1a74db497e22368b))
+* **ui5-dynamic-page:** align header area with title and content ([#10053](https://github.com/SAP/ui5-webcomponents/issues/10053)) ([61e3dbd](https://github.com/SAP/ui5-webcomponents/commit/61e3dbd1f9a5b69c824cfcdae5c750d59585615a))
+
+
+### Features
+
+* **ui5-tabcontainer:** style adjustments for transparent header ([#10064](https://github.com/SAP/ui5-webcomponents/issues/10064)) ([b5e596e](https://github.com/SAP/ui5-webcomponents/commit/b5e596e542a4fbd3f0643b15d2f4023be2079f5a))
+
+
+
+
+
 # [2.4.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.1...v2.4.0-rc.2) (2024-10-24)
 
 

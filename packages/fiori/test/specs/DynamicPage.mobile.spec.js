@@ -23,6 +23,44 @@ describe("DynamicPage Mobile Behaviour", () => {
 		);
 	});
 
+	it("the header content should not be rendered when snappedTitleOnMobile content is present", async () => {
+		const dynamicPage = await browser.$("#page");
+		const headerAreaSlot = await dynamicPage.shadow$("slot[name=headerArea]");
+		const scrollContainer = await dynamicPage.shadow$(".ui5-dynamic-page-scroll-container");
+
+		const initialScrollTop = await scrollContainer.getProperty("scrollTop");
+
+		// Scroll the content to snap the header
+		await browser.execute((container) => {
+			container.scrollTop = 340;
+		}, scrollContainer);
+
+		// Wait until the scroll position has changed
+		await browser.waitUntil(
+			async () => (await scrollContainer.getProperty("scrollTop")) > initialScrollTop,
+			{
+				timeout: 2000,
+				timeoutMsg: "The scroll handler must be called.",
+			}
+		);
+
+		// Assert that the header is snapped
+		const isHeaderSnapped = await dynamicPage.getProperty("headerSnapped");
+		assert.strictEqual(
+			isHeaderSnapped,
+			true,
+			"Header should be snapped when the content is scrolled."
+		);
+
+		// Assert that the header content is not rendered
+		const isHeaderContentRendered = await headerAreaSlot.isExisting();
+		assert.strictEqual(
+			isHeaderContentRendered,
+			false,
+			"Header content should not be rendered when snappedTitleOnMobile slot has content."
+		);
+	});
+
 	it("should not display snapped title on mobile when snappedTitleOnMobile slot is empty", async () => {
 		const dynamicPage = await browser.$("#page");
 		const title = await browser.$("#page ui5-dynamic-page-title");
