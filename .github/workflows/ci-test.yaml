@@ -7,7 +7,7 @@ on:
       - 'main'
 jobs:
   check:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         suite: ['base', 'compat', 'ai', 'main:suite-1', 'main:suite-2', 'fiori']
@@ -21,6 +21,9 @@ jobs:
 
     - name: Install Dependencies
       run: yarn --frozen-lockfile
+
+    - name: Print TypeScript verstion
+      run: yarn tsc -v
 
     - name: Test Build
       run: yarn ci:testbuild
