@@ -594,13 +594,12 @@ class ShellBar extends UI5Element {
 
 	_focusNextItem(items: HTMLElement[], currentIndex: number) {
 		if (currentIndex < items.length - 1) {
-			(items[currentIndex + 1] as HTMLElement).focus(); // Focus the next element
+			(items[currentIndex + 1]).focus(); // Focus the next element
 		}
 	}
-
 	_focusPreviousItem(items: HTMLElement[], currentIndex: number) {
 		if (currentIndex > 0) {
-			(items[currentIndex - 1] as HTMLElement).focus(); // Focus the previous element
+			(items[currentIndex - 1]).focus(); // Focus the previous element
 		}
 	}
 
@@ -945,7 +944,7 @@ class ShellBar extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-		setTimeout(this._overflowActions.bind(this), 300);
+		setTimeout(this._overflowActions.bind(this), 100);
 	}
 
 	onExitDOM() {
