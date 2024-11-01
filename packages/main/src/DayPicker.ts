@@ -329,8 +329,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_calculateWeekNumber(date: Date): number {
-		// @ts-expect-error
-		const oDateFormat = DateFormat.getDateInstance({ pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering });
+		const opt = {
+			pattern: "w",
+			calendarWeekNumbering: this.calendarWeekNumbering,
+			...(this.primaryCalendarType && { calendarType: this.primaryCalendarType }),
+		};
+		const oDateFormat = DateFormat.getDateInstance(opt);
 		const weekNumber = oDateFormat.format(date);
 
 		return Number(weekNumber);
