@@ -1,5 +1,3 @@
-// import { promises as fs } from 'node:fs';
-
 const extractChangelogSections = (releaseBody) => {
 	const fixes = [];
 	const features = [];
@@ -36,25 +34,17 @@ const updateRelease = async (releaseContext) => {
 	const tag = `v${releaseContext.version}`; // Ensure `version` is defined in your script's scope
 
 	try {
-		// const response = await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/tags/{tag}', {
-		// 	owner: releaseContext.owner,
-		// 	repo: releaseContext.repo,
-		// 	tag,
-		// 	body,
-		// });
+		await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/tags/{tag}', {
+			owner: releaseContext.owner,
+			repo: releaseContext.repo,
+			tag,
+			body,
+		});
 
-		console.log("Release Context:", releaseContext);
-		console.log(`Release body ${tag}:`, body);
-
-		// console.log("Release updated successfully:", response.data);
+		console.log("Release updated successfully:", releaseContext);
 	} catch (error) {
-		console.error("Error updating release:", error);
+		console.error("Error updating release:", error, );
 	}
-
-	// if (!response.ok) {
-	// 	throw new Error(`Failed to update release: ${response.statusText}`);
-	// }
-	console.log('Minor release changelog updated successfully.');
 };
 
 /**
@@ -64,14 +54,13 @@ const updateRelease = async (releaseContext) => {
  * @param options.context
  */
 export default async function run({ github, context }) {
-	// const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
-	// const { version } = JSON.parse(lerna);
-	// if (!version.startsWith("2")) {
-	// 	console.warn('Skip: the task is relevant for version 2');
-	// 	return;
-	// }
+	const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
+	const { version } = JSON.parse(lerna);
 
-	const version = "2.4.0";
+	if (!version.startsWith("2")) {
+		console.warn('Skip: the task is relevant for version 2');
+		return;
+	}
 
 	try {
 		const { owner, repo } = context.repo;
