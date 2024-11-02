@@ -75,7 +75,7 @@ export default async function run({ github, context }) {
 
 	try {
 		const { owner, repo } = context.repo;
-		const allReleases = await github.request('GET /repos/{owner}/{repo}/releases', { owner, repo });
+		const allReleases = (await github.request('GET /repos/{owner}/{repo}/releases', { owner, repo })).data;
 		const rcReleases = allReleases.filter((release) => release.tag_name.includes(`v${version}-rc`));
 		const minorRelease = allReleases.find((release) => release.tag_name === `v${version}`);
 
