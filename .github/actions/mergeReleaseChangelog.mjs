@@ -36,14 +36,15 @@ const updateRelease = async (releaseContext) => {
 	const tag = `v${releaseContext.version}`; // Ensure `version` is defined in your script's scope
 
 	try {
-		const response = await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/tags/{tag}', {
-			owner: releaseContext.owner,
-			repo: releaseContext.repo,
-			tag,
-			body,
-		});
+		// const response = await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/tags/{tag}', {
+		// 	owner: releaseContext.owner,
+		// 	repo: releaseContext.repo,
+		// 	tag,
+		// 	body,
+		// });
 
-		console.log("Release updated successfully:", response.data);
+		console.log("Release Context:", releaseContext);
+		// console.log("Release updated successfully:", response.data);
 	} catch (error) {
 		console.error("Error updating release:", error);
 	}
