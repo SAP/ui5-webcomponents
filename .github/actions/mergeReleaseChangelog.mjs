@@ -1,4 +1,4 @@
-import { promises as fs } from 'node:fs';
+// import { promises as fs } from 'node:fs';
 
 const extractChangelogSections = (releaseBody) => {
 	const fixes = [];
@@ -44,6 +44,8 @@ const updateRelease = async (releaseContext) => {
 		// });
 
 		console.log("Release Context:", releaseContext);
+		console.log(`Release body ${tag}:`, body);
+
 		// console.log("Release updated successfully:", response.data);
 	} catch (error) {
 		console.error("Error updating release:", error);
@@ -62,12 +64,14 @@ const updateRelease = async (releaseContext) => {
  * @param options.context
  */
 export default async function run({ github, context }) {
-	const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
-	const { version } = JSON.parse(lerna);
-	if (!version.startsWith("2")) {
-		console.warn('Skip: the task is relevant for version 2');
-		return;
-	}
+	// const lerna = await fs.readFile(new URL('../../lerna.json', import.meta.url), 'utf8');
+	// const { version } = JSON.parse(lerna);
+	// if (!version.startsWith("2")) {
+	// 	console.warn('Skip: the task is relevant for version 2');
+	// 	return;
+	// }
+
+	const version = "2.4.0";
 
 	try {
 		const { owner, repo } = context.repo;
@@ -91,7 +95,7 @@ export default async function run({ github, context }) {
 		// Update the minor release with aggregated changelog
 		await updateRelease(minorReleaseContext);
 
-	  } catch (error) {
+	} catch (error) {
 		console.error('Error:', error);
-	  }
+	}
 }
