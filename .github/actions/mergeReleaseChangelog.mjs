@@ -30,8 +30,8 @@ const mergeReleaseChangelogs = (releases) => {
 }
 
 const updateRelease = async (releaseContext) => {
-	const formattedFixes = fixes.length ? `### Fixes\n- ${fixes.join('\n- ')}` : '';
-	const formattedFeatures = features.length ? `### Features\n- ${features.join('\n- ')}` : '';
+	const formattedFixes = releaseContext.fixes.length ? `### Fixes\n- ${fixes.join('\n- ')}` : '';
+	const formattedFeatures = releaseContext.features.length ? `### Features\n- ${features.join('\n- ')}` : '';
 	const body = `${formattedFixes}\n\n${formattedFeatures}`.trim();
 	const tag = `v${releaseContext.version}`; // Ensure `version` is defined in your script's scope
 
