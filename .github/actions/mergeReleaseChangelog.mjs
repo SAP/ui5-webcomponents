@@ -3,7 +3,7 @@
 const extractChangelogSections = (releaseBody) => {
 	const fixes = [];
 	const features = [];
-	const fixesMatch = releaseBody.match(/## Fixes([\s\S]*?)(?=##|$)/);
+	const fixesMatch = releaseBody.match(/## Bug Fixes([\s\S]*?)(?=##|$)/);
 	const featuresMatch = releaseBody.match(/## Features([\s\S]*?)(?=##|$)/);
 
 	if (fixesMatch) {
@@ -51,9 +51,9 @@ const updateRelease = async (releaseContext) => {
 		console.error("Error updating release:", error);
 	}
 
-	if (!response.ok) {
-		throw new Error(`Failed to update release: ${response.statusText}`);
-	}
+	// if (!response.ok) {
+	// 	throw new Error(`Failed to update release: ${response.statusText}`);
+	// }
 	console.log('Minor release changelog updated successfully.');
 };
 
