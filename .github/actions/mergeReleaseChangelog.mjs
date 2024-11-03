@@ -1,3 +1,5 @@
+import { promises as fs } from 'node:fs';
+
 const extractChangelogSections = (releaseBody) => {
 	const fixes = [];
 	const features = [];
