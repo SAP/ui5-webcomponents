@@ -34,9 +34,11 @@ const mergeReleaseChangelogs = (releases) => {
 
 const updateRelease = async (releaseContext) => {
 	const releaseId = releaseContext.minorRelease.id;
+	const releaseHeaderMatch = releaseContext.minorRelease.body.match(/^#\s\[.*?\]\(.*?\)\s\([\d-]+\)/);
+	const releaseHeader = releaseHeaderMatch ? `${releaseHeaderMatch[0]}\n\n` : '';
 	const formattedFixes = releaseContext.fixes.length ? `### Fixes\n- ${releaseContext.fixes.join('\n- ')}` : '';
 	const formattedFeatures = releaseContext.features.length ? `### Features\n- ${releaseContext.features.join('\n- ')}` : '';
-	const body = `${formattedFixes}\n\n${formattedFeatures}`.trim();
+	const body = `${releaseHeader}${formattedFixes}\n\n${formattedFeatures}`.trim();
 
 	try {
 		await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/{releaseId}', {
