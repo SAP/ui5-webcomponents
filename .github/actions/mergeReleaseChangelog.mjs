@@ -7,10 +7,13 @@ const extractChangelogSections = (releaseBody) => {
 	const featuresMatch = releaseBody.match(/## Features([\s\S]*?)(?=##|$)/);
 
 	if (fixesMatch) {
-		fixes.push(fixesMatch[1].trim());
+		// Split lines, trim whitespace, and remove any leading bullet point (like "*" or "-")
+		const fixEntries = fixesMatch[1].trim().split('\n').map(line => line.replace(/^[*-]\s*/, '').trim());
+		fixes.push(...fixEntries);
 	}
 	if (featuresMatch) {
-		features.push(featuresMatch[1].trim());
+		const featureEntries = featuresMatch[1].trim().split('\n').map(line => line.replace(/^[*-]\s*/, '').trim());
+		features.push(...featureEntries);
 	}
 
 	return { fixes, features };
