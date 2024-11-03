@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
+
+
+### Bug Fixes
+
+* **ui5-toolbar-*:** ensure getDomRef() returns the actual DOM reference ([#10009](https://github.com/SAP/ui5-webcomponents/issues/10009)) ([747244d](https://github.com/SAP/ui5-webcomponents/commit/747244d93fee5ee0d1ac54863de5e3573f4d6248))
+
+
+### Features
+
+* **ui5-date-picker:** introduce open and close events ([#10118](https://github.com/SAP/ui5-webcomponents/issues/10118)) ([819730a](https://github.com/SAP/ui5-webcomponents/commit/819730afbec336ad04e1207b8fee24bcd69f7c2d))
+
+
+
+
+
 # [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
 
 
