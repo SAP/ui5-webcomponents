@@ -30,22 +30,22 @@ const mergeReleaseChangelogs = (releases) => {
 }
 
 const updateRelease = async (releaseContext) => {
+	const releaseId = releaseContext.minorRelease.data.id;
 	const formattedFixes = releaseContext.fixes.length ? `### Fixes\n- ${releaseContext.fixes.join('\n- ')}` : '';
 	const formattedFeatures = releaseContext.features.length ? `### Features\n- ${releaseContext.features.join('\n- ')}` : '';
 	const body = `${formattedFixes}\n\n${formattedFeatures}`.trim();
-	const tag = `v${releaseContext.version}`; // Ensure `version` is defined in your script's scope
 
 	try {
-		await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/tags/{tag}', {
+		await releaseContext.github.request('PATCH /repos/{owner}/{repo}/releases/{releaseId}', {
 			owner: releaseContext.owner,
 			repo: releaseContext.repo,
-			tag,
 			body,
+			releaseId,
 		});
 
-		console.log("Release updated successfully:", releaseContext);
+		console.log(`Release ${releaseContext.version} updated successfully:`, releaseContext);
 	} catch (error) {
-		console.error("Error updating release:", error, );
+		console.error(`Error updating release ${releaseContext.version}:`, error );
 	}
 };
 
