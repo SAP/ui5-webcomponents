@@ -30,7 +30,7 @@ const mergeReleaseChangelogs = (releases) => {
 }
 
 const updateRelease = async (releaseContext) => {
-	const releaseId = releaseContext.minorRelease.data.id;
+	const releaseId = releaseContext.minorRelease.id;
 	const formattedFixes = releaseContext.fixes.length ? `### Fixes\n- ${releaseContext.fixes.join('\n- ')}` : '';
 	const formattedFeatures = releaseContext.features.length ? `### Features\n- ${releaseContext.features.join('\n- ')}` : '';
 	const body = `${formattedFixes}\n\n${formattedFeatures}`.trim();
