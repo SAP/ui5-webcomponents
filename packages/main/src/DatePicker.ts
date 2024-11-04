@@ -250,6 +250,18 @@ type DatePickerInputEventDetail = {
 	bubbles: true,
 	cancelable: true,
 })
+/**
+ * Fired after the value-help dialog of the component is opened.
+ * @since 2.4.0
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the value-help dialog of the component is closed.
+ * @since 2.4.0
+ * @public
+ */
+@event("close")
 class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * Defines a formatted date value.
@@ -407,6 +419,12 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		} else {
 			this._getInput()?.focus();
 		}
+
+		this.fireDecoratorEvent("close");
+	}
+
+	onResponsivePopoverAfterOpen() {
+		this.fireDecoratorEvent("open");
 	}
 
 	onResponsivePopoverBeforeOpen() {
