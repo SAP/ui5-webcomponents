@@ -32,6 +32,35 @@
 .ui5-form-group-layout {
 	display: grid;
 	column-gap: 1rem;
+	grid-auto-flow: column;
+}
+
+/* S - 1 column */
+@container (max-width: 600px) {
+	.ui5-form-group-layout {
+		grid-template-rows: repeat(var(--ui5-form-group-item-rows-S), auto);
+	}
+}
+
+/* M  - 1 column by default, up to 2 columns */
+@container (width > 600px) and (width <= 1024px) {
+	.ui5-form-group-layout {
+		grid-template-rows: repeat(var(--ui5-form-group-item-rows-M), auto);
+	}
+}
+
+/* L - 2 columns by default, up to 3 columns */
+@container (width > 1024px) and (width <= 1440px) {
+	.ui5-form-group-layout {
+		grid-template-rows: repeat(var(--ui5-form-group-item-rows-L), auto);
+	}
+}
+
+/* XL - 3 columns by default, up to 6 */
+@container (min-width: 1441px) {
+	.ui5-form-group-layout {
+		grid-template-rows: repeat(var(--ui5-form-group-item-rows-XL), auto);
+	}
 }
 
 .ui5-form-group-heading {

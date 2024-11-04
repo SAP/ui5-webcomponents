@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -367,10 +368,19 @@ class Form extends UI5Element {
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
 		return this.items.map((groupItem: IFormItem) => {
+			const items = this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>));
+			const styles: Record<string, number> = {};
+
+			styles[getScopedVarName("--ui5-form-group-item-rows-S")] = Math.ceil(items.length / (groupItem.colsS || 1));
+			styles[getScopedVarName("--ui5-form-group-item-rows-M")] = Math.ceil(items.length / (groupItem.colsM || 1));
+			styles[getScopedVarName("--ui5-form-group-item-rows-L")] = Math.ceil(items.length / (groupItem.colsL || 1));
+			styles[getScopedVarName("--ui5-form-group-item-rows-XL")] = Math.ceil(items.length / (groupItem.colsXl || 1));
+
 			return {
+				styles,
 				groupItem,
 				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
-				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
+				items,
 			};
 		});
 	}
