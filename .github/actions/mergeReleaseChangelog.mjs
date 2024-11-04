@@ -29,7 +29,20 @@ const mergeReleaseChangelogs = (releases) => {
 		features.push(...rcFeatures);
 	})
 
-	return { fixes, features };
+	// Sort fixes and features alphabetically
+	const sortedFixes = fixes.sort((a, b) => {
+		const contentA = a.match(/\*\*(.*?)\*\*/)?.[1] || '';
+		const contentB = b.match(/\*\*(.*?)\*\*/)?.[1] || '';
+		return contentA.localeCompare(contentB);
+	});
+
+	const sortedFeatures = features.sort((a, b) => {
+		const contentA = a.match(/\*\*(.*?)\*\*/)?.[1] || '';
+		const contentB = b.match(/\*\*(.*?)\*\*/)?.[1] || '';
+		return contentA.localeCompare(contentB);
+	});
+
+	return { fixes: sortedFixes, features: sortedFeatures };
 }
 
 const updateRelease = async (releaseContext) => {
