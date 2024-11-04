@@ -1,22 +1,20 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import {
-	isPhone,
-} from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
-
-// Templates
-import type ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
-import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
+import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
+import Tab from "@ui5/webcomponents/dist/Tab.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 import SettingItemTemplate from "./generated/templates/SettingItemTemplate.lit.js";
-import type SettingTab from "./SettingTab.js";
-import type SettingsDialog from "./SettingsDialog.js";
+import type SettingView from "./SettingView.js";
+import SettingsItemCss from "./generated/themes/SettingsItem.css.js";
 
 @customElement({
 	tag: "ui5-setting-item",
 	renderer: litRender,
 	template: SettingItemTemplate,
+	styles: [SettingsItemCss],
+	dependencies: [TabContainer, Tab, Title],
 })
 
 /**
@@ -27,7 +25,6 @@ import type SettingsDialog from "./SettingsDialog.js";
  * @extends UI5Element
  * @abstract
  * @public
- * @since
  */
 class SettingItem extends UI5Element {
 	/**
@@ -45,7 +42,6 @@ class SettingItem extends UI5Element {
 	 * A tooltip attribute should be provided, in order to represent meaning/function, when the component is collapsed(icon only is visualized).
 	 * @default undefined
 	 * @public
-	 * @since
 	 */
 	@property()
 	tooltip?: string;
@@ -75,48 +71,32 @@ class SettingItem extends UI5Element {
 	 *
 	 * @default undefined
 	 * @public
-	 * @since
 	 */
 	@property({ type: String })
 	icon= "globe";
 
 	@slot({
 		type: HTMLElement,
+		"default": true,
 		individualSlots: true,
 		invalidateOnChildChange: {
 			properties: true,
 			slots: false,
 		},
 	})
-	tabs!: Array<SettingTab>;
-
-	@property({ type: Object })
-	_selectedSettingReference?: SettingItem;
+	views!: Array<SettingView>;
 
 	_individualSlot?: string;
+
+	get _shouldHaveTabs() {
+		return this.views.length > 1;
+	}
 
 	get _tooltip() {
 		return this.tooltip ? this.tooltip : this.text;
 	}
-
-	onBeforeRendering() {
-	}
-
-	get settings(): Array<SettingTab> {
-		return this.tabs;// when return correct item don't render  tabs
-	}
-
-	get _defaultSlotName() {
-		return this.selected ? "" : "disabled-slot";
-	}
-
-	get _effectiveSlotName() {
-		return this.selected ? this._individualSlot : `disabled-${this._individualSlot}`;
-	}
-
-	get _isPhone() {
-		return isPhone();
-	}
 }
+
 SettingItem.define();
+
 export default SettingItem;

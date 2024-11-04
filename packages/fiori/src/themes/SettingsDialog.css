@@ -1,0 +1,13 @@
+[ui5-dialog]::part(content) {
+  padding: 0;
+}
+
+[ui5-navigation-layout] {
+    position: static;
+    height: 100%;
+}
+
+.content {
+    height: 100%;
+    overflow: hidden;
+}

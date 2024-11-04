@@ -1,7 +1,21 @@
-<div class="ui5-setting-item" >
-	<slot name="{{this._defaultSlotName}}"></slot>
+<div class="ui5-setting-item">
+	<ui5-title level="H4" size="H4">{{headerTitle}}</ui5-title>
 
-	{{#each settings}}
-		<slot name="{{this._effectiveSlotName}}"></slot>
-	{{/each}}
+	{{#if _shouldHaveTabs}}
+		{{> tabbedContent}}
+	{{else}}
+		{{#each views}}
+			<slot name="{{this._individualSlot}}" />
+		{{/each}}
+	{{/if}}
 </div>
+
+{{#*inline "tabbedContent"}}
+	<ui5-tabcontainer>
+		{{#each views}}
+			<ui5-tab text={{text}}>
+				<slot name="{{this._individualSlot}}" />
+			</ui5-tab>
+		{{/each}}
+	</ui5-tabcontainer>
+{{/inline}}

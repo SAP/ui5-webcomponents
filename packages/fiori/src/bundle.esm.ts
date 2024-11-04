@@ -35,7 +35,6 @@ import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SortItem from "./SortItem.js";
 import SettingItem from "./SettingItem.js";
 import SettingsDialog from "./SettingsDialog.js";
-import SettingTab from "./SettingTab.js";
 import SettingView from "./SettingView.js";
 import Timeline from "./Timeline.js";
 import NavigationLayout from "./NavigationLayout.js";

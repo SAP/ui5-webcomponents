@@ -16,34 +16,36 @@
 </head>
 
 <body>
-			<ui5-settings-dialog header-title="Settings" show-search-field>
+			<ui5-settings-dialog header-title="Settings" show-search-field open>
 				<!-- Item -->
-				<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="header title setting item">
-					<ui5-setting-tab  busy tab-title="Tab Text 1" text="text1">
-						<ui5-button>Setting 1 Tab 1</ui5-button>
-					</ui5-setting-tab>
-					<ui5-setting-tab tab-title="Tab Text 2s" text="text2">
-						<ui5-button>Setting 1 Tab 2 view 2</ui5-button>
-					</ui5-setting-tab>
+				<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="Header title | Setting 1">
+					<ui5-setting-view text="Setting 1 Tab 1">
+						<ui5-button>Setting 1 Content 1</ui5-button>
+					</ui5-setting-view>
+					<ui5-setting-view text="Setting 1 Tab 2">
+						<ui5-button>Setting 1 Content 2</ui5-button>
+					</ui5-setting-view>
 				</ui5-setting-item>
 
 				<!-- Item -->
-				<ui5-setting-item fixed-item text="Setting 2">
-					<ui5-setting-tab tab-title="Tab Text 1" >
-						<ui5-button>Setting 2 Tab 1 view 1</ui5-button>
-						<ui5-button>Setting 2 Tab 1 view 2</ui5-button>
-					</ui5-setting-tab>
+				<ui5-setting-item fixed-item text="Setting 2" header-title="Header title | Setting 2">
+					<ui5-setting-view text="Setting 2 Tab 1">
+						<ui5-button>Setting 2 Content 1</ui5-button>
+					</ui5-setting-view>
+					<ui5-setting-view text="Setting 2 Tab 2">
+						<ui5-button>Setting 2 Content 2</ui5-button>
+					</ui5-setting-view>
+					<ui5-setting-view  text="Setting 2 Tab 3">
+						<ui5-button>Setting 2 Content 3</ui5-button>
+					</ui5-setting-view>
 				</ui5-setting-item>
 
 				<!-- Item -->
-				<ui5-setting-item text="Setting 3" tooltip="tooltip" icon="accessibility" >
-					<ui5-setting-tab tab-title="Tab Text 3" text="text3">
-						<ui5-setting-view>
-							<ui5-button>Setting 3 Tab 1 view 1</ui5-button>
-						</ui5-setting-view>
-					</ui5-setting-tab>
+				<ui5-setting-item text="Setting 3" tooltip="tooltip" icon="accessibility" header-title="Header title | Setting 3">
+					<ui5-setting-view text="Setting 3 Tab 1">
+						<ui5-button>Setting 3 Content 1</ui5-button>
+					</ui5-setting-view>
 				</ui5-setting-item>
-
 			</ui5-settings-dialog>
 
 </body>

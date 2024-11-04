@@ -1,37 +1,30 @@
-<div class="ui5-settings-dialog" >
-
-	<div style="border-right-color: rgba(63, 81, 97, .2); border-right-style: solid; display:inline-block">
-		<ui5-navigation-layout id="nl1">
-
-		{{#if headerTitle}}
-			<ui5-title slot="header" level="H2" size="H2">{{headerTitle}}</ui5-title>
-		{{/if}}
-		{{#if showSearchField}}
-			<ui5-input slot="header" placeholder="Search" type="Search">
-				<ui5-icon id="searchFieldIcon" slot="icon" name="search"></ui5-icon>
-			</ui5-input>
-		{{/if}}
-
+<ui5-dialog .open={{open}} stretch>
+	<ui5-navigation-layout>
 		<ui5-side-navigation slot="sideContent" @selection-change={{setSelectedItem}}>
+			{{#if headerTitle}}
+				<ui5-title slot="header" level="H4" size="H4">{{headerTitle}}</ui5-title>
+			{{/if}}
+			{{#if showSearchField}}
+				<ui5-input slot="header" placeholder="Search" type="Search">
+					<ui5-icon id="searchFieldIcon" slot="icon" name="search"></ui5-icon>
+				</ui5-input>
+			{{/if}}
+
 			{{#each items}}
 				{{#if this.fixedItem}}
-					<ui5-side-navigation-item slot="fixedItems" text={{this.text}} tooltip={{this.tooltip}}  href="#{{this.slot.name}}" icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
+					<ui5-side-navigation-item slot="fixedItems" text={{this.text}} tooltip={{this.tooltip}} icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
 				{{else}}
-					<ui5-side-navigation-item text={{this.text}} tooltip={{this.tooltip}} href="#{{this.slot.name}}" icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
+					<ui5-side-navigation-item text={{this.text}} tooltip={{this.tooltip}} icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
 				{{/if}}
 			{{/each}}
 		</ui5-side-navigation>
 
 		<div class="content">
-			{{#each items}}
-				<slot name="{{this._effectiveSlotName}}"></slot>
-			{{/each}}
+			<slot name="{{_selectedItemSlotName}}"></slot>
 		</div>
-		</ui5-navigation-layout>
-	</div>
+	</ui5-navigation-layout>
 
-	<div class="footer">
-		<div role="separator" class="ui5-setting-spacer" style="margin: 0.25rem; height: 0.25rem; background-color: rgba(63,81,97,.2);"></div>
-		<ui5-button design="Transparent">Close</ui5-button>
-	</div>
-</div>
+	<ui5-toolbar slot="footer">
+		<ui5-toolbar-button design="Transparent" text="Close" />
+	</ui5-toolbar>
+</ui5-dialog>
