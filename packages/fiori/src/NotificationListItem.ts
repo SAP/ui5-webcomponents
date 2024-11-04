@@ -488,13 +488,6 @@ class NotificationListItem extends NotificationListItemBase {
 		return !!this.getMenu();
 	}
 
-	/**
-	 * Event handlers
-	 */
-	_onclick() {
-		this.fireItemPress();
-	}
-
 	_onShowMoreClick(e: MouseEvent) {
 		e.preventDefault();
 		this._showMorePressed = !this._showMorePressed;
@@ -547,23 +540,12 @@ class NotificationListItem extends NotificationListItemBase {
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
-		const space = isSpace(e);
-
-		if (space && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
-			this._onShowMoreClick(e as unknown as MouseEvent);
-			return;
-		}
-
 		if (isDelete(e)) {
 			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
 			this._onBtnMenuClick();
-		}
-
-		if (isEnterShift(e)) {
-			this._showMorePressed = !this._showMorePressed;
 		}
 	}
 
@@ -592,10 +574,6 @@ class NotificationListItem extends NotificationListItemBase {
 	 * Private
 	 */
 	fireItemPress() {
-		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
-			return;
-		}
-
 		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 

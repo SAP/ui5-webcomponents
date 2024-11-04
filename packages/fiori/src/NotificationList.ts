@@ -159,6 +159,11 @@ class NotificationList extends UI5Element {
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
+		// avoid firing the event if it comes from a nested list (like menu)
+		if (!e.detail.item.hasAttribute("ui5-li-notification")) {
+			return;
+		}
+
 		if (!this.fireDecoratorEvent<NotificationItemClickEventDetail>("item-click", { item })) {
 			e.preventDefault();
 		}
