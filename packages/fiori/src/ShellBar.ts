@@ -347,6 +347,16 @@ class ShellBar extends UI5Element {
 	variant: `${ShellBarVariant}` = "Full"
 
 	/**
+	 * Apply CSS paddings suitable to ShellBar when `ui5-side-navigation` is used as adjacent.
+	 *
+	 * **Note:** It is recommended to be set to `true` when `ui5-side-navigation` is used as ShellBar adjacent.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	applySideNavigationStyles = false;
+
+	/**
 	 * Defines additional accessibility attributes on different areas of the component.
 	 *
 	 * The accessibilityAttributes object has the following fields,

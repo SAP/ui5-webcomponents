@@ -240,6 +240,11 @@ slot[name="profile"] {
 	padding: 0 3rem;
 }
 
+:host([apply-side-navigation-styles]) {
+	padding-left: 0.5rem;
+	padding-right: 1rem;
+}
+
 .ui5-shellbar-logo {
 	cursor: pointer;
 	max-height: 2rem;
