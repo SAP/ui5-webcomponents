@@ -1,6 +1,7 @@
 import { html } from "lit";
 import "../../src/MultiComboBox.js";
 import "../../src/MultiComboBoxItem.js";
+import type List from "../../src/List.js";
 
 describe("Lit HTML key function for #each", () => {
 	it("LIT HTML does not mess up keys when looping over lists", () => {
@@ -20,11 +21,18 @@ describe("Lit HTML key function for #each", () => {
 		cy.realPress("a");
 
 		cy.get("@mcb")
-			.find("[ui5-mcb-item]")
-			.as("items");
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.as("rpo");
 
-		cy.get("@items")
-			.eq(3)
+		cy.get("@rpo")
+			.find("[ui5-list]")
+			.as("list");
+
+		cy.get("@list")
+			.then($el => {
+				return ($el[0] as List).getSlottedNodes("items");
+			})
 			.realClick();
 
 		cy.get("@mcb")
@@ -32,13 +40,17 @@ describe("Lit HTML key function for #each", () => {
 			.find(".inputIcon")
 			.realClick();
 
-		cy.get("@items")
-			.eq(0)
+		cy.get("@list")
+			.then($el => {
+				return ($el[0] as List).getSlottedNodes("items")[0];
+			})
 			.invoke("attr", "text", "<empty>")
 			.should("not.have.attr", "selected");
 
-		cy.get("@items")
-			.eq(3)
+		cy.get("@list")
+			.then($el => {
+				return ($el[0] as List).getSlottedNodes("items")[3];
+			})
 			.invoke("attr", "text", "USA")
 			.should("have.attr", "selected");
 	});
