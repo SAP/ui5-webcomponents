@@ -13,9 +13,6 @@ import SettingItemTemplate from "./generated/templates/SettingItemTemplate.lit.j
 import type SettingTab from "./SettingTab.js";
 import type SettingsDialog from "./SettingsDialog.js";
 
-type SettingListItem = ListItemStandard & {
-	mappedItem: SettingItem
-};
 @customElement({
 	tag: "ui5-setting-item",
 	renderer: litRender,
@@ -98,6 +95,10 @@ class SettingItem extends UI5Element {
 
 	_individualSlot?: string;
 
+	get _tooltip() {
+		return this.tooltip ? this.tooltip : this.text;
+	}
+
 	onBeforeRendering() {
 	}
 
@@ -109,22 +110,8 @@ class SettingItem extends UI5Element {
 		return this.selected ? "" : "disabled-slot";
 	}
 
-	get isSelectedSetting(): boolean {
-		return this._selectedSettingReference === this;
-	}
-
 	get _effectiveSlotName() {
 		return this.selected ? this._individualSlot : `disabled-${this._individualSlot}`;
-	}
-
-	setSelectedItem(e: CustomEvent<ListItemClickEventDetail>) {
-		const setting = e.target as SettingListItem;
-		const settingItem = setting.mappedItem;
-		(this as unknown as SettingsDialog).items.forEach(item => {
-			item.selected = false;
-		});
-		(this as unknown as SettingsDialog)._selectedSetting = settingItem;
-		settingItem.selected = true;
 	}
 
 	get _isPhone() {

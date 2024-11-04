@@ -19,7 +19,13 @@ import SettingsDialogTemplate from "./generated/templates/SettingsDialogTemplate
 import type SettingItem from "./SettingItem.js";
 import SettingView from "./SettingView.js";
 import SettingTab from "./SettingTab.js";
+import SideNavigationItem from "./SideNavigationItem.js";
+import SideNavigation, { type SideNavigationSelectionChangeEventDetail } from "./SideNavigation.js";
+import NavigationLayout from "./NavigationLayout.js";
 
+type SettingListItem = SideNavigationItem & {
+	mappedItem: SettingItem
+};
 @customElement({
 	tag: "ui5-settings-dialog",
 	renderer: litRender,
@@ -28,11 +34,12 @@ import SettingTab from "./SettingTab.js";
 		Title,
 		Input,
 		Icon,
-		List,
-		ListItemStandard,
 		Button,
 		SettingTab,
 		SettingView,
+		SideNavigation,
+		SideNavigationItem,
+		NavigationLayout,
 	],
 })
 
@@ -96,6 +103,16 @@ class SettingDialog extends UI5Element {
 			this._selectedSetting = this.items[0];
 			this.items[0].selected = true;
 		}
+	}
+
+	setSelectedItem(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
+		const setting = e.detail.item as SettingListItem;
+		const settingItem = setting.mappedItem;
+		this.items.forEach(item => {
+			item.selected = false;
+		});
+		this._selectedSetting = settingItem;
+		settingItem.selected = true;
 	}
 
 	get _isPhone() {
