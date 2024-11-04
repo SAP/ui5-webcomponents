@@ -246,6 +246,14 @@ class MediaGallery extends UI5Element {
 	}
 
 	_updateSelection() {
+		if (this.items.length === 0) {
+			this._selectedItem = undefined;
+			if (this._mainItem) {
+				const oldContent = this._mainItem.displayedContent;
+				oldContent?.remove();
+			}
+			return;
+		}
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
 			itemToSelect = this._findSelectableItem();
