@@ -2,7 +2,7 @@ import { html } from "lit";
 import "../../../src/Label.js";
 import "../../../src/Input.js";
 
-describe("AriaLabelHelper", () => {
+describe("AccessibilityTextsHelper", () => {
 	it("Label-for tests", () => {
 		cy.mount(html`
 			<ui5-input id="myInput" placeholder="input placeholder" class="field"></ui5-input>

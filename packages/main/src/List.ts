@@ -27,7 +27,7 @@ import {
 	registerUI5Element,
 	deregisterUI5Element,
 	getAllAccessibleNameRefTexts,
-} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
