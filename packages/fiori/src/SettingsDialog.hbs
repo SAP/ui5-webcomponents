@@ -1,54 +1,60 @@
-<div class="ui5-settings-dialog" style="display: flex">
-	<div style="border-right-color: rgba(63, 81, 97, .2); border-right-style: solid; display:inline-block">
-		{{#if headerTitle}}
-			<ui5-title level="H2" size="H2">{{headerTitle}}</ui5-title>
-		{{/if}}
-		{{#if showSearchField}}
-			<ui5-input placeholder="Search" type="Search">
-				<ui5-icon id="searchFieldIcon" slot="icon" name="search"></ui5-icon>
-			</ui5-input>
-		{{/if}}
+<div class="ui5-settings-dialog" >
+	<div style="display: flex">
+		<div style="border-right-color: rgba(63, 81, 97, .2); border-right-style: solid; display:inline-block">
+			{{#if headerTitle}}
+				<ui5-title level="H2" size="H2">{{headerTitle}}</ui5-title>
+			{{/if}}
+			{{#if showSearchField}}
+				<ui5-input placeholder="Search" type="Search">
+					<ui5-icon id="searchFieldIcon" slot="icon" name="search"></ui5-icon>
+				</ui5-input>
+			{{/if}}
 
-		<ui5-list id="items" accessibleRole="Menu" separators="None">
-			{{#each items}}
-				{{#unless this.fixedItem}}
-					{{#if this.tooltip}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block"
-							.mappedItem={{this}} ?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
-					{{else}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block" .mappedItem={{this}}
-							?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
-					{{/if}}
-				{{/unless}}
-			{{/each}}
-
-			{{#if fixedItems.length}}
-				<div role="separator" class="ui5-setting-spacer"
-					style="margin: 0.25rem; height: 0.25rem; background-color: rgba(63,81,97,.2);"></div>
-
-				{{#each fixedItems}}
-					{{#if this.tooltip}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block"
-							.mappedItem={{this}} ?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
-					{{else}}
-						<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block" .mappedItem={{this}}
-						?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
-					{{/if}}
+			<ui5-list id="items" accessibleRole="Menu" separators="None">
+				{{#each items}}
+					{{#unless this.fixedItem}}
+						{{#if this.tooltip}}
+							<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block"
+								.mappedItem={{this}} ?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						{{else}}
+							<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block" .mappedItem={{this}}
+								?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						{{/if}}
+					{{/unless}}
 				{{/each}}
-			{{/if}}
-		</ui5-list>
-	</div>
 
-	<div style="flex: 1">
-		{{#each items}}
-			{{#if this.selected}}
-				{{#if headerTitle}}
-					<ui5-title level="H3" size="H3">{{this.headerTitle}}</ui5-title>
-				{{else}}
-					<ui5-title level="H3" size="H3">{{this.text}}</ui5-title>
+				{{#if fixedItems.length}}
+					<div role="separator" class="ui5-setting-spacer"
+						style="margin: 0.25rem; height: 0.25rem; background-color: rgba(63,81,97,.2);"></div>
+
+					{{#each fixedItems}}
+						{{#if this.tooltip}}
+							<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.tooltip}}" style="display:block"
+								.mappedItem={{this}} ?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						{{else}}
+							<ui5-li icon="sap-icon://{{this.icon}}" tooltip="{{this.text}}" style="display:block" .mappedItem={{this}}
+							?selected={{this.selected}} @click="{{setSelectedItem}}">{{this.text}}</ui5-li>
+						{{/if}}
+					{{/each}}
 				{{/if}}
-			{{/if}}
-			<slot name="{{this._effectiveSlotName}}"></slot>
-		{{/each}}
+			</ui5-list>
+		</div>
+
+		<div style="flex: 1">
+			{{#each items}}
+				{{#if this.selected}}
+					{{#if headerTitle}}
+						<ui5-title level="H3" size="H3">{{this.headerTitle}}</ui5-title>
+					{{else}}
+						<ui5-title level="H3" size="H3">{{this.text}}</ui5-title>
+					{{/if}}
+				{{/if}}
+				<slot name="{{this._effectiveSlotName}}"></slot>
+			{{/each}}
+		</div>
+	</div>
+	<div class="footer">
+		<div role="separator" class="ui5-setting-spacer" style="margin: 0.25rem; height: 0.25rem; background-color: rgba(63,81,97,.2);"></div>
+		<ui5-button design="Transparent">Close</ui5-button>
 	</div>
 </div>
