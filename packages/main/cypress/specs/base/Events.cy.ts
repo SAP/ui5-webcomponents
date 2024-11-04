@@ -227,8 +227,12 @@ describe("Event bubbling", () => {
 			.realClick();
 
 		// act - open/close Menu
-		cy.get("[ui5-menu]")
-			.ui5MenuOpen({ opener: "btnOpen" });
+		cy.get("@menu")
+			.ui5MenuOpen();
+
+		cy.get("[ui5-menu-item]")
+			.first()
+			.ui5MenuItemClick();
 
 		// assert - the close events of the Select and MultiComboBox do not bubble
 		cy.get("@selClosed")
