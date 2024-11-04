@@ -421,6 +421,7 @@ slot[name="profile"] {
 
 .ui5-shellbar-separator-end {
 	margin-inline-start: 0.5rem;
+	margin-inline-end: 0.5rem;
 }
 
 .ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before {
@@ -457,11 +458,11 @@ slot[name="profile"] {
 	flex-shrink: 0;
 }
 
-::slotted([slot^="additionalContext"]:not(:first-child):not(ui5-menu)) {
+::slotted([slot^="additionalContext"]:not(ui5-menu)) {
 	margin-inline-start: 1rem;
 }
 
-::slotted([slot="additionalContextStart-1"]:not(:first-child):not(ui5-menu)) {
+::slotted([slot^="additionalContext"][slot$="-1"]) {
 	margin-inline-start: 0;
 }
 
