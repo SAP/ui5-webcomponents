@@ -1,5 +1,5 @@
 import {
-	isDelete, isF10Shift, isUp, isDown,
+	isDelete, isF10Shift, isEnterShift, isUp, isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -546,6 +546,10 @@ class NotificationListItem extends NotificationListItemBase {
 
 		if (isF10Shift(e)) {
 			this._onBtnMenuClick();
+		}
+
+		if (isEnterShift(e)) {
+			this._showMorePressed = !this._showMorePressed;
 		}
 	}
 
