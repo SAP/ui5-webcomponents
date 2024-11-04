@@ -92,7 +92,7 @@
 				id="{{_id}}-singleSelectionElement"
 				class="ui5-li-singlesel-radiobtn"
 				?checked="{{selected}}"
-				@click="{{onSingleSelectionComponentPress}}">
+				@ui5-change="{{onSingleSelectionComponentPress}}">
 		</ui5-radio-button>
 	{{/if}}
 
@@ -106,7 +106,7 @@
 				class="ui5-li-multisel-cb"
 				?checked="{{selected}}"
 				accessible-name="{{_accInfo.ariaLabel}}"
-				@click="{{onMultiSelectionComponentPress}}">
+				@ui5-change="{{onMultiSelectionComponentPress}}">
 		</ui5-checkbox>
 	{{/if}}
 

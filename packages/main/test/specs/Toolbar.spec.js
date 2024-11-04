@@ -72,6 +72,4 @@ describe("Toolbar general interaction", () => {
 		assert.strictEqual(await input.getProperty("value"), "1", "Button click event only called once");
 		await input.setAttribute("value", "0");
 	});
-
-
 });

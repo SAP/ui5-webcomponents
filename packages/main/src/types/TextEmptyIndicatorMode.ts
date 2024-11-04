@@ -2,7 +2,7 @@
  * Empty Indicator Mode.
  * @public
  */
-enum EmptyIndicatorMode {
+enum TextEmptyIndicatorMode {
 	/**
 	 * Empty indicator is never rendered.
 	 * @public
@@ -16,4 +16,4 @@ enum EmptyIndicatorMode {
 	On = "On",
 }
 
-export default EmptyIndicatorMode;
+export default TextEmptyIndicatorMode;

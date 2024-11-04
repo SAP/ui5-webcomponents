@@ -16,7 +16,6 @@ import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/w
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
@@ -338,9 +337,7 @@ class Button extends UI5Element implements IButton {
 			isGlobalHandlerAttached = true;
 		}
 
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			markEvent(e, "button");
-
+		const handleTouchStartEvent = () => {
 			if (this.nonInteractive) {
 				return;
 			}
@@ -368,12 +365,11 @@ class Button extends UI5Element implements IButton {
 		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
-	_onclick(e: MouseEvent) {
+	_onclick() {
 		if (this.nonInteractive) {
 			return;
 		}
 
-		markEvent(e, "button");
 		if (this._isSubmit) {
 			submitForm(this);
 		}
@@ -387,12 +383,11 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
+	_onmousedown() {
 		if (this.nonInteractive) {
 			return;
 		}
 
-		markEvent(e, "button");
 		this._setActiveState(true);
 		activeButton = this; // eslint-disable-line
 	}
@@ -412,13 +407,8 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onmouseup(e: MouseEvent) {
-		markEvent(e, "button");
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		this._cancelAction = isShift(e) || isEscape(e);
-		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
@@ -430,10 +420,6 @@ class Button extends UI5Element implements IButton {
 	_onkeyup(e: KeyboardEvent) {
 		if (this._cancelAction) {
 			e.preventDefault();
-		}
-
-		if (isSpace(e)) {
-			markEvent(e, "button");
 		}
 
 		if (isSpace(e) || isEnter(e)) {
@@ -451,14 +437,6 @@ class Button extends UI5Element implements IButton {
 		if (this.active) {
 			this._setActiveState(false);
 		}
-	}
-
-	_onfocusin(e: FocusEvent) {
-		if (this.nonInteractive) {
-			return;
-		}
-
-		markEvent(e, "button");
 	}
 
 	_setActiveState(active: boolean) {

@@ -4,6 +4,7 @@ import "../../src/BarcodeScannerDialog.js";
 import type BarcodeScannerDialog from "../../src/BarcodeScannerDialog.js";
 
 describe("BarcodeScannerDialog", () => {
+	let openDialogHandler: EventListener | null;
 	let handleScanSuccess: (event: CustomEvent) => void;
 	let handleScanError: (event: CustomEvent) => void;
 
@@ -49,6 +50,12 @@ describe("BarcodeScannerDialog", () => {
 				handleScanError = undefined!;
 			}
 
+			const btnScan = doc.querySelector("#btnScan");
+			if (btnScan && openDialogHandler) {
+				btnScan.removeEventListener("click", openDialogHandler);
+			}
+			openDialogHandler = null;
+
 			// Clear the scan result and error
 			const scanResultElement = doc.querySelector("#scanResult")!;
 			const scanErrorElement = doc.querySelector("#scanError")!;
@@ -82,7 +89,7 @@ describe("BarcodeScannerDialog", () => {
 		// Close the dialog using the close button
 		cy.get("@dialog")
 			.shadow()
-			.find("ui5-dialog [slot=footer] ui5-button")
+			.find("ui5-dialog slot[name=footer] ui5-button")
 			.realClick();
 
 		// Verify the dialog is closed
@@ -188,7 +195,7 @@ describe("BarcodeScannerDialog", () => {
 		// Close the dialog using the close button
 		cy.get("@dialog")
 			.shadow()
-			.find("ui5-dialog [slot=footer] ui5-button")
+			.find("ui5-dialog slot[name=footer] ui5-button")
 			.realClick();
 
 		// Verify the dialog is closed
@@ -266,7 +273,7 @@ describe("BarcodeScannerDialog", () => {
 			const dlgScan = $dialog.get(0) as BarcodeScannerDialog;
 
 			// Simulate the scan success
-			dlgScan.fireEvent("scan-success", {
+			dlgScan.fireDecoratorEvent("scan-success", {
 				text: "mocked-scan-result",
 				rawBytes: new Uint8Array(),
 			});
@@ -301,7 +308,7 @@ describe("BarcodeScannerDialog", () => {
 			const dlgScan = $dialog.get(0) as BarcodeScannerDialog;
 
 			// Simulate the scan error
-			dlgScan.fireEvent("scan-error", {
+			dlgScan.fireDecoratorEvent("scan-error", {
 				message: "mocked-scan-error",
 			});
 		});
@@ -345,5 +352,118 @@ describe("BarcodeScannerDialog", () => {
 		cy.get("@getUserMediaStub").then(stub => {
 			(stub as unknown as sinon.SinonStub).restore();
 		});
+	});
+});
+
+describe("BarcodeScannerDialog with Custom Slots", () => {
+	let openDialogHandler: EventListener | null;
+	let closeDialogHandler: EventListener | null;
+
+	beforeEach(() => {
+		cy.mount(html`
+		  <ui5-barcode-scanner-dialog id="dlgScanCustom">
+			<div slot="header" class="custom-dialog-header">
+			  <ui5-title level="H2">My Custom Header</ui5-title>
+			</div>
+			<div slot="footer" class="custom-dialog-footer">
+			  <ui5-button id="customCloseBtn">My Custom Close Button</ui5-button>
+			</div>
+		  </ui5-barcode-scanner-dialog>
+		  <ui5-button id="btnScanCustom" icon="camera">Open Custom Scanner Dialog</ui5-button>
+		`);
+
+		cy.get("#dlgScanCustom").as("customDialog");
+		cy.get("#btnScanCustom").as("customButton");
+		cy.get("@customDialog")
+			.shadow()
+			.find(".ui5-barcode-scanner-dialog-video")
+			.as("videoElement");
+
+		cy.document().then(doc => {
+			const dlgScanCustom = doc.querySelector<BarcodeScannerDialog>("#dlgScanCustom")!;
+			const btnScanCustom = doc.querySelector("#btnScanCustom")!;
+			const btnScanCustomClose = doc.querySelector("#customCloseBtn")!;
+
+			btnScanCustom.addEventListener("click", () => {
+				dlgScanCustom.open = true;
+			});
+
+			btnScanCustomClose.addEventListener("click", () => {
+				dlgScanCustom.open = false;
+			});
+		});
+	});
+
+	afterEach(() => {
+		cy.document().then(doc => {
+			const btnScanCustom = doc.querySelector("#btnScanCustom");
+			const btnScanCustomClose = doc.querySelector("#customCloseBtn");
+
+			if (btnScanCustom && openDialogHandler) {
+			  btnScanCustom.removeEventListener("click", openDialogHandler);
+			}
+			openDialogHandler = null;
+
+			if (btnScanCustomClose && closeDialogHandler) {
+			  btnScanCustomClose.removeEventListener("click", closeDialogHandler);
+			}
+
+			closeDialogHandler = null;
+		});
+	});
+
+	it("renders custom header when provided", () => {
+		// Click the button to open the custom dialog
+		cy.get("@customButton").realClick();
+
+		// Wait for the video to be ready
+		cy.get("@videoElement").should($video => {
+			const videoEl = $video[0] as HTMLVideoElement;
+			expect(videoEl.readyState, "Video readyState should be >= 1").to.be.at.least(1);
+		});
+
+		// Assert that the dialog is open
+		cy.get("@customDialog")
+			.shadow()
+			.find("ui5-dialog")
+			.should("have.attr", "open");
+
+		// Verify that the custom header is rendered
+		cy.get("@customDialog")
+			.find("[slot=header] ui5-title")
+			.should("contain.text", "My Custom Header");
+	});
+
+	it("renders custom footer and functions correctly", () => {
+		// Click the button to open the custom dialog
+		cy.get("@customButton").realClick();
+
+		// Wait for the video to be ready
+		cy.get("@videoElement").should($video => {
+			const videoEl = $video[0] as HTMLVideoElement;
+			expect(videoEl.readyState, "Video readyState should be >= 1").to.be.at.least(1);
+		});
+
+		// Assert that the dialog is open
+		cy.get("@customDialog")
+			.shadow()
+			.find("ui5-dialog")
+			.should("have.attr", "open");
+
+		// Verify that the custom footer is rendered
+		cy.get("@customDialog")
+			.find("[slot=footer] ui5-button")
+			.should("contain.text", "My Custom Close Button");
+
+		// Test that the custom button closes the dialog
+		cy.get("@customDialog")
+			.find("#customCloseBtn")
+			.realClick();
+
+		// Verify the dialog is closed
+		cy.get("@customDialog")
+			.shadow()
+			.find("ui5-dialog")
+			.should("not.have.attr", "open");
 	});
 });

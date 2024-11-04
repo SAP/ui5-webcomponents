@@ -3,7 +3,7 @@ const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
 let websiteBaseUrl = "/";
 
-if (process.env.DEPOY) {
+if (process.env.DEPLOY) {
 	websiteBaseUrl = "/ui5-webcomponents/";
 } else if (process.env.DEPLOY_NIGHTLY) {
 	websiteBaseUrl = "/ui5-webcomponents/nightly/";

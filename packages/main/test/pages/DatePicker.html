@@ -223,6 +223,14 @@
 			e.preventDefault();
 	});
 
+	dpCalendarModeDays.addEventListener("ui5-open", function(e) {
+		console.log("Picker is opened");
+	});
+
+	dpCalendarModeDays.addEventListener("ui5-close", function(e) {
+		console.log("Picker is closed");
+	});
+
 	</script>
 </body>
 </html>

@@ -997,7 +997,7 @@ Now,  attach to the `selection-change` to get the previewed suggestion item:
 input.addEventListener("selection-change", event => { 
 	const suggestionItemOnPreview = event.detail.item;
 });
-
+```
 
 ### ui5-suggestion-item
 

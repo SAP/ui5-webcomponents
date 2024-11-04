@@ -63,6 +63,74 @@ Theming is an important aspect when it comes to a UI5 Web Components application
 
 For more information regarding the available themes and how to use them, see the [Configuration](../2-advanced/01-configuration.md) section.
 
+### Theme Selection According to OS Settings
+
+The UI5 Web Components framework does not offer a built-in mechanism for selecting themes based on the users' OS settings. However, we recommend using standard APIs to implement OS-based theme selection in applications built with UI5 Web Components.
+
+In the next sections, we will demonstrate one of the possible approaches to detect and apply a theme that aligns with the user's OS preferences. However, you are free to explore and develop your own detection and matching algorithm.
+
+#### Light | Dark
+
+To synchronize theme switching with the OS's light or dark mode, you can use the [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) CSS Media feature, as shown in the next example:
+
+Check `prefers-color-scheme` for `dark` or `light` and apply one of the availabe light/dark themes (Horizon Morning, Horizon Evening, ect.)
+
+```ts
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+setTheme(darkColorScheme ? "sap_horizon_dark" : "sap_horizon");
+```
+
+#### Contrast 
+
+To switch to a high contrast theme when the OS does, you can use [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and  [prefers-contrast](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast) (detecting MacOS contrast preferences and Windows high contrast themes) CSS features, as shown in the next example:
+
+Check `prefers-color-scheme` for `dark` or `light` and `prefers-contrast` for `more`, and apply one of the available high contrast themes (Horizon High Contrast White or Horizon High Contrast Black)
+
+```ts
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const prefersContrastMore = window.matchMedia("(prefers-contrast: more)").matches;
+const prefersContrastCustom = window.matchMedia("(prefers-contrast: custom)").matches;
+const prefersContrast = prefersContrastMore || prefersContrastCustom;
+
+if (prefersContrast) {
+	setTheme(darkColorScheme ? "sap_horizon_hcb" : "sap_horizon_hcw");
+}
+```
+
+**Note:** In addition to detecting contrast mode, you need to check for light and dark modes via `prefers-color-scheme` to pick between the High Contrast Black and High Contrast White themes.
+
+The examples above will work for initial loading. However, to react on dynamic changes of the user preferences, you need to attach for the media query `change` event, fired when the status of media query support changes.
+
+Here is the full solution, listening for changes of the OS settings and considering light, dark and contrast preferences:
+
+```ts
+import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+
+const darkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+const prefersContrastMore = window.matchMedia("(prefers-contrast: more)");
+const prefersContrastCustom = window.matchMedia("(prefers-contrast: custom)");
+
+const applyOSThemePreferences = () => {
+	if (prefersContrastMore.matches || prefersContrastCustom.matches) {
+		setTheme(darkColorScheme.matches ? "sap_horizon_hcb" : "sap_horizon_hcw");
+	} else {
+		setTheme(darkColorScheme.matches ? "sap_horizon_dark" : "sap_horizon");
+	}
+}
+
+darkColorScheme.onchange = applyOSThemePreferences;
+prefersContrastMore.onchange = applyOSThemePreferences;
+prefersContrastCustom.onchange = applyOSThemePreferences;
+
+applyOSThemePreferences();
+```
+
+Although you've learned how to detect OS settings and apply the corresponding theme, we recommend allowing users to decide whether the theme should always match the OS setting OS settings by providing application settings and not forcing the OS settings by default.
 
 ## Accessibility APIs
 

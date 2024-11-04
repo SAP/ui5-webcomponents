@@ -38,6 +38,7 @@ import SettingsDialog from "./SettingsDialog.js";
 import SettingTab from "./SettingTab.js";
 import SettingView from "./SettingView.js";
 import Timeline from "./Timeline.js";
+import NavigationLayout from "./NavigationLayout.js";
 import UploadCollection from "./UploadCollection.js";
 import UploadCollectionItem from "./UploadCollectionItem.js";
 import ViewSettingsDialog from "./ViewSettingsDialog.js";
