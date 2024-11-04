@@ -8,7 +8,6 @@ import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import DropIndicator from "./DropIndicator.js";
 import TreeItem from "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
@@ -305,6 +304,24 @@ class Tree extends UI5Element {
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Defines the IDs of the elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.
 	 *
 	 * **Note:** Use `ui5-tree-item` for the intended design.
@@ -351,10 +368,6 @@ class Tree extends UI5Element {
 
 	get _role() {
 		return ListAccessibleRole.Tree;
-	}
-
-	get _label() {
-		return getEffectiveAriaLabelText(this);
 	}
 
 	get _hasHeader() {

@@ -466,15 +466,6 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the accessible description of the component.
-	 * @default undefined
-	 * @public
-	 * @since 2.4.0
-	 */
-	@property()
-	accessibleDescription?: string;
-
-	/**
 	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
@@ -484,10 +475,19 @@ class List extends UI5Element {
 	accessibleNameRef?: string;
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
 	 * Defines the IDs of the elements that describe the component.
 	 * @default undefined
 	 * @public
-	 * @since 2.4.0
+	 * @since 2.5.0
 	 */
 	@property()
 	accessibleDescriptionRef?: string;
