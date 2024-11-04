@@ -16,7 +16,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
@@ -295,7 +294,8 @@ class TableRow extends UI5Element implements ITableRow {
 		// If the user tab over a button on IOS device, the document.activeElement
 		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
 		// the row will not be selected.
-		if (getEventMark(e) === "button") {
+
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
