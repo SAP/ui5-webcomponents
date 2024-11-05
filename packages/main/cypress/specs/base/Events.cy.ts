@@ -14,7 +14,6 @@ import "../../../src/CheckBox.js";
 import "../../../src/Label.js";
 import "../../../src/MenuItem.js";
 import "../../../src/Menu.js";
-import type Menu from "../../../src/Menu.js";
 
 describe("Event bubbling", () => {
 	it("test bubbling events", () => {
