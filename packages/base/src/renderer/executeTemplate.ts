@@ -1,7 +1,6 @@
 import type UI5Element from "../UI5Element.js";
 
-type TemplateFunctionResult = object;
-type TemplateFunction = () => TemplateFunctionResult;
+type TemplateFunction = () => object;
 
 /**
  * Runs a component's template with the component's current state, while also scoping HTML
@@ -10,9 +9,9 @@ type TemplateFunction = () => TemplateFunctionResult;
  * @param component - the component
  * @public
  */
-const executeTemplate = (template: TemplateFunction, component: UI5Element): TemplateFunctionResult => {
+const executeTemplate = (template: TemplateFunction, component: UI5Element) => {
 	return template.call(component);
 };
 
 export default executeTemplate;
-export type { TemplateFunction, TemplateFunctionResult };
+export type { TemplateFunction };
