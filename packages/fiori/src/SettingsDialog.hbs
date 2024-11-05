@@ -12,9 +12,9 @@
 
 			{{#each items}}
 				{{#if this.fixedItem}}
-					<ui5-side-navigation-item slot="fixedItems" text={{this.text}} tooltip={{this.tooltip}} icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
+					<ui5-side-navigation-item slot="fixedItems" text={{this.text}} tooltip={{this._tooltip}} icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
 				{{else}}
-					<ui5-side-navigation-item text={{this.text}} tooltip={{this.tooltip}} icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
+					<ui5-side-navigation-item text={{this.text}} tooltip={{this._tooltip}} icon={{this.icon}} .mappedItem={{this}} ?selected={{this.selected}}></ui5-side-navigation-item>
 				{{/if}}
 			{{/each}}
 		</ui5-side-navigation>
