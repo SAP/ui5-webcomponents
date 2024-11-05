@@ -1,0 +1,85 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Test Page - Table Popin</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+    <div class="section" style="height: 100px; overflow: auto;">
+<!-- playground-fold-end -->
+		<ui5-table id="table">
+			<ui5-table-growing id="growing" type="Scroll" slot="features"></ui5-table-growing>
+<!-- playground-fold -->
+			<ui5-table-header-row sticky slot="headerRow">
+				<ui5-table-header-cell id="produtCol"><span>Product</span></ui5-table-header-cell>
+				<ui5-table-header-cell id="supplierCol">Supplier</ui5-table-header-cell>
+				<ui5-table-header-cell id="dimensionsCol">Dimensions</ui5-table-header-cell>
+				<ui5-table-header-cell id="weightCol">Weight</ui5-table-header-cell>
+				<ui5-table-header-cell id="priceCol">Price</ui5-table-header-cell>
+			</ui5-table-header-row>
+			<ui5-table-row row-key="0">
+				<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br>HT-1000</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label><b>956</b> EUR</ui5-label></ui5-table-cell>
+			</ui5-table-row>
+			<ui5-table-row row-key="1">
+				<ui5-table-cell><ui5-label><b>Notebook Basic 17</b><br>HT-1001</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label>Smartcards</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label>29 x 17 x 3.1 cm</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.5</b> KG</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label><b>1249</b> EUR</ui5-label></ui5-table-cell>
+			</ui5-table-row>
+			<ui5-table-row row-key="2">
+				<ui5-table-cell><ui5-label><b>Notebook Basic 18</b><br>HT-1002</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
+				<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
+			</ui5-table-row>
+<!-- playground-fold-end -->
+		</ui5-table>
+<!-- playground-fold -->
+	</div>
+    <script type="module" src="main.js"></script>
+	<script>
+		const MAX_GROW = 20;
+
+		const table = document.getElementById("table");
+		const growing = document.getElementById("growing");
+
+		let counter = 0;
+
+		growing.addEventListener("load-more", () => {
+			for (let i = 0; i < 5; i++) {
+				const newRow = document.createElement("ui5-table-row");
+				newRow.setAttribute("key", table.rows.length + i);
+				newRow.innerHTML = `
+					<ui5-table-cell><ui5-label><b>Notebook Basic ${18 + table.rows.length + i}</b><br>HT-100${2 + table.rows.length + i}</ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
+				`;
+				table.appendChild(newRow);
+			}
+
+			counter++;
+			if (counter >= MAX_GROW) {
+				growing.disabled = true;
+				return;
+			}
+		});
+	</script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
