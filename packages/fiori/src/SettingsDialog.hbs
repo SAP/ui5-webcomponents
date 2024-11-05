@@ -1,6 +1,6 @@
 <ui5-dialog .open={{open}} stretch>
 	<ui5-navigation-layout>
-		<ui5-side-navigation slot="sideContent" @selection-change={{setSelectedItem}}>
+		<ui5-side-navigation slot="sideContent" @ui5-selection-change={{setSelectedItem}}>
 			{{#if headerTitle}}
 				<ui5-title slot="header" level="H4" size="H4">{{headerTitle}}</ui5-title>
 			{{/if}}
@@ -25,6 +25,6 @@
 	</ui5-navigation-layout>
 
 	<ui5-toolbar slot="footer">
-		<ui5-toolbar-button design="Transparent" text="Close" />
+		<ui5-toolbar-button design="Transparent" text="Close" @ui5-click="{{_onClose}}" />
 	</ui5-toolbar>
 </ui5-dialog>

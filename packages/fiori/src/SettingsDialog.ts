@@ -132,6 +132,10 @@ class SettingDialog extends UI5Element {
 	get _selectedItemSlotName() {
 		return this._selectedSetting ? this._selectedSetting._individualSlot : "";
 	}
+
+	_onClose() {
+		this.open = false;
+	}
 }
 
 SettingDialog.define();

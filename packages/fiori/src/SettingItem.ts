@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
 import Tab from "@ui5/webcomponents/dist/Tab.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -16,7 +17,7 @@ import type SettingDialog from "./SettingsDialog.js";
 	renderer: litRender,
 	template: SettingItemTemplate,
 	styles: [SettingsItemCss],
-	dependencies: [TabContainer, Tab, Title],
+	dependencies: [Button, TabContainer, Tab, Title],
 })
 
 /**
