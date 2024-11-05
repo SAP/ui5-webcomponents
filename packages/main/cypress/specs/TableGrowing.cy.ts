@@ -186,7 +186,7 @@ describe("TableGrowing - Button", () => {
 describe("TableGrowing - Scroll", () => {
 	function mountTable(rowCount: number = 10, overflow = false) {
 		cy.mount(html`
-			<div style="height: 200px; ${overflow ? "overflow: auto" : ""}">
+			<div id="wrapper" style="height: 200px; ${overflow ? "overflow: auto" : ""}">
 			<ui5-table id="table">
 				<ui5-table-growing slot="features" type="Scroll"></ui5-table-growing>
 				<ui5-table-header-row slot="headerRow">
@@ -298,10 +298,8 @@ describe("TableGrowing - Scroll", () => {
 				.should("not.exist");
 
 			for (let i = 2; i <= 6; i++) {
-				cy.get("[ui5-table]")
-					.shadow()
-					.find("#table-end-row")
-					.scrollIntoView();
+				cy.get("#wrapper")
+					.scrollTo("bottom", { duration: 300 });
 
 				cy.get("@loadMore")
 					.should("have.callCount", i);
