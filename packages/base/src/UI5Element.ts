@@ -28,7 +28,8 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
+import executeTemplate from "./renderer/executeTemplate.js";
+import { shouldScopeCustomElement } from "./CustomElementsScopeUtils.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type {
 	AccessibilityInfo,
@@ -278,7 +279,7 @@ abstract class UI5Element extends HTMLElement {
 			// when an element is connected, check if it exists in the `dependencies` of the parent
 			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
 				const klass = rootNode.host.constructor as typeof UI5Element;
-				const hasDependency = getTagsToScope(rootNode.host).includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
+				const hasDependency = klass.tagsToScope.includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
 				if (!hasDependency) {
 					// eslint-disable-next-line no-console
 					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
@@ -1107,6 +1108,22 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
+	}
+
+	/**
+	 * Returns all tags, used inside component's template subject to scoping.
+	 * @returns {Array[]}
+	 * @private
+	 */
+	static get tagsToScope(): Array<string> {
+		const componentTag = this.getMetadata().getPureTag();
+		const tagsToScope = this.getUniqueDependencies().map((dep: typeof UI5Element) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+
+		if (shouldScopeCustomElement(componentTag)) {
+			tagsToScope.push(componentTag);
+		}
+
+		return tagsToScope;
 	}
 
 	/**

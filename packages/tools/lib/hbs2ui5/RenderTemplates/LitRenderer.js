@@ -24,15 +24,21 @@ const importForControl = (controlName, hasTypes) => {
 }
 
 const buildRenderer = (controlName, litTemplate, hasTypes) => {
-	const importPrefix = process.env.UI5_BASE ? "../../../../../src/" : "@ui5/webcomponents-base/dist/"
+	const importPrefix = process.env.UI5_BASE ? "../../../../../src/" : "@ui5/webcomponents-base/dist/";
+
+	const mainTemplateFunction = process.env.UI5_TS ?
+		`function template(this: ${controlName}, context: UI5Element) { return block0.call(this, context, (context.constructor as typeof UI5Element).tagsToScope, getCustomElementsScopingSuffix()); }` :
+		`function template(context) { return block0.call(this, context, context.constructor.tagsToScope, getCustomElementsScopingSuffix()); }`;
 
 	// typescript cannot process package imports for the same package and the paths are changed to relative for base package templates
 	return `/* eslint no-unused-vars: 0 */
 import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "${importPrefix}renderer/LitRenderer.js";
+import { getCustomElementsScopingSuffix } from "${importPrefix}CustomElementsScopeUtils.js";
 ${tsImports(controlName, hasTypes)}
 ${litTemplate}
 
-export default block0;`;
+${mainTemplateFunction}
+export default template;`;
 };
 
 module.exports = {
