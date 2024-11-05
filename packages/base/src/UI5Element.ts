@@ -30,7 +30,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import { shouldScopeCustomElement } from "./CustomElementsScopeUtils.js";
-import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
+import type { TemplateFunction } from "./renderer/executeTemplate.js";
 import type {
 	AccessibilityInfo,
 	PromiseResolve,
@@ -50,7 +50,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, instance: UI5Element) => void;
+type Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => void;
 
 type ChangeInfo = {
 	type: "property" | "slot",

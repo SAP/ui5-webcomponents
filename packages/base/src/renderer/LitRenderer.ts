@@ -11,7 +11,6 @@ import type { LitStatic } from "../CustomElementsScope.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import type UI5Element from "../UI5Element.js";
 import type { Renderer } from "../UI5Element.js";
-import type { TemplateFunctionResult } from "./executeTemplate.js";
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
@@ -25,7 +24,8 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 	return fn(strings, ...values);
 };
 
-const litRender: Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, instance: UI5Element) => {
+const litRender: Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => {
+	let templateResult = instance.render();
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 	if (openUI5Enablement) {
 		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, instance, templateResult as TemplateResult);

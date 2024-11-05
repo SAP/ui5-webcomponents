@@ -2,13 +2,12 @@ import {
 	render,
 } from "preact";
 
-import type { TemplateResult } from "lit-html";
-
+import type UI5Element from "../UI5Element.js";
 import type { Renderer } from "../UI5Element.js";
-import type { TemplateFunctionResult } from "./executeTemplate.js";
 
-const jsxRender: Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment) => {
-	render(templateResult as TemplateResult, container);
+const jsxRender: Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => {
+	const templateResult = instance.render();
+	render(templateResult, container);
 };
 
 export default jsxRender;
