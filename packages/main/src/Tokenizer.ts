@@ -215,7 +215,9 @@ class Tokenizer extends UI5Element {
 	readonly = false;
 
 	/**
-	 * **Note:** The multiLine property is in an experimental state and is a subject to change.
+	 * Defines whether tokens are displayed on multiple lines.
+	 *
+	 * **Note:** The `multiLine` property is in an experimental state and is a subject to change.
 	 * @default false
 	 * @public
 	 */
@@ -223,7 +225,9 @@ class Tokenizer extends UI5Element {
 	multiLine = false;
 
 	/**
-	 * **Note:** The showClearAll property is in an experimental state and is a subject to change.
+	 * Defines whether "Clear All" button is present. Ensure `multiLine` is enabled, otherwise `showClearAll` will have no effect.
+	 *
+	 * **Note:** The `showClearAll` property is in an experimental state and is a subject to change.
 	 * @default false
 	 * @public
 	 */
