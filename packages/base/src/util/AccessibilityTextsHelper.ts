@@ -78,9 +78,9 @@ const _getAllAssociatedElementsFromDOM = (el: UI5Element): Array<HTMLElement> =>
 	const ariaLabelledBy = el["accessibleNameRef" as keyof typeof el] as string;
 	const ariaDescribedBy = el["accessibleDescriptionRef" as keyof typeof el] as string;
 
-	const value = `${ariaLabelledBy} ${ariaDescribedBy}`;
+	const value = [ariaLabelledBy, ariaDescribedBy].filter(Boolean).join(" ");
 
-	const ids = value?.split(" ") ?? [];
+	const ids = value ? value.split(" ") : [];
 	ids.forEach(id => {
 		const refEl = _getReferencedElementById(el, id);
 		if (refEl) {

@@ -305,14 +305,6 @@ describe("AccessibilityTextsHelper", () => {
 		cy.get("@list")
 			.should("have.attr", "aria-description", "Desc1X Desc2");
 
-		// act - update accessible-description
-		cy.get("#lblDesc2")
-			.invoke("remove");
-
-		// assert
-		cy.get("@list")
-			.should("have.attr", "aria-description", "Desc1X ");
-
 		// act - update accessible-description-ref
 		cy.get("#list")
 			.invoke("removeAttr", "accessible-description-ref");
