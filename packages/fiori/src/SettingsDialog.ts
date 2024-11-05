@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { customElement } from "@ui5/webcomponents-base/dist/decorators.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Input from "@ui5/webcomponents/dist/Input.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -92,16 +93,23 @@ class SettingDialog extends UI5Element {
 	})
 	items!: Array<SettingItem>;
 
+	@property({ type: Boolean })
+	_sideCollapsed = false;
+
 	onBeforeRendering() {
 		if (!this.items.length) {
 			return;
+		}
+
+		if (this.shadowRoot!.querySelector<NavigationLayout>("[ui5-navigation-layout]")) {
+			this.shadowRoot!.querySelector<NavigationLayout>("[ui5-navigation-layout]")!.sideCollapsed = this._sideCollapsed; // zTODO: check if there is a better place to change the property
 		}
 
 		const selectedSetting = this.items.find(setting => setting.selected);
 
 		if (selectedSetting) {
 			this._selectedSetting = selectedSetting;
-		} else {
+		} else if (!isPhone()) {
 			this._selectedSetting = this.items[0];
 			this.items[0].selected = true;
 		}
@@ -115,6 +123,10 @@ class SettingDialog extends UI5Element {
 		});
 		this._selectedSetting = settingItem;
 		settingItem.selected = true;
+
+		if (isPhone()) {
+			this._sideCollapsed = true;
+		}
 	}
 
 	get _selectedItemSlotName() {

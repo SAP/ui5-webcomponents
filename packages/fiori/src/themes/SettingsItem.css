@@ -1,3 +1,9 @@
 .ui5-setting-item {
     height: 100%;
 }
+
+.ui5-setting-item-header {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
