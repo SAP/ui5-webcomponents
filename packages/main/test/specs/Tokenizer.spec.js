@@ -260,7 +260,7 @@ describe("Accessibility", () => {
 
 	it("should test tokenizer content aria attributes", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
-		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const tokenizerList = await tokenizer.shadow$(".ui5-tokenizer--list");
 		const expandedTokenizer = await browser.$("#expanded-tokenizer");
 		const expandedTokenizerList = await expandedTokenizer.shadow$(".ui5-tokenizer--list");
 		const keys = [
@@ -268,8 +268,8 @@ describe("Accessibility", () => {
 		];
 		const texts = await getResourceBundleTexts(keys);
 
-		assert.strictEqual(await tokenizerContent.getAttribute("role"), "listbox", "tokenizer content should have correct role=listbox");
-		assert.strictEqual(await tokenizerContent.getAttribute("aria-label"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-label");
+		assert.strictEqual(await tokenizerList.getAttribute("role"), "listbox", "tokenizer content should have correct role=listbox");
+		assert.strictEqual(await tokenizerList.getAttribute("aria-label"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-label");
 		assert.strictEqual(await expandedTokenizerList.getAttribute("aria-label"), 'Test label', "tokenizer content should have correct aria-label when accesible name is set");
 		assert.strictEqual(await expandedTokenizerList.getAttribute("aria-description"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-description when accesible name is set");
 	});
