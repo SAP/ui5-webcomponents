@@ -8,6 +8,7 @@
 }
 
 .content {
+    background-color: var(--sapGroup_ContentBackground);
     height: 100%;
     overflow: hidden;
 }
