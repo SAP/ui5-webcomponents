@@ -57,7 +57,7 @@
     "@ui5/webcomponents-base": "2.4.0",
     "@ui5/webcomponents-icons": "2.4.0",
     "@ui5/webcomponents-theming": "2.4.0",
-    "@zxing/library": "^0.17.1"
+    "@zxing/library": "^0.21.3"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "2.4.0",
