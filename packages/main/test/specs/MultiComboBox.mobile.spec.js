@@ -1,13 +1,13 @@
 import { assert } from "chai";
 
-const getVisibleItems = async (combo) => {
-	const items = await combo.$$("ui5-mcb-item");
-	const filteredItems = await Promise.all(items.map(async item => {
-			return (await item.getProperty("_isVisible")) ? item : null;
-	}));
+const getVisibleItems = async (id) => {
+	const slottedItems = await browser.executeAsync((mcbId, done) => {
+		const mcb = document.getElementById(mcbId);
+		
+		done(mcb.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list").getSlottedNodes("items"));
+	}, id);
 
-	// filter out null values
-	return filteredItems.filter(item => item !== null);
+	return slottedItems;
 };
 
 describe("Basic interaction", () => {
@@ -103,7 +103,7 @@ describe("Basic interaction", () => {
 		const toggleSelectedButton =  await multiCombo.shadow$("ui5-responsive-popover").$("ui5-toggle-button");
 		assert.strictEqual(await toggleSelectedButton.getAttribute("pressed"), "", "Toggle selected items button is pressed");
 
-		const itemsCount = (await getVisibleItems(multiCombo));
+		const itemsCount = (await getVisibleItems("multi1"));
 		assert.strictEqual(itemsCount.length, 3, "Only the selected items are shown");
 	});
 
@@ -274,7 +274,7 @@ describe("Items selection", () => {
 		assert.strictEqual(tokens.length, 2, "No new tokens were created");
 	});
 
-	it.only("Should not allow deselection when readonly", async () => {
+	it("Should not allow deselection when readonly", async () => {
 		const multiCombo = await browser.$("#mcb-ro");
 
 		await multiCombo.scrollIntoView();
@@ -351,12 +351,11 @@ describe("Items selection", () => {
 
 	it("should not close the dialog on checkbox click", async () => {
 		const mcb = await $("#mcb-select-all-vs");
-		const popover = await mcb.shadow$("ui5-responsive-popover");
 
 		await mcb.scrollIntoView();
 		await mcb.click();
 
-		const listItemCheckbox = await mcb.$("ui5-mcb-item")[0].shadow$("ui5-checkbox");
+		const listItemCheckbox = await mcb.$("ui5-mcb-item").shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
 
 		assert.strictEqual(await mcb.getProperty("open"), true, "Mobile dialog is not closed on checkbox click");

@@ -1449,6 +1449,11 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_listSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		let changePrevented;
 
+		if (this.readonly) {
+			e.preventDefault();
+			return;
+		}
+
 		if (!isPhone()) {
 			this._previouslySelectedItems = this._getSelectedItems();
 		}
@@ -1645,6 +1650,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			this._getItems().forEach(item => {
 				if (isInstanceOfMultiComboBoxItem(item)) {
 					item._isVisible = true;
+					item._readonly = this.readonly;
 				}
 			});
 			return;

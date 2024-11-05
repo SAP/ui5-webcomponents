@@ -49,6 +49,9 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	@property({ type: Boolean, noAttribute: true })
 	_isVisible = false;
 
+	@property({ type: Boolean, noAttribute: true })
+	_readonly = false;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
