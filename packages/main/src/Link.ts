@@ -10,7 +10,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
@@ -344,7 +343,6 @@ class Link extends UI5Element implements ITabbable {
 		} = e;
 
 		e.stopImmediatePropagation();
-		markEvent(e, "link");
 
 		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
 			altKey,
@@ -358,23 +356,16 @@ class Link extends UI5Element implements ITabbable {
 		}
 	}
 
-	_onfocusin(e: FocusEvent) {
-		markEvent(e, "link");
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) && !this.href) {
 			this._onclick(e);
 		} else if (isSpace(e)) {
 			e.preventDefault();
 		}
-
-		markEvent(e, "link");
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (!isSpace(e)) {
-			markEvent(e, "link");
 			return;
 		}
 
