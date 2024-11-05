@@ -614,9 +614,10 @@ class Tokenizer extends UI5Element {
 
 	handleBeforeOpen() {
 		if (this.multiLine) {
-			this._tokens.forEach(token => {
-				token._isVisible = this._selectedTokens[0] === token;
-			});
+			this._resetTokensVisibility();
+
+			const focusedToken = this._tokens.find(token => token.focused);
+			focusedToken!._isVisible = true;
 		} else {
 			this._tokens.forEach(token => {
 				token._isVisible = true;
@@ -980,6 +981,12 @@ class Tokenizer extends UI5Element {
 				tokens: this._selectedTokens,
 			});
 		}
+	}
+
+	_resetTokensVisibility() {
+		this._tokens.forEach(token => {
+			token._isVisible = false;
+		});
 	}
 
 	get hasTokens() {
