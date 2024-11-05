@@ -36,7 +36,6 @@ import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag 
 import { getCustomElementsScopingSuffix } from "${importPrefix}CustomElementsScopeUtils.js";
 ${tsImports(controlName, hasTypes)}
 ${litTemplate}
-
 ${mainTemplateFunction}
 export default template;`;
 };
