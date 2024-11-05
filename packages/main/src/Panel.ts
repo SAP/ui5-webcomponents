@@ -23,7 +23,6 @@ import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import panelCss from "./generated/themes/Panel.css.js";
-import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 
 /**
  * @class
@@ -86,7 +85,7 @@ import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/exe
 	fastNavigation: true,
 	languageAware: true,
 	renderer: jsxRender,
-	template: PanelTemplate as unknown as TemplateFunction,
+	template: PanelTemplate,
 	styles: panelCss,
 	dependencies: [Button, Icon],
 })

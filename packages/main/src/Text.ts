@@ -7,7 +7,6 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
 import TextTemplate2 from "./TextTemplate.js";
@@ -51,7 +50,7 @@ import styles from "./generated/themes/Text.css.js";
 @customElement({
 	tag: "ui5-text",
 	renderer: jsxRender,
-	template: TextTemplate2 as unknown as TemplateFunction,
+	template: TextTemplate2,
 	styles,
 })
 class Text extends UI5Element {

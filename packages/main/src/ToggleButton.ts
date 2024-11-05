@@ -4,7 +4,6 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./ToggleButtonTemplate.js";
 
@@ -34,7 +33,7 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
  */
 @customElement({
 	tag: "ui5-toggle-button",
-	template: ToggleButtonTemplate as unknown as TemplateFunction,
+	template: ToggleButtonTemplate,
 	styles: [Button.styles, toggleBtnCss],
 })
 class ToggleButton extends Button {

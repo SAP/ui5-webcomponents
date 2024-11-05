@@ -27,7 +27,6 @@ import {
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
-import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import type { JSX } from "@ui5/webcomponents-base";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
@@ -90,7 +89,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	formAssociated: true,
 	languageAware: true,
 	renderer: jsxRender,
-	template: ButtonTemplate as unknown as TemplateFunction,
+	template: ButtonTemplate,
 	styles: buttonCss,
 	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },
