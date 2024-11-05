@@ -155,9 +155,6 @@ describe("Event bubbling", () => {
 		cy.get("[ui5-select]")
 			.as("select");
 
-		cy.get("[ui5-button]")
-			.as("button");
-
 		cy.get("[ui5-menu]")
 			.as("menu");
 
@@ -176,26 +173,17 @@ describe("Event bubbling", () => {
 
 		cy.get("@dialog")
 			.then(dialog => {
-				dialog.get(0).addEventListener("close", cy.stub().as("dialogClosed"));
 				dialog.get(0).addEventListener("ui5-close", cy.stub().as("dialogClosed"));
 			});
 
 		cy.get("@select")
 			.then(select => {
-				select.get(0).addEventListener("close", cy.stub().as("selClosed"));
+				select.get(0).addEventListener("ui5-close", cy.stub().as("selClosed"));
 			});
 
 		cy.get("@menu")
 			.then(menu => {
-				menu.get(0).addEventListener("close", cy.stub().as("menuClosed"));
-			});
-
-		cy.get("@button")
-			.then(button => {
-				button.get(0).addEventListener("click", () => {
-					const menu = document.getElementById("myMenu") as Menu;
-					menu.open = !menu.open;
-				});
+				menu.get(0).addEventListener("ui5-close", cy.stub().as("menuClosed"));
 			});
 
 		cy.get("@multiCombobox")
