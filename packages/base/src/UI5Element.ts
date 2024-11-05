@@ -50,15 +50,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => void;
-
-type RendererOptions = {
-	/**
-	 * An object to use as the `this` value for event listeners. It's often
-	 * useful to set this to the host component rendering a template.
-	 */
-	host?: object,
-}
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, instance: UI5Element) => void;
 
 type ChangeInfo = {
 	type: "property" | "slot",
@@ -1389,5 +1381,4 @@ export type {
 	ChangeInfo,
 	InvalidationInfo,
 	Renderer,
-	RendererOptions,
 };

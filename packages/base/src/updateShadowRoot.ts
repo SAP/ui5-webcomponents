@@ -17,7 +17,7 @@ const updateShadowRoot = (element: UI5Element) => {
 
 	shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor);
 
-	ctor.renderer(renderResult, shadowRoot, { host: element });
+	ctor.renderer(renderResult, shadowRoot, element);
 };
 
 export default updateShadowRoot;
