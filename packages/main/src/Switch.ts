@@ -88,7 +88,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @default "Textual"
 	 */
 	@property()
-	design: `${SwitchDesign}` = "Textual";
+	accessor design: `${SwitchDesign}` = "Textual";
 
 	/**
 	 * Defines if the component is checked.
@@ -101,7 +101,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	checked = false;
+	accessor checked = false;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -111,7 +111,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false
+	accessor disabled = false
 
 	/**
 	 * Defines the text, displayed when the component is checked.
@@ -121,7 +121,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	textOn?: string
+	accessor textOn: string | undefined;
 
 	/**
 	 * Defines the text, displayed when the component is not checked.
@@ -131,7 +131,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	textOff?: string
+	accessor textOff: string | undefined;
 
 	/**
 	 * Sets the accessible ARIA name of the component.
@@ -143,7 +143,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -155,7 +155,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the tooltip of the component.
@@ -166,7 +166,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @since 1.9.0
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined;
 
 	/**
 	 * Defines whether the component is required.
@@ -175,7 +175,7 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @since 1.16.0
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -186,10 +186,10 @@ class Switch extends UI5Element implements IFormInputElement {
 	 * @since 1.16.0
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
 		return Switch.i18nBundle.getText(FORM_CHECKABLE_REQUIRED);

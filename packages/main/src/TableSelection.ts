@@ -68,7 +68,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @public
 	 */
 	@property()
-	mode: `${TableSelectionMode}` = "Multiple";
+	accessor mode: `${TableSelectionMode}` = "Multiple";
 
 	/**
 	 * Defines the selected rows separated by a space.
@@ -77,7 +77,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	 * @public
 	 */
 	@property()
-	selected = "";
+	accessor selected = "";
 
 	readonly identifier = "TableSelection";
 	_table?: Table;
@@ -219,8 +219,8 @@ class TableSelection extends UI5Element implements ITableFeature {
 		}
 
 		this._table._invalidate++;
-		this._table.headerRow[0]._invalidate++;
-		this._table.rows.forEach(row => row._invalidate++);
+		this._table.headerRow[0]._invalidate2++;
+		this._table.rows.forEach(row => row._invalidate2++);
 	}
 
 	_onkeydown(e: KeyboardEvent) {

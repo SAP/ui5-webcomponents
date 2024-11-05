@@ -141,7 +141,7 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
-			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
+			default: "", // tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",
 			generateCEM: `cem analyze --config "${LIB}/cem/custom-elements-manifest.config.mjs" ${ options.dev ? "--dev" : "" }`,
 			validateCEM: `node "${LIB}/cem/validate.js" ${ options.dev ? "--dev" : "" }`,
 		},

@@ -37,7 +37,7 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property()
-	width = "auto";
+	accessor width = "auto";
 
 	/**
  	 * Defines the minimum width of the column.
@@ -49,7 +49,7 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property()
-	minWidth = "auto";
+	accessor minWidth = "auto";
 
 	/**
 	 * Defines the maximum width of the column.
@@ -58,7 +58,7 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property()
-	maxWidth = "auto";
+	accessor maxWidth = "auto";
 
 	/**
 	 * Defines the importance of the column.
@@ -71,10 +71,10 @@ class TableHeaderCell extends TableCellBase {
 	 * @public
 	 */
 	@property({ type: Number })
-	importance = 0;
+	accessor importance = 0;
 
 	@property({ type: Boolean, noAttribute: true })
-	_popin = false;
+	accessor _popin = false;
 
 	protected ariaRole: string = "columnheader";
 	_popinWidth: number = 0;

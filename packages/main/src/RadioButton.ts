@@ -97,7 +97,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -108,7 +108,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -117,7 +117,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.9.0
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines whether the component is checked or not.
@@ -132,7 +132,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	checked = false;
+	accessor checked = false;
 
 	/**
 	 * Defines the text of the component.
@@ -140,7 +140,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -148,7 +148,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -164,7 +164,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the form value of the component.
@@ -174,7 +174,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 
 	/**
 	 * Defines whether the component text wraps when there is not enough space.
@@ -184,7 +184,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "Normal";
+	accessor wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -193,7 +193,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.6.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -202,10 +202,10 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	@property()
-	_tabIndex?: string;
+	accessor _tabIndex: string | undefined;
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
@@ -213,7 +213,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active = false;
+	accessor active = false;
 
 	/**
 	 * Defines if the component is selected in specific group
@@ -221,9 +221,9 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_groupChecked = false;
+	accessor _groupChecked = false;
 	@property({ type: Boolean, noAttribute: true })
-	_groupRequired = false;
+	accessor _groupRequired = false;
 
 	_deactivate: () => void;
 	_name = "";
@@ -246,7 +246,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	}
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

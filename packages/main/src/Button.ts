@@ -118,7 +118,7 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@property()
-	design: `${ButtonDesign}` = "Default";
+	accessor design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines whether the component is disabled.
@@ -128,7 +128,7 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
@@ -140,7 +140,7 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the button text.
@@ -156,7 +156,7 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@property()
-	endIcon?: string;
+	accessor endIcon: string | undefined;
 
 	/**
 	 * When set to `true`, the component will
@@ -168,7 +168,7 @@ class Button extends UI5Element implements IButton {
 	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
 	 */
 	@property({ type: Boolean })
-	submits = false;
+	accessor submits = false;
 
 	/**
 	 * Defines the tooltip of the component.
@@ -179,7 +179,7 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.2.0
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -188,7 +188,7 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -197,7 +197,7 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -217,7 +217,7 @@ class Button extends UI5Element implements IButton {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: ButtonAccessibilityAttributes = {};
+	accessor accessibilityAttributes: ButtonAccessibilityAttributes = {};
 
 	/**
 	 * Defines whether the button has special form-related functionality.
@@ -228,7 +228,7 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.15.0
 	 */
 	@property()
-	type: `${ButtonType}` = "Button";
+	accessor type: `${ButtonType}` = "Button";
 
 	/**
 	 * Describes the accessibility role of the button.
@@ -240,72 +240,72 @@ class Button extends UI5Element implements IButton {
 	 * @since 1.23
 	 */
 	@property()
-	accessibleRole: `${ButtonAccessibleRole}` = "Button";
+	accessor accessibleRole: `${ButtonAccessibleRole}` = "Button";
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active = false;
+	accessor active = false;
 
 	/**
 	 * Defines if a content has been added to the default slot
 	 * @private
 	 */
 	@property({ type: Boolean })
-	iconOnly = false;
+	accessor iconOnly = false;
 
 	/**
 	 * Indicates if the elements has a slotted icon
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasIcon = false;
+	accessor hasIcon = false;
 
 	/**
 	 * Indicates if the elements has a slotted end icon
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasEndIcon = false;
+	accessor hasEndIcon = false;
 
 	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
-	nonInteractive = false;
+	accessor nonInteractive = false;
 
 	/**
 	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	buttonTitle?: string;
+	accessor buttonTitle: string | undefined;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Object })
-	_iconSettings: object = {};
+	accessor _iconSettings: object = {};
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	forcedTabIndex = "0";
+	accessor forcedTabIndex = "0";
 
 	/**
 	 * @since 1.0.0-rc.13
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isTouch = false;
+	accessor _isTouch = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_cancelAction = false;
+	accessor _cancelAction = false;
 
 	/**
 	 * Defines the text of the component.
@@ -314,14 +314,14 @@ class Button extends UI5Element implements IButton {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	_deactivate: () => void;
 
 	_ontouchstart: PassiveEventListenerObject;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
@@ -494,7 +494,8 @@ class Button extends UI5Element implements IButton {
 	}
 
 	get buttonTypeText() {
-		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+		// return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
+		return "";
 	}
 
 	get effectiveAccRole() {

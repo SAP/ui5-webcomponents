@@ -23,7 +23,7 @@ class ToolbarSelectOption extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	accessor selected = false;
 
 	/**
 	 * Defines the text of the component.
@@ -32,7 +32,7 @@ class ToolbarSelectOption extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 }
 
 ToolbarSelectOption.define();

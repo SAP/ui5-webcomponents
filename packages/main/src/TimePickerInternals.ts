@@ -99,7 +99,7 @@ class TimePickerInternals extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value?: string;
+	accessor value: string | undefined;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -113,7 +113,7 @@ class TimePickerInternals extends UI5Element {
 	 * @public
 	 */
 	@property()
-	formatPattern?: string;
+	accessor formatPattern: string | undefined;
 
 	/**
 	 * The index of the active Clock/TogleSpinButton.
@@ -121,59 +121,59 @@ class TimePickerInternals extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_activeIndex = 0
+	accessor _activeIndex = 0
 
 	/**
 	 * Contains calendar type.
 	 * @private
 	 */
 	@property()
-	_calendarType?: CalendarType;
+	accessor _calendarType: CalendarType | undefined;
 
 	/**
 	 * Contains currently available Time Picker components depending on time format.
 	 * @private
 	 */
 	@property({ type: Array })
-	_entities: Array<TimePickerEntityProperties> = [];
+	accessor _entities: Array<TimePickerEntityProperties> = [];
 
 	/**
 	 * Contains component-to-index map.
 	 * @private
 	 */
 	@property({ type: Object })
-	_componentMap!: TimePickerComponentIndexMap;
+	accessor _componentMap!: TimePickerComponentIndexMap;
 
 	/**
 	 * Contains currently available Button components depending on time format.
 	 * @private
 	 */
 	@property({ type: Array })
-	_periods: Array<TimeSelectionPeriodProperties> = [];
+	accessor _periods: Array<TimeSelectionPeriodProperties> = [];
 
 	/**
 	 * Id of the cooldown interval
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_typeCooldownId?: ReturnType<typeof setTimeout>;
+	accessor _typeCooldownId: ReturnType<typeof setTimeout> | undefined;
 
 	/**
 	 * Exact match number buffer
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_exactMatch?: number;
+	accessor _exactMatch: number | undefined;
 
 	/**
 	 * Buffer for entered by keyboard numbers
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_keyboardBuffer = "";
+	accessor _keyboardBuffer = "";
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get _hoursConfiguration() {
 		// @ts-ignore aFormatArray is a private API of DateFormat

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -191,15 +192,15 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({
-		type: HTMLElement,
-		"default": true,
-		invalidateOnChildChange: {
-			properties: ["navigated"],
-			slots: false,
-		},
-	})
-	rows!: Array<TableRow>;
+	// @slot({
+	// 	type: HTMLElement,
+	// 	"default": true,
+	// 	invalidateOnChildChange: {
+	// 		properties: ["navigated"],
+	// 		slots: false,
+	// 	},
+	// })
+	accessor rows!: Array<TableRow>;
 
 	/**
 	 * Defines the header row of the component.
@@ -208,23 +209,23 @@ class Table extends UI5Element {
 	 *
 	 * @public
 	 */
-	@slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
-	headerRow!: Array<TableHeaderRow>;
+	// @slot({ type: HTMLElement, invalidateOnChildChange: { properties: false, slots: true } })
+	accessor headerRow!: Array<TableHeaderRow>;
 
 	/**
 	 * Defines the custom visualization if there is no data available.
 	 *
 	 * @public
 	 */
-	@slot()
-	nodata!: Array<HTMLElement>;
+	// @slot()
+	accessor nodata!: Array<HTMLElement>;
 
 	/**
 	 * Defines the features of the component.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, individualSlots: true })
-	features!: Array<ITableFeature>;
+	// @slot({ type: HTMLElement, individualSlots: true })
+	accessor features!: Array<ITableFeature>;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -233,7 +234,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Identifies the element (or elements) that labels the component.
@@ -242,7 +243,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the text to be displayed when there are no rows in the component.
@@ -251,7 +252,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	noDataText?: string;
+	accessor noDataText: string | undefined;
 
 	/**
 	 * Defines the mode of the <code>ui5-table</code> overflow behavior.
@@ -266,7 +267,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property()
-	overflowMode: `${TableOverflowMode}` = "Scroll";
+	accessor overflowMode: `${TableOverflowMode}` = "Scroll";
 
 	/**
 	 * Defines if the loading indicator should be shown.
@@ -276,7 +277,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	loading = false;
+	accessor loading = false;
 
 	/**
      * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
@@ -284,22 +285,22 @@ class Table extends UI5Element {
      * @public
      */
 	@property({ type: Number })
-	loadingDelay = 1000;
+	accessor loadingDelay = 1000;
 
 	/**
 	 * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
 	 */
 	@property()
-	stickyTop = "0";
+	accessor stickyTop = "0";
 
 	@property({ type: Number, noAttribute: true })
-	_invalidate = 0;
+	accessor _invalidate = 0;
 
 	@property({ type: Boolean, noAttribute: true })
-	_renderNavigated = false;
+	accessor _renderNavigated = false;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	_events = ["keydown", "keyup", "click", "focusin", "focusout"];
 	_onEventBound: (e: Event) => void;

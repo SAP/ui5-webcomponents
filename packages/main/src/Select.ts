@@ -201,7 +201,7 @@ type SelectLiveChangeEventDetail = {
 })
 class Select extends UI5Element implements IFormInputElement {
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -211,7 +211,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -221,7 +221,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -229,7 +229,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is required.
@@ -238,7 +238,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -250,7 +250,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -259,7 +259,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @default undefined
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
@@ -268,31 +268,31 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed = false;
+	accessor _iconPressed = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	opened = false;
+	accessor opened = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_listWidth = 0;
+	accessor _listWidth = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	_selectedIndexBeforeOpen = -1;
 	_escapePressed = false;
@@ -312,7 +312,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<IOption>;
+	accessor options!: Array<IOption>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -327,7 +327,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @public
 	*/
 	@slot()
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	/**
 	 * Defines the HTML element that will be displayed in the component input part,
@@ -342,7 +342,7 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @since 1.17.0
 	*/
 	@slot()
-	label!: Array<HTMLElement>;
+	accessor label!: Array<HTMLElement>;
 
 	get formValidityMessage() {
 		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
@@ -428,7 +428,8 @@ class Select extends UI5Element implements IFormInputElement {
 	 * @formProperty
 	 * @formEvents change liveChange
 	 */
-	@property({ noAttribute: true })
+	// TODO
+	// @property({ noAttribute: true })
 	set value(newValue: string) {
 		const options = Array.from(this.children) as Array<IOption>;
 

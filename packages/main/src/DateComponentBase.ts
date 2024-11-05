@@ -40,7 +40,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	primaryCalendarType?: `${CalendarType}`;
+	accessor primaryCalendarType: `${CalendarType}` | undefined;
 
 	/**
 	 * Defines the secondary calendar type.
@@ -50,7 +50,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	secondaryCalendarType?: `${CalendarType}`;
+	accessor secondaryCalendarType: `${CalendarType}` | undefined;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -58,7 +58,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	formatPattern?: string;
+	accessor formatPattern: string | undefined;
 
 	/**
 	 * Determines the minimum date available for selection.
@@ -69,7 +69,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	minDate = "";
+	accessor minDate = "";
 
 	/**
 	 * Determines the maximum date available for selection.
@@ -80,7 +80,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	maxDate = "";
+	accessor maxDate = "";
 
 	/**
 	 * Defines how to calculate calendar weeks and first day of the week.
@@ -90,10 +90,10 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	calendarWeekNumbering: `${CalendarWeekNumbering}` = "Default";
+	accessor calendarWeekNumbering: `${CalendarWeekNumbering}` = "Default";
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle?: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	/**
 	 * Cached instance of DateFormat with a format pattern of "YYYY-MM-dd".

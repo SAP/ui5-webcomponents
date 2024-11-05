@@ -55,7 +55,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the action design.
@@ -63,7 +63,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	design: `${ButtonDesign}` = "Default";
+	accessor design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines the `icon` source URI.
@@ -74,7 +74,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	icon?: string
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the button text.
@@ -90,7 +90,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	endIcon?: string;
+	accessor endIcon: string | undefined;
 
 	/**
 	 * Defines the tooltip of the component.
@@ -100,7 +100,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	tooltip?: string
+	accessor tooltip: string | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -108,7 +108,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -116,7 +116,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -136,7 +136,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: ToolbarButtonAccessibilityAttributes = {};
+	accessor accessibilityAttributes: ToolbarButtonAccessibilityAttributes = {};
 
 	/**
 	 * Button text
@@ -144,7 +144,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @default undefined
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the width of the button.
@@ -154,7 +154,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	width?: string;
+	accessor width: string | undefined;
 
 	get styles() {
 		return {

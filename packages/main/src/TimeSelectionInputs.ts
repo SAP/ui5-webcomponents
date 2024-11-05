@@ -57,10 +57,10 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 })
 class TimeSelectionInputs extends TimePickerInternals {
 	@property({ type: Number })
-	_editedInput = -1;
+	accessor _editedInput = -1;
 
 	@property()
-	_editedInputValue?: string;
+	accessor _editedInputValue: string | undefined;
 
 	get enterHoursLabel() {
 		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_INPUTS_ENTER_HOURS);

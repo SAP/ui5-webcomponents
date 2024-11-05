@@ -162,7 +162,7 @@ class Form extends UI5Element {
 	 * @public
 	 */
 	@property()
-	layout = "S1 M1 L2 XL3"
+	accessor layout = "S1 M1 L2 XL3"
 
 	/**
 	 * Defines the width proportion of the labels and fields of a FormItem by breakpoint.
@@ -177,7 +177,7 @@ class Form extends UI5Element {
 	 * @public
 	 */
 	@property()
-	labelSpan = "S12 M4 L4 XL4";
+	accessor labelSpan = "S12 M4 L4 XL4";
 
 	/**
 	 * Defines the header text of the component.
@@ -188,7 +188,7 @@ class Form extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Defines the vertical spacing between form items.
@@ -201,7 +201,7 @@ class Form extends UI5Element {
 	 * @public
 	 */
 	@property()
-	itemSpacing: `${FormItemSpacing}` = "Normal";
+	accessor itemSpacing: `${FormItemSpacing}` = "Normal";
 
 	/**
 	 * Defines the component header area.
@@ -210,7 +210,7 @@ class Form extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	header!: Array<HTMLElement>;
+	accessor header!: Array<HTMLElement>;
 
 	/**
 	 * Defines the component content - FormGroups or FormItems.
@@ -225,30 +225,30 @@ class Form extends UI5Element {
 		individualSlots: true,
 		invalidateOnChildChange: true,
 	})
-	items!: Array<IFormItem>;
+	accessor items!: Array<IFormItem>;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number })
-	columnsS = 1;
+	accessor columnsS = 1;
 	@property({ type: Number })
-	labelSpanS = 12
+	accessor labelSpanS = 12
 
 	@property({ type: Number })
-	columnsM = 1;
+	accessor columnsM = 1;
 	@property({ type: Number })
-	labelSpanM = 4;
+	accessor labelSpanM = 4;
 
 	@property({ type: Number })
-	columnsL = 2;
+	accessor columnsL = 2;
 	@property({ type: Number })
-	labelSpanL = 4;
+	accessor labelSpanL = 4;
 
 	@property({ type: Number })
-	columnsXl = 3;
+	accessor columnsXl = 3;
 	@property({ type: Number })
-	labelSpanXl = 4;
+	accessor labelSpanXl = 4;
 
 	onBeforeRendering() {
 		// Parse the layout and set it to the FormGroups/FormItems.

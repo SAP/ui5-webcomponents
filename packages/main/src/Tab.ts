@@ -86,7 +86,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Disabled tabs can't be selected.
@@ -94,7 +94,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
@@ -102,7 +102,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Defines the icon source URI to be displayed as graphical element within the component.
@@ -112,7 +112,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines the component's design color.
@@ -130,7 +130,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property()
-	design: `${SemanticColor}` = "Default";
+	accessor design: `${SemanticColor}` = "Default";
 
 	/**
 	 * Specifies if the component is selected.
@@ -138,7 +138,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	accessor selected = false;
 
 	/**
 	 * Defines if the tab is movable.
@@ -147,13 +147,13 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	movable = false;
+	accessor movable = false;
 
 	@property({ type: Boolean })
-	_isTopLevelTab = false;
+	accessor _isTopLevelTab = false;
 
 	@property({ type: Object })
-	_selectedTabReference?: Tab;
+	accessor _selectedTabReference: Tab | undefined;
 
 	/**
 	 * Holds the content associated with this tab.
@@ -167,7 +167,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 			slots: false,
 		},
 	})
-	content!: Array<Node>;
+	accessor content!: Array<Node>;
 
 	/**
 	 * Defines hierarchies with nested sub tabs.
@@ -183,7 +183,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 			slots: false,
 		},
 	})
-	items!: Array<ITab>
+	accessor items!: Array<ITab>
 
 	_isInline?: boolean;
 	_forcedMixedMode?: boolean;
@@ -195,7 +195,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_forcedStyleInOverflow?: Record<string, any>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	set forcedTabIndex(val: string) {
 		this.getDomRefInStrip()!.setAttribute("tabindex", val);

@@ -24,7 +24,7 @@ class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Defines the items of the <code>ui5-mcb-item-group</code>.
@@ -35,7 +35,7 @@ class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
 		invalidateOnChildChange: true,
 		type: HTMLElement,
 	})
-	items!: Array<MultiComboBoxItem>;
+	accessor items!: Array<MultiComboBoxItem>;
 
 	/**
 	 * Used to avoid tag name checks

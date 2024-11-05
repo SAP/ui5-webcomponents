@@ -59,14 +59,14 @@ class FormItem extends UI5Element implements IFormItem {
 	 * @public
 	 */
 	@property({ type: Number })
-	columnSpan?: number;
+	accessor columnSpan: number | undefined;
 
 	/**
 	 * Defines the label of the component.
 	 * @public
 	 */
 	@slot()
-	labelContent!: Array<HTMLElement>;
+	accessor labelContent!: Array<HTMLElement>;
 
 	/**
 	 * Defines the content of the component,
@@ -78,19 +78,19 @@ class FormItem extends UI5Element implements IFormItem {
 		"default": true,
 		individualSlots: true,
 	})
-	content!: Array<HTMLElement>;
+	accessor content!: Array<HTMLElement>;
 
 	/**
 	 * @private
 	 */
 	@property()
-	labelSpan = "S12 M4 L4 XL4";
+	accessor labelSpan = "S12 M4 L4 XL4";
 
 	/**
 	 * @private
 	 */
 	@property()
-	itemSpacing: `${FormItemSpacing}` = "Normal"
+	accessor itemSpacing: `${FormItemSpacing}` = "Normal"
 
 	get isGroup() {
 		return false;

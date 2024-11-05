@@ -364,7 +364,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Defines the footer text.
@@ -372,7 +372,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	footerText?: string;
+	accessor footerText: string | undefined;
 
 	/**
 	 * Determines whether the component is indented.
@@ -380,7 +380,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	indent = false;
+	accessor indent = false;
 
 	/**
 	 * Defines the selection mode of the component.
@@ -388,7 +388,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	selectionMode: `${ListSelectionMode}` = "None";
+	accessor selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -396,7 +396,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	noDataText?: string;
+	accessor noDataText: string | undefined;
 
 	/**
 	 * Defines the item separator style that is used.
@@ -404,7 +404,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	separators: `${ListSeparator}`= "All";
+	accessor separators: `${ListSeparator}`= "All";
 
 	/**
 	 * Defines whether the component will have growing capability either by pressing a `More` button,
@@ -417,7 +417,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	growing: `${ListGrowingMode}` = "None";
+	accessor growing: `${ListGrowingMode}` = "None";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
@@ -430,7 +430,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	growingButtonText?: string;
+	accessor growingButtonText: string | undefined;
 
 	/**
 	 * Defines if the component would display a loading indicator over the list.
@@ -439,7 +439,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.6
 	 */
 	@property({ type: Boolean })
-	loading = false;
+	accessor loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
@@ -447,7 +447,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	loadingDelay = 1000;
+	accessor loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -456,7 +456,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the IDs of the elements that label the input.
@@ -465,7 +465,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the accessible role of the component.
@@ -474,21 +474,21 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleRole: `${ListAccessibleRole}` = "List";
+	accessor accessibleRole: `${ListAccessibleRole}` = "List";
 
 	/**
 	 * Defines if the entire list is in view port.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_inViewport = false;
+	accessor _inViewport = false;
 
 	/**
 	 * Defines the active state of the `More` button.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_loadMoreActive = false;
+	accessor _loadMoreActive = false;
 
 	/**
 	 * Defines the items of the component.
@@ -501,7 +501,7 @@ class List extends UI5Element {
 		"default": true,
 		invalidateOnChildChange: true,
 	})
-	items!: Array<ListItemBase | ListItemGroup>;
+	accessor items!: Array<ListItemBase | ListItemGroup>;
 
 	/**
 	 * Defines the component header.
@@ -511,10 +511,11 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	header!: Array<HTMLElement>;
+	accessor header!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
+
 	_previouslyFocusedItem: ListItemBase | null;
 	_forwardingFocus: boolean;
 	resizeListenerAttached: boolean;

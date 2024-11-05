@@ -62,15 +62,17 @@ type State = Record<string, PropertyValue | Array<SlotValue>>;
  */
 class UI5ElementMetadata {
 	metadata: Metadata;
+	klass: typeof UI5Element;
 	_initialState: State | undefined;
 
-	constructor(metadata: Metadata) {
+	constructor(metadata: Metadata, klass: typeof UI5Element) {
 		this.metadata = metadata;
+		this.klass = klass;
 	}
 
 	getInitialState() {
-		if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
-			return this._initialState!;
+		if (this._initialState !== undefined) {
+			return this._initialState;
 		}
 		const initialState: State = {};
 		const slotsAreManaged = this.slotsAreManaged();
@@ -188,7 +190,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	slotsAreManaged(): boolean {
-		return !!this.metadata.managedSlots;
+		return !!this.metadata.managedSlots || this.klass[Symbol.metadata]?.managedSlots as boolean;
 	}
 
 	/**
@@ -204,10 +206,8 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getProperties(): Record<string, Property> {
-		if (!this.metadata.properties) {
-			this.metadata.properties = {};
-		}
-		return this.metadata.properties;
+		const decoratorProperties = this.klass[Symbol.metadata]?.properties;
+		return this.metadata.properties as Record<string, Property> || decoratorProperties || {};
 	}
 
 	/**
@@ -226,10 +226,8 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	 getSlots(): Record<string, Slot> {
-		if (!this.metadata.slots) {
-			this.metadata.slots = {};
-		}
-		return this.metadata.slots;
+		const decoratorSlots = this.klass[Symbol.metadata]?.slots;
+		return this.metadata.slots as Record<string, Slot> || decoratorSlots || {};
 	}
 
 	/**
@@ -332,10 +330,8 @@ class UI5ElementMetadata {
 	}
 
 	getI18n(): I18nBundleAccessors {
-		if (!this.metadata.i18n) {
-			this.metadata.i18n = {};
-		}
-		return this.metadata.i18n;
+		const i18nDecoratoData = this.klass[Symbol.metadata]?.i18n;
+		return this.metadata.i18n as I18nBundleAccessors || i18nDecoratoData || {};
 	}
 }
 

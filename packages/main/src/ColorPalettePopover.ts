@@ -96,7 +96,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showRecentColors = false
+	accessor showRecentColors = false
 
 	/**
 	 * Defines whether the user can choose a custom color from a component.
@@ -106,7 +106,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showMoreColors = false
+	accessor showMoreColors = false
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
@@ -114,7 +114,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showDefaultColor = false
+	accessor showDefaultColor = false
 
 	/**
 	 * Defines the default color of the component.
@@ -124,7 +124,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@property()
-	defaultColor?: string;
+	accessor defaultColor: string | undefined;
 
 	/**
 	 * Defines the open | closed state of the popover.
@@ -133,7 +133,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
-	open = false
+	accessor open = false
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at.
@@ -144,17 +144,17 @@ class ColorPalettePopover extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	accessor opener: HTMLElement | string | undefined;
 
 	/**
 	 * Defines the content of the component.
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
-	colors!: Array<IColorPaletteItem>;
+	accessor colors!: Array<IColorPaletteItem>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

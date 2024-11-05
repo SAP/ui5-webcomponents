@@ -185,7 +185,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	@property()
-	type: `${AvatarGroupType}` = "Group"
+	accessor type: `${AvatarGroupType}` = "Group"
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -199,13 +199,13 @@ class AvatarGroup extends UI5Element {
 	 * @default {}
 	 */
 	 @property({ type: Object })
-	 accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
+	 accessor accessibilityAttributes: AvatarGroupAccessibilityAttributes = {};
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_overflowButtonText?: string;
+	accessor _overflowButtonText: string | undefined;
 
 	/**
 	 * Defines the items of the component. Use the `ui5-avatar` component as an item.
@@ -217,7 +217,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<IAvatarGroupItem>;
+	accessor items!: Array<IAvatarGroupItem>;
 
 	/**
 	 * Defines the overflow button of the component.
@@ -229,10 +229,10 @@ class AvatarGroup extends UI5Element {
 	 * @since 1.0.0-rc.13
 	 */
 	@slot()
-	overflowButton!: Array<IButton>;
+	accessor overflowButton!: Array<IButton>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
 	_colorIndex = 0;
 	_hiddenItems = 0;

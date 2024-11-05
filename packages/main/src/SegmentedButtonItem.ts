@@ -56,7 +56,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as selected.
@@ -64,7 +64,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	accessor selected = false;
 
 	/**
 	 * Defines the tooltip of the component.
@@ -75,7 +75,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @since 1.2.0
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -84,7 +84,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -93,7 +93,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component.
@@ -105,28 +105,28 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines if the button has icon and no text.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	iconOnly = false;
+	accessor iconOnly = false;
 
 	/**
 	 * Indicates if the element is focusable
 	 * @private
 	 */
 	@property({ type: Boolean })
-	nonInteractive = false;
+	accessor nonInteractive = false;
 
 	/**
 	 * Defines the tabIndex of the component.
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	forcedTabIndex?: string;
+	accessor forcedTabIndex: string | undefined;
 
 	/**
 	 * Defines the index of the item inside of the SegmentedButton.
@@ -134,7 +134,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @private
 	 */
 	@property({ type: Number })
-	posInSet = 0;
+	accessor posInSet = 0;
 
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
@@ -142,7 +142,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @private
 	 */
 	@property({ type: Number })
-	sizeOfSet = 0;
+	accessor sizeOfSet = 0;
 
 	/**
 	 * Defines the text of the component.
@@ -151,10 +151,10 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);

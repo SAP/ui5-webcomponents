@@ -88,10 +88,10 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	value = 0;
+	accessor value = 0;
 
 	_valueInitial?: number;
-	_valueOnInteractionStart?: number;
+	declare _valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 	_lastValidInputValue: string;
@@ -103,7 +103,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	}
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

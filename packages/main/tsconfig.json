@@ -5,8 +5,9 @@
 		"global.d.ts"
 	],
 	"compilerOptions": {
+		"target": "ES2023",
 		"outDir": "dist",
-		"experimentalDecorators": true,
+		"experimentalDecorators": false,
 		"composite": true,
 		"rootDir": "src",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",

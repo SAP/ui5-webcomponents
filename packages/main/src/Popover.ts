@@ -97,7 +97,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Determines on which side the component is placed at.
@@ -105,7 +105,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property()
-	placement: `${PopoverPlacement}` = "End";
+	accessor placement: `${PopoverPlacement}` = "End";
 
 	/**
 	 * Determines the horizontal alignment of the component.
@@ -113,7 +113,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property()
-	horizontalAlign: `${PopoverHorizontalAlign}` = "Center";
+	accessor horizontalAlign: `${PopoverHorizontalAlign}` = "Center";
 
 	/**
 	 * Determines the vertical alignment of the component.
@@ -121,7 +121,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property()
-	verticalAlign: `${PopoverVerticalAlign}` = "Center";
+	accessor verticalAlign: `${PopoverVerticalAlign}` = "Center";
 
 	/**
 	 * Defines whether the component should close when
@@ -131,7 +131,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	modal = false;
+	accessor modal = false;
 
 	/**
 	 * Determines whether the component arrow is hidden.
@@ -140,7 +140,7 @@ class Popover extends Popup {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	hideArrow = false;
+	accessor hideArrow = false;
 
 	/**
 	 * Determines if there is no enough space, the component can be placed
@@ -149,7 +149,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	allowTargetOverlap = false;
+	accessor allowTargetOverlap = false;
 
 	/**
 	 * Defines whether the content is scrollable.
@@ -157,48 +157,48 @@ class Popover extends Popup {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	disableScrolling = false;
+	accessor disableScrolling = false;
 
 	/**
 	 * Sets the X translation of the arrow
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	arrowTranslateX = 0;
+	accessor arrowTranslateX = 0;
 
 	/**
 	 * Sets the Y translation of the arrow
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	arrowTranslateY = 0;
+	accessor arrowTranslateY = 0;
 
 	/**
 	 * Returns the calculated placement depending on the free space
 	 * @private
 	 */
 	@property()
-	actualPlacement: `${PopoverPlacement}` = "End";
+	accessor actualPlacement: `${PopoverPlacement}` = "End";
 
 	@property({ type: Number, noAttribute: true })
-	_maxHeight?: number;
+	accessor _maxHeight: number | undefined;
 
 	@property({ type: Number, noAttribute: true })
-	_maxWidth?: number;
+	accessor _maxWidth: number | undefined;
 
 	/**
 	 * Defines the header HTML Element.
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	header!: Array<HTMLElement>;
+	accessor header!: Array<HTMLElement>;
 
 	/**
 	 * Defines the footer HTML Element.
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	footer!: Array<HTMLElement>;
+	accessor footer!: Array<HTMLElement>;
 
 	_opener?: HTMLElement | string;
 	_openerRect?: DOMRect;
@@ -225,7 +225,8 @@ class Popover extends Popup {
 	 * @default undefined
 	 * @since 1.2.0
 	 */
-	@property({ converter: DOMReferenceConverter })
+	// TODO setter decorator
+	// @property({ converter: DOMReferenceConverter })
 	set opener(value: HTMLElement | string) {
 		if (this._opener === value) {
 			return;

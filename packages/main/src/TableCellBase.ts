@@ -27,10 +27,10 @@ abstract class TableCellBase extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	content!: Array<Node>;
+	accessor content!: Array<Node>;
 
 	@property({ type: Boolean })
-	_popin = false;
+	accessor _popin = false;
 
 	/**
 	 * Determines the horizontal alignment of table cells.
@@ -39,14 +39,14 @@ abstract class TableCellBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-    horizontalAlign?: `${TableCellHorizontalAlign}`;
+    accessor horizontalAlign: `${TableCellHorizontalAlign}` | undefined;
 
 	_individualSlot?: string;
 
 	protected ariaRole: string = "gridcell";
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onEnterDOM() {
 		this.toggleAttribute("ui5-table-cell-base", true);

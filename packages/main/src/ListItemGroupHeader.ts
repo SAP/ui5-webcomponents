@@ -37,10 +37,10 @@ class ListItemGroupHeader extends ListItemBase {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get groupItem() {
 		return true;

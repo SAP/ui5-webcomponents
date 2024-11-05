@@ -27,7 +27,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	href?: string;
+	accessor href: string | undefined;
 
 	/**
 	 * Defines the link target.
@@ -45,7 +45,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	target?: string;
+	accessor target: string | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the item.
@@ -53,7 +53,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the text of the component.
@@ -62,7 +62,7 @@ class BreadcrumbsItem extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	_accessibleNameText?: string;
 	_isCurrentPageItem?: boolean;

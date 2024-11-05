@@ -1,10 +1,11 @@
 {
 	"compilerOptions": {
-		"target": "ES2021",
+		"target": "ES2022",
 		"lib": [
 			"DOM",
 			"DOM.Iterable",
-			"ES2023"
+			"ES2023",
+			"esnext.decorators",
 		],
 		"declaration": true,
 		"skipLibCheck": true,

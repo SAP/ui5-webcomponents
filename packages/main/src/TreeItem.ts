@@ -37,7 +37,7 @@ class TreeItem extends TreeItemBase {
 	 * @default undefined
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the tree item.
@@ -46,7 +46,7 @@ class TreeItem extends TreeItemBase {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	get _showTitle() {
 		return this.text?.length;

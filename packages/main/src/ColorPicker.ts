@@ -98,7 +98,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "rgba(255,255,255,1)";
+	accessor value = "rgba(255,255,255,1)";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -109,7 +109,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the HEX code of the currently selected color
@@ -118,57 +118,57 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	hex = "ffffff";
+	accessor hex = "ffffff";
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
 	 * @private
 	 */
 	@property({ type: Object })
-	_mainValue: ColorRGB;
+	accessor _mainValue: ColorRGB;
 
 	/**
 	 * Defines the currenty selected color from the main color section.
 	 * @private
 	 */
 	@property({ type: Object })
-	_value: ColorRGB = getRGBColor(this.value);
+	accessor _value: ColorRGB = getRGBColor(this.value);
 
 	/**
 	 * @private
 	 */
 	@property({ type: Object })
-	_selectedCoordinates: ColorCoordinates;
+	accessor _selectedCoordinates: ColorCoordinates;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number })
-	_alpha = 1;
+	accessor _alpha = 1;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number })
-	_hue = 0;
+	accessor _hue = 0;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isSelectedColorChanged = false;
+	accessor _isSelectedColorChanged = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isHueValueChanged = false;
+	accessor _isHueValueChanged = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_wrongHEX = false;
+	accessor _wrongHEX = false;
 
 	selectedHue: number;
 
@@ -177,7 +177,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	mouseIn: boolean;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();

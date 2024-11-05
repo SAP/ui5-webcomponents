@@ -44,7 +44,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	displayText?: string;
+	accessor displayText: string | undefined;
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
@@ -53,7 +53,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	value?: string;
+	accessor value: string | undefined;
 
 	/**
 	 * Defines the text of the component.
@@ -62,7 +62,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
-	content!: Array<Node>;
+	accessor content!: Array<Node>;
 
 	/**
 	 * Defines the tooltip of the option.
@@ -70,7 +70,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined;
 
 	/**
 	 * Defines the selected state of the component.
@@ -78,7 +78,7 @@ class OptionCustom extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare selected: boolean;
+	accessor selected = false;
 
 	get effectiveDisplayText() {
 		return this.displayText || this.textContent || "";

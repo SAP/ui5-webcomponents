@@ -105,7 +105,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Determines whether the component is in a fixed state that is not
@@ -114,7 +114,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	fixed = false;
+	accessor fixed = false;
 
 	/**
 	 * Indicates whether the component is collapsed and only the header is displayed.
@@ -122,7 +122,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed = false;
+	accessor collapsed = false;
 
 	/**
 	 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
@@ -131,7 +131,7 @@ class Panel extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	noAnimation = false;
+	accessor noAnimation = false;
 
 	/**
 	 * Sets the accessible ARIA role of the component.
@@ -141,7 +141,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleRole: `${PanelAccessibleRole}` = "Form";
+	accessor accessibleRole: `${PanelAccessibleRole}` = "Form";
 
 	/**
 	 * Defines the "aria-level" of component heading,
@@ -150,7 +150,7 @@ class Panel extends UI5Element {
 	 * @public
 	*/
 	@property()
-	headerLevel: `${TitleLevel}` = "H2";
+	accessor headerLevel: `${TitleLevel}` = "H2";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -159,7 +159,7 @@ class Panel extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Indicates whether the Panel header is sticky or not.
@@ -171,7 +171,7 @@ class Panel extends UI5Element {
 	 * @since 1.16.0-rc.1
 	 */
 	 @property({ type: Boolean })
-	 stickyHeader = false;
+	 accessor stickyHeader = false;
 
 	/**
 	 * When set to `true`, the `accessibleName` property will be
@@ -181,19 +181,19 @@ class Panel extends UI5Element {
 	 * @private
 	  */
 	@property({ type: Boolean })
-	useAccessibleNameForToggleButton = false;
+	accessor useAccessibleNameForToggleButton = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hasHeader = false;
+	accessor _hasHeader = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_contentExpanded = false;
+	accessor _contentExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_animationRunning = false;
+	accessor _animationRunning = false;
 
 	/**
 	 * Defines the component header area.
@@ -202,10 +202,10 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	header!: Array<HTMLElement>;
+	accessor header!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end

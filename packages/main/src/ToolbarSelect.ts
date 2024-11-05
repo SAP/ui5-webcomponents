@@ -78,7 +78,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	width?: string;
+	accessor width: string | undefined;
 
 	/**
 	 * Defines the component options.
@@ -90,7 +90,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	options!: Array<ToolbarSelectOption>;
+	accessor options!: Array<ToolbarSelectOption>;
 
 	/**
 	 * Defines the value state of the component.
@@ -98,7 +98,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -108,7 +108,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -116,7 +116,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @default undefined
 	 */
 	@property()
-	accessibleName?: string
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the select.
@@ -124,7 +124,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * @public
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	_onEvent: EventListener
 

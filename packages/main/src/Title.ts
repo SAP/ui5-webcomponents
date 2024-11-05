@@ -45,7 +45,7 @@ class Title extends UI5Element {
 	 * @public
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "Normal";
+	accessor wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the component level.
@@ -56,7 +56,7 @@ class Title extends UI5Element {
 	 * @public
 	 */
 	@property()
-	level: `${TitleLevel}` = "H2";
+	accessor level: `${TitleLevel}` = "H2";
 
 	/**
 	 * Defines the visual appearance of the title.
@@ -65,7 +65,7 @@ class Title extends UI5Element {
 	 * @public
 	 */
 	@property()
-	size: `${TitleLevel}` = "H5";
+	accessor size: `${TitleLevel}` = "H5";
 
 	get h1() {
 		return this.level === TitleLevel.H1;

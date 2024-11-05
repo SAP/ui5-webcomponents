@@ -130,7 +130,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @default []
 	 */
 	@property({ type: Array })
-	selectedDates: Array<number> = [];
+	accessor selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the day picker component.
@@ -142,7 +142,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @default "Single"
 	 */
 	@property()
-	selectionMode: `${CalendarSelectionMode}` = "Single";
+	accessor selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -153,42 +153,42 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers = false;
+	accessor hideWeekNumbers = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Array })
-	_weeks: Array<Week> = [];
+	accessor _weeks: Array<Week> = [];
 
 	@property({ type: Array })
-	_dayNames: Array<DayName> = [];
+	accessor _dayNames: Array<DayName> = [];
 
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_hidden = false;
+	accessor _hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
 	 * @private
 	 */
 	 @property({ type: Number })
-	_secondTimestamp?: number;
+	accessor _secondTimestamp: number | undefined;
 
 	/**
 	 * Array of special calendar dates (if such are passed) from the calendar.
 	 * @private
 	 */
 	@property({ type: Array })
-	specialCalendarDates: Array<SpecialCalendarDateT> = [];
+	accessor specialCalendarDates: Array<SpecialCalendarDateT> = [];
 
 	_autoFocus?: boolean;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());

@@ -266,7 +266,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -279,7 +279,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
@@ -288,7 +288,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.4.0
 	 */
 	@property({ type: Boolean })
-	noTypeahead = false;
+	accessor noTypeahead = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
@@ -297,7 +297,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Defines if the user input will be prevented, if no matching item has been found
@@ -305,7 +305,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	noValidation = false;
+	accessor noValidation = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -315,7 +315,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the value state of the component.
@@ -323,7 +323,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is read-only.
@@ -334,7 +334,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -343,7 +343,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.5
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines the filter type of the component.
@@ -351,7 +351,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	filter: `${ComboBoxFilter}` = "StartsWithPerTerm";
+	accessor filter: `${ComboBoxFilter}` = "StartsWithPerTerm";
 
 	/**
 	 * Defines whether the clear icon of the multi-combobox will be shown.
@@ -360,7 +360,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.20.1
 	 */
 	@property({ type: Boolean })
-	showClearIcon = false;
+	accessor showClearIcon = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -369,7 +369,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -378,7 +378,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Determines if the select all checkbox is visible on top of suggestions.
@@ -386,83 +386,83 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showSelectAll = false;
+	accessor showSelectAll = false;
 
 	@property()
-	_effectiveValueState: `${ValueState}` = "None";
+	accessor _effectiveValueState: `${ValueState}` = "None";
 	/**
 	 * Indicates whether the value state message popover is open.
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	valueStateOpen = false;
+	accessor valueStateOpen = false;
 
 	/**
 	 * Indicates whether the Tokenizer n-more popover is open.
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	tokenizerOpen = false;
+	accessor tokenizerOpen = false;
 
 	/**
 	 * Indicates whether the items picker is open.
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_open = false;
+	accessor _open = false;
 
 	@property()
-	_valueBeforeOpen = this.value;
+	accessor _valueBeforeOpen = this.value;
 
 	@property({ type: Array })
-	_filteredItems!: Array<IMultiComboBoxItem>;
+	accessor _filteredItems!: Array<IMultiComboBoxItem>;
 
 	@property({ type: Array })
-	_previouslySelectedItems!: Array<IMultiComboBoxItem>;
+	accessor _previouslySelectedItems!: Array<IMultiComboBoxItem>;
 
 	@property({ type: Boolean })
-	filterSelected = false;
+	accessor filterSelected = false;
 
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_tokenizerFocused = false;
+	accessor _tokenizerFocused = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed = false;
+	accessor _iconPressed = false;
 
 	@property({ type: Number, noAttribute: true })
-	_inputWidth = 0;
+	accessor _inputWidth = 0;
 
 	@property({ type: Number, noAttribute: true })
-	_listWidth = 0;
+	accessor _listWidth = 0;
 
 	@property({ type: Boolean, noAttribute: true })
-	_performingSelectionTwice = false;
+	accessor _performingSelectionTwice = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_allSelected = false;
+	accessor _allSelected = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_effectiveShowClearIcon = false;
+	accessor _effectiveShowClearIcon = false;
 
 	@property()
-	_dialogInputValueState: `${ValueState}` = "None";
+	accessor _dialogInputValueState: `${ValueState}` = "None";
 
 	/**
 	 * Indicates whether the tokenizer has tokens
 	 * @private
 	 */
 	@property({ type: Boolean })
-	tokenizerAvailable = false;
+	accessor tokenizerAvailable = false;
 
 	/**
 	 * Defines the component items.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
-	items!: Array<IMultiComboBoxItem>;
+	accessor items!: Array<IMultiComboBoxItem>;
 
 	/**
 	* Defines the icon to be displayed in the component.
@@ -470,7 +470,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	* @since 1.0.0-rc.9
 	*/
 	@slot()
-	icon!: Array<IIcon>;
+	accessor icon!: Array<IIcon>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -484,7 +484,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot()
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	selectedValues: Array<IMultiComboBoxItem>;
 	_inputLastValue: string;
@@ -506,7 +506,7 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems: Array<IMultiComboBoxItem>;
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
 		return MultiComboBox.i18nBundle.getText(FORM_MIXED_TEXTFIELD_REQUIRED);

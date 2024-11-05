@@ -95,6 +95,9 @@ const customResolver = (id, source, options) => {
 
 export default defineConfig(async () => {
 	return {
+		esbuild: {
+			target: "es2021",
+		},
 		build: {
 			emptyOutDir: false,
 		},

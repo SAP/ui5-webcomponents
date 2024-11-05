@@ -94,7 +94,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @default []
 	 */
 	@property({ type: Array })
-	selectedDates: Array<number> = [];
+	accessor selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the year picker component.
@@ -108,13 +108,13 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @since 2.2.0
 	 */
 	@property()
-	selectionMode: `${CalendarSelectionMode}` = "Single";
+	accessor selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	@property({ type: Array })
-	_years: YearInterval = [];
+	accessor _years: YearInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden = false;
+	accessor _hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first year in the range is selected, this is the currently hovered or focused year.
@@ -122,13 +122,13 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	@property({ type: Number })
-	_secondTimestamp?: number;
+	accessor _secondTimestamp: number | undefined;
 
 	_firstYear?: number;
 	_lastYear?: number;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get roleDescription() {
 		return YearPicker.i18nBundle.getText(YEAR_PICKER_DESCRIPTION);

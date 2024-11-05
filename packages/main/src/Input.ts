@@ -321,7 +321,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines if characters within the suggestions are to be highlighted
@@ -333,7 +333,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	highlight = false;
+	accessor highlight = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the
@@ -342,7 +342,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -353,7 +353,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -362,7 +362,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.0.0-rc.3
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines whether the value will be autcompleted to match an item
@@ -371,7 +371,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.4.0
 	 */
 	@property({ type: Boolean })
-	noTypeahead = false;
+	accessor noTypeahead = false;
 
 	/**
 	 * Defines the HTML type of the component.
@@ -386,7 +386,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	type: `${InputType}` = "Text";
+	accessor type: `${InputType}` = "Text";
 
 	/**
 	 * Defines the value of the component.
@@ -398,7 +398,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 
 	/**
 	 * Defines the inner stored value of the component.
@@ -408,7 +408,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_innerValue = "";
+	accessor _innerValue = "";
 
 	/**
 	 * Defines the value state of the component.
@@ -416,7 +416,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -426,7 +426,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines whether the component should show suggestions, if such are present.
@@ -437,7 +437,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showSuggestions = false;
+	accessor showSuggestions = false;
 
 	/**
 	 * Sets the maximum number of characters available in the input field.
@@ -448,7 +448,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@property({ type: Number })
-	maxlength?: number;
+	accessor maxlength: number | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -457,7 +457,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
@@ -466,7 +466,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines whether the clear icon of the input will be shown.
@@ -475,7 +475,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.2.0
 	 */
 	@property({ type: Boolean })
-	showClearIcon = false;
+	accessor showClearIcon = false;
 
 	/**
 	 * Defines whether the suggestions picker is open.
@@ -486,7 +486,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open = false;
+	accessor open = false;
 
 	/**
 	 * Defines whether the clear icon is visible.
@@ -495,52 +495,52 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @since 1.2.0
 	 */
 	@property({ type: Boolean })
-	_effectiveShowClearIcon = false;
+	accessor _effectiveShowClearIcon = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	@property({ type: Boolean })
-	valueStateOpen = false;
+	accessor valueStateOpen = false;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isValueStateFocused = false;
+	accessor _isValueStateFocused = false;
 
 	@property({ type: Object })
-	_inputAccInfo: AccInfo = {};
+	accessor _inputAccInfo: AccInfo = {};
 
 	@property({ type: Object })
-	_nativeInputAttributes: NativeInputAttributes = {};
+	accessor _nativeInputAttributes: NativeInputAttributes = {};
 
 	@property({ type: Number })
-	_inputWidth?: number;
+	accessor _inputWidth: number | undefined;
 
 	@property({ type: Number })
-	_listWidth?: number;
+	accessor _listWidth: number | undefined;
 
 	@property({ type: Boolean, noAttribute: true })
-	_inputIconFocused = false;
+	accessor _inputIconFocused = false;
 
 	/**
 	 * Constantly updated value of texts collected from the associated labels
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_associatedLabelsTexts?: string;
+	accessor _associatedLabelsTexts: string | undefined;
 
 	/**
 	 * Constantly updated value of texts collected from the accessibleNameRef elements
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_accessibleLabelsRefTexts?: string;
+	accessor _accessibleLabelsRefTexts: string | undefined;
 
 	/**
 	 * Defines the suggestion items.
@@ -558,14 +558,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	suggestionItems!: Array<IInputSuggestionItem>;
+	accessor suggestionItems!: Array<IInputSuggestionItem>;
 
 	/**
 	 * Defines the icon to be displayed in the component.
 	 * @public
 	 */
 	@slot()
-	icon!: Array<IIcon>;
+	accessor icon!: Array<IIcon>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -585,7 +585,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		type: HTMLElement,
 		invalidateOnChildChange: true,
 	})
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	hasSuggestionItemSelected: boolean;
 	valueBeforeItemSelection: string;
@@ -608,7 +608,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
 		return Input.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);

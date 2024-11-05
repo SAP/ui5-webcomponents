@@ -49,7 +49,7 @@ class TableRow extends TableRowBase {
 			slots: false,
 		},
 	})
-	cells!: Array<TableCell>;
+	accessor cells: Array<TableCell> = []
 
 	/**
 	 * Unique identifier of the row.
@@ -58,7 +58,7 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property()
-	rowKey = "";
+	accessor rowKey = "";
 
 	/**
 	 * Defines the interactive state of the row.
@@ -67,7 +67,7 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive = false;
+	accessor interactive = false;
 
 	/**
 	 * Defines the navigated state of the row.
@@ -76,10 +76,10 @@ class TableRow extends TableRowBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	navigated = false;
+	accessor navigated = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_renderNavigated = false;
+	accessor _renderNavigated = false;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

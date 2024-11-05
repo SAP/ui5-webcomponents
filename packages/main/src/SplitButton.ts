@@ -114,7 +114,7 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines whether the arrow button should have the active state styles or not.
@@ -123,7 +123,7 @@ class SplitButton extends UI5Element {
 	 * @since 1.21.0
 	 */
 	@property({ type: Boolean })
-	activeArrowButton = false;
+	accessor activeArrowButton = false;
 
 	/**
 	 * Defines the component design.
@@ -131,7 +131,7 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property()
-	design: `${ButtonDesign}` = "Default";
+	accessor design: `${ButtonDesign}` = "Default";
 
 	/**
 	 * Defines whether the component is disabled.
@@ -141,7 +141,7 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -149,7 +149,7 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the tabIndex of the component.
@@ -157,7 +157,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_tabIndex = "0"
+	accessor _tabIndex = "0"
 
 	/**
 	 * Indicates if there is Space key pressed
@@ -165,7 +165,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed = false;
+	accessor _spacePressed = false;
 
 	/**
 	 * Indicates if there is SHIFT or ESCAPE key pressed
@@ -173,7 +173,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_shiftOrEscapePressed = false;
+	accessor _shiftOrEscapePressed = false;
 
 	/**
 	 * Defines the active state of the text button
@@ -181,7 +181,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_textButtonActive = false;
+	accessor _textButtonActive = false;
 
 	/**
 	 * Defines the state of the internal Button used for the Arrow button of the SplitButton.
@@ -189,7 +189,7 @@ class SplitButton extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_activeArrowButton = false;
+	accessor _activeArrowButton = false;
 
 	/**
 	 * Defines the text of the component.
@@ -198,14 +198,14 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	_textButtonPress: { handleEvent: (e: MouseEvent) => void, passive: boolean };
 	_isDefaultActionPressed = false;
 	_isKeyDownOperation = false;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

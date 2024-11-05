@@ -140,7 +140,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	value = 0;
+	accessor value = 0;
 
 	/**
 	 * Defines a minimum value of the component.
@@ -148,7 +148,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	min?: number;
+	accessor min: number | undefined;
 
 	/**
 	 * Defines a maximum value of the component.
@@ -156,7 +156,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	max?: number;
+	accessor max: number | undefined;
 
 	/**
 	 * Defines a step of increasing/decreasing the value of the component.
@@ -164,7 +164,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	step: number = 1;
+	accessor step: number = 1;
 
 	/**
 	 * Defines the value state of the component.
@@ -172,7 +172,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component is required.
@@ -180,7 +180,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Determines whether the component is displayed as disabled.
@@ -188,7 +188,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as read-only.
@@ -196,7 +196,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -208,7 +208,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -218,7 +218,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Determines the number of digits after the decimal point of the component.
@@ -226,7 +226,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	valuePrecision = 0;
+	accessor valuePrecision = 0;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -235,7 +235,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -244,37 +244,37 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	@property({ noAttribute: true })
-	_decIconDisabled = false;
+	accessor _decIconDisabled = false;
 
 	@property({ noAttribute: true })
-	_incIconDisabled = false;
+	accessor _incIconDisabled = false;
 
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	@property({ noAttribute: true })
-	_inputFocused = false;
+	accessor _inputFocused = false;
 
 	@property({ noAttribute: true })
-	_previousValue: number = this.value;
+	accessor _previousValue: number = this.value;
 
 	@property({ noAttribute: true })
-	_waitTimeout: number = INITIAL_WAIT_TIMEOUT;
+	accessor _waitTimeout: number = INITIAL_WAIT_TIMEOUT;
 
 	@property({ noAttribute: true })
-	_speed: number = INITIAL_SPEED;
+	accessor _speed: number = INITIAL_SPEED;
 
 	@property({ noAttribute: true })
-	_btnDown?: boolean;
+	accessor _btnDown: boolean | undefined;
 
 	@property({ noAttribute: true })
-	_spinTimeoutId?: Timeout;
+	accessor _spinTimeoutId: Timeout | undefined;
 
 	@property({ noAttribute: true })
-	_spinStarted = false;
+	accessor _spinStarted = false;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -286,12 +286,12 @@ class StepInput extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot()
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	_initialValueState?: `${ValueState}`;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
 		return (await this.getFocusDomRefAsync() as UI5Element)?.getFocusDomRefAsync();

@@ -271,7 +271,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 
 	/**
 	 * Defines the value state of the component.
@@ -279,7 +279,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None"
+	accessor valueState: `${ValueState}` = "None"
 
 	/**
 	 * Defines whether the component is required.
@@ -288,7 +288,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Determines whether the component is displayed as disabled.
@@ -296,7 +296,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Determines whether the component is displayed as read-only.
@@ -304,7 +304,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -316,7 +316,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -326,7 +326,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -338,7 +338,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers = false;
+	accessor hideWeekNumbers = false;
 
 	/**
 	 * Defines the open or closed state of the popover.
@@ -347,7 +347,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open = false;
+	accessor open = false;
 
 	/**
 	 * Defines the aria-label attribute for the component.
@@ -356,7 +356,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -365,13 +365,13 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	@property({ type: Object })
-	_respPopoverConfig?: object;
+	accessor _respPopoverConfig: object | undefined;
 
 	@property()
-	_calendarCurrentPicker = "day";
+	accessor _calendarCurrentPicker = "day";
 
 	liveValue?: string;
 
@@ -386,12 +386,12 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	responsivePopover?: ResponsivePopover;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
 		return DatePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);

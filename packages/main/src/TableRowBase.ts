@@ -29,13 +29,13 @@ import {
 	dependencies: [CheckBox],
 })
 abstract class TableRowBase extends UI5Element {
-	cells!: Array<TableCellBase>;
+	accessor cells!: Array<TableCellBase>;
 
 	@property({ type: Number, noAttribute: true })
-	_invalidate = 0;
+	accessor _invalidate2 = 0;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onEnterDOM() {
 		this.setAttribute("role", "row");

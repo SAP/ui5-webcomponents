@@ -70,14 +70,14 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	delimiter = "-";
+	accessor delimiter = "-";
 
 	 /**
 	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
 	 * @private
 	 */
 	@property()
-	_tempValue?: string;
+	accessor _tempValue: string | undefined;
 
 	private _prevDelimiter: string | null;
 

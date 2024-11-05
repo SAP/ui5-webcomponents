@@ -138,7 +138,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 	/**
 	 * Indicates whether the user can interact with the component or not.
 	 *
@@ -147,7 +147,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 	/**
 	 * Defines whether the component is read-only.
 	 *
@@ -157,7 +157,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 	/**
 	 * Defines whether the component is required.
 	 * @default false
@@ -165,7 +165,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.3
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
@@ -173,7 +173,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -186,7 +186,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the number of visible text rows for the component.
@@ -200,7 +200,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	rows = 0;
+	accessor rows = 0;
 
 	/**
 	 * Defines the maximum number of characters that the `value` can have.
@@ -208,7 +208,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	maxlength?: number
+	accessor maxlength: number | undefined;
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
@@ -222,7 +222,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showExceededText = false;
+	accessor showExceededText = false;
 
 	/**
 	 * Enables the component to automatically grow and shrink dynamically with its content.
@@ -230,7 +230,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	growing = false;
+	accessor growing = false;
 
 	/**
 	 * Defines the maximum number of rows that the component can grow.
@@ -238,7 +238,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	growingMaxRows = 0;
+	accessor growingMaxRows = 0;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -248,7 +248,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -257,7 +257,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the textarea.
@@ -266,37 +266,37 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	/**
 	 * @private
 	 */
-	 @property({ type: Boolean })
-	exceeding = false;
+	@property({ type: Boolean })
+	accessor exceeding = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Array })
-	_mirrorText: IndexedTokenizedText = [];
+	accessor _mirrorText: IndexedTokenizedText = [];
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_maxHeight?: string;
+	accessor _maxHeight: string | undefined;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number })
-	_width?: number;
+	accessor _width: number | undefined;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -310,7 +310,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot()
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	_fnOnResize: ResizeObserverCallback;
 	_firstRendering: boolean;
@@ -321,7 +321,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 	valueStatePopover?: Popover;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
 		return TextArea.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);

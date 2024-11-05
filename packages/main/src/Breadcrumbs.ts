@@ -154,7 +154,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	*/
 	@property()
-	design: `${BreadcrumbsDesign}` = "Standard";
+	accessor design: `${BreadcrumbsDesign}` = "Standard";
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
@@ -162,7 +162,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@property()
-	separators: `${BreadcrumbsSeparator}` = "Slash";
+	accessor separators: `${BreadcrumbsSeparator}` = "Slash";
 
 	/**
 	 * Holds the number of items in the overflow.
@@ -170,7 +170,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Number, noAttribute: true })
-	_overflowSize = 0;
+	accessor _overflowSize = 0;
 
 	/**
 	 * Defines the component items.
@@ -179,7 +179,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<BreadcrumbsItem>;
+	accessor items!: Array<BreadcrumbsItem>;
 
 	_itemNavigation: ItemNavigation
 	_onResizeHandler: ResizeObserverCallback;
@@ -191,7 +191,7 @@ class Breadcrumbs extends UI5Element {
 	_labelFocusAdaptor: FocusAdaptor;
 	responsivePopover?: ResponsivePopover;
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

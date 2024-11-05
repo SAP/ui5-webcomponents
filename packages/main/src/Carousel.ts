@@ -132,7 +132,7 @@ class Carousel extends UI5Element {
 	 * @since 1.24
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the IDs of the elements that label the input.
@@ -141,7 +141,7 @@ class Carousel extends UI5Element {
 	 * @since 1.24
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
@@ -149,7 +149,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	cyclic = false;
+	accessor cyclic = false;
 
 	/**
 	 * Defines the number of items per page depending on the carousel width.
@@ -164,7 +164,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	itemsPerPage = "S1 M1 L1 XL1";
+	accessor itemsPerPage = "S1 M1 L1 XL1";
 
 	/**
 	 * Defines the visibility of the navigation arrows.
@@ -176,7 +176,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideNavigationArrows = false;
+	accessor hideNavigationArrows = false;
 
 	/**
 	 * Defines the visibility of the page indicator.
@@ -186,7 +186,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hidePageIndicator = false;
+	accessor hidePageIndicator = false;
 
 	/**
 	 * Defines the style of the page indicator.
@@ -199,7 +199,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	pageIndicatorType: `${CarouselPageIndicatorType}` = "Default";
+	accessor pageIndicatorType: `${CarouselPageIndicatorType}` = "Default";
 
 	/**
 	 * Defines the carousel's background design.
@@ -208,7 +208,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	backgroundDesign: `${BackgroundDesign}` = "Translucent";
+	accessor backgroundDesign: `${BackgroundDesign}` = "Translucent";
 
 	/**
 	 * Defines the page indicator background design.
@@ -217,7 +217,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	pageIndicatorBackgroundDesign: `${BackgroundDesign}` = "Solid";
+	accessor pageIndicatorBackgroundDesign: `${BackgroundDesign}` = "Solid";
 
 	/**
 	 * Defines the page indicator border design.
@@ -226,7 +226,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	pageIndicatorBorderDesign: `${BorderDesign}` = "Solid";
+	accessor pageIndicatorBorderDesign: `${BorderDesign}` = "Solid";
 
 	/**
 	 * Defines the index of the initially selected item.
@@ -234,7 +234,7 @@ class Carousel extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Number })
-	_selectedIndex = 0;
+	accessor _selectedIndex = 0;
 
 	/**
 	 * Defines the position of arrows.
@@ -247,21 +247,21 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property()
-	arrowsPlacement: `${CarouselArrowsPlacement}` = "Content";
+	accessor arrowsPlacement: `${CarouselArrowsPlacement}` = "Content";
 
 	/**
 	 * Defines the carousel width in pixels.
 	 * @private
 	 */
 	@property({ type: Number })
-	_width?: number;
+	accessor _width: number | undefined;
 
 	/**
 	 * Defines the carousel item width in pixels.
 	 * @private
 	 */
 	@property({ type: Number })
-	_itemWidth?: number;
+	accessor _itemWidth: number | undefined;
 
 	/**
 	 * If set to true navigation arrows are shown.
@@ -269,7 +269,7 @@ class Carousel extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_visibleNavigationArrows = false;
+	accessor _visibleNavigationArrows = false;
 
 	_scrollEnablement: ScrollEnablement;
 	_onResizeBound: ResizeObserverCallback;
@@ -282,10 +282,10 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
-	content!: Array<HTMLElement>;
+	accessor content!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	static get pageTypeLimit() {
 		return 9;

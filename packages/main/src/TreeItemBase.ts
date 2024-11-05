@@ -93,7 +93,7 @@ class TreeItemBase extends ListItem {
 	 * @default 1
 	 */
 	@property({ type: Number })
-	level = 1;
+	accessor level = 1;
 
 	/**
 	 * If set, an icon will be displayed before the text of the tree list item.
@@ -101,7 +101,7 @@ class TreeItemBase extends ListItem {
 	 * @default undefined
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines whether the tree list item should display an expand/collapse button.
@@ -109,7 +109,7 @@ class TreeItemBase extends ListItem {
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	showToggleButton = false;
+	accessor showToggleButton = false;
 
 	/**
 	 * Defines whether the tree list item will show a collapse or expand icon inside its toggle button.
@@ -117,7 +117,7 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	expanded = false;
+	accessor expanded = false;
 
 	/**
 	 * Defines whether the item is movable.
@@ -126,7 +126,7 @@ class TreeItemBase extends ListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable = false;
+	accessor movable = false;
 
 	/**
 	* Defines whether the selection of a tree node is displayed as partially selected.
@@ -145,7 +145,7 @@ class TreeItemBase extends ListItem {
 	* @since 1.1.0
 	*/
 	@property({ type: Boolean })
-	declare indeterminate: boolean;
+	accessor indeterminate: boolean = false;
 
 	/**
 	 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
@@ -157,7 +157,7 @@ class TreeItemBase extends ListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hasChildren = false;
+	accessor hasChildren = false;
 
 	/**
 	 * Defines the state of the `additionalText`.
@@ -168,7 +168,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalTextState: `${ValueState}` = "None";
+	accessor additionalTextState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the accessible name of the component.
@@ -177,21 +177,21 @@ class TreeItemBase extends ListItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	declare accessibleName?: string;
+	accessor accessibleName: string | undefined = undefined
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ type: Number, noAttribute: true })
-	forcedSetsize = 1;
+	accessor forcedSetsize = 1;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.11
 	 */
 	@property({ type: Number, noAttribute: true })
-	forcedPosinset = 1;
+	accessor forcedPosinset = 1;
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -200,7 +200,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	_fixed = false;
+	accessor _fixed = false;
 
 	/**
 	 * Defines the items of the component.
@@ -216,10 +216,10 @@ class TreeItemBase extends ListItem {
 		},
 		"default": true,
 	})
-	items!: Array<TreeItemBase>;
+	accessor items!: Array<TreeItemBase>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
 		this.showToggleButton = this.requiresToggleButton;

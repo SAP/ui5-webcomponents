@@ -43,7 +43,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Defines column span of the component,
@@ -53,7 +53,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	 * @public
 	 */
 	@property({ type: Number })
-	columnSpan?: number;
+	accessor columnSpan: number | undefined;
 
 	/**
 	 * Defines the items of the component.
@@ -63,28 +63,28 @@ class FormGroup extends UI5Element implements IFormItem {
 		type: HTMLElement,
 		"default": true,
 	})
-	items!: Array<FormItem>;
+	accessor items!: Array<FormItem>;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number })
-	colsS = 1;
+	accessor colsS = 1;
 
 	@property({ type: Number })
-	colsM = 1;
+	accessor colsM = 1;
 
 	@property({ type: Number })
-	colsL = 1;
+	accessor colsL = 1;
 
 	@property({ type: Number })
-	colsXl = 1;
+	accessor colsXl = 1;
 
 	@property()
-	itemSpacing: `${FormItemSpacing}` = "Normal";
+	accessor itemSpacing: `${FormItemSpacing}` = "Normal";
 
 	@property()
-	labelSpan = "S12 M4 L4 XL4";
+	accessor labelSpan = "S12 M4 L4 XL4";
 
 	onBeforeRendering() {
 		this.processFormItems();

@@ -60,7 +60,7 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	maxLines: number = Infinity;
+	accessor maxLines: number = Infinity;
 
 	/**
 	 * Specifies if an empty indicator should be displayed when there is no text.
@@ -69,17 +69,17 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property()
-	emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
+	accessor emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
 
 	/**
 	 * Defines the text of the component.
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);

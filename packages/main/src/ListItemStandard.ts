@@ -51,7 +51,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 0.8.0
 	 */
 	@property()
-	description?: string;
+	accessor description: string | undefined;
 
 	/**
 	 * Defines the `icon` source URI.
@@ -63,7 +63,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines whether the `icon` should be displayed in the beginning of the list item or in the end.
@@ -72,7 +72,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd = false;
+	accessor iconEnd = false;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the list item.
@@ -81,7 +81,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Defines the state of the `additionalText`.
@@ -92,7 +92,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalTextState: `${ValueState}` = "None";
+	accessor additionalTextState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the item is movable.
@@ -101,7 +101,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable = false;
+	accessor movable = false;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -110,8 +110,8 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property()
-	declare accessibleName?: string;
+	// @property()
+	accessor accessibleName: string | undefined = undefined;
 
 	/**
 	 * Defines if the text of the component should wrap, they truncate by default.
@@ -122,17 +122,17 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @since 1.5.0
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "None";
+	accessor wrappingType: `${WrappingType}` = "None";
 
 	/**
 	 * Indicates if the list item has text content.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hasTitle = false;
+	accessor hasTitle = false;
 
 	@property({ type: Boolean })
-	_hasImage = false;
+	accessor _hasImage = false;
 
 	/**
 	 * **Note:** While the slot allows option for setting custom avatar, to match the
@@ -144,7 +144,7 @@ class ListItemStandard extends ListItem implements IAccessibleListItem {
 	 * @public
 	 */
 	@slot()
-	image!: Array<HTMLElement>;
+	accessor image!: Array<HTMLElement>;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

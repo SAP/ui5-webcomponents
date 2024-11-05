@@ -26,7 +26,7 @@ class ToolbarItem extends UI5Element {
 	 * @default "Default"
 	 */
 	@property()
-	overflowPriority: `${ToolbarItemOverflowBehavior}` = "Default";
+	accessor overflowPriority: `${ToolbarItemOverflowBehavior}` = "Default";
 
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
@@ -35,7 +35,7 @@ class ToolbarItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	preventOverflowClosing = false;
+	accessor preventOverflowClosing = false;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar

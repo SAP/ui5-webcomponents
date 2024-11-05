@@ -20,7 +20,7 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the additional text of the component.
@@ -29,28 +29,28 @@ class ComboBoxItem extends UI5Element implements IComboBoxItem {
 	 * @public
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Indicates whether the item is filtered
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_isVisible = false;
+	accessor _isVisible = false;
 
 	/**
 	 * Indicates whether the item is focssed
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	/**
 	 * Indicates whether the item is selected
 	 * @protected
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	accessor selected = false;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

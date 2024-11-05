@@ -87,7 +87,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @public
 	 */
 	@property()
-	type: `${TableGrowingMode}` = "Button";
+	accessor type: `${TableGrowingMode}` = "Button";
 
 	/**
 	 * Defines the text that will be displayed inside the growing button.
@@ -100,7 +100,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @public
 	 */
 	@property()
-	growingText?: string;
+	accessor growingText: string | undefined;
 
 	/**
 	 * Defines the text that will be displayed below the `growingText` inside the growing button.
@@ -110,13 +110,13 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @public
 	 */
 	@property()
-	growingSubText?: string;
+	accessor growingSubText: string | undefined;
 
 	/**
 	 * Disables the growing feature.
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the active state of the growing button.
@@ -124,7 +124,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_activeState = false;
+	accessor _activeState = false;
 
 	readonly identifier = "TableGrowing";
 	_table?: Table;
@@ -134,7 +134,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	_shouldFocusRow?: boolean;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onTableActivate(table: Table): void {
 		this._table = table;

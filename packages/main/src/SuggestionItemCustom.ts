@@ -39,7 +39,7 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the content of the component.
@@ -47,7 +47,7 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
-	content!: Array<Node>;
+	accessor content!: Array<Node>;
 }
 
 SuggestionItemCustom.define();

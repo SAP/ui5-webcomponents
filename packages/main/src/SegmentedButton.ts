@@ -86,7 +86,7 @@ class SegmentedButton extends UI5Element {
 	 * @since 1.0.3
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the component selection mode.
@@ -95,7 +95,7 @@ class SegmentedButton extends UI5Element {
 	 * @since 1.14.0
 	 */
 	@property()
-	selectionMode: `${SegmentedButtonSelectionMode}` = "Single";
+	accessor selectionMode: `${SegmentedButtonSelectionMode}` = "Single";
 
 	/**
 	 * Defines the items of `ui5-segmented-button`.
@@ -106,10 +106,10 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<ISegmentedButtonItem>;
+	accessor items!: Array<ISegmentedButtonItem>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
 

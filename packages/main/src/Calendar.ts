@@ -249,7 +249,7 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@property()
-	selectionMode: `${CalendarSelectionMode}` = "Single";
+	accessor selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -260,32 +260,32 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideWeekNumbers = false;
+	accessor hideWeekNumbers = false;
 
 	/**
 	 * Which picker is currently visible to the user: day/month/year
 	 * @private
 	 */
 	@property()
-	_currentPicker: "day" | "month" | "year" = "day"
+	accessor _currentPicker: "day" | "month" | "year" = "day"
 
 	@property({ type: Boolean })
-	_previousButtonDisabled = false;
+	accessor _previousButtonDisabled = false;
 
 	@property({ type: Boolean })
-	_nextButtonDisabled = false;
+	accessor _nextButtonDisabled = false;
 
 	@property()
-	_headerMonthButtonText?: string;
+	accessor _headerMonthButtonText: string | undefined;
 
 	@property()
-	_headerYearButtonText?: string;
+	accessor _headerYearButtonText: string | undefined;
 
 	@property()
-	_headerYearButtonTextSecType?: string;
+	accessor _headerYearButtonTextSecType: string | undefined;
 
 	@property({ noAttribute: true })
-	_pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
+	accessor _pickersMode: `${CalendarPickersMode}` = "DAY_MONTH_YEAR";
 
 	_valueIsProcessed = false;
 
@@ -295,7 +295,7 @@ class Calendar extends CalendarPart {
 	 * @since 1.23.0
 	 */
 	@slot({ type: HTMLElement })
-	calendarLegend!: Array<CalendarLegend>;
+	accessor calendarLegend!: Array<CalendarLegend>;
 
 	/**
 	 * Defines the selected date or dates (depending on the `selectionMode` property)
@@ -304,7 +304,7 @@ class Calendar extends CalendarPart {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	dates!: Array<ICalendarSelectedDates>;
+	accessor dates!: Array<ICalendarSelectedDates>;
 
 	/**
 	 * Defines the special dates, visually emphasized in the calendar.
@@ -312,17 +312,17 @@ class Calendar extends CalendarPart {
 	 * @since 1.23.0
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	specialDates!: Array<SpecialCalendarDate>;
+	accessor specialDates!: Array<SpecialCalendarDate>;
 
 	/**
 	 * Defines the selected item type of the calendar legend item (if such exists).
 	 * @private
 	 */
 	@property()
-	_selectedItemType: `${CalendarLegendItemType}` = "None";
+	accessor _selectedItemType: `${CalendarLegendItemType}` = "None";
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

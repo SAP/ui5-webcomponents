@@ -67,7 +67,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the menu item.
@@ -82,7 +82,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 1.8.0
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -95,7 +95,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines whether `ui5-menu-item` is in disabled state.
@@ -105,7 +105,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -116,7 +116,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading = false;
+	accessor loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
@@ -125,7 +125,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 1.13.0
 	 */
 	@property({ type: Number })
-	loadingDelay = 1000;
+	accessor loadingDelay = 1000;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -133,8 +133,8 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 * @since 1.7.0
 	 */
-	@property()
-	accessibleName?: string;
+	// @property()
+	accessor accessibleName: string | undefined = undefined;
 
 	/**
 	 * Defines the text of the tooltip for the menu item.
@@ -142,8 +142,9 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 * @since 1.23.0
 	 */
-	@property()
-	tooltip?: string;
+	// TODO Nayden: show inherited properties in the API reference?
+	// @property()
+	// declare tooltip: string | undefined;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -158,13 +159,13 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: MenuItemAccessibilityAttributes = {};
+	accessor accessibilityAttributes: MenuItemAccessibilityAttributes = {};
 
 	/**
 	 * Indicates whether any of the element siblings have icon.
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_siblingsWithIcon = false;
+	accessor _siblingsWithIcon = false;
 
 	/**
 	 * Defines the items of this component.
@@ -180,7 +181,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<IMenuItem>;
+	accessor items!: Array<IMenuItem>;
 
 	/**
 	 * Defines the components that should be displayed at the end of the menu item.
@@ -196,10 +197,10 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @since 2.0.0
 	 */
 	@slot({ type: HTMLElement })
-	endContent!: Array<HTMLElement>;
+	accessor endContent!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";

@@ -20,14 +20,14 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare selected: boolean;
+	accessor selected = false;
 
 	/**
 	 * Defines whether the item is filtered
 	 * @private
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_isVisible = false;
+	accessor _isVisible = false;
 
 	get isMultiComboBoxItem() {
 		return true;

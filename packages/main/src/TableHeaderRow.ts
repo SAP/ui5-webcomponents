@@ -61,7 +61,7 @@ class TableHeaderRow extends TableRowBase {
 		},
 		individualSlots: true,
 	})
-	cells!: Array<TableHeaderCell>;
+	accessor cells: Array<TableHeaderCell> = [];
 
 	/**
 	 * Sticks the `ui5-table-header-row` to the top of a table.
@@ -72,7 +72,7 @@ class TableHeaderRow extends TableRowBase {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	sticky = false;
+	accessor sticky = false;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

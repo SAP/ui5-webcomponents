@@ -104,7 +104,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	startValue = 0;
+	accessor startValue = 0;
 
 	/**
 	 * Defines end point of a selection - position of a second handle on the slider.
@@ -114,16 +114,16 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	endValue = 100;
+	accessor endValue = 100;
 
 	@property({ type: Boolean })
-	rangePressed = false;
+	accessor rangePressed = false;
 
 	@property({ type: Boolean })
-	_isStartValueValid = false;
+	accessor _isStartValueValid = false;
 
 	@property({ type: Boolean })
-	_isEndValueValid = false;
+	accessor _isEndValueValid = false;
 
 	_startValueInitial?: number;
 	_endValueInitial?: number;
@@ -143,7 +143,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	_areInputValuesSwapped = false;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formFormattedValue() {
 		const formData = new FormData();

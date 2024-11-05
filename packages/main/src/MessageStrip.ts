@@ -102,7 +102,7 @@ class MessageStrip extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	design: `${MessageStripDesign}` = "Information";
+	accessor design: `${MessageStripDesign}` = "Information";
 
 	/**
 	 * Defines the color scheme of the component.
@@ -114,7 +114,7 @@ class MessageStrip extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	colorScheme = "1"
+	accessor colorScheme = "1"
 
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
@@ -127,7 +127,7 @@ class MessageStrip extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	hideIcon = false
+	accessor hideIcon = false
 
 	/**
 	 * Defines whether the MessageStrip renders close button.
@@ -135,7 +135,7 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideCloseButton = false;
+	accessor hideCloseButton = false;
 
 	/**
 	 * Defines the content to be displayed as graphical element within the component.
@@ -147,10 +147,10 @@ class MessageStrip extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	icon!: Array<IIcon>;
+	accessor icon!: Array<IIcon>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	_closeClick() {
 		this.fireDecoratorEvent("close");

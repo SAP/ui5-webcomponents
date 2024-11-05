@@ -57,7 +57,7 @@ class ProgressIndicator extends UI5Element {
 	 * @since 1.16.0
 	*/
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines whether the component value is shown.
@@ -65,7 +65,7 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideValue = false;
+	accessor hideValue = false;
 
 	/**
 	 * Specifies the numerical value in percent for the length of the component.
@@ -76,7 +76,7 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	value = 0;
+	accessor value = 0;
 
 	/**
 	 * Specifies the text value to be displayed in the bar.
@@ -89,7 +89,7 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property()
-	displayValue?: string;
+	accessor displayValue: string | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -97,10 +97,10 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 	_previousValue: number;
 	_transitionDuration: number;
 

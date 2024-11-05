@@ -62,7 +62,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideToday = false;
+	accessor hideToday = false;
 
 	/**
 	 * Hides the Selected day item in the legend.
@@ -70,7 +70,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideSelectedDay = false;
+	accessor hideSelectedDay = false;
 
 	/**
 	 * Hides the Non-Working day item in the legend.
@@ -78,7 +78,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideNonWorkingDay = false;
+	accessor hideNonWorkingDay = false;
 
 	/**
 	 * Hides the Working day item in the legend.
@@ -86,7 +86,7 @@ class CalendarLegend extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideWorkingDay = false;
+	accessor hideWorkingDay = false;
 
 	/**
 	 * Defines the items of the component.
@@ -98,7 +98,7 @@ class CalendarLegend extends UI5Element {
 		individualSlots: true,
 		"default": true,
 	 })
-	items!: Array<CalendarLegendItem>;
+	accessor items!: Array<CalendarLegendItem>;
 
 	_itemNavigation!: ItemNavigation;
 	_lastFocusedItemIndex: number | null;

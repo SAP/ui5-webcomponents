@@ -53,7 +53,7 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the type of the Calendar Legend Item.
@@ -61,17 +61,17 @@ class CalendarLegendItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	type: `${CalendarLegendItemType}` = "None";
+	accessor type: `${CalendarLegendItemType}` = "None";
 
 	/**
 	 * Tab index of the component.
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	forcedTabIndex = "-1"
+	accessor forcedTabIndex = "-1"
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get effectiveText() {
 		const TodayI18n = CalendarLegendItem.i18nBundle.getText(CAL_LEGEND_TODAY_TEXT);

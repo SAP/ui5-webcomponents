@@ -53,7 +53,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property()
-	for?: string;
+	accessor for: string | undefined;
 
 	/**
 	 * Defines whether colon is added to the component text.
@@ -63,7 +63,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showColon = false;
+	accessor showColon = false;
 
 	/**
 	 * Defines whether an asterisk character is added to the component text.
@@ -75,7 +75,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -85,10 +85,10 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "Normal";
+	accessor wrappingType: `${WrappingType}` = "Normal";
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	_onclick() {
 		if (!this.for) {

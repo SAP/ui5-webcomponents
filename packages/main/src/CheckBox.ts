@@ -111,7 +111,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -120,7 +120,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -130,7 +130,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -141,7 +141,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Determines whether the `ui5-checkbox` is in display only state.
@@ -155,7 +155,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	displayOnly = false;
+	accessor displayOnly = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -164,7 +164,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @since 1.3.0
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	* Defines whether the component is displayed as partially checked.
@@ -181,7 +181,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	* @since 1.0.0-rc.15
 	*/
 	@property({ type: Boolean })
-	indeterminate = false;
+	accessor indeterminate = false;
 
 	/**
 	 * Defines if the component is checked.
@@ -195,7 +195,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	checked = false;
+	accessor checked = false;
 
 	/**
 	 * Defines the text of the component.
@@ -203,7 +203,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -211,7 +211,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines whether the component text wraps when there is not enough space.
@@ -222,7 +222,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "Normal";
+	accessor wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -232,17 +232,17 @@ class CheckBox extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the active state (pressed or not) of the component.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active = false;
+	accessor active = false;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 	_deactivate: () => void;
 
 	get formValidityMessage() {

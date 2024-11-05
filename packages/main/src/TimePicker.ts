@@ -219,7 +219,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -230,7 +230,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -238,7 +238,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * Defines the disabled state of the comonent.
@@ -246,7 +246,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the readonly state of the comonent.
@@ -254,7 +254,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines a short hint, intended to aid the user with data entry when the
@@ -266,7 +266,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -279,7 +279,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	formatPattern?: string;
+	accessor formatPattern: string | undefined;
 
 	/**
 	 * Defines the open or closed state of the popover.
@@ -288,7 +288,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open = false;
+	accessor open = false;
 
 	/**
 	 * Defines whether the component is required.
@@ -297,7 +297,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines the aria-label attribute for the component.
@@ -306,7 +306,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @since 2.1.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id (or many ids) of the elements that label the component.
@@ -315,10 +315,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @since 2.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isInputsPopoverOpen = false;
+	accessor _isInputsPopoverOpen = false;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
@@ -331,12 +331,12 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot()
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	tempValue?: string;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get formValidityMessage() {
 		return TimePicker.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);

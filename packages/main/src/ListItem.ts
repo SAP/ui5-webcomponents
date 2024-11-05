@@ -115,7 +115,7 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	*/
 	@property()
-	type: `${ListItemType}` = "Active";
+	accessor type: `${ListItemType}` = "Active";
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -132,7 +132,7 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.15.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: ListItemAccessibilityAttributes = {};
+	accessor accessibilityAttributes: ListItemAccessibilityAttributes = {};
 
 	/**
 	 * The navigated state of the list item.
@@ -142,7 +142,7 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	navigated = false;
+	accessor navigated = false;
 
 	/**
 	 * Defines the text of the tooltip that would be displayed for the list item.
@@ -151,14 +151,14 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.23.0
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined;
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
 	 * @private
 	*/
 	@property({ type: Boolean })
-	active = false;
+	accessor active = false;
 
 	/**
 	 * Defines the highlight state of the list items.
@@ -168,15 +168,15 @@ abstract class ListItem extends ListItemBase {
 	 * @since 1.24
 	 */
 	@property()
-	highlight: `${Highlight}` = "None";
+	accessor highlight: `${Highlight}` = "None";
 
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
 	 * @public
 	 */
-	@property({ type: Boolean })
-	declare selected: boolean;
+	// @property({ type: Boolean })
+	accessor selected: boolean = false;
 
 	/**
 	 * Used to define the role of the list item.
@@ -186,10 +186,10 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 */
 	@property()
-	accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
+	accessor accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
 
 	@property()
-	_selectionMode: `${ListSelectionMode}` = "None";
+	accessor _selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
 	 * Defines the delete button, displayed in "Delete" mode.
@@ -200,20 +200,20 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	*/
 	@slot()
-	deleteButton!: Array<IButton>;
+	accessor deleteButton!: Array<IButton>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
 	// used in template, implemented in TreeItemBase, ListItemStandard
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 	// used in ListItem template but implemented in TreeItemBase
-	indeterminate?: boolean;
+	accessor indeterminate: boolean | undefined;
 	// Used in UploadCollectionItem
 	disableDeleteButton?: boolean;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

@@ -60,28 +60,28 @@ class Bar extends UI5Element {
 	 * @public
 	 */
 	@property()
-	design: `${BarDesign}` = "Header";
+	accessor design: `${BarDesign}` = "Header";
 
 	/**
 	* Defines the content at the start of the bar.
 	* @public
 	*/
 	@slot({ type: HTMLElement })
-	startContent!: Array<HTMLElement>;
+	accessor startContent!: Array<HTMLElement>;
 
 	/**
 	* Defines the content in the middle of the bar.
 	* @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
-	middleContent!: Array<HTMLElement>
+	accessor middleContent!: Array<HTMLElement>
 
 	/**
 	* Defines the content at the end of the bar.
 	* @public
 	*/
 	@slot({ type: HTMLElement })
-	endContent!: Array<HTMLElement>
+	accessor endContent!: Array<HTMLElement>
 
 	_handleResizeBound: () => void;
 

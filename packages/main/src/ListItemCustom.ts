@@ -39,7 +39,7 @@ class ListItemCustom extends ListItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	movable = false;
+	accessor movable = false;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -49,8 +49,8 @@ class ListItemCustom extends ListItem {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property()
-	declare accessibleName?: string;
+	// @property()
+	accessor accessibleName: string | undefined = undefined;
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);

@@ -49,7 +49,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	/**
 	 * Defines the value of the `ui5-select` inside an HTML Form element when this component is selected.
@@ -58,7 +58,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	value?: string;
+	accessor value: string | undefined;
 
 	/**
 	 * Defines the `icon` source URI.
@@ -70,7 +70,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the option.
@@ -79,7 +79,7 @@ class Option extends ListItemBase implements IOption {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Defines the tooltip of the option.
@@ -88,7 +88,7 @@ class Option extends ListItemBase implements IOption {
 	 * @since 2.0.0
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined;
 
 	/**
 	 * Defines the selected state of the component.
@@ -96,7 +96,7 @@ class Option extends ListItemBase implements IOption {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	declare selected: boolean;
+	accessor selected = false;
 
 	get displayIconBegin(): boolean {
 		return !!this.icon;

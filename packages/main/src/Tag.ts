@@ -86,7 +86,7 @@ class Tag extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property()
-	design: `${TagDesign}` = "Neutral"
+	accessor design: `${TagDesign}` = "Neutral"
 
 	/**
 	 * Defines the color scheme of the component.
@@ -96,7 +96,7 @@ class Tag extends UI5Element {
 	 * @public
 	 */
 	@property()
-	colorScheme = "1";
+	accessor colorScheme = "1";
 
 	/**
 	 * Defines if the default state icon is shown.
@@ -105,7 +105,7 @@ class Tag extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
-	hideStateIcon = false;
+	accessor hideStateIcon = false;
 
 	/**
 	 * Defines if the component is interactive (focusable and pressable).
@@ -115,7 +115,7 @@ class Tag extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property({ type: Boolean })
-	interactive = false;
+	accessor interactive = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -127,7 +127,7 @@ class Tag extends UI5Element {
 	 * @since 1.22.0
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "Normal";
+	accessor wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines predefined size of the component.
@@ -136,21 +136,21 @@ class Tag extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	size: `${TagSize}` = "S";
+	accessor size: `${TagSize}` = "S";
 
 	/**
 	 * Defines if the tag has an icon.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hasIcon = false;
+	accessor _hasIcon = false;
 
 	/**
 	 * Defines if the tag has only an icon (and no text).
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_iconOnly = false;
+	accessor _iconOnly = false;
 
 	/**
 	 * Defines the text of the component.
@@ -159,17 +159,17 @@ class Tag extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	accessor text!: Array<Node>;
 
 	/**
 	 * Defines the icon to be displayed in the component.
 	 * @public
 	 */
 	@slot()
-	icon!: Array<IIcon>;
+	accessor icon!: Array<IIcon>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onEnterDOM() {
 		if (isDesktop()) {

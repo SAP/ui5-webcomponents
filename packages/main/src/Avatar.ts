@@ -84,7 +84,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
@@ -95,7 +95,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	interactive = false;
+	accessor interactive = false;
 
 	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
@@ -115,7 +115,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines the name of the fallback icon, which should be displayed in the following cases:
@@ -137,7 +137,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property()
-	fallbackIcon = "employee";
+	accessor fallbackIcon = "employee";
 
 	/**
 	 * Defines the displayed initials.
@@ -147,7 +147,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property()
-	initials?: string;
+	accessor initials: string | undefined;
 
 	/**
 	 * Defines the shape of the component.
@@ -155,7 +155,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property()
-	shape: `${AvatarShape}` = "Circle";
+	accessor shape: `${AvatarShape}` = "Circle";
 
 	/**
 	 * Defines predefined size of the component.
@@ -163,7 +163,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property()
-	size: `${AvatarSize}` = "S";
+	accessor size: `${AvatarSize}` = "S";
 
 	/**
 	 * Defines the background color of the desired image.
@@ -171,13 +171,13 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @public
 	 */
 	@property()
-	colorScheme: `${AvatarColorScheme}` = "Accent6";
+	accessor colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * @private
 	 */
 	@property()
-	_colorScheme: `${AvatarColorScheme}` = "Accent6";
+	accessor _colorScheme: `${AvatarColorScheme}` = "Accent6";
 
 	/**
 	 * Defines the text alternative of the component.
@@ -187,7 +187,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -201,13 +201,13 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: AvatarAccessibilityAttributes = {};
+	accessor accessibilityAttributes: AvatarAccessibilityAttributes = {};
 
 	@property({ noAttribute: true })
-	forcedTabIndex?: string;
+	accessor forcedTabIndex: string | undefined;
 
 	@property({ type: Boolean })
-	_hasImage = false;
+	accessor _hasImage = false;
 
 	/**
 	 * Receives the desired `<img>` tag
@@ -217,7 +217,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	image!: Array<HTMLElement>;
+	accessor image!: Array<HTMLElement> | undefined;
 
 	/**
 	 * Defines the optional badge that will be used for visual affordance.
@@ -229,12 +229,12 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * @since 1.7.0
 	 */
 	@slot()
-	badge!: Array<HTMLElement>;
+	accessor badge: Array<HTMLElement> | undefined;
 
 	_onclick?: (e: MouseEvent) => void;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	_handleResizeBound: ResizeObserverCallback;
 
@@ -300,7 +300,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	get hasImage() {
-		this._hasImage = !!this.image.length;
+		this._hasImage = !!(this.image && this.image.length);
 		return this._hasImage;
 	}
 

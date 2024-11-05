@@ -194,7 +194,7 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Indicates if the menu is open
@@ -203,7 +203,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ type: Boolean })
-	open = false;
+	accessor open = false;
 
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
@@ -212,7 +212,7 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
-	loading = false;
+	accessor loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
@@ -221,7 +221,7 @@ class Menu extends UI5Element {
 	 * @since 1.13.0
 	 */
 	@property({ type: Number })
-	loadingDelay = 1000;
+	accessor loadingDelay = 1000;
 
 	/**
 	 * Defines the ID or DOM Reference of the element at which the menu is shown.
@@ -232,7 +232,7 @@ class Menu extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ converter: DOMReferenceConverter })
-	opener?: HTMLElement | string;
+	accessor opener: HTMLElement | string | undefined;
 
 	/**
 	 * Defines the items of this component.
@@ -241,10 +241,10 @@ class Menu extends UI5Element {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<IMenuItem>;
+	accessor items!: Array<IMenuItem>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 	_timeout?: Timeout;
 
 	get isRtl() {

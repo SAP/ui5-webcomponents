@@ -22,14 +22,17 @@ const customElement = (tagNameOrComponentSettings: string | {
 	formAssociated?: boolean,
 	shadowRootOptions?: Partial<ShadowRootInit>,
 	features?: Array<string>,
-} = {}): ClassDecorator => {
-	return (target: any) => {
+} = {}) => {
+	return (target: ClassDecorator | object, ctx?: ClassDecoratorContext | undefined) => {
+		if (ctx && "name" in ctx) {
+			console.log(ctx.name);
+		}
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
-			target.metadata = {};
+			(target as typeof UI5Element).metadata = {};
 		}
 
 		if (typeof tagNameOrComponentSettings === "string") {
-			target.metadata.tag = tagNameOrComponentSettings;
+			(target as typeof UI5Element).metadata.tag = tagNameOrComponentSettings;
 			return;
 		}
 
@@ -44,30 +47,30 @@ const customElement = (tagNameOrComponentSettings: string | {
 			features,
 		 } = tagNameOrComponentSettings;
 
-		target.metadata.tag = tag;
+		(target as typeof UI5Element).metadata.tag = tag;
 		if (languageAware) {
-			target.metadata.languageAware = languageAware;
+			(target as typeof UI5Element).metadata.languageAware = languageAware;
 		}
 		if (cldr) {
-			target.metadata.cldr = cldr;
+			(target as typeof UI5Element).metadata.cldr = cldr;
 		}
 
 		if (features) {
-			target.metadata.features = features;
+			(target as typeof UI5Element).metadata.features = features;
 		}
 
 		if (themeAware) {
-			target.metadata.themeAware = themeAware;
+			(target as typeof UI5Element).metadata.themeAware = themeAware;
 		}
 		if (fastNavigation) {
-			target.metadata.fastNavigation = fastNavigation;
+			(target as typeof UI5Element).metadata.fastNavigation = fastNavigation;
 		}
 		if (formAssociated) {
-			target.metadata.formAssociated = formAssociated;
+			(target as typeof UI5Element).metadata.formAssociated = formAssociated;
 		}
 
 		if (shadowRootOptions) {
-			target.metadata.shadowRootOptions = shadowRootOptions;
+			(target as typeof UI5Element).metadata.shadowRootOptions = shadowRootOptions;
 		}
 
 		["renderer", "template", "styles", "dependencies"].forEach((customElementEntity: string) => {

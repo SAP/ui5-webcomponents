@@ -43,7 +43,7 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @public
 	 */
 	@property()
-	value = ""
+	accessor value = ""
 
 	/**
 	 * Defines if the component is selected.
@@ -56,38 +56,38 @@ class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	selected = false;
+	accessor selected = false;
 
 	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	forcedTabIndex = "-1";
+	accessor forcedTabIndex = "-1";
 
 	/**
 	 * Defines the index of the item inside of the ColorPalette.
 	 * @private
 	 */
 	@property({ type: Number })
-	index?: number;
+	accessor index: number | undefined;
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone = false;
+	accessor onPhone = false;
 
 	/**
 	 * @private
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	_disabled = false;
+	accessor _disabled = false;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

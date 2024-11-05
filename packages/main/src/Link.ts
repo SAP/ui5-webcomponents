@@ -121,7 +121,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the tooltip of the component.
@@ -130,7 +130,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @since 2.0.0
 	 */
 	 @property()
-	 tooltip?: string;
+	 accessor tooltip: string | undefined;
 
 	/**
 	 * Defines the component href.
@@ -140,7 +140,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	href?: string;
+	accessor href: string | undefined;
 
 	/**
 	 * Defines the component target.
@@ -158,7 +158,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	target?: string;
+	accessor target: string | undefined;
 
 	/**
 	 * Defines the component design.
@@ -168,7 +168,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	design: `${LinkDesign}` = "Default";
+	accessor design: `${LinkDesign}` = "Default";
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -178,7 +178,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	wrappingType: `${WrappingType}` = "Normal";
+	accessor wrappingType: `${WrappingType}` = "Normal";
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -187,7 +187,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @since 1.2.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input
@@ -196,7 +196,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the ARIA role of the component.
@@ -207,7 +207,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @since 1.9.0
 	 */
 	@property()
-	accessibleRole: `${LinkAccessibleRole}` = "Link";
+	accessor accessibleRole: `${LinkAccessibleRole}` = "Link";
 
 	/**
 	 * Defines the additional accessibility attributes that will be applied to the component.
@@ -224,7 +224,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: LinkAccessibilityAttributes = {};
+	accessor accessibilityAttributes: LinkAccessibilityAttributes = {};
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component before the link's text.
@@ -240,7 +240,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	accessor icon: string | undefined;
 
 	/**
 	 * Defines the icon, displayed as graphical element within the component after the link's text.
@@ -256,18 +256,18 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	endIcon?: string;
+	accessor endIcon: string | undefined;
 
 	@property({ noAttribute: true })
-	_rel: string | undefined;
+	accessor _rel: string | undefined;
 
 	@property({ noAttribute: true })
-	forcedTabIndex?: string;
+	accessor forcedTabIndex: string | undefined;
 
 	_dummyAnchor: HTMLAnchorElement;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

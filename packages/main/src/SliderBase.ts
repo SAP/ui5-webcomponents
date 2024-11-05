@@ -52,7 +52,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	min = 0;
+	accessor min = 0;
 
 	/**
 	 * Defines the maximum value of the slider.
@@ -60,7 +60,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	max = 100;
+	accessor max = 100;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -71,7 +71,7 @@ abstract class SliderBase extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
@@ -81,7 +81,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	step = 1;
+	accessor step = 1;
 
 	/**
 	 * Displays a label with a value on every N-th step.
@@ -93,7 +93,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	labelInterval = 0;
+	accessor labelInterval = 0;
 
 	/**
 	 * Enables tickmarks visualization for each step.
@@ -103,7 +103,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTickmarks = false;
+	accessor showTickmarks = false;
 
 	/**
 	 * Enables handle tooltip displaying the current value.
@@ -111,7 +111,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip = false;
+	accessor showTooltip = false;
 
 	/**
 	 *
@@ -123,7 +123,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	editableTooltip = false;
+	accessor editableTooltip = false;
 
 	/**
 	 * Defines whether the slider is in disabled state.
@@ -131,7 +131,7 @@ abstract class SliderBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -140,28 +140,28 @@ abstract class SliderBase extends UI5Element {
 	 * @since 1.4.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Number })
-	value = 0;
+	accessor value = 0;
 
 	/**
 	 * @private
 	 */
 	@property()
-	_tooltipVisibility = "hidden";
+	accessor _tooltipVisibility = "hidden";
 
 	@property({ type: Boolean })
-	_labelsOverlapping = false;
+	accessor _labelsOverlapping = false;
 
 	@property({ type: Boolean })
-	_hiddenTickmarks = false;
+	accessor _hiddenTickmarks = false;
 
 	@property({ type: Boolean })
-	_isInputValueValid = false;
+	accessor _isInputValueValid = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;

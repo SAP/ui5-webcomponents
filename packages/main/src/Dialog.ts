@@ -128,7 +128,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Determines whether the component should be stretched to fullscreen.
@@ -139,7 +139,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	stretch = false;
+	accessor stretch = false;
 
 	/**
 	 * Determines whether the component is draggable.
@@ -155,7 +155,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	draggable = false;
+	accessor draggable = false;
 
 	/**
 	 * Configures the component to be resizable.
@@ -170,7 +170,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	resizable = false;
+	accessor resizable = false;
 
 	/**
 	 * Defines the state of the `Dialog`.
@@ -182,7 +182,7 @@ class Dialog extends Popup {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	state: `${ValueState}` = "None";
+	accessor state: `${ValueState}` = "None";
 
 	_screenResizeHandler: () => void;
 	_dragMouseMoveHandler: (e: MouseEvent) => void;
@@ -214,7 +214,7 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@slot()
-	header!: Array<HTMLElement>;
+	accessor header!: Array<HTMLElement>;
 
 	/**
 	 * Defines the footer HTML Element.
@@ -223,10 +223,10 @@ class Dialog extends Popup {
 	 * @public
 	 */
 	@slot()
-	footer!: Array<HTMLElement>;
+	accessor footer!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

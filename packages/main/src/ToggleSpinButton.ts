@@ -34,28 +34,28 @@ class ToggleSpinButton extends ToggleButton {
 	 * @default -1
 	 */
 	@property({ type: Number })
-	valueMin = -1;
+	accessor valueMin = -1;
 
 	/**
 	 * Defines the ARIA valuemax of the component.
 	 * @default -1
 	 */
 	@property({ type: Number })
-	valueMax = -1;
+	accessor valueMax = -1;
 
 	/**
 	 * Defines the ARIA valuenow of the component.
 	 * @default -1
 	 */
 	@property({ type: Number })
-	valueNow = -1;;
+	accessor valueNow = -1;;
 
 	/**
 	 * Defines the ARIA valuetext of the component.
 	 * @default undefined
 	 */
 	@property()
-	valueText?: string;
+	accessor valueText: string | undefined;
 
 	/**
 	 * Override of the handler in order to prevent button toggle functionality

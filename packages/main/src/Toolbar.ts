@@ -93,7 +93,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 })
 class Toolbar extends UI5Element {
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
@@ -101,7 +101,7 @@ class Toolbar extends UI5Element {
 	 * @default "End"
 	 */
 	@property()
-	alignContent: `${ToolbarAlign}` = "End";
+	accessor alignContent: `${ToolbarAlign}` = "End";
 
 	/**
 	 * Calculated width of the whole toolbar.
@@ -109,7 +109,7 @@ class Toolbar extends UI5Element {
 	 * @default undefined
 	 */
 	@property({ type: Number })
-	width?: number;
+	accessor width: number | undefined;
 
 	/**
 	 * Calculated width of the toolbar content.
@@ -117,14 +117,14 @@ class Toolbar extends UI5Element {
 	 * @default undefined
 	 */
 	@property({ type: Number })
-	contentWidth?: number;
+	accessor contentWidth: number | undefined;
 
 	/**
 	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	reverseOverflow = false;
+	accessor reverseOverflow = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -132,7 +132,7 @@ class Toolbar extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the input.
@@ -140,7 +140,7 @@ class Toolbar extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the toolbar design.
@@ -149,7 +149,7 @@ class Toolbar extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property()
-	design: `${ToolbarDesign}` = "Solid"
+	accessor design: `${ToolbarDesign}` = "Solid"
 
 	/**
 	 * Defines the items of the component.
@@ -158,7 +158,7 @@ class Toolbar extends UI5Element {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	items!: Array<ToolbarItem>
+	accessor items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
 	_onInteract!: EventListener;

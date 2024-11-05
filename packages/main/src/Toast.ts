@@ -105,7 +105,7 @@ class Toast extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	duration = 3000;
+	accessor duration = 3000;
 
 	/**
 	 * Defines the placement of the component.
@@ -113,7 +113,7 @@ class Toast extends UI5Element {
 	 * @public
 	 */
 	@property()
-	placement: `${ToastPlacement}` = "BottomCenter";
+	accessor placement: `${ToastPlacement}` = "BottomCenter";
 
 	/**
 	 * Indicates whether the component is open (visible).
@@ -122,14 +122,14 @@ class Toast extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	open = false;
+	accessor open = false;
 
 	/**
 	 * Indicates whether the component is hovered.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hover = false;
+	accessor hover = false;
 
 	/**
 	 * Indicates whether the toast could be focused
@@ -137,7 +137,7 @@ class Toast extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focusable = false;
+	accessor focusable = false;
 
 	/**
 	 * Indicates whether the toast is focused
@@ -145,7 +145,7 @@ class Toast extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	_onfocusinFn: () => void;
 	_onfocusoutFn: () => void;

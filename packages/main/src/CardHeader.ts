@@ -68,7 +68,7 @@ class CardHeader extends UI5Element {
 	 * @public
 	*/
 	@property()
-	titleText?: string;
+	accessor titleText: string | undefined;
 
 	/**
 	 * Defines the subtitle text.
@@ -76,7 +76,7 @@ class CardHeader extends UI5Element {
 	 * @public
 	*/
 	@property()
-	subtitleText?: string;
+	accessor subtitleText: string | undefined;
 
 	/**
 	 * Defines the additional text.
@@ -84,7 +84,7 @@ class CardHeader extends UI5Element {
 	 * @public
 	*/
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Defines if the component would be interactive,
@@ -93,7 +93,7 @@ class CardHeader extends UI5Element {
 	 * @public
 	*/
 	@property({ type: Boolean })
-	interactive = false;
+	accessor interactive = false;
 
 	/**
 	 * Define the `aria-level` attribute of the component
@@ -103,27 +103,27 @@ class CardHeader extends UI5Element {
 	 * @default 3
 	*/
 	@property({ type: Number })
-	_ariaLevel = 3;
+	accessor _ariaLevel = 3;
 
 	@property({ type: Boolean, noAttribute: true })
-	_headerActive = false;
+	accessor _headerActive = false;
 
 	/**
 	 * Defines an avatar image, displayed in the left most part of the header.
 	 * @public
 	*/
 	@slot()
-	avatar!: Array<HTMLElement>;
+	accessor avatar!: Array<HTMLElement>;
 
 	/**
 	 * Defines an action, displayed in the right most part of the header.
 	 * @public
 	*/
 	@slot()
-	action!: Array<HTMLElement>;
+	accessor action!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	onEnterDOM() {
 		if (isDesktop()) {

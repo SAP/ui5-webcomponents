@@ -209,7 +209,7 @@ class Tokenizer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -219,7 +219,7 @@ class Tokenizer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -227,7 +227,7 @@ class Tokenizer extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -235,7 +235,7 @@ class Tokenizer extends UI5Element {
 	 * @public
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
@@ -244,7 +244,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	expanded = false;
+	accessor expanded = false;
 
 	/**
 	 * Indicates if the nMore popover is open
@@ -253,7 +253,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	open = false
+	accessor open = false
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
@@ -266,7 +266,7 @@ class Tokenizer extends UI5Element {
 	@property({
 		converter: DOMReferenceConverter,
 	})
-	opener?: HTMLElement;
+	accessor opener: HTMLElement | undefined;
 
 	/**
 	 * Sets the min-width of the nMore Popover.
@@ -274,7 +274,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Number })
-	popoverMinWidth?: number;
+	accessor popoverMinWidth: number | undefined;
 
 	/**
 	 * Prevents tokens to be part of the tab chain.
@@ -283,7 +283,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventInitialFocus = false;
+	accessor preventInitialFocus = false;
 
 	/**
 	 * Prevent opening of n-more Popover when label is clicked
@@ -292,7 +292,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	preventPopoverOpen = false;
+	accessor preventPopoverOpen = false;
 
 	/**
 	 * Hides the popover arrow.
@@ -301,13 +301,13 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	hidePopoverArrow = false;
+	accessor hidePopoverArrow = false;
 
 	@property({ type: Number })
-	_nMoreCount = 0;
+	accessor _nMoreCount = 0;
 
 	@property({ type: Number })
-	_tokensCount = 0;
+	accessor _tokensCount = 0;
 
 	@slot({
 		type: HTMLElement,
@@ -318,10 +318,10 @@ class Tokenizer extends UI5Element {
 			slots: false,
 		},
 	})
-	tokens!: Array<Token>;
+	accessor tokens!: Array<Token>;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 	_resizeHandler: ResizeObserverCallback;
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;

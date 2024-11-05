@@ -50,7 +50,7 @@ class NavigationMenuItem extends MenuItem {
 	 * @since 1.22.0
 	 */
 	@property()
-	href?: string;
+	accessor href: string | undefined;
 
 	/**
 	 * Defines the component target.
@@ -69,7 +69,7 @@ class NavigationMenuItem extends MenuItem {
 	 * @since 1.22.0
 	 */
 	@property()
-	target?: string;
+	accessor target: string | undefined;
 
 	get isExternalLink() {
 		return this.href && this.target === "_blank";

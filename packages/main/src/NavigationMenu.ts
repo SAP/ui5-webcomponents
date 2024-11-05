@@ -51,8 +51,8 @@ class NavigationMenu extends Menu {
 	 * **Note:** Use `ui5-navigation-menu-item` for the intended design.
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	declare items: Array<NavigationMenuItem>;
+	// @slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	// accessor items!: Array<NavigationMenuItem>;
 
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {

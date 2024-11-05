@@ -118,28 +118,28 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Determines whether the component is active (visible).
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	active = false;
+	accessor active = false;
 
 	/**
 	 * Minimum item value for the outer circle of the clock.
 	 * @default -1
 	 */
 	@property({ type: Number })
-	itemMin = -1;
+	accessor itemMin = -1;
 
 	/**
 	 * Maximum item value for the outer circle of the clock.
 	 * @default -1
 	 */
 	@property({ type: Number })
-	itemMax = -1;
+	accessor itemMax = -1;
 
 	/**
 	 * If set to `true`, an inner circle is displayed.
@@ -147,14 +147,14 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	showInnerCircle = false;
+	accessor showInnerCircle = false;
 
 	/**
 	 * Label of the clock dial - for example, 'Hours', 'Minutes', or 'Seconds'.
 	 * @default undefined
 	 */
 	@property()
-	label?: string;
+	accessor label: string | undefined;
 
 	/**
 	 * If set to `true`, a surrounding circle with markers (dots) will be hidden.
@@ -162,7 +162,7 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hideFractions = false;
+	accessor hideFractions = false;
 
 	/**
 	 * If provided, this will replace the last item displayed. If there is only one (outer) circle,
@@ -171,21 +171,21 @@ class TimePickerClock extends UI5Element {
 	 * @default -1
 	 */
 	@property({ type: Number })
-	lastItemReplacement = -1;
+	accessor lastItemReplacement = -1;
 
 	/**
 	 * Prepend with zero flag. If `true`, values less than 10 will be prepend with 0.
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	prependZero = false;
+	accessor prependZero = false;
 
 	/**
 	 * The currently selected value of the clock.
 	 * @default -1
 	 */
 	@property({ type: Number })
-	selectedValue = -1
+	accessor selectedValue = -1
 
 	/**
 	 * The step for displaying of one unit of items.
@@ -195,7 +195,7 @@ class TimePickerClock extends UI5Element {
 	 * @default 5
 	 */
 	@property({ type: Number })
-	displayStep = 5;
+	accessor displayStep = 5;
 
 	/**
 	 * The step for selection of items.
@@ -205,25 +205,25 @@ class TimePickerClock extends UI5Element {
 	 * @default 1
 	 */
 	@property({ type: Number })
-	valueStep = 1;
+	accessor valueStep = 1;
 
 	/**
 	 * Defines the currently available Time Picker Clock items depending on Clock setup.
 	 */
 	@property({ type: Array })
-	_items: Array<TimePickerClockItem> = [];
+	accessor _items: Array<TimePickerClockItem> = [];
 
 	/**
 	 * Defines the currently selected Time Picker Clock item.
 	 */
 	@property({ type: Object })
-	_selectedItem: TimePickerClockSelectedItem = {};
+	accessor _selectedItem: TimePickerClockSelectedItem = {};
 
 	/**
 	 * Keeps variables used in interaction calculations.
 	 */
 	@property({ type: Object })
-	_dimensionParameters: TimePickerClockDimensions = {
+	accessor _dimensionParameters: TimePickerClockDimensions = {
 		radius: 0,
 		centerX: 0,
 		centerY: 0,
@@ -242,49 +242,49 @@ class TimePickerClock extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_mouseOrTouchDown = false;
+	accessor _mouseOrTouchDown = false;
 
 	/**
 	 * Cancel Mouseout flag.
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_cancelTouchOut = false;
+	accessor _cancelTouchOut = false;
 
 	/**
 	 * Calculated selected value of the clock during interactions.
 	 * @default -1
 	 */
 	@property({ type: Number, noAttribute: true })
-	_selectedValue = -1;
+	accessor _selectedValue = -1;
 
 	/**
 	 * Selected value of the clock during interactions.
 	 * @default -1
 	 */
 	@property({ type: Number, noAttribute: true })
-	_movSelectedValue = -1;
+	accessor _movSelectedValue = -1;
 
 	/**
 	 * Hovered value of the clock during interactions.
 	 * @default -1
 	 */
 	@property({ type: Number, noAttribute: true })
-	_hoveredValue = -1;
+	accessor _hoveredValue = -1;
 
 	/**
 	 * Previously hovered value of the clock during interactions.
 	 * @default -1
 	 */
 	@property({ type: Number, noAttribute: true })
-	_prevHoveredValue = -1;
+	accessor _prevHoveredValue = -1;
 
 	/**
 	 * Animation in progress flag.
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_animationInProgress = false;
+	accessor _animationInProgress = false;
 
 	_fnOnMouseOutUp: () => void;
 

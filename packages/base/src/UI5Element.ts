@@ -9,6 +9,7 @@ import type {
 	State,
 	PropertyValue,
 	Metadata,
+	Property,
 } from "./UI5ElementMetadata.js";
 import EventProvider from "./EventProvider.js";
 import updateShadowRoot from "./updateShadowRoot.js";
@@ -140,6 +141,9 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 	} while (proto && proto !== HTMLElement.prototype);
 }
 
+// @ts-expect-error
+Symbol.metadata ??= Symbol("Symbol.metadata");
+
 /**
  * @class
  * Base class for all UI5 Web Components
@@ -148,6 +152,9 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
+	_invalidate (param: InvalidationInfo) {
+		_invalidate.call(this, param);
+	}
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
@@ -1282,7 +1289,8 @@ abstract class UI5Element extends HTMLElement {
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
 				const propertyName = pair[0];
 				const targetClass = pair[1].target;
-				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+				// (targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+				(targetClass as any).call(undefined, i18nBundles[index]);
 			});
 			this.asyncFinished = true;
 		};
@@ -1332,7 +1340,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 		const mergedMetadata = merge({}, ...metadataObjects) as Metadata;
 
-		this._metadata = new UI5ElementMetadata(mergedMetadata);
+		this._metadata = new UI5ElementMetadata(mergedMetadata, this);
 		return this._metadata;
 	}
 

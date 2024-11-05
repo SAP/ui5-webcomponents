@@ -100,7 +100,7 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	value: number = 0;
+	accessor value: number = 0;
 
 	/**
 	 * The number of displayed rating symbols.
@@ -109,7 +109,7 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Number })
-	max: number = 5;
+	accessor max: number = 5;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -119,7 +119,7 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -130,7 +130,7 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	readonly = false;
+	accessor readonly = false;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -139,7 +139,7 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
@@ -148,7 +148,7 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.15.0
 	 */
 	 @property()
-	 accessibleNameRef?: string;
+	 accessor accessibleNameRef: string | undefined;
 
 	 /**
 	 * Defines whether the component is required.
@@ -157,7 +157,7 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.15.0
 	 */
 	@property({ type: Boolean })
-	required = false;
+	accessor required = false;
 
 	/**
 	 * Defines the tooltip of the component.
@@ -166,24 +166,24 @@ class RatingIndicator extends UI5Element {
 	 * @since 1.19.0
 	 */
 	@property()
-	tooltip?: string;
+	accessor tooltip: string | undefined;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Array })
-	_stars: Array<Star> = [];
+	accessor _stars: Array<Star> = [];
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_focused = false;
+	accessor _focused = false;
 
 	_liveValue?: number;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

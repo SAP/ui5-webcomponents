@@ -59,7 +59,7 @@ class Card extends UI5Element {
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -68,14 +68,14 @@ class Card extends UI5Element {
 	 * @since 1.0.0-rc.16
 	*/
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the content of the component.
 	 * @public
 	*/
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	accessor content!: Array<HTMLElement>;
 
 	/**
 	 * Defines the header of the component.
@@ -85,7 +85,7 @@ class Card extends UI5Element {
 	 * @public
 	*/
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	header!: Array<CardHeader>;
+	accessor header!: Array<CardHeader>;
 
 	/**
 	 * Defines if a loading indicator would be displayed over the card.
@@ -94,7 +94,7 @@ class Card extends UI5Element {
 	 * @since 2.1.0
 	 */
 	@property({ type: Boolean })
-	loading = false;
+	accessor loading = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will show up for this card.
@@ -103,10 +103,10 @@ class Card extends UI5Element {
 	 * @since 2.1.0
 	 */
 	@property({ type: Number })
-	loadingDelay = 1000;
+	accessor loadingDelay = 1000;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get classes() {
 		return {

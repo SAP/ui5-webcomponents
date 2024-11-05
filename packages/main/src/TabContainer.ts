@@ -248,7 +248,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	collapsed = false;
+	accessor collapsed = false;
 
 	/**
 	 * Defines the alignment of the content and the `additionalText` of a tab.
@@ -260,7 +260,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property()
-	tabLayout: `${TabLayout}` = "Standard";
+	accessor tabLayout: `${TabLayout}` = "Standard";
 
 	/**
 	 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
@@ -274,7 +274,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property()
-	overflowMode: `${OverflowMode}` = "End";
+	accessor overflowMode: `${OverflowMode}` = "End";
 
 	/**
 	 * Sets the background color of the Tab Container's header as `Solid`, `Transparent`, or `Translucent`.
@@ -283,7 +283,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerBackgroundDesign: `${BackgroundDesign}` = "Solid";
+	accessor headerBackgroundDesign: `${BackgroundDesign}` = "Solid";
 
 	/**
 	 * Sets the background color of the Tab Container's content as `Solid`, `Transparent`, or `Translucent`.
@@ -292,7 +292,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property()
-	contentBackgroundDesign: `${BackgroundDesign}` = "Solid";
+	accessor contentBackgroundDesign: `${BackgroundDesign}` = "Solid";
 
 	/**
 	 * Defines the placement of the tab strip relative to the actual tabs' content.
@@ -305,35 +305,35 @@ class TabContainer extends UI5Element {
 	 * @private
 	 */
 	@property()
-	tabsPlacement: `${TabContainerTabsPlacement}` = "Top";
+	accessor tabsPlacement: `${TabContainerTabsPlacement}` = "Top";
 
 	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
 	@property()
-	mediaRange?: string;
+	accessor mediaRange: string | undefined;
 
 	@property({ type: Object })
-	_selectedTab?: Tab;
+	accessor _selectedTab: Tab | undefined;
 
 	@property({ type: Boolean, noAttribute: true })
-	_animationRunning = false;
+	accessor _animationRunning = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_contentCollapsed = false;
+	accessor _contentCollapsed = false;
 
 	@property({ noAttribute: true })
-	_startOverflowText = "0"
+	accessor _startOverflowText = "0"
 
 	@property({ noAttribute: true })
-	_endOverflowText = "More";
+	accessor _endOverflowText = "More";
 
 	@property({ type: Array })
-	_popoverItemsFlat: Array<ITab> = [];
+	accessor _popoverItemsFlat: Array<ITab> = [];
 
 	@property({ type: Number, noAttribute: true })
-	_width?: number;
+	accessor _width: number | undefined;
 
 	/**
 	 * Defines the tabs.
@@ -350,7 +350,7 @@ class TabContainer extends UI5Element {
 			slots: true,
 		},
 	})
-	items!: Array<ITab>;
+	accessor items!: Array<ITab>;
 
 	/**
 	 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
@@ -359,7 +359,7 @@ class TabContainer extends UI5Element {
 	 * @since 1.0.0-rc.9
 	 */
 	@slot()
-	overflowButton!: Array<IButton>;
+	accessor overflowButton!: Array<IButton>;
 
 	/**
 	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
@@ -368,7 +368,7 @@ class TabContainer extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@slot()
-	startOverflowButton!: Array<IButton>;
+	accessor startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
 	_itemsFlat: Array<ITab> = [];
@@ -382,7 +382,7 @@ class TabContainer extends UI5Element {
 	}
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
@@ -529,7 +529,7 @@ class TabContainer extends UI5Element {
 		e.preventDefault();
 	}
 
-	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
+	// @longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
 	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
 		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
 			this.dropIndicatorDOM!.targetReference = null;

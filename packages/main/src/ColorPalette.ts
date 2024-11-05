@@ -105,7 +105,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showRecentColors = false;
+	accessor showRecentColors = false;
 
 	/**
 	 * Defines whether the user can choose a custom color from a color picker
@@ -115,7 +115,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: Boolean })
-	showMoreColors = false;
+	accessor showMoreColors = false;
 
 	/**
 	 * Defines whether the user can choose the default color from a button.
@@ -124,7 +124,7 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	@property({ type: Boolean })
-	showDefaultColor = false;
+	accessor showDefaultColor = false;
 
 	/**
 	 * Defines the default color of the color palette, only valid CSS color values accepted
@@ -134,28 +134,28 @@ class ColorPalette extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	@property()
-	defaultColor?: string;
+	accessor defaultColor: string | undefined;
 
 	/**
 	 * Defines the selected color, only valid CSS color values accepted
 	 * @private
 	 */
 	@property()
-	_selectedColor?: string;
+	accessor _selectedColor: string | undefined;
 
 	/**
 	 * Defines if the palette is in Popup or Embeded mode.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	popupMode = false;
+	accessor popupMode = false;
 
 	/**
 	 * Defines if the palette is rendered on phone.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone = false;
+	accessor onPhone = false;
 
 	/**
 	 * Defines the `ui5-color-palette-item` elements.
@@ -167,8 +167,7 @@ class ColorPalette extends UI5Element {
 		invalidateOnChildChange: true,
 		individualSlots: true,
 	})
-
-	colors!: Array<IColorPaletteItem>;
+	accessor colors!: Array<IColorPaletteItem>;
 
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
@@ -178,7 +177,7 @@ class ColorPalette extends UI5Element {
 	_shouldFocusRecentColors = false;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

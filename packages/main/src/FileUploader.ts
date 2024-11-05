@@ -126,7 +126,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	accept?: string;
+	accessor accept: string | undefined;
 
 	/**
 	 * If set to "true", the input field of component will not be rendered. Only the default slot that is passed will be rendered.
@@ -134,7 +134,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	hideInput = false;
+	accessor hideInput = false;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -144,7 +144,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	disabled = false;
+	accessor disabled = false;
 
 	/**
 	 * Allows multiple files to be chosen.
@@ -152,7 +152,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	multiple = false;
+	accessor multiple = false;
 
 	/**
 	 * Determines the name by which the component will be identified upon submission in an HTML form.
@@ -162,7 +162,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines a short hint intended to aid the user with data entry when the component has no value.
@@ -170,7 +170,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	placeholder?: string;
+	accessor placeholder: string | undefined;
 
 	/**
 	 * Defines the name/names of the file/files to upload.
@@ -180,7 +180,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 
 	/**
 	 * Defines the maximum file size in megabytes which prevents the upload if at least one file exceeds it.
@@ -189,7 +189,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property({ type: Number })
-	maxFileSize?: number;
+	accessor maxFileSize: number | undefined;
 
 	/**
 	 * Defines the value state of the component.
@@ -197,13 +197,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@property()
-	valueState: `${ValueState}` = "None";
+	accessor valueState: `${ValueState}` = "None";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	/**
 	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
@@ -213,7 +213,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	accessor content!: Array<HTMLElement>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -226,12 +226,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	 * @public
 	 */
 	@slot()
-	valueStateMessage!: Array<HTMLElement>;
+	accessor valueStateMessage!: Array<HTMLElement>;
 
 	static emptyInput: HTMLInputElement;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();

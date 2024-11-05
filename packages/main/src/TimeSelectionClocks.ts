@@ -74,19 +74,19 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * Flag for pressed Space key
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_spacePressed = false;
+	accessor _spacePressed = false;
 
 	/**
 	 * Flag for focused state of Clocks component
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_focused = false;
+	accessor _focused = false;
 
 	/**
 	 * Flag for focused state of AM/PM segmented button
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	_amPmFocused = false;
+	accessor _amPmFocused = false;
 
 	onBeforeRendering() {
 		this._createComponents();

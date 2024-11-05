@@ -98,7 +98,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @default []
 	 */
 	@property({ type: Array })
-	selectedDates: Array<number> = [];
+	accessor selectedDates: Array<number> = [];
 
 	/**
 	 * Defines the type of selection used in the month picker component.
@@ -112,13 +112,13 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @since 2.2.0
 	 */
 	@property()
-	selectionMode: `${CalendarSelectionMode}` = "Single";
+	accessor selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	@property({ type: Array })
-	_months: MonthInterval = [];
+	accessor _months: MonthInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
-	_hidden = false;
+	accessor _hidden = false;
 
 	/**
 	 * When selectionMode="Range" and the first month in the range is selected, this is the currently hovered or focused month.
@@ -126,10 +126,10 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	@property({ type: Number })
-	_secondTimestamp?: number;
+	accessor _secondTimestamp: number | undefined;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	get roleDescription() {
 		return MonthPicker.i18nBundle.getText(MONTH_PICKER_DESCRIPTION);

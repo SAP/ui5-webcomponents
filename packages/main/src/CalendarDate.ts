@@ -24,7 +24,7 @@ class CalendarDate extends UI5Element implements ICalendarSelectedDates {
 	 * @public
 	 */
 	@property()
-	value = "";
+	accessor value = "";
 }
 
 CalendarDate.define();

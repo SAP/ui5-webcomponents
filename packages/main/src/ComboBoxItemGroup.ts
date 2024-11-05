@@ -23,14 +23,14 @@ class ComboBoxItemGroup extends UI5Element implements IComboBoxItem {
 		 * @public
 		 */
 		@property()
-		headerText?: string;
+		accessor headerText: string | undefined;
 
 		/**
 		 * Indicates whether the item is focused
 		 * @protected
 		 */
 		@property({ type: Boolean })
-		focused = false
+		accessor focused = false
 
 		/**
 		 * Defines the items of the <code>ui5-cb-item-group</code>.
@@ -41,7 +41,7 @@ class ComboBoxItemGroup extends UI5Element implements IComboBoxItem {
 			invalidateOnChildChange: true,
 			type: HTMLElement,
 		})
-		items!: Array<IComboBoxItem>;
+		accessor items!: Array<IComboBoxItem>;
 
 		/**
 		 * Used to avoid tag name checks

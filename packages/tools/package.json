@@ -83,7 +83,7 @@
   "devDependencies": {
     "cypress-ct-lit": "^0.4.0",
     "cypress-real-events": "^1.12.0",
-    "esbuild": "^0.19.9",
+    "esbuild": "^0.24.0",
     "yargs": "^17.5.1"
   }
 }

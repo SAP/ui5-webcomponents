@@ -258,7 +258,8 @@ class Tree extends UI5Element {
 	 * @default "None"
 	 */
 	@property()
-	selectionMode?: `${ListSelectionMode}` = "None";
+	// TODO can it be undefined?
+	accessor selectionMode: `${ListSelectionMode}` | undefined = "None";
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -266,7 +267,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@property()
-	noDataText?: string;
+	accessor noDataText: string | undefined;
 
 	/**
 	 * Defines the component header text.
@@ -276,7 +277,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Defines the component footer text.
@@ -284,7 +285,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@property()
-	footerText?: string;
+	accessor footerText: string | undefined;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -293,7 +294,7 @@ class Tree extends UI5Element {
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -302,7 +303,7 @@ class Tree extends UI5Element {
 	 * @since 1.8.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Defines the items of the component. Tree items may have other tree items as children.
@@ -311,7 +312,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<TreeItemBase>;
+	accessor items!: Array<TreeItemBase>;
 
 	/**
 	 * Defines the component header.
@@ -321,7 +322,7 @@ class Tree extends UI5Element {
 	 * @public
 	 */
 	@slot()
-	header!: Array<HTMLElement>;
+	accessor header!: Array<HTMLElement>;
 
 	onEnterDOM() {
 		DragRegistry.subscribe(this);

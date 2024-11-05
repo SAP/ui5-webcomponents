@@ -75,7 +75,7 @@ class BusyIndicator extends UI5Element {
 	 * @since 1.0.0-rc.7
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the size of the component.
@@ -83,7 +83,7 @@ class BusyIndicator extends UI5Element {
 	 * @public
 	 */
 	@property()
-	size: `${BusyIndicatorSize}` = "M";
+	accessor size: `${BusyIndicatorSize}` = "M";
 
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
@@ -91,7 +91,7 @@ class BusyIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	active = false;
+	accessor active = false;
 
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
@@ -99,7 +99,7 @@ class BusyIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	delay = 1000;
+	accessor delay = 1000;
 
 	/**
 	 * Defines the placement of the text.
@@ -108,14 +108,14 @@ class BusyIndicator extends UI5Element {
 	 * @public
 	 */
 	@property()
-	textPlacement: `${BusyIndicatorTextPlacement}` = "Bottom";
+	accessor textPlacement: `${BusyIndicatorTextPlacement}` = "Bottom";
 
 	/**
 	 * Defines if the component is currently in busy state.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_isBusy = false;
+	accessor _isBusy = false;
 
 	_keydownHandler: (e: KeyboardEvent) => void;
 	_preventEventHandler: (e: KeyboardEvent) => void;
@@ -123,7 +123,7 @@ class BusyIndicator extends UI5Element {
 	focusForward?: boolean;
 
 	@i18n("@ui5/webcomponents")
-	static i18nBundle: I18nBundle;
+	static accessor i18nBundle: I18nBundle;
 
 	constructor() {
 		super();

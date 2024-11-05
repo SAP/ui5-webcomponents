@@ -41,14 +41,14 @@ class TreeItemCustom extends TreeItemBase {
 	 * @default false
 	 */
 	@property({ type: Boolean })
-	hideSelectionElement = false;
+	accessor hideSelectionElement = false;
 
 	/**
 	 * Defines the content of the `ui5-tree-item`.
 	 * @public
 	 */
 	@slot()
-	content!: Array<HTMLElement>;
+	accessor content!: Array<HTMLElement>;
 
 	async _onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);

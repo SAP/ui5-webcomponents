@@ -29,7 +29,7 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 	 * @public
 	 */
 	@property()
-	text?: string;
+	accessor text: string | undefined;
 
 	/**
 	 * Defines the `additionalText`, displayed in the end of the item.
@@ -38,7 +38,7 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 	 * @public
 	 */
 	@property()
-	additionalText?: string;
+	accessor additionalText: string | undefined;
 
 	/**
 	 * Defines the markup text that will be displayed as suggestion.
@@ -48,7 +48,7 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 	 * @private
 	 */
 	@property()
-	markupText = "";
+	accessor markupText = "";
 
 	onEnterDOM() {
 		if (isDesktop()) {

@@ -108,7 +108,7 @@ class ListItemGroup extends UI5Element {
 	 * @default undefined
 	 */
 	@property()
-	headerText?: string;
+	accessor headerText: string | undefined;
 
 	/**
 	 * Defines the accessible name of the header.
@@ -116,7 +116,7 @@ class ListItemGroup extends UI5Element {
 	 * @default undefined
 	 */
 	@property()
-	headerAccessibleName?: string;
+	accessor headerAccessibleName: string | undefined;
 
 	/**
 	 * Defines the items of the <code>ui5-li-group</code>.
@@ -127,14 +127,14 @@ class ListItemGroup extends UI5Element {
 		invalidateOnChildChange: true,
 		type: HTMLElement,
 	})
-	items!: Array<ListItemBase>;
+	accessor items!: Array<ListItemBase>;
 
 	/**
 	 * Indicates whether the header is focused
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused = false;
+	accessor focused = false;
 
 	/**
 	* Defines the header of the component.
@@ -143,7 +143,7 @@ class ListItemGroup extends UI5Element {
 	* @public
 	*/
 	@slot({ type: HTMLElement })
-	header!: Array<ListItemBase>;
+	accessor header!: Array<ListItemBase>;
 
 	onEnterDOM() {
 		DragRegistry.subscribe(this);

@@ -135,7 +135,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 */
 	@property()
-	initialFocus?: string;
+	accessor initialFocus: string | undefined;
 
 	/**
 	 * Defines if the focus should be returned to the previously focused element,
@@ -145,7 +145,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: Boolean })
-	preventFocusRestore = false;
+	accessor preventFocusRestore = false;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -154,7 +154,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines the IDs of the elements that label the component.
@@ -163,7 +163,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessor accessibleNameRef: string | undefined;
 
 	/**
 	 * Allows setting a custom role.
@@ -172,14 +172,14 @@ abstract class Popup extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property()
-	accessibleRole: `${PopupAccessibleRole}` = "Dialog";
+	accessor accessibleRole: `${PopupAccessibleRole}` = "Dialog";
 
 	/**
 	 * Defines the current media query size.
 	 * @private
 	 */
 	@property()
-	mediaRange?: string;
+	accessor mediaRange: string | undefined;
 
 	/**
 	 * Indicates whether initial focus should be prevented.
@@ -188,7 +188,7 @@ abstract class Popup extends UI5Element {
 	 * @since 2.0.0
 	 */
 	@property({ type: Boolean })
-	preventInitialFocus = false;
+	accessor preventInitialFocus = false;
 
 	/**
 	 * Indicates if the element is the top modal popup
@@ -198,26 +198,26 @@ abstract class Popup extends UI5Element {
 	 * @default false
 	 */
 	@property({ type: Boolean, noAttribute: true })
-	isTopModalPopup = false;
+	accessor isTopModalPopup = false;
 
 	/**
 	 * Defines the content of the Popup.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
+	accessor content!: Array<HTMLElement>;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onPhone = false;
+	accessor onPhone = false;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	onDesktop = false;
+	accessor onDesktop = false;
 
 	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
@@ -275,7 +275,8 @@ abstract class Popup extends UI5Element {
 	 * @default false
 	 * @since 1.2.0
 	 */
-	@property({ type: Boolean })
+	// TODO setter decorator
+	// @property({ type: Boolean })
 	set open(value: boolean) {
 		if (this._open === value) {
 			return;

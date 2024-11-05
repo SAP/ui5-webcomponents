@@ -31,7 +31,7 @@ class ToolbarSpacer extends ToolbarItem {
 	 * @default undefined
 	 */
 	@property()
-	width?: string;
+	accessor width: string | undefined;
 
 	get styles() {
 		return this.width ? { width: this.width } : { flex: "auto" };

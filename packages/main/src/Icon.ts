@@ -121,7 +121,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @since 1.9.2
 	 */
 	@property()
-	design: `${IconDesign}` = "Default";
+	accessor design: `${IconDesign}` = "Default";
 
 	/**
 	 * Defines the unique identifier (icon name) of the component.
@@ -149,7 +149,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 */
 	@property()
-	name?: string;
+	accessor name: string | undefined;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -161,7 +161,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 */
 	@property()
-	accessibleName?: string;
+	accessor accessibleName: string | undefined;
 
 	/**
 	 * Defines whether the component should have a tooltip.
@@ -171,7 +171,7 @@ class Icon extends UI5Element implements IIcon {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showTooltip = false;
+	accessor showTooltip = false;
 
 	/**
 	 * Defines the mode of the component.
@@ -180,31 +180,31 @@ class Icon extends UI5Element implements IIcon {
 	 * @since 2.0.0
 	 */
 	@property()
-	mode: `${IconMode}` = "Image";
+	accessor mode: `${IconMode}` = "Image";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Array })
-	pathData: Array<string> = [];
+	accessor pathData: Array<string> = [];
 
 	/**
 	 * @private
 	 */
 	@property({ type: Object, noAttribute: true })
-	accData?: I18nText;
+	accessor accData: I18nText | undefined;
 
 	/**
 	* @private
 	*/
 	@property({ type: Boolean })
-	invalid = false;
+	accessor invalid = false;
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	effectiveAccessibleName?: string;
+	accessor effectiveAccessibleName: string | undefined;
 
 	ltr?: boolean;
 	packageName?: string;

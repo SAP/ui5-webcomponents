@@ -25,7 +25,7 @@ class SuggestionItemGroup extends ListItemGroup {
 		invalidateOnChildChange: true,
 		type: HTMLElement,
 	})
-	items!: Array<SuggestionListItem>;
+	accessor items: Array<SuggestionListItem> = [];
 }
 
 SuggestionItemGroup.define();
