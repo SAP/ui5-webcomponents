@@ -138,7 +138,7 @@
 {{#*inline "selectAllWrapper"}}
 	{{#if showSelectAll}}
 		<div class="ui5-mcb-select-all-header" @keydown="{{_onListHeaderKeydown}}" tabindex="0">
-			<ui5-checkbox ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
+			<ui5-checkbox ?disabled={{this.readonly}} ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
 		</div>
 	{{/if}}
 {{/inline}}
