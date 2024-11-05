@@ -305,7 +305,7 @@ class Popover extends Popup {
 		const rootNode = this.getRootNode();
 		const openerHTMLElement = rootNode instanceof Document ? rootNode.getElementById(opener) : document.getElementById(opener);
 
-		return (openerHTMLElement as UI5Element)?.getDomRef?.() || openerHTMLElement;
+		return (openerHTMLElement as UI5Element)?.getFocusDomRef?.() || openerHTMLElement;
 	}
 
 	shouldCloseDueToOverflow(placement: `${PopoverPlacement}`, openerRect: DOMRect): boolean {
