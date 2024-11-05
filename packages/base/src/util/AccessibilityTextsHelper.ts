@@ -51,11 +51,10 @@ const getEffectiveAriaLabelText = (el: HTMLElement) => {
  */
 const getAllAccessibleNameRefTexts = (el: HTMLElement) => {
 	const ids = (el as AccessibleElement).accessibleNameRef?.split(" ") ?? [];
-	const owner = el.getRootNode() as HTMLElement;
 	let result = "";
 
 	ids.forEach((elementId: string, index: number) => {
-		const element = owner.querySelector(`[id='${elementId}']`);
+		const element = _getReferencedElementById(el, elementId);
 		const text = `${element && element.textContent ? element.textContent : ""}`;
 		if (text) {
 			result += text;
@@ -97,7 +96,7 @@ const _getAssociatedLabels = (el: HTMLElement): Array<HTMLElement> => {
 };
 
 const _getReferencedElementById = (el: HTMLElement, elementId: string): HTMLElement | null => {
-	return (el.getRootNode() as HTMLElement).querySelector<HTMLElement>(`[id='${elementId}']`);
+	return (el.getRootNode() as HTMLElement).querySelector<HTMLElement>(`[id='${elementId}']`) || document.getElementById(elementId);
 };
 
 /**
@@ -234,11 +233,10 @@ const getEffectiveAriaDescriptionText = (el: HTMLElement) => {
 
 const getAllAccessibleDescriptionRefTexts = (el: HTMLElement) => {
 	const ids = (el as AccessibleElement).accessibleDescriptionRef?.split(" ") ?? [];
-	const owner = el.getRootNode() as HTMLElement;
 	let result = "";
 
 	ids.forEach((elementId: string, index: number) => {
-		const element = owner.querySelector(`[id='${elementId}']`);
+		const element = _getReferencedElementById(el, elementId);
 		const text = `${element && element.textContent ? element.textContent : ""}`;
 		if (text) {
 			result += text;
