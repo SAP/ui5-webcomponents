@@ -308,6 +308,8 @@ class MenuItem extends ListItem implements IMenuItem {
 		const siblingsWithIcon = this._menuItemsAll.some(menuItem => !!menuItem.icon);
 		const itemSelectionMode = this._parentItemSelectionMode;
 
+		this._setupItemNavigation();
+
 		this._menuItemsAll.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
@@ -366,7 +368,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
-	// Return only the menu items, including items that belong to groups, but excluding separators
 	get _menuItemsAll() {
 		const items: MenuItem[] = [];
 

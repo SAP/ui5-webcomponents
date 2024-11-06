@@ -238,9 +238,6 @@ class Menu extends UI5Element {
 	@property({ converter: DOMReferenceConverter })
 	opener?: HTMLElement | string;
 
-	@property({ type: Object })
-	_parent?: MenuItem | Menu;
-
 	/**
 	 * Defines the items of this component.
 	 *
@@ -278,7 +275,6 @@ class Menu extends UI5Element {
 		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
 	}
 
-	// Return only the menu items, excluding separators and items that belong to groups
 	get _menuItems() {
 		return this.items.filter((item) : item is MenuItem => !item.isSeparator && !item.isGroup);
 	}
@@ -298,10 +294,8 @@ class Menu extends UI5Element {
 	}
 
 	get _menuItemsNavigation() {
-		const parent = this._parent || this;
-
 		const items: Array<MenuItem> = [];
-		const slottedItems = parent.getSlottedNodes<MenuItem>("items");
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
 
 		slottedItems.forEach(item => {
 			if (item.isGroup) {
@@ -311,8 +305,6 @@ class Menu extends UI5Element {
 				items.push(item);
 			}
 		});
-
-		this._parent = undefined;
 
 		return items;
 	}
@@ -352,8 +344,6 @@ class Menu extends UI5Element {
 			item,
 		}, false, false);
 
-		this._parent = item;
-		item._setupItemNavigation();
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
