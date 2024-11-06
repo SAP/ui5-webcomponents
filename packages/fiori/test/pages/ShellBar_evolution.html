@@ -20,6 +20,8 @@
 
 <body class="shellbar1auto">
 
+<ui5-navigation-layout side-collapsed>
+
 	<ui5-shellbar
 		id="shellbarWithLogoClick"
 		class="shellbar-example"
@@ -29,6 +31,7 @@
 		show-notifications
 		notifications-count="777"
 		show-product-switch
+		slot="header"
 	>
 		<ui5-button icon="menu2" slot="startButton" id="btnOpenStart"></ui5-button>
 		<ui5-button id="btnOpenBasic" end-icon="slim-arrow-down" slot="additionalContextStart" data-priority="10">PR10</ui5-button>
@@ -86,7 +89,7 @@
 		<ui5-toggle-button id="assistant" icon="sap-icon://da" slot="assistant" text="Button3"></ui5-toggle-button>
 
 	</ui5-shellbar>
-	<ui5-side-navigation collapsed>
+	<ui5-side-navigation slot="sideContent">
 		<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
 		<ui5-side-navigation-item text="People" expanded icon="group">
 			<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
@@ -106,6 +109,8 @@
 		<ui5-side-navigation-item slot="fixedItems" text="History" icon="history">
 		</ui5-side-navigation-item>
 	</ui5-side-navigation>
+</ui5-navigation-layout>
+
 	<div class="content"></div>
 	<script>
 		const btnOpenBasic = document.getElementById("btnOpenBasic");
