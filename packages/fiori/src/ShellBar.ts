@@ -610,10 +610,14 @@ class ShellBar extends UI5Element {
 	}
 
 	_isInteractive(element: HTMLElement) {
+		const bIsLogoOrMenuBtn = element.classList.contains("ui5-shellbar-logo-area")
+								|| element.classList.contains("ui5-shellbar-logo")
+								|| element.classList.contains("ui5-shellbar-menu-button");
 		const firstShadowRootChild = element.shadowRoot?.firstElementChild;
+		const elementDom = bIsLogoOrMenuBtn ? element : firstShadowRootChild;
 
 		return (
-			firstShadowRootChild && firstShadowRootChild.hasAttribute("tabindex") && firstShadowRootChild.getAttribute("tabindex") === "0"
+			elementDom && elementDom.hasAttribute("tabindex") && elementDom.getAttribute("tabindex") === "0"
 		);
 	}
 
@@ -629,15 +633,16 @@ class ShellBar extends UI5Element {
 
 	_getAllShellbarItems() {
 		return [
-			// ...this.startButton,
-			...this.logo,
+			...this.startButton,
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo-area"),
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-menu-button"),
 			...this.additionalContextStart,
 			...this.additionalContextEnd,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-search-item-for-arrow-nav"),
 			...this.assistant,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-items-for-arrow-nav"),
 			...this.profile,
-			// ...this.menuItems,
 		] as HTMLElement[];
 	}
 
