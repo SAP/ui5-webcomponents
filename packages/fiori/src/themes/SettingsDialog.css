@@ -1,5 +1,5 @@
 [ui5-dialog]::part(content) {
-  padding: 0;
+    padding: 0.25rem 0.875rem 0.25rem 0.875rem;
 }
 
 [ui5-navigation-layout] {
