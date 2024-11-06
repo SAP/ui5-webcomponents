@@ -22,6 +22,7 @@ import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.j
 import Input from "./Input.js";
 import Slider from "./Slider.js";
 import Label from "./Label.js";
+import Button from "./Button.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -31,6 +32,10 @@ import {
 	COLORPICKER_GREEN,
 	COLORPICKER_BLUE,
 	COLORPICKER_ALPHA,
+	COLORPICKER_SATURATION,
+	COLORPICKER_LIGHT,
+	COLORPICKER_HUE,
+	COLORPICKER_TOGGLE_MODE_TOOLTIP,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -41,6 +46,14 @@ const PICKER_POINTER_WIDTH = 6.5;
 type ColorCoordinates = {
 	x: number,
 	y: number,
+}
+
+type ColorChannelInput = {
+	id: string,
+	value: number,
+	accessibleName: string
+	label: string,
+	showPercentSymbol?: boolean,
 }
 
 /**
@@ -79,6 +92,7 @@ type ColorCoordinates = {
 		Input,
 		Slider,
 		Label,
+		Button,
 	],
 	shadowRootOptions: { delegatesFocus: true },
 })
@@ -135,6 +149,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_value: ColorRGB = getRGBColor(this.value);
 
 	/**
+	 * Defines the currenty selected color in HSL.
+	 * @private
+	 */
+	@property({ type: Object })
+	_valueHSL: ColorHSL = RGBToHSL(this._value);
+
+	/**
 	 * @private
 	 */
 	@property({ type: Object })
@@ -169,6 +190,12 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 */
 	@property({ type: Boolean })
 	_wrongHEX = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_displayHSL = false;
 
 	selectedHue: number;
 
@@ -212,6 +239,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	onBeforeRendering() {
 		// we have the color & ._mainValue properties here
 		this._value = getRGBColor(this.value);
+		this._valueHSL = RGBToHSL(this._value);
 		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},1)`;
 		this._setHex();
 		this._setValues();
@@ -332,27 +360,50 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_handleRGBInputsChange(e: CustomEvent) {
+	_togglePickerMode() {
+		this._displayHSL = !this._displayHSL;
+	}
+
+	_handleColorInputChange(e: CustomEvent) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
-		let tempColor;
+		const colorValue = this._displayHSL ? this._valueHSL : this._value;
+		let tempColor: ColorHSL | ColorRGB;
+
 		switch (target.id) {
 		case "red":
-			tempColor = { ...this._value, r: targetValue };
+			tempColor = { ...colorValue, r: targetValue };
 			break;
 
 		case "green":
-			tempColor = { ...this._value, g: targetValue };
+			tempColor = { ...colorValue, g: targetValue };
 			break;
 
 		case "blue":
-			tempColor = { ...this._value, b: targetValue };
+			tempColor = { ...colorValue, b: targetValue };
 			break;
+
+		case "hue":
+			tempColor = { ...colorValue, h: targetValue };
+			break;
+
+		case "saturation":
+			tempColor = { ...colorValue, s: targetValue };
+			break;
+
+		case "light":
+			tempColor = { ...colorValue, l: targetValue };
+			break;
+
 		default:
-			tempColor = { ...this._value };
+			tempColor = { ...colorValue };
 		}
 
-		this._setColor(tempColor);
+		if (this._displayHSL) {
+			tempColor = HSLToRGB(tempColor as ColorHSL);
+		}
+
+		this._setColor(tempColor as ColorRGB);
 	}
 
 	_setMainColor(hueValue: number) {
@@ -440,9 +491,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 
 		return {
-			h,
-			s,
-			l,
+			h: Math.round(h),
+			s: Math.round(s * 100),
+			l: Math.round(l * 100),
 		};
 	}
 
@@ -475,10 +526,10 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	_setValues() {
-		const hslColours: ColorHSL = RGBToHSL(this._value);
+		const hslColours: ColorHSL = this._valueHSL;
 		this._selectedCoordinates = {
-			x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
-			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
+			x: ((hslColours.l * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
+			y: (256 - (hslColours.s * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
 		};
 
 		if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.
@@ -517,8 +568,24 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return ColorPicker.i18nBundle.getText(COLORPICKER_BLUE);
 	}
 
+	get hueInputLabel() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_HUE);
+	}
+
+	get saturationInputLabel() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_SATURATION);
+	}
+
+	get lightInputLabel() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_LIGHT);
+	}
+
 	get alphaInputLabel() {
 		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA);
+	}
+
+	get toggleModeTooltip() {
+		return ColorPicker.i18nBundle.getText(COLORPICKER_TOGGLE_MODE_TOOLTIP);
 	}
 
 	get inputsDisabled() {
@@ -527,6 +594,65 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	get hexInputErrorState() {
 		return this._wrongHEX ? "Error" : undefined;
+	}
+
+	get rgbInputs(): Array<ColorChannelInput> {
+		const redInput = {
+			id: "red",
+			value: this._value.r,
+			label: "R",
+			accessibleName: this.redInputLabel,
+		};
+
+		const greenInput = {
+			id: "green",
+			value: this._value.g,
+			label: "G",
+			accessibleName: this.blueInputLabel,
+		};
+
+		const blueInput = {
+			id: "blue",
+			value: this._value.b,
+			label: "B",
+			accessibleName: this.blueInputLabel,
+		};
+
+		return [redInput, greenInput, blueInput];
+	}
+
+	get hslInputs(): Array<ColorChannelInput> {
+		const hueInput = {
+			id: "hue",
+			value: this._valueHSL.h,
+			label: "H",
+			accessibleName: this.hueInputLabel,
+		};
+
+		const saturationInput = {
+			id: "saturation",
+			value: this._valueHSL.s,
+			label: "S",
+			accessibleName: this.saturationInputLabel,
+			showPercentSymbol: true,
+		};
+
+		const lightInput = {
+			id: "light",
+			value: this._valueHSL.l,
+			label: "L",
+			accessibleName: this.lightInputLabel,
+			showPercentSymbol: true,
+		};
+
+		return [hueInput, saturationInput, lightInput];
+	}
+
+	get colorChannelInputs() {
+		if (!this._displayHSL) {
+			return this.rgbInputs;
+		}
+		return this.hslInputs;
 	}
 
 	get styles() {

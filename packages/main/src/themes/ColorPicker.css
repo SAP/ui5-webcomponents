@@ -156,20 +156,28 @@
     margin-left: .2rem;
 }
 
-.ui5-color-picker-rgb-wrapper {
+.ui5-color-channel-inputs-wrapper {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    align-items: center;
 }
 
-.ui5-color-picker-rgb {
+.ui5-color-channel {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 1rem;
+    position: relative;
 }
 
-.ui5-color-picker-rgb-input {
+.ui5-color-channel-percentage-label {
+    position: absolute;
+    top: 25%;
+    left: 100%;
+}
+
+.ui5-color-channel-input {
     width: 2.5rem;
     min-width: 2.5rem;
     text-align: center;
