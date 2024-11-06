@@ -16,7 +16,8 @@
 </head>
 
 <body>
-			<ui5-settings-dialog header-title="Settings" show-search-field open>
+		<ui5-button id="btnOpenUserSettings">User settings</ui5-button>
+			<ui5-settings-dialog id="userSetting" header-title="Settings" show-search-field>
 				<!-- Item -->
 				<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="Header title | Setting 1">
 					<ui5-setting-view text="Setting 1 Tab 1">
@@ -47,6 +48,11 @@
 					</ui5-setting-view>
 				</ui5-setting-item>
 			</ui5-settings-dialog>
+		<script>
+			btnOpenUserSettings.addEventListener("click", function () {
+				userSetting.open = true;
+			});
+		</script>
 
 </body>
 </html>
