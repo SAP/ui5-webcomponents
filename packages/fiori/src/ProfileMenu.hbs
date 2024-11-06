@@ -1,0 +1,25 @@
+<ui5-dialog .open={{open}}>
+	<ui5-user-profile avatar={{userProfile.avatar}}
+					 first-name={{userProfile.firstName}}
+					 last-name={{userProfile.lastName}}
+					 subtitle1={{userProfile.subtitle1}}
+					 subtitle2={{userProfile.subtitle2}}>
+	</ui5-user-profile>
+	<ui5-button icon="user-settings">Manage Account</ui5-button>
+	<ui5-panel collapsed>
+		<ui5-title slot="header" level="H4">Other Accounts</ui5-title>
+		<ui5-icon slot="header" name="add-employee"></ui5-icon>
+		<ui5-list>
+			{{#each otherUsers}}
+				<ui5-li>
+					<ui5-avatar slot="image"size="XS"><img src={{this.avatar}}/></ui5-avatar>
+					<ui5-title>{{firstName}} {{lastName}}</ui5-title>
+					<ui5-label>{{subtitle1}}</ui5-label>
+					</br>
+					<ui5-label>{{subtitle2}}</ui5-label>
+				</ui5-li>
+			{{/each}}
+		</ui5-list>
+	</ui5-panel>
+
+</ui5-dialog>

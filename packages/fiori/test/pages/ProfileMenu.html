@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Profile Menu</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+
+	</script>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+
+<body>
+<ui5-button id="btnOpenProfileMenu">Profile menu</ui5-button>
+<ui5-profile-menu id="profileMenu">
+	<ui5-user-profile slot="user"
+					 avatar="./img/man_avatar_1.png"
+					 first-name="Alain"
+					 last-name="Chevalier"
+					 subtitle1="alian.chevalier@sap.com"
+					 subtitle2="Delivery Manager, SAP SE">
+	</ui5-user-profile>
+	<ui5-user-profile slot="otherUsers"
+					 avatar="./img/man_avatar_1.png"
+					 first-name="Alain"
+					 last-name="Chevalier"
+					 subtitle1="test.alian.chevalier@sap.com">
+	</ui5-user-profile>
+	<ui5-user-profile slot="otherUsers"
+					 avatar="./img/man_avatar_1.png"
+					 first-name="Alain"
+					 last-name="Chevalier"
+					 subtitle1="alian.chevalier@ariba.com"
+					 subtitle2="Account Manager">
+	</ui5-user-profile>
+	<ui5-profile-menu-item slot ="menuItems" icon="action-settings" text="Setting"></ui5-profile-menu-item>
+	<ui5-profile-menu-item slot ="menuItems" icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
+	<ui5-profile-menu-item slot ="menuItems" icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
+	<ui5-profile-menu-item slot ="menuItems" icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
+	<ui5-profile-menu-item slot ="menuItems" icon="official-service" text="Legal Information">
+		<ui5-profile-menu-item text="Private Policy"></ui5-profile-menu-item>
+		<ui5-profile-menu-item text="Terms of Use"></ui5-profile-menu-item>
+	</ui5-profile-menu-item>
+	<ui5-profile-menu-item slot ="menuItems" separator icon="log" text="Sign Out"></ui5-profile-menu-item>
+
+</ui5-profile-menu>
+
+<script>
+	document.getElementById("btnOpenProfileMenu").addEventListener("click", function () {
+		document.getElementById("profileMenu").open = true;
+	});
+</script>
+</body>
+</html>

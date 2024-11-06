@@ -27,6 +27,8 @@ import NotificationList from "./NotificationList.js";
 import Page from "./Page.js";
 import ProductSwitch from "./ProductSwitch.js";
 import ProductSwitchItem from "./ProductSwitchItem.js";
+import ProfileMenu from "./ProfileMenu.js";
+import ProfileMenuItem from "./ProfileMenuItem.js";
 import ShellBar from "./ShellBar.js";
 import ShellBarItem from "./ShellBarItem.js";
 import SideNavigation from "./SideNavigation.js";
@@ -40,6 +42,7 @@ import Timeline from "./Timeline.js";
 import NavigationLayout from "./NavigationLayout.js";
 import UploadCollection from "./UploadCollection.js";
 import UploadCollectionItem from "./UploadCollectionItem.js";
+import UserProfile from "./UserProfile.js";
 import ViewSettingsDialog from "./ViewSettingsDialog.js";
 import Wizard from "./Wizard.js";
 
