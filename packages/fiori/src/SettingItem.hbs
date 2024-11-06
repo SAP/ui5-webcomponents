@@ -1,11 +1,7 @@
 <div class="ui5-setting-item">
 	<header class="ui5-setting-item-header">
 		{{#if _isPhone}}
-			<!-- 
-				when paging is enabled the if statement should include the button if you are on the second, third etc pages. 
-				_onBack should also consider to what page the navigation should be done 
-			-->
-			<ui5-button icon="nav-back" design="Transparent" @click={{_onBack}}></ui5-button>
+			<ui5-button icon="nav-back" design="Transparent" @click={{_onBackClick}}></ui5-button>
 		{{/if}}
 
 		<ui5-title level="H4" size="H4">{{headerTitle}}</ui5-title>

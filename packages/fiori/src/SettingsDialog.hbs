@@ -1,4 +1,5 @@
-<ui5-dialog .open={{open}} stretch>
+
+<ui5-dialog .open={{open}} stretch @ui5-_back="{{_onBackClick}}">
 	<ui5-navigation-layout>
 		<ui5-side-navigation slot="sideContent" @ui5-selection-change={{setSelectedItem}}>
 			{{#if headerTitle}}

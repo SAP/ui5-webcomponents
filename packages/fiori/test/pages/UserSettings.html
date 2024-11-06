@@ -16,37 +16,43 @@
 </head>
 
 <body>
-			<ui5-settings-dialog header-title="Settings" show-search-field open>
-				<!-- Item -->
-				<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="Header title | Setting 1">
-					<ui5-setting-view text="Setting 1 Tab 1">
-						<ui5-button>Setting 1 Content 1</ui5-button>
-					</ui5-setting-view>
-					<ui5-setting-view text="Setting 1 Tab 2">
-						<ui5-button>Setting 1 Content 2</ui5-button>
-					</ui5-setting-view>
-				</ui5-setting-item>
+	<ui5-button id="openSettingsDialog" design="Emphasized">Open Settings Dialog</ui5-button>
 
-				<!-- Item -->
-				<ui5-setting-item fixed-item text="Setting 2" header-title="Header title | Setting 2">
-					<ui5-setting-view text="Setting 2 Tab 1">
-						<ui5-button>Setting 2 Content 1</ui5-button>
-					</ui5-setting-view>
-					<ui5-setting-view text="Setting 2 Tab 2">
-						<ui5-button>Setting 2 Content 2</ui5-button>
-					</ui5-setting-view>
-					<ui5-setting-view  text="Setting 2 Tab 3">
-						<ui5-button>Setting 2 Content 3</ui5-button>
-					</ui5-setting-view>
-				</ui5-setting-item>
+	<ui5-settings-dialog header-title="Settings" show-search-field id="setting-dialog">
+		<!-- Item -->
+		<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="Header title | Setting 1">
+			<ui5-setting-view text="Setting 1 Tab 1">
+				<ui5-button>Setting 1 Content 1</ui5-button>
+			</ui5-setting-view>
+			<ui5-setting-view text="Setting 1 Tab 2">
+				<ui5-button>Setting 1 Content 2</ui5-button>
+			</ui5-setting-view>
+		</ui5-setting-item>
 
-				<!-- Item -->
-				<ui5-setting-item text="Setting 3" tooltip="tooltip" icon="accessibility" header-title="Header title | Setting 3">
-					<ui5-setting-view text="Setting 3 Tab 1">
-						<ui5-button>Setting 3 Content 1</ui5-button>
-					</ui5-setting-view>
-				</ui5-setting-item>
-			</ui5-settings-dialog>
+		<!-- Item -->
+		<ui5-setting-item fixed-item text="Setting 2" header-title="Header title | Setting 2">
+			<ui5-setting-view text="Setting 2 Tab 1">
+				<ui5-button>Setting 2 Content 1</ui5-button>
+			</ui5-setting-view>
+			<ui5-setting-view text="Setting 2 Tab 2">
+				<ui5-button>Setting 2 Content 2</ui5-button>
+			</ui5-setting-view>
+			<ui5-setting-view  text="Setting 2 Tab 3">
+				<ui5-button>Setting 2 Content 3</ui5-button>
+			</ui5-setting-view>
+		</ui5-setting-item>
 
+		<!-- Item -->
+		<ui5-setting-item text="Setting 3" tooltip="tooltip" icon="accessibility" header-title="Header title | Setting 3">
+			<ui5-setting-view text="Setting 3 Tab 1">
+				<ui5-button>Setting 3 Content 1</ui5-button>
+			</ui5-setting-view>
+		</ui5-setting-item>
+	</ui5-settings-dialog>
+	<script>
+		document.getElementById("openSettingsDialog").addEventListener("click", function() {
+			document.getElementById("setting-dialog").open = true;
+		});
+	</script>
 </body>
 </html>

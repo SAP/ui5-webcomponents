@@ -18,6 +18,7 @@ import SideNavigation, { type SideNavigationSelectionChangeEventDetail } from ".
 import NavigationLayout from "./NavigationLayout.js";
 
 import SettingsDialogCss from "./generated/themes/SettingsDialog.css.js";
+import type { SettingItemBackEventDetail } from "./SettingItem.js";
 
 type SettingListItem = SideNavigationItem & {
 	mappedItem: SettingItem
@@ -135,6 +136,13 @@ class SettingDialog extends UI5Element {
 
 	_onClose() {
 		this.open = false;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	_onBackClick(e: CustomEvent<SettingItemBackEventDetail>) { // zTODO: use setting item to decide if change from page to page is needed or show a side nav on phone		
+		if (isPhone()) {
+			this._sideCollapsed = false;
+		}
 	}
 }
 
