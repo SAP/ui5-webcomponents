@@ -8,7 +8,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	TAB_ARIA_DESIGN_POSITIVE,
@@ -194,6 +194,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 	_forcedSetsize?: number;
 	_forcedStyleInOverflow?: Record<string, any>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	set forcedTabIndex(val: string) {
@@ -492,10 +493,6 @@ class Tab extends UI5Element implements ITabbable, ITab {
 
 	static get overflowTemplate() {
 		return TabInOverflowTemplate;
-	}
-
-	static async onDefine() {
-		Tab.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	_ondragstart(e: DragEvent) {

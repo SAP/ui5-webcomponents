@@ -29,12 +29,15 @@ describe("Menu interaction", () => {
 
 	it("Menu icons appearance", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu open opener="btnOpen">
+		<ui5-menu opener="btnOpen">
 			<ui5-menu-item text="Item 1.0" icon="open-folder">
 				<ui5-menu-item text="1.1"></ui5-menu-item>
 			</ui5-menu-item>
 			<ui5-menu-item text="Item 2.0"></ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu] > [ui5-menu-item]")
 			.as("items");
@@ -57,11 +60,14 @@ describe("Menu interaction", () => {
 
 	it("Restore focus to previous element after close", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu open opener="btnOpen">
+		<ui5-menu opener="btnOpen">
 			<ui5-menu-item text="Item 1.0" icon="open-folder">
 				<ui5-menu-item text="1.1"></ui5-menu-item>
 			</ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
@@ -78,10 +84,13 @@ describe("Menu interaction", () => {
 
 	it("Enable navigaion over disabled items", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen" open>
+		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="Item 1"></ui5-menu-item>
 			<ui5-menu-item text="Item 2" disabled></ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
@@ -90,23 +99,26 @@ describe("Menu interaction", () => {
 			.as("items");
 
 		cy.get("@items")
-			.eq(0)
-			.should("be.focused");
+			.eq(1)
+			.should("be.visible")
+			.ui5MenuItemClick();
 
 		cy.get("@items")
 			.eq(1)
-			.ui5MenuItemClick()
 			.should("be.focused")
 			.and("have.attr", "disabled");
 	});
 
 	it("Add endContent to a menu item", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen" open>
+		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="Item 1">
 				<ui5-button slot="endContent">endContent</ui5-button>
 			</ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu]")
 			.as("menu")
@@ -131,11 +143,14 @@ describe("Menu interaction", () => {
 
 	it("Menu and Menu items busy indication - with items", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen" open>
+		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="Item 1" loading-delay="500" loading>
 				<ui5-menu-item text="Item 1.1"></ui5-menu-item>
 			</ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
@@ -149,9 +164,12 @@ describe("Menu interaction", () => {
 
 	it("Menu and Menu items busy indication - without items", () => {
 		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-		<ui5-menu id="menu" opener="btnOpen" open>
+		<ui5-menu id="menu" opener="btnOpen">
 			<ui5-menu-item text="Item 1" loading-delay="500" loading></ui5-menu-item>
 		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpen();
 
 		cy.get("[ui5-menu] > [ui5-menu-item]")
 			.shadow()
@@ -192,9 +210,12 @@ describe("Menu interaction", () => {
 	describe("Event firing", () => {
 		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen">
+			<ui5-menu opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
 			cy.get("[ui5-menu]")
 				.then($item => {
@@ -213,9 +234,12 @@ describe("Menu interaction", () => {
 
 		it("Event firing - 'ui5-item-click' after 'Space' on menu item", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen">
+			<ui5-menu opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
 			cy.get("[ui5-menu]")
 				.then($menu => {
@@ -234,9 +258,12 @@ describe("Menu interaction", () => {
 
 		it("Event firing - 'ui5-item-click' after 'Enter' on menu item", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen">
+			<ui5-menu opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
 			cy.get("[ui5-menu]")
 				.then($item => {
@@ -255,9 +282,12 @@ describe("Menu interaction", () => {
 
 		it("Prevent menu closing on item press", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen" @ui5-item-click="${(e: CustomEvent) => e.preventDefault()}">
+			<ui5-menu opener="btnOpen" @ui5-item-click="${(e: CustomEvent) => e.preventDefault()}">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
 			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
 			cy.get("[ui5-menu]")
 				.as("menu")
@@ -337,13 +367,16 @@ describe("Menu interaction", () => {
 	describe("Accessibility", () => {
 		it("Menu and Menu items accessibility attributes", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen">
+			<ui5-menu opener="btnOpen">
 				<ui5-menu-item text="Item 1.0" accessible-name="test accessible name">
 					<ui5-menu-item text="Item 1.1"></ui5-menu-item>
 				</ui5-menu-item>
 				<ui5-menu-item text="Item 2.0" accessible-name="test accessible name"></ui5-menu-item>
 				<ui5-menu-item text="Item 3.0" additional-text="Ctrl+A"></ui5-menu-item>
 			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
 			cy.get("[ui5-menu]")
 				.as("menu");
@@ -382,31 +415,31 @@ describe("Menu interaction", () => {
 				.eq(2)
 				.shadow()
 				.find("li")
-				.invoke("attr", "aria-keyshortcuts")
-				.should("be.equal", "Ctrl+A");
+				.should("have.attr", "aria-keyshortcuts", "Ctrl+A");
 
 			cy.get("@items")
 				.eq(2)
 				.shadow()
 				.find("li")
-				.invoke("attr", "role")
-				.should("be.equal", "alertdialog");
+				.should("have.attr", "role", "alertdialog");
 
 			cy.get("@items")
 				.eq(2)
 				.shadow()
 				.find("li .ui5-li-additional-text")
-				.invoke("attr", "aria-hidden")
-				.should("be.equal", "true");
+				.should("have.attr", "aria-hidden", "true");
 		});
 
 		it("Menu popover has an accessible name", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-			<ui5-menu open opener="btnOpen">
+			<ui5-menu opener="btnOpen">
 				<ui5-menu-item text="Item 1.0" icon="open-folder">
 					<ui5-menu-item text="1.1"></ui5-menu-item>
 				</ui5-menu-item>
 			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
 
 			cy.get("[ui5-menu]")
 				.ui5MenuOpened();
@@ -414,8 +447,7 @@ describe("Menu interaction", () => {
 			cy.get("[ui5-menu]")
 				.shadow()
 				.find("[ui5-responsive-popover]")
-				.invoke("attr", "accessible-name")
-				.should("be.equal", "Select an option from the menu");
+				.should("have.attr", "accessible-name", "Select an option from the menu");
 
 			cy.get("[ui5-menu-item][text='Item 1.0']")
 				.as("item")
@@ -424,8 +456,7 @@ describe("Menu interaction", () => {
 			cy.get("@item")
 				.shadow()
 				.find("[ui5-responsive-popover]")
-				.invoke("attr", "accessible-name")
-				.should("be.equal", "Select an option from the menu");
+				.should("have.attr", "accessible-name", "Select an option from the menu");
 		});
 	});
 

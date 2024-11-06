@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -11,8 +12,8 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
@@ -108,14 +109,18 @@ const SCROLL_THRESHOLD = 10; // px
  *
  * @public
  */
-@event("pin-button-toggle")
+@event("pin-button-toggle", {
+	bubbles: true,
+})
 
 /**
  * Fired when the expand/collapse area of the title is toggled.
  *
  * @public
  */
-@event("title-toggle")
+@event("title-toggle", {
+	bubbles: true,
+})
 
 class DynamicPage extends UI5Element {
 	/**
@@ -185,10 +190,12 @@ class DynamicPage extends UI5Element {
 	@slot({ type: HTMLElement })
 	footerArea!: HTMLElement[];
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	skipSnapOnScroll = false;
 	showHeaderInStickArea = false;
+	isToggled = false;
 
 	@property({ type: Boolean })
 	_headerSnapped = false;
@@ -207,10 +214,6 @@ class DynamicPage extends UI5Element {
 		this._updateMediaRange = this.updateMediaRange.bind(this);
 	}
 
-	static async onDefine() {
-		DynamicPage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._updateMediaRange);
 	}
@@ -223,6 +226,8 @@ class DynamicPage extends UI5Element {
 		if (this.dynamicPageTitle) {
 			this.dynamicPageTitle.snapped = this._headerSnapped;
 			this.dynamicPageTitle.interactive = this.hasHeading;
+			this.dynamicPageTitle.hasSnappedTitleOnMobile = !!this.hasSnappedTitleOnMobile;
+			this.dynamicPageTitle.removeAttribute("hovered");
 		}
 	}
 
@@ -243,7 +248,7 @@ class DynamicPage extends UI5Element {
 	}
 
 	get headerInContent(): boolean {
-		return !this.showHeaderInStickArea && !this.headerInTitle;
+		return !this.showHeaderInStickArea && !this.headerInTitle && !this.hasSnappedTitleOnMobile;
 	}
 
 	get _headerLabel() {
@@ -278,6 +283,10 @@ class DynamicPage extends UI5Element {
 		return this._headerSnapped;
 	}
 
+	get hasSnappedTitleOnMobile() {
+		return isPhone() && this.headerSnapped && this.dynamicPageTitle?.snappedTitleOnMobile.length;
+	}
+
 	/**
 	 * Defines if the header is snapped.
 	 *
@@ -300,39 +309,63 @@ class DynamicPage extends UI5Element {
 			return;
 		}
 
-		const scrollTop = this.scrollContainer!.scrollTop;
-		const lastHeaderSnapped = this._headerSnapped;
+		if (this.isToggled) {
+			this.isToggled = false;
+			return;
+		}
 
 		if (this.skipSnapOnScroll) {
 			this.skipSnapOnScroll = false;
 			return;
 		}
 
-		if (scrollTop > this.dynamicPageHeader.getBoundingClientRect().height) {
+		const scrollTop = this.scrollContainer!.scrollTop;
+		const headerHeight = this.dynamicPageHeader.getBoundingClientRect().height;
+		const lastHeaderSnapped = this._headerSnapped;
+
+		const shouldSnap = !this._headerSnapped && scrollTop > headerHeight + SCROLL_THRESHOLD;
+		const shouldExpand = this._headerSnapped && (scrollTop < headerHeight - SCROLL_THRESHOLD
+			|| (!scrollTop && !headerHeight));
+
+		if (shouldSnap) {
 			this.showHeaderInStickArea = false;
 			this._headerSnapped = true;
-		} else {
+
+			//* snappedTitleOnMobile
+			// If the header is snapped and the scroll is at the top, scroll down a bit
+			// to avoid ending in an endless loop of snapping and unsnapping
+			requestAnimationFrame(() => {
+				if (this.scrollContainer!.scrollTop === 0) {
+					this.scrollContainer!.scrollTop = SCROLL_THRESHOLD;
+				}
+			});
+		} else if (shouldExpand) {
 			this._headerSnapped = false;
 		}
 
+		// Fire event if snapped state changed
 		if (lastHeaderSnapped !== this._headerSnapped) {
-			this.fireEvent("title-toggle");
+			this.fireDecoratorEvent("title-toggle");
 		}
-
-		this.dynamicPageTitle.snapped = this._headerSnapped;
 	}
 
 	async onExpandClick() {
+		this.isToggled = true;
 		this._toggleHeader();
-		this.fireEvent("title-toggle");
+		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
 		this.headerActions?.focusExpandButton();
+
+		if (this.hasSnappedTitleOnMobile) {
+			this.dynamicPageTitle?.focus();
+		}
+
 		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
-		this.fireEvent("pin-button-toggle");
+		this.fireDecoratorEvent("pin-button-toggle");
 		await renderFinished();
 		this.headerActions?.focusPinButton();
 	}
@@ -341,13 +374,29 @@ class DynamicPage extends UI5Element {
 		if (!this.hasHeading) {
 			return;
 		}
+		this.isToggled = true;
 		this._toggleHeader();
-		this.fireEvent("title-toggle");
+		this.fireDecoratorEvent("title-toggle");
 		await renderFinished();
 		this.dynamicPageTitle!.focus();
 	}
 
 	async _toggleHeader() {
+		const headerHeight = this.dynamicPageHeader?.getBoundingClientRect().height || 0;
+		const currentScrollTop = this.scrollContainer!.scrollTop;
+
+		if (currentScrollTop > SCROLL_THRESHOLD && currentScrollTop < headerHeight) {
+			if (!this._headerSnapped) {
+				this._headerSnapped = true;
+				this.showHeaderInStickArea = true;
+				this.scrollContainer!.scrollTop = 0;
+			} else {
+				this.showHeaderInStickArea = false;
+				this._headerSnapped = false;
+			}
+			return;
+		}
+
 		if (this.scrollContainer!.scrollTop === SCROLL_THRESHOLD) {
 			this.scrollContainer!.scrollTop = 0;
 		}

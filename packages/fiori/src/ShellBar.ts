@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
@@ -18,7 +19,6 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/search.js";
@@ -162,7 +162,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  *
  * Fired, when the notification icon is activated.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -173,6 +172,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	cancelable: true,
+	bubbles: true,
 })
 
 /**
@@ -187,13 +188,13 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
  * Fired, when the product switch icon is activated.
  *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
@@ -204,6 +205,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	cancelable: true,
+	bubbles: true,
 })
 
 /**
@@ -219,6 +222,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		targetRef: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -236,13 +240,14 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
  * Fired, when the search button is activated.
  *
  * **Note:** You can prevent expanding/collapsing of the search field by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @param {Boolean} searchFieldVisible whether the search field is visible
  * @public
@@ -253,6 +258,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		targetRef: { type: HTMLElement },
 		searchFieldVisible: { type: Boolean },
 	},
+	cancelable: true,
+	bubbles: true,
 })
 
 class ShellBar extends UI5Element {
@@ -452,6 +459,7 @@ class ShellBar extends UI5Element {
 	@slot()
 	midContent!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 	overflowPopover?: Popover | null;
 	menuPopover?: Popover | null;
@@ -527,16 +535,16 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		const shouldContinue = this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+		const shouldContinue = this.fireDecoratorEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 			item: e.detail.selectedItems[0],
-		}, true);
+		});
 		if (shouldContinue) {
 			this.menuPopover!.open = false;
 		}
 	}
 
 	_logoPress() {
-		this.fireEvent<ShellBarLogoClickEventDetail>("logo-click", {
+		this.fireDecoratorEvent<ShellBarLogoClickEventDetail>("logo-click", {
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo")!,
 		});
 	}
@@ -731,10 +739,10 @@ class ShellBar extends UI5Element {
 
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
-		const defaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+		const defaultPrevented = !this.fireDecoratorEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
-		}, true);
+		});
 
 		if (defaultPrevented) {
 			return;
@@ -794,13 +802,13 @@ class ShellBar extends UI5Element {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
-		}, true);
+		});
 	}
 
 	_handleProfilePress() {
-		this.fireEvent<ShellBarProfileClickEventDetail>("profile-click", {
+		this.fireDecoratorEvent<ShellBarProfileClickEventDetail>("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
 	}
@@ -813,9 +821,9 @@ class ShellBar extends UI5Element {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
-		}, true);
+		});
 	}
 
 	/**
@@ -1202,10 +1210,6 @@ class ShellBar extends UI5Element {
 
 	get accLogoRole() {
 		return this.accessibilityAttributes.logo?.role || "button";
-	}
-
-	static async onDefine() {
-		ShellBar.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

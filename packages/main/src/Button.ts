@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -13,10 +14,8 @@ import {
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
@@ -101,12 +100,17 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @public
  * @native
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 /**
  * Fired whenever the active state of the component changes.
  * @private
  */
-@event("_active-state-change")
+@event("_active-state-change", {
+	bubbles: true,
+	cancelable: true,
+})
 class Button extends UI5Element implements IButton {
 	/**
 	 * Defines the component design.
@@ -316,6 +320,7 @@ class Button extends UI5Element implements IButton {
 
 	_ontouchstart: PassiveEventListenerObject;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -332,9 +337,7 @@ class Button extends UI5Element implements IButton {
 			isGlobalHandlerAttached = true;
 		}
 
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			markEvent(e, "button");
-
+		const handleTouchStartEvent = () => {
 			if (this.nonInteractive) {
 				return;
 			}
@@ -362,12 +365,11 @@ class Button extends UI5Element implements IButton {
 		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
-	_onclick(e: MouseEvent) {
+	_onclick() {
 		if (this.nonInteractive) {
 			return;
 		}
 
-		markEvent(e, "button");
 		if (this._isSubmit) {
 			submitForm(this);
 		}
@@ -381,12 +383,11 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
+	_onmousedown() {
 		if (this.nonInteractive) {
 			return;
 		}
 
-		markEvent(e, "button");
 		this._setActiveState(true);
 		activeButton = this; // eslint-disable-line
 	}
@@ -406,13 +407,8 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onmouseup(e: MouseEvent) {
-		markEvent(e, "button");
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		this._cancelAction = isShift(e) || isEscape(e);
-		markEvent(e, "button");
 
 		if (isSpace(e) || isEnter(e)) {
 			this._setActiveState(true);
@@ -424,10 +420,6 @@ class Button extends UI5Element implements IButton {
 	_onkeyup(e: KeyboardEvent) {
 		if (this._cancelAction) {
 			e.preventDefault();
-		}
-
-		if (isSpace(e)) {
-			markEvent(e, "button");
 		}
 
 		if (isSpace(e) || isEnter(e)) {
@@ -447,16 +439,8 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	_onfocusin(e: FocusEvent) {
-		if (this.nonInteractive) {
-			return;
-		}
-
-		markEvent(e, "button");
-	}
-
 	_setActiveState(active: boolean) {
-		const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+		const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
 
 		if (eventPrevented) {
 			return;
@@ -549,10 +533,6 @@ class Button extends UI5Element implements IButton {
 
 	get _isReset() {
 		return this.type === ButtonType.Reset;
-	}
-
-	static async onDefine() {
-		Button.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

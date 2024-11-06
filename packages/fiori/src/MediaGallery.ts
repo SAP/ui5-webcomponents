@@ -108,13 +108,16 @@ const COLUMNS_COUNT: Record<string, number> = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
  * Fired when the thumbnails overflow button is clicked.
  * @public
  */
-@event("overflow-click")
+@event("overflow-click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the display area is clicked.
@@ -122,7 +125,9 @@ const COLUMNS_COUNT: Record<string, number> = {
  * the enlarged content of the currently selected item.
  * @public
  */
-@event("display-area-click")
+@event("display-area-click", {
+	bubbles: true,
+})
 
 class MediaGallery extends UI5Element {
 	/**
@@ -241,6 +246,14 @@ class MediaGallery extends UI5Element {
 	}
 
 	_updateSelection() {
+		if (this.items.length === 0) {
+			this._selectedItem = undefined;
+			if (this._mainItem) {
+				const oldContent = this._mainItem.displayedContent;
+				oldContent?.remove();
+			}
+			return;
+		}
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
 			itemToSelect = this._findSelectableItem();
@@ -375,7 +388,7 @@ class MediaGallery extends UI5Element {
 		this._itemNavigation.setCurrentItem(item);
 
 		if (userInteraction) {
-			this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+			this.fireDecoratorEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
 		}
 
 		if (isPhone()) {
@@ -425,7 +438,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	_onOverflowBtnClick() {
-		this.fireEvent("overflow-click");
+		this.fireDecoratorEvent("overflow-click");
 	}
 
 	_onDisplayAreaClick() {
@@ -433,14 +446,14 @@ class MediaGallery extends UI5Element {
 			return;
 		}
 
-		this.fireEvent("display-area-click");
+		this.fireDecoratorEvent("display-area-click");
 	}
 
 	_onCarouselNavigate(e: CustomEvent<CarouselNavigateEventDetail>) {
 		const selectedIndex = e.detail.selectedIndex,
 			item = this._selectableItems[selectedIndex];
 
-		this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+		this.fireDecoratorEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
 	}
 
 	get _mainItemTabIndex() {

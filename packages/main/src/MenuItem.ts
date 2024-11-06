@@ -1,11 +1,12 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -62,10 +63,6 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
 })
 class MenuItem extends ListItem implements IMenuItem {
-	static async onDefine() {
-		MenuItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
 	/**
 	 * Defines the text of the tree item.
 	 * @default undefined
@@ -214,6 +211,9 @@ class MenuItem extends ListItem implements IMenuItem {
 	 */
 	@slot({ type: HTMLElement })
 	endContent!: Array<HTMLElement>;
+
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
 
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";

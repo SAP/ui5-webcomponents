@@ -4,6 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -30,7 +31,6 @@ import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalized
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
@@ -189,6 +189,7 @@ enum TableFocusTargetElement {
 		*/
 		row: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -206,6 +207,7 @@ enum TableFocusTargetElement {
 			type: Array,
 		},
 	},
+	bubbles: true,
 })
 
 /**
@@ -215,7 +217,9 @@ enum TableFocusTargetElement {
  * @public
  * @since 2.0.0
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 /**
  * Fired when selection is changed by user interaction
@@ -236,6 +240,7 @@ enum TableFocusTargetElement {
 		 */
 		previouslySelectedRows: { type: Array },
 	},
+	bubbles: true,
 })
 class Table extends UI5Element {
 	/**
@@ -430,10 +435,7 @@ class Table extends UI5Element {
 	})
 	columns!: Array<TableColumn>;
 
-	static async onDefine() {
-		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	fnHandleF7: (e: CustomEvent) => void;
@@ -671,7 +673,7 @@ class Table extends UI5Element {
 
 		const selectedRows = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -703,7 +705,7 @@ class Table extends UI5Element {
 
 		const selectedRows: Array<ITableRow> = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -925,7 +927,7 @@ class Table extends UI5Element {
 	}
 
 	_onLoadMoreClick() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	observeTableEnd() {
@@ -947,7 +949,7 @@ class Table extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
@@ -965,7 +967,7 @@ class Table extends UI5Element {
 				}
 			});
 			row.selected = true;
-			this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
 				selectedRows: [row],
 				previouslySelectedRows,
 			});
@@ -990,7 +992,7 @@ class Table extends UI5Element {
 			this._allRowsSelected = false;
 		}
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1019,7 +1021,7 @@ class Table extends UI5Element {
 
 		const selectedRows = bAllSelected ? this.rows : [];
 
-		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1094,7 +1096,7 @@ class Table extends UI5Element {
 		// invalidate if hidden columns count has changed or columns are shown
 		if (hiddenColumnsChange || shownColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
-			this.fireEvent<TablePopinChangeEventDetail>("popin-change", {
+			this.fireDecoratorEvent<TablePopinChangeEventDetail>("popin-change", {
 				poppedColumns: this._hiddenColumns,
 			});
 		}

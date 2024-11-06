@@ -1,5 +1,4 @@
 import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import Dialog from "../Dialog.js";
@@ -22,10 +21,6 @@ class ColorPaletteMoreColors extends ComponentFeature {
 	}
 
 	static i18nBundle: I18nBundle;
-
-	static async define() {
-		ColorPaletteMoreColors.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	get colorPaletteDialogTitle() {
 		return ColorPaletteMoreColors.i18nBundle.getText(COLOR_PALETTE_DIALOG_TITLE);

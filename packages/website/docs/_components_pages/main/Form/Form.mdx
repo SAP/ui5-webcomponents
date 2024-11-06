@@ -10,6 +10,7 @@ import Layout from "../../../_samples/main/Form/Layout/Layout.md";
 import LabelSpan from "../../../_samples/main/Form/LabelSpan/LabelSpan.md";
 import LabelsOnTop from "../../../_samples/main/Form/LabelsOnTop/LabelsOnTop.md";
 import GroupColumnSpan from "../../../_samples/main/Form/GroupColumnSpan/GroupColumnSpan.md";
+import HeaderTextWrapping from "../../../_samples/main/Form/HeaderTextWrapping/HeaderTextWrapping.md";
 import ItemColumnSpan from "../../../_samples/main/Form/ItemColumnSpan/ItemColumnSpan.md";
 import FreeStyleForm from "../../../_samples/main/Form/FreeStyleForm/FreeStyleForm.md";
 import CustomHeader from "../../../_samples/main/Form/CustomHeader/CustomHeader.md";
@@ -26,6 +27,7 @@ import CustomHeader from "../../../_samples/main/Form/CustomHeader/CustomHeader.
 ### Layout
 Use the Form#**layout** property to define the number of columns to distribute the form content by breakpoint.
 
+- S1 M1 L2 XL3 - 1 cols in S, 1 cols in M, 2 cols in L and 3 cols in XL (default layout) 
 - S1 M2 L3 XL5 - 1 cols in S, 2 cols in M, 3 cols in L and 5 cols in XL
 - S1 M2 L4 XL6 -  1 cols in S, 2 cols in M, 4 cols in L and 6 cols in XL
 - S2 M3 L5 XL7 - 2 cols in S, 3 cols in M, 5 cols in L and 7 cols in XL
@@ -79,6 +81,12 @@ The FormItem#**columnSpan** defines to how many columns the form item should exp
 
 <ItemColumnSpan />
 
+
+### Header Text Wrapping
+
+The Form header text **is wrapping** when doesn't fit the available space.
+
+<HeaderTextWrapping />
 
 ### Custom Header
 

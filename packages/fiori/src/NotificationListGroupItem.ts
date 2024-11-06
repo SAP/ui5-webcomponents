@@ -88,7 +88,9 @@ type NotificationListGroupItemToggleEventDetail = {
  * Fired when the `ui5-li-notification-group` is expanded/collapsed by user interaction.
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
 
 /**
  * Fired when additional items are requested.
@@ -96,7 +98,9 @@ type NotificationListGroupItemToggleEventDetail = {
  * @public
  * @since 2.2.0
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 class NotificationListGroupItem extends NotificationListItemBase {
 	/**
@@ -184,7 +188,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return ids.join(" ");
 	}
 
-	get _ariaExpanded() {
+	get _expanded() {
 		return !this.collapsed;
 	}
 
@@ -198,7 +202,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	toggleCollapsed() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
+		this.fireDecoratorEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
 	}
 
 	/**
@@ -210,7 +214,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	_onLoadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	get loadMoreButton() {

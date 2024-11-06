@@ -4,10 +4,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
+import TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
 import TextTemplate from "./generated/templates/TextTemplate.lit.js";
 
@@ -69,7 +69,7 @@ class Text extends UI5Element {
 	 * @public
 	 */
 	@property()
-	emptyIndicatorMode: `${EmptyIndicatorMode}` = "Off";
+	emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
 
 	/**
 	 * Defines the text of the component.
@@ -78,11 +78,8 @@ class Text extends UI5Element {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		Text.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	onBeforeRendering() {
 		this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);
@@ -93,7 +90,7 @@ class Text extends UI5Element {
 	}
 
 	get _renderEmptyIndicator() {
-		return !this.hasText && this.emptyIndicatorMode === EmptyIndicatorMode.On;
+		return !this.hasText && this.emptyIndicatorMode === TextEmptyIndicatorMode.On;
 	}
 
 	get _emptyIndicatorAriaLabel() {

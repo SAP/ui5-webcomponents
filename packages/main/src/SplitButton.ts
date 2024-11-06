@@ -17,9 +17,8 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
@@ -92,13 +91,17 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * Fired when the user clicks on the default action.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the user clicks on the arrow action.
  * @public
  */
-@event("arrow-click")
+@event("arrow-click", {
+	bubbles: true,
+})
 class SplitButton extends UI5Element {
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
@@ -201,11 +204,8 @@ class SplitButton extends UI5Element {
 	_isDefaultActionPressed = false;
 	_isKeyDownOperation = false;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
 
 	constructor() {
 		super();
@@ -232,8 +232,8 @@ class SplitButton extends UI5Element {
 		this._fireClick(e);
 	}
 
-	_onFocusOut(e: FocusEvent) {
-		if (this.disabled || getEventMark(e)) {
+	_onFocusOut() {
+		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
@@ -241,8 +241,8 @@ class SplitButton extends UI5Element {
 		this._setTabIndexValue();
 	}
 
-	_onFocusIn(e: FocusEvent) {
-		if (this.disabled || getEventMark(e)) {
+	_onFocusIn() {
+		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
@@ -306,7 +306,7 @@ class SplitButton extends UI5Element {
 	_fireClick(e?: Event) {
 		e?.stopPropagation();
 		if (!this._shiftOrEscapePressed) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 		this._shiftOrEscapePressed = false;
 	}
@@ -314,7 +314,7 @@ class SplitButton extends UI5Element {
 	_fireArrowClick(e?: Event) {
 		e?.stopPropagation();
 
-		this.fireEvent("arrow-click");
+		this.fireDecoratorEvent("arrow-click");
 	}
 
 	_textButtonRelease() {

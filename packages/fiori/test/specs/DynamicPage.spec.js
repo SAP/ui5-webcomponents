@@ -129,6 +129,28 @@ describe("Page general interaction", () => {
 		await browser.url(`test/pages/DynamicPage_test.html`);
 	});
 
+    it("toggles the header when scrollTop is between SCROLL_THRESHOLD and headerHeight", async () => {
+        const page = await browser.$("#page");
+        const scrollContainer = await page.shadow$(".ui5-dynamic-page-scroll-container");
+        const snapButton = await page.shadow$("ui5-dynamic-page-header-actions").shadow$(".ui5-dynamic-page-header-action");
+
+        await scrollContainer.setProperty("scrollTop", 20);
+
+        assert.strictEqual(await page.getProperty("headerSnapped"), false, "Header is initially expanded");
+
+        await snapButton.click();
+
+        assert.strictEqual(await page.getProperty("headerSnapped"), true, "The header should be snapped");
+        assert.strictEqual(await page.getProperty("showHeaderInStickArea"), true, "Header should be displayed in the sticky area");
+
+        await snapButton.click();
+
+        assert.strictEqual(await page.getProperty("headerSnapped"), false, "The header should be expanded again after unsnapping");
+        assert.strictEqual(await page.getProperty("showHeaderInStickArea"), false, "Header should not be in the sticky area when expanded");
+
+        assert.strictEqual(await scrollContainer.getProperty("scrollTop"), 0, "scrollTop should be reset to 0 after unsnapping");
+    });
+
     it("allows toggle the footer", async () => {
         const footer = await browser.$("#page").shadow$(".ui5-dynamic-page-footer");
         const toggleFooterButton = await browser.$("#actionsToolbar").shadow$("#toggleFooterBtn");
@@ -408,12 +430,12 @@ describe("ARIA attributes", () => {
 
         assert.strictEqual(await expandButton.getProperty("accessibleName"), "Snap Header",
             "expand button accessible-name is correct");
-        assert.strictEqual(await expandButton.getProperty("title"), "Snap Header",
+        assert.strictEqual(await expandButton.getProperty("tooltip"), "Snap Header",
             "expand button accessible-name is correct");
 
         assert.strictEqual(await pinButton.getProperty("accessibleName"), "Pin Header",
             "pin button accessible-name is correct");
-        assert.strictEqual(await pinButton.getProperty("title"), "Pin Header",
+        assert.strictEqual(await pinButton.getProperty("tooltip"), "Pin Header",
             "pin button accessible-name is correct");
     });
 
@@ -447,7 +469,7 @@ describe("ARIA attributes", () => {
         assert.ok(await expandButton.isExisting(), "expand button is rendered");
         assert.strictEqual(await expandButton.getProperty("accessibleName"), "Expand Header",
             "expand button accessible-name is correct");
-        assert.strictEqual(await expandButton.getProperty("title"), "Expand Header",
+        assert.strictEqual(await expandButton.getProperty("tooltip"), "Expand Header",
             "expand button tooltip is correct");
     });
 });

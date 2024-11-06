@@ -14,7 +14,7 @@ import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import {
 	isSpace,
@@ -167,6 +167,7 @@ enum ClipboardDataOperation {
 		*/
 		tokens: { type: Array },
 	},
+	bubbles: true,
 })
 
 /**
@@ -179,19 +180,24 @@ enum ClipboardDataOperation {
 	detail: {
 		tokens: { type: Array },
 	},
+	bubbles: true,
 })
 
 /**
  * Fired when nMore link is pressed.
  * @private
  */
-@event("show-more-items-press")
+@event("show-more-items-press", {
+	bubbles: true,
+})
 
 /**
  * Fired before nMore Popover is opened.
  * @private
  */
-@event("before-more-popover-open")
+@event("before-more-popover-open", {
+	bubbles: true,
+})
 
 class Tokenizer extends UI5Element {
 	/**
@@ -314,6 +320,7 @@ class Tokenizer extends UI5Element {
 	})
 	tokens!: Array<Token>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 	_resizeHandler: ResizeObserverCallback;
 	_itemNav: ItemNavigation;
@@ -380,7 +387,7 @@ class Tokenizer extends UI5Element {
 
 		this._skipTabIndex = true;
 
-		this.fireEvent("show-more-items-press");
+		this.fireDecoratorEvent("show-more-items-press");
 	}
 
 	_onmousedown(e: MouseEvent) {
@@ -460,7 +467,7 @@ class Tokenizer extends UI5Element {
 		this._handleCurrentItemAfterDeletion(nextToken);
 
 		this._tokenDeleting = true;
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] || [target] });
+		this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -513,9 +520,9 @@ class Tokenizer extends UI5Element {
 		this._tokenDeleting = true;
 
 		if (this._selectedTokens.length) {
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._selectedTokens });
+			this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._selectedTokens });
 		} else {
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
+			this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 		}
 	}
 
@@ -528,7 +535,7 @@ class Tokenizer extends UI5Element {
 			const morePopover = this.getPopover();
 
 			morePopover.addEventListener("ui5-close", () => {
-				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
+				this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 			}, {
 				once: true,
 			});
@@ -538,7 +545,7 @@ class Tokenizer extends UI5Element {
 				token._isVisible = false;
 				this._deletedDialogItems.push(token as Token);
 			} else {
-				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
+				this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 			}
 			const currentListItem = e.detail.item as ListItem;
 			const nextListItem = currentListItem.nextElementSibling as ListItem;
@@ -577,7 +584,7 @@ class Tokenizer extends UI5Element {
 
 		list._itemNavigation.setCurrentItem(firstListItem);
 
-		this.fireEvent("before-more-popover-open");
+		this.fireDecoratorEvent("before-more-popover-open");
 	}
 
 	handleAfterClose() {
@@ -595,7 +602,7 @@ class Tokenizer extends UI5Element {
 		const confirm = !!isOkButton;
 
 		if (confirm && this._deletedDialogItems.length) {
-			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._deletedDialogItems });
+			this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: this._deletedDialogItems });
 		}
 
 		this.open = false;
@@ -735,7 +742,7 @@ class Tokenizer extends UI5Element {
 		const selectedTokensChanged = JSON.stringify(previousSelectedTokens) !== JSON.stringify(this._selectedTokens);
 
 		if (selectedTokensChanged) {
-			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 				tokens: this._selectedTokens,
 			});
 		}
@@ -756,7 +763,7 @@ class Tokenizer extends UI5Element {
 		const selectedTokensChanged = JSON.stringify(previousSelectedTokens) !== JSON.stringify(this._selectedTokens);
 
 		if (selectedTokensChanged) {
-			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 				tokens: this._selectedTokens,
 			});
 		}
@@ -814,7 +821,7 @@ class Tokenizer extends UI5Element {
 		const selectedTokensChanged = JSON.stringify(previousSelectedTokens) !== JSON.stringify(this._selectedTokens);
 
 		if (selectedTokensChanged) {
-			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 				tokens: this._selectedTokens,
 			});
 		}
@@ -826,7 +833,7 @@ class Tokenizer extends UI5Element {
 
 	_click(e: MouseEvent) {
 		if (e.metaKey || e.ctrlKey) {
-			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 				tokens: this._selectedTokens,
 			});
 			return;
@@ -859,7 +866,7 @@ class Tokenizer extends UI5Element {
 				});
 			}
 
-			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 				tokens: this._selectedTokens,
 			});
 
@@ -908,7 +915,7 @@ class Tokenizer extends UI5Element {
 		const tokensAreSelected = tokens.every(token => token.selected);
 		tokens.forEach(token => { token.selected = !tokensAreSelected; });
 
-		this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 			tokens: this._selectedTokens,
 		});
 	}
@@ -925,7 +932,7 @@ class Tokenizer extends UI5Element {
 				}
 			});
 
-			this.fireEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent<TokenizerSelectionChangeEventDetail>("selection-change", {
 				tokens: this._selectedTokens,
 			});
 		}
@@ -1114,10 +1121,6 @@ class Tokenizer extends UI5Element {
 
 		const lastToken = tokens[tokens.length - 1];
 		lastToken.focus();
-	}
-
-	static async onDefine() {
-		Tokenizer.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	getPopover() {

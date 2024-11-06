@@ -2,7 +2,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -152,6 +152,7 @@ type VSDInternalSettings = {
 		 */
 		filters: { type: Array },
 	},
+	bubbles: true,
 })
 
 /**
@@ -186,25 +187,32 @@ type VSDInternalSettings = {
 		 */
 		filters: { type: Array },
 	},
+	bubbles: true,
 })
 
 /**
- * Fired before the component is opened. **This event does not bubble.**
+ * Fired before the component is opened.
  * @public
  */
-@event("before-open")
+@event("before-open", {
+	cancelable: true,
+})
 /**
  * Fired after the dialog is opened.
  * @since 2.0.0
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 /**
  * Fired after the dialog is closed.
  * @since 2.0.0
  * @public
  */
-@event("close")
+@event("close", {
+	bubbles: true,
+})
 class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
@@ -293,6 +301,7 @@ class ViewSettingsDialog extends UI5Element {
 	_sortOrder?: List;
 	_sortBy?: List;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
 	onBeforeRendering() {
@@ -323,10 +332,6 @@ class ViewSettingsDialog extends UI5Element {
 
 			filter.additionalText = !selectedCount ? "" : `${selectedCount}`;
 		});
-	}
-
-	static async onDefine() {
-		ViewSettingsDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 
 	get _selectedFilter() {
@@ -528,7 +533,7 @@ class ViewSettingsDialog extends UI5Element {
 			this._restoreSettings(this._confirmedSettings);
 		}
 
-		this.fireEvent("before-open", {}, true, false);
+		this.fireDecoratorEvent("before-open", {});
 	}
 
 	afterDialogOpen(): void {
@@ -536,11 +541,11 @@ class ViewSettingsDialog extends UI5Element {
 
 		this._focusRecentlyUsedControl();
 
-		this.fireEvent("open");
+		this.fireDecoratorEvent("open");
 	}
 
 	afterDialogClose(): void {
-		this.fireEvent("close");
+		this.fireDecoratorEvent("close");
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
@@ -561,7 +566,24 @@ class ViewSettingsDialog extends UI5Element {
 			return filter;
 		});
 
+		this._setSelectedProp(e);
+
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
+	}
+
+	/**
+	 * Sets the selected property of the clicked item.
+	 * @param e
+	 * @private
+	 */
+	_setSelectedProp(e: CustomEvent<ListItemClickEventDetail>) {
+		this.filterItems.forEach(filterItem => {
+			filterItem.values.forEach(option => {
+				if (option.text === e.detail.item.innerText) {
+					option.selected = !option.selected;
+				}
+			});
+		});
 	}
 
 	_navigateToFilters() {
@@ -597,7 +619,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.open = false;
 		this._confirmedSettings = this._currentSettings;
 
-		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
+		this.fireDecoratorEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
 	}
 
 	/**
@@ -606,7 +628,7 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 
-		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
+		this.fireDecoratorEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
 		this.open = false;
 	}
 
@@ -617,13 +639,15 @@ class ViewSettingsDialog extends UI5Element {
 			sortDescending = !this._currentSettings.sortOrder[0].selected,
 			sortBy = _currentSortBySelected && (_currentSortBySelected.text || ""),
 			sortByElementIndex = _currentSortBySelected && _currentSortBySelected.index,
-			sortByItem = this.sortItems[sortByElementIndex];
+			sortByItem = this.sortItems[sortByElementIndex],
+			selectedFilterItems = this.filterItems.filter(filterItem => filterItem.values.some(item => item.selected));
 		return {
 			sortOrder,
 			sortDescending,
 			sortBy,
 			sortByItem,
 			filters: this.selectedFilters,
+			filterItems: selectedFilterItems,
 		};
 	}
 

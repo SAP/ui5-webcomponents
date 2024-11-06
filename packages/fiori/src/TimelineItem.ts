@@ -44,7 +44,9 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * attribute is not set.
  * @public
  */
-@event("name-click")
+@event("name-click", {
+	bubbles: true,
+})
 class TimelineItem extends UI5Element implements ITimelineItem {
 	/**
 	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
@@ -157,7 +159,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	}
 
 	onNamePress() {
-		this.fireEvent("name-click", {});
+		this.fireDecoratorEvent("name-click", {});
 	}
 
 	/**

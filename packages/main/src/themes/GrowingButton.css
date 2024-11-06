@@ -13,7 +13,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
+	flex-direction: row;
 	min-height: var(--_ui5_load_more_text_height);
 	width: 100%;
 	color: var(--sapButton_TextColor);
@@ -46,7 +46,6 @@
 
 [growing-button-text],
 [growing-button-subtext] {
-	width: 100%;
 	text-align: center;
 	font-family: "72override", var(--sapFontFamily);
 	white-space: nowrap;
@@ -60,6 +59,14 @@
 	padding: 0.875rem 1rem 1rem;
 	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
+}
+
+:host([loading]) .ui5-list-growing-button-busy-indicator:not([_is-busy]) {
+	display: none;
+}
+
+:host([loading]) .ui5-list-growing-button-busy-indicator[_is-busy] + [growing-button-text]{
+	padding-left: 0.5rem;
 }
 
 [growing-button-subtext] {
