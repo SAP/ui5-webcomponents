@@ -48,6 +48,13 @@ type PopupBeforeCloseEventDetail = {
 	escPressed: boolean;
 }
 
+type _PopupEvents = {
+	"before-open": void
+	"open": void
+	"before-close": void
+	"close": void
+}
+
 /**
  * @class
  * ### Overview
@@ -126,6 +133,8 @@ type PopupBeforeCloseEventDetail = {
 	bubbles: true,
 })
 abstract class Popup extends UI5Element {
+	_events!: _PopupEvents
+
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
@@ -640,4 +649,5 @@ export default Popup;
 export type {
 	PopupScrollEventDetail,
 	PopupBeforeCloseEventDetail,
+	_PopupEvents,
 };
