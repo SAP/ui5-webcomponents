@@ -1455,11 +1455,8 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		if (!isPhone()) {
-			this._previouslySelectedItems = this._getSelectedItems();
+			this._previouslySelectedItems = e.detail.previouslySelectedItems;
 		}
-
-		// sync list items and cb items
-		this.syncItems((e.target as List).listItems);
 
 		// don't call selection change right after selection as user can cancel it on phone
 		if (!isPhone()) {
@@ -1496,16 +1493,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.value = this.valueBeforeAutoComplete || "";
-	}
-
-	syncItems(listItems: Array<ListItemBase>) {
-		listItems.forEach(item => {
-			this._getItems().forEach(mcbItem => {
-				if (mcbItem._id === item.getAttribute("data-ui5-token-id")) {
-					mcbItem.selected = item.selected;
-				}
-			});
-		});
 	}
 
 	fireSelectionChange() {

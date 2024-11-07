@@ -61,7 +61,7 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 
 	_onclick(e: MouseEvent) {
 		if ((e.target as HTMLElement)?.hasAttribute("ui5-checkbox")) {
-			this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+			return this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 		}
 
 		super._onclick(e);
