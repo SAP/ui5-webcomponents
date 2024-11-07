@@ -1,7 +1,12 @@
 <ui5-dialog .open={{open}}>
 	<div class="ui5-profile-menu-user" slot="header">
 		{{#if _selectedUser}}
-			<ui5-avatar size="L"><img src={{_selectedUser.avatar}}/></ui5-avatar>
+			<ui5-avatar size="L">
+				<img src={{_selectedUser.avatar}}/>
+				<ui5-tag slot="badge" wrapping-type="None">
+					<ui5-icon slot="icon" name="edit"></ui5-icon>
+				</ui5-tag>
+			</ui5-avatar>
 			<ui5-title>{{_selectedUser.text}}</ui5-title>
 			<ui5-text>{{_selectedUser.subtitle1}}</ui5-text>
 			<ui5-text>{{_selectedUser.subtitle2}}</ui5-text>
