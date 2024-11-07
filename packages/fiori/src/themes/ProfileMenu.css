@@ -1,0 +1,13 @@
+.ui5-profile-menu-user {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ui5-profile-menu-user-header {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}

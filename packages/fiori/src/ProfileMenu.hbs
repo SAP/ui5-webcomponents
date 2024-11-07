@@ -1,19 +1,23 @@
 <ui5-dialog .open={{open}}>
-	<ui5-user-profile avatar={{userProfile.avatar}}
-					 first-name={{userProfile.firstName}}
-					 last-name={{userProfile.lastName}}
-					 subtitle1={{userProfile.subtitle1}}
-					 subtitle2={{userProfile.subtitle2}}>
-	</ui5-user-profile>
-	<ui5-button icon="user-settings">Manage Account</ui5-button>
+	<div class="ui5-profile-menu-user" slot="header">
+		{{#if _selectedUser}}
+			<ui5-avatar size="L"><img src={{_selectedUser.avatar}}/></ui5-avatar>
+			<ui5-title>{{_selectedUser.text}}</ui5-title>
+			<ui5-text>{{_selectedUser.subtitle1}}</ui5-text>
+			<ui5-text>{{_selectedUser.subtitle2}}</ui5-text>
+			<ui5-button icon="user-settings">Manage Account</ui5-button>
+		{{/if}}
+	</div>
 	<ui5-panel collapsed>
-		<ui5-title slot="header" level="H4">Other Accounts</ui5-title>
-		<ui5-icon slot="header" name="add-employee"></ui5-icon>
+		<div slot="header" class="ui5-profile-menu-user-header">
+			<ui5-title slot="header" level="H4">Other Accounts</ui5-title>
+			<ui5-button slot="header" design="Transparent" icon="add-employee" />
+		</div>
 		<ui5-list>
-			{{#each otherUsers}}
+			{{#each _otherUsers}}
 				<ui5-li>
 					<ui5-avatar slot="image"size="XS"><img src={{this.avatar}}/></ui5-avatar>
-					<ui5-title>{{firstName}} {{lastName}}</ui5-title>
+					<ui5-title>{{text}}</ui5-title>
 					<ui5-label>{{subtitle1}}</ui5-label>
 					</br>
 					<ui5-label>{{subtitle2}}</ui5-label>

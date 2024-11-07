@@ -3,28 +3,31 @@ import { customElement } from "@ui5/webcomponents-base/decorators.js";
 import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import UserProfile from "./UserProfile.js";
-import type ProfileMenuItem from "./ProfileMenuItem.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import Text from "@ui5/webcomponents/dist/Text.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Panel from "@ui5/webcomponents/dist/Panel.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import ListItemStandard from "@ui5/webcomponents/ListItemStandard.js";
+import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
+import type UserProfile from "./UserProfile.js";
+import type ProfileMenuItem from "./ProfileMenuItem.js";
 import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.js";
+import ProfileMenuCss from "./generated/themes/ProfileMenu.css.js";
 
 @customElement({
 	tag: "ui5-profile-menu",
 	renderer: litRender,
 	template: ProfileMenuTemplate,
+	styles: [ProfileMenuCss],
 	dependencies: [
 		Dialog,
-		UserProfile,
 		Avatar,
 		Title,
+		Text,
 		Label,
 		Button,
 		Panel,
@@ -52,19 +55,20 @@ class ProfileMenu extends UI5Element {
 	open = false;
 
 	@slot({ type: HTMLElement })
-	user!: UserProfile;
+	users!: Array<UserProfile>;
 
-	@slot({ type: HTMLElement })
-	otherUsers!: Array<UserProfile>;
-
-	@slot({ type: HTMLElement })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+	})
 	menuItems!: Array<ProfileMenuItem>;
 
-	get userProfile() {
-		// TODO: why retun array in case that the propery is defined as object
-		// @ts-ignore
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-		return this.user[0];
+	_selectedUser!: UserProfile;
+	_otherUsers: UserProfile[] = [];
+
+	onBeforeRendering() {
+		this._selectedUser = this.users.find(user => user.selected) || this.users[0]; // zTODO: why || this.users[0] is needed. Without it lit template is complaining about possible undefined value
+		this._otherUsers = this.users.filter(user => user !== this._selectedUser);
 	}
 }
 

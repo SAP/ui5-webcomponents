@@ -17,35 +17,33 @@
 <body>
 <ui5-button id="btnOpenProfileMenu">Profile menu</ui5-button>
 <ui5-profile-menu id="profileMenu">
-	<ui5-user-profile slot="user"
+	<ui5-user-profile slot="users"
 					 avatar="./img/man_avatar_1.png"
-					 first-name="Alain"
-					 last-name="Chevalier"
+					text="Alain Chevalier"
 					 subtitle1="alian.chevalier@sap.com"
-					 subtitle2="Delivery Manager, SAP SE">
+					 subtitle2="Delivery Manager, SAP SE"
+					 selected>
 	</ui5-user-profile>
-	<ui5-user-profile slot="otherUsers"
+	<ui5-user-profile slot="users"
 					 avatar="./img/man_avatar_1.png"
-					 first-name="Alain"
-					 last-name="Chevalier"
+					 text="Alain Chevalier"
 					 subtitle1="test.alian.chevalier@sap.com">
 	</ui5-user-profile>
-	<ui5-user-profile slot="otherUsers"
+	<ui5-user-profile slot="users"
 					 avatar="./img/man_avatar_1.png"
-					 first-name="Alain"
-					 last-name="Chevalier"
+					 text="Alain Chevalier"
 					 subtitle1="alian.chevalier@ariba.com"
 					 subtitle2="Account Manager">
 	</ui5-user-profile>
-	<ui5-profile-menu-item slot ="menuItems" icon="action-settings" text="Setting"></ui5-profile-menu-item>
-	<ui5-profile-menu-item slot ="menuItems" icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
-	<ui5-profile-menu-item slot ="menuItems" icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
-	<ui5-profile-menu-item slot ="menuItems" icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
-	<ui5-profile-menu-item slot ="menuItems" icon="official-service" text="Legal Information">
+	<ui5-profile-menu-item icon="action-settings" text="Setting"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="globe" text="Product-specific user action"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="official-service" text="Legal Information">
 		<ui5-profile-menu-item text="Private Policy"></ui5-profile-menu-item>
 		<ui5-profile-menu-item text="Terms of Use"></ui5-profile-menu-item>
 	</ui5-profile-menu-item>
-	<ui5-profile-menu-item slot ="menuItems" separator icon="log" text="Sign Out"></ui5-profile-menu-item>
+	<ui5-profile-menu-item separator icon="log" text="Sign Out"></ui5-profile-menu-item>
 
 </ui5-profile-menu>
 
