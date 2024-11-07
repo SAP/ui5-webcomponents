@@ -7,7 +7,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
-import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
@@ -15,8 +14,6 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
-
-type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 
 /**
  * @class
@@ -153,7 +150,7 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
 	}
 
-	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+	_beforeDialogOpen(e: CustomEvent<Popover["_events"]["before-open"]>) {
 		this._opened = true;
 		this.open = true;
 		this._propagateDialogEvent(e);
@@ -183,6 +180,3 @@ class ResponsivePopover extends Popover {
 ResponsivePopover.define();
 
 export default ResponsivePopover;
-export type {
-	ResponsivePopoverBeforeCloseEventDetail,
-};

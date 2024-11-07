@@ -20,7 +20,6 @@ import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import type { IMenuItem } from "./Menu.js";
 
 // Styles
@@ -312,7 +311,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireEvent("open", {}, false, false);
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+	_beforePopoverClose(e: CustomEvent<ResponsivePopover["_events"]["before-close"]>) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {

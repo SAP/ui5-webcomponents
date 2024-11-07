@@ -19,7 +19,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -391,7 +390,7 @@ class Menu extends UI5Element {
 		this.fireEvent("open", {}, false, true);
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+	_beforePopoverClose(e: CustomEvent<ResponsivePopover["_events"]["before-close"]>) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
 
 		if (prevented) {

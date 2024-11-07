@@ -51,8 +51,9 @@ type PopupBeforeCloseEventDetail = {
 type _PopupEvents = {
 	"before-open": void
 	"open": void
-	"before-close": void
+	"before-close": PopupBeforeCloseEventDetail
 	"close": void
+	"scroll": PopupScrollEventDetail
 }
 
 /**
@@ -645,9 +646,3 @@ abstract class Popup extends UI5Element {
 }
 
 export default Popup;
-
-export type {
-	PopupScrollEventDetail,
-	PopupBeforeCloseEventDetail,
-	_PopupEvents,
-};

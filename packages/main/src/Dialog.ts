@@ -11,7 +11,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popup from "./Popup.js";
-import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -676,6 +675,3 @@ class Dialog extends Popup {
 Dialog.define();
 
 export default Dialog;
-export type {
-	DialogBeforeCloseEventDetail,
-};

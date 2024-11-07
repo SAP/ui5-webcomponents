@@ -52,7 +52,6 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
-import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
@@ -1058,7 +1057,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._clearIconClicked = true;
 	}
 
-	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
+	_scroll(e: CustomEvent<ResponsivePopover["_events"]["scroll"]>) {
 		this.fireDecoratorEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
