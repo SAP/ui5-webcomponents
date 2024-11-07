@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+
+### Bug Fixes
+
+* patchPopup calls onFocusEvent with all params ([#10128](https://github.com/SAP/ui5-webcomponents/issues/10128)) ([8112148](https://github.com/SAP/ui5-webcomponents/commit/811214859f2a1a8d5dabbfc1300a0df934774b0e))
+* **ui5-badge:** correct parameters for Color Set 2 in high contrast themes ([#10094](https://github.com/SAP/ui5-webcomponents/issues/10094)) ([ab93ce7](https://github.com/SAP/ui5-webcomponents/commit/ab93ce7c7b6f91f34e46afff62ba3be9587b6430)), closes [#8942](https://github.com/SAP/ui5-webcomponents/issues/8942) [#8952](https://github.com/SAP/ui5-webcomponents/issues/8952)
+* **ui5-segmented-button:** remove overstyling when disabled and pressed) ([#10121](https://github.com/SAP/ui5-webcomponents/issues/10121)) ([4c1014c](https://github.com/SAP/ui5-webcomponents/commit/4c1014c33e83b207da53ec53f86c515476ffcb85)), closes [#10112](https://github.com/SAP/ui5-webcomponents/issues/10112)
+
+
+
+
+
 ## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
 
 **Note:** Version bump only for package ui5-webcomponents
