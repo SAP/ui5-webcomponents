@@ -56,6 +56,15 @@ class ProfileMenu extends UI5Element {
 	@property({ type: Boolean })
 	open = false;
 
+	/**
+	 * Defines, id of user setting menu which will be open
+	 *
+	 * @default ""
+	 * @public
+	 */
+	@property({ type: String })
+	userSetting? = undefined;
+
 	@slot({ type: HTMLElement })
 	users!: Array<UserProfile>;
 
@@ -71,6 +80,33 @@ class ProfileMenu extends UI5Element {
 	onBeforeRendering() {
 		this._selectedUser = this.users.find(user => user.selected) || this.users[0]; // zTODO: why || this.users[0] is needed. Without it lit template is complaining about possible undefined value
 		this._otherUsers = this.users.filter(user => user !== this._selectedUser);
+	}
+	_avatarClicked() {
+		this.fireDecoratorEvent("user-avatar-clicked");
+	}
+
+	_addAccountClicked() {
+		this.fireDecoratorEvent("add-account-clicked");
+	}
+
+	_menuItemClicked() {
+		this.fireDecoratorEvent("menu-item-clicked");
+	}
+
+	_accountSwitch() {
+		this.fireDecoratorEvent("user-account-switch");
+	}
+
+	_openSettingDialog() {
+		const rootNode = this.getRootNode();
+		let userSettingDialog;
+		if (rootNode instanceof Document && this.userSetting) {
+			userSettingDialog = rootNode.getElementById(this.userSetting) as Dialog;
+		}
+
+		if (userSettingDialog) {
+			userSettingDialog.open = true;
+		}
 	}
 }
 

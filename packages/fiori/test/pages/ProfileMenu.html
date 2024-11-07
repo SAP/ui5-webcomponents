@@ -16,7 +16,7 @@
 
 <body>
 <ui5-button id="btnOpenProfileMenu">Profile menu</ui5-button>
-<ui5-profile-menu id="profileMenu">
+<ui5-profile-menu id="profileMenu" user-setting="userSetting">
 	<ui5-user-profile slot="users"
 					 avatar="./img/man_avatar_1.png"
 					text="Alain Chevalier"
@@ -45,6 +45,38 @@
 	<ui5-profile-menu-item separator icon="log" text="Sign Out"></ui5-profile-menu-item>
 
 </ui5-profile-menu>
+
+<ui5-settings-dialog id="userSetting" header-title="Settings" show-search-field>
+	<!-- Item -->
+	<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="Header title | Setting 1">
+		<ui5-setting-view text="Setting 1 Tab 1">
+			<ui5-button>Setting 1 Content 1</ui5-button>
+		</ui5-setting-view>
+		<ui5-setting-view text="Setting 1 Tab 2">
+			<ui5-button>Setting 1 Content 2</ui5-button>
+		</ui5-setting-view>
+	</ui5-setting-item>
+
+	<!-- Item -->
+	<ui5-setting-item fixed-item text="Setting 2" header-title="Header title | Setting 2">
+		<ui5-setting-view text="Setting 2 Tab 1">
+			<ui5-button>Setting 2 Content 1</ui5-button>
+		</ui5-setting-view>
+		<ui5-setting-view text="Setting 2 Tab 2">
+			<ui5-button>Setting 2 Content 2</ui5-button>
+		</ui5-setting-view>
+		<ui5-setting-view  text="Setting 2 Tab 3">
+			<ui5-button>Setting 2 Content 3</ui5-button>
+		</ui5-setting-view>
+	</ui5-setting-item>
+
+	<!-- Item -->
+	<ui5-setting-item text="Setting 3" tooltip="tooltip" icon="accessibility" header-title="Header title | Setting 3">
+		<ui5-setting-view text="Setting 3 Tab 1">
+			<ui5-button>Setting 3 Content 1</ui5-button>
+		</ui5-setting-view>
+	</ui5-setting-item>
+</ui5-settings-dialog>
 
 <script>
 	document.getElementById("btnOpenProfileMenu").addEventListener("click", function () {
