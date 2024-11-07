@@ -147,6 +147,31 @@ describe("TableGrowing - Button", () => {
 				.should("have.been.calledOnce");
 		});
 
+		it("test loadMore event fired upon pressing Enter", () => {
+			mountTable();
+
+			cy.get<TableGrowing>("[ui5-table-growing]")
+				.then(tableGrowing => tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore")))
+				.shadow()
+				.find("#growing-button")
+				.focus();
+
+			cy.realPress("Enter");
+
+			cy.get("@loadMore")
+				.should("have.been.calledOnce");
+
+			cy.get<TableGrowing>("[ui5-table-growing]")
+				.shadow()
+				.find("#growing-button")
+				.focus();
+
+			cy.realPress("Space");
+
+			cy.get("@loadMore")
+				.should("have.been.calledTwice");
+		});
+
 		it("tests focus is set to first newly added row", () => {
 			mountTable();
 
