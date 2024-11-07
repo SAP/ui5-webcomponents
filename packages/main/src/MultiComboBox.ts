@@ -101,7 +101,6 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js";
 import type ComboBoxFilter from "./types/ComboBoxFilter.js";
-import type ListItemBase from "./ListItemBase.js";
 import CheckBox from "./CheckBox.js";
 import Input from "./Input.js";
 import type { InputEventDetail } from "./Input.js";
