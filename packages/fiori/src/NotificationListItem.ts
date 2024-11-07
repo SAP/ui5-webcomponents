@@ -574,13 +574,6 @@ class NotificationListItem extends NotificationListItemBase {
 		return menu;
 	}
 
-	/**
-	 * Private
-	 */
-	fireItemPress() {
-		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
-	}
-
 	onResize() {
 		if (this.wrappingType === WrappingType.Normal) {
 			this._showMore = false;

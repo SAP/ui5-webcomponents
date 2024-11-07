@@ -1199,6 +1199,8 @@ class List extends UI5Element {
 			return;
 		}
 
+		e.stopPropagation();
+
 		if (this.selectionMode !== ListSelectionMode.Delete) {
 			const detail: SelectionRequestEventDetail = {
 				item: pressedItem,
