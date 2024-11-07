@@ -136,8 +136,11 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 
 // JSX support
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
-type Convert<T> = { [Property in keyof T as `on${Capitalize<string & Property>}` ]: (e: CustomEvent<T[Property]>) => void }
-
+type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: (e: CustomEvent<T[Property]>) => void }
+type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
+  ? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
+  : T;
+type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "slot" | "spellcheck" | "style" | "tabIndex" | "title" | "translate";
 
 /**
