@@ -37,6 +37,7 @@
 // }
 
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import "./commands/Common.commands.js";
 import "./commands/Menu.commands.js";
 
 type SimulationDevices = "phone"
@@ -48,6 +49,7 @@ declare global {
 			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
 			ui5MenuOpened(): Chainable<void>
 			ui5MenuItemClick(): Chainable<void>
+			ui5DOMRef(): Chainable<void>
 			ui5MenuItemPress(key: any): Chainable<void>
 		}
 	}
