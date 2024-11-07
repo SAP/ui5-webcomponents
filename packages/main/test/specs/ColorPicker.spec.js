@@ -145,6 +145,11 @@ describe("Color Picker general interaction", () => {
 		const blueInput = await colorPicker.shadow$("#blue");
 		const alphaInput = await colorPicker.shadow$("#alpha");
 
+		const colorPickerHSL = await browser.$("#cp-hsl");
+		const hueInput = await colorPickerHSL.shadow$("#hue");
+		const saturationInput = await colorPickerHSL.shadow$("#saturation");
+		const lightInput = await colorPickerHSL.shadow$("#light");
+
 		assert.strictEqual(await hueSlider.getAttribute("accessible-name"), "Hue control", "Hue slider accessible-name attribute properly set");
 		assert.strictEqual(await alphaSlider.getAttribute("accessible-name"), "Alpha control", "Alpha slider accessible-name attribute properly set");
 		assert.strictEqual(await hexInput.getAttribute("accessible-name"), "Hexadecimal", "Hex input accessible-name attribute properly set");
@@ -152,5 +157,66 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(await greenInput.getAttribute("accessible-name"), "Green", "Green input accessible-name attribute properly set");
 		assert.strictEqual(await blueInput.getAttribute("accessible-name"), "Blue", "Blue input accessible-name attribute properly set");
 		assert.strictEqual(await alphaInput.getAttribute("accessible-name"), "Alpha", "Alpha input accessible-name attribute properly set");
+		assert.strictEqual(await hueInput.getAttribute("accessible-name"), "Hue", "Hue input accessible-name attribute properly set");
+		assert.strictEqual(await saturationInput.getAttribute("accessible-name"), "Saturation", "Saturation input accessible-name attribute properly set");
+		assert.strictEqual(await lightInput.getAttribute("accessible-name"), "Light", "Light input accessible-name attribute properly set");
 	});
+
+	it("Button toggles HSL and RGB inputs", async () => {
+		const colorPicker = await browser.$("#cp1");
+		const toggleColorMode = await colorPicker.shadow$("#toggle-picker-mode");
+
+		await colorPicker.setAttribute("value", "rgba(112, 178, 225, 1)");
+
+		await toggleColorMode.click();
+
+		const hueInput = await colorPicker.shadow$("#hue");
+		assert.strictEqual(await hueInput.getProperty("value"), "205", "Button toggled into HSL and Hue value is correctly converted from RGB");
+
+		const saturationInput = await colorPicker.shadow$("#saturation");
+		assert.strictEqual(await saturationInput.getProperty("value"), "65", "Saturation is correctly converted from RGB");
+
+		const lightInput = await colorPicker.shadow$("#light");
+		assert.strictEqual(await lightInput.getProperty("value"), "66", "Light is correctly converted from RGB");
+	});
+
+	it("Hue value change via the input field", async () => {
+		const colorPicker = await browser.$("#cp-hsl");
+		const hueInput = await colorPicker.shadow$("#hue");
+
+		await colorPicker.setAttribute("value", "rgba(112, 178, 225, 1)");
+
+		await hueInput.doubleClick();
+		await browser.keys("130");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await colorPicker.getProperty("value"), "rgba(112, 225, 131, 1)", "Hue value is parsed correctly");
+	});
+
+	it("Saturation value change via the input field", async () => {
+		const colorPicker = await browser.$("#cp-hsl");
+		const saturationInput = await colorPicker.shadow$("#saturation");
+
+		await colorPicker.setAttribute("value", "rgba(112, 225, 131, 1)");
+
+		await saturationInput.doubleClick();
+		await browser.keys("44");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await colorPicker.getProperty("value"), "rgba(130, 206, 143, 1)", "Saturation value is parsed correctly");
+	});
+
+	it("Saturation value change via the input field", async () => {
+		const colorPicker = await browser.$("#cp-hsl");
+		const lightInput = await colorPicker.shadow$("#light");
+
+		await colorPicker.setAttribute("value", "rgba(130, 206, 143, 1)");
+
+		await lightInput.doubleClick();
+		await browser.keys("30");
+		await browser.keys("Enter");
+
+		assert.strictEqual(await colorPicker.getProperty("value"), "rgba(43, 110, 54, 1)", "Light value is parsed correctly");
+	});
+	
 });

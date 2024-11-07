@@ -608,7 +608,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			id: "green",
 			value: this._value.g,
 			label: "G",
-			accessibleName: this.blueInputLabel,
+			accessibleName: this.greenInputLabel,
 		};
 
 		const blueInput = {
