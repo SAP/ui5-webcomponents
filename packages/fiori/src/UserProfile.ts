@@ -18,7 +18,7 @@ class UserProfile extends UI5Element {
 	avatar = "";
 
 	@property({ type: String })
-	text?: string;
+	text!: string;
 
 	@property({ type: String })
 	subtitle1?: string;

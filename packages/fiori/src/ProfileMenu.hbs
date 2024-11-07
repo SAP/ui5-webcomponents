@@ -10,7 +10,7 @@
 	</div>
 	<ui5-panel collapsed>
 		<div slot="header" class="ui5-profile-menu-user-header">
-			<ui5-title slot="header" level="H4">Other Accounts</ui5-title>
+			<ui5-title slot="header" level="H4">Other Accounts ({{_otherUsers.length}})</ui5-title>
 			<ui5-button slot="header" design="Transparent" icon="add-employee" />
 		</div>
 		<ui5-list>
@@ -25,5 +25,14 @@
 			{{/each}}
 		</ui5-list>
 	</ui5-panel>
+
+	<ui5-list separators="None">
+	{{#each menuItems}}
+		{{#if this.separator}}
+			<div class="ui5-profile-menu-separator"></div>
+		{{/if}}
+		<ui5-li icon={{this.icon}}>{{this.text}}</ui5-li>
+	{{/each}}
+	</ui5-list>
 
 </ui5-dialog>
