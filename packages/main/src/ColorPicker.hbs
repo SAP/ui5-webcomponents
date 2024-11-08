@@ -23,7 +23,7 @@
             accessible-name="{{hueSliderLabel}}"
             @ui5-input="{{_handleHueInput}}"
         ></ui5-slider>
-        {{#if _displayFullPicker}}
+        {{#if _isDefaultPickerMode}}
             <ui5-slider
                 disabled="{{inputsDisabled}}"
                 class="ui5-color-picker-alpha-slider"
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    {{#if _displayFullPicker}}
+    {{#if _isDefaultPickerMode}}
         <div
             class="ui5-color-picker-rgb-wrapper"
             @ui5-change="{{_handleRGBInputsChange}}"

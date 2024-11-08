@@ -115,9 +115,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the display mode of the component.
 	 * @default "Default"
-	 * @since 2.5.0
-	 *
 	 * @public
+	 * @since 2.5.0
 	 */
 	@property()
 	displayMode: `${ColorPickerDisplayMode}` = "Default";
@@ -540,7 +539,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return this._wrongHEX ? "Error" : undefined;
 	}
 
-	get _displayFullPicker() {
+	get _isDefaultPickerMode() {
 		return this.displayMode === ColorPickerDisplayMode.Default;
 	}
 
