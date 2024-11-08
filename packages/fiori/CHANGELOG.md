@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.12](https://github.com/SAP/ui5-webcomponents/compare/v1.24.11...v1.24.12) (2024-10-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** enable preventDefault for input event ([#9946](https://github.com/SAP/ui5-webcomponents/issues/9946)) ([2d273b6](https://github.com/SAP/ui5-webcomponents/commit/2d273b69be405769dd974dbaf0f1fdf0599802d6)), closes [#9884](https://github.com/SAP/ui5-webcomponents/issues/9884)
+* **ui5-upload-collеction:** hide the upload icon when the height is too small ([#10050](https://github.com/SAP/ui5-webcomponents/issues/10050)) ([db3eae0](https://github.com/SAP/ui5-webcomponents/commit/db3eae02173b97270a6dd88af8d8ca5a185365e1)), closes [#9975](https://github.com/SAP/ui5-webcomponents/issues/9975)
+* **ui5-wizard:** disabled steps are no longer clickable ([#9706](https://github.com/SAP/ui5-webcomponents/issues/9706)) ([8136497](https://github.com/SAP/ui5-webcomponents/commit/8136497b68dec6e656b54e7fa8ae9dc0ddea6163)), closes [#9571](https://github.com/SAP/ui5-webcomponents/issues/9571)
+
+
+
+
+
 ## [1.24.11](https://github.com/SAP/ui5-webcomponents/compare/v1.24.10...v1.24.11) (2024-10-02)
 
 
