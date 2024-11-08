@@ -12,9 +12,9 @@ export default function (this: Toolbar) {
             role={this.accInfo.root.role}
             aria-label={this.accInfo.root.accessibleName}
         >
-            {this.standardItems.map(item => {
-                return item.toolbarTemplate.call(item.context);
-            })}
+            {this.standardItems.map(item => (
+                item.toolbarTemplate.call(item.context)
+            ))}
 
             <ui5-button
                 aria-hidden={this.hideOverflowButton}

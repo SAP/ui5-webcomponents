@@ -20,9 +20,9 @@ export default function(this: Toolbar) {
 					"ui5-overflow-list--alignleft": this.hasItemWithText,
 				})
 			}>
-				{ this.overflowItems.map(item => {
-					return item.toolbarPopoverTemplate.call(item.context);
-				})}
+				{ this.overflowItems.map(item => (
+					item.toolbarPopoverTemplate.call(item.context)
+				))}
 			</div>
 		</Popover>
 	);
