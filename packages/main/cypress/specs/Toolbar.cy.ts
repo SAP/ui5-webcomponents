@@ -11,7 +11,6 @@ import "@ui5/webcomponents-icons/dist/add.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/employee.js";
 
-
 describe("Toolbar general interaction", () => {
 	it("Should not return null upon calling getDomRef for all direct child items", () => {
 		cy.mount(html`
