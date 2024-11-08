@@ -141,7 +141,7 @@ type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}
   ? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
   : T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
-type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "slot" | "spellcheck" | "style" | "tabIndex" | "title" | "translate";
+type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate";
 
 /**
  * @class
