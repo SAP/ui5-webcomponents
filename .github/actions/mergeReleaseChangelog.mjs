@@ -19,11 +19,14 @@ const extractChangelogSections = (releaseBody) => {
 	return { fixes, features };
 };
 
-const mergeReleaseChangelogs = (releases) => {
-	const fixes = [];
-	const features = [];
+const mergeReleaseChangelogs = (minorRelease, rcReleases) => {
+	// Extract the existing changes from the minor release body
+	const { fixes: minorFixes, features: minorFeatures } = extractChangelogSections(minorRelease.body);
+	const fixes = [...minorFixes];
+	const features = [...minorFeatures];
 
-	releases.forEach((release) => {
+	// Add changes from each RC release
+	rcReleases.forEach((release) => {
 		const { fixes: rcFixes, features: rcFeatures } = extractChangelogSections(release.body);
 		fixes.push(...rcFixes);
 		features.push(...rcFeatures);
@@ -89,7 +92,7 @@ export default async function run({ github, context }) {
 		const minorRelease = allReleases.find((release) => release.tag_name === `v${version}`);
 
 		// Merge RC changelogs
-		const { fixes, features } = await mergeReleaseChangelogs(rcReleases);
+		const { fixes, features } = await mergeReleaseChangelogs(minorRelease, rcReleases);
 
 		const minorReleaseContext = {
 			github,

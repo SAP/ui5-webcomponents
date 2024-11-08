@@ -95,11 +95,11 @@ slot[name="profile"] {
 }
 
 ::slotted([ui5-avatar][slot="profile"]) {
-	min-width: 0;
+	display: block;
 	width: 2rem;
 	height: 2rem;
+	min-width: 0;
 	min-height: 2rem;
-	padding: .25rem;
 	pointer-events: none;
 }
 
@@ -308,22 +308,14 @@ slot[name="profile"] {
 	min-width: var(--_ui5_shellbar_search_button_size);
 }
 
-.ui5-shellbar-image-buttonImage {
-	border-radius: 50%;
-	width: 1.75rem;
-	height: 1.75rem;
-	display: flex;
-	background-size: cover;
-}
-
 .ui5-shellbar-image-button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-width: 2.25rem;
-	height: 2.25rem;
-	display: inline-flex;
-	padding: 0;
+	min-width: auto;
+	height: 2.5rem;
+	--_ui5_button_focused_border_radius: var(--_ui5_shellbar_image_button_border_radius);
+	border-radius: var(--_ui5_shellbar_image_button_border_radius);
 }
 
 .ui5-shellbar-overflow-container-left {
