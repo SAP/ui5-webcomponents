@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
@@ -29,7 +30,7 @@ const StepColumn = {
  * @experimental
  * @since 2.0.0
  */
-interface IFormItem extends HTMLElement {
+interface IFormItem extends UI5Element {
 	labelSpan: string
 	itemSpacing: `${FormItemSpacing}`;
 	readonly isGroup: boolean;
@@ -367,6 +368,30 @@ class Form extends UI5Element {
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
 		return this.items.map((groupItem: IFormItem) => {
+			const items = this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>));
+			const breakpoints = ["S", "M", "L", "Xl"];
+
+			breakpoints.forEach(breakpoint => {
+				const cols = ((groupItem[`cols${breakpoint}` as keyof IFormItem]) as number || 1);
+				const rows = Math.ceil(items.length / cols);
+				const total = cols * rows;
+				const lastRowColumns = (cols - (total - items.length) - 1); // all other indecies start from 0
+				let currentItem = 0;
+
+				for (let i = 0; i < total; i++) {
+					const column = Math.floor(i / rows);
+					const row = i % rows;
+
+					if (row === rows - 1 && column > lastRowColumns) {
+						// eslint-disable-next-line no-continue
+						continue;
+					}
+
+					items[currentItem].item.style.setProperty(getScopedVarName(`--ui5-form-item-order-${breakpoint}`), `${column + row * cols}`);
+					currentItem++;
+				}
+			});
+
 			return {
 				groupItem,
 				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
