@@ -218,5 +218,4 @@ describe("Color Picker general interaction", () => {
 
 		assert.strictEqual(await colorPicker.getProperty("value"), "rgba(43, 110, 54, 1)", "Light value is parsed correctly");
 	});
-	
 });

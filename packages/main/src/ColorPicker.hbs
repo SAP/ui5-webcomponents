@@ -70,11 +70,10 @@
                     value="{{value}}"
                 ></ui5-input>
                 <ui5-label>{{label}}</ui5-label>
-
+            </div>
+            <div class="ui5-color-channel-percentage-label">
                 {{#if showPercentSymbol}}
-                    <ui5-label
-                        class="ui5-color-channel-percentage-label"
-                    >%</ui5-label>
+                    <ui5-label>%</ui5-label>
                 {{/if}}
             </div>
         {{/each}}
@@ -94,6 +93,7 @@
 
         <div>
             <ui5-button
+                class="ui5-color-channel-toggle"
                 id="toggle-picker-mode"
                 icon="sap-icon://expand" 
                 design="Transparent" 
