@@ -18,11 +18,13 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
+import "@ui5/webcomponents-icons/dist/expand.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
 import Input from "./Input.js";
 import Slider from "./Slider.js";
 import Label from "./Label.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -93,6 +95,7 @@ type ColorChannelInput = {
 		Slider,
 		Label,
 		Button,
+		Icon,
 	],
 	shadowRootOptions: { delegatesFocus: true },
 })
