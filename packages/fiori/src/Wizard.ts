@@ -222,6 +222,7 @@ type StepInfo = {
 		*/
 		withScroll: { type: Boolean },
 	},
+	bubbles: true,
 })
 
 class Wizard extends UI5Element {
@@ -1036,7 +1037,7 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireEvent<WizardStepChangeEventDetail>("step-change", {
+			this.fireDecoratorEvent<WizardStepChangeEventDetail>("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
 				withScroll,

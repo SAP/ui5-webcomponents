@@ -10,6 +10,8 @@
 		"composite": true,
 		"rootDir": "src",
 		"experimentalDecorators": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"tsBuildInfoFile": "dist/.tsbuildinfobuild",
 		"paths": {
 			"@ui5/webcomponents-base/dist/ssr-dom.js": ["./src/ssr-dom.ts"],

@@ -81,12 +81,16 @@ type MonthPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class MonthPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date
@@ -287,7 +291,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -327,7 +331,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -354,7 +358,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp);
 
-		this.fireEvent<MonthPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent<MonthPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp!,
 			dates: this.selectedDates,
 		});

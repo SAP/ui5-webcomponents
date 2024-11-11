@@ -8,7 +8,8 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
-	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
+	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
@@ -24,13 +25,17 @@ type DirectionStart = "left" | "right";
  * Fired when the value changes and the user has finished interacting with the slider.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * @class
@@ -109,6 +114,18 @@ abstract class SliderBase extends UI5Element {
 	showTooltip = false;
 
 	/**
+	 *
+	 * Indicates whether input fields should be used as tooltips for the handles.
+	 *
+	 * **Note:** Setting this option to true will only work if showTooltip is set to true.
+	 * **Note:** In order for the component to comply with the accessibility standard, it is recommended to set the editableTooltip property to true.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	editableTooltip = false;
+
+	/**
 	 * Defines whether the slider is in disabled state.
 	 * @default false
 	 * @public
@@ -128,6 +145,12 @@ abstract class SliderBase extends UI5Element {
 	/**
 	 * @private
 	 */
+	@property({ type: Number })
+	value = 0;
+
+	/**
+	 * @private
+	 */
 	@property()
 	_tooltipVisibility = "hidden";
 
@@ -137,9 +160,12 @@ abstract class SliderBase extends UI5Element {
 	@property({ type: Boolean })
 	_hiddenTickmarks = false;
 
+	@property({ type: Boolean })
+	_isInputValueValid = false;
+
 	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
-	_upHandler: () => void;
+	_upHandler: (e: TouchEvent | MouseEvent) => void;
 	_stateStorage: StateStorage;
 	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
@@ -150,6 +176,7 @@ abstract class SliderBase extends UI5Element {
 	_oldMax?: number;
 	_labelWidth = 0;
 	_labelValues?: Array<string>;
+	_valueOnInteractionStart?: number;
 
 	async formElementAnchor() {
 		return this.getFocusDomRefAsync();
@@ -180,11 +207,13 @@ abstract class SliderBase extends UI5Element {
 
 	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
-	_handleUp() {}
+	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
+
+	_updateInputValue() {}
 
 	// used in base template, but implemented in subclasses
 	abstract styles: {
@@ -281,11 +310,17 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this.disabled || this._effectiveStep === 0) {
+		const target = e.target as HTMLElement;
+
+		if (isF2(e) && target.classList.contains("ui5-slider-handle")) {
+			(target.parentNode!.querySelector(".ui5-slider-handle-container ui5-input") as HTMLElement).focus();
+		}
+
+		if (this.disabled || this._effectiveStep === 0 || target.hasAttribute("ui5-slider-handle")) {
 			return;
 		}
 
-		if (SliderBase._isActionKey(e)) {
+		if (SliderBase._isActionKey(e) && target && !target.hasAttribute("ui5-input")) {
 			e.preventDefault();
 
 			this._isUserInteraction = true;
@@ -293,7 +328,42 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	_onkeyup() {
+	_onInputKeydown(e: KeyboardEvent) {
+		const target = e.target as HTMLElement;
+
+		if (isF2(e) && target.hasAttribute("ui5-input")) {
+			(target.parentNode!.parentNode!.querySelector(".ui5-slider-handle") as HTMLElement).focus();
+		}
+
+		if (isEnter(e)) {
+			this._updateInputValue();
+			this._updateValueFromInput(e);
+		}
+	}
+
+	_onInputChange() {
+		if (this._valueOnInteractionStart !== this.value) {
+			this.fireEvent("change");
+		}
+	}
+
+	_onInputInput() {
+		this.fireEvent("input");
+	}
+
+	_updateValueFromInput(e: Event) {
+		const input = e.target as HTMLInputElement;
+		const value = parseFloat(input.value);
+		this._isInputValueValid = value >= this._effectiveMin && value <= this._effectiveMax;
+
+		if (!this._isInputValueValid) {
+			return;
+		}
+
+		this.value = value;
+	}
+
+	_onKeyupBase() {
 		if (this.disabled) {
 			return;
 		}
@@ -403,9 +473,10 @@ abstract class SliderBase extends UI5Element {
 	 * @private
 	 */
 	_handleFocusOnMouseDown(e: TouchEvent | MouseEvent) {
-		const focusedElement = this.shadowRoot!.activeElement;
+		const currentlyFocusedElement = this.shadowRoot!.activeElement;
+		const elementToBeFocused = e.target as HTMLElement;
 
-		if (!focusedElement || focusedElement !== e.target) {
+		if ((!currentlyFocusedElement || currentlyFocusedElement !== elementToBeFocused) && !elementToBeFocused.hasAttribute("ui5-input")) {
 			this._preserveFocus(true);
 			this.focusInnerElement();
 		}
@@ -435,7 +506,7 @@ abstract class SliderBase extends UI5Element {
 	updateStateStorageAndFireInputEvent(valueType: string) {
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 		}
 	}
 
@@ -622,16 +693,14 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	_handleActionKeyPressBase(e: KeyboardEvent, affectedPropName: string) {
-		const isUpAction = SliderBase._isIncreaseValueAction(e);
+		const isUpAction = SliderBase._isIncreaseValueAction(e, this.directionStart);
 		const isBigStep = SliderBase._isBigStepAction(e);
 
 		const currentValue = this[affectedPropName as keyof SliderBase] as number;
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
-		// We need to take into consideration the effective direction of the slider - rtl or ltr.
-		// While in ltr, the left arrow key decreases the value, in rtl it should actually increase it.
-		let step = this.effectiveDir === "rtl" ? -this._effectiveStep : this._effectiveStep;
+		let step = this._effectiveStep;
 
 		// If the action key corresponds to a long step and the slider has more than 10 normal steps,
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
@@ -648,11 +717,11 @@ abstract class SliderBase extends UI5Element {
 		return isUpAction ? step : step * -1;
 	}
 
-	static _isDecreaseValueAction(e: KeyboardEvent) {
-		return isDown(e) || isDownCtrl(e) || isLeft(e) || isLeftCtrl(e) || isMinus(e) || isPageDown(e);
-	}
+	static _isIncreaseValueAction(e: KeyboardEvent, directionStart: DirectionStart) {
+		if (directionStart === "right") {
+			return isUp(e) || isUpCtrl(e) || isLeft(e) || isLeftCtrl(e) || isPlus(e) || isPageUp(e);
+		}
 
-	static _isIncreaseValueAction(e: KeyboardEvent) {
 		return isUp(e) || isUpCtrl(e) || isRight(e) || isRightCtrl(e) || isPlus(e) || isPageUp(e);
 	}
 
@@ -725,8 +794,20 @@ abstract class SliderBase extends UI5Element {
 		return this.disabled ? "-1" : "0";
 	}
 
-	get _ariaLabelledByHandleRefs() {
-		return [`${this._id}-accName`, `${this._id}-sliderDesc`].join(" ").trim();
+	get _ariaDescribedByHandleText() {
+		return this.editableTooltip ? "ui5-slider-InputDesc" : undefined;
+	}
+
+	get _ariaLabelledByHandleText() {
+		return this.accessibleName ? "ui5-slider-accName ui5-slider-sliderDesc" : "ui5-slider-sliderDesc";
+	}
+
+	get _ariaDescribedByInputText() {
+		return "";
+	}
+
+	get _ariaLabelledByInputText() {
+		return "";
 	}
 }
 

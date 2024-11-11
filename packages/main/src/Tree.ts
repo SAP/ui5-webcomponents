@@ -122,7 +122,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
  * Even if you prevented the event's default behavior, you can always manually call `toggle()` on a tree item.
  * @param {HTMLElement} item the toggled item.
- * @allowPreventDefault
  * @public
  */
 @event<TreeItemToggleEventDetail>("item-toggle", {
@@ -132,6 +131,8 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when the mouse cursor enters the tree item borders.
@@ -146,6 +147,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 /**
  * Fired when the mouse cursor leaves the tree item borders.
@@ -160,10 +162,10 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 /**
  * Fired when a tree item is activated.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
@@ -174,6 +176,8 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -191,6 +195,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -202,6 +207,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 	detail: {
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -227,6 +233,22 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		 */
 		targetItem: { type: HTMLElement },
 	},
+	bubbles: true,
+})
+@event<TreeMoveEventDetail>("move", {
+	detail: {
+		source: { type: Object },
+		destination: { type: Object },
+	},
+	bubbles: true,
+})
+@event<TreeMoveEventDetail>("move-over", {
+	detail: {
+		source: { type: Object },
+		destination: { type: Object },
+	},
+	bubbles: true,
+	cancelable: true,
 })
 class Tree extends UI5Element {
 	/**
@@ -385,7 +407,7 @@ class Tree extends UI5Element {
 
 		const placementAccepted = placements.some(placement => {
 			const closestElement = closestPosition.element;
-			const beforeItemMovePrevented = !this.fireEvent<TreeMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireDecoratorEvent<TreeMoveEventDetail>("move-over", {
 				source: {
 					element: draggedElement,
 				},
@@ -393,7 +415,7 @@ class Tree extends UI5Element {
 					element: closestElement,
 					placement,
 				},
-			}, true);
+			});
 
 			if (beforeItemMovePrevented) {
 				e.preventDefault();
@@ -414,7 +436,7 @@ class Tree extends UI5Element {
 		e.preventDefault();
 
 		const draggedElement = DragRegistry.getDraggedElement()!;
-		this.fireEvent<TreeMoveEventDetail>("move", {
+		this.fireDecoratorEvent<TreeMoveEventDetail>("move", {
 			source: {
 				element: draggedElement,
 			},
@@ -447,7 +469,7 @@ class Tree extends UI5Element {
 
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
-		const defaultPrevented = !this.fireEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem }, true);
+		const defaultPrevented = !this.fireDecoratorEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem });
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -456,26 +478,26 @@ class Tree extends UI5Element {
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 
-		if (!this.fireEvent<TreeItemClickEventDetail>("item-click", { item: treeItem }, true)) {
+		if (!this.fireDecoratorEvent<TreeItemClickEventDetail>("item-click", { item: treeItem })) {
 			e.preventDefault();
 		}
 	}
 
 	_onListItemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
-		this.fireEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
+		this.fireDecoratorEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
 	}
 
 	_onListItemFocus(e: CustomEvent<ListItemFocusEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
-		this.fireEvent<TreeItemFocusEventDetail>("item-focus", { item: treeItem });
+		this.fireDecoratorEvent<TreeItemFocusEventDetail>("item-focus", { item: treeItem });
 	}
 
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireEvent<TreeItemMouseoverEventDetail>("item-mouseover", { item: target });
+			this.fireDecoratorEvent<TreeItemMouseoverEventDetail>("item-mouseover", { item: target });
 		}
 	}
 
@@ -483,7 +505,7 @@ class Tree extends UI5Element {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target });
+			this.fireDecoratorEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target });
 		}
 	}
 
@@ -499,7 +521,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent<TreeSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent<TreeSelectionChangeEventDetail>("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,

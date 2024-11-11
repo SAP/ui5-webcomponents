@@ -10,7 +10,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
@@ -86,7 +85,6 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
  * @public
- * @allowPreventDefault
  * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
@@ -111,6 +109,8 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 		 */
 		shiftKey: { type: Boolean },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
 	/**
@@ -343,22 +343,17 @@ class Link extends UI5Element implements ITabbable {
 		} = e;
 
 		e.stopImmediatePropagation();
-		markEvent(e, "link");
 
-		const executeEvent = this.fireEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
 			altKey,
 			ctrlKey,
 			metaKey,
 			shiftKey,
-		}, true);
+		});
 
 		if (!executeEvent) {
 			e.preventDefault();
 		}
-	}
-
-	_onfocusin(e: FocusEvent) {
-		markEvent(e, "link");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -367,13 +362,10 @@ class Link extends UI5Element implements ITabbable {
 		} else if (isSpace(e)) {
 			e.preventDefault();
 		}
-
-		markEvent(e, "link");
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (!isSpace(e)) {
-			markEvent(e, "link");
 			return;
 		}
 

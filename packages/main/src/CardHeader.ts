@@ -58,7 +58,9 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * **Note:** The event would be fired only if the `interactive` property is set to true.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class CardHeader extends UI5Element {
 	/**
 	 * Defines the title text.
@@ -86,7 +88,7 @@ class CardHeader extends UI5Element {
 
 	/**
 	 * Defines if the component would be interactive,
-	 * e.g gets hover effect, gets focus outline and `click` event is fired, when pressed.
+	 * e.g gets hover effect and `click` event is fired, when pressed.
 	 * @default false
 	 * @public
 	*/
@@ -199,7 +201,7 @@ class CardHeader extends UI5Element {
 		e.stopImmediatePropagation();
 
 		if (this.interactive && this._root.contains(e.target as HTMLElement)) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 	}
 
@@ -214,7 +216,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 			return;
 		}
 
@@ -233,7 +235,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("click");
+			this.fireDecoratorEvent("click");
 		}
 	}
 }

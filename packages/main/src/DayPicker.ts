@@ -115,11 +115,15 @@ type DayPickerNavigateEventDetail = {
 /**
  * Fired when the selected date(s) change
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
  */
-@event("navigate")
+@event("navigate", {
+	bubbles: true,
+})
 class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
@@ -463,7 +467,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp, isShift);
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent<DayPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -513,7 +517,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent<DayPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -722,7 +726,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -733,7 +737,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**

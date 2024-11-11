@@ -8,7 +8,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
@@ -147,7 +146,9 @@ const ICON_PER_STATUS_DESIGN = {
 	],
 })
 
-@event("_press")
+@event("_press", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `Close` button is pressed.
@@ -163,6 +164,7 @@ const ICON_PER_STATUS_DESIGN = {
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
@@ -489,8 +491,8 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Event handlers
 	 */
-	_onclick(e: MouseEvent) {
-		this.fireItemPress(e);
+	_onclick() {
+		this.fireItemPress();
 	}
 
 	_onShowMoreClick(e: MouseEvent) {
@@ -547,13 +549,13 @@ class NotificationListItem extends NotificationListItemBase {
 
 		const space = isSpace(e);
 
-		if (space && getEventMark(e) === "link") {
+		if (space && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			this._onShowMoreClick(e as unknown as MouseEvent);
 			return;
 		}
 
 		if (isDelete(e)) {
-			this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -566,7 +568,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
@@ -589,12 +591,12 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Private
 	 */
-	fireItemPress(e: Event) {
-		if (getEventMark(e) === "button" || getEventMark(e) === "link") {
+	fireItemPress() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
-		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 
 	onResize() {

@@ -168,7 +168,7 @@ class ResponsivePopover extends Popover {
 	_propagateDialogEvent(e: CustomEvent) {
 		const type = e.type.replace("ui5-", "");
 
-		this.fireEvent(type, e.detail);
+		this.fireDecoratorEvent(type, e.detail);
 	}
 
 	get isModal() {

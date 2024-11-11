@@ -29,7 +29,7 @@ type Property = {
 
 type PropertyValue = boolean | number | string | object | undefined | null;
 
-type EventData = Record<string, object>;
+type EventData = Record<string, { detail: Record<string, object>, cancelable: boolean, bubbles: boolean }>;
 
 type I18nBundleAccessorValue = {
 	bundleName: string,

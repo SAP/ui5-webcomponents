@@ -180,6 +180,7 @@ type TableRowClickEventDetail = {
 		 */
 		row: { type: TableRow },
 	},
+	bubbles: true,
 })
 
 class Table extends UI5Element {
@@ -459,12 +460,12 @@ class Table extends UI5Element {
 	}
 
 	_onRowPress(row: TableRow) {
-		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
+		this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
 	get styles() {
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
-			if (headerCell.horizontalAlign !== undefined) {
+			if (headerCell.horizontalAlign !== undefined && !headerCell._popin) {
 				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
 			}
 			return headerStyles;

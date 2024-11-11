@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -96,9 +95,15 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  * Fired when the user clicks on the detail button when type is `Detail`.
  * @public
  */
-@event("detail-click")
-@event("_focused")
-@event("_selection-requested")
+@event("detail-click", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
+@event("_selection-requested", {
+	bubbles: true,
+})
 abstract class ListItem extends ListItemBase {
 	/**
 	 * Defines the visual indication and behavior of the list items.
@@ -225,8 +230,8 @@ abstract class ListItem extends ListItemBase {
 			}
 		};
 
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e as unknown as MouseEvent);
+		const handleTouchStartEvent = () => {
+			this._onmousedown();
 		};
 
 		this._ontouchstart = {
@@ -292,25 +297,34 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
-			return;
-		}
+	_onmousedown() {
 		this.activate();
 	}
 
-	_onmouseup(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_onmouseup() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		this.deactivate();
 	}
 
-	_ontouchend(e: TouchEvent) {
-		this._onmouseup(e as unknown as MouseEvent);
+	_ontouchend() {
+		this._onmouseup();
 	}
 
-	_onfocusout() {
+	_onfocusin(e: FocusEvent) {
+		super._onfocusin(e);
+
+		if (e.target !== this.getFocusDomRef()) {
+			this.deactivate();
+		}
+	}
+
+	_onfocusout(e: FocusEvent) {
+		if (e.target !== this.getFocusDomRef()) {
+			return;
+		}
+
 		this.deactivate();
 	}
 
@@ -348,7 +362,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
@@ -356,7 +370,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -366,11 +380,11 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDelete() {
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick() {
-		this.fireEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(e: Event) {

@@ -3,6 +3,8 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
+	background: var(--sapShellColor);
+	box-sizing: border-box;
 }
 
 :host {
@@ -19,7 +21,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background: var(--sapShellColor);
 	height: var(--_ui5_shellbar_root_height);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
@@ -178,7 +179,7 @@ slot[name="profile"] {
 	margin-inline-start: 0;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-root {
+:host([breakpoint-size="S"]) {
 	padding: 0 1rem;
 }
 
@@ -186,7 +187,7 @@ slot[name="profile"] {
 	padding: 0 1rem;
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-root {
+:host([breakpoint-size="M"]) {
 	padding: 0 2rem;
 }
 
@@ -194,15 +195,15 @@ slot[name="profile"] {
 	padding: 0 2rem;
 }
 
-:host([breakpoint-size="L"]) .ui5-shellbar-root {
+:host([breakpoint-size="L"]) {
 	padding: 0 2rem;
 }
 
-:host([breakpoint-size="XL"]) .ui5-shellbar-root {
+:host([breakpoint-size="XL"]) {
 	padding: 0 3rem;
 }
 
-:host([breakpoint-size="XXL"]) .ui5-shellbar-root {
+:host([breakpoint-size="XXL"]) {
 	padding: 0 3rem;
 }
 

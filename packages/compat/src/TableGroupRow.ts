@@ -43,7 +43,9 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 		CheckBox,
 	],
 })
-@event("_focused")
+@event("_focused", {
+	bubbles: true,
+})
 class TableGroupRow extends UI5Element implements ITableRow {
 	/**
 	 * Defines the mode of the row
@@ -103,7 +105,7 @@ class TableGroupRow extends UI5Element implements ITableRow {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireEvent("_focused", e);
+		this.fireDecoratorEvent("_focused", e);
 	}
 }
 

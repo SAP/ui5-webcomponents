@@ -946,6 +946,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @param cancelable - true, if the user can call preventDefault on the event object
 	 * @param bubbles - true, if the event bubbles
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 * @deprecated use fireDecoratorEvent instead
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
@@ -957,6 +958,32 @@ abstract class UI5Element extends HTMLElement {
 		//	 After: onLiveChange
 		if (pascalCaseEventName !== name) {
 			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
+		}
+
+		return eventResult;
+	}
+
+	/**
+	 * Fires a custom event, configured via the "event" decorator.
+	 * @public
+	 * @param name - name of the event
+	 * @param data - additional data for the event
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 */
+	fireDecoratorEvent<T>(name: string, data?: T): boolean {
+		const eventData = this.getEventData(name);
+		const cancellable = eventData ? eventData.cancelable : false;
+		const bubbles = eventData ? eventData.bubbles : false;
+
+		const eventResult = this._fireEvent(name, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name);
+
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancellable, bubbles);
 		}
 
 		return eventResult;
@@ -989,6 +1016,12 @@ abstract class UI5Element extends HTMLElement {
 
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && noConflictEventResult;
+	}
+
+	getEventData(name: string) {
+		const ctor = this.constructor as typeof UI5Element;
+		const eventMap = ctor.getMetadata().getEvents();
+		return eventMap[name];
 	}
 
 	/**
@@ -1238,12 +1271,13 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	static define(): typeof UI5Element {
-		this.definePromise = Promise.all([
-			this.fetchI18nBundles(),
-			this.fetchCLDR(),
-			boot(),
-			this.onDefine(),
-		]).then(result => {
+		const defineSequence = async () => {
+			await boot(); // boot must finish first, because it initializes configuration
+			const result = await Promise.all([
+				this.fetchI18nBundles(), // uses configuration
+				this.fetchCLDR(),
+				this.onDefine(),
+			]);
 			const [i18nBundles] = result;
 			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
 				const propertyName = pair[0];
@@ -1251,7 +1285,8 @@ abstract class UI5Element extends HTMLElement {
 				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
 			});
 			this.asyncFinished = true;
-		});
+		};
+		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
 
