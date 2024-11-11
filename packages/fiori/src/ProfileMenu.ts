@@ -14,6 +14,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
+import ResponsivePopover from "@ui5/webcomponents/ResponsivePopover.js";
 import type UserProfile from "./UserProfile.js";
 import type ProfileMenuItem from "./ProfileMenuItem.js";
 import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.js";
@@ -25,7 +26,7 @@ import ProfileMenuCss from "./generated/themes/ProfileMenu.css.js";
 	template: ProfileMenuTemplate,
 	styles: [ProfileMenuCss],
 	dependencies: [
-		Dialog,
+		ResponsivePopover,
 		Avatar,
 		Title,
 		Text,

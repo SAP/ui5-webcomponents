@@ -1,4 +1,10 @@
-<ui5-dialog .open={{open}}>
+<ui5-responsive-popover
+		tabindex="-1"
+		placement="Bottom"
+		horizontal-align="Start"
+		.open={{open}}
+		.opener={{this}}
+>
 	<div class="ui5-profile-menu-user" slot="header">
 		{{#if _selectedUser}}
 			<ui5-avatar size="L" @click="{{_avatarClicked}}">
@@ -46,4 +52,4 @@
 	{{/each}}
 	</ui5-list>
 
-</ui5-dialog>
+</ui5-responsive-popover>
