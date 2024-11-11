@@ -29,8 +29,7 @@ const StepColumn = {
  * @experimental
  * @since 2.0.0
  */
-interface IFormItem extends HTMLElement {
-	_id: string,
+interface IFormItem extends UI5Element {
 	labelSpan: string
 	itemSpacing: `${FormItemSpacing}`;
 	readonly isGroup: boolean;
