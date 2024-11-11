@@ -5,6 +5,7 @@ Cypress.Commands.add("ui5DOMRef", { prevSubject: true }, subject => {
 	cy.get(subject)
 		.then(async $ui5Element => {
 			await renderFinished();
-			return ($ui5Element.get(0) as UI5Element).getFocusDomRef();
+			const ui5ElementDOMRef = await (($ui5Element.get(0) as UI5Element).getFocusDomRefAsync());
+			return ui5ElementDOMRef;
 		});
 });
