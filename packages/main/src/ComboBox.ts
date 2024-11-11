@@ -741,7 +741,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		const isOpen = this.open;
 		const currentItem = allItems.find(item => {
-			return isOpen ? item.focused : item.selected;
+			return item.selected || item.focused;
 		});
 
 		const indexOfItem = currentItem ? allItems.indexOf(currentItem) : -1;
@@ -841,7 +841,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 	_handleArrowUp(e: KeyboardEvent, indexOfItem: number) {
 		const isOpen = this.open;
-
+debugger;
 		if (indexOfItem === 0 && !this.hasValueStateText) {
 			this._clearFocus();
 			this.focused = true;
@@ -849,18 +849,22 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		if (indexOfItem === 0 && this.hasValueStateText && isOpen) {
+		if (indexOfItem === 0 && this.hasValueStateText && isOpen && !this._isValueStateFocused) {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
 			this._announceValueStateText();
 			this._filteredItems[0].selected = false;
+			this.value = this._userTypedValue;
+
 			return;
 		}
 
 		if (this._isValueStateFocused) {
 			this.focused = true;
 			this._isValueStateFocused = false;
+			this.value = this._userTypedValue;
+
 			return;
 		}
 
