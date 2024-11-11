@@ -609,18 +609,14 @@ class ShellBar extends UI5Element {
 		return style.display !== "none" && style.visibility !== "hidden" && element.offsetWidth > 0 && element.offsetHeight > 0;
 	}
 
-	_isInteractive(element: HTMLElement) {
-		const bIsLogoOrMenuBtn = element.classList.contains("ui5-shellbar-logo-area")
-								|| element.classList.contains("ui5-shellbar-logo")
-								|| element.classList.contains("ui5-shellbar-menu-button");
-		const firstShadowRootChild = element.shadowRoot?.firstElementChild;
-		const elementDom = bIsLogoOrMenuBtn ? element : firstShadowRootChild;
-
-		return (
-			elementDom && elementDom.hasAttribute("tabindex") && elementDom.getAttribute("tabindex") === "0"
-		);
+	_isInteractive(element: HTMLElement | UI5Element): boolean {
+		const component = element as UI5Element;
+		if (component.isUI5Element) {
+			const dom = component.getFocusDomRef();
+			return dom?.tabIndex === 0;
+		}
+		return element.tabIndex === 0;
 	}
-
 	_getActiveElement() {
 		const activeElement = document.activeElement;
 
