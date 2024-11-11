@@ -102,8 +102,8 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines whether the component is read-only.
 	 *
-	 * **Note:** A read-only component is not editable,
-	 * but still provides visual feedback upon user interaction.
+	 * **Note:** A read-only component is not editable (selectable),
+	 * but still provides visual feedback upon user interaction (is focusable).
 	 * @default false
 	 * @public
 	 */
@@ -121,6 +121,8 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 	/**
 	 * Defines whether the component is checked or not.
+	 * Only enabled radio buttons can be checked.
+	 * Read-only radio buttons are not selectable, and therefore are always unchecked.
 	 *
 	 * **Note:** The property value can be changed with user interaction,
 	 * either by clicking/tapping on the component,
