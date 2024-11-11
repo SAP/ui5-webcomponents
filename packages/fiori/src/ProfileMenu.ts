@@ -23,11 +23,11 @@ import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.j
 import ProfileMenuCss from "./generated/themes/ProfileMenu.css.js";
 
 // Texts
-// import {
-//	PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT,
-//	PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
-//	PROFILE_MENU_SIGN_OUT_BUTTON_TXT,
-// } from "./generated/i18n/i18n-defaults.js";
+import {
+	PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT,
+	PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
+	PROFILE_MENU_SIGN_OUT_BUTTON_TXT,
+} from "./generated/i18n/i18n-defaults.js";
 
 @customElement({
 	tag: "ui5-profile-menu",
@@ -139,15 +139,15 @@ class ProfileMenu extends UI5Element {
 	}
 
 	get _manageAccountButtonText() {
-		return "Manage Account";//ProfileMenu.i18nBundle.getText(PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT);
+		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT);
 	}
 
 	get _otherAccountsButtonText() {
-		return "Other Accounts";//ProfileMenu.i18nBundle.getText(PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT);
+		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT);
 	}
 
 	get _signOutButtonText() {
-		return "Sign Out";//ProfileMenu.i18nBundle.getText(PROFILE_MENU_SIGN_OUT_BUTTON_TXT);
+		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_SIGN_OUT_BUTTON_TXT);
 	}
 }
 
