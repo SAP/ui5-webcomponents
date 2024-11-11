@@ -2,6 +2,7 @@
 		tabindex="-1"
 		placement="Bottom"
 		horizontal-align="Start"
+		@ui5-close={{_afterClosePopover}}
 		.open={{open}}
 		.opener={{this}}
 >
@@ -17,39 +18,40 @@
 			<ui5-text>{{_selectedUser.subtitle1}}</ui5-text>
 			<ui5-text>{{_selectedUser.subtitle2}}</ui5-text>
 			{{#if userSetting}}
-				<ui5-button icon="user-settings" @click="{{_openSettingDialog}}">Manage Account</ui5-button>
+				<ui5-button icon="user-settings" @click="{{_openSettingDialog}}">{{_manageAccountButtonText}}</ui5-button>
 			{{/if}}
 		{{/if}}
 	</div>
-	<ui5-panel collapsed>
-		<div slot="header" class="ui5-profile-menu-user-header">
-			<ui5-title slot="header" level="H4">Other Accounts ({{_otherUsers.length}})</ui5-title>
-			<ui5-button slot="header" design="Transparent" icon="add-employee" @click="{{_addAccountClicked}}" />
-		</div>
-		{{#if _otherUsers.length}}
-		<ui5-list @item-click="{{_accountSwitch}}">
-			{{#each _otherUsers}}
-				<ui5-li>
-					<ui5-avatar slot="image" size="XS">
-						<img src={{this.avatar}}/>
-					</ui5-avatar>
-					<ui5-title>{{text}}</ui5-title>
+	{{#if showOtherUsers}}
+		<ui5-panel collapsed>
+			<div slot="header" class="ui5-profile-menu-user-header">
+				<ui5-title slot="header" level="H4">{{_otherAccountsButtonText}} ({{_otherUsers.length}})</ui5-title>
+				<ui5-button slot="header" design="Transparent" icon="add-employee" @click="{{_addAccountClicked}}" />
+			</div>
+			{{#if _otherUsers.length}}
+			<ui5-list @item-click="{{_accountSwitch}}">
+				{{#each _otherUsers}}
+					<ui5-li>
+						<ui5-avatar slot="image" size="XS">
+							<img src={{this.avatar}}/>
+						</ui5-avatar>
+						<ui5-title>{{text}}</ui5-title>
 					<ui5-label>{{subtitle1}}</ui5-label>
 					</br>
 					<ui5-label>{{subtitle2}}</ui5-label>
-				</ui5-li>
-			{{/each}}
-		</ui5-list>
-		{{/if}}
-	</ui5-panel>
-
+					</ui5-li>
+				{{/each}}
+			</ui5-list>
+			{{/if}}
+		</ui5-panel>
+	{{/if}}
 	<ui5-list separators="None" @item-click="{{_menuItemClicked}}">
 	{{#each menuItems}}
-		{{#if this.separator}}
-			<div class="ui5-profile-menu-separator"></div>
-		{{/if}}
 		<ui5-li icon={{this.icon}} >{{this.text}}</ui5-li>
 	{{/each}}
 	</ui5-list>
 
+	<div slot="footer" class="ui5-profile-menu-user-footer">
+		<ui5-button design="Transparent" icon="log" @click="{{_signOutClicked}}">{{_signOutButtonText}}</ui5-button>
+	</div>
 </ui5-responsive-popover>

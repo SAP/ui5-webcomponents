@@ -12,9 +12,9 @@
     align-items: center;
 }
 
-.ui5-profile-menu-separator {
-	width: 100%;
-	height: 0;
-	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
-	margin: 10px 0;
+.ui5-profile-menu-user-footer {
+	display: flex;
+	flex: 1;
+	justify-content: flex-end;
+	align-items: center;
 }

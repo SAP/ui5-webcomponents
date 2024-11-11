@@ -3,7 +3,6 @@ import { customElement } from "@ui5/webcomponents-base/decorators.js";
 import litRender from "@ui5/webcomponents-base/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Text from "@ui5/webcomponents/dist/Text.js";
@@ -15,10 +14,20 @@ import List from "@ui5/webcomponents/dist/List.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/ResponsivePopover.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import type Dialog from "@ui5/webcomponents/Dialog.js";
 import type UserProfile from "./UserProfile.js";
 import type ProfileMenuItem from "./ProfileMenuItem.js";
 import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.js";
 import ProfileMenuCss from "./generated/themes/ProfileMenu.css.js";
+
+// Texts
+// import {
+//	PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT,
+//	PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
+//	PROFILE_MENU_SIGN_OUT_BUTTON_TXT,
+// } from "./generated/i18n/i18n-defaults.js";
 
 @customElement({
 	tag: "ui5-profile-menu",
@@ -58,6 +67,15 @@ class ProfileMenu extends UI5Element {
 	open = false;
 
 	/**
+	 * Defines, if the Profile menu will show other users.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showOtherUsers = false;
+
+	/**
 	 * Defines, id of user setting menu which will be open
 	 *
 	 * @default ""
@@ -74,6 +92,9 @@ class ProfileMenu extends UI5Element {
 		"default": true,
 	})
 	menuItems!: Array<ProfileMenuItem>;
+
+	@i18n("@ui5/webcomponents-fiori")
+	static i18nBundle: I18nBundle;
 
 	_selectedUser!: UserProfile;
 	_otherUsers: UserProfile[] = [];
@@ -93,6 +114,9 @@ class ProfileMenu extends UI5Element {
 	_menuItemClicked() {
 		this.fireDecoratorEvent("menu-item-clicked");
 	}
+	_signOutClicked() {
+		this.fireDecoratorEvent("user-sign-out-clicked");
+	}
 
 	_accountSwitch() {
 		this.fireDecoratorEvent("user-account-switch");
@@ -108,6 +132,22 @@ class ProfileMenu extends UI5Element {
 		if (userSettingDialog) {
 			userSettingDialog.open = true;
 		}
+	}
+
+	_afterClosePopover() {
+		this.open = false;
+	}
+
+	get _manageAccountButtonText() {
+		return "Manage Account";//ProfileMenu.i18nBundle.getText(PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT);
+	}
+
+	get _otherAccountsButtonText() {
+		return "Other Accounts";//ProfileMenu.i18nBundle.getText(PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT);
+	}
+
+	get _signOutButtonText() {
+		return "Sign Out";//ProfileMenu.i18nBundle.getText(PROFILE_MENU_SIGN_OUT_BUTTON_TXT);
 	}
 }
 
