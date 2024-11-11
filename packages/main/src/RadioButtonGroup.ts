@@ -189,37 +189,37 @@ class RadioButtonGroup {
 		}
 
 		const groupLength = group.length;
-		let nextRadioToSelect = null;
+		let nextRadioToFocus = null;
 
 		if (pos === groupLength - 1) {
 			if (group[0].disabled) {
 				return this._nextFocusable(1, group);
 			}
-			nextRadioToSelect = group[0];
+			nextRadioToFocus = group[0];
 		} else if (group[pos + 1].disabled) {
 			return this._nextFocusable(pos + 1, group);
 		} else {
-			nextRadioToSelect = group[pos + 1];
+			nextRadioToFocus = group[pos + 1];
 		}
 
-		return nextRadioToSelect;
+		return nextRadioToFocus;
 	}
 
 	static _previousFocusable(pos: number, group: RadioButton[]): RadioButton | null {
 		const groupLength = group.length;
-		let previousRadioToSelect = null;
+		let previousRadioToFocus = null;
 		if (pos === 0) {
 			if (group[groupLength - 1].disabled) {
 				return this._previousFocusable(groupLength - 1, group);
 			}
-			previousRadioToSelect = group[groupLength - 1];
+			previousRadioToFocus = group[groupLength - 1];
 		} else if (group[pos - 1].disabled) {
 			return this._previousFocusable(pos - 1, group);
 		} else {
-			previousRadioToSelect = group[pos - 1];
+			previousRadioToFocus = group[pos - 1];
 		}
 
-		return previousRadioToSelect;
+		return previousRadioToFocus;
 	}
 
 	static enforceSingleSelection(radioBtn: RadioButton, groupName: string) {
