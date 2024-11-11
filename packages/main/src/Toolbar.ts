@@ -317,6 +317,8 @@ class Toolbar extends UI5Element {
 	onBeforeRendering() {
 		this.detachListeners();
 		this.attachListeners();
+
+		this.preprocessItems();
 	}
 
 	async onAfterRendering() {
@@ -332,19 +334,19 @@ class Toolbar extends UI5Element {
 	 */
 	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
-		return overflowPopover!.open;
+		return overflowPopover.open;
 	}
 
 	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.opener = this.overflowButtonDOM!;
-		overflowPopover!.open = true;
-		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
+		overflowPopover.opener = this.overflowButtonDOM!;
+		overflowPopover.open = true;
+		this.reverseOverflow = overflowPopover.actualPlacement === "Top";
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.open = false;
+		overflowPopover.open = false;
 	}
 
 	toggleOverflow() {
@@ -355,8 +357,8 @@ class Toolbar extends UI5Element {
 		}
 	}
 
-	getOverflowPopover(): Popover | null {
-		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
+	getOverflowPopover(): Popover {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover")!;
 	}
 
 	/**
@@ -602,6 +604,13 @@ class Toolbar extends UI5Element {
 
 	getRegisteredToolbarItemByID(id: string): HTMLElement | null {
 		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
+	}
+
+	preprocessItems() {
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.getDomRef()!.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)
+				?? this.getOverflowPopover().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)!;
+		});
 	}
 }
 
