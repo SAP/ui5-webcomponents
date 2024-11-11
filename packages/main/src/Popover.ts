@@ -181,13 +181,12 @@ class Popover extends Popup {
 	actualPlacement: `${PopoverPlacement}` = "End";
 
 	/**
-	 * Defines of specialPositioning should be applied.
 	 * Special positioning is needed, when we have a popover inside iFrame in RTL.
 	 * The scrollbar width should be considered in the positioning
 	 * @private
 	 */
 	@property({ type: Boolean })
-	specialPositioning = false;
+	RTLAndIFramePositioning = false;
 
 	@property({ type: Number, noAttribute: true })
 	_maxHeight?: number;
@@ -412,7 +411,7 @@ class Popover extends Popup {
 
 		this._oldPlacement = placement;
 		this.actualPlacement = placement.placement;
-		this.specialPositioning = this.getSpecialPositioning();
+		this.RTLAndIFramePositioning = this.getRTLAndIFramePositioning();
 
 		let left = clamp(
 			this._left!,
@@ -567,7 +566,7 @@ class Popover extends Popup {
 				maxWidth = targetRect.left - arrowOffset;
 			}
 
-			if (this.getSpecialPositioning()) {
+			if (this.getRTLAndIFramePositioning()) {
 				left -= scrollbarWidth;
 			}
 
@@ -582,7 +581,7 @@ class Popover extends Popup {
 				maxWidth = clientWidth - targetRect.right - arrowOffset;
 			}
 
-			if (this.getSpecialPositioning()) {
+			if (this.getRTLAndIFramePositioning()) {
 				left -= scrollbarWidth;
 			}
 
@@ -654,7 +653,7 @@ class Popover extends Popup {
 		if (isVertical && arrowXCentered) {
 			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
 
-			if (this.getSpecialPositioning()) {
+			if (this.getRTLAndIFramePositioning()) {
 				arrowTranslateX -= scrollbarWidth;
 			}
 		}
@@ -755,7 +754,7 @@ class Popover extends Popup {
 		return document.documentElement.scrollHeight > document.documentElement.clientHeight;
 	}
 
-	getSpecialPositioning() {
+	getRTLAndIFramePositioning() {
 		return this.isInsideIframe() && this.isRTL() && this.hasVerticalScrollbar();
 	}
 
@@ -768,7 +767,7 @@ class Popover extends Popup {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
-			if (this.getSpecialPositioning()) {
+			if (this.getRTLAndIFramePositioning()) {
 				left -= scrollbarWidth;
 			}
 
