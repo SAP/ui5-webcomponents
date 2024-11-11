@@ -251,13 +251,13 @@ type DatePickerInputEventDetail = {
 	cancelable: true,
 })
 /**
- * Fired after the value-help dialog of the component is opened.
+ * Fired after the component's picker is opened.
  * @since 2.4.0
  * @public
  */
 @event("open")
 /**
- * Fired after the value-help dialog of the component is closed.
+ * Fired after the component's picker is closed.
  * @since 2.4.0
  * @public
  */
