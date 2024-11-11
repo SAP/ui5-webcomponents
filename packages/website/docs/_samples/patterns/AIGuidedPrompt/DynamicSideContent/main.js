@@ -50,8 +50,8 @@ let options = {
 let text;
 let sideContentGenerationId;
 
-function startGeneration() {
-	console.warn('startGeneration');
+function startGenerating() {
+	console.warn('startGenerating');
 	output.value = '';
 	text = texts[options.structure][options.language][options.toneOfVoice];
 	let generatedWordIndex = 0;
@@ -61,7 +61,7 @@ function startGeneration() {
 		const maxWordIndex = words.length - 1;
 		
 		if (generatedWordIndex > maxWordIndex) {
-			stopGeneration(generationId);
+			stopGenerating(generationId);
 			aiSideContentButton.state = 'revise';
 			openSideContentButton.innerText = 'Revise';
 			closeSideContentButton.disabled = false;
@@ -73,8 +73,8 @@ function startGeneration() {
 	return generationId;
 }
 
-function stopGeneration(generationId) {
-	console.warn('stopGeneration');
+function stopGenerating(generationId) {
+	console.warn('stopGenerating');
 	closeSideContentButton.disabled = false;
 	clearTimeout(generationId);
 }
@@ -88,23 +88,23 @@ function aiSideContentButtonClickHandler(evt) {
 	switch (button.state) {
 	case '':
 	case 'generate':
-		startGenerationFromSideContent(button);
+		startGeneratingFromSideContent(button);
 		break;
 	case 'revise':
-		startGenerationFromSideContent(button);
+		startGeneratingFromSideContent(button);
 		break;
 	case 'generating':
 		button.state = 'generate';
 		openSideContentButton.innerText = 'Generate';
-		stopGeneration(sideContentGenerationId);
+		stopGenerating(sideContentGenerationId);
 		break;
 	}
 }
 
-function startGenerationFromSideContent(button) {
+function startGeneratingFromSideContent(button) {
 	button.state = 'generating';
 	closeSideContentButton.disabled = true;
-	sideContentGenerationId = startGeneration();
+	sideContentGenerationId = startGenerating();
 }
 
 function openSideContent() {

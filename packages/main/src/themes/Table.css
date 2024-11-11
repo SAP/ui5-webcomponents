@@ -9,14 +9,11 @@
     display: none;
 }
 
-:host([overflow-mode="Scroll"]) {
-    overflow-x: scroll;
-}
-
 #table {
     display: grid;
     grid-auto-rows: minmax(min-content, auto);
     background: var(--sapList_Background);
+    height: -moz-fill, -webkit-fill-available, 100%;
 }
 
 #nodata-cell {

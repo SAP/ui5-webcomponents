@@ -389,7 +389,9 @@
 
 			// remove busy state
 			event.target.loading = false;
-		});
+			
+			// load the items once or turn off filtering
+		}, { once: true });
 	</script>
 
 	<script type="module">

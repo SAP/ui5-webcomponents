@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.4.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.4...v2.4.0) (2024-11-03)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** improve scrolling smoothness ([#10093](https://github.com/SAP/ui5-webcomponents/issues/10093)) ([d1420b0](https://github.com/SAP/ui5-webcomponents/commit/d1420b0be2c40ca649503cca0715e4c529929f8f)), closes [#10011](https://github.com/SAP/ui5-webcomponents/issues/10011)
+* **ui5-dynamic-page:** prevent unwanted header toggle from scroll ([#10007](https://github.com/SAP/ui5-webcomponents/issues/10007)) ([7a7d00c](https://github.com/SAP/ui5-webcomponents/commit/7a7d00c0d615283d1a86d775b6c51db7feadfb42))
+* **ui5-media-gallery:** clear selected thumbnail on item removal ([#10087](https://github.com/SAP/ui5-webcomponents/issues/10087)) ([af4cadb](https://github.com/SAP/ui5-webcomponents/commit/af4cadbfb637c1a6440aa0bd1fc516629ae332ae))
+
+
+
+
+
+# [2.4.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.3...v2.4.0-rc.4) (2024-10-31)
+
+
+### Features
+
+* **ui5-navigation-layout:** add ui5-navigation-layout component ([#9517](https://github.com/SAP/ui5-webcomponents/issues/9517)) ([463c780](https://github.com/SAP/ui5-webcomponents/commit/463c780df03e95eacf82075f9a47007a5a088b01))
+
+
+
+
+
 # [2.4.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0-rc.2...v2.4.0-rc.3) (2024-10-28)
 
 
