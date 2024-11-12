@@ -13,7 +13,6 @@ export default function (this: Button, injectedProps?: { ariaPressed?: boolean }
 			onFocusIn={this._onfocusin}
 			onClick={this._onclick}
 			onMouseDown={this._onmousedown}
-			onMouseUp={this._onmouseup}
 			onKeyDown={this._onkeydown}
 			onKeyUp={this._onkeyup}
 			onTouchStart={this._ontouchstart}
