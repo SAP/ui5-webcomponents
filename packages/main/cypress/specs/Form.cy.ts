@@ -1,9 +1,11 @@
 import { html } from "lit";
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import "../../src/Form.js";
 import "../../src/FormItem.js";
 import "../../src/FormGroup.js";
 import "../../src/Label.js";
 import "../../src/Text.js";
+import "../../src/Input.js";
 
 describe("General API", () => {
 	it("tests calculated state of Form with default layout and label-span", () => {
@@ -502,5 +504,88 @@ describe("Accessibility", () => {
 						expect(ariaLabelledBy).to.equal(id);
 					});
 			});
+	});
+
+	it("tests F6 navigation", () => {
+		cy.mount(html`
+			<section>
+				<button id="before">Before element</button>
+			</section>
+			<ui5-form id="formWithGroups" header-text="Form 1">
+				<ui5-form-group header-text="Address">
+					<ui5-form-item>
+						<ui5-label for="nameInp" slot="labelContent">Name:</ui5-label>
+						<ui5-input value="Red Point Stores" id="nameInp"></ui5-input>
+					</ui5-form-item>
+				
+					<ui5-form-item>
+						<ui5-label id="cityLbl" for="cityInp" slot="labelContent">ZIP Code/City:</ui5-label>
+						<ui5-input id="cityInp" value="411" accessible-name-ref="cityLbl"></ui5-input>
+						<ui5-input value="Maintown" accessible-name-ref="cityLbl"></ui5-input>
+					</ui5-form-item>
+				</ui5-form-group>
+
+				<ui5-form-group header-text="Contact">
+					<ui5-form-item>
+						<ui5-label id="streetLbl" for="streetInp" slot="labelContent">Street:</ui5-label>
+						<ui5-input id="streetInp" value="Main St" accessible-name-ref="streetLbl"></ui5-input>
+						<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl"></ui5-input>
+					</ui5-form-item>
+					
+					<ui5-form-item>
+						<ui5-label id="countryLbl" for="countrySel" slot="labelContent">Country:</ui5-label>
+						<ui5-input id="countrySel" accessible-name-ref="countryLbl"></ui5-input>
+					</ui5-form-item>
+				</ui5-form-group>
+			</ui5-form>
+
+			<ui5-form id="formWithItems" header-text="Form 2">
+				<ui5-form-item>
+					<ui5-label for="nameInp2" slot="labelContent">Name:</ui5-label>
+					<ui5-input value="Red Point Stores" id="nameInp2"></ui5-input>
+				</ui5-form-item>
+				
+				<ui5-form-item>
+					<ui5-label id="cityLbl2" for="cityInp2" slot="labelContent">ZIP Code/City:</ui5-label>
+					<ui5-input id="cityInp2" value="411" accessible-name-ref="cityLbl2"></ui5-input>
+					<ui5-input value="Maintown" accessible-name-ref="cityLbl2"></ui5-input>
+				</ui5-form-item>
+
+				<ui5-form-item>
+					<ui5-label id="streetLbl2" for="streetInp2" slot="labelContent">Street:</ui5-label>
+					<ui5-input id="streetInp2" value="Main St" accessible-name-ref="streetLbl2"></ui5-input>
+					<ui5-input id="streetNumberInp" value="1618" accessible-name-ref="streetLbl2"></ui5-input>
+				</ui5-form-item>
+				
+				<ui5-form-item>
+					<ui5-label id="countryLbl2" for="countrySel2" slot="labelContent">Country:</ui5-label>
+					<ui5-input id="countrySel2" accessible-name-ref="countryLbl2"></ui5-input>
+				</ui5-form-item>
+			</ui5-form>`);
+
+		cy.get("#before").focus();
+		cy.realPress("F6");
+
+		// assert: the first input of the first FormGroup is focused
+		cy.get("#nameInp")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		// assert: the first input in second FormGroup is focused
+		cy.get("#streetInp")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		// assert: the first input in next Form is focused
+		cy.get("#nameInp2")
+			.should("be.focused");
+
+		cy.realPress("F6");
+
+		// assert: back to the first Form
+		cy.get("#nameInp")
+			.should("be.focused");
 	});
 });
