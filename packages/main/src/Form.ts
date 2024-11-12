@@ -127,6 +127,13 @@ type ItemsInfo = {
  *
  * **For example:** To always place the labels on top set: `labelSpan="S12 M12 L12 XL12"` property.
  *
+ * ### Keyboard Handling
+ *
+ * - [Tab] - Moves the focus to the next interactive element within the Form/FormGroup (if available) or to the next element in the tab chain outside the Form
+ * - [Shift] + [Tab] - Moves the focus to the previous interactive element within the Form/FormGroup (if available) or to the previous element in the tab chain outside the Form
+ * - [F6] - Moves the focus to the first interactive element of the next FormGroup (if available) or to the next element in the tab chain outside the Form
+ * - [Shift] + [F6] - Moves the focus to the first interactive element of the previous FormGroup (if available) or to the previous element in the tab chain outside the Form
+ *
  * ### ES6 Module Import
  *
  * - import @ui5/webcomponents/dist/Form.js";
@@ -266,7 +273,7 @@ class Form extends UI5Element {
 		// Create additional CSS for number of columns that are not supported by default.
 		this.createAdditionalCSSStyleSheet();
 
-		this.setFastNavGroups();
+		this.setFastNavGroup();
 	}
 
 	setColumnLayout() {
@@ -303,11 +310,11 @@ class Form extends UI5Element {
 		});
 	}
 
-	setFastNavGroups() {
-		if (!this.hasGroupItems) {
-			this.setAttribute("data-sap-ui-fastnavgroup", "true");
-		} else {
+	setFastNavGroup() {
+		if (this.hasGroupItems) {
 			this.removeAttribute("data-sap-ui-fastnavgroup");
+		} else {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
 		}
 	}
 
