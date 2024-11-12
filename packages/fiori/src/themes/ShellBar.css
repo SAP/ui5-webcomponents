@@ -379,15 +379,15 @@ slot[name="profile"] {
 	height: inherit;
 	align-items: center;
 	overflow: hidden;
-	flex: 1 1.2 auto;
-	max-width: max-content;
+	flex: 1 1;
+	max-width: fit-content;
 }
 
 .ui5-shellbar-overflow-container-additional-content {
 	align-items: center;
 	display: flex;
 	justify-content: flex-end;
-	flex: 1 0.01 auto;
+	flex: 1 0 auto;
 	overflow: hidden;
 	min-width: 0;
 }
@@ -396,6 +396,7 @@ slot[name="profile"] {
 	flex-grow: 1;
 	height: 1px;
 	flex-basis: 1rem;
+	min-width: 1rem;
 }
 
 ::slotted(.ui5-shellbar-separator),
@@ -433,7 +434,8 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-hidden-button,
-.ui5-shellbar-invisible-button {
+.ui5-shellbar-invisible-button,
+::slotted(.ui5-shellbar-hidden-button) {
 	visibility: hidden;
 	order: -1;
 	min-width: 0;
