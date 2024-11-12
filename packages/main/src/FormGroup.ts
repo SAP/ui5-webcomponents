@@ -86,6 +86,9 @@ class FormGroup extends UI5Element implements IFormItem {
 	@property()
 	labelSpan = "S12 M4 L4 XL4";
 
+	@property()
+	emptySpan = "S0 M0 L0 XL0";
+
 	onBeforeRendering() {
 		this.processFormItems();
 	}
@@ -93,6 +96,7 @@ class FormGroup extends UI5Element implements IFormItem {
 	processFormItems() {
 		this.items.forEach((item: FormItem) => {
 			item.labelSpan = this.labelSpan;
+			item.emptySpan = this.emptySpan;
 			item.itemSpacing = this.itemSpacing;
 		});
 	}

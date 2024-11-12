@@ -1,17 +1,83 @@
 :root {
-	--ui5-form-item-layout: 1fr 2fr;
-	--ui5-form-item-layout-span1: 1fr 11fr;
-	--ui5-form-item-layout-span2: 2fr 10fr;
-	--ui5-form-item-layout-span3: 3fr 9fr;
-	--ui5-form-item-layout-span4: 4fr 8fr;
-	--ui5-form-item-layout-span5: 5fr 7fr;
-	--ui5-form-item-layout-span6: 6fr 6fr;
-	--ui5-form-item-layout-span7: 7fr 5fr;
-	--ui5-form-item-layout-span8: 8fr 4fr;
-	--ui5-form-item-layout-span9: 9fr 3fr;
-	--ui5-form-item-layout-span10: 10fr 2fr;
-	--ui5-form-item-layout-span11: 11fr 1fr;
+	--ui5-form-item-layout: 4fr 8fr 0fr;
+	--ui5-form-item-layout-span1: 1fr 11fr 0fr;
+	--ui5-form-item-layout-span1-1: 1fr 10fr 1fr;
+	--ui5-form-item-layout-span1-2: 1fr 9fr 2fr;
+	--ui5-form-item-layout-span1-3: 1fr 8fr 3fr;
+	--ui5-form-item-layout-span1-4: 1fr 7fr 4fr;
+	--ui5-form-item-layout-span1-5: 1fr 6fr 5fr;
+	--ui5-form-item-layout-span1-6: 1fr 5fr 6fr;
+	--ui5-form-item-layout-span1-7: 1fr 5fr 7fr;
+	--ui5-form-item-layout-span1-8: 1fr 5fr 8fr;
+	--ui5-form-item-layout-span1-9: 1fr 5fr 9fr;
+	--ui5-form-item-layout-span1-10: 1fr 1fr 10fr;
+
+	--ui5-form-item-layout-span2: 2fr 10fr 0fr;
+	--ui5-form-item-layout-span2-1: 2fr 9fr 1fr;
+	--ui5-form-item-layout-span2-2: 2fr 8fr 2fr;
+	--ui5-form-item-layout-span2-3: 2fr 7fr 3fr;
+	--ui5-form-item-layout-span2-4: 2fr 6fr 4fr;
+	--ui5-form-item-layout-span2-5: 2fr 5fr 5fr;
+	--ui5-form-item-layout-span2-6: 2fr 4fr 6fr;
+	--ui5-form-item-layout-span2-7: 2fr 3fr 7fr;
+	--ui5-form-item-layout-span2-8: 2fr 2fr 8fr;
+	--ui5-form-item-layout-span2-9: 2fr 1fr 9fr;
+
+	--ui5-form-item-layout-span3: 3fr 9fr 0fr;
+	--ui5-form-item-layout-span3-1: 3fr 8fr 1fr;
+	--ui5-form-item-layout-span3-2: 3fr 7fr 2fr;
+	--ui5-form-item-layout-span3-3: 3fr 6fr 3fr;
+	--ui5-form-item-layout-span3-4: 3fr 5fr 4fr;
+	--ui5-form-item-layout-span3-5: 3fr 4fr 5fr;
+	--ui5-form-item-layout-span3-6: 3fr 3fr 6fr;
+	--ui5-form-item-layout-span3-7: 3fr 2fr 7fr;
+	--ui5-form-item-layout-span3-8: 3fr 1fr 8fr;
+	
+	--ui5-form-item-layout-span4: 4fr 8fr 0fr;
+	--ui5-form-item-layout-span4-1: 4fr 7fr 1fr;
+	--ui5-form-item-layout-span4-2: 4fr 6fr 2fr;
+	--ui5-form-item-layout-span4-3: 4fr 5fr 3fr;
+	--ui5-form-item-layout-span4-4: 4fr 4fr 4fr;
+	--ui5-form-item-layout-span4-5: 4fr 3fr 5fr;
+	--ui5-form-item-layout-span4-6: 4fr 2fr 6fr;
+	--ui5-form-item-layout-span4-7: 4fr 1fr 7fr;
+
+	--ui5-form-item-layout-span5: 5fr 7fr 0fr;
+	--ui5-form-item-layout-span5-1: 5fr 6fr 1fr;
+	--ui5-form-item-layout-span5-2: 5fr 5fr 2fr;
+	--ui5-form-item-layout-span5-3: 5fr 4fr 3fr;
+	--ui5-form-item-layout-span5-4: 5fr 3fr 4fr;
+	--ui5-form-item-layout-span5-5: 5fr 2fr 5fr;
+	--ui5-form-item-layout-span5-6: 5fr 1fr 6fr;
+
+	--ui5-form-item-layout-span6: 6fr 6fr 0fr;
+	--ui5-form-item-layout-span6-1: 6fr 5fr 1fr;
+	--ui5-form-item-layout-span6-2: 6fr 4fr 2fr;
+	--ui5-form-item-layout-span6-3: 6fr 3fr 3fr;
+	--ui5-form-item-layout-span6-4: 6fr 2fr 4fr;
+	--ui5-form-item-layout-span6-5: 6fr 1fr 5fr;
+
+	--ui5-form-item-layout-span7: 7fr 5fr 0fr;
+	--ui5-form-item-layout-span7-1: 7fr 4fr 1fr;
+	--ui5-form-item-layout-span7-2: 7fr 3fr 2fr;
+	--ui5-form-item-layout-span7-3: 7fr 2fr 3fr;
+	--ui5-form-item-layout-span7-4: 7fr 1fr 4fr;
+
+	--ui5-form-item-layout-span8: 8fr 4fr 0fr;
+	--ui5-form-item-layout-span8-1: 8fr 3fr 1fr;
+	--ui5-form-item-layout-span8-2: 8fr 2fr 2fr;
+	--ui5-form-item-layout-span8-3: 8fr 1fr 3fr;
+
+	--ui5-form-item-layout-span9: 9fr 3fr 0fr;
+	--ui5-form-item-layout-span9-1: 9fr 2fr 1fr;
+	--ui5-form-item-layout-span9-2: 9fr 1fr 2fr;
+
+	--ui5-form-item-layout-span10: 10fr 2fr 0fr;
+	--ui5-form-item-layout-span10-1: 10fr 1fr 1fr;
+
+	--ui5-form-item-layout-span11: 11fr 1fr 0fr;
 	--ui5-form-item-layout-span12: 1fr;
+
 	--ui5-form-item-label-justify: end;
 	--ui5-form-item-label-justify-span12: start;
 	--ui5-form-item-label-padding: 0.125rem 0;

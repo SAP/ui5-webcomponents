@@ -6,58 +6,282 @@
 
 /* S - 12 cells */
 @container (max-width: 600px) {
-	:host([label-span-s="1"]) .ui5-form-item,
-	:host([label-span-s="1"]) .ui5-form-group {
+	:host([label-span-s="1"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
 	}
+	:host([label-span-s="1"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-1);
+	}
+	:host([label-span-s="1"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-2);
+	}
+	:host([label-span-s="1"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-3);
+	}
+	:host([label-span-s="1"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-4);
+	}
+	:host([label-span-s="1"][empty-span-s="5"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-5);
+	}
+	:host([label-span-s="1"][empty-span-s="6"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-6);
+	}
+	:host([label-span-s="1"][empty-span-s="7"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-7);
+	}
+	:host([label-span-s="1"][empty-span-s="8"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-8);
+	}
+	:host([label-span-s="1"][empty-span-s="9"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-9);
+	}
+	:host([label-span-s="1"][empty-span-s="10"]) .ui5-form-item,
+	:host([label-span-s="1"][empty-span-s="10"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-10);
+	}
 
-	:host([label-span-s="2"]) .ui5-form-item,
-	:host([label-span-s="2"]) .ui5-form-group {
+
+	:host([label-span-s="2"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span2);
 	}
+	:host([label-span-s="2"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-1);
+	}
+	:host([label-span-s="2"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-2);
+	}
+	:host([label-span-s="2"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-3);
+	}
+	:host([label-span-s="2"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-4);
+	}
+	:host([label-span-s="2"][empty-span-s="5"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-5);
+	}
+	:host([label-span-s="2"][empty-span-s="6"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-6);
+	}
+	:host([label-span-s="2"][empty-span-s="7"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-7);
+	}
+	:host([label-span-s="2"][empty-span-s="8"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-8);
+	}
+	:host([label-span-s="2"][empty-span-s="9"]) .ui5-form-item,
+	:host([label-span-s="2"][empty-span-s="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-9);
+	}
 
-	:host([label-span-s="3"]) .ui5-form-item,
-	:host([label-span-s="3"]) .ui5-form-group {
+
+	:host([label-span-s="3"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span3);
 	}
+	:host([label-span-s="3"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-1);
+	}
+	:host([label-span-s="3"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-2);
+	}
+	:host([label-span-s="3"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-3);
+	}
+	:host([label-span-s="3"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-4);
+	}
+	:host([label-span-s="3"][empty-span-s="5"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-5);
+	}
+	:host([label-span-s="3"][empty-span-s="6"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-6);
+	}
+	:host([label-span-s="3"][empty-span-s="7"]) .ui5-form-item,
+	:host([label-span-s="3"][empty-span-s="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-7);
+	}
 
-	:host([label-span-s="4"]) .ui5-form-item,
-	:host([label-span-s="4"]) .ui5-form-group {
+
+	:host([label-span-s="4"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span4);
 	}
+	:host([label-span-s="4"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-1);
+	}
+	:host([label-span-s="4"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-2);
+	}
+	:host([label-span-s="4"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-3);
+	}
+	:host([label-span-s="4"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-4);
+	}
+	:host([label-span-s="4"][empty-span-s="5"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-5);
+	}
+	:host([label-span-s="4"][empty-span-s="6"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-6);
+	}
+	:host([label-span-s="4"][empty-span-s="7"]) .ui5-form-item,
+	:host([label-span-s="4"][empty-span-s="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-7);
+	}
 
-	:host([label-span-s="5"]) .ui5-form-item,
-	:host([label-span-s="5"]) .ui5-form-group {
+
+	:host([label-span-s="5"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span5);
 	}
+	:host([label-span-s="5"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-1);
+	}
+	:host([label-span-s="5"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-2);
+	}
+	:host([label-span-s="5"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-3);
+	}
+	:host([label-span-s="5"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-4);
+	}
+	:host([label-span-s="5"][empty-span-s="5"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-5);
+	}
+	:host([label-span-s="5"][empty-span-s="6"]) .ui5-form-item,
+	:host([label-span-s="5"][empty-span-s="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-6);
+	}
 
-	:host([label-span-s="6"]) .ui5-form-item,
-	:host([label-span-s="6"]) .ui5-form-group {
+
+	:host([label-span-s="6"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="6"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span6);
 	}
+	:host([label-span-s="6"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="6"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-1);
+	}
+	:host([label-span-s="6"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="6"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-2);
+	}
+	:host([label-span-s="6"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="6"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-3);
+	}
+	:host([label-span-s="6"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="6"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-4);
+	}
+	:host([label-span-s="6"][empty-span-s="5"]) .ui5-form-item,
+	:host([label-span-s="6"][empty-span-s="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-5);
+	}
 
-	:host([label-span-s="7"]) .ui5-form-item,
-	:host([label-span-s="7"]) .ui5-form-group {
+
+	:host([label-span-s="7"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="7"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span7);
 	}
+	:host([label-span-s="7"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="7"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-1);
+	}
+	:host([label-span-s="7"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="7"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-2);
+	}
+	:host([label-span-s="7"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="7"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-3);
+	}
+	:host([label-span-s="7"][empty-span-s="4"]) .ui5-form-item,
+	:host([label-span-s="7"][empty-span-s="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-4);
+	}
 
-	:host([label-span-s="8"]) .ui5-form-item,
-	:host([label-span-s="8"]) .ui5-form-group {
+
+	:host([label-span-s="8"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="8"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span8);
 	}
+	:host([label-span-s="8"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="8"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-1);
+	}
+	:host([label-span-s="8"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="8"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-2);
+	}
+	:host([label-span-s="8"][empty-span-s="3"]) .ui5-form-item,
+	:host([label-span-s="8"][empty-span-s="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-3);
+	}
 
-	:host([label-span-s="9"]) .ui5-form-item,
-	:host([label-span-s="9"]) .ui5-form-group {
+
+	:host([label-span-s="9"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="9"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span9);
 	}
-
-	:host([label-span-s="10"]) .ui5-form-item,
-	:host([label-span-s="10"]) .ui5-form-group {
-		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	:host([label-span-s="9"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="9"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-1);
+	}
+	:host([label-span-s="9"][empty-span-s="2"]) .ui5-form-item,
+	:host([label-span-s="9"][empty-span-s="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-2);
 	}
 
-	:host([label-span-s="11"]) .ui5-form-item,
-	:host([label-span-s="11"]) .ui5-form-group {
+	:host([label-span-s="10"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="10"][empty-span-s="0"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	}
+	:host([label-span-s="10"][empty-span-s="1"]) .ui5-form-item,
+	:host([label-span-s="10"][empty-span-s="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10-1);
+	}
+
+	:host([label-span-s="11"][empty-span-s="0"]) .ui5-form-item,
+	:host([label-span-s="11"][empty-span-s="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 
@@ -73,58 +297,282 @@
 
 /* M  - 4 cells by default, up to 12 cells */
 @container (width > 600px) and (width <= 1024px) {
-	:host([label-span-m="1"]) .ui5-form-item,
-	:host([label-span-m="1"]) .ui5-form-group {
+	:host([label-span-m="1"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
 	}
+	:host([label-span-m="1"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-1);
+	}
+	:host([label-span-m="1"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-2);
+	}
+	:host([label-span-m="1"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-3);
+	}
+	:host([label-span-m="1"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-4);
+	}
+	:host([label-span-m="1"][empty-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-5);
+	}
+	:host([label-span-m="1"][empty-span-m="6"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-6);
+	}
+	:host([label-span-m="1"][empty-span-m="7"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-7);
+	}
+	:host([label-span-m="1"][empty-span-m="8"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-8);
+	}
+	:host([label-span-m="1"][empty-span-m="9"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-9);
+	}
+	:host([label-span-m="1"][empty-span-m="10"]) .ui5-form-item,
+	:host([label-span-m="1"][empty-span-m="10"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-10);
+	}
 
-	:host([label-span-m="2"]) .ui5-form-item,
-	:host([label-span-m="2"]) .ui5-form-group {
+
+	:host([label-span-m="2"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span2);
 	}
+	:host([label-span-m="2"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-1);
+	}
+	:host([label-span-m="2"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-2);
+	}
+	:host([label-span-m="2"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-3);
+	}
+	:host([label-span-m="2"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-4);
+	}
+	:host([label-span-m="2"][empty-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-5);
+	}
+	:host([label-span-m="2"][empty-span-m="6"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-6);
+	}
+	:host([label-span-m="2"][empty-span-m="7"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-7);
+	}
+	:host([label-span-m="2"][empty-span-m="8"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-8);
+	}
+	:host([label-span-m="2"][empty-span-m="9"]) .ui5-form-item,
+	:host([label-span-m="2"][empty-span-m="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-9);
+	}
 
-	:host([label-span-m="3"]) .ui5-form-item,
-	:host([label-span-m="3"]) .ui5-form-group {
+
+	:host([label-span-m="3"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span3);
 	}
+	:host([label-span-m="3"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-1);
+	}
+	:host([label-span-m="3"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-2);
+	}
+	:host([label-span-m="3"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-3);
+	}
+	:host([label-span-m="3"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-4);
+	}
+	:host([label-span-m="3"][empty-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-5);
+	}
+	:host([label-span-m="3"][empty-span-m="6"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-6);
+	}
+	:host([label-span-m="3"][empty-span-m="7"]) .ui5-form-item,
+	:host([label-span-m="3"][empty-span-m="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-7);
+	}
 
-	:host([label-span-m="4"]) .ui5-form-item,
-	:host([label-span-m="4"]) .ui5-form-group {
+
+	:host([label-span-m="4"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span4);
 	}
+	:host([label-span-m="4"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-1);
+	}
+	:host([label-span-m="4"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-2);
+	}
+	:host([label-span-m="4"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-3);
+	}
+	:host([label-span-m="4"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-4);
+	}
+	:host([label-span-m="4"][empty-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-5);
+	}
+	:host([label-span-m="4"][empty-span-m="6"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-6);
+	}
+	:host([label-span-m="4"][empty-span-m="7"]) .ui5-form-item,
+	:host([label-span-m="4"][empty-span-m="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-7);
+	}
 
-	:host([label-span-m="5"]) .ui5-form-item,
-	:host([label-span-m="5"]) .ui5-form-group {
+
+	:host([label-span-m="5"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span5);
 	}
+	:host([label-span-m="5"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-1);
+	}
+	:host([label-span-m="5"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-2);
+	}
+	:host([label-span-m="5"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-3);
+	}
+	:host([label-span-m="5"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-4);
+	}
+	:host([label-span-m="5"][empty-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-5);
+	}
+	:host([label-span-m="5"][empty-span-m="6"]) .ui5-form-item,
+	:host([label-span-m="5"][empty-span-m="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-6);
+	}
 
-	:host([label-span-m="6"]) .ui5-form-item,
-	:host([label-span-m="6"]) .ui5-form-group {
+
+	:host([label-span-m="6"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="6"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span6);
 	}
+	:host([label-span-m="6"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="6"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-1);
+	}
+	:host([label-span-m="6"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="6"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-2);
+	}
+	:host([label-span-m="6"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="6"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-3);
+	}
+	:host([label-span-m="6"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="6"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-4);
+	}
+	:host([label-span-m="6"][empty-span-m="5"]) .ui5-form-item,
+	:host([label-span-m="6"][empty-span-m="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-5);
+	}
 
-	:host([label-span-m="7"]) .ui5-form-item,
-	:host([label-span-m="7"]) .ui5-form-group {
+
+	:host([label-span-m="7"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="7"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span7);
 	}
+	:host([label-span-m="7"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="7"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-1);
+	}
+	:host([label-span-m="7"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="7"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-2);
+	}
+	:host([label-span-m="7"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="7"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-3);
+	}
+	:host([label-span-m="7"][empty-span-m="4"]) .ui5-form-item,
+	:host([label-span-m="7"][empty-span-m="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-4);
+	}
 
-	:host([label-span-m="8"]) .ui5-form-item,
-	:host([label-span-m="8"]) .ui5-form-group {
+
+	:host([label-span-m="8"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="8"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span8);
 	}
+	:host([label-span-m="8"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="8"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-1);
+	}
+	:host([label-span-m="8"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="8"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-2);
+	}
+	:host([label-span-m="8"][empty-span-m="3"]) .ui5-form-item,
+	:host([label-span-m="8"][empty-span-m="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-3);
+	}
 
-	:host([label-span-m="9"]) .ui5-form-item,
-	:host([label-span-m="9"]) .ui5-form-group {
+
+	:host([label-span-m="9"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="9"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span9);
 	}
-
-	:host([label-span-m="10"]) .ui5-form-item,
-	:host([label-span-m="10"]) .ui5-form-group {
-		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	:host([label-span-m="9"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="9"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-1);
+	}
+	:host([label-span-m="9"][empty-span-m="2"]) .ui5-form-item,
+	:host([label-span-m="9"][empty-span-m="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-2);
 	}
 
-	:host([label-span-m="11"]) .ui5-form-item,
-	:host([label-span-m="11"]) .ui5-form-group {
+	:host([label-span-m="10"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="10"][empty-span-m="0"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	}
+	:host([label-span-m="10"][empty-span-m="1"]) .ui5-form-item,
+	:host([label-span-m="10"][empty-span-m="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10-1);
+	}
+
+	:host([label-span-m="11"][empty-span-m="0"]) .ui5-form-item,
+	:host([label-span-m="11"][empty-span-m="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 
@@ -138,58 +586,282 @@
 
 /* L - 4 cells by default, up to 12 cells */
 @container (width > 1024px) and (width <= 1440px) {
-	:host([label-span-l="1"]) .ui5-form-item,
-	:host([label-span-l="1"]) .ui5-form-group {
+	:host([label-span-l="1"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
 	}
+	:host([label-span-l="1"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-1);
+	}
+	:host([label-span-l="1"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-2);
+	}
+	:host([label-span-l="1"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-3);
+	}
+	:host([label-span-l="1"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-4);
+	}
+	:host([label-span-l="1"][empty-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-5);
+	}
+	:host([label-span-l="1"][empty-span-l="6"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-6);
+	}
+	:host([label-span-l="1"][empty-span-l="7"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-7);
+	}
+	:host([label-span-l="1"][empty-span-l="8"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-8);
+	}
+	:host([label-span-l="1"][empty-span-l="9"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-9);
+	}
+	:host([label-span-l="1"][empty-span-l="10"]) .ui5-form-item,
+	:host([label-span-l="1"][empty-span-l="10"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-10);
+	}
 
-	:host([label-span-l="2"]) .ui5-form-item,
-	:host([label-span-l="2"]) .ui5-form-group {
+
+	:host([label-span-l="2"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span2);
 	}
+	:host([label-span-l="2"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-1);
+	}
+	:host([label-span-l="2"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-2);
+	}
+	:host([label-span-l="2"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-3);
+	}
+	:host([label-span-l="2"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-4);
+	}
+	:host([label-span-l="2"][empty-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-5);
+	}
+	:host([label-span-l="2"][empty-span-l="6"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-6);
+	}
+	:host([label-span-l="2"][empty-span-l="7"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-7);
+	}
+	:host([label-span-l="2"][empty-span-l="8"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-8);
+	}
+	:host([label-span-l="2"][empty-span-l="9"]) .ui5-form-item,
+	:host([label-span-l="2"][empty-span-l="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-9);
+	}
 
-	:host([label-span-l="3"]) .ui5-form-item,
-	:host([label-span-l="3"]) .ui5-form-group {
+
+	:host([label-span-l="3"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span3);
 	}
+	:host([label-span-l="3"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-1);
+	}
+	:host([label-span-l="3"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-2);
+	}
+	:host([label-span-l="3"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-3);
+	}
+	:host([label-span-l="3"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-4);
+	}
+	:host([label-span-l="3"][empty-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-5);
+	}
+	:host([label-span-l="3"][empty-span-l="6"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-6);
+	}
+	:host([label-span-l="3"][empty-span-l="7"]) .ui5-form-item,
+	:host([label-span-l="3"][empty-span-l="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-7);
+	}
 
-	:host([label-span-l="4"]) .ui5-form-item,
-	:host([label-span-l="4"]) .ui5-form-group {
+
+	:host([label-span-l="4"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span4);
 	}
+	:host([label-span-l="4"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-1);
+	}
+	:host([label-span-l="4"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-2);
+	}
+	:host([label-span-l="4"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-3);
+	}
+	:host([label-span-l="4"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-4);
+	}
+	:host([label-span-l="4"][empty-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-5);
+	}
+	:host([label-span-l="4"][empty-span-l="6"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-6);
+	}
+	:host([label-span-l="4"][empty-span-l="7"]) .ui5-form-item,
+	:host([label-span-l="4"][empty-span-l="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-7);
+	}
 
-	:host([label-span-l="5"]) .ui5-form-item,
-	:host([label-span-l="5"]) .ui5-form-group {
+
+	:host([label-span-l="5"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span5);
 	}
+	:host([label-span-l="5"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-1);
+	}
+	:host([label-span-l="5"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-2);
+	}
+	:host([label-span-l="5"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-3);
+	}
+	:host([label-span-l="5"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-4);
+	}
+	:host([label-span-l="5"][empty-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-5);
+	}
+	:host([label-span-l="5"][empty-span-l="6"]) .ui5-form-item,
+	:host([label-span-l="5"][empty-span-l="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-6);
+	}
 
-	:host([label-span-l="6"]) .ui5-form-item,
-	:host([label-span-l="6"]) .ui5-form-group {
+
+	:host([label-span-l="6"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="6"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span6);
 	}
+	:host([label-span-l="6"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="6"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-1);
+	}
+	:host([label-span-l="6"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="6"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-2);
+	}
+	:host([label-span-l="6"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="6"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-3);
+	}
+	:host([label-span-l="6"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="6"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-4);
+	}
+	:host([label-span-l="6"][empty-span-l="5"]) .ui5-form-item,
+	:host([label-span-l="6"][empty-span-l="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-5);
+	}
 
-	:host([label-span-l="7"]) .ui5-form-item,
-	:host([label-span-l="7"]) .ui5-form-group {
+
+	:host([label-span-l="7"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="7"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span7);
 	}
+	:host([label-span-l="7"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="7"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-1);
+	}
+	:host([label-span-l="7"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="7"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-2);
+	}
+	:host([label-span-l="7"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="7"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-3);
+	}
+	:host([label-span-l="7"][empty-span-l="4"]) .ui5-form-item,
+	:host([label-span-l="7"][empty-span-l="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-4);
+	}
 
-	:host([label-span-l="8"]) .ui5-form-item,
-	:host([label-span-l="8"]) .ui5-form-group {
+
+	:host([label-span-l="8"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="8"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span8);
 	}
+	:host([label-span-l="8"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="8"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-1);
+	}
+	:host([label-span-l="8"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="8"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-2);
+	}
+	:host([label-span-l="8"][empty-span-l="3"]) .ui5-form-item,
+	:host([label-span-l="8"][empty-span-l="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-3);
+	}
 
-	:host([label-span-l="9"]) .ui5-form-item,
-	:host([label-span-l="9"]) .ui5-form-group {
+
+	:host([label-span-l="9"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="9"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span9);
 	}
-
-	:host([label-span-l="10"]) .ui5-form-item,
-	:host([label-span-l="10"]) .ui5-form-group {
-		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	:host([label-span-l="9"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="9"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-1);
+	}
+	:host([label-span-l="9"][empty-span-l="2"]) .ui5-form-item,
+	:host([label-span-l="9"][empty-span-l="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-2);
 	}
 
-	:host([label-span-l="11"]) .ui5-form-item,
-	:host([label-span-l="11"]) .ui5-form-group {
+	:host([label-span-l="10"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="10"][empty-span-l="0"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	}
+	:host([label-span-l="10"][empty-span-l="1"]) .ui5-form-item,
+	:host([label-span-l="10"][empty-span-l="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10-1);
+	}
+
+	:host([label-span-l="11"][empty-span-l="0"]) .ui5-form-item,
+	:host([label-span-l="11"][empty-span-l="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 
@@ -203,58 +875,282 @@
 
 /* XL - 4 cells by default, up to 12 cells */
 @container (min-width: 1441px) {
-	:host([label-span-xl="1"]) .ui5-form-item,
-	:host([label-span-xl="1"]) .ui5-form-group {
+	:host([label-span-xl="1"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span1);
 	}
+	:host([label-span-xl="1"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-1);
+	}
+	:host([label-span-xl="1"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-2);
+	}
+	:host([label-span-xl="1"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-3);
+	}
+	:host([label-span-xl="1"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-4);
+	}
+	:host([label-span-xl="1"][empty-span-xl="5"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-5);
+	}
+	:host([label-span-xl="1"][empty-span-xl="6"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-6);
+	}
+	:host([label-span-xl="1"][empty-span-xl="7"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-7);
+	}
+	:host([label-span-xl="1"][empty-span-xl="8"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-8);
+	}
+	:host([label-span-xl="1"][empty-span-xl="9"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-9);
+	}
+	:host([label-span-xl="1"][empty-span-xl="10"]) .ui5-form-item,
+	:host([label-span-xl="1"][empty-span-xl="10"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span1-10);
+	}
 
-	:host([label-span-xl="2"]) .ui5-form-item,
-	:host([label-span-xl="2"]) .ui5-form-group {
+
+	:host([label-span-xl="2"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span2);
 	}
+	:host([label-span-xl="2"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-1);
+	}
+	:host([label-span-xl="2"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-2);
+	}
+	:host([label-span-xl="2"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-3);
+	}
+	:host([label-span-xl="2"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-4);
+	}
+	:host([label-span-xl="2"][empty-span-xl="5"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-5);
+	}
+	:host([label-span-xl="2"][empty-span-xl="6"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-6);
+	}
+	:host([label-span-xl="2"][empty-span-xl="7"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-7);
+	}
+	:host([label-span-xl="2"][empty-span-xl="8"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="8"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-8);
+	}
+	:host([label-span-xl="2"][empty-span-xl="9"]) .ui5-form-item,
+	:host([label-span-xl="2"][empty-span-xl="9"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span2-9);
+	}
 
-	:host([label-span-xl="3"]) .ui5-form-item,
-	:host([label-span-xl="3"]) .ui5-form-group {
+
+	:host([label-span-xl="3"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span3);
 	}
+	:host([label-span-xl="3"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-1);
+	}
+	:host([label-span-xl="3"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-2);
+	}
+	:host([label-span-xl="3"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-3);
+	}
+	:host([label-span-xl="3"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-4);
+	}
+	:host([label-span-xl="3"][empty-span-xl="5"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-5);
+	}
+	:host([label-span-xl="3"][empty-span-xl="6"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-6);
+	}
+	:host([label-span-xl="3"][empty-span-xl="7"]) .ui5-form-item,
+	:host([label-span-xl="3"][empty-span-xl="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span3-7);
+	}
 
-	:host([label-span-xl="4"]) .ui5-form-item,
-	:host([label-span-xl="4"]) .ui5-form-group {
+
+	:host([label-span-xl="4"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span4);
 	}
+	:host([label-span-xl="4"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-1);
+	}
+	:host([label-span-xl="4"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-2);
+	}
+	:host([label-span-xl="4"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-3);
+	}
+	:host([label-span-xl="4"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-4);
+	}
+	:host([label-span-xl="4"][empty-span-xl="5"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-5);
+	}
+	:host([label-span-xl="4"][empty-span-xl="6"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-6);
+	}
+	:host([label-span-xl="4"][empty-span-xl="7"]) .ui5-form-item,
+	:host([label-span-xl="4"][empty-span-xl="7"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span4-7);
+	}
 
-	:host([label-span-xl="5"]) .ui5-form-item,
-	:host([label-span-xl="5"]) .ui5-form-group {
+
+	:host([label-span-xl="5"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span5);
 	}
+	:host([label-span-xl="5"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-1);
+	}
+	:host([label-span-xl="5"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-2);
+	}
+	:host([label-span-xl="5"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-3);
+	}
+	:host([label-span-xl="5"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-4);
+	}
+	:host([label-span-xl="5"][empty-span-xl="5"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-5);
+	}
+	:host([label-span-xl="5"][empty-span-xl="6"]) .ui5-form-item,
+	:host([label-span-xl="5"][empty-span-xl="6"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span5-6);
+	}
 
-	:host([label-span-xl="6"]) .ui5-form-item,
-	:host([label-span-xl="6"]) .ui5-form-group {
+
+	:host([label-span-xl="6"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="6"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span6);
 	}
+	:host([label-span-xl="6"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="6"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-1);
+	}
+	:host([label-span-xl="6"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="6"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-2);
+	}
+	:host([label-span-xl="6"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="6"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-3);
+	}
+	:host([label-span-xl="6"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="6"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-4);
+	}
+	:host([label-span-xl="6"][empty-span-xl="5"]) .ui5-form-item,
+	:host([label-span-xl="6"][empty-span-xl="5"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span6-5);
+	}
 
-	:host([label-span-xl="7"]) .ui5-form-item,
-	:host([label-span-xl="7"]) .ui5-form-group {
+
+	:host([label-span-xl="7"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="7"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span7);
 	}
+	:host([label-span-xl="7"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="7"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-1);
+	}
+	:host([label-span-xl="7"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="7"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-2);
+	}
+	:host([label-span-xl="7"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="7"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-3);
+	}
+	:host([label-span-xl="7"][empty-span-xl="4"]) .ui5-form-item,
+	:host([label-span-xl="7"][empty-span-xl="4"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span7-4);
+	}
 
-	:host([label-span-xl="8"]) .ui5-form-item,
-	:host([label-span-xl="8"]) .ui5-form-group {
+
+	:host([label-span-xl="8"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="8"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span8);
 	}
+	:host([label-span-xl="8"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="8"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-1);
+	}
+	:host([label-span-xl="8"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="8"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-2);
+	}
+	:host([label-span-xl="8"][empty-span-xl="3"]) .ui5-form-item,
+	:host([label-span-xl="8"][empty-span-xl="3"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span8-3);
+	}
 
-	:host([label-span-xl="9"]) .ui5-form-item,
-	:host([label-span-xl="9"]) .ui5-form-group {
+
+	:host([label-span-xl="9"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="9"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span9);
 	}
-
-	:host([label-span-xl="10"]) .ui5-form-item,
-	:host([label-span-xl="10"]) .ui5-form-group {
-		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	:host([label-span-xl="9"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="9"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-1);
+	}
+	:host([label-span-xl="9"][empty-span-xl="2"]) .ui5-form-item,
+	:host([label-span-xl="9"][empty-span-xl="2"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span9-2);
 	}
 
-	:host([label-span-xl="11"]) .ui5-form-item,
-	:host([label-span-xl="11"]) .ui5-form-group {
+	:host([label-span-xl="10"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="10"][empty-span-xl="0"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10);
+	}
+	:host([label-span-xl="10"][empty-span-xl="1"]) .ui5-form-item,
+	:host([label-span-xl="10"][empty-span-xl="1"]) .ui5-form-group {
+		--ui5-form-item-layout: var(--ui5-form-item-layout-span10-1);
+	}
+
+	:host([label-span-xl="11"][empty-span-xl="0"]) .ui5-form-item,
+	:host([label-span-xl="11"][empty-span-xl="0"]) .ui5-form-group {
 		--ui5-form-item-layout: var(--ui5-form-item-layout-span11);
 	}
 
