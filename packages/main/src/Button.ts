@@ -383,6 +383,7 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onmousedown() {
 		if (this.nonInteractive) {
 			return;
