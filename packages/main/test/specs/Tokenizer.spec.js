@@ -233,44 +233,45 @@ describe("Accessibility", () => {
 
 	it("should test aria-readonly attribute", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
-		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const tokenizerList = await tokenizer.shadow$(".ui5-tokenizer--list");
 		const readonlyTokenizer = await browser.$("#readonly-tokenizer");
-		const readonlyTokenizerContent = await readonlyTokenizer.shadow$(".ui5-tokenizer--content");
+		const readonlyTokenizerList = await readonlyTokenizer.shadow$(".ui5-tokenizer--list");
 
 		assert.notOk(await tokenizer.getAttribute("readonly"), "tokenizer should not be readonly");
-		assert.notOk(await tokenizerContent.getAttribute("aria-readonly"), "aria-readonly should not be set on tokenizer");
+		assert.notOk(await tokenizerList.getAttribute("aria-readonly"), "aria-readonly should not be set on tokenizer");
 
 		assert.ok(await readonlyTokenizer.getAttribute("readonly"), "tokenizer should be readonly");
-		assert.ok(await readonlyTokenizerContent.getAttribute("aria-readonly"), "aria-readonly should be set on disabled tokenizer");
+		assert.ok(await readonlyTokenizerList.getAttribute("aria-readonly"), "aria-readonly should be set on disabled tokenizer");
 	});
 
 	it("should test aria-disabled attribute", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
-		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const tokenizerList = await tokenizer.shadow$(".ui5-tokenizer--list");
+
 		const disabledTokenizer = await browser.$("#disabled-tokenizer");
-		const disabledTokenizerContent = await disabledTokenizer.shadow$(".ui5-tokenizer--content");
+		const disabledTokenizerList = await disabledTokenizer.shadow$(".ui5-tokenizer--list");
 
 		assert.notOk(await tokenizer.getAttribute("disabled"), "tokenizer should not be disabled");
-		assert.notOk(await tokenizerContent.getAttribute("aria-disabled"), "aria-disabled should not be set on tokenizer");
+		assert.notOk(await tokenizerList.getAttribute("aria-disabled"), "aria-disabled should not be set on tokenizer");
 
 		assert.ok(await disabledTokenizer.getAttribute("disabled"), "tokenizer should be disabled");
-		assert.ok(await disabledTokenizerContent.getAttribute("aria-disabled"), "aria-disabled should be set on disabled tokenizer");
+		assert.ok(await disabledTokenizerList.getAttribute("aria-disabled"), "aria-disabled should be set on disabled tokenizer");
 	});
 
 	it("should test tokenizer content aria attributes", async () => {
 		const tokenizer = await browser.$("#nmore-tokenizer");
-		const tokenizerContent = await tokenizer.shadow$(".ui5-tokenizer--content");
+		const tokenizerList = await tokenizer.shadow$(".ui5-tokenizer--list");
 		const expandedTokenizer = await browser.$("#expanded-tokenizer");
-		const expandedTokenizerContent = await expandedTokenizer.shadow$(".ui5-tokenizer--content");
+		const expandedTokenizerList = await expandedTokenizer.shadow$(".ui5-tokenizer--list");
 		const keys = [
 			"TOKENIZER_ARIA_LABEL",
 		];
 		const texts = await getResourceBundleTexts(keys);
 
-		assert.strictEqual(await tokenizerContent.getAttribute("role"), "listbox", "tokenizer content should have correct role=listbox");
-		assert.strictEqual(await tokenizerContent.getAttribute("aria-label"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-label");
-		assert.strictEqual(await expandedTokenizerContent.getAttribute("aria-label"), 'Test label', "tokenizer content should have correct aria-label when accesible name is set");
-		assert.strictEqual(await expandedTokenizerContent.getAttribute("aria-description"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-description when accesible name is set");
+		assert.strictEqual(await tokenizerList.getAttribute("role"), "listbox", "tokenizer content should have correct role=listbox");
+		assert.strictEqual(await tokenizerList.getAttribute("aria-label"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-label");
+		assert.strictEqual(await expandedTokenizerList.getAttribute("aria-label"), 'Test label', "tokenizer content should have correct aria-label when accesible name is set");
+		assert.strictEqual(await expandedTokenizerList.getAttribute("aria-description"), texts.TOKENIZER_ARIA_LABEL, "tokenizer content should have correct aria-description when accesible name is set");
 	});
 
 	it("should test nMore aria attributes", async () => {

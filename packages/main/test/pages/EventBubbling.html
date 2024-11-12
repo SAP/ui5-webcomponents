@@ -22,6 +22,12 @@
 				<ui5-suggestion-item text="Condensed"></ui5-suggestion-item>
 			</ui5-input>
 
+			<ui5-button id="btnOpen">Open Menu</ui5-button>
+			<ui5-menu id="myMenu" header-text="Menu" opener="btnOpen">
+				<ui5-menu-item id="menuItemNewFile" text="New File"></ui5-menu-item>
+				<ui5-menu-item text="New Folder"></ui5-menu-item>
+			</ui5-menu>
+
 			<ui5-multi-combobox id="myMcb">
 				<ui5-mcb-item text="Cosy"></ui5-mcb-item>
 				<ui5-mcb-item selected text="Compact"></ui5-mcb-item>
@@ -53,8 +59,11 @@
 	mySelect.addEventListener("close", function(e) {
 		console.log("Select on close")
 	});
+	myMenu.addEventListener("close", function(e) {
+		console.log("Menu on close")
+	});
 	myMcb.addEventListener("close", function(e) {
-		console.log("myMcb on close")
+		console.log("Mcb on close")
 	});
 	myInput.addEventListener("close", function(e) {
 		console.log("Input on close")
@@ -64,6 +73,10 @@
 	});
 	myMsgStrip.addEventListener("close", function(e) {
 		console.log("MessageStrip on close")
+	});
+
+	btnOpen.addEventListener("click", function(e) {
+		myMenu.open = true;
 	});
 </script>
 </html>

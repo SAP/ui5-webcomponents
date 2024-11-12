@@ -65,7 +65,7 @@ myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
 promptInput.addEventListener("ui5-change", function(evt) {
 	promptCounter++;
 	promptCount.textContent = promptCounter;
-	responseTextArea.value = "your response ot query " + evt.target.value + " is that.";
+	responseTextArea.value = "your response to query " + evt.target.value + " is that.";
 })
 
 menu.addEventListener("item-click", function(evt) {

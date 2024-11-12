@@ -51,8 +51,8 @@ let options = {
 let text;
 let dialogGenerationId;
 
-function startGeneration() {
-	console.warn("startGeneration");
+function startGenerating() {
+	console.warn("startGenerating");
 	dialogOutput.value = "";
 	text = texts[options.structure][options.language][options.toneOfVoice];
 	let generatedWordIndex = 0;
@@ -60,7 +60,7 @@ function startGeneration() {
 	const words = text.split(" ");
 	const maxWordIndex = words.length - 1;
 	if (generatedWordIndex > maxWordIndex) {
-		stopGeneration(generationId);
+		stopGenerating(generationId);
 		aiDialogButton.state = "revise";
 		openDialogButton.innerText = "Revise";
 		closeDialogButton.disabled = false;
@@ -73,8 +73,8 @@ function startGeneration() {
 	return generationId;
 }
 
-function stopGeneration(generationId) {
-	console.warn("stopGeneration");
+function stopGenerating(generationId) {
+	console.warn("stopGenerating");
 	closeDialogButton.disabled = false;
 	clearTimeout(generationId);
 }
@@ -88,24 +88,24 @@ function aiDialogButtonClickHandler(evt) {
 	switch (button.state) {
 	case "":
 	case "generate":
-		startGenerationFromDialog();
+		startGeneratingFromDialog();
 		break;
 	case "revise":
-		startGenerationFromDialog();
+		startGeneratingFromDialog();
 		break;
 	case "generating":
 		button.state = "generate";
 		openDialogButton.innerText = "Generate";
 		closeDialogButton.disabled = false;
-		stopGeneration(dialogGenerationId, closeDialogButton);
+		stopGenerating(dialogGenerationId, closeDialogButton);
 		break;
 	}
 }
 
-function startGenerationFromDialog() {
+function startGeneratingFromDialog() {
 	aiDialogButton.state = "generating";
 	closeDialogButton.disabled = true;
-	dialogGenerationId = startGeneration();
+	dialogGenerationId = startGenerating();
 }
 
 function openDialog() {

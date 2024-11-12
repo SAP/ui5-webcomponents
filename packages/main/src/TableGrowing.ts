@@ -114,6 +114,9 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 
 	/**
 	 * Disables the growing feature.
+	 *
+	 * @default false
+	 * @public
 	 */
 	@property({ type: Boolean })
 	disabled = false;
@@ -126,12 +129,16 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	@property({ type: Boolean })
 	_activeState = false;
 
+	@property({ type: Number, noAttribute: true })
+	_invalidate = 0;
+
 	readonly identifier = "TableGrowing";
 	_table?: Table;
 	_observer?: IntersectionObserver;
 	_individualSlot?: string;
 	_currentLastRow?: HTMLElement;
 	_shouldFocusRow?: boolean;
+	_renderContent = true;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -139,9 +146,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	onTableActivate(table: Table): void {
 		this._table = table;
 		this._shouldFocusRow = false;
-		if (this._hasScrollToLoad()) {
-			this._observeTableEnd();
-		}
 	}
 
 	onTableRendered(): void {
@@ -163,7 +167,12 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			return;
 		}
 
-		if (this._hasScrollToLoad()) {
+		if (this._renderContent !== this.hasGrowingComponent()) {
+			this._invalidate++;
+			return;
+		}
+
+		if (this._hasScrollToLoad() && !this.hasGrowingComponent() && !this._observer) {
 			this._observeTableEnd();
 		}
 	}
@@ -179,15 +188,20 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._observer?.disconnect();
 		this._observer = undefined;
 		this._currentLastRow = undefined;
+		this._renderContent = this.hasGrowingComponent();
 		this._invalidateTable();
 	}
 
 	hasGrowingComponent(): boolean {
-		if (this._hasScrollToLoad()) {
-			return !(this._table && this._table._scrollContainer.scrollHeight > this._table._scrollContainer.clientHeight);
+		if (this.disabled) {
+			return false;
 		}
 
-		return this.type === TableGrowingMode.Button && !this.disabled;
+		if (this.type === TableGrowingMode.Scroll) {
+			return !!this._table && this._table._scrollContainer.clientHeight >= this._table._tableElement.scrollHeight;
+		}
+
+		return this.type === `${TableGrowingMode.Button}`;
 	}
 
 	/**
@@ -230,11 +244,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	 */
 	_getIntersectionObserver(): IntersectionObserver {
 		if (!this._observer) {
-			this._observer = new IntersectionObserver(this._onIntersection.bind(this), {
-				root: document,
-				rootMargin: "10px",
-				threshold: 1.0,
-			});
+			this._observer = new IntersectionObserver(this._onIntersection.bind(this), { root: document });
 		}
 		return this._observer;
 	}

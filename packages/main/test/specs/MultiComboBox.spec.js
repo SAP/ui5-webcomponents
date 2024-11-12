@@ -1,8 +1,28 @@
 import { assert } from "chai";
 
+const getVisibleItems = async (combo) => {
+	const items = await combo.$$("ui5-mcb-item");
+	const filteredItems = await Promise.all(items.map(async item => {
+			return (await item.getProperty("_isVisible")) ? item : null;
+	}));
+
+	// filter out null values
+	return filteredItems.filter(item => item !== null);
+};
+
+const getVisibleGroupItems = async (combo) => {
+	const items = await combo.$$("ui5-mcb-item-group");
+	const assignedItems = await Promise.all(items.map(async item => {
+		return (await item.getProperty("assignedSlot")) ? item : null;
+	}));
+
+	return assignedItems.filter(item => item !== null);
+};
+
 describe("MultiComboBox general interaction", () => {
-	before(async () => {
+	beforeEach(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
+		await browser.setWindowSize(1920, 1080);
 	});
 
 	describe("toggling", () => {
@@ -41,8 +61,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Apply focus", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi1");
 			const focusBtn = await browser.$("#focus-mcb");
 
@@ -76,8 +94,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Opens selected items Popover", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			await browser.setWindowSize(400, 1250);
 			const mcb = await browser.$("#multi1");
 			const showMore = await mcb.shadow$(".ui5-multi-combobox-tokenizer").shadow$(".ui5-tokenizer-more-text");
@@ -90,9 +106,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Checks if tokenizer is expanded when adding items dynamically", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-			await browser.setWindowSize(1920, 1080);
-
 			const btn = await $("#add");
 			const mcb = await $("#mcb-dynamic-selection");
 
@@ -109,8 +122,7 @@ describe("MultiComboBox general interaction", () => {
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const body = await browser.$(".multicombobox1auto");
 			const nMoreText = await tokenizer.shadow$(".ui5-tokenizer-more-text");
-			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItemCheckbox = await popover.$("ui5-list > ui5-li").shadow$("ui5-checkbox");
+			const firstItemCheckbox = await mcb.$("ui5-mcb-item").shadow$("ui5-checkbox");
 
 			await arrow.click();
 			await browser.keys("ArrowDown");
@@ -132,7 +144,6 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("selection and filtering", () => {
 		beforeEach(async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 		});
 
@@ -140,8 +151,8 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb");
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItem = await popover.$("ui5-list > ui5-li");
-			const firstItemCheckbox = await firstItem.shadow$("ui5-checkbox");
+			const firstItem = await mcb.$("ui5-mcb-item");
+			const firstItemCheckbox = await mcb.$("ui5-mcb-item").shadow$("ui5-checkbox");
 			const eventInput = await browser.$("#events-input");
 			const paramsInput = await browser.$("#events-parameters");
 			const callCountInput = await browser.$("#events-call-count");
@@ -173,7 +184,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-success");
 			const icon = await browser.$("#mcb-success").shadow$(".inputIcon");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const firstItem = await mcb.$("ui5-mcb-item");
 
 			await icon.click();
 
@@ -283,7 +294,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#another-mcb");
 			const input = await browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const firstItem = await mcb.$("ui5-mcb-item");
 
 			await input.click();
 			await input.keys("c");
@@ -302,7 +313,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#another-mcb");
 			const input = await browser.$("#another-mcb").shadow$("#ui5-multi-combobox-input");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItemCheckbox = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
+			const firstItemCheckbox = await mcb.$("ui5-mcb-item").shadow$("ui5-checkbox");
 
 			await input.click();
 			await input.keys("c");
@@ -326,7 +337,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if clicking n more will prefilter items before opening the popover", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
 			const mcb = await $("#more-mcb");
@@ -364,8 +374,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if tokenizer is scrolled to the end when expanded and to start when narrowed", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await $("#more-mcb");
 			const input = mcb.shadow$("input");
 
@@ -382,8 +390,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if tokenizer is not expanded/collapsed when the suggestions are opened from a selected token", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await $("#more-mcb");
 			let tokenizer = await mcb.shadow$("ui5-tokenizer")
 			let tokens = await browser.$("#more-mcb").shadow$$(".ui5-multi-combobox-token");
@@ -400,7 +406,6 @@ describe("MultiComboBox general interaction", () => {
 		})
 
 		it("tests filtering of items when nmore popover is open and user types in the input fueld", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
 			const mcb = await $("#more-mcb");
@@ -411,16 +416,16 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 
 			await nMoreText.click();
-
-			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const list = await popover.$(".ui5-multi-combobox-all-items-list");
-			const lastListItem = await list.$("ui5-li:last-child");
-
 			await input.click();
 			await input.keys("c");
 
+			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const list = await popover.$(".ui5-multi-combobox-all-items-list");
+			const items = (await getVisibleItems(mcb))
+			const lastItem = items[items.length - 1];
+
 			assert.strictEqual((await list.getProperty("items")).length, 3, "3 items should be shown (all selected)");
-			assert.notOk(await lastListItem.getProperty("selected"), "last item should not be selected");
+			assert.notOk(await lastItem.getProperty("selected"), "last item should not be selected");
 		})
 
 		it("tests if tokenizer is collapsed after focusout of the Popover", async () => {
@@ -428,19 +433,20 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItemCheckbox = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li").shadow$("ui5-checkbox");
-
+			
 			await input.click();
 			await input.keys("Comp");
-
+			
 			assert.ok(await popover.getProperty("open"), "The popover should be opened");
+			
+			const visibleItems = await getVisibleItems(mcb);
+			const firstItemCheckbox = await visibleItems[0].shadow$("ui5-checkbox");
 
 			await firstItemCheckbox.click();
 			await firstItemCheckbox.click();
 			await browser.keys("Tab");
 
 			assert.notOk(await popover.getProperty("open"), "The popover should not be opened.");
-
 			assert.notOk(await tokenizer.getProperty("expanded"), "The tokenizer should be collapsed.");
 		});
 
@@ -473,8 +479,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should make a selection on ENTER and discard on ESC", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			let tokens;
 
 			const mcb = await browser.$("#mcb");
@@ -497,13 +501,10 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should reset typeahead on item navigation and restore it on focus input", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li");
+			const listItem = await mcb.$("ui5-mcb-item");
 
 			await icon.click();
 			await mcb.keys("c");
@@ -522,7 +523,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if clicking delete icon of a token removes it from the selection", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
 			const mcb = $("#mcb-long-token");
@@ -542,8 +542,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("tests if clicking delete icon of a token removes it from the selection (mcb with grouping)", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = $("#mcb-grouping");
 			const inner = mcb.shadow$("input");
 
@@ -551,8 +549,7 @@ describe("MultiComboBox general interaction", () => {
 			await inner.click();
 
 			await inner.keys("a");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const firstItem = (await getVisibleItems(mcb))[0];
 			await firstItem.click();
 
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
@@ -570,12 +567,10 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("prevents selection change event when clicking an item", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = $("#mcb-prevent");
 			const input = mcb.shadow$("#ui5-multi-combobox-input");
 			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const firstItem = (await getVisibleItems(mcb))[0];
 			const mcbTokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.equal(mcbTokens.length, 1, "1 token is created.");
@@ -594,8 +589,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("prevents selection change event when deleting a token", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = $("#mcb-prevent");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
@@ -610,8 +603,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should prevent selection-change on CTRL+A", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = $("#mcb-prevent");
 			const input = await mcb.shadow$("input");
 
@@ -707,10 +698,6 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("keyboard handling", () => {
-		before(async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-		});
-
 		it("tests backspace when combobox has an empty value", async () => {
 			let tokens = await browser.$("#multi1").shadow$$(".ui5-multi-combobox-token");
 			const input = await browser.$("#multi1").shadow$("input");
@@ -728,8 +715,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Value should be reset on ESC key", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mCombo = await browser.$("#another-mcb");
 			const mCombo2 = await browser.$("#more-mcb");
 			const input = await mCombo.shadow$("#ui5-multi-combobox-input");
@@ -763,8 +748,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("selects an item when enter is pressed and value matches a text of an item in the list", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-with-placeholder");
 			const input = await mcb.shadow$("input");
 
@@ -790,13 +773,11 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("focuses the value state header and item on arrow down then the value state and the input on arrow up", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li");
+			const listItem = (await getVisibleItems(mcb))[0];
 
 			await icon.click();
 			await input.keys("ArrowDown");
@@ -833,8 +814,7 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-with-placeholder");
 			const input = await mcb.shadow$("input");
 			const icon = await mcb.shadow$(".inputIcon");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li");
+			const listItem = (await getVisibleItems(mcb))[0];
 
 			await icon.click();
 			await mcb.keys("ArrowDown");
@@ -853,8 +833,7 @@ describe("MultiComboBox general interaction", () => {
 			const input = await mcb.shadow$("input");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const checkbox = await popover.$("ui5-checkbox");
-			const listItemGroup = await popover.$("ui5-li-group");
-
+			const listItemGroup = await mcb.$("ui5-mcb-item-group");
 
 			await input.click();
 			await mcb.keys("F4");
@@ -902,8 +881,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should reset current navigation state on user input", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
@@ -928,8 +905,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("arrow up when no item is selected should go to the last item", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
@@ -939,8 +914,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should focus input after all tokens are deleted", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-compact");
 			const input = await mcb.shadow$("input");
 
@@ -953,8 +926,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("first HOME should move caret to start of the input, second HOME should focus the first token, END should focus last token", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
@@ -980,13 +951,10 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("CTRL + HOME focus the first item, CTRL + END should focus last item", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const firstItem = await popover.$("ui5-li");
-			const lastItem = await popover.$("ui5-li:last-child");
+			const firstItem = await mcb.$("ui5-mcb-item");
+			const lastItem = await mcb.$("ui5-mcb-item:last-child");
 
 			await input.click();
 			await mcb.keys("F4");
@@ -1001,8 +969,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should close the picker and focus the next element on TAB", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const mcb2 = await browser.$("#mcb-no-typeahead");
 
@@ -1029,8 +995,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should close the picker and focus the next element on TAB over an item or value state header", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-warning");
 			const input = await mcb.shadow$("input");
 			const mcb2 = await browser.$("#mcb-error");
@@ -1061,8 +1025,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should select/unselect next/previous item on shift+arrow", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
@@ -1083,8 +1045,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should move focus to the previous token with arrow left", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 
@@ -1103,8 +1063,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should navigate through the items with CTRL + arrow up/down keys when the picker is closed", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 
 			await mcb.click();
@@ -1123,12 +1081,10 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("focuses the value state header and item on CTRL + arrow down then the value state and the input on CTRL + arrow up", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-error");
 			const icon = await mcb.shadow$(".inputIcon");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li");
+			const listItem = mcb.$("ui5-mcb-item");
 
 			await icon.click();
 			await mcb.keys(["Control", "ArrowDown"]);
@@ -1164,8 +1120,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should select all filtered items on CTRL+A", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 
@@ -1199,8 +1153,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should copy a token with CTRL+C and paste it with CTRL+V", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
 			const input = await mcb2.shadow$("input");
@@ -1220,8 +1172,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should not be able to paste token with CTRL+V in read only multi combo box", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#readonly-value-state-mcb");
 			const input = await mcb2.shadow$("input");
@@ -1238,8 +1188,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should cut a token with CTRL+X and paste it with CTRL+V", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
 			const input = await mcb2.shadow$("input");
@@ -1258,8 +1206,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should cut a token with SHIFT+DELETE and paste it with SHIFT+INSERT", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
 			const input = await mcb2.shadow$("input");
@@ -1278,8 +1224,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should copy a token with CTRL+INSERT and paste it with SHIFT+INSERT", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi1");
 			const mcb2 = await browser.$("#mcb");
 			const input = await mcb2.shadow$("input");
@@ -1294,8 +1238,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("should select a token with CTRL+SPACE", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-error");
 			const input = await mcb.shadow$("input");
 
@@ -1309,8 +1251,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("CTRL+SPACE should do nothing when pressed in the input field", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 
@@ -1321,13 +1261,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("F4 should focus the selected item or the first one if there is no selected", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li");
-			const listItem2 = await popover.$$("ui5-li")[1];
-
+			const listItem = await mcb.$$("ui5-mcb-item")[0];
+			const listItem2 = await mcb.$$("ui5-mcb-item")[1];
 			await mcb.click();
 			await mcb.keys("F4");
 
@@ -1342,12 +1278,9 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Alt + Down should focus the corresponding item to the token from which the combination is pressed", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-items");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-			const listItem = await popover.$$("ui5-li")[3];
+			const listItem = await mcb.$$("ui5-mcb-item")[3];
 
 			await tokens[2].click();
 			await tokens[2].keys(["Alt", "ArrowDown"]);
@@ -1356,11 +1289,8 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Alt + Down should focus the first item if no selected items are present", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#multi-acv");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			const listItem = await popover.$("ui5-li");
+			const listItem = await mcb.$("ui5-mcb-item");
 
 			await mcb.click();
 			await mcb.keys(["Alt", "ArrowDown"]);
@@ -1369,24 +1299,19 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Alt + Down should not filter items", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await input.click();
 			await input.keys(["a", "b"]);
 			await input.keys(["Alt", "ArrowDown"]);
 
-			const listItem = await popover.$("ui5-li");
+			const listItem = await mcb.$("ui5-mcb-item");
 
 			assert.ok(await listItem.matches(":focus"), "The items are not filtered and the first item is focused");
 		});
 
 		it("Alt + Down should focus the item corresponding to the text value", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb");
 			const input = await mcb.shadow$("input");
 			const popover = await mcb.shadow$("ui5-responsive-popover");
@@ -1396,14 +1321,12 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("ArrowDown");
 			await input.keys(["Alt", "ArrowDown"]);
 
-			const listItem = await popover.$$("ui5-li")[1];
+			const listItem = await mcb.$$("ui5-mcb-item")[1];
 
 			assert.ok(await listItem.matches(":focus"), "The second item is focused");
 		});
 
 		it("Backspace deletes token and forwards the focus to the last token without collapsing the tokenizer", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#n-more-many-items");
 			const inner = await mcb.shadow$("input");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
@@ -1422,8 +1345,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Backspace should not delete tokens, when MCB is readonly", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-ro");
 			const inner = await mcb.shadow$("input");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
@@ -1466,13 +1387,9 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("General", () => {
-		before(async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-		});
-
 		it("tests text selection on focus", async () => {
-			const mcb = await browser.$("#multi-acv");
-			const mcb2 = await browser.$("#mcb-with-placeholder");
+			const mcb = await $("#multi-acv");
+			const mcb2 = await $("#mcb-with-placeholder");
 
 			await mcb.click();
 
@@ -1497,8 +1414,7 @@ describe("MultiComboBox general interaction", () => {
 		it("tests two-column layout", async () => {
 			const mcb = await browser.$("#mcb-two-column-layout");
 			const icon = await mcb.shadow$(".inputIcon");
-			const popover = await mcb.shadow$(".ui5-multi-combobox-all-items-responsive-popover");
-			const listItem = await popover.$("ui5-li");
+			const listItem = await mcb.$("ui5-mcb-item");
 
 			await icon.click();
 			assert.strictEqual(await listItem.shadow$(".ui5-li-additional-text").getText(), "DZ", "Additional item text should be displayed");
@@ -1599,8 +1515,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should check clear icon availability", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const cb = await browser.$("#clear-icon-cb");
 			const inner = cb.shadow$("input");
 			const clearIcon = await cb.shadow$(".ui5-input-clear-icon-wrapper");
@@ -1614,8 +1528,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should check clear icon events", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const cb = await browser.$("#clear-icon-cb");
 
 			await cb.shadow$("input").click();
@@ -1631,8 +1543,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should not fire submit event when confirming selection", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const cb = await browser.$("#mcb-form");
 
 			await cb.shadow$("input").click();
@@ -1647,8 +1557,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should remove header when value state is reset", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = $("#mcb-error");
 
 			// click on arrow
@@ -1669,10 +1577,6 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("MultiComboBox Truncated Token", () => {
-		beforeEach(async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-		});
-
 		it("should truncate token when single token is in the multicombobox and open popover on click", async () => {
 			const mcb = await browser.$("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
@@ -1729,10 +1633,6 @@ describe("MultiComboBox general interaction", () => {
 	});
 
 	describe("ARIA attributes", () => {
-		before(async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-		});
-
 		it("aria-describedby value according to the tokens count and the value state", async () => {
 			const mcb = await browser.$("#mcb-error");
 			const innerInput = await mcb.shadow$("input");
@@ -1753,8 +1653,6 @@ describe("MultiComboBox general interaction", () => {
 			const innerInput = await mcb.shadow$("input");
 			let invisibleText = await mcb.shadow$(".ui5-hidden-text");
 			const inivisbleTextId = await invisibleText.getProperty("id");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
-			let firstItem = await popover.$("ui5-list").$("ui5-li");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 			let resourceBundleText = null;
 
@@ -1796,8 +1694,11 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 0, "should not have tokens");
 			assert.ok(await ariaHiddenText.includes(resourceBundleText), "aria-describedby text is correct");
 
+			
 			await innerInput.click();
 			await innerInput.keys("i");
+
+			const firstItem = (await getVisibleItems(mcb))[0];
 			await firstItem.click();
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
@@ -1845,8 +1746,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Value state type should be added to the screen readers default value states announcement", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mCbWarning = await browser.$("#mcb-warning");
 			const mCbSuccess = await browser.$("#mcb-success");
 			const mCbError = await browser.$("#mcb-error");
@@ -1898,16 +1797,15 @@ describe("MultiComboBox general interaction", () => {
 
 	describe("Grouping", () => {
 		it("Tests group filtering", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
 			let popover = await mcb.shadow$("ui5-responsive-popover");
-			let groupItems = await popover.$("ui5-list").$$("ui5-li-group");
-			let listItems = await popover.$("ui5-list").$$("ui5-li");
-
+			
 			await arrow.click();
+
+			let groupItems = await getVisibleGroupItems(mcb);
+			let listItems = await getVisibleItems(mcb);
 
 			assert.strictEqual(groupItems.length, 3, "Group items should be 3");
 			assert.strictEqual(listItems.length, 12, "Items should be 12");
@@ -1915,8 +1813,8 @@ describe("MultiComboBox general interaction", () => {
 			await input.keys("B");
 
 			popover = await mcb.shadow$("ui5-responsive-popover");
-			groupItems = await popover.$("ui5-list").$$("ui5-li-group");
-			listItems = await popover.$("ui5-list").$$("ui5-li");
+			groupItems = await getVisibleGroupItems(mcb);
+			listItems = await getVisibleItems(mcb);
 
 			assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
 			assert.strictEqual(listItems.length, 1, "Filtered items should be 1");
@@ -1928,40 +1826,32 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Tests group item focusability", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
 			let groupItem;
 
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
+			groupItem = (await getVisibleGroupItems(mcb))[0];
 
 			assert.ok(await groupItem.matches(":focus"), "The first group header should be focused");
 		});
 
 		it("Tests group item focusability with keyboard", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const popover = await mcb.shadow$("ui5-responsive-popover");
 
 			await input.click();
 			await input.keys("F4");
 
-			let firstItem = await popover.$("ui5-list").$("ui5-li");
+			let firstItem = (await getVisibleItems(mcb))[0];
 
 			assert.ok(await firstItem.matches(":focus"), "The first item inside the first group should be focused");
 		});
 
 		it("Group header keyboard handling", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 			const arrow = await mcb.shadow$(".inputIcon");
@@ -1971,7 +1861,7 @@ describe("MultiComboBox general interaction", () => {
 			await arrow.click();
 			await input.keys("ArrowDown");
 
-			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
+			groupItem = (await getVisibleGroupItems(mcb))[0];
 
 			await groupItem.keys("Enter");
 
@@ -1979,7 +1869,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated");
 
-			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
+			groupItem = (await getVisibleGroupItems(mcb))[0];
 
 			await groupItem.keys("Space");
 
@@ -1987,7 +1877,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await popover.getProperty("open"), true, "Popover should not be open");
 			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
 
-			groupItem = await popover.$("ui5-list").$("ui5-li-group").shadow$("ui5-li-group-header");
+			groupItem = (await getVisibleGroupItems(mcb))[0];
 
 			await groupItem.keys("ArrowUp");
 
@@ -1996,8 +1886,6 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("Should not select group headers", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
 			const mcb = await browser.$("#mcb-grouping");
 			const input = await mcb.shadow$("#ui5-multi-combobox-input");
 

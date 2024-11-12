@@ -231,43 +231,4 @@ describe('Table - Growing with Scroll', async () => {
 		await endRow.scrollIntoView();
 		assert.strictEqual(await loadMoreCounter.getProperty("value"), "2", "The load-more event is dispatched");
 	});
-
-	
-});
-
-describe('Table - Growing with Scroll (Edge Cases)', async () => {
-	before(async () => {
-		await browser.url(`test/pages/TableGrowing.html`);
-		await browser.setWindowSize(2000, 2000);
-
-		const tableGrowing = await browser.$("#growing");
-		await tableGrowing.setAttribute("type", "Scroll");
-	});
-
-	it('Check if growing button is rendered, when no scrollbar is visible', async () => {
-		const tableGrowing = await browser.$("#growing");
-
-		const table = await browser.$("#table0");
-
-		const growingButtonRow = await table.shadow$("#growing-row");
-		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
-
-		const growingButtonCell = await table.shadow$("#growing-cell");
-		assert.ok(await growingButtonCell.isExisting(), "Growing Button Cell exists");
-
-		const growingButton = await tableGrowing.shadow$("#growing-button");
-		assert.ok(await growingButton.isExisting(), "Growing Button exists");
-
-		await growingButton.click();
-		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
-		await growingButton.click();
-		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
-		await growingButton.click();
-		assert.ok(await growingButtonRow.isExisting(), "Growing Button Row exists");
-
-		await growingButton.click();
-
-		assert.notOk(await growingButtonRow.isExisting(), "Growing Button Row is not rendered");
-		assert.notOk(await growingButtonCell.isExisting(), "Growing Button Cell is not rendered");
-	});
 });

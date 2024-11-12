@@ -48,6 +48,7 @@ declare global {
 			ui5MenuOpen(options?: { opener?: string }): Chainable<void>
 			ui5MenuOpened(): Chainable<void>
 			ui5MenuItemClick(): Chainable<void>
+			ui5DOMRef(): Chainable<void>
 			ui5MenuItemPress(key: any): Chainable<void>
 		}
 	}

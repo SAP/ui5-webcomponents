@@ -8,26 +8,37 @@
 		@focusout="{{_onfocusout}}"
 		@focusin="{{_onfocusin}}"
 		@ui5-select="{{onTokenSelect}}"
-		role="listbox"
-		aria-label="{{tokenizerLabel}}"
-		aria-description="{{tokenizerAriaDescription}}"
-		aria-disabled="{{_ariaDisabled}}"
-		aria-readonly="{{_ariaReadonly}}"
 	>
-		{{#each tokens}}
-			<slot name="{{this._individualSlot}}"></slot>
-		{{/each}}
+		<div class="ui5-tokenizer--list"
+			role="listbox"
+			aria-label="{{tokenizerLabel}}"
+			aria-description="{{tokenizerAriaDescription}}"
+			aria-disabled="{{_ariaDisabled}}"
+			aria-readonly="{{_ariaReadonly}}"
+		>
+			{{#each tokens}}
+				<slot name="{{this._individualSlot}}"></slot>
+			{{/each}}
+		</div>
+
+		{{#if showEffectiveClearAll}}
+			<span
+				role="button"
+				@click={{handleClearAll}}
+				class="ui5-tokenizer--clear-all">
+				{{_clearAllText}}</span>
+		{{/if}}
 	</div>
 
-	{{#if showNMore}}
-		<span
-			role="button"
-			aria-haspopup="dialog"
-			@click="{{_handleNMoreClick}}"
-			class="ui5-tokenizer-more-text"
-			part="n-more-text"
-		>{{_nMoreText}}</span>
-	{{/if}}
+		{{#if showNMore}}
+			<span
+				role="button"
+				aria-haspopup="dialog"
+				@click="{{_handleNMoreClick}}"
+				class="ui5-tokenizer-more-text"
+				part="n-more-text"
+			>{{_nMoreText}}</span>
+		{{/if}}
 </div>
 
 {{>include "./TokenizerPopover.hbs"}}

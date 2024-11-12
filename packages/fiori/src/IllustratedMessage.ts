@@ -6,7 +6,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";

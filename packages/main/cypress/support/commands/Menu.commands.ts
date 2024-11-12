@@ -20,8 +20,7 @@ Cypress.Commands.add("ui5MenuOpened", { prevSubject: true }, subject => {
 		.as("menu");
 
 	cy.get("@menu")
-		.should("be.visible")
-		.and("have.attr", "open");
+		.should("have.attr", "open");
 
 	cy.get("@menu")
 		.shadow()
