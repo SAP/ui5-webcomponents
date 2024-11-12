@@ -1,0 +1,37 @@
+<div class="ainotice">
+  {{#if isEmphasized}}
+    <ui5-link
+      @click={{onPress}}
+      class="sapMLnkText"
+      wrapping-type="None"
+      icon="sap-icon://ai"
+    >
+      {{attributionText}}
+    </ui5-link>
+    <span class="verificationText">{{verificationText}}</span>
+  {{else if isIconOnly}}
+    <ui5-button
+      @click={{onPress}}
+      icon="sap-icon://ai"
+      tooltip="AI Notice button."
+    ></ui5-button>
+  {{else if isShortened}}
+    <ui5-link
+      @click={{onPress}}
+      class="sapMLnkText"
+      wrapping-type="None"
+    >
+      {{attributionText}}
+    </ui5-link>
+  {{else}}
+    <ui5-link
+      @click={{onPress}}
+      class="sapMLnkText"
+      wrapping-type="None"
+    >
+      {{attributionText}}
+    </ui5-link>
+    <span class="verificationText">{{verificationText}}</span>
+  {{/if}}
+  <slot name="popup"></slot>
+</div>
