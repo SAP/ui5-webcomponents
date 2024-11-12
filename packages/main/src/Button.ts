@@ -12,7 +12,7 @@ import {
 	isEscape,
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -342,7 +342,7 @@ class Button extends UI5Element implements IButton {
 
 	// @bound
 	@bound
-	_ontouchstart(e: TouchEvent) {
+	_ontouchstart() {
 		if (this.nonInteractive) {
 			return;
 		}
@@ -443,7 +443,7 @@ class Button extends UI5Element implements IButton {
 	}
 
 	@bound
-	_onfocusin(e: FocusEvent) {
+	_onfocusin() {
 		if (this.nonInteractive) {
 			return;
 		}
