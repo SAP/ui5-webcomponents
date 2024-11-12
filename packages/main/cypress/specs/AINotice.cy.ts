@@ -2,11 +2,10 @@ import "../../src/AINotice.js";
 import "../../../icons/src/AllIcons.js";
 
 describe("AINotice component", () => {
-
 	it("should display attribution text, verification text and icon when all of them are set.", () => {
 		cy.mount("<ui5-ainotice attribution-text='Test Attribution' verification-text='Test Verification' show-icon='true'></ui5-ainotice>");
 		cy.get("ui5-ainotice").shadow().find(".link-text")
-			.should('contain.text', 'Test Attribution');
+			.should("contain.text", "Test Attribution");
 
 		cy.get("ui5-ainotice").shadow().find(".verificationText")
 			.should("contain.text", "Test Verification");
