@@ -304,7 +304,7 @@ class Form extends UI5Element {
 	}
 
 	setFastNavGroups() {
-		if (this.hasGroupItems) {
+		if (!this.hasGroupItems) {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
 		} else {
 			this.removeAttribute("data-sap-ui-fastnavgroup");

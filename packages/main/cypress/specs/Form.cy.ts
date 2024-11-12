@@ -387,7 +387,7 @@ describe("General API", () => {
 });
 
 describe("Accessibility", () => {
-	it("tests 'role' and 'aria-labelled-by' of form with groups", () => {
+	it("tests 'role' and 'aria-labelledby' of form with groups", () => {
 		cy.mount(html`<ui5-form class="addressForm" header-text="Form header text">
 			<ui5-form-group header-text="Address">
 				<ui5-form-item>
@@ -414,6 +414,10 @@ describe("Accessibility", () => {
 		cy.get("[ui5-form]")
 			.as("form");
 
+		cy.get("[ui5-form-group]")
+			.first()
+			.as("formGroup");
+
 		cy.get("@form")
 			.shadow()
 			.find(".ui5-form-root")
@@ -433,11 +437,7 @@ describe("Accessibility", () => {
 			.shadow()
 			.find(".ui5-form-group")
 			.eq(0)
-			.as("firstGroup");
-
-		cy.get("@firstGroup")
-			.should("have.attr", "role", "form")
-			.should("have.attr", "data-sap-ui-fastnavgroup", "true");
+			.as("firstGroupDOMRef");
 
 		cy.get("@form")
 			.shadow()
@@ -445,8 +445,17 @@ describe("Accessibility", () => {
 			.eq(0)
 			.as("firstGroupTitle");
 
+		cy.get("@form")
+			.should("not.have.attr", "data-sap-ui-fastnavgroup", "true");
+
+		cy.get("@formGroup")
+			.should("have.attr", "data-sap-ui-fastnavgroup", "true");
+
+		cy.get("@firstGroupDOMRef")
+			.should("have.attr", "role", "form");
+
 		// assert: the form group's aria-labelledby is equal to the form group title's ID
-		cy.get("@firstGroup")
+		cy.get("@firstGroupDOMRef")
 			.invoke("attr", "aria-labelledby")
 			.then(ariaLabelledBy => {
 				cy.get("@firstGroupTitle")
@@ -457,7 +466,7 @@ describe("Accessibility", () => {
 			});
 	});
 
-	it("tests 'role' and 'aria-labelled-by' of form with groups", () => {
+	it("tests 'role' and 'aria-labelledby' of form without groups", () => {
 		cy.mount(html`<ui5-form class="addressForm" header-text="Form header text">
 				<ui5-form-item>
 					<ui5-label>Name:</ui5-label>
@@ -480,6 +489,9 @@ describe("Accessibility", () => {
 			.shadow()
 			.find(".ui5-form-root")
 			.should("have.attr", "role", "form");
+
+		cy.get("@form")
+			.should("have.attr", "data-sap-ui-fastnavgroup", "true");
 
 		// assert: the root element's aria-labelledby is equal to the form title's ID
 		cy.get("@form").shadow().find(".ui5-form-root").invoke("attr", "aria-labelledby")
