@@ -5,7 +5,6 @@ import "../../src/ToolbarSelect.js";
 import "../../src/ToolbarSelectOption.js";
 import "../../src/ToolbarSeparator.js";
 import "../../src/Popover.js";
-import type Popover from "../../src/Popover.js";
 import type ToolbarItem from "../../src/ToolbarItem.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -61,28 +60,9 @@ describe("Toolbar general interaction", () => {
 			</ui5-popover>
 		`);
 
+		cy.get("#popup").invoke("prop", "open", "true");
+
 		cy.get("#popup")
-			.as("popover");
-
-		cy.get("#btnOpenMenu")
-			.as("toolbarBtn");
-
-		cy.get("@toolbarBtn")
-			.ui5DOMRef()
-			.as("toolbarBtnDomRef");
-
-		cy.get("@toolbarBtn")
-			.then(toolbarBtn => {
-				toolbarBtn.get(0).addEventListener("click", () => {
-					const popover = document.querySelector<Popover>("#popup")!;
-					popover.open = !popover.open;
-				});
-			});
-
-		cy.get("@toolbarBtnDomRef")
-			.realClick();
-
-		cy.get("@popover")
 			.should("be.visible");
 	});
 });

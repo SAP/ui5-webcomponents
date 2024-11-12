@@ -37,7 +37,6 @@
 // }
 
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import "./commands/Common.commands.js";
 import "./commands/Menu.commands.js";
 
 type SimulationDevices = "phone"
