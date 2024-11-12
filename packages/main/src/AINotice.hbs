@@ -2,7 +2,7 @@
   {{#if isEmphasized}}
     <ui5-link
       @click={{onPress}}
-      class="sapMLnkText"
+      class="link-text"
       wrapping-type="None"
       icon="sap-icon://ai"
     >
@@ -13,12 +13,12 @@
     <ui5-button
       @click={{onPress}}
       icon="sap-icon://ai"
-      tooltip="AI Notice button."
+      tooltip="{{tooltipValue}}"
     ></ui5-button>
   {{else if isShortened}}
     <ui5-link
       @click={{onPress}}
-      class="sapMLnkText"
+      class="link-text"
       wrapping-type="None"
     >
       {{attributionText}}
@@ -26,7 +26,7 @@
   {{else}}
     <ui5-link
       @click={{onPress}}
-      class="sapMLnkText"
+      class="link-text"
       wrapping-type="None"
     >
       {{attributionText}}
