@@ -94,6 +94,10 @@ type ShellBarMenuItemClickEventDetail = {
 	item: HTMLElement;
 };
 
+type ShellBarAdditionalContextItemDissapears = {
+	items: Array<HTMLElement>
+};
+
 type ShellBarSearchButtonEventDetail = {
 	targetRef: HTMLElement;
 	searchFieldVisible: boolean;
@@ -283,6 +287,23 @@ const INCLUDED_LEAN_MODE_ACTIONS = ["feedback", "sys-help"];
 	bubbles: true,
 })
 
+/**
+ * Fired, when an additional context item disappears
+ *
+ * @param {Array<HTMLElement>} array of all the items that disappeared from additional context slot
+ * @public
+ */
+@event<ShellBarAdditionalContextItemDissapears>("additional-context-disappears", {
+	detail: {
+		/**
+		 * @public
+		 */
+		items: { type: Array<HTMLElement> },
+	},
+	bubbles: true,
+	cancelable: true,
+})
+
 class ShellBar extends UI5Element {
 	/**
 	 * Defines the `primaryTitle`.
@@ -410,6 +431,9 @@ class ShellBar extends UI5Element {
 
 	@property({ type: Boolean, noAttribute: true })
 	hasVisibleAdditionalContextEnd = false;
+
+	@property({ type: Array, noAttribute: true })
+	_cachedHiddenContent: Array<IShelBarAdditionalContext> = [];
 
 	/**
 	 * Defines the assistant slot.
@@ -895,6 +919,12 @@ class ShellBar extends UI5Element {
 				hiddenItems--;
 			}
 		});
+
+		if (this.additionalCoontextHidden && JSON.stringify(this.additionalCoontextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
+			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalCoontextHidden });
+		}
+
+		this._cachedHiddenContent = this.additionalCoontextHidden;
 
 		return items;
 	}
@@ -1433,6 +1463,10 @@ class ShellBar extends UI5Element {
 		const start = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-separator-start")!;
 		const end = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-separator-end")!;
 		return [start, end];
+	}
+
+	get additionalCoontextHidden() {
+		return [...this.additionalContextEnd, ...this.additionalContextStart].filter(item => item.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
 	get accInfo() {
