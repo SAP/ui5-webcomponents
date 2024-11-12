@@ -304,14 +304,11 @@ class Form extends UI5Element {
 	}
 
 	setFastNavGroups() {
-		if (!this.hasGroupItems) {
+		if (this.hasGroupItems) {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
-			return;
+		} else {
+			this.removeAttribute("data-sap-ui-fastnavgroup");
 		}
-
-		this.items.forEach((item: IFormItem) => {
-			item.setAttribute("data-sap-ui-fastnavgroup", "true");
-		});
 	}
 
 	setGroupsColSpan() {
