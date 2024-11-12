@@ -141,6 +141,8 @@ The mapping of the accessibility APIs to ARIA attributes is described in the fol
 | ------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `accessibleName`               | `aria-label`                                      | Defines the text alternative of the component. If not provided, a default text alternative is set, if present.                                                                                      |
 | `accessibleNameRef`            | `aria-label`                                      | Alternative for `aria-labelledby`. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the `aria-label` attribute. |
+| `accessibleDescription`        | `aria-description`                                | Defines the description of the component.                                                                                                                                                           |
+| `accessibleDescriptionRef`     | `aria-description`                                | Alternative for `aria-describedby`. Receives ID (or many IDs) of the elements that serve as descriptions of the component. Those descriptions are passed as a concatenated string to the `aria-describedby` attribute. |
 | `accessibleRole`               | `role`                                            | Sets the accessible aria role of the component.                                                                                                                                                     |                                                                          
 | `accessibilityAttributes`      | `aria-expanded`, `aria-haspopup`, `aria-controls`, etc. | An object of strings that defines several additional accessibility attribute values for customization depending on the use case. <br/> For composite components the object provides a way to enrich the accessibility of the different elements inside the component (for example in the `ui5-shellbar`).                                                                   |                                                                                          |
 | `required`                     | `aria-required`                                   | Defines whether the component is required.                                                                                                                                                          |
@@ -184,6 +186,53 @@ Will result in the shadow DOM as:
 ```
 
 The `accessibleNameRef` property is currently supported in most of the available components.
+
+---
+
+### accessibleDescription
+
+Setting the property on the custom element as:
+```html
+<ui5-list accessible-description="List of items">
+    <ui5-li>Item 1</ui5-li>
+    <ui5-li>Item 2</ui5-li>
+</ui5-list>
+```
+
+Will result in the shadow DOM as:
+```html
+<ul role="list" aria-description="List of items" ... >
+    ...
+</ul>
+```
+
+The `accessibleDescription` property is currently supported in:
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
+* [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
+
+---
+
+### accessibleDescriptionRef
+
+Setting the property on the custom element as:
+```html
+<p id="description">List of items</p>
+<ui5-list accessible-description-ref="description">
+    <ui5-li>Item 1</ui5-li>
+    <ui5-li>Item 2</ui5-li>
+</ui5-list>
+```
+
+Will result in the shadow DOM as:
+```html
+<ul role="list" aria-description="List of items" ... >
+    ...
+</ul>
+```
+
+The `accessibleDescriptionRef` property is currently supported in:
+* [List](https://sap.github.io/ui5-webcomponents/nightly/components/List/)
+* [Tree](https://sap.github.io/ui5-webcomponents/nightly/components/Tree/)
 
 ---
 
