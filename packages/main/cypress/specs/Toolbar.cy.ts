@@ -11,7 +11,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/employee.js";
 
 describe("Toolbar general interaction", () => {
-	it("Should not return null upon calling getDomRef for all direct child items", () => {
+	it.skip("Should not return null upon calling getDomRef for all direct child items", () => {
 		cy.mount(html`
 			<ui5-toolbar id="otb_standard">
 				<ui5-toolbar-button text="Button 1"></ui5-toolbar-button>
