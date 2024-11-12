@@ -189,6 +189,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @default false
 	 * @private
 	 */
+	@property({ type: Boolean, noAttribute: true })
 	_isSelected = false;
 
 	/**
@@ -241,7 +242,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._isSelected = value;
 	}
 
-	get isSelected() {
+	get isSelected(): boolean {
 		return this._isSelected;
 	}
 
