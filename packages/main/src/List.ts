@@ -872,10 +872,10 @@ class List extends UI5Element {
 
 		slottedItems.forEach(item => {
 			if (isInstanceOfListItemGroup(item)) {
-				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
+				const groupItems = [item.groupHeaderItem, ...item.items.filter(listItem => listItem.assignedSlot)].filter(Boolean);
 				items.push(...groupItems);
 			} else {
-				items.push(item);
+				item.assignedSlot && items.push(item);
 			}
 		});
 
