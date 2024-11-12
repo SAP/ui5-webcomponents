@@ -251,6 +251,12 @@ class Form extends UI5Element {
 	@property({ type: Number })
 	labelSpanXl = 4;
 
+	onEnterDOM() {
+		if (!this.hasGroupItems) {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
+		}
+	}
+
 	onBeforeRendering() {
 		// Parse the layout and set it to the FormGroups/FormItems.
 		this.setColumnLayout();
@@ -265,6 +271,8 @@ class Form extends UI5Element {
 	onAfterRendering() {
 		// Create additional CSS for number of columns that are not supported by default.
 		this.createAdditionalCSSStyleSheet();
+
+		this.setFastNavGroups();
 	}
 
 	setColumnLayout() {
@@ -298,6 +306,17 @@ class Form extends UI5Element {
 		this.items.forEach((item: IFormItem) => {
 			item.labelSpan = this.labelSpan;
 			item.itemSpacing = this.itemSpacing;
+		});
+	}
+
+	setFastNavGroups() {
+		if (!this.hasGroupItems) {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
+			return;
+		}
+
+		this.items.forEach((item: IFormItem) => {
+			item.setAttribute("data-sap-ui-fastnavgroup", "true");
 		});
 	}
 
