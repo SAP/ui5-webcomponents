@@ -1107,7 +1107,7 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns all tags, used inside component's template subject to scoping.
-	 * @returns {Array[]}
+	 * returns {Array[]} // TODO add @
 	 * @private
 	 */
 	static get tagsToScope(): Array<string> {

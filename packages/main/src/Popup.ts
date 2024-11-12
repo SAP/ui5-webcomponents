@@ -646,3 +646,4 @@ abstract class Popup extends UI5Element {
 }
 
 export default Popup;
+export type { PopupScrollEventDetail, PopupBeforeCloseEventDetail };
