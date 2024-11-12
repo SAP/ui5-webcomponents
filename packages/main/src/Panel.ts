@@ -92,7 +92,9 @@ import panelCss from "./generated/themes/Panel.css.js";
  * Fired when the component is expanded/collapsed by user interaction.
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
 class Panel extends UI5Element {
 	/**
 	 * This property is used to set the header text of the component.
@@ -276,7 +278,7 @@ class Panel extends UI5Element {
 		this.collapsed = !this.collapsed;
 
 		if (this.shouldNotAnimate()) {
-			this.fireEvent("toggle");
+			this.fireDecoratorEvent("toggle");
 			return;
 		}
 
@@ -296,7 +298,7 @@ class Panel extends UI5Element {
 		Promise.all(animations).then(() => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
-			this.fireEvent("toggle");
+			this.fireDecoratorEvent("toggle");
 		});
 	}
 

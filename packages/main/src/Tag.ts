@@ -75,7 +75,9 @@ import tagCss from "./generated/themes/Tag.css.js";
  * @public
  * @since 1.22.0
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+})
 class Tag extends UI5Element {
 	/**
 	 * Defines the design type of the component.
@@ -252,7 +254,7 @@ class Tag extends UI5Element {
 	}
 
 	_onclick() {
-		this.fireEvent("click");
+		this.fireDecoratorEvent("click");
 	}
 }
 

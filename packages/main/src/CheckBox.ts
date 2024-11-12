@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/complete.js";
@@ -90,10 +90,19 @@ let activeCb: CheckBox;
 /**
  * Fired when the component checked state changes.
  * @public
- * @allowPreventDefault
  */
-@event("change")
-
+@event("change", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+	cancelable: true,
+})
 class CheckBox extends UI5Element implements IFormInputElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
@@ -331,11 +340,11 @@ class CheckBox extends UI5Element implements IFormInputElement {
 				this.checked = !this.checked;
 			}
 
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.fireDecoratorEvent("change");
 			// Angular two way data binding
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = lastState.checked;
 				this.indeterminate = lastState.indeterminate;
 			}

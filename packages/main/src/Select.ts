@@ -17,7 +17,7 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -68,14 +68,14 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
-type IOption = ListItemBase & {
+interface IOption extends ListItemBase {
 	tooltip?: string,
 	icon?: string,
 	value?: string,
 	additionalText?: string,
-	focused?: boolean,
+	focused: boolean,
 	effectiveDisplayText: string,
-};
+}
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -149,7 +149,6 @@ type SelectLiveChangeEventDetail = {
 })
 /**
  * Fired when the selected option changes.
- * @allowPreventDefault
  * @param {IOption} selectedOption the selected option.
  * @public
  */
@@ -160,6 +159,8 @@ type SelectLiveChangeEventDetail = {
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 /**
  * Fired when the user navigates through the options, but the selection is not finalized,
@@ -175,17 +176,38 @@ type SelectLiveChangeEventDetail = {
 		*/
 		selectedOption: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 /**
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
+
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
 @event("close")
+
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("selected-item-changed", {
+	bubbles: true,
+})
+
+/**
+ * Fired to make Vue.js two way data binding work properly.
+ * @private
+ */
+@event("input", {
+	bubbles: true,
+})
+
 class Select extends UI5Element implements IFormInputElement {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -580,7 +602,7 @@ class Select extends UI5Element implements IFormInputElement {
 		}
 
 		if (selectedIndex !== index) {
-			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
+			this.fireDecoratorEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.options[index] });
 		}
 
 		this.options[index].selected = true;
@@ -676,7 +698,7 @@ class Select extends UI5Element implements IFormInputElement {
 		nextOption.selected = true;
 		nextOption.focused = true;
 
-		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
+		this.fireDecoratorEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
@@ -699,7 +721,7 @@ class Select extends UI5Element implements IFormInputElement {
 
 	_afterOpen() {
 		this.opened = true;
-		this.fireEvent<CustomEvent>("open");
+		this.fireDecoratorEvent<CustomEvent>("open");
 		this.itemSelectionAnnounce();
 		this._scrollSelectedItem();
 		this._applyFocusToSelectedItem();
@@ -723,7 +745,7 @@ class Select extends UI5Element implements IFormInputElement {
 			this._fireChangeEvent(this.options[this._selectedIndex]);
 			this._lastSelectedOption = this.options[this._selectedIndex];
 		}
-		this.fireEvent<CustomEvent>("close");
+		this.fireDecoratorEvent<CustomEvent>("close");
 	}
 
 	get hasCustomLabel() {
@@ -731,10 +753,13 @@ class Select extends UI5Element implements IFormInputElement {
 	}
 
 	_fireChangeEvent(selectedOption: IOption) {
-		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
+		const changePrevented = !this.fireDecoratorEvent<SelectChangeEventDetail>("change", { selectedOption });
 
 		//  Angular two way data binding
-		this.fireEvent("selected-item-changed");
+		this.fireDecoratorEvent("selected-item-changed");
+
+		// Fire input event for Vue.js two-way binding
+		this.fireDecoratorEvent("input");
 
 		if (changePrevented) {
 			this._select(this._selectedIndexBeforeOpen);

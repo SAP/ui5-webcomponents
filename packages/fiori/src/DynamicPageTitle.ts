@@ -72,7 +72,9 @@ import {
  * Event is fired when the title is toggled.
  * @private
  */
-@event("_toggle-title")
+@event("_toggle-title", {
+	bubbles: true,
+})
 
 class DynamicPageTitle extends UI5Element {
 	/**
@@ -287,13 +289,17 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	prepareLayoutActions() {
-		// all navigation/layout actions should have the NeverOverflow behavior
-		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']");
+		const navigationBar = this.querySelector<Toolbar>("[ui5-toolbar][slot='navigationBar']"),
+			isWideScreen = this.offsetWidth >= 1280;
+
 		if (!navigationBar) {
 			return;
 		}
+
 		navigationBar.items.forEach(action => {
-			action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
+			action.overflowPriority = isWideScreen
+				? ToolbarItemOverflowBehavior.NeverOverflow
+				: ToolbarItemOverflowBehavior.Default;
 		});
 	}
 
@@ -311,13 +317,13 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	onTitleClick() {
-		this.fireEvent("_toggle-title");
+		this.fireDecoratorEvent("_toggle-title");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("_toggle-title");
+			this.fireDecoratorEvent("_toggle-title");
 		}
 	}
 }

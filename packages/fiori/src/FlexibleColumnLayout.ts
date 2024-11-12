@@ -215,6 +215,7 @@ type UserDefinedColumnLayouts = {
 		*/
 		resized: { type: Boolean },
 	},
+	bubbles: true,
 })
 class FlexibleColumnLayout extends UI5Element {
 	/**
@@ -493,7 +494,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
-		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
+		this.fireDecoratorEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
@@ -510,7 +511,7 @@ class FlexibleColumnLayout extends UI5Element {
 			return;
 		}
 
-		const isTouch = e instanceof TouchEvent,
+		const isTouch = supportsTouch() && e instanceof TouchEvent,
 			cursorPositionX = this.getPageXValueFromEvent(e);
 
 		this.separatorMovementSession = this.initSeparatorMovementSession(pressedSeparator, cursorPositionX, isTouch);

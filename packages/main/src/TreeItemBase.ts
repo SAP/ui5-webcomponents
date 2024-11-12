@@ -60,6 +60,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 	detail: {
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -71,6 +72,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 	detail: {
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -82,6 +84,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 	detail: {
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 class TreeItemBase extends ListItem {
 	/**
@@ -291,7 +294,7 @@ class TreeItemBase extends ListItem {
 
 	_toggleClick(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
-		this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+		this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
@@ -299,17 +302,17 @@ class TreeItemBase extends ListItem {
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {
-				this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 			} else {
-				this.fireEvent<TreeItemBaseStepInEventDetail>("step-in", { item: this });
+				this.fireDecoratorEvent<TreeItemBaseStepInEventDetail>("step-in", { item: this });
 			}
 		}
 
 		if (!this._fixed && isLeft(e)) {
 			if (this.expanded) {
-				this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
 			} else if (this.hasParent) {
-				this.fireEvent<TreeItemBaseStepOutEventDetail>("step-out", { item: this });
+				this.fireDecoratorEvent<TreeItemBaseStepOutEventDetail>("step-out", { item: this });
 			}
 		}
 	}

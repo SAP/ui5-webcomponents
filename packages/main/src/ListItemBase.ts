@@ -14,7 +14,6 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -39,11 +38,22 @@ type ListItemBasePressEventDetail = {
 	renderer: litRender,
 	styles: [styles, draggableElementStyles],
 })
-@event("_request-tabindex-change")
-@event("_press")
-@event("_focused")
-@event("_forward-after")
-@event("_forward-before")
+@event("_request-tabindex-change", {
+	bubbles: true,
+})
+@event("_press", {
+	bubbles: true,
+})
+@event("_focused", {
+	bubbles: true,
+})
+@event("_forward-after", {
+	bubbles: true,
+	cancelable: true,
+})
+@event("_forward-before", {
+	bubbles: true,
+})
 class ListItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the component.
@@ -108,12 +118,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireEvent("_request-tabindex-change", e);
+		this.fireDecoratorEvent("_request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
 			return;
 		}
 
-		this.fireEvent("_focused", e);
+		this.fireDecoratorEvent("_focused", e);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -125,7 +135,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 			return this._handleTabPrevious(e);
 		}
 
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
@@ -139,7 +149,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		if (isSpace(e)) {
@@ -148,9 +158,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onclick(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
+
 		this.fireItemPress(e);
 	}
 
@@ -161,12 +172,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (isEnter(e as KeyboardEvent)) {
 			e.preventDefault();
 		}
-		this.fireEvent<ListItemBasePressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		this.fireDecoratorEvent<ListItemBasePressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
 		if (this.shouldForwardTabAfter()) {
-			if (!this.fireEvent("_forward-after", {}, true)) {
+			if (!this.fireDecoratorEvent("_forward-after")) {
 				e.preventDefault();
 			}
 		}
@@ -176,7 +187,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		const target = e.target as HTMLElement;
 
 		if (this.shouldForwardTabBefore(target)) {
-			this.fireEvent("_forward-before");
+			this.fireDecoratorEvent("_forward-before");
 		}
 	}
 

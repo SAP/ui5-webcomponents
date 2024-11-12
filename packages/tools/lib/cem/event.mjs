@@ -16,6 +16,7 @@ import {
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
+const ASTFalseKeywordCode = 94;
 
 const getParams = (ts, eventDetails, commentParams, classNode, moduleDoc) => {
 	return commentParams?.map(commentParam => {
@@ -77,17 +78,33 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
 	const sinceTag = findTag(eventParsedComment, "since");
 	const commentParams = findAllTags(eventParsedComment, "param");
-	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault") || undefined;
 	const description = normalizeDescription(eventParsedComment?.description);
 	const native = hasTag(eventParsedComment, "native");
-	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
+	const eventArgs =  event?.expression?.arguments;
+	let eventBubbles;
+	let eventCancelable;
+	let eventDetails;
 
-	if (event?.expression?.arguments?.[1] && !event?.expression?.typeArguments) {
+	eventArgs && eventArgs.forEach(arg => {
+		arg.properties?.forEach(prop => {
+			if (prop.name?.text === "bubbles") {
+				eventBubbles = prop.initializer.kind === ASTFalseKeywordCode ? false : true;
+			} else if (prop.name?.text === "cancelable") {
+				eventCancelable = prop.initializer.kind === ASTFalseKeywordCode ? false : true;
+			} else if (prop.name?.text === "detail") {
+				eventDetails = prop.initializer?.properties;
+			}
+		});
+	});
+
+	if (eventDetails && !event?.expression?.typeArguments) {
 		logDocumentationError(moduleDoc.path, `Event details for event '${name}' must be described using generics. Add type via generics to the decorator: @event<TypeForDetails>("${name}", {details}).`)
 	}
 
 	result.description = description;
-	result._ui5allowPreventDefault = allowPreventDefault;
+	result._ui5Cancelable = eventCancelable !== undefined ? eventCancelable : false;
+	result._ui5allowPreventDefault = result._ui5Cancelable;
+	result._ui5Bubbles = eventBubbles !== undefined ? eventBubbles : false;
 
 	if (native) {
 		result.type = { text: "Event" };

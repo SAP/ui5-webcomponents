@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	isSpace,
@@ -84,7 +84,9 @@ let activeRadio: RadioButton;
  * @public
  * @since 1.0.0-rc.15
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RadioButton extends UI5Element implements IFormInputElement {
 	/**
@@ -383,7 +385,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 
 		if (!this.name) {
 			this.checked = !this.checked;
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 			return this;
 		}
 

@@ -80,12 +80,15 @@ type ColorCoordinates = {
 		Slider,
 		Label,
 	],
+	shadowRootOptions: { delegatesFocus: true },
 })
 /**
  * Fired when the the selected color is changed
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 class ColorPicker extends UI5Element implements IFormInputElement {
 	/**
 	 * Defines the currently selected color of the component.
@@ -446,7 +449,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 		this._wrongHEX = !this.isValidRGBColor(color);
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	isValidRGBColor(color: ColorRGB) {

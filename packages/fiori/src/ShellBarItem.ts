@@ -27,7 +27,6 @@ type ShellBarItemClickEventDetail = {
 @customElement("ui5-shellbar-item")
 /**
  * Fired, when the item is pressed.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
@@ -35,6 +34,8 @@ type ShellBarItemClickEventDetail = {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 class ShellBarItem extends UI5Element {
@@ -70,9 +71,9 @@ class ShellBarItem extends UI5Element {
 	}
 
 	fireClickEvent(e: MouseEvent) {
-		return this.fireEvent<ShellBarItemClickEventDetail>("click", {
+		return this.fireDecoratorEvent<ShellBarItemClickEventDetail>("click", {
 			targetRef: (e.target as HTMLElement),
-		}, true);
+		});
 	}
 }
 

@@ -50,8 +50,11 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	detail: {
 		item: { type: CalendarLegendItem },
 	},
+	bubbles: true,
 })
-@event("_calendar-legend-focus-out")
+@event("_calendar-legend-focus-out", {
+	bubbles: true,
+})
 class CalendarLegend extends UI5Element {
 	/**
 	 * Hides the Today item in the legend.
@@ -131,14 +134,14 @@ class CalendarLegend extends UI5Element {
 	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
-		this.fireEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
+		this.fireDecoratorEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
 			item: target,
 		});
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
 	}
 
 	_onFocusOut() {
-		this.fireEvent("_calendar-legend-focus-out");
+		this.fireDecoratorEvent("_calendar-legend-focus-out");
 	}
 
 	_onItemKeyDown(e: KeyboardEvent) {

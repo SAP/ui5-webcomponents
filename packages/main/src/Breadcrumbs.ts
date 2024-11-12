@@ -110,7 +110,6 @@ type FocusAdaptor = ITabbable & {
  * Fires when a `BreadcrumbsItem` is clicked.
  *
  * **Note:** You can prevent browser location change by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
  * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
@@ -141,6 +140,8 @@ type FocusAdaptor = ITabbable & {
 		 */
 		shiftKey: { type: Boolean },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 class Breadcrumbs extends UI5Element {
 	/**
@@ -403,13 +404,13 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		if (!this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
 			metaKey,
 			shiftKey,
-		}, true)) {
+		})) {
 			e.preventDefault();
 		}
 	}
@@ -424,7 +425,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e;
 
-		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -438,7 +439,7 @@ class Breadcrumbs extends UI5Element {
 			items = this._getItems(),
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
 
-		if (this.fireEvent("item-click", { item }, true)) {
+		if (this.fireDecoratorEvent("item-click", { item })) {
 			locationOpen(item.href, item.target || "_self", "noopener,noreferrer");
 			this.responsivePopover!.open = false;
 		}

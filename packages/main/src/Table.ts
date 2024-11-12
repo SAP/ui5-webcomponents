@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -195,6 +195,7 @@ type TableMoveEventDetail = {
 		 */
 		row: { type: TableRow },
 	},
+	bubbles: true,
 })
 
 class Table extends UI5Element {
@@ -477,12 +478,12 @@ class Table extends UI5Element {
 	}
 
 	_onRowPress(row: TableRow) {
-		this.fireEvent<TableRowClickEventDetail>("row-click", { row });
+		this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
 	get styles() {
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
-			if (headerCell.horizontalAlign !== undefined) {
+			if (headerCell.horizontalAlign !== undefined && !headerCell._popin) {
 				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
 			}
 			return headerStyles;

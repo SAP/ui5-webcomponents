@@ -21,7 +21,14 @@ import { dragOver, dropRow } from "@ui5/webcomponents-base/dist/util/dragAndDrop
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	getAllAccessibleDescriptionRefTexts,
+	getEffectiveAriaDescriptionText,
+	getEffectiveAriaLabelText,
+	registerUI5Element,
+	deregisterUI5Element,
+	getAllAccessibleNameRefTexts,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -175,7 +182,6 @@ type ListItemClickEventDetail = {
 /**
  * Fired when an item is activated, unless the item's `type` property
  * is set to `Inactive`.
- * @allowPreventDefault
  * @param {HTMLElement} item The clicked item.
  * @public
  */
@@ -186,6 +192,8 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -204,6 +212,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -221,6 +230,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -238,12 +248,12 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
  * Fired when selection is changed by user interaction
  * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
- * @allowPreventDefault
  * @param {Array<ListItemBase>} selectedItems An array of the selected items.
  * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
  * @public
@@ -273,6 +283,8 @@ type ListItemClickEventDetail = {
 		 */
 		key: { type: String },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -282,7 +294,9 @@ type ListItemClickEventDetail = {
  * @public
  * @since 1.0.0-rc.6
  */
-@event("load-more")
+@event("load-more", {
+	bubbles: true,
+})
 
 /**
  * @private
@@ -291,6 +305,7 @@ type ListItemClickEventDetail = {
 	detail: {
 		item: { type: HTMLElement },
 	},
+	bubbles: true,
 })
 
 /**
@@ -301,7 +316,6 @@ type ListItemClickEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  * @since 2.0.0
- * @allowPreventDefault
  */
 
 @event<ListMoveEventDetail>("move-over", {
@@ -319,6 +333,8 @@ type ListItemClickEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -328,7 +344,6 @@ type ListItemClickEventDetail = {
  * @param {object} source Contains information about the moved element under `element` property.
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
- * @allowPreventDefault
  */
 @event<ListMoveEventDetail>("move", {
 	detail: {
@@ -345,6 +360,7 @@ type ListItemClickEventDetail = {
 		 */
 		destination: { type: Object },
 	},
+	bubbles: true,
 })
 class List extends UI5Element {
 	/**
@@ -450,13 +466,45 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the IDs of the elements that label the input.
+	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Defines the IDs of the elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedDescriptionRefTexts?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedLabelsRefTexts?: string;
 
 	/**
 	 * Defines the accessible role of the component.
@@ -567,11 +615,18 @@ class List extends UI5Element {
 		return this.getItems();
 	}
 
+	_updateAssociatedLabelsTexts() {
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
+		this._associatedLabelsRefTexts = getAllAccessibleNameRefTexts(this);
+	}
+
 	onEnterDOM() {
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
 	}
 
 	onExitDOM() {
+		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
@@ -652,6 +707,10 @@ class List extends UI5Element {
 		return this.getItems().length !== 0;
 	}
 
+	get showBusyIndicatorOverlay() {
+		return !this.growsWithButton && this.loading;
+	}
+
 	get showNoDataText() {
 		return !this.hasData && this.noDataText;
 	}
@@ -691,7 +750,11 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelTxt() {
-		return getEffectiveAriaLabelText(this);
+		return this._associatedLabelsRefTexts || getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescriptionText() {
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
 	}
 
 	get ariaLabelModeText(): string {
@@ -787,20 +850,19 @@ class List extends UI5Element {
 	onSelectionRequested(e: CustomEvent<SelectionRequestEventDetail>) {
 		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
-		this._selectionRequested = true;
 
 		if (this.selectionMode !== ListSelectionMode.None && this[`handle${this.selectionMode}`]) {
 			selectionChange = this[`handle${this.selectionMode}`](e.detail.item, !!e.detail.selected);
 		}
 
 		if (selectionChange) {
-			const changePrevented = !this.fireEvent<ListSelectionChangeEventDetail>("selection-change", {
+			const changePrevented = !this.fireDecoratorEvent<ListSelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
 				targetItem: e.detail.item,
 				key: e.detail.key,
-			}, true);
+			});
 			if (changePrevented) {
 				this._revertSelection(previouslySelectedItems);
 			}
@@ -836,7 +898,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item: ListItemBase): boolean {
-		this.fireEvent<ListItemDeleteEventDetail>("item-delete", { item });
+		this.fireDecoratorEvent<ListItemDeleteEventDetail>("item-delete", { item });
 
 		return true;
 	}
@@ -860,10 +922,10 @@ class List extends UI5Element {
 
 		slottedItems.forEach(item => {
 			if (isInstanceOfListItemGroup(item)) {
-				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
+				const groupItems = [item.groupHeaderItem, ...item.items.filter(listItem => listItem.assignedSlot)].filter(Boolean);
 				items.push(...groupItems);
 			} else {
-				items.push(item);
+				item.assignedSlot && items.push(item);
 			}
 		});
 
@@ -914,7 +976,7 @@ class List extends UI5Element {
 		e.preventDefault();
 
 		const acceptedPosition = closestPositions.find(({ element, placement }) => {
-			return !this.fireEvent<ListMoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent<ListMoveEventDetail>("move-over", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -923,11 +985,11 @@ class List extends UI5Element {
 					element,
 					placement,
 				},
-			}, true);
+			});
 		});
 
 		if (acceptedPosition) {
-			this.fireEvent<ListMoveEventDetail>("move", {
+			this.fireDecoratorEvent<ListMoveEventDetail>("move", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -991,7 +1053,7 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireEvent("load-more");
+		this.fireDecoratorEvent("load-more");
 	}
 
 	/*
@@ -1111,7 +1173,7 @@ class List extends UI5Element {
 		e.stopPropagation();
 
 		this._itemNavigation.setCurrentItem(target);
-		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
+		this.fireDecoratorEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
 		if (this.selectionMode === ListSelectionMode.SingleAuto) {
 			const detail: SelectionRequestEventDetail = {
@@ -1128,12 +1190,11 @@ class List extends UI5Element {
 	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
-		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
+		if (!this.fireDecoratorEvent<ListItemClickEventDetail>("item-click", { item: pressedItem })) {
 			return;
 		}
 
-		if (!this._selectionRequested && this.selectionMode !== ListSelectionMode.Delete) {
-			this._selectionRequested = true;
+		if (this.selectionMode !== ListSelectionMode.Delete) {
 			const detail: SelectionRequestEventDetail = {
 				item: pressedItem,
 				selectionComponentPressed: false,
@@ -1143,8 +1204,6 @@ class List extends UI5Element {
 
 			this.onSelectionRequested({ detail } as CustomEvent<SelectionRequestEventDetail>);
 		}
-
-		this._selectionRequested = false;
 	}
 
 	// This is applicable to NotificationListItem
@@ -1153,12 +1212,12 @@ class List extends UI5Element {
 		const shouldFireItemClose = target?.hasAttribute("ui5-li-notification") || target?.hasAttribute("ui5-li-notification-group");
 
 		if (shouldFireItemClose) {
-			this.fireEvent<ListItemCloseEventDetail>("item-close", { item: e.detail?.item });
+			this.fireDecoratorEvent<ListItemCloseEventDetail>("item-close", { item: e.detail?.item });
 		}
 	}
 
 	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
-		this.fireEvent<ListItemToggleEventDetail>("item-toggle", { item: e.detail.item });
+		this.fireDecoratorEvent<ListItemToggleEventDetail>("item-toggle", { item: e.detail.item });
 	}
 
 	onForwardBefore(e: CustomEvent) {

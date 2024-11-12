@@ -7,7 +7,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -88,7 +88,16 @@ type ExceededText = {
  * Fired when the text has changed and the focus leaves the component.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
+/**
+ * Fired to make Angular two way data binding work properly.
+ * @private
+ */
+@event("value-changed", {
+	bubbles: true,
+})
 
 /**
  * Fired when the value of the component changes at each keystroke or when
@@ -96,7 +105,9 @@ type ExceededText = {
  * @since 1.0.0-rc.5
  * @public
  */
-@event("input")
+@event("input", {
+	bubbles: true,
+})
 
 /**
  * Fired when some text has been selected.
@@ -104,7 +115,9 @@ type ExceededText = {
  * @since 1.23.0
  * @public
  */
-@event("select")
+@event("select", {
+	bubbles: true,
+})
 
 /**
  * Fired when textarea is scrolled.
@@ -112,7 +125,9 @@ type ExceededText = {
  * @since 1.23.0
  * @public
  */
-@event("scroll")
+@event("scroll", {
+	bubbles: true,
+})
 
 class TextArea extends UI5Element implements IFormInputElement {
 	/**
@@ -379,7 +394,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 			this.value = this.previousValue;
 			nativeTextArea.value = this.value;
-			this.fireEvent("input");
+			this.fireDecoratorEvent("input");
 		}
 	}
 
@@ -405,15 +420,15 @@ class TextArea extends UI5Element implements IFormInputElement {
 	}
 
 	_onchange() {
-		this.fireEvent("change", {});
+		this.fireDecoratorEvent("change", {});
 	}
 
 	_onselect() {
-		this.fireEvent("select", {});
+		this.fireDecoratorEvent("select", {});
 	}
 
 	_onscroll() {
-		this.fireEvent("scroll", {});
+		this.fireDecoratorEvent("scroll", {});
 	}
 
 	_oninput(e: InputEvent) {
@@ -431,10 +446,10 @@ class TextArea extends UI5Element implements IFormInputElement {
 			nativeTextArea.setSelectionRange(this.maxlength, valueLength);
 		}
 
-		this.fireEvent("input", {});
+		this.fireDecoratorEvent("input", {});
 
 		// Angular two way data binding
-		this.fireEvent("value-changed");
+		this.fireDecoratorEvent("value-changed");
 	}
 
 	_onResize() {

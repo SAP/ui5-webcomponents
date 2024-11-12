@@ -263,7 +263,7 @@ class ColorPalette extends UI5Element {
 			}
 		}
 
-		this.fireEvent<ColorPaletteItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent<ColorPaletteItemClickEventDetail>("item-click", {
 			color: this._selectedColor,
 		});
 	}

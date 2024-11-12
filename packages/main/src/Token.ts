@@ -58,7 +58,9 @@ type TokenDeleteEventDetail = {
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
  * @private
  */
-@event("select")
+@event("select", {
+	bubbles: true,
+})
 
 /**
  * Fired when the backspace, delete or close icon of the token is pressed
@@ -71,6 +73,7 @@ type TokenDeleteEventDetail = {
 		"backSpace": { type: Boolean },
 		"delete": { type: Boolean },
 	},
+	bubbles: true,
 })
 
 class Token extends UI5Element implements IToken {
@@ -158,7 +161,7 @@ class Token extends UI5Element implements IToken {
 	_handleSelect() {
 		if (!this.toBeDeleted) {
 			this.selected = !this.selected;
-			this.fireEvent("select");
+			this.fireDecoratorEvent("select");
 		}
 	}
 
@@ -172,7 +175,7 @@ class Token extends UI5Element implements IToken {
 
 	_delete() {
 		this.toBeDeleted = true;
-		this.fireEvent("delete");
+		this.fireDecoratorEvent("delete");
 	}
 
 	_keydown(e: KeyboardEvent) {
@@ -182,7 +185,7 @@ class Token extends UI5Element implements IToken {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireEvent<TokenDeleteEventDetail>("delete", {
+			this.fireDecoratorEvent<TokenDeleteEventDetail>("delete", {
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});

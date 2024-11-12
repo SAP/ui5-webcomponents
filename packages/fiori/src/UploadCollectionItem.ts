@@ -77,7 +77,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * **Note:** This event is only available when `fileNameClickable` property is `true`.
  * @public
  */
-@event("file-name-click")
+@event("file-name-click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `fileName` property gets changed.
@@ -86,7 +88,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * when the `ui5-upload-collection-item` `type` property is set to `Detail`.
  * @public
  */
-@event("rename")
+@event("rename", {
+	bubbles: true,
+})
 
 /**
  * Fired when the terminate button is pressed.
@@ -94,7 +98,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * **Note:** Terminate button is displayed when `uploadState` property is set to `Uploading`.
  * @public
  */
-@event("terminate")
+@event("terminate", {
+	bubbles: true,
+})
 
 /**
  * Fired when the retry button is pressed.
@@ -102,18 +108,24 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * **Note:** Retry button is displayed when `uploadState` property is set to `Error`.
  * @public
  */
-@event("retry")
+@event("retry", {
+	bubbles: true,
+})
 
 /**
  * @since 1.0.0-rc.8
  * @private
  */
-@event("_focus-requested")
+@event("_focus-requested", {
+	bubbles: true,
+})
 
 /**
  * @private
  */
-@event("_uci-delete")
+@event("_uci-delete", {
+	bubbles: true,
+})
 class UploadCollectionItem extends ListItem {
 	/**
 	 * Holds an instance of `File` associated with this item.
@@ -274,7 +286,7 @@ class UploadCollectionItem extends ListItem {
 	_onRename() {
 		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
 		this.fileName = inp.value + this._fileExtension;
-		this.fireEvent("rename");
+		this.fireDecoratorEvent("rename");
 
 		this._editing = false;
 		this._focus();
@@ -304,15 +316,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireEvent("_focus-requested");
+		this.fireDecoratorEvent("_focus-requested");
 	}
 
 	_onFileNameClick() {
-		this.fireEvent("file-name-click");
+		this.fireDecoratorEvent("file-name-click");
 	}
 
 	_onRetry() {
-		this.fireEvent("retry");
+		this.fireDecoratorEvent("retry");
 	}
 
 	_onRetryKeyup(e: KeyboardEvent) {
@@ -322,7 +334,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onTerminate() {
-		this.fireEvent("terminate");
+		this.fireDecoratorEvent("terminate");
 	}
 
 	_onTerminateKeyup(e: KeyboardEvent) {
@@ -332,7 +344,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onDelete() {
-		this.fireEvent("_uci-delete");
+		this.fireDecoratorEvent("_uci-delete");
 	}
 
 	getFocusDomRef() {

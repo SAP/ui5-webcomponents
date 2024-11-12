@@ -14,7 +14,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -83,7 +83,9 @@ type Star = {
  * The event is fired when the value changes.
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class RatingIndicator extends UI5Element {
 	/**
@@ -232,7 +234,7 @@ class RatingIndicator extends UI5Element {
 			}
 
 			if (this._liveValue !== this.value) {
-				this.fireEvent("change");
+				this.fireDecoratorEvent("change");
 				this._liveValue = this.value;
 			}
 		}
@@ -270,7 +272,7 @@ class RatingIndicator extends UI5Element {
 				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
 
-			this.fireEvent("change");
+			this.fireDecoratorEvent("change");
 		}
 	}
 
