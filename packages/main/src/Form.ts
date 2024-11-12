@@ -44,7 +44,7 @@ type GroupItemsInfo = {
 	groupItem: IFormItem,
 	classes: string,
 	items: Array<ItemsInfo>,
-	ariaLabelledBy: string | undefined
+	accessibleNameRef: string | undefined
 }
 
 type ItemsInfo = {
@@ -381,11 +381,11 @@ class Form extends UI5Element {
 		return !!this.header.length;
 	}
 
-	get ariaLabelledByID(): string | undefined {
+	get effectiveАccessibleNameRef(): string | undefined {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
 
-	get ariaRole(): string | undefined {
+	get effectiveAccessibleRole(): string | undefined {
 		return this.hasGroupItems ? "region" : "form";
 	}
 
@@ -393,7 +393,7 @@ class Form extends UI5Element {
 		return this.items.map((groupItem: IFormItem) => {
 			return {
 				groupItem,
-				ariaLabelledBy: (groupItem as FormGroup).headerText ? `${groupItem._id}-group-header-text` : undefined,
+				accessibleNameRef: (groupItem as FormGroup).headerText ? `${groupItem._id}-group-header-text` : undefined,
 				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
 				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
 			};

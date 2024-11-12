@@ -1,4 +1,4 @@
-<div class="ui5-form-root" role="{{ariaRole}}" aria-labelledby="{{ariaLabelledByID}}">
+<div class="ui5-form-root" role="{{effectiveAccessibleRole}}" aria-labelledby="{{effectiveАccessibleNameRef}}">
 	{{#if hasHeader}}
 		<div class="ui5-form-header" part="header">
 			{{#if hasCustomHeader}}
@@ -13,7 +13,7 @@
 			{{#if this.hasGroupItems}}
 					{{#each groupItemsInfo}}
 						<div class="ui5-form-column {{this.classes}}" part="column">
-							<div class="ui5-form-group" role="form" aria-labelledby="{{this.ariaLabelledBy}}">
+							<div class="ui5-form-group" role="form" aria-labelledby="{{this.accessibleNameRef}}">
 								{{#if this.groupItem.headerText}}
 									<div class="ui5-form-group-heading">
 										<ui5-title id="{{this.groupItem._id}}-group-header-text" level="H6">{{ this.groupItem.headerText }}</ui5-title>
