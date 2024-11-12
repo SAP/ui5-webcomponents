@@ -45,12 +45,8 @@
 			{{/if}}
 		</ui5-panel>
 	{{/if}}
-	<ui5-list separators="None" @item-click="{{_menuItemClicked}}">
-	{{#each menuItems}}
-		<ui5-li icon={{this.icon}} >{{this.text}}</ui5-li>
-	{{/each}}
-	</ui5-list>
 
+	{{>include "./ProfileMenuContent.hbs"}}
 	<div slot="footer" class="ui5-profile-menu-user-footer">
 		<ui5-button design="Transparent" icon="log" @click="{{_signOutClicked}}">{{_signOutButtonText}}</ui5-button>
 	</div>

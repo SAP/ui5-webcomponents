@@ -10,17 +10,18 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Panel from "@ui5/webcomponents/dist/Panel.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import List from "@ui5/webcomponents/dist/List.js";
+import List, {type ListItemClickEventDetail} from "@ui5/webcomponents/dist/List.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type Dialog from "@ui5/webcomponents/Dialog.js";
+import type MenuItem from "@ui5/webcomponents/MenuItem.js";
 import type UserProfile from "./UserProfile.js";
-import type ProfileMenuItem from "./ProfileMenuItem.js";
 import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.js";
 import ProfileMenuCss from "./generated/themes/ProfileMenu.css.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 
 // Texts
 import {
@@ -28,7 +29,12 @@ import {
 	PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
 	PROFILE_MENU_SIGN_OUT_BUTTON_TXT,
 } from "./generated/i18n/i18n-defaults.js";
+import type ProfileMenuItem from "./ProfileMenuItem.js";
+import type {MenuBeforeOpenEventDetail, MenuItemClickEventDetail} from "@ui5/webcomponents/dist/Menu.js";
+import {isDesktop} from "@ui5/webcomponents-base/dist/Device.js";
+import {isEnter, isLeft, isRight} from "@ui5/webcomponents-base/dist/Keys.js";
 
+const PROFILE_MENU_OPEN_DELAY = 300;
 @customElement({
 	tag: "ui5-profile-menu",
 	renderer: litRender,
@@ -98,6 +104,7 @@ class ProfileMenu extends UI5Element {
 
 	_selectedUser!: UserProfile;
 	_otherUsers: UserProfile[] = [];
+	_timeout?: Timeout;
 
 	onBeforeRendering() {
 		this._selectedUser = this.users.find(user => user.selected) || this.users[0]; // zTODO: why || this.users[0] is needed. Without it lit template is complaining about possible undefined value
@@ -111,9 +118,6 @@ class ProfileMenu extends UI5Element {
 		this.fireDecoratorEvent("add-account-clicked");
 	}
 
-	_menuItemClicked() {
-		this.fireDecoratorEvent("menu-item-clicked");
-	}
 	_signOutClicked() {
 		this.fireDecoratorEvent("user-sign-out-clicked");
 	}
@@ -137,6 +141,77 @@ class ProfileMenu extends UI5Element {
 	_afterClosePopover() {
 		this.open = false;
 	}
+
+	_menuItemClicked(e: CustomEvent<ListItemClickEventDetail>) {
+		const item = e.detail.item as ProfileMenuItem;
+
+		if (!item._popover) {
+			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
+				"item": item,
+				"text": item.text || "",
+			}, true, false);
+
+			if (!prevented) {
+				item.fireEvent("close-menu", {});
+			}
+		} else {
+			this._openItemSubMenu(item);
+		}
+	}
+
+	_openItemSubMenu(item: ProfileMenuItem) {
+		if (!item._popover || item._popover.open) {
+			return;
+		}
+
+		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+			item,
+		}, false, false);
+		item._popover.opener = item;
+		item._popover.open = true;
+		item.selected = true;
+	}
+
+	_itemMouseOver(e: MouseEvent) {
+		if (isDesktop()) {
+			// respect mouseover only on desktop
+			const item = e.target as ProfileMenuItem;
+
+			if (item.hasAttribute("ui5-menu-item")) {
+				item.focus();
+
+				// Opens submenu with 300ms delay
+				this._startOpenTimeout(item);
+			}
+		}
+	}
+
+	_closeItemSubMenu(item: MenuItem) {
+		if (item && item._popover) {
+			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
+			if (openedSibling) {
+				this._closeItemSubMenu(openedSibling);
+			}
+
+			item._popover.open = false;
+			item.selected = false;
+		}
+	}
+
+	_startOpenTimeout(item: ProfileMenuItem) {
+		clearTimeout(this._timeout);
+
+		this._timeout = setTimeout(() => {
+			const opener = item.parentElement as ProfileMenuItem;
+			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
+			if (openedSibling) {
+				this._closeItemSubMenu(openedSibling);
+			}
+
+			this._openItemSubMenu(item);
+		}, PROFILE_MENU_OPEN_DELAY);
+	}
+
 
 	get _manageAccountButtonText() {
 		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT);

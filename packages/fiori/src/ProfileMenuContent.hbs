@@ -1,0 +1,16 @@
+<div
+		id="{{_id}}-menu-main"
+>
+	{{#if menuItems.length}}
+		<ui5-list
+				id="{{_id}}-menu-list"
+				selection-mode="None"
+				separators="None"
+				accessible-role="Menu"
+				@ui5-item-click={{_menuItemClicked}}
+				@mouseover={{_itemMouseOver}}
+		>
+			<slot></slot>
+		</ui5-list>
+	{{/if}}
+</div>
