@@ -26,7 +26,6 @@ import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
 import type MenuItemGroup from "./MenuItemGroup.js";
-import ItemSelectionMode from "./types/ItemSelectionMode.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -397,15 +396,8 @@ class Menu extends UI5Element {
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 		const prevSelected = item.isSelected;
-		const parent = item.parentElement as MenuItem | Menu | MenuItemGroup;
 
-		if (this._isGroupParent(parent)) {
-			const itemSelectionMode = (parent as MenuItemGroup).itemSelectionMode;
-			if (itemSelectionMode === ItemSelectionMode.SingleSelect) {
-				(parent as MenuItemGroup)._clearSelectedItems();
-			}
-			item.isSelected = !prevSelected;
-		}
+		item.isSelected = !prevSelected;
 
 		if (!item._popover) {
 			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {

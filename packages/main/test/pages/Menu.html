@@ -130,11 +130,15 @@
 					<ui5-menu-item text="Item 5" is-selected></ui5-menu-item>
 					<ui5-menu-item text="Item 6"></ui5-menu-item>
 					<ui5-menu-item text="Item 7"></ui5-menu-item>
-					<ui5-menu-item text="Item 8" is-selected>
-						<ui5-menu-item text="Item 8.1"></ui5-menu-item>
-					</ui5-menu-item>
 				</ui5-menu-item-group>
-			</ui5-menu-item>
+				<ui5-menu-item text="Item 8" is-selected>
+					<ui5-menu-item-group item-selection-mode="MultiSelect">
+						<ui5-menu-item text="Item 8.1"></ui5-menu-item>
+						<ui5-menu-item text="Item 8.2"></ui5-menu-item>
+						<ui5-menu-item text="Item 8.3"></ui5-menu-item>
+					</ui5-menu-item-group>
+				</ui5-menu-item>
+		</ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-separator></ui5-menu-separator>
 		<ui5-menu-item-group item-selection-mode="MultiSelect">
@@ -214,7 +218,7 @@
 		menu.addEventListener("ui5-item-click", function(event) {
 			const item = event.detail.item;
 			selectionInput.value = item.text;
-			if (item && item.text === "New File(selection prevented)") {
+			if (item && item.text === "New File (selection prevented)") {
 				event.preventDefault();
 			}
 		});

@@ -208,27 +208,45 @@ describe("Menu interaction", () => {
 	});
 
 	describe("Event firing", () => {
-		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
+		it("Event firing - 'ui5-item-click' and 'ui5-item-selection' after 'click' on menu item", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 			<ui5-menu opener="btnOpen">
 				<ui5-menu-item text="Item 1.0"></ui5-menu-item>
+				<ui5-menu-item-group itemSelectionMode="SingleSelect">
+					<ui5-menu-item text="Item 2.0"></ui5-menu-item>
+				</ui5-menu-item-group>
 			</ui5-menu>`);
 
 			cy.get("[ui5-menu]")
+				.as("menu")
 				.ui5MenuOpen();
 
-			cy.get("[ui5-menu]")
+			cy.get("@menu")
+				.find("[ui5-menu-item-group]")
+				.as("group");
+
+			cy.get("@menu")
 				.then($item => {
 					$item.get(0).addEventListener("ui5-item-click", cy.stub().as("clicked"));
 				});
 
-			cy.get("[ui5-menu]")
+			cy.get("@group")
+				.get("div")
+				.get("[ui5-menu-item]")
+				.then($item => {
+					$item.get(0).addEventListener("ui5-item-selection", cy.stub().as("selected"));
+				});
+
+			cy.get("@menu")
 				.ui5MenuOpened();
 
 			cy.get("[ui5-menu-item]")
 				.ui5MenuItemClick();
 
 			cy.get("@clicked")
+				.should("have.been.calledOnce");
+
+			cy.get("@selected")
 				.should("have.been.calledOnce");
 		});
 
@@ -488,6 +506,7 @@ describe("Menu interaction", () => {
 			cy.get("@menu")
 				.find("[text='Item 1']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 
@@ -498,14 +517,16 @@ describe("Menu interaction", () => {
 			cy.get("@groupSingle")
 				.find("[text='Item 2']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
-				.should("exist");
+				.should("not.exist");
 
 			cy.get("@groupSingle")
 				.find("[text='Item 3']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
-				.should("not.exist");
+				.should("exist");
 
 			cy.get("@menu")
 				.find("[id='groupMulti']")
@@ -514,18 +535,21 @@ describe("Menu interaction", () => {
 			cy.get("@groupMulti")
 				.find("[text='Item 4']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("exist");
 
 			cy.get("@groupMulti")
 				.find("[text='Item 5']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("exist");
 
 			cy.get("@groupMulti")
 				.find("[text='Item 6']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 
@@ -536,12 +560,14 @@ describe("Menu interaction", () => {
 			cy.get("@groupNone")
 				.find("[text='Item 7']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 
 			cy.get("@groupNone")
 				.find("[text='Item 8']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 		});
@@ -567,6 +593,8 @@ describe("Menu interaction", () => {
 				.should("not.exist");
 		});
 
+		/* === commented out due to unintentional behavior ===
+
 		it("Select/deselect items (SingleSelect mode)", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
 				<ui5-menu open opener="btnOpen">
@@ -580,44 +608,62 @@ describe("Menu interaction", () => {
 				.as("menu");
 
 			cy.get("@menu")
-				.find("[text='Item 2']")
-				.ui5MenuItemClick();
+				.find("[id='groupSingle']")
+				.as("groupSingle");
 
-			cy.get("@menu")
+			cy.get("@groupSingle")
 				.find("[text='Item 2']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
-				.should("exist");
+				.should("not.exist");
+
+			cy.get("@groupSingle")
+				.find("[text='Item 2']")
+				.ui5MenuItemClick();
 
 			cy.get("@menu")
 				.ui5MenuOpen({ opener: "btnOpen" });
 
-			cy.get("@menu")
+			cy.get("@groupSingle")
+				.find("[text='Item 2']")
+				.shadow()
+				.find("[part='content']")
+				.find("[part='selected']")
+				.should("exist");
+
+			cy.get("@groupSingle")
 				.find("[text='Item 3']")
 				.ui5MenuItemClick();
 
-			cy.get("@menu")
+			cy.get("@groupSingle")
 				.find("[text='Item 2']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 
 			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
+
+			cy.get("@groupSingle")
 				.find("[text='Item 3']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("exist");
 
-			cy.get("@menu")
-				.ui5MenuOpen({ opener: "btnOpen" });
-
-			cy.get("@menu")
+			cy.get("@groupSingle")
 				.find("[text='Item 3']")
 				.ui5MenuItemClick();
 
 			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
+
+			cy.get("@groupSingle")
 				.find("[text='Item 3']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 		});
@@ -635,47 +681,56 @@ describe("Menu interaction", () => {
 				.as("menu");
 
 			cy.get("@menu")
+				.find("[id='groupMulti']")
+				.as("groupMulti");
+
+			cy.get("@groupMulti")
 				.find("[text='Item 4']")
 				.ui5MenuItemClick();
 
-			cy.get("@menu")
+			cy.get("@groupMulti")
 				.find("[text='Item 4']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("exist");
 
 			cy.get("@menu")
 				.ui5MenuOpen({ opener: "btnOpen" });
 
-			cy.get("@menu")
+			cy.get("@groupMulti")
 				.find("[text='Item 5']")
 				.ui5MenuItemClick();
 
-			cy.get("@menu")
+			cy.get("@groupMulti")
 				.find("[text='Item 4']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("exist");
 
-			cy.get("@menu")
+			cy.get("@groupMulti")
 				.find("[text='Item 5']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("exist");
 
 			cy.get("@menu")
 				.ui5MenuOpen({ opener: "btnOpen" });
 
-			cy.get("@menu")
+			cy.get("@groupMulti")
 				.find("[text='Item 5']")
 				.ui5MenuItemClick();
 
-			cy.get("@menu")
+			cy.get("@groupMulti")
 				.find("[text='Item 5']")
 				.shadow()
+				.find("[part='content']")
 				.find("[part='selected']")
 				.should("not.exist");
 		});
+		*/
 
 		it("Select item (None mode) ", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>

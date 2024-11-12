@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import MenuItem from "./MenuItem.js";
 import MenuItemGroupTemplate from "./generated/templates/MenuItemGroupTemplate.lit.js";
-import type ItemSelectionMode from "./types/ItemSelectionMode.js";
+import ItemSelectionMode from "./types/ItemSelectionMode.js";
 import type { IMenuItem } from "./Menu.js";
 
 /**
@@ -45,7 +45,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @public
 	 */
 	@property()
-	itemSelectionMode: `${ItemSelectionMode}` = "None";
+	itemSelectionMode: `${ItemSelectionMode}` = ItemSelectionMode.None;
 
 	/**
 	 * Defines the items of this component.
@@ -69,9 +69,21 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	}
 
 	onBeforeRendering() {
-		if (this.itemSelectionMode === "SingleSelect") {
+		this._updateItemsSelectionMode();
+
+		if (this.itemSelectionMode === ItemSelectionMode.SingleSelect) {
 			this._ensureSingleSelection();
 		}
+	}
+
+	/**
+	 * Sets <code>_itemSelectionMode</code> property of all menu items in the group.
+	 * @private
+	 */
+	_updateItemsSelectionMode() {
+		this._menuItems.forEach((item: MenuItem) => {
+			item._itemSelectionMode = this.itemSelectionMode;
+		});
 	}
 
 	/**
@@ -96,6 +108,16 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 		this._clearSelectedItems();
 		if (lastSelectedItem) {
 			lastSelectedItem.isSelected = true;
+		}
+	}
+
+	/**
+	 * Handles the selection of an item in the group and unselects other items if the item selection mode is SingleSelect.
+	 * @private
+	 */
+	_handleItemSelection() {
+		if (this.itemSelectionMode === ItemSelectionMode.SingleSelect) {
+			this._clearSelectedItems();
 		}
 	}
 }
