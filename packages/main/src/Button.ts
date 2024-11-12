@@ -409,6 +409,7 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		this._cancelAction = isShift(e) || isEscape(e);
 
