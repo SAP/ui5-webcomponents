@@ -442,13 +442,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	@bound
-	_onfocusin() {
-		if (this.nonInteractive) {
-			return;
-		}
-	}
-
 	_setActiveState(active: boolean) {
 		const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
 

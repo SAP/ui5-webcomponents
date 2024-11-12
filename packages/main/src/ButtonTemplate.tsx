@@ -10,7 +10,6 @@ export default function (this: Button, injectedProps?: { ariaPressed?: boolean }
 			data-sap-focus-ref
 			aria-pressed={injectedProps?.ariaPressed}
 			onFocusOut={this._onfocusout}
-			onFocusIn={this._onfocusin}
 			onClick={this._onclick}
 			onMouseDown={this._onmousedown}
 			onKeyDown={this._onkeydown}
