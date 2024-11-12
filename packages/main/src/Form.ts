@@ -251,12 +251,6 @@ class Form extends UI5Element {
 	@property({ type: Number })
 	labelSpanXl = 4;
 
-	onEnterDOM() {
-		if (!this.hasGroupItems) {
-			this.setAttribute("data-sap-ui-fastnavgroup", "true");
-		}
-	}
-
 	onBeforeRendering() {
 		// Parse the layout and set it to the FormGroups/FormItems.
 		this.setColumnLayout();
