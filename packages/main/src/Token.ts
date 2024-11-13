@@ -1,10 +1,9 @@
 // eslint-disable-next-line max-classes-per-file
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-// import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-// import event2 from "@ui5/webcomponents-base/dist/decorators/event2.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event2 from "@ui5/webcomponents-base/dist/decorators/event2.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -30,6 +29,15 @@ import tokenStyles from "./generated/themes/Token.css.js";
 type TokenDeleteEventDetail = {
 	backSpace: boolean;
 	delete: boolean;
+}
+
+type EventMetadataOptions = {
+	bubbles?: boolean;
+	cancelable?: boolean;
+}
+
+function eventMetadata<T = void>(a?: EventMetadataOptions): EventMetadataOptions & { type: T } {
+	return a as EventMetadataOptions & { type: T};
 }
 
 /**
@@ -71,19 +79,33 @@ type TokenDeleteEventDetail = {
  * @private
  */
 @event<TokenDeleteEventDetail>("delete", {
-	detail: {
-		"backSpace": { type: Boolean },
-		"delete": { type: Boolean },
-	},
 	bubbles: true,
 })
 class Token extends UI5Element implements IToken {
-	// @event2("select", {
-	// 	bubbles: true,
-	// })
-	// @event2("delete", {
-	// 	bubbles: true,
-	// })
+	events = {
+		/**
+		 * Fired when the backspace, delete or close icon of the token is pressed
+		 * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
+		 * @param {Boolean} delete Indicates whether token is deleted by delete key.
+		 * @private
+		 */
+		"delete": eventMetadata<TokenDeleteEventDetail>({
+			bubbles: true,
+		}),
+		/**
+		 * Fired when the the component is selected by user interaction with mouse or by clicking space.
+		 * @private
+		 */
+		"select": eventMetadata({
+			bubbles: true,
+		}),
+	}
+	@event2("delete", {
+		bubbles: true,
+	})
+	@event2("select", {
+		bubbles: true,
+	})
 	_events!: {
 		/**
 		 * Fired when the backspace, delete or close icon of the token is pressed

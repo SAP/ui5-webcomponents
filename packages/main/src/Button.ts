@@ -462,22 +462,6 @@ class Button extends UI5Element implements IButton {
 		return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
 	}
 
-	get iconMode() {
-		if (!this.icon) {
-			return undefined;
-		}
-
-		return IconMode.Decorative;
-	}
-
-	get endIconMode() {
-		if (!this.endIcon) {
-			return undefined;
-		}
-
-		return IconMode.Decorative;
-	}
-
 	get isIconOnly() {
 		return !willShowContent(this.text);
 	}

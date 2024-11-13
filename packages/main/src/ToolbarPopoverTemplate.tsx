@@ -10,8 +10,6 @@ export default function(this: Toolbar) {
 			horizontal-align="End"
 			onClose={this.onOverflowPopoverClosed}
 			onOpen={this.onOverflowPopoverOpened}
-			onBeforeOpen={(e) => {}}
-			onExtra={(e) => {}}
 			hide-arrow
 		>
 			<div class={

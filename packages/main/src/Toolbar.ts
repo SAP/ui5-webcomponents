@@ -41,10 +41,12 @@ import {
 
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
 };
+type UI5CustomEvent<T extends UI5Element, N extends keyof T["_events"]> = CustomEvent<T["_events"][N]>;
 
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
@@ -92,9 +94,26 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	},
 	bubbles: true,
 })
+
 class Toolbar extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
+
+	@bound
+	onBeforeClose1(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+		// eslint-disable-next-line no-console
+		console.log(e.detail.escPressed);
+	}
+	@bound
+	onBeforeClose2(e: CustomEvent<Popover["_events"]["before-close"]>) {
+		// eslint-disable-next-line no-console
+		console.log(e.detail.escPressed);
+	}
+	@bound
+	onBeforeClose3(e: UI5CustomEvent<Popover, "before-close">) {
+		// eslint-disable-next-line no-console
+		console.log(e.detail.escPressed);
+	}
 
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
@@ -475,6 +494,11 @@ class Toolbar extends UI5Element {
 		if (this.overflowButtonDOM) {
 			this.overflowButtonDOM.accessibilityAttributes.expanded = false;
 		}
+	}
+
+	onBeforeClose(e: UI5CustomEvent<Popover, "before-close">) {
+		e.preventDefault();
+		console.log(e.detail.escPressed);
 	}
 
 	@bound

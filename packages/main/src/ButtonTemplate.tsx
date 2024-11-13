@@ -30,7 +30,7 @@ export default function (this: Button, injectedProps?: { ariaPressed?: boolean }
 				<Icon
 					class="ui5-button-icon"
 					name={this.icon}
-					mode={this.iconMode}
+					mode="Decorative"
 					part="icon"
 					showTooltip={this.showIconTooltip}
 				></Icon>
@@ -46,7 +46,7 @@ export default function (this: Button, injectedProps?: { ariaPressed?: boolean }
 				<Icon
 					class="ui5-button-end-icon"
 					name={this.endIcon}
-					mode={this.endIconMode}
+					mode="Decorative"
 					part="endIcon"
 				></Icon>
 			}
