@@ -384,14 +384,15 @@ class Toolbar extends UI5Element {
 	processOverflowLayout() {
 		const containerWidth = this.offsetWidth - this.padding;
 		const contentWidth = this.itemsWidth;
-		const overflowSpace = contentWidth - containerWidth + this.overflowButtonSize;
 
 		// skip calculation if the width has not been changed or if the items width has not been changed
 		if (this.width === containerWidth && this.contentWidth === contentWidth) {
 			return;
 		}
 
-		this.distributeItems(overflowSpace);
+		// if there is not enough space, distribute items while calculating overflow button. Otherwise don't calc overflow space/area
+		this.distributeItems(contentWidth > containerWidth ? contentWidth - containerWidth + this.overflowButtonSize : 0);
+
 		this.width = containerWidth;
 		this.contentWidth = contentWidth;
 	}
@@ -505,6 +506,12 @@ class Toolbar extends UI5Element {
 		}
 
 		this.closeOverflow();
+
+		// re-calculate items width if there is a dynamic spacer
+		if (this.hasFlexibleSpacers) {
+			this.storeItemsWidth();
+		}
+
 		this.processOverflowLayout();
 	}
 

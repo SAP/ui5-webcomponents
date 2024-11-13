@@ -42,7 +42,7 @@ class ToolbarSpacer extends ToolbarItem {
 	}
 
 	get hasFlexibleWidth() {
-		return this.width === "";
+		return this.width === undefined || this.width === "auto";
 	}
 
 	static get toolbarTemplate() {
