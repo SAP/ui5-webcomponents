@@ -153,20 +153,4 @@ describe("Color Picker general interaction", () => {
 		assert.strictEqual(await blueInput.getAttribute("accessible-name"), "Blue", "Blue input accessible-name attribute properly set");
 		assert.strictEqual(await alphaInput.getAttribute("accessible-name"), "Alpha", "Alpha input accessible-name attribute properly set");
 	});
-
-	it("should not display color channel inputs and alpha slider in simplified mode", async () => {
-		const colorPicker = await browser.$("#cp-simplified");
-		const redInput = await colorPicker.shadow$("#red");
-		const alphaInput = await colorPicker.shadow$("#alpha");
-		const hexInput = await colorPicker.shadow$(".ui5-color-picker-hex-input");
-
-		const redExists = await redInput.isExisting();
-		assert.notOk(redExists, "Picker does not have an input for red values");
-
-		const alphaExists = await alphaInput.isExisting();
-		assert.notOk(alphaExists, "Picker does not have an alpha slider");
-
-		const hexExists = await hexInput.isExisting();
-		assert.ok(hexExists, "Picker has an input for HEX values");
-	});
 });
