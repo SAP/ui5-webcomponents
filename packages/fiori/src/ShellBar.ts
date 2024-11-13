@@ -112,6 +112,7 @@ interface IShelBarItemInfo extends ITabbable {
 	classes: string,
 	order?: number,
 	profile?: boolean,
+	tooltip?: string,
 }
 
 interface IShelBarAdditionalContext extends HTMLElement, ITabbable {
@@ -1114,6 +1115,7 @@ class ShellBar extends UI5Element {
 			id: `${this._id}-item-${1}`,
 			press: this._handleSearchIconPress.bind(this),
 			show: !!this.searchField.length,
+			tooltip: this._searchText,
 		};
 
 		const items: Array<IShelBarItemInfo> = [
@@ -1138,6 +1140,7 @@ class ShellBar extends UI5Element {
 					title: item.title,
 					stableDomRef: item.stableDomRef,
 					shouldBeHidden: !this._isFullVariant && item.icon && !isHelpOrMessageAction,
+					tooltip: item.title || item.text,
 				};
 			}),
 			{
@@ -1154,6 +1157,7 @@ class ShellBar extends UI5Element {
 				show: this.showNotifications,
 				domOrder: this.showNotifications ? (++domOrder) : -1,
 				press: this._handleNotificationsPress.bind(this),
+				tooltip: this._notificationsText,
 			},
 			{
 				icon: "overflow",
@@ -1167,6 +1171,7 @@ class ShellBar extends UI5Element {
 				id: `${this.id}-item-${5}`,
 				press: this._handleOverflowPress.bind(this),
 				show: true,
+				tooltip: "Overflow",
 			},
 			{
 				text: "Person",
@@ -1180,6 +1185,7 @@ class ShellBar extends UI5Element {
 				domOrder: this.hasProfile ? (++domOrder) : -1,
 				show: this.hasProfile,
 				press: this._handleProfilePress.bind(this),
+				tooltip: "Person",
 			},
 			{
 				icon: "grid",
@@ -1193,6 +1199,7 @@ class ShellBar extends UI5Element {
 				show: this.showProductSwitch,
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
+				tooltip: "Grid",
 			},
 			search,
 		];
