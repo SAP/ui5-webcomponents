@@ -363,6 +363,17 @@ type ListItemClickEventDetail = {
 	bubbles: true,
 })
 class List extends UI5Element {
+	eventDetails!: {
+		"item-click": ListItemClickEventDetail
+		"item-close": ListItemCloseEventDetail
+		"item-toggle": ListItemToggleEventDetail
+		"item-delete": ListItemDeleteEventDetail
+		"selection-change": ListSelectionChangeEventDetail
+		"load-more": void
+		"move-over": ListMoveEventDetail
+		"move": ListMoveEventDetail
+	}
+
 	/**
 	 * Defines the component header text.
 	 *

@@ -1,13 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
 import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 
 // Templates
-import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
-import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorInOverflowTemplate.lit.js";
+import TabSeparatorInStripTemplate from "./TabSeparatorInStripTemplate.js";
+import TabSeparatorInOverflowTemplate from "./TabSeparatorInOverflowTemplate.js";
 
 // Styles
 import stripCss from "./generated/themes/TabSeparatorInStrip.css.js";
@@ -33,7 +34,7 @@ interface TabSeparatorInOverflow extends ListItemCustom {
  */
 @customElement({
 	tag: "ui5-tab-separator",
-	renderer: litRender,
+	renderer: jsxRender,
 })
 class TabSeparator extends UI5Element implements ITab {
 	_forcedStyleInOverflow?: Record<string, any>;
@@ -46,14 +47,6 @@ class TabSeparator extends UI5Element implements ITab {
 
 	static get overflowTemplate() {
 		return TabSeparatorInOverflowTemplate;
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-tc__separator": true,
-			},
-		};
 	}
 
 	get isSeparator() {
@@ -88,6 +81,13 @@ class TabSeparator extends UI5Element implements ITab {
 
 	get overflowPresentation() {
 		return executeTemplate(TabSeparator.overflowTemplate, this);
+	}
+
+	@bound
+	captureRef(ref: HTMLElement & { realTabReference?: UI5Element} | null) {
+		if (ref) {
+			ref.realTabReference = this;
+		}
 	}
 }
 

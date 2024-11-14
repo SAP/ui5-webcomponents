@@ -1,10 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
@@ -61,7 +62,7 @@ import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
 
 // Templates
-import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerTemplate from "./TabContainerTemplate.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -165,7 +166,7 @@ interface ITab extends UI5Element {
 		tabContainerCss,
 		ResponsivePopoverCommonCss,
 	],
-	renderer: litRender,
+	renderer: jsxRender,
 	template: TabContainerTemplate,
 	dependencies: [
 		Button,
@@ -506,6 +507,7 @@ class TabContainer extends UI5Element {
 		});
 	}
 
+	@bound
 	_onHeaderFocusin(e: FocusEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 
@@ -514,6 +516,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	@bound
 	_onDragStart(e: DragEvent) {
 		if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
 			return;
@@ -525,12 +528,14 @@ class TabContainer extends UI5Element {
 		this._setDraggedElement!((e.target as TabInStrip).realTabReference);
 	}
 
+	@bound
 	_onHeaderDragEnter(e: DragEvent) {
 		e.preventDefault();
 	}
 
+	@bound
 	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
-	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
+	_onHeaderDragOver(e: DragEvent, isLongDragOver?: boolean) {
 		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;
@@ -591,6 +596,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	@bound
 	_onHeaderDrop(e: DragEvent) {
 		if (e.target === this._getStartOverflowBtnDOM() || e.target === this._getEndOverflowBtnDOM()) {
 			return;
@@ -666,6 +672,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	@bound
 	_onHeaderDragLeave(e: DragEvent) {
 		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
 			return;
@@ -674,6 +681,7 @@ class TabContainer extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
+	@bound
 	_onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination, source } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement()!;
@@ -724,6 +732,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	@bound
 	_onPopoverListMove(e: CustomEvent<ListMoveEventDetail>) {
 		const { destination, source } = e.detail;
 		const draggedElement = DragRegistry.getDraggedElement()!;
@@ -765,12 +774,14 @@ class TabContainer extends UI5Element {
 		draggedElement.focus();
 	}
 
+	@bound
 	_onPopoverListKeyDown(e: KeyboardEvent) {
 		if (isCtrl(e)) {
 			this._setDraggedElement!((e.target as TabInOverflow).realTabReference);
 		}
 	}
 
+	@bound
 	async _onTabStripClick(e: Event) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
@@ -850,6 +861,7 @@ class TabContainer extends UI5Element {
 		return ((this.responsivePopover!.content[0] as List).items as Array<TabInOverflow | TabSeparatorInOverflow>).find(item => item.realTabReference === realTab);
 	}
 
+	@bound
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab) {
@@ -888,6 +900,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	@bound
 	_onTabStripKeyUp(e: KeyboardEvent) {
 		const tab = getTabInStrip(e.target as HTMLElement);
 		if (!tab || tab.realTabReference.disabled) {
@@ -904,12 +917,14 @@ class TabContainer extends UI5Element {
 		}
 	}
 
+	@bound
 	_onHeaderItemSelect(tab: HTMLElement) {
 		if (!tab.hasAttribute("disabled")) {
 			this._onItemSelect(tab.id);
 		}
 	}
 
+	@bound
 	async _onOverflowListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		e.preventDefault(); // cancel the item selection
 
@@ -944,6 +959,7 @@ class TabContainer extends UI5Element {
 		return result;
 	}
 
+	@bound
 	_onItemSelect(selectedTabId: string) {
 		const selectedTabIndex = this._itemsFlat.findIndex(item => item.__id === selectedTabId);
 		const selectedTab = this._itemsFlat[selectedTabIndex] as Tab;
@@ -987,6 +1003,7 @@ class TabContainer extends UI5Element {
 		return slideUp(element).promise();
 	}
 
+	@bound
 	async _onOverflowClick(e: Event) {
 		if ((e.target as HTMLElement).classList.contains("ui5-tc__overflow")) {
 			// the empty area in the overflow was clicked
@@ -1024,6 +1041,7 @@ class TabContainer extends UI5Element {
 		});
 	}
 
+	@bound
 	async _onOverflowKeyDown(e: KeyboardEvent) {
 		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
@@ -1465,6 +1483,7 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
+	@bound
 	_closePopover() {
 		this._hasScheduledPopoverOpen = false;
 		if (this.responsivePopover) {

@@ -11,13 +11,10 @@ export default function bound(target: any, key: string | symbol, descriptor: any
 				return fn;
 			}
 
-			let boundFn: any;
+			let boundFn = fn.bind(this);
+
 			Object.defineProperty(this, key, {
 				get(): any {
-					if (boundFn) {
-						return boundFn;
-					}
-					boundFn = fn.bind(this);
 					return boundFn;
 				},
 				set(value: any): void {
@@ -25,6 +22,7 @@ export default function bound(target: any, key: string | symbol, descriptor: any
 					boundFn = value;
 				},
 			});
+			return boundFn;
 		},
 		set(value: any): void {
 			fn = value;

@@ -1,9 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -31,9 +32,9 @@ import Button from "./Button.js";
 import ListItemCustom from "./ListItemCustom.js";
 
 // Templates
-import TabTemplate from "./generated/templates/TabTemplate.lit.js";
-import TabInStripTemplate from "./generated/templates/TabInStripTemplate.lit.js";
-import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.lit.js";
+import TabTemplate from "./TabTemplate.js";
+import TabInStripTemplate from "./TabInStripTemplate.js";
+import TabInOverflowTemplate from "./TabInOverflowTemplate.js";
 
 // Styles
 import css from "./generated/themes/Tab.css.js";
@@ -70,7 +71,7 @@ interface TabInOverflow extends ListItemCustom {
 @customElement({
 	tag: "ui5-tab",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: TabTemplate,
 	styles: css,
 	dependencies: [
@@ -247,7 +248,7 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
 
-	get _effectiveSlotName() {
+	get _effectiveSlotName(): string | undefined {
 		return this.isOnSelectedTabPath ? this._individualSlot : `disabled-${this._individualSlot}`;
 	}
 
@@ -495,15 +496,31 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		return TabInOverflowTemplate;
 	}
 
+	@bound
 	_ondragstart(e: DragEvent) {
 		if (e.target instanceof HTMLElement) {
 			e.target.setAttribute("data-moving", "");
 		}
 	}
 
+	@bound
 	_ondragend(e: DragEvent) {
 		if (e.target instanceof HTMLElement) {
 			e.target.removeAttribute("data-moving");
+		}
+	}
+
+	@bound
+	captureRef(ref: HTMLElement & { realTabReference?: UI5Element} | null) {
+		if (ref) {
+			ref.realTabReference = this;
+		}
+	}
+
+	@bound
+	captureButtonRef(ref: HTMLElement & { tab?: UI5Element} | null) {
+		if (ref) {
+			ref.tab = this;
 		}
 	}
 }

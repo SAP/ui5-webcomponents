@@ -11,7 +11,11 @@ declare namespace JSX {
 	// 	class: Record<string, boolean> | string | undefined // _JSX.HTMLAttributes["class"]
 	// }
 
-    export interface IntrinsicElements extends _JSX.IntrinsicElements {}
+    export interface IntrinsicElements extends _JSX.IntrinsicElements {
+		div: HTMLAttributes<HTMLDivElement> & {
+			ui5Data?: object
+		}
+	}
     export type ElementClass = UI5Element;
     export interface ElementAttributesProperty<T extends EventTarget> {
 		_jsxProps: HTMLAttributes<T>;
