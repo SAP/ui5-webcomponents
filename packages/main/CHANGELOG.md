@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
+
+
+### Bug Fixes
+
+* **ui5-card-header:** update interactive property documentation ([#10143](https://github.com/SAP/ui5-webcomponents/issues/10143)) ([23289d4](https://github.com/SAP/ui5-webcomponents/commit/23289d4d1696d0441823d98f71b5e21b617777c3))
+* **ui5-table-growing:** button is shown despite scroll type ([#10142](https://github.com/SAP/ui5-webcomponents/issues/10142)) ([950441b](https://github.com/SAP/ui5-webcomponents/commit/950441b7d272e8cd20499461f4cfa05ad3ac7510)), closes [#10045](https://github.com/SAP/ui5-webcomponents/issues/10045)
+
+
+### Features
+
+* **ui5-color-picker:** add simplified display mode ([#10153](https://github.com/SAP/ui5-webcomponents/issues/10153)) ([bf9c0d6](https://github.com/SAP/ui5-webcomponents/commit/bf9c0d653be5af5473a7b616f2c91803db46beb3)), closes [#9979](https://github.com/SAP/ui5-webcomponents/issues/9979)
+* **ui5-combobox/multi-combobox:** physical items ([#10051](https://github.com/SAP/ui5-webcomponents/issues/10051)) ([73f82ab](https://github.com/SAP/ui5-webcomponents/commit/73f82abe5e9a61d88919f4c45df9435be850eb2f))
+* **ui5-form:** update to latest accessibility spec ([#10152](https://github.com/SAP/ui5-webcomponents/issues/10152)) ([4382d4e](https://github.com/SAP/ui5-webcomponents/commit/4382d4e280ffcf01a924163b9b719887c17f529a)), closes [#9952](https://github.com/SAP/ui5-webcomponents/issues/9952)
+* **ui5-list, ui5-tree:** support accessible description ([#10131](https://github.com/SAP/ui5-webcomponents/issues/10131)) ([45f0ffe](https://github.com/SAP/ui5-webcomponents/commit/45f0ffeafb2da0ffcaf425649c7440b604e359a3)), closes [#6445](https://github.com/SAP/ui5-webcomponents/issues/6445)
+* **ui5-tokenizer:** enable multiline mode ([#9964](https://github.com/SAP/ui5-webcomponents/issues/9964)) ([1071746](https://github.com/SAP/ui5-webcomponents/commit/107174616b5b3b96c174160488eba18b9cdb9cae))
+
+
+
+
+
 ## [2.4.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.0...v2.4.1-rc.0) (2024-11-07)
 
 
