@@ -198,6 +198,25 @@ type TableMoveEventDetail = {
 	bubbles: true,
 })
 
+@event<TableMoveEventDetail>("move", {
+	detail: {
+		originalEvent: { type: Event },
+		source: { type: Object },
+		destination: { type: Object },
+	},
+	bubbles: true,
+})
+
+@event("move-over", {
+	detail: {
+		originalEvent: { type: Event },
+		source: { type: Object },
+		destination: { type: Object },
+	},
+	cancelable: true,
+	bubbles: true,
+})
+
 class Table extends UI5Element {
 	/**
 	 * Defines the rows of the component.

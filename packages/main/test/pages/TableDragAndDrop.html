@@ -94,6 +94,13 @@
     function tableMoveOver(e) {
       const { source, destination } = e.detail;
 
+      const sourceIndex = table.rows.indexOf(source.element);
+      const destinationIndex = table.rows.indexOf(destination.element);
+
+      if (sourceIndex === -1 || destinationIndex === -1) {
+        return;
+      }
+
       if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row") && destination.placement !== "On") {
         e.preventDefault();
       }
@@ -101,21 +108,11 @@
 
     function tableMove(e) {
       const { source, destination } = e.detail;
-
-      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row")) {
-        reorderRow(source.element, destination.element, destination.placement);
-      }
+      reorderRow(source.element, destination.element, destination.placement);
     }
 
     function reorderRow(source, destination, placement) {
       if (!table) {
-        return;
-      }
-
-      const sourceIndex = table.rows.indexOf(source);
-      const destinationIndex = table.rows.indexOf(destination);
-
-      if (sourceIndex === -1 || destinationIndex === -1) {
         return;
       }
 

@@ -1,5 +1,8 @@
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { dragOver, dropRow } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRowUtil.js";
+import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 
 import type Table from "./Table.js";
 import TableExtension from "./TableExtension.js";
@@ -39,7 +42,22 @@ export default class TableDragAndDrop extends TableExtension {
 	}
 
 	_ondragover(e: DragEvent) {
-		const { targetReference, placement } = dragOver(e, this._table, this._table.rows);
+		if (!(e.target instanceof HTMLElement)) {
+			return;
+		}
+
+		const closestPosition = findClosestPosition(
+			this._table.rows,
+			e.clientY,
+			Orientation.Vertical,
+		);
+
+		if (!closestPosition) {
+			this._table.dropIndicatorDOM!.targetReference = null;
+			return;
+		}
+
+		const { targetReference, placement } = handleDragOver(e, this._table, closestPosition, closestPosition.element);
 		this._table.dropIndicatorDOM!.targetReference = targetReference;
 		this._table.dropIndicatorDOM!.placement = placement;
 	}
@@ -49,7 +67,7 @@ export default class TableDragAndDrop extends TableExtension {
 			return;
 		}
 
-		dropRow(e, this._table, this._table.dropIndicatorDOM.targetReference, this._table.dropIndicatorDOM.placement);
+		handleDrop(e, this._table, this._table.dropIndicatorDOM.targetReference, this._table.dropIndicatorDOM.placement);
 		this._table.dropIndicatorDOM.targetReference = null;
 	}
 }

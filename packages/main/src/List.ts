@@ -17,9 +17,11 @@ import {
 	isTabPrevious,
 	isCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { dragOver, dropRow } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRowUtil.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	getAllAccessibleDescriptionRefTexts,
@@ -1130,7 +1132,22 @@ class List extends UI5Element {
 	}
 
 	_ondragover(e: DragEvent) {
-		const { targetReference, placement } = dragOver(e, this, this.items);
+		if (!(e.target instanceof HTMLElement)) {
+			return;
+		}
+
+		const closestPosition = findClosestPosition(
+			this.items,
+			e.clientY,
+			Orientation.Vertical,
+		);
+
+		if (!closestPosition) {
+			this.dropIndicatorDOM!.targetReference = null;
+			return;
+		}
+
+		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element);
 		this.dropIndicatorDOM!.targetReference = targetReference;
 		this.dropIndicatorDOM!.placement = placement;
 	}
@@ -1140,7 +1157,7 @@ class List extends UI5Element {
 			return;
 		}
 
-		dropRow(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
+		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
 		this.dropIndicatorDOM.targetReference = null;
 	}
 
