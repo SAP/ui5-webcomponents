@@ -290,7 +290,10 @@ type ListItemClickEventDetail = {
 /**
  * Fired when the user scrolls to the bottom of the list.
  *
- * **Note:** The event is fired when the `growing='Scroll'` property is enabled.
+ * **Notes:**
+ * - The event is fired when the `growing='Scroll'` property is enabled.
+ * - The event is fired through [IntersectionObserver (MDN Reference)](https://developer.mozilla.org/docs/Web/API/IntersectionObserver).
+ *
  * @public
  * @since 1.0.0-rc.6
  */
