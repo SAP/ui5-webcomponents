@@ -126,6 +126,40 @@ type ItemsInfo = {
  * You can control what space the labels should take via the `labelSpan` property.
  *
  * **For example:** To always place the labels on top set: `labelSpan="S12 M12 L12 XL12"` property.
+ *f
+ * ### Keyboard Navigation
+ *
+ * The Form component supports two layout options for keyboard navigation:
+ *
+ * #### Simple form
+ *
+ * In this "simple form" layout, each `ui5-form-item` acts as a standalone group
+ * with one item, so focus moves horizontally across the grid from one `ui5-form-item` to the next.
+ * This layout is ideal for simpler forms and supports custom arrangements, e.g.,
+ *
+ * ```
+ * | 1 | 2 |
+ * |   3   |
+ * | 4 | 5 |
+ * ```
+ *
+ * #### Complex form
+ *
+ * In this layout, items are grouped into `ui5-form-group` elements, allowing more complex configurations:
+ *
+ * - **Single-Column Group**: Focus moves vertically down from one item to the next.
+ *   ```
+ *   | 1 |
+ *   | 2 |
+ *   | 3 |
+ *   ```
+ *
+ * - **Multi-Column Group**: Focus moves horizontally within each row, advancing to the next row after completing the current one.
+ *   ```
+ *   | 1 | 4 |
+ *   | 2 | 5 |
+ *   | 3 | 6 |
+ *   ```
  *
  * ### ES6 Module Import
  *
