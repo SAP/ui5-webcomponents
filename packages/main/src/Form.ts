@@ -29,7 +29,7 @@ const StepColumn = {
  * @experimental
  * @since 2.0.0
  */
-interface IFormItem extends HTMLElement {
+interface IFormItem extends UI5Element {
 	labelSpan: string
 	emptySpan: string
 	itemSpacing: `${FormItemSpacing}`;
@@ -45,6 +45,7 @@ type GroupItemsInfo = {
 	groupItem: IFormItem,
 	classes: string,
 	items: Array<ItemsInfo>,
+	accessibleNameRef: string | undefined
 }
 
 type ItemsInfo = {
@@ -140,6 +141,13 @@ type ItemsInfo = {
  *
  * *Note:* When both `emptySpan` and `labelSpan` are set, their combined value must not exceed 11, to ensure at least 1 cell remains for the field.
  *
+ * ### Keyboard Handling
+ *
+ * - [Tab] - Moves the focus to the next interactive element within the Form/FormGroup (if available) or to the next element in the tab chain outside the Form
+ * - [Shift] + [Tab] - Moves the focus to the previous interactive element within the Form/FormGroup (if available) or to the previous element in the tab chain outside the Form
+ * - [F6] - Moves the focus to the first interactive element of the next FormGroup (if available) or to the next element in the tab chain outside the Form
+ * - [Shift] + [F6] - Moves the focus to the first interactive element of the previous FormGroup (if available) or to the previous element in the tab chain outside the Form
+ *
  * ### ES6 Module Import
  *
  * - import @ui5/webcomponents/dist/Form.js";
@@ -210,6 +218,7 @@ class Form extends UI5Element {
 	 * **Note:** When both `emptySpan` and `labelSpan` are set, their combined value must not exceed 11, to ensure at least 1 cell remains for the field.
 	 *
 	 * @default "S0 M0 L0 XL0"
+	 * @since 2.5.0
 	 * @public
 	 */
 	@property()
@@ -308,6 +317,8 @@ class Form extends UI5Element {
 	onAfterRendering() {
 		// Create additional CSS for number of columns that are not supported by default.
 		this.createAdditionalCSSStyleSheet();
+
+		this.setFastNavGroup();
 	}
 
 	setColumnLayout() {
@@ -355,6 +366,14 @@ class Form extends UI5Element {
 			item.emptySpan = this.emptySpan;
 			item.itemSpacing = this.itemSpacing;
 		});
+	}
+
+	setFastNavGroup() {
+		if (this.hasGroupItems) {
+			this.removeAttribute("data-sap-ui-fastnavgroup");
+		} else {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
+		}
 	}
 
 	setGroupsColSpan() {
@@ -418,14 +437,19 @@ class Form extends UI5Element {
 		return !!this.header.length;
 	}
 
-	get ariaLabelledByID(): string | undefined {
+	get effectiveАccessibleNameRef(): string | undefined {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
+	}
+
+	get effectiveAccessibleRole(): string | undefined {
+		return this.hasGroupItems ? "region" : "form";
 	}
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
 		return this.items.map((groupItem: IFormItem) => {
 			return {
 				groupItem,
+				accessibleNameRef: (groupItem as FormGroup).headerText ? `${groupItem._id}-group-header-text` : undefined,
 				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
 				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
 			};

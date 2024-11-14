@@ -6,6 +6,9 @@ import "@ui5/webcomponents/dist/FormItem.js";
 import "@ui5/webcomponents/dist/Label.js";
 import "@ui5/webcomponents/dist/Text.js";
 import "@ui5/webcomponents/dist/Slider.js";
+import "@ui5/webcomponents/dist/Input.js";
+import "@ui5/webcomponents/dist/Select.js";
+import "@ui5/webcomponents/dist/Option.js";
 
 const slider = document.getElementById("slider");
 const txtLayout = document.getElementById("txtLayout");
