@@ -10,7 +10,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { Result, Exception } from "@zxing/library/esm5/index.js";
+import type { Result, Exception } from "@zxing/library";
 import type { Interval } from "@ui5/webcomponents-base/dist/types.js";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ZXing from "@ui5/webcomponents-fiori/dist/ssr-zxing.js";

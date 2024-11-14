@@ -1,8 +1,9 @@
 import { html } from "lit";
 import "../../../src/Label.js";
 import "../../../src/Input.js";
+import "../../../src/List.js";
 
-describe("AriaLabelHelper", () => {
+describe("AccessibilityTextsHelper", () => {
 	it("Label-for tests", () => {
 		cy.mount(html`
 			<ui5-input id="myInput" placeholder="input placeholder" class="field"></ui5-input>
@@ -276,5 +277,40 @@ describe("AriaLabelHelper", () => {
 		// assert
 		cy.get("@input")
 			.should("have.attr", "aria-label", "Desc1X Desc4X");
+	});
+
+	it("Tests accessibleDescription and accessibleDescriptionRef with ui5-list", () => {
+		cy.mount(html`
+			<ui5-label id="lblDesc1">Desc1</ui5-label>
+			<ui5-label id="lblDesc2">Desc2</ui5-label>
+			<ui5-list id="list" accessible-description-ref="lblDesc1 lblDesc2" accessible-description="Desc3"></ui5-list>
+		`);
+
+		cy.get("#list")
+			.shadow()
+			.find("ul")
+			.as("list");
+
+		// assert
+		cy.get("@list")
+			.should("have.attr", "aria-description", "Desc1 Desc2");
+
+		// act - update text of referenced label
+		cy.get("#lblDesc1")
+			.then($el => {
+				$el.get(0).innerHTML = `${$el.get(0).innerHTML}X`;
+			});
+
+		// assert
+		cy.get("@list")
+			.should("have.attr", "aria-description", "Desc1X Desc2");
+
+		// act - update accessible-description-ref
+		cy.get("#list")
+			.invoke("removeAttr", "accessible-description-ref");
+
+		// assert
+		cy.get("@list")
+			.should("have.attr", "aria-description", "Desc3");
 	});
 });
