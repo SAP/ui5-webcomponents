@@ -24,6 +24,8 @@ const StepColumn = {
 	"XL": 6,
 };
 
+const breakpoints = ["S", "M", "L", "Xl"];
+
 /**
  * Interface for components that can be slotted inside `ui5-form` as items.
  * @public
@@ -401,8 +403,6 @@ class Form extends UI5Element {
 	}
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
-		const breakpoints = ["S", "M", "L", "Xl"];
-
 		return this.items.map((groupItem: IFormItem) => {
 			const items = this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>));
 			breakpoints.forEach(breakpoint => {
