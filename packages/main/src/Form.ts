@@ -401,10 +401,10 @@ class Form extends UI5Element {
 	}
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
+		const breakpoints = ["S", "M", "L", "Xl"];
+
 		return this.items.map((groupItem: IFormItem) => {
 			const items = this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>));
-			const breakpoints = ["S", "M", "L", "Xl"];
-
 			breakpoints.forEach(breakpoint => {
 				const cols = ((groupItem[`cols${breakpoint}` as keyof IFormItem]) as number || 1);
 				const rows = Math.ceil(items.length / cols);
