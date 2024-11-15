@@ -1,7 +1,9 @@
 /* 
-* The Form's labels take 4 cells out 12 in M, L ans XL sizes,
-* and 12 cells (whole row) in S size.
-* The ratio can be changed trough the labelSpan property.
+* By default, 
+* - in M, L ans XL sizes the Form's labels take 4 cells out 12 of the whole width, e.g 4:8:0
+* - in S size, it  the Form's labels take the whole width 12/12 cells, e.g the label and the input are displayed vertically.
+*
+* The ratio can be changed trough the labelSpan and the emptySpan properties.
 */
 
 /* S - 12 cells */
