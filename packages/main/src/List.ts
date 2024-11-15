@@ -290,10 +290,7 @@ type ListItemClickEventDetail = {
 /**
  * Fired when the user scrolls to the bottom of the list.
  *
- * **Notes:**
- * - The event is fired when the `growing='Scroll'` property is enabled.
- * - The event is fired through [IntersectionObserver (MDN Reference)](https://developer.mozilla.org/docs/Web/API/IntersectionObserver).
- *
+ * **Note:** The event is fired when the `growing='Scroll'` property is enabled.
  * @public
  * @since 1.0.0-rc.6
  */
@@ -1056,7 +1053,10 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireDecoratorEvent("load-more");
+		// don't fire load-more on initial mount
+		if (this.children.length > 0) {
+			this.fireDecoratorEvent("load-more");
+		}
 	}
 
 	/*
