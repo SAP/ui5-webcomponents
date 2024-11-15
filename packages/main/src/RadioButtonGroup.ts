@@ -164,10 +164,10 @@ class RadioButtonGroup {
 		if (radioBtnToSelect) {
 			radioBtnToSelect.focus();
 
-			if(!radioBtnToSelect.readonly) {
+			if (!radioBtnToSelect.readonly) {
 				this._selectRadio(radioBtnToSelect);
 			}
-		}	
+		}
 	}
 
 	static _deselectRadio(radioBtn: RadioButton) {
@@ -180,7 +180,6 @@ class RadioButtonGroup {
 		radioBtn.checked = true;
 		radioBtn._checked = true;
 		radioBtn.fireDecoratorEvent("change");
-
 	}
 
 	static _nextFocusable(pos: number, group: RadioButton[]): RadioButton | null {
