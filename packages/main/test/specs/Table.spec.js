@@ -440,7 +440,7 @@ describe("Table - Horizontal alignment of cells", async () => {
 					for (const row of tableRows) {
 						const rowCells = await row.$$("ui5-table-cell");
 						const justifyContent = await rowCells[index].getCSSProperty("justify-content");
-			
+
 						assert.equal(justifyContent.value, "normal", "justify-content correctly set.");
 					}
 				}
@@ -563,7 +563,7 @@ describe("Table - Horizontal Scrolling", async () => {
 			return {
 				fixedX: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
 				leftOffset: table.shadowRoot.querySelector("#table")?.scrollLeft || 0
-			}; 
+			};
 		});
 
 		assert.equal(leftOffset, 0, "Table is not scrolled horizontally");
@@ -576,8 +576,8 @@ describe("Table - Horizontal Scrolling", async () => {
 			const row = document.getElementById("firstRow");
 			return {
 				fixedX2: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
-				leftOffset2: table.scrollLeft || 0
-			}; 
+				leftOffset2: table._tableElement.scrollLeft || 0
+			};
 		});
 
 		assert.ok(leftOffset2 > 0, "Table is scrolled horizontally");
