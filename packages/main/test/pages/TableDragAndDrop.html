@@ -101,7 +101,7 @@
         return;
       }
 
-      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row") && destination.placement !== "On") {
+      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row") && destination.placement === "On") {
         e.preventDefault();
       }
     }
