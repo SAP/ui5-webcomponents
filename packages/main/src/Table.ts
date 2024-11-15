@@ -25,6 +25,7 @@ import {
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import type TableRowAction from "./TableRowAction.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
 
 /**
@@ -71,6 +72,14 @@ interface ITableGrowing extends ITableFeature {
  */
 type TableRowClickEventDetail = {
 	row: TableRow,
+};
+
+/**
+ * Fired when row action is clicked.
+ * @public
+ */
+type TableRowActionClickEvent = {
+	action: TableRowAction;
 };
 
 /**
@@ -299,6 +308,15 @@ class Table extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
 
+	/**
+	 * Defines the number of row actions.
+	 *
+	 * @default 2
+	 * @public
+	 */
+	@property({ type: Number })
+	rowActionCount = 2;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -472,6 +490,10 @@ class Table extends UI5Element {
 		this.fireDecoratorEvent<TableRowClickEventDetail>("row-click", { row });
 	}
 
+	_onTableRowActionPress(clickedAction: TableRowAction) {
+		this.fireEvent<TableRowActionClickEvent>("row-action-click", { action: clickedAction });
+	}
+
 	get styles() {
 		const virtualizer = this._getVirtualizer();
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
@@ -510,6 +532,15 @@ class Table extends UI5Element {
 			}
 			return `minmax(${cell.width}, ${cell.width})`;
 		}));
+
+		// search for the most actions in a row but not more than 3
+		const maxRowActionsCount = Math.min(3, Math.max(...this.rows.map(row => {
+			return row._visibleActionsCount + (row._hasRowActionNavigation ? 1 : 0);
+		})));
+
+		if (maxRowActionsCount !== 0) {
+			widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${maxRowActionsCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${maxRowActionsCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
+		}
 		if (this._renderNavigated) {
 			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
 		}
@@ -583,6 +614,10 @@ class Table extends UI5Element {
 	get isTable() {
 		return true;
 	}
+
+	get _hasRowActions() {
+		return this.rows.find(row => row._hasRowActions) !== undefined;
+	}
 }
 
 Table.define();
@@ -593,4 +628,5 @@ export type {
 	ITableFeature,
 	ITableGrowing,
 	TableRowClickEventDetail,
+	TableRowActionClickEvent,
 };

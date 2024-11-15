@@ -57,6 +57,7 @@ import TableHeaderRow from "./TableHeaderRow.js";
 import TableGrowing from "./TableGrowing.js";
 import TableSelection from "./TableSelection.js";
 import TableVirtualizer from "./TableVirtualizer.js";
+import TableRowAction from "./TableRowAction.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import SuggestionItemCustom from "./SuggestionItemCustom.js";

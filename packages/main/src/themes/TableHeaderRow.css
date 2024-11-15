@@ -17,3 +17,15 @@
     padding: 0;
     width: 0;
 }
+
+#header-actions-cell {
+	position: sticky;
+	right: 0;
+	background-color: inherit;
+    margin: var(--sapContent_FocusWidth);
+}
+
+#header-actions-cell:focus-visible {
+    margin: 0;
+    padding: var(--sapContent_FocusWidth);
+}

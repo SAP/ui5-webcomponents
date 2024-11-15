@@ -71,3 +71,20 @@
 :host([navigated]) #popin-cell {
 	grid-column: 1 / -2;
 }
+
+#actions-cell {
+	position: sticky;
+	right: 0;
+	background-color: inherit;
+}
+
+#actions-cell:has(+ #navigated-cell) {
+	right: var(--_ui5_table_navigated_cell_width);
+	overflow: auto;
+}
+
+#actions {
+	display: flex;
+	align-items: center;
+	gap: var(--_ui5_table_row_actions_gap);
+}
