@@ -386,6 +386,247 @@ describe("General API", () => {
 		cy.get("@formGr3")
 			.should("have.prop", "colsXl", 1);
 	});
+
+	describe("tests items ordering within a group", () => {
+		beforeEach(() => {
+			cy.mount(html`<ui5-form layout="S3 M4 L5 XL6">
+	<ui5-form-group>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>1</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>2</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>3</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>4</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>5</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>6</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>7</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>8</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>9</span>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">Item:</span>
+			<span>10</span>
+		</ui5-form-item>
+	</ui5-form-group>
+</ui5-form>`);
+		});
+
+		it("10 items in 6 columns", () => {
+			cy.get("[ui5-form]")
+				.invoke("width", 1500);
+
+			cy.get("[ui5-form-item]")
+				.as("items");
+
+			cy.get("@items")
+				.eq(0)
+				.should("have.css", "order", "0");
+
+			cy.get("@items")
+				.eq(1)
+				.should("have.css", "order", "6");
+
+			cy.get("@items")
+				.eq(2)
+				.should("have.css", "order", "1");
+
+			cy.get("@items")
+				.eq(3)
+				.should("have.css", "order", "7");
+
+			cy.get("@items")
+				.eq(4)
+				.should("have.css", "order", "2");
+
+			cy.get("@items")
+				.eq(5)
+				.should("have.css", "order", "8");
+
+			cy.get("@items")
+				.eq(6)
+				.should("have.css", "order", "3");
+
+			cy.get("@items")
+				.eq(7)
+				.should("have.css", "order", "9");
+
+			cy.get("@items")
+				.eq(8)
+				.should("have.css", "order", "4");
+
+			cy.get("@items")
+				.eq(9)
+				.should("have.css", "order", "5");
+		});
+
+		it("10 items in 5 columns", () => {
+			cy.get("[ui5-form]")
+				.invoke("width", 1300);
+
+			cy.get("[ui5-form-item]")
+				.as("items");
+
+			cy.get("@items")
+				.eq(0)
+				.should("have.css", "order", "0");
+
+			cy.get("@items")
+				.eq(1)
+				.should("have.css", "order", "5");
+
+			cy.get("@items")
+				.eq(2)
+				.should("have.css", "order", "1");
+
+			cy.get("@items")
+				.eq(3)
+				.should("have.css", "order", "6");
+
+			cy.get("@items")
+				.eq(4)
+				.should("have.css", "order", "2");
+
+			cy.get("@items")
+				.eq(5)
+				.should("have.css", "order", "7");
+
+			cy.get("@items")
+				.eq(6)
+				.should("have.css", "order", "3");
+
+			cy.get("@items")
+				.eq(7)
+				.should("have.css", "order", "8");
+
+			cy.get("@items")
+				.eq(8)
+				.should("have.css", "order", "4");
+
+			cy.get("@items")
+				.eq(9)
+				.should("have.css", "order", "9");
+		});
+
+		it("10 items in 4 columns", () => {
+			cy.get("[ui5-form]")
+				.invoke("width", 800);
+
+			cy.get("[ui5-form-item]")
+				.as("items");
+
+			cy.get("@items")
+				.eq(0)
+				.should("have.css", "order", "0");
+
+			cy.get("@items")
+				.eq(1)
+				.should("have.css", "order", "4");
+
+			cy.get("@items")
+				.eq(2)
+				.should("have.css", "order", "8");
+
+			cy.get("@items")
+				.eq(3)
+				.should("have.css", "order", "1");
+
+			cy.get("@items")
+				.eq(4)
+				.should("have.css", "order", "5");
+
+			cy.get("@items")
+				.eq(5)
+				.should("have.css", "order", "9");
+
+			cy.get("@items")
+				.eq(6)
+				.should("have.css", "order", "2");
+
+			cy.get("@items")
+				.eq(7)
+				.should("have.css", "order", "6");
+
+			cy.get("@items")
+				.eq(8)
+				.should("have.css", "order", "3");
+
+			cy.get("@items")
+				.eq(9)
+				.should("have.css", "order", "7");
+		});
+
+		it("10 items in 3 columns", () => {
+			cy.get("[ui5-form]")
+				.invoke("width", 500);
+
+			cy.get("[ui5-form-item]")
+				.as("items");
+
+			cy.get("@items")
+				.eq(0)
+				.should("have.css", "order", "0");
+
+			cy.get("@items")
+				.eq(1)
+				.should("have.css", "order", "3");
+
+			cy.get("@items")
+				.eq(2)
+				.should("have.css", "order", "6");
+
+			cy.get("@items")
+				.eq(3)
+				.should("have.css", "order", "9");
+
+			cy.get("@items")
+				.eq(4)
+				.should("have.css", "order", "1");
+
+			cy.get("@items")
+				.eq(5)
+				.should("have.css", "order", "4");
+
+			cy.get("@items")
+				.eq(6)
+				.should("have.css", "order", "7");
+
+			cy.get("@items")
+				.eq(7)
+				.should("have.css", "order", "2");
+
+			cy.get("@items")
+				.eq(8)
+				.should("have.css", "order", "5");
+
+			cy.get("@items")
+				.eq(9)
+				.should("have.css", "order", "8");
+		});
+	});
 });
 
 describe("Accessibility", () => {
