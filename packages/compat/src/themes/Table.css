@@ -10,11 +10,15 @@
 	border-bottom: var(--ui5_table_bottom_border);
 }
 
-.ui5-table-root,
-.ui5-table-busy-indicator {
+.ui5-table-root {
 	width: 100%;
 	height: 100%;
+	display: flex;
 	box-sizing: border-box;
+}
+
+.ui5-table-busy-indicator {
+	flex-grow: 1;
 }
 
 table {
