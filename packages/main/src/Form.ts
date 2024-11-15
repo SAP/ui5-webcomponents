@@ -35,8 +35,6 @@ const MAX_SPAN_VALUE = 11;
  * @since 2.0.0
  */
 interface IFormItem extends UI5Element {
-	labelSpan: string
-	emptySpan: string
 	itemSpacing: `${FormItemSpacing}`;
 	readonly isGroup: boolean;
 	colsXl?: number;

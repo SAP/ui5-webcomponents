@@ -8,7 +8,7 @@ import "../../src/Text.js";
 import "../../src/Input.js";
 
 describe("General API", () => {
-	it("tests calculated state of Form with default layout and label-span", () => {
+	it("tests calculated state of Form with default layout, label-span and empty-span", () => {
 		cy.mount(html`<ui5-form class="addressForm" header-text="Default form">
 			<ui5-form-group header-text="Address">
 				<ui5-form-item>
@@ -36,28 +36,18 @@ describe("General API", () => {
 			.as("form");
 
 		cy.get("@form")
-			.should("have.prop", "columnsS", 1);
-
-		cy.get("@form")
-			.should("have.prop", "labelSpanS", 12);
-
-		cy.get("@form")
-			.should("have.prop", "columnsM", 1);
-
-		cy.get("@form")
-			.should("have.prop", "labelSpanM", 4);
-
-		cy.get("@form")
-			.should("have.prop", "columnsL", 2);
-
-		cy.get("@form")
-			.should("have.prop", "labelSpanL", 4);
-
-		cy.get("@form")
-			.should("have.prop", "columnsXl", 3);
-
-		cy.get("@form")
-			.should("have.prop", "labelSpanXl", 4);
+			.should("have.prop", "columnsS", 1)
+			.and("have.prop", "labelSpanS", 12)
+			.and("have.prop", "emptySpanS", 0)
+			.and("have.prop", "columnsM", 1)
+			.and("have.prop", "labelSpanM", 4)
+			.and("have.prop", "emptySpanM", 0)
+			.and("have.prop", "columnsL", 2)
+			.and("have.prop", "labelSpanL", 4)
+			.and("have.prop", "emptySpanL", 0)
+			.and("have.prop", "columnsXl", 3)
+			.and("have.prop", "emptySpanXl", 0)
+			.and("have.prop", "labelSpanXl", 4);
 	});
 
 	it("tests calculated state of Form with layout='S1 M2 L3 XL6' and label-span='S12 M4 L4 XL4'", () => {
@@ -173,6 +163,40 @@ describe("General API", () => {
 
 		cy.get("@form")
 			.should("have.prop", "labelSpanXl", 12);
+	});
+
+	it("tests calculated state of Form empty-span='S0 M0 L1 XL1'", () => {
+		cy.mount(html`<ui5-form empty-span="L1 XL1">
+			<ui5-form-group header-text="Address">
+				<ui5-form-item>
+					<ui5-label slot="labelContent">Name</ui5-label>
+					<ui5-text>Red Point Stores</ui5-text>
+				</ui5-form-item>
+			</ui5-form-group>
+
+			<ui5-form-group id="testFormGroup2" header-text="Contact">
+				<ui5-form-item>
+					<ui5-label slot="labelContent">Twitter</ui5-label>
+					<ui5-text>@sap</ui5-text>
+				</ui5-form-item>
+			</ui5-form-group>
+
+			<ui5-form-group id="testFormGroup3" header-text="Other info">
+				<ui5-form-item>
+					<ui5-label slot="labelContent">Name</ui5-label>
+					<ui5-text>Red Point Stores</ui5-text>
+				</ui5-form-item>
+			</ui5-form-group>
+		</ui5-form>`);
+
+		cy.get("[ui5-form]")
+			.as("form");
+
+		cy.get("@form")
+			.should("have.prop", "emptySpanS", 0)
+			.and("have.prop", "emptySpanM", 0)
+			.and("have.prop", "emptySpanL", 1)
+			.and("have.prop", "emptySpanXl", 1);
 	});
 
 	it("tests calculated state of two FormGroups in layout='S1 M2 L3 XL4'", () => {

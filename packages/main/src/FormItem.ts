@@ -84,12 +84,6 @@ class FormItem extends UI5Element implements IFormItem {
 	 * @private
 	 */
 	@property()
-	labelSpan = "S12 M4 L4 XL4";
-
-	@property()
-	emptySpan = "S0 M0 L0 XL0";
-
-	@property()
 	itemSpacing: `${FormItemSpacing}` = "Normal"
 
 	get isGroup() {
