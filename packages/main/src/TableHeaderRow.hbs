@@ -18,6 +18,10 @@
 	<slot name="{{_individualSlot}}"></slot>
 {{/each}}
 
+{{#if _hasRowActions}}
+    <ui5-table-header-cell id="header-actions-cell" aria-label="{{_i18nRowActions}}"></ui5-table-header-cell>
+{{/if}}
+
 {{#if _popinCells.length}}
     <ui5-table-header-cell id="popin-cell" aria-label="{{_i18nRowPopin}}" excluded-from-navigation></ui5-table-cell>
 {{/if}}

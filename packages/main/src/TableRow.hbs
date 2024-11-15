@@ -21,6 +21,42 @@
     <slot name="{{_individualSlot}}"></slot>
 {{/each}}
 
+
+{{#if _hasRowActions}}
+    <ui5-table-cell id="actions-cell">
+        <div id="actions">
+            {{#each visibleActions}}
+               <slot name="{{_individualSlot}}"></slot>
+            {{/each}}
+            {{#if _hasRowActionPopover}}
+                <ui5-button
+                    icon="overflow"
+                    design="Transparent"
+                    @click="{{_handleRowActionPopoverClick}}">
+                </ui5-button>
+                <ui5-menu id="rowActionMenu">
+                    {{#each popoverActions}}
+                        <slot name="{{_individualSlot}}"></slot>
+                    {{/each}}
+                </ui5-menu>
+            {{/if}}
+            {{#if _hasRowActionNavigation}}
+                <ui5-button
+                    icon="navigation-right-arrow"
+                    design="Transparent"
+                    @click="{{_onTableRowActionClick}}">
+                </ui5-button>
+            {{/if}}
+        </div>
+    </ui5-table-cell>
+
+{{else}}
+    {{#if _renderNavigated}}
+        <ui5-table-cell id="navigated-cell" excluded-from-navigation>
+            <div id="navigated"></div>
+        </ui5-table-cell>
+    {{/if}}
+{{/if}}
 {{#if _popinCells.length}}
     <ui5-table-cell id="popin-cell">
         {{#each _popinCells}}

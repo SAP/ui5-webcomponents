@@ -82,6 +82,10 @@ class TableHeaderRow extends TableRowBase {
 		return true;
 	}
 
+	get _hasRowActions() {
+		return this._table ? this._table._hasRowActions : false;
+	}
+
 	get _isSelectable() {
 		return this._isMultiSelect;
 	}
