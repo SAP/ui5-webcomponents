@@ -240,19 +240,25 @@ class Form extends UI5Element {
 
 	/**
 	 * Defines the number of cells that are empty at the end of each form item, configurable by breakpoint.
-	 * By default, a form item’s width (12 cells) is fully allocated between its label and field, with no empty space at the end.
-	 * Labels occupy 4 cells, and fields occupy 8 cells.
+	 *
+	 * By default, a form item spans 12 cells, fully divided between its label and field, with no empty space at the end:
+	 * - **Label:** occupies 4 cells.
+	 * - **Field:** occupies 8 cells.
 	 *
 	 * The `emptySpan` property provides additional layout flexibility by defining empty space at the form item’s end.
 	 *
-	 * **For example:** Setting "S0 M0 L3 XL3" (or just "L3 XL3") allocates 4 cells for the label, 5 cells for the associated field,
-	 * and leaves 3 cells empty space at the end. Greater values increase the empty space at the end of the form item, reducing the space available for the label and its field.
+	 * **For example:** Setting "S0 M0 L3 XL3" (or just "L3 XL3") adjusts the layout as follows:
+ 	 * - **Label:** remains 4 cells.
+ 	 * - **Field:** is reduced to 5 cells.
+ 	 * - **Empty space:** 3 cells are added at the end.
+	 * Greater values increase the empty space at the end of the form item, reducing the space available for the label and its field.
 	 *
-	 * **Recommended value:** 1 cell for empty space is typically sufficient.
+	 * **Recommended value:**
+	 * Setting `emptySpan` to 1 cell is typically sufficient to achieve a balanced layout.
 	 *
-	 * **Note:** The empty space can take up to 10 cells, ensuring at least 1 cell each for the label and its field.
-	 * However, the **recommended** empty space is 1 cell. Moreover, the combined value of `emptySpan` and `labelSpan` must not exceed 11,
-	 * to ensure at least 1 cell remains for the field.
+	 * **Note:**
+	 * - The maximum allowable empty space is 10 cells. At least 1 cell each must remain for the label and the field.
+	 * - When `emptySpan` is specified (greater than 0), ensure that the combined value of `emptySpan` and `labelSpan` does not exceed 11. This guarantees a minimum of 1 cell for the field.
 	 *
 	 * @default "S0 M0 L0 XL0"
 	 * @since 2.5.0
@@ -402,19 +408,19 @@ class Form extends UI5Element {
 	}
 
 	validatateItemLayout() {
-		if (this.labelSpanS + this.emptySpanS > MAX_SPAN_VALUE) {
+		if (this.emptySpanS !== 0 && this.labelSpanS + this.emptySpanS > MAX_SPAN_VALUE) {
 			// eslint-disable-next-line
 			console.warn(`Form :: invalid usage of emptySpan and labelSpan in S size. Their combined values must not exceed ${MAX_SPAN_VALUE} - currently ${this.labelSpanS + this.emptySpanS}.`)
 		}
-		if (this.labelSpanM + this.emptySpanM > MAX_SPAN_VALUE) {
+		if (this.emptySpanM !== 0 && this.labelSpanM + this.emptySpanM > MAX_SPAN_VALUE) {
 			// eslint-disable-next-line
 			console.warn(`Form :: invalid usage of emptySpan and labelSpan in M size. Their combined values must not exceed ${MAX_SPAN_VALUE} - currently ${this.labelSpanS + this.emptySpanS}.`)
 		}
-		if (this.labelSpanL + this.emptySpanL > MAX_SPAN_VALUE) {
+		if (this.emptySpanL !== 0 && this.labelSpanL + this.emptySpanL > MAX_SPAN_VALUE) {
 			// eslint-disable-next-line
 			console.warn(`Form :: invalid usage of emptySpan and labelSpan in L size. Their combined values must not exceed ${MAX_SPAN_VALUE} - currently ${this.labelSpanS + this.emptySpanS}.`)
 		}
-		if (this.labelSpanXl + this.emptySpanXl > MAX_SPAN_VALUE) {
+		if (this.emptySpanXl !== 0 && this.labelSpanXl + this.emptySpanXl > MAX_SPAN_VALUE) {
 			// eslint-disable-next-line
 			console.warn(`Form :: invalid usage of emptySpan and labelSpan in XL size. Their combined values must not exceed 11 - currently ${this.labelSpanS + this.emptySpanS}.`)
 		}
