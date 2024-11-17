@@ -15,6 +15,17 @@
 			display: inline-block;
 			margin-right: 20px;
 		}
+		/* body {
+			margin: 0;
+		} */
+		.rating-indicator-margin-zero-fixed {
+		  margin: -8px;
+		}
+
+		.rating-indicator-margin-zero-not-fixed {
+			offset: 20px;
+		}
+
 	</style>
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
@@ -123,6 +134,13 @@
 		<br>
 
 	</section>
+
+	<h3>RatingIndicator with margin 0- fixed</h3>
+	<ui5-rating-indicator class="rating-indicator-margin-zero-fixed"></ui5-rating-indicator>
+	<br>
+	<br>
+	<br>
+
 
 	<script>
 		var changeCount = 0;
