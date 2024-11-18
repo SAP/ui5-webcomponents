@@ -3,6 +3,7 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
+	max-width: 100%;
 	background: var(--sapShellColor);
 	box-sizing: border-box;
 }
@@ -166,26 +167,6 @@ slot[name="profile"] {
 
 .ui5-shellbar-mid-content {
 	height: var(--_ui5_shellbar_overflow_container_middle_height);
-	width: 33.4%;
-}
-
-.ui5-shellbar-overflow-container-left:has(+ .ui5-shellbar-mid-content) {
-	width: 33.3%;
-}
-
-.ui5-shellbar-mid-content + .ui5-shellbar-overflow-container-right {
-	width: 33.3%;
-}
-
-:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-middle {
-	width: 35rem;
-}
-
-:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-overflow-container-right-child,
-:host([breakpoint-size="XXL"][show-search-field]) .ui5-shellbar-overflow-container-additional-content,
-:host([breakpoint-size="XL"][show-search-field]) .ui5-shellbar-overflow-container-right-child,
-:host([breakpoint-size="XL"][show-search-field]) .ui5-shellbar-overflow-container-additional-content  {
-	max-width: 50%;
 }
 
 :host([breakpoint-size="L"][show-search-field]) .ui5-shellbar-overflow-container-additional-content,
@@ -322,8 +303,7 @@ slot[name="profile"] {
 	padding: 0 0.125rem;
 	justify-content: flex-start;
 	max-width: 75%;
-	flex-shrink: 0;
-	flex-grow: 0;
+	flex-shrink: 1;
 }
 
 .ui5-shellbar-overflow-container-left > :nth-child(n) {
@@ -362,15 +342,16 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-overflow-container-right {
-	display: flex;
+	/* display: flex;
 	overflow: hidden;
 	position: relative;
 	box-sizing: border-box;
 	white-space: nowrap;
-	flex: 1 1 auto;
-	width: 100%;
 	justify-content: flex-end;
-	overflow: hidden;
+	flex-grow: 1;
+	overflow: hidden; */
+	flex-grow: 1;
+	justify-content: flex-end;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
@@ -379,17 +360,13 @@ slot[name="profile"] {
 	height: inherit;
 	align-items: center;
 	overflow: hidden;
-	flex: 1 1.2 auto;
-	max-width: max-content;
 }
 
 .ui5-shellbar-overflow-container-additional-content {
 	align-items: center;
 	display: flex;
-	justify-content: flex-end;
-	flex: 1 0.01 auto;
 	overflow: hidden;
-	min-width: 0;
+	flex-grow: 1;
 }
 
 .ui5-shellbar-spacer {
@@ -432,13 +409,6 @@ slot[name="profile"] {
 	display: inline-block;
 }
 
-.ui5-shellbar-hidden-button,
-.ui5-shellbar-invisible-button {
-	visibility: hidden;
-	order: -1;
-	min-width: 0;
-    width: 0;
-}
 
 ::slotted([hidden]) {
 	visibility: hidden;
@@ -450,7 +420,7 @@ slot[name="profile"] {
 	flex-shrink: 0;
 }
 
-::slotted([slot^="additionalContext"]:not(ui5-menu)) {
+::slotted([slot^="additionalContext"]) {
 	margin-inline-start: 1rem;
 }
 
@@ -508,7 +478,6 @@ slot[name="profile"] {
 .ui5-shellbar-search-field {
 	align-items: center;
 	flex-grow: 1;
-	min-width: 40%;
 	margin-inline-start: 0.5rem;
 }
 
@@ -541,7 +510,11 @@ slot[name="profile"] {
 	color: var(--_ui5_shellbar_search_field_color);
 	height: 2.25rem;
 	width: 100%;
-	max-width: 25rem;
+	min-width: 25rem;
+}
+
+:host([breakpoint-size="S"]) ::slotted([ui5-input]) {
+	min-width: 0;
 }
 
 ::slotted([ui5-input]:hover) {
@@ -576,4 +549,20 @@ slot[name="profile"] {
 
 ::slotted([ui5-button][profile-btn]) {
 	width: auto;
+}
+
+/* if class contains ui5-shellbar-hidden-button */
+::slotted(.ui5-shellbar-hidden-button),
+::slotted(.ui5-shellbar-force-hidden-button),
+.ui5-shellbar-hidden-button,
+.ui5-shellbar-invisible-button {
+	visibility: hidden;
+	order: -1;
+	opacity: 0;
+	min-width: 0;
+	width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	margin-inline-start: 0;
 }

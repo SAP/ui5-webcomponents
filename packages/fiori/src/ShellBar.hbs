@@ -100,9 +100,8 @@
 						{{/if}}
 					{{/unless}}
 				{{/if}}
-					<div class="ui5-shellbar-overflow-container-right-child">
+			<div class="ui5-shellbar-overflow-container-right-child">
 				{{#if _isFullVariant}}
-
 					{{#if _isXXLBreakpoint}}
 						{{#if hasSearchField}}
 						<slot name="searchField"></slot>
@@ -110,7 +109,7 @@
 					{{/if}}
 					{{#unless _isXXLBreakpoint }}
 						{{#if hasSearchField}}
-							{{#if _fullWidthSearch}}
+							{{#if _showFullWidthSearch}}
 								<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
 									<div class="ui5-shellbar-search-full-field">
 										<slot name="searchField"></slot>
@@ -126,7 +125,7 @@
 							{{/if}}
 
 							<div class="ui5-shellbar-search-field" style="{{styles.searchField}}">
-								{{#unless _fullWidthSearch}}
+								{{#unless _showFullWidthSearch}}
 								<slot name="searchField"></slot>
 								{{/unless}}
 							</div>
@@ -148,9 +147,10 @@
 						<slot name="assistant"></slot>
 					{{/if}}
 				{{/if}}
+
 				{{#if showNotifications}}
 					{{#if _isFullVariant}}
-						<ui5-button id="{{this._id}}-item-2" style="{{styles.items.notification}}"
+						<ui5-button id="{{this._id}}-item-2"
 							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
 							icon="sap-icon://bell" data-ui5-text="Notifications"
 							data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
@@ -159,8 +159,8 @@
 							data-ui5-stable="notifications"></ui5-button>
 					{{/if}}
 				{{/if}}
+
 				{{#each customItemsInfo}}
-					{{#unless this.shouldBeHidden}}
 					<ui5-button
 						id="{{this.id}}"
 						style="{{this.styles}}"
@@ -173,14 +173,12 @@
 						data-ui5-stable="{{stableDomRef}}"
 						@click={{this.press}}
 					></ui5-button>
-					{{/unless}}
 				{{/each}}
 
 
 				{{#if _isFullVariant}}
 					<ui5-button
 						id="{{this._id}}-item-5"
-						style="{{styles.items.overflow}}"
 						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
 						icon="sap-icon://overflow"
 						data-count="{{_overflowNotifications}}"
@@ -190,25 +188,25 @@
 						data-ui5-stable="overflow"
 					></ui5-button>
 				{{/if}}
-\			{{#if hasProfile}}
-				{{> profileButton}}
-			{{/if}}
 
-			{{#if showProductSwitch}}
-				{{#if _isFullVariant}}
-					<ui5-button
-						id="{{this._id}}-item-4"
-						style="{{styles.items.product}}"
-						class="{{classes.items.product}} ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-no-overflow-button ui5-shellbar-items-for-arrow-nav"
-						icon="sap-icon://grid"
-						data-ui5-text="Product Switch"
-						@click={{_handleProductSwitchPress}}
-						tooltip="{{_productsText}}"
-						.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
-						data-ui5-stable="product-switch"
-					></ui5-button>
+				{{#if hasProfile}}
+					{{> profileButton}}
 				{{/if}}
-			{{/if}}
+
+				{{#if showProductSwitch}}
+					{{#if _isFullVariant}}
+						<ui5-button
+							id="{{this._id}}-item-4"
+							class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
+							icon="sap-icon://grid"
+							data-ui5-text="Product Switch"
+							@click={{_handleProductSwitchPress}}
+							tooltip="{{_productsText}}"
+							.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
+							data-ui5-stable="product-switch"
+						></ui5-button>
+					{{/if}}
+				{{/if}}
 			</div>
 		</div>
 </header>
@@ -218,7 +216,6 @@
 		profile-btn
 		id="{{this._id}}-item-3"
 		@click={{_handleProfilePress}}
-		style="{{styles.items.profile}}"
 		tooltip="{{_profileText}}"
 		class="ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-no-overflow-button ui5-shellbar-items-for-arrow-nav"
 		.accessibilityAttributes={{accInfo.profile.accessibilityAttributes}}
