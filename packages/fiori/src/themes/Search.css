@@ -1,0 +1,184 @@
+/* container */
+:host {
+	--_ui5_input_focus_border_radius: var(--_ui5_shellbar_input_focus_border_radius);
+	--_ui5_input_focus_outline_color: var(--sapContent_FocusColor);
+	/* only way to add border radius to the slotted select icon*/
+	--_ui5_input_icon_border_radius: 1.125rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+}
+
+:host([expanded]) {
+	width: 25rem;
+	margin: 0;
+    height: 2.25rem;
+	color: var(--sapShell_InteractiveTextColor);
+	font-size: var(--sapFontSize);
+	font-family: "72override", var(--sapFontFamily);
+	font-style: normal;
+    box-shadow: var(--sapField_Shadow);
+	border-radius: 1.125rem;
+	box-sizing: border-box;
+	text-align: start;
+	background: var(--sapField_BackgroundStyle);
+	background-color: var(--sapShell_InteractiveBackground);
+    position: relative;
+}
+
+:host([expanded]:hover),
+:host([expanded]:focus-within) {
+	box-shadow: var(--sapField_Hover_Shadow);
+	background: var(--sapField_Hover_BackgroundStyle);
+	background-color: var(--sapShell_Hover_Background);
+}
+
+:host([focusedInnerInput]) .ui5-search-root::after {
+	content: '';
+	position: absolute;
+	pointer-events: none;
+	z-index: 2;
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapField_Active_BorderColor);
+	border-radius: 1.125rem;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.ui5-search-root {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	background: transparent;
+	display: inline-block;
+	outline: none;
+	box-sizing: border-box;
+	color: inherit;
+	transition: border-color .2s ease-in-out;
+	border-radius: 1.125rem;
+	overflow: hidden;
+}
+
+.ui5-search-content {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	overflow: hidden;
+}
+
+/* scope select */
+::slotted([ui5-select]) {
+    outline: none;
+    margin-inline-start: 1rem;
+    margin-inline-end: 0.125rem;
+    width: 4.375rem;
+    border-radius: 1.125rem;
+    border: none;
+    box-shadow: none;
+    background: unset;
+}
+
+::slotted([ui5-select]:hover) {
+	box-shadow: var(--sapField_Hover_Shadow);
+	background-color: var(--sapShell_Hover_Background);
+}
+
+/* input */
+.ui5-search-inner-input {
+    width: 16rem;
+    height: 1rem;
+    flex-grow: 1;
+    background-color: inherit;
+    border: none;
+    outline: none;
+	color: inherit;
+}
+
+:host([show-scope]) .ui5-search-inner-input {
+    width: 11.5625rem;
+}
+
+:host(:not([show-scope])) .ui5-search-inner-input {
+    margin-inline-start: 0.875rem;
+}
+
+.ui5-search-inner-input::placeholder {
+	font-weight: normal;
+	font-style: italic;
+	color: var(--sapField_PlaceholderTextColor);
+	padding-inline-start: 0.125rem;
+}
+
+/* separator */
+.ui5-search-separator {
+    height: 1.5rem;
+    width: 0.0625rem;
+    background: var(--sapShell_InteractiveBorderColor);
+    box-sizing: border-box;
+    margin-inline-end: 0.5rem;
+}
+
+/* clear icon */
+.ui5-shell-search-clear-icon {
+	cursor: pointer;
+	outline: none;
+	width: 1.75rem;
+	height: 1.75rem;
+	border-radius: 1.125rem;
+    box-sizing: border-box;
+}
+
+.ui5-shell-search-clear-icon::part(root){
+    padding: 0.375rem;
+    width: 1rem;
+	height: 1rem;
+    outline-offset: -0.125rem;
+}
+
+.ui5-shell-search-clear-icon:hover::part(root) {
+    padding: 0.3125rem;
+    outline-offset: -0.1875rem;
+}
+
+.ui5-shell-search-clear-icon:focus::part(root) {
+	border-radius: 1.125rem;
+}
+
+.ui5-shell-search-clear-icon:hover,
+.ui5-shell-search-input-button:hover {
+    background: var(--sapShell_Hover_Background);
+    border: 1px solid var(--sapButton_Lite_Hover_BorderColor);
+    color: var(--sapShell_InteractiveTextColor); 
+}
+
+/* search button */
+.ui5-shell-search-input-button {
+	outline: none;
+	min-width: 1.75rem;
+	min-height: 1.75rem;
+	border-radius: 1.125rem;
+    margin-inline-end: 0.25rem;
+    border: none;
+	margin-inline-start: 0.1875rem;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.ui5-shell-search-input-button:not([design="Emphasized"]){
+    color: var(--sapShell_TextColor);
+}
+
+/* copy paste all button styles - could be simplified */
+[ui5-button][desktop]:not([active])::part(button):after,
+[ui5-button]:not([active])::part(button):focus-visible:after,
+[ui5-button][desktop][active][design="Emphasized"]::part(button):focus-within:after,
+[ui5-button][active][design="Emphasized"]::part(button):focus-visible:after,
+[ui5-button][desktop][active]::part(button):focus-within:before,
+[ui5-button][active]::part(button):focus-visible:before,
+[ui5-button][design="Emphasized"][desktop]::part(button):focus-within:before,
+[ui5-button][design="Emphasized"]::part(button):focus-visible:before {
+    border-radius: 1.125rem;
+}
