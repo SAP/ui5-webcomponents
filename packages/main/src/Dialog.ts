@@ -71,7 +71,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 
  *
  * ### Responsive Behavior
- * The `stretch` property can be used to stretch the `ui5-dialog` on full screen. This is recommended for better usability on mobile devices.
+ * The `stretch` property can be used to stretch the `ui5-dialog` on full screen. For better usability it is recommended to stretch the dialog on phone devices.
  * On desktop and tablet `stretch` property can be switched off.
  *
  * **Note:** When a `ui5-bar` is used in the header or in the footer, you should remove the default dialog's paddings.
