@@ -1,5 +1,6 @@
 /**
  * Menu item selection modes.
+ * @since 2.5.0
  * @public
  */
 enum ItemSelectionMode {
@@ -13,13 +14,13 @@ enum ItemSelectionMode {
 	 * Single item selection mode
 	 * @public
 	 */
-	SingleSelect = "SingleSelect",
+	Single = "Single",
 
 	/**
 	 * Multiple items selection mode
 	 * @public
 	 */
-	MultiSelect = "MultiSelect",
+	Multiple = "Multiple",
 }
 
 export default ItemSelectionMode;

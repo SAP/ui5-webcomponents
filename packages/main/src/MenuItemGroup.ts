@@ -16,7 +16,9 @@ import type { IMenuItem } from "./Menu.js";
  * `ui5-menu-item-group` is the group of items to use inside a `ui5-menu`.
  * Items that belong to the same group should be enclosed by `ui5-menu-item-group`.
  * Each group can have itemSelectionMode property, which defines the selection mode of the items inside.
- * Possible values are 'None' (default), 'SingleSelect', 'MultiSelect'.
+ * Possible values are 'None' (default), 'Single', 'Multiple'.
+ * **Note:** If the itemSelectionMode property is set to 'Single', only one item can be selected at a time.
+ * If there is more than one item is marked as selected, the last one would be considered as the selected one.
  *
  * ### Usage
  *
@@ -29,7 +31,7 @@ import type { IMenuItem } from "./Menu.js";
  * @constructor
  * @extends UI5Element
  * @implements {IMenuItem}
- * @since 2.4.0
+ * @since 2.5.0
  * @public
  */
 @customElement({
@@ -45,7 +47,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @public
 	 */
 	@property()
-	itemSelectionMode: `${ItemSelectionMode}` = ItemSelectionMode.None;
+	itemSelectionMode: `${ItemSelectionMode}` = "None";
 
 	/**
 	 * Defines the items of this component.
@@ -63,7 +65,6 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 		return true;
 	}
 
-	// Return only the menu items, excluding separators
 	get _menuItems() {
 		return this.items.filter((item) : item is MenuItem => !item.isSeparator);
 	}
@@ -71,7 +72,7 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	onBeforeRendering() {
 		this._updateItemsSelectionMode();
 
-		if (this.itemSelectionMode === ItemSelectionMode.SingleSelect) {
+		if (this.itemSelectionMode === ItemSelectionMode.Single) {
 			this._ensureSingleSelection();
 		}
 	}
@@ -91,9 +92,9 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_clearSelectedItems() {
-		this.items.forEach((item: IMenuItem) => {
+		this._menuItems.forEach((item: MenuItem) => {
 			if (!item.isSeparator && !item.isGroup) {
-				item.isSelected = false;
+				item._isSelected = false;
 			}
 		});
 	}
@@ -103,20 +104,20 @@ class MenuItemGroup extends UI5Element implements IMenuItem {
 	 * @private
 	 */
 	_ensureSingleSelection() {
-		const lastSelectedItem = this.items.findLast((item: IMenuItem) => item.isSelected);
+		const lastSelectedItem = this._menuItems.findLast((item: MenuItem) => item._isSelected);
 
 		this._clearSelectedItems();
 		if (lastSelectedItem) {
-			lastSelectedItem.isSelected = true;
+			lastSelectedItem._isSelected = true;
 		}
 	}
 
 	/**
-	 * Handles the selection of an item in the group and unselects other items if the item selection mode is SingleSelect.
+	 * Handles the selection of an item in the group and unselects other items if the item selection mode is Single.
 	 * @private
 	 */
 	_handleItemSelection() {
-		if (this.itemSelectionMode === ItemSelectionMode.SingleSelect) {
+		if (this.itemSelectionMode === ItemSelectionMode.Single) {
 			this._clearSelectedItems();
 		}
 	}

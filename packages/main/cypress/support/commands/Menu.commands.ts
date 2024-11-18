@@ -28,7 +28,7 @@ Cypress.Commands.add("ui5MenuOpened", { prevSubject: true }, subject => {
 		.should("have.attr", "open");
 
 	cy.get("@menu")
-		.find(" > [ui5-menu-item]")
+		.find(" > [ui5-menu-item], > [ui5-menu-item-group]")
 		.first()
 		.should("be.visible");
 });

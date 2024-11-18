@@ -66,9 +66,12 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 
 /**
  * Fired when an item is being selected.
+ * @since 2.5.0
  * @public
  */
-@event("item-selection")
+@event("item-selection", {
+	bubbles: true,
+})
 
 class MenuItem extends ListItem implements IMenuItem {
 	/**
@@ -182,7 +185,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	 * @private
 	 */
 	@property()
-	_itemSelectionMode: `${ItemSelectionMode}` = ItemSelectionMode.None;
+	_itemSelectionMode: `${ItemSelectionMode}` = "None";
 
 	/**
 	 * Defines whether `ui5-menu-item` is in selected state.
@@ -230,11 +233,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	/**
 	 * Defines whether `ui5-menu-item` is in selected state.
 	 *
-	 * **Note:** selected state is only taken into account when `ui5-menu-item` is added to `ui5-menu-item-group` with `itemSelectionMode` other than `None`.
+	 * **Note:** selected state is only taken into account when `ui5-menu-item` is added to `ui5-menu-item-group`
+	 * with `itemSelectionMode` other than `None`.
 	 * **Note:** A selected `ui5-menu-item` have selection mark displayed ad its end.
 	 * @default false
 	 * @public
-	 * @since 2.4.0
+	 * @since 2.5.0
 	 */
 	@property({ type: Boolean })
 	set isSelected(value: boolean) {
@@ -302,11 +306,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return false;
 	}
 
-	get _parentGroup() {
-		const parent = this.parentElement;
-		return parent && "isGroup" in parent && parent.isGroup ? parent as MenuItemGroup : null;
-	}
-
 	get _list() {
 		return this.shadowRoot!.querySelector<List>("[ui5-list]")!;
 	}
@@ -333,21 +332,12 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	onBeforeRendering() {
 		const siblingsWithIcon = this._menuItemsAll.some(menuItem => !!menuItem.icon);
-		const itemSelectionMode = this._itemSelectionMode;
 
 		this._setupItemNavigation();
 
 		this._menuItemsAll.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
-
-		if (itemSelectionMode === ItemSelectionMode.None) {
-			return;
-		}
-		if (itemSelectionMode === ItemSelectionMode.SingleSelect && this.isSelected) {
-			this._parentGroup?._clearSelectedItems();
-			this.isSelected = true;
-		}
 	}
 
 	_setupItemNavigation() {
@@ -362,9 +352,9 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get _role() {
 		switch (this._itemSelectionMode) {
-		case ItemSelectionMode.SingleSelect:
+		case ItemSelectionMode.Single:
 			return "menuitemradio";
-		case ItemSelectionMode.MultiSelect:
+		case ItemSelectionMode.Multiple:
 			return "menuitemcheckbox";
 		default:
 			return "menuitem";
@@ -414,7 +404,7 @@ class MenuItem extends ListItem implements IMenuItem {
 			this._popover.open = false;
 		}
 		this.selected = false;
-		this.fireDecoratorEvent("close-menu");
+		this.fireEvent("close-menu", {});
 	}
 
 	_close() {
@@ -434,7 +424,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_afterPopoverOpen() {
 		this._menuItemsAll[0]?.focus();
-		this.fireDecoratorEvent("open");
+		this.fireEvent("open", {}, false, false);
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
@@ -449,7 +439,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		if (e.detail.escPressed) {
 			this.focus();
 			if (isPhone()) {
-				this.fireDecoratorEvent("close-menu");
+				this.fireEvent("close-menu", {});
 			}
 		}
 	}

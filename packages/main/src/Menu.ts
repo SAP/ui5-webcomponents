@@ -267,7 +267,7 @@ class Menu extends UI5Element {
 	}
 
 	get _list() {
-		return this.shadowRoot!.querySelector<List>("[ui5-list]")!;
+		return this.shadowRoot!.querySelector<List>("[ui5-list]");
 	}
 
 	get _menuItemGroups() {
@@ -387,10 +387,6 @@ class Menu extends UI5Element {
 
 			this._openItemSubMenu(item);
 		}, MENU_OPEN_DELAY);
-	}
-
-	_isGroupParent(parent: MenuItem | Menu | MenuItemGroup): boolean {
-		return parent && "isGroup" in parent && parent.isGroup;
 	}
 
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
