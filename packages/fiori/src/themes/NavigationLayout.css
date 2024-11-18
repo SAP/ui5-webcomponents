@@ -61,5 +61,5 @@
 }
 
 ::slotted([ui5-shellbar][slot="header"]) {
-	padding-inline: .5rem 1rem;
+	padding-inline: .5rem;
 }

@@ -9,8 +9,11 @@ import "../../../src/MessageStrip.js";
 import "../../../src/MultiComboBox.js";
 import "../../../src/MultiComboBoxItem.js";
 import "../../../src/Panel.js";
+import "../../../src/Button.js";
 import "../../../src/CheckBox.js";
 import "../../../src/Label.js";
+import "../../../src/MenuItem.js";
+import "../../../src/Menu.js";
 
 describe("Event bubbling", () => {
 	it("test bubbling events", () => {
@@ -126,7 +129,13 @@ describe("Event bubbling", () => {
 						<ui5-option>Hello</ui5-option>
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
-					</ui5-select>	
+					</ui5-select>
+					
+					<ui5-button id="btnOpen">Open Menu</ui5-button>
+					<ui5-menu id="myMenu" header-text="Menu" opener="btnOpen">
+						<ui5-menu-item text="New File"></ui5-menu-item>
+						<ui5-menu-item text="New Folder"></ui5-menu-item>
+					</ui5-menu>
 					
 					<ui5-multi-combobox id="myMCB">
 						<ui5-mcb-item text="Cosy"></ui5-mcb-item>
@@ -138,12 +147,19 @@ describe("Event bubbling", () => {
 
 		cy.get("#app")
 			.as("app");
+
 		cy.get("[ui5-dialog]")
 			.as("dialog");
+
 		cy.get("[ui5-select]")
 			.as("select");
+
+		cy.get("[ui5-menu]")
+			.as("menu");
+
 		cy.get("[ui5-multi-combobox]")
 			.as("multiCombobox");
+
 		cy.get("[ui5-multi-combobox]")
 			.shadow()
 			.find(".inputIcon")
@@ -164,6 +180,11 @@ describe("Event bubbling", () => {
 				select.get(0).addEventListener("ui5-close", cy.stub().as("selClosed"));
 			});
 
+		cy.get("@menu")
+			.then(menu => {
+				menu.get(0).addEventListener("ui5-close", cy.stub().as("menuClosed"));
+			});
+
 		cy.get("@multiCombobox")
 			.then(multiCombobox => {
 				multiCombobox.get(0).addEventListener("ui5-close", cy.stub().as("mcbClosed"));
@@ -180,23 +201,31 @@ describe("Event bubbling", () => {
 			.eq(1)
 			.realClick();
 
-		// act - open the  MultiComboBox
+		// act - open/close the  MultiComboBox
 		cy.get("@multiComboboxIcon")
 			.realClick();
 
 		cy.get("@multiCombobox")
-			.shadow()
-			.find("[ui5-responsive-popover]")
+			.find("[ui5-mcb-item]")
 			.should("be.visible");
 
-		// act - close the MultiComboBox
 		cy.get("@multiComboboxIcon")
 			.realClick();
+
+		// act - open/close Menu
+		cy.get("@menu")
+			.ui5MenuOpen();
+
+		cy.get("[ui5-menu-item]")
+			.first()
+			.ui5MenuItemClick();
 
 		// assert - the close events of the Select and MultiComboBox do not bubble
 		cy.get("@selClosed")
 			.should("have.been.calledOnce");
 		cy.get("@mcbClosed")
+			.should("have.been.calledOnce");
+		cy.get("@menuClosed")
 			.should("have.been.calledOnce");
 		cy.get("@dialogClosed")
 			.should("not.be.called");
