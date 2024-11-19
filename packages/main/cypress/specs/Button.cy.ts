@@ -111,49 +111,6 @@ describe("Button general interaction", () => {
 			.should("not.been.called");
 	});
 
-	it("aria-expanded is properly applied on the button tag", () => {
-		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
-
-		cy.get("[ui5-button]")
-			.as("button");
-
-		cy.get<Button>("@button")
-			.then($el => {
-				$el.get(0).accessibilityAttributes = {
-					expanded: "true",
-				};
-			});
-
-		cy.get("@button")
-			.shadow()
-			.find("button")
-			.should("have.attr", "aria-expanded", "true");
-
-		cy.get<Button>("@button")
-			.then($el => {
-				$el.get(0).accessibilityAttributes = {
-					expanded: "false",
-				};
-			});
-
-		cy.get("@button")
-			.shadow()
-			.find("button")
-			.should("have.attr", "aria-expanded", "false");
-	});
-
-	it("not setting accessible-role on the host keeps the correct role on the button tag", () => {
-		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
-
-		cy.get("[ui5-button]")
-			.shadow()
-			.find("button")
-			.as("button");
-
-		cy.get("@button")
-			.should("have.attr", "role", "button");
-	});
-
 	it("tests button's icon only rendering", () => {
 		cy.mount(html`<ui5-button icon="home"><!----><!----></ui5-button>`);
 
@@ -253,6 +210,87 @@ describe("Button general interaction", () => {
 			.should("have.attr", "mode", "Decorative");
 	});
 
+	it("setting tooltip on the host is reflected on the button tag", () => {
+		cy.mount(html`<ui5-button icon="message-information" tooltip="Go home"></ui5-button>`);
+
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "title", "Go home");
+	});
+
+	it("tooltip from inner icon is propagated", () => {
+		cy.mount(html`<ui5-button icon="download" accessible-name="Download application"></ui5-button>`);
+
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "title", "Download");
+	});
+});
+
+describe("Accessibility", () => {
+	it("aria-expanded is properly applied on the button tag", () => {
+		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
+
+		cy.get("[ui5-button]")
+			.as("button");
+
+		cy.get<Button>("@button")
+			.then($el => {
+				$el.get(0).accessibilityAttributes = {
+					expanded: "true",
+				};
+			});
+
+		cy.get("@button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-expanded", "true");
+
+		cy.get<Button>("@button")
+			.then($el => {
+				$el.get(0).accessibilityAttributes = {
+					expanded: "false",
+				};
+			});
+
+		cy.get("@button")
+			.shadow()
+			.find("button")
+			.should("have.attr", "aria-expanded", "false");
+	});
+
+	it("setting accessible-role on the host is reflected on the button tag", () => {
+		cy.mount(html`<ui5-button accessible-role="Link"> Navigation Button </ui5-button>`);
+
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "role", "link");
+	});
+
+	it("not setting accessible-role on the host keeps the correct role on the button tag", () => {
+		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
+
+		cy.get("[ui5-button]")
+			.shadow()
+			.find("button")
+			.as("button");
+
+		cy.get("@button")
+			.should("have.attr", "role", "button");
+	});
+
 	it("aria-describedby properly applied on the button tag", () => {
 		const hiddenTextTypeId = "ui5-button-hiddenText-type";
 
@@ -310,8 +348,8 @@ describe("Button general interaction", () => {
 			.should("have.attr", "aria-controls", "registration-dialog");
 	});
 
-	it("setting tooltip on the host is reflected on the button tag", () => {
-		cy.mount(html`<ui5-button icon="message-information" tooltip="Go home"></ui5-button>`);
+	it("setting accessible-description is applied to button tag", () => {
+		cy.mount(html`<ui5-button accessible-description="A long description."></ui5-button>`);
 
 		cy.get("[ui5-button]")
 			.shadow()
@@ -319,30 +357,6 @@ describe("Button general interaction", () => {
 			.as("button");
 
 		cy.get("@button")
-			.should("have.attr", "title", "Go home");
-	});
-
-	it("tooltip from inner icon is propagated", () => {
-		cy.mount(html`<ui5-button icon="download" accessible-name="Download application"></ui5-button>`);
-
-		cy.get("[ui5-button]")
-			.shadow()
-			.find("button")
-			.as("button");
-
-		cy.get("@button")
-			.should("have.attr", "title", "Download");
-	});
-
-	it("setting accessible-role on the host is reflected on the button tag", () => {
-		cy.mount(html`<ui5-button accessible-role="Link"> Navigation Button </ui5-button>`);
-
-		cy.get("[ui5-button]")
-			.shadow()
-			.find("button")
-			.as("button");
-
-		cy.get("@button")
-			.should("have.attr", "role", "link");
+			.should("have.attr", "aria-description", "A long description.");
 	});
 });
