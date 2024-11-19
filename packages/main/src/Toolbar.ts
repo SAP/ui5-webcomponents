@@ -480,7 +480,6 @@ class Toolbar extends UI5Element {
 
 	onBeforeClose(e: UI5CustomEvent<Popover, "before-close">) {
 		e.preventDefault();
-		console.log(e.detail.escPressed);
 	}
 
 	@bound
