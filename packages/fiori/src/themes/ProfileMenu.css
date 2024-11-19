@@ -1,0 +1,58 @@
+.ui5-pm-rp {
+    width: 20rem;
+}
+
+.ui5-pm-rp::part(header),
+.ui5-pm-rp::part(content),
+.ui5-pm-rp::part(footer) {
+    padding-inline: 0.5rem;
+}
+
+.ui5-pm-rp::part(header) {
+    padding-top: 1rem;
+    box-shadow: none;
+}
+
+.ui5-pm-rp::part(content) {
+    padding-top: 0;
+    padding-bottom: 0.5rem;
+}
+
+.ui5-pm-rp::part(footer) {
+    padding-block: 0.5rem;
+}
+
+.ui5-pm-selected-account {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.ui5-pm-manage-account-btn {
+    margin-top: 0.5rem;
+}
+
+.ui5-pm-other-accounts {
+    border: .0625rem solid var(--sapGroup_TitleBorderColor);
+    margin-bottom: 1rem;
+}
+
+.ui5-pm-other-accounts::part(content) {
+    padding: 0;
+}
+
+.ui5-profile-menu-account-header {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ui5-pm-footer {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+}
