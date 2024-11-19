@@ -78,46 +78,12 @@ function eventMetadata<T = void>(a?: EventMetadataOptions): EventMetadataOptions
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
  */
-@event<TokenDeleteEventDetail>("delete", {
+@event("delete", {
 	bubbles: true,
 })
 class Token extends UI5Element implements IToken {
-	events = {
-		/**
-		 * Fired when the backspace, delete or close icon of the token is pressed
-		 * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
-		 * @param {Boolean} delete Indicates whether token is deleted by delete key.
-		 * @private
-		 */
-		"delete": eventMetadata<TokenDeleteEventDetail>({
-			bubbles: true,
-		}),
-		/**
-		 * Fired when the the component is selected by user interaction with mouse or by clicking space.
-		 * @private
-		 */
-		"select": eventMetadata({
-			bubbles: true,
-		}),
-	}
-	@event2("delete", {
-		bubbles: true,
-	})
-	@event2("select", {
-		bubbles: true,
-	})
-	_events!: {
-		/**
-		 * Fired when the backspace, delete or close icon of the token is pressed
-		 * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
-		 * @param {Boolean} delete Indicates whether token is deleted by delete key.
-		 * @private
-		 */
+	eventDetails!: {
 		"delete": TokenDeleteEventDetail
-		/**
-		 * Fired when the the component is selected by user interaction with mouse or by clicking space.
-		 * @private
-		 */
 		"select": void
 	};
 

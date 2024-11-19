@@ -1,3 +1,4 @@
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -150,7 +151,7 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
 	}
 
-	_beforeDialogOpen(e: CustomEvent<Popover["_events"]["before-open"]>) {
+	_beforeDialogOpen(e: UI5CustomEvent<Popover, "before-open">) {
 		this._opened = true;
 		this.open = true;
 		this._propagateDialogEvent(e);

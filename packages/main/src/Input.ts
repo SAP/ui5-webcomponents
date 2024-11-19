@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { type UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -1057,7 +1057,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._clearIconClicked = true;
 	}
 
-	_scroll(e: CustomEvent<ResponsivePopover["_events"]["scroll"]>) {
+	_scroll(e: UI5CustomEvent<ResponsivePopover, "scroll">) {
 		this.fireDecoratorEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,

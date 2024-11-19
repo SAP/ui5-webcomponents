@@ -2,12 +2,13 @@ import clsx from "clsx"
 import type Panel from "./Panel.js"
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-// import Token from "./Token.js";
+// import Token, { type TokenDeleteEventDetail } from "./Token.js";
+// import type { JSX } from "@ui5/webcomponents-base/jsx-runtime";
 // import type { JSX } from "@ui5/webcomponents-base";
 declare module "@ui5/webcomponents-base" {
 	namespace JSX {
 		interface IntrinsicElements {
-			"my-comp": JSX.HTMLAttributes<HTMLDialogElement>;
+			// "ui5-token": Token["_jsxProps"];
 		}
 	}
 }

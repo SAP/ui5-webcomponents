@@ -88,7 +88,7 @@ type CalculatedPlacement = {
 	template: PopoverTemplate,
 })
 class Popover extends Popup {
-	_events!: Popup["_events"] & {
+	eventDetails!: Popup["eventDetails"] & {
 		"extra": void
 	}
 

@@ -1,3 +1,4 @@
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -311,7 +312,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireEvent("open", {}, false, false);
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopover["_events"]["before-close"]>) {
+	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {
