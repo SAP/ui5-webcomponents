@@ -21,13 +21,6 @@
 		</ui5-menu-item>
 		<ui5-menu-separator></ui5-menu-separator>
 		<ui5-menu-item text="Open" icon="open-folder" accessible-name="Choose platform" loading-delay="100" loading>
-			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
-				<ui5-menu-item id="menuItemFromC" text="Open from C"></ui5-menu-item>
-				<ui5-menu-item id="menuItemFromD" text="Open from D"></ui5-menu-item>
-				<ui5-menu-separator></ui5-menu-separator>
-				<ui5-menu-item text="Open from E" disabled></ui5-menu-item>
-			</ui5-menu-item>
-			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Save with very long title for a menu item text inside" icon="save">
 			<ui5-menu-item text="Save Locally" icon="save">
@@ -41,6 +34,9 @@
 		<ui5-menu-separator></ui5-menu-separator>
 		<ui5-menu-item text="Preferences" icon="action-settings" disabled></ui5-menu-item>
 		<ui5-menu-item id="menuItemExit" text="Exit" icon="journey-arrive"></ui5-menu-item>
+	</ui5-menu>
+
+	<ui5-menu id="delaymenu" loading-delay="100" loading>
 	</ui5-menu>
 
 	<ui5-title level="H5" class="header-title">Clicked menu item text</ui5-title>
@@ -119,6 +115,9 @@
 			<ui5-link id="detailsLink" href="https://en.wikipedia.org/wiki/Google_logo" target="_blank"></ui5-link>
 	</ui5-popover>
 
+
+	<ui5-button id="btnAddOpenerDelay">Delayed</ui5-button>
+
 	<script>
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "menu",
@@ -146,6 +145,24 @@
 			menu.open = btnToggleOpen.pressed;
 		});
 
+		btnAddOpenerDelay.addEventListener("click", function() {
+			delaymenu.opener = "btnAddOpenerDelay";
+			delaymenu.open = !delaymenu.open;
+		});
+
+		delaymenu.addEventListener("ui5-before-open", function(event) {
+			setTimeout(function() {
+				delaymenu.removeAttribute("loading");
+				delaymenu.removeAttribute("loading-delay");
+				let oneNode = document.createElement("ui5-menu-item");
+				oneNode.setAttribute("text", "Open from Amazon Cloud");
+				let twoNode = document.createElement("ui5-menu-item");
+				twoNode.setAttribute("text", "Open from Google Cloud");
+				delaymenu.append(oneNode, twoNode);
+				delaymenu.focus();
+			}, 1000);
+		});
+
 		let fetched = false;
 
 		menu.addEventListener("ui5-before-open", function(event) {
@@ -160,6 +177,7 @@
 					twoNode.setAttribute("text", "Open from Google Cloud");
 					item.append(oneNode, twoNode);
 					fetched = true;
+					item.focus();
 				}, 1000);
 			}
 		});
