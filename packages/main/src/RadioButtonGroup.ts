@@ -118,7 +118,11 @@ class RadioButtonGroup {
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
 			if (hasCheckedRadio) {
-				radioBtn._tabIndex = radioBtn.checked ? "0" : "-1";
+				if ((document.activeElement as RadioButton).readonly) {
+					radioBtn._tabIndex = radioBtn.readonly ? "0" : "-1";
+				} else {
+					radioBtn._tabIndex = radioBtn.checked ? "0" : "-1";
+				}
 			} else {
 				radioBtn._tabIndex = idx === 0 ? "0" : "-1";
 			}
@@ -166,6 +170,11 @@ class RadioButtonGroup {
 
 			if (!radioBtnToSelect.readonly) {
 				this._selectRadio(radioBtnToSelect);
+			} else {
+				// Ensure updateTabOrder is called after focus
+				setTimeout(() => {
+					this.updateTabOrder(groupName);
+				}, 0);
 			}
 		}
 	}
