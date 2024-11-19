@@ -9,25 +9,25 @@
 
 :host([multi-line]) {
 	height: auto;
+}
 
-	.ui5-tokenizer--content {
-		display: flex;
-		align-content: baseline;
-		flex-wrap: wrap;
-		padding: .25rem;
-		box-sizing: border-box;
-		row-gap: .5rem;
-		column-gap: .25rem;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
+:host([multi-line]) .ui5-tokenizer--content {
+	display: flex;
+	align-content: baseline;
+	flex-wrap: wrap;
+	padding: .25rem;
+	box-sizing: border-box;
+	row-gap: .5rem;
+	column-gap: .25rem;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
 
-	::slotted(ui5-token) {
-		margin: 0;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		max-width: 100%;
-	}
+::slotted(ui5-token) {
+	margin: 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 100%;
 }
 
 :host([disabled]) {
