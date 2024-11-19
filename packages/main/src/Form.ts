@@ -25,9 +25,9 @@ const StepColumn = {
 };
 
 const breakpoints = ["S", "M", "L", "Xl"];
-
-const MAX_SPAN_VALUE = 11;
-
+const MAX_FORM_ITEM_CELLS = 12;
+const DEFAULT_FORM_ITEM_LAYOUT = "4fr 8fr 0fr";
+const DEFAULT_FORM_ITEM_LAYOUT_S = "1fr";
 /**
  * Interface for components that can be slotted inside `ui5-form` as items.
  * @public
@@ -133,15 +133,19 @@ type ItemsInfo = {
  *
  * ### Items Empty Span
  *
- * By default, the entire form item's width is allocated between the label and its field, with no empty space at the end.
+ * By default, a form item spans 12 cells, fully divided between its label and field, with no empty space at the end:
+ * - **Label:** occupies 4 cells.
+ * - **Field:** occupies 8 cells.
+ *
  * The `emptySpan` property provides additional layout flexibility by defining empty space at the form item’s end.
  *
- * **For example:** Setting "S0 M0 L3 XL3" (or just "L3 XL3") allocates 4 cells for the label, 5 cells for the associated field,
- * and leaves 3 cells empty space at the end. Greater values increase the empty space at the end of the form item, reducing the space available for the label and its field.
+ * **For example:** Setting "S0 M0 L3 XL3" (or just "L3 XL3") adjusts the layout as follows:
+ * - **Label:** remains 4 cells.
+ * - **Field:** is reduced to 5 cells.
+ * - **Empty space:** 3 cells are added at the end.
  *
- * *Note:* The empty space can take up to 10 cells, ensuring at least 1 cell each for the label and its field.
- * However, the **recommended** empty space is 1 cell and you have avoid using big numbers.
- * Moreover, the combined value of `emptySpan` and `labelSpan` must not exceed 11, to ensure at least 1 cell remains for the field.
+ * Greater values increase the empty space at the end of the form item, reducing the space available for the label and its field.
+ * However, setting `emptySpan` to 1 cell is recommended and typically sufficient to achieve a balanced layout.
  *
  * ### Navigation flow
  *
@@ -241,20 +245,8 @@ class Form extends UI5Element {
 	/**
 	 * Defines the number of cells that are empty at the end of each form item, configurable by breakpoint.
 	 *
-	 * By default, a form item spans 12 cells, fully divided between its label and field, with no empty space at the end:
-	 * - **Label:** occupies 4 cells.
-	 * - **Field:** occupies 8 cells.
-	 *
-	 * The `emptySpan` property provides additional layout flexibility by defining empty space at the form item’s end.
-	 *
-	 * **For example:** Setting "S0 M0 L3 XL3" (or just "L3 XL3") adjusts the layout as follows:
- 	 * - **Label:** remains 4 cells.
- 	 * - **Field:** is reduced to 5 cells.
- 	 * - **Empty space:** 3 cells are added at the end.
-	 * Greater values increase the empty space at the end of the form item, reducing the space available for the label and its field.
-	 *
-	 * **Recommended value:**
-	 * Setting `emptySpan` to 1 cell is typically sufficient to achieve a balanced layout.
+	 * By default, a form item spans 12 cells, fully divided between its label (4 cells) and field (8 cells), with no empty space at the end.
+	 * The `emptySpan` provides additional layout flexibility by defining empty space at the form item’s end.
 	 *
 	 * **Note:**
 	 * - The maximum allowable empty space is 10 cells. At least 1 cell each must remain for the label and the field.
@@ -379,7 +371,7 @@ class Form extends UI5Element {
 		});
 	}
 
-	setFormItemLayout() {
+	parseFormItemSpan() {
 		this.labelSpan.split(" ").forEach((breakpoint: string) => {
 			if (breakpoint.startsWith("S")) {
 				this.labelSpanS = parseInt(breakpoint.slice(1));
@@ -403,27 +395,46 @@ class Form extends UI5Element {
 				this.emptySpanXl = parseInt(breakpoint.slice(2));
 			}
 		});
-
-		this.validatateItemLayout();
 	}
 
-	validatateItemLayout() {
-		if (this.emptySpanS !== 0 && this.labelSpanS + this.emptySpanS > MAX_SPAN_VALUE) {
-			// eslint-disable-next-line
-			console.warn(`Form :: invalid usage of emptySpan and labelSpan in S size. Their combined values must not exceed ${MAX_SPAN_VALUE} - currently ${this.labelSpanS + this.emptySpanS}.`)
-		}
-		if (this.emptySpanM !== 0 && this.labelSpanM + this.emptySpanM > MAX_SPAN_VALUE) {
-			// eslint-disable-next-line
-			console.warn(`Form :: invalid usage of emptySpan and labelSpan in M size. Their combined values must not exceed ${MAX_SPAN_VALUE} - currently ${this.labelSpanS + this.emptySpanS}.`)
-		}
-		if (this.emptySpanL !== 0 && this.labelSpanL + this.emptySpanL > MAX_SPAN_VALUE) {
-			// eslint-disable-next-line
-			console.warn(`Form :: invalid usage of emptySpan and labelSpan in L size. Their combined values must not exceed ${MAX_SPAN_VALUE} - currently ${this.labelSpanS + this.emptySpanS}.`)
-		}
-		if (this.emptySpanXl !== 0 && this.labelSpanXl + this.emptySpanXl > MAX_SPAN_VALUE) {
-			// eslint-disable-next-line
-			console.warn(`Form :: invalid usage of emptySpan and labelSpan in XL size. Their combined values must not exceed 11 - currently ${this.labelSpanS + this.emptySpanS}.`)
-		}
+	setFormItemLayout() {
+		this.parseFormItemSpan();
+
+		[
+			{
+				breakpoint: "S",
+				labelSpan: this.labelSpanS,
+				emptySpan: this.emptySpanS,
+			},
+			{
+				breakpoint: "M",
+				labelSpan: this.labelSpanM,
+				emptySpan: this.emptySpanM,
+			},
+			{
+				breakpoint: "L",
+				labelSpan: this.labelSpanL,
+				emptySpan: this.emptySpanL,
+			},
+			{
+				breakpoint: "XL",
+				labelSpan: this.labelSpanXl,
+				emptySpan: this.emptySpanXl,
+			},
+		].forEach(layout => {
+			if (this.isValidFormItemLayout(layout.labelSpan, layout.emptySpan)) {
+				const formItemLayout = layout.labelSpan === MAX_FORM_ITEM_CELLS ? `1fr` : `${layout.labelSpan}fr ${MAX_FORM_ITEM_CELLS - (layout.labelSpan + layout.emptySpan)}fr ${layout.emptySpan}fr`;
+				this.style.setProperty(getScopedVarName(`--ui5-form-item-layout-${layout.breakpoint}`), formItemLayout);
+			} else {
+				// eslint-disable-next-line
+				console.warn(`Form :: invalid usage of emptySpan and/or labelSpan in ${layout.breakpoint} size. The labelSpan must be <=12 and when emptySpace is used - their combined values must not exceed 11.`)
+				this.style.setProperty(getScopedVarName(`--ui5-form-item-layout-${layout.breakpoint}`), layout.breakpoint === "S" ? DEFAULT_FORM_ITEM_LAYOUT_S : DEFAULT_FORM_ITEM_LAYOUT);
+			}
+		});
+	}
+
+	isValidFormItemLayout(labelSpan: number, emptySpan: number) {
+		return emptySpan === 0 ? labelSpan <= MAX_FORM_ITEM_CELLS : labelSpan + emptySpan <= MAX_FORM_ITEM_CELLS - 1;
 	}
 
 	setFastNavGroup() {
