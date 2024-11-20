@@ -24,7 +24,7 @@ export default function (this: Link) {
 		{this.icon &&
 			<Icon
 				class="ui5-link-icon"
-				name="{{icon}}"
+				name={this.icon}
 				mode="Decorative"
 				part="icon">
 			</Icon>
@@ -41,7 +41,7 @@ export default function (this: Link) {
 		{this.endIcon &&
 			<Icon
 				class="ui5-link-end-icon"
-				name="{{endIcon}}"
+				name={this.endIcon}
 				mode="Decorative"
 				part="endIcon"
 			></Icon>
