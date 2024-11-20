@@ -1,7 +1,7 @@
 <header
 	class="{{classes.wrapper}}"
 	aria-label="{{_shellbarText}}"
-	@focusin={{_onfocusin}}
+	@keydown="{{_onKeyDown}}"
 	part="root">
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 
@@ -155,15 +155,13 @@
 				{{/if}}
 
 				{{#if showNotifications}}
-					{{#if _isFullVariant}}
-						<ui5-button id="{{this._id}}-item-2"
-							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
-							icon="sap-icon://bell" data-ui5-text="Notifications"
-							data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
-							tooltip="{{_notificationsText}}"
-							.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
-							data-ui5-stable="notifications"></ui5-button>
-					{{/if}}
+					<ui5-button id="{{this._id}}-item-2"
+						class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
+						icon="sap-icon://bell" data-ui5-text="Notifications"
+						data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
+						tooltip="{{_notificationsText}}"
+						.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
+						data-ui5-stable="notifications"></ui5-button>
 				{{/if}}
 
 				{{#each customItemsInfo}}
@@ -182,36 +180,32 @@
 				{{/each}}
 
 
-				{{#if _isFullVariant}}
-					<ui5-button
-						id="{{this._id}}-item-5"
-						class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
-						icon="sap-icon://overflow"
-						data-count="{{_overflowNotifications}}"
-						@click="{{_handleOverflowPress}}"
-						tooltip="{{_overflowText}}"
-						.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
-						data-ui5-stable="overflow"
-					></ui5-button>
-				{{/if}}
+				<ui5-button
+					id="{{this._id}}-item-5"
+					class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
+					icon="sap-icon://overflow"
+					data-count="{{_overflowNotifications}}"
+					@click="{{_handleOverflowPress}}"
+					tooltip="{{_overflowText}}"
+					.accessibilityAttributes={{accInfo.overflow.accessibilityAttributes}}
+					data-ui5-stable="overflow"
+				></ui5-button>
 
 				{{#if hasProfile}}
 					{{> profileButton}}
 				{{/if}}
 
 				{{#if showProductSwitch}}
-					{{#if _isFullVariant}}
-						<ui5-button
-							id="{{this._id}}-item-4"
-							class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
-							icon="sap-icon://grid"
-							data-ui5-text="Product Switch"
-							@click={{_handleProductSwitchPress}}
-							tooltip="{{_productsText}}"
-							.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
-							data-ui5-stable="product-switch"
-						></ui5-button>
-					{{/if}}
+					<ui5-button
+						id="{{this._id}}-item-4"
+						class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
+						icon="sap-icon://grid"
+						data-ui5-text="Product Switch"
+						@click={{_handleProductSwitchPress}}
+						tooltip="{{_productsText}}"
+						.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
+						data-ui5-stable="product-switch"
+					></ui5-button>
 				{{/if}}
 			</div>
 		</div>

@@ -397,18 +397,10 @@ slot[name="profile"] {
 	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
-.ui5-shellbar-overflow-button {
-	display: none;
-}
 
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-right {
 	padding-inline-start: 0;
 }
-
-.ui5-shellbar-overflow-button-shown {
-	display: inline-block;
-}
-
 
 ::slotted([hidden]) {
 	visibility: hidden;
