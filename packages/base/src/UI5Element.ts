@@ -141,7 +141,7 @@ type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}
 	? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
 	: T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
-
+export type UI5CustomEvent<T extends UI5Element, N extends keyof T["eventDetails"]> = CustomEvent<T["eventDetails"][N]>;
 type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "role" | "slot" | "spellcheck" | "style" | "tabindex" | "title" | "translate" | "ref";
 
 /**
