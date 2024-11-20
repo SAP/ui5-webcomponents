@@ -1,0 +1,25 @@
+:host {
+	display: inline-block;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	color: var(--sapTextColor);
+}
+
+:host([hidden]) {
+	display: none;
+}
+
+.ui5-exp-text-text {
+	display: inline;
+}
+
+.ui5-exp-text-text,
+.ui5-exp-test-toggle {
+	font-family: inherit;
+	font-size: inherit;
+}
+
+.ui5-exp-text-text,
+.ui5-exp-text-ellipsis {
+	color: inherit;
+}
