@@ -5,15 +5,18 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import MainButton from "@ui5/webcomponents/dist/Button.js";
+// import MainButton from "@ui5/webcomponents/dist/Button.js";
+import SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import ButtonState from "./ButtonState.js";
 
-import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
+ import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
+// import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
+// import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 
 /**
  * @class
@@ -50,7 +53,7 @@ import ButtonCss from "./generated/themes/Button.css.js";
 	renderer: litRender,
 	template: ButtonTemplate,
 	styles: ButtonCss,
-	dependencies: [MainButton, Icon, ButtonState],
+	dependencies: [SplitButton, Icon, ButtonState],
 	shadowRootOptions: { delegatesFocus: true },
 })
 
@@ -160,11 +163,12 @@ class Button extends UI5Element {
 			console.warn(`State with name="${this.state}" doesn't exist!`);
 		} else if (button) {
 			const buttonWidth = button.offsetWidth;
-			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as MainButton;
+			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as SplitButton;
 			button.style.width = `${buttonWidth}px`;
 			hiddenButton.icon = newStateObject.icon;
-			hiddenButton.endIcon = newStateObject.endIcon;
+			hiddenButton._endIcon = newStateObject.endIcon;
 			hiddenButton.textContent = newStateObject.text || null;
+			hiddenButton._hideArrowButton = this._hideArrowButton;
 
 			await renderFinished();
 			const hiddenButtonWidth = hiddenButton.offsetWidth;
@@ -174,6 +178,7 @@ class Button extends UI5Element {
 			setTimeout(() => {
 				this.fadeMid = true;
 				this._currentStateObject = newStateObject;
+				button._hideArrowButton = this._hideArrowButton;
 				this._fadeIn();
 			}, fadeOutDuration);
 		}
@@ -221,8 +226,12 @@ class Button extends UI5Element {
 		this.fireDecoratorEvent("click");
 	}
 
+	get _hideArrowButton() {
+		return !this._effectiveStateObject?.splitMode;
+	}
+
 	get _mainButton() {
-		return this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
+		return this.shadowRoot?.querySelector("[ui5-split-button]") as SplitButton;
 	}
 
 	get _effectiveState() {
@@ -246,7 +255,8 @@ class Button extends UI5Element {
 	}
 
 	get _stateEndIcon() {
-		return this._currentStateObject?.endIcon;
+		const endIcon = this._effectiveStateObject?.splitMode ? "" : this._effectiveStateObject?.endIcon;
+		return endIcon;
 	}
 
 	get _hasText() {

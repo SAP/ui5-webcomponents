@@ -67,6 +67,14 @@ class ButtonState extends UI5Element {
 	 */
 	@property()
 	endIcon?: string;
+
+	/**
+	 * Defines whether the component will be in SplitButton mode.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	splitMode = false;
 }
 
 ButtonState.define();
