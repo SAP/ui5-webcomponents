@@ -22,7 +22,7 @@
 	overflow-x: hidden;
 }
 
-:host([multi-line])::slotted(ui5-token) {
+:host([multi-line])::slotted([ui5-token]) {
 	margin: 0;
 	white-space: nowrap;
 	text-overflow: ellipsis;
