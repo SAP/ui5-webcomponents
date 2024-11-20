@@ -106,7 +106,7 @@ class ExpandableText extends UI5Element {
 	}
 
 	get _toggleText() {
-		return this._expanded ? "Show less" : "Show more";
+		return this._expanded ? "Show Less" : "Show More";
 	}
 
 	_handleShowLessClick() {

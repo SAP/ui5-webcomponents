@@ -3,7 +3,7 @@
 
 	{{#if _maxCharactersExceeded}}
 		<span class="ui5-exp-text-ellipsis">{{_ellipsisText}}</span>
-		<ui5-link id="{{_id}}-toggle" class="ui5-exp-test-toggle" @click="{{_toggleExpanded}}">{{_toggleText}}<ui5-link>
+		<ui5-link id="{{_id}}-toggle" class="ui5-exp-text-toggle" @click="{{_toggleExpanded}}">{{_toggleText}}<ui5-link>
 
 		{{#if _usePopover}}
 			<ui5-responsive-popover ?open="{{_expanded}}" opener="{{_id}}-toggle" @ui5-close="{{_handlePopoverClose}}" >
