@@ -29,7 +29,7 @@ const StepColumn = {
  * @experimental
  * @since 2.0.0
  */
-interface IFormItem extends HTMLElement {
+interface IFormItem extends UI5Element {
 	labelSpan: string
 	itemSpacing: `${FormItemSpacing}`;
 	readonly isGroup: boolean;
@@ -44,6 +44,7 @@ type GroupItemsInfo = {
 	groupItem: IFormItem,
 	classes: string,
 	items: Array<ItemsInfo>,
+	accessibleNameRef: string | undefined
 }
 
 type ItemsInfo = {
@@ -125,6 +126,13 @@ type ItemsInfo = {
  * You can control what space the labels should take via the `labelSpan` property.
  *
  * **For example:** To always place the labels on top set: `labelSpan="S12 M12 L12 XL12"` property.
+ *
+ * ### Keyboard Handling
+ *
+ * - [Tab] - Moves the focus to the next interactive element within the Form/FormGroup (if available) or to the next element in the tab chain outside the Form
+ * - [Shift] + [Tab] - Moves the focus to the previous interactive element within the Form/FormGroup (if available) or to the previous element in the tab chain outside the Form
+ * - [F6] - Moves the focus to the first interactive element of the next FormGroup (if available) or to the next element in the tab chain outside the Form
+ * - [Shift] + [F6] - Moves the focus to the first interactive element of the previous FormGroup (if available) or to the previous element in the tab chain outside the Form
  *
  * ### ES6 Module Import
  *
@@ -264,6 +272,8 @@ class Form extends UI5Element {
 	onAfterRendering() {
 		// Create additional CSS for number of columns that are not supported by default.
 		this.createAdditionalCSSStyleSheet();
+
+		this.setFastNavGroup();
 	}
 
 	setColumnLayout() {
@@ -298,6 +308,14 @@ class Form extends UI5Element {
 			item.labelSpan = this.labelSpan;
 			item.itemSpacing = this.itemSpacing;
 		});
+	}
+
+	setFastNavGroup() {
+		if (this.hasGroupItems) {
+			this.removeAttribute("data-sap-ui-fastnavgroup");
+		} else {
+			this.setAttribute("data-sap-ui-fastnavgroup", "true");
+		}
 	}
 
 	setGroupsColSpan() {
@@ -361,14 +379,19 @@ class Form extends UI5Element {
 		return !!this.header.length;
 	}
 
-	get ariaLabelledByID(): string | undefined {
+	get effectiveАccessibleNameRef(): string | undefined {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
+	}
+
+	get effectiveAccessibleRole(): string | undefined {
+		return this.hasGroupItems ? "region" : "form";
 	}
 
 	get groupItemsInfo(): Array<GroupItemsInfo> {
 		return this.items.map((groupItem: IFormItem) => {
 			return {
 				groupItem,
+				accessibleNameRef: (groupItem as FormGroup).headerText ? `${groupItem._id}-group-header-text` : undefined,
 				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
 				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
 			};

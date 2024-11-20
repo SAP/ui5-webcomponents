@@ -26,8 +26,14 @@
 			{{/if}}
 
 			{{#if showMenuButton}}
-				<button class="{{classes.button}}" @click="{{_headerPress}}" aria-haspopup="menu"
-					aria-expanded="{{_menuPopoverExpanded}}" data-ui5-stable="menu">
+				<button
+					class="{{classes.button}}"
+					@click="{{_headerPress}}"
+					aria-haspopup="menu"
+					aria-expanded="{{_menuPopoverExpanded}}"
+					data-ui5-stable="menu"
+					tabindex="0"
+				>
 					{{#if showLogoInMenuButton}}
 					<span class="ui5-shellbar-logo" aria-label="{{_logoText}}" title="{{_logoText}}">
 						<slot name="logo"></slot>

@@ -402,7 +402,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("close", {}, false, true);
+		this.fireDecoratorEvent("close");
 	}
 }
 

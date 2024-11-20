@@ -131,6 +131,7 @@ interface IShelBarItemInfo extends ITabbable {
 	classes: string,
 	order?: number,
 	profile?: boolean,
+	tooltip?: string,
 }
 
 interface IShelBarAdditionalContext extends HTMLElement, ITabbable {
@@ -615,14 +616,14 @@ class ShellBar extends UI5Element {
 		return style.display !== "none" && style.visibility !== "hidden" && element.offsetWidth > 0 && element.offsetHeight > 0;
 	}
 
-	_isInteractive(element: HTMLElement) {
-		const firstShadowRootChild = element.shadowRoot?.firstElementChild;
-
-		return (
-			firstShadowRootChild && firstShadowRootChild.hasAttribute("tabindex") && firstShadowRootChild.getAttribute("tabindex") === "0"
-		);
+	_isInteractive(element: HTMLElement | UI5Element): boolean {
+		const component = element as UI5Element;
+		if (component.isUI5Element) {
+			const dom = component.getFocusDomRef();
+			return dom?.tabIndex === 0;
+		}
+		return element.tabIndex === 0;
 	}
-
 	_getActiveElement() {
 		const activeElement = document.activeElement;
 
@@ -635,15 +636,16 @@ class ShellBar extends UI5Element {
 
 	_getAllShellbarItems() {
 		return [
-			// ...this.startButton,
-			...this.logo,
+			...this.startButton,
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo-area"),
+			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-menu-button"),
 			...this.additionalContextStart,
 			...this.additionalContextEnd,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-search-item-for-arrow-nav"),
 			...this.assistant,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-items-for-arrow-nav"),
 			...this.profile,
-			// ...this.menuItems,
 		] as HTMLElement[];
 	}
 
@@ -1137,6 +1139,7 @@ class ShellBar extends UI5Element {
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
 				show: !!this.searchField.length,
+				tooltip: this._searchText,
 			},
 			{
 				icon: "da",
@@ -1160,7 +1163,8 @@ class ShellBar extends UI5Element {
 			},
 			...this.items.map((item: ShellBarItem) => {
 				item._getRealDomRef = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
-				// const isHelpOrMessageAction = item.icon === "sys-help" || item.icon === "thing-type";
+				const isHelpOrMessageAction = item.icon === "sys-help" || item.icon === "thing-type";
+				const shouldBeHidden = !this._isFullVariant && item.icon && !isHelpOrMessageAction;
 				return {
 					icon: item.icon,
 					id: item._id,
@@ -1169,12 +1173,12 @@ class ShellBar extends UI5Element {
 					text: item.text,
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",
 					domOrder: (++domOrder),
-					show: true,
+					show: !shouldBeHidden,
 					press: this._handleCustomActionPress.bind(this),
 					custom: true,
 					title: item.title,
 					stableDomRef: item.stableDomRef,
-					// shouldBeHidden: !this._isFullVariant && item.icon && !isHelpOrMessageAction,
+					tooltip: this._notificationsText,
 				};
 			}),
 			{
@@ -1185,6 +1189,7 @@ class ShellBar extends UI5Element {
 				id: `${this.id}-item-${5}`,
 				press: this._handleOverflowPress.bind(this),
 				show: true,
+				tooltip: this._overflowText,
 			},
 			{
 				text: "Person",
@@ -1194,6 +1199,7 @@ class ShellBar extends UI5Element {
 				domOrder: this.hasProfile ? (++domOrder) : -1,
 				show: this.hasProfile,
 				press: this._handleProfilePress.bind(this),
+				tooltip: this._profileText,
 			},
 			{
 				icon: "grid",
@@ -1203,6 +1209,7 @@ class ShellBar extends UI5Element {
 				show: this.showProductSwitch,
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
+				tooltip: this._productsText,
 			},
 		];
 

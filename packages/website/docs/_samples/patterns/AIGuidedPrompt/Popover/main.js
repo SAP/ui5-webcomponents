@@ -48,8 +48,8 @@ let options = {
 let text;
 let popoverGenerationId;
 
-function startGeneration() {
-	console.warn("startGeneration");
+function startGenerating() {
+	console.warn("startGenerating");
 	output.value = "";
 	text = texts[options.structure][options.language][options.toneOfVoice];
 	sendButton.disabled = true;
@@ -61,7 +61,7 @@ function startGeneration() {
 		const maxWordIndex = words.length - 1;
 
 		if (generatedWordIndex > maxWordIndex) {
-			stopGeneration(generationId);
+			stopGenerating(generationId);
 			aiButton.state = "revise";
 			sendButton.disabled = false;
 			return;
@@ -72,8 +72,8 @@ function startGeneration() {
 	return generationId;
 }
 
-function stopGeneration(generationId) {
-	console.warn("stopGeneration");
+function stopGenerating(generationId) {
+	console.warn("stopGenerating");
 	clearTimeout(generationId);
 }
 
@@ -87,7 +87,7 @@ function aiButtonClickHandler(evt) {
 		case "generating":
 			button.state = "generate";
 			sendButton.disabled = false;
-			stopGeneration(popoverGenerationId);
+			stopGenerating(popoverGenerationId);
 			break;
 		case "revise":
 			openPopover();
@@ -97,7 +97,7 @@ function aiButtonClickHandler(evt) {
 
 function applyButtonClickHandler(evt) {
 	aiButton.state = "generating";
-	popoverGenerationId = startGeneration();
+	popoverGenerationId = startGenerating();
 	closePopover();
 }
 
