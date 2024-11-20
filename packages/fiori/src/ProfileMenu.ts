@@ -150,6 +150,15 @@ class ProfileMenu extends UI5Element {
 	opener?: HTMLElement | string;
 
 	/**
+	 * Defines, if the Profile menu will show manage accounts.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showManageAccount = false;
+
+	/**
 	 * Defines, if the Profile menu will show other accounts.
 	 *
 	 * @default false

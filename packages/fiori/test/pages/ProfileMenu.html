@@ -21,7 +21,7 @@
 
 <body>
 <ui5-button id="btnOpenProfileMenu">Profile menu</ui5-button>
-<ui5-profile-menu id="profileMenu" show-other-accounts opener="btnOpenProfileMenu">
+<ui5-profile-menu id="profileMenu" show-manage-account show-other-accounts opener="btnOpenProfileMenu">
 	<ui5-profile-menu-account slot="accounts"
 					 avatar="./img/man_avatar_1.png"
 					 text="Alain Chevalier 1"
@@ -30,7 +30,7 @@
 					 selected>
 	</ui5-profile-menu-account>
 	<ui5-profile-menu-account slot="accounts"
-					 avatar="./img/man_avatar_1.png"
+					 initials="AC"
 					 text="Alain Chevalier 2"
 					 subtitle1="test.alian.chevalier@sap.com">
 	</ui5-profile-menu-account>
@@ -57,7 +57,7 @@
 
 	menu.addEventListener("item-click", function (event) {
 		const item = event.detail.item.getAttribute("data-id");
-		
+
 		switch (item) {
 			case "setting":
 			console.log("Open Setting Dialog");
