@@ -1064,7 +1064,10 @@ class List extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireDecoratorEvent("load-more");
+		// don't fire load-more on initial mount
+		if (this.children.length > 0) {
+			this.fireDecoratorEvent("load-more");
+		}
 	}
 
 	/*
