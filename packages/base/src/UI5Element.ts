@@ -1289,7 +1289,6 @@ abstract class UI5Element extends HTMLElement {
 	static asyncFinished: boolean;
 	static definePromise: Promise<void> | undefined;
 
-	static __instance: UI5Element | undefined;
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
@@ -1333,10 +1332,6 @@ abstract class UI5Element extends HTMLElement {
 			this._generateAccessors();
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
-			if (!this.__instance) {
-				// @ts-expect-error
-				this.__instance = new this();
-			}
 		}
 
 		return this;
