@@ -103,6 +103,10 @@ type NotificationListGroupItemToggleEventDetail = {
 	bubbles: true,
 })
 
+@event("_innerItemPress", {
+	bubbles: true,
+})
+
 class NotificationListGroupItem extends NotificationListItemBase {
 	/**
 	 * Defines if the group is collapsed or expanded.
@@ -134,7 +138,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		super.onBeforeRendering();
 
 		this.items.forEach(item => {
-			item._ariaLevel = "2";
+			item.ariaLevel = "2";
 		});
 
 		if (this.loading) {
@@ -263,7 +267,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	}
 
 	_onInnerItemClick(e: CustomEvent) {
-		this.fireDecoratorEvent<ListItemBasePressEventDetail>("_press", { item: e.detail.item, selected: false, key: "" });
+		this.fireDecoratorEvent<ListItemBasePressEventDetail>("_innerItemPress", { item: e.detail.item, selected: false, key: "" });
 	}
 }
 

@@ -194,7 +194,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
-	bubbles: true,
+	bubbles: false,
 	cancelable: true,
 })
 
