@@ -130,6 +130,7 @@ class Button extends UI5Element {
 	states!: Array<ButtonState>;
 
 	onBeforeRendering(): void {
+		console.log("asd")
 		if (this.fadeOut || this.fadeIn) {
 			return;
 		}
