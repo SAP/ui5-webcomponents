@@ -6,6 +6,7 @@ import Text from "./Text.js";
 import Link from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
+import type TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 
 // Template
 import ExpandableTextTemplate from "./generated/templates/ExpandableTextTemplate.lit.js";
@@ -61,9 +62,19 @@ class ExpandableText extends UI5Element {
 
 	/**
 	 * Determines how the full text will be displayed.
+	 * @default "InPlace"
+	 * @public
 	 */
 	@property()
 	overflowMode: `${ExpandableTextOverflowMode}` = ExpandableTextOverflowMode.InPlace
+
+	/**
+	 * Specifies if an empty indicator should be displayed when there is no text.
+	 * @default "Off"
+	 * @public
+	 */
+	@property()
+	emptyIndicatorMode: `${TextEmptyIndicatorMode}` = "Off";
 
 	@property({ type: Boolean })
 	_expanded = false;

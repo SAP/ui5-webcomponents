@@ -1,5 +1,5 @@
 <div>
-	<ui5-text class="ui5-exp-text-text">{{_displayedText}}</ui5-text>
+	<ui5-text class="ui5-exp-text-text" empty-indicator-mode="{{emptyIndicatorMode}}">{{_displayedText}}</ui5-text>
 
 	{{#if _maxCharactersExceeded}}
 		<span class="ui5-exp-text-ellipsis">{{_ellipsisText}}</span>

@@ -4,7 +4,6 @@ import "../../src/ExpandableText.js";
 // Test keyboard support
 // Test SR attributes
 // Test RTL
-// Test empty indicator
 // Test mobile popover
 
 describe("ExpandableText", () => {
@@ -23,9 +22,8 @@ describe("ExpandableText", () => {
 
 		it("Should display full text if maxCharacters are set, but not exceeded", () => {
 			const text = "This is a very long text that should be displayed";
-			const maxCharacters = 9999;
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
+			cy.mount(html`<ui5-expandable-text text=${text} max-characters="9999"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]")
 				.shadow()
@@ -60,9 +58,8 @@ describe("ExpandableText", () => {
 
 		it("Should display 'Show More' if maxCharacters are exceeded, set to 0", () => {
 			const text = "This is a very long text that should be displayed";
-			const maxCharacters = 0;
 
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
+			cy.mount(html`<ui5-expandable-text text=${text} max-characters="0"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 
@@ -82,10 +79,7 @@ describe("ExpandableText", () => {
 		});
 
 		it("Should NOT display 'Show More' if maxCharacters are 0, but text is empty", () => {
-			const text = "";
-			const maxCharacters = 0;
-
-			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
+			cy.mount(html`<ui5-expandable-text max-characters="0"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 
@@ -134,6 +128,26 @@ describe("ExpandableText", () => {
 			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.contains("Show More");
+		});
+	});
+
+	describe("Empty Indicator", () => {
+		it("Should display empty indicator if text is empty and emptyIndicatorMode=On", () => {
+			cy.mount(html`<ui5-expandable-text text="" empty-indicator-mode="On"></ui5-expandable-text>`);
+
+			cy.get("[ui5-expandable-text]")
+				.shadow()
+				.find("[ui5-text]")
+				.should("have.attr", "empty-indicator-mode", "On");
+		});
+
+		it("Should NOT display empty indicator if text is empty and emptyIndicatorMode=Off", () => {
+			cy.mount(html`<ui5-expandable-text text="" empty-indicator-mode="Off"></ui5-expandable-text>`);
+
+			cy.get("[ui5-expandable-text]")
+				.shadow()
+				.find("[ui5-text]")
+				.should("have.attr", "empty-indicator-mode", "Off");
 		});
 	});
 
