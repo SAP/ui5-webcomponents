@@ -138,7 +138,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		super.onBeforeRendering();
 
 		this.items.forEach(item => {
-			item.ariaLevel = "2";
+			item._ariaLevel = "2";
 		});
 
 		if (this.loading) {
