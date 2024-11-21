@@ -339,6 +339,10 @@ class Link extends UI5Element implements ITabbable {
 		return this.accessibleRole.toLowerCase();
 	}
 
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+	}
+
 	get _hasPopup() {
 		return this.accessibilityAttributes.hasPopup;
 	}

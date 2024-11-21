@@ -536,6 +536,10 @@ class Button extends UI5Element implements IButton {
 		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
 	}
 
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+	}
+
 	get _isSubmit() {
 		return this.type === ButtonType.Submit || this.submits;
 	}
