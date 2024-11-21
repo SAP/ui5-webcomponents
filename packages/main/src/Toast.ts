@@ -169,6 +169,7 @@ class Toast extends UI5Element {
 		if (this.open) {
 			openedToasts.pop();
 			openedToasts.push(this);
+			this.showPopover();
 		}
 
 		requestAnimationFrame(() => {
@@ -214,6 +215,7 @@ class Toast extends UI5Element {
 		this.focusable = false;
 		this.focused = false;
 		this.fireDecoratorEvent("close");
+		this.hidePopover();
 	}
 
 	_onmouseover() {
