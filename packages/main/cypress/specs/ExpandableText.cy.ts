@@ -40,20 +40,19 @@ describe("ExpandableText", () => {
 
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+
+			cy.get("@expTextShadow")
 				.find("[ui5-text]")
 				.contains(text.substring(0, maxCharacters))
 				.should("exist");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find(".ui5-exp-text-ellipsis")
 				.contains("... ")
 				.should("exist");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.contains("Show More")
 				.should("exist");
@@ -65,34 +64,31 @@ describe("ExpandableText", () => {
 
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+
+			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.contains("Show More")
 				.realClick();
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-text]")
 				.contains(text)
 				.should("exist");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
-				.find("[ui5-link].ui5-exp-text-toggle")
-				.realClick();
-
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.contains("Show Less")
 				.realClick();
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-text]")
 				.contains(text.substring(0, maxCharacters))
 				.should("exist");
+
+			cy.get("@expTextShadow")
+				.find("[ui5-link].ui5-exp-text-toggle")
+				.contains("Show More");
 		});
 	});
 
@@ -103,52 +99,46 @@ describe("ExpandableText", () => {
 
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>`);
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+
+			cy.get("@expTextShadow")
 				.find("[ui5-text]")
 				.contains(text.substring(0, maxCharacters))
 				.should("exist");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find(".ui5-exp-text-ellipsis")
 				.contains("... ")
 				.should("exist");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.contains("Show More")
 				.realClick();
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.invoke("attr", "id")
 				.as("expectedOpenerId");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-responsive-popover]")
 				.should("exist")
 				.should("have.attr", "open");
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-responsive-popover]")
 				.invoke("attr", "opener")
 				.then(function testOpenerId(opener) {
 					expect(opener).to.equal(this.expectedOpenerId);
 				});
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
 				.contains("Show Less")
 				.realClick();
 
-			cy.get("[ui5-expandable-text]")
-				.shadow()
+			cy.get("@expTextShadow")
 				.find("[ui5-responsive-popover]")
 				.should("not.have.attr", "open");
 		});
