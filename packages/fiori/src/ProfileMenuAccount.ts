@@ -32,11 +32,11 @@ class ProfileMenuAccount extends UI5Element {
 	/**
 	 * Defines, the avatar initials of the profile.
 	 *
-	 * @default ""
+	 * @default null
 	 * @public
 	 */
 	@property({ type: String })
-	initials = "";
+	initials = null;
 
 	/**
 	 * Defines, the title text of the profile.

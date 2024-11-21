@@ -13,7 +13,7 @@
 >
 	{{#if _selectedAccount}}
 		<div class="ui5-pm-selected-account" slot="header">
-			<ui5-avatar size="L" @click="{{_handleAvatarClick}}" initials="{{_selectedAccount.initials}}">
+			<ui5-avatar size="L" @click="{{_handleAvatarClick}}" initials=null initials="{{_selectedAccount.initials}}" fallback-icon="person-placeholder">
 				{{#if _selectedAccount.avatar}}
 					<img src={{_selectedAccount.avatar}}/>
 				{{/if}}
@@ -41,7 +41,7 @@
 			<ui5-list @ui5-item-click="{{_handleAccountSwitch}}">
 				{{#each _otherAccounts}}
 					<ui5-li .associatedAccount="{{this}}">
-						<ui5-avatar slot="image" size="XS" initials="{{initials}}">
+						<ui5-avatar slot="image" size="XS" initials=null initials="{{initials}}" fallback-icon="person-placeholder">
 							{{#if avatar}}
 								<img src={{avatar}}/>
 							{{/if}}

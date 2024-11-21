@@ -57,6 +57,7 @@ type ProfileMenuOtherAccountClickEventDetail = {
  * @experimental
  * @public
  */
+
 @customElement({
 	tag: "ui5-profile-menu",
 	languageAware: true,

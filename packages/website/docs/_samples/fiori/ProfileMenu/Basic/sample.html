@@ -1,0 +1,59 @@
+<!-- playground-fold -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Profile Menu sample</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+
+	</script>
+
+	<style>
+		#btnOpenProfileMenu {
+			float: right;
+		}
+	</style>
+</head>
+
+<body style="background-color: var(--sapBackgroundColor)">
+<!-- playground-fold-end -->
+
+<ui5-button id="btnOpenProfileMenu">Profile menu</ui5-button>
+<ui5-profile-menu id="profileMenu" show-manage-account show-other-accounts opener="btnOpenProfileMenu">
+	<ui5-profile-menu-account slot="accounts"
+							  avatar="../assets/images/avatars/Lamp_avatar_01.jpg"
+							  text="Alain Chevalier 1"
+							  subtitle1="alian.chevalier@sap.com"
+							  subtitle2="Delivery Manager, SAP SE"
+							  selected>
+	</ui5-profile-menu-account>
+	<ui5-profile-menu-account slot="accounts"
+							  initials="AC"
+							  text="Alain Chevalier 2"
+							  subtitle1="test.alian.chevalier@sap.com">
+	</ui5-profile-menu-account>
+	<ui5-profile-menu-account slot="accounts"
+							  text="Alain Chevalier 3"
+							  subtitle1="alian.chevalier@ariba.com"
+							  subtitle2="Account Manager">
+	</ui5-profile-menu-account>
+	<ui5-profile-menu-item icon="action-settings" text="Setting" data-id="setting" additional-text="selected value"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-profile-menu-item>
+	<ui5-profile-menu-item icon="official-service" text="Legal Information">
+		<ui5-profile-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-profile-menu-item>
+		<ui5-profile-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-profile-menu-item>
+	</ui5-profile-menu-item>
+</ui5-profile-menu>
+
+<!-- playground-fold -->
+<script type="module" src="main.js"></script>
+</body>
+
+</html>
+<!-- playground-fold-end -->
