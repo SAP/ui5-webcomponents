@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -114,7 +114,7 @@ type CarouselNavigateEventDetail = {
  * @public
  * @since 1.0.0-rc.7
  */
-@event<CarouselNavigateEventDetail>("navigate", {
+@event("navigate", {
 	detail: {
 		/**
 		 * @public
@@ -125,6 +125,9 @@ type CarouselNavigateEventDetail = {
 })
 
 class Carousel extends UI5Element {
+	eventDetails!: {
+		navigate: CarouselNavigateEventDetail;
+	}
 	/**
 	 * Defines the accessible name of the component.
 	 * @default undefined
@@ -353,7 +356,7 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -472,7 +475,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -492,7 +495,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 

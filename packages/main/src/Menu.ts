@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isLeft,
 	isRight,
@@ -117,7 +117,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @param { string } text The text of the currently clicked menu item.
  * @public
  */
-@event<MenuItemClickEventDetail>("item-click", {
+@event("item-click", {
 	detail: {
 		/**
 		 * @public
@@ -143,7 +143,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @since 1.10.0
  * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
-@event<MenuBeforeOpenEventDetail>("before-open", {
+@event("before-open", {
 	detail: {
 		/**
 		 * @public
@@ -169,7 +169,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
-@event<MenuBeforeCloseEventDetail>("before-close", {
+@event("before-close", {
 	detail: {
 		/**
 		 * @public
@@ -188,6 +188,13 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 @event("close")
 
 class Menu extends UI5Element {
+	eventDetails!: {
+		"item-click": MenuItemClickEventDetail,
+		"before-open": MenuBeforeOpenEventDetail,
+		"open": void,
+		"before-close": MenuBeforeCloseEventDetail,
+		"close": void,
+	}
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
 	 * @default undefined

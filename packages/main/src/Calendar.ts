@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -214,7 +214,7 @@ type SpecialCalendarDateT = {
  * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
  */
-@event<CalendarSelectionChangeEventDetail>("selection-change", {
+@event("selection-change", {
 	detail: {
 		/**
 		 * @public
@@ -238,6 +238,12 @@ type SpecialCalendarDateT = {
 	bubbles: true,
 })
 class Calendar extends CalendarPart {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"selection-change": CalendarSelectionChangeEventDetail,
+		// TODO: XXX
+		"show-month-view": KeyboardEvent,
+		"show-year-view": KeyboardEvent,
+	}
 	/**
 	 * Defines the type of selection used in the calendar component.
 	 * Accepted property values are:
@@ -635,7 +641,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireDecoratorEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
+		const defaultPrevented = !this.fireDecoratorEvent("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}

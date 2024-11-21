@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -68,7 +68,7 @@ type TokenDeleteEventDetail = {
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
  */
-@event<TokenDeleteEventDetail>("delete", {
+@event("delete", {
 	detail: {
 		"backSpace": { type: Boolean },
 		"delete": { type: Boolean },
@@ -77,6 +77,10 @@ type TokenDeleteEventDetail = {
 })
 
 class Token extends UI5Element implements IToken {
+	eventDetails!: {
+		"select": void
+		"delete": TokenDeleteEventDetail
+	}
 	/**
 	 * Defines the text of the token.
 	 * @default undefined
@@ -185,7 +189,7 @@ class Token extends UI5Element implements IToken {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireDecoratorEvent<TokenDeleteEventDetail>("delete", {
+			this.fireDecoratorEvent("delete", {
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});

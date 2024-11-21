@@ -1,7 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -56,7 +56,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the toggled item.
  * @protected
  */
-@event<TreeItemBaseToggleEventDetail>("toggle", {
+@event("toggle", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -68,7 +68,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which right arrow was pressed.
  * @protected
  */
-@event<TreeItemBaseStepInEventDetail>("step-in", {
+@event("step-in", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -80,13 +80,18 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @param {HTMLElement} item the item on which left arrow was pressed.
  * @protected
  */
-@event<TreeItemBaseStepOutEventDetail>("step-out", {
+@event("step-out", {
 	detail: {
 		item: { type: HTMLElement },
 	},
 	bubbles: true,
 })
 class TreeItemBase extends ListItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		toggle: TreeItemBaseToggleEventDetail;
+		"step-in": TreeItemBaseStepInEventDetail;
+		"step-out": TreeItemBaseStepOutEventDetail;
+	}
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 	 * @protected
@@ -294,7 +299,7 @@ class TreeItemBase extends ListItem {
 
 	_toggleClick(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
-		this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+		this.fireDecoratorEvent("toggle", { item: this });
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
@@ -302,17 +307,17 @@ class TreeItemBase extends ListItem {
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {
-				this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.fireDecoratorEvent("toggle", { item: this });
 			} else {
-				this.fireDecoratorEvent<TreeItemBaseStepInEventDetail>("step-in", { item: this });
+				this.fireDecoratorEvent("step-in", { item: this });
 			}
 		}
 
 		if (!this._fixed && isLeft(e)) {
 			if (this.expanded) {
-				this.fireDecoratorEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.fireDecoratorEvent("toggle", { item: this });
 			} else if (this.hasParent) {
-				this.fireDecoratorEvent<TreeItemBaseStepOutEventDetail>("step-out", { item: this });
+				this.fireDecoratorEvent("step-out", { item: this });
 			}
 		}
 	}

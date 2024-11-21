@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 type ShellBarItemClickEventDetail = {
@@ -30,7 +30,7 @@ type ShellBarItemClickEventDetail = {
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
  */
-@event<ShellBarItemClickEventDetail>("click", {
+@event("click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 	},
@@ -39,6 +39,10 @@ type ShellBarItemClickEventDetail = {
 })
 
 class ShellBarItem extends UI5Element {
+	eventDetails!: {
+		// TODO: XXX
+		click: ShellBarItemClickEventDetail,
+	}
 	/**
 	 * Defines the name of the item's icon.
 	 * @default undefined
@@ -71,7 +75,7 @@ class ShellBarItem extends UI5Element {
 	}
 
 	fireClickEvent(e: MouseEvent) {
-		return this.fireDecoratorEvent<ShellBarItemClickEventDetail>("click", {
+		return this.fireDecoratorEvent("click", {
 			targetRef: (e.target as HTMLElement),
 		});
 	}

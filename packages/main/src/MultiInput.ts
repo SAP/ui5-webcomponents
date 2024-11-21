@@ -1,6 +1,6 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -91,7 +91,7 @@ type MultiInputTokenDeleteEventDetail = {
  * @param {Array} tokens An array containing the deleted tokens.
  * @public
  */
-@event<MultiInputTokenDeleteEventDetail>("token-delete", {
+@event("token-delete", {
 	detail: {
 		/**
 		 * @public
@@ -102,6 +102,10 @@ type MultiInputTokenDeleteEventDetail = {
 })
 
 class MultiInput extends Input implements IFormInputElement {
+	eventDetails!: Input["eventDetails"] & {
+		"value-help-trigger": void,
+		"token-delete": MultiInputTokenDeleteEventDetail,
+	}
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire `value-help-trigger` event.
@@ -188,7 +192,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 
 		if (deletedTokens) {
-			this.fireDecoratorEvent<MultiInputTokenDeleteEventDetail>("token-delete", { tokens: deletedTokens });
+			this.fireDecoratorEvent("token-delete", { tokens: deletedTokens });
 
 			if (shouldFocusInput) {
 				this.focus();

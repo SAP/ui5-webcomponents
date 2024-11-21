@@ -4,7 +4,7 @@ import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Key
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
 import type { IProductSwitchItem } from "./ProductSwitch.js";
@@ -54,6 +54,10 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 	bubbles: true,
 })
 class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
+	eventDetails!: {
+		click: { item: ProductSwitchItem },
+		_focused: FocusEvent,
+	}
 	/**
 	 * Defines the title of the component.
 	 * @default undefined
@@ -196,10 +200,12 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	}
 
 	_onfocusin(e: FocusEvent) {
+		// TODO: XXX
 		this.fireDecoratorEvent("_focused", e);
 	}
 
 	_fireItemClick() {
+		// TODO: XXX
 		this.fireDecoratorEvent("click", { item: this });
 	}
 }

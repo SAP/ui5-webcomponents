@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import Button from "./Button.js";
 import type { ButtonAccessibilityAttributes } from "./Button.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
@@ -47,6 +47,10 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  */
 @event("click")
 class ToolbarButton extends ToolbarItem {
+	eventDetails!: ToolbarItem["eventDetails"] & {
+		// TODO: XXX
+		"click": void
+	}
 	/**
 	 * Defines if the action is disabled.
 	 *

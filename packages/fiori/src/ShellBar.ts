@@ -3,7 +3,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -165,7 +165,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event<ShellBarNotificationsClickEventDetail>("notifications-click", {
+@event("notifications-click", {
 	detail: {
 		/**
 		 * @public
@@ -181,7 +181,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event<ShellBarProfileClickEventDetail>("profile-click", {
+@event("profile-click", {
 	detail: {
 		/**
 		 * @public
@@ -198,7 +198,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
+@event("product-switch-click", {
 	detail: {
 		/**
 		 * @public
@@ -215,7 +215,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event<ShellBarLogoClickEventDetail>("logo-click", {
+@event("logo-click", {
 	detail: {
 		/**
 		 * @public
@@ -233,7 +233,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+@event("menu-item-click", {
 	detail: {
 		/**
 		 * @public
@@ -253,7 +253,7 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 
-@event<ShellBarSearchButtonEventDetail>("search-button-click", {
+@event("search-button-click", {
 	detail: {
 		targetRef: { type: HTMLElement },
 		searchFieldVisible: { type: Boolean },
@@ -263,6 +263,14 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 })
 
 class ShellBar extends UI5Element {
+	eventDetails!: {
+		"notifications-click": ShellBarNotificationsClickEventDetail,
+		"profile-click": ShellBarProfileClickEventDetail,
+		"product-switch-click": ShellBarProductSwitchClickEventDetail,
+		"logo-click": ShellBarLogoClickEventDetail,
+		"menu-item-click": ShellBarMenuItemClickEventDetail,
+		"search-button-click": ShellBarSearchButtonEventDetail,
+	}
 	/**
 	 * Defines the `primaryTitle`.
 	 *
@@ -535,7 +543,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		const shouldContinue = this.fireDecoratorEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+		const shouldContinue = this.fireDecoratorEvent("menu-item-click", {
 			item: e.detail.selectedItems[0],
 		});
 		if (shouldContinue) {
@@ -544,8 +552,9 @@ class ShellBar extends UI5Element {
 	}
 
 	_logoPress() {
-		this.fireDecoratorEvent<ShellBarLogoClickEventDetail>("logo-click", {
-			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo")!,
+		this.fireDecoratorEvent("logo-click", {
+			// TODO: XXX
+			targetRef: this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-logo")!,
 		});
 	}
 
@@ -739,7 +748,7 @@ class ShellBar extends UI5Element {
 
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
-		const defaultPrevented = !this.fireDecoratorEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+		const defaultPrevented = !this.fireDecoratorEvent("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
 		});
@@ -802,13 +811,13 @@ class ShellBar extends UI5Element {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
 		});
 	}
 
 	_handleProfilePress() {
-		this.fireDecoratorEvent<ShellBarProfileClickEventDetail>("profile-click", {
+		this.fireDecoratorEvent("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
 	}
@@ -821,7 +830,7 @@ class ShellBar extends UI5Element {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
 		});
 	}

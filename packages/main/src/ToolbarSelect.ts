@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
@@ -45,7 +45,7 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
-@event<ToolbarSelectChangeEventDetail>("change", {
+@event("change", {
 	detail: {
 		/**
 		* @public
@@ -70,6 +70,11 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @event("close")
 class ToolbarSelect extends ToolbarItem {
+	eventDetails!: ToolbarItem["eventDetails"] & {
+		change: ToolbarSelectChangeEventDetail;
+		open: void;
+		close: void;
+	}
 	/**
 	 * Defines the width of the select.
 	 *

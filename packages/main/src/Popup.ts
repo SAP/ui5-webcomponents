@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -100,7 +100,7 @@ type PopupBeforeCloseEventDetail = {
  * @public
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
-@event<PopupBeforeCloseEventDetail>("before-close", {
+@event("before-close", {
 	detail: {
 		/**
 		 * @public
@@ -126,6 +126,13 @@ type PopupBeforeCloseEventDetail = {
 	bubbles: true,
 })
 abstract class Popup extends UI5Element {
+	eventDetails!: {
+		"before-open": void,
+		open: void,
+		"before-close": PopupBeforeCloseEventDetail,
+		close: void,
+		scroll: PopupScrollEventDetail,
+	}
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
@@ -299,7 +306,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireDecoratorEvent("before-open", {});
+		const prevented = !this.fireDecoratorEvent("before-open");
 
 		if (prevented || this._opened) {
 			return;
@@ -332,7 +339,8 @@ abstract class Popup extends UI5Element {
 		await this.applyInitialFocus();
 
 		if (this.isConnected) {
-			this.fireDecoratorEvent("open", {});
+			// TODO: XXX
+			this.fireDecoratorEvent("open");
 		}
 	}
 
@@ -376,7 +384,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireDecoratorEvent<PopupScrollEventDetail>("scroll", {
+		this.fireDecoratorEvent("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -515,7 +523,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireDecoratorEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed });
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
 		if (prevented) {
 			return;
 		}
@@ -537,7 +545,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireDecoratorEvent("close", {});
+		this.fireDecoratorEvent("close");
 	}
 
 	/**

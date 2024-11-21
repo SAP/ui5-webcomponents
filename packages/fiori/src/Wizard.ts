@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -207,7 +207,7 @@ type StepInfo = {
  * @param {boolean} withScroll true when the event occurs due to user scrolling.
  * @public
  */
-@event<WizardStepChangeEventDetail>("step-change", {
+@event("step-change", {
 	detail: {
 		/**
 		* @public
@@ -226,6 +226,9 @@ type StepInfo = {
 })
 
 class Wizard extends UI5Element {
+	eventDetails!: {
+		"step-change": WizardStepChangeEventDetail
+	}
 	/**
 	 * Defines how the content of the `ui5-wizard` would be visualized.
 	 * @public
@@ -1037,7 +1040,7 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireDecoratorEvent<WizardStepChangeEventDetail>("step-change", {
+			this.fireDecoratorEvent("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
 				withScroll,

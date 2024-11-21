@@ -1,13 +1,14 @@
+import type UI5Element from "../UI5Element.js";
+
 /**
  * Returns an event class decorator.
  *
- * @deprecated Use `@ui5/webcomponents-base/dist/decorators/event-strict.js` instead.
  * @param { string } name the event name
  * @param { EventData } data the event data
  * @returns { ClassDecorator }
  */
-const event = <EventDetail>(name: string, data: { detail?: Record<keyof EventDetail, { type: any }>, bubbles?: boolean, cancelable?: boolean } = {}): ClassDecorator => {
-	return (target: any) => {
+const event = <T extends typeof UI5Element, N extends keyof InstanceType<T>["eventDetails"]>(name: N, data: { detail?: Record<keyof InstanceType<T>["eventDetails"][N], { type: any}>, bubbles?: boolean, cancelable?: boolean } = {}): (target: T) => T | void => {
+	return (target: T) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};
 		}
@@ -18,10 +19,10 @@ const event = <EventDetail>(name: string, data: { detail?: Record<keyof EventDet
 		}
 
 		const eventsMetadata = metadata.events;
-		if (!eventsMetadata[name]) {
+		if (!eventsMetadata[name as string]) {
 			data.bubbles = !!data.bubbles;
 			data.cancelable = !!data.cancelable;
-			eventsMetadata[name] = data;
+			eventsMetadata[name as string] = data;
 		}
 	};
 };

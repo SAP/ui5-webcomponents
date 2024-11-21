@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -90,7 +90,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event<LinkClickEventDetail>("click", {
+@event("click", {
 	detail: {
 		/**
 		 * @public
@@ -113,6 +113,9 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
+	eventDetails!: {
+		"click": LinkClickEventDetail,
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -344,7 +347,7 @@ class Link extends UI5Element implements ITabbable {
 
 		e.stopImmediatePropagation();
 
-		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent("click", {
 			altKey,
 			ctrlKey,
 			metaKey,

@@ -148,6 +148,7 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
+	eventDetails!: object;
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
@@ -970,13 +971,13 @@ abstract class UI5Element extends HTMLElement {
 	 * @param data - additional data for the event
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireDecoratorEvent<T>(name: string, data?: T): boolean {
-		const eventData = this.getEventData(name);
+	fireDecoratorEvent<N extends keyof this["eventDetails"]>(name: N, data?: this["eventDetails"][N] | undefined): boolean {
+		const eventData = this.getEventData(name as string);
 		const cancellable = eventData ? eventData.cancelable : false;
 		const bubbles = eventData ? eventData.bubbles : false;
 
-		const eventResult = this._fireEvent(name, data, cancellable, bubbles);
-		const pascalCaseEventName = kebabToPascalCase(name);
+		const eventResult = this._fireEvent(name as string, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name as string);
 
 		// pascal events are more convinient for native react usage
 		// live-change:
