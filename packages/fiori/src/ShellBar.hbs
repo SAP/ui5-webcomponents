@@ -4,10 +4,8 @@
 	@keydown="{{_onKeyDown}}"
 	part="root">
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
-
 		{{#if startButton.length}}
 			{{#if _isFullVariant}}
-
 				<slot name="startButton"></slot>
 			{{/if}}
 		{{/if}}
@@ -57,19 +55,14 @@
 		{{/if}}
 
 		{{#unless hasMenuItems}}
-		{{#if hasMenuItems}}
-			<slot name="menuItems"></slot>
-		{{/if}}
-
-		{{#if _isSBreakpoint}}
-			{{#if hasLogo}}
-				{{> singleLogo}}
+			{{#if _isSBreakpoint}}
+				{{#if hasLogo}}
+					{{> singleLogo}}
+				{{/if}}
+			{{else}}
+				{{> combinedLogo}}
 			{{/if}}
-		{{else}}
-			{{> combinedLogo}}
-		{{/if}}
 		{{/unless}}
-
 	</div>
 	{{#if hasMidContent}}
 		<div class="ui5-shellbar-overflow-container ui5-shellbar-mid-content">
@@ -77,40 +70,28 @@
 		</div>
 	{{/if}}
 		<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
-
-
-				{{#if _isFullVariant}}
-					{{#unless _isSBreakpoint}}
-						{{#if hasAdditionalContext}}
-						{{#if additionalContextStart}}
-									{{#if hasVisibleAdditionalContextStart}}
-										<div class="ui5-shellbar-separator ui5-shellbar-separator-start"></div>
-									{{/if}}
-								{{/if}}
-							<div class="ui5-shellbar-overflow-container-additional-content">
-
-								{{#each additionalContextStart}}
-									<slot name="{{this._individualSlot}}"></slot>
-								{{/each}}
-									<div class="ui5-shellbar-spacer"></div>
-								{{#each additionalContextEnd}}
-									<slot name="{{this._individualSlot}}"></slot>
-								{{/each}}
-
-							</div>
-							{{#if additionalContextEnd}}
-									{{#if hasVisibleAdditionalContextEnd}}
-										<div class="ui5-shellbar-separator ui5-shellbar-separator-end"></div>
-									{{/if}}
-								{{/if}}
-						{{/if}}
-					{{/unless}}
+			{{#if showAdditionalContext}}
+				{{#if hasVisibleAdditionalContextStart}}
+					<div class="ui5-shellbar-separator ui5-shellbar-separator-start"></div>
 				{{/if}}
+				<div class="ui5-shellbar-overflow-container-additional-content">
+					{{#each additionalContextStart}}
+						<slot name="{{this._individualSlot}}"></slot>
+					{{/each}}
+						<div class="ui5-shellbar-spacer"></div>
+					{{#each additionalContextEnd}}
+						<slot name="{{this._individualSlot}}"></slot>
+					{{/each}}
+				</div>
+				{{#if hasVisibleAdditionalContextEnd}}
+					<div class="ui5-shellbar-separator ui5-shellbar-separator-end"></div>
+				{{/if}}
+			{{/if}}
 			<div class="ui5-shellbar-overflow-container-right-child">
 				{{#if _isFullVariant}}
 					{{#if _isXXLBreakpoint}}
 						{{#if hasSearchField}}
-						<slot name="searchField"></slot>
+							<slot name="searchField"></slot>
 						{{/if}}
 					{{/if}}
 					{{#unless _isXXLBreakpoint }}
@@ -155,13 +136,15 @@
 				{{/if}}
 
 				{{#if showNotifications}}
-					<ui5-button id="{{this._id}}-item-2"
-						class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
-						icon="sap-icon://bell" data-ui5-text="Notifications"
-						data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
-						tooltip="{{_notificationsText}}"
-						.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
-						data-ui5-stable="notifications"></ui5-button>
+					{{#if _isFullVariant}}
+						<ui5-button id="{{this._id}}-item-2"
+							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
+							icon="sap-icon://bell" data-ui5-text="Notifications"
+							data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
+							tooltip="{{_notificationsText}}"
+							.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
+							data-ui5-stable="notifications"></ui5-button>
+					{{/if}}
 				{{/if}}
 
 				{{#each customItemsInfo}}
@@ -179,7 +162,6 @@
 					></ui5-button>
 				{{/each}}
 
-
 				<ui5-button
 					id="{{this._id}}-item-5"
 					class="{{classes.items.overflow}} ui5-shellbar-button ui5-shellbar-overflow-button  ui5-shellbar-items-for-arrow-nav"
@@ -196,16 +178,18 @@
 				{{/if}}
 
 				{{#if showProductSwitch}}
-					<ui5-button
-						id="{{this._id}}-item-4"
-						class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
-						icon="sap-icon://grid"
-						data-ui5-text="Product Switch"
-						@click={{_handleProductSwitchPress}}
-						tooltip="{{_productsText}}"
-						.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
-						data-ui5-stable="product-switch"
-					></ui5-button>
+					{{#if _isFullVariant}}
+						<ui5-button
+							id="{{this._id}}-item-4"
+							class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
+							icon="sap-icon://grid"
+							data-ui5-text="Product Switch"
+							@click={{_handleProductSwitchPress}}
+							tooltip="{{_productsText}}"
+							.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
+							data-ui5-stable="product-switch"
+						></ui5-button>
+					{{/if}}
 				{{/if}}
 			</div>
 		</div>
