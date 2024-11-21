@@ -1,0 +1,48 @@
+name: API Reviewer
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Genereate current CEM
+        run: yarn generateAPI
+
+      - name: Flatten current CEM
+        run: |
+          node ${{ github.workspace }}/.github/actions/test.js --file-name=flat-manifest-current
+          echo "Current manifest ==="
+          cat flat-manifest-current.json
+
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Genereate main CEM
+        run: yarn generateAPI
+
+      - name: Flatten main CEM
+        run: |
+          echo "Main manifest ==="
+          node ${{ github.workspace }}/.github/actions/test.js --file-name=flat-manifest-main
+          cat flat-manifest-main.json
