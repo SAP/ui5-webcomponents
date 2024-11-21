@@ -401,8 +401,15 @@ class ShellBar extends UI5Element {
 
 	@property({ type: Boolean, noAttribute: true })
 	_isXXLBreakpoint = false;
+
 	@property({ type: Boolean, noAttribute: true })
 	_isSBreakpoint = false;
+
+	@property({ type: Boolean, noAttribute: true })
+	hasVisibleAdditionalContextStart = false;
+
+	@property({ type: Boolean, noAttribute: true })
+	hasVisibleAdditionalContextEnd = false;
 
 	/**
 	 * Defines the assistant slot.
@@ -507,9 +514,6 @@ class ShellBar extends UI5Element {
 	_overflowNotifications: string | null;
 	_showSearchField = false;
 	_skipLayout = false;
-
-	hasVisibleAdditionalContextStart = false;
-	hasVisibleAdditionalContextEnd = false;
 
 	_headerPress: () => void;
 
@@ -1285,6 +1289,18 @@ class ShellBar extends UI5Element {
 		return {
 			searchField: {
 				"display": this.correctSearchFieldStyles,
+			},
+			additionalContext: {
+				start: {
+					separator: {
+						"visibility": this.hasVisibleAdditionalContextStart ? "" : "hidden",
+					},
+				},
+				end: {
+					separator: {
+						"visibility": this.hasVisibleAdditionalContextEnd ? "" : "hidden",
+					},
+				},
 			},
 		};
 	}

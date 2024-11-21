@@ -71,9 +71,10 @@
 	{{/if}}
 		<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 			{{#if showAdditionalContext}}
-				{{#if hasVisibleAdditionalContextStart}}
-					<div class="ui5-shellbar-separator ui5-shellbar-separator-start"></div>
-				{{/if}}
+				<div 
+					style="{{styles.additionalContext.start.separator}}" 
+					class="ui5-shellbar-separator ui5-shellbar-separator-start">
+				</div>
 				<div class="ui5-shellbar-overflow-container-additional-content">
 					{{#each additionalContextStart}}
 						<slot name="{{this._individualSlot}}"></slot>
@@ -83,9 +84,10 @@
 						<slot name="{{this._individualSlot}}"></slot>
 					{{/each}}
 				</div>
-				{{#if hasVisibleAdditionalContextEnd}}
-					<div class="ui5-shellbar-separator ui5-shellbar-separator-end"></div>
-				{{/if}}
+				<div 
+					style="{{styles.additionalContext.end.separator}}" 
+					class="ui5-shellbar-separator ui5-shellbar-separator-end">
+				</div>
 			{{/if}}
 			<div class="ui5-shellbar-overflow-container-right-child">
 				{{#if _isFullVariant}}
