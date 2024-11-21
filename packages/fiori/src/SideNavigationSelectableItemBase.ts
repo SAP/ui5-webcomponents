@@ -173,6 +173,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 	}
 
+	get canBeSelected() {
+		return !this.isExternalLink;
+	}
+
 	get isSideNavigationSelectableItemBase() {
 		return true;
 	}

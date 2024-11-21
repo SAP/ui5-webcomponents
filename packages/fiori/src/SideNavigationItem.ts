@@ -213,6 +213,22 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	get isSideNavigationItem() {
 		return true;
 	}
+
+	_activate(e: KeyboardEvent | PointerEvent) {
+		super._activate(e);
+
+		if (!this.canBeSelected) {
+			this.expanded = !this.expanded;
+		}
+	}
+
+	get canBeSelected() {
+		if (this.items.length > 0 && !this.href) {
+			return false;
+		}
+
+		return !this.isExternalLink;
+	}
 }
 
 SideNavigationItem.define();
