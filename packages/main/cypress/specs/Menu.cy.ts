@@ -595,7 +595,7 @@ describe("Menu interaction", () => {
 
 		it("Select/deselect items (Single mode)", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-				<ui5-menu open opener="btnOpen">
+				<ui5-menu opener="btnOpen">
 					<ui5-menu-item-group item-selection-mode="Single" id="groupSingle">
 						<ui5-menu-item text="Item 2" is-selected></ui5-menu-item>
 						<ui5-menu-item text="Item 3"></ui5-menu-item>
@@ -604,6 +604,9 @@ describe("Menu interaction", () => {
 
 			cy.get("[ui5-menu]")
 				.as("menu");
+
+			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
 
 			cy.get("@menu")
 				.find("[id='groupSingle']")
@@ -668,7 +671,7 @@ describe("Menu interaction", () => {
 
 		it("Select/deselect items (Multiple mode) ", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
-				<ui5-menu open opener="btnOpen">
+				<ui5-menu opener="btnOpen">
 					<ui5-menu-item-group id="groupMulti" item-selection-mode="Multiple">
 						<ui5-menu-item text="Item 4" is-selected></ui5-menu-item>
 						<ui5-menu-item text="Item 5" is-selected></ui5-menu-item>
@@ -677,6 +680,9 @@ describe("Menu interaction", () => {
 
 			cy.get("[ui5-menu]")
 				.as("menu");
+
+			cy.get("@menu")
+				.ui5MenuOpen({ opener: "btnOpen" });
 
 			cy.get("@menu")
 				.find("[id='groupMulti']")
