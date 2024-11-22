@@ -409,10 +409,11 @@ class SplitButton extends UI5Element {
 			}
 		} else {
 			this._textButtonActive = true;
-			this._fireClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;
+				return;
 			}
+			this._fireClick();
 		}
 	}
 
