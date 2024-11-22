@@ -92,6 +92,8 @@ class ExpandableText extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	_preventNextToggleClickHandling = false;
+
 	getFocusDomRef(): HTMLElement | undefined {
 		if (this._usePopover) {
 			return this.shadowRoot?.querySelector("[ui5-responsive-popover]") as HTMLElement;
@@ -135,10 +137,19 @@ class ExpandableText extends UI5Element {
 	_handlePopoverClose() {
 		if (!isPhone()) {
 			this._expanded = false;
+
+			if (this.shadowRoot!.activeElement === this.shadowRoot!.querySelector("[ui5-link]")) {
+				this._preventNextToggleClickHandling = true;
+			}
 		}
 	}
 
 	_handleToggleClick() {
+		if (this._preventNextToggleClickHandling) {
+			this._preventNextToggleClickHandling = false;
+			return;
+		}
+
 		this._expanded = !this._expanded;
 	}
 

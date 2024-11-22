@@ -3,7 +3,6 @@ import "../../src/ExpandableText.js";
 
 // Test keyboard support
 // Test SR attributes
-// Test RTL
 
 describe("ExpandableText", () => {
 	describe("Rendering and Interaction", () => {
@@ -201,10 +200,9 @@ describe("ExpandableText", () => {
 				.contains("Show Less")
 				.realClick();
 
-			// TODO: currently it is not possible to close the popover from an opener link, therefore this test is unstable. Fix the issue and uncomment it.
-			// cy.get("@expTextShadow")
-			// 	.find("[ui5-responsive-popover]")
-			// 	.should("not.have.attr", "open");
+			cy.get("@expTextShadow")
+				.find("[ui5-responsive-popover]")
+				.should("not.have.attr", "open");
 		});
 
 		it("Toggling 'Show More' and 'Show Less' on Mobile Device", () => {
