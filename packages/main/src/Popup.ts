@@ -339,7 +339,6 @@ abstract class Popup extends UI5Element {
 		await this.applyInitialFocus();
 
 		if (this.isConnected) {
-			// TODO: XXX
 			this.fireDecoratorEvent("open");
 		}
 	}

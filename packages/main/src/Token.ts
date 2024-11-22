@@ -25,8 +25,8 @@ import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 import tokenStyles from "./generated/themes/Token.css.js";
 
 type TokenDeleteEventDetail = {
-	backSpace: boolean;
-	delete: boolean;
+	backSpace?: boolean;
+	delete?: boolean;
 }
 
 /**

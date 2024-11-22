@@ -49,7 +49,6 @@ import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js"
 
 type BreadcrumbsItemClickEventDetail = {
 	item: BreadcrumbsItem;
-	// TODO: XXX
 	altKey?: boolean;
 	ctrlKey?: boolean;
 	metaKey?: boolean;

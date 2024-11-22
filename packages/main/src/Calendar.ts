@@ -240,9 +240,8 @@ type SpecialCalendarDateT = {
 class Calendar extends CalendarPart {
 	eventDetails!: CalendarPart["eventDetails"] & {
 		"selection-change": CalendarSelectionChangeEventDetail,
-		// TODO: XXX
-		"show-month-view": KeyboardEvent,
-		"show-year-view": KeyboardEvent,
+		"show-month-view": void,
+		"show-year-view": void,
 	}
 	/**
 	 * Defines the type of selection used in the calendar component.
@@ -743,7 +742,7 @@ class Calendar extends CalendarPart {
 
 		if (isEnter(e)) {
 			this.showMonth();
-			this.fireDecoratorEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view");
 		}
 	}
 
@@ -751,7 +750,7 @@ class Calendar extends CalendarPart {
 		if (isSpace(e)) {
 			e.preventDefault();
 			this.showMonth();
-			this.fireDecoratorEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view");
 		}
 	}
 
@@ -762,14 +761,14 @@ class Calendar extends CalendarPart {
 
 		if (isEnter(e)) {
 			this.showYear();
-			this.fireDecoratorEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view");
 		}
 	}
 
 	onYearButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.showYear();
-			this.fireDecoratorEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view");
 		}
 	}
 

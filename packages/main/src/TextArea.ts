@@ -427,7 +427,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 	}
 
 	_onchange() {
-		// TODO: XXX
 		this.fireDecoratorEvent("change");
 	}
 

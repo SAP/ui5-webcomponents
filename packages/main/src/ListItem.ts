@@ -98,10 +98,6 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 @event("detail-click", {
 	bubbles: true,
 })
-// TODO: XXX from base class
-@event("_focused", {
-	bubbles: true,
-})
 @event("_selection-requested", {
 	bubbles: true,
 })

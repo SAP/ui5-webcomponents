@@ -57,7 +57,6 @@ type ListItemBasePressEventDetail = {
 class ListItemBase extends UI5Element implements ITabbable {
 	eventDetails!: {
 		"_request-tabindex-change": FocusEvent,
-		// TODO: XXX
 		"_press": ListItemBasePressEventDetail,
 		"_focused": FocusEvent,
 		"_forward-after": void,

@@ -135,8 +135,7 @@ type StepInputValueStateChangeEventDetail = {
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	eventDetails!: {
-		// TODO: XXX
-		change: { value: number }
+		change: void
 		"value-state-change": StepInputValueStateChangeEventDetail
 	}
 	/**
@@ -446,7 +445,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_fireChangeEvent() {
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		}
 	}
 

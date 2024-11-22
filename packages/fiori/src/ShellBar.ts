@@ -553,7 +553,6 @@ class ShellBar extends UI5Element {
 
 	_logoPress() {
 		this.fireDecoratorEvent("logo-click", {
-			// TODO: XXX
 			targetRef: this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-logo")!,
 		});
 	}
