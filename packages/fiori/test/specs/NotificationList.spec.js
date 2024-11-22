@@ -86,6 +86,20 @@ describe("Notification List Item Tests", () => {
 		// assert
 		assert.strictEqual(await clickInput.getProperty("value"), EXPECTED_RESULT_2,
 			"The itemClick has been fired.");
+
+		// act
+		await browser.keys("ArrowUp");
+		await browser.keys("Tab");
+		await browser.keys("Tab");
+
+		// menu button
+		await firstItem.keys("Enter");
+		// menu item
+		await firstItem.keys("Enter");
+
+		// assert
+		assert.strictEqual(await clickInput.getProperty("value"), EXPECTED_RESULT_2,
+			"The itemClick has not been fired.");
 	});
 
 	it("tests itemClose fired", async () => {
