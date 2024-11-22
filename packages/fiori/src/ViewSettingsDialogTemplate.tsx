@@ -74,7 +74,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 					<List
 						selectionMode="SingleStart"
 						onItemClick={this._onSortOrderChange}
-						data-sort-order
+						sort-order
 						accessibleNameRef={`${this._id}-label`}
 					>
 						<ListItemGroup headerText={this._sortOrderLabel}>
@@ -88,7 +88,7 @@ function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 					<List
 						selectionMode="SingleStart"
 						onItemClick={this._onSortByChange}
-						data-sort-by
+						sort-by
 					>
 						<ListItemGroup headerText={this._sortByLabel}>
 							{this._currentSettings.sortBy.map((item, index) => (
