@@ -4,14 +4,17 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Text from "./Text.js";
 import Link from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import Button from "./Button.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
 import type TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 import {
 	EXPANDABLE_TEXT_SHOW_LESS,
 	EXPANDABLE_TEXT_SHOW_MORE,
+	EXPANDABLE_TEXT_CLOSE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -46,6 +49,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
 		Text,
 		Link,
 		ResponsivePopover,
+		Button,
 	],
 })
 class ExpandableText extends UI5Element {
@@ -124,12 +128,23 @@ class ExpandableText extends UI5Element {
 		return this._expanded ? ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_LESS) : ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_MORE);
 	}
 
-	_handlePopoverClose() {
-		this._toggleExpanded();
+	get _closeButtonText() {
+		return ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_CLOSE);
 	}
 
-	_toggleExpanded() {
+	_handlePopoverClose() {
+		if (!isPhone()) {
+			this._expanded = false;
+		}
+	}
+
+	_handleToggleClick() {
 		this._expanded = !this._expanded;
+	}
+
+	_handleCloseButtonClick(e: CustomEvent) {
+		this._expanded = false;
+		e.stopPropagation();
 	}
 }
 

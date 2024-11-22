@@ -4,7 +4,6 @@ import "../../src/ExpandableText.js";
 // Test keyboard support
 // Test SR attributes
 // Test RTL
-// Test mobile popover
 
 describe("ExpandableText", () => {
 	describe("Rendering and Interaction", () => {
@@ -182,11 +181,16 @@ describe("ExpandableText", () => {
 
 			cy.get("@expTextShadow")
 				.find("[ui5-responsive-popover]")
+				.as("rpo");
+
+			cy.get("@rpo")
 				.should("exist")
 				.should("have.attr", "open");
 
-			cy.get("@expTextShadow")
-				.find("[ui5-responsive-popover]")
+			cy.get("@rpo")
+				.should("have.attr", "content-only-on-desktop");
+
+			cy.get("@rpo")
 				.invoke("attr", "opener")
 				.then(function testOpenerId(opener) {
 					expect(opener).to.equal(this.expectedOpenerId);
@@ -201,6 +205,42 @@ describe("ExpandableText", () => {
 			// cy.get("@expTextShadow")
 			// 	.find("[ui5-responsive-popover]")
 			// 	.should("not.have.attr", "open");
+		});
+
+		it("Toggling 'Show More' and 'Show Less' on Mobile Device", () => {
+			const text = "This is a very long text that should be displayed";
+			const maxCharacters = 5;
+
+			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>`);
+			cy.ui5SimulateDevice("phone");
+
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+
+			cy.get("@expTextShadow")
+				.find("[ui5-link].ui5-exp-text-toggle")
+				.contains("Show More")
+				.realClick();
+
+			cy.get("@expTextShadow")
+				.find("[ui5-responsive-popover]").as("rpo");
+
+			cy.get("@rpo")
+				.should("exist")
+				.should("have.attr", "open");
+
+			cy.get("@rpo")
+				.should("have.attr", "_hide-header");
+
+			cy.get("@rpo")
+				.contains("[slot=footer] [ui5-button]", "Close")
+				.should("exist");
+
+			cy.get("@rpo")
+				.contains("[slot=footer] [ui5-button]", "Close")
+				.realClick();
+
+			cy.get("@rpo")
+				.should("not.have.attr", "open");
 		});
 	});
 });

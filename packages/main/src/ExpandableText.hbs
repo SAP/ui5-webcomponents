@@ -3,11 +3,28 @@
 
 	{{#if _maxCharactersExceeded}}
 		<span class="ui5-exp-text-ellipsis">{{_ellipsisText}}</span>
-		<ui5-link id="{{_id}}-toggle" class="ui5-exp-text-toggle" @click="{{_toggleExpanded}}">{{_textForToggle}}<ui5-link>
+		<ui5-link id="{{_id}}-toggle" class="ui5-exp-text-toggle" @click="{{_handleToggleClick}}">{{_textForToggle}}<ui5-link>
 
 		{{#if _usePopover}}
-			<ui5-responsive-popover ?open="{{_expanded}}" opener="{{_id}}-toggle" @ui5-close="{{_handlePopoverClose}}" >
+			<ui5-responsive-popover
+				?open="{{_expanded}}"
+				opener="{{_id}}-toggle"
+				content-only-on-desktop
+				_hide-header="true"
+				@ui5-close="{{_handlePopoverClose}}"
+			>
 				<ui5-text>{{text}}</ui5-text>
+				<div 
+					slot="footer"
+					class="ui5-exp-text-footer"
+				>
+					<ui5-button
+						design="Transparent"
+						@click="{{_handleCloseButtonClick}}"
+					>
+						{{_closeButtonText}}
+					</ui5-button>
+				</div>
 			</ui5-responsive-popover>
 		{{/if}}
 	{{/if}}
