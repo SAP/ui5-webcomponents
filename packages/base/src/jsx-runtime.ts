@@ -4,6 +4,7 @@ import type { JSX as _JSX } from "preact/jsx-runtime";
 import { options } from "preact";
 import type UI5Element from "./UI5Element.js";
 // import classObjToStr from "./util/classObjToString.js";
+import { pascalToKebabCase } from "./util/StringHelper.js";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace JSX {
@@ -48,6 +49,22 @@ export function jsx(type: string | typeof UI5Element, props: Record<string, any>
 	let tag = type;
 	if (typeof type === "function" && "getMetadata" in type) {
 		tag = type.getMetadata().getTag();
+
+		const events = type.getMetadata().getEvents();
+
+		Object.keys(props).forEach(prop => {
+			if (prop.startsWith("on")) {
+				// Exteract the kebab-case event: onChange - change, onSelectionChange - selection-change, etc.
+				const pascalEvent = prop.slice("on".length);
+				const kebabCaseEvent = pascalToKebabCase(pascalEvent);
+
+				// Attach for th "ui5-" preffixed event
+				if (kebabCaseEvent in events) {
+					props[`onui5-${kebabCaseEvent}`] = props[prop];
+					delete props[prop];
+				}
+			}
+		});
 	}
 	return _jsx(tag as string, props, key);
 }

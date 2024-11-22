@@ -54,7 +54,7 @@ describe("Calendar Legend with standard items", () => {
 		await browser.keys("ArrowDown");
 
 		const dayPicker = await calendar.$("#ui5wc_22-daypicker");
-		const filteredDays = await dayPicker.shadow$$("[special-day]");
+		const filteredDays = await dayPicker.shadow$$("[data-ui5-special-day]");
 
 		assert.strictEqual(filteredDays.length, 12, "Only one day is filtered");
 	});
@@ -71,14 +71,14 @@ describe("Calendar Legend with standard items", () => {
 		await browser.keys("ArrowDown");
 
 		const dayPicker = await calendar.$("#ui5wc_22-daypicker");
-		let filteredDays = await dayPicker.shadow$$("[special-day]");
+		let filteredDays = await dayPicker.shadow$$("[data-ui5-special-day]");
 
 		assert.strictEqual(filteredDays.length, 12, "Days are filtered");
 
 		await calendar.click();
 
 		// get the items again
-		filteredDays = await dayPicker.shadow$$("[special-day]");
+		filteredDays = await dayPicker.shadow$$("[data-ui5-special-day]");
 
 		assert.strictEqual(filteredDays.length, 31, "Days are un-filtered")
 	});

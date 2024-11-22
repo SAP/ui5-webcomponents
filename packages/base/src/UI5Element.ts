@@ -141,8 +141,10 @@ type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}
 	? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
 	: T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
+type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "exportparts" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate";
+type GlobalHTMLEventNames = "onChange";
+
 export type UI5CustomEvent<T extends UI5Element, N extends keyof T["eventDetails"]> = CustomEvent<T["eventDetails"][N]>;
-type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "contentEditable" | "contextMenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "lang" | "nonce" | "part" | "role" | "slot" | "spellcheck" | "style" | "tabindex" | "title" | "translate" | "ref";
 
 /**
  * @class
@@ -154,7 +156,7 @@ type GlobalHTMLAttributeNames = "accessKey" | "autoCapitalize" | "autoFocus" | "
 abstract class UI5Element extends HTMLElement {
 	eventDetails!: object;	// no events in base class
 	_jsxEvents!: Convert<this["eventDetails"]>
-	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & JSX.DOMAttributes<HTMLElement> & ElementProps<this> & Partial<this["_jsxEvents"]>; // & Partial<ButtonEvents>;
+	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & Omit<JSX.DOMAttributes<HTMLElement>, GlobalHTMLEventNames> & ElementProps<this> & Partial<this["_jsxEvents"]>; // & Partial<ButtonEvents>;
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
@@ -169,6 +171,7 @@ abstract class UI5Element extends HTMLElement {
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
 	_internals: ElementInternals;
+	_individualSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;

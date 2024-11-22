@@ -135,7 +135,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	readonly identifier = "TableGrowing";
 	_table?: Table;
 	_observer?: IntersectionObserver;
-	_individualSlot?: string;
 	_currentLastRow?: HTMLElement;
 	_shouldFocusRow?: boolean;
 	_renderContent = true;

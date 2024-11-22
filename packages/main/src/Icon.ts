@@ -110,9 +110,11 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
  * @private
  * @since 1.0.0-rc.8
  */
-@event("click", {
-	bubbles: true,
-})
+// eslint-disable-next-line
+// TODO: check DatePickerIcon click handler
+// @event("click", {
+// 	bubbles: true,
+// })
 class Icon extends UI5Element implements IIcon {
 	/**
 	 * Defines the component semantic design.
@@ -205,6 +207,12 @@ class Icon extends UI5Element implements IIcon {
 	 */
 	@property({ noAttribute: true })
 	effectiveAccessibleName?: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	pressed = false;
 
 	ltr?: boolean;
 	packageName?: string;

@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type LocaleT from "sap/ui/core/Locale";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
@@ -28,7 +29,7 @@ import type { ICalendarPicker } from "./Calendar.js";
 import { YEAR_PICKER_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
+import YearPickerTemplate from "./YearPickerTemplate.js";
 
 // Styles
 import yearPickerStyles from "./generated/themes/YearPicker.css.js";
@@ -38,14 +39,14 @@ const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, 
 
 type Year = {
 	timestamp: string;
-	_tabIndex: string;
+	_tabIndex: number;
 	focusRef: boolean;
 	selected: boolean;
-	ariaSelected: string;
+	ariaSelected: boolean;
 	year: string;
 	yearInSecType: string | undefined;
 	disabled: boolean;
-	ariaDisabled: string | undefined;
+	ariaDisabled: boolean | undefined;
 	classes: string;
 	parts: string;
 }
@@ -77,17 +78,22 @@ type YearPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
  */
-@event("change", {
+@event<YearPickerChangeEventDetail>("change", {
 	bubbles: true,
 })
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  */
-@event("navigate", {
+@event<YearPickerNavigateEventDetail>("navigate", {
 	bubbles: true,
 })
 class YearPicker extends CalendarPart implements ICalendarPicker {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"change": YearPickerChangeEventDetail,
+		"navigate": YearPickerNavigateEventDetail,
+	};
+
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
@@ -111,7 +117,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	selectionMode: `${CalendarSelectionMode}` = "Single";
 
 	@property({ type: Array })
-	_years: YearInterval = [];
+	_yearsInterval: YearInterval = [];
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden = false;
@@ -191,14 +197,14 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 			const year: Year = {
 				timestamp: timestamp.toString(),
-				_tabIndex: isFocused ? "0" : "-1",
+				_tabIndex: isFocused ? 0 : -1,
 				focusRef: isFocused,
 				selected: isSelected || isSelectedBetween,
-				ariaSelected: String(isSelected || isSelectedBetween),
+				ariaSelected: isSelected || isSelectedBetween,
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
 				yearInSecType: textInSecType,
 				disabled: isDisabled,
-				ariaDisabled: isDisabled ? "true" : undefined,
+				ariaDisabled: isDisabled,
 				classes: "ui5-yp-item",
 				parts: "year-cell",
 			};
@@ -231,7 +237,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 			tempDate.setYear(tempDate.getYear() + 1);
 		}
 
-		this._years = intervals;
+		this._yearsInterval = intervals;
 	}
 
 	_calculateFirstYear() {
@@ -289,6 +295,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 		const pageSize = this._getPageSize();
@@ -313,9 +320,9 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
-			this._setTimestamp(parseInt(this._years[0][0].timestamp)); // first year of first row
+			this._setTimestamp(parseInt(this._yearsInterval[0][0].timestamp)); // first year of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._years[pageSize / rowSize - 1][rowSize - 1].timestamp)); // last year of last row
+			this._setTimestamp(parseInt(this._yearsInterval[pageSize / rowSize - 1][rowSize - 1].timestamp)); // last year of last row
 		} else {
 			preventDefault = false;
 		}
@@ -326,7 +333,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_onHomeOrEnd(homePressed: boolean) {
-		this._years.forEach(row => {
+		this._yearsInterval.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
 			if (indexInRow !== -1) { // The current year is on this row
 				const index = homePressed ? 0 : this._getRowSize() - 1; // select the first (if Home) or last (if End) year on the row
@@ -351,6 +358,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @param e
 	 * @private
 	 */
+	@bound
 	_onmouseover(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const hoveredItem = target.closest(".ui5-yp-item") as HTMLElement;
@@ -383,6 +391,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._selectYear(e);
@@ -394,6 +403,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 * @param e
 	 * @private
 	 */
+	@bound
 	_selectYear(e: Event) {
 		e.preventDefault();
 		const target = e.target as HTMLElement;

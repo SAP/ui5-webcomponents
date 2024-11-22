@@ -27,7 +27,7 @@
 					{{#each this}}
 						{{#if this.timestamp}}
 							<div
-								?special-day="{{this.type}}"
+								?data-ui5-special-day="{{this.type}}"
 								tabindex="{{this._tabIndex}}"
 								?data-sap-focus-ref="{{this.focusRef}}"
 								data-sap-timestamp="{{this.timestamp}}"
@@ -64,7 +64,7 @@
 					{{/each}}
 				</div>
 			{{else}}
-				<div class="sapWCEmptyWeek"></div>
+				<div class="ui5-dp-empty-week"></div>
 			{{/if}}
 		{{/each}}
 	</div>

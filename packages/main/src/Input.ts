@@ -312,6 +312,18 @@ type InputSuggestionScrollEventDetail = {
 	bubbles: true,
 })
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
+	eventDetails!: {
+		"input": void,
+		"change": void,
+		"value-changed": void,
+		"selection-change": void,
+		"open": void,
+		"close": void,
+		"select": void,
+		"type-ahead": void,
+		"suggestion-scroll": InputSuggestionScrollEventDetail,
+	};
+
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
@@ -1729,6 +1741,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return value;
 	}
 }
+
+// declare module "@ui5/webcomponents-base/jsx-runtime" {
+// 	// eslint-disable-next-line @typescript-eslint/no-namespace
+// 	namespace JSX {
+// 		interface IntrinsicElements {
+// 			"ui5-input": Input["_jsxProps"];
+// 		}
+// 	}
+// }
 
 Input.define();
 

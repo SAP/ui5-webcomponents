@@ -41,7 +41,7 @@ export default function (this: Tab) {
 			}
 
 			{this._designDescription &&
-				<div id={ `${this._id}}-designDescription` }
+				<div id={ `${this._id}-designDescription` }
 					 class="ui5-tab-strip-design-description"
 				>
 					{this._designDescription}
