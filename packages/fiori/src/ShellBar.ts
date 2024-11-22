@@ -15,6 +15,7 @@ import {
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
@@ -55,7 +56,13 @@ import {
 	SHELLBAR_PROFILE,
 	SHELLBAR_PRODUCTS,
 	SHELLBAR_SEARCH,
+	SHELLBAR_SEARCH_FIELD,
 	SHELLBAR_OVERFLOW,
+	SHELLBAR_LOGO_AREA,
+	SHELLBAR_ADDITIONAL_CONTEXT,
+	SHELLBAR_SEARCHFIELD_DESCRIPTION,
+	SHELLBAR_SEARCH_BTN_OPEN,
+	SHELLBAR_PRODUCT_SWITCH_BTN,
 } from "./generated/i18n/i18n-defaults.js";
 
 type LowercaseString<T> = T extends string ? Lowercase<T> : never;
@@ -628,15 +635,22 @@ class ShellBar extends UI5Element {
 	_getNavigableContent() {
 		return [
 			...this.startButton,
+			...this.logo,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo-area"),
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-menu-button"),
 			...this.additionalContextStart,
 			...this.additionalContextEnd,
+			...this._getRightChildItems(),
+		] as HTMLElement[];
+	}
+
+	_getRightChildItems() {
+		return [
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-search-item-for-arrow-nav"),
+			...this.searchField,
 			...this.assistant,
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-items-for-arrow-nav"),
-			...this.profile,
 		] as HTMLElement[];
 	}
 
@@ -704,6 +718,8 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		const input = this.searchField[0]?.shadowRoot!.querySelector(".ui5-input-inner");
+
 		this.withLogo = this.hasLogo;
 
 		this._hiddenIcons = this._itemsInfo.filter(info => {
@@ -715,6 +731,12 @@ class ShellBar extends UI5Element {
 
 			return isHidden && isSet && !shouldStayOnScreen;
 		});
+
+		if (input) {
+			input.role = "searchbox";
+			// Temporary workaround: Adding aria-description to the aria-label since the input element lacks an aria-description.
+			input.ariaLabel = `${this._searchFieldText} ${this._searchFieldDescription}`;
+		}
 
 		this._observeMenuItems();
 	}
@@ -1357,6 +1379,10 @@ class ShellBar extends UI5Element {
 		return this.menuItems.length > 0;
 	}
 
+	get imageBtnText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get _shellbarText() {
 		return ShellBar.i18nBundle.getText(SHELLBAR_LABEL);
 	}
@@ -1371,6 +1397,60 @@ class ShellBar extends UI5Element {
 
 	get _cancelBtnText() {
 		return ShellBar.i18nBundle.getText(SHELLBAR_CANCEL);
+	}
+
+	get _logoAreaText() {
+		const primaryTitle = this.primaryTitle ?? "";
+		const secondaryTitle = this.secondaryTitle ?? "";
+
+		return ShellBar.i18nBundle.getText(SHELLBAR_LOGO_AREA, primaryTitle, secondaryTitle);
+	}
+
+	get _additionalContextText() {
+		return ShellBar.i18nBundle.getText(SHELLBAR_ADDITIONAL_CONTEXT);
+	}
+
+	get _searchFieldDescription() {
+		return ShellBar.i18nBundle.getText(SHELLBAR_SEARCHFIELD_DESCRIPTION);
+	}
+
+	get _additionalContextRole() {
+		const additionalContext = [...this.additionalContextEnd, ...this.additionalContextStart];
+
+		if (additionalContext.length === 1) {
+			return;
+		}
+
+		return "group";
+	}
+
+	get _rightChildRole() {
+		const items = this._getRightChildItems();
+		const visibleItems = items.filter(item => {
+			return this._isVisible(item);
+		});
+
+		if (visibleItems.length === 1) {
+			return;
+		}
+
+		return "toolbar";
+	}
+
+	get _searchFieldExpanded() {
+		return this.showSearchField;
+	}
+
+	get _searchFieldText() {
+		return ShellBar.i18nBundle.getText(SHELLBAR_SEARCH_FIELD);
+	}
+
+	get _searchBtnOpen() {
+		return ShellBar.i18nBundle.getText(SHELLBAR_SEARCH_BTN_OPEN);
+	}
+
+	get _productSwitchBtnText() {
+		return ShellBar.i18nBundle.getText(SHELLBAR_PRODUCT_SWITCH_BTN);
 	}
 
 	get _showFullWidthSearch() {
