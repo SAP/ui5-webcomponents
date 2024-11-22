@@ -22,6 +22,9 @@ such as a common header (ShellBar).
 | Page                                      | `ui5-page`                     | `import "@ui5/webcomponents-fiori/dist/Page.js";`                     |
 | Product Switch                            | `ui5-product-switch`           | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`            |
 | Product Switch Item                       | `ui5-product-switch-item`      | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`        |
+| Profile Menu                              | `ui5-profile-menu`             | `import "@ui5/webcomponents-fiori/dist/ProfileMenu.js";`              |
+| Profile Menu Account                      | `ui5-profile-menu-account`     | `import "@ui5/webcomponents-fiori/dist/ProfileMenuAccount.js";`       |
+| Profile Menu Item                         | `ui5-profile-menu-item`        | `import "@ui5/webcomponents-fiori/dist/ProfileMenuItem.js";`          |
 | Shell Bar                                 | `ui5-shellbar`                 | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`                 |
 | Shell Bar Item                            | `ui5-shellbar-item`            | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`             |
 | Side Navigation                           | `ui5-side-navigation`          | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`           |
