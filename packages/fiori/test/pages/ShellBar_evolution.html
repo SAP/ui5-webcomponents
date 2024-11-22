@@ -46,7 +46,7 @@
 	</ui5-menu>
 
 	<ui5-shellbar
-		id="shellbarWithLogoClick"
+		id="shellbar"
 		class="shellbar-example"
 		data-ui5-static-stable="shellbarWithLogoClickStatic"
 		primary-title="SAP Labs Bulgaria"
@@ -58,7 +58,7 @@
 	>
 		<ui5-button icon="menu2" slot="startButton" id="btnOpenStart"></ui5-button>
 		<ui5-button id="btnOpenBasic" end-icon="slim-arrow-down" slot="additionalContextStart" data-priority="10">PR10</ui5-button>
-		
+
 		<ui5-tag color-scheme="7" slot="additionalContextStart" data-priority="4">PR 4</ui5-tag>
 		<ui5-text slot="additionalContextStart" data-priority="3">PR3</ui5-text>
 
@@ -126,6 +126,16 @@
 		btnOpenStart.addEventListener("click", () => {
 			sidenav.toggleAttribute("collapsed");
 		});
+
+		assistant.addEventListener("click", event => {
+			const toggleButton = event.target;
+			toggleButton.icon = toggleButton.pressed ? "sap-icon://da-2" : "sap-icon://da";
+		});
+
+		shellbar.addEventListener("additional-context-disappears", (e) => {
+			console.log(e.detail.items);
+		})
+
 	</script>
 
 </body>
