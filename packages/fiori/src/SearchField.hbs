@@ -1,0 +1,52 @@
+{{#if expanded}}
+	<div class="ui5-search-field-root">
+		<div class="ui5-search-field-content">
+			{{#if showScope}}
+				<ui5-select @change="{{_handleScopeChange}}" class="sapUiSizeCompact">
+					{{#each scopeOptions}}
+						<ui5-option
+							id="{{this._id}}"
+							?selected="{{this.selected}}"
+							data-ui5-stable="{{this.stableDomRef}}"
+						>{{this.text}}</ui5-option>
+					{{/each}}
+				</ui5-select>
+				<div class="ui5-search-field-separator"></div>
+			{{/if}}
+
+			<input
+				class="ui5-search-field-inner-input"
+				.value="{{value}}"
+				placeholder="{{placeholder}}"
+				data-sap-focus-ref
+				@input="{{_handleInput}}"
+				@focusin="{{_onfocusin}}"
+				@focusout="{{_onfocusout}}"
+				@keydown="{{_onkeydown}}"/>
+
+			<ui5-button
+				class="ui5-shell-search-field-input-button"
+				icon="search"
+				design={{_searchDesign}}
+				@click={{_handleSearchIconPress}}
+			></ui5-button>
+
+			{{#if _effectiveShowClearIcon}}
+				<ui5-icon
+					class="ui5-shell-search-field-clear-icon"
+					name="decline"
+					mode="Interactive"
+					@click={{_handleClear}}
+				></ui5-icon>
+			{{/if}}
+		</div>
+	</div>
+{{else}}
+	<ui5-button
+		class="ui5-shell-search-field-input-button"
+		icon="sap-icon://search"
+		design="Transparent"
+		data-sap-focus-ref
+		@click={{_handleSearchIconPress}}
+	></ui5-button>
+{{/if}}

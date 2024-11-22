@@ -5,30 +5,45 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import SearchTemplate from "./generated/templates/SearchTemplate.lit.js";
-import SearchCss from "./generated/themes/Search.css.js";
+import SearchFieldTemplate from "./generated/templates/SearchFieldTemplate.lit.js";
+import SearchFieldCss from "./generated/themes/SearchField.css.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Select from "@ui5/webcomponents/dist/Select.js";
+import Select, { type SelectChangeEventDetail } from "@ui5/webcomponents/dist/Select.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
 
 import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
+
+/**
+ * Interface for components that may be slotted inside a `ui5-search`
+ * @public
+ */
+interface ISearchFieldScopeOption extends UI5Element {
+	text?: string,
+	selected: boolean,
+	stableDomRef: string,
+}
+
+type SearchFieldScopeSelectionChangeDetails = {
+	scope: ISearchFieldScopeOption | null;
+}
+
 /**
  * @class
  *
  * ### Overview
  *
- * A `ui5-search` is an input field, used for user search.
+ * A `ui5-search-field` is an input field, used for user search.
  *
- * The `ui5-search` consists of several elements parts:
+ * The `ui5-search-field` consists of several elements parts:
  * - Scope - displays a select in the beggining of the component, used for filtering results by their scope.
  * - Input field - for user input value
  * - Clear button - gives the possibility for deleting the entered value
  * - Search button - a primary button for performing search, when the user has entered a search term
- * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search` component
+ * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search-field` component
  *
  * ### ES6 Module Import
  *
@@ -41,12 +56,12 @@ import {
  * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  */
 @customElement({
-	tag: "ui5-search",
+	tag: "ui5-search-field",
 	languageAware: true,
 	renderer: litRender,
-	template: SearchTemplate,
+	template: SearchFieldTemplate,
 	styles: [
-		SearchCss,
+		SearchFieldCss,
 	],
 	dependencies: [
 		Button,
@@ -66,6 +81,21 @@ import {
 })
 
 /**
+ * Fired when the scope has changed.
+ * @public
+ * @param {HTMLElement} scope The newly selected scope
+ */
+@event<SearchFieldScopeSelectionChangeDetails>("scope-change", {
+	detail: {
+		/**
+	 	* @public
+	 	*/
+		scope: { type: HTMLElement },
+	},
+	bubbles: true,
+})
+
+/**
  * Fired when the user has triggered search with Enter key or Search Button press.
  * @public
  */
@@ -73,7 +103,7 @@ import {
 	bubbles: true,
 })
 
-class Search extends UI5Element {
+class SearchField extends UI5Element {
 	/**
 	 * Defines whether scope select should be shown.
 	 *
@@ -120,13 +150,11 @@ class Search extends UI5Element {
 	placeholder?: string;
 
 	/**
-	 * Defines the component scope select.
-	 *
-	 * **Note:** In order to show the scope, one should set `showScope` to true.
+	 * Defines the component scope options.
 	 * @public
 	 */
-	@slot()
-	scope!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
+	scopeOptions!: Array<ISearchFieldScopeOption>;
 
 	/**
 	 * @private
@@ -188,11 +216,17 @@ class Search extends UI5Element {
 		this.focus();
 	}
 
+	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
+		this.fireDecoratorEvent("scope-change", { scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id) });
+	}
+
 	get _searchDesign() {
 		return this.value.length && this.focusedInnerInput ? ButtonDesign.Emphasized : ButtonDesign.Transparent;
 	}
 }
 
-Search.define();
+SearchField.define();
 
-export default Search;
+export default SearchField;
+
+export type { ISearchFieldScopeOption, SearchFieldScopeSelectionChangeDetails };
