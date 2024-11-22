@@ -94,12 +94,6 @@
 			<div class="ui5-shellbar-overflow-container-right-child"
 				 role="{{_rightChildRole}}">
 				{{#if _isFullVariant}}
-					{{#if _isXXLBreakpoint}}
-						{{#if hasSearchField}}
-							<slot name="searchField"></slot>
-						{{/if}}
-					{{/if}}
-					{{#unless _isXXLBreakpoint }}
 						{{#if hasSearchField}}
 							{{#if _showFullWidthSearch}}
 								<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
@@ -136,7 +130,6 @@
 								.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
 							></ui5-button>
 						{{/if}}
-					{{/unless}}
 					{{#if hasAssistant}}
 							<slot name="assistant"></slot>
 					{{/if}}
