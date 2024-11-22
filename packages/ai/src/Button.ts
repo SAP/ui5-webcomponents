@@ -65,6 +65,17 @@ import ButtonCss from "./generated/themes/Button.css.js";
 @event("click", {
 	bubbles: true,
 })
+
+/**
+ * Fired when the component is in split mode and arrow button is
+ * activated either with a mouse/tap or by using the Arrow Up/Down,
+ * Alt + Arrow Up/Down or F4 keys.
+ * @public
+ */
+@event("arrow-click", {
+	bubbles: true,
+})
+
 class Button extends UI5Element {
 	/**
 	 * Defines the component design.
@@ -125,6 +136,38 @@ class Button extends UI5Element {
 	fadeIn = false;
 
 	/**
+	 * Flag for transition between button without end icon or arrow button
+	 * and button with end icon or arrow button.
+	 * This property is animation related only.
+	 * @default false
+	 * @since 2.5.0
+	 * @private
+	 */
+	@property({ type: Boolean })
+	buttonToMenu? = false;
+
+	/**
+	 * Flag for transition between button with end icon or arrow button
+	 * and button without end icon or arrow button.
+	 * This property is animation related only.
+	 * @default false
+	 * @since 2.5.0
+	 * @private
+	 */
+	@property({ type: Boolean })
+	menuToButton? = false;
+
+	/**
+	 * Determines if the button is in icon-only mode.
+	 * This property is animation related only.
+	 * @default false
+	 * @since 2.5.0
+	 * @private
+	 */
+	@property({ type: Boolean })
+	iconOnly? = false;
+
+	/**
 	 * Defines the available states of the component.
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use `ui5-ai-button-state` components in order to preserve the intended design.
 	 * @public
@@ -136,13 +179,11 @@ class Button extends UI5Element {
 		if (this.fadeOut || this.fadeIn) {
 			return;
 		}
-
 		if (!this._currentStateObject?.name) {
 			this._currentStateObject = this._effectiveStateObject;
 		}
-
 		const currentStateName = this._currentStateObject?.name || "";
-
+		this.iconOnly = this._stateIconOnly;
 		if (currentStateName !== "" && currentStateName !== this._effectiveState) {
 			this._fadeOut();
 		}
@@ -164,7 +205,11 @@ class Button extends UI5Element {
 		} else if (button) {
 			const buttonWidth = button.offsetWidth;
 			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as SplitButton;
-			button.style.width = `${buttonWidth}px`;
+
+			this.buttonToMenu = (!this._currentStateObject?.splitMode && newStateObject?.splitMode) || (!this._currentStateObject?.endIcon && !!newStateObject?.endIcon);
+			this.menuToButton = (this._currentStateObject?.splitMode && !newStateObject?.splitMode) || (!!this._currentStateObject?.endIcon && !newStateObject?.endIcon);
+
+			this.style.width = `${buttonWidth}px`;
 			hiddenButton.icon = newStateObject.icon;
 			hiddenButton._endIcon = newStateObject.endIcon;
 			hiddenButton.textContent = newStateObject.text || null;
@@ -172,12 +217,11 @@ class Button extends UI5Element {
 
 			await renderFinished();
 			const hiddenButtonWidth = hiddenButton.offsetWidth;
+			this.style.width = `${hiddenButtonWidth}px`;
 			this.fadeOut = true;
-			button.style.width = `${hiddenButtonWidth}px`;
 
 			setTimeout(() => {
 				this.fadeMid = true;
-				this._currentStateObject = newStateObject;
 				button._hideArrowButton = this._hideArrowButton;
 				this._fadeIn();
 			}, fadeOutDuration);
@@ -192,6 +236,8 @@ class Button extends UI5Element {
 		const fadeInDuration = 60;
 
 		setTimeout(() => {
+			const newStateObject = this._effectiveStateObject;
+			this._currentStateObject = newStateObject;
 			this.fadeIn = true;
 			this._resetFade();
 		}, fadeInDuration);
@@ -208,6 +254,8 @@ class Button extends UI5Element {
 			this.fadeOut = false;
 			this.fadeMid = false;
 			this.fadeIn = false;
+			this.buttonToMenu = false;
+			this.menuToButton = false;
 		}, fadeResetDuration);
 
 		// reset the button's width after animations
@@ -221,9 +269,18 @@ class Button extends UI5Element {
 	 * Handles the click event.
 	 * @private
 	 */
-	_onclick(e: MouseEvent): void {
+	_onClick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
 		this.fireDecoratorEvent("click");
+	}
+
+	/**
+	 * Handles the arrow-click event (if AI Button is in split mode).
+	 * @private
+	 */
+	_onArrowClick(e: MouseEvent): void {
+		e.stopImmediatePropagation();
+		this.fireDecoratorEvent("arrow-click");
 	}
 
 	get _hideArrowButton() {

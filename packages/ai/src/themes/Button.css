@@ -23,84 +23,92 @@
 	display: block;
 	width: fit-content;
 }
-/*
-:host(:not([split-mode])) .ui5-ai-button-inner::part(arrow-button),
-:host(:not([split-mode])) .ui5-ai-button-hidden::part(arrow-button) {
-	display: none;
+
+:host .ui5-ai-button-inner {
+	width: 100%;
 }
 
-:host ::part(arrowIcon) {
-	color: red;
+:host([menu-to-button]) .ui5-ai-button-inner::part(button),
+:host([fade-out]:not([icon-only])) .ui5-ai-button-inner::part(button) {
+	justify-content: flex-start;
 }
 
-:host ::part(arrow-button)::before {
-	display: none;
+:host([icon-only]) .ui5-ai-button-inner[_end-icon]:not([_end-icon=""])::part(button),
+:host([icon-only]) .ui5-ai-button-inner[_hide-arrow-button]::part(button) {
+	justify-content: flex-start;
+	padding-inline-start: var(--_ui5_button_base_padding);
 }
-*/
 
+:host([icon-only]) .ui5-ai-button-inner[_end-icon=""]::part(textButton),
+:host([icon-only][menu-to-button]) .ui5-ai-button-inner::part(textButton) {
+	min-width: var(--_ui5_button_base_min_width);
+	max-width: var(--_ui5_button_base_min_width);
+}
 /* Animated parts */
 
-:host [ui5-split-button]:not(.ui5-ai-button-hidden) {
+:host {
 	width: auto;
 	position: relative;
 	transition: width 0.18s cubic-bezier(0.67, 1, 0.95, 1.3) 0.12s;
 }
 
-:host ::part(icon) {
+:host(:not([fade-out]):not([fade-mid]):not([fade-in])) .ui5-ai-button-text,
+:host(:not([fade-out]):not([fade-mid]):not([fade-in])) ::part(endIcon),
+:host(:not([fade-out]):not([fade-mid]):not([fade-in])) ::part(arrowButton) {
 	opacity: 1;
 	transform: translateY(0);
 }
 
-:host(:not([fade-out]):not([fade-mid]):not([fade-in])) .ui5-ai-button-text,
-:host(:not([fade-out]):not([fade-mid]):not([fade-in])) ::part(endIcon),
-:host(:not([fade-out]):not([fade-mid]):not([fade-in])) ::part(arrowIcon) {
-	opacity: 1;
+:host([button-to-menu]) .ui5-ai-button-inner::part(endIcon),
+:host([button-to-menu]) .ui5-ai-button-inner::part(arrowButton) {
+	display: none;
 	transform: translateY(0);
+	opacity: 0;
 }
 
 /* Fade out */
 
-:host([fade-out]:not([fade-mid])) ::part(icon) {
-	opacity: 0;
-	transform: translateY(-1rem);
-	transition: opacity 0.05s ease-in-out 0.025s, transform 0.10s ease-in-out 0s;
-}
-
-:host([fade-out]:not([fade-mid])) .ui5-ai-button-text,
-:host([fade-out]:not([fade-mid])) ::part(endIcon),
-:host([fade-out]:not([fade-mid])) ::part(arrowIcon) {
+:host([fade-out]) .ui5-ai-button-text {
 	opacity: 0;
 	transform: translateY(-1rem);
 	transition: opacity 0.06s ease-in-out 0.12s, transform 0.08s ease-in-out 0.12s;
 }
 
-/* Fade mid */
-
-:host([fade-mid]) ::part(icon) {
+:host([fade-out]) ::part(icon) {
 	opacity: 0;
-	transform: translateY(1rem);
+	transform: translateY(-1rem);
+	transition: opacity 0.05s ease-in-out 0.025s, transform 0.10s ease-in-out 0s;
 }
 
-:host([fade-mid]) .ui5-ai-button-text,
-:host([fade-mid]) ::part(endIcon),
-:host([fade-mid]) ::part(arrowIcon) {
+/* Fade mid */
+:host([fade-out][fade-mid]) .ui5-ai-button-text {
+	opacity: 0;
+	transform: translateY(1rem);
+	transition: none;
+}
+
+:host([fade-out][fade-mid]) ::part(endIcon),
+:host([fade-out][fade-mid]) ::part(arrowButton) {
+	opacity: 0;
+	transform: translateY(1rem);
+	transition: none;
+}
+
+:host([fade-out][fade-mid]) ::part(icon) {
 	opacity: 0;
 	transform: translateY(1rem);
 	transition: none;
 }
 
 /* Fade in */
-
-:host([fade-in]) ::part(icon) {
-	opacity: 1;
-	transform: translateY(0);
-	transition: opacity 0.05s ease-in-out 0.025s, transform 0.10s ease-in-out 0s;
-}
-
-:host([fade-in]) .ui5-ai-button-text,
-:host([fade-in]) ::part(endIcon),
-:host([fade-in]) ::part(arrowIcon) {
+:host([fade-out][fade-mid][fade-in]) .ui5-ai-button-text {
 	opacity: 1;
 	transform: translateY(0);
 	transition: opacity 0.06s ease-in-out 0.12s, transform 0.08s ease-in-out 0.12s;
+}
+
+:host([fade-out][fade-mid][fade-in]) ::part(icon) {
+	opacity: 1;
+	transform: translateY(0);
+	transition: opacity 0.05s ease-in-out 0.025s, transform 0.10s ease-in-out 0s;
 }

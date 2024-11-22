@@ -14,7 +14,7 @@
 		design="{{design}}"
 		icon="{{icon}}"
 		end-icon="{{_endIcon}}"
-		part="text-button"
+		part="textButton"
 		tabindex="-1"
 		?disabled="{{disabled}}"
 		?active="{{_textButtonActive}}"
@@ -24,7 +24,7 @@
 		@mouseup={{_textButtonRelease}}
 		@focusin={{_onInnerButtonFocusIn}}
 		@focusout={{_onFocusOut}}
-		exportparts="icon,endIcon"
+		exportparts="icon,endIcon,button"
 	>
 		{{#if isTextButton}}
 			<slot></slot>
@@ -35,7 +35,7 @@
 			class="ui5-split-arrow-button"
 			design="{{design}}"
 			icon="slim-arrow-down"
-			part="arrow-button"
+			part="arrowButton"
 			tabindex="-1"
 			tooltip="{{accInfo.arrowButton.title}}"
 			.accessibilityAttributes={{accInfo.arrowButton.accessibilityAttributes}}
@@ -46,7 +46,6 @@
 			@mouseup={{_arrowButtonRelease}}
 			@focusin={{_onInnerButtonFocusIn}}
 			@ui5-_active-state-change={{_onArrowButtonActiveStateChange}}
-			exportparts="icon:arrowIcon"
 		>
 		</ui5-button>
 		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInfo.root.description}} {{accInfo.root.keyboardHint}} {{accessibleName}}</span>

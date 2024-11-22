@@ -22,7 +22,18 @@
 	<ui5-ai-button id="myAiButton" state="generate">
 		<ui5-ai-button-state name="generate" text="Generate" icon="ai"></ui5-ai-button-state>
 		<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
-		<ui5-ai-button-state name="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow" split-mode></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" text="Revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+	</ui5-ai-button>
+	<br/>
+	<br/>
+
+	<ui5-title level="H3">AI Button with split mode state</ui5-title>
+	<br/>
+
+	<ui5-ai-button id="myAiButtonSplit" state="generate">
+		<ui5-ai-button-state name="generate" text="Regenerate" icon="ai"></ui5-ai-button-state>
+		<ui5-ai-button-state name="generating" text="Stop Generating" icon="stop"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" text="Regenerate" icon="ai" split-mode></ui5-ai-button-state>
 	</ui5-ai-button>
 	<br/>
 	<br/>
@@ -33,7 +44,7 @@
 	<ui5-ai-button id="myAiButtonIconOnly" state="generate">
 		<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
 		<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
-		<ui5-ai-button-state name="revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" icon="stop" end-icon="navigation-down-arrow"></ui5-ai-button-state>
 	</ui5-ai-button>
 
 	<ui5-menu id="menu">
@@ -56,13 +67,18 @@
 		</ui5-menu-item>
 	</ui5-menu>
 
+	<ui5-menu id="menuReg">
+		<ui5-menu-item text="Edit Prompt"></ui5-menu-item>
+		<ui5-menu-item text="Change Tone"></ui5-menu-item>
+	</ui5-menu>
+
 	<br/>
 	<br/>
 	<br/>
 	<br/>
 
 	<!-- QUICK PROMPT PATTERNS SCENARIO -->
-	<!--
+
 	<ui5-title size="H2">Quick Prompt Pattern</ui5-title>
 	<ui5-card>
 		<ui5-card-header slot="header" title-text="Stoyan Kralimarkov" subtitle-text="Senior Sales Executive">
@@ -112,13 +128,14 @@
 		<ui5-menu-item text="Generate Error"></ui5-menu-item>
 		<ui5-menu-item text="Clear Error"></ui5-menu-item>
 	</ui5-menu>
--->
+
 	<script type="module">
 		import data from "./js/Button.js";
 		var generationId;
 		var generationStopped = false;
 		var currentTextKey;
 		var translationKey = "en";
+		var prevTriggerState = "generate";
 		const sendButton = document.getElementById("footerBtnSend");
 		const toast = document.getElementById("quickPromptToast");
 		const predefinedTexts = data.predefinedTexts;
@@ -160,7 +177,39 @@
 			}
 		}
 
+		function aiButtonSplitClickHandler(evt) {
+			var button = evt.target;
+
+			switch(button.state) {
+				case "":
+				case "generate":
+					prevTriggerState = "generate";
+					button.state = "generating";
+					startGeneration(button);
+					break;
+				case "generating":
+					button.state = prevTriggerState;
+					stopGeneration();
+					break;
+				case "revise":
+					menuReg.open = false;
+					prevTriggerState = "revise";
+					button.state = "generating";
+					startGeneration(button);
+					break;
+			}
+		}
+
+		function aiButtonSplitArrowClickHandler(evt) {
+			var button = evt.target;
+			menuReg.opener = button;
+			menuReg.open = true;
+		}
+
 		myAiButton.addEventListener("click", aiButtonClickHandler);
+
+		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);
+		myAiButtonSplit.addEventListener("arrow-click", aiButtonSplitArrowClickHandler);
 
 		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
 
@@ -171,7 +220,15 @@
 				startGeneration(button);
 			}
 		});
-	/*
+
+		menuReg.addEventListener("item-click", function(evt) {
+			var button = menuReg.opener;
+
+			prevTriggerState = "revise";
+			button.state = "generating";
+			startGeneration(button);
+		});
+
 		function aiQuickPromptButtonClickHandler(e) {
 			var button = e.target;
 			switch(button.state) {
@@ -353,7 +410,6 @@
 				}
 			}, 75);
 		}
-	*/
 	</script>
 
 </body>
