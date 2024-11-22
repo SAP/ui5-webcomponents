@@ -26,19 +26,31 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
 /**
  * @class
  *
- * <h3 class="comment-api-title">Overview</h3>
+ * ### Overview
  *
+ * The `ui5-expandable-text` component allows displaying a large body of text in a small space. It provides an "expand" functionality, which shows the full text.
  *
- * <h3>Usage</h3>
+ * ### Usage</h3>
  *
- * For the <code>expandable-text</code>
- * <h3>ES6 Module Import</h3>
+ * #### When to use:
+ * - You specifically have to deal with long texts
  *
- * <code>import "@ui5/webcomponents/dist/ExpandableText.js";</code>
+ * #### When not to use:
+ * - Do not use long texts and descriptions if you can provide short and meaningful alternatives
+ * - The content is critical for the user. In this case use short descriptions that can fit in
+ *
+ * ### Responsive Behavior
+ *
+ * On phones, when the component is set to show the full text in a popover, the popover will be displayed full screen.
+ *
+ * ### ES6 Module Import
+ *
+ * `import "@ui5/webcomponents/dist/Text";`
  *
  * @constructor
  * @extends UI5Element
  * @public
+ * @since 2.5.0
  */
 @customElement({
 	tag: "ui5-expandable-text",
@@ -68,7 +80,7 @@ class ExpandableText extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Number })
-	maxCharacters = Number.POSITIVE_INFINITY;
+	maxCharacters : number = Infinity;
 
 	/**
 	 * Determines how the full text will be displayed.
