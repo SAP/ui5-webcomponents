@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -13,8 +14,7 @@ import { AINOTICE_BUTTON_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 
 import Link from "./Link.js";
 import Button from "./Button.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/ai.js";
 
 /**
  * @class
@@ -40,7 +40,7 @@ import Icon from "./Icon.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.4.0
+ * @since 2.5.0
  */
 
 @customElement({
@@ -48,7 +48,13 @@ import Icon from "./Icon.js";
 	renderer: litRender,
 	template: AINoticeTemplate,
 	styles: AINoticeCss,
-	dependencies: [Link, Button, Popover, Icon],
+	dependencies: [Link, Button],
+})
+
+@event("noticePress", {
+	detail: {
+		opener: { type: HTMLElement },
+	},
 })
 
 class AINotice extends UI5Element {
@@ -85,7 +91,7 @@ class AINotice extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement })
-	popup!: HTMLElement;
+	popup!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -133,11 +139,11 @@ class AINotice extends UI5Element {
 	 * It adjusts the visibility of the verification text depending on the available width.
 	 */
 	resizeWidth() {
-		const container = this.getDomRef();
-		const verificationText = this.shadowRoot?.querySelector(".verificationText") as HTMLElement;
-		const attributionText = this.shadowRoot?.querySelector(".link-text") as HTMLElement;
-		if (container && verificationText && attributionText) {
-			const containerWidth = container.offsetWidth;
+		const containerWidth = this.getDomRef()?.offsetWidth || 0;
+
+		const verificationText = this.shadowRoot?.querySelector(".ui5-notice-verification-text") as HTMLElement;
+		const attributionText = this.shadowRoot?.querySelector(".ui5-notice-attribution-text") as HTMLElement;
+		if (containerWidth && verificationText && attributionText) {
 			const verificationTextWidth = verificationText.offsetWidth;
 			const attributionTextWidth = attributionText ? attributionText.offsetWidth : 0;
 
@@ -156,17 +162,10 @@ class AINotice extends UI5Element {
 	}
 
 	/**
-	 * Handles the click event for the component and opens the associated popup.
+	 * Handles the noticePress event for the component.
 	 */
 	onPress(e: Event) {
-		const popup = this.getPopup();
-		popup.opener = e.target as HTMLElement;
-		popup.open = true;
-	}
-
-	getPopup() {
-		const popup = this.querySelector<Popover>("ui5-popover")!;
-		return popup;
+		this.fireDecoratorEvent("noticePress", { opener: e.target });
 	}
 }
 

@@ -17,8 +17,7 @@
 		<ui5-textarea rows="3" value-state="Information"
 			value="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime quos reprehenderit odit id, suscipit ad adipisci, necessitatibus tempore modi, distinctio nam illo debitis nisi fugiat error sapiente nemo labore? Ex?">
 		</ui5-textarea>
-		<ui5-ainotice attribution-text="Created with AI." verification-text="Verify results before use."
-			show-icon="true">
+		<ui5-ainotice attribution-text="Created with AI." verification-text="Verify results before use." show-icon="true">
 			<ui5-popover id="popover" slot="popup" placement="Bottom" content-width="350px" content-height="135px"
 				header-text="Created with AI">
 				<ui5-vbox>
@@ -33,8 +32,8 @@
 							sources.</ui5-text>
 					</ui5-hbox>
 				</ui5-vbox>
-				<ui5-bar slot="footer">
-					<ui5-button id="closeButton">Close</ui5-button>
+				<ui5-bar slot="footer" end-content="">
+					<ui5-button id="closeButton" slot="endContent">Close</ui5-button>
 				</ui5-bar>
 			</ui5-popover>
 		</ui5-ainotice>
@@ -42,9 +41,21 @@
 </body>
 
 <script>
+
+	const notice =document.querySelector("ui5-ainotice");
+	const popover = notice.querySelector("#popover");
 	const btn = document.querySelector("#closeButton");
+	notice.addEventListener("noticePress", (event) => {
+		const popoverOpener = event.detail.opener;
+
+		if (popover) {
+			popover.opener = popoverOpener;
+        	popover.open = true;
+        }
+    });
+
 	btn.addEventListener("click", () => {
-		const popover = document.getElementById("popover");
+		popover.opener = btn;
 		popover.open = false;
 	});
 </script>

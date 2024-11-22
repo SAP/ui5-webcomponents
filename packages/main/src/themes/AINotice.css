@@ -1,6 +1,15 @@
-.verificationText {
-	font-size: 0.875rem;
+.ui5-notice-verification-text {
+	font-size: var(--ui5-ai-notice-font-size);
 	opacity: 1;
-	white-space: nowrap;
-	padding-left: 0.25rem;
+	white-space: var(--ui5-ai-notice-verification-text-white-space);
+	padding-left: var(--ui5-notice-verification-text-padding-left);
+  }
+
+  .ui5-notice-root {
+    width: 100%;
+    height: var(--ui5-ai-notice-height);
+    font-size: var(--ui5-ai-notice-font-size);
+    overflow: var(--ui5-ai-notice-overflow);
+    align-items: var( --ui5-ai-notice-align-items);
+    font-family: var(--SapMFontFamily);
   }
