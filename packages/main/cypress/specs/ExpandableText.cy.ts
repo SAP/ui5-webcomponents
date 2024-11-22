@@ -1,9 +1,6 @@
 import { html } from "lit";
 import "../../src/ExpandableText.js";
 
-// Test keyboard support
-// Test SR attributes
-
 describe("ExpandableText", () => {
 	describe("Rendering and Interaction", () => {
 		it("Should display full text if maxCharacters is not set", () => {
@@ -102,9 +99,9 @@ describe("ExpandableText", () => {
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
 
-			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+			cy.get("@toggle")
 				.contains("Show More")
 				.realClick();
 
@@ -113,8 +110,7 @@ describe("ExpandableText", () => {
 				.contains(text)
 				.should("exist");
 
-			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+			cy.get("@toggle")
 				.contains("Show Less")
 				.realClick();
 
@@ -123,9 +119,49 @@ describe("ExpandableText", () => {
 				.contains(text.substring(0, maxCharacters))
 				.should("exist");
 
+			cy.get("@toggle")
+				.contains("Show More")
+				.should("exist");
+		});
+
+		it("Toggling 'Show More' and 'Show Less' with keyboard", () => {
+			const text = "This is a very long text that should be displayed";
+			const maxCharacters = 5;
+
+			cy.mount(html`
+				<button id="before">before</button>
+				<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>
+			`);
+
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+
+			cy.get("#before")
+				.focus();
+
+			cy.get("#before")
+				.realPress("Tab");
+
+			cy.get("@toggle")
+				.realPress("Enter");
+
 			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
-				.contains("Show More");
+				.find("[ui5-text]")
+				.contains(text)
+				.should("exist");
+
+			cy.get("@toggle")
+				.contains("Show Less")
+				.realPress("Enter");
+
+			cy.get("@expTextShadow")
+				.find("[ui5-text]")
+				.contains(text.substring(0, maxCharacters))
+				.should("exist");
+
+			cy.get("@toggle")
+				.contains("Show More")
+				.should("exist");
 		});
 	});
 
@@ -157,6 +193,7 @@ describe("ExpandableText", () => {
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@expTextShadow")
 				.find("[ui5-text]")
@@ -168,13 +205,11 @@ describe("ExpandableText", () => {
 				.contains("... ")
 				.should("exist");
 
-			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+			cy.get("@toggle")
 				.contains("Show More")
 				.realClick();
 
-			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+			cy.get("@toggle")
 				.invoke("attr", "id")
 				.as("expectedOpenerId");
 
@@ -195,14 +230,56 @@ describe("ExpandableText", () => {
 					expect(opener).to.equal(this.expectedOpenerId);
 				});
 
-			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+			cy.get("@toggle")
 				.contains("Show Less")
 				.realClick();
 
 			cy.get("@expTextShadow")
 				.find("[ui5-responsive-popover]")
 				.should("not.have.attr", "open");
+		});
+
+		it("Toggling 'Show More' and 'Show Less' with keyboard", () => {
+			const text = "This is a very long text that should be displayed";
+			const maxCharacters = 5;
+
+			cy.mount(html`
+				<button id="before">before</button>
+				<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>
+			`);
+
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+
+			cy.get("#before")
+				.focus();
+
+			cy.get("#before")
+				.realPress("Tab");
+
+			cy.get("@toggle")
+				.realPress("Enter");
+
+			cy.get("@expTextShadow")
+				.find("[ui5-responsive-popover]")
+				.as("rpo");
+
+			cy.get("@rpo")
+				.should("exist")
+				.should("have.attr", "open");
+
+			cy.get("@toggle")
+				.contains("Show Less")
+				.should("exist");
+
+			cy.realPress("Escape");
+
+			cy.get("@rpo")
+				.should("not.have.attr", "open");
+
+			cy.get("@toggle")
+				.contains("Show More")
+				.should("exist");
 		});
 
 		it("Toggling 'Show More' and 'Show Less' on Mobile Device", () => {

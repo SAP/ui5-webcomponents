@@ -1,9 +1,20 @@
 <div>
-	<ui5-text class="ui5-exp-text-text" empty-indicator-mode="{{emptyIndicatorMode}}">{{_displayedText}}</ui5-text>
+	<ui5-text
+		class="ui5-exp-text-text"
+		empty-indicator-mode="{{emptyIndicatorMode}}"
+	>
+		{{_displayedText}}
+	</ui5-text>
 
 	{{#if _maxCharactersExceeded}}
 		<span class="ui5-exp-text-ellipsis">{{_ellipsisText}}</span>
-		<ui5-link id="{{_id}}-toggle" class="ui5-exp-text-toggle" @click="{{_handleToggleClick}}">{{_textForToggle}}<ui5-link>
+		<ui5-link
+			id="{{_id}}-toggle"
+			class="ui5-exp-text-toggle"
+			@click="{{_handleToggleClick}}"
+		>
+			{{_textForToggle}}
+		</ui5-link>
 
 		{{#if _usePopover}}
 			<ui5-responsive-popover

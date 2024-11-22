@@ -138,17 +138,18 @@ class ExpandableText extends UI5Element {
 		if (!isPhone()) {
 			this._expanded = false;
 
-			if (this.shadowRoot!.activeElement === this.shadowRoot!.querySelector("[ui5-link]")) {
-				this._preventNextToggleClickHandling = true;
-			}
+			// TODO: find way to prevent next click handling, only if the popover is closed by a click on the toggle (link)
+			// if (this.shadowRoot!.activeElement === this.shadowRoot!.querySelector("[ui5-link]")) {
+			// 	this._preventNextToggleClickHandling = true;
+			// }
 		}
 	}
 
 	_handleToggleClick() {
-		if (this._preventNextToggleClickHandling) {
-			this._preventNextToggleClickHandling = false;
-			return;
-		}
+		// if (this._preventNextToggleClickHandling) {
+		// 	this._preventNextToggleClickHandling = false;
+		// 	return;
+		// }
 
 		this._expanded = !this._expanded;
 	}
