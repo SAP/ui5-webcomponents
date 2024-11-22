@@ -71,11 +71,13 @@
 	{{/if}}
 		<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-right">
 			{{#if showAdditionalContext}}
-				<div 
-					style="{{styles.additionalContext.start.separator}}" 
+				<div
+					style="{{styles.additionalContext.start.separator}}"
 					class="ui5-shellbar-separator ui5-shellbar-separator-start">
 				</div>
-				<div class="ui5-shellbar-overflow-container-additional-content">
+				<div class="ui5-shellbar-overflow-container-additional-content"
+					 aria-label="{{_additionalContextText}}"
+					 role="{{_additionalContextRole}}">
 					{{#each additionalContextStart}}
 						<slot name="{{this._individualSlot}}"></slot>
 					{{/each}}
@@ -84,12 +86,13 @@
 						<slot name="{{this._individualSlot}}"></slot>
 					{{/each}}
 				</div>
-				<div 
-					style="{{styles.additionalContext.end.separator}}" 
+				<div
+					style="{{styles.additionalContext.end.separator}}"
 					class="ui5-shellbar-separator ui5-shellbar-separator-end">
 				</div>
 			{{/if}}
-			<div class="ui5-shellbar-overflow-container-right-child">
+			<div class="ui5-shellbar-overflow-container-right-child"
+				 role="{{_rightChildRole}}">
 				{{#if _isFullVariant}}
 					{{#if _isXXLBreakpoint}}
 						{{#if hasSearchField}}
@@ -127,13 +130,15 @@
 								data-ui5-notifications-count="{{notificationsCount}}"
 								data-ui5-stable="toggle-search"
 								@click={{_handleSearchIconPress}}
-								tooltip="{{_searchText}}"
+								tooltip="{{_searchBtnOpen}}"
+								aria-label="{{_searchBtnOpen}}"
+								aria-expanded="{{_searchFieldExpanded}}"
 								.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
 							></ui5-button>
 						{{/if}}
 					{{/unless}}
 					{{#if hasAssistant}}
-						<slot name="assistant"></slot>
+							<slot name="assistant"></slot>
 					{{/if}}
 				{{/if}}
 
@@ -188,6 +193,9 @@
 							data-ui5-text="Product Switch"
 							@click={{_handleProductSwitchPress}}
 							tooltip="{{_productsText}}"
+							aria-label="{{_productSwitchBtnText}}"
+							aria-haspopup="dialog"
+							aria-expanded="{{accInfo.products.accessibilityAttributes.expanded}}"
 							.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
 							data-ui5-stable="product-switch"
 						></ui5-button>
@@ -204,6 +212,8 @@
 		@click={{_handleProfilePress}}
 		tooltip="{{_profileText}}"
 		class="ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-no-overflow-button ui5-shellbar-items-for-arrow-nav"
+		aria-label="{{imageBtnText}}"
+		aria-haspopup="dialog"
 		.accessibilityAttributes={{accInfo.profile.accessibilityAttributes}}
 		data-ui5-stable="profile"
 	>
@@ -221,11 +231,15 @@
 {{/inline}}
 
 {{#*inline "combinedLogo"}}
-<div class="ui5-shellbar-logo-area" @click="{{_logoPress}}" tabindex="0" @keydown="{{_logoKeydown}}" @keyup="{{_logoKeyup}}">
+<div class="ui5-shellbar-logo-area"
+	@click="{{_logoPress}}"
+	tabindex="0"
+	@keydown="{{_logoKeydown}}"
+	@keyup="{{_logoKeyup}}"
+	role="{{accLogoRole}}"
+	aria-label="{{_logoAreaText}}">
 	{{#if hasLogo}}
 		<span class="ui5-shellbar-logo"
-			role="{{accLogoRole}}"
-			aria-label="{{_logoText}}"
 			title="{{_logoText}}"
 			@click="{{_logoPress}}"
 			@keydown="{{_logoKeydown}}"
