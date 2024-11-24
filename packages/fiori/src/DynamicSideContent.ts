@@ -7,12 +7,12 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
 import SideContentFallDown from "./types/SideContentFallDown.js";
-import DynamicSideContentTemplate from "./generated/templates/DynamicSideContentTemplate.lit.js";
+import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
 
 // Styles
 import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js";
@@ -109,7 +109,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: [DynamicSideContentCss, getEffectiveScrollbarStyle()],
 	template: DynamicSideContentTemplate,
 })
@@ -151,6 +151,10 @@ type DynamicSideContentLayoutChangeEventDetail = {
 	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
+	eventDetails!: {
+		"layout-change": DynamicSideContentLayoutChangeEventDetail,
+	};
+
 	/**
 	 * Defines the visibility of the main content.
 	 * @default false
