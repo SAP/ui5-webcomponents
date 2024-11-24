@@ -7,7 +7,7 @@ export default function (this: DatePicker) {
 		<div
 			class="ui5-date-picker-root"
 			style={{
-					width: "100%",
+				width: "100%",
 			}}
 		>
 			<Input
@@ -28,7 +28,7 @@ export default function (this: DatePicker) {
 				onKeyDown={this._onkeydown}
 			>
 
-				{this.valueStateMessage.length &&
+				{this.valueStateMessage.length > 0 &&
 					<slot name="valueStateMessage" slot="valueStateMessage"></slot>
 				}
 

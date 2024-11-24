@@ -2,10 +2,11 @@ import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Devic
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -34,7 +35,7 @@ import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
+import TimePickerTemplate from "./TimePickerTemplate.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -129,7 +130,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 	languageAware: true,
 	cldr: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: TimePickerTemplate,
 	styles: [
 		TimePickerCss,
@@ -427,24 +428,29 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return !isDesktop() && (isPhone() || isTablet());
 	}
 
+	@bound
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
+	@bound
 	_togglePicker() {
 		this.open = !this.open;
 	}
 
+	@bound
 	submitPickers() {
 		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
 		this._togglePicker();
 	}
 
+	@bound
 	onResponsivePopoverAfterClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");
 	}
 
+	@bound
 	onResponsivePopoverAfterOpen() {
 		this.fireDecoratorEvent("open");
 	}
@@ -488,20 +494,24 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return !!this._isInputsPopoverOpen;
 	}
 
+	@bound
 	submitInputsPopover() {
 		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
 		this.closeInputsPopover();
 	}
 
+	@bound
 	onInputsPopoverAfterOpen() {
 		const popover = this._getInputsPopover();
 		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
+	@bound
 	onInputsPopoverAfterClose() {
 		this._isInputsPopoverOpen = false;
 	}
 
+	@bound
 	_handleInputClick(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		if (this.open) {
@@ -549,11 +559,13 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_handleInputChange(e: CustomEvent) {
 		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, true, ["change", "value-changed"]);
 	}
 
+	@bound
 	_handleInputLiveChange(e: CustomEvent) {
 		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
@@ -584,6 +596,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return input && input.getInputDOMRef();
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (this._isMobileDevice && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
@@ -702,6 +715,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	 * @param e Wheel Event
 	 * @private
 	 */
+	@bound
 	_handleWheel(e: WheelEvent) {
 		e.preventDefault();
 	}
@@ -714,6 +728,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		setTimeout(() => { this._getInput().readonly = false; }, 0);
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent) {
 		if (this._isMobileDevice) {
 			this._hideMobileKeyboard();
@@ -725,7 +740,8 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_oninput(e: CustomEvent) {
+	@bound
+	_oninput(e: MouseEvent) {
 		if (this._isPhone) {
 			e.preventDefault();
 		}

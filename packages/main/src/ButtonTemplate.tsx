@@ -1,7 +1,13 @@
 import type Button from "./Button.js"
 import Icon from "./Icon.js";
 
-export default function (this: Button, injectedProps?: { ariaPressed?: boolean }) {
+export default function (this: Button, injectedProps?: { 
+		ariaPressed?: boolean,
+		ariaValueMax?: number,
+		ariaValueMin?: number,
+		ariaValueNow?: number,
+		ariaValueText?: string 
+}) {
 	return (<>
 		<button
 			type="button"
@@ -9,6 +15,10 @@ export default function (this: Button, injectedProps?: { ariaPressed?: boolean }
 			disabled={this.disabled}
 			data-sap-focus-ref
 			aria-pressed={injectedProps?.ariaPressed}
+			aria-valuemin={injectedProps?.ariaValueMin}
+			aria-valuemax={injectedProps?.ariaValueMax}
+			aria-valuenow={injectedProps?.ariaValueNow}
+			aria-valuetext={injectedProps?.ariaValueText}
 			onFocusOut={this._onfocusout}
 			onClick={this._onclick}
 			onMouseDown={this._onmousedown}

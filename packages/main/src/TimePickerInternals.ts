@@ -1,7 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -78,7 +79,7 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
  */
 @customElement({
 	cldr: true,
-	renderer: litRender,
+	renderer: jsxRender,
 })
 
 /**
@@ -93,6 +94,10 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
 })
 
 class TimePickerInternals extends UI5Element {
+	eventDetails!: {
+		"change": TimeSelectionChangeEventDetail,
+	};
+
 	/**
 	 * Defines a formatted time value.
 	 * @default undefined
@@ -128,7 +133,7 @@ class TimePickerInternals extends UI5Element {
 	 * @private
 	 */
 	@property()
-	_calendarType?: CalendarType;
+	_calendarType?: `${CalendarType}`;
 
 	/**
 	 * Contains currently available Time Picker components depending on time format.
@@ -418,7 +423,8 @@ class TimePickerInternals extends UI5Element {
 		}
 	}
 
-	_periodChange(evt: PointerEvent) {
+	@bound
+	_periodChange(evt: MouseEvent) {
 		const periodItem = evt.target;
 
 		if (periodItem) {

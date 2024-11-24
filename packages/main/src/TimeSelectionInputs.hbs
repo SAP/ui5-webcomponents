@@ -4,7 +4,7 @@
 	>
 	{{#each _entities}}
 		{{#if this.hasSeparator}}
-		<span separator>:</span>
+		<span class="ui5-time-selection-separator">:</span>
 		{{/if}}
 		<ui5-input
 			id="{{../_id}}_input_{{this.entity}}"
@@ -24,7 +24,7 @@
 		></ui5-input>
 	{{/each}}
 	{{#if _periods.length}}
-		<span separator> </span>
+		<span class="ui5-time-selection-separator"> </span>
 		<ui5-segmented-button
 			id="{{_id}}_AmPm"
 			@click={{_periodChange}}

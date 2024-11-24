@@ -16,7 +16,7 @@
 		{{/if}}
 		<ui5-toggle-spin-button
 			id="{{../_id}}_button_{{this.entity}}"
-			data-sap-clock="{{this.entity}}"
+			data-ui5-clock="{{this.entity}}"
 			.valueMin="{{this.attributes.min}}"
 			.valueMax="{{this.attributes.max}}"
 			.valueNow="{{this.value}}"
@@ -53,7 +53,7 @@
 	{{#each _entities}}
 		<ui5-time-picker-clock
 			id="{{../_id}}_clock_{{this.entity}}"
-			data-sap-clock="{{this.entity}}"
+			data-ui5-clock="{{this.entity}}"
 			.active="{{this.active}}"
 			.label="{{this.label}}"
 			.itemMin="{{this.itemMin}}"

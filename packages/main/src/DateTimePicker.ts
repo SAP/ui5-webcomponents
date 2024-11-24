@@ -1,4 +1,5 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -13,7 +14,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
-import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButton, { type SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
@@ -35,7 +36,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DateTimePickerTemplate from "./generated/templates/DateTimePickerTemplate.lit.js";
+import DateTimePickerTemplate from "./DateTimePickerTemplate.js";
 
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
@@ -191,6 +192,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * @override
 	 * @private
 	 */
+	@bound
 	_togglePicker() {
 		super._togglePicker();
 
@@ -306,6 +308,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
+	@bound
 	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
@@ -318,6 +321,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		};
 	}
 
+	@bound
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this._previewValues = {
 			...this._previewValues,
@@ -345,6 +349,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * Handles clicking on the `submit` button, within the picker`s footer.
 	 */
+	@bound
 	_submitClick() {
 		const selectedDate = this.getSelectedDateTime();
 
@@ -360,6 +365,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * Handles clicking on the `cancel` button, within the picker`s footer,
 	 * that would disregard the user selection.
 	 */
+	@bound
 	_cancelClick() {
 		this._togglePicker();
 	}
@@ -369,9 +375,10 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * between the date and time views.
 	 * @param e
 	 */
-	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
-		const target = e.target as HTMLElement;
-		this._showTimeView = target.getAttribute("key") === "Time";
+	@bound
+	_dateTimeSwitchChange(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) { // Note: fix when SegmentedButton is implemented in TS
+		const selectedItem = e.detail.selectedItems[0];
+		this._showTimeView = selectedItem.getAttribute("data-ui5-key") === "Time";
 	}
 
 	/**
