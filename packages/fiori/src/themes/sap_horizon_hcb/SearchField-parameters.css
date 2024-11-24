@@ -12,4 +12,6 @@
 	--_ui5_search_input_outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapField_Active_BorderColor);
 	--_ui5_search_icon_size: 2.25rem;
 	--_ui5_search_icon_padding: 0.5rem;
+	--_ui5_search_input_start_margin: 0.25rem;
+	--_ui5_search_input_end_padding: 0.25rem;
 }

@@ -10,4 +10,6 @@
     --_ui5_search_input_outline: none;
     --_ui5_search_icon_size: 1.75rem;
     --_ui5_search_icon_padding: 0.375rem;
+    --_ui5_search_input_start_margin: 0;
+    --_ui5_search_input_end_padding: 0;
 }

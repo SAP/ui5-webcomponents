@@ -131,6 +131,15 @@ class SearchField extends UI5Element {
 	expanded = false;
 
 	/**
+	 * Determines whether the component is in a fixed state that is not
+	 * expandable/collapsible by user interaction.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	fixed = false;
+
+	/**
 	 * Defines the value of the component.
 	 *
 	 * **Note:** The property is updated upon typing.
@@ -193,6 +202,10 @@ class SearchField extends UI5Element {
 	_handleSearchIconPress() {
 		if (this.value.length) {
 			this.fireDecoratorEvent("search");
+			return;
+		}
+
+		if (this.fixed) {
 			return;
 		}
 
