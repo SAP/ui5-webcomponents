@@ -1,0 +1,6 @@
+ui5-form-item::part(layout) {
+	background: var(--sapHoverColor);
+}
+ui5-form-item::part(content) {
+	background: var(--sapAvatar_1_Background);
+}
