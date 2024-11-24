@@ -35,12 +35,19 @@
 }
 
 .ui5-pm-other-accounts {
-    border: .0625rem solid var(--sapGroup_TitleBorderColor);
     margin-bottom: 1rem;
 }
 
 .ui5-pm-other-accounts::part(content) {
     padding: 0;
+}
+
+.ui5-pm-other-accounts-content {
+    display: grid; 
+    grid-template-columns: auto 1fr; 
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1rem;
 }
 
 .ui5-profile-menu-account-header {

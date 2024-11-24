@@ -13,11 +13,12 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import Panel from "@ui5/webcomponents/dist/Panel.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import List, { type ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
+import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import ProfileMenuAccount from "./ProfileMenuAccount.js";
 import ProfileMenuItem from "./ProfileMenuItem.js";
 import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.js";
@@ -74,7 +75,7 @@ type ProfileMenuOtherAccountClickEventDetail = {
 		Panel,
 		Icon,
 		List,
-		ListItemStandard,
+		ListItemCustom,
 		Tag,
 	],
 })
@@ -83,19 +84,25 @@ type ProfileMenuOtherAccountClickEventDetail = {
  * Fired when selected account avatar is clicked.
  * @public
  */
-@event("avatar-click")
+@event("avatar-click", {
+	bubbles: false,
+})
 
 /**
  * Fired when the "Manage Account" button is clicked.
  * @public
  */
-@event("manage-account-click")
+@event("manage-account-click", {
+	bubbles: false,
+})
 
 /**
  * Fired when the "Add Account" button is clicked.
  * @public
  */
-@event("add-account-click")
+@event("add-account-click", {
+	bubbles: false,
+})
 
 /**
  * Fired when account is switched.
@@ -108,6 +115,7 @@ type ProfileMenuOtherAccountClickEventDetail = {
 		prevSelectedAccount: { type: ProfileMenuAccount },
 		selectedAccount: { type: ProfileMenuAccount },
 	},
+	bubbles: false,
 	cancelable: true,
 })
 
@@ -120,6 +128,7 @@ type ProfileMenuOtherAccountClickEventDetail = {
 	detail: {
 		item: { type: ProfileMenuItem },
 	},
+	bubbles: false,
 	cancelable: true,
 })
 
@@ -128,6 +137,7 @@ type ProfileMenuOtherAccountClickEventDetail = {
  * @public
  */
 @event("sign-out-click", {
+	bubbles: false,
 	cancelable: true,
 })
 class ProfileMenu extends UI5Element {

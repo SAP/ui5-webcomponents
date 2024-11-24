@@ -27,7 +27,7 @@ class ProfileMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	avatar = "";
+	avatar?: string;
 
 	/**
 	 * Defines, the avatar initials of the profile.
@@ -45,7 +45,7 @@ class ProfileMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	text!: string;
+	text = "";
 
 	/**
 	 * Defines, the subtitle1 of the profile.
@@ -54,7 +54,7 @@ class ProfileMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	subtitle1?: string;
+	subtitle1 = "";
 
 	/**
 	 * Defines, the subtitle2 of the profile.
@@ -63,12 +63,12 @@ class ProfileMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	subtitle2?: string;
+	subtitle2 = "";
 
 	/**
 	 * Defines, if the profile is selected
 	 *
-	 * @default ""
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })

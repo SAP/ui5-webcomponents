@@ -13,7 +13,7 @@
 >
 	{{#if _selectedAccount}}
 		<div class="ui5-pm-selected-account" slot="header">
-			<ui5-avatar size="L" @click="{{_handleAvatarClick}}" initials=null initials="{{_selectedAccount.initials}}" fallback-icon="person-placeholder">
+			<ui5-avatar size="L" @click="{{_handleAvatarClick}}" .initials="{{_selectedAccount.initials}}" fallback-icon="person-placeholder">
 				{{#if _selectedAccount.avatar}}
 					<img src={{_selectedAccount.avatar}}/>
 				{{/if}}
@@ -21,12 +21,18 @@
 					<ui5-icon slot="icon" name="edit"></ui5-icon>
 				</ui5-tag>
 			</ui5-avatar>
-			<ui5-title>{{_selectedAccount.text}}</ui5-title>
-			<ui5-text>{{_selectedAccount.subtitle1}}</ui5-text>
-			<ui5-text>{{_selectedAccount.subtitle2}}</ui5-text>
+			{{#if _selectedAccount.text}}
+				<ui5-title>{{_selectedAccount.text}}</ui5-title>
+			{{/if}}
+			{{#if _selectedAccount.subtitle1}}
+				<ui5-text>{{_selectedAccount.subtitle1}}</ui5-text>
+			{{/if}}
+			{{#if _selectedAccount.subtitle2}}
+				<ui5-text>{{_selectedAccount.subtitle2}}</ui5-text>
+			{{/if}}
 
 			{{#if showManageAccount}}
-			<ui5-button icon="user-settings" class="ui5-pm-manage-account-btn" @click="{{_handleManageAccountClick}}">{{_manageAccountButtonText}}</ui5-button>
+				<ui5-button icon="user-settings" class="ui5-pm-manage-account-btn" @click="{{_handleManageAccountClick}}">{{_manageAccountButtonText}}</ui5-button>
 			{{/if}}
 		</div>
 	{{/if}}
@@ -40,18 +46,26 @@
 			{{#if _otherAccounts.length}}
 			<ui5-list @ui5-item-click="{{_handleAccountSwitch}}">
 				{{#each _otherAccounts}}
-					<ui5-li .associatedAccount="{{this}}">
-						<ui5-avatar slot="image" size="XS" initials=null initials="{{initials}}" fallback-icon="person-placeholder">
-							{{#if avatar}}
-								<img src={{avatar}}/>
+					<ui5-li-custom .associatedAccount="{{this}}">
+						<div class="ui5-pm-other-accounts-content">
+							<ui5-avatar slot="image" size="S" fallback-icon="person-placeholder">
+								{{#if avatar}}
+									<img src={{avatar}}/>
+								{{/if}}
+							</ui5-avatar>
+							<div>
+							{{#if text}}
+								<ui5-title>{{text}}</ui5-title>
 							{{/if}}
-
-						</ui5-avatar>
-						<ui5-title>{{text}}</ui5-title>
-					<ui5-label>{{subtitle1}}</ui5-label>
-					</br>
-					<ui5-label>{{subtitle2}}</ui5-label>
-					</ui5-li>
+							{{#if subtitle1}}
+								<ui5-label>{{subtitle1}}</ui5-label>
+							{{/if}}
+							{{#if subtitle2}}
+								<ui5-label>{{subtitle2}}</ui5-label>
+							{{/if}}
+							</div>
+						</div>
+					</ui5-li-custom>
 				{{/each}}
 			</ui5-list>
 			{{/if}}
