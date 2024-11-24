@@ -3,12 +3,12 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
-import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
+import ColorPalettePopoverTemplate from "./ColorPalettePopoverTemplate.js";
 
 // Styles
 import ColorPalettePopoverCss from "./generated/themes/ColorPalettePopover.css.js";
@@ -24,6 +24,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -54,7 +55,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  */
 @customElement({
 	tag: "ui5-color-palette-popover",
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: [ResponsivePopoverCommonCss, ColorPalettePopoverCss],
 	template: ColorPalettePopoverTemplate,
 	dependencies: [
@@ -90,6 +91,10 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 	bubbles: true,
 })
 class ColorPalettePopover extends UI5Element {
+	eventDetails!: {
+		"item-click": ColorPalettePopoverItemClickEventDetail,
+		"close": void,
+	}
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
 	 * @default false
@@ -168,15 +173,18 @@ class ColorPalettePopover extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
+	@bound
 	closePopover() {
 		this.open = false;
 	}
 
+	@bound
 	onAfterClose() {
 		this.closePopover();
 		this.fireDecoratorEvent("close");
 	}
 
+	@bound
 	onAfterOpen() {
 		const colorPalette = this._colorPalette;
 		if (colorPalette._currentlySelected) {
@@ -194,6 +202,7 @@ class ColorPalettePopover extends UI5Element {
 		});
 	}
 
+	@bound
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
 		this.fireDecoratorEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
