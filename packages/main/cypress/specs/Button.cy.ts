@@ -209,7 +209,9 @@ describe("Button general interaction", () => {
 			.find("[ui5-icon]")
 			.should("have.attr", "mode", "Decorative");
 	});
+});
 
+describe("Accessibility", () => {
 	it("setting tooltip on the host is reflected on the button tag", () => {
 		cy.mount(html`<ui5-button icon="message-information" tooltip="Go home"></ui5-button>`);
 
@@ -233,9 +235,7 @@ describe("Button general interaction", () => {
 		cy.get("@button")
 			.should("have.attr", "title", "Download");
 	});
-});
 
-describe("Accessibility", () => {
 	it("aria-expanded is properly applied on the button tag", () => {
 		cy.mount(html`<ui5-button icon="home" design="Emphasized">Action Bar Button</ui5-button>`);
 
