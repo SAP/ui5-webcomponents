@@ -49,7 +49,7 @@ class UserMenuAccount extends UI5Element {
 	text = "";
 
 	/**
-	 * Defines, the subtitle1 of the user.
+	 * Defines subtitle 1 of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -58,7 +58,7 @@ class UserMenuAccount extends UI5Element {
 	subtitle1 = "";
 
 	/**
-	 * Defines, the subtitle2 of the user.
+	 * Defines subtitle 2 of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -67,7 +67,7 @@ class UserMenuAccount extends UI5Element {
 	subtitle2 = "";
 
 	/**
-	 * Defines, if the user is selected
+	 * Defines if the user is selected.
 	 *
 	 * @default false
 	 * @public

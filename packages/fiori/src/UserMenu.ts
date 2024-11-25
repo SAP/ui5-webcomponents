@@ -82,7 +82,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired when selected account avatar is clicked.
+ * Fired when the account avatar is selected.
  * @public
  */
 @event("avatar-click", {
@@ -90,7 +90,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired when the "Manage Account" button is clicked.
+ * Fired when the "Manage Account" button is selected.
  * @public
  */
 @event("manage-account-click", {
@@ -98,7 +98,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired when the "Add Account" button is clicked.
+ * Fired when the "Add Account" button is selected.
  * @public
  */
 @event("add-account-click", {
@@ -106,7 +106,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired when account is switched.
+ * Fired when the account is switched to a different one.
  * @param {UserMenuAccount} prevSelectedAccount The previously selected account.
  * @param {UserMenuAccount} selectedAccount The selected account.
  * @public
@@ -121,7 +121,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired when a menu item is clicked.
+ * Fired when a menu item is selected.
  * @param {UserMenuItem} item The selected `user menu item`.
  * @public
  */
@@ -190,7 +190,7 @@ class UserMenu extends UI5Element {
 	menuItems!: Array<UserMenuItem>;
 
 	/**
-	 * Defines the усер accounts.
+	 * Defines the user accounts.
 	 *
 	 * **Note:** If one item is used, it will be shown as selected one. If more than one item is used, the first one will be shown as selected unless
 	 * there is an item with `selected` property set to `true`.
