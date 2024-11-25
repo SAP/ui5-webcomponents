@@ -34,6 +34,8 @@ import {
 	USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
 	USER_MENU_SIGN_OUT_BUTTON_TXT,
 	USER_MENU_POPOVER_ACCESSIBLE_NAME,
+	USER_MENU_EDIT_AVATAR_TXT,
+	USER_MENU_ADD_ACCOUNT_TXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type UserMenuItemClickEventDetail = {
@@ -323,8 +325,16 @@ class UserMenu extends UI5Element {
 		return UserMenu.i18nBundle.getText(USER_MENU_SIGN_OUT_BUTTON_TXT);
 	}
 
+	get _editAvatarTooltip() {
+		return UserMenu.i18nBundle.getText(USER_MENU_EDIT_AVATAR_TXT);
+	}
+
+	get _addAccountTooltip() {
+		return UserMenu.i18nBundle.getText(USER_MENU_ADD_ACCOUNT_TXT);
+	}
+
 	get accessibleNameText() {
-		return UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME);
+		return `${UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME)} ${this._selectedAccount.text}`;
 	}
 }
 
