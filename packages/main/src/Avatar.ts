@@ -116,7 +116,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 * Defines the name of the fallback icon, which should be displayed in the following cases:
 	 *
 	 * 	- If the initials are not valid (more than 3 letters, unsupported languages or empty initials).
-	 * 	- If there are three initials and they do not fit in the shape (e.g. WWW for some of the sizes).
 	 * 	- If the image src is wrong.
 	 *
 	 * **Note:** If not set, a default fallback icon "employee" is displayed.
@@ -349,14 +348,27 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 
 	_checkInitials() {
 		const avatar = this.getDomRef()!;
-		const avatarInitials = avatar.querySelector(".ui5-avatar-initials");
-		const validInitials = this.validInitials && avatarInitials && avatarInitials.scrollWidth <= avatar.scrollWidth;
+		const avatarInitials = avatar.querySelector(".ui5-avatar-initials") as HTMLElement;
+		avatarInitials.style.fontSize = "inherit";
+		const validInitials = this.validInitials && avatarInitials;
 
 		if (validInitials) {
+			if (avatarInitials.scrollWidth > avatar.scrollWidth) {
+				this._resizeInitialsToFit(avatarInitials, avatar);
+			}
 			this.showInitials();
-			return;
+		} else {
+			this.showFallbackIcon();
 		}
-		this.showFallbackIcon();
+	}
+
+	_resizeInitialsToFit(output: HTMLElement, avatar: HTMLElement) {
+		const fontSize = window.getComputedStyle(output).fontSize;
+		output.style.fontSize = `${parseFloat(fontSize) - 1}px`;
+
+		if (output.scrollWidth > avatar.clientHeight) {
+			this._resizeInitialsToFit(output, avatar);
+		}
 	}
 
 	showFallbackIcon() {

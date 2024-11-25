@@ -53,25 +53,14 @@ describe("Avatar", () => {
 		assert.ok(await initials.isExisting(), "initials are rendered");
 	});
 
-	it("tests rendering of default fallback icon when initials are overflowing ", async () => {
-		const avatar = await browser.$("#myAvatar5");
-		const icon = await avatar.shadow$(".ui5-avatar-icon");
-		const iconName = await icon.getAttribute("name");
-
-		// icon is rendered
-		assert.ok(await icon.isExisting(), "icon should be rendered, when the initials are overflowing");
-		assert.strictEqual(await iconName, "employee", "the default fallback icon is renderen");
-
-	});
-
-	it("tests rendering of custom fallback icon when initials are overflowing ", async () => {
+	it("initials' font size reduced to fit in avatar", async () => {
 		const avatar = await browser.$("#myAvatar7");
-		const fbIcon = await avatar.shadow$(".ui5-avatar-icon-fallback");
-		const fbIconName = await fbIcon.getAttribute("name");
+		const initials = await avatar.shadow$(".ui5-avatar-initials");
+		const initialsStyles = await initials.getAttribute("style");
 
 		// icon is rendered
-		assert.ok(await fbIcon.isExisting(), "fallback icon should be rendered, when it is set and the initials are overflowing");
-		assert.strictEqual(await fbIconName, "alert", "the custom fallback icon is renderen");
+		assert.ok(await initials.isExisting(), "initials are rendered");
+		assert.strictEqual(await initialsStyles, "font-size: 29px;", "there is inline style attr with the proper font-size");
 
 	});
 
