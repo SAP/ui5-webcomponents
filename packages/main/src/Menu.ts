@@ -132,6 +132,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 			type: String,
 		},
 	},
+	cancelable: true,
 })
 
 /**
@@ -153,6 +154,8 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 			type: HTMLElement,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -160,7 +163,13 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @public
  * @since 1.10.0
  */
-@event("open")
+@event("open", { bubbles: true })
+
+/**
+ * Fired when the menu is being closed.
+ * @private
+ */
+@event("close-menu")
 
 /**
  * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
@@ -178,6 +187,8 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 			type: Boolean,
 		},
 	},
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
@@ -290,9 +301,9 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+		this.fireDecoratorEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
-		}, false, false);
+		});
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
@@ -342,13 +353,13 @@ class Menu extends UI5Element {
 		const item = e.detail.item as MenuItem;
 
 		if (!item._popover) {
-			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
+			const prevented = !this.fireDecoratorEvent<MenuItemClickEventDetail>("item-click", {
 				"item": item,
 				"text": item.text || "",
-			}, true, false);
+			});
 
 			if (!prevented && this._popover) {
-				item.fireEvent("close-menu", {});
+				item.fireDecoratorEvent("close-menu", {});
 			}
 		} else {
 			this._openItemSubMenu(item);
@@ -378,7 +389,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
+		const prevented = !this.fireDecoratorEvent<MenuBeforeOpenEventDetail>("before-open", {});
 
 		if (prevented) {
 			this.open = false;
@@ -388,11 +399,11 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
-		this.fireEvent("open", {}, false, true);
+		this.fireDecoratorEvent("open", {});
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
+		const prevented = !this.fireDecoratorEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed });
 
 		if (prevented) {
 			this.open = true;

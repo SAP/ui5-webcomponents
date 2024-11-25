@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
@@ -60,6 +61,66 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
 	styles: [ListItem.styles, menuItemCss],
 	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
 })
+
+/**
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
+ *
+ * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
+ * @public
+ * @allowPreventDefault
+ * @since 1.10.0
+ * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
+ */
+@event<MenuBeforeOpenEventDetail>("before-open", {
+	detail: {
+		/**
+		 * @public
+		 * @since 1.14.0
+		 */
+		item: {
+			type: HTMLElement,
+		},
+	},
+	cancelable: true,
+})
+
+/**
+ * Fired after the menu is opened. **This event does not bubble.**
+ * @public
+ */
+@event("open")
+
+/**
+ * Fired when the menu is being closed.
+ * @private
+ */
+@event("close-menu")
+
+/**
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
+ * @public
+ * @allowPreventDefault
+ * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
+ * @since 1.10.0
+ */
+@event<MenuBeforeCloseEventDetail>("before-close", {
+	detail: {
+		/**
+		 * @public
+		 */
+		escPressed: {
+			type: Boolean,
+		},
+	},
+	cancelable: true,
+})
+
+/**
+ * Fired after the menu is closed. **This event does not bubble.**
+ * @public
+ * @since 1.10.0
+ */
+@event("close")
 class MenuItem extends ListItem implements IMenuItem {
 	/**
 	 * Defines the text of the tree item.
@@ -289,7 +350,7 @@ class MenuItem extends ListItem implements IMenuItem {
 			this._popover.open = false;
 		}
 		this.selected = false;
-		this.fireEvent("close-menu", {});
+		this.fireDecoratorEvent("close-menu", {});
 	}
 
 	_close() {
@@ -300,7 +361,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
+		const prevented = !this.fireDecoratorEvent<MenuBeforeOpenEventDetail>("before-open", {});
 
 		if (prevented) {
 			e.preventDefault();
@@ -309,11 +370,11 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_afterPopoverOpen() {
 		this.items[0]?.focus();
-		this.fireEvent("open", {}, false, false);
+		this.fireDecoratorEvent("open");
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
+		const prevented = !this.fireDecoratorEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed });
 
 		if (prevented) {
 			e.preventDefault();
@@ -324,13 +385,13 @@ class MenuItem extends ListItem implements IMenuItem {
 		if (e.detail.escPressed) {
 			this.focus();
 			if (isPhone()) {
-				this.fireEvent("close-menu", {});
+				this.fireDecoratorEvent("close-menu", {});
 			}
 		}
 	}
 
 	_afterPopoverClose() {
-		this.fireEvent("close", {}, false, false);
+		this.fireDecoratorEvent("close", {});
 	}
 }
 
