@@ -210,6 +210,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 
 	get classes() {
 		return {
+			// Remove after deliting the hbs template, the classes are added in the jsx template
 			picker: {
 				"ui5-dt-picker-content--phone": this.phone,
 			},

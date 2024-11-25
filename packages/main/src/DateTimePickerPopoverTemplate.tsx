@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import DatePickerPopoverTemplate from "./DatePickerPopoverTemplate.js"
 
 import Button from "./Button.js";
@@ -11,7 +12,7 @@ import TimeSelectionClocks from "./TimeSelectionClocks.js";
 export default function (this: DateTimePicker) {
 	return (
 		<>
-			{ DatePickerPopoverTemplate.call(this, { header, content, footer }) };
+			{ DatePickerPopoverTemplate.call(this, { header, content, footer }) }
 		</>
 	);
 };
@@ -34,9 +35,16 @@ function header(this: DateTimePicker) {
 
 function content(this: DateTimePicker) {
 	return (
-		<div class="ui5-dt-picker-content {{classes.picker}}">
+		<div class={clsx({
+			"ui5-dt-picker-content": true,
+			"ui5-dt-picker-content--phone": this.phone,
+		})}>
 			<Calendar
-				class="ui5-dt-cal {{classes.dateTimeView}}"
+				class={clsx({
+					"ui5-dt-cal": true,
+					"ui5-dt-cal--hidden": this.phone && this.showTimeView,
+					"ui5-dt-time--hidden": this.phone && this.showDateView,
+				})}
 				id={`${this._id}-calendar`}
 				primaryCalendarType={this._primaryCalendarType}
 				secondaryCalendarType={this.secondaryCalendarType}
@@ -75,7 +83,12 @@ function content(this: DateTimePicker) {
 
 function footer(this: DateTimePicker) {
 	return (
-		<div slot="footer" class="ui5-dt-picker-footer {{classes.footer}}">
+		<div 
+			slot="footer" 
+			class={clsx({
+				"ui5-dt-picker-footer": true,
+				"ui5-dt-picker-footer-time-hidden": (this.phone && this.showTimeView) || (this.phone && this.showDateView)
+			})}>
 			<Button
 				id="ok"
 				class="ui5-dt-picker-action"

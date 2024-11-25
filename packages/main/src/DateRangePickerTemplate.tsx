@@ -9,7 +9,7 @@ export default function (this: DateRangePicker) {
 	return (
 		<>
 			{ DatePickerInputTemplate.call(this) }
-			{ DatePickerPopoverTemplate.call(this, { content }) };
+			{ DatePickerPopoverTemplate.call(this, { content }) }
 		</>
 	)
 };
