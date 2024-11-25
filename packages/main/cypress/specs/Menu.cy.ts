@@ -501,14 +501,14 @@ describe("Menu interaction", () => {
 			cy.realPress('{rightarrow}');
 
 			cy.get("@endContent")
-					.eq(3)
-					.should("be.focused");
+				.eq(3)
+				.should("be.focused");
 
 			cy.realPress('{rightarrow}');
 
 			cy.get("@endContent")
-					.eq(3)
-					.should("be.focused");
+				.eq(3)
+				.should("be.focused");
 
 			cy.realPress('{leftarrow}');
 
@@ -525,8 +525,8 @@ describe("Menu interaction", () => {
 			cy.realPress('{leftarrow}');
 
 			cy.get("@endContent")
-					.eq(1)
-					.should("be.focused");
+				.eq(1)
+				.should("be.focused");
 
 			cy.realPress('{downarrow}');
 
