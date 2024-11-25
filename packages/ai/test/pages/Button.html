@@ -202,19 +202,15 @@
 
 		function aiButtonSplitArrowClickHandler(evt) {
 			var button = evt.target;
+
 			menuReg.opener = button;
 			menuReg.open = true;
+			button.splitButton().activeArrowButton = true;
 		}
-
-		myAiButton.addEventListener("click", aiButtonClickHandler);
-
-		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);
-		myAiButtonSplit.addEventListener("arrow-click", aiButtonSplitArrowClickHandler);
-
-		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
 
 		menu.addEventListener("item-click", function(evt) {
 			var button = menu.opener;
+
 			if (evt.detail.text === "Regenerate") {
 				button.state = "generating";
 				startGeneration(button);
@@ -224,13 +220,26 @@
 		menuReg.addEventListener("item-click", function(evt) {
 			var button = menuReg.opener;
 
+			button.splitButton().activeArrowButton = false;
 			prevTriggerState = "revise";
 			button.state = "generating";
 			startGeneration(button);
 		});
 
+		menuReg.addEventListener("close", function(evt) {
+			var button = menuReg.opener;
+
+			button.splitButton().activeArrowButton = false;
+		});
+
+		myAiButton.addEventListener("click", aiButtonClickHandler);
+		myAiButtonSplit.addEventListener("click", aiButtonSplitClickHandler);
+		myAiButtonSplit.addEventListener("arrow-click", aiButtonSplitArrowClickHandler);
+		myAiButtonIconOnly.addEventListener("click", aiButtonClickHandler);
+
 		function aiQuickPromptButtonClickHandler(e) {
 			var button = e.target;
+
 			switch(button.state) {
 				case "":
 				case "generate":
@@ -276,6 +285,7 @@
 
 		sendButton.addEventListener("click", function() {
 			const output = document.getElementById("output");
+
 			if (output.value) {
 				toast.open = true;
 				output.valueState = "None";
@@ -299,6 +309,7 @@
 				case "Regenerate":
 					const keys = Object.keys(predefinedTexts[translationKey]);
 					const randomKey = keys[Math.floor(Math.random() * keys.length)];
+
 					currentTextKey = randomKey;
 					setStateAndGenerate(button, "generating", randomKey, predefinedTexts);
 					break;
@@ -360,8 +371,9 @@
 		}
 
 		function setNegativeValueState(output) {
-			output.valueState = "Negative";
 			const div = document.createElement("div");
+
+			output.valueState = "Negative";
 			div.setAttribute("slot", "valueStateMessage");
 			div.textContent = "Spelling or grammar issues found, please try again!";
 
@@ -392,6 +404,7 @@
 			const output = document.getElementById("output");
 			const words = text.split(" ");
 			let currentWordIndex = 0;
+
 			output.value = "";
 			generationId = setInterval(() => {
 				if (currentWordIndex < words.length) {

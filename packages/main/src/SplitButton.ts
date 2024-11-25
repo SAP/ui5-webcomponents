@@ -433,10 +433,11 @@ class SplitButton extends UI5Element {
 			}
 		} else {
 			this._textButtonActive = true;
-			this._fireClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;
+				return;
 			}
+			this._fireClick();
 		}
 	}
 
@@ -469,6 +470,7 @@ class SplitButton extends UI5Element {
 	get accInfo() {
 		return {
 			root: {
+				"role": this._hideArrowButton ? "button" : "group",
 				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
 			},
@@ -476,6 +478,7 @@ class SplitButton extends UI5Element {
 				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
 					"hasPopup": AriaHasPopup.Menu.toLocaleLowerCase(),
+					"expanded": this.effectiveActiveArrowButton ? "true" : "false",
 				},
 			},
 		};

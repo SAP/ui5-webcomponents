@@ -190,6 +190,16 @@ class Button extends UI5Element {
 	}
 
 	/**
+	 * Returns the inner SplitButton element.
+	 * @public
+	 * @since 2.5.0
+	 * @returns {SplitButton} The inner SplitButton element.
+	 */
+	splitButton(): SplitButton | undefined {
+		return !this._hideArrowButton ? this.shadowRoot?.querySelector(".ui5-ai-button-inner") as SplitButton : undefined;
+	}
+
+	/**
 	 * Starts the fade-out animation.
 	 * @private
 	 */
