@@ -63,6 +63,9 @@ import ButtonCss from "./generated/themes/Button.css.js";
 	bubbles: true,
 })
 class Button extends UI5Element {
+	eventDetails!: {
+		click: void,
+	}
 	/**
 	 * Defines the component design.
 	 * @default "Default"
