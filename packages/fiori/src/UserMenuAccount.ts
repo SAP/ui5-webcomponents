@@ -22,7 +22,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  */
 class UserMenuAccount extends UI5Element {
 	/**
-	 * Defines, the avatar of the user.
+	 * Defines the avatar of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -31,7 +31,7 @@ class UserMenuAccount extends UI5Element {
 	avatar?: string;
 
 	/**
-	 * Defines, the avatar initials of the user.
+	 * Defines the avatar initials of the user.
 	 *
 	 * @default null
 	 * @public
@@ -40,7 +40,7 @@ class UserMenuAccount extends UI5Element {
 	initials = null;
 
 	/**
-	 * Defines, the title text of the user.
+	 * Defines the title text of the user.
 	 *
 	 * @default ""
 	 * @public

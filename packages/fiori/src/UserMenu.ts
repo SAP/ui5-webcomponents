@@ -134,7 +134,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired when the "Sign Out" button is clicked.
+ * Fired when the "Sign Out" button is selected.
  * @public
  */
 @event("sign-out-click", {
@@ -143,7 +143,7 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 class UserMenu extends UI5Element {
 	/**
-	 * Defines, if the User menu dialog is opened.
+	 * Defines if the User Menu dialog is opened.
 	 *
 	 * @default false
 	 * @public
@@ -162,7 +162,7 @@ class UserMenu extends UI5Element {
 	opener?: HTMLElement | string;
 
 	/**
-	 * Defines, if the User menu will show manage accounts.
+	 * Defines if the User Menu shows the Manage Account option.
 	 *
 	 * @default false
 	 * @public
@@ -171,7 +171,7 @@ class UserMenu extends UI5Element {
 	showManageAccount = false;
 
 	/**
-	 * Defines, if the User menu will show other accounts.
+	 * Defines if the User Menu shows the Other Accounts option.
 	 *
 	 * @default false
 	 * @public
@@ -192,7 +192,7 @@ class UserMenu extends UI5Element {
 	/**
 	 * Defines the user accounts.
 	 *
-	 * **Note:** If one item is used, it will be shown as selected one. If more than one item is used, the first one will be shown as selected unless
+	 * **Note:** If one item is used, it will be shown as the selected one. If more than one item is used, the first one will be shown as selected unless
 	 * there is an item with `selected` property set to `true`.
 	 * @public
 	 */
