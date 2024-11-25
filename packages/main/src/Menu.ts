@@ -363,7 +363,7 @@ class Menu extends UI5Element {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 		}
-		debugger;
+
 		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 		const item = e.target as MenuItem;
