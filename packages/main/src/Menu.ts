@@ -7,6 +7,9 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isTabNext,
+	isDown,
+	isUp
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -356,14 +359,17 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
-			return;
+		if (isTabNext(e)) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
 		}
 
 		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
+
+		const menuItem = parentElement.hasAttribute("ui5-menu-item") ? parentElement : item;
 
 		if (isEnter(e)) {
 			e.preventDefault();
@@ -375,7 +381,28 @@ class Menu extends UI5Element {
 			parentElement.selected = false;
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}
+		if (!menuItem.hasAttribute("ui5-menu-item")) {
+			return;
+		}
+		if (isUp(e)) {
+			this._handleNextOrPreviousItem(menuItem);
+		} else if (isDown(e)) {
+			this._handleNextOrPreviousItem(menuItem, true);
+		} else if (isLeft(e) || isRight(e)) {
+			menuItem._itemKeyDown(e);
+		}
 	}
+
+	_handleNextOrPreviousItem(menuItem: MenuItem, isNext?: boolean) {
+		const currentIndex = this._menuItems.indexOf(menuItem);
+		const nextItem = isNext ? this._menuItems[currentIndex + 1] : this._menuItems[currentIndex - 1];
+
+		if (nextItem) {
+			nextItem.focus();
+		} else {
+			this._menuItems[currentIndex].focus();
+		}
+ 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
 		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);

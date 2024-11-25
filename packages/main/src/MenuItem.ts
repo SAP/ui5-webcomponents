@@ -15,6 +15,12 @@ import List from "./List.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import {
+	isLeft,
+	isRight
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
@@ -201,6 +207,54 @@ class MenuItem extends ListItem implements IMenuItem {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	_itemNavigation: ItemNavigation;
+	_lastFocusedItemIndex: number | null;
+
+	constructor() {
+		super();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			getItemsCallback: () => this._navigableItems,
+		});
+		this._lastFocusedItemIndex = null;
+	}
+
+	get _navigableItems() {
+		let navigableItems: Array<HTMLElement> = [];
+
+		if (!this.hasEndContent) {
+			return [];
+		}
+
+		navigableItems.push(...this.endContent);
+
+		return navigableItems;
+	}
+
+	_itemKeyDown(e: KeyboardEvent) {
+		if (isLeft(e)) {
+			this._handleNextOrPreviousItem(e);
+		} else if (isRight(e)) {
+			this._handleNextOrPreviousItem(e, true);
+		}
+	}
+
+	_handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean) {
+		const target = e.target as MenuItem | HTMLElement;
+
+		let updatedTarget = target;
+
+		const nextTargetIndex = isNext ? this._navigableItems.indexOf(updatedTarget) + 1 : this._navigableItems.indexOf(updatedTarget) - 1;
+		const nextTarget = this._navigableItems[nextTargetIndex];
+
+		if (nextTarget) {
+			e.preventDefault();
+
+			this._itemNavigation.setCurrentItem(nextTarget);
+			this._itemNavigation._focusCurrentItem();
+		}
+	}
+
 	get placement(): `${PopoverPlacement}` {
 		return this.isRtl ? "Start" : "End";
 	}
@@ -259,6 +313,8 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+
+		this._itemNavigation._navigationMode = NavigationMode.Horizontal;
 	}
 
 	get _focusable() {

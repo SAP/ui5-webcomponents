@@ -456,5 +456,83 @@ describe("Menu interaction", () => {
 				.find("[ui5-responsive-popover]")
 				.should("have.attr", "accessible-name", "Select an option from the menu");
 		});
+
+		it("Menu items - navigation in endContent", () => {
+			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+			<ui5-menu id="menu" opener="btnOpen">
+				<ui5-menu-item id="item1" text="Item 1" loading-delay="500" loading></ui5-menu-item>
+				<ui5-menu-item id="item2" text="Item 2">
+					<ui5-button id="newLock" slot="endContent" icon="locked" design="Transparent"></ui5-button>
+					<ui5-button id="newUnlock" slot="endContent" icon="unlocked" design="Transparent"></ui5-button>
+					<ui5-button id="newFavorite" slot="endContent" icon="favorite" design="Transparent"></ui5-button>
+				</ui5-menu-item>
+				<ui5-menu-item text="Item3" additional-text="Ctrl+F" icon="add-folder" ></ui5-menu-item>
+			</ui5-menu>`);
+
+			cy.get("[ui5-menu]")
+				.ui5MenuOpen();
+
+			cy.get("[ui5-menu] > [ui5-menu-item]")
+				.as("items");
+
+			cy.realPress('{downarrow}');
+
+			cy.get("@items")
+				.eq(1)
+				.should("be.focused");
+
+			cy.realPress('{rightarrow}');
+
+			cy.get("@items")
+				.eq(1)
+				.get("[ui5-button]")
+				.as("endContent");
+
+			cy.get("@endContent")
+				.eq(1)
+				.should("be.focused");
+
+			cy.realPress('{rightarrow}');
+
+			cy.get("@endContent")
+				.eq(2)
+				.should("be.focused");
+
+			cy.realPress('{rightarrow}');
+
+			cy.get("@endContent")
+					.eq(3)
+					.should("be.focused");
+
+			cy.realPress('{rightarrow}');
+
+			cy.get("@endContent")
+					.eq(3)
+					.should("be.focused");
+
+			cy.realPress('{leftarrow}');
+
+			cy.get("@endContent")
+				.eq(2)
+				.should("be.focused");
+
+			cy.realPress('{leftarrow}');
+
+			cy.get("@endContent")
+				.eq(1)
+				.should("be.focused");
+
+			cy.realPress('{leftarrow}');
+
+			cy.get("@endContent")
+					.eq(1)
+					.should("be.focused");
+
+			cy.realPress('{downarrow}');
+
+			cy.get("@items")
+				.eq(2)
+				.should("be.focused");
+		});
 	});
 });
