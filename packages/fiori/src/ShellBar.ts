@@ -785,14 +785,6 @@ class ShellBar extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-overflow-container-additional-content");
 	}
 
-	get spacerWidth() {
-		return this.spacer?.offsetWidth || 0;
-	}
-
-	get spacer() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-spacer")!;
-	}
-
 	onAfterRendering() {
 		requestAnimationFrame(() => {
 			this._lastOffsetWidth = this.offsetWidth;
@@ -900,7 +892,6 @@ class ShellBar extends UI5Element {
 		const nonDisappearingItems = Array.from(container.querySelectorAll<HTMLElement>(".ui5-shellbar-no-overflow-button"));
 		const nonDisappearingItemsWidth = nonDisappearingItems.reduce((acc, el) => acc + el.offsetWidth + OVERFLOW_ITEM_MARGIN, 0);
 		const totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth;
-
 
 		let usedWidth = 0;
 		let hiddenItems = 0;
