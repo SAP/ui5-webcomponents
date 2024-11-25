@@ -397,11 +397,7 @@ class Menu extends UI5Element {
 		const currentIndex = this._menuItems.indexOf(menuItem);
 		const nextItem = isNext ? this._menuItems[currentIndex + 1] : this._menuItems[currentIndex - 1];
 
-		if (nextItem) {
-			nextItem.focus();
-		} else {
-			this._menuItems[currentIndex].focus();
-		}
+		!!nextItem ? nextItem.focus() : this._menuItems[currentIndex].focus();
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
