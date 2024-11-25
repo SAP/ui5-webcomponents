@@ -435,6 +435,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this._handleHEXChange(e);
