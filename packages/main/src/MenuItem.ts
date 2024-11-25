@@ -233,8 +233,16 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	_handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean) {
 		const target = e.target as MenuItem | HTMLElement;
+		const maxPossibleIndex = this._navigableItems.length - 1;
 
-		const nextTargetIndex = isNext ? this._navigableItems.indexOf(target) + 1 : this._navigableItems.indexOf(target) - 1;
+		let nextTargetIndex = isNext ? this._navigableItems.indexOf(target) + 1 : this._navigableItems.indexOf(target) - 1;
+
+		if (nextTargetIndex >= maxPossibleIndex) {
+			nextTargetIndex = maxPossibleIndex;
+		} else if (nextTargetIndex < 0) {
+			nextTargetIndex = 0;
+		}
+
 		const nextTarget = this._navigableItems[nextTargetIndex];
 
 		if (nextTarget) {

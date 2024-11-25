@@ -363,7 +363,7 @@ class Menu extends UI5Element {
 			e.preventDefault();
 			e.stopImmediatePropagation();
 		}
-
+		debugger;
 		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 		const item = e.target as MenuItem;
@@ -381,15 +381,19 @@ class Menu extends UI5Element {
 			parentElement.selected = false;
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}
-		if (!menuItem.hasAttribute("ui5-menu-item")) {
+
+		if (isLeft(e) || isRight(e)) {
+			menuItem._itemKeyDown(e);
+		}
+
+		if (item.hasAttribute("ui5-menu-item")) {
 			return;
 		}
+
 		if (isUp(e)) {
 			this._handleNextOrPreviousItem(menuItem);
 		} else if (isDown(e)) {
 			this._handleNextOrPreviousItem(menuItem, true);
-		} else if (isLeft(e) || isRight(e)) {
-			menuItem._itemKeyDown(e);
 		}
 	}
 
