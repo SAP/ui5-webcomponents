@@ -573,7 +573,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 
-		events.forEach((e) => {
+		events.forEach(e => {
 			if (!this.fireDecoratorEvent(e, { value, valid })) {
 				executeEvent = false;
 			}

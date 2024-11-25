@@ -35,7 +35,6 @@ import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.j
 // Styles
 import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import type Calendar from "./Calendar.js";
 
 const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const PAGE_SIZE = 12; // total months on a single page
