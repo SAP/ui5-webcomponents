@@ -334,7 +334,7 @@ class UserMenu extends UI5Element {
 	}
 
 	get accessibleNameText() {
-		return `${UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME)} ${this._selectedAccount.text}`;
+		return `${UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME)} ${this._selectedAccount?.text}`;
 	}
 }
 
