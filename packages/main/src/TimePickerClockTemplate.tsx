@@ -5,8 +5,8 @@ export default function (this: TimePickerClock) {
 	return (
 		<div
 			id={`${this._id}`}
-			onDragStart={() => false}
-			onDrop={() => false}
+			onDragStart={this.noop}
+			onDrop={this.noop}
 			aria-hidden="true"
 			class={clsx({
 				"ui5-tp-clock": true,
@@ -24,39 +24,39 @@ export default function (this: TimePickerClock) {
 					item.item &&
 						<>
 							<span class="ui5-tp-clock-dot"></span>
-							<span id={`${this._id}-${item.item}`} 
+							<span id={`${this._id}-${item.item}`}
 								class="ui5-tp-clock-number"
 								style={{ transform: `rotate(-${i * 6}deg)` }}
 							>{item.item}</span>
 							{
-								item.innerItem && 
-									<span 
+								item.innerItem &&
+									<span
 										id={`${this._id}-${item.innerItem}`}
-										class="ui5-tp-clock-number" 
+										class="ui5-tp-clock-number"
 										style={{ transform: `rotate(-${i * 6}deg)` }}
 									>{item.innerItem}</span>
 							}
 						</>
 					}
 
-					{ !this.hideFractions 
-						&& <span class="ui5-tp-clock-mid-dot"></span> 
+					{ !this.hideFractions
+						&& <span class="ui5-tp-clock-mid-dot"></span>
 					}
 				</div>
 			))}
 
 			{this._selectedItem.showMarker &&
-				<div 
-					class="ui5-tp-clock-item ui5-tp-clock-item-with-marker" 
+				<div
+					class="ui5-tp-clock-item ui5-tp-clock-item-with-marker"
 					style={{ transform: `translate(-50%) rotate(${this._selectedItem.angle || 0}deg)` }}
 				>
 					<div class="ui5-tp-clock-marker"></div>
-					<div 
-						class={this._selectedItem.itemClasses} 
+					<div
+						class={this._selectedItem.itemClasses}
 						style={{ transform: `rotate(-${this._selectedItem.angle || 0}deg)` }}
 					>{this._selectedItem.item}</div>
 
-					<div id={`${this._id}-selected`} 
+					<div id={`${this._id}-selected`}
 						class={this._selectedItem.innerItemClasses}
 						style={{ transform: `rotate(-${this._selectedItem.angle || 0}deg)` }}
 					>{this._selectedItem.innerItem}</div>

@@ -170,6 +170,7 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
+	@bound
 	onResponsivePopoverAfterClose() {
 		super.onResponsivePopoverAfterClose();
 		this._showTimeView = false;

@@ -790,6 +790,11 @@ class TimePickerClock extends UI5Element {
 		this._hoveredValue = -1;
 		this._prevHoveredValue = -1;
 	}
+
+	@bound
+	noop() {
+		return false;
+	}
 }
 
 TimePickerClock.define();
