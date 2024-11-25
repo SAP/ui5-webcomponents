@@ -14,6 +14,7 @@ export default function bound(target: any, key: string | symbol, descriptor: any
 			let boundFn = fn.bind(this);
 
 			Object.defineProperty(this, key, {
+				configurable: true,
 				get(): any {
 					return boundFn;
 				},
@@ -21,7 +22,6 @@ export default function bound(target: any, key: string | symbol, descriptor: any
 					// setting a value on the instance means they overwrite the default behaviour
 					boundFn = value;
 				},
-				configurable: true,
 			});
 			return boundFn;
 		},

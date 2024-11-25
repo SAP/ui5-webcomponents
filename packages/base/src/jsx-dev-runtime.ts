@@ -20,15 +20,16 @@ options.vnode = vnode => {
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-function isBound(func: Function): boolean {
-	return func.name.startsWith("bound ");
+function isBoundOrArrow(func: Function): boolean {
+	// TODO improve => detection after func params
+	return func.name.startsWith("bound ") || func.toString().includes("=>");
 }
 
 function checkBound(props: Record<string, any>) {
 	Object.keys(props).forEach(prop => {
-		if (prop.startsWith("on") && !isBound(props[prop])) {
+		if (prop.startsWith("on") && !isBoundOrArrow(props[prop])) {
 			// eslint-disable-next-line no-console
-			console.log(props[prop], isBound(props[prop]));
+			console.warn(`Method [${prop}] not bound, accessing [this] won't work correctly. Add \`@bound\` decorator`, props[prop]);
 		}
 	});
 }
