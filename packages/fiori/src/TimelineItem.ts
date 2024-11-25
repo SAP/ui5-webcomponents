@@ -3,11 +3,12 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import type { ITimelineItem } from "./Timeline.js";
-import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
+import TimelineItemTemplate from "./TimelineItemTemplate.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
@@ -28,7 +29,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  */
 @customElement({
 	tag: "ui5-timeline-item",
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: TimelineItemCss,
 	template: TimelineItemTemplate,
 	dependencies: [
@@ -48,6 +49,10 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	bubbles: true,
 })
 class TimelineItem extends UI5Element implements ITimelineItem {
+	eventDetails!: {
+		"name-click": void,
+	};
+
 	/**
 	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
@@ -158,6 +163,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		super();
 	}
 
+	@bound
 	onNamePress() {
 		this.fireDecoratorEvent("name-click", {});
 	}
@@ -170,6 +176,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	}
 
 	get classes() {
+		// Remove the getter a the classes ar added in the jsx template
 		return {
 			indicator: {
 				"ui5-tli-indicator": true,
