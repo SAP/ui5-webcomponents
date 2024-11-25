@@ -16,12 +16,12 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 			<div class="ui5-vsd-header-container">
 				<div class="ui5-vsd-header-start">
 					{this.showBackButton && (
-						<ui5-button
+						<Button
 							design="Transparent"
 							icon="nav-back"
 							class="ui5-vsd-back-button"
 							onClick={this._navigateToFilters}
-						></ui5-button>
+						></Button>
 					)}
 					<Title
 						wrappingType="None"
