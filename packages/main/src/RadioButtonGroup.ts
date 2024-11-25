@@ -1,3 +1,4 @@
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import type RadioButton from "./RadioButton.js";
 
 class RadioButtonGroup {
@@ -117,9 +118,18 @@ class RadioButtonGroup {
 		const hasCheckedRadio = group.some(radioBtn => radioBtn.checked);
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
+			let activeElement: Element | RadioButton = getActiveElement()!;
+
+			if (activeElement.classList.contains("ui5-radio-root")) {
+				activeElement = activeElement.getRootNode() as Element;
+				if (activeElement instanceof ShadowRoot) {
+					activeElement = activeElement.host;
+				}
+			}
+
 			if (hasCheckedRadio) {
-				if ((document.activeElement as RadioButton).readonly) {
-					radioBtn._tabIndex = radioBtn.readonly ? "0" : "-1";
+				if (activeElement.hasAttribute("ui5-radio-button") && (activeElement as RadioButton).readonly) {
+					radioBtn._tabIndex = activeElement === radioBtn && radioBtn.readonly ? "0" : "-1";
 				} else {
 					radioBtn._tabIndex = radioBtn.checked ? "0" : "-1";
 				}
