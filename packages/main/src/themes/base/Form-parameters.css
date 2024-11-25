@@ -1,17 +1,5 @@
 :root {
-	--ui5-form-item-layout: 1fr 2fr;
-	--ui5-form-item-layout-span1: 1fr 11fr;
-	--ui5-form-item-layout-span2: 2fr 10fr;
-	--ui5-form-item-layout-span3: 3fr 9fr;
-	--ui5-form-item-layout-span4: 4fr 8fr;
-	--ui5-form-item-layout-span5: 5fr 7fr;
-	--ui5-form-item-layout-span6: 6fr 6fr;
-	--ui5-form-item-layout-span7: 7fr 5fr;
-	--ui5-form-item-layout-span8: 8fr 4fr;
-	--ui5-form-item-layout-span9: 9fr 3fr;
-	--ui5-form-item-layout-span10: 10fr 2fr;
-	--ui5-form-item-layout-span11: 11fr 1fr;
-	--ui5-form-item-layout-span12: 1fr;
+	--ui5-form-item-layout: 4fr 8fr 0fr;
 	--ui5-form-item-label-justify: end;
 	--ui5-form-item-label-justify-span12: start;
 	--ui5-form-item-label-padding: 0.125rem 0;

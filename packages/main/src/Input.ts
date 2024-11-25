@@ -1330,14 +1330,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.value = inputValue;
 		this.typedInValue = inputValue;
 		this.valueBeforeSelectionStart = inputValue;
+		const valueAfterInput = this.value;
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
 			const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType });
 
 			if (prevented) {
-				this.value = valueBeforeInput;
-				inputRef && (inputRef.value = valueBeforeInput);
+				// if the value is not changed after preventing the input event, revert the value
+				if (valueAfterInput === this.value) {
+					this.value = valueBeforeInput;
+				}
+
+				inputRef && (inputRef.value = this.value);
 			}
 
 			// Angular two way data binding
