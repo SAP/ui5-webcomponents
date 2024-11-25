@@ -31,7 +31,7 @@ import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";
  * @extends MenuItem
  * @experimental
  * @public
- * @since 2.5.0-rc.1
+ * @since 2.5.0
  */
 @customElement({
 	tag: "ui5-user-menu-item",

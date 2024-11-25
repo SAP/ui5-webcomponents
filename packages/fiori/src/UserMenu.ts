@@ -56,7 +56,7 @@ type UserMenuOtherAccountClickEventDetail = {
  * @extends UI5Element
  * @experimental
  * @public
- * @since 2.5.0-rc.1
+ * @since 2.5.0
  */
 
 @customElement({
@@ -212,14 +212,8 @@ class UserMenu extends UI5Element {
 	 */
 	_selectedAccount!: UserMenuAccount;
 
-	/**
-	 * @private
-	 */
-	_otherAccounts: UserMenuAccount[] = [];
-
 	onBeforeRendering() {
 		this._selectedAccount = this.accounts.find(account => account.selected) || this.accounts[0];
-		this._otherAccounts = this.accounts.filter(account => account !== this._selectedAccount);
 	}
 
 	_handleAvatarClick() {
@@ -306,6 +300,10 @@ class UserMenu extends UI5Element {
 
 	_closeUserMenu() {
 		this.open = false;
+	}
+
+	get _otherAccounts() {
+		return this.accounts.filter(account => account !== this._selectedAccount);
 	}
 
 	get _manageAccountButtonText() {
