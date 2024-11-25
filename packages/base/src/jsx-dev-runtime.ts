@@ -44,6 +44,7 @@ export function jsxDEV(type: string | typeof UI5Element, props: Record<string, a
 				// Attach for th "ui5-" preffixed event
 				if (kebabCaseEvent in events) {
 					props[`onui5-${kebabCaseEvent}`] = props[prop];
+					// eslint-disable-next-line
 					// TODO: native "click" event will be missed (as they won't be fired in pair with the "ui5-" event) - find better fix
 					if (prop !== "onClick") {
 						delete props[prop];

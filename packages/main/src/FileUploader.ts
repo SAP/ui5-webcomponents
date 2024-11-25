@@ -517,6 +517,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	get classes() {
 		return {
+			// eslint-disable-next-line
 			// TODO: remove after delting the hbs template, the classes are added via the jsx template
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
@@ -530,6 +531,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 
 	get styles() {
 		return {
+			// eslint-disable-next-line
 			// TODO: remove after delting the hbs template, the styles are added via the jsx template
 			popoverHeader: {
 				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,

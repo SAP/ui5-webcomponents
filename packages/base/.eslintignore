@@ -17,5 +17,7 @@ src/renderer/directives/style-map.js
 src/util/metaUrl.js
 src/ssr-dom*
 index.js
+src/jsx-runtime.ts
+src/jsx-dev-runtime.ts
 jsx-runtime.d.ts
 jsx-dev-runtime.d.ts
