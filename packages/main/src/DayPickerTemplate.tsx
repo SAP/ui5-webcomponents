@@ -6,7 +6,7 @@ export default function (this: DayPicker) {
 		<div
 			class={clsx({
 				"ui5-dp-root": true,
-				"ui5-switch--disabled": this.hasSecondaryCalendarType,
+				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
 			})}
 			style={{
 				"justify-content": "center",
@@ -21,7 +21,7 @@ export default function (this: DayPicker) {
 		>
 			<div id={`${this._id}-content`} class="ui5-dp-content" role="grid" aria-roledescription={this.ariaRoledescription}>
 				<div role="row" class="ui5-dp-days-names-container">
-					{this._dayNames.map(day => 
+					{this._dayNames.map(day =>
 						<div
 							role="columnheader"
 							aria-label={day.name}
@@ -35,7 +35,7 @@ export default function (this: DayPicker) {
 				{this._weeks.map(week => {
 					{ return week.length > 0 ?
 						<div class="ui5-dp-weeks-row" role="row">
-							{week.map(day => { 
+							{week.map(day => {
 								{
 									return "timestamp" in day ?
 										<div

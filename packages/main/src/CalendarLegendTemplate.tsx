@@ -9,13 +9,11 @@ export default function (this: CalendarLegend) {
 			onKeyDown={this._onItemKeyDown}
 			onMouseDown={this._onMouseDown}
 		>
-			{this.defaultItemsMapping.map((item) =>
-				{!item.hide &&
-					<CalendarLegendItem type={item.type}></CalendarLegendItem>
-				}
+			{this.defaultItemsMapping.filter(item => !item.hide).map(item =>
+				<CalendarLegendItem type={item.type}></CalendarLegendItem>
 			)}
 
-			{this.legendItems.map((item) => 
+			{this.legendItems.map((item) =>
 				<slot name={item._individualSlot}></slot>
 			)}
 	</div>);

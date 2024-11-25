@@ -775,15 +775,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		return this.hideWeekNumbers;
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-dp-root": true,
-				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
-			},
-		};
-	}
-
 	_isWeekend(oDate: CalendarDate): boolean {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
