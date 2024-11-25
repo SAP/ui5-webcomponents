@@ -16,6 +16,8 @@ import {
 	isEnter,
 	isTabPrevious,
 	isCtrl,
+	isEnd,
+	isHome,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
@@ -963,6 +965,17 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isEnd(e)) {
+			this._handleEnd();
+			e.preventDefault();
+			return;
+		}
+
+		if (isHome(e)) {
+			this._handleHome();
+			return;
+		}
+
 		if (isCtrl(e)) {
 			this._moveItem(e.target as ListItemBase, e);
 			return;
@@ -1093,6 +1106,22 @@ class List extends UI5Element {
 			e.stopImmediatePropagation();
 			e.preventDefault();
 		}
+	}
+
+	_handleHome() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this.focusFirstItem();
+	}
+
+	_handleEnd() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -1323,6 +1352,16 @@ class List extends UI5Element {
 
 		if (growingBtn) {
 			growingBtn.focus();
+		}
+	}
+
+	_shouldFocusGrowingButton() {
+		const items = this.getItems();
+		const lastIndex = items.length - 1;
+		const currentIndex = items.indexOf(document.activeElement as ListItemBase);
+
+		if (currentIndex !== -1 && currentIndex === lastIndex) {
+			this.focusGrowingButton();
 		}
 	}
 
