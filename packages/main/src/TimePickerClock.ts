@@ -761,7 +761,7 @@ class TimePickerClock extends UI5Element {
 			return;
 		}
 		if (!this._cancelTouchOut) {
-			this._changeValueAnimation(this._selectedValue);
+			this._changeValueAnimation(this._selectedValue, true);
 		}
 	}
 
