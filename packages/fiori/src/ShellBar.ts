@@ -101,7 +101,7 @@ type ShellBarMenuItemClickEventDetail = {
 	item: HTMLElement;
 };
 
-type ShellBarAdditionalContextItemDissapears = {
+type ShellBarAdditionalContextItemDisappearsEventDetail = {
 	items: Array<HTMLElement>
 };
 
@@ -126,10 +126,6 @@ interface IShelBarItemInfo {
 	order?: number,
 	profile?: boolean,
 	tooltip?: string,
-}
-
-interface IShelBarAdditionalContext extends HTMLElement {
-	priority: string | number,
 }
 
 const RESIZE_THROTTLE_RATE = 40; // ms
@@ -299,7 +295,7 @@ const INCLUDED_LEAN_MODE_ACTIONS = ["feedback", "sys-help"];
  * @param {Array<HTMLElement>} array of all the items that disappeared from additional context slot
  * @public
  */
-@event<ShellBarAdditionalContextItemDissapears>("additional-context-disappears", {
+@event<ShellBarAdditionalContextItemDisappearsEventDetail>("additional-context-disappears", {
 	detail: {
 		/**
 		 * @public
@@ -355,6 +351,16 @@ class ShellBar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	showProductSwitch = false;
+
+	/**
+	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+	 *
+	 * **Note:** By default the Search Field is not displayed.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showSearchField = false;
 
 	/**
 	 * Defines the mode Shellbar is presented in.
@@ -438,7 +444,7 @@ class ShellBar extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	hasVisibleAdditionalContextEnd = false;
 
-	_cachedHiddenContent: Array<IShelBarAdditionalContext> = [];
+	_cachedHiddenContent: Array<HTMLElement> = [];
 
 	/**
 	 * Defines the assistant slot.
@@ -521,7 +527,7 @@ class ShellBar extends UI5Element {
 	 * @since 2.5.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	additionalContextStart!: Array<IShelBarAdditionalContext>;
+	additionalContextStart!: Array<HTMLElement>;
 
 	/**
 	 * Define the items displayed in the end of the additional content area.
@@ -529,7 +535,7 @@ class ShellBar extends UI5Element {
 	 * @since 2.5.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	additionalContextEnd!: Array<IShelBarAdditionalContext>;
+	additionalContextEnd!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -908,7 +914,7 @@ class ShellBar extends UI5Element {
 				item.classList.remove("ui5-shellbar-hidden-button");
 				restoreVisibility = true;
 			}
-			const isAdditionalContext = this.additionalContextSorted.includes(item as IShelBarAdditionalContext);
+			const isAdditionalContext = this.additionalContextSorted.includes(item);
 			const gap = isAdditionalContext ? ADDITIONAL_CONTEXT_ITEM_MARGIN : OVERFLOW_ITEM_MARGIN;
 			const itemWidth = item.offsetWidth + gap;
 
@@ -1074,25 +1080,6 @@ class ShellBar extends UI5Element {
 		this._defaultItemPressPrevented = !this.fireDecoratorEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
 		});
-	}
-
-	/**
-	 * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
-	 *
-	 * **Note:** By default the Search Field is not displayed.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	set showSearchField(value: boolean) {
-		if (this._showSearchField === value) {
-			return;
-		}
-		this._showSearchField = value;
-	}
-
-	get showSearchField() {
-		return this._showSearchField;
 	}
 
 	/**
@@ -1608,6 +1595,7 @@ ShellBar.define();
 export default ShellBar;
 
 export type {
+	ShellBarAdditionalContextItemDisappearsEventDetail,
 	ShellBarNotificationsClickEventDetail,
 	ShellBarProfileClickEventDetail,
 	ShellBarProductSwitchClickEventDetail,
