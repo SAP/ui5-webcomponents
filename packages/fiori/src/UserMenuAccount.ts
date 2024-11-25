@@ -32,6 +32,7 @@ class UserMenuAccount extends UI5Element {
 	/**
 	 * Defines the avatar initials of the user.
 	 *
+	 * @default undefined
 	 * @public
 	 */
 	@property({ type: String })
