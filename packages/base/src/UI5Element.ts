@@ -68,6 +68,8 @@ type ChildChangeListener = (param: InvalidationInfo) => void;
 
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
 
+type SlottedChild = Record<string, any>;
+
 const defaultConverter = {
 	fromAttribute(value: string | null, type: unknown) {
 		if (type === Boolean) {
@@ -452,7 +454,7 @@ abstract class UI5Element extends HTMLElement {
 			if (slotData.individualSlots) {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
-				(child as Record<string, any>)._individualSlot = `${slotName}-${nextIndex}`;
+				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements
@@ -1383,4 +1385,5 @@ export type {
 	ChangeInfo,
 	InvalidationInfo,
 	Renderer,
+	SlottedChild,
 };
