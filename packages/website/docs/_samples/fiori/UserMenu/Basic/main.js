@@ -10,7 +10,7 @@ import "@ui5/webcomponents-icons/dist/official-service.js";
 import "@ui5/webcomponents-icons/dist/private.js";
 import "@ui5/webcomponents-icons/dist/accelerated.js";
 
-const button = document.getElementById("userMenuButton");
+const button = document.getElementById("btnOpenUserMenu");
 const menu = document.getElementById("userMenu");
 
 button.addEventListener("click", function () {
