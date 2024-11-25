@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "preact/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment } from "preact/jsx-runtime";
 import type { JSX as _JSX } from "preact/jsx-runtime";
 import { options } from "preact";
 import type UI5Element from "./UI5Element.js";
@@ -69,6 +69,7 @@ export function jsx(type: string | typeof UI5Element, props: Record<string, any>
 	return _jsx(tag as string, props, key);
 }
 export function jsxs(type: string, props: Record<string, any>, key: string) {
-	return _jsxs(type, props, key);
+	// TODO extract prop logic and call _jsxs from preact
+	return jsx(type, props, key);
 }
 export { JSX };
