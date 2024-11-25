@@ -18,6 +18,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @extends UI5Element
  * @experimental
  * @public
+ * @since 2.5.0-rc.1
  */
 class UserMenuAccount extends UI5Element {
 	/**

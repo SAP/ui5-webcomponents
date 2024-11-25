@@ -57,6 +57,7 @@ type UserMenuOtherAccountClickEventDetail = {
  * @extends UI5Element
  * @experimental
  * @public
+ * @since 2.5.0-rc.1
  */
 
 @customElement({
