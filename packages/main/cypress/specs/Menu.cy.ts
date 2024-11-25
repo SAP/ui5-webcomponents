@@ -475,13 +475,13 @@ describe("Menu interaction", () => {
 			cy.get("[ui5-menu] > [ui5-menu-item]")
 				.as("items");
 
-			cy.realPress('{downarrow}');
+			cy.realPress("{downarrow}");
 
 			cy.get("@items")
 				.eq(1)
 				.should("be.focused");
 
-			cy.realPress('{rightarrow}');
+			cy.realPress("{rightarrow}");
 
 			cy.get("@items")
 				.eq(1)
@@ -492,43 +492,43 @@ describe("Menu interaction", () => {
 				.eq(1)
 				.should("be.focused");
 
-			cy.realPress('{rightarrow}');
+			cy.realPress("{rightarrow}");
 
 			cy.get("@endContent")
 				.eq(2)
 				.should("be.focused");
 
-			cy.realPress('{rightarrow}');
+			cy.realPress("{rightarrow}");
 
 			cy.get("@endContent")
 				.eq(3)
 				.should("be.focused");
 
-			cy.realPress('{rightarrow}');
+			cy.realPress("{rightarrow}");
 
 			cy.get("@endContent")
 				.eq(3)
 				.should("be.focused");
 
-			cy.realPress('{leftarrow}');
+			cy.realPress("{leftarrow}");
 
 			cy.get("@endContent")
 				.eq(2)
 				.should("be.focused");
 
-			cy.realPress('{leftarrow}');
+			cy.realPress("{leftarrow}");
 
 			cy.get("@endContent")
 				.eq(1)
 				.should("be.focused");
 
-			cy.realPress('{leftarrow}');
+			cy.realPress("{leftarrow}");
 
 			cy.get("@endContent")
 				.eq(1)
 				.should("be.focused");
 
-			cy.realPress('{downarrow}');
+			cy.realPress("{downarrow}");
 
 			cy.get("@items")
 				.eq(2)

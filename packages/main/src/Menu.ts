@@ -9,7 +9,7 @@ import {
 	isEnter,
 	isTabNext,
 	isDown,
-	isUp
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -402,7 +402,7 @@ class Menu extends UI5Element {
 		} else {
 			this._menuItems[currentIndex].focus();
 		}
- 	}
+	}
 
 	_beforePopoverOpen(e: CustomEvent) {
 		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);

@@ -11,16 +11,16 @@ import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
-import List from "./List.js";
-import Icon from "./Icon.js";
-import BusyIndicator from "./BusyIndicator.js";
-import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isLeft,
-	isRight
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import List from "./List.js";
+import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
+import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
@@ -220,7 +220,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	get _navigableItems() {
-		let navigableItems: Array<HTMLElement> = [];
+		const navigableItems: Array<HTMLElement> = [];
 
 		if (!this.hasEndContent) {
 			return [];
@@ -242,9 +242,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	_handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean) {
 		const target = e.target as MenuItem | HTMLElement;
 
-		let updatedTarget = target;
-
-		const nextTargetIndex = isNext ? this._navigableItems.indexOf(updatedTarget) + 1 : this._navigableItems.indexOf(updatedTarget) - 1;
+		const nextTargetIndex = isNext ? this._navigableItems.indexOf(target) + 1 : this._navigableItems.indexOf(target) - 1;
 		const nextTarget = this._navigableItems[nextTargetIndex];
 
 		if (nextTarget) {
