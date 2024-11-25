@@ -1,10 +1,9 @@
 // eslint-disable-next-line import/extensions
-import { jsx as _jsx, Fragment as _Fragment } from "preact/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "preact/jsx-runtime";
 import type { JSX as _JSX } from "preact/jsx-runtime";
 import { options } from "preact";
 import type UI5Element from "./UI5Element.js";
-// import classObjToStr from "./util/classObjToString.js";
-import { pascalToKebabCase } from "./util/StringHelper.js";
+import { preprocess } from "./jsx-utils.js";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace JSX {
@@ -46,34 +45,13 @@ export function Fragment(props: Record<string, any>, context?: any) {
 	return _Fragment(props, context);
 }
 export function jsx(type: string | typeof UI5Element, props: Record<string, any>, key: string) {
-	let tag = type;
-	if (typeof type === "function" && "getMetadata" in type) {
-		tag = type.getMetadata().getTag();
+	const tag = preprocess(type, props, key);
 
-		const events = type.getMetadata().getEvents();
-
-		Object.keys(props).forEach(prop => {
-			if (prop.startsWith("on")) {
-				// Exteract the kebab-case event: onChange - change, onSelectionChange - selection-change, etc.
-				const pascalEvent = prop.slice("on".length);
-				const kebabCaseEvent = pascalToKebabCase(pascalEvent);
-
-				// Attach for th "ui5-" preffixed event
-				if (kebabCaseEvent in events) {
-					props[`onui5-${kebabCaseEvent}`] = props[prop];
-					// eslint-disable-next-line
-					// TODO: native "click" event will be missed (as they won't be fired in pair with the "ui5-" event) - find better fix
-					if (prop !== "onClick") {
-						delete props[prop];
-					}
-				}
-			}
-		});
-	}
-	return _jsx(tag as string, props, key);
+	return _jsx(tag, props, key);
 }
-export function jsxs(type: string, props: Record<string, any>, key: string) {
-	// TODO extract prop logic and call _jsxs from preact
-	return jsx(type, props, key);
+export function jsxs(type: string | typeof UI5Element, props: Record<string, any>, key: string) {
+	const tag = preprocess(type, props, key);
+
+	return _jsxs(tag, props, key);
 }
 export { JSX };

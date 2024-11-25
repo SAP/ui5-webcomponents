@@ -57,7 +57,8 @@
     "@ui5/webcomponents-base": "2.5.0-rc.1",
     "@ui5/webcomponents-icons": "2.5.0-rc.1",
     "@ui5/webcomponents-theming": "2.5.0-rc.1",
-    "@zxing/library": "^0.21.3"
+    "@zxing/library": "^0.21.3",
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "2.5.0-rc.1",
