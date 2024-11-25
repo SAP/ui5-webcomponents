@@ -17,11 +17,16 @@ import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import UserMenuAccount from "./UserMenuAccount.js";
 import UserMenuItem from "./UserMenuItem.js";
 import UserMenuTemplate from "./generated/templates/UserMenuTemplate.lit.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
+
+// Icons
+import "@ui5/webcomponents-icons/dist/add-employee.js";
+import "@ui5/webcomponents-icons/dist/person-placeholder.js";
+import "@ui5/webcomponents-icons/dist/log.js";
+import "@ui5/webcomponents-icons/dist/user-settings.js";
 
 // Texts
 import {

@@ -36,7 +36,7 @@ class UserMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	initials = null;
+	initials? = undefined;
 
 	/**
 	 * Defines the title text of the user.
@@ -73,6 +73,10 @@ class UserMenuAccount extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	selected = false;
+
+	get _initials() {
+		return this.initials || "undefined";
+	}
 }
 
 UserMenuAccount.define();
