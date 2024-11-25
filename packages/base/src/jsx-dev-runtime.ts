@@ -26,7 +26,7 @@ function isBound(func: Function): boolean {
 
 function checkBound(props: Record<string, any>) {
 	Object.keys(props).forEach(prop => {
-		if (props[prop].startsWith("on") && !isBound(props[prop])) {
+		if (prop.startsWith("on") && !isBound(props[prop])) {
 			// eslint-disable-next-line no-console
 			console.log(props[prop], isBound(props[prop]));
 		}
