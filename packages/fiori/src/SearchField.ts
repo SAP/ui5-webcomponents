@@ -181,21 +181,21 @@ class SearchField extends UI5Element {
 		this._effectiveShowClearIcon = (this.showClearIcon && !!this.value);
 	}
 
-	_onkeydown (e:KeyboardEvent) {
+	_onkeydown(e:KeyboardEvent) {
 		if (isEnter(e)) {
-			return this._handleEnter(e);
+			return this._handleEnter();
 		}
 	}
 
-	_onfocusin(e: FocusEvent) {
-		this.focusedInnerInput = true; 
+	_onfocusin() {
+		this.focusedInnerInput = true;
 	}
 
-	_onfocusout(e: FocusEvent) {
+	_onfocusout() {
 		this.focusedInnerInput = false;
 	}
 
-	_handleEnter (e:KeyboardEvent) {
+	_handleEnter() {
 		this.fireDecoratorEvent("search");
 	}
 
