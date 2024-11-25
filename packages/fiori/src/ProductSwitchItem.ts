@@ -199,7 +199,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 		this.active = false;
 	}
 
-	_onfocusin(e: FocusEvent) {
+	_onfocusin() {
 		this.fireDecoratorEvent("_focused");
 	}
 

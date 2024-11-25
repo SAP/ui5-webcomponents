@@ -86,7 +86,6 @@ type UploadCollectionItemDeleteEventDetail = {
  * @public
  * @native
  */
-// TODO: XXX document native events without decorator
 // @event("drop", {
 // 	bubbles: true,
 // })
