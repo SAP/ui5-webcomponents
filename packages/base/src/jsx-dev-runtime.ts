@@ -2,7 +2,8 @@
 import { jsxDEV as _jsxDEV, Fragment as _Fragment } from "preact/jsx-runtime";
 import { options } from "preact";
 import type UI5Element from "./UI5Element.js";
-import { preprocess } from "./jsx-utils.js";
+import { isUI5ElementClass, preprocess } from "./jsx-utils.js";
+import { kebabToCamelCase } from "./util/StringHelper.js";
 
 // import classObjToStr from "./util/classObjToString.js";
 
@@ -34,6 +35,21 @@ function checkBound(props: Record<string, any>) {
 	});
 }
 
+function checkAttributeUsage(type: string | typeof UI5Element, props: Record<string, any>) {
+	if (!isUI5ElementClass(type)) {
+		return;
+	}
+
+	const tag = type.getMetadata().getTag();
+	const componentAttributes = type.getMetadata().getAttributesList();
+	Object.keys(props).forEach(prop => {
+		if (prop.includes("-") && componentAttributes.includes(prop)) {
+			// eslint-disable-next-line no-console
+			console.warn(`Avoid attribute usage in favour of properties ['${prop}' --> '${kebabToCamelCase(prop)}'] for tag [${tag}]. Check stack trace to find out which template causes this. Attributes are not type-checked and boolean conversion is manual and error-prone.`);
+		}
+	});
+}
+
 export function Fragment(props: Record<string, any>, context?: any) {
 	return _Fragment(props, context);
 }
@@ -42,6 +58,7 @@ export function jsxDEV(type: string | typeof UI5Element, props: Record<string, a
 	const tag = preprocess(type, props, key);
 
 	checkBound(props);
+	checkAttributeUsage(type, props);
 
 	return _jsxDEV(tag, props, key);
 }

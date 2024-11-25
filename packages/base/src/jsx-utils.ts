@@ -24,7 +24,7 @@ function convertEventScoping(type: typeof UI5Element, props: Record<string, any>
 	});
 }
 
-function isUI5ElementClass(type: string | typeof UI5Element): type is typeof UI5Element {
+export function isUI5ElementClass(type: string | typeof UI5Element): type is typeof UI5Element {
 	return typeof type === "function" && "getMetadata" in type;
 }
 
