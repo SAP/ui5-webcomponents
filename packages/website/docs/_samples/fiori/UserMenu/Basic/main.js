@@ -1,6 +1,6 @@
-import "@ui5/webcomponents-fiori/dist/ProfileMenu.js";
-import "@ui5/webcomponents-fiori/dist/ProfileMenuAccount.js";
-import "@ui5/webcomponents-fiori/dist/ProfileMenuItem.js";
+import "@ui5/webcomponents-fiori/dist/UserMenu.js";
+import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";
+import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";
 
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/action-settings.js";
@@ -10,8 +10,8 @@ import "@ui5/webcomponents-icons/dist/official-service.js";
 import "@ui5/webcomponents-icons/dist/private.js";
 import "@ui5/webcomponents-icons/dist/accelerated.js";
 
-const button = document.getElementById("profileMenuButton");
-const menu = document.getElementById("profileMenu");
+const button = document.getElementById("userMenuButton");
+const menu = document.getElementById("userMenu");
 
 button.addEventListener("click", function () {
 	menu.open = true;

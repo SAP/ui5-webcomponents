@@ -19,39 +19,39 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/person-placeholder.js";
-import ProfileMenuAccount from "./ProfileMenuAccount.js";
-import ProfileMenuItem from "./ProfileMenuItem.js";
-import ProfileMenuTemplate from "./generated/templates/ProfileMenuTemplate.lit.js";
-import ProfileMenuCss from "./generated/themes/ProfileMenu.css.js";
+import UserMenuAccount from "./UserMenuAccount.js";
+import UserMenuItem from "./UserMenuItem.js";
+import UserMenuTemplate from "./generated/templates/UserMenuTemplate.lit.js";
+import UserMenuCss from "./generated/themes/UserMenu.css.js";
 
 // Texts
 import {
-	PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT,
-	PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
-	PROFILE_MENU_SIGN_OUT_BUTTON_TXT,
-	PROFILE_MENU_POPOVER_ACCESSIBLE_NAME,
+	USER_MENU_OTHER_ACCOUNT_BUTTON_TXT,
+	USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
+	USER_MENU_SIGN_OUT_BUTTON_TXT,
+	USER_MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 
-type ProfileMenuItemClickEventDetail = {
-	item: ProfileMenuItem;
+type UserMenuItemClickEventDetail = {
+	item: UserMenuItem;
 }
 
-type ProfileMenuOtherAccountClickEventDetail = {
-	prevSelectedAccount: ProfileMenuAccount;
-	selectedAccount: ProfileMenuAccount;
+type UserMenuOtherAccountClickEventDetail = {
+	prevSelectedAccount: UserMenuAccount;
+	selectedAccount: UserMenuAccount;
 }
 
 /**
  * @class
  * ### Overview
  *
- * The `ui5-profile-menu` is an SAP Fiori specific web component that is used in `ui5-shellbar`
- * and allows the user to easily see information and settings for the current profile and all other logged in accounts.
+ * The `ui5-user-menu` is an SAP Fiori specific web component that is used in `ui5-shellbar`
+ * and allows the user to easily see information and settings for the current user and all other logged in accounts.
  *
  * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/ProfileMenu.js";`
+ * `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`
  *
- * `import "@ui5/webcomponents-fiori/dist/ProfileMenuItem.js";` (for `ui5-profile-menu-item`)
+ * `import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";` (for `ui5-user-menu-item`)
  *
  * @constructor
  * @extends UI5Element
@@ -60,11 +60,11 @@ type ProfileMenuOtherAccountClickEventDetail = {
  */
 
 @customElement({
-	tag: "ui5-profile-menu",
+	tag: "ui5-user-menu",
 	languageAware: true,
 	renderer: litRender,
-	template: ProfileMenuTemplate,
-	styles: [ProfileMenuCss],
+	template: UserMenuTemplate,
+	styles: [UserMenuCss],
 	dependencies: [
 		ResponsivePopover,
 		Avatar,
@@ -106,14 +106,14 @@ type ProfileMenuOtherAccountClickEventDetail = {
 
 /**
  * Fired when account is switched.
- * @param {ProfileMenuAccount} prevSelectedAccount The previously selected account.
- * @param {ProfileMenuAccount} selectedAccount The selected account.
+ * @param {UserMenuAccount} prevSelectedAccount The previously selected account.
+ * @param {UserMenuAccount} selectedAccount The selected account.
  * @public
  */
-@event<ProfileMenuOtherAccountClickEventDetail>("change-account", {
+@event<UserMenuOtherAccountClickEventDetail>("change-account", {
 	detail: {
-		prevSelectedAccount: { type: ProfileMenuAccount },
-		selectedAccount: { type: ProfileMenuAccount },
+		prevSelectedAccount: { type: UserMenuAccount },
+		selectedAccount: { type: UserMenuAccount },
 	},
 	bubbles: false,
 	cancelable: true,
@@ -121,12 +121,12 @@ type ProfileMenuOtherAccountClickEventDetail = {
 
 /**
  * Fired when a menu item is clicked.
- * @param {ProfileMenuItem} item The selected `profile menu item`.
+ * @param {UserMenuItem} item The selected `user menu item`.
  * @public
  */
-@event<ProfileMenuItemClickEventDetail>("item-click", {
+@event<UserMenuItemClickEventDetail>("item-click", {
 	detail: {
-		item: { type: ProfileMenuItem },
+		item: { type: UserMenuItem },
 	},
 	bubbles: false,
 	cancelable: true,
@@ -140,9 +140,9 @@ type ProfileMenuOtherAccountClickEventDetail = {
 	bubbles: false,
 	cancelable: true,
 })
-class ProfileMenu extends UI5Element {
+class UserMenu extends UI5Element {
 	/**
-	 * Defines, if the Profile menu dialog is opened.
+	 * Defines, if the User menu dialog is opened.
 	 *
 	 * @default false
 	 * @public
@@ -151,7 +151,7 @@ class ProfileMenu extends UI5Element {
 	open = false;
 
 	/**
-	 * Defines the ID or DOM Reference of the element at which the profile menu is shown.
+	 * Defines the ID or DOM Reference of the element at which the user menu is shown.
 	 * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the popover.
 	 * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
 	 * @public
@@ -161,7 +161,7 @@ class ProfileMenu extends UI5Element {
 	opener?: HTMLElement | string;
 
 	/**
-	 * Defines, if the Profile menu will show manage accounts.
+	 * Defines, if the User menu will show manage accounts.
 	 *
 	 * @default false
 	 * @public
@@ -170,7 +170,7 @@ class ProfileMenu extends UI5Element {
 	showManageAccount = false;
 
 	/**
-	 * Defines, if the Profile menu will show other accounts.
+	 * Defines, if the User menu will show other accounts.
 	 *
 	 * @default false
 	 * @public
@@ -186,10 +186,10 @@ class ProfileMenu extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 	})
-	menuItems!: Array<ProfileMenuItem>;
+	menuItems!: Array<UserMenuItem>;
 
 	/**
-	 * Defines the profile accounts.
+	 * Defines the усер accounts.
 	 *
 	 * **Note:** If one item is used, it will be shown as selected one. If more than one item is used, the first one will be shown as selected unless
 	 * there is an item with `selected` property set to `true`.
@@ -202,7 +202,7 @@ class ProfileMenu extends UI5Element {
 			slots: false,
 		},
 	})
-	accounts!: Array<ProfileMenuAccount>;
+	accounts!: Array<UserMenuAccount>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -210,12 +210,12 @@ class ProfileMenu extends UI5Element {
 	/**
 	 * @private
 	 */
-	_selectedAccount!: ProfileMenuAccount;
+	_selectedAccount!: UserMenuAccount;
 
 	/**
 	 * @private
 	 */
-	_otherAccounts: ProfileMenuAccount[] = [];
+	_otherAccounts: UserMenuAccount[] = [];
 
 	onBeforeRendering() {
 		this._selectedAccount = this.accounts.find(account => account.selected) || this.accounts[0];
@@ -234,8 +234,8 @@ class ProfileMenu extends UI5Element {
 		this.fireDecoratorEvent("add-account-click");
 	}
 
-	_handleAccountSwitch(e: CustomEvent<{ item: ListItemClickEventDetail & { associatedAccount: ProfileMenuAccount } }>) {
-		const eventPrevented = !this.fireDecoratorEvent<ProfileMenuOtherAccountClickEventDetail>("change-account", {
+	_handleAccountSwitch(e: CustomEvent<{ item: ListItemClickEventDetail & { associatedAccount: UserMenuAccount } }>) {
+		const eventPrevented = !this.fireDecoratorEvent<UserMenuOtherAccountClickEventDetail>("change-account", {
 			prevSelectedAccount: this._selectedAccount,
 			selectedAccount: e.detail.item.associatedAccount,
 		});
@@ -255,14 +255,14 @@ class ProfileMenu extends UI5Element {
 			return;
 		}
 
-		 this._closeProfileMenu();
+		 this._closeUserMenu();
 	}
 
-	_handleMenuItemClick(e: CustomEvent<ProfileMenuItemClickEventDetail>) {
+	_handleMenuItemClick(e: CustomEvent<UserMenuItemClickEventDetail>) {
 		const item = e.detail.item;
 
 		if (!item._popover) {
-			const eventPrevented = !this.fireDecoratorEvent<ProfileMenuItemClickEventDetail>("item-click", {
+			const eventPrevented = !this.fireDecoratorEvent<UserMenuItemClickEventDetail>("item-click", {
 				"item": item,
 			});
 
@@ -275,14 +275,14 @@ class ProfileMenu extends UI5Element {
 	}
 
 	_handleMenuItemClose() {
-		this._closeProfileMenu();
+		this._closeUserMenu();
 	}
 
 	_handlePopoverAfterClose() {
 		this.open = false;
 	}
 
-	_openItemSubMenu(item: ProfileMenuItem) {
+	_openItemSubMenu(item: UserMenuItem) {
 		if (!item._popover || item._popover.open) {
 			return;
 		}
@@ -292,7 +292,7 @@ class ProfileMenu extends UI5Element {
 		item.selected = true;
 	}
 
-	_closeItemSubMenu(item: ProfileMenuItem) {
+	_closeItemSubMenu(item: UserMenuItem) {
 		if (item && item._popover) {
 			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
@@ -304,31 +304,31 @@ class ProfileMenu extends UI5Element {
 		}
 	}
 
-	_closeProfileMenu() {
+	_closeUserMenu() {
 		this.open = false;
 	}
 
 	get _manageAccountButtonText() {
-		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_MANAGE_ACCOUNT_BUTTON_TXT);
+		return UserMenu.i18nBundle.getText(USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT);
 	}
 
 	get _otherAccountsButtonText() {
-		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_OTHER_ACCOUNT_BUTTON_TXT);
+		return UserMenu.i18nBundle.getText(USER_MENU_OTHER_ACCOUNT_BUTTON_TXT);
 	}
 
 	get _signOutButtonText() {
-		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_SIGN_OUT_BUTTON_TXT);
+		return UserMenu.i18nBundle.getText(USER_MENU_SIGN_OUT_BUTTON_TXT);
 	}
 
 	get accessibleNameText() {
-		return ProfileMenu.i18nBundle.getText(PROFILE_MENU_POPOVER_ACCESSIBLE_NAME);
+		return UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 }
 
-ProfileMenu.define();
+UserMenu.define();
 
-export default ProfileMenu;
+export default UserMenu;
 export type {
-	ProfileMenuItemClickEventDetail,
-	ProfileMenuOtherAccountClickEventDetail,
+	UserMenuItemClickEventDetail,
+	UserMenuOtherAccountClickEventDetail,
 };

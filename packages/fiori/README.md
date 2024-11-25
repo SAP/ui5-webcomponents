@@ -22,9 +22,6 @@ such as a common header (ShellBar).
 | Page                                      | `ui5-page`                     | `import "@ui5/webcomponents-fiori/dist/Page.js";`                     |
 | Product Switch                            | `ui5-product-switch`           | `import "@ui5/webcomponents-fiori/dist/ProductSwitch.js";`            |
 | Product Switch Item                       | `ui5-product-switch-item`      | `import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";`        |
-| Profile Menu                              | `ui5-profile-menu`             | `import "@ui5/webcomponents-fiori/dist/ProfileMenu.js";`              |
-| Profile Menu Account                      | `ui5-profile-menu-account`     | `import "@ui5/webcomponents-fiori/dist/ProfileMenuAccount.js";`       |
-| Profile Menu Item                         | `ui5-profile-menu-item`        | `import "@ui5/webcomponents-fiori/dist/ProfileMenuItem.js";`          |
 | Shell Bar                                 | `ui5-shellbar`                 | `import "@ui5/webcomponents-fiori/dist/ShellBar.js";`                 |
 | Shell Bar Item                            | `ui5-shellbar-item`            | `import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";`             |
 | Side Navigation                           | `ui5-side-navigation`          | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`           |
@@ -34,6 +31,9 @@ such as a common header (ShellBar).
 | Timeline Item                             | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection                         | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item                    | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| User Menu                                 | `ui5-user-menu`                | `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`                 |
+| User Menu Account                         | `ui5-user-menu-account`        | `import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";`          |
+| User Menu Item                            | `ui5-user-menu-item`           | `import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";`             |
 | View Settings Dialog                      | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | View Settings Dialog - Sort Item          | `ui5-sort-item`                | `import "@ui5/webcomponents-fiori/dist/SortItem.js";`                 |
 | View Settings Dialog - Filter Item        | `ui5-filter-item`              | `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`               |

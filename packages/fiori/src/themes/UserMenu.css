@@ -43,14 +43,14 @@
 }
 
 .ui5-pm-other-accounts-content {
-    display: grid; 
-    grid-template-columns: auto 1fr; 
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 1rem;
     padding-block: 1rem;
 }
 
-.ui5-profile-menu-account-header {
+.ui5-user-menu-account-header {
     display: flex;
     flex: 1;
     justify-content: space-between;

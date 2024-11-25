@@ -3,25 +3,25 @@ import { customElement } from "@ui5/webcomponents-base/decorators.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 @customElement({
-	tag: "ui5-profile-menu-account",
+	tag: "ui5-user-menu-account",
 })
 /**
  * @class
  * ### Overview
  *
- * The `ui5-profile-menu-account` represents an account in the `ui5-profile-menu`.
+ * The `ui5-user-menu-account` represents an account in the `ui5-user-menu`.
  *
  * ### ES6 Module Import
- * `import "@ui5/webcomponents-fiori/dist/ProfileMenuAccount.js";`
+ * `import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";`
  *
  * @constructor
  * @extends UI5Element
  * @experimental
  * @public
  */
-class ProfileMenuAccount extends UI5Element {
+class UserMenuAccount extends UI5Element {
 	/**
-	 * Defines, the avatar of the profile.
+	 * Defines, the avatar of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -30,7 +30,7 @@ class ProfileMenuAccount extends UI5Element {
 	avatar?: string;
 
 	/**
-	 * Defines, the avatar initials of the profile.
+	 * Defines, the avatar initials of the user.
 	 *
 	 * @default null
 	 * @public
@@ -39,7 +39,7 @@ class ProfileMenuAccount extends UI5Element {
 	initials = null;
 
 	/**
-	 * Defines, the title text of the profile.
+	 * Defines, the title text of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -48,7 +48,7 @@ class ProfileMenuAccount extends UI5Element {
 	text = "";
 
 	/**
-	 * Defines, the subtitle1 of the profile.
+	 * Defines, the subtitle1 of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -57,7 +57,7 @@ class ProfileMenuAccount extends UI5Element {
 	subtitle1 = "";
 
 	/**
-	 * Defines, the subtitle2 of the profile.
+	 * Defines, the subtitle2 of the user.
 	 *
 	 * @default ""
 	 * @public
@@ -66,7 +66,7 @@ class ProfileMenuAccount extends UI5Element {
 	subtitle2 = "";
 
 	/**
-	 * Defines, if the profile is selected
+	 * Defines, if the user is selected
 	 *
 	 * @default false
 	 * @public
@@ -75,6 +75,6 @@ class ProfileMenuAccount extends UI5Element {
 	selected = false;
 }
 
-ProfileMenuAccount.define();
+UserMenuAccount.define();
 
-export default ProfileMenuAccount;
+export default UserMenuAccount;

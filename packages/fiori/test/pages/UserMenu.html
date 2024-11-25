@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Profile Menu</title>
+	<title>User Menu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script data-ui5-config type="application/json">
 		{
@@ -13,45 +13,45 @@
 
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
 	<style>
-		#btnOpenProfileMenu {
+		#btnOpenUserMenu {
 			float: right;
 		}
 	</style>
 </head>
 
 <body>
-<ui5-button id="btnOpenProfileMenu">Profile menu</ui5-button>
-<ui5-profile-menu id="profileMenu" show-manage-account show-other-accounts opener="btnOpenProfileMenu">
-	<ui5-profile-menu-account slot="accounts"
+<ui5-button id="btnOpenUserMenu">User menu</ui5-button>
+<ui5-user-menu id="userMenu" show-manage-account show-other-accounts opener="btnOpenUserMenu">
+	<ui5-user-menu-account slot="accounts"
 					 avatar="./img/man_avatar_1.png"
 					 text="Alain Chevalier 1"
 					 subtitle1="alian.chevalier@sap.com"
 					 subtitle2="Delivery Manager, SAP SE"
 					 selected>
-	</ui5-profile-menu-account>
-	<ui5-profile-menu-account slot="accounts"
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
 					 initials="AC"
 					 text="Alain Chevalier 2"
 					 subtitle1="test.alian.chevalier@sap.com">
-	</ui5-profile-menu-account>
-	<ui5-profile-menu-account slot="accounts"
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
 
 					 text="Alain Chevalier 3"
 					 subtitle1="alian.chevalier@ariba.com"
 					 subtitle2="Account Manager">
-	</ui5-profile-menu-account>
-	<ui5-profile-menu-item icon="action-settings" text="Setting" data-id="setting" additional-text="selected value"></ui5-profile-menu-item>
-	<ui5-profile-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-profile-menu-item>
-	<ui5-profile-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-profile-menu-item>
-	<ui5-profile-menu-item icon="official-service" text="Legal Information">
-		<ui5-profile-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-profile-menu-item>
-		<ui5-profile-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-profile-menu-item>
-	</ui5-profile-menu-item>
-</ui5-profile-menu>
+	</ui5-user-menu-account>
+	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting" additional-text="selected value"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="official-service" text="Legal Information">
+		<ui5-user-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-user-menu-item>
+		<ui5-user-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>
+	</ui5-user-menu-item>
+</ui5-user-menu>
 
 <script>
-	const menu = document.getElementById("profileMenu");
-	document.getElementById("btnOpenProfileMenu").addEventListener("click", function () {
+	const menu = document.getElementById("userMenu");
+	document.getElementById("btnOpenUserMenu").addEventListener("click", function () {
 		menu.open = true;
 	});
 
