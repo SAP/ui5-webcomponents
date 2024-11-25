@@ -21,8 +21,8 @@ import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
 type ListItemBasePressEventDetail = {
 	item: ListItemBase,
-	selected: boolean,
-	key: string,
+	selected?: boolean,
+	key?: string,
 }
 
 /**

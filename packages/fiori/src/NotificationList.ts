@@ -126,9 +126,10 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 
 class NotificationList extends UI5Element {
 	eventDetails!: {
-		"item-click": NotificationItemClickEventDetail;
-		"item-close": NotificationItemCloseEventDetail;
-		"item-toggle": NotificationItemToggleEventDetail;
+		"item-click": NotificationItemClickEventDetail,
+		"item-close": NotificationItemCloseEventDetail,
+		"item-toggle": NotificationItemToggleEventDetail,
+		"load-more": void,
 	}
 	/**
 	 * Defines the items of the component.

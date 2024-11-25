@@ -48,7 +48,6 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 @event("click")
 class ToolbarButton extends ToolbarItem {
 	eventDetails!: ToolbarItem["eventDetails"] & {
-		// TODO: XXX
 		"click": void
 	}
 	/**

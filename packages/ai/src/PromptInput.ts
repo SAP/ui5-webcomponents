@@ -87,6 +87,11 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
 	bubbles: true,
 })
 class PromptInput extends UI5Element {
+	eventDetails!: {
+		submit: void;
+		input: void;
+		change: void;
+	}
 	/**
 	 * Defines the value of the component.
 	 *

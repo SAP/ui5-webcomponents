@@ -221,14 +221,6 @@ type InputSuggestionScrollEventDetail = {
 })
 
 /**
- * Fired to make Angular two way data binding work properly.
- * @private
- */
-@event("value-changed", {
-	bubbles: true,
-})
-
-/**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
  * @public
@@ -1345,8 +1337,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				inputRef && (inputRef.value = this.value);
 			}
 
-			// Angular two way data binding
-			this.fireDecoratorEvent("value-changed");
 			this.fireResetSelectionChange();
 		}
 	}

@@ -91,7 +91,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * @public
  */
 @event("close", {
-	// TODO: XXX
 	bubbles: true,
 })
 

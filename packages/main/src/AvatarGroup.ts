@@ -180,7 +180,6 @@ type AvatarGroupClickEventDetail = {
 @event("overflow")
 class AvatarGroup extends UI5Element {
 	eventDetails!: {
-		// TODO: XXX
 		"click": AvatarGroupClickEventDetail
 		"overflow": void
 	}

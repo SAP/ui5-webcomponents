@@ -89,7 +89,6 @@ type NotificationListGroupItemToggleEventDetail = {
  * @public
  */
 @event("toggle", {
-	// TODO: XXX detail
 	bubbles: true,
 })
 

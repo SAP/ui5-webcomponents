@@ -80,7 +80,6 @@ import tagCss from "./generated/themes/Tag.css.js";
 })
 class Tag extends UI5Element {
 	eventDetails!: {
-		// TODO: XXX
 		click: void;
 	}
 	/**

@@ -77,7 +77,6 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 })
 class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	eventDetails!: {
-		// TODO: XXX
 		click: void,
 	}
 	/**

@@ -1506,9 +1506,6 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 			items: this._getSelectedItems(),
 		});
 
-		// Angular 2 way data binding
-		this.fireDecoratorEvent("value-changed");
-
 		return changePrevented;
 	}
 

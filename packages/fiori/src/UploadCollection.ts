@@ -86,9 +86,10 @@ type UploadCollectionItemDeleteEventDetail = {
  * @public
  * @native
  */
-@event("drop", {
-	bubbles: true,
-})
+// TODO: XXX document native events without decorator
+// @event("drop", {
+// 	bubbles: true,
+// })
 
 /**
  * Fired when the delete button of any item is pressed.

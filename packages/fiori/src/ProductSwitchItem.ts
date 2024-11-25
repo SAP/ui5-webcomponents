@@ -56,7 +56,7 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	eventDetails!: {
 		click: { item: ProductSwitchItem },
-		_focused: FocusEvent,
+		_focused: void,
 	}
 	/**
 	 * Defines the title of the component.
@@ -200,12 +200,10 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		// TODO: XXX
-		this.fireDecoratorEvent("_focused", e);
+		this.fireDecoratorEvent("_focused");
 	}
 
 	_fireItemClick() {
-		// TODO: XXX
 		this.fireDecoratorEvent("click", { item: this });
 	}
 }

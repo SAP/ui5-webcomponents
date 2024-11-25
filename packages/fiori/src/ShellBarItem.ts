@@ -40,7 +40,6 @@ type ShellBarItemClickEventDetail = {
 
 class ShellBarItem extends UI5Element {
 	eventDetails!: {
-		// TODO: XXX
 		click: ShellBarItemClickEventDetail,
 	}
 	/**

@@ -519,9 +519,9 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress(e: CustomEvent) {
+	onHeaderShowMonthPress() {
 		this.showMonth();
-		this.fireDecoratorEvent("show-month-view", e);
+		this.fireDecoratorEvent("show-month-view");
 	}
 
 	showMonth() {
@@ -532,9 +532,9 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress(e: CustomEvent) {
+	onHeaderShowYearPress() {
 		this.showYear();
-		this.fireDecoratorEvent("show-year-view", e);
+		this.fireDecoratorEvent("show-year-view");
 	}
 
 	showYear() {
@@ -684,12 +684,12 @@ class Calendar extends CalendarPart {
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
-			this.fireDecoratorEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view");
 		}
 
 		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
-			this.fireDecoratorEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view");
 		}
 	}
 

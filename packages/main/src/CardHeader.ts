@@ -63,7 +63,6 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 })
 class CardHeader extends UI5Element {
 	eventDetails!: {
-		// TODO: XXX
 		click: void
 	}
 	/**
