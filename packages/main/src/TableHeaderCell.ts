@@ -45,6 +45,8 @@ class TableHeaderCell extends TableCellBase {
 	 * If the table is in `Popin` mode, the column will move into the popin when
 	 * when the minimum width does not fit anymore.
 	 *
+	 * **Note:** If `minWidth` has value `auto`, the table ensures that the column cannot be smaller than `3rem`.
+	 *
 	 * @default "auto"
 	 * @public
 	 */
