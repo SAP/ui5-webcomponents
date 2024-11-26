@@ -205,7 +205,7 @@
 
 			menuReg.opener = button;
 			menuReg.open = true;
-			button.splitButton().activeArrowButton = true;
+			button.activeArrowButton = true;
 		}
 
 		menu.addEventListener("item-click", function(evt) {
@@ -220,7 +220,7 @@
 		menuReg.addEventListener("item-click", function(evt) {
 			var button = menuReg.opener;
 
-			button.splitButton().activeArrowButton = false;
+			button.activeArrowButton = false;
 			prevTriggerState = "revise";
 			button.state = "generating";
 			startGeneration(button);
@@ -229,7 +229,7 @@
 		menuReg.addEventListener("close", function(evt) {
 			var button = menuReg.opener;
 
-			button.splitButton().activeArrowButton = false;
+			button.activeArrowButton = false;
 		});
 
 		myAiButton.addEventListener("click", aiButtonClickHandler);

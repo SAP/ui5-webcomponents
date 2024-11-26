@@ -112,6 +112,14 @@ class Button extends UI5Element {
 	_currentStateObject?: ButtonState;
 
 	/**
+	 * Defines the active state of the internal Arrow Button in split mode.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_activeArrowButton = false;
+
+	/**
 	 * Initiates button elements fade-out phase.
 	 * @default false
 	 * @private
@@ -140,7 +148,6 @@ class Button extends UI5Element {
 	 * and button with end icon or arrow button.
 	 * This property is animation related only.
 	 * @default false
-	 * @since 2.5.0
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -151,7 +158,6 @@ class Button extends UI5Element {
 	 * and button without end icon or arrow button.
 	 * This property is animation related only.
 	 * @default false
-	 * @since 2.5.0
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -161,7 +167,6 @@ class Button extends UI5Element {
 	 * Determines if the button is in icon-only mode.
 	 * This property is animation related only.
 	 * @default false
-	 * @since 2.5.0
 	 * @private
 	 */
 	@property({ type: Boolean })
@@ -175,6 +180,63 @@ class Button extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	states!: Array<ButtonState>;
 
+	/**
+	 * Defines the active state of the internal Arrow Button in split mode.
+	 * @default false
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property({ type: Boolean })
+	set activeArrowButton(value: boolean) {
+		const splitButton = this._splitButton();
+
+		if (splitButton) {
+			splitButton.activeArrowButton = value;
+		}
+		this._activeArrowButton = value;
+	}
+
+	get activeArrowButton(): boolean {
+		return this._activeArrowButton;
+	}
+
+	get _hideArrowButton() {
+		return !this._effectiveStateObject?.splitMode;
+	}
+
+	get _mainButton() {
+		return this.shadowRoot?.querySelector("[ui5-split-button]") as SplitButton;
+	}
+
+	get _effectiveState() {
+		return this.state || (this.states.length && this.states[0].name) || "";
+	}
+
+	get _effectiveStateObject() {
+		return this.states.find(state => state.name === this._effectiveState);
+	}
+
+	get _stateIconOnly() {
+		return !this._stateText && !!this._stateIcon;
+	}
+
+	get _stateText() {
+		return this._currentStateObject?.text;
+	}
+
+	get _stateIcon() {
+		return this._currentStateObject?.icon;
+	}
+
+	get _stateEndIcon() {
+		const endIcon = this._effectiveStateObject?.splitMode ? "" : this._effectiveStateObject?.endIcon;
+		return endIcon;
+	}
+
+	get _hasText() {
+		return !!this._stateText;
+	}
+
 	onBeforeRendering(): void {
 		if (this.fadeOut || this.fadeIn) {
 			return;
@@ -182,7 +244,9 @@ class Button extends UI5Element {
 		if (!this._currentStateObject?.name) {
 			this._currentStateObject = this._effectiveStateObject;
 		}
+
 		const currentStateName = this._currentStateObject?.name || "";
+
 		this.iconOnly = this._stateIconOnly;
 		if (currentStateName !== "" && currentStateName !== this._effectiveState) {
 			this._fadeOut();
@@ -191,11 +255,10 @@ class Button extends UI5Element {
 
 	/**
 	 * Returns the inner SplitButton element.
-	 * @public
-	 * @since 2.5.0
+	 * @private
 	 * @returns {SplitButton} The inner SplitButton element.
 	 */
-	splitButton(): SplitButton | undefined {
+	_splitButton(): SplitButton | undefined {
 		return !this._hideArrowButton ? this.shadowRoot?.querySelector(".ui5-ai-button-inner") as SplitButton : undefined;
 	}
 
@@ -291,43 +354,6 @@ class Button extends UI5Element {
 	_onArrowClick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
 		this.fireDecoratorEvent("arrow-click");
-	}
-
-	get _hideArrowButton() {
-		return !this._effectiveStateObject?.splitMode;
-	}
-
-	get _mainButton() {
-		return this.shadowRoot?.querySelector("[ui5-split-button]") as SplitButton;
-	}
-
-	get _effectiveState() {
-		return this.state || (this.states.length && this.states[0].name) || "";
-	}
-
-	get _effectiveStateObject() {
-		return this.states.find(state => state.name === this._effectiveState);
-	}
-
-	get _stateIconOnly() {
-		return !this._stateText && !!this._stateIcon;
-	}
-
-	get _stateText() {
-		return this._currentStateObject?.text;
-	}
-
-	get _stateIcon() {
-		return this._currentStateObject?.icon;
-	}
-
-	get _stateEndIcon() {
-		const endIcon = this._effectiveStateObject?.splitMode ? "" : this._effectiveStateObject?.endIcon;
-		return endIcon;
-	}
-
-	get _hasText() {
-		return !!this._stateText;
 	}
 }
 
