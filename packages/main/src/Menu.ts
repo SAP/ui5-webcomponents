@@ -385,21 +385,21 @@ class Menu extends UI5Element {
 			const menuItem = item.parentElement as MenuItem;
 
 			if (isUp(e)) {
-				this._handleNextOrPreviousItem(menuItem);
+				this._navigateOutOfEndContent(menuItem);
 			} else if (isDown(e)) {
-				this._handleNextOrPreviousItem(menuItem, true);
+				this._navigateOutOfEndContent(menuItem, true);
 			}
 		} else if (isRight(e)) {
-			item._moveFocusToEndContent();
+			item._navigateToEndContent();
 		} else if (isLeft(e)) {
-			item._moveFocusToEndContent(true);
+			item._navigateToEndContent(true);
 		}
 	}
 
-	_handleNextOrPreviousItem(menuItem: MenuItem, isNext?: boolean) {
+	_navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean) {
 		const opener = menuItem?.parentElement as MenuItem | Menu;
 		const currentIndex = opener._menuItems.indexOf(menuItem);
-		const nextItem = isNext ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
+		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
 		const focusItem = nextItem || opener._menuItems[currentIndex];
 
 		focusItem.focus();

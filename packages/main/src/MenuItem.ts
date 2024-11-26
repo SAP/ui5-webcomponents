@@ -220,7 +220,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		return [...this.endContent] as Array<HTMLElement>;
 	}
 
-	_moveFocusToEndContent(isLast?: boolean) {
+	_navigateToEndContent(isLast?: boolean) {
 		const item = isLast
 			? this._navigableItems[this._navigableItems.length - 1]
 			: this._navigableItems[0];
