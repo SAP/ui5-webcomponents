@@ -7,10 +7,10 @@ export default function(this: Toolbar) {
 		<Popover
 			class="ui5-overflow-popover"
 			placement="Bottom"
-			horizontal-align="End"
+			horizontalAlign="End"
 			onClose={this.onOverflowPopoverClosed}
 			onOpen={this.onOverflowPopoverOpened}
-			hide-arrow
+			hideArrow={true}
 		>
 			<div class={
 				clsx({
