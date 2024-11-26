@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
@@ -101,9 +101,9 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @public
  * @native
  */
-@event("click", {
-	bubbles: true,
-})
+// @event("click", {
+// 	bubbles: true,
+// })
 /**
  * Fired whenever the active state of the component changes.
  * @private
@@ -113,6 +113,9 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	cancelable: true,
 })
 class Button extends UI5Element implements IButton {
+	eventDetails!: {
+		"_active-state-change": void,
+	}
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -339,7 +342,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	// @bound
 	@bound
 	_ontouchstart() {
 		if (this.nonInteractive) {
@@ -534,15 +536,6 @@ declare module "@ui5/webcomponents-base/jsx-runtime" {
 		}
 	}
 }
-
-// type neshto = typeof Button.prototype._jsxProps;
-// a: nestho;
-// a.design
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-// interface Button {
-// 	_jsxProps: JSX.HTMLAttributes & ElementProps<Button> & Partial<ButtonEvents>;
-// }
 
 export default Button;
 export type {

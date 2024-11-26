@@ -11,11 +11,7 @@ declare namespace JSX {
 	// 	class: Record<string, boolean> | string | undefined // _JSX.HTMLAttributes["class"]
 	// }
 
-    export interface IntrinsicElements extends _JSX.IntrinsicElements {
-		div: HTMLAttributes<HTMLDivElement> & {
-			ui5Data?: object
-		}
-	}
+    export interface IntrinsicElements extends _JSX.IntrinsicElements {}
     export type ElementClass = UI5Element;
     export interface ElementAttributesProperty<T extends EventTarget> {
 		_jsxProps: HTMLAttributes<T>;
@@ -26,6 +22,7 @@ declare namespace JSX {
 	export type AriaRole = _JSX.AriaRole;
 	export type MouseEventHandler<T extends EventTarget> = _JSX.MouseEventHandler<T>;
 	export type TargetedMouseEvent<Target extends EventTarget> = _JSX.TargetedMouseEvent<Target>;
+	export type TargetedInputEvent<Target extends EventTarget> = _JSX.TargetedInputEvent<Target>;
 }
 
 // eslint-disable-next-line @typescript-eslint/unbound-method

@@ -7,6 +7,7 @@ type GlobalHTMLEvents = {
 class Base {
     eventDetails!: {
 		click?: any
+		[k: string]: any
 	};
 
 	// jsxEvents!: GlobalHTMLEvents & AddEvents<this>
@@ -17,12 +18,13 @@ class Base {
 class Link extends Base {
     eventDetails!: {
 		"click": CustomEvent
+		other: void
 	}
 }
 
 class Button extends Base {
     eventDetails!: {
-		// "other"
+		"other": void
 	}
 }
 

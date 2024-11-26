@@ -137,14 +137,15 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 }
 
 // JSX support
+type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
-type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: (e: CustomEvent<T[Property]>) => void }
+type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
+// type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: T[Property] extends IsAny<T> ? any : (e: CustomEvent<T[Property]>) => void }
 type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
 	? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
 	: T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref";
-type GlobalHTMLEventNames = "onChange";
 
 export type UI5CustomEvent<T extends UI5Element, N extends keyof T["eventDetails"]> = CustomEvent<T["eventDetails"][N]>;
 
@@ -156,9 +157,11 @@ export type UI5CustomEvent<T extends UI5Element, N extends keyof T["eventDetails
  * @public
  */
 abstract class UI5Element extends HTMLElement {
-	eventDetails!: object;	// no events in base class
-	_jsxEvents!: Convert<this["eventDetails"]>
-	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & Omit<JSX.DOMAttributes<HTMLElement>, GlobalHTMLEventNames> & ElementProps<this> & Partial<this["_jsxEvents"]>; // & Partial<ButtonEvents>;
+	eventDetails!: {
+		[k: string]: any
+	};	// all event types can be assigned to base class
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]>> & Convert<this["eventDetails"]>
+	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]>;
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;

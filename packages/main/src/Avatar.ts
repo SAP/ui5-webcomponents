@@ -76,6 +76,9 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 	bubbles: true,
 })
 class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
+	eventDetails!: {
+		click: void;
+	};
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or

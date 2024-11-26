@@ -31,11 +31,9 @@ export default function (this: ColorPicker) {
 					max={1530}
 					value={this._hue}
 					accessibleName={this.hueSliderLabel}
-					// TODO
-					// @ts-expect-error
 					onInput={this._handleHueInput}
 				></Slider>
-	
+
 				{this._isDefaultPickerMode &&
 					<Slider
 						disabled={this.inputsDisabled}
@@ -45,8 +43,6 @@ export default function (this: ColorPicker) {
 						step={0.01}
 						value={this._alpha}
 						accessibleName={this.alphaSliderLabel}
-						// TODO
-						// @ts-expect-error
 						onInput={this._handleAlphaInput}
 					></Slider>
 				}
@@ -120,8 +116,6 @@ export default function (this: ColorPicker) {
 							class="ui5-color-picker-rgb-input"
 							value={String(this._alpha)}
 							accessibleName={this.alphaInputLabel}
-							// TODO
-							// @ts-expect-error
 							onInput={this._handleAlphaInput}
 							onChange={this._handleAlphaChange}
 						></Input>

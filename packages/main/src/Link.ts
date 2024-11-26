@@ -115,6 +115,9 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
+	eventDetails!: {
+		click: LinkClickEventDetail;
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 *
