@@ -15,6 +15,7 @@ import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton, { type SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
@@ -127,6 +128,7 @@ type PreviewValues = {
 		Button,
 		ToggleButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 		TimeSelectionClocks,
 	],
 })
