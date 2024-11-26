@@ -326,6 +326,7 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 	}
 
+	@bound
 	_handleSelection() {
 		this.fireDecoratorEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 	}
@@ -350,10 +351,10 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 	}
 
-	get shouldPopin() {
-		return this._columnsInfo?.filter(el => {
+	get shouldPopin(): boolean {
+		return !!(this._columnsInfo?.filter(el => {
 			return el.demandPopin || !el.visible;
-		}).length;
+		}).length);
 	}
 
 	get allColumnsPoppedIn() {
