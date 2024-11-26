@@ -1,7 +1,9 @@
-import Icon from "./Icon.js";
+import clsx from "clsx";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+
 import type CheckBox from "./CheckBox.js";
 import Label from "./Label.js";
-
+import Icon from "./Icon.js";
 import accept from "@ui5/webcomponents-icons/dist/accept.js";
 import complete from "@ui5/webcomponents-icons/dist/complete.js";
 import border from "@ui5/webcomponents-icons/dist/border.js";
@@ -10,8 +12,10 @@ import triState from "@ui5/webcomponents-icons/dist/tri-state.js"
 export default function (this: CheckBox) {
 	return (
 		<div
-		// todo classes
-			class="ui5-checkbox-root {{classes.main}}"
+			class={clsx("ui5-checkbox-root", {
+				"ui5-checkbox-root": true,
+				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
+			})}
 			role="checkbox"
 			part="root"
 			aria-checked={this.effectiveAriaChecked}

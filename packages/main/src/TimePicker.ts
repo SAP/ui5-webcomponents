@@ -744,13 +744,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
-	_oninput(e: MouseEvent) {
-		if (this._isPhone) {
-			e.preventDefault();
-		}
-	}
-
 	get submitButtonLabel() {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}

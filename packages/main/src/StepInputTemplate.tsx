@@ -33,7 +33,7 @@ export default function (this: StepInput) {
 					onMouseOut={this._resetSpinOut}
 					class={clsx({
 						"inputIcon": true,
-						"ui5-step-input--clickable": this._decIconClickable,
+						"ui5-step-input-icon--clickable": this._decIconClickable,
 					})}
 					showTooltip={true}
 				></Icon>
@@ -73,7 +73,7 @@ export default function (this: StepInput) {
 						id={`${this._id}-inc`}
 						class={clsx({
 							"inputIcon": true,
-							"ui5-step-input--clickable": this._incIconClickable,
+							"ui5-step-input-icon--clickable": this._incIconClickable,
 						})}
 						name={add}
 						tabindex={-1}

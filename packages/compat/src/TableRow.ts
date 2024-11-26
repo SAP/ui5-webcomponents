@@ -2,11 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isEnter,
@@ -22,7 +22,7 @@ import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
-import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
+import TableRowTemplate from "./TableRowTemplate.js";
 import {
 	ARIA_LABEL_ROW_SELECTION,
 	LIST_ITEM_NOT_SELECTED,
@@ -68,7 +68,7 @@ type TableRowF7PressEventDetail = {
 @customElement({
 	tag: "ui5-table-row",
 	styles: tableRowStyles,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: TableRowTemplate,
 	dependencies: [CheckBox],
 })
@@ -125,6 +125,15 @@ type TableRowF7PressEventDetail = {
 	bubbles: true,
 })
 class TableRow extends UI5Element implements ITableRow {
+	eventDetails!: {
+		"row-click": TableRowClickEventDetail,
+		"_forward-before": TableRowForwardBeforeEventDetail,
+		"_forward-after": TableRowForwardAfterEventDetail,
+		"selection-requested": TableRowSelectionRequestedEventDetail,
+		"f7-pressed": TableRowF7PressEventDetail,
+		"_focused": void,
+	 };
+
 	/**
 	 * Defines the visual indication and behavior of the component.
 	 *
@@ -200,29 +209,21 @@ class TableRow extends UI5Element implements ITableRow {
 	visibleCells: Array<TableCell> = [];
 	popinCells: Array<TableColumnInfo> = [];
 
-	_ontouchstart: PassiveEventListenerObject;
-
 	// Properties, set and handled by the Table
 	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
-	constructor() {
-		super();
-
-		const handleToushStartEvent = () => {
-			this.activate();
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleToushStartEvent,
-			passive: true,
-		};
+	@bound
+	_ontouchstart() {
+		this.activate();
 	}
 
+	@bound
 	_onmouseup() {
 		this.deactivate();
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		const activeElement = getActiveElement() as HTMLElement;
 		const itemActive = this.type === TableRowType.Active;
@@ -266,20 +267,24 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
 			this.deactivate();
 		}
 	}
 
+	@bound
 	_ontouchend() {
 		this.deactivate();
 	}
 
+	@bound
 	_onfocusout() {
 		this.deactivate();
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent, forceSelfFocus = false) {
 		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
 			this.root.focus();
@@ -289,6 +294,7 @@ class TableRow extends UI5Element implements ITableRow {
 		this.fireDecoratorEvent("_focused");
 	}
 
+	@bound
 	_onrowclick(e: MouseEvent) {
 		const checkboxPressed = (e.target as HTMLElement).classList.contains("ui5-multi-select-checkbox");
 		// If the user tab over a button on IOS device, the document.activeElement
