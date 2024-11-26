@@ -111,7 +111,7 @@ menu1.addEventListener("item-click", function (e) {
 		case "Clear Error":
 			clearValueState(output);
 			break;
-		case "Fix Spelling & Grammar":
+		case "Fix Spelling and Grammar":
 			fixSpellingAndGrammar(button, output);
 			break;
 		case "Generate Error":
@@ -126,7 +126,7 @@ menu1.addEventListener("item-click", function (e) {
 		case "Rephrase":
 			startTextGeneration(button, "reviseGenerating", predefinedTextsRephrased);
 			break;
-		case "Summarise":
+		case "Summarize":
 			startTextGeneration(button, "reviseGenerating", predefinedTextsSummarized);
 			break;
 		case "Bulgarian":
@@ -166,7 +166,7 @@ function setNegativeValueState(output) {
 	output.valueState = "Negative";
 	const div = document.createElement("div");
 	div.setAttribute("slot", "valueStateMessage");
-	div.textContent = "Spelling or grammar issues found, please try again!";
+	div.textContent = "Something went wrong during the generation process. Please try again.";
 
 	if (!output.querySelector("[slot='valueStateMessage']")) {
 		output.appendChild(div);
