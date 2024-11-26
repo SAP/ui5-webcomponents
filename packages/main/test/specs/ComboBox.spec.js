@@ -1406,8 +1406,10 @@ describe("Keyboard navigation", async () => {
 		assert.notOk(isInVisibleArea, "Item should not be displayed in the viewport");
 
 		// click ArrowDown 16 times
-		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
-		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
+		for (let i = 0; i < 16; i++) {
+            await browser.keys("ArrowDown"),
+            await browser.pause(10);
+        }
 
 		isInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");

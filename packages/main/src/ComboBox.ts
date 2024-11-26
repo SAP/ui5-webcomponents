@@ -721,7 +721,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._filteredItems.forEach(item => {
 			if (isInstanceOfComboBoxItemGroup(item)) {
-				const groupedItems = [item, ...item.items];
+				const visibleItems = this.open ? item.items.filter(i => i._isVisible) : item.items;
+				const groupedItems = [item, ...visibleItems];
 				allItems.push(...groupedItems);
 				return;
 			}
