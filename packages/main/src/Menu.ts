@@ -389,8 +389,10 @@ class Menu extends UI5Element {
 			} else if (isDown(e)) {
 				this._handleNextOrPreviousItem(menuItem, true);
 			}
-		} else if (isLeft(e) || isRight(e)) {
-			item._focusEndContent();
+		} else if (isRight(e)) {
+			item._moveFocusToEndContent();
+		} else if (isLeft(e)) {
+			item._moveFocusToEndContent(true);
 		}
 	}
 
