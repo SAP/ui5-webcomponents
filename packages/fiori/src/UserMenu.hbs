@@ -21,14 +21,14 @@
 					<ui5-icon slot="icon" name="edit" show-tooltip accessible-name="{{_editAvatarTooltip}}"></ui5-icon>
 				</ui5-tag>
 			</ui5-avatar>
-			{{#if _selectedAccount.text}}
-				<ui5-title>{{_selectedAccount.text}}</ui5-title>
+			{{#if _selectedAccount.titleText}}
+				<ui5-title>{{_selectedAccount.titleText}}</ui5-title>
 			{{/if}}
-			{{#if _selectedAccount.subtitle1}}
-				<ui5-text>{{_selectedAccount.subtitle1}}</ui5-text>
+			{{#if _selectedAccount.additionalText}}
+				<ui5-text>{{_selectedAccount.additionalText}}</ui5-text>
 			{{/if}}
-			{{#if _selectedAccount.subtitle2}}
-				<ui5-text>{{_selectedAccount.subtitle2}}</ui5-text>
+			{{#if _selectedAccount.description}}
+				<ui5-text>{{_selectedAccount.description}}</ui5-text>
 			{{/if}}
 
 			{{#if showManageAccount}}
@@ -54,14 +54,14 @@
 								{{/if}}
 							</ui5-avatar>
 							<div>
-							{{#if text}}
-								<ui5-title>{{text}}</ui5-title>
+							{{#if titleText}}
+								<ui5-title>{{titleText}}</ui5-title>
 							{{/if}}
-							{{#if subtitle1}}
-								<ui5-label>{{subtitle1}}</ui5-label>
+							{{#if additionalText}}
+								<ui5-label>{{additionalText}}</ui5-label>
 							{{/if}}
-							{{#if subtitle2}}
-								<ui5-label>{{subtitle2}}</ui5-label>
+							{{#if description}}
+								<ui5-label>{{description}}</ui5-label>
 							{{/if}}
 							</div>
 						</div>

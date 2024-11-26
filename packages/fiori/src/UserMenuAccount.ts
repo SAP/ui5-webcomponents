@@ -45,25 +45,25 @@ class UserMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	text = "";
+	titleText = "";
 
 	/**
-	 * Defines subtitle 1 of the user.
+	 * Defines additional text of the user.
 	 *
 	 * @default ""
 	 * @public
 	 */
 	@property({ type: String })
-	subtitle1 = "";
+	additionalText = "";
 
 	/**
-	 * Defines subtitle 2 of the user.
+	 * Defines description of the user.
 	 *
 	 * @default ""
 	 * @public
 	 */
 	@property({ type: String })
-	subtitle2 = "";
+	description = "";
 
 	/**
 	 * Defines if the user is selected.
