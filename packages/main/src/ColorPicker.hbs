@@ -32,7 +32,7 @@
                 step="0.01"
                 value="{{_alpha}}"
                 accessible-name="{{alphaSliderLabel}}"
-                @ui5-input="{{_handleAlphaInput}}"
+                @ui5-input="{{_handleAlphaInputFromSlider}}"
             ></ui5-slider>
         {{/if}}
     </div>
@@ -100,7 +100,7 @@
                     class="ui5-color-picker-rgb-input"
                     value="{{_alpha}}"
                     accessible-name="{{alphaInputLabel}}"
-                    @ui5-input="{{_handleAlphaInput}}"
+                    @ui5-input="{{_handleAlphaInputFromSlider}}"
                     @ui5-change="{{_handleAlphaChange}}"
                 ></ui5-input>
                 <ui5-label>A</ui5-label>
