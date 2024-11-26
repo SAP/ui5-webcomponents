@@ -317,16 +317,8 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
 	}
 
-	get decIconName() {
-		return "less";
-	}
-
 	get incIconTitle() {
 		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
-	}
-
-	get incIconName() {
-		return "add";
 	}
 
 	get _decIconClickable() {

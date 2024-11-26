@@ -7,6 +7,7 @@ import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -548,8 +549,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return this._wrongHEX ? true : undefined;
 	}
 
-	get hexInputErrorState() {
-		return this._wrongHEX ? "Error" : undefined;
+	get hexInputErrorState(): `${ValueState}` {
+		return this._wrongHEX ? "Negative" : "None";
 	}
 
 	get _isDefaultPickerMode() {

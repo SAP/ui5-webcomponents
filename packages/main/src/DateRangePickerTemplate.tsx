@@ -14,7 +14,6 @@ export default function (this: DateRangePicker) {
 	)
 };
 
-// TODO: overwrite the super content
 function content(this: DateRangePicker) {
 	return (
 		<Calendar

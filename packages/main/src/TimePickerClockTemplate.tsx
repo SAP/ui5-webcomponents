@@ -27,14 +27,18 @@ export default function (this: TimePickerClock) {
 							<span id={`${this._id}-${item.item}`}
 								class="ui5-tp-clock-number"
 								style={{ transform: `rotate(-${i * 6}deg)` }}
-							>{item.item}</span>
+							>{
+								item.item}
+							</span>
 							{
 								item.innerItem &&
 									<span
 										id={`${this._id}-${item.innerItem}`}
 										class="ui5-tp-clock-number"
 										style={{ transform: `rotate(-${i * 6}deg)` }}
-									>{item.innerItem}</span>
+									>
+										{item.innerItem}
+									</span>
 							}
 						</>
 					}
@@ -73,9 +77,7 @@ export default function (this: TimePickerClock) {
 			onMouseMove={this._onTouchMove}
 			onMouseUp={this._onTouchEnd}
 			onMouseOut={this._onMouseOut}
-			// TODO: check these events: MDN docs says deprecated and non-standard
-			// @mousewheel={this._onMouseWheel}
-			// @DOMMouseScroll={this._onMouseWheel}
+			ref={this._captureClockRef}
 		></div>
 	</div>)
 };

@@ -47,16 +47,12 @@ interface IFormItem extends UI5Element {
 
 type GroupItemsInfo = {
 	groupItem: IFormItem,
-	classes: string,
-	classMap: object,
 	items: Array<ItemsInfo>,
 	accessibleNameRef: string | undefined
 }
 
 type ItemsInfo = {
 	item: IFormItem,
-	classes: string,
-	classMap: object,
 }
 
 /**
@@ -544,15 +540,6 @@ class Form extends UI5Element {
 			return {
 				groupItem,
 				accessibleNameRef: (groupItem as FormGroup).headerText ? `${groupItem._id}-group-header-text` : undefined,
-				// eslint-disable-next-line
-				// TODO: remove classes and classMap after deleting the hbs template
-				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
-				classMap: {
-					[`ui5-form-column-spanL-${groupItem.colsL}`]: true,
-					[`ui5-form-column-spanXL-${groupItem.colsXl}`]: true,
-					[`ui5-form-column-spanM-${groupItem.colsM}`]: true,
-					[`ui5-form-column-spanS-${groupItem.colsS}`]: true,
-				},
 				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
 			};
 		});

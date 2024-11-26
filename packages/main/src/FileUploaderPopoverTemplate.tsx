@@ -7,8 +7,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 export default function (this: FileUploader) {
 	return (
 		<Popover
-			// TODO: the following prop does not exist?
-			// skipRegistryUpdate={true}
 			preventInitialFocus={true}
 			preventFocusRestore={true}
 			hideArrow={true}

@@ -6,7 +6,7 @@ import type DatePicker from "./DatePicker.js";
 export default function (this: DatePicker) {
 	return (
 		<>
-			{DatePickerInputTemplate.call(this)}
-			{DatePickerPopoverTemplate.call(this)}
+			{ DatePickerInputTemplate.call(this) }
+			{ DatePickerPopoverTemplate.call(this) }
 		</>
 )};

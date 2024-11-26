@@ -8,6 +8,10 @@ import decline from "@ui5/webcomponents-icons/dist/decline.js";
 type TemplateHook = () => void;
 
 export default function (this: DatePicker, hooks?: { header?: TemplateHook, content?: TemplateHook, footer?: TemplateHook }) {
+	const header = hooks?.header || defaultHeader;
+	const content = hooks?.content || defaultContent;
+	const footer = hooks?.footer || defaultFooter;
+
 	return (
 		<ResponsivePopover
 			id={`${this._id}-responsive-popover`}
@@ -24,16 +28,16 @@ export default function (this: DatePicker, hooks?: { header?: TemplateHook, cont
 			onOpen={this.onResponsivePopoverAfterOpen}
 			onBeforeOpen={this.onResponsivePopoverBeforeOpen}
 		>
-			{ this.showHeader && (hooks?.header || _header).call(this) }
+			{ this.showHeader && header.call(this) }
 
-			{ (hooks?.content || _content).call(this)}
+			{ content.call(this) }
 
-			{ this.showFooter && (hooks?.footer || _footer).call(this) }
+			{ this.showFooter && footer.call(this) }
 		</ResponsivePopover>
 	);
 };
 
-function _header(this: DatePicker) {
+function defaultHeader(this: DatePicker) {
 	return (
 		<div slot="header" class="ui5-responsive-popover-header">
 			<div class="row">
@@ -50,7 +54,7 @@ function _header(this: DatePicker) {
 	);
 };
 
-function _content(this: DatePicker) {
+function defaultContent(this: DatePicker) {
 	return (
 		<Calendar
 			id={`${this._id}-calendar`}
@@ -73,6 +77,6 @@ function _content(this: DatePicker) {
 	);
 };
 		
-function _footer() {}
+function defaultFooter() {}
 
 

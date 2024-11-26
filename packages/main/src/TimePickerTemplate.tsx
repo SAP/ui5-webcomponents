@@ -20,13 +20,8 @@ export default function (this: TimePicker) {
 					_inputAccInfo={this.accInfo}
 					onClick={this._handleInputClick}
 					onChange={this._handleInputChange}
-					// TODO:
-					// @ts-expect-error
 					onInput={this._handleInputLiveChange}
 					onFocusIn={this._onfocusin}
-					// TODO:
-					// @ts-expect-error
-					onInput={this._oninput}
 					onKeyDown={this._onkeydown}
 				>
 					{this.valueStateMessage.length > 0 &&

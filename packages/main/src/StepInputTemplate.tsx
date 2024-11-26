@@ -1,6 +1,10 @@
 import type StepInput from "./StepInput.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
+import clsx from "clsx";
+
+import less from "@ui5/webcomponents-icons/dist/less.js";
+import add from "@ui5/webcomponents-icons/dist/add.js";
 
 export default function (this: StepInput) {
 	return (
@@ -19,7 +23,7 @@ export default function (this: StepInput) {
 			>
 				<Icon
 					id={`${this._id}-dec`}
-					name={this.decIconName}
+					name={less}
 					tabindex={-1}
 					accessibleName={this.decIconTitle}
 					onClick={this._decValue}
@@ -27,11 +31,11 @@ export default function (this: StepInput) {
 					onMouseDown={this._decSpin}
 					onMouseUp={this._resetSpin}
 					onMouseOut={this._resetSpinOut}
-					class="inputIcon"
+					class={clsx({
+						"inputIcon": true,
+						"ui5-step-input--clickable": this._decIconClickable,
+					})}
 					showTooltip={true}
-					// TODO - "clickable" is not a valid prop for Icon
-					// @ts-expect-error
-					clickable={this._decIconClickable}
 				></Icon>
 			</div>
 		}
@@ -67,8 +71,11 @@ export default function (this: StepInput) {
 				>
 					<Icon
 						id={`${this._id}-inc`}
-						class="inputIcon"
-						name={this.incIconName}
+						class={clsx({
+							"inputIcon": true,
+							"ui5-step-input--clickable": this._incIconClickable,
+						})}
+						name={add}
 						tabindex={-1}
 						accessibleName={this.incIconTitle}
 						onClick={this._incValue}
@@ -77,9 +84,6 @@ export default function (this: StepInput) {
 						onMouseUp={this._resetSpin}
 						onMouseOut={this._resetSpinOut}
 						showTooltip={true}
-						// TODO - "clickable" is not a valid prop for Icon
-						// @ts-expect-error
-						clickable={this._incIconClickable}
 					></Icon>
 				</div>
 			}

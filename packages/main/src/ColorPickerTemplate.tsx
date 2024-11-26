@@ -67,8 +67,6 @@ export default function (this: ColorPicker) {
 						onKeyDown={this._onkeydown}
 						accessibleName={this.hexInputLabel}
 						onChange={this._handleHEXChange}
-						// TODO: Discuss - returning undefined, better return "None"?
-						// @ts-expect-error
 						valueState={this.hexInputErrorState}
 					></Input>
 				</div>

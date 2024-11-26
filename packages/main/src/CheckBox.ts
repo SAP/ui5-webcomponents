@@ -3,7 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -28,7 +28,8 @@ import {
 import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 // Template
-import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
+import CheckBoxTemplate from "./CheckBoxTemplate.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 let isGlobalHandlerAttached = false;
 let activeCb: CheckBox;
@@ -79,7 +80,7 @@ let activeCb: CheckBox;
 	tag: "ui5-checkbox",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: CheckBoxTemplate,
 	styles: checkboxCss,
 	dependencies: [
@@ -104,6 +105,11 @@ let activeCb: CheckBox;
 	cancelable: true,
 })
 class CheckBox extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": void,
+		"value-changed": void,
+	};
+
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @default undefined
@@ -282,10 +288,12 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onclick() {
 		this.toggle();
 	}
 
+	@bound
 	_onmousedown() {
 		if (this.readonly || this.disabled) {
 			return;
@@ -295,14 +303,17 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		activeCb = this; // eslint-disable-line
 	}
 
+	@bound
 	_onmouseup() {
 		this.active = false;
 	}
 
+	@bound
 	_onfocusout() {
 		this.active = false;
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -319,6 +330,7 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		this.active = true;
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.toggle();
@@ -412,7 +424,14 @@ class CheckBox extends UI5Element implements IFormInputElement {
 
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled || this.displayOnly ? undefined : tabindex || "0";
+
+		if (this.tabbable) {
+			return tabindex ? parseInt(tabindex) : 0;
+		}
+	}
+
+	get tabbable() {
+		return !this.disabled && !this.displayOnly;
 	}
 
 	get isCompletelyChecked() {
@@ -421,16 +440,6 @@ class CheckBox extends UI5Element implements IFormInputElement {
 
 	get isDisplayOnly() {
 		return this.displayOnly && !this.disabled;
-	}
-
-	get displayOnlyIcon() {
-		if (this.isCompletelyChecked) {
-			return "complete";
-		}
-		if (this.checked && this.indeterminate) {
-			return "tri-state";
-		}
-		return "border";
 	}
 }
 

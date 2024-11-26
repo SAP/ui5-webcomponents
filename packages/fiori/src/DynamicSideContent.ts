@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -277,23 +276,21 @@ class DynamicSideContent extends UI5Element {
 		}
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
-			scSpan = this._toggled ? this._mcSpan : this._scSpan,
-			classes: ClassMap = {
-				main: {
-					"ui5-dsc-main": true,
-				},
-				side: {
-					"ui5-dsc-side": true,
-				},
-			};
+			scSpan = this._toggled ? this._mcSpan : this._scSpan;
 
-		classes.main[`${gridPrefix}-${mcSpan}`] = true;
-		classes.side[`${gridPrefix}-${scSpan}`] = true;
-
-		return classes;
+		return {
+			main: {
+				"ui5-dsc-main": true,
+				[`${gridPrefix}-${mcSpan}`]: true,
+			},
+			side: {
+				"ui5-dsc-side": true,
+				[`${gridPrefix}-${scSpan}`]: true,
+			},
+		};
 	}
 
 	get styles() {

@@ -567,6 +567,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 
 	@bound
 	_handleInputLiveChange(e: CustomEvent) {
+		if (this._isPhone) {
+			e.preventDefault();
+		}
+
 		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}

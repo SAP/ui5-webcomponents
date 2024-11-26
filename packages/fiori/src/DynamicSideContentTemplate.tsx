@@ -5,7 +5,6 @@ export default function (this: DynamicSideContent) {
 	return (
 		<div
 			class="ui5-dsc-root"
-			// TODO: discuss
 			style={this.styles.root}
 		>
 			{this._isSideContentFirst ?
@@ -26,7 +25,6 @@ export default function (this: DynamicSideContent) {
 function mainContent(this: DynamicSideContent) {
 	return (
 		<div
-			// TODO: discuss
 			class={clsx(this.classes.main)}
 			style={this.styles.main}
 		>
@@ -40,7 +38,6 @@ function sideContent(this: DynamicSideContent) {
 		<aside
 			role="complementary"
 			aria-label={this.accInfo.label}
-			// TODO: discuss
 			class={clsx(this.classes.side)}
 			style={this.styles.side}
 		>

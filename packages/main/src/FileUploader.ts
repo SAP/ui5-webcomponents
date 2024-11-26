@@ -515,30 +515,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
-	get classes() {
-		return {
-			// eslint-disable-next-line
-			// TODO: remove after delting the hbs template, the classes are added via the jsx template
-			popoverValueState: {
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
-	get styles() {
-		return {
-			// eslint-disable-next-line
-			// TODO: remove after delting the hbs template, the styles are added via the jsx template
-			popoverHeader: {
-				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,
-			},
-		};
-	}
-
 	get ui5Input() {
 		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
 	}
