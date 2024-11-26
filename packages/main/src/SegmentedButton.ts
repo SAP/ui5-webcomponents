@@ -64,14 +64,13 @@ type SegmentedButtonSelectionChangeEventDetail = {
 })
 /**
  * Fired when the selected item changes.
- * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
+ * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items. Since: 1.14.0
  * @public
  */
 @event("selection-change", {
 	detail: {
 		/**
 		 * @public
-		 * @since 1.14.0
 		 */
 		selectedItems: { type: Array },
 	},
