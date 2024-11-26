@@ -54,12 +54,14 @@ type AccessibilityInfo = {
 type AccessibilityAttributes = {
 	ariaSetsize?: number,
 	ariaPosinset?: number,
+	ariaLabel?: string,
 	controls?: LowercaseString<string>
 	expanded?: "true" | "false" | boolean,
 	hasPopup?: ARIAHasPopup,
 	name?: string,
 	role?: ARIARoles,
 	ariaKeyShortcuts?: string,
+	ariaCurrent?: "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean
 	current?: "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean
 }
 
