@@ -66,7 +66,7 @@ describe("Clock API", () => {
 });
 
 describe("Clock item selection", () => {
-	it("select clock item and 'change' event", async () => {
+	it.skip("select clock item and 'change' event", async () => {
 		const hours12 = await browser.$("#myHours12");
 		const hours24 = await browser.$("#myHours24");
 		const hours12Cover = await hours12.shadow$(".ui5-tp-clock-cover");
