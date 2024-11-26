@@ -136,7 +136,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 })
 
 /**
- * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
+ * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening.
  *
  * **Note:** Since 1.14.0 the event is also fired before a sub-menu opens.
  * @public
@@ -159,11 +159,11 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 })
 
 /**
- * Fired after the menu is opened. **This event does not bubble.**
+ * Fired after the menu is opened.
  * @public
  * @since 1.10.0
  */
-@event("open", { bubbles: true })
+@event("open")
 
 /**
  * Fired when the menu is being closed.
@@ -172,7 +172,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 @event("close-menu")
 
 /**
- * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
+ * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
  * @public
  * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
@@ -192,7 +192,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 })
 
 /**
- * Fired after the menu is closed. **This event does not bubble.**
+ * Fired after the menu is closed.
  * @public
  * @since 1.10.0
  */
