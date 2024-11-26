@@ -9,6 +9,7 @@ import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import {
 	isLeft,
 	isRight,
@@ -208,47 +209,26 @@ class MenuItem extends ListItem implements IMenuItem {
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
-	_lastFocusedItemIndex: number | null;
 
 	constructor() {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Horizontal,
+			behavior: ItemNavigationBehavior.Static,
 			getItemsCallback: () => this._navigableItems,
 		});
-		this._lastFocusedItemIndex = null;
 	}
 
 	get _navigableItems() {
 		return [...this.endContent] as Array<HTMLElement>;
 	}
 
-	_itemKeyDown(e: KeyboardEvent) {
-		if (isLeft(e)) {
-			this._handleNextOrPreviousItem(e);
-		} else if (isRight(e)) {
-			this._handleNextOrPreviousItem(e, true);
-		}
-	}
+	_focusEndContent() {
+		const fistItem = this._navigableItems[0];
 
-	_handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean) {
-		const target = e.target as MenuItem | HTMLElement;
-		const maxPossibleIndex = this._navigableItems.length - 1;
-
-		let nextTargetIndex = isNext ? this._navigableItems.indexOf(target) + 1 : this._navigableItems.indexOf(target) - 1;
-
-		if (nextTargetIndex >= maxPossibleIndex) {
-			nextTargetIndex = maxPossibleIndex;
-		} else if (nextTargetIndex < 0) {
-			nextTargetIndex = 0;
-		}
-
-		const nextTarget = this._navigableItems[nextTargetIndex];
-
-		if (nextTarget) {
-			e.preventDefault();
-
-			this._itemNavigation.setCurrentItem(nextTarget);
+		if (fistItem) {
+			this._itemNavigation.setCurrentItem(fistItem);
 			this._itemNavigation._focusCurrentItem();
 		}
 	}
@@ -311,8 +291,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
-
-		this._itemNavigation._navigationMode = NavigationMode.Horizontal;
 	}
 
 	get _focusable() {
