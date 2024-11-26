@@ -20,7 +20,6 @@ export default function (this: TimeSelectionInputs) {
 				<Input
 					id={`${this._id}_input_${entity.entity}`}
 					class="ui5-time-selection-numeric-input"
-					/* TODO: check data-sap-input usage - I removed it as not used */
 					type={this._numberType}
 					maxlength={2}
 					autocomplete="off"

@@ -13,8 +13,6 @@ export default function (this: TimeSelectionClocks) {
 			onKeyDown={this._onkeydown}
 			onKeyUp={this._onkeyup}
 			onFocusIn={this._clocksFocusIn}
-			// TODO: where is the format-pattern used?
-			format-pattern={this.formatPattern}
 		>
 			<div class="ui5-time-picker-tsc-buttons">
 				{this._entities.map(entity =>
