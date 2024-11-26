@@ -291,7 +291,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	@bound
-	_handleAlphaInput(e: CustomEvent) {
+	_handleAlphaInputFromSlider(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
 		if (Number.isNaN(this._alpha)) {
@@ -415,7 +415,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	@bound
-	_handleAlphaChange() {
+	_handleAlphaChange(e: CustomEvent) {
+		this._handleAlphaInputFromSlider(e);
+
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
 	}

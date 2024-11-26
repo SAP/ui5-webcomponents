@@ -43,7 +43,7 @@ export default function (this: ColorPicker) {
 						step={0.01}
 						value={this._alpha}
 						accessibleName={this.alphaSliderLabel}
-						onInput={this._handleAlphaInput}
+						onInput={this._handleAlphaInputFromSlider}
 					></Slider>
 				}
 			</div>
@@ -77,7 +77,7 @@ export default function (this: ColorPicker) {
 			{this._isDefaultPickerMode &&
 				<div
 					class="ui5-color-picker-rgb-wrapper"
-					onChange={this._handleRGBInputsChange}
+					onui5-change={this._handleRGBInputsChange}
 				>
 					<div class="ui5-color-picker-rgb">
 						<Input
@@ -116,7 +116,6 @@ export default function (this: ColorPicker) {
 							class="ui5-color-picker-rgb-input"
 							value={String(this._alpha)}
 							accessibleName={this.alphaInputLabel}
-							onInput={this._handleAlphaInput}
 							onChange={this._handleAlphaChange}
 						></Input>
 						<Label>A</Label>
