@@ -359,21 +359,20 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if (isTabNext(e)) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-		}
-
-		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
+		const shouldCloseMenu = this.isRtl ? isRight(e) || isTabNext(e) : isLeft(e) || isTabNext(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
 
-		const menuItem = parentElement.hasAttribute("ui5-menu-item") ? parentElement : item;
-
-		if (isEnter(e)) {
+		if (isEnter(e) || isTabNext(e)) {
 			e.preventDefault();
+			e.stopImmediatePropagation();
 		}
+
+		if (isTabNext(e) && parentElement.hasAttribute("ui5-menu")) {
+			this._close();
+		}
+
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
 		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
@@ -382,25 +381,24 @@ class Menu extends UI5Element {
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}
 
-		if (isLeft(e) || isRight(e)) {
-			menuItem._itemKeyDown(e);
-		}
+		if (!item.hasAttribute("ui5-menu-item")) {
+			const menuItem = item.parentElement as MenuItem;
 
-		if (item.hasAttribute("ui5-menu-item")) {
-			return;
-		}
-
-		if (isUp(e)) {
-			this._handleNextOrPreviousItem(menuItem);
-		} else if (isDown(e)) {
-			this._handleNextOrPreviousItem(menuItem, true);
+			if (isUp(e)) {
+				this._handleNextOrPreviousItem(menuItem);
+			} else if (isDown(e)) {
+				this._handleNextOrPreviousItem(menuItem, true);
+			}
+		} else if (isLeft(e) || isRight(e)) {
+			item._focusEndContent();
 		}
 	}
 
 	_handleNextOrPreviousItem(menuItem: MenuItem, isNext?: boolean) {
-		const currentIndex = this._menuItems.indexOf(menuItem);
-		const nextItem = isNext ? this._menuItems[currentIndex + 1] : this._menuItems[currentIndex - 1];
-		const focusItem = nextItem || this._menuItems[currentIndex];
+		const opener = menuItem?.parentElement as MenuItem | Menu;
+		const currentIndex = opener._menuItems.indexOf(menuItem);
+		const nextItem = isNext ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
+		const focusItem = nextItem || opener._menuItems[currentIndex];
 
 		focusItem.focus();
 	}
