@@ -11,6 +11,11 @@ export default function bound(target: any, key: string | symbol, descriptor: any
 				return fn;
 			}
 
+			// if the property is already defined on the instance, then this call is a super call
+			if (Object.hasOwnProperty.call(this, key)) {
+				return fn;
+			}
+
 			let boundFn = fn.bind(this);
 
 			Object.defineProperty(this, key, {
