@@ -5,18 +5,15 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-// import MainButton from "@ui5/webcomponents/dist/Button.js";
 import SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import ButtonState from "./ButtonState.js";
 
- import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
-// import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
+import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
-// import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 
 /**
  * @class
