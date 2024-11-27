@@ -9,9 +9,4 @@
 	--_ui5-tag-font: var(--sapFontSemiboldDuplexFamily);
 	--_ui5-tag-font-weight: normal;
 	--_ui5-tag-letter-spacing: normal;
-
-	/* set 2 */
-	--ui5-tag-set2-color-scheme-9-active-color: var(--sapIndicationColor_9_Active_TextColor);
-	--ui5-tag-set2-color-scheme-9-active-background: var(--sapIndicationColor_9_Active_Background);
-	--ui5-tag-set2-color-scheme-9-active-border: var(--sapIndicationColor_9_Active_BorderColor);
 }
