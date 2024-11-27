@@ -13,7 +13,6 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -340,19 +339,6 @@ class Wizard extends UI5Element {
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-wiz-root": true,
-			},
-			popover: {
-				"ui5-wizard-responsive-popover": true,
-				"ui5-wizard-popover": !isPhone(),
-				"ui5-wizard-dialog": isPhone(),
-			},
-		};
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
