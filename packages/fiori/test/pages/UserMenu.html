@@ -27,7 +27,7 @@
 	</ui5-avatar>
 	<img slot="logo" src="./img/sap-logo-svg.svg" />
 </ui5-shellbar>
-<ui5-user-menu id="userMenu2" show-manage-account show-other-accounts show-add-account>
+<ui5-user-menu id="userMenuShellBar" show-manage-account show-other-accounts show-add-account>
 	<ui5-user-menu-account slot="accounts"
 						   avatar="./img/man_avatar_1.png"
 						   title-text="Alain Chevalier 1"
@@ -78,17 +78,25 @@
 <script>
 	const menu = document.getElementById("userMenu");
 	document.getElementById("btnOpenUserMenu").addEventListener("click", function () {
-		menu.open = true;
+		if(menu.open){
+			menu.open = false;
+		} else {
+			menu.open = true;
+		}
 	});
 
 	const shellbar = document.getElementById("shellbar");
-	const menu2 = document.getElementById("userMenu2");
+	const menuShellBar = document.getElementById("userMenuShellBar");
 
 
 
 	shellbar.addEventListener("ui5-profile-click", (event) => {
-		menu2.opener = event.detail.targetRef;
-		menu2.open = true;
+		menuShellBar.opener = event.detail.targetRef;
+		if(menuShellBar.open){
+			menuShellBar.open = false;
+		} else {
+			menuShellBar.open = true;
+		}
 	});
 
 	menu.addEventListener("item-click", function (event) {
@@ -141,7 +149,7 @@
 		event.preventDefault();
 	});
 
-	menu2.addEventListener("item-click", function (event) {
+	menuShellBar.addEventListener("item-click", function (event) {
 		const item = event.detail.item.getAttribute("data-id");
 
 		switch (item) {
@@ -165,23 +173,23 @@
 		}
 	});
 
-	menu2.addEventListener("avatar-click", function () {
+	menuShellBar.addEventListener("avatar-click", function () {
 		console.log("Avatar clicked");
 	});
 
-	menu2.addEventListener("manage-account-click", function () {
+	menuShellBar.addEventListener("manage-account-click", function () {
 		console.log("Manage account clicked");
 	});
 
-	menu2.addEventListener("add-account-click", function () {
+	menuShellBar.addEventListener("add-account-click", function () {
 		console.log("Add account clicked");
 	});
 
-	menu2.addEventListener("change-account", function (event) {
+	menuShellBar.addEventListener("change-account", function (event) {
 		console.log("Change account account", event.detail);
 	});
 
-	menu2.addEventListener("sign-out-click", function (event) {
+	menuShellBar.addEventListener("sign-out-click", function (event) {
 		console.log("Sign Out clicked");
 
 		const result = prompt("Sign Out", "Are you sure you want to sign out?");
