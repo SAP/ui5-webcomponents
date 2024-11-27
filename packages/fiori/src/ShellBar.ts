@@ -601,11 +601,12 @@ class ShellBar extends UI5Element {
 		};
 
 		this._handleResize = throttle(() => {
+			const shouldSearchBeOpen = this._isXXLBreakpoint || this.breakpointSize === "XL" || this.breakpointSize === "L";
 			this.menuPopover = this._getMenuPopover();
 			this.overflowPopover = this._getOverflowPopover();
 			this.overflowPopover.open = false;
 			if (this._lastOffsetWidth !== this.offsetWidth) {
-				this.showSearchField = false;
+				this.showSearchField = shouldSearchBeOpen;
 				this._overflowActions();
 			}
 		}, RESIZE_THROTTLE_RATE);
@@ -751,7 +752,7 @@ class ShellBar extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const input = this.searchField[0]?.shadowRoot!.querySelector(".ui5-input-inner");
+		const input = this.searchField.length && this.searchField[0]?.querySelector(".ui5-input-inner");
 
 		this.withLogo = this.hasLogo;
 
@@ -831,7 +832,7 @@ class ShellBar extends UI5Element {
 		const newItems = this._getAllItems(hasIcons > 1).filter(i => i.show).map((info): IShelBarItemInfo => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
-			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile) || !this._isFullVariant;
+			const shouldStayOnScreen = hasIcons === 1 || isOverflowIcon || (isImageIcon && this.hasProfile) || !this._isFullVariant;
 
 			return {
 				...info,
@@ -1149,6 +1150,7 @@ class ShellBar extends UI5Element {
 				show: !!this.assistant.length && this._isFullVariant,
 				domOrder: this.assistant.length ? (++domOrder) : -1,
 				press: () => { },
+				tooltip: this.assistant.length ? (this.assistant[0].getAttribute("text") || this.assistant[0].getAttribute("title") || undefined) : undefined,
 			},
 			{
 				icon: "bell",
@@ -1160,6 +1162,7 @@ class ShellBar extends UI5Element {
 				show: this.showNotifications && this._isFullVariant,
 				domOrder: this.showNotifications ? (++domOrder) : -1,
 				press: this._handleNotificationsPress.bind(this),
+				tooltip: this._notificationsText,
 			},
 			// sort feedback and help to always be last
 			...this.items.sort((a, b) => {
@@ -1183,7 +1186,7 @@ class ShellBar extends UI5Element {
 					custom: true,
 					title: item.title,
 					stableDomRef: item.stableDomRef,
-					tooltip: this._notificationsText,
+					tooltip: item.title || item.text,
 				};
 			}),
 			{
