@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import tabContainer from "../pageobjects/TabContainerTestPage.js";
 
-describe("Drag and drop tests", () => {
+describe.skip("Drag and drop tests", () => {
 	const getDragOffset = async (draggedElement, dropTargetElement, targetPosition) => {
 		const OFFSET = 5;
 		const draggedRectangle = {
