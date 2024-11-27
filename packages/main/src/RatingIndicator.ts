@@ -289,6 +289,14 @@ class RatingIndicator extends UI5Element {
 		this._focused = false;
 	}
 
+	get halfStarIconName() {
+		if (this.disabled || this.readonly) {
+			return "favorite";
+		} else {
+			return "unfavorite";
+		}
+	}
+
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
 		return this.disabled ? "-1" : tabindex || "0";
