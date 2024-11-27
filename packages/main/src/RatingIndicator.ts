@@ -290,11 +290,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get halfStarIconName() {
-		if (this.disabled || this.readonly) {
-			return "favorite";
-		} else {
-			return "unfavorite";
-		}
+		return this.disabled || this.readonly ? "favorite" : "unfavorite";
 	}
 
 	get effectiveTabIndex() {
