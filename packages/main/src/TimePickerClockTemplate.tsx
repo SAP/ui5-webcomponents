@@ -19,7 +19,7 @@ export default function (this: TimePickerClock) {
 
 		<div>
 			{this._items.map((item, i) => (
-				<div class="ui5-tp-clock-item" style={{transform: `translate(-50%) rotate(${i * 6}deg` }}>
+				<div class="ui5-tp-clock-item" style={{transform: `translate(-50%) rotate(${(i + 1) * 6}deg` }}>
 					{
 					item.item &&
 						<>
@@ -27,8 +27,8 @@ export default function (this: TimePickerClock) {
 							<span id={`${this._id}-${item.item}`}
 								class="ui5-tp-clock-number"
 								style={{ transform: `rotate(-${i * 6}deg)` }}
-							>{
-								item.item}
+							>
+								{item.item}
 							</span>
 							{
 								item.innerItem &&

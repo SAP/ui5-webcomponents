@@ -410,9 +410,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 			this._entities[this._activeIndex].active = false;
 			this._activeIndex = clockIndex;
 			this._entities[this._activeIndex].active = true;
-			if (!newButton.matches(":focus")) {
-				newButton.focus();
-			}
+			newButton.focus();
 		}
 	}
 
