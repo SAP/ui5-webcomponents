@@ -253,7 +253,6 @@ class Button extends UI5Element {
 	/**
 	 * Returns the inner SplitButton element.
 	 * @private
-	 * @returns {SplitButton | undefined} The inner SplitButton element.
 	 */
 	_splitButton(): SplitButton | undefined {
 		return !this._hideArrowButton ? this.shadowRoot?.querySelector(".ui5-ai-button-inner") as SplitButton : undefined;
