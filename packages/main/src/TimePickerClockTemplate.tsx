@@ -43,7 +43,7 @@ export default function (this: TimePickerClock) {
 						</>
 					}
 
-					{ !this.hideFractions
+					{ !item.item && !this.hideFractions
 						&& <span class="ui5-tp-clock-mid-dot"></span>
 					}
 				</div>
