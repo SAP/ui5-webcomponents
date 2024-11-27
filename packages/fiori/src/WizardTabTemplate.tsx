@@ -25,7 +25,9 @@ export default function(this: WizardTab) {
 				{this.hasTexts && (
 					<div class="ui5-wiz-step-texts">
 						<div class="ui5-wiz-step-title-text">{this.titleText}</div>
-						<div class="ui5-wiz-step-subtitle-text">{this.subtitleText}</div>
+						{ this.subtitleText &&
+							<div class="ui5-wiz-step-subtitle-text">{this.subtitleText}</div>
+						}
 					</div>
 				)}
 			</div>
