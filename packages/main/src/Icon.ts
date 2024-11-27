@@ -114,6 +114,9 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 	bubbles: true,
 })
 class Icon extends UI5Element implements IIcon {
+	eventDetails!: {
+		click: void
+	}
 	/**
 	 * Defines the component semantic design.
 	 * @default "Default"
@@ -216,6 +219,11 @@ class Icon extends UI5Element implements IIcon {
 	packageName?: string;
 	viewBox?: string;
 	customSvg?: object;
+
+	_onclick(e: MouseEvent) {
+		e.stopImmediatePropagation();
+		this.fireDecoratorEvent("click");
+	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (this.mode !== IconMode.Interactive) {

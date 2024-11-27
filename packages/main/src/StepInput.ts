@@ -479,16 +479,16 @@ class StepInput extends UI5Element implements IFormInputElement {
 	}
 
 	@bound
-	_incValue(e: MouseEvent) {
-		if (this._incIconClickable && e.isTrusted && !this.disabled && !this.readonly) {
+	_incValue() {
+		if (this._incIconClickable /* && e.isTrusted */ && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
 			this._previousValue = this.value;
 		}
 	}
 
 	@bound
-	_decValue(e: MouseEvent) {
-		if (this._decIconClickable && e.isTrusted && !this.disabled && !this.readonly) {
+	_decValue() {
+		if (this._decIconClickable /* && e.isTrusted */ && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
 			this._previousValue = this.value;
 		}
