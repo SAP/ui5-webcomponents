@@ -2,7 +2,6 @@ import { html } from "lit";
 import "../../src/UserMenu.js";
 import "../../src/UserMenuAccount.js";
 import "../../src/UserMenuItem.js";
-import "../../src/ShellBar.js";
 
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Button.js";
