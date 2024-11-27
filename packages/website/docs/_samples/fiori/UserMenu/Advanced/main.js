@@ -2,6 +2,8 @@ import "@ui5/webcomponents-fiori/dist/UserMenu.js";
 import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";
 import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";
 
+import "@ui5/webcomponents/dist/Avatar.js";
+import "@ui5/webcomponents-fiori/dist/ShellBar.js";
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/action-settings.js";
 import "@ui5/webcomponents-icons/dist/globe.js";
@@ -10,10 +12,13 @@ import "@ui5/webcomponents-icons/dist/official-service.js";
 import "@ui5/webcomponents-icons/dist/private.js";
 import "@ui5/webcomponents-icons/dist/accelerated.js";
 
-const button = document.getElementById("btnOpenUserMenu");
+const shellbar = document.getElementById("shellbar");
 const menu = document.getElementById("userMenu");
 
-button.addEventListener("click", function () {
+
+
+shellbar.addEventListener("ui5-profile-click", (event) => {
+	menu.opener = event.detail.targetRef;
 	menu.open = true;
 });
 
@@ -43,6 +48,18 @@ menu.addEventListener("item-click", function (event) {
 
 menu.addEventListener("avatar-click", function () {
 	console.log("Avatar clicked");
+});
+
+menu.addEventListener("manage-account-click", function () {
+	console.log("Manage account clicked");
+});
+
+menu.addEventListener("add-account-click", function () {
+	console.log("Add account clicked");
+});
+
+menu.addEventListener("change-account", function (event) {
+	console.log("Change account account", event.detail);
 });
 
 menu.addEventListener("sign-out-click", function (event) {

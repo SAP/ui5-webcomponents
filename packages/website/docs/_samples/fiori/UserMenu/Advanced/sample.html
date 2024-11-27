@@ -17,26 +17,39 @@
 		body {
 			height: 600px;
 		}
-		#btnOpenUserMenu {
-			float: right;
-		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor)">
 <!-- playground-fold-end -->
 
-<ui5-button id="btnOpenUserMenu">User menu</ui5-button>
-<ui5-user-menu id="userMenu" opener="btnOpenUserMenu">
+<ui5-shellbar id="shellbar" primary-title="Corporate Portal">
+	<ui5-avatar slot="profile">
+		<img src="../assets/images/avatars/man_avatar_3.png"/>
+	</ui5-avatar>
+	<img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+</ui5-shellbar>
+<ui5-user-menu id="userMenu" show-manage-account show-other-accounts show-add-account>
 	<ui5-user-menu-account slot="accounts"
-		avatar="../assets/images/avatars/Lamp_avatar_01.jpg"
-		title-text="Alain Chevalier 1"
-		additional-text="alian.chevalier@sap.com"
-		description="Delivery Manager, SAP SE"
-		selected>
+						   avatar="../assets/images/avatars/man_avatar_3.png"
+						   title-text="Alain Chevalier 1"
+						   additional-text="alian.chevalier@sap.com"
+						   description="Delivery Manager, SAP SE"
+						   selected>
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
+						   initials="AC"
+						   title-text="Alain Chevalier 2"
+						   additional-text="test.alian.chevalier@sap.com">
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
+						   title-text="Alain Chevalier 3"
+						   additional-text="alian.chevalier@ariba.com"
+						   description="Account Manager">
 	</ui5-user-menu-account>
 	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
 	<ui5-user-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-user-menu-item>
 	<ui5-user-menu-item icon="official-service" text="Legal Information">
 		<ui5-user-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-user-menu-item>
 		<ui5-user-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>

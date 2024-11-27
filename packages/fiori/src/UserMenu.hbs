@@ -41,7 +41,9 @@
 		<ui5-panel collapsed class="ui5-pm-other-accounts">
 			<div slot="header" class="ui5-user-menu-account-header">
 				<ui5-title slot="header" level="H4">{{_otherAccountsButtonText}} ({{_otherAccounts.length}})</ui5-title>
+			{{#if showAddAccount}}
 				<ui5-button slot="header" design="Transparent" icon="add-employee" @click="{{_handleAddAccountClick}}" tooltip="{{_addAccountTooltip}}"/>
+			{{/if}}
 			</div>
 			{{#if _otherAccounts.length}}
 			<ui5-list @ui5-item-click="{{_handleAccountSwitch}}">

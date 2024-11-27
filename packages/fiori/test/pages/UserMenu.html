@@ -21,23 +21,48 @@
 
 <body>
 <ui5-button id="btnOpenUserMenu">User menu</ui5-button>
-<ui5-user-menu id="userMenu" show-manage-account show-other-accounts opener="btnOpenUserMenu">
+<ui5-user-menu id="userMenu" opener="btnOpenUserMenu">
 	<ui5-user-menu-account slot="accounts"
-		avatar="./img/man_avatar_1.png"
+		avatar="./img/man_avatar_4.png"
 		title-text="Alain Chevalier 1"
 		additional-text="alian.chevalier@sap.com"
 		description="Delivery Manager, SAP SE"
 		selected>
 	</ui5-user-menu-account>
+	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="collaborate" text="Product-specific account action" data-id="account-action2"></ui5-user-menu-item>
+	<ui5-user-menu-item icon="official-service" text="Legal Information">
+		<ui5-user-menu-item icon="private" text="Private Policy" data-id="privacy-policy"></ui5-user-menu-item>
+		<ui5-user-menu-item icon="accelerated" text="Terms of Use" data-id="terms-of-use"></ui5-user-menu-item>
+	</ui5-user-menu-item>
+</ui5-user-menu>
+
+
+
+<ui5-shellbar id="shellbar" primary-title="Corporate Portal">
+	<ui5-avatar slot="profile">
+		<img src="../assets/images/avatars/man_avatar_3.png"/>
+	</ui5-avatar>
+	<img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+</ui5-shellbar>
+<ui5-user-menu id="userMenu2" show-manage-account show-other-accounts show-add-account>
 	<ui5-user-menu-account slot="accounts"
-		initials="AC"
-		title-text="Alain Chevalier 2"
-		additional-text="test.alian.chevalier@sap.com">
+						   avatar="../assets/images/avatars/man_avatar_3.png"
+						   title-text="Alain Chevalier 1"
+						   additional-text="alian.chevalier@sap.com"
+						   description="Delivery Manager, SAP SE"
+						   selected>
 	</ui5-user-menu-account>
 	<ui5-user-menu-account slot="accounts"
-		title-text="Alain Chevalier 3"
-		additional-text="alian.chevalier@ariba.com"
-		description="Account Manager">
+						   initials="AC"
+						   title-text="Alain Chevalier 2"
+						   additional-text="test.alian.chevalier@sap.com">
+	</ui5-user-menu-account>
+	<ui5-user-menu-account slot="accounts"
+						   title-text="Alain Chevalier 3"
+						   additional-text="alian.chevalier@ariba.com"
+						   description="Account Manager">
 	</ui5-user-menu-account>
 	<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
 	<ui5-user-menu-item icon="globe" text="Product-specific account action" data-id="account-action1"></ui5-user-menu-item>
@@ -52,6 +77,16 @@
 	const menu = document.getElementById("userMenu");
 	document.getElementById("btnOpenUserMenu").addEventListener("click", function () {
 		menu.open = true;
+	});
+
+	const shellbar = document.getElementById("shellbar");
+	const menu2 = document.getElementById("userMenu2");
+
+
+
+	shellbar.addEventListener("ui5-profile-click", (event) => {
+		menu2.opener = event.detail.targetRef;
+		menu2.open = true;
 	});
 
 	menu.addEventListener("item-click", function (event) {
@@ -100,6 +135,56 @@
 		const result = prompt("Sign Out", "Are you sure you want to sign out?");
 		if (result) {
 			menu.open = false;
+		}
+		event.preventDefault();
+	});
+
+	menu2.addEventListener("item-click", function (event) {
+		const item = event.detail.item.getAttribute("data-id");
+
+		switch (item) {
+			case "setting":
+				console.log("Open Setting Dialog");
+				break;
+			case "privacy-policy":
+				console.log("Privacy Policy");
+				break;
+			case "terms-of-use":
+				console.log("Terms of Use");
+				break;
+			case "account-action1":
+				console.log("Product-specific account action 1");
+				break;
+			case "account-action2":
+				console.log("Product-specific account action 2");
+				break;
+			default:
+				console.log("Default");
+		}
+	});
+
+	menu2.addEventListener("avatar-click", function () {
+		console.log("Avatar clicked");
+	});
+
+	menu2.addEventListener("manage-account-click", function () {
+		console.log("Manage account clicked");
+	});
+
+	menu2.addEventListener("add-account-click", function () {
+		console.log("Add account clicked");
+	});
+
+	menu2.addEventListener("change-account", function (event) {
+		console.log("Change account account", event.detail);
+	});
+
+	menu2.addEventListener("sign-out-click", function (event) {
+		console.log("Sign Out clicked");
+
+		const result = prompt("Sign Out", "Are you sure you want to sign out?");
+		if (result) {
+			menu2.open = false;
 		}
 		event.preventDefault();
 	});
