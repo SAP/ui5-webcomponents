@@ -223,6 +223,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}, 0);
 	}
 
+	@bound
 	innerFocusIn() {
 		this.tokenizer.expanded = true;
 		this.focused = true;
@@ -233,6 +234,7 @@ class MultiInput extends Input implements IFormInputElement {
 		});
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
@@ -316,6 +318,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onfocusout(e: FocusEvent) {
 		super._onfocusout(e);
 		const relatedTarget = e.relatedTarget as HTMLElement;
@@ -334,6 +337,7 @@ class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * @override
 	 */
+	@bound
 	_onfocusin(e: FocusEvent) {
 		const inputDomRef = this.getInputDOMRef();
 
