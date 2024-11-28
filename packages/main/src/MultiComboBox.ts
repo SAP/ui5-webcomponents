@@ -243,12 +243,6 @@ type MultiComboboxItemWithSelection = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		items: { type: Array<IMultiComboBoxItem> },
-	},
 	bubbles: true,
 	cancelable: true,
 })

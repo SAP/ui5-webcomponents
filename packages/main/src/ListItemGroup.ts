@@ -64,16 +64,6 @@ type ListItemGroupMoveEventDetail = {
  */
 
 @event("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -88,16 +78,6 @@ type ListItemGroupMoveEventDetail = {
  * @since 2.1.0
  */
 @event("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
 	bubbles: true,
 })
 

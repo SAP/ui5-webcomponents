@@ -46,12 +46,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  * @public
  */
 @event("change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })

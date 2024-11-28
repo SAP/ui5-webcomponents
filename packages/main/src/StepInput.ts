@@ -116,20 +116,6 @@ type StepInputValueStateChangeEventDetail = {
  * @param {boolean} valid Indicator if the value is in between the min and max value.
  */
 @event("value-state-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		valueState: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 	cancelable: true,
 })

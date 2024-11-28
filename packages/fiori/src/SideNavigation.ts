@@ -130,12 +130,6 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })

@@ -206,12 +206,6 @@ type ComboBoxSelectionChangeEventDetail = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 

@@ -91,24 +91,6 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 @event("click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		altKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		ctrlKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		metaKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		shiftKey: { type: Boolean },
-	},
 	bubbles: true,
 	cancelable: true,
 })

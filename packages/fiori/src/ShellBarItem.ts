@@ -31,9 +31,6 @@ type ShellBarItemClickEventDetail = {
  * @public
  */
 @event("click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })

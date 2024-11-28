@@ -94,12 +94,6 @@ type FileUploaderChangeEventDetail = {
  * @public
  */
 @event("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		files: { type: FileList },
-	},
 	bubbles: true,
 })
 /**
@@ -109,12 +103,6 @@ type FileUploaderChangeEventDetail = {
  * @public
  */
 @event("file-size-exceed", {
-	detail: {
-		/**
-		 * @public
-		 */
-		filesData: { type: Array<FileData> },
-	},
 	bubbles: true,
 })
 class FileUploader extends UI5Element implements IFormInputElement {

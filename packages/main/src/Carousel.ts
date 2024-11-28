@@ -115,12 +115,6 @@ type CarouselNavigateEventDetail = {
  * @since 1.0.0-rc.7
  */
 @event("navigate", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedIndex: { type: Number },
-	},
 	bubbles: true,
 })
 

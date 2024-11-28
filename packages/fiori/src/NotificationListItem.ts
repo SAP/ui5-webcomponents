@@ -156,14 +156,6 @@ const ICON_PER_STATUS_DESIGN = {
  * @public
  */
 @event("close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
 	bubbles: true,
 })
 

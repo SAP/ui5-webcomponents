@@ -92,12 +92,6 @@ type MultiInputTokenDeleteEventDetail = {
  * @public
  */
 @event("token-delete", {
-	detail: {
-		/**
-		 * @public
-		 */
-		tokens: { type: Array },
-	},
 	bubbles: true,
 })
 

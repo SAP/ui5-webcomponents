@@ -122,32 +122,6 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * @public
  */
 @event("layout-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		currentBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		previousBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		mainContentVisible: {
-			type: Boolean,
-		},
-		/**
-		 * @public
-		 */
-		sideContentVisible: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {

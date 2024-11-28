@@ -57,9 +57,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @protected
  */
 @event("toggle", {
-	detail: {
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -69,9 +66,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @protected
  */
 @event("step-in", {
-	detail: {
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -81,9 +75,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @protected
  */
 @event("step-out", {
-	detail: {
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 class TreeItemBase extends ListItem {

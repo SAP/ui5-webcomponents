@@ -184,16 +184,6 @@ interface ITab extends UI5Element {
  * @since 2.0.0
  */
 @event("tab-select", {
-	detail: {
-		/**
-		 * @public
-		 */
-		tab: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		tabIndex: { type: Number },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -207,16 +197,6 @@ interface ITab extends UI5Element {
  * @since 2.0.0
  */
 @event("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -229,16 +209,6 @@ interface ITab extends UI5Element {
  * @public
  */
 @event("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
 	bubbles: true,
 })
 class TabContainer extends UI5Element {

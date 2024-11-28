@@ -96,12 +96,6 @@ type UploadCollectionItemDeleteEventDetail = {
  * @public
  */
 @event("item-delete", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -112,12 +106,6 @@ type UploadCollectionItemDeleteEventDetail = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedItems: { type: Array },
-	},
 	bubbles: true,
 })
 class UploadCollection extends UI5Element {

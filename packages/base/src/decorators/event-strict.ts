@@ -7,7 +7,7 @@ import type UI5Element from "../UI5Element.js";
  * @param { EventData } data the event data
  * @returns { ClassDecorator }
  */
-const event = <T extends typeof UI5Element, N extends keyof InstanceType<T>["eventDetails"]>(name: N, data: { detail?: Record<keyof InstanceType<T>["eventDetails"][N], { type: any}>, bubbles?: boolean, cancelable?: boolean } = {}): (target: T) => T | void => {
+const event = <T extends typeof UI5Element, N extends keyof InstanceType<T>["eventDetails"]>(name: N, data: { bubbles?: boolean, cancelable?: boolean } = {}): (target: T) => T | void => {
 	return (target: T) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};

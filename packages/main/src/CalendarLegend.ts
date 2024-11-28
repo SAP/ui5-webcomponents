@@ -47,9 +47,6 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	dependencies: [CalendarLegendItem],
 })
 @event("_calendar-legend-selection-change", {
-	detail: {
-		item: { type: CalendarLegendItem },
-	},
 	bubbles: true,
 })
 @event("_calendar-legend-focus-out", {

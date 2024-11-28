@@ -158,18 +158,7 @@ type AvatarGroupClickEventDetail = {
  * @public
  * @since 1.0.0-rc.11
  */
-@event("click", {
-	detail: {
-		/**
-		* @public
-		*/
-		targetRef: { type: HTMLElement },
-		/**
-		* @public
-		*/
-		overflowButtonClicked: { type: Boolean },
-	},
-})
+@event("click")
 
 /**
  * Fired when the count of visible `ui5-avatar` elements in the

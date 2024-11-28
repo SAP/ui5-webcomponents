@@ -95,20 +95,6 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  * @param { boolean } finalChange `true` when a value is selected and confirmed, `false` when a value is only selected but not confirmed.
  */
 @event("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: { type: Number },
-		/**
-		 * @public
-		 */
-		stringValue: { type: String },
-		/**
-		 * @public
-		 */
-		finalChange: { type: Boolean },
-	},
 	bubbles: true,
 })
 

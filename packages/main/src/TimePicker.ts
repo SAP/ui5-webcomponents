@@ -154,20 +154,6 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 })
 
@@ -178,20 +164,6 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event("input", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 })
 /**

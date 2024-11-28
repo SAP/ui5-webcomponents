@@ -124,12 +124,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  */
 @event("item-toggle", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -140,12 +134,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  */
 @event("item-mouseover", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 /**
@@ -155,12 +143,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  */
 @event("item-mouseout", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 /**
@@ -169,12 +151,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  */
 @event("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -188,12 +164,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  */
 @event("item-delete", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -203,9 +173,6 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @private
  */
 @event("item-focus", {
-	detail: {
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -218,34 +185,12 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedItems: { type: Array },
-		/**
-		 * @public
-		 */
-		previouslySelectedItems: { type: Array },
-		/**
-		 * @public
-		 */
-		targetItem: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 @event("move", {
-	detail: {
-		source: { type: Object },
-		destination: { type: Object },
-	},
 	bubbles: true,
 })
 @event("move-over", {
-	detail: {
-		source: { type: Object },
-		destination: { type: Object },
-	},
 	bubbles: true,
 	cancelable: true,
 })

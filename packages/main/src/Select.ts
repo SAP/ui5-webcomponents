@@ -153,12 +153,6 @@ type SelectLiveChangeEventDetail = {
  * @public
  */
 @event("change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -170,12 +164,6 @@ type SelectLiveChangeEventDetail = {
  * @since 1.17.0
  */
 @event("live-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 /**

@@ -215,18 +215,6 @@ type SpecialCalendarDateT = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedDates: { type: Array },
-		/**
-		 * @public
-		 */
-		selectedValues: { type: Array },
-
-		timestamp: { type: Number },
-	},
 	bubbles: true,
 	cancelable: true,
 })

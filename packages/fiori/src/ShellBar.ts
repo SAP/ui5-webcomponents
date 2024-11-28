@@ -166,12 +166,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 @event("notifications-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
 	cancelable: true,
 	bubbles: true,
 })
@@ -182,12 +176,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 @event("profile-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -199,12 +187,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 @event("product-switch-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
 	cancelable: true,
 	bubbles: true,
 })
@@ -216,12 +198,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 @event("logo-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -234,12 +210,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @public
  */
 @event("menu-item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -254,10 +224,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  */
 
 @event("search-button-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-		searchFieldVisible: { type: Boolean },
-	},
 	cancelable: true,
 	bubbles: true,
 })

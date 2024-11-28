@@ -130,28 +130,6 @@ type VSDInternalSettings = {
  * @public
  */
 @event("confirm", {
-	detail: {
-		/**
-		 * @public
-		 */
-		sortOrder: { type: String },
-		/**
-		 * @public
-		 */
-		sortBy: { type: String },
-		/**
-		 * @public
-		 */
-		sortByItem: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		sortDescending: { type: Boolean },
-		/**
-		 * @public
-		 */
-		filters: { type: Array },
-	},
 	bubbles: true,
 })
 
@@ -165,28 +143,6 @@ type VSDInternalSettings = {
  * @public
  */
 @event("cancel", {
-	detail: {
-		/**
-		 * @public
-		 */
-		sortOrder: { type: String },
-		/**
-		 * @public
-		 */
-		sortBy: { type: String },
-		/**
-		 * @public
-		 */
-		sortByItem: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		sortDescending: { type: Boolean },
-		/**
-		 * @public
-		 */
-		filters: { type: Array },
-	},
 	bubbles: true,
 })
 

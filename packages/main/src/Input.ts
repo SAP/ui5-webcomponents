@@ -248,12 +248,6 @@ type InputSuggestionScrollEventDetail = {
  * @since 2.0.0
  */
 @event("selection-change", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -274,16 +268,6 @@ type InputSuggestionScrollEventDetail = {
  * @since 1.0.0-rc.8
  */
 @event("suggestion-scroll", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		scrollTop: { type: Number },
-		/**
-	 	* @public
-	 	*/
-		scrollContainer: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 

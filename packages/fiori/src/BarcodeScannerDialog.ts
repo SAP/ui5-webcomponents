@@ -103,16 +103,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @public
  */
 @event("scan-success", {
-	detail: {
-		/**
-		 * @public
-		 */
-		text: { type: String },
-		/**
-		 * @public
-		 */
-		rawBytes: { type: Object },
-	},
 	bubbles: true,
 })
 
@@ -122,12 +112,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @public
  */
 @event("scan-error", {
-	detail: {
-		/**
-		 * @public
-		 */
-		message: { type: String },
-	},
 	bubbles: true,
 })
 

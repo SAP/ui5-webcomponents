@@ -164,12 +164,6 @@ enum ClipboardDataOperation {
  * @public
  */
 @event("token-delete", {
-	detail: {
-		/**
-		* @public
-		*/
-		tokens: { type: Array },
-	},
 	bubbles: true,
 })
 
@@ -180,9 +174,6 @@ enum ClipboardDataOperation {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		tokens: { type: Array },
-	},
 	bubbles: true,
 })
 

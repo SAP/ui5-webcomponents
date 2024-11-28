@@ -183,20 +183,6 @@ type DatePickerInputEventDetail = {
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -207,20 +193,6 @@ type DatePickerInputEventDetail = {
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event("input", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -233,20 +205,6 @@ type DatePickerInputEventDetail = {
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
 @event("value-state-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		valueState: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
 	bubbles: true,
 	cancelable: true,
 })

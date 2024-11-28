@@ -84,11 +84,6 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * @private
 */
 @event("_min-content-width-change", {
-	detail: {
-		minWidth: {
-			type: Number,
-		},
-	},
 	bubbles: true,
 })
 class Toolbar extends UI5Element {

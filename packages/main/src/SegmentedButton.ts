@@ -68,12 +68,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedItems: { type: Array },
-	},
 	bubbles: true,
 })
 

@@ -117,22 +117,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @param { string } text The text of the currently clicked menu item.
  * @public
  */
-@event("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-		/**
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-	},
-})
+@event("item-click")
 
 /**
  * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**
@@ -143,17 +128,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @since 1.10.0
  * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
-@event("before-open", {
-	detail: {
-		/**
-		 * @public
-		 * @since 1.14.0
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
-})
+@event("before-open")
 
 /**
  * Fired after the menu is opened. **This event does not bubble.**
@@ -169,16 +144,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
-@event("before-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		escPressed: {
-			type: Boolean,
-		},
-	},
-})
+@event("before-close")
 
 /**
  * Fired after the menu is closed. **This event does not bubble.**

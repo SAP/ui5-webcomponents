@@ -185,36 +185,6 @@ type UserDefinedColumnLayouts = {
  * @public
  */
 @event("layout-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		layout: { type: FCLLayout },
-		/**
-		* @public
-		*/
-		columnLayout: { type: Array },
-		/**
-		* @public
-		*/
-		startColumnVisible: { type: Boolean },
-		/**
-		* @public
-		*/
-		midColumnVisible: { type: Boolean },
-		/**
-		* @public
-		*/
-		endColumnVisible: { type: Boolean },
-		/**
-		 * @public
-		*/
-		separatorsUsed: { type: Boolean },
-		/**
-		 * @public
-		*/
-		resized: { type: Boolean },
-	},
 	bubbles: true,
 })
 class FlexibleColumnLayout extends UI5Element {

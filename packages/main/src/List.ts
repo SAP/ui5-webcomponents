@@ -188,12 +188,6 @@ type ListItemClickEventDetail = {
  * @public
  */
 @event("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -208,12 +202,6 @@ type ListItemClickEventDetail = {
  * @since 1.0.0-rc.8
  */
 @event("item-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -226,12 +214,6 @@ type ListItemClickEventDetail = {
  * @since 1.0.0-rc.8
  */
 @event("item-toggle", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -244,12 +226,6 @@ type ListItemClickEventDetail = {
  * @public
  */
 @event("item-delete", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -261,30 +237,6 @@ type ListItemClickEventDetail = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedItems: { type: Array },
-		/**
-		 * @public
-		 */
-		previouslySelectedItems: { type: Array },
-		/**
-		 * protected, holds the event target item
-		 * @protected
-		 */
-		targetItem: { type: HTMLElement },
-		/**
-		 * protected, indicates if the user used the selection components to change the selection
-		 * @protected
-		 */
-		selectionComponentPressed: { type: Boolean },
-		/**
-		 * @private
-		 */
-		key: { type: String },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -304,9 +256,6 @@ type ListItemClickEventDetail = {
  * @private
  */
 @event("item-focused", {
-	detail: {
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -321,20 +270,6 @@ type ListItemClickEventDetail = {
  */
 
 @event("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		originalEvent: { type: Event },
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -348,20 +283,6 @@ type ListItemClickEventDetail = {
  * @public
  */
 @event("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		originalEvent: { type: Event },
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
 	bubbles: true,
 })
 class List extends UI5Element {

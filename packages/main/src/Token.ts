@@ -69,10 +69,6 @@ type TokenDeleteEventDetail = {
  * @private
  */
 @event("delete", {
-	detail: {
-		"backSpace": { type: Boolean },
-		"delete": { type: Boolean },
-	},
 	bubbles: true,
 })
 

@@ -208,20 +208,6 @@ type StepInfo = {
  * @public
  */
 @event("step-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		step: { type: HTMLElement },
-		/**
-		* @public
-		*/
-		previousStep: { type: HTMLElement },
-		/**
-		* @public
-		*/
-		withScroll: { type: Boolean },
-	},
 	bubbles: true,
 })
 

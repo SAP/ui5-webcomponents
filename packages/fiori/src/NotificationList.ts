@@ -81,12 +81,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * @public
  */
 @event("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -97,12 +91,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * @public
  */
 @event("item-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })
@@ -114,12 +102,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * @public
  */
 @event("item-toggle", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 	cancelable: true,
 })

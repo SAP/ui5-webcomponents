@@ -148,7 +148,9 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
-	eventDetails!: object;
+	eventDetails!: {
+		[k: string]: any;
+	};
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;

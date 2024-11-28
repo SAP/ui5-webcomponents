@@ -102,12 +102,6 @@ const COLUMNS_COUNT: Record<string, number> = {
  * @public
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 

@@ -174,12 +174,6 @@ type TableRowClickEventDetail = {
  * @public
  */
 @event("row-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		row: { type: TableRow },
-	},
 	bubbles: true,
 })
 
