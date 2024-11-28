@@ -197,7 +197,7 @@ class RadioButtonGroup {
 	static _selectRadio(radioBtn: RadioButton) {
 		radioBtn.checked = true;
 		radioBtn._checked = true;
-		radioBtn.fireDecoratorEvent("change");
+		radioBtn.fireEvent("change");
 	}
 
 	static _nextFocusable(pos: number, group: RadioButton[]): RadioButton | null {
