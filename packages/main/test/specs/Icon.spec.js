@@ -28,16 +28,16 @@ describe("Icon general interaction", () => {
 		const inpUI5ClickRes = await browser.$("#ui5-click-event");
 
 		await interactiveIcon.click();
-		assert.strictEqual(await inpClickRes.getAttribute("value"), "0", "The 'ui5-click' event is fired.");
-		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "1", "The 'click' event is not fired on mouse click.");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "1", "The 'click' event is fired.");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click.");
 
 		await interactiveIcon.keys("Enter");
-		assert.strictEqual(await inpClickRes.getAttribute("value"), "0", "Enter fires 'click'");
-		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "2", "Enter fires 'ui5-click'");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "2", "Enter fires 'click'");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "1", "Enter fires 'ui5-click'");
 
 		await interactiveIcon.keys("Space");
-		assert.strictEqual(await inpClickRes.getAttribute("value"), "0", "Space fires 'click'");
-		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "3", "Space fires 'ui5-click'");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "Space fires 'click'");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "2", "Space fires 'ui5-click'");
 
 		// Non-interactive icon
 		const nonInteractiveIcon = await browser.$("#non-interactive-icon");
@@ -45,8 +45,8 @@ describe("Icon general interaction", () => {
 		const inpUI5ClickRes2 = await browser.$("#ui5-click-event-2");
 
 		await nonInteractiveIcon.click();
-		assert.strictEqual(await inpClickRes2.getAttribute("value"), "0", "The 'click' event is not fired.");
-		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "1", "The 'ui5-click' event is fired on mouse click..");
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "1", "The 'click' event is fired.");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click..");
 	});
 
 	it("Tests switch to sap_horizon", async () => {

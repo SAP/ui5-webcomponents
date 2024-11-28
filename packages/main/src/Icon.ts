@@ -220,12 +220,6 @@ class Icon extends UI5Element implements IIcon {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick(e: MouseEvent) {
-		e.stopImmediatePropagation();
-		e.preventDefault();
-		this.fireDecoratorEvent("click");
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		if (this.mode !== IconMode.Interactive) {
 			return;

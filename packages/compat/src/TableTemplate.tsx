@@ -25,7 +25,7 @@ export default function (this: Table) {
 					cellSpacing="0"
 					cellPadding="0"
 					aria-label={this.tableAriaLabelText}
-					onKeyDown={this._onkeydown} 
+					onKeyDown={this._onkeydown}
 				>
 					<thead>
 						 <tr
@@ -54,10 +54,10 @@ export default function (this: Table) {
 
 							{this.visibleColumns.map(col =>
 								<slot name={col._individualSlot}></slot>
-							)} 
+							)}
 
 							<th class="ui5-table-header-row-navigated" aria-hidden="true"></th>
-						</tr> 
+						</tr>
 					</thead>
 
 					<tbody>
@@ -65,7 +65,7 @@ export default function (this: Table) {
 						this.rows.map(row =>
 							<slot name={row._individualSlot}></slot>
 						)}
-							
+
 						{!this.rows.length && !this.hideNoData &&
 							<tr class="ui5-table-no-data-row-root">
 								<td colspan={this.visibleColumnsCount} role="cell" style="width: 100%">
@@ -76,9 +76,9 @@ export default function (this: Table) {
 								</td>
 							</tr>
 						}
-						
+
 						{ this.growsWithButton && moreRow.call(this) }
-						
+
 						{ this.growsOnScroll && endRow.call(this) }
 					</tbody>
 				</table>

@@ -4,7 +4,7 @@ import { attachConfigurationReset } from "./ConfigurationReset.js";
 // Fire these events even with noConflict: true
 const excludeList = [
 	"value-changed",
-	// "click",
+	"click",
 ];
 
 type NoConflictData = boolean | { events: Array<string>};

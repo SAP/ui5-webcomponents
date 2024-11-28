@@ -43,11 +43,6 @@ export default function (this: Button, injectedProps?: {
 					mode="Decorative"
 					part="icon"
 					showTooltip={this.showIconTooltip}
-					onClick={e => {
-						e.stopImmediatePropagation();
-						e.preventDefault();
-						this.fireDecoratorEvent("click")
-					}}
 				></Icon>
 			}
 

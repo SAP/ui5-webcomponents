@@ -39,7 +39,7 @@ export default function (this: TableRow) {
 
 			{this.shouldPopin ?
 				<>
-					{this.visibleCells.map(cell => 
+					{this.visibleCells.map(cell =>
 						<slot name={cell._individualSlot}></slot>
 					)}
 				</>
@@ -58,7 +58,7 @@ export default function (this: TableRow) {
 
 		{
 			this.shouldPopin && this.popinCells.map(cellData =>
-				<tr 
+				<tr
 					part="popin-row"
 					class={cellData.classes}
 					onClick={this._onrowclick}

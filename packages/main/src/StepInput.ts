@@ -488,6 +488,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 	@bound
 	_decValue() {
+		// TODO isTrusted
 		if (this._decIconClickable /* && e.isTrusted */ && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
 			this._previousValue = this.value;
