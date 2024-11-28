@@ -11,12 +11,11 @@ import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 
 export default function (this: DateTimePicker) {
-	return (
-		<>
-			{ DatePickerInputTemplate.call(this) }
-			{ DatePickerPopoverTemplate.call(this, { header, content, footer }) }
-		</>
-)};
+	return [
+		DatePickerInputTemplate.call(this),
+		DatePickerPopoverTemplate.call(this, { header, content, footer }),
+	];
+};
 
 function header(this: DateTimePicker) {
 	return (

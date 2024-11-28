@@ -209,12 +209,6 @@ class Icon extends UI5Element implements IIcon {
 	@property({ noAttribute: true })
 	effectiveAccessibleName?: string;
 
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	pressed = false;
-
 	ltr?: boolean;
 	packageName?: string;
 	viewBox?: string;

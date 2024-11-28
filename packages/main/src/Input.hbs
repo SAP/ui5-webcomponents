@@ -20,15 +20,15 @@
 			.value="{{_innerValue}}"
 			placeholder="{{_placeholder}}"
 			maxlength="{{maxlength}}"
-			role="{{accInfo.input.role}}"
-			aria-controls="{{accInfo.input.ariaControls}}"
-			aria-invalid="{{accInfo.input.ariaInvalid}}"
-			aria-haspopup="{{accInfo.input.ariaHasPopup}}"
-			aria-describedby="{{accInfo.input.ariaDescribedBy}}"
-			aria-roledescription="{{accInfo.input.ariaRoledescription}}"
-			aria-autocomplete="{{accInfo.input.ariaAutoComplete}}"
-			aria-expanded="{{accInfo.input.ariaExpanded}}"
-			aria-label="{{accInfo.input.ariaLabel}}"
+			role="{{accInfo.role}}"
+			aria-controls="{{accInfo.ariaControls}}"
+			aria-invalid="{{accInfo.ariaInvalid}}"
+			aria-haspopup="{{accInfo.ariaHasPopup}}"
+			aria-describedby="{{accInfo.ariaDescribedBy}}"
+			aria-roledescription="{{accInfo.ariaRoledescription}}"
+			aria-autocomplete="{{accInfo.ariaAutoComplete}}"
+			aria-expanded="{{accInfo.ariaExpanded}}"
+			aria-label="{{accInfo.ariaLabel}}"
 			aria-required="{{required}}"
 			autocomplete="off"
 			@input="{{_handleInput}}"
@@ -68,8 +68,8 @@
 			<span id="suggestionsCount" class="ui5-hidden-text" aria-live="polite">{{availableSuggestionsCount}}</span>
 		{{/if}}
 
-		{{#if accInfo.input.ariaDescription}}
-			<span id="descr" class="ui5-hidden-text">{{accInfo.input.ariaDescription}}</span>
+		{{#if accInfo.ariaDescription}}
+			<span id="descr" class="ui5-hidden-text">{{accInfo.ariaDescription}}</span>
 		{{/if}}
 
 		{{#if hasValueState}}

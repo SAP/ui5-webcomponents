@@ -5,14 +5,11 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/accept.js";
-import "@ui5/webcomponents-icons/dist/complete.js";
-import "@ui5/webcomponents-icons/dist/border.js";
-import "@ui5/webcomponents-icons/dist/tri-state.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import Label from "./Label.js";
@@ -29,7 +26,6 @@ import checkboxCss from "./generated/themes/CheckBox.css.js";
 
 // Template
 import CheckBoxTemplate from "./CheckBoxTemplate.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 let isGlobalHandlerAttached = false;
 let activeCb: CheckBox;

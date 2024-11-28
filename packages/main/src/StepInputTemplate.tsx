@@ -52,7 +52,7 @@ export default function (this: StepInput) {
 				required={this.required}
 				readonly={this.readonly}
 				valueState={this.valueState}
-				_inputAccInfo ={this.accInfo}
+				_inputAccInfo={this.accInfo}
 				_nativeInputAttributes={this.inputAttributes}
 				onChange={this._onInputChange}
 				onFocusOut={this._onInputFocusOut}

@@ -31,7 +31,7 @@ import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
 import Icon from "./Icon.js";
-import Input from "./Input.js";
+import Input, { type InputAccInfo } from "./Input.js";
 import InputType from "./types/InputType.js";
 
 // Styles
@@ -345,7 +345,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return this.value.toString();
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),

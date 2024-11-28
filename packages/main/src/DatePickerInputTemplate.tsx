@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type DatePicker from "./DatePicker.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
@@ -41,9 +42,11 @@ export default function (this: DatePicker) {
 						accessibleName={this.openIconTitle}
 						mode={this._iconMode}
 						showTooltip={true}
+						class={clsx({
+							"inputIcon": true,
+							"inputIcon--pressed": this.open,
+						})}
 						onClick={this._togglePicker}
-						class="inputIcon"
-						pressed={this.open}
 					></Icon>
 				}
 			</Input>

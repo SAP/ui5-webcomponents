@@ -6,12 +6,10 @@ import DatePickerInputTemplate from "./DatePickerInputTemplate.js";
 import DatePickerPopoverTemplate from "./DatePickerPopoverTemplate.js";
 
 export default function (this: DateRangePicker) {
-	return (
-		<>
-			{ DatePickerInputTemplate.call(this) }
-			{ DatePickerPopoverTemplate.call(this, { content }) }
-		</>
-	)
+	return [
+		DatePickerInputTemplate.call(this),
+		DatePickerPopoverTemplate.call(this, {content }),
+	];
 };
 
 function content(this: DateRangePicker) {

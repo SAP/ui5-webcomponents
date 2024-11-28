@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type TimePicker from "./TimePicker.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
@@ -38,8 +39,11 @@ export default function (this: TimePicker) {
 							tabindex={-1}
 							showTooltip={true}
 							onClick={this._togglePicker}
-							pressed={this.open}
-							class="ui5-time-picker-input-icon-button inputIcon"
+							class={clsx({
+								"ui5-time-picker-input-icon-button": true,
+								"inputIcon": true,
+								"inputIcon--pressed": this.open,
+							})}
 						></Icon>
 					}
 				</Input>

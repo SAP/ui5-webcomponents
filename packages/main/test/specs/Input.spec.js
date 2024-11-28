@@ -1276,14 +1276,14 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 
 		await suggestionsInput.keys("ArrowDown");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 		await suggestionsInput.keys("ArrowDown");
 
@@ -1291,14 +1291,14 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), true, "First list item is focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is no longer focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), false, "Input is not focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), true, "Group header is focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 
 
 		await suggestionsInput.keys("ArrowUp");
@@ -1307,14 +1307,14 @@ describe("Input arrow navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "Value state header is focused");
 
 		await suggestionsInput.keys("ArrowUp");
 
 		assert.strictEqual(await suggestionsInput.getProperty("focused"), true, "Input is focused");
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is not focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is not focused");
 	});
 
 	it("Items should not hide behind value state header on arrow up navigation", async () => {

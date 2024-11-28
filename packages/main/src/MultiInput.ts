@@ -393,11 +393,9 @@ class MultiInput extends Input implements IFormInputElement {
 	get accInfo() {
 		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 		return {
-			"input": {
-				...super.accInfo.input,
-				"ariaRoledescription": this.ariaRoleDescription,
-				"ariaDescribedBy": ariaDescribedBy,
-			},
+			...super.accInfo,
+			"ariaRoledescription": this.ariaRoleDescription,
+			"ariaDescribedBy": ariaDescribedBy,
 		};
 	}
 

@@ -30,7 +30,6 @@ import {
 	isF6Next,
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -50,7 +49,7 @@ import Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarDateComponent from "./CalendarDate.js";
-import Input from "./Input.js";
+import Input, { type InputAccInfo } from "./Input.js";
 import InputType from "./types/InputType.js";
 import IconMode from "./types/IconMode.js";
 import DatePickerTemplate from "./DatePickerTemplate.js";
@@ -732,10 +731,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.phone;
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
-			"ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
+			"ariaHasPopup": "grid",
 			"ariaRequired": this.required,
 			"ariaLabel": getEffectiveAriaLabelText(this),
 		};
