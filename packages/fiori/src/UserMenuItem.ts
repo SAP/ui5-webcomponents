@@ -1,5 +1,4 @@
 import { customElement } from "@ui5/webcomponents-base/dist/decorators.js";
-// import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";

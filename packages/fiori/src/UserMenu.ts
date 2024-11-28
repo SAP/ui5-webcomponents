@@ -91,25 +91,19 @@ type UserMenuOtherAccountClickEventDetail = {
  * Fired when the account avatar is selected.
  * @public
  */
-@event("avatar-click", {
-	bubbles: false,
-})
+@event("avatar-click")
 
 /**
  * Fired when the "Manage Account" button is selected.
  * @public
  */
-@event("manage-account-click", {
-	bubbles: false,
-})
+@event("manage-account-click")
 
 /**
  * Fired when the "Add Account" button is selected.
  * @public
  */
-@event("add-account-click", {
-	bubbles: false,
-})
+@event("add-account-click")
 
 /**
  * Fired when the account is switched to a different one.
@@ -122,7 +116,6 @@ type UserMenuOtherAccountClickEventDetail = {
 		prevSelectedAccount: { type: UserMenuAccount },
 		selectedAccount: { type: UserMenuAccount },
 	},
-	bubbles: false,
 	cancelable: true,
 })
 
@@ -135,7 +128,6 @@ type UserMenuOtherAccountClickEventDetail = {
 	detail: {
 		item: { type: UserMenuItem },
 	},
-	bubbles: false,
 	cancelable: true,
 })
 
@@ -144,12 +136,11 @@ type UserMenuOtherAccountClickEventDetail = {
  * @public
  */
 @event("sign-out-click", {
-	bubbles: false,
 	cancelable: true,
 })
 class UserMenu extends UI5Element {
 	/**
-	 * Defines if the User Menu dialog is opened.
+	 * Defines if the User Menu is opened.
 	 *
 	 * @default false
 	 * @public
