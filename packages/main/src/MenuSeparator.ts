@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import menuSeparatorTemplate from "./generated/templates/MenuSeparatorTemplate.lit.js";
+import menuSeparatorTemplate from "./MenuSeparatorTemplate.js";
 import menuSeparatorCss from "./generated/themes/MenuSeparator.css.js";
 import ListItemBase from "./ListItemBase.js";
 import ListItemCustom from "./ListItemCustom.js";
@@ -17,7 +17,7 @@ import type { IMenuItem } from "./Menu.js";
  */
 @customElement({
 	tag: "ui5-menu-separator",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [menuSeparatorCss],
 	template: menuSeparatorTemplate,
 	dependencies: [

@@ -39,7 +39,7 @@ export default function (this: CheckBox) {
 				<Icon aria-hidden="true" name={displayOnlyIcon.call(this)} class="ui5-checkbox-display-only-icon" part="icon"></Icon>
 			</div>
 		:
-			<div id={`${this._id}}-CbBg`} class="ui5-checkbox-inner">
+			<div id={`${this._id}-CbBg`} class="ui5-checkbox-inner">
 				{this.isCompletelyChecked &&
 					<Icon aria-hidden="true" name={accept} class="ui5-checkbox-icon" part="icon"></Icon>
 				}
@@ -47,7 +47,7 @@ export default function (this: CheckBox) {
 		}
 
 		<input
-			id={`${this._id}}-CB`}
+			id={`${this._id}-CB`}
 			type="checkbox"
 			checked={this.checked}
 			readonly={this.readonly}
@@ -59,7 +59,7 @@ export default function (this: CheckBox) {
 
 		{this.text &&
 			<Label 
-				id={`${this._id}}-label`}
+				id={`${this._id}-label`}
 				part="label" 
 				class="ui5-checkbox-label"
 				wrappingType={this.wrappingType}
@@ -69,7 +69,7 @@ export default function (this: CheckBox) {
 		}
 
 		{this.hasValueState &&
-			<span id={`${this._id}}-descr`} class="ui5-hidden-text">{this.valueStateText}</span>
+			<span id={`${this._id}-descr`} class="ui5-hidden-text">{this.valueStateText}</span>
 		}
 	</div>
 	);

@@ -1,5 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -36,7 +38,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
+import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
@@ -59,6 +61,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @customElement({
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
+	renderer: jsxRender,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
 	dependencies: [
@@ -232,6 +235,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
+	@bound
 	async onDetailClick() {
 		super.onDetailClick();
 		this._editing = true;
@@ -254,6 +258,7 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
@@ -262,17 +267,20 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	@bound
 	_onDetailKeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.onDetailClick();
 		}
 	}
 
+	@bound
 	_onInputFocusin(e: FocusEvent) {
 		// prevent focusing the whole upload collection item.
 		e.stopPropagation();
 	}
 
+	@bound
 	_onInputKeyDown(e: KeyboardEvent) {
 		if (isEscape(e)) {
 			this._onRenameCancel(e);
@@ -283,6 +291,7 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	@bound
 	_onRename() {
 		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
 		this.fileName = inp.value + this._fileExtension;
@@ -292,12 +301,14 @@ class UploadCollectionItem extends ListItem {
 		this._focus();
 	}
 
+	@bound
 	_onRenameKeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._onRename();
 		}
 	}
 
+	@bound
 	async _onRenameCancel(e: KeyboardEvent) {
 		this._editing = false;
 
@@ -309,6 +320,7 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	@bound
 	_onRenameCancelKeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._onRenameCancel(e);
@@ -319,30 +331,36 @@ class UploadCollectionItem extends ListItem {
 		this.fireDecoratorEvent("_focus-requested");
 	}
 
+	@bound
 	_onFileNameClick() {
 		this.fireDecoratorEvent("file-name-click");
 	}
 
+	@bound
 	_onRetry() {
 		this.fireDecoratorEvent("retry");
 	}
 
+	@bound
 	_onRetryKeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._onRetry();
 		}
 	}
 
+	@bound
 	_onTerminate() {
 		this.fireDecoratorEvent("terminate");
 	}
 
+	@bound
 	_onTerminateKeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._onTerminate();
 		}
 	}
 
+	@bound
 	_onDelete() {
 		this.fireDecoratorEvent("_uci-delete");
 	}
