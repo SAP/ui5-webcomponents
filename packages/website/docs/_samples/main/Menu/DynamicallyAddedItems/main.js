@@ -2,14 +2,19 @@ import "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents/dist/MenuItem.js";
 import "@ui5/webcomponents/dist/Button.js";
 
+import "@ui5/webcomponents-icons/dist/add-document.js";
+import "@ui5/webcomponents-icons/dist/add-folder.js";
+import "@ui5/webcomponents-icons/dist/open-folder.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+
 const btnOpenBasic = document.getElementById("btnOpenBasic");
 const menuSubs = document.getElementById("menuSubs");
 const btnAddOpenerDelay = document.getElementById("btnAddOpenerDelay");
-const delaymenu = document.getElementById("delaymenu");
+const delayMenu = document.getElementById("delaymenu");
 
 
 btnAddOpenerDelay.addEventListener("click", function() {
-    delaymenu.open = !delaymenu.open;
+    delayMenu.open = !delayMenu.open;
 });
 
 btnOpenBasic.addEventListener("click", function() {
@@ -21,23 +26,23 @@ const addItemsDynamically = (menu) => {
         menu.loading = false;
         menu.loadingDelay = 0;
         let oneNode = document.createElement("ui5-menu-item");
-        oneNode.setAttribute("text", "Open from Amazon Cloud");
+        oneNode.text =  "Open from Amazon Cloud";
         let twoNode = document.createElement("ui5-menu-item");
-        twoNode.setAttribute("text", "Open from Google Cloud");
+        twoNode.text = "Open from Google Cloud";
         menu.append(oneNode, twoNode);
         menu.focus();
     }, 1000);
 }
 
-delaymenu.addEventListener("ui5-before-open", function() {
-    if (!delaymenu.children) {
-        addItemsDynamically(delaymenu);
+delayMenu.addEventListener("ui5-before-open", function() {
+    if (delayMenu && !delayMenu.children.length) {
+        addItemsDynamically(delayMenu);
     }
 });
 
 menuSubs.addEventListener("ui5-before-open", function(event) {
     const item = event.detail.item;
-    if (!item.children) {
-        addItemsDynamically(delaymenu);
+    if (item && !item.children.length) {
+        addItemsDynamically(item);
     }
 });
