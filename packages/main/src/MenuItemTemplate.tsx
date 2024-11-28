@@ -88,13 +88,11 @@ function iconBegin(this: MenuItem) {
 function listItemPostContent(this: MenuItem) {
 	return this.hasSubmenu && <ResponsivePopover
 		id={`${this._id}-menu-rp`}
-		class="ui5-menu-rp"
+		class="ui5-menu-rp .ui5-menu-rp-sub-menu"
 		preventInitialFocus={true}
 		preventFocusRestore={true}
 		hideArrow={true}
 		allowTargetOverlap={true}
-		// TODO: Nayden
-		sub-menu={true}
 		placement={this.placement}
 		verticalAlign="Top"
 		accessibleName={this.acessibleNameText}
@@ -140,7 +138,6 @@ function listItemPostContent(this: MenuItem) {
 						accessibleRole="Menu"
 						loading={this.loading}
 						loadingDelay={this.loadingDelay}
-						// TODO: Nayden
 						// handles event from slotted children
 						onui5-close-menu={this._close}
 					>

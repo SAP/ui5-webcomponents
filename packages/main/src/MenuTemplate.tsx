@@ -52,7 +52,6 @@ export default function (this: Menu) {
 						onItemClick={this._itemClick}
 						onMouseOver={this._itemMouseOver}
 						onKeyDown={this._itemKeyDown}
-						// TODO: Nayden
 						// handles event from slotted children
 						onui5-close-menu={this._close}
 					>

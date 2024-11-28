@@ -87,8 +87,6 @@ function listItemContent(this: UploadCollectionItem) {
 					<Button
 						design="Transparent"
 						id="ui5-uci-edit-cancel"
-						// TODO: Nayden
-						// @ts-expect-error
 						onClick={this._onRenameCancel}
 						onKeyUp={this._onRenameCancelKeyup}
 					>

@@ -44,7 +44,6 @@ export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
 		draggable={this.movable}
 		onDragStart={this._ondragstart}
 		onDragEnd={this._ondragend}
-		// TODO: Nayden
 		role={this._accInfo.role}
 		title={this._accInfo.tooltip}
 		aria-expanded={this._accInfo.ariaExpanded}
@@ -127,7 +126,6 @@ function selectionElement(this: ListItem) {
 					id="{{_id}-singleSelectionElement"
 					class="ui5-li-singlesel-radiobtn"
 					checked={this.selected}
-					// TODO: Nayden
 					onChange={this.onSingleSelectionComponentPress}
 				/>
 			)
@@ -142,7 +140,6 @@ function selectionElement(this: ListItem) {
 					class="ui5-li-multisel-cb"
 					checked={this.selected}
 					accessibleName={this._accInfo.ariaLabel}
-					// TODO: Nayden
 					onChange={this.onMultiSelectionComponentPress}
 				/>
 			)

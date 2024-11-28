@@ -373,7 +373,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	@bound
-	onSingleSelectionComponentPress(e: MouseEvent) {
+	onSingleSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}

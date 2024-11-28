@@ -17,7 +17,6 @@ const predefinedHooks: Partial<MenuItemHooks> = {
 }
 
 export default function (this: NavigationMenuItem, hooks?: Partial<MenuItemHooks>) {
-	// TODO: Nayden
 	const currentHooks = { ...predefinedHooks, ...hooks,  }
 
 	return <>
@@ -72,10 +71,8 @@ function iconEnd(this: NavigationMenuItem) {
 function listItemPostContent(this: NavigationMenuItem) {
 	return this.hasSubmenu && <ResponsivePopover
 		id={`${this._id}-navigation-menu-rp`}
-		class="ui5-menu-rp ui5-navigation-menu"
+		class="ui5-menu-rp ui5-navigation-menu ui5-menu-rp-sub-menu"
 		verticalAlign="Center"
-		// TODO: Nayden
-		sub-menu={true}
 		preventInitialFocus
 		preventFocusRestore
 		accessibleNameRef={`${this._id}-navigationMenuPopoverText`}
@@ -122,7 +119,6 @@ function listItemPostContent(this: NavigationMenuItem) {
 					loading={this.loading}
 					loadingDelay={this.loadingDelay}
 					separators="None"
-					// TODO: Nayden
 					// handles event from slotted children
 					onui5-close-menu={this._close}
 				>

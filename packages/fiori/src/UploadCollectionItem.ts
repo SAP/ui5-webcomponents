@@ -309,10 +309,10 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	@bound
-	async _onRenameCancel(e: KeyboardEvent) {
+	async _onRenameCancel(e: KeyboardEvent | MouseEvent) {
 		this._editing = false;
 
-		if (isEscape(e)) {
+		if (isEscape(e as KeyboardEvent)) {
 			await renderFinished();
 			this.shadowRoot!.querySelector<Button>(`#${this._id}-editing-button`)!.focus();
 		} else {
