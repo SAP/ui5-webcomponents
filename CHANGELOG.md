@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** set value after preventDefault of input event ([#10196](https://github.com/SAP/ui5-webcomponents/issues/10196)) ([e2a6c94](https://github.com/SAP/ui5-webcomponents/commit/e2a6c94d6b4d88db61d85313f2776a092152478d)), closes [#9988](https://github.com/SAP/ui5-webcomponents/issues/9988)
+* **ui5-radio-button:** fix aria-disabled and focus of the read-only radio buttons ([#10111](https://github.com/SAP/ui5-webcomponents/issues/10111)) ([3bcfd1d](https://github.com/SAP/ui5-webcomponents/commit/3bcfd1d26b8520b73be336558f590e1b89c4d0c3)), closes [#10025](https://github.com/SAP/ui5-webcomponents/issues/10025)
+* **ui5-tokenizer:** adjust touch area for cozy and compact ([#10215](https://github.com/SAP/ui5-webcomponents/issues/10215)) ([ee90aea](https://github.com/SAP/ui5-webcomponents/commit/ee90aeaae00a3a888a8dafae73cb7dba1bf8e51f))
+* **ui5-wizard:** stacked Wizard Steps are aligned properly ([#10250](https://github.com/SAP/ui5-webcomponents/issues/10250)) ([3473fbf](https://github.com/SAP/ui5-webcomponents/commit/3473fbf7dd6f97d0de70a540d412c36901455926)), closes [#9779](https://github.com/SAP/ui5-webcomponents/issues/9779)
+
+
+### Features
+
+* **ui5-combobox:** adjust arrow-down behavior ([#10166](https://github.com/SAP/ui5-webcomponents/issues/10166)) ([74616dc](https://github.com/SAP/ui5-webcomponents/commit/74616dc7ea533ecbd18265878c90339e10eb9d1b))
+* **ui5-form:** add new `emptySpan` property ([#10194](https://github.com/SAP/ui5-webcomponents/issues/10194)) ([48b0cc8](https://github.com/SAP/ui5-webcomponents/commit/48b0cc89b36dd859dd07c17021eedf7a99375150)), closes [#9963](https://github.com/SAP/ui5-webcomponents/issues/9963)
+* **ui5-list:** add Home and End key handling for Load More button ([#10206](https://github.com/SAP/ui5-webcomponents/issues/10206)) ([7059e09](https://github.com/SAP/ui5-webcomponents/commit/7059e0987960f62cd5b8740594b907fa98e1f11c))
+
+
+
+
+
 # [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
 
 
