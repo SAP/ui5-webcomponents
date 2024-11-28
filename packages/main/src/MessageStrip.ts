@@ -2,19 +2,14 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/information.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import MessageStripDesign from "./types/MessageStripDesign.js";
-import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
+import type MessageStripDesign from "./types/MessageStripDesign.js";
+import MessageStripTemplate from "./MessageStripTemplate.js";
 import type { IIcon } from "./Icon.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -80,7 +75,7 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 @customElement({
 	tag: "ui5-message-strip",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: MessageStripTemplate,
 	styles: messageStripCss,
 	dependencies: [Icon, Button],
@@ -95,6 +90,10 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 })
 
 class MessageStrip extends UI5Element {
+	eventDetails!: {
+		"close": void,
+	};
+
 	/**
 	 * Defines the component type.
 	 * @default "Information"
@@ -152,6 +151,7 @@ class MessageStrip extends UI5Element {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	@bound
 	_closeClick() {
 		this.fireDecoratorEvent("close");
 	}
@@ -191,34 +191,8 @@ class MessageStrip extends UI5Element {
 		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE);
 	}
 
-	get classes(): ClassMap {
-		return {
-			root: {
-				"ui5-message-strip-root": true,
-				"ui5-message-strip-root-hide-icon": this.shouldHideIcon,
-				"ui5-message-strip-root-hide-close-button": this.hideCloseButton,
-				[this.designClasses]: true,
-			},
-		};
-	}
-
 	get iconProvided() {
 		return this.icon.length > 0;
-	}
-
-	get standardIconName() {
-		switch (this.design) {
-		case MessageStripDesign.Critical:
-			return "alert";
-		case MessageStripDesign.Positive:
-			return "sys-enter-2";
-		case MessageStripDesign.Negative:
-			return "error";
-		case MessageStripDesign.Information:
-			return "information";
-		default:
-			return null;
-		}
 	}
 
 	get designClasses() {

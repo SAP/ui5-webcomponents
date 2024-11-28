@@ -137,7 +137,7 @@ function suggestionsList(this: Input) {
 	return (
 		<List
 			separators={this.suggestionSeparators}
-			selection-mode="Single"
+			selectionMode="Single"
 			onMouseDown={this.onItemMouseDown}
 			onItemClick={this._handleSuggestionItemPress}
 			onSelectionChange={this._handleSelectionChange}
