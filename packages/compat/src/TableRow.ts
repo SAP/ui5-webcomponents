@@ -90,22 +90,12 @@ type TableRowF7PressEventDetail = {
  * @private
  */
 @event("_forward-before", {
-	detail: {
-		target: {
-			type: HTMLElement,
-		},
-	},
 	bubbles: true,
 })
 /**
  * @private
  */
 @event("_forward-after", {
-	detail: {
-		target: {
-			type: HTMLElement,
-		},
-	},
 	bubbles: true,
 })
 /**

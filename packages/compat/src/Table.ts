@@ -183,12 +183,6 @@ enum TableFocusTargetElement {
  * @public
  */
 @event("row-click", {
-	detail: {
-		/**
-		* @public
-		*/
-		row: { type: HTMLElement },
-	},
 	bubbles: true,
 })
 
@@ -199,14 +193,6 @@ enum TableFocusTargetElement {
  * @public
  */
 @event("popin-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		poppedColumns: {
-			type: Array,
-		},
-	},
 	bubbles: true,
 })
 
@@ -230,16 +216,6 @@ enum TableFocusTargetElement {
  * @since 2.0.0
  */
 @event("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedRows: { type: Array },
-		/**
-		 * @public
-		 */
-		previouslySelectedRows: { type: Array },
-	},
 	bubbles: true,
 })
 class Table extends UI5Element {
