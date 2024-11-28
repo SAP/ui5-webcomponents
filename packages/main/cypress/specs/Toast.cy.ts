@@ -5,13 +5,12 @@ import "../../src/List.js";
 import type Toast from "../../src/Toast.js";
 
 describe("Toast - test popover API", () => {
-
-	it('Should verify the toast has the popover attribute set to manual', () => {
+	it("Should verify the toast has the popover attribute set to manual", () => {
 		cy.mount(html`
 		<ui5-toast id="toast" open placement="TopStart">TopStart</ui5-toast>`);
 		cy.get<Toast>("[ui5-toast]")
-			.should('have.attr', 'popover', 'manual')
-			.should('be.visible');
+			.should("have.attr", "popover", "manual")
+			.should("be.visible");
 	});
 
 	it("Toast should stay on top of list after scroll", () => {
@@ -24,20 +23,20 @@ describe("Toast - test popover API", () => {
 		</ui5-list>`);
 
 		cy.get<Toast>("[ui5-toast]")
-			.should('have.attr', 'popover', 'manual')
-			.should('be.visible');
+			.should("have.attr", "popover", "manual")
+			.should("be.visible");
 
-		cy.get('#toast').then(($toast) => {
+		cy.get("#toast").then(($toast) => {
 			const toastRect = $toast[0].getBoundingClientRect();
-			cy.get('#list').then(($list) => {
+			cy.get("#list").then(($list) => {
 				const listRect = $list[0].getBoundingClientRect();
 				const isOverlapping =
-				toastRect.right > listRect.left &&
-				toastRect.left < listRect.right &&
-				toastRect.bottom > listRect.top &&
-				toastRect.top < listRect.bottom;
+				toastRect.right > listRect.left
+				&& toastRect.left < listRect.right
+				&& toastRect.bottom > listRect.top
+				&& toastRect.top < listRect.bottom;
 			  expect(isOverlapping).to.be.true;
 			});
 		});
 	});
-});
+})
