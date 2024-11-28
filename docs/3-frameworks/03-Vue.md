@@ -55,6 +55,60 @@ import "@ui5/webcomponents/dist/Button.js";
 npm run dev
 ```
 
+## Setting up a Nuxt project with UI5 Web Components
+
+### Step 1. Setup a Nuxt project.
+
+To initialize a Nuxt project, please follow the instructions provided in the [official Nuxt documentation.](https://nuxt.com/docs/getting-started/installation#new-project)
+
+### Step 2. Add UI5 Web Components
+```bash
+npm install @ui5/webcomponents
+```
+
+### Step 3. Configure the Nuxt application.
+
+#### Disable Server-Side Rendering (SSR):
+
+Currently, UI5 Web Components do not support Server-Side Rendering (SSR) as they rely on the browser's DOM APIs to function. To prevent rendering issues, ensure that SSR is disabled in your Nuxt configuration by setting `ssr: false`.
+
+#### Treat UI5 Web Components as custom elements:
+
+To avoid Vue's compiler treating UI5 Web Components as standard Vue components, you need to configure `compilerOptions.isCustomElement` in your `nuxt.config`.
+
+Here's an example:
+
+```ts
+// nuxt.config.ts
+
+// https://nuxt.com/docs/api/nuxt-config
+export default defineNuxtConfig({
+  ssr: false,
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag.startsWith("ui5-"),
+    },
+  },
+})
+```
+
+### Step 4. Import the components that you are going to use.
+
+```ts
+import "@ui5/webcomponents/dist/Button.js";
+```
+
+### Step 5. Use the imported elements in your application.
+
+```html
+<ui5-button>Hello world!</ui5-button>
+```
+
+### Step 6. Launch the application
+```bash
+npm run dev
+```
 
 ## Two-Way Data Binding
 
