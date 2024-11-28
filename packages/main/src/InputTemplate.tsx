@@ -2,8 +2,12 @@ import type Input from "./Input.js";
 import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import InputPopoverTemplate from "./InputPopoverTemplate.js";
+type TemplateHook = () => void;
 
-export default function (this: Input) {
+export default function (this: Input, hooks?: { preContent: TemplateHook, postContent: TemplateHook }) {
+	const preContent = hooks?.preContent || defaultPreContent;
+	const postContent = hooks?.postContent || defaultPostContent;
+
 	return (
 		<>
 		<div
@@ -104,6 +108,6 @@ export default function (this: Input) {
 	);
 };
 
-function preContent() {};
+function defaultPreContent() {};
 
-function postContent() {};
+function defaultPostContent() {};
