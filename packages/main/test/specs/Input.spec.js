@@ -1477,7 +1477,7 @@ describe("Input HOME navigation", () => {
 		assert.strictEqual(await firstListItem.getProperty("focused"), false, "First list item is not focused");
 		assert.strictEqual(await groupHeader.getProperty("focused"), false, "Group header is not focused");
 		assert.strictEqual(await suggestionsInput.getProperty("_isValueStateFocused"), true, "Value State should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "Value state header is focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "Value state header is focused");
 	});
 
 	it("Should focus the group header from the suggestions popover with HOME", async () => {
