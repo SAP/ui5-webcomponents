@@ -222,6 +222,7 @@ class Icon extends UI5Element implements IIcon {
 
 	_onclick(e: MouseEvent) {
 		e.stopImmediatePropagation();
+		e.preventDefault();
 		this.fireDecoratorEvent("click");
 	}
 
