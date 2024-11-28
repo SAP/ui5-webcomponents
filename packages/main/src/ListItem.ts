@@ -7,7 +7,7 @@ import type { JSX } from "@ui5/webcomponents-base";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
