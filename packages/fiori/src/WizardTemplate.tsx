@@ -34,8 +34,8 @@ export default function(this: Wizard) {
 							_wizardTabAccInfo={step.accInfo}
 							data-ui5-content-ref-id={step.refStepId}
 							data-ui5-index={step.pos}
-							onui5-selection-change-requested={this.onSelectionChangeRequested}
-							onui5-focused={this.onStepInHeaderFocused}
+							onSelectionChangeRequested={this.onSelectionChangeRequested}
+							onFocused={this.onStepInHeaderFocused}
 							onClick={this._onGroupedTabClick}
 							style={step.styles}
 						></WizardTab>

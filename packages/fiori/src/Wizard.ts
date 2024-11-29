@@ -459,7 +459,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	@bound
-	onSelectionChangeRequested(e: MouseEvent) {
+	onSelectionChangeRequested(e: CustomEvent) {
 		this.selectionRequestedByClick = true;
 		this.changeSelectionByStepAction(e.target as WizardTab);
 	}
@@ -487,7 +487,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	@bound
-	onStepInHeaderFocused(e: FocusEvent) {
+	onStepInHeaderFocused(e: CustomEvent) {
 		this._itemNavigation.setCurrentItem(e.target as WizardTab);
 	}
 
