@@ -25,7 +25,7 @@ describe("Initial rendering", () => {
 						<ui5-user-menu open opener="openUserMenuBtn" show-manage-account>
 							<ui5-user-menu-account slot="accounts"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE">
 							</ui5-user-menu-account>
 						</ui5-user-menu>`);
@@ -42,14 +42,14 @@ describe("Initial rendering", () => {
 						<ui5-user-menu open opener="openUserMenuBtn" show-other-accounts>
 							<ui5-user-menu-account slot="accounts"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE"
 												   selected>
 							</ui5-user-menu-account>
 							<ui5-user-menu-account slot="accounts"
-												   initials="AC"
+												   avatar-initials="AC"
 												   title-text="Alain Chevalier 2"
-												   additional-text="test.alian.chevalier@sap.com">
+												   subtitle-text="test.alian.chevalier@sap.com">
 							</ui5-user-menu-account>
 						</ui5-user-menu>`);
 		cy.get("[ui5-user-menu]").as("userMenu");
@@ -65,14 +65,14 @@ describe("Initial rendering", () => {
 						<ui5-user-menu open opener="openUserMenuBtn" show-other-accounts show-add-account>
 							<ui5-user-menu-account slot="accounts"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE"
 												   selected>
 							</ui5-user-menu-account>
 							<ui5-user-menu-account slot="accounts"
-												   initials="AC"
+												   avatar-initials="AC"
 												   title-text="Alain Chevalier 2"
-												   additional-text="test.alian.chevalier@sap.com">
+												   subtitle-text="test.alian.chevalier@sap.com">
 							</ui5-user-menu-account>
 						</ui5-user-menu>`);
 		cy.get("[ui5-user-menu]").as("userMenu");
@@ -90,7 +90,7 @@ describe("Menu configuration", () => {
 						<ui5-user-menu open opener="openUserMenuBtn">
 							<ui5-user-menu-account slot="accounts"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE">
 							</ui5-user-menu-account>
 							<ui5-user-menu-item text="Setting" data-id="setting"></ui5-user-menu-item>
@@ -109,7 +109,7 @@ describe("Menu configuration", () => {
 						<ui5-user-menu open opener="openUserMenuBtn">
 							<ui5-user-menu-account slot="accounts"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE">
 							</ui5-user-menu-account>
 							<ui5-user-menu-item text="Setting" data-id="setting"></ui5-user-menu-item>
@@ -134,7 +134,7 @@ describe("Menu configuration", () => {
 						<ui5-user-menu open opener="openUserMenuBtn">
 							<ui5-user-menu-account slot="accounts"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE">
 							</ui5-user-menu-account>
 							<ui5-user-menu-item icon="action-settings" text="Setting" data-id="setting"></ui5-user-menu-item>
@@ -154,7 +154,7 @@ describe("Avatar configuration", () => {
 		<ui5-user-menu open opener="openUserMenuBtn">
 			<ui5-user-menu-account slot="accounts"
 								   title-text="Alain Chevalier 1"
-								   additional-text="alian.chevalier@sap.com"
+								   subtitle-text="alian.chevalier@sap.com"
 								   description="Delivery Manager, SAP SE">
 			</ui5-user-menu-account>
 		</ui5-user-menu>`);
@@ -170,9 +170,9 @@ describe("Avatar configuration", () => {
 		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
 						<ui5-user-menu open opener="openUserMenuBtn">
 							<ui5-user-menu-account slot="accounts"
-												   initials="AC"
+												   avatar-initials="AC"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE">
 							</ui5-user-menu-account>
 						</ui5-user-menu>`);
@@ -188,9 +188,9 @@ describe("Avatar configuration", () => {
 		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
 						<ui5-user-menu open opener="openUserMenuBtn">
 							<ui5-user-menu-account slot="accounts"
-												   avatar="./../../test/pages/img/man_avatar_1.png"
+												   avatar-src="./../../test/pages/img/man_avatar_1.png"
 												   title-text="Alain Chevalier 1"
-												   additional-text="alian.chevalier@sap.com"
+												   subtitle-text="alian.chevalier@sap.com"
 												   description="Delivery Manager, SAP SE">
 							</ui5-user-menu-account>
 						</ui5-user-menu>`);

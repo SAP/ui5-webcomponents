@@ -21,13 +21,13 @@ import { customElement, property } from "@ui5/webcomponents-base/dist/decorators
  */
 class UserMenuAccount extends UI5Element {
 	/**
-	 * Defines the avatar of the user.
+	 * Defines the avatar image url of the user.
 	 *
 	 * @default ""
 	 * @public
 	 */
 	@property({ type: String })
-	avatar?: string;
+	avatarSrc?: string;
 
 	/**
 	 * Defines the avatar initials of the user.
@@ -36,7 +36,7 @@ class UserMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	initials?: string;
+	avatarInitials?: string;
 
 	/**
 	 * Defines the title text of the user.
@@ -54,7 +54,7 @@ class UserMenuAccount extends UI5Element {
 	 * @public
 	 */
 	@property({ type: String })
-	additionalText = "";
+	subtitleText = "";
 
 	/**
 	 * Defines description of the user.
@@ -75,7 +75,7 @@ class UserMenuAccount extends UI5Element {
 	selected = false;
 
 	get _initials() {
-		return this.initials || "undefined";
+		return this.avatarInitials || "undefined";
 	}
 }
 
