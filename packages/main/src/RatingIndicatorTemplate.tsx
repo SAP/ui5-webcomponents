@@ -43,7 +43,7 @@ function Star(this: RatingIndicator, star: Star) {
 	} else if (star.halfStar) {
 		return (
 			<li class="ui5-rating-indicator-item ui5-rating-indicator-item-half">
-				<Icon data-ui5-value={star.index} name={unfavorite}></Icon>
+				<Icon data-ui5-value={star.index} name={halfStarIconName.call(this)}></Icon>
 				<div class="ui5-rating-indicator-half-icon-wrapper">
 					<Icon data-ui5-value={star.index} name={favorite} class="ui5-rating-indicator-half-icon"></Icon>
 				</div>
@@ -69,3 +69,7 @@ function Star(this: RatingIndicator, star: Star) {
 		)
 	}
 };
+
+function halfStarIconName(this: RatingIndicator) {
+	return this.disabled || this.readonly ? favorite : unfavorite;
+}
