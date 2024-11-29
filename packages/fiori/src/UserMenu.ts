@@ -24,6 +24,7 @@ import UserMenuCss from "./generated/themes/UserMenu.css.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/add-employee.js";
+import "@ui5/webcomponents-icons/dist/edit.js";
 import "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import "@ui5/webcomponents-icons/dist/log.js";
 import "@ui5/webcomponents-icons/dist/user-settings.js";
