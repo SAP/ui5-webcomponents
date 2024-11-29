@@ -9,7 +9,7 @@ export default function (this: Tab) {
 		>
 			<slot name={this._defaultSlotName}></slot>
 			{this.tabs.map(tab =>
-				<slot name={tab._effectiveSlotName as string}></slot>
+				<slot name={tab._effectiveSlotName}></slot>
 			)}
 		</div>
 	);

@@ -13,7 +13,6 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { JSX } from "@ui5/webcomponents-base";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import type TitleLevel from "./types/TitleLevel.js";

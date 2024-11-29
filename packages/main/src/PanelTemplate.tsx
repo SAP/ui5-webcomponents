@@ -2,27 +2,17 @@ import clsx from "clsx"
 import type Panel from "./Panel.js"
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-// import Token, { type TokenDeleteEventDetail } from "./Token.js";
-// import type { JSX } from "@ui5/webcomponents-base/jsx-runtime";
-// import type { JSX } from "@ui5/webcomponents-base";
-declare module "@ui5/webcomponents-base" {
-	namespace JSX {
-		interface IntrinsicElements {
-			// "ui5-token": Token["_jsxProps"];
-		}
-	}
-}
+
+import slimArrowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
 export default function (this: Panel) {
 	return (<>
-		{/* <my-comp onClick={(e) => e.currentTarget}></my-comp> */}
 		<div
 			class="ui5-panel-root"
 			role={this.accRole}
 			aria-label={this.effectiveAccessibleName}
 			aria-labelledby={this.fixedPanelAriaLabelledbyReference}
 		>
-			{/* <Token text="abc" selected={false}></Token> */}
 			{ this.hasHeaderOrHeaderText &&
 				// header: either header or h1 with header text
 				<div
@@ -62,7 +52,7 @@ export default function (this: Panel) {
 													"ui5-panel-header-icon": true,
 													"ui5-panel-header-button-animated": !this.shouldNotAnimate,
 												})}
-												name="slim-arrow-right"
+												name={slimArrowRight}
 											>
 											</Icon>
 										</div>
@@ -73,8 +63,8 @@ export default function (this: Panel) {
 											"ui5-panel-header-button ui5-panel-header-icon",
 											!this.shouldNotAnimate && "ui5-panel-header-button-animated",
 										)}
-										name="slim-arrow-right"
-										show-tooltip
+										name={slimArrowRight}
+										showTooltip={true}
 										accessibleName={this.toggleButtonTitle}
 									></Icon>
 								}
