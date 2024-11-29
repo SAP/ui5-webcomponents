@@ -11,6 +11,8 @@
 		@ui5-close="{{_afterClose}}"
 		@keydown="{{_onkeydown}}"
 		style={{styles.responsivePopover}}
+		aria-label="{{_ariaLabelPopover}}"
+
 	>
 		{{#if _isPhone}}
 			<div slot="header" class="ui5-responsive-popover-header">

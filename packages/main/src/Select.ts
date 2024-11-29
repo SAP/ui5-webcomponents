@@ -47,6 +47,7 @@ import {
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
 	FORM_SELECTABLE_REQUIRED,
+	FORM_SELECTABLE_AVALIABLE_VALUES,
 } from "./generated/i18n/i18n-defaults.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -355,6 +356,10 @@ class Select extends UI5Element implements IFormInputElement {
 
 	get formValidityMessage() {
 		return Select.i18nBundle.getText(FORM_SELECTABLE_REQUIRED);
+	}
+
+	get _ariaLabelPopover() {
+		return Select.i18nBundle.getText(FORM_SELECTABLE_AVALIABLE_VALUES);
 	}
 
 	get formValidity(): ValidityStateFlags {
