@@ -1,4 +1,4 @@
-import { customElement } from "@ui5/webcomponents-base/dist/decorators.js";
+import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 
 import UserMenuItemTemplate from "./generated/templates/UserMenuItemTemplate.lit.js";
@@ -36,7 +36,18 @@ import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";
 	dependencies: [...MenuItem.dependencies],
 })
 class UserMenuItem extends MenuItem {
+	/**
+	 * Defines the items of this component.
+	 *
+	 * **Note:** Use `ui5-user-menu-item` for the intended design.
+	 * @public
+	 */
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	declare items: Array<UserMenuItem>;
 
+	get _menuItems() {
+		return this.items.filter(item => !item.isSeparator);
+	}
 }
 
 UserMenuItem.define();
