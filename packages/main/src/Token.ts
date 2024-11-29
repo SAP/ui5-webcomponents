@@ -3,16 +3,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isBackSpace,
 	isSpace,
 	isDelete,
 	isSpaceCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/sys-cancel.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
@@ -20,7 +19,7 @@ import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-de
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type { IToken } from "./MultiInput.js";
-import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
+import TokenTemplate from "./TokenTemplate.js";
 
 // Styles
 import tokenStyles from "./generated/themes/Token.css.js";
@@ -49,7 +48,7 @@ type TokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-token",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: TokenTemplate,
 	styles: tokenStyles,
 	dependencies: [Icon],
@@ -158,6 +157,7 @@ class Token extends UI5Element implements IToken {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
+	@bound
 	_handleSelect() {
 		if (!this.toBeDeleted) {
 			this.selected = !this.selected;
@@ -165,19 +165,23 @@ class Token extends UI5Element implements IToken {
 		}
 	}
 
+	@bound
 	_focusin() {
 		this.focused = true;
 	}
 
+	@bound
 	_focusout() {
 		this.focused = !this.focused;
 	}
 
+	@bound
 	_delete() {
 		this.toBeDeleted = true;
 		this.fireDecoratorEvent("delete");
 	}
 
+	@bound
 	_keydown(e: KeyboardEvent) {
 		const isBackSpacePressed = isBackSpace(e);
 		const isDeletePressed = isDelete(e);
