@@ -8,7 +8,10 @@ import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 import TimelineItem from "./TimelineItem.js";
 import type { ITimelineItem } from "./Timeline.js";
-
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import TimelineGroupItemTemplate from "./generated/templates/TimelineGroupItemTemplate.lit.js";
 
 // Styles
