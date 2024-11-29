@@ -4,8 +4,9 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -18,7 +19,7 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 
 // Template
-import DynamicPageTemplate from "./generated/templates/DynamicPageTemplate.lit.js";
+import DynamicPageTemplate from "./DynamicPageTemplate.js";
 
 // Styles
 import DynamicPageCss from "./generated/themes/DynamicPage.css.js";
@@ -98,7 +99,7 @@ const SCROLL_THRESHOLD = 10; // px
  */
 @customElement({
 	tag: "ui5-dynamic-page",
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
 	dependencies: [DynamicPageHeaderActions],
@@ -263,7 +264,7 @@ class DynamicPage extends UI5Element {
 
 	get _accAttributesForHeaderActions() {
 		return {
-			controls: `${this._id}-header`,
+			controls: `${this._id}-header` as Lowercase<string>,
 		};
 	}
 
@@ -300,6 +301,7 @@ class DynamicPage extends UI5Element {
 		}
 	}
 
+	@bound
 	snapOnScroll() {
 		debounce(() => this.snapTitleByScroll(), SCROLL_DEBOUNCE_RATE);
 	}
@@ -349,6 +351,7 @@ class DynamicPage extends UI5Element {
 		}
 	}
 
+	@bound
 	async onExpandClick() {
 		this.isToggled = true;
 		this._toggleHeader();
@@ -363,6 +366,7 @@ class DynamicPage extends UI5Element {
 		announce(this._headerLabel, InvisibleMessageMode.Polite);
 	}
 
+	@bound
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
 		this.fireDecoratorEvent("pin-button-toggle");
@@ -370,6 +374,7 @@ class DynamicPage extends UI5Element {
 		this.headerActions?.focusPinButton();
 	}
 
+	@bound
 	async onToggleTitle() {
 		if (!this.hasHeading) {
 			return;
@@ -412,11 +417,13 @@ class DynamicPage extends UI5Element {
 		}
 	}
 
+	@bound
 	async onExpandHoverIn() {
 		this.dynamicPageTitle?.setAttribute("hovered", "");
 		await renderFinished();
 	}
 
+	@bound
 	async onExpandHoverOut() {
 		this.dynamicPageTitle?.removeAttribute("hovered");
 		await renderFinished();
