@@ -161,8 +161,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
-
-		this.focus();
 		this.fireItemPress(e);
 	}
 

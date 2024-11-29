@@ -104,7 +104,7 @@ function processEvent(ts, event, classNode, moduleDoc) {
 	result.description = description;
 	result._ui5Cancelable = eventCancelable !== undefined ? eventCancelable : false;
 	result._ui5allowPreventDefault = result._ui5Cancelable;
-	result._ui5Bubbles = eventBubbles !== undefined ? eventBubbles : true;
+	result._ui5Bubbles = eventBubbles !== undefined ? eventBubbles : false;
 
 	if (native) {
 		result.type = { text: "Event" };

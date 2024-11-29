@@ -16,11 +16,22 @@ import {
 	isEnter,
 	isTabPrevious,
 	isCtrl,
+	isEnd,
+	isHome,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	getAllAccessibleDescriptionRefTexts,
+	getEffectiveAriaDescriptionText,
+	getEffectiveAriaLabelText,
+	registerUI5Element,
+	deregisterUI5Element,
+	getAllAccessibleNameRefTexts,
+} from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -459,13 +470,45 @@ class List extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the IDs of the elements that label the input.
+	 * Defines the IDs of the elements that label the component.
 	 * @default undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
 	accessibleNameRef?: string;
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
+	 * Defines the IDs of the elements that describe the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescriptionRef?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedDescriptionRefTexts?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_associatedLabelsRefTexts?: string;
 
 	/**
 	 * Defines the accessible role of the component.
@@ -576,11 +619,18 @@ class List extends UI5Element {
 		return this.getItems();
 	}
 
+	_updateAssociatedLabelsTexts() {
+		this._associatedDescriptionRefTexts = getAllAccessibleDescriptionRefTexts(this);
+		this._associatedLabelsRefTexts = getAllAccessibleNameRefTexts(this);
+	}
+
 	onEnterDOM() {
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 		DragRegistry.subscribe(this);
 	}
 
 	onExitDOM() {
+		deregisterUI5Element(this);
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
 		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
@@ -704,7 +754,11 @@ class List extends UI5Element {
 	}
 
 	get ariaLabelTxt() {
-		return getEffectiveAriaLabelText(this);
+		return this._associatedLabelsRefTexts || getEffectiveAriaLabelText(this);
+	}
+
+	get ariaDescriptionText() {
+		return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this);
 	}
 
 	get ariaLabelModeText(): string {
@@ -872,10 +926,10 @@ class List extends UI5Element {
 
 		slottedItems.forEach(item => {
 			if (isInstanceOfListItemGroup(item)) {
-				const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
+				const groupItems = [item.groupHeaderItem, ...item.items.filter(listItem => listItem.assignedSlot)].filter(Boolean);
 				items.push(...groupItems);
 			} else {
-				items.push(item);
+				item.assignedSlot && items.push(item);
 			}
 		});
 
@@ -902,6 +956,23 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isEnd(e)) {
+			this._handleEnd();
+			e.preventDefault();
+			return;
+		}
+
+		if (isHome(e)) {
+			this._handleHome();
+			return;
+		}
+
+		if (isDown(e)) {
+			this._handleDown();
+			e.preventDefault();
+			return;
+		}
+
 		if (isCtrl(e)) {
 			this._moveItem(e.target as ListItemBase, e);
 			return;
@@ -969,6 +1040,11 @@ class List extends UI5Element {
 			this.focusAfterElement();
 		}
 
+		if (isUp(e)) {
+			this._handleLodeMoreUp(e);
+			return;
+		}
+
 		if (isTabPrevious(e)) {
 			if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -998,12 +1074,29 @@ class List extends UI5Element {
 		this.loadMore();
 	}
 
+	_handleLodeMoreUp(e: KeyboardEvent) {
+		const growingButton = this.getGrowingButton();
+
+		if (growingButton === e.target) {
+			const items = this.getItems();
+			const lastItem = items[items.length - 1];
+
+			this.focusItem(lastItem);
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+	}
+
 	checkListInViewport() {
 		this._inViewport = isElementInView(this.getDomRef()!);
 	}
 
 	loadMore() {
-		this.fireDecoratorEvent("load-more");
+		// don't fire load-more on initial mount
+		if (this.children.length > 0) {
+			this.fireDecoratorEvent("load-more");
+		}
 	}
 
 	/*
@@ -1031,11 +1124,34 @@ class List extends UI5Element {
 		}
 	}
 
+	_handleHome() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this.focusFirstItem();
+	}
+
+	_handleEnd() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
+	}
+
+	_handleDown() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
+	}
+
 	_onfocusin(e: FocusEvent) {
 		const target = getNormalizedTarget(e.target as HTMLElement);
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(target)) {
-			e.stopImmediatePropagation();
 			return;
 		}
 
@@ -1064,6 +1180,7 @@ class List extends UI5Element {
 			e.stopImmediatePropagation();
 		}
 
+		e.stopImmediatePropagation();
 		this.setForwardingFocus(false);
 	}
 
@@ -1259,6 +1376,16 @@ class List extends UI5Element {
 
 		if (growingBtn) {
 			growingBtn.focus();
+		}
+	}
+
+	_shouldFocusGrowingButton() {
+		const items = this.getItems();
+		const lastIndex = items.length - 1;
+		const currentIndex = this._itemNavigation._currentIndex;
+
+		if (currentIndex !== -1 && currentIndex === lastIndex) {
+			this.focusGrowingButton();
 		}
 	}
 

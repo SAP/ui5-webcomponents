@@ -9,7 +9,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -333,6 +333,8 @@ class Toolbar extends UI5Element {
 	onBeforeRendering() {
 		this.detachListeners();
 		this.attachListeners();
+
+		this.preprocessItems();
 	}
 
 	async onAfterRendering() {
@@ -348,19 +350,19 @@ class Toolbar extends UI5Element {
 	 */
 	isOverflowOpen(): boolean {
 		const overflowPopover = this.getOverflowPopover();
-		return overflowPopover!.open;
+		return overflowPopover.open;
 	}
 
 	openOverflow(): void {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.opener = this.overflowButtonDOM!;
-		overflowPopover!.open = true;
-		this.reverseOverflow = overflowPopover!.actualPlacement === "Top";
+		overflowPopover.opener = this.overflowButtonDOM!;
+		overflowPopover.open = true;
+		this.reverseOverflow = overflowPopover.actualPlacement === "Top";
 	}
 
 	closeOverflow() {
 		const overflowPopover = this.getOverflowPopover();
-		overflowPopover!.open = false;
+		overflowPopover.open = false;
 	}
 
 	toggleOverflow() {
@@ -371,8 +373,8 @@ class Toolbar extends UI5Element {
 		}
 	}
 
-	getOverflowPopover(): Popover | null {
-		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover");
+	getOverflowPopover(): Popover {
+		return this.shadowRoot!.querySelector<Popover>(".ui5-overflow-popover")!;
 	}
 
 	/**
@@ -526,7 +528,7 @@ class Toolbar extends UI5Element {
 			const abstractItem = this.getItemByID(refItemId);
 			const eventType = e.type;
 			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
+			const prevented = !abstractItem?.fireDecoratorEvent(eventTypeNonPrefixed, { ...e.detail, targetRef: target });
 			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
@@ -615,6 +617,13 @@ class Toolbar extends UI5Element {
 
 	getRegisteredToolbarItemByID(id: string): HTMLElement | null {
 		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
+	}
+
+	preprocessItems() {
+		this.items.forEach(item => {
+			item._getRealDomRef = () => this.getDomRef()!.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)
+				?? this.getOverflowPopover().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)!;
+		});
 	}
 }
 

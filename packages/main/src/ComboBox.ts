@@ -7,7 +7,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone, isAndroid } from "@ui5/webcomponents-base/dist/Device.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -98,17 +98,12 @@ interface IComboBoxItem extends UI5Element {
 	isGroupItem?: boolean,
 	selected?: boolean,
 	additionalText?: string,
-	stableDomRef: string,
 	_isVisible?: boolean,
 	items?: Array<IComboBoxItem>
 }
 
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
-
-type ComboBoxListItem = ListItemStandard & {
-	mappedItem: ComboBoxItem
-};
 
 enum ValueStateIconMapping {
 	Negative = "error",
@@ -398,7 +393,12 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	 * Defines the component items.
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
+	@slot({
+		type: HTMLElement,
+		"default": true,
+		individualSlots: true,
+		invalidateOnChildChange: true,
+	})
 	items!: Array<IComboBoxItem>;
 
 	/**
@@ -504,10 +504,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 
 		this.storeResponsivePopoverWidth();
-
-		this.items.forEach(item => {
-			item._getRealDomRef = () => this._getPicker().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
-		});
 	}
 
 	_focusin(e: FocusEvent) {
@@ -725,7 +721,8 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this._filteredItems.forEach(item => {
 			if (isInstanceOfComboBoxItemGroup(item)) {
-				const groupedItems = [item, ...item.items];
+				const visibleItems = this.open ? item.items.filter(i => i._isVisible) : item.items;
+				const groupedItems = [item, ...visibleItems];
 				allItems.push(...groupedItems);
 				return;
 			}
@@ -745,7 +742,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		const isOpen = this.open;
 		const currentItem = allItems.find(item => {
-			return isOpen ? item.focused : item.selected;
+			return item.selected || item.focused;
 		});
 
 		const indexOfItem = currentItem ? allItems.indexOf(currentItem) : -1;
@@ -853,18 +850,22 @@ class ComboBox extends UI5Element implements IFormInputElement {
 			return;
 		}
 
-		if (indexOfItem === 0 && this.hasValueStateText && isOpen) {
+		if (indexOfItem === 0 && this.hasValueStateText && isOpen && !this._isValueStateFocused) {
 			this._clearFocus();
 			this._itemFocused = false;
 			this._isValueStateFocused = true;
 			this._announceValueStateText();
 			this._filteredItems[0].selected = false;
+			this.value = this._userTypedValue;
+
 			return;
 		}
 
 		if (this._isValueStateFocused) {
 			this.focused = true;
 			this._isValueStateFocused = false;
+			this.value = this._userTypedValue;
+
 			return;
 		}
 
@@ -1129,9 +1130,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
-		const listItem = e.detail.item as ComboBoxListItem;
+		const item = e.detail.item as ComboBoxItem;
 
-		this._selectedItemText = listItem.mappedItem.text || "";
+		this._selectedItemText = item.text || "";
 		this._selectionPerformed = true;
 
 		const sameItemSelected = this.value === this._selectedItemText;
@@ -1144,16 +1145,11 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		this.value = this._selectedItemText;
 
-		if (!listItem.mappedItem.selected) {
+		if (!item.selected) {
 			this.fireDecoratorEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
-				item: listItem.mappedItem,
+				item,
 			});
 		}
-
-		this._filteredItems.map(item => {
-			item.selected = (item === listItem.mappedItem && !item.isGroupItem);
-			return item;
-		});
 
 		this._fireChangeEvent();
 		this._closeRespPopover();

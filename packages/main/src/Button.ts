@@ -11,7 +11,7 @@ import {
 	isEscape,
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -218,6 +218,15 @@ class Button extends UI5Element implements IButton {
 	 */
 	@property({ type: Object })
 	accessibilityAttributes: ButtonAccessibilityAttributes = {};
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
 
 	/**
 	 * Defines whether the button has special form-related functionality.
@@ -525,6 +534,10 @@ class Button extends UI5Element implements IButton {
 
 	get ariaDescribedbyText() {
 		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+	}
+
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
 	}
 
 	get _isSubmit() {
