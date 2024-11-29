@@ -17,8 +17,8 @@ import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";
  * ### Usage
  *
  * `ui5-user-menu-item` represents a node in a `ui5-user-menu`. The user menu itself is rendered as a list,
- * and each `ui5-menu-item` is represented by a list item in that list. Therefore, you should only use
- * `ui5-user-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
+ * and each `ui5-menu-item` is represented by a menu item in that menu. Therefore, you should only use
+ * `ui5-user-menu-item` directly in your apps. The `ui5-menu` menu item is internal for the menu, and not intended for public use.
  *
  * ### ES6 Module Import
  *
