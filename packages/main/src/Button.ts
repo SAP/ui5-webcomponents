@@ -224,6 +224,15 @@ class Button extends UI5Element implements IButton {
 	accessibilityAttributes: ButtonAccessibilityAttributes = {};
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
 	 * Defines whether the button has special form-related functionality.
 	 *
 	 * **Note:** This property is only applicable within the context of an HTML Form element.
@@ -515,6 +524,10 @@ class Button extends UI5Element implements IButton {
 
 	get ariaDescribedbyText() {
 		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+	}
+
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
 	}
 
 	get _isSubmit() {

@@ -17,6 +17,7 @@ export default function (this: Link) {
 		aria-haspopup={this._hasPopup}
 		aria-expanded={this.accessibilityAttributes.expanded}
 		aria-current={this.accessibilityAttributes.current}
+		aria-description={this.ariaDescriptionText}
 		onClick={this._onclick}
 		onKeyDown={this._onkeydown}
 		onKeyUp={this._onkeyup}
