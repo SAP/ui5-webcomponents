@@ -23,6 +23,7 @@ describe("Rendering", () => {
 
 		assert.notOk(await readOnlyRadioButtonRoot.getAttribute("aria-readonly"), "aria-readonly is not set to the root level");
 		assert.strictEqual(await readOnlyRadioButtonInput.getAttribute("readonly"), "true", "internal input is readonly");
+		assert.strictEqual(await readOnlyRadioButtonRoot.getAttribute("aria-disabled"), "true", "aria-disabled = true");
 	});
 });
 
@@ -87,6 +88,7 @@ describe("RadioButton general interaction", () => {
 		const field = await browser.$("#tabField");
 		const radioButtonPreviouslySelected = await browser.$("#groupRb1");
 		const radioButtonToBeSelected = await browser.$("#groupRb3");
+		const radioButtonToBeSelectedNext = await browser.$("#groupRbReadOnly");
 
 		await field.click();
 		await field.keys("Tab");
@@ -96,7 +98,14 @@ describe("RadioButton general interaction", () => {
 		assert.notOk(await radioButtonPreviouslySelected.getProperty("checked"), "Previously selected item has been de-selected.");
 		assert.ok(await radioButtonToBeSelected.getProperty("checked"), "Pressing ArrowRight selects the next (not disabled) radio in the group.");
 
-		await radioButtonToBeSelected.keys("Tab");
+		await radioButtonToBeSelected.keys("ArrowRight");
+		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+
+		assert.ok(await radioButtonToBeSelected.getProperty("checked"), "Previously selected item is still selected");
+		assert.notOk(await radioButtonToBeSelectedNext.getProperty("checked"), "Read-only radio button is not selected.");
+		assert.ok(activeElementId === "groupRbReadOnly", " Focus is on the last radio button, which is read-only");
+
+		await radioButtonToBeSelectedNext.keys("Tab");
 	});
 
 	it("tests radio buttons selection within group with ARROW-LEFT key", async () => {

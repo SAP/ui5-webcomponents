@@ -23,16 +23,18 @@
             accessible-name="{{hueSliderLabel}}"
             @ui5-input="{{_handleHueInput}}"
         ></ui5-slider>
-        <ui5-slider
-            disabled="{{inputsDisabled}}"
-            class="ui5-color-picker-alpha-slider"
-            min="0"
-            max="1"
-            step="0.01"
-            value="{{_alpha}}"
-            accessible-name="{{alphaSliderLabel}}"
-            @ui5-input="{{_handleAlphaInput}}"
-        ></ui5-slider>
+        {{#if _isDefaultPickerMode}}
+            <ui5-slider
+                disabled="{{inputsDisabled}}"
+                class="ui5-color-picker-alpha-slider"
+                min="0"
+                max="1"
+                step="0.01"
+                value="{{_alpha}}"
+                accessible-name="{{alphaSliderLabel}}"
+                @ui5-input="{{_handleAlphaInput}}"
+            ></ui5-slider>
+        {{/if}}
     </div>
 
     <div class="ui5-color-picker-current-color">
@@ -56,51 +58,53 @@
         </div>
     </div>
 
-    <div
-        class="ui5-color-picker-rgb-wrapper"
-        @ui5-change="{{_handleRGBInputsChange}}"
-    >
-        <div class="ui5-color-picker-rgb">
-            <ui5-input
-                id="red"
-                class="ui5-color-picker-rgb-input"
-                disabled="{{inputsDisabled}}"
-                accessible-name="{{redInputLabel}}"
-                value="{{_value.r}}"
-            ></ui5-input>
-            <ui5-label>R</ui5-label>
+    {{#if _isDefaultPickerMode}}
+        <div
+            class="ui5-color-picker-rgb-wrapper"
+            @ui5-change="{{_handleRGBInputsChange}}"
+        >
+            <div class="ui5-color-picker-rgb">
+                <ui5-input
+                    id="red"
+                    class="ui5-color-picker-rgb-input"
+                    disabled="{{inputsDisabled}}"
+                    accessible-name="{{redInputLabel}}"
+                    value="{{_value.r}}"
+                ></ui5-input>
+                <ui5-label>R</ui5-label>
+            </div>
+            <div class="ui5-color-picker-rgb">
+                <ui5-input
+                    id="green"
+                    class="ui5-color-picker-rgb-input"
+                    disabled="{{inputsDisabled}}"
+                    accessible-name="{{greenInputLabel}}"
+                    value="{{_value.g}}"
+                ></ui5-input>
+                <ui5-label>G</ui5-label>
+            </div>
+            <div class="ui5-color-picker-rgb">
+                <ui5-input
+                    id="blue"
+                    class="ui5-color-picker-rgb-input"
+                    disabled="{{inputsDisabled}}"
+                    accessible-name="{{blueInputLabel}}"
+                    value="{{_value.b}}"
+                ></ui5-input>
+                <ui5-label>B</ui5-label>
+            </div>
+            <div class="ui5-color-picker-rgb">
+                <ui5-input
+                    id="alpha"
+                    disabled="{{inputsDisabled}}"
+                    class="ui5-color-picker-rgb-input"
+                    value="{{_alpha}}"
+                    accessible-name="{{alphaInputLabel}}"
+                    @ui5-input="{{_handleAlphaInput}}"
+                    @ui5-change="{{_handleAlphaChange}}"
+                ></ui5-input>
+                <ui5-label>A</ui5-label>
+            </div>
         </div>
-        <div class="ui5-color-picker-rgb">
-            <ui5-input
-                id="green"
-                class="ui5-color-picker-rgb-input"
-                disabled="{{inputsDisabled}}"
-                accessible-name="{{greenInputLabel}}"
-                value="{{_value.g}}"
-            ></ui5-input>
-            <ui5-label>G</ui5-label>
-        </div>
-        <div class="ui5-color-picker-rgb">
-            <ui5-input
-                id="blue"
-                class="ui5-color-picker-rgb-input"
-                disabled="{{inputsDisabled}}"
-                accessible-name="{{blueInputLabel}}"
-                value="{{_value.b}}"
-            ></ui5-input>
-            <ui5-label>B</ui5-label>
-        </div>
-        <div class="ui5-color-picker-rgb">
-            <ui5-input
-				id="alpha"
-                disabled="{{inputsDisabled}}"
-                class="ui5-color-picker-rgb-input"
-                value="{{_alpha}}"
-                accessible-name="{{alphaInputLabel}}"
-                @ui5-input="{{_handleAlphaInput}}"
-                @ui5-change="{{_handleAlphaChange}}"
-            ></ui5-input>
-            <ui5-label>A</ui5-label>
-        </div>
-    </div>
+    {{/if}}
 </section>

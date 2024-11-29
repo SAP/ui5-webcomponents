@@ -1,0 +1,13 @@
+:root {
+	--my-margin: -0.6875rem;
+}
+.ui5-content-density-compact {
+	--my-margin: -0.5rem;
+}
+
+.margin--density-aware {
+	margin-inline-start: var(--my-margin);
+}
+.margin--fixed {
+	margin-inline-start: -0.5rem;
+}

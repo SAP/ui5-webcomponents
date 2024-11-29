@@ -24,7 +24,7 @@ await Promise.all([
     cp("../localization/package.json", "local-cdn/local-cdn/localization/package.json"),
 
     cp("../../node_modules/@zxing/library/umd/index.min.js", "local-cdn/local-cdn/zxing/umd/index.min.js"),
-    cp("../../node_modules/@zxing/library/esm5/index.js", "local-cdn/local-cdn/zxing/esm5/index.js"),
+    cp("../../node_modules/@zxing/library/esm/index.js", "local-cdn/local-cdn/zxing/esm/index.js"),
 ]);
 
 const files = await readdir("local-cdn", {recursive: true, withFileTypes: true});

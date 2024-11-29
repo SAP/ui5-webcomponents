@@ -22,6 +22,10 @@
 	color: var(--sapList_Active_TextColor);
 }
 
+:host([active][actionable]) .ui5-li-additional-text {
+	text-shadow: none;
+}
+
 /* [ui5-li]: additionalTextState */
 :host([additional-text-state="Critical"]) .ui5-li-additional-text {
 	color: var(--sapCriticalTextColor);

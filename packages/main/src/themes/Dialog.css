@@ -21,6 +21,7 @@
 	max-height: 100%;
 	max-width: 100%;
 	border-radius: 0;
+	min-width: 0; /*this is for preventing the dialog to hold its width on small screens*/
 }
 
 :host([draggable]) .ui5-popup-header-root,

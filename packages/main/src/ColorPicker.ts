@@ -22,6 +22,7 @@ import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.j
 import Input from "./Input.js";
 import Slider from "./Slider.js";
 import Label from "./Label.js";
+import ColorPickerDisplayMode from "./types/ColorPickerDisplayMode.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -110,6 +111,15 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 */
 	@property()
 	name?: string;
+
+	/**
+	 * Defines the display mode of the component.
+	 * @default "Default"
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	displayMode: `${ColorPickerDisplayMode}` = "Default";
 
 	/**
 	 * Defines the HEX code of the currently selected color
@@ -527,6 +537,10 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	get hexInputErrorState() {
 		return this._wrongHEX ? "Error" : undefined;
+	}
+
+	get _isDefaultPickerMode() {
+		return this.displayMode === ColorPickerDisplayMode.Default;
 	}
 
 	get styles() {

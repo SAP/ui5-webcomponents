@@ -31,6 +31,10 @@ class NotificationListGroupList extends List {
 	onItemFocused() {
 	}
 
+	_onfocusin(e: FocusEvent) {
+		e.stopImmediatePropagation();
+	}
+
 	focusItem(item: ListItemBase) {
 		item.focus();
 	}

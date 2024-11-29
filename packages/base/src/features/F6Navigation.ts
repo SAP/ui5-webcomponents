@@ -39,7 +39,11 @@ class F6Navigation {
 	}
 
 	async groupElementToFocus(nextElement: HTMLElement) {
-		const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+		let nextElementDomRef = nextElement;
+
+		if (instanceOfUI5Element(nextElement)) {
+			nextElementDomRef = nextElement.getDomRef() || nextElement.firstElementChild as HTMLElement;
+		}
 
 		if (nextElementDomRef) {
 			if (isElementClickable(nextElementDomRef)) {

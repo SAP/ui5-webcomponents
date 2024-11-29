@@ -108,3 +108,38 @@ dist/assets/vendor.c05c7785.js 114.92kb / brotli: 24.30kb
 The content of the `dist` folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.
 
 #### 4. Enjoy UI5 Web Components.
+
+### Code Completion
+
+#### Visual Studio Code (VS Code)
+
+UI5 Web Components packages include a vscode.html-custom-data.json file that describes their custom elements. This enables advanced code completion features, such as “code hinting” or “IntelliSense,” in Visual Studio Code.
+
+Steps to Enable Code Completion in VS Code:
+
+1. Install UI5 Web Components locally
+   Use your package manager to add the required UI5 Web Components packages to your project.
+
+2. Create or update `.vscode/settings.json`:
+   - Ensure a folder named `.vscode` exists at the root of your project.
+   - Inside `.vscode`, create or update a file named `settings.json`.
+
+3. Configure the Settings File:
+   Add the following configuration to `settings.json`:
+
+   ```json
+   {
+     "html.customData": [
+       "./node_modules/@ui5/webcomponents/dist/vscode.html-custom-data.json"
+       // Add entries for other installed @ui5/webcomponents packages as needed
+     ]
+   }
+   ```
+
+   If `settings.json` already exists, append the `html.customData` property to the root object.
+
+4. Restart VS Code:
+   Restart the editor to apply the changes.
+
+#### JetBrains IDEs
+For JetBrains IDEs, such as WebStorm or IntelliJ IDEA, no additional setup is required when using UI5 Web Components installed from your package manager. The IDE will automatically detect the `web-types.json` file provided by the packages, enabling code completion and displaying relevant component information without further configuration.

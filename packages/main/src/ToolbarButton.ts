@@ -45,7 +45,11 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  * property is set to `true`.
  * @public
  */
-@event("click")
+@event("click", {
+	bubbles: true,
+	cancelable: true,
+})
+
 class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines if the action is disabled.

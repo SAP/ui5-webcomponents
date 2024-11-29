@@ -38,11 +38,11 @@ class ToolbarSpacer extends ToolbarItem {
 	}
 
 	get ignoreSpace() {
-		return this.width === "";
+		return this.width === "" || this.width === undefined || this.width === "auto";
 	}
 
 	get hasFlexibleWidth() {
-		return this.width === "";
+		return this.width === "" || this.width === undefined || this.width === "auto";
 	}
 
 	static get toolbarTemplate() {

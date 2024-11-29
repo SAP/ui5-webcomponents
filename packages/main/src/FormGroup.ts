@@ -34,7 +34,10 @@ import type FormItemSpacing from "./types/FormItemSpacing.js";
  * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  * @extends UI5Element
  */
-@customElement("ui5-form-group")
+@customElement({
+	tag: "ui5-form-group",
+	fastNavigation: true,
+})
 class FormGroup extends UI5Element implements IFormItem {
 	/**
 	 * Defines header text of the component.
@@ -83,16 +86,12 @@ class FormGroup extends UI5Element implements IFormItem {
 	@property()
 	itemSpacing: `${FormItemSpacing}` = "Normal";
 
-	@property()
-	labelSpan = "S12 M4 L4 XL4";
-
 	onBeforeRendering() {
 		this.processFormItems();
 	}
 
 	processFormItems() {
 		this.items.forEach((item: FormItem) => {
-			item.labelSpan = this.labelSpan;
 			item.itemSpacing = this.itemSpacing;
 		});
 	}

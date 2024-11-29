@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample</title>
+    <link rel="stylesheet" href="./main.css">
 </head>
 
 <body style="background-color: var(--sapBackgroundColor)">
@@ -59,13 +60,14 @@
 
             <ui5-form-group header-text="Group2 (Cb, Rb, Switch)">
                 <ui5-form-item>
-                    <ui5-checkbox text="Here comes your checkbox text"></ui5-checkbox>
+                    <ui5-label required slot="labelContent" for="rbGroup">Label:</ui5-label>
+                    <ui5-checkbox class="margin--density-aware" text="Here comes your checkbox text"></ui5-checkbox>
                 </ui5-form-item>
 
                 <ui5-form-item>
                     <ui5-label required slot="labelContent" for="rbGroup">Label:</ui5-label>
 
-                    <div role="radiogroup">
+                    <div role="radiogroup" class="margin--density-aware">
                         <ui5-radio-button id="rbGroup" text="With Text" name="test"></ui5-radio-button>
                         <ui5-radio-button text="With Tex" name="test"></ui5-radio-button>
                     </div>
@@ -73,7 +75,7 @@
 
                 <ui5-form-item>
                     <ui5-label required slot="labelContent" for="swGroup">Label:</ui5-label>
-                    <ui5-switch id="swGrou" checked></ui5-switch>
+                    <ui5-switch id="swGrou" class="margin--fixed" checked></ui5-switch>
                 </ui5-form-item>
             </ui5-form-group>
 
