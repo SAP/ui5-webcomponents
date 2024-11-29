@@ -227,6 +227,15 @@ class Link extends UI5Element implements ITabbable {
 	accessibilityAttributes: LinkAccessibilityAttributes = {};
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
 	 * Defines the icon, displayed as graphical element within the component before the link's text.
 	 * The SAP-icons font provides numerous options.
 	 *
@@ -328,6 +337,10 @@ class Link extends UI5Element implements ITabbable {
 
 	get effectiveAccRole() {
 		return this.accessibleRole.toLowerCase();
+	}
+
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
 	}
 
 	get _hasPopup() {
