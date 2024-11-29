@@ -6,7 +6,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
@@ -108,7 +108,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [DynamicSideContentCss, getEffectiveScrollbarStyle()],
 	template: DynamicSideContentTemplate,
 })

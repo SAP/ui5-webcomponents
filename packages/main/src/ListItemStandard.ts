@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -37,7 +37,7 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
  */
 @customElement({
 	tag: "ui5-li",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: ListItemStandardTemplate,
 	dependencies: [
 		...ListItem.dependencies,

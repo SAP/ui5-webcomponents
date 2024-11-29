@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { JSX } from "@ui5/webcomponents-base";
 // Template
 import FormTemplate from "./FormTemplate.js";
@@ -204,7 +204,7 @@ type ItemsInfo = {
  */
 @customElement({
 	tag: "ui5-form",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: FormCss,
 	template: FormTemplate,
 	dependencies: [Title],

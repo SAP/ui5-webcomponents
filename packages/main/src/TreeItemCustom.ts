@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -32,7 +32,7 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  * @since 1.9.2
  */
 @customElement({
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	tag: "ui5-tree-item-custom",
 	template: TreeItemCustomTemplate,
 	styles: [TreeItemBase.styles, treeItemCustomCss],

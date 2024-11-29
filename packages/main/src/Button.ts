@@ -5,7 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isEnter,
@@ -86,7 +86,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	tag: "ui5-button",
 	formAssociated: true,
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: ButtonTemplate,
 	styles: buttonCss,
 	dependencies: [Icon],

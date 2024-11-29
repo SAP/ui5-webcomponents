@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -61,7 +61,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @customElement({
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
 	dependencies: [

@@ -6,7 +6,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
@@ -105,7 +105,7 @@ type VSDInternalSettings = {
  */
 @customElement({
 	tag: "ui5-view-settings-dialog",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: viewSettingsDialogCSS,
 	template: ViewSettingsDialogTemplate,
 	dependencies: [

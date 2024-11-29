@@ -9,7 +9,7 @@ import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import SegmentedButtonItemTemplate from "./SegmentedButtonItemTemplate.js";
@@ -42,7 +42,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
  */
 @customElement({
 	tag: "ui5-segmented-button-item",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: SegmentedButtonItemTemplate,
 	styles: segmentedButtonItemCss,
 	dependencies: [Icon],

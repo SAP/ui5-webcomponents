@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -78,7 +78,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 @customElement({
 	tag: "ui5-link",
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: LinkTemplate,
 	styles: linkCss,
 	dependencies: [Icon],

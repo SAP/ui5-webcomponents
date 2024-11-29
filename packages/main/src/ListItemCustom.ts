@@ -1,5 +1,5 @@
 import { isTabNext, isTabPrevious, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -31,7 +31,7 @@ import ListItemCustomCss from "./generated/themes/ListItemCustom.css.js";
 @customElement({
 	tag: "ui5-li-custom",
 	template: ListItemCustomTemplate,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [ListItem.styles, ListItemCustomCss],
 })
 class ListItemCustom extends ListItem {

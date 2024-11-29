@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -74,7 +74,7 @@ type ColorCoordinates = {
 
 @customElement({
 	tag: "ui5-color-picker",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,

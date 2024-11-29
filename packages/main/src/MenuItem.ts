@@ -1,5 +1,5 @@
 import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { JSX } from "@ui5/webcomponents-base";
@@ -59,7 +59,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  */
 @customElement({
 	tag: "ui5-menu-item",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: MenuItemTemplate,
 	styles: [ListItem.styles, menuItemCss],
 	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],

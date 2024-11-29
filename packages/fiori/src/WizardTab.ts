@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -32,7 +32,7 @@ type WizardTabAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaSetsi
 
 @customElement({
 	tag: "ui5-wizard-tab",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: WizardTabCss,
 	template: WizardTabTemplate,
 	dependencies: [Icon],

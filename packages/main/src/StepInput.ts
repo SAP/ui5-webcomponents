@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isUp,
 	isDown,
@@ -92,7 +92,7 @@ type StepInputValueStateChangeEventDetail = {
 @customElement({
 	tag: "ui5-step-input",
 	formAssociated: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: StepInputCss,
 	template: StepInputTemplate,
 	dependencies: [

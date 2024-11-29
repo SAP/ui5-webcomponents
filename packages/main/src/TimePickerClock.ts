@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 // Template
 import TimePickerClockTemplate from "./TimePickerClockTemplate.js";
@@ -84,7 +84,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  */
 @customElement({
 	tag: "ui5-time-picker-clock",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: TimePickerClockCss,
 	template: TimePickerClockTemplate,
 })

@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TreeItemBase from "./TreeItemBase.js";
 // Template
@@ -27,7 +27,7 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  * @since 1.0.0-rc.8
  */
 @customElement({
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	tag: "ui5-tree-item",
 	template: TreeItemTemplate,
 	styles: [TreeItemBase.styles, treeItemCss],

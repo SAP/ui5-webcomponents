@@ -5,7 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -74,7 +74,7 @@ type FileUploaderChangeEventDetail = {
 	tag: "ui5-file-uploader",
 	languageAware: true,
 	formAssociated: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [
 		FileUploaderCss,
 		ResponsivePopoverCommonCss,

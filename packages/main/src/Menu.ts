@@ -16,7 +16,7 @@ import {
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -95,7 +95,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  */
 @customElement({
 	tag: "ui5-menu",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: menuCss,
 	template: menuTemplate,
 	dependencies: [

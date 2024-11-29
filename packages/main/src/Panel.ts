@@ -4,7 +4,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -83,7 +83,7 @@ import panelCss from "./generated/themes/Panel.css.js";
 	tag: "ui5-panel",
 	fastNavigation: true,
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: PanelTemplate,
 	styles: panelCss,
 	dependencies: [Button, Icon],

@@ -4,7 +4,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
@@ -49,7 +49,7 @@ type DynamicPageHeaderActionsAccessibilityAttributes = Pick<AccessibilityAttribu
  */
 @customElement({
 	tag: "ui5-dynamic-page-header-actions",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageHeaderActionsCss,
 	template: DynamicPageHeaderActionsTemplate,
 	dependencies: [Button, ToggleButton],

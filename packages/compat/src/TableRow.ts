@@ -6,7 +6,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
 	isEnter,
@@ -68,7 +68,7 @@ type TableRowF7PressEventDetail = {
 @customElement({
 	tag: "ui5-table-row",
 	styles: tableRowStyles,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: TableRowTemplate,
 	dependencies: [CheckBox],
 })

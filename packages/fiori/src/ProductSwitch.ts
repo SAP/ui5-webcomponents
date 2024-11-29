@@ -9,7 +9,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 import {
 	isDown,
@@ -65,7 +65,7 @@ interface IProductSwitchItem extends HTMLElement, ITabbable {
  */
 @customElement({
 	tag: "ui5-product-switch",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: ProductSwitchCss,
 	template: ProductSwitchTemplate,
 })

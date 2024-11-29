@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { JSX } from "@ui5/webcomponents-base";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -37,7 +37,7 @@ import {
  * @private
  */
 @customElement({
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	tag: "ui5-navigation-menu-item",
 	template: NavigationMenuItemTemplate,
 	styles: [MenuItem.styles, navigationMenuItemCss],

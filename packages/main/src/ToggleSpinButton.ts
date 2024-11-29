@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { JSX } from "@ui5/webcomponents-base";
 
 import Button from "./Button.js";
@@ -25,7 +25,7 @@ import ToggleSpinButtonTemplate from "./ToggleSpinButtonTemplate.js";
  */
 @customElement({
 	tag: "ui5-toggle-spin-button",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [Button.styles, ToggleButton.styles],
 	template: ToggleSpinButtonTemplate,
 })

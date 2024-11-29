@@ -4,7 +4,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { JSX } from "@ui5/webcomponents-base";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -83,7 +83,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  */
 @customElement({
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [
 		ListItemBase.styles,
 		listItemAdditionalTextCss,

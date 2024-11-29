@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 import TimelineItem from "./TimelineItem.js";
@@ -36,7 +36,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  */
 @customElement({
 	tag: "ui5-timeline-group-item",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: TimelineGroupItemCss,
 	template: TimelineGroupItemTemplate,
 	dependencies: [TimelineItem, ToggleButton],

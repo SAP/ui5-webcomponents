@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
@@ -34,7 +34,7 @@ interface TabSeparatorInOverflow extends ListItemCustom {
  */
 @customElement({
 	tag: "ui5-tab-separator",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 })
 class TabSeparator extends UI5Element implements ITab {
 	_forcedStyleInOverflow?: Record<string, any>;

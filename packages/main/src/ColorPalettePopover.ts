@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
@@ -55,7 +55,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  */
 @customElement({
 	tag: "ui5-color-palette-popover",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: [ResponsivePopoverCommonCss, ColorPalettePopoverCss],
 	template: ColorPalettePopoverTemplate,
 	dependencies: [

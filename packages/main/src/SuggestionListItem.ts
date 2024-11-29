@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ListItemStandard from "./ListItemStandard.js";
 import SuggestionListItemTemplate from "./SuggestionListItemTemplate.js";
@@ -15,7 +15,7 @@ import SuggestionListItemTemplate from "./SuggestionListItemTemplate.js";
  * @csspart info - Used to style the info of the suggestion list item
  */
 @customElement({
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	tag: "ui5-li-suggestion-item",
 	template: SuggestionListItemTemplate,
 })

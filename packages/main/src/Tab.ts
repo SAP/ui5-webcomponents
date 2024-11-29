@@ -4,7 +4,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -71,7 +71,7 @@ interface TabInOverflow extends ListItemCustom {
 @customElement({
 	tag: "ui5-tab",
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: TabTemplate,
 	styles: css,
 	dependencies: [

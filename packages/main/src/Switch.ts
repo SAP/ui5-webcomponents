@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -55,7 +55,7 @@ import switchCss from "./generated/themes/Switch.css.js";
 	formAssociated: true,
 	languageAware: true,
 	styles: switchCss,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: SwitchTemplate,
 	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },

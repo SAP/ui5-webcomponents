@@ -6,7 +6,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./MessageStripTemplate.js";
@@ -75,7 +75,7 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 @customElement({
 	tag: "ui5-message-strip",
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: MessageStripTemplate,
 	styles: messageStripCss,
 	dependencies: [Icon, Button],

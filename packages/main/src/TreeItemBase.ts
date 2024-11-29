@@ -1,7 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type { JSX } from "@ui5/webcomponents-base";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -44,7 +44,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  */
 @customElement({
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: TreeItemBaseTemplate,
 	styles: [
 		ListItem.styles,

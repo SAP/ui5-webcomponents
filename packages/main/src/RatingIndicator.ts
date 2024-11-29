@@ -3,7 +3,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDown,
 	isUp,
@@ -73,7 +73,7 @@ type Star = {
 @customElement({
 	tag: "ui5-rating-indicator",
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: RatingIndicatorCss,
 	template: RatingIndicatorTemplate,
 	dependencies: [Icon],

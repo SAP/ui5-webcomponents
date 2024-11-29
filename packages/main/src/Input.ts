@@ -4,7 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type {
 	ARIAAutoComplete,
 	ARIARoles,
@@ -198,7 +198,7 @@ type InputSuggestionScrollEventDetail = {
 	tag: "ui5-input",
 	languageAware: true,
 	formAssociated: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: InputTemplate,
 	styles: [
 		inputStyles,

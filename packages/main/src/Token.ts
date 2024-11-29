@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isBackSpace,
 	isSpace,
@@ -48,7 +48,7 @@ type TokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-token",
 	languageAware: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: TokenTemplate,
 	styles: tokenStyles,
 	dependencies: [Icon],

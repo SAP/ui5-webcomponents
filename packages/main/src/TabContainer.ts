@@ -5,7 +5,7 @@ import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
@@ -166,7 +166,7 @@ interface ITab extends UI5Element {
 		tabContainerCss,
 		ResponsivePopoverCommonCss,
 	],
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	template: TabContainerTemplate,
 	dependencies: [
 		Button,
