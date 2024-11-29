@@ -222,7 +222,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	onBeforeRendering() {
 		// we have the color & ._mainValue properties here
-		console.warn("OBR", this.value);
 		this._value = getRGBColor(this.value);
 		this._alpha = getAlpha(this.value);
 		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},${this._alpha})`;

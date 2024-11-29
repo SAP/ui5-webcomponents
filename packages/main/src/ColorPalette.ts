@@ -503,12 +503,9 @@ class ColorPalette extends UI5Element {
 	_openMoreColorsDialog() {
 		const dialog = this._getDialog();
 		const colorPicker = this.getColorPicker();
-		let value = this._currentlySelected ? this._currentlySelected.value : undefined;
+		const value = this._currentlySelected ? this._currentlySelected.value : undefined;
 
 		if (value) {
-			// if (!value.startsWith("rgba")) {
-			// 	colorPicker._alpha = 1;
-			// }
 			colorPicker.value = value;
 		}
 		dialog.open = true;
