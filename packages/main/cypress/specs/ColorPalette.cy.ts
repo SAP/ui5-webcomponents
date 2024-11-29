@@ -143,5 +143,4 @@ describe("Color Palette tests", () => {
 		cy.get<Button>("@okButton")
 			.realClick();
 	});
-
 });
