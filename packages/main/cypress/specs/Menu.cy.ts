@@ -3,6 +3,7 @@ import "../../src/Button.js";
 import "../../src/Menu.js";
 import "../../src/MenuItem.js";
 import type MenuItem from "../../src/MenuItem.js";
+import Menu from "../../src/Menu.js";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
@@ -202,6 +203,43 @@ describe("Menu interaction", () => {
 			.ui5MenuItemPress("Space");
 
 		cy.get("@button")
+			.should("be.focused");
+	});
+
+	it("Set focus on first item", () => {
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		<ui5-menu id="menu" loading loading-delay="100">
+		</ui5-menu>`);
+
+		cy.get("#btnOpen")
+			.as("button")
+			.realClick();
+
+		cy.get<Menu>("[ui5-menu]")
+			.as("menu").then($menu => {
+				$menu.get(0).addEventListener("ui5-before-open", () => {
+					setTimeout(() => {
+						$menu.removeAttr("loading");
+						$menu.removeAttr("loading-delay");
+						const oneNode = document.createElement("ui5-menu-item");
+						oneNode.setAttribute("text", "Open from Amazon Cloud");
+						const twoNode = document.createElement("ui5-menu-item");
+						twoNode.setAttribute("text", "Open from Google Cloud");
+						$menu.append(oneNode, twoNode);
+						$menu.focus();
+					}, 1000);
+				});
+			})
+			.ui5MenuOpen({
+				opener: "btnOpen",
+			});
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpened();
+
+		cy.get("[ui5-menu-item][text='Open from Amazon Cloud']").as("item");
+
+		cy.get("@item")
 			.should("be.focused");
 	});
 
