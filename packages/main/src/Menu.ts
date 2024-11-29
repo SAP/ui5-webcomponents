@@ -163,13 +163,17 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @public
  * @since 1.10.0
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
 
 /**
  * Fired when the menu is being closed.
  * @private
  */
-@event("close-menu")
+@event("close-menu", {
+	bubbles: true,
+})
 
 /**
  * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing.
