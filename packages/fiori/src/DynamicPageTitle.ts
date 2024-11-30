@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -63,7 +63,7 @@ import {
 @customElement({
 	tag: "ui5-dynamic-page-title",
 	fastNavigation: true,
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
 	dependencies: [Title, Icon],
@@ -73,7 +73,7 @@ import {
  * Event is fired when the title is toggled.
  * @private
  */
-@event("_toggle-title", {
+@event("toggle-title", {
 	bubbles: true,
 })
 
@@ -309,14 +309,14 @@ class DynamicPageTitle extends UI5Element {
 
 	@bound
 	onTitleClick() {
-		this.fireDecoratorEvent("_toggle-title");
+		this.fireDecoratorEvent("toggle-title");
 	}
 
 	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
-			this.fireDecoratorEvent("_toggle-title");
+			this.fireDecoratorEvent("toggle-title");
 		}
 	}
 }

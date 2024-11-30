@@ -39,7 +39,7 @@ type ListItemBasePressEventDetail = {
 	renderer: litRender,
 	styles: [styles, draggableElementStyles],
 })
-@event("_request-tabindex-change", {
+@event("request-tabindex-change", {
 	bubbles: true,
 })
 @event("_press", {
@@ -48,11 +48,11 @@ type ListItemBasePressEventDetail = {
 @event("_focused", {
 	bubbles: true,
 })
-@event("_forward-after", {
+@event("forward-after", {
 	bubbles: true,
 	cancelable: true,
 })
-@event("_forward-before", {
+@event("forward-before", {
 	bubbles: true,
 })
 class ListItemBase extends UI5Element implements ITabbable {
@@ -119,7 +119,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireDecoratorEvent("_request-tabindex-change", e);
+		this.fireDecoratorEvent("request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
 			return;
 		}
@@ -179,7 +179,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	_handleTabNext(e: KeyboardEvent) {
 		if (this.shouldForwardTabAfter()) {
-			if (!this.fireDecoratorEvent("_forward-after")) {
+			if (!this.fireDecoratorEvent("forward-after")) {
 				e.preventDefault();
 			}
 		}
@@ -189,7 +189,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		const target = e.target as HTMLElement;
 
 		if (this.shouldForwardTabBefore(target)) {
-			this.fireDecoratorEvent("_forward-before");
+			this.fireDecoratorEvent("forward-before");
 		}
 	}
 

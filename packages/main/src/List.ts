@@ -673,9 +673,8 @@ class List extends UI5Element {
 		this.getItems().forEach(item => {
 			if (item.hasAttribute("ui5-li-group-header")) {
 				item.addEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
-				item.addEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
-				item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
-				item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+				item.addEventListener("ui5-forward-after", this.onForwardAfterBound as EventListener);
+				item.addEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
 	}
@@ -684,9 +683,8 @@ class List extends UI5Element {
 		this.getItems().forEach(item => {
 			if (item.hasAttribute("ui5-li-group-header")) {
 				item.removeEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
-				item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
-				item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
-				item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+				item.removeEventListener("ui5-forward-after", this.onForwardAfterBound as EventListener);
+				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
 	}

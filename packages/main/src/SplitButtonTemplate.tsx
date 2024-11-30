@@ -44,7 +44,7 @@ export default function (this: SplitButton) {
 				onMouseDown={this._arrowButtonPress}
 				onMouseUp={this._arrowButtonRelease}
 				onFocusIn={this._onInnerButtonFocusIn}
-				on_activeStateChange={this._onArrowButtonActiveStateChange}
+				onActiveStateChange={this._onArrowButtonActiveStateChange}
 			>
 			</Button>
 			<span id={`${this._id}-invisibleText`} class="ui5-hidden-text">{this.accInfo.root.description} {this.accInfo.root.keyboardHint} {this.accessibleName}</span>

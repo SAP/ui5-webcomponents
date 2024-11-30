@@ -47,19 +47,19 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	template: CalendarLegendTemplate,
 	dependencies: [CalendarLegendItem],
 })
-@event<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
+@event<CalendarLegendItemSelectionChangeEventDetail>("calendar-legend-selection-change", {
 	detail: {
 		item: { type: CalendarLegendItem },
 	},
 	bubbles: true,
 })
-@event("_calendar-legend-focus-out", {
+@event("calendar-legend-focus-out", {
 	bubbles: true,
 })
 class CalendarLegend extends UI5Element {
 	eventDetails!: {
-		"_calendar-legend-selection-change": CalendarLegendItemSelectionChangeEventDetail,
-		"_calendar-legend-focus-out": void,
+		"calendar-legend-selection-change": CalendarLegendItemSelectionChangeEventDetail,
+		"calendar-legend-focus-out": void,
 	};
 
 	/**
@@ -142,7 +142,7 @@ class CalendarLegend extends UI5Element {
 	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
-		this.fireDecoratorEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
+		this.fireDecoratorEvent<CalendarLegendItemSelectionChangeEventDetail>("calendar-legend-selection-change", {
 			item: target,
 		});
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
@@ -150,7 +150,7 @@ class CalendarLegend extends UI5Element {
 
 	@bound
 	_onFocusOut() {
-		this.fireDecoratorEvent("_calendar-legend-focus-out");
+		this.fireDecoratorEvent("calendar-legend-focus-out");
 	}
 
 	@bound

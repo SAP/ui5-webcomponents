@@ -29,10 +29,9 @@ import type { SelectionRequestEventDetail } from "./ListItem.js";
 	dependencies: [...ComboBoxItem.dependencies, CheckBox],
 })
 
-@event("_selection-requested", {
+@event("selection-requested", {
 	bubbles: true,
 })
-
 class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 	/**
 	 * Defines the selected state of the component.
@@ -61,7 +60,7 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 
 	_onclick(e: MouseEvent) {
 		if ((e.target as HTMLElement)?.hasAttribute("ui5-checkbox")) {
-			return this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+			return this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 		}
 
 		super._onclick(e);

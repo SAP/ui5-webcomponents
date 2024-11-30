@@ -6,7 +6,7 @@ import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -99,7 +99,7 @@ const SCROLL_THRESHOLD = 10; // px
  */
 @customElement({
 	tag: "ui5-dynamic-page",
-	renderer: jsxRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
 	dependencies: [DynamicPageHeaderActions],

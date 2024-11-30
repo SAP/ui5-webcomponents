@@ -13,7 +13,7 @@ export default function(this: DynamicPage) {
 					aria-label={this._headerLabel}
 					aria-expanded={this._headerExpanded}
 					role="region"
-					onui5-_toggle-title={this.onToggleTitle}
+					onui5-toggle-title={this.onToggleTitle}
 				>
 					<slot name="titleArea"></slot>
 					{this.headerInTitle &&

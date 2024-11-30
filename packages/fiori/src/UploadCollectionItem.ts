@@ -119,14 +119,14 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @since 1.0.0-rc.8
  * @private
  */
-@event("_focus-requested", {
+@event("focus-requested", {
 	bubbles: true,
 })
 
 /**
  * @private
  */
-@event("_uci-delete", {
+@event("request-delete", {
 	bubbles: true,
 })
 class UploadCollectionItem extends ListItem {
@@ -328,7 +328,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireDecoratorEvent("_focus-requested");
+		this.fireDecoratorEvent("focus-requested");
 	}
 
 	@bound
@@ -362,7 +362,7 @@ class UploadCollectionItem extends ListItem {
 
 	@bound
 	_onDelete() {
-		this.fireDecoratorEvent("_uci-delete");
+		this.fireDecoratorEvent("request-delete");
 	}
 
 	getFocusDomRef() {

@@ -105,7 +105,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 @event("_focused", {
 	bubbles: true,
 })
-@event("_selection-requested", {
+@event("selection-requested", {
 	bubbles: true,
 })
 abstract class ListItem extends ListItemBase {
@@ -369,7 +369,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	@bound
@@ -378,7 +378,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -389,7 +389,7 @@ abstract class ListItem extends ListItemBase {
 
 	@bound
 	onDelete() {
-		this.fireDecoratorEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	@bound

@@ -73,8 +73,8 @@ export default function (this: Calendar) {
 			</div>
 
 			<div
-				onui5-_calendar-legend-selection-change={this._onCalendarLegendSelectionChange}
-				onui5-_calendar-legend-focus-out={this._onLegendFocusOut}
+				onui5-calendar-legend-selection-change={this._onCalendarLegendSelectionChange}
+				onui5-calendar-legend-focus-out={this._onLegendFocusOut}
 			>
 				<slot name="calendarLegend"></slot>
 			</div>

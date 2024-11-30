@@ -8,8 +8,8 @@ export default function (this: Table) {
 		<div
 			class="ui5-table-root"
 			onui5-selection-requested={this._handleSelect}
-			onui5-_forward-after={this._onForwardAfter}
-			onui5-_forward-before={this._onForwardBefore}
+			onui5-forward-after={this._onForwardAfter}
+			onui5-forward-before={this._onForwardBefore}
 			onFocusIn={this._onfocusin}
 		>
 			<BusyIndicator
