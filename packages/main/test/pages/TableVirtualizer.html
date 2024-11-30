@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Table (in development)</title>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+
+	<style>
+	</style>
+</head>
+
+<body>
+	<!-- toolbar with ui5-bar -->
+	<ui5-bar design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
+		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (1000)</ui5-title>
+		<ui5-slider id="slider" min="0" max="100" step="1" value="100"
+			label-interval="0"></ui5-slider>
+	</ui5-bar>
+
+	<ui5-table id="table" loading-delay="0" accessible-name-ref="title" no-data-text="No data found" overflow-mode="Scroll" style="height: 375px;">
+		<ui5-table-virtualizer id="virtualizer" slot="features" row-height="51" row-count="10"></ui5-table-virtualizer>
+		<ui5-table-selection id="selection" selected="2 5" slot="features"></ui5-table-selection>
+		<ui5-table-header-row slot="headerRow" sticky>
+			<ui5-table-header-cell width="200px" id="produtCol">Product</ui5-table-header-cell>
+			<ui5-table-header-cell width="max-content" id="supplierCol">Supplier</ui5-table-header-cell>
+			<ui5-table-header-cell width="max-content" id="dimensionsCol">Dimensions</ui5-table-header-cell>
+			<ui5-table-header-cell width="max-content" id="weightCol">Weight</ui5-table-header-cell>
+			<ui5-table-header-cell width="100px"  id="priceCol">Price</ui5-table-header-cell>
+		</ui5-table-heπader-row>
+	</ui5-table>
+
+	<ui5-input value="after table" data-sap-ui-fastnavgroup="true"></ui5-input>
+	<script>
+		const slider = document.getElementById("slider");
+		const table = document.getElementById("table");
+		let timer = 0;
+		slider.addEventListener("input", (e) => {
+			table.style.width = `${e.target.value}%`;
+		});
+		table.addEventListener("row-click", (e) => {
+			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.row-key} is clicked`);
+		});
+
+		const virtualizerData = [];
+		for (let i = 0; i <= 1000; i++) {
+			virtualizerData.push(Math.random() * 200 + 32);
+		}
+
+		const virtualizer = document.getElementById("virtualizer");
+		virtualizer.addEventListener("range-change", (e) => {
+
+ 			if (table.rows.length) {
+				clearTimeout(timer);
+				table.loading = true;
+				timer = setTimeout(() => {
+					for (let i = e.detail.first; i < e.detail.last; i++) {
+						const index = i - e.detail.first;
+						const content = table.rows[index].cells[0];
+						table.rows[index].rowKey = i + "";
+						table.rows[index].position = i;
+						content.querySelector("b").firstChild.nodeValue = `Notebook Basic ${i}`;
+						content.querySelector("a").firstChild.nodeValue = `HT-100${i}`;
+					}
+					table.loading = false;
+				}, 500);
+				return;
+			}
+
+			table.rows.forEach(row => row.remove());
+
+			for (let i = e.detail.first; i < e.detail.last; i++) {
+				const newRow = document.createElement("ui5-table-row");
+				newRow.setAttribute("row-key", i.toString());
+				newRow.position = i;
+				newRow.innerHTML = `
+					<ui5-table-cell><ui5-label><b>Notebook Basic ${i}</b><br><a href="#">HT-100${i}</a></ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-input></ui5-input></ui5-table-cell>
+					<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
+					<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
+				`;
+				table.appendChild(newRow);
+			}
+		});
+
+		const selection = document.getElementById("selection");
+		selection.addEventListener("change", (e) => {
+			console.log(e.target.selected);
+		});
+	</script>
+</body>
+
+</html>
