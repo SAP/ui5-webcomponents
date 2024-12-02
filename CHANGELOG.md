@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* **ui5-input:** set value after preventDefault of input event ([#10196](https://github.com/SAP/ui5-webcomponents/issues/10196)) ([e2a6c94](https://github.com/SAP/ui5-webcomponents/commit/e2a6c94d6b4d88db61d85313f2776a092152478d)), closes [#9988](https://github.com/SAP/ui5-webcomponents/issues/9988)
+* **ui5-radio-button:** fix aria-disabled and focus of the read-only radio buttons ([#10111](https://github.com/SAP/ui5-webcomponents/issues/10111)) ([3bcfd1d](https://github.com/SAP/ui5-webcomponents/commit/3bcfd1d26b8520b73be336558f590e1b89c4d0c3)), closes [#10025](https://github.com/SAP/ui5-webcomponents/issues/10025)
+* **ui5-tokenizer:** adjust touch area for cozy and compact ([#10215](https://github.com/SAP/ui5-webcomponents/issues/10215)) ([ee90aea](https://github.com/SAP/ui5-webcomponents/commit/ee90aeaae00a3a888a8dafae73cb7dba1bf8e51f))
+* **ui5-wizard:** stacked Wizard Steps are aligned properly ([#10250](https://github.com/SAP/ui5-webcomponents/issues/10250)) ([3473fbf](https://github.com/SAP/ui5-webcomponents/commit/3473fbf7dd6f97d0de70a540d412c36901455926)), closes [#9779](https://github.com/SAP/ui5-webcomponents/issues/9779)
+
+
+### Features
+
+* **ui5-combobox:** adjust arrow-down behavior ([#10166](https://github.com/SAP/ui5-webcomponents/issues/10166)) ([74616dc](https://github.com/SAP/ui5-webcomponents/commit/74616dc7ea533ecbd18265878c90339e10eb9d1b))
+* **ui5-form:** add new `emptySpan` property ([#10194](https://github.com/SAP/ui5-webcomponents/issues/10194)) ([48b0cc8](https://github.com/SAP/ui5-webcomponents/commit/48b0cc89b36dd859dd07c17021eedf7a99375150)), closes [#9963](https://github.com/SAP/ui5-webcomponents/issues/9963)
+* **ui5-list:** add Home and End key handling for Load More button ([#10206](https://github.com/SAP/ui5-webcomponents/issues/10206)) ([7059e09](https://github.com/SAP/ui5-webcomponents/commit/7059e0987960f62cd5b8740594b907fa98e1f11c))
+
+
+
+
+
+# [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** width on mobile is not bigger than the phone width ([#10199](https://github.com/SAP/ui5-webcomponents/issues/10199)) ([77af592](https://github.com/SAP/ui5-webcomponents/commit/77af592c238ad53502c09f142d33f7c66c6b0715)), closes [#10000](https://github.com/SAP/ui5-webcomponents/issues/10000)
+* **ui5-table:** text cut due to column overflow ([#10193](https://github.com/SAP/ui5-webcomponents/issues/10193)) ([b59d718](https://github.com/SAP/ui5-webcomponents/commit/b59d718dca80bd9a8ee65993ddc2358ecd127024)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+### Features
+
+* **ui5-form:** enable vertical alignment of form items ([#10165](https://github.com/SAP/ui5-webcomponents/issues/10165)) ([13b571b](https://github.com/SAP/ui5-webcomponents/commit/13b571baf0b225dfabc4739be64dd64a34cc5506))
+* **ui5-toolbar:** fixed spacer behavior ([#10177](https://github.com/SAP/ui5-webcomponents/issues/10177)) ([b3625ac](https://github.com/SAP/ui5-webcomponents/commit/b3625ac7426aa592b80f50e15147c18ccc7d2abd)), closes [#10104](https://github.com/SAP/ui5-webcomponents/issues/10104)
+
+
+
+
+
 # [2.5.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.4.1-rc.0...v2.5.0-rc.0) (2024-11-14)
 
 
