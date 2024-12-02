@@ -110,7 +110,5 @@ class ToolbarItem extends UI5Element {
 	}
 }
 
-type a = ToolbarItem["eventDetails"];
-
 export type { IEventOptions };
 export default ToolbarItem;
