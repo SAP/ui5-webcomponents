@@ -31,8 +31,8 @@ describe("Responsiveness", () => {
 			<div slot="valueStateMessage">Instructions</div>
 		</ui5-input>
 
-		<ui5-switch design="Textual" text-on="PR0" text-off="PR0" slot="additionalContextStart"></ui5-switch>
-		<ui5-toggle-button  slot="additionalContextEnd" text="PR2" data-priority="2">PR2</ui5-toggle-button>
+		<ui5-switch design="Textual" text-on="PR0" text-off="PR0" slot="startContent"></ui5-switch>
+		<ui5-toggle-button  slot="endContent" text="PR2" data-priority="2">PR2</ui5-toggle-button>
 	</ui5-shellbar>`;
 
 	const templateWithMenuItems = html`
@@ -92,7 +92,6 @@ describe("Responsiveness", () => {
 
 	afterEach(() => {
 		cy.viewport(1920, 1080);
-		cy.get("@shellbar").invoke("attr", "variant", "Full");
 	});
 
 	it("tests XXL Breakpoint 1920px", () => {
@@ -189,14 +188,6 @@ describe("Responsiveness", () => {
 			.shadow()
 			.find(".ui5-shellbar-button-product-switch")
 			.as("productSwitchIcon");
-
-		cy.get("@shellbar").invoke("attr", "variant", "Lean").then(() => {
-			cy.get("@backButton").should("not.be.visible");
-			cy.get("@searchButton").should("not.exist");
-			cy.get("@notificationsIcon").should("not.exist");
-			cy.get("@productSwitchIcon").should("not.exist");
-			cy.get("@profileIcon").should("be.visible");
-		});
 	});
 
 	it("tests logo and Primary title when no menuItems are presented", () => {

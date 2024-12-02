@@ -5,9 +5,7 @@
 	part="root">
 	<div class="ui5-shellbar-overflow-container ui5-shellbar-overflow-container-left">
 		{{#if startButton.length}}
-			{{#if _isFullVariant}}
-				<slot name="startButton"></slot>
-			{{/if}}
+			<slot name="startButton"></slot>
 		{{/if}}
 
 		{{#if hasMenuItems}}
@@ -78,11 +76,11 @@
 				<div class="ui5-shellbar-overflow-container-additional-content"
 					 aria-label="{{_additionalContextText}}"
 					 role="{{_additionalContextRole}}">
-					{{#each additionalContextStart}}
+					{{#each startContent}}
 						<slot name="{{this._individualSlot}}"></slot>
 					{{/each}}
 						<div class="ui5-shellbar-spacer"></div>
-					{{#each additionalContextEnd}}
+					{{#each endContent}}
 						<slot name="{{this._individualSlot}}"></slot>
 					{{/each}}
 				</div>
@@ -93,58 +91,54 @@
 			{{/if}}
 			<div class="ui5-shellbar-overflow-container-right-child"
 				 role="{{_rightChildRole}}">
-				{{#if _isFullVariant}}
-						{{#if hasSearchField}}
-							{{#if _showFullWidthSearch}}
-								<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
-									<div class="ui5-shellbar-search-full-field">
-										<slot name="searchField"></slot>
-									</div>
-									<ui5-button
-										@click={{_handleCancelButtonPress}}
-										class="ui5-shellbar-button ui5-shellbar-cancel-button"
-										data-ui5-stable="cancel-search"
-									>
-										{{_cancelBtnText}}
-									</ui5-button>
+					{{#if hasSearchField}}
+						{{#if _showFullWidthSearch}}
+							<div class="ui5-shellbar-search-full-width-wrapper" style="{{styles.searchField}}">
+								<div class="ui5-shellbar-search-full-field">
+									<slot name="searchField"></slot>
 								</div>
-							{{/if}}
-
-							<div class="ui5-shellbar-search-field" style="{{styles.searchField}}">
-								{{#unless _showFullWidthSearch}}
-								<slot name="searchField"></slot>
-								{{/unless}}
+								<ui5-button
+									@click={{_handleCancelButtonPress}}
+									class="ui5-shellbar-button ui5-shellbar-cancel-button"
+									data-ui5-stable="cancel-search"
+								>
+									{{_cancelBtnText}}
+								</ui5-button>
 							</div>
-
-							<ui5-button
-								id="{{this._id}}-item-1"
-								class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button ui5-shellbar-search-item-for-arrow-nav"
-								icon="sap-icon://search"
-								data-ui5-text="Search"
-								data-ui5-notifications-count="{{notificationsCount}}"
-								data-ui5-stable="toggle-search"
-								@click={{_handleSearchIconPress}}
-								tooltip="{{_searchBtnOpen}}"
-								aria-label="{{_searchBtnOpen}}"
-								aria-expanded="{{_searchFieldExpanded}}"
-								.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
-							></ui5-button>
 						{{/if}}
+
+						<div class="ui5-shellbar-search-field" style="{{styles.searchField}}">
+							{{#unless _showFullWidthSearch}}
+							<slot name="searchField"></slot>
+							{{/unless}}
+						</div>
+
+						<ui5-button
+							id="{{this._id}}-item-1"
+							class="{{classes.items.search}} ui5-shellbar-button ui5-shellbar-search-button ui5-shellbar-search-item-for-arrow-nav"
+							icon="sap-icon://search"
+							data-ui5-text="Search"
+							data-ui5-notifications-count="{{notificationsCount}}"
+							data-ui5-stable="toggle-search"
+							@click={{_handleSearchIconPress}}
+							tooltip="{{_searchBtnOpen}}"
+							aria-label="{{_searchBtnOpen}}"
+							aria-expanded="{{_searchFieldExpanded}}"
+							.accessibilityAttributes={{accInfo.search.accessibilityAttributes}}
+						></ui5-button>
+					{{/if}}
 					{{#if hasAssistant}}
 							<slot name="assistant"></slot>
 					{{/if}}
-				{{/if}}
 
 				{{#if showNotifications}}
-					{{#if _isFullVariant}}
-						<ui5-button id="{{this._id}}-item-2"
-							class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
-							icon="sap-icon://bell" data-ui5-text="Notifications"
-							data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
-							tooltip="{{_notificationsText}}"
-							.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
-							data-ui5-stable="notifications"></ui5-button>
-					{{/if}}
+					<ui5-button id="{{this._id}}-item-2"
+						class="{{classes.items.notification}} ui5-shellbar-button ui5-shellbar-bell-button ui5-shellbar-items-for-arrow-nav"
+						icon="sap-icon://bell" data-ui5-text="Notifications"
+						data-ui5-notifications-count="{{notificationsCount}}" @click={{_handleNotificationsPress}}
+						tooltip="{{_notificationsText}}"
+						.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
+						data-ui5-stable="notifications"></ui5-button>
 				{{/if}}
 
 				{{#each customItemsInfo}}
@@ -178,21 +172,19 @@
 				{{/if}}
 
 				{{#if showProductSwitch}}
-					{{#if _isFullVariant}}
-						<ui5-button
-							id="{{this._id}}-item-4"
-							class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
-							icon="sap-icon://grid"
-							data-ui5-text="Product Switch"
-							@click={{_handleProductSwitchPress}}
-							tooltip="{{_productsText}}"
-							aria-label="{{_productSwitchBtnText}}"
-							aria-haspopup="dialog"
-							aria-expanded="{{accInfo.products.accessibilityAttributes.expanded}}"
-							.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
-							data-ui5-stable="product-switch"
-						></ui5-button>
-					{{/if}}
+					<ui5-button
+						id="{{this._id}}-item-4"
+						class="{{classes.items.product}} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-button-product-switch ui5-shellbar-items-for-arrow-nav"
+						icon="sap-icon://grid"
+						data-ui5-text="Product Switch"
+						@click={{_handleProductSwitchPress}}
+						tooltip="{{_productsText}}"
+						aria-label="{{_productSwitchBtnText}}"
+						aria-haspopup="dialog"
+						aria-expanded="{{accInfo.products.accessibilityAttributes.expanded}}"
+						.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
+						data-ui5-stable="product-switch"
+					></ui5-button>
 				{{/if}}
 			</div>
 		</div>
