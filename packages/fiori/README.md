@@ -31,6 +31,9 @@ such as a common header (ShellBar).
 | Timeline Item                             | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection                         | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
 | Upload Collection Item                    | `ui5-upload-collection-item`   | `import "@ui5/webcomponents-fiori/dist/UploadCollectionItem.js";`     |
+| User Menu                                 | `ui5-user-menu`                | `import "@ui5/webcomponents-fiori/dist/UserMenu.js";`                 |
+| User Menu Account                         | `ui5-user-menu-account`        | `import "@ui5/webcomponents-fiori/dist/UserMenuAccount.js";`          |
+| User Menu Item                            | `ui5-user-menu-item`           | `import "@ui5/webcomponents-fiori/dist/UserMenuItem.js";`             |
 | View Settings Dialog                      | `ui5-view-settings-dialog`     | `import "@ui5/webcomponents-fiori/dist/ViewSettingsDialog.js";`       |
 | View Settings Dialog - Sort Item          | `ui5-sort-item`                | `import "@ui5/webcomponents-fiori/dist/SortItem.js";`                 |
 | View Settings Dialog - Filter Item        | `ui5-filter-item`              | `import "@ui5/webcomponents-fiori/dist/FilterItem.js";`               |

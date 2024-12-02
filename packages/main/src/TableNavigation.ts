@@ -115,7 +115,7 @@ class TableNavigation extends TableExtension {
 		}
 
 		this._ignoreFocusIn = ignoreFocusIn;
-		element.focus();
+		element.focus({ preventScroll: element === this._table._beforeElement || element === this._table._afterElement });
 		if (element instanceof HTMLInputElement) {
 			element.select();
 		}
@@ -210,6 +210,11 @@ class TableNavigation extends TableExtension {
 			this._gridWalker.setCurrent(eventOrigin);
 		}
 
+		this._table._getVirtualizer()?._onKeyDown(e);
+		if (e.defaultPrevented) {
+			return;
+		}
+
 		const keydownHandlerName = `_handle${e.code}` as keyof TableNavigation;
 		const keydownHandler = this[keydownHandlerName] as (e: KeyboardEvent, eventOrigin: HTMLElement) => void | false;
 		if (typeof keydownHandler === "function" && keydownHandler.call(this, e, eventOrigin) === undefined) {
@@ -284,6 +289,7 @@ class TableNavigation extends TableExtension {
 			if (this._table.loading) {
 				this._table._loadingElement.focus();
 			} else {
+				this._getNavigationItemsOfGrid();
 				this._gridWalker.setColPos(0);
 				this._focusCurrentItem();
 			}
