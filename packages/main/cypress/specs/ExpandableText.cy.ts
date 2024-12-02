@@ -163,6 +163,34 @@ describe("ExpandableText", () => {
 				.contains("Show More")
 				.should("exist");
 		});
+
+		it("ARIA attributes", () => {
+			const text = "This is a very long text that should be displayed";
+
+			cy.mount(html`<ui5-expandable-text text=${text} max-characters="5"></ui5-expandable-text>`);
+
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+			cy.get("@expTextShadow").find("[ui5-text]").as("text");
+			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+
+			cy.get("@toggle")
+				.should("have.attr", "accessible-role", "Button");
+
+			cy.get("@toggle")
+				.invoke("prop", "accessibilityAttributes")
+				.should("deep.equal", {
+					expanded: false,
+				});
+
+			cy.get("@toggle")
+				.realClick();
+
+			cy.get("@toggle")
+				.invoke("prop", "accessibilityAttributes")
+				.should("deep.equal", {
+					expanded: true,
+				});
+		});
 	});
 
 	describe("Empty Indicator", () => {
@@ -237,6 +265,36 @@ describe("ExpandableText", () => {
 			cy.get("@expTextShadow")
 				.find("[ui5-responsive-popover]")
 				.should("not.have.attr", "open");
+		});
+
+		it("ARIA attributes", () => {
+			const text = "This is a very long text that should be displayed";
+
+			cy.mount(html`<ui5-expandable-text text=${text} max-characters="5" overflow-mode="Popover"></ui5-expandable-text>`);
+
+			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
+			cy.get("@expTextShadow").find("[ui5-text]").as("text");
+			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+
+			cy.get("@toggle")
+				.should("have.attr", "accessible-name");
+
+			cy.get("@toggle")
+				.invoke("prop", "accessibilityAttributes")
+				.should("deep.equal", {
+					expanded: false,
+					hasPopup: "dialog",
+				});
+
+			cy.get("@toggle")
+				.realClick();
+
+			cy.get("@toggle")
+				.invoke("prop", "accessibilityAttributes")
+				.should("deep.equal", {
+					expanded: true,
+					hasPopup: "dialog",
+				});
 		});
 
 		it("Toggling 'Show More' and 'Show Less' with keyboard", () => {

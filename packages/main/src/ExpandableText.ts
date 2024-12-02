@@ -6,7 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Text from "./Text.js";
-import Link from "./Link.js";
+import Link, { type LinkAccessibilityAttributes } from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
@@ -15,6 +15,8 @@ import {
 	EXPANDABLE_TEXT_SHOW_LESS,
 	EXPANDABLE_TEXT_SHOW_MORE,
 	EXPANDABLE_TEXT_CLOSE,
+	EXPANDABLE_TEXT_SHOW_LESS_POPOVER_ARIA_LABEL,
+	EXPANDABLE_TEXT_SHOW_MORE_POPOVER_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -144,6 +146,27 @@ class ExpandableText extends UI5Element {
 
 	get _closeButtonText() {
 		return ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_CLOSE);
+	}
+
+	get _accessibilityAttributesForToggle(): LinkAccessibilityAttributes {
+		if (this._usePopover) {
+			return {
+				expanded: this._expanded,
+				hasPopup: "dialog",
+			};
+		}
+
+		return {
+			expanded: this._expanded,
+		};
+	}
+
+	get _accessibleNameForToggle() {
+		if (this._usePopover) {
+			return this._expanded ? ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_LESS_POPOVER_ARIA_LABEL) : ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_MORE_POPOVER_ARIA_LABEL);
+		}
+
+		return null;
 	}
 
 	_handlePopoverClose() {
