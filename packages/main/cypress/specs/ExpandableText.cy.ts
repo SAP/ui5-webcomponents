@@ -1,5 +1,9 @@
 import { html } from "lit";
 import "../../src/ExpandableText.js";
+import {
+	EXPANDABLE_TEXT_SHOW_MORE,
+	EXPANDABLE_TEXT_SHOW_LESS,
+} from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("ExpandableText", () => {
 	describe("Rendering and Interaction", () => {
@@ -47,7 +51,7 @@ describe("ExpandableText", () => {
 
 			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.should("exist");
 		});
 
@@ -69,7 +73,7 @@ describe("ExpandableText", () => {
 
 			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.should("exist");
 		});
 
@@ -102,7 +106,7 @@ describe("ExpandableText", () => {
 			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.realClick();
 
 			cy.get("@expTextShadow")
@@ -111,7 +115,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@toggle")
-				.contains("Show Less")
+				.contains(EXPANDABLE_TEXT_SHOW_LESS.defaultText)
 				.realClick();
 
 			cy.get("@expTextShadow")
@@ -120,7 +124,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.should("exist");
 		});
 
@@ -151,7 +155,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@toggle")
-				.contains("Show Less")
+				.contains(EXPANDABLE_TEXT_SHOW_LESS.defaultText)
 				.realPress("Enter");
 
 			cy.get("@expTextShadow")
@@ -160,7 +164,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.should("exist");
 		});
 
@@ -234,7 +238,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.realClick();
 
 			cy.get("@toggle")
@@ -259,7 +263,7 @@ describe("ExpandableText", () => {
 				});
 
 			cy.get("@toggle")
-				.contains("Show Less")
+				.contains(EXPANDABLE_TEXT_SHOW_LESS.defaultText)
 				.realClick();
 
 			cy.get("@expTextShadow")
@@ -327,7 +331,7 @@ describe("ExpandableText", () => {
 				.should("have.attr", "open");
 
 			cy.get("@toggle")
-				.contains("Show Less")
+				.contains(EXPANDABLE_TEXT_SHOW_LESS.defaultText)
 				.should("exist");
 
 			cy.realPress("Escape");
@@ -336,7 +340,7 @@ describe("ExpandableText", () => {
 				.should("not.have.attr", "open");
 
 			cy.get("@toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.should("exist");
 		});
 
@@ -351,7 +355,7 @@ describe("ExpandableText", () => {
 
 			cy.get("@expTextShadow")
 				.find("[ui5-link].ui5-exp-text-toggle")
-				.contains("Show More")
+				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.realClick();
 
 			cy.get("@expTextShadow")
