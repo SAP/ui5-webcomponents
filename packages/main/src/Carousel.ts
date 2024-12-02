@@ -514,7 +514,7 @@ class Carousel extends UI5Element {
 	@bound
 	_navButtonClick(e: MouseEvent) {
 		const button = e.target as Button;
-		if (button.hasAttribute("arrow-forward")) {
+		if (button.hasAttribute("data-ui5-arrow-forward")) {
 			this.navigateRight();
 		} else {
 			this.navigateLeft();

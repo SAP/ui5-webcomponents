@@ -50,21 +50,7 @@ export default function (this: Carousel) {
 						{this.showArrows.navigation && arrowBack.call(this)}
 
 						<div class="ui5-carousel-navigation">
-							{!this.hidePageIndicator &&
-								this.isPageTypeDots ?
-									this.dots.map(dot =>
-										<div
-											role="img"
-											aria-label={dot.ariaLabel}
-											class={clsx({
-												"ui5-carousel-navigation-dot": true,
-												"ui5-carousel-navigation-dot--active": dot.active
-											})}
-										></div>
-									)
-								:
-								<div dir="auto" class="ui5-carousel-navigation-text">{this.selectedIndexToShow}&nbsp;{this.ofText}&nbsp;{this.pagesCount}</div>
-							}
+							{ !this.hidePageIndicator && navIndicator.call(this) }
 						</div>
 
 						{this.showArrows.navigation && arrowForward.call(this)}
@@ -76,28 +62,45 @@ export default function (this: Carousel) {
 
 function arrowBack(this: Carousel) {
 	return <Button
-		icon={slimArrowLeft}
-		tabindex={-1}
-		tooltip={this.previousPageText}
-		class={clsx({
-			"ui5-carousel-navigation-button": true,
-			"ui5-carousel-navigation-button--hidden":!this.hasPrev
-		})}
-		data-ui5-arrow-back
-		onClick={this._navButtonClick}
-	></Button>
+			icon={slimArrowLeft}
+			tabindex={-1}
+			tooltip={this.previousPageText}
+			class={clsx({
+				"ui5-carousel-navigation-button": true,
+				"ui5-carousel-navigation-button--hidden":!this.hasPrev
+			})}
+			data-ui5-arrow-back
+			onClick={this._navButtonClick}
+		></Button>
 };
 
 function arrowForward(this: Carousel) {
-	<Button
-		icon={slimArrowRight}
-		tabindex={-1}
-		tooltip={this.nextPageText}
-		class={clsx({
-			"ui5-carousel-navigation-button": true,
-			"ui5-carousel-navigation-button--hidden":!this.hasNext
-		})}
-		data-ui5-arrow-forward
-		onClick={this._navButtonClick}
-	></Button>
+	return <Button
+			icon={slimArrowRight}
+			tabindex={-1}
+			tooltip={this.nextPageText}
+			class={clsx({
+				"ui5-carousel-navigation-button": true,
+				"ui5-carousel-navigation-button--hidden":!this.hasNext
+			})}
+			data-ui5-arrow-forward
+			onClick={this._navButtonClick}
+		></Button>
+};
+
+function navIndicator(this: Carousel) {
+	return this.isPageTypeDots ? this.dots.map(dot =>
+			<div
+				role="img"
+				aria-label={dot.ariaLabel}
+				class={clsx({
+					"ui5-carousel-navigation-dot": true,
+					"ui5-carousel-navigation-dot--active": dot.active
+				})}
+			></div>)
+		:
+		<div
+			dir="auto"
+			class="ui5-carousel-navigation-text"
+		>{this.selectedIndexToShow}&nbsp;{this.ofText}&nbsp;{this.pagesCount}</div>
 };

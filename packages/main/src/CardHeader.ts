@@ -2,16 +2,14 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import {
-	isFirefox,
-	isDesktop,
-} from "@ui5/webcomponents-base/dist/Device.js";
-import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import CardHeaderTemplate from "./CardHeaderTemplate.js";
 
 import {
 	AVATAR_TOOLTIP,
@@ -48,7 +46,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 @customElement({
 	tag: "ui5-card-header",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: CardHeaderTemplate,
 	styles: cardHeaderCss,
 })
@@ -131,17 +129,6 @@ class CardHeader extends UI5Element {
 		}
 	}
 
-	get classes() {
-		return {
-			root: {
-				"ui5-card-header": true,
-				"ui5-card-header--interactive": this.interactive,
-				"ui5-card-header--active": this.interactive && this._headerActive,
-				"ui5-card-header-ff": isFirefox(),
-			},
-		};
-	}
-
 	get _root() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-card-header")!;
 	}
@@ -151,7 +138,7 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaRoleFocusableElement() {
-		return this.interactive ? "button" : null;
+		return this.interactive ? "button" : undefined;
 	}
 
 	get ariaCardAvatarLabel() {
@@ -188,14 +175,17 @@ class CardHeader extends UI5Element {
 		return !!this.action.length;
 	}
 
+	@bound
 	_actionsFocusin() {
 		this._root.classList.add("ui5-card-header-hide-focus");
 	}
 
+	@bound
 	_actionsFocusout() {
 		this._root.classList.remove("ui5-card-header-hide-focus");
 	}
 
+	@bound
 	_click(e: MouseEvent) {
 		// prevents the native browser "click" event from firing
 		e.stopImmediatePropagation();
@@ -205,6 +195,7 @@ class CardHeader extends UI5Element {
 		}
 	}
 
+	@bound
 	_keydown(e: KeyboardEvent) {
 		if (!this.interactive || !this._root.contains(e.target as HTMLElement)) {
 			return;
@@ -225,6 +216,7 @@ class CardHeader extends UI5Element {
 		}
 	}
 
+	@bound
 	_keyup(e: KeyboardEvent) {
 		if (!this.interactive || !this._root.contains(e.target as HTMLElement)) {
 			return;
