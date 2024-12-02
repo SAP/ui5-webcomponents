@@ -30,7 +30,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  *
  * The `ui5-expandable-text` component allows displaying a large body of text in a small space. It provides an "expand" functionality, which shows the full text.
  *
- * ### Usage</h3>
+ * ### Usage
  *
  * #### When to use:
  * - You specifically have to deal with long texts
