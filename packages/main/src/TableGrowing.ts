@@ -148,7 +148,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._shouldFocusRow = false;
 	}
 
-	onTableRendered(): void {
+	onTableAfterRendering(): void {
 		// Focus the first row after growing, when the growing button is used
 		if (this._shouldFocusRow) {
 			this._shouldFocusRow = false;

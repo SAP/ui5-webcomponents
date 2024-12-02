@@ -483,6 +483,16 @@
 	color: var(--ui5-tag-set2-color-scheme-9-color);
 }
 
+:host([interactive][design="Set2"][color-scheme="9"]) .ui5-tag-root:hover {
+	background-color: var(--ui5-tag-set2-color-scheme-9-hover-background);
+}
+
+:host([interactive][design="Set2"][color-scheme="9"]) .ui5-tag-root:active {
+	background-color: var(--ui5-tag-set2-color-scheme-9-active-background);
+	border-color: var(--ui5-tag-set2-color-scheme-9-active-border);
+	color: var(--ui5-tag-set2-color-scheme-9-active-color);
+}
+
 :host([interactive][design="Set2"][color-scheme="10"]) .ui5-tag-root:hover {
 	background-color: var(--ui5-tag-set2-color-scheme-10-hover-background);
 }

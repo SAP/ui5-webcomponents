@@ -77,6 +77,16 @@ const isFeature = <T>(element: any, identifier: string): element is T => {
 	return element.identifier === identifier;
 };
 
+const throttle = (callback: () => void) => {
+	let timer: number;
+	return () => {
+		cancelAnimationFrame(timer);
+		timer = requestAnimationFrame(() => {
+			callback();
+		});
+	};
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -85,4 +95,5 @@ export {
 	findVerticalScrollContainer,
 	scrollElementIntoView,
 	isFeature,
+	throttle,
 };
