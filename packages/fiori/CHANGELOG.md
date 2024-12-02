@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.1...v2.5.0-rc.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* **ui5-wizard:** stacked Wizard Steps are aligned properly ([#10250](https://github.com/SAP/ui5-webcomponents/issues/10250)) ([3473fbf](https://github.com/SAP/ui5-webcomponents/commit/3473fbf7dd6f97d0de70a540d412c36901455926)), closes [#9779](https://github.com/SAP/ui5-webcomponents/issues/9779)
+
+
+
+
+
 # [2.5.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.0...v2.5.0-rc.1) (2024-11-21)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

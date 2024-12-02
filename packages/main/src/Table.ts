@@ -25,6 +25,7 @@ import {
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import type TableVirtualizer from "./TableVirtualizer.js";
 
 /**
  * Interface for components that can be slotted inside the <code>features</code> slot of the <code>ui5-table</code>.
@@ -42,7 +43,7 @@ interface ITableFeature extends UI5Element {
 	/**
 	 * Called when the table finished rendering.
 	 */
-	onTableRendered?(): void;
+	onTableAfterRendering?(): void;
 }
 
 /**
@@ -192,7 +193,7 @@ class Table extends UI5Element {
 		type: HTMLElement,
 		"default": true,
 		invalidateOnChildChange: {
-			properties: ["navigated"],
+			properties: ["navigated", "position"],
 			slots: false,
 		},
 	})
@@ -344,11 +345,15 @@ class Table extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		this.features.forEach(feature => feature.onTableRendered?.());
+		this.features.forEach(feature => feature.onTableAfterRendering?.());
 	}
 
 	_getSelection(): TableSelection | undefined {
 		return this.features.find(feature => isFeature<TableSelection>(feature, "TableSelection")) as TableSelection;
+	}
+
+	_getVirtualizer(): TableVirtualizer | undefined {
+		return this.features.find(feature => isFeature<TableVirtualizer>(feature, "TableVirtualizer")) as TableVirtualizer;
 	}
 
 	_onEvent(e: Event) {
@@ -401,6 +406,10 @@ class Table extends UI5Element {
 	}
 
 	_onfocusin(e: FocusEvent) {
+		if (e.target === this) {
+			return;
+		}
+
 		// Handles focus in the table, when the focus is below a sticky element
 		scrollElementIntoView(this._scrollContainer, e.target as HTMLElement, this._stickyElements, this.effectiveDir === "rtl");
 	}
@@ -449,7 +458,7 @@ class Table extends UI5Element {
 	}
 
 	_isFeature(feature: any) {
-		return Boolean(feature.onTableActivate && feature.onTableRendered);
+		return Boolean(feature.onTableActivate && feature.onTableAfterRendering);
 	}
 
 	_isGrowingFeature(feature: any) {
@@ -461,6 +470,7 @@ class Table extends UI5Element {
 	}
 
 	get styles() {
+		const virtualizer = this._getVirtualizer();
 		const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
 			if (headerCell.horizontalAlign !== undefined && !headerCell._popin) {
 				headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
@@ -470,7 +480,12 @@ class Table extends UI5Element {
 		return {
 			table: {
 				"grid-template-columns": this._gridTemplateColumns,
+				"--row-height": virtualizer ? `${virtualizer.rowHeight}px` : "auto",
 				...headerStyleMap,
+			},
+			spacer: {
+				"transform": virtualizer?._getTransform(),
+				"will-change": virtualizer && "transform",
 			},
 		};
 	}
@@ -534,6 +549,10 @@ class Table extends UI5Element {
 		return getEffectiveAriaLabelText(this) || undefined;
 	}
 
+	get _ariaRowCount() {
+		return this._getVirtualizer()?.rowCount || undefined;
+	}
+
 	get _ariaMultiSelectable() {
 		const selection = this._getSelection();
 		return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
@@ -555,7 +574,7 @@ class Table extends UI5Element {
 	}
 
 	get _scrollContainer() {
-		return findVerticalScrollContainer(this._tableElement);
+		return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
 	}
 
 	get isTable() {
