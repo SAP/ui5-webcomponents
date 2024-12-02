@@ -72,8 +72,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 
  *
  * ### Responsive Behavior
- * The `stretch` property can be used to stretch the
- * `ui5-dialog` on full screen.
+ * The `stretch` property can be used to stretch the `ui5-dialog` to full screen. For better usability, it's recommended to stretch the dialog to full screen on phone devices.
  *
  * **Note:** When a `ui5-bar` is used in the header or in the footer, you should remove the default dialog's paddings.
  *
@@ -136,10 +135,10 @@ class Dialog extends Popup {
 	headerText!: string;
 
 	/**
-	 * Determines whether the component should be stretched to fullscreen.
+	 * Determines if the dialog will be stretched to full screen on mobile. On desktop,
+	 * the dialog will be stretched to approximately 90% of the viewport.
 	 *
-	 * **Note:** The component will be stretched to approximately
-	 * 90% of the viewport.
+	 * **Note:** For better usability of the component it is recommended to set this property to "true" when the dialog is opened on phone.
 	 * @default false
 	 * @public
 	 */
