@@ -17,6 +17,7 @@ import type SideNavigation from "./SideNavigation.js";
  * @since 1.19.0
  */
 class SideNavigationItemBase extends UI5Element implements ITabbable {
+	eventDetails!: object;
 	/**
 	 * Defines the text of the item.
 	 *

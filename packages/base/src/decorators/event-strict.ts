@@ -1,5 +1,10 @@
 import type UI5Element from "../UI5Element.js";
 
+type IsAny<T> = 0 extends (1 & T) ? true : false;
+type EventDetailsValues<T extends UI5Element> = T["eventDetails"][keyof T["eventDetails"]];
+type HasOwnEventDetails<T extends UI5Element> = IsAny<EventDetailsValues<T>> extends true ? false : true;
+type ExtractEventKeys<T extends typeof UI5Element> = HasOwnEventDetails<InstanceType<T>> extends true ? keyof InstanceType<T>["eventDetails"] : "eventDetails missing or has value with type any"
+
 /**
  * Returns an event class decorator.
  *
@@ -7,7 +12,7 @@ import type UI5Element from "../UI5Element.js";
  * @param { EventData } data the event data
  * @returns { ClassDecorator }
  */
-const event = <T extends typeof UI5Element, N extends keyof InstanceType<T>["eventDetails"]>(name: N, data: { bubbles?: boolean, cancelable?: boolean } = {}): (target: T) => T | void => {
+const event = <T extends typeof UI5Element, N extends ExtractEventKeys<T>>(name: N, data: { bubbles?: boolean, cancelable?: boolean } = {}): (target: T) => T | void => {
 	return (target: T) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
 			target.metadata = {};

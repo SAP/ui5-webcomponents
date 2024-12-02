@@ -33,6 +33,7 @@ import type CalendarWeekNumbering from "./types/CalendarWeekNumbering.js";
 	renderer: litRender,
 })
 class DateComponentBase extends UI5Element {
+	eventDetails!: object;
 	/**
 	 * Sets a calendar type used for display.
 	 * If not set, the calendar type of the global configuration is used.
