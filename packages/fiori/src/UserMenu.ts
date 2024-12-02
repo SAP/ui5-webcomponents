@@ -1,8 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
-	customElement, slot, event, property,
+	customElement,
+	slot,
+	event,
+	property,
+	bound,
 } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -19,7 +23,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import UserMenuAccount from "./UserMenuAccount.js";
 import UserMenuItem from "./UserMenuItem.js";
-import UserMenuTemplate from "./generated/templates/UserMenuTemplate.lit.js";
+import UserMenuTemplate from "./UserMenuTemplate.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
 
 // Icons
@@ -70,7 +74,7 @@ type UserMenuOtherAccountClickEventDetail = {
 @customElement({
 	tag: "ui5-user-menu",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: UserMenuTemplate,
 	styles: [UserMenuCss],
 	dependencies: [
@@ -224,22 +228,28 @@ class UserMenu extends UI5Element {
 		this._selectedAccount = this.accounts.find(account => account.selected) || this.accounts[0];
 	}
 
+	@bound
 	_handleAvatarClick() {
 		this.fireDecoratorEvent("avatar-click");
 	}
 
+	@bound
 	_handleManageAccountClick() {
 		this.fireDecoratorEvent("manage-account-click");
 	}
 
+	@bound
 	_handleAddAccountClick() {
 		this.fireDecoratorEvent("add-account-click");
 	}
 
-	_handleAccountSwitch(e: CustomEvent<{ item: ListItemClickEventDetail & { associatedAccount: UserMenuAccount } }>) {
+	@bound
+	_handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>) {
+		const accountToSelect = this.getAccountByRefId(e.detail.item.getAttribute("data-ui5-account-ref-id")!);
+
 		const eventPrevented = !this.fireDecoratorEvent<UserMenuOtherAccountClickEventDetail>("change-account", {
 			prevSelectedAccount: this._selectedAccount,
-			selectedAccount: e.detail.item.associatedAccount,
+			selectedAccount: accountToSelect,
 		});
 
 		if (eventPrevented) {
@@ -247,9 +257,10 @@ class UserMenu extends UI5Element {
 		}
 
 		this._selectedAccount.selected = false;
-		e.detail.item.associatedAccount.selected = true;
+		accountToSelect.selected = true;
 	}
 
+	@bound
 	_handleSignOutClick() {
 		const eventPrevented = !this.fireDecoratorEvent("sign-out-click");
 
@@ -260,8 +271,9 @@ class UserMenu extends UI5Element {
 		 this._closeUserMenu();
 	}
 
-	_handleMenuItemClick(e: CustomEvent<UserMenuItemClickEventDetail>) {
-		const item = e.detail.item;
+	@bound
+	_handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>) {
+		const item = e.detail.item as UserMenuItem; // imrove: improve this ideally without "as" cating
 
 		if (!item._popover) {
 			const eventPrevented = !this.fireDecoratorEvent<UserMenuItemClickEventDetail>("item-click", {
@@ -276,10 +288,12 @@ class UserMenu extends UI5Element {
 		}
 	}
 
+	@bound
 	_handleMenuItemClose() {
 		this._closeUserMenu();
 	}
 
+	@bound
 	_handlePopoverAfterClose() {
 		this.open = false;
 	}
@@ -339,6 +353,10 @@ class UserMenu extends UI5Element {
 			return "";
 		}
 		return `${UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME)} ${this._selectedAccount.titleText}`;
+	}
+
+	getAccountByRefId(refId: string) {
+		return this.accounts.find(account => account._id === refId)!;
 	}
 }
 
