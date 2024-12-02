@@ -61,6 +61,15 @@ class TableRow extends TableRowBase {
 	rowKey = "";
 
 	/**
+	 * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
+	 *
+     * @default -1
+     * @public
+     */
+	@property({ type: Number })
+	position = -1;
+
+	/**
 	 * Defines the interactive state of the row.
 	 *
 	 * @default false
@@ -84,6 +93,9 @@ class TableRow extends TableRowBase {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.toggleAttribute("_interactive", this._isInteractive);
+		if (this.position !== -1) {
+			this.setAttribute("aria-rowindex", `${this.position + 1}`);
+		}
 		if (this._renderNavigated && this.navigated) {
 			this.setAttribute("aria-current", "true");
 		} else {

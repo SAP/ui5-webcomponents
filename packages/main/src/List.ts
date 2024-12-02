@@ -18,6 +18,8 @@ import {
 	isCtrl,
 	isEnd,
 	isHome,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
@@ -965,6 +967,12 @@ class List extends UI5Element {
 			return;
 		}
 
+		if (isDown(e)) {
+			this._handleDown();
+			e.preventDefault();
+			return;
+		}
+
 		if (isCtrl(e)) {
 			this._moveItem(e.target as ListItemBase, e);
 			return;
@@ -1032,6 +1040,11 @@ class List extends UI5Element {
 			this.focusAfterElement();
 		}
 
+		if (isUp(e)) {
+			this._handleLodeMoreUp(e);
+			return;
+		}
+
 		if (isTabPrevious(e)) {
 			if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -1059,6 +1072,20 @@ class List extends UI5Element {
 
 	_onLoadMoreClick() {
 		this.loadMore();
+	}
+
+	_handleLodeMoreUp(e: KeyboardEvent) {
+		const growingButton = this.getGrowingButton();
+
+		if (growingButton === e.target) {
+			const items = this.getItems();
+			const lastItem = items[items.length - 1];
+
+			this.focusItem(lastItem);
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
 	}
 
 	checkListInViewport() {
@@ -1113,11 +1140,18 @@ class List extends UI5Element {
 		this._shouldFocusGrowingButton();
 	}
 
+	_handleDown() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
+	}
+
 	_onfocusin(e: FocusEvent) {
 		const target = getNormalizedTarget(e.target as HTMLElement);
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(target)) {
-			e.stopImmediatePropagation();
 			return;
 		}
 
@@ -1146,6 +1180,7 @@ class List extends UI5Element {
 			e.stopImmediatePropagation();
 		}
 
+		e.stopImmediatePropagation();
 		this.setForwardingFocus(false);
 	}
 
@@ -1347,7 +1382,7 @@ class List extends UI5Element {
 	_shouldFocusGrowingButton() {
 		const items = this.getItems();
 		const lastIndex = items.length - 1;
-		const currentIndex = items.indexOf(document.activeElement as ListItemBase);
+		const currentIndex = this._itemNavigation._currentIndex;
 
 		if (currentIndex !== -1 && currentIndex === lastIndex) {
 			this.focusGrowingButton();
