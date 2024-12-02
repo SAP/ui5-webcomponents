@@ -24,6 +24,10 @@
 	color: inherit;
 }
 
+.ui5-exp-text-popover::part(content) {
+	padding-inline: 1rem;
+}
+
 .ui5-exp-text-footer {
 	width: 100%;
 	display: flex;
