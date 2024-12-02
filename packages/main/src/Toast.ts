@@ -191,7 +191,7 @@ class Toast extends UI5Element {
 		if (!this.hasAttribute("popover")) {
 			this.setAttribute("popover", "manual");
 		}
-		if(this.open) {
+		if (this.open) {
 			this.showPopover();
 		}
 	}
