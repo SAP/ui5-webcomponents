@@ -2,9 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -16,12 +17,8 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/information.js";
 
-import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import TextAreaTemplate from "./TextAreaTemplate.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -80,7 +77,7 @@ type ExceededText = {
 		valueStateMessageStyles,
 		getEffectiveScrollbarStyle(),
 	],
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TextAreaTemplate,
 	dependencies: [Popover, Icon],
 })
@@ -386,6 +383,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return this.getDomRef()!.querySelector<HTMLTextAreaElement>("textarea")!;
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		this._keyDown = true;
 
@@ -398,16 +396,19 @@ class TextArea extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onkeyup() {
 		this._keyDown = false;
 	}
 
+	@bound
 	_onfocusin() {
 		this.focused = true;
 		this._openValueStateMsgPopover = true;
 		this.previousValue = this.getInputDomRef().value;
 	}
 
+	@bound
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
 		const focusedOutToValueStateMessage = eTarget && this.contains(eTarget);
@@ -419,18 +420,22 @@ class TextArea extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onchange() {
 		this.fireDecoratorEvent("change", {});
 	}
 
+	@bound
 	_onselect() {
 		this.fireDecoratorEvent("select", {});
 	}
 
+	@bound
 	_onscroll() {
 		this.fireDecoratorEvent("scroll", {});
 	}
 
+	@bound
 	_oninput(e: InputEvent) {
 		const nativeTextArea = this.getInputDomRef()!;
 
@@ -552,14 +557,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 		};
 	}
 
-	get styles() {
-		return {
-			valueStateMsgPopover: {
-				"max-width": `${this._width!}px`,
-			},
-		};
-	}
-
 	get tabIndex() {
 		return this.disabled ? -1 : 0;
 	}
@@ -606,8 +603,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return "";
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Negative ? "true" : null;
+	get _ariaInvalid() {
+		return this.valueState === ValueState.Negative ? "true" : undefined;
 	}
 
 	get openValueStateMsgPopover() {
@@ -628,20 +625,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
 		return this.effectiveDir !== "rtl" ? "Start" : "End";
-	}
-
-	/**
-	 * This method is relevant for sap_horizon theme only
-	 */
-	get _valueStateMessageIcon() {
-		const iconPerValueState = {
-			Negative: "error",
-			Critical: "alert",
-			Positive: "sys-enter-2",
-			Information: "information",
-		};
-
-		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get valueStateTextMappings() {
