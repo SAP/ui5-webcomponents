@@ -166,13 +166,9 @@ class Toast extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		if (!this.hasAttribute("popover")) {
-			this.setAttribute("popover", "manual");
-		}
 		if (this.open) {
 			openedToasts.pop();
 			openedToasts.push(this);
-			this.showPopover();
 		}
 
 		requestAnimationFrame(() => {
@@ -188,6 +184,15 @@ class Toast extends UI5Element {
 		if (!globalListenerAdded) {
 			document.addEventListener("keydown", handleGlobalKeydown);
 			globalListenerAdded = true;
+		}
+	}
+
+	onAfterRendering() {
+		if (!this.hasAttribute("popover")) {
+			this.setAttribute("popover", "manual");
+		}
+		if(this.open) {
+			this.showPopover();
 		}
 	}
 
