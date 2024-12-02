@@ -37,7 +37,6 @@ import type { ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import throttle from "@ui5/webcomponents-base/dist/util/throttle.js";
-import type ShellBarVariant from "./types/ShellBarVariant.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
@@ -363,16 +362,6 @@ class ShellBar extends UI5Element {
 	showSearchField = false;
 
 	/**
-	 * Defines the mode Shellbar is presented in.
-	 *
-	 * @default false
-	 * @public
-	 * @since 2.5.0
-	 */
-	@property()
-	variant: `${ShellBarVariant}` = "Full"
-
-	/**
 	 * Defines additional accessibility attributes on different areas of the component.
 	 *
 	 * The accessibilityAttributes object has the following fields,
@@ -412,7 +401,7 @@ class ShellBar extends UI5Element {
 	 * @private
 	 */
 	@property()
-	breakpointSize?: string;
+	breakpointSize = "S";
 
 	/**
 	 * @private
@@ -439,10 +428,10 @@ class ShellBar extends UI5Element {
 	_isSBreakpoint = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	hasVisibleAdditionalContextStart = false;
+	hasVisibleStartContent = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	hasVisibleAdditionalContextEnd = false;
+	hasVisibleEndContent = false;
 
 	_cachedHiddenContent: Array<HTMLElement> = [];
 
@@ -527,7 +516,7 @@ class ShellBar extends UI5Element {
 	 * @since 2.5.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	additionalContextStart!: Array<HTMLElement>;
+	startContent!: Array<HTMLElement>;
 
 	/**
 	 * Define the items displayed in the end of the additional content area.
@@ -535,7 +524,7 @@ class ShellBar extends UI5Element {
 	 * @since 2.5.0
 	 */
 	@slot({ type: HTMLElement, individualSlots: true })
-	additionalContextEnd!: Array<HTMLElement>;
+	endContent!: Array<HTMLElement>;
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
@@ -551,6 +540,7 @@ class ShellBar extends UI5Element {
 	_skipLayout = false;
 	_lastOffsetWidth = 0;
 	_lessSearchSpace = false;
+	_isSearchBarOpenByDefault = false;
 
 	_headerPress: () => void;
 
@@ -601,12 +591,11 @@ class ShellBar extends UI5Element {
 		};
 
 		this._handleResize = throttle(() => {
-			const shouldSearchBeOpen = this._isXXLBreakpoint || this.breakpointSize === "XL" || this.breakpointSize === "L";
 			this.menuPopover = this._getMenuPopover();
 			this.overflowPopover = this._getOverflowPopover();
 			this.overflowPopover.open = false;
 			if (this._lastOffsetWidth !== this.offsetWidth) {
-				this.showSearchField = shouldSearchBeOpen;
+				this.showSearchField = false;
 				this._overflowActions();
 			}
 		}, RESIZE_THROTTLE_RATE);
@@ -673,8 +662,8 @@ class ShellBar extends UI5Element {
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo"),
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-logo-area"),
 			...this.shadowRoot!.querySelectorAll(".ui5-shellbar-menu-button"),
-			...this.additionalContextStart,
-			...this.additionalContextEnd,
+			...this.startContent,
+			...this.endContent,
 			...this._getRightChildItems(),
 		] as HTMLElement[];
 	}
@@ -777,7 +766,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get additionalContextSorted() {
-		return [...this.additionalContextStart, ...this.additionalContextEnd].sort((a, b) => {
+		return [...this.startContent, ...this.endContent].sort((a, b) => {
 			return parseInt(a.getAttribute("data-priority") || "0") - parseInt(b.getAttribute("data-priority") || "0");
 		});
 	}
@@ -832,7 +821,7 @@ class ShellBar extends UI5Element {
 		const newItems = this._getAllItems(hasIcons > 1).filter(i => i.show).map((info): IShelBarItemInfo => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
-			const shouldStayOnScreen = hasIcons === 1 || isOverflowIcon || (isImageIcon && this.hasProfile) || !this._isFullVariant;
+			const shouldStayOnScreen = hasIcons === 1 || isOverflowIcon || (isImageIcon && this.hasProfile);
 
 			return {
 				...info,
@@ -931,9 +920,6 @@ class ShellBar extends UI5Element {
 
 		const showOverflowButton = hiddenItems > 0;
 		const items = this._getAllItems(showOverflowButton, hiddenItems === itemsToOverflow.length).filter(item => item.show && item.classes.indexOf("ui5-shellbar-no-overflow-button") === -1);
-		if (!this._isFullVariant) {
-			return items;
-		}
 		// start hiding the actions on the right (overflow actions) first
 		this._hideOverflowItems(hiddenItems, items);
 		// last, start hiding the items that are in the additional context
@@ -962,8 +948,8 @@ class ShellBar extends UI5Element {
 	}
 
 	_updateSeparatorsVisibility() {
-		this.hasVisibleAdditionalContextStart = this._hasVisibleAdditionalContextStart;
-		this.hasVisibleAdditionalContextEnd = this._hasVisibleAdditionalContextEnd;
+		this.hasVisibleStartContent = this._hasVisibleStartContent;
+		this.hasVisibleEndContent = this._hasVisibleEndContent;
 	}
 
 	_toggleActionPopover() {
@@ -1139,7 +1125,7 @@ class ShellBar extends UI5Element {
 				domOrder: this.searchField.length ? (++domOrder) : -1,
 				id: `${this._id}-item-${1}`,
 				press: this._handleSearchIconPress.bind(this),
-				show: !!this.searchField.length && this._isFullVariant,
+				show: !!this.searchField.length,
 				tooltip: this._searchText,
 			},
 			{
@@ -1147,7 +1133,7 @@ class ShellBar extends UI5Element {
 				text: "Assistant",
 				classes: `${this.assistant.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button`,
 				id: `${this._id}-item-${4}`,
-				show: !!this.assistant.length && this._isFullVariant,
+				show: !!this.assistant.length,
 				domOrder: this.assistant.length ? (++domOrder) : -1,
 				press: () => { },
 				tooltip: this.assistant.length ? (this.assistant[0].getAttribute("text") || this.assistant[0].getAttribute("title") || undefined) : undefined,
@@ -1159,7 +1145,7 @@ class ShellBar extends UI5Element {
 				count: this.notificationsCount,
 				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
 				id: `${this._id}-item-${2}`,
-				show: this.showNotifications && this._isFullVariant,
+				show: this.showNotifications,
 				domOrder: this.showNotifications ? (++domOrder) : -1,
 				press: this._handleNotificationsPress.bind(this),
 				tooltip: this._notificationsText,
@@ -1172,7 +1158,7 @@ class ShellBar extends UI5Element {
 			}).map((item: ShellBarItem) => {
 				item._getRealDomRef = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 				// check if included for lean mode
-				const show = this._isFullVariant || (item.icon && INCLUDED_LEAN_MODE_ACTIONS.includes(item.icon)) || false;
+				const show = (item.icon && INCLUDED_LEAN_MODE_ACTIONS.includes(item.icon)) || false;
 				return {
 					icon: item.icon,
 					id: item._id,
@@ -1196,7 +1182,7 @@ class ShellBar extends UI5Element {
 				domOrder: showOverflowButton ? (++domOrder) : -1,
 				id: `${this.id}-item-${5}`,
 				press: this._handleOverflowPress.bind(this),
-				show: this._isFullVariant,
+				show: true,
 				tooltip: this._overflowText,
 			},
 			{
@@ -1214,7 +1200,7 @@ class ShellBar extends UI5Element {
 				text: this._productsText,
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-no-overflow-button ui5-shellbar-button ui5-shellbar-image-button ui5-shellbar-button-product-switch`,
 				id: `${this._id}-item-${4}`,
-				show: this.showProductSwitch && this._isFullVariant,
+				show: this.showProductSwitch,
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
 				tooltip: this._productsText,
@@ -1329,12 +1315,12 @@ class ShellBar extends UI5Element {
 			additionalContext: {
 				start: {
 					separator: {
-						"visibility": this.hasVisibleAdditionalContextStart ? "" : "hidden",
+						"visibility": this.hasVisibleStartContent ? "" : "hidden",
 					},
 				},
 				end: {
 					separator: {
-						"visibility": this.hasVisibleAdditionalContextEnd ? "" : "hidden",
+						"visibility": this.hasVisibleEndContent ? "" : "hidden",
 					},
 				},
 			},
@@ -1429,7 +1415,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _additionalContextRole() {
-		const additionalContext = [...this.additionalContextEnd, ...this.additionalContextStart];
+		const additionalContext = [...this.endContent, ...this.startContent];
 
 		if (additionalContext.length === 1) {
 			return;
@@ -1494,24 +1480,20 @@ class ShellBar extends UI5Element {
 		return ShellBar.i18nBundle.getText(SHELLBAR_OVERFLOW);
 	}
 
-	get _isFullVariant() {
-		return this.variant === "Full";
-	}
-
 	get hasAdditionalContext() {
-		return this.additionalContextStart.length > 0 || this.additionalContextEnd.length > 0;
+		return this.startContent.length > 0 || this.endContent.length > 0;
 	}
 
 	get showAdditionalContext() {
-		return this._isFullVariant && !this._isSBreakpoint && this.hasAdditionalContext;
+		return !this._isSBreakpoint && this.hasAdditionalContext;
 	}
 
-	get _hasVisibleAdditionalContextStart() {
-		return this.additionalContextStart.some(item => !item.classList.contains("ui5-shellbar-hidden-button"));
+	get _hasVisibleStartContent() {
+		return this.startContent.some(item => !item.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
-	get _hasVisibleAdditionalContextEnd() {
-		return this.additionalContextEnd.some(item => !item.classList.contains("ui5-shellbar-hidden-button"));
+	get _hasVisibleEndContent() {
+		return this.endContent.some(item => !item.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
 	get itemsToOverflow(): HTMLElement [] {
@@ -1535,7 +1517,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get additionalCoontextHidden() {
-		return [...this.additionalContextEnd, ...this.additionalContextStart].filter(item => item.classList.contains("ui5-shellbar-hidden-button"));
+		return [...this.endContent, ...this.startContent].filter(item => item.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
 	get accInfo() {
@@ -1580,7 +1562,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get accLogoRole() {
-		return this.accessibilityAttributes.logo?.role || "link";
+		return this.accessibilityAttributes.logo?.role || "button";
 	}
 }
 
