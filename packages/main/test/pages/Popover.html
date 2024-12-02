@@ -527,8 +527,14 @@ z-index: 1;
 	</ui5-popover>
 
 	<br>
-	<br><br>
-	<br><br>
+	<br>
+
+	<h2>Opener in ShadowRoot</h2>
+	<opener-test></opener-test>
+
+	<br>
+	<br>
+	<br>
 	<br>
 
 	<script>
@@ -843,6 +849,24 @@ z-index: 1;
 			document.getElementById("vertical").opener = e.currentTarget;
 			document.getElementById("vertical").open = true;
 		});
+
+		class OpenerTest extends HTMLElement {
+			constructor() {
+				super();
+				this.attachShadow({ mode: "open" });
+				this.shadowRoot.innerHTML = `
+					<ui5-link id="lnk">click me to open popover</ui5-link>
+					<ui5-responsive-popover id="pop" opener="lnk">content</ui5-responsive-popover>
+				`;
+			}
+			connectedCallback() {
+				this.shadowRoot.getElementById("lnk").addEventListener("click", () => {
+					this.shadowRoot.getElementById("pop").open = true;
+				});
+			}
+		}
+
+		customElements.define("opener-test", OpenerTest)
 
 	</script>
 </body>
