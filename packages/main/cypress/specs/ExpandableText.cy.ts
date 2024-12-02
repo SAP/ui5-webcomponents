@@ -50,9 +50,10 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+				.find(".ui5-exp-text-toggle")
 				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
-				.should("exist");
+				.should("exist")
+				.should("have.attr", "ui5-link");
 		});
 
 		it("Should display 'Show More' if maxCharacters are exceeded, set to 0", () => {
@@ -72,7 +73,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 
 			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+				.find(".ui5-exp-text-toggle")
 				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.should("exist");
 		});
@@ -92,7 +93,7 @@ describe("ExpandableText", () => {
 				.should("not.exist");
 
 			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+				.find(".ui5-exp-text-toggle")
 				.should("not.exist");
 		});
 
@@ -103,7 +104,7 @@ describe("ExpandableText", () => {
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
-			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@toggle")
 				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
@@ -138,7 +139,7 @@ describe("ExpandableText", () => {
 			`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
-			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("#before")
 				.focus();
@@ -175,7 +176,7 @@ describe("ExpandableText", () => {
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find("[ui5-text]").as("text");
-			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@toggle")
 				.should("have.attr", "accessible-role", "Button");
@@ -225,7 +226,7 @@ describe("ExpandableText", () => {
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="${maxCharacters}" overflow-mode="Popover"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
-			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@expTextShadow")
 				.find("[ui5-text]")
@@ -278,7 +279,7 @@ describe("ExpandableText", () => {
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 			cy.get("@expTextShadow").find("[ui5-text]").as("text");
-			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@toggle")
 				.should("have.attr", "accessible-name");
@@ -311,7 +312,7 @@ describe("ExpandableText", () => {
 			`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
-			cy.get("@expTextShadow").find("[ui5-link].ui5-exp-text-toggle").as("toggle");
+			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("#before")
 				.focus();
@@ -354,7 +355,7 @@ describe("ExpandableText", () => {
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
 
 			cy.get("@expTextShadow")
-				.find("[ui5-link].ui5-exp-text-toggle")
+				.find(".ui5-exp-text-toggle")
 				.contains(EXPANDABLE_TEXT_SHOW_MORE.defaultText)
 				.realClick();
 
