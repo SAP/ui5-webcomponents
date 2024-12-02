@@ -14,7 +14,7 @@ import {
 import UI5Element, { type InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { throttle } from "./TableUtils.js";
@@ -69,20 +69,12 @@ type RangeChangeEventDetail = {
  * @param {number} last The 0-based index of the last children currently rendered
  * @public
  */
-@event<RangeChangeEventDetail>("range-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		first: { type: Number },
-		/**
-		 * @public
-		 */
-		last: { type: Number },
-	},
-})
+@event("range-change")
 
 class TableVirtualizer extends UI5Element implements ITableFeature {
+	eventDetails!: {
+		"range-change": RangeChangeEventDetail
+	}
 	/**
 	 * Defines the height of the rows in the table.
 	 *
@@ -210,7 +202,7 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 
 		this._lastRowPosition = lastRowPosition;
 		this._firstRowPosition = firstRowPosition;
-		this.fireDecoratorEvent<RangeChangeEventDetail>("range-change", {
+		this.fireDecoratorEvent("range-change", {
 			first: firstRowPosition,
 			last: lastRowPosition,
 		});

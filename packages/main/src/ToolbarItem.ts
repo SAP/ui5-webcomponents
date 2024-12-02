@@ -19,7 +19,6 @@ type IEventOptions = {
  * @since 1.17.0
  */
 class ToolbarItem extends UI5Element {
-	eventDetails!: object;
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
@@ -110,6 +109,8 @@ class ToolbarItem extends UI5Element {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 }
+
+type a = ToolbarItem["eventDetails"];
 
 export type { IEventOptions };
 export default ToolbarItem;

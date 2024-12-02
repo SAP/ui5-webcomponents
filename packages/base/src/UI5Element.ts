@@ -139,6 +139,10 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 		proto = Object.getPrototypeOf(proto);
 	} while (proto && proto !== HTMLElement.prototype);
 }
+export type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
+export type Equal<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? true : false
 
 /**
  * @class
@@ -148,8 +152,8 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
-	eventDetails!: {
-		[k: string]: any;
+	eventDetails!: NotEqual<typeof this, typeof UI5Element> extends true ? object : {
+		[k: string]: any
 	};
 	__id?: string;
 	_suppressInvalidation: boolean;
