@@ -50,7 +50,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import List from "./List.js";
+import List, { type ListItemDeleteEventDetail } from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
@@ -577,8 +577,10 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	async itemDelete(e: CustomEvent) {
-		const token = e.detail.item.tokenRef;
+	@bound
+	async itemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
+		const token = this.getTokenByRefId(e.detail.item.getAttribute("data-ui5-token-ref-id")!);
+
 		const tokensArray = this._tokens;
 
 		// delay the token deletion in order to close the popover before removing token of the DOM
@@ -594,7 +596,7 @@ class Tokenizer extends UI5Element {
 		} else {
 			if (isPhone()) {
 				token._isVisible = false;
-				this._deletedDialogItems.push(token as Token);
+				this._deletedDialogItems.push(token);
 			} else {
 				this.fireDecoratorEvent<TokenizerTokenDeleteEventDetail>("token-delete", { tokens: [token] });
 			}
@@ -610,6 +612,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
+	@bound
 	handleBeforeClose() {
 		const tokensArray = this._tokens;
 
@@ -625,6 +628,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
+	@bound
 	handleBeforeOpen() {
 		if (this.multiLine) {
 			this._resetTokensVisibility();
@@ -645,6 +649,7 @@ class Tokenizer extends UI5Element {
 		this.fireDecoratorEvent("before-more-popover-open");
 	}
 
+	@bound
 	handleAfterClose() {
 		this.open = false;
 		this._preventCollapse = false;
@@ -655,6 +660,7 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
+	@bound
 	handleDialogButtonPress(e: MouseEvent) {
 		const isOkButton = (e.target as HTMLElement).hasAttribute("data-ui5-tokenizer-dialog-ok-button");
 		const confirm = !!isOkButton;
@@ -718,6 +724,7 @@ class Tokenizer extends UI5Element {
 		this._handleItemNavigation(e, this._tokens);
 	}
 
+	@bound
 	_onPopoverListKeydown(e: KeyboardEvent) {
 		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
@@ -1205,6 +1212,10 @@ class Tokenizer extends UI5Element {
 
 	getPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	getTokenByRefId(refId: string) {
+		return this.tokens.find(token => token._id === refId)!;
 	}
 }
 

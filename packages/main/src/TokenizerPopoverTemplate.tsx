@@ -41,10 +41,9 @@ export default function (this: Tokenizer) {
 			onKeyDown={this._onPopoverListKeydown}
 			onItemDelete={this.itemDelete}
 		>
-			{this._tokens.map(token =>
-				{token._isVisible &&
-					<ListItemStandard tokenRef={token} wrappingType="Normal">{token.text}</ListItemStandard> 
-			})}
+			{this._tokens
+				.filter(token => token._isVisible)
+				.map(token => <ListItemStandard data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard> )}
 		</List>
 
 		{this._isPhone &&
