@@ -102,6 +102,7 @@
 			notifications-count="99+"
 			show-notifications
 			show-product-switch
+			show-search-field
 	>
 
 		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
@@ -115,7 +116,7 @@
 		<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 
 		<ui5-shellbar-item id="disc" icon="disconnected" text="Disconnect"></ui5-shellbar-item>
-		<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" icon="incoming-call" text="Incoming Calls"  id="Call"></ui5-shellbar-item>
 
 		<ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
 			<div slot="valueStateMessage">Instructions</div>
@@ -308,6 +309,10 @@
 		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
 			item.addEventListener("ui5-click", function(event) {
 				wcToastTC.open = true;
+				if (event.target.id === "Call") {
+					event.preventDefault();
+					window["press-input"].value = "Call";
+				}
 			});
 		});
 
