@@ -107,6 +107,16 @@ type StepInputValueStateChangeEventDetail = {
 	bubbles: true,
 })
 /**
+ * Fired when the value of the component changes at each keystroke,
+ * and when a suggestion item has been selected.
+ * @public
+ * @since 2.5.0
+ */
+@event("input", {
+	bubbles: true,
+	cancelable: true,
+})
+/**
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
@@ -387,6 +397,14 @@ class StepInput extends UI5Element implements IFormInputElement {
 				this.inputOuter.removeAttribute("focused");
 			}
 		}, 0);
+	}
+
+	_onInput(e: InputEvent) {
+		const prevented = !this.fireDecoratorEvent("input");
+
+		if (prevented) {
+			e.preventDefault();
+		}
 	}
 
 	_onInputFocusIn() {
