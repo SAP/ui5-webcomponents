@@ -17,6 +17,7 @@ import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type UserMenuAccount from "./UserMenuAccount.js";
 import type UserMenuItem from "./UserMenuItem.js";
 import UserMenuTemplate from "./generated/templates/UserMenuTemplate.lit.js";
@@ -28,6 +29,7 @@ import "@ui5/webcomponents-icons/dist/edit.js";
 import "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import "@ui5/webcomponents-icons/dist/log.js";
 import "@ui5/webcomponents-icons/dist/user-settings.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Texts
 import {
@@ -37,6 +39,7 @@ import {
 	USER_MENU_POPOVER_ACCESSIBLE_NAME,
 	USER_MENU_EDIT_AVATAR_TXT,
 	USER_MENU_ADD_ACCOUNT_TXT,
+	USER_MENU_CLOSE_BUTTON_TXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type UserMenuItemClickEventDetail = {
@@ -225,6 +228,10 @@ class UserMenu extends UI5Element {
 		this._selectedAccount = this.accounts.find(account => account.selected) || this.accounts[0];
 	}
 
+	get _isPhone() {
+		return isPhone();
+	}
+
 	_handleAvatarClick() {
 		this.fireDecoratorEvent("avatar-click");
 	}
@@ -285,6 +292,10 @@ class UserMenu extends UI5Element {
 		this.open = false;
 	}
 
+	_handleDeclineClick() {
+		this._closeUserMenu();
+	}
+
 	_openItemSubMenu(item: UserMenuItem) {
 		if (!item._popover || item._popover.open) {
 			return;
@@ -313,6 +324,10 @@ class UserMenu extends UI5Element {
 
 	get _otherAccounts() {
 		return this.accounts.filter(account => account !== this._selectedAccount);
+	}
+
+	get _declineButtonTooltip() {
+		return UserMenu.i18nBundle.getText(USER_MENU_CLOSE_BUTTON_TXT);
 	}
 
 	get _manageAccountButtonText() {
