@@ -12,7 +12,7 @@ import {
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
-import NavigationLayoutTemplate from "./generated/templates/NavigationLayoutTemplate.lit.js";
+import NavigationLayoutTemplate from "./NavigationLayoutTemplate.js";
 
 // Styles
 import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
