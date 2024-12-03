@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -121,36 +121,13 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
  */
-@event<DynamicSideContentLayoutChangeEventDetail>("layout-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		currentBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		previousBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		mainContentVisible: {
-			type: Boolean,
-		},
-		/**
-		 * @public
-		 */
-		sideContentVisible: {
-			type: Boolean,
-		},
-	},
+@event("layout-change", {
 	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
+	eventDetails!: {
+		"layout-change": DynamicSideContentLayoutChangeEventDetail
+	}
 	/**
 	 * Defines the visibility of the main content.
 	 * @default false
@@ -466,7 +443,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireDecoratorEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
+			this.fireDecoratorEvent("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 
