@@ -1,7 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
@@ -10,7 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-import IconTemplate from "./generated/templates/IconTemplate.lit.js";
+import IconTemplate from "./IconTemplate.js";
 import type IconDesign from "./types/IconDesign.js";
 import IconMode from "./types/IconMode.js";
 
@@ -99,7 +100,7 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 	tag: "ui5-icon",
 	languageAware: true,
 	themeAware: true,
-	renderer: litRender,
+	renderer: jsxRender,
 	template: IconTemplate,
 	styles: iconCss,
 })
@@ -214,6 +215,7 @@ class Icon extends UI5Element implements IIcon {
 	viewBox?: string;
 	customSvg?: object;
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (this.mode !== IconMode.Interactive) {
 			return;
@@ -228,6 +230,7 @@ class Icon extends UI5Element implements IIcon {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this.mode === IconMode.Interactive && isSpace(e)) {
 			this.fireDecoratorEvent("click");
@@ -246,7 +249,7 @@ class Icon extends UI5Element implements IIcon {
 	}
 
 	get _tabIndex() {
-		return this.mode === IconMode.Interactive ? "0" : undefined;
+		return this.mode === IconMode.Interactive ? 0 : undefined;
 	}
 
 	get effectiveAccessibleRole() {
