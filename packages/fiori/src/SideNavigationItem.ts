@@ -72,7 +72,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
-	get overflowItems() : Array<HTMLElement> {
+	get overflowItems() : Array<SideNavigationItem> {
 		return [this];
 	}
 
