@@ -1012,7 +1012,6 @@ abstract class UI5Element extends HTMLElement {
 			cancelable,
 		});
 
-		// TODO we can stop firing ui5-* events which match native events, as the native one will be always used (like click, change, etc)
 		// This will be false if the no-conflict event is prevented
 		const noConflictEventResult = this.dispatchEvent(noConflictEvent);
 

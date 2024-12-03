@@ -1513,7 +1513,6 @@ class List extends UI5Element {
 	}
 
 	getBeforeElement() {
-		debugger;
 		if (!this._beforeElement) {
 			this._beforeElement = this.shadowRoot!.querySelector(`[id="${this._id}-before"]`) as HTMLElement;
 		}
