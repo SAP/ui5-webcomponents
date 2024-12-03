@@ -3,6 +3,7 @@ import "../../src/Button.js";
 import "../../src/Menu.js";
 import "../../src/MenuItem.js";
 import type MenuItem from "../../src/MenuItem.js";
+import Menu from "../../src/Menu.js";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
@@ -212,16 +213,21 @@ describe("Menu interaction", () => {
 
 		cy.get("[ui5-menu]")
 			.as("menu").then($menu => {
-				$menu.get(0).addEventListener("ui5-before-open", () => {
+				const menu = $menu.get(0) as Menu;
+
+				menu.addEventListener("ui5-before-open", () => {
 					setTimeout(() => {
-						$menu.removeAttr("loading");
-						$menu.removeAttr("loading-delay");
-						const oneNode = document.createElement("ui5-menu-item");
-						oneNode.setAttribute("text", "Open from Amazon Cloud");
-						const twoNode = document.createElement("ui5-menu-item");
-						twoNode.setAttribute("text", "Open from Google Cloud");
-						$menu.append(oneNode, twoNode);
-						$menu.focus();
+						menu.loading = false;
+						menu.loadingDelay = 0;
+
+						const oneNode = document.createElement("ui5-menu-item") as MenuItem;
+						oneNode.text = "Open from Amazon Cloud";
+
+						const twoNode = document.createElement("ui5-menu-item") as MenuItem;
+						twoNode.text = "Open from Google Cloud";
+
+						menu.append(oneNode, twoNode);
+						menu.focus();
 					}, 1000);
 				});
 			});
