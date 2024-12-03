@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type ComboBox from "./ComboBox.js";
 import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
@@ -55,10 +54,10 @@ export default function (this: ComboBox) {
 					slot="icon"
 					name={slimArrowDown}
 					tabindex={-1}
-					class={clsx({
+					class={{
 						"inputIcon": true,
 						"inputIcon--pressed": this._iconPressed,
-					})}
+					}}
 					accessibleName={this._iconAccessibleNameText}
 					onClick={this._arrowClick}
 				></Icon>

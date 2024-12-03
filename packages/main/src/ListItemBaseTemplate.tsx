@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type ListItemBase from "./ListItemBase.js";
 import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
 
@@ -13,7 +12,7 @@ export default function (this: ListItemBase, hooks?: { listItemContent: () => vo
 			part="native-li"
 			data-sap-focus-ref
 			tabindex={this._effectiveTabIndex}
-			class={clsx(this.classes.main)}
+			class={this.classes.main}
 			draggable={this.movable}
 			role={injectedProps?.role}
 			title={injectedProps?.title}

@@ -1,5 +1,4 @@
 import type ListItem from "./ListItem.js"
-import clsx from "clsx";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import editIcon from "@ui5/webcomponents-icons/dist/edit.js";
@@ -32,7 +31,7 @@ export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
 		part="native-li"
 		data-sap-focus-ref
 		tabindex={this._effectiveTabIndex}
-		class={clsx(this.classes.main)}
+		class={this.classes.main}
 		onFocusIn={this._onfocusin}
 		onFocusOut={this._onfocusout}
 		onKeyUp={this._onkeyup}

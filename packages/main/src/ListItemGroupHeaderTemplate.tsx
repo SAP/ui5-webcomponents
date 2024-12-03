@@ -1,4 +1,3 @@
-import clsx from "clsx"
 import type ListItemGroupHeader from "./ListItemGroupHeader.js"
 
 export default function (this: ListItemGroupHeader) {
@@ -7,10 +6,10 @@ return (
 			role="group"
 			part="native-li"
 			tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
-			class={clsx({
+			class={{
 				"ui5-ghli-root": true,
 				...this.classes.main,
-			})}
+			}}
 			aria-label={this.ariaLabelText}
 			aria-roledescription={this.groupHeaderText}
 			onFocusIn={this._onfocusin}

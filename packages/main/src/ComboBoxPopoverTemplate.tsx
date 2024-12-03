@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import List from "./List.js";
@@ -14,7 +13,7 @@ export default function (this: ComboBox) {
 		<>
 		<ResponsivePopover
 			id={this.responsivePopoverId}
-			class={clsx(this.classes.popover)}
+			class={this.classes.popover}
 			style={this.styles.suggestionsPopover}
 			tabindex={-1}
 			open={this.open}
@@ -64,7 +63,7 @@ export default function (this: ComboBox) {
 				</div>
 
 				{this.hasValueStateText &&
-					<div class={clsx(this.classes.popoverValueState)} style={this.styles.popoverValueStateMessage}>
+					<div class={this.classes.popoverValueState} style={this.styles.popoverValueStateMessage}>
 						<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
 						{ this.open && valueStateMessage.call(this) }
 					</div>
@@ -75,11 +74,11 @@ export default function (this: ComboBox) {
 			{!this._isPhone && this.hasValueStateText &&
 				<div 
 					slot="header" 
-					class={clsx({
+					class={{
 						"ui5-responsive-popover-header": true,
 						"ui5-responsive-popover-header--focused": this._isValueStateFocused,
 						...this.classes.popoverValueState,
-					})}
+					}}
 					style={this.styles.suggestionPopoverHeader}
 				>
 					<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
@@ -123,7 +122,7 @@ export default function (this: ComboBox) {
 			onClose={this._handleValueStatePopoverAfterClose}
 			onFocusOut={this._handleValueStatePopoverFocusout}
 		>
-			<div slot="header" class={clsx(this.classes.popoverValueState)} style={this.styles.popoverHeader}>
+			<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
 				<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
 				{ valueStateMessage.call(this) }
 			</div>
