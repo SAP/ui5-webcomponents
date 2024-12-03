@@ -8,6 +8,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
 import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
@@ -99,6 +100,10 @@ type NotificationListGroupItemToggleEventDetail = {
  * @since 2.2.0
  */
 @event("load-more", {
+	bubbles: true,
+})
+
+@event("_innerItemPress", {
 	bubbles: true,
 })
 
@@ -259,6 +264,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	getHeaderDomRef() {
 		return this.getDomRef()?.querySelector(".ui5-nli-group-header") as HTMLElement;
+	}
+
+	_onInnerItemClick(e: CustomEvent) {
+		this.fireDecoratorEvent<ListItemClickEventDetail>("_innerItemPress", { item: e.detail.item });
 	}
 }
 

@@ -196,7 +196,7 @@ type ListItemClickEventDetail = {
 		 */
 		item: { type: HTMLElement },
 	},
-	bubbles: true,
+	bubbles: false,
 	cancelable: true,
 })
 
@@ -1314,6 +1314,8 @@ class List extends UI5Element {
 		if (!this.fireDecoratorEvent<ListItemClickEventDetail>("item-click", { item: pressedItem })) {
 			return;
 		}
+
+		e.stopPropagation();
 
 		if (this.selectionMode !== ListSelectionMode.Delete) {
 			const detail: SelectionRequestEventDetail = {

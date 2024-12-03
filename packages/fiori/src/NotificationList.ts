@@ -159,6 +159,8 @@ class NotificationList extends UI5Element {
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
+		e.stopPropagation();
+
 		if (!this.fireDecoratorEvent<NotificationItemClickEventDetail>("item-click", { item })) {
 			e.preventDefault();
 		}

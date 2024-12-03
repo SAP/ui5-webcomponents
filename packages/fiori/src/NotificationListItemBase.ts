@@ -1,4 +1,4 @@
-import { isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -74,11 +74,6 @@ class NotificationListItemBase extends ListItemBase {
 	 */
 	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
-
-		if (isSpace(e) && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
-			e.preventDefault();
-			return;
-		}
 
 		if (isF2(e)) {
 			e.stopImmediatePropagation();
