@@ -2,15 +2,22 @@
     width: 20rem;
 }
 
-.ui5-pm-rp::part(header),
 .ui5-pm-rp::part(content),
 .ui5-pm-rp::part(footer) {
     padding-inline: 0.5rem;
 }
 
 .ui5-pm-rp::part(header) {
-    padding-top: 1rem;
     box-shadow: none;
+    padding: 0;
+}
+
+.ui5-pm-header {
+    width: 100%;
+    padding-block-start: 1rem;
+    padding-inline: 0.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .ui5-pm-rp::part(content) {
@@ -55,7 +62,6 @@
 }
 
 .ui5-pm-decline-btn {
-	margin-top: 0.5rem;
 	align-self: flex-end;
 	font-family: var(--sapFontSemiboldFamily);
 }

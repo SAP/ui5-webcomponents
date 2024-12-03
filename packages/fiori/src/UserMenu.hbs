@@ -11,35 +11,37 @@
 		.open={{open}}
 		.opener={{opener}}
 >
-	{{#if _isPhone}}
-		<ui5-button icon="decline" design="Transparent" class="ui5-pm-decline-btn" @click="{{_handleDeclineClick}}" tooltip="{{_declineButtonTooltip}}"></ui5-button>
-	{{/if}}
+	<div class="ui5-pm-header" slot="header">
+		{{#if _isPhone}}
+			<ui5-button icon="decline" design="Transparent" class="ui5-pm-decline-btn" @click="{{_handleDeclineClick}}" tooltip="{{_declineButtonTooltip}}"></ui5-button>
+		{{/if}}
 
-	{{#if _selectedAccount}}
-		<div class="ui5-pm-selected-account" slot="header">
-			<ui5-avatar size="L" @click="{{_handleAvatarClick}}" .initials="{{_selectedAccount._initials}}" fallback-icon="person-placeholder" class="ui5-pm--selected-account-avatar">
-				{{#if _selectedAccount.avatarSrc}}
-					<img src={{_selectedAccount.avatarSrc}}/>
+		{{#if _selectedAccount}}
+			<div class="ui5-pm-selected-account" >
+				<ui5-avatar size="L" @click="{{_handleAvatarClick}}" .initials="{{_selectedAccount._initials}}" fallback-icon="person-placeholder" class="ui5-pm--selected-account-avatar">
+					{{#if _selectedAccount.avatarSrc}}
+						<img src={{_selectedAccount.avatarSrc}}/>
+					{{/if}}
+					<ui5-tag slot="badge" wrapping-type="None" design="Set1" color-scheme="5" title="{{_editAvatarTooltip}}">
+						<ui5-icon slot="icon" name="edit"></ui5-icon>
+					</ui5-tag>
+				</ui5-avatar>
+				{{#if _selectedAccount.titleText}}
+					<ui5-title class="ui5-pm-selected-account-title">{{_selectedAccount.titleText}}</ui5-title>
 				{{/if}}
-				<ui5-tag slot="badge" wrapping-type="None" design="Set1" color-scheme="5" title="{{_editAvatarTooltip}}">
-					<ui5-icon slot="icon" name="edit"></ui5-icon>
-				</ui5-tag>
-			</ui5-avatar>
-			{{#if _selectedAccount.titleText}}
-				<ui5-title class="ui5-pm-selected-account-title">{{_selectedAccount.titleText}}</ui5-title>
-			{{/if}}
-			{{#if _selectedAccount.subtitleText}}
-				<ui5-text class="ui5-pm-selected-account-subtitleText">{{_selectedAccount.subtitleText}}</ui5-text>
-			{{/if}}
-			{{#if _selectedAccount.description}}
-				<ui5-text class="ui5-pm-selected-account-description">{{_selectedAccount.description}}</ui5-text>
-			{{/if}}
+				{{#if _selectedAccount.subtitleText}}
+					<ui5-text class="ui5-pm-selected-account-subtitleText">{{_selectedAccount.subtitleText}}</ui5-text>
+				{{/if}}
+				{{#if _selectedAccount.description}}
+					<ui5-text class="ui5-pm-selected-account-description">{{_selectedAccount.description}}</ui5-text>
+				{{/if}}
 
-			{{#if showManageAccount}}
-				<ui5-button icon="user-settings" class="ui5-pm-manage-account-btn" @click="{{_handleManageAccountClick}}">{{_manageAccountButtonText}}</ui5-button>
-			{{/if}}
-		</div>
-	{{/if}}
+				{{#if showManageAccount}}
+					<ui5-button icon="user-settings" class="ui5-pm-manage-account-btn" @click="{{_handleManageAccountClick}}">{{_manageAccountButtonText}}</ui5-button>
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
 
 	{{#if showOtherAccounts}}
 		<ui5-panel collapsed class="ui5-pm-other-accounts">
