@@ -152,8 +152,8 @@
 
 		delaymenu.addEventListener("ui5-before-open", function(event) {
 			setTimeout(function() {
-				delaymenu.removeAttribute("loading");
-				delaymenu.removeAttribute("loading-delay");
+				delaymenu.loading = false;
+				delaymenu.loadingDelay = 0;
 				let oneNode = document.createElement("ui5-menu-item");
 				oneNode.setAttribute("text", "Open from Amazon Cloud");
 				let twoNode = document.createElement("ui5-menu-item");
@@ -169,8 +169,8 @@
 			const item = event.detail.item;
 			if (item && item.text === "Open" && !fetched) {
 				setTimeout(function() {
-					item.removeAttribute("loading");
-					item.removeAttribute("loading-delay");
+					item.loading = false;
+					item.loadingDelay = 0;
 					let oneNode = document.createElement("ui5-menu-item");
 					oneNode.setAttribute("text", "Open from Amazon Cloud");
 					let twoNode = document.createElement("ui5-menu-item");

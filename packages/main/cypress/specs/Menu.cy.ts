@@ -210,10 +210,6 @@ describe("Menu interaction", () => {
 		<ui5-menu id="menu" loading loading-delay="100">
 		</ui5-menu>`);
 
-		cy.get("#btnOpen")
-			.as("button")
-			.realClick();
-
 		cy.get("[ui5-menu]")
 			.as("menu").then($menu => {
 				$menu.get(0).addEventListener("ui5-before-open", () => {
@@ -228,10 +224,11 @@ describe("Menu interaction", () => {
 						$menu.focus();
 					}, 1000);
 				});
-			})
-			.ui5MenuOpen({
-				opener: "btnOpen",
 			});
+
+		cy.get("@menu").ui5MenuOpen({
+			opener: "btnOpen",
+		});
 
 		cy.get("[ui5-menu]")
 			.ui5MenuOpened();
