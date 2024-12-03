@@ -219,7 +219,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	get loadMoreButton() {
 		const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]") as NotificationListGroupList;
-		return innerList.getDomRef()?.querySelector("[growing-button-inner]") as HTMLElement;
+		return innerList.getDomRef()?.querySelector(".ui5-growing-button-inner") as HTMLElement;
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
