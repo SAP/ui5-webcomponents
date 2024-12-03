@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -86,22 +86,16 @@ type UploadCollectionItemDeleteEventDetail = {
  * @public
  * @native
  */
-@event("drop", {
-	bubbles: true,
-})
+// @event("drop", {
+// 	bubbles: true,
+// })
 
 /**
  * Fired when the delete button of any item is pressed.
  * @param {HTMLElement} item The `ui5-upload-collection-item` which was deleted.
  * @public
  */
-@event<UploadCollectionItemDeleteEventDetail>("item-delete", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-delete", {
 	bubbles: true,
 })
 
@@ -111,16 +105,14 @@ type UploadCollectionItemDeleteEventDetail = {
  * @param {Array} selectedItems An array of the selected items.
  * @public
  */
-@event<UploadCollectionSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedItems: { type: Array },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
 class UploadCollection extends UI5Element {
+	eventDetails!: {
+		"item-delete": UploadCollectionItemDeleteEventDetail,
+		"selection-change": UploadCollectionSelectionChangeEventDetail,
+	}
 	/**
 	 * Defines the selection mode of the `ui5-upload-collection`.
 	 *
@@ -273,12 +265,12 @@ class UploadCollection extends UI5Element {
 
 	@bound
 	_onItemDelete(e: CustomEvent) {
-		this.fireDecoratorEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
+		this.fireDecoratorEvent("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
 	@bound
 	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		this.fireDecoratorEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
+		this.fireDecoratorEvent("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {

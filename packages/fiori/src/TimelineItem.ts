@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
@@ -50,9 +50,8 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 })
 class TimelineItem extends UI5Element implements ITimelineItem {
 	eventDetails!: {
-		"name-click": void,
-	};
-
+		"name-click": void
+	}
 	/**
 	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
@@ -165,7 +164,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	@bound
 	onNamePress() {
-		this.fireDecoratorEvent("name-click", {});
+		this.fireDecoratorEvent("name-click");
 	}
 
 	/**

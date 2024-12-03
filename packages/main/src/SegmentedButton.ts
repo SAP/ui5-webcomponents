@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -65,23 +65,16 @@ type SegmentedButtonSelectionChangeEventDetail = {
 })
 /**
  * Fired when the selected item changes.
- * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items.
+ * @param {Array<ISegmentedButtonItem>} selectedItems an array of selected items. Since: 1.14.0
  * @public
  */
-@event<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 * @since 1.14.0
-		 */
-		selectedItems: { type: Array },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
 
 class SegmentedButton extends UI5Element {
 	eventDetails!: {
-		"selection-change": SegmentedButtonSelectionChangeEventDetail
+		"selection-change": SegmentedButtonSelectionChangeEventDetail,
 	}
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -181,7 +174,7 @@ class SegmentedButton extends UI5Element {
 			this._applySingleSelection(target);
 		}
 
-		this.fireDecoratorEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedItems: this.selectedItems,
 		});
 

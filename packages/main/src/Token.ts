@@ -25,8 +25,8 @@ import TokenTemplate from "./TokenTemplate.js";
 import tokenStyles from "./generated/themes/Token.css.js";
 
 type TokenDeleteEventDetail = {
-	backSpace: boolean;
-	delete: boolean;
+	backSpace?: boolean;
+	delete?: boolean;
 }
 
 /**
@@ -72,10 +72,9 @@ type TokenDeleteEventDetail = {
 })
 class Token extends UI5Element implements IToken {
 	eventDetails!: {
-		"delete": TokenDeleteEventDetail
 		"select": void
-	};
-
+		"delete": TokenDeleteEventDetail
+	}
 	/**
 	 * Defines the text of the token.
 	 * @default undefined
@@ -189,7 +188,7 @@ class Token extends UI5Element implements IToken {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireDecoratorEvent<TokenDeleteEventDetail>("delete", {
+			this.fireDecoratorEvent("delete", {
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});

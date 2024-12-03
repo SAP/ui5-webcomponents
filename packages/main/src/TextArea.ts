@@ -3,7 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -127,6 +127,13 @@ type ExceededText = {
 })
 
 class TextArea extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": void;
+		"input": void;
+		"select": void;
+		"scroll": void;
+		"value-changed": void;
+	}
 	/**
 	 * Defines the value of the component.
 	 * @formEvents change input
@@ -422,17 +429,17 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	@bound
 	_onchange() {
-		this.fireDecoratorEvent("change", {});
+		this.fireDecoratorEvent("change");
 	}
 
 	@bound
 	_onselect() {
-		this.fireDecoratorEvent("select", {});
+		this.fireDecoratorEvent("select");
 	}
 
 	@bound
 	_onscroll() {
-		this.fireDecoratorEvent("scroll", {});
+		this.fireDecoratorEvent("scroll");
 	}
 
 	@bound
@@ -451,7 +458,7 @@ class TextArea extends UI5Element implements IFormInputElement {
 			nativeTextArea.setSelectionRange(this.maxlength, valueLength);
 		}
 
-		this.fireDecoratorEvent("input", {});
+		this.fireDecoratorEvent("input");
 
 		// Angular two way data binding
 		this.fireDecoratorEvent("value-changed");

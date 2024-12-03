@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -116,13 +116,13 @@ type DayPickerNavigateEventDetail = {
 /**
  * Fired when the selected date(s) change
  */
-@event<DayPickerChangeEventDetail>("change", {
+@event("change", {
 	bubbles: true,
 })
 /**
  * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
  */
-@event<DayPickerNavigateEventDetail>("navigate", {
+@event("navigate", {
 	bubbles: true,
 })
 class DayPicker extends CalendarPart implements ICalendarPicker {
@@ -475,7 +475,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp, isShift);
 
-		this.fireDecoratorEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -525,7 +525,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireDecoratorEvent<DayPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -738,7 +738,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireDecoratorEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -749,7 +749,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireDecoratorEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**

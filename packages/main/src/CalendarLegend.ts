@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -47,10 +47,7 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	template: CalendarLegendTemplate,
 	dependencies: [CalendarLegendItem],
 })
-@event<CalendarLegendItemSelectionChangeEventDetail>("calendar-legend-selection-change", {
-	detail: {
-		item: { type: CalendarLegendItem },
-	},
+@event("calendar-legend-selection-change", {
 	bubbles: true,
 })
 @event("calendar-legend-focus-out", {
@@ -142,7 +139,7 @@ class CalendarLegend extends UI5Element {
 	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
-		this.fireDecoratorEvent<CalendarLegendItemSelectionChangeEventDetail>("calendar-legend-selection-change", {
+		this.fireDecoratorEvent("calendar-legend-selection-change", {
 			item: target,
 		});
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);

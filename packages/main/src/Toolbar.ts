@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo, UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { event } from "@ui5/webcomponents-base/dist/decorators.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -84,16 +84,14 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 /**
  * @private
 */
-@event<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
-	detail: {
-		minWidth: {
-			type: Number,
-		},
-	},
+@event("_min-content-width-change", {
 	bubbles: true,
 })
 
 class Toolbar extends UI5Element {
+	eventDetails!: {
+		"_min-content-width-change": ToolbarMinWidthChangeEventDetail
+	}
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -396,7 +394,7 @@ class Toolbar extends UI5Element {
 
 		if (minWidth !== this.minContentWidth) {
 			const spaceAroundContent = this.offsetWidth - this.getDomRef()!.offsetWidth;
-			this.fireDecoratorEvent<ToolbarMinWidthChangeEventDetail>("_min-content-width-change", {
+			this.fireDecoratorEvent("_min-content-width-change", {
 				minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
 			});
 		}
@@ -519,7 +517,7 @@ class Toolbar extends UI5Element {
 			const abstractItem = this.getItemByID(refItemId);
 			const eventType = e.type;
 			const eventTypeNonPrefixed: string = e.type.replace("ui5-", "");
-			const prevented = !abstractItem?.fireDecoratorEvent(eventTypeNonPrefixed, { ...e.detail, targetRef: target });
+			const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, { ...e.detail, targetRef: target });
 			const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {

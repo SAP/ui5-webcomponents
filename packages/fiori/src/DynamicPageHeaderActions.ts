@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
@@ -90,6 +90,12 @@ type DynamicPageHeaderActionsAccessibilityAttributes = Pick<AccessibilityAttribu
 	bubbles: true,
 })
 class DynamicPageHeaderActions extends UI5Element {
+	eventDetails!: {
+		"expand-button-click": void;
+		"pin-button-click": void;
+		"expand-button-hover-in": void;
+		"expand-button-hover-out": void;
+	}
 	/**
 	 * Defines whether the header is pinned.
 	 *

@@ -118,6 +118,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	],
 })
 class Dialog extends Popup {
+	eventDetails!: Popup["eventDetails"];
 	/**
 	 * Defines the header text.
 	 *

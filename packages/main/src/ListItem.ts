@@ -9,7 +9,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -102,13 +102,16 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 @event("detail-click", {
 	bubbles: true,
 })
-@event("_focused", {
-	bubbles: true,
-})
-@event("selection-requested", {
+@event("_selection-requested", {
 	bubbles: true,
 })
 abstract class ListItem extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"] & {
+		// strictEvents
+		"toggle": any
+		"detail-click": { item: ListItem, selected: boolean };
+		"_selection-requested": SelectionRequestEventDetail,
+	}
 	/**
 	 * Defines the visual indication and behavior of the list items.
 	 * Available options are `Active` (by default), `Inactive`, `Detail` and `Navigation`.
@@ -369,7 +372,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	@bound
@@ -378,7 +381,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -389,7 +392,7 @@ abstract class ListItem extends ListItemBase {
 
 	@bound
 	onDelete() {
-		this.fireDecoratorEvent<SelectionRequestEventDetail>("selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	@bound

@@ -114,7 +114,8 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 })
 class Button extends UI5Element implements IButton {
 	eventDetails!: {
-		"active-state-change": void,
+		"active-state-change": void
+		// click: void
 	}
 	/**
 	 * Defines the component design.

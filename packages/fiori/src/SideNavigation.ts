@@ -7,7 +7,7 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -128,13 +128,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
  * @param {SideNavigationSelectableItemBase} item the clicked item.
  * @public
  */
-@event<SideNavigationSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("selection-change", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -553,6 +547,7 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
+			// @ts-expect-error strictEvents
 			item.fireDecoratorEvent("click");
 			return;
 		}
@@ -568,6 +563,7 @@ class SideNavigation extends UI5Element {
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
 		} else {
+			// @ts-expect-error strictEvents
 			item.fireDecoratorEvent("click");
 
 			if (!item.selected) {
@@ -602,7 +598,7 @@ class SideNavigation extends UI5Element {
 			return;
 		}
 
-		if (!this.fireDecoratorEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item })) {
+		if (!this.fireDecoratorEvent("selection-change", { item })) {
 			return;
 		}
 

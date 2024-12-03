@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -184,17 +184,7 @@ interface ITab extends UI5Element {
  * @public
  * @since 2.0.0
  */
-@event<TabContainerTabSelectEventDetail>("tab-select", {
-	detail: {
-		/**
-		 * @public
-		 */
-		tab: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		tabIndex: { type: Number },
-	},
+@event("tab-select", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -207,17 +197,7 @@ interface ITab extends UI5Element {
  * @public
  * @since 2.0.0
  */
-@event<TabContainerMoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -229,20 +209,15 @@ interface ITab extends UI5Element {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  */
-@event<TabContainerMoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
 	bubbles: true,
 })
 class TabContainer extends UI5Element {
+	eventDetails!: {
+		"tab-select": TabContainerTabSelectEventDetail;
+		"move-over": TabContainerMoveEventDetail;
+		"move": TabContainerMoveEventDetail;
+	}
 	/**
 	 * Defines whether the tab content is collapsed.
 	 * @default false
@@ -562,7 +537,7 @@ class TabContainer extends UI5Element {
 			}
 
 			const acceptedPlacement = placements.find(placement => {
-				const dragOverPrevented = !this.fireDecoratorEvent<TabContainerMoveEventDetail>("move-over", {
+				const dragOverPrevented = !this.fireDecoratorEvent("move-over", {
 					source: {
 						element: draggedElement!,
 					},
@@ -605,7 +580,7 @@ class TabContainer extends UI5Element {
 		e.preventDefault();
 		const draggedElement = DragRegistry.getDraggedElement()!;
 
-		this.fireDecoratorEvent<TabContainerMoveEventDetail>("move", {
+		this.fireDecoratorEvent("move", {
 			source: {
 				element: draggedElement,
 			},
@@ -646,7 +621,7 @@ class TabContainer extends UI5Element {
 		});
 
 		const acceptedPosition = positions.find(({ element, placement }) => {
-			return !this.fireDecoratorEvent<TabContainerMoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent("move-over", {
 				source: {
 					element: tab,
 				},
@@ -658,7 +633,7 @@ class TabContainer extends UI5Element {
 		});
 
 		if (acceptedPosition) {
-			this.fireDecoratorEvent<TabContainerMoveEventDetail>("move", {
+			this.fireDecoratorEvent("move", {
 				source: {
 					element: tab,
 				},
@@ -715,7 +690,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const placementAccepted = !this.fireDecoratorEvent<TabContainerMoveEventDetail>("move-over", {
+		const placementAccepted = !this.fireDecoratorEvent("move-over", {
 			source: {
 				element: draggedElement,
 			},
@@ -760,7 +735,7 @@ class TabContainer extends UI5Element {
 
 		e.preventDefault();
 
-		this.fireDecoratorEvent<TabContainerMoveEventDetail>("move", {
+		this.fireDecoratorEvent("move", {
 			source: {
 				element: draggedElement,
 			},
@@ -986,7 +961,7 @@ class TabContainer extends UI5Element {
 	 * @returns true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {
-		if (!this.fireDecoratorEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex })) {
+		if (!this.fireDecoratorEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex })) {
 			return false;
 		}
 

@@ -7,7 +7,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
@@ -158,18 +158,7 @@ type AvatarGroupClickEventDetail = {
  * @public
  * @since 1.0.0-rc.11
  */
-@event<AvatarGroupClickEventDetail>("click", {
-	detail: {
-		/**
-		* @public
-		*/
-		targetRef: { type: HTMLElement },
-		/**
-		* @public
-		*/
-		overflowButtonClicked: { type: Boolean },
-	},
-})
+@event("click")
 
 /**
  * Fired when the count of visible `ui5-avatar` elements in the
@@ -179,6 +168,10 @@ type AvatarGroupClickEventDetail = {
  */
 @event("overflow")
 class AvatarGroup extends UI5Element {
+	eventDetails!: {
+		"click": AvatarGroupClickEventDetail
+		"overflow": void
+	}
 	/**
 	 * Defines the mode of the `AvatarGroup`.
 	 * @default "Group"
@@ -434,7 +427,7 @@ class AvatarGroup extends UI5Element {
 	_fireGroupEvent(targetRef: HTMLElement) {
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
-		this.fireDecoratorEvent<AvatarGroupClickEventDetail>("click", {
+		this.fireDecoratorEvent("click", {
 			targetRef,
 			overflowButtonClicked: isOverflowButtonClicked,
 		});

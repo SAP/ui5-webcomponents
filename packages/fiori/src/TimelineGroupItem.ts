@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
@@ -50,9 +50,8 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 })
 class TimelineGroupItem extends UI5Element implements ITimelineItem {
 	eventDetails!: {
-		"toggle": void,
-	};
-
+		"toggle": void
+	}
 	/**
 	 * Defines the text of the button that expands and collapses the group.
 	 * @default undefined

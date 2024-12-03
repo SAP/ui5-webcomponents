@@ -2,7 +2,7 @@ import UI5Element, { type UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type {
@@ -222,14 +222,6 @@ type InputSuggestionScrollEventDetail = {
 })
 
 /**
- * Fired to make Angular two way data binding work properly.
- * @private
- */
-@event("value-changed", {
-	bubbles: true,
-})
-
-/**
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
  * @public
@@ -256,13 +248,7 @@ type InputSuggestionScrollEventDetail = {
  * @public
  * @since 2.0.0
  */
-@event<InputSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		item: { type: HTMLElement },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
 
@@ -282,17 +268,7 @@ type InputSuggestionScrollEventDetail = {
  * @protected
  * @since 1.0.0-rc.8
  */
-@event<InputSuggestionScrollEventDetail>("suggestion-scroll", {
-	detail: {
-		/**
-	 	* @public
-	 	*/
-		scrollTop: { type: Number },
-		/**
-	 	* @public
-	 	*/
-		scrollContainer: { type: HTMLElement },
-	},
+@event("suggestion-scroll", {
 	bubbles: true,
 })
 
@@ -315,17 +291,15 @@ type InputSuggestionScrollEventDetail = {
 })
 class Input extends UI5Element implements SuggestionComponent, IFormInputElement {
 	eventDetails!: {
+		"change": InputEventDetail,
 		"input": InputEventDetail,
-		"change": void,
-		"value-changed": void,
-		"selection-change": InputSelectionChangeEventDetail,
-		"open": void,
-		"close": void,
 		"select": void,
+		"selection-change": InputSelectionChangeEventDetail,
 		"type-ahead": void,
 		"suggestion-scroll": InputSuggestionScrollEventDetail,
-	};
-
+		"open": void,
+		"close": void,
+	}
 	/**
 	 * Defines whether the component is in disabled state.
 	 *
@@ -1061,7 +1035,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_clear() {
 		const valueBeforeClear = this.value;
 		this.value = "";
-		const prevented = !this.fireDecoratorEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: "" });
+		const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType: "" });
 
 		if (prevented) {
 			this.value = valueBeforeClear;
@@ -1080,9 +1054,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._clearIconClicked = true;
 	}
 
-	@bound
 	_scroll(e: UI5CustomEvent<ResponsivePopover, "scroll">) {
-		this.fireDecoratorEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
+		this.fireDecoratorEvent("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
 		});
@@ -1090,7 +1063,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	@bound
 	_handleSelect() {
-		this.fireDecoratorEvent("select", {});
+		this.fireDecoratorEvent("select");
 	}
 
 	@bound
@@ -1365,7 +1338,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (isUserInput) { // input
 			const inputType = e.inputType || "";
-			const prevented = !this.fireDecoratorEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType });
+			const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType });
 
 			if (prevented) {
 				// if the value is not changed after preventing the input event, revert the value
@@ -1376,8 +1349,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 				inputRef && (inputRef.value = this.value);
 			}
 
-			// Angular two way data binding
-			this.fireDecoratorEvent("value-changed");
 			this.fireResetSelectionChange();
 		}
 	}
@@ -1500,7 +1471,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 	fireSelectionChange(item: IInputSuggestionItem | null, isValueFromSuggestions: boolean) {
 		if (this.Suggestions) {
-			this.fireDecoratorEvent<InputSelectionChangeEventDetail>(INPUT_EVENTS.SELECTION_CHANGE, { item });
+			this.fireDecoratorEvent(INPUT_EVENTS.SELECTION_CHANGE, { item });
 			this._isLatestValueFromSuggestions = isValueFromSuggestions;
 		}
 	}

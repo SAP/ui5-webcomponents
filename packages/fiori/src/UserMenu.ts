@@ -1,10 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
-	customElement,
-	slot,
-	event,
-	property,
-	bound,
+	customElement, slot, eventStrict as event, property, bound,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
@@ -22,8 +18,8 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import UserMenuAccount from "./UserMenuAccount.js";
-import UserMenuItem from "./UserMenuItem.js";
+import type UserMenuAccount from "./UserMenuAccount.js";
+import type UserMenuItem from "./UserMenuItem.js";
 import UserMenuTemplate from "./UserMenuTemplate.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
 
@@ -119,11 +115,7 @@ type UserMenuOtherAccountClickEventDetail = {
  * @param {UserMenuAccount} selectedAccount The selected account.
  * @public
  */
-@event<UserMenuOtherAccountClickEventDetail>("change-account", {
-	detail: {
-		prevSelectedAccount: { type: UserMenuAccount },
-		selectedAccount: { type: UserMenuAccount },
-	},
+@event("change-account", {
 	cancelable: true,
 })
 
@@ -132,10 +124,7 @@ type UserMenuOtherAccountClickEventDetail = {
  * @param {UserMenuItem} item The selected `user menu item`.
  * @public
  */
-@event<UserMenuItemClickEventDetail>("item-click", {
-	detail: {
-		item: { type: UserMenuItem },
-	},
+@event("item-click", {
 	cancelable: true,
 })
 
@@ -147,6 +136,14 @@ type UserMenuOtherAccountClickEventDetail = {
 	cancelable: true,
 })
 class UserMenu extends UI5Element {
+	eventDetails!: {
+		"avatar-click": void;
+		"manage-account-click": void;
+		"add-account-click": void;
+		"change-account": UserMenuOtherAccountClickEventDetail;
+		"item-click": UserMenuItemClickEventDetail;
+		"sign-out-click": void;
+	}
 	/**
 	 * Defines if the User Menu is opened.
 	 *
@@ -254,7 +251,7 @@ class UserMenu extends UI5Element {
 	_handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>) {
 		const accountToSelect = this.getAccountByRefId(e.detail.item.getAttribute("data-ui5-account-ref-id")!);
 
-		const eventPrevented = !this.fireDecoratorEvent<UserMenuOtherAccountClickEventDetail>("change-account", {
+		const eventPrevented = !this.fireDecoratorEvent("change-account", {
 			prevSelectedAccount: this._selectedAccount,
 			selectedAccount: accountToSelect,
 		});
@@ -283,7 +280,7 @@ class UserMenu extends UI5Element {
 		const item = e.detail.item as UserMenuItem; // imrove: improve this ideally without "as" cating
 
 		if (!item._popover) {
-			const eventPrevented = !this.fireDecoratorEvent<UserMenuItemClickEventDetail>("item-click", {
+			const eventPrevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
 			});
 

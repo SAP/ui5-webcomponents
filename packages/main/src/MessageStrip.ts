@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -91,9 +91,8 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 
 class MessageStrip extends UI5Element {
 	eventDetails!: {
-		"close": void,
-	};
-
+		close: void;
+	}
 	/**
 	 * Defines the component type.
 	 * @default "Information"

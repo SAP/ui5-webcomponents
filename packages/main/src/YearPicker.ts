@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type LocaleT from "sap/ui/core/Locale";
@@ -78,21 +78,21 @@ type YearPickerNavigateEventDetail = {
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
  */
-@event<YearPickerChangeEventDetail>("change", {
+@event("change", {
 	bubbles: true,
 })
 /**
  * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
  * @since 1.0.0-rc.9
  */
-@event<YearPickerNavigateEventDetail>("navigate", {
+@event("navigate", {
 	bubbles: true,
 })
 class YearPicker extends CalendarPart implements ICalendarPicker {
 	eventDetails!: CalendarPart["eventDetails"] & {
 		"change": YearPickerChangeEventDetail,
 		"navigate": YearPickerNavigateEventDetail,
-	};
+	}
 
 	/**
 	 * An array of UTC timestamps representing the selected date
@@ -374,7 +374,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -388,7 +388,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	@bound
@@ -417,7 +417,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp);
 
-		this.fireDecoratorEvent<YearPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp!,
 			dates: this.selectedDates,
 		});

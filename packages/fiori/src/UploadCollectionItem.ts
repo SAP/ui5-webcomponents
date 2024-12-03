@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -130,6 +130,15 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 	bubbles: true,
 })
 class UploadCollectionItem extends ListItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		"file-name-click": void;
+		"rename": void;
+		"terminate": void;
+		"retry": void;
+		"focus-requested": void;
+		"_uci-delete": void;
+		"request-delete": void;
+	}
 	/**
 	 * Holds an instance of `File` associated with this item.
 	 * @default null

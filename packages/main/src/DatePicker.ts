@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -185,21 +185,7 @@ type Picker = "day" | "month" | "year";
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<DatePickerChangeEventDetail>("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("change", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -209,21 +195,7 @@ type Picker = "day" | "month" | "year";
  * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<DatePickerInputEventDetail>("input", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("input", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -235,21 +207,7 @@ type Picker = "day" | "month" | "year";
  * @param {string} valueState The new `valueState` that will be set.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
  */
-@event<DatePickerValueStateChangeEventDetail>("value-state-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		valueState: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("value-state-change", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -267,13 +225,13 @@ type Picker = "day" | "month" | "year";
 @event("close")
 class DatePicker extends DateComponentBase implements IFormInputElement {
 	eventDetails!: DateComponentBase["eventDetails"] & {
-		"open": void,
-		"close": void,
-		"input": DatePickerInputEventDetail,
-		"change": DatePickerChangeEventDetail,
+		change: DatePickerChangeEventDetail,
+		"value-changed": DatePickerChangeEventDetail,
+		input: DatePickerInputEventDetail,
 		"value-state-change": DatePickerValueStateChangeEventDetail,
-	};
-
+		open: void,
+		close: void,
+	}
 	/**
 	 * Defines a formatted date value.
 	 * @default ""
@@ -562,7 +520,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	_updateValueAndFireEvents(value: string, normalizeValue: boolean, events: Array<string>, updateValue = true) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, events: Array<"change" | "value-changed" | "input">, updateValue = true) {
 		const valid = this._checkValueValidity(value);
 
 		if (valid && normalizeValue) {
@@ -580,8 +538,8 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 
-		events.forEach((e: string) => {
-			if (!this.fireDecoratorEvent<DatePickerChangeEventDetail>(e, { value, valid })) {
+		events.forEach(e => {
+			if (!this.fireDecoratorEvent(e, { value, valid })) {
 				executeEvent = false;
 			}
 		});
@@ -603,7 +561,7 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 
 		this.valueState = valid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireDecoratorEvent<DatePickerValueStateChangeEventDetail>("value-state-change", { valueState: this.valueState, valid });
+		const eventPrevented = !this.fireDecoratorEvent("value-state-change", { valueState: this.valueState, valid });
 
 		if (eventPrevented) {
 			this.valueState = previousValueState;

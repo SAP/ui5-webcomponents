@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
@@ -59,7 +59,7 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 class TimeSelectionInputs extends TimePickerInternals {
 	eventDetails!: TimePickerInternals["eventDetails"] & {
 		"close-inputs": void,
-	};
+	}
 
 	@property({ type: Number })
 	_editedInput = -1;

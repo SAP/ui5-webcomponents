@@ -19,6 +19,10 @@ import SuggestionItemGroup from "../SuggestionItemGroup.js";
 import type { IInputSuggestionItem, IInputSuggestionItemSelectable } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
+	// XstrictEventsXX declared in Input.ts
+	eventDetails: {
+		input: { inputType: string };
+	}
 	_isValueStateFocused: boolean;
 	focused: boolean;
 	hasSuggestionItemSelected: boolean;

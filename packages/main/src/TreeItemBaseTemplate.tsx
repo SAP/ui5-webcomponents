@@ -16,7 +16,9 @@ export default function (this: TreeItemBase, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks }
 
 	return <div>
-		{ListItemTemplate.call(this, currentHooks)}
+		{
+			ListItemTemplate.call(this, currentHooks)
+		}
 
 		{listItemPostContent.call(this)}
 	</div>

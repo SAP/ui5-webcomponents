@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -95,21 +95,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  * @param { string } stringValue The new `value` of the clock, as string, zero-prepended when necessary.
  * @param { boolean } finalChange `true` when a value is selected and confirmed, `false` when a value is only selected but not confirmed.
  */
-@event<TimePickerClockChangeEventDetail>("change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		value: { type: Number },
-		/**
-		 * @public
-		 */
-		stringValue: { type: String },
-		/**
-		 * @public
-		 */
-		finalChange: { type: Boolean },
-	},
+@event("change", {
 	bubbles: true,
 })
 
@@ -629,10 +615,10 @@ class TimePickerClock extends UI5Element {
 		} else {
 			// the new value is set, fire event
 			setTimeout(() => {
-				this.fireDecoratorEvent<TimePickerClockChangeEventDetail>("change", {
-					"value": newValue,
-					"stringValue": this._getStringValue(newValue),
-					"finalChange": true,
+				this.fireDecoratorEvent("change", {
+					value: newValue,
+					stringValue: this._getStringValue(newValue),
+					finalChange: true,
 				});
 			}, ANIMATION_DELAY_EVENT);
 		}
@@ -681,10 +667,10 @@ class TimePickerClock extends UI5Element {
 	_setSelectedValue(value: number) {
 		const realValue: number = this._fixReplacementValue(value);
 		this.selectedValue = realValue;
-		this.fireDecoratorEvent<TimePickerClockChangeEventDetail>("change", {
-			"value": realValue,
-			"stringValue": this._getStringValue(realValue),
-			"finalChange": false,
+		this.fireDecoratorEvent("change", {
+			value: realValue,
+			stringValue: this._getStringValue(realValue),
+			finalChange: false,
 		});
 		this._updateSelectedValueObject(realValue);
 	}

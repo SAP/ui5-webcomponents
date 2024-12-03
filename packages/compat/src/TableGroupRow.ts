@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -49,9 +49,8 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 })
 class TableGroupRow extends UI5Element implements ITableRow {
 	eventDetails!: {
-		"_focused": void,
-	};
-
+		_focused: FocusEvent,
+	}
 	/**
 	 * Defines the mode of the row
 	 * @default "None"

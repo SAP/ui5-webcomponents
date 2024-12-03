@@ -1,11 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import {
-	customElement,
-	property,
-	event,
-	slot,
-	bound,
-} from "@ui5/webcomponents-base/dist/decorators.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isLeft,
@@ -125,17 +123,14 @@ type ItemsInfo = {
  * @public
  * @since 1.0.0-rc.7
  */
-@event<CarouselNavigateEventDetail>("navigate", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedIndex: { type: Number },
-	},
+@event("navigate", {
 	bubbles: true,
 })
 
 class Carousel extends UI5Element {
+	eventDetails!: {
+		navigate: CarouselNavigateEventDetail;
+	}
 	/**
 	 * Defines the accessible name of the component.
 	 * @default undefined
@@ -364,7 +359,7 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -487,7 +482,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -507,7 +502,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireDecoratorEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 

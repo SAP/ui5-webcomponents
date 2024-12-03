@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
@@ -88,9 +88,8 @@ type Star = {
 
 class RatingIndicator extends UI5Element {
 	eventDetails!: {
-		"change": void,
-	};
-
+		change: void,
+	}
 	/**
 	 * The indicated value of the rating.
 	 *

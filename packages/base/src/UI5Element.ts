@@ -135,6 +135,10 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 		proto = Object.getPrototypeOf(proto);
 	} while (proto && proto !== HTMLElement.prototype);
 }
+export type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
+export type Equal<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? true : false
 
 // JSX support
 type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
@@ -157,10 +161,10 @@ export type UI5CustomEvent<T extends UI5Element, N extends keyof T["eventDetails
  * @public
  */
 abstract class UI5Element extends HTMLElement {
-	eventDetails!: {
+	eventDetails!: NotEqual<this, UI5Element> extends true ? object : {
 		[k: string]: any
-	};	// all event types can be assigned to base class
-	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]>> & Convert<this["eventDetails"]>
+	};
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect"> & Convert<this["eventDetails"]>
 	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
@@ -985,13 +989,13 @@ abstract class UI5Element extends HTMLElement {
 	 * @param data - additional data for the event
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireDecoratorEvent<T>(name: string, data?: T): boolean {
-		const eventData = this.getEventData(name);
+	fireDecoratorEvent<N extends keyof this["eventDetails"]>(name: N, data?: this["eventDetails"][N] | undefined): boolean {
+		const eventData = this.getEventData(name as string);
 		const cancellable = eventData ? eventData.cancelable : false;
 		const bubbles = eventData ? eventData.bubbles : false;
 
-		const eventResult = this._fireEvent(name, data, cancellable, bubbles);
-		const pascalCaseEventName = kebabToPascalCase(name);
+		const eventResult = this._fireEvent(name as string, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name as string);
 
 		// pascal events are more convinient for native react usage
 		// live-change:
