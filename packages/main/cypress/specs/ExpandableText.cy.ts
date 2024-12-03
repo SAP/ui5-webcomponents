@@ -7,15 +7,17 @@ import {
 
 describe("ExpandableText", () => {
 	describe("Rendering and Interaction", () => {
-		it("Should display full text if maxCharacters is not set", () => {
-			const text = "This is a very long text that should be displayed";
+		it("Should display only 100 characters by default", () => {
+			const text = "This is a very long text that should be displayed. This is a very long text that should be displayed. This is a very long text that should be displayed.";
 
 			cy.mount(html`<ui5-expandable-text text=${text}></ui5-expandable-text>`);
+
+			expect(text.length).to.be.greaterThan(100);
 
 			cy.get("[ui5-expandable-text]")
 				.shadow()
 				.find("[ui5-text]")
-				.contains(text)
+				.contains(text.substring(0, 100))
 				.should("exist");
 		});
 
@@ -31,7 +33,7 @@ describe("ExpandableText", () => {
 				.should("exist");
 		});
 
-		it("Should display 'Show More' if maxCharacters are exceeded", () => {
+		it("Should display 'Show More' if maxCharacters are set and exceeded", () => {
 			const text = "This is a very long text that should be displayed";
 			const maxCharacters = 5;
 

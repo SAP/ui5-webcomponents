@@ -77,12 +77,12 @@ class ExpandableText extends UI5Element {
 	text?: string;
 
 	/**
-	 * Maximum number of characters to be displayed. After them, a "show more" trigger will be displayed.
-	 * @default Infinity
+	 * Maximum number of characters to be displayed initially.
+	 * @default 100
 	 * @public
 	 */
-	@property({ type: Number })
-	maxCharacters : number = Infinity;
+	@property()
+	maxCharacters = 100;
 
 	/**
 	 * Determines how the full text will be displayed.
