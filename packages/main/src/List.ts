@@ -16,6 +16,10 @@ import {
 	isEnter,
 	isTabPrevious,
 	isCtrl,
+	isEnd,
+	isHome,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
@@ -954,6 +958,23 @@ class List extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (isEnd(e)) {
+			this._handleEnd();
+			e.preventDefault();
+			return;
+		}
+
+		if (isHome(e)) {
+			this._handleHome();
+			return;
+		}
+
+		if (isDown(e)) {
+			this._handleDown();
+			e.preventDefault();
+			return;
+		}
+
 		if (isCtrl(e)) {
 			this._moveItem(e.target as ListItemBase, e);
 			return;
@@ -1021,6 +1042,11 @@ class List extends UI5Element {
 			this.focusAfterElement();
 		}
 
+		if (isUp(e)) {
+			this._handleLodeMoreUp(e);
+			return;
+		}
+
 		if (isTabPrevious(e)) {
 			if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
@@ -1050,12 +1076,29 @@ class List extends UI5Element {
 		this.loadMore();
 	}
 
+	_handleLodeMoreUp(e: KeyboardEvent) {
+		const growingButton = this.getGrowingButton();
+
+		if (growingButton === e.target) {
+			const items = this.getItems();
+			const lastItem = items[items.length - 1];
+
+			this.focusItem(lastItem);
+
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+	}
+
 	checkListInViewport() {
 		this._inViewport = isElementInView(this.getDomRef()!);
 	}
 
 	loadMore() {
-		this.fireDecoratorEvent("load-more");
+		// don't fire load-more on initial mount
+		if (this.children.length > 0) {
+			this.fireDecoratorEvent("load-more");
+		}
 	}
 
 	/*
@@ -1083,11 +1126,34 @@ class List extends UI5Element {
 		}
 	}
 
+	_handleHome() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this.focusFirstItem();
+	}
+
+	_handleEnd() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
+	}
+
+	_handleDown() {
+		if (!this.growsWithButton) {
+			return;
+		}
+
+		this._shouldFocusGrowingButton();
+	}
+
 	_onfocusin(e: FocusEvent) {
 		const target = getNormalizedTarget(e.target as HTMLElement);
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(target)) {
-			e.stopImmediatePropagation();
 			return;
 		}
 
@@ -1116,6 +1182,7 @@ class List extends UI5Element {
 			e.stopImmediatePropagation();
 		}
 
+		e.stopImmediatePropagation();
 		this.setForwardingFocus(false);
 	}
 
@@ -1271,6 +1338,16 @@ class List extends UI5Element {
 
 		if (growingBtn) {
 			growingBtn.focus();
+		}
+	}
+
+	_shouldFocusGrowingButton() {
+		const items = this.getItems();
+		const lastIndex = items.length - 1;
+		const currentIndex = this._itemNavigation._currentIndex;
+
+		if (currentIndex !== -1 && currentIndex === lastIndex) {
+			this.focusGrowingButton();
 		}
 	}
 
