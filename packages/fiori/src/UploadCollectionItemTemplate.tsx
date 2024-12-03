@@ -12,13 +12,13 @@ import editIcon from "@ui5/webcomponents-icons/dist/edit.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
 const predefinedHooks: Partial<ListItemHooks> = {
-	listItemContent
-}
+	listItemContent,
+};
 
 export default function (this: UploadCollectionItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks }
 
-	return ListItemTemplate.call(this, currentHooks)
+	return ListItemTemplate.call(this, currentHooks);
 }
 
 function listItemContent(this: UploadCollectionItem) {

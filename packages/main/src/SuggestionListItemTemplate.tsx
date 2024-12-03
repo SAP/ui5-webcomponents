@@ -4,13 +4,13 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
 const predefinedHooks: Partial<ListItemHooks> = {
-	listItemContent
-}
+	listItemContent,
+};
 
 export default function (this: SuggestionListItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks }
 
-	return ListItemStandardTemplate.call(this, currentHooks)
+	return ListItemStandardTemplate.call(this, currentHooks);
 }
 
 function listItemContent(this: SuggestionListItem) {

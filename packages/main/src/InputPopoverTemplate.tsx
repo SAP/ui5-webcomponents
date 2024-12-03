@@ -84,7 +84,7 @@ export default function (this: Input) {
 						</div>
 				}
 
-				{suggestionsList.call(this)}
+				{ suggestionsList.call(this) }
 
 				{this._isPhone &&
 					<div slot="footer" class="ui5-responsive-popover-footer">

@@ -3,8 +3,8 @@ import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
 const predefinedHooks: Partial<ListItemHooks> = {
-	listItemContent
-}
+	listItemContent,
+};
 
 export default function (this: ListItemCustom, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks }

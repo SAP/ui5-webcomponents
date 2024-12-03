@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -36,7 +36,7 @@ type ListItemBasePressEventDetail = {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [styles, draggableElementStyles],
 })
 @event("request-tabindex-change", {
@@ -125,6 +125,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		this.actionable = true;
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent) {
 		this.fireDecoratorEvent("request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
@@ -134,6 +135,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		this.fireDecoratorEvent("_focused", e);
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isTabNext(e)) {
 			return this._handleTabNext(e);
@@ -156,6 +158,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
@@ -244,12 +247,12 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	get _effectiveTabIndex() {
 		if (!this._focusable) {
-			return "-1";
+			return -1;
 		}
 		if (this.selected) {
-			return "0";
+			return 0;
 		}
-		return this.forcedTabIndex;
+		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;
 	}
 }
 

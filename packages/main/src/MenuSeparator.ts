@@ -26,6 +26,8 @@ import type { IMenuItem } from "./Menu.js";
 })
 
 class MenuSeparator extends ListItemBase implements IMenuItem {
+	eventDetails!: ListItemBase["eventDetails"];
+
 	get isSeparator() {
 		return true;
 	}
