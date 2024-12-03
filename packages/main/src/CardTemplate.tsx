@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type Card from "./Card.js";
 import BusyIndicator from "./BusyIndicator.js";
 
@@ -7,11 +6,11 @@ export default function (this: Card) {
 		<div
 			part="root"
 			role="region"
-			class={clsx({
+			class={{
 				"ui5-card-root": true,
 				"ui5-card--interactive": this._hasHeader && this.header[0].interactive,
 				"ui5-card--nocontent": !this.content.length,
-			})}
+			}}
 			aria-label={this._getAriaLabel}
 		>
 			<BusyIndicator

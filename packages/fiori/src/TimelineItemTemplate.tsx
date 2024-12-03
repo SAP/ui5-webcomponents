@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type TimelineItem from "./TimelineItem.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -8,11 +7,11 @@ export default function (this: TimelineItem) {
 	return (
 		<div class="ui5-tli-root">
 			<div
-				class={clsx({
+				class={{
 					"ui5-tli-indicator": true,
 					"ui5-tli-indicator-short-line": this.forcedLineWidth === "ShortLineWidth",
 					"ui5-tli-indicator-large-line": this.forcedLineWidth === "LargeLineWidth",
-				})}
+				}}
 			>
 				<div class="ui5-tli-icon-outer">
 					{
@@ -42,11 +41,11 @@ export default function (this: TimelineItem) {
 							<slot></slot>
 						</div>
 					}
-					<span class={clsx({
+					<span class={{
 						"ui5-tli-bubble-arrow": true,
 						"ui5-tli-bubble-arrow--left": this.layout === TimelineLayout.Vertical,
 						"ui5-tli-bubble-arrow--top": this.layout === TimelineLayout.Horizontal,
-					})}></span>
+					}}></span>
 				</div>
 			}
 	</div>

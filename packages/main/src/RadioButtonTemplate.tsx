@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type RadioButton from "./RadioButton.js"
 import Label from "./Label.js";
@@ -20,10 +19,10 @@ export default function (this: RadioButton) {
 			onMouseUp={this._onmouseup}
 			onFocusOut={this._onfocusout}
 		>
-			<div class={clsx({
+			<div class={{
 					"ui5-radio-inner": true,
 					"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
-			})}>
+			}}>
 				<svg class="ui5-radio-svg" focusable="false" aria-hidden="true">
 					<circle part="outer-ring" class="ui5-radio-svg-outer" cx="50%" cy="50%" r="50%" />
 					<circle part="inner-ring" class="ui5-radio-svg-inner" cx="50%" cy="50%" />

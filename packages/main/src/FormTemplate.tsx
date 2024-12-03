@@ -1,4 +1,3 @@
-import clsx from "clsx"
 import type Form from "./Form.js"
 import Title from "./Title.js"
 
@@ -27,13 +26,13 @@ export default function (this: Form) {
 							this.groupItemsInfo.map(groupItemInfo => {
 								const groupItem = groupItemInfo.groupItem;
 								return (
-									<div class={clsx({
+									<div class={{
 										"ui5-form-column": true,
 										[`ui5-form-column-spanL-${groupItem.colsL}`]: true,
 										[`ui5-form-column-spanXL-${groupItem.colsXl}`]: true,
 										[`ui5-form-column-spanM-${groupItem.colsM}`]: true,
 										[`ui5-form-column-spanS-${groupItem.colsS}`]: true,
-									})}
+									}}
 										part="column"
 									>
 										<div class="ui5-form-group" role="form" aria-labelledby={groupItemInfo.accessibleNameRef}>
@@ -56,11 +55,11 @@ export default function (this: Form) {
 							{
 							this.itemsInfo.map(itemInfo => {
 								const item = itemInfo.item;
-								return ( 
-									<div class={clsx({
+								return (
+									<div class={{
 										"ui5-form-item": true,
 										[`ui5-form-item-span-${item.columnSpan}`]: item.columnSpan !== undefined,
-									})}
+									}}
 									>
 										<slot name={item._individualSlot}></slot>
 									</div>

@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import MessageStrip from "./MessageStrip.js";
 import MessageStripDesign from "./types/MessageStripDesign.js";
 import Button from "./Button.js";
@@ -13,12 +12,12 @@ export default function (this: MessageStrip) {
 	return (
 		<div
 			id={this._id}
-			class={clsx({
+			class={{
 				"ui5-message-strip-root": true,
 				"ui5-message-strip-root-hide-icon": this.shouldHideIcon,
 				"ui5-message-strip-root-hide-close-button": this.hideCloseButton,
 				[this.designClasses]: true,
-			})}
+			}}
 			role="note"
 			aria-labelledby={this._id}
 		>

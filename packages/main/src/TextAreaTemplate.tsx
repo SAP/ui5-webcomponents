@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type TextArea from "./TextArea.js";
 import TextAreaPopoverTemplate from "./TextAreaPopoverTemplate.js";
 
@@ -6,18 +5,18 @@ export default function (this: TextArea) {
 	return(
 		<>
 		<div
-			class={clsx(this.classes.root)}
+			class={this.classes.root}
 			onFocusIn={this._onfocusin}
 			onFocusOut={this._onfocusout}
 		>
 			<div class="ui5-textarea-wrapper">
 				{this.growing &&
 					<div id={`${this._id}-mirror`} class="ui5-textarea-mirror" aria-hidden="true">
-						{this._mirrorText.map(mirrorText => { 
+						{this._mirrorText.map(mirrorText => {
 							return (
 								<>
-									{mirrorText.text} 
-									<br /> 
+									{mirrorText.text}
+									<br />
 								</>
 							);
 						})}

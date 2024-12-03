@@ -7,16 +7,14 @@ import { preprocess } from "./jsx-utils.js";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace JSX {
-	// export interface HTMLAttributes<RefType extends EventTarget = EventTarget> extends Omit<_JSX.HTMLAttributes<RefType>, "class"> {
-	// 	class: Record<string, boolean> | string | undefined // _JSX.HTMLAttributes["class"]
-	// }
-
-    export interface IntrinsicElements extends _JSX.IntrinsicElements {}
+	type JSXWithClassObj =  { [K in keyof _JSX.IntrinsicElements]: Omit<_JSX.IntrinsicElements[K], "class"> & { class?: object | string | undefined  } };
+	type HTMLAttributesWithClassObj<T extends EventTarget> = Omit<_JSX.HTMLAttributes<T>, "class"> & { class?: object | string | undefined  }
+    export interface IntrinsicElements extends JSXWithClassObj {}
     export type ElementClass = UI5Element;
     export interface ElementAttributesProperty<T extends EventTarget> {
 		_jsxProps: HTMLAttributes<T>;
 	}
-	export interface HTMLAttributes<T extends EventTarget> extends _JSX.HTMLAttributes<T> {}
+	export interface HTMLAttributes<T extends EventTarget> extends HTMLAttributesWithClassObj<T> {}
 	export interface DOMAttributes<T extends EventTarget> extends _JSX.DOMAttributes<T> {}
 	export interface SVGAttributes extends _JSX.SVGAttributes {}
 	export type AriaRole = _JSX.AriaRole;

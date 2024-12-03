@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import List from "@ui5/webcomponents/dist/List.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
@@ -17,7 +16,10 @@ export default function (this: UploadCollection) {
 			onDrop={this._ondrop}
 			onui5-request-delete={this._onItemDelete}
 		>
-			<div  class={clsx({ "ui5-uc-content": true, "ui5-uc-content-no-data": this.items.length === 0 })}>
+			<div  class={{
+				"ui5-uc-content": true,
+				"ui5-uc-content-no-data": this.items.length === 0
+			}}>
 				<List
 					accessibleName={this.accessibleName}
 					selectionMode={this.selectionMode}
@@ -27,10 +29,10 @@ export default function (this: UploadCollection) {
 					<slot></slot>
 					{this._showNoData &&
 						<ListItemCustom
-							class={clsx({
+							class={{
 								"uc-no-files": true,
 								"uc-no-files-dnd-overlay": this._showDndOverlay,
-							})}
+							}}
 							type="Inactive"
 						>
 							<IllustratedMessage	name="Tent">
@@ -43,11 +45,11 @@ export default function (this: UploadCollection) {
 
 				{this._showDndOverlay &&
 					<div
-						class={clsx({
+						class={{
 							"uc-dnd-overlay": true,
 							"uc-drag-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag,
 							"uc-drop-overlay": this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drop,
-						})}
+						}}
 						onDragEnter={this._ondragenter}
 						onDragLeave={this._ondragleave}
 						onDragOver={this._ondragover}

@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import Icon from "./Icon.js";
 import type ProgressIndicator from "./ProgressIndicator.js";
 
@@ -16,12 +15,12 @@ const valueStateIconMappings: Record<string, string> = {
 
 export default function (this: ProgressIndicator) {
     return(
-		<div 
-			class={clsx({
+		<div
+			class={{
 				"ui5-progress-indicator-root": true,
 				"ui5-progress-indicator-max-value": this.validatedValue === 100,
 				"ui5-progress-indicator-min-value": this.validatedValue === 0,
-			})}
+			}}
 			role="progressbar"
 			aria-valuemin={0}
 			aria-valuenow={this.validatedValue}
@@ -42,7 +41,7 @@ export default function (this: ProgressIndicator) {
 function valueLabel(this: ProgressIndicator) {
 	return (
 		<>
-		{ this.showIcon && 
+		{ this.showIcon &&
 			<Icon name={valueStateIcon.call(this)} class="ui5-progress-indicator-icon"></Icon> }
 
 		{!this.hideValue &&

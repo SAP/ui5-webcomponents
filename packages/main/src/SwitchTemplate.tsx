@@ -1,4 +1,3 @@
-import clsx from "clsx"
 import Icon from "./Icon.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import type Switch from "./Switch.js"
@@ -6,7 +5,7 @@ import type Switch from "./Switch.js"
 export default function (this: Switch) {
 	return (
 	<div
-		class={clsx({
+		class={{
 			"ui5-switch-root": true,
 			"ui5-switch--desktop": isDesktop(),
 			"ui5-switch--disabled": this.disabled,
@@ -14,7 +13,7 @@ export default function (this: Switch) {
 			"ui5-switch--semantic": this.graphical,
 			"ui5-switch--no-label": !(this.graphical || this.textOn || this.textOff),
 			"ui5-switch--safari": isSafari(),
-		})}
+		}}
 		role="switch"
 		aria-label={this.ariaLabelText}
 		aria-checked={this.checked}

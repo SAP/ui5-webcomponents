@@ -1,5 +1,4 @@
 import type DynamicSideContent from "./DynamicSideContent.js";
-import clsx from "clsx";
 
 export default function (this: DynamicSideContent) {
 	return (
@@ -25,7 +24,7 @@ export default function (this: DynamicSideContent) {
 function mainContent(this: DynamicSideContent) {
 	return (
 		<div
-			class={clsx(this.classes.main)}
+			class={this.classes.main}
 			style={this.styles.main}
 		>
 			<slot></slot>
@@ -38,7 +37,7 @@ function sideContent(this: DynamicSideContent) {
 		<aside
 			role="complementary"
 			aria-label={this.accInfo.label}
-			class={clsx(this.classes.side)}
+			class={this.classes.side}
 			style={this.styles.side}
 		>
 			<slot name="sideContent"></slot>

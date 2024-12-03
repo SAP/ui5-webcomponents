@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type FileUploader from "./FileUploader.js"
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -15,13 +14,13 @@ export default function (this: FileUploader) {
 			class="ui5-valuestatemessage-popover"
 		>
 			<div slot="header"
-				class={clsx({
+				class={{
 					"ui5-valuestatemessage-root": true,
 					"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
 					"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
 					"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
 					"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-				})}
+				}}
 				style={{
 					"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,
 				}}
@@ -42,11 +41,11 @@ function valueStateMessage(this: FileUploader) {
 	return (
 		<>
 			{
-				this.shouldDisplayDefaultValueStateMessage ? 
+				this.shouldDisplayDefaultValueStateMessage ?
 				<>
-					{this.valueStateText} 
+					{this.valueStateText}
 				</>
-				: 
+				:
 				<slot name="valueStateMessage"></slot>
 			}
 		</>

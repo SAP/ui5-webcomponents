@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type CardHeader from "./CardHeader.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 
@@ -6,12 +5,12 @@ export default function (this: CardHeader) {
 	return (
 		<div
 			id={`${this._id}--header`}
-			class={clsx({
+			class={{
 				"ui5-card-header": true,
 				"ui5-card-header--interactive": this.interactive,
 				"ui5-card-header--active": this.interactive && this._headerActive,
 				"ui5-card-header-ff": isFirefox(),
-			})}
+			}}
 			part="root"
 			role="group"
 			aria-roledescription={this.ariaRoleDescription}

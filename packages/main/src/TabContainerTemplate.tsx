@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import TabContainer from "./TabContainer.js";
 import DropIndicator from "./DropIndicator.js";
 import Button from "./Button.js";
@@ -8,10 +7,10 @@ import type Tab from "./Tab.js";
 function contentArea(this: TabContainer) {
 	return (
 		<div
-			class={clsx({
+			class={{
 				"ui5-tc__content": true,
 				"ui5-tc__content--collapsed": this._contentCollapsed,
-			})}
+			}}
 			part="content"
 		>
 			<div
@@ -41,12 +40,12 @@ export default function(this: TabContainer, injectedPartials?: Partial<typeof de
 
 	return (<>
 		<div
-			class={clsx({
+			class={{
 				"ui5-tc-root": true,
 				"ui5-tc--textOnly": this.textOnly,
 				"ui5-tc--withAdditionalText": this.withAdditionalText,
 				"ui5-tc--standardTabLayout": this.standardTabLayout,
-			})}
+			}}
 		>
 			{this.tabsAtTheBottom && partials.contentArea.call(this)}
 

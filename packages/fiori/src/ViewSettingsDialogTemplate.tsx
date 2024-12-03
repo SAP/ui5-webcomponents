@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -64,10 +63,10 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 function ViewSettingsDialogTemplateContent(this: ViewSettingsDialog) {
 	return (
 		<div
-			class={clsx({
+			class={{
 				"ui5-vsd-content": true,
 				"ui5-vsd-content-expand": this.expandContent,
-			})}
+			}}
 		>
 			{this.shouldBuildSort && this.isModeSort && (
 				<div class="ui5-vsd-sort">

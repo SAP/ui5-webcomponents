@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type Table from "./Table.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -96,10 +95,10 @@ function moreRow(this: Table) {
 				<div class="ui5-table-growing-row">
 					<div
 						id={`${this._id}-growingButton`}
-						class={clsx({
+						class={{
 							"ui5-table-growing-row-inner": true,
 							"ui5-table-growing-row-inner--active": this._loadMoreActive
-						})}
+						}}
 						role="button"
 						tabindex={0}
 						aria-labelledby={this.loadMoreAriaLabelledBy}

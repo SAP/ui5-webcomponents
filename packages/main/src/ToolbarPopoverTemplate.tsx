@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type Toolbar from "./Toolbar.js";
 import Popover from "./Popover.js";
 
@@ -12,12 +11,10 @@ export default function(this: Toolbar) {
 			onOpen={this.onOverflowPopoverOpened}
 			hideArrow={true}
 		>
-			<div class={
-				clsx({
-					"ui5-overflow-list": true,
-					"ui5-overflow-list--alignleft": this.hasItemWithText,
-				})
-			}>
+			<div class={{
+				"ui5-overflow-list": true,
+				"ui5-overflow-list--alignleft": this.hasItemWithText,
+			}}>
 				{ this.overflowItems.map(item => (
 					item.toolbarPopoverTemplate.call(item.context)
 				))}

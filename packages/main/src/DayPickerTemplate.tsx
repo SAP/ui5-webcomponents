@@ -1,13 +1,12 @@
-import clsx from "clsx";
 import type DayPicker from "./DayPicker.js"
 
 export default function (this: DayPicker) {
 	return (
 		<div
-			class={clsx({
+			class={{
 				"ui5-dp-root": true,
 				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
-			})}
+			}}
 			style={{
 				"justify-content": "center",
 				display: this._hidden ? "none" : "flex",

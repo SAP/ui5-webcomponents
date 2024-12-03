@@ -5,7 +5,6 @@ import editIcon from "@ui5/webcomponents-icons/dist/edit.js";
 import slimArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
-import clsx from "clsx";
 
 export type ListItemHooks = {
 	listItemPreContent: any
@@ -31,7 +30,7 @@ export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
 		part="native-li"
 		data-sap-focus-ref
 		tabindex={this._effectiveTabIndex ? parseInt(this._effectiveTabIndex): undefined}
-		class={clsx(this.classes.main)}
+		class={this.classes.main}
 		onFocusIn={this._onfocusin}
 		onFocusOut={this._onfocusout}
 		onKeyUp={this._onkeyup}

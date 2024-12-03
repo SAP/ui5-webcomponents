@@ -1,7 +1,6 @@
 import type StepInput from "./StepInput.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
-import clsx from "clsx";
 
 import less from "@ui5/webcomponents-icons/dist/less.js";
 import add from "@ui5/webcomponents-icons/dist/add.js";
@@ -31,10 +30,10 @@ export default function (this: StepInput) {
 					onMouseDown={this._decSpin}
 					onMouseUp={this._resetSpin}
 					onMouseOut={this._resetSpinOut}
-					class={clsx({
+					class={{
 						"inputIcon": true,
 						"ui5-step-input-icon--clickable": this._decIconClickable,
-					})}
+					}}
 					showTooltip={true}
 				></Icon>
 			</div>
@@ -71,10 +70,10 @@ export default function (this: StepInput) {
 				>
 					<Icon
 						id={`${this._id}-inc`}
-						class={clsx({
+						class={{
 							"inputIcon": true,
 							"ui5-step-input-icon--clickable": this._incIconClickable,
-						})}
+						}}
 						name={add}
 						tabindex={-1}
 						accessibleName={this.incIconTitle}

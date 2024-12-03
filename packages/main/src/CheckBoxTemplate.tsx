@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 
 import type CheckBox from "./CheckBox.js";
@@ -12,10 +11,10 @@ import triState from "@ui5/webcomponents-icons/dist/tri-state.js";
 export default function (this: CheckBox) {
 	return (
 		<div
-			class={clsx("ui5-checkbox-root", {
+			class={{
 				"ui5-checkbox-root": true,
 				"ui5-checkbox--hoverable": !this.disabled && !this.readonly && isDesktop(),
-			})}
+			}}
 			role="checkbox"
 			part="root"
 			aria-checked={this.effectiveAriaChecked}
@@ -58,9 +57,9 @@ export default function (this: CheckBox) {
 		/>
 
 		{this.text &&
-			<Label 
+			<Label
 				id={`${this._id}-label`}
-				part="label" 
+				part="label"
 				class="ui5-checkbox-label"
 				wrappingType={this.wrappingType}
 			>

@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import BusyIndicator from "./BusyIndicator.js";
 import DropIndicator from "./DropIndicator.js";
 import type List from "./List.js";
@@ -85,7 +84,7 @@ export default function (this: List ) {
 	);
 };
 
-function moreRow(this: List) {	
+function moreRow(this: List) {
 	return (
 		<div class="ui5-growing-button" part="growing-button">
 			<div
@@ -93,9 +92,10 @@ function moreRow(this: List) {
 				role="button"
 				tabindex={0}
 				part="growing-button-inner"
-				class={clsx({
+				class={{
 					"ui5-growing-button-inner": true,
-					"ui5-growing-button-inner-active": this._loadMoreActive })}
+					"ui5-growing-button-inner-active": this._loadMoreActive,
+				}}
 				aria-labelledby={`${this._id}-growingButton-text`}
 				onClick={this._onLoadMoreClick}
 				onKeyDown={this._onLoadMoreKeydown}

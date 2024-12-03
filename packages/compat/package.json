@@ -48,8 +48,7 @@
     "@ui5/webcomponents": "2.5.0-rc.2",
     "@ui5/webcomponents-base": "2.5.0-rc.2",
     "@ui5/webcomponents-icons": "2.5.0-rc.2",
-    "@ui5/webcomponents-theming": "2.5.0-rc.2",
-    "clsx": "^2.1.1"
+    "@ui5/webcomponents-theming": "2.5.0-rc.2"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "2.5.0-rc.2",

@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type Calendar from "./Calendar.js";
 import Icon from "./Icon.js";
 
@@ -10,10 +9,10 @@ export default function (this: Calendar) {
 		<div class="ui5-calheader-root">
 			<div
 				data-ui5-cal-header-btn-prev
-				class={clsx({
+				class={{
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._previousButtonDisabled,
-				})}
+				}}
 				role="button"
 				onMouseDown={this.onPrevButtonClick}
 				title={this.headerPreviousButtonText}
@@ -58,10 +57,10 @@ export default function (this: Calendar) {
 
 			<div
 				data-ui5-cal-header-btn-next
-				class={clsx({
+				class={{
 					"ui5-calheader-arrowbtn": true,
 					"ui5-calheader-arrowbtn-disabled": this._nextButtonDisabled,
-				})}
+				}}
 				role="button"
 				onMouseDown={this.onNextButtonClick}
 				title={this.headerNextButtonText}
@@ -70,5 +69,4 @@ export default function (this: Calendar) {
 			</div>
 		</div>);
 	};
-	
-	
+

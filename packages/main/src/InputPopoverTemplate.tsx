@@ -10,7 +10,6 @@ import Popover from "./Popover.js";
 import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
-import clsx from "clsx";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 export default function (this: Input) {
@@ -18,7 +17,7 @@ export default function (this: Input) {
 		<>
 		{this._effectiveShowSuggestions &&
 			<ResponsivePopover
-				class={clsx(this.classes.popover)}
+				class={this.classes.popover}
 				hideArrow={true}
 				preventFocusRestore={true}
 				preventInitialFocus={true}
@@ -62,7 +61,7 @@ export default function (this: Input) {
 					</div>
 
 					{this.hasValueStateMessage &&
-						<div class={clsx(this.classes.popoverValueState)} style={this.styles.suggestionPopoverHeader}>
+						<div class={this.classes.popoverValueState} style={this.styles.suggestionPopoverHeader}>
 							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
 							{ this.open && valueStateMessage.call(this) }
 						</div>
@@ -71,13 +70,13 @@ export default function (this: Input) {
 				}
 
 				{!this._isPhone && this.hasValueStateMessage &&
-						<div 
+						<div
 							slot="header"
-							class={clsx({
+							class={{
 								"ui5-responsive-popover-header": true,
 								"ui5-responsive-popover-header--focused": this._isValueStateFocused,
 								...this.classes.popoverValueState,
-							})}
+							}}
 							style={this.styles.suggestionPopoverHeader}
 						>
 							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
@@ -113,7 +112,7 @@ export default function (this: Input) {
 					open={this.valueStateOpen}
 					onClose={this._handleValueStatePopoverAfterClose}
 				>
-					<div slot="header" class={clsx(this.classes.popoverValueState)} style={this.styles.popoverHeader}>
+					<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
 						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
 						{ this.valueStateOpen && valueStateMessage.call(this) }
 					</div>

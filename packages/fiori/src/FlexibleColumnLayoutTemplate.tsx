@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 import verticalGrip from "@ui5/webcomponents-icons/dist/vertical-grip.js";
@@ -12,11 +11,11 @@ export default function (this: FlexibleColumnLayout) {
 		<div class="ui5-fcl-root">
 			<div
 				role={this._accAttributes.columns.start.role}
-				class={clsx({
+				class={{
 					"ui5-fcl-column": true,
 					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--start": true,
-				})}
+				}}
 				aria-hidden={this._accAttributes.columns.start.ariaHidden}
 				aria-labelledby={`${this._id}-startColumnText`}
 			>
@@ -40,11 +39,11 @@ export default function (this: FlexibleColumnLayout) {
 
 			<div
 				role={this._accAttributes.columns.middle.role}
-				class={clsx({
+				class={{
 					"ui5-fcl-column": true,
 					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--middle": true,
-				})}
+				}}
 				aria-hidden={this._accAttributes.columns.middle.ariaHidden}
 				aria-labelledby={`${this._id}-midColumnText`}
 			>
@@ -68,11 +67,11 @@ export default function (this: FlexibleColumnLayout) {
 
 			<div
 				role={this._accAttributes.columns.end.role}
-				class={clsx({
+				class={{
 					"ui5-fcl-column": true,
 					"ui5-fcl-column-animation": hasAnimation,
 					"ui5-fcl-column--end": true,
-				})}
+				}}
 				aria-hidden={this._accAttributes.columns.end.ariaHidden}
 				aria-labelledby={`${this._id}-endColumnText`}
 			>

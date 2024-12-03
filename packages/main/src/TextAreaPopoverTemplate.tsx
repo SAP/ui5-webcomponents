@@ -1,4 +1,3 @@
-import clsx from "clsx"
 import Icon from "./Icon.js"
 import Popover from "./Popover.js"
 import type TextArea from "./TextArea.js"
@@ -28,10 +27,10 @@ export default function (this: TextArea) {
 				placement="Bottom"
 				horizontalAlign={this._valueStatePopoverHorizontalAlign}
 			>
-				<div slot="header" class={clsx({
+				<div slot="header" class={{
 					"ui5-valuestatemessage-root": true,
 					...this.classes.valueStateMsg,
-				})}>
+				}}>
 					<Icon class="ui5-input-value-state-message-icon" name={valueStateIcon.call(this)}></Icon>
 					{valueStateMessage.call(this)}
 				</div>

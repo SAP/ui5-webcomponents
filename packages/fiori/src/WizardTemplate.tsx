@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type Wizard from "./Wizard.js";
 import WizardTab from "./WizardTab.js";
 import WizardPopoverTemplate from "./WizardPopoverTemplate.js";
@@ -53,10 +52,10 @@ export default function(this: Wizard) {
 				 onScroll={this.onScroll}
 			>
 				{this._steps.map(step =>
-					<div class={clsx({
+					<div class={{
 							"ui5-wiz-content-item": true,
 							"ui5-wiz-content-item-stretch": step.stretch
-						})}
+						}}
 						hidden={step.disabled}
 						selected={step.selected}
 						part="step-content"

@@ -1,4 +1,3 @@
-import clsx from "clsx"
 import type Panel from "./Panel.js"
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -16,10 +15,10 @@ export default function (this: Panel) {
 			{ this.hasHeaderOrHeaderText &&
 				// header: either header or h1 with header text
 				<div
-					class={clsx({
+					class={{
 						"ui5-panel-heading-wrapper": true,
 						"ui5-panel-heading-wrapper-sticky": this.stickyHeader,
-					})}
+					}}
 					role={this.headingWrapperRole}
 					aria-level={this.headingWrapperAriaLevel}
 				>
@@ -48,10 +47,10 @@ export default function (this: Panel) {
 									>
 										<div class="ui5-panel-header-icon-wrapper">
 											<Icon
-												class={clsx({
+												class={{
 													"ui5-panel-header-icon": true,
 													"ui5-panel-header-button-animated": !this.shouldNotAnimate,
-												})}
+												}}
 												name={slimArrowRight}
 											>
 											</Icon>
@@ -59,10 +58,11 @@ export default function (this: Panel) {
 									</Button>
 								: // else
 									<Icon
-										class={clsx(
-											"ui5-panel-header-button ui5-panel-header-icon",
-											!this.shouldNotAnimate && "ui5-panel-header-button-animated",
-										)}
+										class={{
+											"ui5-panel-header-button": true,
+											"ui5-panel-header-icon": true,
+											"ui5-panel-header-button-animated": !this.shouldNotAnimate,
+										}}
 										name={slimArrowRight}
 										showTooltip={true}
 										accessibleName={this.toggleButtonTitle}

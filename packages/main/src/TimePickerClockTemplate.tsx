@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type TimePickerClock from "./TimePickerClock.js";
 
 export default function (this: TimePickerClock) {
@@ -8,11 +7,11 @@ export default function (this: TimePickerClock) {
 			onDragStart={this.noop}
 			onDrop={this.noop}
 			aria-hidden="true"
-			class={clsx({
+			class={{
 				"ui5-tp-clock": true,
 				"ui5-tp-clock-inner": this.showInnerCircle,
 				"ui5-tp-clock-active": this.active,
-			})}
+			}}
 		>
 
 		<div data-ui5-label={this.label} class="ui5-tp-clock-dial"></div>

@@ -1,4 +1,5 @@
 import type UI5Element from "./UI5Element.js";
+import hash2str from "./util/hash2str.js";
 import { pascalToKebabCase } from "./util/StringHelper.js";
 
 function convertEventScoping(type: typeof UI5Element, props: Record<string, any>, key: string) {
@@ -36,5 +37,11 @@ export function preprocess(type: string | typeof UI5Element, props: Record<strin
 	} else {
 		tag = type;
 	}
+
+	// convert class object to string
+	if (typeof props.class === "object") {
+		props.class = hash2str(props.class);
+	}
+
 	return tag;
 }

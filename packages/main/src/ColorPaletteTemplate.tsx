@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 import type ColorPalette from "./ColorPalette.js";
@@ -10,10 +9,10 @@ export default function (this: ColorPalette) {
 	return (
 		<>
 			<div
-				class={clsx({
+				class={{
 					"ui5-cp-root": true,
 					"ui5-cp-root-phone": isPhone(),
-				})}
+				}}
 				onClick={this._onclick}
 				onKeyUp={this._onkeyup}
 				onKeyDown={this._onkeydown}

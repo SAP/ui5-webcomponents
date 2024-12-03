@@ -1,19 +1,18 @@
-import clsx from "clsx";
 import SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationPopoverTemplate from "./SideNavigationPopoverTemplate.js";
 
 export default function(this: SideNavigation) {
 	return (<>
-		<nav class={clsx({
+		<nav class={{
 				"ui5-sn-root": true,
 				"ui5-sn-collapsed": this.collapsed,
-			})}
+			}}
 			role={this._rootRole}
 		>
 			{header.call(this)}
 
-			{this.collapsed ? 
+			{this.collapsed ?
 				<div role="menubar"
 					class="ui5-sn-list ui5-sn-flexible"
 					aria-orientation="vertical"

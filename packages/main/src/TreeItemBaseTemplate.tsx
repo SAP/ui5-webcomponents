@@ -1,6 +1,5 @@
 import type TreeItemBase from "./TreeItemBase.js"
 import ListItemTemplate from "./ListItemTemplate.js"
-import clsx from "clsx";
 import Icon from "./Icon.js";
 import navigationDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import navigatioRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -25,7 +24,7 @@ export default function (this: TreeItemBase, hooks?: Partial<ListItemHooks>) {
 
 function listItemPreContent(this: TreeItemBase) {
 	return (
-		<div class="ui5-li-tree-toggle-box" style={clsx(this.styles.preContent)}>
+		<div class="ui5-li-tree-toggle-box" style={this.styles.preContent}>
 			{this.showToggleButton &&
 				<Icon
 					part="toggle-icon"
