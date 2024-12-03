@@ -487,6 +487,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
 		const defaultPrevented = !this.fireDecoratorEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem });
