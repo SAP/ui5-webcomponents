@@ -1177,7 +1177,6 @@ class List extends UI5Element {
 			}
 
 			this.focusPreviouslyFocusedItem();
-			e.stopImmediatePropagation();
 		}
 
 		e.stopImmediatePropagation();

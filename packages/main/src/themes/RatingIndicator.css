@@ -40,6 +40,7 @@
 .ui5-rating-indicator-root {
 	outline: none;
 	position: relative;
+	padding: var(--_ui5_rating_indicator_component_padding);
 }
 
 .ui5-rating-indicator-list {
