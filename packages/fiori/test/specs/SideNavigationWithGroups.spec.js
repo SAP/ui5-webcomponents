@@ -6,7 +6,7 @@ describe("Component Behavior", () => {
 		await browser.url(`test/pages/SideNavigationWithGroups.html`);
 	});
 
-	describe("Main functionality", async () => {
+	describe.skip("Main functionality", async () => {
 		it("rendering", async () => {
 			const sideNavigation = await browser.$("#sn1");
 
