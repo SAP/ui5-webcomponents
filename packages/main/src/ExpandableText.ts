@@ -81,7 +81,7 @@ class ExpandableText extends UI5Element {
 	 * @default 100
 	 * @public
 	 */
-	@property()
+	@property({ type: Number })
 	maxCharacters = 100;
 
 	/**
@@ -105,8 +105,6 @@ class ExpandableText extends UI5Element {
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
-
-	_preventNextToggleClickHandling = false;
 
 	getFocusDomRef(): HTMLElement | undefined {
 		if (this._usePopover) {
@@ -172,21 +170,19 @@ class ExpandableText extends UI5Element {
 	_handlePopoverClose() {
 		if (!isPhone()) {
 			this._expanded = false;
-
-			// TODO: find way to prevent next click handling, only if the popover is closed by a click on the toggle (link)
-			// if (this.shadowRoot!.activeElement === this.shadowRoot!.querySelector("[ui5-link]")) {
-			// 	this._preventNextToggleClickHandling = true;
-			// }
 		}
 	}
 
 	_handleToggleClick() {
-		// if (this._preventNextToggleClickHandling) {
-		// 	this._preventNextToggleClickHandling = false;
-		// 	return;
-		// }
-
 		this._expanded = !this._expanded;
+	}
+
+	_handleToggleMousedown(e: MouseEvent) {
+		if (this._usePopover) {
+			// Workaround for PopoverRegistry handler that closes the popover on mousedown,
+			//  resulting in "click" event with wrong _expanded state
+			e.stopPropagation();
+		}
 	}
 
 	_handleCloseButtonClick(e: CustomEvent) {
