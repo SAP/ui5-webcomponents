@@ -161,7 +161,7 @@ abstract class UI5Element extends HTMLElement {
 		[k: string]: any
 	};	// all event types can be assigned to base class
 	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]>> & Convert<this["eventDetails"]>
-	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]>;
+	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;

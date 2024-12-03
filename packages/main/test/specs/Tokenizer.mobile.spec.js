@@ -44,7 +44,7 @@ describe("Deleting tokens", () => {
 		await browser.emulateDevice('iPhone X');
 	});
 
-	it.skip("Should fire the ui5-token-delete event when the 'X' is pressed in the n-more picker and confirmed with OK", async () => {
+	it("Should fire the ui5-token-delete event when the 'X' is pressed in the n-more picker and confirmed with OK", async () => {
 		const tokenizer = await browser.$("#delete-tokenizer");
 		const nMoreLabel = await tokenizer.shadow$(".ui5-tokenizer-more-text");
 

@@ -43,7 +43,7 @@ export default function (this: Tokenizer) {
 		>
 			{this._tokens
 				.filter(token => token._isVisible)
-				.map(token => <ListItemStandard data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard> )}
+				.map(token => <ListItemStandard key={String(token._id)} data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard> )}
 		</List>
 
 		{this._isPhone &&
