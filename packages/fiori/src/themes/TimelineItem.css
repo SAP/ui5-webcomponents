@@ -34,19 +34,19 @@
 }
 
 :host([status="Positive"]) .ui5-tli-icon {
-	color: var(--sapPositiveColor);
+	color: var(--sapPositiveElementColor);
 }
 
 :host([status="Negative"]) .ui5-tli-icon {
-	color: var(--sapNegativeColor);
+	color: var(--sapNegativeElementColor);
 }
 
 :host([status="Critical"]) .ui5-tli-icon {
-	color: var(--sapCriticalColor);
+	color: var(--sapCriticalElementColor);
 }
 
 :host([status="Information"]) .ui5-tli-icon {
-	color: var(--sapInformativeColor);
+	color: var(--sapInformativeElementColor);
 }
 
 :host(:not([icon])[layout="Vertical"]) .ui5-tli-indicator::before {
