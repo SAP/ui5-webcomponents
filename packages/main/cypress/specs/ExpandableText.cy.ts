@@ -3,6 +3,7 @@ import "../../src/ExpandableText.js";
 import {
 	EXPANDABLE_TEXT_SHOW_MORE,
 	EXPANDABLE_TEXT_SHOW_LESS,
+	EXPANDABLE_TEXT_CLOSE,
 } from "../../src/generated/i18n/i18n-defaults.js";
 
 describe("ExpandableText", () => {
@@ -372,11 +373,11 @@ describe("ExpandableText", () => {
 				.should("have.attr", "_hide-header");
 
 			cy.get("@rpo")
-				.contains("[slot=footer] [ui5-button]", "Close")
+				.contains("[slot=footer] [ui5-button]", EXPANDABLE_TEXT_CLOSE.defaultText)
 				.should("exist");
 
 			cy.get("@rpo")
-				.contains("[slot=footer] [ui5-button]", "Close")
+				.contains("[slot=footer] [ui5-button]", EXPANDABLE_TEXT_CLOSE.defaultText)
 				.realClick();
 
 			cy.get("@rpo")
