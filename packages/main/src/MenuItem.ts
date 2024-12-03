@@ -310,42 +310,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.shadowRoot!.querySelector<List>("[ui5-list]")!;
 	}
 
-	get _menuItemsNavigation() {
-		const items: MenuItem[] = [];
-		const slottedItems = this.getSlottedNodes<MenuItem>("items");
-
-		slottedItems.forEach(item => {
-			if (item.isGroup) {
-				const groupItems = item.getSlottedNodes<MenuItem>("items");
-				items.push(...groupItems);
-			} else if (!item.isSeparator) {
-				items.push(item);
-			}
-		});
-
-		return items;
-	}
-
-	get _markSelected() {
-		return this.isSelected && this._itemSelectionMode !== ItemSelectionMode.None;
-	}
-
-	onBeforeRendering() {
-		const siblingsWithIcon = this._menuItemsAll.some(menuItem => !!menuItem.icon);
-
-		this._setupItemNavigation();
-
-		this._menuItemsAll.forEach(item => {
-			item._siblingsWithIcon = siblingsWithIcon;
-		});
-	}
-
-	_setupItemNavigation() {
-		if (this._list) {
-			this._list._itemNavigation._getItems = () => this._menuItemsNavigation;
-		}
-	}
-
 	get _focusable() {
 		return true;
 	}
@@ -377,15 +341,22 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
+	get _markSelected() {
+		return this.isSelected && this._itemSelectionMode !== ItemSelectionMode.None;
+	}
+
+	/** Returns menu item groups */
 	get _menuItemGroups() {
 		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
 	}
 
+	/** Returns menu items */
 	get _menuItems() {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
-	get _menuItemsAll() {
+	/** Returns all menu items (including those in groups */
+	get _allMenuItems() {
 		const items: MenuItem[] = [];
 
 		this.items.forEach(item => {
@@ -397,6 +368,39 @@ class MenuItem extends ListItem implements IMenuItem {
 		});
 
 		return items;
+	}
+
+	/** Returns menu items included in the ItemNavigation */
+	get _navigatableMenuItems() {
+		const items: MenuItem[] = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (item.isGroup) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!item.isSeparator) {
+				items.push(item);
+			}
+		});
+
+		return items;
+	}
+
+	onBeforeRendering() {
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
+
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
+			item._siblingsWithIcon = siblingsWithIcon;
+		});
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;
+		}
 	}
 
 	_closeAll() {
@@ -423,7 +427,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_afterPopoverOpen() {
-		this._menuItemsAll[0]?.focus();
+		this._allMenuItems[0]?.focus();
 		this.fireEvent("open", {}, false, false);
 	}
 
