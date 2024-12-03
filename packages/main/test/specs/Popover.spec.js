@@ -445,15 +445,22 @@ describe("Opener", () => {
 	});
 
 	it("tests opener set as ID in the same shadow root", async () => {
-		const openerTestElement = await browser.$("opener-test");
-		const opener = await openerTestElement.shadow$("#lnk");
-		const popover = await openerTestElement.shadow$("#pop");
+		const opener = await browser.$("opener-test-shadow-root-id").shadow$("#lnk");
+		const popover = await browser.$("opener-test-shadow-root-id").shadow$("#pop");
 
 		await opener.click();
 
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 	});
 
+	it("tests opener set as ID in window.document, while popover is in a shadow root", async () => {
+		const opener = await browser.$("#lnkInDocument");
+		const popover = await browser.$("opener-test-shadow-root-id-document").shadow$("#pop");
+
+		await opener.click();
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+	});
 });
 
 describe("Acc", () => {

@@ -308,7 +308,11 @@ class Popover extends Popup {
 			return;
 		}
 
-		const openerHTMLElement = rootNode.getElementById(opener);
+		let openerHTMLElement = rootNode.getElementById(opener);
+
+		if (rootNode instanceof ShadowRoot && !openerHTMLElement) {
+			openerHTMLElement = document.getElementById(opener);
+		}
 
 		if (openerHTMLElement && this._isUI5Element(openerHTMLElement)) {
 			return openerHTMLElement.getFocusDomRef();
