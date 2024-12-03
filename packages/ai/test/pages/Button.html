@@ -44,7 +44,7 @@
 	<ui5-ai-button id="myAiButtonIconOnly" state="generate">
 		<ui5-ai-button-state name="generate" icon="ai"></ui5-ai-button-state>
 		<ui5-ai-button-state name="generating" icon="stop"></ui5-ai-button-state>
-		<ui5-ai-button-state name="revise" icon="stop" end-icon="navigation-down-arrow"></ui5-ai-button-state>
+		<ui5-ai-button-state name="revise" icon="ai" end-icon="navigation-down-arrow"></ui5-ai-button-state>
 	</ui5-ai-button>
 
 	<ui5-menu id="menu">
@@ -194,7 +194,6 @@
 				case "revise":
 					menuReg.open = false;
 					prevTriggerState = "revise";
-					button.activeArrowButton = false;
 					button.state = "generating";
 					startGeneration(button);
 					break;
@@ -206,7 +205,6 @@
 
 			menuReg.opener = button;
 			menuReg.open = true;
-			button.activeArrowButton = true;
 		}
 
 		menu.addEventListener("item-click", function(evt) {
@@ -221,10 +219,15 @@
 		menuReg.addEventListener("item-click", function(evt) {
 			var button = menuReg.opener;
 
-			button.activeArrowButton = false;
 			prevTriggerState = "revise";
 			button.state = "generating";
 			startGeneration(button);
+		});
+
+		menuReg.addEventListener("open", function(evt) {
+			var button = menuReg.opener;
+
+			button.activeArrowButton = true;
 		});
 
 		menuReg.addEventListener("close", function(evt) {
