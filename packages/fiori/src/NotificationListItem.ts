@@ -17,10 +17,10 @@ import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import litRenderer from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
-
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -52,6 +52,7 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 type NotificationListItemCloseEventDetail = {
 	item: HTMLElement,
@@ -136,6 +137,7 @@ const ICON_PER_STATUS_DESIGN = {
 	styles: [
 		NotificationListItemCss,
 	],
+	renderer: litRenderer,
 	template: NotificationListItemTemplate,
 	dependencies: [
 		Button,
