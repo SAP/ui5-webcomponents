@@ -89,13 +89,13 @@ type TableRowF7PressEventDetail = {
 /**
  * @private
  */
-@event("_forward-before", {
+@event("forward-before", {
 	bubbles: true,
 })
 /**
  * @private
  */
-@event("_forward-after", {
+@event("forward-after", {
 	bubbles: true,
 })
 /**
@@ -118,8 +118,8 @@ class TableRow extends UI5Element implements ITableRow {
 	eventDetails!: {
 		"row-click": TableRowClickEventDetail,
 		"_focused": FocusEvent,
-		"_forward-before": TableRowForwardBeforeEventDetail,
-		"_forward-after": TableRowForwardAfterEventDetail,
+		"forward-before": TableRowForwardBeforeEventDetail,
+		"forward-after": TableRowForwardAfterEventDetail,
 		"selection-requested": TableRowSelectionRequestedEventDetail,
 		"f7-pressed": TableRowF7PressEventDetail,
 	}
@@ -226,11 +226,11 @@ class TableRow extends UI5Element implements ITableRow {
 		const lastFocusableElement = elements.pop();
 
 		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {
-			this.fireDecoratorEvent("_forward-after", { target: activeElement });
+			this.fireDecoratorEvent("forward-after", { target: activeElement });
 		}
 
 		if (isTabPrevious(e) && activeElement === this.root) {
-			this.fireDecoratorEvent("_forward-before", { target: activeElement });
+			this.fireDecoratorEvent("forward-before", { target: activeElement });
 		}
 
 		if (isSpace(e) && target.tagName.toLowerCase() === "tr") {
