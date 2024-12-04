@@ -24,6 +24,7 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 					)}
 					<Title
 						wrappingType="None"
+						level="H1"
 						class="ui5-vsd-title"
 						id={`${this._id}-label`}
 					>{this._title}</Title>
