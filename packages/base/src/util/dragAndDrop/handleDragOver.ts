@@ -1,5 +1,6 @@
 import type UI5Element from "../../UI5Element.js";
 import type MovePlacement from "../../types/MovePlacement.js";
+import type { DragAndDropSettings } from "./DragRegistry.js";
 import DragRegistry from "./DragRegistry.js";
 
 type DragOverResult = {
@@ -15,14 +16,14 @@ type DragPosition = {
 /**
  * Handles the dragover event.
  */
-function handleDragOver(e: DragEvent, component: UI5Element, position: DragPosition, target: HTMLElement): DragOverResult {
+function handleDragOver(e: DragEvent, component: UI5Element, position: DragPosition, target: HTMLElement, settings: DragAndDropSettings = {}): DragOverResult {
 	const draggedElement = DragRegistry.getDraggedElement();
 	const dragOverResult: DragOverResult = {
 		targetReference: null,
 		placement: null,
 	};
 
-	if (!draggedElement) {
+	if (!draggedElement && !settings?.crossDnD) {
 		return dragOverResult;
 	}
 
@@ -30,8 +31,9 @@ function handleDragOver(e: DragEvent, component: UI5Element, position: DragPosit
 	dragOverResult.targetReference = e.target as HTMLElement;
 
 	const placementAccepted = placements.some(placement => {
+		const originalEvent = settings.originalEvent ? { originalEvent: e } : {};
 		const beforeItemMovePrevented = !component.fireDecoratorEvent("move-over", {
-			originalEvent: e,
+			...originalEvent,
 			source: {
 				element: draggedElement,
 			},

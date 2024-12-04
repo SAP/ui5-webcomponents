@@ -24,7 +24,7 @@ import {
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import DragRegistry, { type MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -40,7 +40,6 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
-import type MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import type ListAccessibleRole from "./types/ListAccessibleRole.js";
@@ -91,17 +90,6 @@ type ListSelectionChangeEventDetail = {
 
 type ListItemDeleteEventDetail = {
 	item: ListItemBase,
-}
-
-type ListMoveEventDetail = {
-	originalEvent: Event,
-	source: {
-		element: HTMLElement,
-	},
-	destination: {
-		element: HTMLElement,
-		placement: `${MovePlacement}`,
-	}
 }
 
 // ListItem-based events
@@ -324,7 +312,7 @@ type ListItemClickEventDetail = {
  * @since 2.0.0
  */
 
-@event<ListMoveEventDetail>("move-over", {
+@event<MoveEventDetail>("move-over", {
 	detail: {
 		/**
 		 * @public
@@ -351,7 +339,7 @@ type ListItemClickEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  */
-@event<ListMoveEventDetail>("move", {
+@event<MoveEventDetail>("move", {
 	detail: {
 		/**
 		 * @public
@@ -999,7 +987,7 @@ class List extends UI5Element {
 		e.preventDefault();
 
 		const acceptedPosition = closestPositions.find(({ element, placement }) => {
-			return !this.fireDecoratorEvent<ListMoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent<MoveEventDetail>("move-over", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -1012,7 +1000,7 @@ class List extends UI5Element {
 		});
 
 		if (acceptedPosition) {
-			this.fireDecoratorEvent<ListMoveEventDetail>("move", {
+			this.fireDecoratorEvent<MoveEventDetail>("move", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -1214,17 +1202,18 @@ class List extends UI5Element {
 			return;
 		}
 
-		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element);
+		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
 		this.dropIndicatorDOM!.targetReference = targetReference;
 		this.dropIndicatorDOM!.placement = placement;
 	}
 
 	_ondrop(e: DragEvent) {
 		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
+			e.preventDefault();
 			return;
 		}
 
-		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
+		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
 		this.dropIndicatorDOM.targetReference = null;
 	}
 
@@ -1473,5 +1462,5 @@ export type {
 	ListItemCloseEventDetail,
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
-	ListMoveEventDetail,
+	MoveEventDetail as ListMoveEventDetail,
 };

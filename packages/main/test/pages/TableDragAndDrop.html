@@ -21,7 +21,7 @@
       <ui5-li movable>Item 2</ui5-li>
       <ui5-li movable>Item 3</ui5-li>
       <ui5-li movable>Item 4</ui5-li>
-      <ui5-li movable>Item 5</ui5-li>
+      <ui5-li movable>Test</ui5-li>
     </ui5-list>
 
     <ui5-tree id="tree" movable style="margin-top: 1rem">
@@ -101,7 +101,7 @@
         return;
       }
 
-      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row") && destination.placement === "On") {
+      if (source.element.hasAttribute("ui5-table-row") && destination.element.hasAttribute("ui5-table-row") && destination.placement !== "On") {
         e.preventDefault();
       }
     }
@@ -117,14 +117,14 @@
       }
 
       switch (placement) {
-      case "Before":
-        table.insertBefore(source, destination);
-        break;
-      case "After":
-        table.insertBefore(source, destination.nextElementSibling);
-        break;
-      default:
-        break;
+        case "Before":
+          destination.insertAdjacentElement("beforebegin", source);
+          break;
+        case "After":
+          destination.insertAdjacentElement("afterend", source);
+          break;
+        default:
+          break;
       }
     }
     

@@ -9,24 +9,11 @@ import TableExtension from "./TableExtension.js";
 
 export default class TableDragAndDrop extends TableExtension {
 	_table: Table;
-	_onDragEnterBound: (e: DragEvent) => void;
-	_onDragLeaveBound: (e: DragEvent) => void;
-	_onDragOverBound: (e: DragEvent) => void;
-	_onDropBound: (e: DragEvent) => void;
 
 	constructor(table: Table) {
 		super();
 		this._table = table;
-		this._onDragEnterBound = this._ondragenter.bind(this);
-		this._onDragLeaveBound = this._ondragleave.bind(this);
-		this._onDragOverBound = this._ondragover.bind(this);
-		this._onDropBound = this._ondrop.bind(this);
-
 		DragRegistry.subscribe(this._table); // TODO: Where unsubscribe?
-		this._table._tableElement.addEventListener("dragenter", this._onDragEnterBound);
-		this._table._tableElement.addEventListener("dragleave", this._onDragLeaveBound);
-		this._table._tableElement.addEventListener("dragover", this._onDragOverBound);
-		this._table._tableElement.addEventListener("drop", this._onDropBound);
 	}
 
 	_ondragenter(e: DragEvent) {
@@ -57,7 +44,7 @@ export default class TableDragAndDrop extends TableExtension {
 			return;
 		}
 
-		const { targetReference, placement } = handleDragOver(e, this._table, closestPosition, closestPosition.element);
+		const { targetReference, placement } = handleDragOver(e, this._table, closestPosition, closestPosition.element, { crossDnD: true, originalEvent: true });
 		this._table.dropIndicatorDOM!.targetReference = targetReference;
 		this._table.dropIndicatorDOM!.placement = placement;
 	}
