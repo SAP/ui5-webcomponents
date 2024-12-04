@@ -30,6 +30,7 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -72,6 +73,7 @@ type NotificationListGroupItemToggleEventDetail = {
 @customElement({
 	tag: "ui5-li-notification-group",
 	languageAware: true,
+	renderer: litRender,
 	styles: [
 		NotificationListGroupItemCss,
 	],
