@@ -3,7 +3,6 @@ import "../../src/Button.js";
 import "../../src/Menu.js";
 import "../../src/MenuItem.js";
 import type MenuItem from "../../src/MenuItem.js";
-import Menu from "../../src/Menu.js";
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", () => {
