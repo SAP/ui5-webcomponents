@@ -542,7 +542,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	get _isDefaultPickerMode() {
-		return !!this.simplified;
+		return !this.simplified;
 	}
 
 	get styles() {
