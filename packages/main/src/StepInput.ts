@@ -131,8 +131,8 @@ type StepInputValueStateChangeEventDetail = {
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	eventDetails!: {
-		input: void
 		change: void
+		input: void
 		"value-state-change": StepInputValueStateChangeEventDetail
 	}
 	/**
