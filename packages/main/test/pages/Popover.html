@@ -527,8 +527,21 @@ z-index: 1;
 	</ui5-popover>
 
 	<br>
-	<br><br>
-	<br><br>
+	<br>
+
+	<h2>Opener Variations</h2>
+
+	<h3>Popover in ShadowRoot, Opener set as ID in the same ShadowRoot</h3>
+	<opener-test-shadow-root-id></opener-test-shadow-root-id>
+
+	<h3>Popover in ShadowRoot, Opener set as ID in window.document</h3>
+	<ui5-link id="lnkInDocument">link in document</ui5-link>
+	<opener-test-shadow-root-id-document></opener-test-shadow-root-id-document>
+
+
+	<br>
+	<br>
+	<br>
 	<br>
 
 	<script>
@@ -843,6 +856,40 @@ z-index: 1;
 			document.getElementById("vertical").opener = e.currentTarget;
 			document.getElementById("vertical").open = true;
 		});
+
+		class OpenerTestShadowRootId extends HTMLElement {
+			constructor() {
+				super();
+				this.attachShadow({ mode: "open" });
+				this.shadowRoot.innerHTML = `
+					<ui5-link id="lnk">click me to open popover</ui5-link>
+					<ui5-responsive-popover id="pop" opener="lnk">content</ui5-responsive-popover>
+				`;
+			}
+			connectedCallback() {
+				this.shadowRoot.getElementById("lnk").addEventListener("click", () => {
+					this.shadowRoot.getElementById("pop").open = true;
+				});
+			}
+		}
+
+		class OpenerTestShadowRootIdDocument extends HTMLElement {
+			constructor() {
+				super();
+				this.attachShadow({ mode: "open" });
+				this.shadowRoot.innerHTML = `
+					<ui5-responsive-popover id="pop" opener="lnkInDocument">content</ui5-responsive-popover>
+				`;
+			}
+			connectedCallback() {
+				document.getElementById("lnkInDocument").addEventListener("click", () => {
+					this.shadowRoot.getElementById("pop").open = true;
+				});
+			}
+		}
+
+		customElements.define("opener-test-shadow-root-id", OpenerTestShadowRootId)
+		customElements.define("opener-test-shadow-root-id-document", OpenerTestShadowRootIdDocument)
 
 	</script>
 </body>
