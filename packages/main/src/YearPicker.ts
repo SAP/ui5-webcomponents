@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type LocaleT from "sap/ui/core/Locale";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
@@ -88,6 +88,10 @@ type YearPickerNavigateEventDetail = {
 	bubbles: true,
 })
 class YearPicker extends CalendarPart implements ICalendarPicker {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"change": YearPickerChangeEventDetail,
+		"navigate": YearPickerNavigateEventDetail,
+	}
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
@@ -366,7 +370,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -380,7 +384,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireDecoratorEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -407,7 +411,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 		this._updateSelectedDates(timestamp);
 
-		this.fireDecoratorEvent<YearPickerChangeEventDetail>("change", {
+		this.fireDecoratorEvent("change", {
 			timestamp: this.timestamp!,
 			dates: this.selectedDates,
 		});

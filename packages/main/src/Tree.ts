@@ -8,7 +8,7 @@ import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop
 import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import DropIndicator from "./DropIndicator.js";
 import TreeItem from "./TreeItem.js";
@@ -125,13 +125,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item the toggled item.
  * @public
  */
-@event<TreeItemToggleEventDetail>("item-toggle", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-toggle", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -141,13 +135,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @since 1.0.0-rc.16
  * @public
  */
-@event<TreeItemMouseoverEventDetail>("item-mouseover", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-mouseover", {
 	bubbles: true,
 })
 /**
@@ -156,13 +144,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @since 1.0.0-rc.16
  * @public
  */
-@event<TreeItemMouseoutEventDetail>("item-mouseout", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-mouseout", {
 	bubbles: true,
 })
 /**
@@ -170,13 +152,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item The clicked item.
  * @public
  */
-@event<TreeItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-click", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -189,13 +165,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item the deleted item.
  * @public
  */
-@event<TreeItemDeleteEventDetail>("item-delete", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-delete", {
 	bubbles: true,
 })
 
@@ -204,10 +174,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} item The focused item.
  * @private
  */
-@event<TreeItemFocusEventDetail>("item-focus", {
-	detail: {
-		item: { type: HTMLElement },
-	},
+@event("item-focus", {
 	bubbles: true,
 })
 
@@ -219,39 +186,28 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @param {HTMLElement} targetItem The item triggering the event.
  * @public
  */
-@event<TreeSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedItems: { type: Array },
-		/**
-		 * @public
-		 */
-		previouslySelectedItems: { type: Array },
-		/**
-		 * @public
-		 */
-		targetItem: { type: HTMLElement },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
-@event<TreeMoveEventDetail>("move", {
-	detail: {
-		source: { type: Object },
-		destination: { type: Object },
-	},
+@event("move", {
 	bubbles: true,
 })
-@event<TreeMoveEventDetail>("move-over", {
-	detail: {
-		source: { type: Object },
-		destination: { type: Object },
-	},
+@event("move-over", {
 	bubbles: true,
 	cancelable: true,
 })
 class Tree extends UI5Element {
+	eventDetails!: {
+		"item-toggle": TreeItemToggleEventDetail,
+		"item-mouseover": TreeItemMouseoverEventDetail,
+		"item-mouseout": TreeItemMouseoutEventDetail,
+		"item-click": TreeItemClickEventDetail,
+		"item-delete": TreeItemDeleteEventDetail,
+		"item-focus": TreeItemFocusEventDetail,
+		"selection-change": TreeSelectionChangeEventDetail,
+		"move": TreeMoveEventDetail,
+		"move-over": TreeMoveEventDetail,
+	}
 	/**
 	 * Defines the selection mode of the component. Since the tree uses a `ui5-list` to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
@@ -449,7 +405,7 @@ class Tree extends UI5Element {
 
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
-		const defaultPrevented = !this.fireDecoratorEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem });
+		const defaultPrevented = !this.fireDecoratorEvent("item-toggle", { item: treeItem });
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -458,26 +414,26 @@ class Tree extends UI5Element {
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 
-		if (!this.fireDecoratorEvent<TreeItemClickEventDetail>("item-click", { item: treeItem })) {
+		if (!this.fireDecoratorEvent("item-click", { item: treeItem })) {
 			e.preventDefault();
 		}
 	}
 
 	_onListItemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
-		this.fireDecoratorEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
+		this.fireDecoratorEvent("item-delete", { item: treeItem });
 	}
 
 	_onListItemFocus(e: CustomEvent<ListItemFocusEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
-		this.fireDecoratorEvent<TreeItemFocusEventDetail>("item-focus", { item: treeItem });
+		this.fireDecoratorEvent("item-focus", { item: treeItem });
 	}
 
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireDecoratorEvent<TreeItemMouseoverEventDetail>("item-mouseover", { item: target });
+			this.fireDecoratorEvent("item-mouseover", { item: target });
 		}
 	}
 
@@ -485,7 +441,7 @@ class Tree extends UI5Element {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireDecoratorEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target });
+			this.fireDecoratorEvent("item-mouseout", { item: target });
 		}
 	}
 
@@ -501,7 +457,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireDecoratorEvent<TreeSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,

@@ -17,21 +17,22 @@
 		body {
 			height: 600px;
 		}
-		#btnOpenUserMenu {
-			float: right;
-		}
 	</style>
 </head>
 
 <body style="background-color: var(--sapBackgroundColor)">
 <!-- playground-fold-end -->
-
-<ui5-button id="btnOpenUserMenu">User menu</ui5-button>
+<ui5-shellbar id="shellbar" primary-title="Corporate Portal">
+	<ui5-avatar slot="profile">
+		<img src="../assets/images/avatars/woman_avatar_3.png"/>
+	</ui5-avatar>
+	<img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+</ui5-shellbar>
 <ui5-user-menu id="userMenu" opener="btnOpenUserMenu">
 	<ui5-user-menu-account slot="accounts"
-		avatar-src="../assets/images/avatars/Lamp_avatar_01.jpg"
-		title-text="Alain Chevalier 1"
-		subtitle-text="alian.chevalier@sap.com"
+		avatar-src="../assets/images/avatars/woman_avatar_3.png"
+		title-text="Alaina Chevalier"
+		subtitle-text="aliana.chevalier@sap.com"
 		description="Delivery Manager, SAP SE"
 		selected>
 	</ui5-user-menu-account>

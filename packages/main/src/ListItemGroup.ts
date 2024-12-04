@@ -1,5 +1,5 @@
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -63,17 +63,7 @@ type ListItemGroupMoveEventDetail = {
  * @since 2.1.0
  */
 
-@event<ListItemGroupMoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -87,21 +77,15 @@ type ListItemGroupMoveEventDetail = {
  * @public
  * @since 2.1.0
  */
-@event<ListItemGroupMoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
 	bubbles: true,
 })
 
 class ListItemGroup extends UI5Element {
+	eventDetails!: {
+		"move-over": ListItemGroupMoveEventDetail,
+		"move": ListItemGroupMoveEventDetail,
+	}
 	/**
 	 * Defines the header text of the <code>ui5-li-group</code>.
 	 * @public
@@ -210,7 +194,7 @@ class ListItemGroup extends UI5Element {
 		}
 
 		const placementAccepted = placements.some(placement => {
-			const beforeItemMovePrevented = !this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move-over", {
+			const beforeItemMovePrevented = !this.fireDecoratorEvent("move-over", {
 				source: {
 					element: draggedElement,
 				},
@@ -238,7 +222,7 @@ class ListItemGroup extends UI5Element {
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 
-		this.fireDecoratorEvent<ListItemGroupMoveEventDetail>("move", {
+		this.fireDecoratorEvent("move", {
 			source: {
 				element: DragRegistry.getDraggedElement()!,
 			},

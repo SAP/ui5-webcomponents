@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -76,6 +76,9 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 	bubbles: true,
 })
 class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
+	eventDetails!: {
+		click: void,
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 * A disabled component can't be pressed or

@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 
@@ -26,6 +26,9 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  */
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
+	eventDetails!: SideNavigationItemBase["eventDetails"] & {
+		"click": void
+	}
 	/**
 	 * Defines the icon of the item.
 	 *
