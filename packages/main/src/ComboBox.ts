@@ -483,8 +483,9 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		} else {
 			this.valueStateOpen = false;
 		}
-
-		this._selectMatchingItem();
+		if (!this.noTypeahead) {
+			this._selectMatchingItem();
+		}
 		this._initialRendering = false;
 
 		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
@@ -1133,7 +1134,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		const sameItemSelected = this.value === this._selectedItemText;
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
 
-		if (sameItemSelected && sameSelectionPerformed) {
+		if (sameItemSelected && sameSelectionPerformed && !this.noTypeahead) {
 			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
 		}
