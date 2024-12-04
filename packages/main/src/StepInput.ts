@@ -113,8 +113,8 @@ type StepInputValueStateChangeEventDetail = {
  * @since 2.5.0
  */
 @event("input", {
-	bubbles: true,
 	cancelable: true,
+	bubbles: true,
 })
 /**
  * Fired before the value state of the component is updated internally.
@@ -131,6 +131,7 @@ type StepInputValueStateChangeEventDetail = {
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	eventDetails!: {
+		input: void
 		change: void
 		"value-state-change": StepInputValueStateChangeEventDetail
 	}
