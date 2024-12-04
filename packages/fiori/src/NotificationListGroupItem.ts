@@ -5,6 +5,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -228,6 +229,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return innerList.getDomRef()?.querySelector(".ui5-growing-button-inner") as HTMLElement;
 	}
 
+	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		const isFocused = this.matches(":focus");
 		if (!isFocused) {

@@ -1,6 +1,7 @@
 import { isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -73,6 +74,7 @@ class NotificationListItemBase extends ListItemBase {
 	/**
 	 * Event handlers
 	 */
+	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
