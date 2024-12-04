@@ -246,7 +246,6 @@ class Toast extends UI5Element {
 	}
 
 	onEnterDOM(): void {
-		this.setAttribute("popover", "manual");
 		this.addEventListener("focusin", this._onfocusinFn);
 		this.addEventListener("focusout", this._onfocusoutFn);
 		this.addEventListener("keydown", this._onkeydownFn);
