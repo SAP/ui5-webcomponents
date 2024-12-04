@@ -4,7 +4,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ToastPlacement from "./types/ToastPlacement.js";
 
 // Template
@@ -95,6 +95,9 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
 })
 
 class Toast extends UI5Element {
+	eventDetails!: {
+		"close": void
+	}
 	/**
 	 * Defines the duration in milliseconds for which component
 	 * remains on the screen before it's automatically closed.

@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import {
 	isUp,
 	isDown,
@@ -125,25 +125,15 @@ type StepInputValueStateChangeEventDetail = {
  * @param {string} valueState The new `valueState` that will be set.
  * @param {boolean} valid Indicator if the value is in between the min and max value.
  */
-@event<StepInputValueStateChangeEventDetail>("value-state-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		valueState: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		valid: {
-			type: Boolean,
-		},
-	},
+@event("value-state-change", {
 	bubbles: true,
 	cancelable: true,
 })
 class StepInput extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void
+		"value-state-change": StepInputValueStateChangeEventDetail
+	}
 	/**
 	 * Defines a value of the component.
 	 * @default 0
@@ -441,7 +431,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 
 		this.valueState = isValid ? ValueState.None : ValueState.Negative;
 
-		const eventPrevented = !this.fireDecoratorEvent<StepInputValueStateChangeEventDetail>("value-state-change", {
+		const eventPrevented = !this.fireDecoratorEvent("value-state-change", {
 			valueState: this.valueState,
 			valid: isValid,
 		});
@@ -459,7 +449,7 @@ class StepInput extends UI5Element implements IFormInputElement {
 	_fireChangeEvent() {
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireDecoratorEvent("change", { value: this.value });
+			this.fireDecoratorEvent("change");
 		}
 	}
 
