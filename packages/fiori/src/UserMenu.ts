@@ -23,14 +23,6 @@ import type UserMenuItem from "./UserMenuItem.js";
 import UserMenuTemplate from "./UserMenuTemplate.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
 
-// Icons
-import "@ui5/webcomponents-icons/dist/add-employee.js";
-import "@ui5/webcomponents-icons/dist/edit.js";
-import "@ui5/webcomponents-icons/dist/person-placeholder.js";
-import "@ui5/webcomponents-icons/dist/log.js";
-import "@ui5/webcomponents-icons/dist/user-settings.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-
 // Texts
 import {
 	USER_MENU_OTHER_ACCOUNT_BUTTON_TXT,
