@@ -16,7 +16,7 @@ type DragPosition = {
 /**
  * Handles the dragover event.
  */
-function handleDragOver(e: DragEvent, component: UI5Element, position: DragPosition, target: HTMLElement, settings: DragAndDropSettings = {}): DragOverResult {
+function handleDragOver<T extends UI5Element>(e: DragEvent, component: T, position: DragPosition, target: HTMLElement, settings: DragAndDropSettings = {}): DragOverResult {
 	const draggedElement = DragRegistry.getDraggedElement();
 	const dragOverResult: DragOverResult = {
 		targetReference: null,
@@ -32,7 +32,7 @@ function handleDragOver(e: DragEvent, component: UI5Element, position: DragPosit
 
 	const placementAccepted = placements.some(placement => {
 		const originalEvent = settings.originalEvent ? { originalEvent: e } : {};
-		const beforeItemMovePrevented = !component.fireDecoratorEvent("move-over", {
+		const beforeItemMovePrevented = !component.fireDecoratorEvent("move-over" as keyof T["eventDetails"], {
 			...originalEvent,
 			source: {
 				element: draggedElement,
@@ -41,7 +41,7 @@ function handleDragOver(e: DragEvent, component: UI5Element, position: DragPosit
 				element: target,
 				placement,
 			},
-		});
+		} as T["eventDetails"][keyof T["eventDetails"]]);
 
 		if (beforeItemMovePrevented) {
 			e.preventDefault();

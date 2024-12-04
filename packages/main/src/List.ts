@@ -24,7 +24,7 @@ import {
 import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
 import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import DragRegistry, { type MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import DragRegistry, { type MoveEventDetail as ListMoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -261,21 +261,7 @@ type ListItemClickEventDetail = {
  * @since 2.0.0
  */
 
-@event<MoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		originalEvent: { type: Event },
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -288,21 +274,7 @@ type ListItemClickEventDetail = {
  * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
  * @public
  */
-@event<MoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		originalEvent: { type: Event },
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
 	bubbles: true,
 })
 class List extends UI5Element {
@@ -947,7 +919,7 @@ class List extends UI5Element {
 		e.preventDefault();
 
 		const acceptedPosition = closestPositions.find(({ element, placement }) => {
-			return !this.fireDecoratorEvent<MoveEventDetail>("move-over", {
+			return !this.fireDecoratorEvent("move-over", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -960,7 +932,7 @@ class List extends UI5Element {
 		});
 
 		if (acceptedPosition) {
-			this.fireDecoratorEvent<MoveEventDetail>("move", {
+			this.fireDecoratorEvent("move", {
 				originalEvent: e,
 				source: {
 					element: item,
@@ -1159,7 +1131,7 @@ class List extends UI5Element {
 		if (!closestPosition) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;
-    }
+		}
 
 		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
 		this.dropIndicatorDOM!.targetReference = targetReference;
@@ -1172,7 +1144,7 @@ class List extends UI5Element {
 			return;
 		}
 
-    handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
+		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
 		this.dropIndicatorDOM.targetReference = null;
 	}
 
@@ -1421,5 +1393,5 @@ export type {
 	ListItemCloseEventDetail,
 	ListItemToggleEventDetail,
 	ListSelectionChangeEventDetail,
-	MoveEventDetail as ListMoveEventDetail,
+	ListMoveEventDetail,
 };

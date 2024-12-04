@@ -10,7 +10,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type { MoveEventDetail as TableMoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -195,21 +195,7 @@ type TableRowClickEventDetail = {
  * @param {object} destination The destination object
  * @public
  */
-@event<MoveEventDetail>("move-over", {
-	detail: {
-		/**
-		 * @public
-		 */
-		originalEvent: { type: Event },
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move-over", {
 	cancelable: true,
 	bubbles: true,
 })
@@ -229,27 +215,15 @@ type TableRowClickEventDetail = {
  * @param {object} destination The destination object
  * @public
  */
-@event<MoveEventDetail>("move", {
-	detail: {
-		/**
-		 * @public
-		 */
-		originalEvent: { type: Event },
-		/**
-		 * @public
-		 */
-		source: { type: Object },
-		/**
-		 * @public
-		 */
-		destination: { type: Object },
-	},
+@event("move", {
 	bubbles: true,
 })
 
 class Table extends UI5Element {
 	eventDetails!: {
 		"row-click": TableRowClickEventDetail;
+		"move-over": TableMoveEventDetail;
+		"move": TableMoveEventDetail;
 	}
 	/**
 	 * Defines the rows of the component.
@@ -666,5 +640,5 @@ export type {
 	ITableFeature,
 	ITableGrowing,
 	TableRowClickEventDetail,
-	MoveEventDetail as TableMoveEventDetail,
+	TableMoveEventDetail as TableTableMoveEventDetail,
 };

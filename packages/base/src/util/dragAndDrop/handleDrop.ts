@@ -3,7 +3,7 @@ import type MovePlacement from "../../types/MovePlacement.js";
 import type { DragAndDropSettings } from "./DragRegistry.js";
 import DragRegistry from "./DragRegistry.js";
 
-function handleDrop(e: DragEvent, component: UI5Element, target: HTMLElement, placement: `${MovePlacement}`, settings: DragAndDropSettings = {}): void {
+function handleDrop<T extends UI5Element>(e: DragEvent, component: T, target: HTMLElement, placement: `${MovePlacement}`, settings: DragAndDropSettings = {}): void {
 	e.preventDefault();
 	const draggedElement = DragRegistry.getDraggedElement();
 
@@ -12,7 +12,7 @@ function handleDrop(e: DragEvent, component: UI5Element, target: HTMLElement, pl
 	}
 
 	const originalEvent = settings.originalEvent ? { originalEvent: e } : {};
-	component.fireDecoratorEvent("move", {
+	component.fireDecoratorEvent("move" as keyof T["eventDetails"], {
 		...originalEvent,
 		source: {
 			element: draggedElement,
@@ -21,7 +21,7 @@ function handleDrop(e: DragEvent, component: UI5Element, target: HTMLElement, pl
 			element: target,
 			placement,
 		},
-	});
+	} as T["eventDetails"][keyof T["eventDetails"]]);
 
 	draggedElement?.focus();
 }
