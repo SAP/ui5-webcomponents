@@ -250,7 +250,6 @@ class Popover extends Popup {
 		const opener = this.getOpenerHTMLElement(this.opener);
 
 		if (!opener) {
-			console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
 			return;
 		}
 

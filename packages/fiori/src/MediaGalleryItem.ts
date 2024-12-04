@@ -6,7 +6,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import type { IMediaGalleryItem } from "./MediaGallery.js";
@@ -54,6 +54,9 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
 	bubbles: true,
 })
 class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
+	eventDetails!: {
+		click: { item: MediaGalleryItem },
+	}
 	/**
 	 * Defines the selected state of the component.
 	 * @default false

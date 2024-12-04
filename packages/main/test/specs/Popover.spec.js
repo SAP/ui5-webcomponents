@@ -209,7 +209,6 @@ describe("Popover general interaction", () => {
 	it("tests modal popover with no block layer", async () => {
 		const btnOpenPopover = await browser.$("#btnPopModalNoLayer");
 		const popover = await browser.$("#modalPopoverNoLayer");
-		const popoverId = await popover.getProperty("_id");
 
 		await btnOpenPopover.click();
 		assert.ok(await popover.getProperty("open"), "Popover is opened.");
@@ -437,6 +436,30 @@ describe("Popover general interaction", () => {
 		await browser.keys("Tab");
 
 		assert.ok(await browser.$("#input2").isFocused(), "next input is focused");
+	});
+});
+
+describe("Opener", () => {
+	before(async () => {
+		await browser.url(`test/pages/Popover.html`);
+	});
+
+	it("tests opener set as ID in the same shadow root", async () => {
+		const opener = await browser.$("opener-test-shadow-root-id").shadow$("#lnk");
+		const popover = await browser.$("opener-test-shadow-root-id").shadow$("#pop");
+
+		await opener.click();
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+	});
+
+	it("tests opener set as ID in window.document, while popover is in a shadow root", async () => {
+		const opener = await browser.$("#lnkInDocument");
+		const popover = await browser.$("opener-test-shadow-root-id-document").shadow$("#pop");
+
+		await opener.click();
+
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 	});
 });
 

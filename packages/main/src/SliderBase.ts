@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
@@ -46,6 +46,10 @@ type DirectionStart = "left" | "right";
  * @public
  */
 abstract class SliderBase extends UI5Element {
+	eventDetails!: {
+		"change": void,
+		"input": void,
+	}
 	/**
 	 * Defines the minimum value of the slider.
 	 * @default 0
