@@ -52,7 +52,6 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 type NotificationListItemCloseEventDetail = {
 	item: HTMLElement,
