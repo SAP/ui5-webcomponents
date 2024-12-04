@@ -113,15 +113,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	status: `${TimelineItemStatus}` = "None";
 
 	/**
-	 * Defines the accessible description of the component.
-	 * @default undefined
-	 * @public
-	 * @since 2.5.0
-	 */
-	@property()
-	accessibleDescription?: string;
-
-	/**
 	 * Defines the content of the `ui5-timeline-item`.
 	 * @public
 	 */
@@ -212,11 +203,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	}
 
 	get timelineItemStatusText() {
-		return TimelineItem.i18nBundle.getText(TimelineItem.typeTextMappings()[this.status]);
-	}
-
-	get ariaDescriptionText() {
-		return this.accessibleDescription || this.timelineItemStatusText || undefined;
+		return this.status !== "None" ? TimelineItem.i18nBundle.getText(TimelineItem.typeTextMappings()[this.status]) : undefined;
 	}
 
 	get classes() {
