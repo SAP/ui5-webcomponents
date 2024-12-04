@@ -175,7 +175,7 @@
 		const siMinMax = document.getElementById('stepInputMinMax');
 		const siPrecision = document.getElementById('stepInputPrecision');
 		const changeResult = document.getElementById('changeResult');
-		const preventedInput = document.getElementById('stepInputPreventedInput');
+		const preventedEventInput = document.getElementById('stepInputPreventedInput');
 		let changeCount = 0;
 		const displayChange = function (event) {
 			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
@@ -200,7 +200,7 @@
 			e.preventDefault();
 		});
 
-		preventedInput.addEventListener("input", function(e) {
+		preventedEventInput.addEventListener("input", function(e) {
 			e.preventDefault();
 		});
 	</script>
