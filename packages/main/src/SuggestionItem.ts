@@ -55,6 +55,13 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 			this.setAttribute("desktop", "");
 		}
 	}
+
+	onBeforeRendering(): void {
+		super.onBeforeRendering();
+
+		// list's item navigation always sets tabIndex to 0 to first item
+		this.forcedTabIndex = "-1";
+	}
 }
 
 SuggestionItem.define();
