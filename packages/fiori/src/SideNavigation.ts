@@ -25,6 +25,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
+import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem, { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -500,7 +501,13 @@ class SideNavigation extends UI5Element {
 				return;
 			}
 
-			const itemDomRef = item.getDomRef()!;
+			let itemDomRef;
+
+			if (isInstanceOfSideNavigationItemBase(item)) {
+				itemDomRef = item.getDomRef()!;
+			} else {
+				itemDomRef = item;
+			}
 
 			const { marginTop, marginBottom } = window.getComputedStyle(itemDomRef);
 			itemsHeight += itemDomRef.offsetHeight + parseFloat(marginTop) + parseFloat(marginBottom);
