@@ -527,7 +527,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const navItems = list.getEnabledItems();
-		// @ts-expect-error strictEvents
+		// @ts-expect-error TOFIX strictEvents
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {
@@ -594,7 +594,10 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		// @ts-expect-error strictEvents
+		// NotificationListItem will never be assigned to a variable of type ListItemBase
+		// typescipt complains here, if that is the case, the parameter to the _press event handler could be a ListItemBase item,
+		// but this is never the case, all components are used by their class and never assigned to a variable with a type of ListItemBase
+		// @ts-expect-error
 		this.fireDecoratorEvent("_press", { item: this });
 	}
 

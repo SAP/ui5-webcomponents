@@ -107,8 +107,6 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 })
 abstract class ListItem extends ListItemBase {
 	eventDetails!: ListItemBase["eventDetails"] & {
-		// strictEvents
-		"toggle": any
 		"detail-click": { item: ListItem, selected: boolean };
 		"selection-requested": SelectionRequestEventDetail,
 	}

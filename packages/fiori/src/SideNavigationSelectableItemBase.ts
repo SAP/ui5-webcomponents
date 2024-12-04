@@ -10,7 +10,6 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  *
  * @public
  */
-// @ts-expect-error strictEvents
 @event("click", {
 	bubbles: true,
 })
@@ -28,8 +27,7 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 @customElement()
 class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	eventDetails!: SideNavigationItemBase["eventDetails"] & {
-		// strictEvents
-		// "click": void
+		"click": void
 	}
 	/**
 	 * Defines the icon of the item.
@@ -172,7 +170,6 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		e.stopPropagation();
 
 		if (this.isOverflow) {
-			// @ts-expect-error strictEvents
 			this.fireDecoratorEvent("click");
 		} else {
 			this.sideNavigation?._handleItemClick(e, this);

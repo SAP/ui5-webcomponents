@@ -164,7 +164,7 @@ abstract class UI5Element extends HTMLElement {
 	eventDetails!: NotEqual<this, UI5Element> extends true ? object : {
 		[k: string]: any
 	};
-	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect"> & Convert<this["eventDetails"]>
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"]>
 	_jsxProps!: Pick<JSX.HTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
