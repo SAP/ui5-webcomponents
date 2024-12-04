@@ -120,7 +120,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * @public
 	 * @since 2.5.0
 	 */
-	@property()
+	@property({ type: Boolean })
 	simplified = false;
 
 	/**
