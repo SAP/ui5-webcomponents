@@ -163,7 +163,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	@bound
-	_onkeydown (e: KeyboardEvent) {
+	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
 			return;
