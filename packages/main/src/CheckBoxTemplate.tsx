@@ -35,12 +35,12 @@ export default function (this: CheckBox) {
 
 			{this.isDisplayOnly ?
 				<div class="ui5-checkbox-display-only-icon-inner">
-					<Icon aria-hidden="true" name={displayOnlyIcon.call(this)} class="ui5-checkbox-display-only-icon" part="icon"></Icon>
+					<Icon aria-hidden="true" name={displayOnlyIcon.call(this)} class="ui5-checkbox-display-only-icon" part="icon"/>
 				</div>
 				:
 				<div id={`${this._id}-CbBg`} class="ui5-checkbox-inner">
 					{this.isCompletelyChecked &&
-					<Icon aria-hidden="true" name={accept} class="ui5-checkbox-icon" part="icon"></Icon>
+					<Icon aria-hidden="true" name={accept} class="ui5-checkbox-icon" part="icon"/>
 					}
 				</div>
 			}

@@ -35,7 +35,7 @@ export default function (this: StepInput) {
 						"ui5-step-input-icon--clickable": this._decIconClickable,
 					}}
 					showTooltip={true}
-				></Icon>
+				/>
 			</div>
 			}
 
@@ -83,7 +83,7 @@ export default function (this: StepInput) {
 						onMouseUp={this._resetSpin}
 						onMouseOut={this._resetSpinOut}
 						showTooltip={true}
-					></Icon>
+					/>
 				</div>
 			}
 		</div>

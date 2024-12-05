@@ -10,7 +10,7 @@ export default function (this: CalendarLegend) {
 			onMouseDown={this._onMouseDown}
 		>
 			{this.defaultItemsMapping.filter(item => !item.hide).map(item =>
-				<CalendarLegendItem type={item.type}></CalendarLegendItem>
+				<CalendarLegendItem type={item.type}/>
 			)}
 
 			{this.legendItems.map(item =>

@@ -1,12 +1,13 @@
 import type TabContainer from "./TabContainer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import Button from "./Button.js";
 import type Tab from "./Tab.js";
 
 export default function (this: TabContainer) {
 	return (
 		<ResponsivePopover
-			id={ `${this._id}-overflowMenu` }
+			id={`${this._id}-overflowMenu`}
 			horizontalAlign="End"
 			placement="Bottom"
 			contentOnlyOnDesktop={true}
@@ -28,10 +29,9 @@ export default function (this: TabContainer) {
 				)}
 			</List>
 			<div slot="footer" class="ui5-responsive-popover-footer">
-				<ui5-button
-					design="Transparent"
-					onClick={this._closePopover}
-				>{this.popoverCancelButtonText}</ui5-button>
+				<Button design="Transparent" onClick={this._closePopover}>
+					{this.popoverCancelButtonText}
+				</Button>
 			</div>
 		</ResponsivePopover>
 	);

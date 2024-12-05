@@ -17,7 +17,7 @@ export default function (this: WizardTab) {
 			<div class="ui5-wiz-step-main">
 				<div class="ui5-wiz-step-icon-circle">
 					{this.icon ? (
-						<Icon class="ui5-wiz-step-icon" mode="Decorative" name={this.icon}></Icon>
+						<Icon class="ui5-wiz-step-icon" mode="Decorative" name={this.icon}/>
 					) : (
 						<span class="ui5-wiz-step-number">{this.number}</span>
 					)}

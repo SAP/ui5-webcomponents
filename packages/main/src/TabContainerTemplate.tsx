@@ -116,10 +116,7 @@ export default function (this: TabContainer, injectedPartials?: Partial<typeof d
 					}
 				</div>
 
-				<DropIndicator
-					orientation="Vertical"
-					ownerReference={this}
-				></DropIndicator>
+				<DropIndicator orientation="Vertical" ownerReference={this}/>
 			</div>
 
 			{!this.tabsAtTheBottom && partials.contentArea.call(this)}

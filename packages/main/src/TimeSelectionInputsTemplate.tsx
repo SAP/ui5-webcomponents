@@ -31,7 +31,7 @@ export default function (this: TimeSelectionInputs) {
 						onFocusIn={this._onfocusin}
 						onFocusOut={this._onfocusout}
 						onInput={this._oninput}
-					></Input>
+					/>
 				</>
 			))}
 

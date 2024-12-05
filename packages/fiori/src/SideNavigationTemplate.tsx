@@ -28,7 +28,7 @@ export default function (this: SideNavigation) {
 						class="ui5-sn-item-overflow"
 						sideNavCollapsed={true}
 						icon={overflow}
-					></SideNavigationItem>
+					/>
 				</div>
 				:
 				<ul role="tree"

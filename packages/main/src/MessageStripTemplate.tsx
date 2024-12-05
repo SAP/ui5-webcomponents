@@ -27,7 +27,7 @@ export default function (this: MessageStrip) {
 					{this.iconProvided ?
 						<slot name="icon"></slot>
 						:
-						<Icon name={standardIconName.call(this)} class="ui5-message-strip-icon"></Icon>
+						<Icon name={standardIconName.call(this)} class="ui5-message-strip-icon"/>
 					}
 				</div>
 			}
@@ -42,7 +42,7 @@ export default function (this: MessageStrip) {
 					class="ui5-message-strip-close-button"
 					tooltip={this._closeButtonText}
 					onClick={this._closeClick}
-				></Button>
+				/>
 			}
 		</div>
 	);

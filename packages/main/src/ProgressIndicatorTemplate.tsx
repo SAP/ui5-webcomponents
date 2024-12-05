@@ -42,7 +42,7 @@ function valueLabel(this: ProgressIndicator) {
 	return (
 		<>
 			{ this.showIcon &&
-			<Icon name={valueStateIcon.call(this)} class="ui5-progress-indicator-icon"></Icon> }
+			<Icon name={valueStateIcon.call(this)} class="ui5-progress-indicator-icon"/> }
 
 			{!this.hideValue &&
 			<span class="ui5-progress-indicator-value"> {this.displayValue ? this.displayValue : `${this.validatedValue}%`}</span> }

@@ -55,14 +55,14 @@ export default function (this: Input) {
 										placeholder={this.placeholder}
 										onInput={this._handleInput}
 										onChange={this._handleChange}
-									></Input>
+									/>
 								</div>
 							</div>
 						</div>
 
 						{this.hasValueStateMessage &&
 						<div class={this.classes.popoverValueState} style={this.styles.suggestionPopoverHeader}>
-							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
+							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)} />
 							{ this.open && valueStateMessage.call(this) }
 						</div>
 						}
@@ -79,7 +79,7 @@ export default function (this: Input) {
 							}}
 							style={this.styles.suggestionPopoverHeader}
 						>
-							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
+							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)} />
 							{ this.open && valueStateMessage.call(this) }
 						</div>
 				}
@@ -113,7 +113,7 @@ export default function (this: Input) {
 					onClose={this._handleValueStatePopoverAfterClose}
 				>
 					<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
-						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
+						<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)} />
 						{ this.valueStateOpen && valueStateMessage.call(this) }
 					</div>
 				</Popover>

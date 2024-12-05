@@ -19,6 +19,6 @@ export default function (this: Button) {
 		<MainButton
 			class="ui5-ai-button-hidden"
 			design={this.design}
-		></MainButton>
+		/>
 	</>);
 }

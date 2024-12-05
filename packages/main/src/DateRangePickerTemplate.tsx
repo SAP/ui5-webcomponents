@@ -30,7 +30,7 @@ function content(this: DateRangePicker) {
 			_currentPicker={this._calendarCurrentPicker}
 			_pickersMode={this._calendarPickersMode}
 		>
-			<CalendarDateRange startValue={this.startValue} endValue={this.endValue}></CalendarDateRange>
+			<CalendarDateRange startValue={this.startValue} endValue={this.endValue} />
 		</Calendar>
 	);
 }

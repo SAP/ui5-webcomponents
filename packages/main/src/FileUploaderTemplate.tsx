@@ -26,7 +26,7 @@ export default function (this: FileUploader) {
 							disabled={this.disabled}
 							tabindex={-1}
 							class="ui5-file-uploader-input"
-						></Input>
+						/>
 					}
 					<slot></slot>
 				</div>

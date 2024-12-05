@@ -31,7 +31,7 @@ export default function (this: TextArea) {
 					"ui5-valuestatemessage-root": true,
 					...this.classes.valueStateMsg,
 				}}>
-					<Icon class="ui5-input-value-state-message-icon" name={valueStateIcon.call(this)}></Icon>
+					<Icon class="ui5-input-value-state-message-icon" name={valueStateIcon.call(this)} />
 					{valueStateMessage.call(this)}
 				</div>
 			</Popover>

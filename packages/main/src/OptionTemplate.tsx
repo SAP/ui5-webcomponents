@@ -10,7 +10,7 @@ function listItemContent(this: Option) {
 	return (
 		<div part="content" id={`${this._id}-content`} class="ui5-li-content">
 			{this.displayIconBegin &&
-				<Icon part="icon" name={this.icon} class="ui5-li-icon" mode="Decorative"></Icon>
+				<Icon part="icon" name={this.icon} class="ui5-li-icon" mode="Decorative" />
 			}
 			<div class="ui5-li-text-wrapper">
 				<span part="title" class="ui5-li-title"><slot></slot></span>

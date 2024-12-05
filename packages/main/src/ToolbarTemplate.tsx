@@ -1,5 +1,7 @@
-import type Toolbar from "./Toolbar.js";
+import Button from "./Button.js";
+import type Toolbar from "./Toolbar.js"
 import toolbarPopoverTemplate from "./ToolbarPopoverTemplate.js";
+import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
 
 export default function (this: Toolbar) {
 	return (<>
@@ -15,9 +17,9 @@ export default function (this: Toolbar) {
 				item.toolbarTemplate.call(item.context)
 			))}
 
-			<ui5-button
+			<Button
 				aria-hidden={this.hideOverflowButton}
-				icon="overflow"
+				icon={overflowIcon}
 				design="Transparent"
 				class={{
 					"ui5-tb-item": true,
@@ -27,7 +29,7 @@ export default function (this: Toolbar) {
 				tooltip={this.accInfo.overflowButton.tooltip}
 				accessibleName={this.accInfo.overflowButton.accessibleName}
 				accessibilityAttributes={this.accInfo.overflowButton.accessibilityAttributes}
-			></ui5-button>
+			/>
 		</div>
 
 		{toolbarPopoverTemplate.call(this)}

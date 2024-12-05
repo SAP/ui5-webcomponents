@@ -46,7 +46,7 @@ export default function (this: DatePicker) {
 							"inputIcon--pressed": this.open,
 						}}
 						onClick={this._togglePicker}
-					></Icon>
+					/>
 				}
 			</Input>
 		</div>

@@ -6,6 +6,9 @@ import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js"
 import List from "@ui5/webcomponents/dist/List.js";
 import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
+import navBackIcon from "@ui5/webcomponents-icons/dist/nav-back.js";
+import sortIcon from "@ui5/webcomponents-icons/dist/sort.js";
+import filterIcon from "@ui5/webcomponents-icons/dist/filter.js";
 
 import type ViewSettingsDialog from "./ViewSettingsDialog.js";
 
@@ -17,10 +20,10 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 					{this.showBackButton && (
 						<Button
 							design="Transparent"
-							icon="nav-back"
+							icon={navBackIcon}
 							class="ui5-vsd-back-button"
 							onClick={this._navigateToFilters}
-						></Button>
+							/>
 					)}
 					<Title
 						wrappingType="None"
@@ -45,14 +48,14 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 						>
 							<SegmentedButtonItem
 								selected={this.isModeSort}
-								icon="sort"
+								icon={sortIcon}
 								data-mode="Sort"
-							></SegmentedButtonItem>
+							/>
 							<SegmentedButtonItem
 								selected={this.isModeFilter}
-								icon="filter"
+								icon={filterIcon}
 								data-mode="Filter"
-							></SegmentedButtonItem>
+							/>
 						</SegmentedButton>
 					</div>
 				</div>

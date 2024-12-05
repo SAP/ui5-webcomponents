@@ -44,7 +44,7 @@ function item(this: ProductSwitchItem) {
 				<Icon
 					class="ui5-product-switch-item-icon"
 					name={this.icon}
-				></Icon>
+				/>
 			}
 
 			<span class="ui5-product-switch-item-text-content">

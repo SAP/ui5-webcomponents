@@ -54,7 +54,7 @@ export default function (this: UploadCollection) {
 						onDragLeave={this._ondragleave}
 						onDragOver={this._ondragover}
 					>
-						<Icon name={uploadToCloud}></Icon>
+						<Icon name={uploadToCloud}/>
 						<span class="dnd-overlay-text">{this._dndOverlayText}</span>
 					</div>
 				}

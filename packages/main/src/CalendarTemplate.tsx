@@ -30,7 +30,7 @@ export default function (this: Calendar) {
 						onChange={this.onSelectedDatesChange}
 						onNavigate={this.onNavigate}
 						exportparts="day-cell, day-cell-selected, day-cell-selected-between"
-					></DayPicker>
+					/>
 
 					<MonthPicker
 						id={`${this._id}-MP`}
@@ -47,7 +47,7 @@ export default function (this: Calendar) {
 						onChange={this.onSelectedMonthChange}
 						onNavigate={this.onNavigate}
 						exportparts="month-cell, month-cell-selected, month-cell-selected-between"
-					></MonthPicker>
+					/>
 
 					<YearPicker
 						id={`${this._id}-YP`}
@@ -64,7 +64,7 @@ export default function (this: Calendar) {
 						onChange={this.onSelectedYearChange}
 						onNavigate={this.onNavigate}
 						exportparts="year-cell, year-cell-selected, year-cell-selected-between"
-					></YearPicker>
+					/>
 				</div>
 
 				<div class="ui5-calheader">

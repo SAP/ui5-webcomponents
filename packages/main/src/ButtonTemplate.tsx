@@ -44,7 +44,7 @@ export default function (this: Button, injectedProps?: {
 					mode="Decorative"
 					part="icon"
 					showTooltip={this.showIconTooltip}
-				></Icon>
+				/>
 			}
 
 			<span id={`${this._id}-content`} class="ui5-button-text">
@@ -59,7 +59,7 @@ export default function (this: Button, injectedProps?: {
 					name={this.endIcon}
 					mode="Decorative"
 					part="endIcon"
-				></Icon>
+				/>
 			}
 
 			{this.hasButtonType &&

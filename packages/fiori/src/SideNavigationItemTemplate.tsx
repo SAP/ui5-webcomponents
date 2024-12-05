@@ -33,17 +33,17 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				href={this._href}
 				target={this._target}
 			>
-				<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
+				<Icon class="ui5-sn-item-icon" name={this.icon}/>
 				<div class="ui5-sn-item-text">{this.text}</div>
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={navRightArrow}
-					></Icon>
+					/>
 				}
 				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
-					></Icon>
+					/>
 				}
 			</a>
 			:
@@ -63,17 +63,17 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				aria-checked={this._ariaChecked}
 				title={this._tooltip}
 			>
-				<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
+				<Icon class="ui5-sn-item-icon" name={this.icon}/>
 				<div class="ui5-sn-item-text">{this.text}</div>
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={navRightArrow}
-					></Icon>
+					/>
 				}
 				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
-					></Icon>
+					/>
 				}
 			</div>
 		}
@@ -101,22 +101,22 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					target={this._target}
 				>
 					{this.icon &&
-					<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
+					<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					}
 					<div class="ui5-sn-item-text">{this.text}</div>
 					<Icon class="ui5-sn-item-selection-icon"
 						name={circleTask}
-					></Icon>
+					/>
 					{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
-					></Icon>
+					/>
 					}
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
 						onui5-click={this._onToggleClick}
-					></Icon>
+					/>
 					}
 				</a>
 				:
@@ -135,22 +135,22 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					aria-owns={this._groupId}
 				>
 					{this.icon &&
-					<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
+					<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					}
 					<div class="ui5-sn-item-text">{this.text}</div>
 					<Icon class="ui5-sn-item-selection-icon"
 						name={circleTask}
-					></Icon>
+					/>
 					{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
-					></Icon>
+					/>
 					}
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
 						onui5-click={this._onToggleClick}
-					></Icon>
+					/>
 					}
 				</div>
 			}

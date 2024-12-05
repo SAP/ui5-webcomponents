@@ -72,7 +72,7 @@ function defaultContent(this: DatePicker) {
 			_currentPicker={this._calendarCurrentPicker}
 			_pickersMode={this._calendarPickersMode}
 		>
-			{ this._calendarSelectedDates.map(date => <CalendarDate value={date}></CalendarDate>)}
+			{ this._calendarSelectedDates.map(date => <CalendarDate value={date}/>)}
 		</Calendar>
 	);
 }

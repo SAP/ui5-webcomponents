@@ -17,7 +17,7 @@ export default function (this: Calendar) {
 				onMouseDown={this.onPrevButtonClick}
 				title={this.headerPreviousButtonText}
 			>
-				<Icon class="ui5-calheader-arrowicon" name={slimArowLeft}></Icon>
+				<Icon class="ui5-calheader-arrowicon" name={slimArowLeft}/>
 			</div>
 
 			<div class="ui5-calheader-midcontainer">
@@ -65,7 +65,7 @@ export default function (this: Calendar) {
 				onMouseDown={this.onNextButtonClick}
 				title={this.headerNextButtonText}
 			>
-				<Icon class="ui5-calheader-arrowicon" name={slimArowRight}></Icon>
+				<Icon class="ui5-calheader-arrowicon" name={slimArowRight}/>
 			</div>
 		</div>);
 }

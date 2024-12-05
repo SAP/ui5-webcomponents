@@ -33,6 +33,6 @@ export default function (this: BarcodeScannerDialog) {
 			active={this.loading}
 			size="L"
 			text={this._busyIndicatorText}
-		></BusyIndicator>
+		/>
 	</>);
 }

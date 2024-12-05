@@ -7,6 +7,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import BusyIndicator from "./BusyIndicator.js";
 import SuggestionItem from "./SuggestionItem.js";
 import type ComboBox from "./ComboBox.js";
+import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
 export default function (this: ComboBox) {
 	return (
@@ -30,7 +31,7 @@ export default function (this: ComboBox) {
 				onKeyDown={this._handlePopoverKeydown}
 				onFocusOut={this._handlePopoverFocusout}
 			>
-				<BusyIndicator active={this.loading} class="ui5-combobox-busy"></BusyIndicator>
+				<BusyIndicator active={this.loading} class="ui5-combobox-busy"/>
 
 				{this._isPhone &&
 				<>
@@ -39,7 +40,7 @@ export default function (this: ComboBox) {
 							<span>{this._headerTitleText}</span>
 							<Button
 								class="ui5-responsive-popover-close-btn"
-								icon="decline"
+								icon={declineIcon}
 								design="Transparent"
 								onClick={this._closeRespPopover}
 							>
@@ -57,14 +58,14 @@ export default function (this: ComboBox) {
 								onInput={this._handleMobileInput}
 								onChange={this._inputChange}
 							>
-								{ this._filteredItems.map(item => <SuggestionItem text={item.text} additional-text={item.additionalText}></SuggestionItem>)}
+								{ this._filteredItems.map(item => <SuggestionItem text={item.text} additional-text={item.additionalText}/>)}
 							</Input>
 						</div>
 					</div>
 
 					{this.hasValueStateText &&
 					<div class={this.classes.popoverValueState} style={this.styles.popoverValueStateMessage}>
-						<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
+						<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}/>
 						{ this.open && valueStateMessage.call(this) }
 					</div>
 					}
@@ -81,7 +82,7 @@ export default function (this: ComboBox) {
 					}}
 					style={this.styles.suggestionPopoverHeader}
 				>
-					<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
+					<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}/>
 					{ this.open && valueStateMessage.call(this) }
 				</div>
 				}
@@ -123,7 +124,7 @@ export default function (this: ComboBox) {
 			onFocusOut={this._handleValueStatePopoverFocusout}
 		>
 			<div slot="header" class={this.classes.popoverValueState} style={this.styles.popoverHeader}>
-				<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}></Icon>
+				<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageIcon}/>
 				{ valueStateMessage.call(this) }
 			</div>
 		</Popover>

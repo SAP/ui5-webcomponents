@@ -35,7 +35,7 @@ export default function (this: SideNavigation) {
 							href={subItem.href}
 							target={subItem.target}
 							title={subItem.title}
-						></NavigationMenuItem>
+						/>
 					)}
 				</NavigationMenuItem>
 			)}
@@ -78,7 +78,7 @@ export default function (this: SideNavigation) {
 								selected={item.selected}
 								onui5-click={this.handlePopupItemClick}
 								ref={this.captureRef.bind(item)}
-							></SideNavigationSubItem>
+							/>
 						)}
 					</SideNavigationItem>
 				</SideNavigation>

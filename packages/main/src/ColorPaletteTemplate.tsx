@@ -60,7 +60,7 @@ export default function (this: ColorPalette) {
 						<div class="ui5-cp-separator"></div>
 						<div class="ui5-cp-recent-colors-container" onKeyDown={this._onRecentColorsContainerKeyDown}>
 							{this.recentColors.map(color =>
-								<ColorPaletteItem value={color}></ColorPaletteItem>
+								<ColorPaletteItem value={color}/>
 							)}
 						</div>
 					</div>

@@ -41,7 +41,7 @@ export default function (this: ComboBox) {
 
 				{this._effectiveShowClearIcon &&
 				<div onClick={this._clear} class="ui5-input-clear-icon-wrapper inputIcon" tabindex={-1}>
-					<Icon tabindex={-1} class="ui5-input-clear-icon" name={decline} accessibleName={this.clearIconAccessibleName}></Icon>
+					<Icon tabindex={-1} class="ui5-input-clear-icon" name={decline} accessibleName={this.clearIconAccessibleName}/>
 				</div>
 				}
 
@@ -60,7 +60,7 @@ export default function (this: ComboBox) {
 					}}
 					accessibleName={this._iconAccessibleNameText}
 					onClick={this._arrowClick}
-				></Icon>
+				/>
 				}
 			</div>
 

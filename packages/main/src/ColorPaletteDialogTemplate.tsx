@@ -10,7 +10,7 @@ export default function (this: ColorPalette) {
 				this._effectiveShowMoreColors &&
 				<Dialog headerText={this.colorPaletteDialogTitle}>
 					<div class="ui5-cp-dialog-content">
-						<ColorPicker></ColorPicker>
+						<ColorPicker />
 					</div>
 
 					<div slot="footer" class="ui5-cp-dialog-footer">

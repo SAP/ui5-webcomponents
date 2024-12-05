@@ -88,7 +88,7 @@ function gripStart(this: FlexibleColumnLayout) {
 			name={verticalGrip}
 			class="ui5-fcl-grip ui5-fcl-grip--start"
 			style={{ display: this.showStartSeparatorGrip ? "inline-block" : "none" }}
-		></Icon>
+		/>
 	);
 }
 
@@ -98,6 +98,6 @@ function gripEnd(this: FlexibleColumnLayout) {
 			name={verticalGrip}
 			class="ui5-fcl-grip ui5-fcl-grip--end"
 			style={{ display: this.showEndSeparatorGrip ? "inline-block" : "none" }}
-		></Icon>
+		/>
 	);
 }

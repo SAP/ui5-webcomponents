@@ -3,6 +3,7 @@ import Button from "./Button.js";
 import Icon from "./Icon.js";
 import editIcon from "@ui5/webcomponents-icons/dist/edit.js";
 import slimArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 
@@ -157,7 +158,7 @@ function selectionElement(this: ListItem) {
 								data-sap-no-tab-ref
 								id={`${this._id}-deleteSelectionElement`}
 								design="Transparent"
-								icon="decline"
+								icon={declineIcon}
 								disabled={this.disableDeleteButton}
 								onClick={this.onDelete}
 								tooltip={this.deleteText}

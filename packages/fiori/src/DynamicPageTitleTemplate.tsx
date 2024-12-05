@@ -1,5 +1,6 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type DynamicPageTitle from "./DynamicPageTitle.js";
+import slimArrowDownIcon from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 export default function (this: DynamicPageTitle) {
 	return (
@@ -20,9 +21,7 @@ export default function (this: DynamicPageTitle) {
 					 class="ui5-dynamic-page--snapped-title-on-mobile"
 				>
 					<slot name="snappedTitleOnMobile"></slot>
-					<Icon name="slim-arrow-down"
-						mode="Decorative"
-					></Icon>
+					<Icon name={slimArrowDownIcon} mode="Decorative" />
 				</div>
 				: <>
 					<div class="ui5-dynamic-page-title--top-area">

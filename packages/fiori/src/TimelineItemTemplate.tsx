@@ -16,7 +16,7 @@ export default function (this: TimelineItem) {
 				<div class="ui5-tli-icon-outer">
 					{
 						this.icon ?
-							<Icon class="ui5-tli-icon" name={this.icon}></Icon>
+							<Icon class="ui5-tli-icon" name={this.icon}/>
 							:
 							<div class="ui5-tli-dummy-icon-container"></div>
 					}

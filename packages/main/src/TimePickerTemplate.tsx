@@ -43,7 +43,7 @@ export default function (this: TimePicker) {
 								"inputIcon": true,
 								"inputIcon--pressed": this.open,
 							}}
-						></Icon>
+						/>
 					}
 				</Input>
 			</div>

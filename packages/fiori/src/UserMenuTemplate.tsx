@@ -39,7 +39,7 @@ export default function (this: UserMenu) {
 						<Avatar size="L" onClick={this._handleAvatarClick} initials={this._selectedAccount._initials} fallbackIcon={personPlaceholder} class="ui5-pm--selected-account-avatar">
 							{this._selectedAccount.avatarSrc && <img src={this._selectedAccount.avatarSrc} />}
 							<Tag slot="badge" wrappingType="None" design="Set1" colorScheme="7" title={this._editAvatarTooltip}>
-								<Icon slot="icon" name={edit}></Icon>
+								<Icon slot="icon" name={edit}/>
 							</Tag>
 						</Avatar>
 
@@ -68,7 +68,7 @@ export default function (this: UserMenu) {
 								design="Transparent"
 								icon={addEmployee}
 								tooltip={this._addAccountTooltip}
-								onClick={this._handleAddAccountClick}></Button>
+								onClick={this._handleAddAccountClick}/>
 						}
 					</div>
 					{this._otherAccounts.length > 0 &&

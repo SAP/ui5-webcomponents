@@ -15,7 +15,7 @@ export default function (this: DynamicPageHeaderActions) {
 					tooltip={this.expandLabel}
 					onMouseOver={this.onExpandHoverIn}
 					onMouseOut={this.onExpandHoverOut}
-				></Button>
+				/>
 				{this.showPinButton &&
 					<ToggleButton
 						class="ui5-dynamic-page-header-action ui5-dynamic-page-header-action-pin"
@@ -25,7 +25,7 @@ export default function (this: DynamicPageHeaderActions) {
 						accessibilityAttributes={this.accessibilityAttributes}
 						accessibleName={this.pinLabel}
 						tooltip={this.pinLabel}
-					></ToggleButton>
+					/>
 				}
 			</div>
 		</div>

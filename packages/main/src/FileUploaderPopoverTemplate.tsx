@@ -27,7 +27,7 @@ export default function (this: FileUploader) {
 			>
 				{
 					this._valueStateMessageInputIcon &&
-						<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageInputIcon}></Icon>
+						<Icon class="ui5-input-value-state-message-icon" name={this._valueStateMessageInputIcon}/>
 				}
 
 				{ valueStateMessage.call(this) }

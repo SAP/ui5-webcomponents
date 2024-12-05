@@ -1,6 +1,8 @@
 import Icon from "./Icon.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import type Switch from "./Switch.js";
+import acceptIcon from "@ui5/webcomponents-icons/dist/accept.js";
+import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
 export default function (this: Switch) {
 	return (
@@ -31,10 +33,10 @@ export default function (this: Switch) {
 						{this.graphical ?
 							<>
 								<span class="ui5-switch-text ui5-switch-text--on">
-									<Icon name="accept" class="ui5-switch-icon-on"></Icon>
+									<Icon name={acceptIcon} class="ui5-switch-icon-on"/>
 								</span>
 								<span class="ui5-switch-text ui5-switch-text--off">
-									<Icon name="decline" class="ui5-switch-icon-off"></Icon>
+									<Icon name={declineIcon} class="ui5-switch-icon-off"/>
 								</span>
 							</>
 							:
@@ -42,10 +44,10 @@ export default function (this: Switch) {
 								{this.hasNoLabel ?
 									<>
 										<span class="ui5-switch-text ui5-switch-text--on ui5-switch-no-label-icon" part="text-on">
-											<Icon name={this.sapNextIcon} class="ui5-switch-no-label-icon-on" ></Icon>
+											<Icon name={this.sapNextIcon} class="ui5-switch-no-label-icon-on" />
 										</span>
 										<span class="ui5-switch-text ui5-switch-text--off ui5-switch-no-label-icon" part="text-off">
-											<Icon name={this.sapNextIcon} class="ui5-switch-no-label-icon-off" ></Icon>
+											<Icon name={this.sapNextIcon} class="ui5-switch-no-label-icon-off" />
 										</span>
 									</>
 									:
@@ -62,7 +64,7 @@ export default function (this: Switch) {
 							<Icon
 								name={this.sapNextIcon}
 								class="ui5-switch-handle-icon"
-							></Icon>
+							/>
 						</span>
 					</div>
 				</div>

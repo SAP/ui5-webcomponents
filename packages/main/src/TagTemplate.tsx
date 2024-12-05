@@ -29,7 +29,7 @@ function content(this: Tag) {
 		<>
 			<slot name="icon"></slot>
 			{this._semanticIconName &&
-				<Icon class="ui5-tag-semantic-icon" name={this._semanticIconName}></Icon>
+				<Icon class="ui5-tag-semantic-icon" name={this._semanticIconName} />
 			}
 			<span class="ui5-hidden-text">{this.tagDescription}</span>
 			{this.hasText &&

@@ -45,7 +45,7 @@ export default function (this: Link) {
 				name={this.endIcon}
 				mode="Decorative"
 				part="endIcon"
-			></Icon>
+			/>
 			}
 		</a>);
 }

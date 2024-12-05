@@ -1,6 +1,7 @@
 import type Tab from "./Tab.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
+import slimArrowDownIcon from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 function additionalText(this: Tab) {
 	return (
@@ -35,7 +36,7 @@ export default function (this: Tab) {
 						id={ `${this._id}-icon` }
 						name={this.icon}
 						class="ui5-tab-strip-item-icon"
-					></Icon>
+					/>
 				</div>
 			}
 
@@ -58,12 +59,12 @@ export default function (this: Tab) {
 						id={ `${this._id}-text` }
 					>
 						{this.semanticIconName && (
-							<Icon class={this.semanticIconClasses} name={this.semanticIconName}></Icon>
+							<Icon class={this.semanticIconClasses} name={this.semanticIconName}/>
 						)}
 						{this.displayText}
 						{this.isSingleClickArea &&
 							<span class="ui5-tab-single-click-icon">
-								<Icon name="slim-arrow-down"></Icon>
+								<Icon name={slimArrowDownIcon}/>
 							</span>
 						}
 					</span>
@@ -78,13 +79,13 @@ export default function (this: Tab) {
 					>
 						<Button
 							ref={this.captureButtonRef}
-							icon="slim-arrow-down"
+							icon={slimArrowDownIcon}
 							design="Transparent"
 							tabindex={ -1 }
 							disabled={this.disabled}
 							tooltip={this.expandButtonTitle}
 							accessibilityAttributes={this.expandBtnAccessibilityAttributes}
-						></Button>
+						/>
 					</div>
 				</>
 			}

@@ -66,7 +66,7 @@ export default function (this: Panel) {
 										name={slimArrowRight}
 										showTooltip={true}
 										accessibleName={this.toggleButtonTitle}
-									></Icon>
+									/>
 								}
 							</div>
 						}

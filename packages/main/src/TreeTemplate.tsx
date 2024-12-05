@@ -34,10 +34,7 @@ export default function (this: Tree) {
 
 			<slot></slot>
 
-			<DropIndicator
-				orientation="Horizontal"
-				ownerReference={this}
-			></DropIndicator>
+			<DropIndicator orientation="Horizontal" ownerReference={this} />
 		</TreeList>
 	);
 }

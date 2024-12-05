@@ -41,7 +41,7 @@ function postContent(this: MultiInput) {
 					onMouseUp={this.valueHelpMouseUp}
 					onMouseDown={this.valueHelpMouseDown}
 					onClick={this.valueHelpPress}
-				></Icon>
+				/>
 			}
 		</>
 	);

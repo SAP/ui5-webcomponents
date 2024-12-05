@@ -37,7 +37,7 @@ export default function (this: Wizard) {
 							onFocused={this.onStepInHeaderFocused}
 							onClick={this._onGroupedTabClick}
 							style={step.styles}
-						></WizardTab>
+						/>
 					)}
 				</div>
 			</nav>

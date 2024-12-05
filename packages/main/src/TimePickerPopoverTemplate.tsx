@@ -30,7 +30,7 @@ export default function (this: TimePicker) {
 					formatPattern={this._formatPattern}
 					onChange={this.onTimeSelectionChange}
 					onClosePicker={this.submitPickers}
-				></TimeSelectionClocks>
+				/>
 
 				<div slot="footer" class="ui5-time-picker-footer">
 					<Button id="submit" design="Emphasized" onClick={this.submitPickers}>{this.submitButtonLabel}</Button>
@@ -59,7 +59,7 @@ export default function (this: TimePicker) {
 							formatPattern={this._formatPattern}
 							onChange={this.onTimeSelectionChange}
 							onCloseInputs={this.submitInputsPopover}
-						></TimeSelectionInputs>
+						/>
 					</div>
 
 					<div slot="footer" class="ui5-time-picker-footer">

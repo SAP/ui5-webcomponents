@@ -22,7 +22,7 @@ export default function (this: ListItemGroup, hooks?: { items: () => void }) {
 
 			{ items.call(this) }
 
-			<DropIndicator orientation="Horizontal" ownerReference={this}></DropIndicator>
+			<DropIndicator orientation="Horizontal" ownerReference={this}/>
 		</ul>
 	);
 }

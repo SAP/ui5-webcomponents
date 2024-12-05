@@ -74,10 +74,7 @@ export default function (this: List) {
 
 					<span tabindex={-1} aria-hidden="true" class="ui5-list-end-marker"></span>
 				</div>
-				<DropIndicator
-					orientation="Horizontal"
-					ownerReference={this}
-				></DropIndicator>
+				<DropIndicator orientation="Horizontal" ownerReference={this}/>
 			</BusyIndicator>
 		</div>
 	);

@@ -14,7 +14,7 @@ function listItemContent(this: MultiComboBoxItem) {
 				checked={this.selected}
 				tabindex={-1}
 				accessibleName={this._accessibleName}
-			></CheckBox>
+			/>
 			<div part="content" id="content" class="ui5-li-content">
 				<div class="ui5-li-text-wrapper">
 					{ this.text && <span part="title" className="ui5-li-title" dangerouslySetInnerHTML={{ __html: this.text }}></span> }

@@ -24,7 +24,7 @@ export default function (this: SegmentedButtonItem) {
 					class="ui5-segmented-button-item-icon"
 					name={this.icon}
 					showTooltip={this.showIconTooltip}
-				></Icon>
+				/>
 			}
 			<span id={`${this._id}-content`} class="ui5-segmented-button-item-text">
 				<bdi>

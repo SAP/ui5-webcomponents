@@ -26,16 +26,16 @@ export default function (this: SideNavigationSubItem) {
 					target={this._target}
 				>
 					{this.icon &&
-						<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
+						<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					}
 					<div class="ui5-sn-item-text">{this.text}</div>
 					<Icon class="ui5-sn-item-selection-icon"
 						name={circleTask}
-					></Icon>
+					/>
 					{this.isExternalLink &&
 						<Icon class="ui5-sn-item-external-link-icon"
 							name={arrowRight}
-						></Icon>
+						/>
 					}
 				</a>
 				:
@@ -52,16 +52,16 @@ export default function (this: SideNavigationSubItem) {
 					title={this._tooltip}
 				>
 					{this.icon &&
-						<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
+						<Icon class="ui5-sn-item-icon" name={this.icon}/>
 					}
 					<div class="ui5-sn-item-text">{this.text}</div>
 					<Icon class="ui5-sn-item-selection-icon"
 						name={circleTask}
-					></Icon>
+					/>
 					{this.isExternalLink &&
 						<Icon class="ui5-sn-item-external-link-icon"
 							name={arrowRight}
-						></Icon>
+						/>
 					}
 				</div>
 			}

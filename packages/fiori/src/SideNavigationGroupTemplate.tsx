@@ -38,7 +38,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-					></Icon>
+					/>
 				}
 			</div>
 			{!!this.items.length &&

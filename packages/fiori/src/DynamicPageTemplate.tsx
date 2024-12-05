@@ -64,7 +64,7 @@ function headerActions(this: DynamicPage) {
 				onui5-pin-button-click={this.onPinClick}
 				onui5-expand-button-hover-in={this.onExpandHoverIn}
 				onui5-expand-button-hover-out={this.onExpandHoverOut}
-			></DynamicPageHeaderActions>
+			/>
 		);
 	}
 }

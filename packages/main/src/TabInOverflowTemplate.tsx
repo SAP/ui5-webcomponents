@@ -20,10 +20,10 @@ export default function (this: Tab) {
 						<Icon
 							class={this.semanticIconClasses}
 							name={this.semanticIconName}
-						></Icon>
+						/>
 					)}
 					{this.icon && (
-						<Icon name={this.icon}></Icon>
+						<Icon name={this.icon}/>
 					)}
 					{this.text}
 					{this.additionalText && (<>

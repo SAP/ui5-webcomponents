@@ -28,7 +28,7 @@ export default function (this: Token) {
 							accessibleName={this.tokenDeletableText}
 							showTooltip={true}
 							onClick={this._delete}
-						></Icon>
+						/>
 					}
 				</div>
 			}

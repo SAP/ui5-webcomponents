@@ -33,7 +33,7 @@ export default function (this: TableRow) {
 						accessibleName={this.ariaLabelRowSelection}
 						onChange={this._handleSelection}
 						tabindex={-1}
-					></CheckBox>
+					/>
 				</td>
 				}
 

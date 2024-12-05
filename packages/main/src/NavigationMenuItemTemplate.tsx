@@ -4,6 +4,8 @@ import type { MenuItemHooks } from "./MenuItemTemplate.js";
 import Icon from "./Icon.js";
 import slimArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import arrowRightIcon from "@ui5/webcomponents-icons/dist/arrow-right.js";
+import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
+import navBackIcon from "@ui5/webcomponents-icons/dist/nav-back.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
@@ -87,7 +89,7 @@ function listItemPostContent(this: NavigationMenuItem) {
 			<div slot="header" class="ui5-menu-dialog-header">
 				{this.isSubMenuOpen && (
 					<Button
-						icon="nav-back"
+						icon={navBackIcon}
 						class="ui5-menu-back-button"
 						design="Transparent"
 						aria-label={this.labelBack}
@@ -102,7 +104,7 @@ function listItemPostContent(this: NavigationMenuItem) {
 				</div>
 
 				<Button
-					icon="decline"
+					icon={declineIcon}
 					design="Transparent"
 					aria-label={this.labelClose}
 					onClick={this._closeAll}

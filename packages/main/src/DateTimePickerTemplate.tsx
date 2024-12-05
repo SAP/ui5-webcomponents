@@ -58,7 +58,7 @@ function content(this: DateTimePicker) {
 				_currentPicker={this._calendarCurrentPicker}
 			>
 				{this._calendarSelectedDates.map(date =>
-					<CalendarDate value={date}></CalendarDate>
+					<CalendarDate value={date} />
 				)}
 			</Calendar>
 
@@ -75,7 +75,7 @@ function content(this: DateTimePicker) {
 					value={this._timeSelectionValue}
 					onChange={this.onTimeSelectionChange}
 					_calendarType={this._primaryCalendarType}
-				></TimeSelectionClocks>
+				/>
 			}
 		</div>
 	);

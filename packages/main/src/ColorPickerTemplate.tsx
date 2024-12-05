@@ -32,7 +32,7 @@ export default function (this: ColorPicker) {
 					value={this._hue}
 					accessibleName={this.hueSliderLabel}
 					onInput={this._handleHueInput}
-				></Slider>
+				/>
 
 				{this._isDefaultPickerMode &&
 					<Slider
@@ -44,7 +44,7 @@ export default function (this: ColorPicker) {
 						value={this._alpha}
 						accessibleName={this.alphaSliderLabel}
 						onInput={this._handleAlphaInputFromSlider}
-					></Slider>
+					/>
 				}
 			</div>
 
@@ -68,7 +68,7 @@ export default function (this: ColorPicker) {
 						accessibleName={this.hexInputLabel}
 						onChange={this._handleHEXChange}
 						valueState={this.hexInputErrorState}
-					></Input>
+						/>
 				</div>
 			</div>
 
@@ -84,7 +84,7 @@ export default function (this: ColorPicker) {
 							disabled={this.inputsDisabled}
 							accessibleName={this.redInputLabel}
 							value={String(this._value.r)}
-						></Input>
+						/>
 						<Label>R</Label>
 					</div>
 					<div class="ui5-color-picker-rgb">
@@ -94,7 +94,7 @@ export default function (this: ColorPicker) {
 							disabled={this.inputsDisabled}
 							accessibleName={this.greenInputLabel}
 							value={String(this._value.g)}
-						></Input>
+						/>
 						<Label>G</Label>
 					</div>
 					<div class="ui5-color-picker-rgb">
@@ -104,7 +104,7 @@ export default function (this: ColorPicker) {
 							disabled={this.inputsDisabled}
 							accessibleName={this.blueInputLabel}
 							value={String(this._value.b)}
-						></Input>
+						/>
 						<Label>B</Label>
 					</div>
 					<div class="ui5-color-picker-rgb">
@@ -115,7 +115,7 @@ export default function (this: ColorPicker) {
 							value={String(this._alpha)}
 							accessibleName={this.alphaInputLabel}
 							onChange={this._handleAlphaChange}
-						></Input>
+						/>
 						<Label>A</Label>
 					</div>
 				</div>

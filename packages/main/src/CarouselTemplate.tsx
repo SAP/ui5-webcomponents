@@ -73,7 +73,7 @@ function arrowBack(this: Carousel) {
 		}}
 		data-ui5-arrow-back
 		onClick={this._navButtonClick}
-	></Button>;
+	/>;
 }
 
 function arrowForward(this: Carousel) {
@@ -87,7 +87,7 @@ function arrowForward(this: Carousel) {
 		}}
 		data-ui5-arrow-forward
 		onClick={this._navButtonClick}
-	></Button>;
+	/>;
 }
 
 function navIndicator(this: Carousel) {
