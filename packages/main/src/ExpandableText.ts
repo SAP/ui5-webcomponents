@@ -30,16 +30,16 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  *
  * ### Overview
  *
- * The `ui5-expandable-text` component allows displaying a large body of text in a small space. It provides an "expand" functionality, which shows the full text.
+ * The `ui5-expandable-text` component allows displaying a large body of text in a small space. It provides an "expand/collapse" functionality, which shows/hides potentially truncated text.
  *
  * ### Usage
  *
  * #### When to use:
- * - You specifically have to deal with long texts
+ * - To accommodate long texts in limited space, for example in list items or table cell texts
  *
  * #### When not to use:
- * - Do not use long texts and descriptions if you can provide short and meaningful alternatives
  * - The content is critical for the user. In this case use short descriptions that can fit in
+ * - Strive to provide short and meaningful texts to avoid excessive number of "Show More" links on the page
  *
  * ### Responsive Behavior
  *
@@ -77,7 +77,7 @@ class ExpandableText extends UI5Element {
 	text?: string;
 
 	/**
-	 * Maximum number of characters to be displayed initially.
+	 * Maximum number of characters to be displayed initially. If the text length exceeds this limit, the text will be truncated with an ellipsis, and the "More" link will be displayed.
 	 * @default 100
 	 * @public
 	 */
