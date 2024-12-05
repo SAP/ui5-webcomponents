@@ -20,12 +20,12 @@ export default function(this: SideNavigation) {
 				>
 					<slot></slot>
 					<SideNavigationItem
-						is-overflow
+						isOverflow={true}
 						id={`${this._id}-sn-overflow-item`}
 						text={this.overflowAccessibleName}
 						onClick={this._handleOverflowClick}
 						class="ui5-sn-item-overflow"
-						side-nav-collapsed
+						sideNavCollapsed={true}
 						icon="overflow"
 					></SideNavigationItem>
 				</div>

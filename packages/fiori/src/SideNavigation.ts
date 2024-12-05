@@ -552,7 +552,7 @@ class SideNavigation extends UI5Element {
 		}, new Array<SideNavigationItem>());
 	}
 
-	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationSelectableItemBase) {
+	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
 		if (item.selected && !this.collapsed) {
 			item.fireDecoratorEvent("click");
 			return;

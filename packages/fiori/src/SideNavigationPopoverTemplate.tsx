@@ -9,9 +9,9 @@ export default function(this: SideNavigation) {
 	return (<>
 		<NavigationMenu
 			id={`${this._id}-side-navigation-overflow-menu`}
-			onui5-before-open={this._onBeforeMenuOpen}
-			onui5-before-close={this._onBeforeMenuClose}
-			onui5-item-click={this.handleOverflowItemClick}
+			onBeforeOpen={this._onBeforeMenuOpen}
+			onBeforeClose={this._onBeforeMenuClose}
+			onui5-item-click={this.handleOverflowItemClick} // TOFIX
 			class="ui5-side-navigation-popover ui5-side-navigation-overflow-menu"
 		>
 			{this._menuPopoverItems.map(item =>
@@ -44,9 +44,9 @@ export default function(this: SideNavigation) {
 			verticalAlign="Top"
 			class="ui5-side-navigation-popover"
 			accessibleNameRef={`${this._id}-sideNavigationPopoverText`}
-			onui5-open={this._onAfterPopoverOpen}
-			onui5-before-open={this._onBeforePopoverOpen}
-			onui5-before-close={this._onBeforePopoverClose}
+			onOpen={this._onAfterPopoverOpen}
+			onBeforeOpen={this._onBeforePopoverOpen}
+			onBeforeClose={this._onBeforePopoverClose}
 		>
 			{this._popoverContents && <>
 				<span id={`${this._id}-sideNavigationPopoverText`}
