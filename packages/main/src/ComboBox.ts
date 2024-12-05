@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -205,17 +205,16 @@ type ComboBoxSelectionChangeEventDetail = {
  * @param {IComboBoxItem} item item to be selected.
  * @public
  */
-@event<ComboBoxSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		item: { type: HTMLElement },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
 
 class ComboBox extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		"change": void,
+		"input": void,
+		"selection-change": ComboBoxSelectionChangeEventDetail,
+	}
 	/**
 	 * Defines the value of the component.
 	 * @default ""
@@ -819,7 +818,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._applyAtomicValueAndSelection(item, filterValue);
 
 		if (value !== "" && !item.selected && (!checkForGroupItem || !item.isGroupItem)) {
-			this.fireDecoratorEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent("selection-change", {
 				item: item as ComboBoxItem,
 			});
 		}
@@ -1146,7 +1145,7 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.value = this._selectedItemText;
 
 		if (!item.selected) {
-			this.fireDecoratorEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent("selection-change", {
 				item,
 			});
 		}

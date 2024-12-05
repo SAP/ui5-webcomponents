@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
@@ -46,16 +46,17 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	template: CalendarLegendTemplate,
 	dependencies: [CalendarLegendItem],
 })
-@event<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
-	detail: {
-		item: { type: CalendarLegendItem },
-	},
+@event("_calendar-legend-selection-change", {
 	bubbles: true,
 })
 @event("_calendar-legend-focus-out", {
 	bubbles: true,
 })
 class CalendarLegend extends UI5Element {
+	eventDetails!: {
+		"_calendar-legend-selection-change": CalendarLegendItemSelectionChangeEventDetail,
+		"_calendar-legend-focus-out": void,
+	}
 	/**
 	 * Hides the Today item in the legend.
 	 * @default false
@@ -134,7 +135,7 @@ class CalendarLegend extends UI5Element {
 	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
-		this.fireDecoratorEvent<CalendarLegendItemSelectionChangeEventDetail>("_calendar-legend-selection-change", {
+		this.fireDecoratorEvent("_calendar-legend-selection-change", {
 			item: target,
 		});
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);

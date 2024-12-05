@@ -3,7 +3,7 @@ import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -49,10 +49,10 @@ import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js"
 
 type BreadcrumbsItemClickEventDetail = {
 	item: BreadcrumbsItem;
-	altKey: boolean;
-	ctrlKey: boolean;
-	metaKey: boolean;
-	shiftKey: boolean;
+	altKey?: boolean;
+	ctrlKey?: boolean;
+	metaKey?: boolean;
+	shiftKey?: boolean;
 }
 
 type FocusAdaptor = ITabbable & {
@@ -117,33 +117,14 @@ type FocusAdaptor = ITabbable & {
  * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  * @public
  */
-@event<BreadcrumbsItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-		/**
-		 * @public
-		 */
-		altKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		ctrlKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		metaKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		shiftKey: { type: Boolean },
-	},
+@event("item-click", {
 	bubbles: true,
 	cancelable: true,
 })
 class Breadcrumbs extends UI5Element {
+	eventDetails!: {
+		"item-click": BreadcrumbsItemClickEventDetail,
+	}
 	/**
 	 * Defines the visual appearance of the last BreadcrumbsItem.
 	 *
@@ -404,7 +385,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		if (!this.fireDecoratorEvent("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -425,7 +406,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e;
 
-		this.fireDecoratorEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		this.fireDecoratorEvent("item-click", {
 			item,
 			altKey,
 			ctrlKey,

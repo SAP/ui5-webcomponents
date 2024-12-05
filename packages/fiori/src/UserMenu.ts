@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
-	customElement, slot, event, property,
+	customElement, slot, eventStrict as event, property,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
@@ -17,8 +17,9 @@ import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import UserMenuAccount from "./UserMenuAccount.js";
-import UserMenuItem from "./UserMenuItem.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type UserMenuAccount from "./UserMenuAccount.js";
+import type UserMenuItem from "./UserMenuItem.js";
 import UserMenuTemplate from "./generated/templates/UserMenuTemplate.lit.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
 
@@ -28,6 +29,7 @@ import "@ui5/webcomponents-icons/dist/edit.js";
 import "@ui5/webcomponents-icons/dist/person-placeholder.js";
 import "@ui5/webcomponents-icons/dist/log.js";
 import "@ui5/webcomponents-icons/dist/user-settings.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Texts
 import {
@@ -37,6 +39,7 @@ import {
 	USER_MENU_POPOVER_ACCESSIBLE_NAME,
 	USER_MENU_EDIT_AVATAR_TXT,
 	USER_MENU_ADD_ACCOUNT_TXT,
+	USER_MENU_CLOSE_BUTTON_TXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type UserMenuItemClickEventDetail = {
@@ -112,11 +115,7 @@ type UserMenuOtherAccountClickEventDetail = {
  * @param {UserMenuAccount} selectedAccount The selected account.
  * @public
  */
-@event<UserMenuOtherAccountClickEventDetail>("change-account", {
-	detail: {
-		prevSelectedAccount: { type: UserMenuAccount },
-		selectedAccount: { type: UserMenuAccount },
-	},
+@event("change-account", {
 	cancelable: true,
 })
 
@@ -125,10 +124,7 @@ type UserMenuOtherAccountClickEventDetail = {
  * @param {UserMenuItem} item The selected `user menu item`.
  * @public
  */
-@event<UserMenuItemClickEventDetail>("item-click", {
-	detail: {
-		item: { type: UserMenuItem },
-	},
+@event("item-click", {
 	cancelable: true,
 })
 
@@ -140,6 +136,14 @@ type UserMenuOtherAccountClickEventDetail = {
 	cancelable: true,
 })
 class UserMenu extends UI5Element {
+	eventDetails!: {
+		"avatar-click": void;
+		"manage-account-click": void;
+		"add-account-click": void;
+		"change-account": UserMenuOtherAccountClickEventDetail;
+		"item-click": UserMenuItemClickEventDetail;
+		"sign-out-click": void;
+	}
 	/**
 	 * Defines if the User Menu is opened.
 	 *
@@ -224,6 +228,10 @@ class UserMenu extends UI5Element {
 		this._selectedAccount = this.accounts.find(account => account.selected) || this.accounts[0];
 	}
 
+	get _isPhone() {
+		return isPhone();
+	}
+
 	_handleAvatarClick() {
 		this.fireDecoratorEvent("avatar-click");
 	}
@@ -237,7 +245,7 @@ class UserMenu extends UI5Element {
 	}
 
 	_handleAccountSwitch(e: CustomEvent<{ item: ListItemClickEventDetail & { associatedAccount: UserMenuAccount } }>) {
-		const eventPrevented = !this.fireDecoratorEvent<UserMenuOtherAccountClickEventDetail>("change-account", {
+		const eventPrevented = !this.fireDecoratorEvent("change-account", {
 			prevSelectedAccount: this._selectedAccount,
 			selectedAccount: e.detail.item.associatedAccount,
 		});
@@ -264,7 +272,7 @@ class UserMenu extends UI5Element {
 		const item = e.detail.item;
 
 		if (!item._popover) {
-			const eventPrevented = !this.fireDecoratorEvent<UserMenuItemClickEventDetail>("item-click", {
+			const eventPrevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
 			});
 
@@ -282,6 +290,10 @@ class UserMenu extends UI5Element {
 
 	_handlePopoverAfterClose() {
 		this.open = false;
+	}
+
+	_handleDeclineClick() {
+		this._closeUserMenu();
 	}
 
 	_openItemSubMenu(item: UserMenuItem) {
@@ -312,6 +324,10 @@ class UserMenu extends UI5Element {
 
 	get _otherAccounts() {
 		return this.accounts.filter(account => account !== this._selectedAccount);
+	}
+
+	get _declineButtonTooltip() {
+		return UserMenu.i18nBundle.getText(USER_MENU_CLOSE_BUTTON_TXT);
 	}
 
 	get _manageAccountButtonText() {

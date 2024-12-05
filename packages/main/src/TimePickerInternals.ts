@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -84,15 +84,14 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
 /**
  * Fired when the value changes due to user interaction with the sliders.
  */
-@event<TimeSelectionChangeEventDetail>("change", {
-	detail: {
-		value: { type: String },
-		valid: { type: Boolean },
-	},
+@event("change", {
 	bubbles: true,
 })
 
 class TimePickerInternals extends UI5Element {
+	eventDetails!: {
+		change: TimeSelectionChangeEventDetail
+	}
 	/**
 	 * Defines a formatted time value.
 	 * @default undefined
@@ -301,7 +300,7 @@ class TimePickerInternals extends UI5Element {
 
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
-			this.fireDecoratorEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
+			this.fireDecoratorEvent("change", { value: this.value, valid: true });
 		}
 	}
 

@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -214,19 +214,7 @@ type SpecialCalendarDateT = {
  * @param {Array<number>} selectedDates The selected dates as UTC timestamps
  * @public
  */
-@event<CalendarSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedDates: { type: Array },
-		/**
-		 * @public
-		 */
-		selectedValues: { type: Array },
-
-		timestamp: { type: Number },
-	},
+@event("selection-change", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -238,6 +226,11 @@ type SpecialCalendarDateT = {
 	bubbles: true,
 })
 class Calendar extends CalendarPart {
+	eventDetails!: CalendarPart["eventDetails"] & {
+		"selection-change": CalendarSelectionChangeEventDetail,
+		"show-month-view": void,
+		"show-year-view": void,
+	}
 	/**
 	 * Defines the type of selection used in the calendar component.
 	 * Accepted property values are:
@@ -514,9 +507,9 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress(e: CustomEvent) {
+	onHeaderShowMonthPress() {
 		this.showMonth();
-		this.fireDecoratorEvent("show-month-view", e);
+		this.fireDecoratorEvent("show-month-view");
 	}
 
 	showMonth() {
@@ -527,9 +520,9 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress(e: CustomEvent) {
+	onHeaderShowYearPress() {
 		this.showYear();
-		this.fireDecoratorEvent("show-year-view", e);
+		this.fireDecoratorEvent("show-year-view");
 	}
 
 	showYear() {
@@ -635,7 +628,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireDecoratorEvent<CalendarSelectionChangeEventDetail>("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
+		const defaultPrevented = !this.fireDecoratorEvent("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -679,12 +672,12 @@ class Calendar extends CalendarPart {
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
-			this.fireDecoratorEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view");
 		}
 
 		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
-			this.fireDecoratorEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view");
 		}
 	}
 
@@ -737,7 +730,7 @@ class Calendar extends CalendarPart {
 
 		if (isEnter(e)) {
 			this.showMonth();
-			this.fireDecoratorEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view");
 		}
 	}
 
@@ -745,7 +738,7 @@ class Calendar extends CalendarPart {
 		if (isSpace(e)) {
 			e.preventDefault();
 			this.showMonth();
-			this.fireDecoratorEvent("show-month-view", e);
+			this.fireDecoratorEvent("show-month-view");
 		}
 	}
 
@@ -756,14 +749,14 @@ class Calendar extends CalendarPart {
 
 		if (isEnter(e)) {
 			this.showYear();
-			this.fireDecoratorEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view");
 		}
 	}
 
 	onYearButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.showYear();
-			this.fireDecoratorEvent("show-year-view", e);
+			this.fireDecoratorEvent("show-year-view");
 		}
 	}
 

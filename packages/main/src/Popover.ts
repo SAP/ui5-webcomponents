@@ -250,7 +250,6 @@ class Popover extends Popup {
 		const opener = this.getOpenerHTMLElement(this.opener);
 
 		if (!opener) {
-			console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
 			return;
 		}
 
@@ -303,7 +302,16 @@ class Popover extends Popup {
 		}
 
 		const rootNode = this.getRootNode();
-		const openerHTMLElement = rootNode instanceof Document ? rootNode.getElementById(opener) : document.getElementById(opener);
+
+		if (!(rootNode instanceof ShadowRoot || rootNode instanceof Document)) {
+			return;
+		}
+
+		let openerHTMLElement = rootNode.getElementById(opener);
+
+		if (rootNode instanceof ShadowRoot && !openerHTMLElement) {
+			openerHTMLElement = document.getElementById(opener);
+		}
 
 		if (openerHTMLElement && this._isUI5Element(openerHTMLElement)) {
 			return openerHTMLElement.getFocusDomRef();
