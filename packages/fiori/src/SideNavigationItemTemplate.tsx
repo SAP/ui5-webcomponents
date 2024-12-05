@@ -85,20 +85,20 @@ function TreeItemTemplate(this: SideNavigationItem) {
 		<li id={this._id} class="ui5-sn-list-li" role="none">
 			{this._href ?
 				<a class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
-			   role={this.ariaRole}
-			   data-sap-focus-ref
-			   onKeyDown={this._onkeydown}
-			   onKeyUp={this._onkeyup}
-			   onClick={this._onclick}
-			   onFocusIn={this._onfocusin}
-			   tabIndex={this.effectiveTabIndex !== undefined ? parseInt(this.effectiveTabIndex) : undefined}
-			   aria-expanded={this._expanded}
-			   aria-current={this._ariaCurrent}
-			   aria-selected={this.selected}
-			   title={this._tooltip}
-			   aria-owns={this._groupId}
-			   href={this._href}
-			   target={this._target}
+					role={this.ariaRole}
+					data-sap-focus-ref
+					onKeyDown={this._onkeydown}
+					onKeyUp={this._onkeyup}
+					onClick={this._onclick}
+					onFocusIn={this._onfocusin}
+					tabIndex={this.effectiveTabIndex !== undefined ? parseInt(this.effectiveTabIndex) : undefined}
+					aria-expanded={this._expanded}
+					aria-current={this._ariaCurrent}
+					aria-selected={this.selected}
+					title={this._tooltip}
+					aria-owns={this._groupId}
+					href={this._href}
+					target={this._target}
 				>
 					{this.icon &&
 					<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
@@ -121,18 +121,18 @@ function TreeItemTemplate(this: SideNavigationItem) {
 				</a>
 				:
 				<div class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
-				 role={this.ariaRole}
-				 data-sap-focus-ref
-				 onKeyDown={this._onkeydown}
-				 onKeyUp={this._onkeyup}
-				 onClick={this._onclick}
-				 onFocusIn={this._onfocusin}
-				 tabIndex={this.effectiveTabIndex !== undefined ? parseInt(this.effectiveTabIndex) : undefined}
-				 aria-expanded={this._expanded}
-				 aria-current={this._ariaCurrent}
-				 aria-selected={this.selected}
-				 title={this._tooltip}
-				 aria-owns={this._groupId}
+					role={this.ariaRole}
+					data-sap-focus-ref
+					onKeyDown={this._onkeydown}
+					onKeyUp={this._onkeyup}
+					onClick={this._onclick}
+					onFocusIn={this._onfocusin}
+					tabIndex={this.effectiveTabIndex !== undefined ? parseInt(this.effectiveTabIndex) : undefined}
+					aria-expanded={this._expanded}
+					aria-current={this._ariaCurrent}
+					aria-selected={this.selected}
+					title={this._tooltip}
+					aria-owns={this._groupId}
 				>
 					{this.icon &&
 					<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
