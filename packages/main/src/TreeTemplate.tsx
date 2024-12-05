@@ -27,7 +27,7 @@ export default function (this: Tree ) {
 			onMouseOut={this._onListItemMouseOut}
 			// events bubbling from slotted items
 			onui5-toggle={this._onListItemToggle}
-			omui5-step-in={this._onListItemStepIn}
+			onui5-step-in={this._onListItemStepIn}
 			onui5-step-out={this._onListItemStepOut}
 		>
         	{this._hasHeader && <slot name="header" slot="header"></slot>}

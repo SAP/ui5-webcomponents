@@ -8,7 +8,7 @@ export default function (this: ToolbarSelect ) {
 			class="ui5-tb-item"
 			style={this.styles}
 			data-ui5-external-action-item-id={this._id}
-			value-state={this.valueState}
+			valueState={this.valueState}
 			disabled={this.disabled}
 			accessibleName={this.accessibleName}
 			accessibleNameRef={this.accessibleNameRef}

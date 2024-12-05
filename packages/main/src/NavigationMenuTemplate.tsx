@@ -42,7 +42,7 @@ export default function (this: NavigationMenu) {
 						accessibleRole="Tree"
 						selectionMode="None"
 						loading={this.loading}
-						loading-delay={this.loadingDelay}
+						loadingDelay={this.loadingDelay}
 						separators="None"
 						onItemClick={this._itemClick}
 						onKeyDown={this._itemKeyDown}

@@ -43,7 +43,7 @@ export default function (this: TimePicker) {
 					id={`${this._id}-popover`}
 					class="ui5-time-picker-inputs-popover"
 					placement="Bottom"
-					horizontal-align="Start"
+					horizontalAlign="Start"
 					allow-target-overlap
 					_hide-header
 					hide-arrow

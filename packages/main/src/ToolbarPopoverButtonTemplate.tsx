@@ -5,7 +5,7 @@ export default function (this: ToolbarButton ) {
 	return (
 		<Button
 			icon={this.icon}
-			end-icon={this.endIcon}
+			endIcon={this.endIcon}
 			accessibleName={this.accessibleName}
 			accessibleNameRef={this.accessibleNameRef}
 			accessibilityAttributes={this.accessibilityAttributes}

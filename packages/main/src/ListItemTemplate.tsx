@@ -56,7 +56,7 @@ export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
 		aria-disabled={this._ariaDisabled}
 		aria-selected={this._accInfo.ariaSelected}
 		aria-checked={this._accInfo.ariaChecked}
-		aria-wwns={this._accInfo.ariaOwns}
+		aria-owns={this._accInfo.ariaOwns}
 		aria-keyshortcuts={this._accInfo.ariaKeyShortcuts}
 	>
 		{currentHooks.listItemPreContent.call(this)}

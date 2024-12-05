@@ -7,7 +7,7 @@ export default function (this: ToolbarSelect ) {
 		<Select
 			class="ui5-tb-popover-item"
 			data-ui5-external-action-item-id={this._id}
-			value-state={this.valueState}
+			valueState={this.valueState}
 			disabled={this.disabled}
 			accessibleName={this.accessibleName}
 			accessibleNameRef={this.accessibleNameRef}
