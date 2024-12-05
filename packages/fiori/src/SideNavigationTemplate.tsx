@@ -1,3 +1,4 @@
+import overflow from "@ui5/webcomponents-icons/dist/overflow.js";
 import SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationPopoverTemplate from "./SideNavigationPopoverTemplate.js";
@@ -26,7 +27,7 @@ export default function(this: SideNavigation) {
 						onClick={this._handleOverflowClick}
 						class="ui5-sn-item-overflow"
 						sideNavCollapsed={true}
-						icon="overflow"
+						icon={overflow}
 					></SideNavigationItem>
 				</div>
 			:

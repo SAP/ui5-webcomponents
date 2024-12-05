@@ -1,4 +1,8 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import navRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import navDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
+import circleTask from "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import type SideNavigationItem from "./SideNavigationItem.js"
 
 export default function(this: SideNavigationItem) {
@@ -33,12 +37,12 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				<div class="ui5-sn-item-text">{this.text}</div>
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
-							name="navigation-right-arrow"
+							name={navRightArrow}
 					></Icon>
 				}
 				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
-							name="arrow-right"
+							name={arrowRight}
 					></Icon>
 				}
 			</a>
@@ -63,12 +67,12 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				<div class="ui5-sn-item-text">{this.text}</div>
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
-						name="navigation-right-arrow"
+						name={navRightArrow}
 					></Icon>
 				}
 				{this.isExternalLink && 
 					<Icon class="ui5-sn-item-external-link-icon"
-								name="arrow-right"
+						name={arrowRight}
 					></Icon>
 				}
 			</div>	
@@ -101,16 +105,16 @@ function TreeItemTemplate(this: SideNavigationItem) {
 				}
 				<div class="ui5-sn-item-text">{this.text}</div>
 				<Icon class="ui5-sn-item-selection-icon"
-					name="circle-task-2"
+					name={circleTask}
 				></Icon>
 				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
-						name="arrow-right"
+						name={arrowRight}
 					></Icon>
 				}
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
-						name={this._toggleIconName}
+						name={this.expanded ? navDownArrow : navRightArrow}
 						onui5-click={this._onToggleClick}
 					></Icon>
 				}
@@ -135,16 +139,16 @@ function TreeItemTemplate(this: SideNavigationItem) {
 				}
 				<div class="ui5-sn-item-text">{this.text}</div>
 				<Icon class="ui5-sn-item-selection-icon"
-					name="circle-task-2"
+					name={circleTask}
 				></Icon>
 				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
-						name="arrow-right"
+						name={arrowRight}
 					></Icon>
 				}
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
-						name={this._toggleIconName}
+						name={this.expanded ? navDownArrow : navRightArrow}
 						onui5-click={this._onToggleClick}
 					></Icon>
 				}

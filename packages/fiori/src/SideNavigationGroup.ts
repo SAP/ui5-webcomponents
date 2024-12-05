@@ -1,20 +1,19 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isLeft,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
-import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
-import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
+import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
 
 import {
 	SIDE_NAVIGATION_GROUP_HEADER_DESC,
@@ -43,7 +42,7 @@ import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.j
  */
 @customElement({
 	tag: "ui5-side-navigation-group",
-	renderer: litRender,
+	renderer: jsxRender,
 	template: SideNavigationGroupTemplate,
 	styles: SideNavigationGroupCss,
 	dependencies: [
@@ -124,10 +123,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return this.expanded;
 	}
 
-	get _toggleIconName() {
-		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
-	}
-
 	get belowGroupClassName() {
 		if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
 			return "ui5-sn-item-group-below-group";
@@ -140,7 +135,8 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
 	}
 
-	_onkeydown = (e: KeyboardEvent) => {
+	@bound
+	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
 			return;
@@ -151,11 +147,13 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		}
 	}
 
-	_onclick = () => {
+	@bound
+	_onclick() {
 		this._toggle();
 	}
 
-	_onfocusin = (e: FocusEvent) => {
+	@bound
+	_onfocusin(e: FocusEvent) {
 		e.stopPropagation();
 
 		this.sideNavigation?.focusItem(this);
