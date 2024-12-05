@@ -5,7 +5,7 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
 export default function (this: SideNavigationSubItem) {
 	if (this.sideNavCollapsed) {
-		return;
+		return <></>;
 	}
 
 	return (
