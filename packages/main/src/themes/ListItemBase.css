@@ -12,6 +12,10 @@
 /* selected */
 :host([selected]) {
 	background: var(--sapList_SelectionBackgroundColor);
+
+	.ui5-li-additional-text {
+		text-shadow: var(--sapContent_TextShadow);
+	}
 }
 
 :host([has-border]) {
