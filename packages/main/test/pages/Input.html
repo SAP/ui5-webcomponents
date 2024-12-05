@@ -421,6 +421,8 @@
 			<ui5-suggestion-item text="text 4"></ui5-suggestion-item>
 			<ui5-suggestion-item text="text 5"></ui5-suggestion-item>
 		</ui5-input>
+
+		<ui5-button id="toggle-suggestions">Toggle show-suggestions</ui5-button>
 		<br />
 	</div>
 
@@ -787,6 +789,11 @@
 		document.getElementById("input-number3").addEventListener("ui5-input", () => {
 			const inputNumber3ChangeCount = document.getElementById("input-number3-change-count");
 			inputNumber3ChangeCount.value = (parseInt(inputNumber3ChangeCount.value) + 1).toString();
+		});
+
+		document.getElementById("toggle-suggestions").addEventListener("click", () => {
+			const input = document.getElementById("clear-input-suggestions");
+			input.toggleAttribute("show-suggestions");
 		});
 	</script>
 </body>
