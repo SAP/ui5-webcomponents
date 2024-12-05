@@ -18,7 +18,7 @@ export default function (this: Page) {
 					"bottom": this.footer.length && this._contentBottom,
 					"top": this._contentTop,
 				}}>
-					<slot></slot>
+				<slot></slot>
 			</section>
 
 			<footer class="ui5-page-footer-root">
@@ -26,4 +26,4 @@ export default function (this: Page) {
 			</footer>
 		</div>
 	);
-};
+}

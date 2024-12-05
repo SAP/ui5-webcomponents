@@ -70,4 +70,4 @@ export default function (this: ColorPalette) {
 			{ ColorPaletteDialogTemplate.call(this) }
 		</>
 	);
-};
+}

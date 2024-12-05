@@ -1,8 +1,8 @@
 import DropIndicator from "./DropIndicator.js";
-import Tree from "./Tree.js";
+import type Tree from "./Tree.js";
 import TreeList from "./TreeList.js";
 
-export default function (this: Tree ) {
+export default function (this: Tree) {
 	return (
 		<TreeList
 			class="ui5-tree-root"
@@ -30,14 +30,14 @@ export default function (this: Tree ) {
 			onui5-step-in={this._onListItemStepIn}
 			onui5-step-out={this._onListItemStepOut}
 		>
-        	{this._hasHeader && <slot name="header" slot="header"></slot>}
+			{this._hasHeader && <slot name="header" slot="header"></slot>}
 
-       	 <slot></slot>
+			<slot></slot>
 
-		<DropIndicator
-			orientation="Horizontal"
-			ownerReference={this}
-		></DropIndicator>
-    </TreeList>
-    );
-};
+			<DropIndicator
+				orientation="Horizontal"
+				ownerReference={this}
+			></DropIndicator>
+		</TreeList>
+	);
+}

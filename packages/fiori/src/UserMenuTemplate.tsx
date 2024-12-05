@@ -115,4 +115,4 @@ export default function (this: UserMenu) {
 			</div>
 		</ResponsivePopover>
 	);
-};
+}

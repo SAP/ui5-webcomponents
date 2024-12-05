@@ -1,4 +1,4 @@
-import type Toolbar from "./Toolbar.js"
+import type Toolbar from "./Toolbar.js";
 import toolbarPopoverTemplate from "./ToolbarPopoverTemplate.js";
 
 export default function (this: Toolbar) {
@@ -32,4 +32,4 @@ export default function (this: Toolbar) {
 
 		{toolbarPopoverTemplate.call(this)}
 	</>);
-};
+}

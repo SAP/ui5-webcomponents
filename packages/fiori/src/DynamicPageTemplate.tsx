@@ -1,10 +1,10 @@
-import type DynamicPage from "./DynamicPage.js"
+import type DynamicPage from "./DynamicPage.js";
 import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 
-export default function(this: DynamicPage) {
+export default function (this: DynamicPage) {
 	return (
 		<div class="ui5-dynamic-page-root">
-			<div  class="ui5-dynamic-page-scroll-container" 
+			<div class="ui5-dynamic-page-scroll-container"
 				onScroll={this.snapOnScroll}
 			>
 				<header
@@ -22,19 +22,19 @@ export default function(this: DynamicPage) {
 							name="headerArea"
 						></slot>
 					}
-		
+
 					{this.actionsInTitle && headerActions.call(this)}
 				</header>
-				
+
 				{this.headerInContent &&
 					<slot tabIndex={this.headerTabIndex}
 						aria-hidden={this.headerAriaHidden}
 						name="headerArea"
 					></slot>
 				}
-		
+
 				{!this.actionsInTitle && headerActions.call(this)}
-		
+
 				<div class="ui5-dynamic-page-content" part="content">
 					<div class="ui5-dynamic-page-fit-content" part="fit-content">
 						<slot></slot>
@@ -44,13 +44,13 @@ export default function(this: DynamicPage) {
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="ui5-dynamic-page-footer" part="footer">
 				<slot name="footerArea"></slot>
 			</div>
 		</div>
 	);
-};
+}
 
 function headerActions(this: DynamicPage) {
 	if (!this.hasSnappedTitleOnMobile && this.hasHeading) {

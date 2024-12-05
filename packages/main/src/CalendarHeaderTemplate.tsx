@@ -68,5 +68,4 @@ export default function (this: Calendar) {
 				<Icon class="ui5-calheader-arrowicon" name={slimArowRight}></Icon>
 			</div>
 		</div>);
-	};
-
+}

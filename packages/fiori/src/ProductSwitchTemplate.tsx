@@ -2,7 +2,7 @@ import type ProductSwitch from "./ProductSwitch.js";
 
 export default function (this: ProductSwitch) {
 	return (
-		<div 
+		<div
 			role="list"
 			class="ui5-product-switch-root"
 			aria-label={this._ariaLabelText}
@@ -13,4 +13,4 @@ export default function (this: ProductSwitch) {
 			<slot></slot>
 		</div>
 	);
-};
+}

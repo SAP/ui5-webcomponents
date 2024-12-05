@@ -20,7 +20,7 @@ export default function (this: Carousel) {
 			onMouseOver={this._onmouseover}
 		>
 			<div class={this.classes.viewport} part="content">
-				<div class={this.classes.content} style={{transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * (this._itemWidth || 0)}px`}}>
+				<div class={this.classes.content} style={{ transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * (this._itemWidth || 0)}px` }}>
 					{this.items.map(itemInfo =>
 						<div
 							id={itemInfo.id}
@@ -28,7 +28,7 @@ export default function (this: Carousel) {
 								"ui5-carousel-item": true,
 								"ui5-carousel-item--hidden": !itemInfo.selected,
 							}}
-							style={{width: `${this._itemWidth || 0}px`}}
+							style={{ width: `${this._itemWidth || 0}px` }}
 							part="item"
 							role="option"
 							aria-posinset={itemInfo.posinset}
@@ -49,60 +49,60 @@ export default function (this: Carousel) {
 
 			{this.renderNavigation &&
 				<div class={this.classes.navigation}>
-						{this.showArrows.navigation && arrowBack.call(this)}
+					{this.showArrows.navigation && arrowBack.call(this)}
 
-						<div class="ui5-carousel-navigation">
-							{ !this.hidePageIndicator && navIndicator.call(this) }
-						</div>
+					<div class="ui5-carousel-navigation">
+						{ !this.hidePageIndicator && navIndicator.call(this) }
+					</div>
 
-						{this.showArrows.navigation && arrowForward.call(this)}
+					{this.showArrows.navigation && arrowForward.call(this)}
 				</div>
 			}
 		</section>
 	);
-};
+}
 
 function arrowBack(this: Carousel) {
 	return <Button
-			icon={slimArrowLeft}
-			tabindex={-1}
-			tooltip={this.previousPageText}
-			class={{
-				"ui5-carousel-navigation-button": true,
-				"ui5-carousel-navigation-button--hidden":!this.hasPrev
-			}}
-			data-ui5-arrow-back
-			onClick={this._navButtonClick}
-		></Button>
-};
+		icon={slimArrowLeft}
+		tabindex={-1}
+		tooltip={this.previousPageText}
+		class={{
+			"ui5-carousel-navigation-button": true,
+			"ui5-carousel-navigation-button--hidden": !this.hasPrev
+		}}
+		data-ui5-arrow-back
+		onClick={this._navButtonClick}
+	></Button>;
+}
 
 function arrowForward(this: Carousel) {
 	return <Button
-			icon={slimArrowRight}
-			tabindex={-1}
-			tooltip={this.nextPageText}
-			class={{
-				"ui5-carousel-navigation-button": true,
-				"ui5-carousel-navigation-button--hidden":!this.hasNext
-			}}
-			data-ui5-arrow-forward
-			onClick={this._navButtonClick}
-		></Button>
-};
+		icon={slimArrowRight}
+		tabindex={-1}
+		tooltip={this.nextPageText}
+		class={{
+			"ui5-carousel-navigation-button": true,
+			"ui5-carousel-navigation-button--hidden": !this.hasNext
+		}}
+		data-ui5-arrow-forward
+		onClick={this._navButtonClick}
+	></Button>;
+}
 
 function navIndicator(this: Carousel) {
 	return this.isPageTypeDots ? this.dots.map(dot =>
-			<div
-				role="img"
-				aria-label={dot.ariaLabel}
-				class={{
-					"ui5-carousel-navigation-dot": true,
-					"ui5-carousel-navigation-dot--active": dot.active
-				}}
-			></div>)
+		<div
+			role="img"
+			aria-label={dot.ariaLabel}
+			class={{
+				"ui5-carousel-navigation-dot": true,
+				"ui5-carousel-navigation-dot--active": dot.active
+			}}
+		></div>)
 		:
 		<div
 			dir="auto"
 			class="ui5-carousel-navigation-text"
-		>{this.selectedIndexToShow}&nbsp;{this.ofText}&nbsp;{this.pagesCount}</div>
-};
+		>{this.selectedIndexToShow}&nbsp;{this.ofText}&nbsp;{this.pagesCount}</div>;
+}

@@ -51,4 +51,4 @@ export default function (this: TimePicker) {
 			{ TimePickerPopoverTemplate.call(this) }
 		</>
 	);
-};
+}

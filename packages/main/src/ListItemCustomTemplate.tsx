@@ -7,11 +7,11 @@ const predefinedHooks: Partial<ListItemHooks> = {
 };
 
 export default function (this: ListItemCustom, hooks?: Partial<ListItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
-	return ListItemTemplate.call(this, currentHooks)
+	return ListItemTemplate.call(this, currentHooks);
 }
 
 function listItemContent(this: ListItemCustom) {
-	return <slot></slot>
+	return <slot></slot>;
 }

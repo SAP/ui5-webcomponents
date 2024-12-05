@@ -4,7 +4,7 @@ import type Option from "./Option.js";
 
 export default function (this: Option) {
 	return ListItemBaseTemplate.call(this, { listItemContent }, { role: "option", title: this.tooltip });
-};
+}
 
 function listItemContent(this: Option) {
 	return (
@@ -20,4 +20,4 @@ function listItemContent(this: Option) {
 			</div>
 		</div>
 	);
-};
+}

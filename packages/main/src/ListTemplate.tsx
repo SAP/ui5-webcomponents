@@ -2,7 +2,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import DropIndicator from "./DropIndicator.js";
 import type List from "./List.js";
 
-export default function (this: List ) {
+export default function (this: List) {
 	return (
 		<div
 			class="ui5-list-root"
@@ -31,7 +31,6 @@ export default function (this: List ) {
 			>
 				<div class="ui5-list-scroll-container">
 					{this.header.length > 0 && <slot name="header" />}
-
 
 					{this.shouldRenderH1 &&
 						<header id={this.headerID} class="ui5-list-header">
@@ -82,7 +81,7 @@ export default function (this: List ) {
 			</BusyIndicator>
 		</div>
 	);
-};
+}
 
 function moreRow(this: List) {
 	return (
@@ -114,5 +113,4 @@ function moreRow(this: List) {
 			</div>
 		</div>
 	);
-};
-
+}

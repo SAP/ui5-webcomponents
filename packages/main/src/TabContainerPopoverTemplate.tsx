@@ -1,9 +1,9 @@
-import TabContainer from "./TabContainer.js";
+import type TabContainer from "./TabContainer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type Tab from "./Tab.js";
 
-export default function(this: TabContainer) {
+export default function (this: TabContainer) {
 	return (
 		<ResponsivePopover
 			id={ `${this._id}-overflowMenu` }
@@ -35,4 +35,4 @@ export default function(this: TabContainer) {
 			</div>
 		</ResponsivePopover>
 	);
-};
+}

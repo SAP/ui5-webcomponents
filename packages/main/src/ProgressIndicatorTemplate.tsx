@@ -14,7 +14,7 @@ const valueStateIconMappings: Record<string, string> = {
 };
 
 export default function (this: ProgressIndicator) {
-    return(
+	return (
 		<div
 			class={{
 				"ui5-progress-indicator-root": true,
@@ -36,19 +36,19 @@ export default function (this: ProgressIndicator) {
 			</div>
 		</div>
 	);
-};
+}
 
 function valueLabel(this: ProgressIndicator) {
 	return (
 		<>
-		{ this.showIcon &&
+			{ this.showIcon &&
 			<Icon name={valueStateIcon.call(this)} class="ui5-progress-indicator-icon"></Icon> }
 
-		{!this.hideValue &&
+			{!this.hideValue &&
 			<span class="ui5-progress-indicator-value"> {this.displayValue ? this.displayValue : `${this.validatedValue}%`}</span> }
 		</>
 	);
-};
+}
 
 function valueStateIcon(this: ProgressIndicator) {
 	return valueStateIconMappings[this.valueState];

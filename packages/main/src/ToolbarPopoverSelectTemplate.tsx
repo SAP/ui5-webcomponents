@@ -2,7 +2,7 @@ import type ToolbarSelect from "./ToolbarSelect.js";
 import Select from "./Select.js";
 import Option from "./Option.js";
 
-export default function (this: ToolbarSelect ) {
+export default function (this: ToolbarSelect) {
 	return (
 		<Select
 			class="ui5-tb-popover-item"
@@ -22,4 +22,4 @@ export default function (this: ToolbarSelect ) {
 			))}
 		</Select>
 	);
-};
+}

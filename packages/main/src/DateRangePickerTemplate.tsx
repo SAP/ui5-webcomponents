@@ -8,9 +8,9 @@ import DatePickerPopoverTemplate from "./DatePickerPopoverTemplate.js";
 export default function (this: DateRangePicker) {
 	return [
 		DatePickerInputTemplate.call(this),
-		DatePickerPopoverTemplate.call(this, {content }),
+		DatePickerPopoverTemplate.call(this, { content }),
 	];
-};
+}
 
 function content(this: DateRangePicker) {
 	return (
@@ -33,4 +33,4 @@ function content(this: DateRangePicker) {
 			<CalendarDateRange startValue={this.startValue} endValue={this.endValue}></CalendarDateRange>
 		</Calendar>
 	);
-};
+}

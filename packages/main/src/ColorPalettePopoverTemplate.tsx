@@ -20,7 +20,7 @@ export default function (this: ColorPalettePopover) {
 					{this._colorPaletteTitle}
 				</Title>
 			</div>
-	
+
 			<div>
 				<ColorPalette
 					showMoreColors={this.showMoreColors}
@@ -46,4 +46,4 @@ export default function (this: ColorPalettePopover) {
 			</div>
 		</ResponsivePopover>
 	);
-};
+}

@@ -1,5 +1,5 @@
-import type SegmentedButtonItem from "./SegmentedButtonItem.js"
-import Icon from "./Icon.js"
+import type SegmentedButtonItem from "./SegmentedButtonItem.js";
+import Icon from "./Icon.js";
 
 export default function (this: SegmentedButtonItem) {
 	return (
@@ -33,4 +33,4 @@ export default function (this: SegmentedButtonItem) {
 			</span>
 		</li>
 	);
-};
+}

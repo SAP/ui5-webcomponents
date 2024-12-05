@@ -1,9 +1,9 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import navRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import navDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
-import type SideNavigationGroup from "./SideNavigationGroup.js"
+import type SideNavigationGroup from "./SideNavigationGroup.js";
 
-export default function(this: SideNavigationGroup) {
+export default function (this: SideNavigationGroup) {
 	if (this.sideNavCollapsed) {
 		return (<>
 			<div class={`ui5-sn-item-separator ${this.belowGroupClassName}`}></div>
@@ -11,7 +11,7 @@ export default function(this: SideNavigationGroup) {
 			<div class="ui5-sn-item-separator"></div>
 		</>);
 	}
-			
+
 	return TreeItemTemplate.call(this);
 }
 
@@ -28,7 +28,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 				onKeyDown={this._onkeydown}
 				onClick={this._onclick}
 				onFocusIn={this._onfocusin}
-				tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex): undefined}
+				tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
 				aria-expanded={this._expanded}
 				aria-description={this.accDescription}
 				title={this._tooltip}

@@ -1,6 +1,6 @@
-import Icon from "./Icon.js"
-import Popover from "./Popover.js"
-import type TextArea from "./TextArea.js"
+import Icon from "./Icon.js";
+import Popover from "./Popover.js";
+import type TextArea from "./TextArea.js";
 import error from "@ui5/webcomponents-icons/dist/error.js";
 import alert from "@ui5/webcomponents-icons/dist/alert.js";
 import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -16,14 +16,14 @@ const IconPerValueState = {
 
 export default function (this: TextArea) {
 	return (
-	<>
-		{this.displayValueStateMessagePopover &&
+		<>
+			{this.displayValueStateMessagePopover &&
 			<Popover
 				preventFocusRestore={true}
 				hideArrow={true}
 				preventInitialFocus={true}
 				class="ui5-valuestatemessage-popover"
-				style={{"max-width": `${this._width!}px`}}
+				style={{ "max-width": `${this._width!}px` }}
 				placement="Bottom"
 				horizontalAlign={this._valueStatePopoverHorizontalAlign}
 			>
@@ -35,15 +35,15 @@ export default function (this: TextArea) {
 					{valueStateMessage.call(this)}
 				</div>
 			</Popover>
-		}
-	</>
+			}
+		</>
 	);
-};
+}
 
 function valueStateMessage(this: TextArea) {
 	return this.hasCustomValueState ? <slot name="valueStateMessage"></slot> : this.valueStateDefaultText;
-};
+}
 
 function valueStateIcon(this: TextArea) {
 	return this.valueState !== ValueState.None ? IconPerValueState[this.valueState] : "";
-};
+}

@@ -1,4 +1,4 @@
-import MessageStrip from "./MessageStrip.js";
+import type MessageStrip from "./MessageStrip.js";
 import MessageStripDesign from "./types/MessageStripDesign.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -26,7 +26,7 @@ export default function (this: MessageStrip) {
 				<div class="ui5-message-strip-icon-wrapper" aria-hidden="true">
 					{this.iconProvided ?
 						<slot name="icon"></slot>
-					:
+						:
 						<Icon name={standardIconName.call(this)} class="ui5-message-strip-icon"></Icon>
 					}
 				</div>
@@ -46,19 +46,19 @@ export default function (this: MessageStrip) {
 			}
 		</div>
 	);
-};
+}
 
 function standardIconName(this: MessageStrip) {
 	switch (this.design) {
-		case MessageStripDesign.Critical:
-			return alert;
-		case MessageStripDesign.Positive:
-			return sysEnter2;
-		case MessageStripDesign.Negative:
-			return error;
-		case MessageStripDesign.Information:
-			return information;
-		default:
-			return undefined;
+	case MessageStripDesign.Critical:
+		return alert;
+	case MessageStripDesign.Positive:
+		return sysEnter2;
+	case MessageStripDesign.Negative:
+		return error;
+	case MessageStripDesign.Information:
+		return information;
+	default:
+		return undefined;
 	}
-};
+}

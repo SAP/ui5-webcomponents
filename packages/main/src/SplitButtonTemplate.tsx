@@ -51,4 +51,4 @@ export default function (this: SplitButton) {
 			<span id={`${this._id}-invisibleTextDefault`} class="ui5-hidden-text">{this.textButtonAccText}</span>
 		</div>
 	);
-};
+}

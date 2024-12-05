@@ -32,5 +32,4 @@ export default function (this: Card) {
 			</BusyIndicator>
 		</div>
 	);
-};
-
+}

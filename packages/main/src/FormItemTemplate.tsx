@@ -18,4 +18,4 @@ export default function (this: FormItem) {
 			</div>
 		</div>
 	);
-};
+}

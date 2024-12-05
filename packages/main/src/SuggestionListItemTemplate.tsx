@@ -1,5 +1,4 @@
-import Icon from "./Icon.js";
-import SuggestionListItem from "./SuggestionListItem.js";
+import type SuggestionListItem from "./SuggestionListItem.js";
 import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
@@ -8,7 +7,7 @@ const predefinedHooks: Partial<ListItemHooks> = {
 };
 
 export default function (this: SuggestionListItem, hooks?: Partial<ListItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return ListItemStandardTemplate.call(this, currentHooks);
 }
@@ -47,5 +46,5 @@ function listItemContent(this: SuggestionListItem) {
 		{!this.description && this.additionalText && (
 			<span part="additional-text" class="ui5-li-additional-text">{this.additionalText}</span>
 		)}
-	</>
+	</>;
 }

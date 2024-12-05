@@ -3,12 +3,12 @@ import navRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.
 import navDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import circleTask from "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
-import type SideNavigationItem from "./SideNavigationItem.js"
+import type SideNavigationItem from "./SideNavigationItem.js";
 
-export default function(this: SideNavigationItem) {
+export default function (this: SideNavigationItem) {
 	if (this.sideNavCollapsed) {
 		return MenuItemTemplate.call(this);
-	}	
+	}
 	return TreeItemTemplate.call(this);
 }
 
@@ -37,16 +37,16 @@ function MenuItemTemplate(this: SideNavigationItem) {
 				<div class="ui5-sn-item-text">{this.text}</div>
 				{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
-							name={navRightArrow}
+						name={navRightArrow}
 					></Icon>
 				}
 				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
-							name={arrowRight}
+						name={arrowRight}
 					></Icon>
 				}
 			</a>
-		:
+			:
 			<div id={this._id}
 				class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
 				role={this.ariaRole}
@@ -70,12 +70,12 @@ function MenuItemTemplate(this: SideNavigationItem) {
 						name={navRightArrow}
 					></Icon>
 				}
-				{this.isExternalLink && 
+				{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
 					></Icon>
 				}
-			</div>	
+			</div>
 		}
 	</>);
 }
@@ -83,8 +83,8 @@ function MenuItemTemplate(this: SideNavigationItem) {
 function TreeItemTemplate(this: SideNavigationItem) {
 	return (
 		<li id={this._id} class="ui5-sn-list-li" role="none">
-		{this._href ?
-			<a class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
+			{this._href ?
+				<a class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
 			   role={this.ariaRole}
 			   data-sap-focus-ref
 			   onKeyDown={this._onkeydown}
@@ -99,28 +99,28 @@ function TreeItemTemplate(this: SideNavigationItem) {
 			   aria-owns={this._groupId}
 			   href={this._href}
 			   target={this._target}
-			>
-				{this.icon &&
+				>
+					{this.icon &&
 					<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
-				}
-				<div class="ui5-sn-item-text">{this.text}</div>
-				<Icon class="ui5-sn-item-selection-icon"
-					name={circleTask}
-				></Icon>
-				{this.isExternalLink &&
+					}
+					<div class="ui5-sn-item-text">{this.text}</div>
+					<Icon class="ui5-sn-item-selection-icon"
+						name={circleTask}
+					></Icon>
+					{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
 					></Icon>
-				}
-				{!!this.items.length &&
+					}
+					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
 						onui5-click={this._onToggleClick}
 					></Icon>
-				}
-			</a>
-		:
-			<div class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
+					}
+				</a>
+				:
+				<div class={`ui5-sn-item ui5-sn-item-level1 ${this._classes}`}
 				 role={this.ariaRole}
 				 data-sap-focus-ref
 				 onKeyDown={this._onkeydown}
@@ -133,35 +133,35 @@ function TreeItemTemplate(this: SideNavigationItem) {
 				 aria-selected={this.selected}
 				 title={this._tooltip}
 				 aria-owns={this._groupId}
-			>
-				{this.icon &&
+				>
+					{this.icon &&
 					<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
-				}
-				<div class="ui5-sn-item-text">{this.text}</div>
-				<Icon class="ui5-sn-item-selection-icon"
-					name={circleTask}
-				></Icon>
-				{this.isExternalLink &&
+					}
+					<div class="ui5-sn-item-text">{this.text}</div>
+					<Icon class="ui5-sn-item-selection-icon"
+						name={circleTask}
+					></Icon>
+					{this.isExternalLink &&
 					<Icon class="ui5-sn-item-external-link-icon"
 						name={arrowRight}
 					></Icon>
-				}
-				{!!this.items.length &&
+					}
+					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
 						onui5-click={this._onToggleClick}
 					></Icon>
-				}
-			</div>
-		}
-		{!!this.items.length &&
+					}
+				</div>
+			}
+			{!!this.items.length &&
 			<ul id={this._groupId}
 				class="ui5-sn-item-ul"
 				role="group"
 			>
 				<slot></slot>
 			</ul>
-		}
-	</li>
+			}
+		</li>
 	);
 }

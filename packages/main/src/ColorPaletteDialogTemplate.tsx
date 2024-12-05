@@ -7,7 +7,7 @@ export default function (this: ColorPalette) {
 	return (
 		<>
 			{
-			this._effectiveShowMoreColors &&
+				this._effectiveShowMoreColors &&
 				<Dialog headerText={this.colorPaletteDialogTitle}>
 					<div class="ui5-cp-dialog-content">
 						<ColorPicker></ColorPicker>
@@ -32,4 +32,4 @@ export default function (this: ColorPalette) {
 			}
 		</>
 	);
-};
+}

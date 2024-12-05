@@ -15,10 +15,10 @@ export default function (this: TimelineItem) {
 			>
 				<div class="ui5-tli-icon-outer">
 					{
-					this.icon ?
-						<Icon class="ui5-tli-icon" name={this.icon}></Icon>
-					:
-						<div class="ui5-tli-dummy-icon-container"></div>
+						this.icon ?
+							<Icon class="ui5-tli-icon" name={this.icon}></Icon>
+							:
+							<div class="ui5-tli-dummy-icon-container"></div>
 					}
 				</div>
 			</div>
@@ -48,24 +48,24 @@ export default function (this: TimelineItem) {
 					}}></span>
 				</div>
 			}
-	</div>
+		</div>
 	);
-};
+}
 
 function name(this: TimelineItem) {
 	return (
 		<>
-		{this.nameClickable ?
-			<Link
-				class="ui5-tli-title-name-clickable"
-				wrappingType="None"
-				onClick={this.onNamePress}
-			>
-				{this.name}&nbsp;
-			</Link>
-			:
-			<span class="ui5-tli-title-name">{this.name}&nbsp;</span>
-		}
+			{this.nameClickable ?
+				<Link
+					class="ui5-tli-title-name-clickable"
+					wrappingType="None"
+					onClick={this.onNamePress}
+				>
+					{this.name}&nbsp;
+				</Link>
+				:
+				<span class="ui5-tli-title-name">{this.name}&nbsp;</span>
+			}
 		</>
 	);
-};
+}

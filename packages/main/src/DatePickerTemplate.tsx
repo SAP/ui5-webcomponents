@@ -8,4 +8,4 @@ export default function (this: DatePicker) {
 		DatePickerInputTemplate.call(this),
 		DatePickerPopoverTemplate.call(this),
 	];
-};
+}

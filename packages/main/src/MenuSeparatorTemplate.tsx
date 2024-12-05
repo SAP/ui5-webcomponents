@@ -1,4 +1,4 @@
-import type MenuSeparator from "./MenuSeparator.js"
+import type MenuSeparator from "./MenuSeparator.js";
 import ListItemCustom from "./ListItemCustom.js";
 
 export default function (this: MenuSeparator) {
@@ -9,4 +9,4 @@ export default function (this: MenuSeparator) {
 			disabled={true}
 		/>
 	);
-};
+}

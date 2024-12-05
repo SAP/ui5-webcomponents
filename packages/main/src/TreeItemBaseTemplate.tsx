@@ -1,5 +1,5 @@
-import type TreeItemBase from "./TreeItemBase.js"
-import ListItemTemplate from "./ListItemTemplate.js"
+import type TreeItemBase from "./TreeItemBase.js";
+import ListItemTemplate from "./ListItemTemplate.js";
 import Icon from "./Icon.js";
 import navigationDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import navigatioRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -10,10 +10,10 @@ const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent,
 	imageBegin,
 	iconBegin,
-}
+};
 
 export default function (this: TreeItemBase, hooks?: Partial<ListItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <div>
 		{
@@ -21,7 +21,7 @@ export default function (this: TreeItemBase, hooks?: Partial<ListItemHooks>) {
 		}
 
 		{listItemPostContent.call(this)}
-	</div>
+	</div>;
 }
 
 function listItemPreContent(this: TreeItemBase) {
@@ -38,7 +38,7 @@ function listItemPreContent(this: TreeItemBase) {
 					onClick={this._toggleClick}
 				/>
 			}
-		</div >)
+		</div >);
 }
 
 function listItemPostContent(this: TreeItemBase) {
@@ -49,13 +49,12 @@ function listItemPostContent(this: TreeItemBase) {
 				id={`${this._id}-subtree`}
 				class="ui5-tree-li-subtree">
 				<slot></slot>
-			</ul>)
+			</ul>);
 	}
-
 }
 
 function listItemContent() { }
 function imageBegin() { }
 function iconBegin(this: TreeItemBase) {
-	return this.icon && <Icon part="icon" name={this.icon} class="ui5-li-icon" />
+	return this.icon && <Icon part="icon" name={this.icon} class="ui5-li-icon" />;
 }

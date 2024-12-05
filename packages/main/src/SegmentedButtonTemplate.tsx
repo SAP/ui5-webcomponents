@@ -1,4 +1,4 @@
-import type SegmentedButton from "./SegmentedButton.js"
+import type SegmentedButton from "./SegmentedButton.js";
 
 export default function (this: SegmentedButton) {
 	return (
@@ -19,4 +19,4 @@ export default function (this: SegmentedButton) {
 			<span id={`${this._id}-invisibleText`} class="ui5-hidden-text">{this.ariaDescribedBy}</span>
 		</ul>
 	);
-};
+}

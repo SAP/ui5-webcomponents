@@ -4,50 +4,49 @@ import type ProductSwitchItem from "./ProductSwitchItem.js";
 export default function (this: ProductSwitchItem) {
 	return (
 		<>
-		{this.targetSrc ?
-			<a 
-				data-sap-focus-ref
-				class="ui5-product-switch-item-root"
-				onFocusOut={this._onfocusout}
-				onFocusIn={this._onfocusin}
-				onMouseDown={this._onmousedown}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
-				tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
-				href={this.targetSrc}
-				target={this._effectiveTarget}>
+			{this.targetSrc ?
+				<a
+					data-sap-focus-ref
+					class="ui5-product-switch-item-root"
+					onFocusOut={this._onfocusout}
+					onFocusIn={this._onfocusin}
+					onMouseDown={this._onmousedown}
+					onKeyDown={this._onkeydown}
+					onKeyUp={this._onkeyup}
+					tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
+					href={this.targetSrc}
+					target={this._effectiveTarget}>
 					{ item.call(this) }
-			</a>
-		:
-			<div
-				role="listitem"
-				class="ui5-product-switch-item-root"
-				data-sap-focus-ref
-				onFocusOut={this._onfocusout}
-				onFocusIn={this._onfocusin}
-				onMouseDown={this._onmousedown}
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
-				tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
-			>
-				{ item.call(this) }
-			</div>
-		}
+				</a>
+				:
+				<div
+					role="listitem"
+					class="ui5-product-switch-item-root"
+					data-sap-focus-ref
+					onFocusOut={this._onfocusout}
+					onFocusIn={this._onfocusin}
+					onMouseDown={this._onmousedown}
+					onKeyDown={this._onkeydown}
+					onKeyUp={this._onkeyup}
+					tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
+				>
+					{ item.call(this) }
+				</div>
+			}
 		</>
 	);
-};
-
+}
 
 function item(this: ProductSwitchItem) {
 	return (
 		<>
 			{this.icon &&
 				<Icon
-				class="ui5-product-switch-item-icon"
-				name={this.icon}
+					class="ui5-product-switch-item-icon"
+					name={this.icon}
 				></Icon>
 			}
-			
+
 			<span class="ui5-product-switch-item-text-content">
 				{this.titleText &&
 					<span class="ui5-product-switch-item-title">{this.titleText}</span>
@@ -58,4 +57,4 @@ function item(this: ProductSwitchItem) {
 			</span>
 		</>
 	);
-};
+}

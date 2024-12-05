@@ -35,7 +35,7 @@ export default function (this: DatePicker, hooks?: { header?: TemplateHook, cont
 			{ this.showFooter && footer.call(this) }
 		</ResponsivePopover>
 	);
-};
+}
 
 function defaultHeader(this: DatePicker) {
 	return (
@@ -52,7 +52,7 @@ function defaultHeader(this: DatePicker) {
 			</div>
 		</div>
 	);
-};
+}
 
 function defaultContent(this: DatePicker) {
 	return (
@@ -72,11 +72,9 @@ function defaultContent(this: DatePicker) {
 			_currentPicker={this._calendarCurrentPicker}
 			_pickersMode={this._calendarPickersMode}
 		>
-			{ this._calendarSelectedDates.map(date => <CalendarDate value={date}></CalendarDate> )}
+			{ this._calendarSelectedDates.map(date => <CalendarDate value={date}></CalendarDate>)}
 		</Calendar>
 	);
-};
-		
+}
+
 function defaultFooter() {}
-
-

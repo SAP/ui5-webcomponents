@@ -90,4 +90,4 @@ export default function (this: Tab) {
 			}
 		</div>
 	);
-};
+}

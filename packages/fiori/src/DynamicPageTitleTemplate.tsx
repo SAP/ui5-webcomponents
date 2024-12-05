@@ -1,7 +1,7 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type DynamicPageTitle from "./DynamicPageTitle.js";
 
-export default function(this: DynamicPageTitle) {
+export default function (this: DynamicPageTitle) {
 	return (
 		<div class="ui5-dynamic-page-title-root">
 			<span class="ui5-dynamic-page-title-focus-area"
@@ -24,24 +24,24 @@ export default function(this: DynamicPageTitle) {
 						mode="Decorative"
 					></Icon>
 				</div>
-			: <>
-				<div class="ui5-dynamic-page-title--top-area">
-					<slot name="breadcrumbs"></slot>
+				: <>
+					<div class="ui5-dynamic-page-title--top-area">
+						<slot name="breadcrumbs"></slot>
 
-					{this.mobileNavigationActions &&
+						{this.mobileNavigationActions &&
 						<slot name="navigationBar"></slot>
-					}
-				</div>
-				<div class="ui5-dynamic-page-title--wrapper"
-					onui5-_min-content-width-change={this.onMinContentWidthChange}
-				>
-					<div id={`${this._id}-heading`}
-						 class="ui5-dynamic-page-title--heading"
-					>
-						<slot name={this.headingSlotName}></slot>
+						}
 					</div>
+					<div class="ui5-dynamic-page-title--wrapper"
+						onui5-_min-content-width-change={this.onMinContentWidthChange}
+					>
+						<div id={`${this._id}-heading`}
+						 class="ui5-dynamic-page-title--heading"
+						>
+							<slot name={this.headingSlotName}></slot>
+						</div>
 
-					{this.hasContent &&
+						{this.hasContent &&
 						<div class="ui5-dynamic-page-title--content"
 							style={{
 								"min-width": this.minContentWidth ? `${this.minContentWidth || 0}px` : undefined,
@@ -49,28 +49,28 @@ export default function(this: DynamicPageTitle) {
 						>
 							<slot></slot>
 						</div>
-					}
+						}
 
-					<div class="ui5-dynamic-page-title--actions"
-						style={{
-							"min-width": this.minActionsWidth ? `${this.minActionsWidth || 0}px` : undefined,
-						}}
-					>
-						<slot name="actionsBar"></slot>
-						{!this.mobileNavigationActions && <>
-							{this._needsSeparator &&
+						<div class="ui5-dynamic-page-title--actions"
+							style={{
+								"min-width": this.minActionsWidth ? `${this.minActionsWidth || 0}px` : undefined,
+							}}
+						>
+							<slot name="actionsBar"></slot>
+							{!this.mobileNavigationActions && <>
+								{this._needsSeparator &&
 								<div class="ui5-dynamic-page-title--actions-separator"></div>
-							}
-							<slot name="navigationBar"></slot>
-						</>}
+								}
+								<slot name="navigationBar"></slot>
+							</>}
+						</div>
 					</div>
-				</div>
-				<slot name={this.subheadingSlotName}></slot>
-			</>}
+					<slot name={this.subheadingSlotName}></slot>
+				</>}
 
 			<span id={`${this._id}-toggle-description`}
 				class="ui5-hidden-text"
 			>{this._ariaDescribedbyText}</span>
 		</div>
 	);
-};
+}

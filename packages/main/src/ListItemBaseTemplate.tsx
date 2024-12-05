@@ -21,15 +21,15 @@ export default function (this: ListItemBase, hooks?: { listItemContent: () => vo
 			onKeyDown={this._onkeydown}
 			onClick={this._onclick}
 		>
-			{ listItemContent.call(this) }	
+			{ listItemContent.call(this) }
 		</li>
 	);
-};
+}
 
-function defaultListItemContent(this: ListItemBase) {	
+function defaultListItemContent(this: ListItemBase) {
 	return <div part="content" id={`${this._id}-content`} class="ui5-li-content">
-			<div class="ui5-li-text-wrapper">
-				<span part="title" class="ui5-li-title"><slot></slot></span>
-			</div>
+		<div class="ui5-li-text-wrapper">
+			<span part="title" class="ui5-li-title"><slot></slot></span>
 		</div>
-};
+	</div>;
+}

@@ -14,4 +14,4 @@ export default function (this: NotificationList) {
 			<slot></slot>
 		</NotificationListInternal>
 	);
-};
+}

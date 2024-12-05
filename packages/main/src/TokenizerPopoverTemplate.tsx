@@ -11,7 +11,7 @@ export default function (this: Tokenizer) {
 			tokenizer-popover="true"
 			open={this.open}
 			opener={this.morePopoverOpener}
-			style={{"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : `${this.getBoundingClientRect().width}px`}}
+			style={{ "min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : `${this.getBoundingClientRect().width}px` }}
 			contentOnlyOnDesktop={true}
 			preventFocusRestore={true}
 			hideArrow={this.hidePopoverArrow}
@@ -21,7 +21,7 @@ export default function (this: Tokenizer) {
 			onBeforeClose={this.handleBeforeClose}
 			onBeforeOpen={this.handleBeforeOpen}
 		>
-		{this._isPhone &&
+			{this._isPhone &&
 			<div slot="header" class="ui5-responsive-popover-header">
 				<div class="row">
 					<Title
@@ -33,20 +33,20 @@ export default function (this: Tokenizer) {
 					</Title>
 				</div>
 			</div>
-		}
-		<List
-			class="ui5-tokenizer-list"
-			selectionMode={this._nMoreListMode}
-			separators="None"
-			onKeyDown={this._onPopoverListKeydown}
-			onItemDelete={this.itemDelete}
-		>
-			{this._tokens
-				.filter(token => token._isVisible)
-				.map(token => <ListItemStandard key={String(token._id)} data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard> )}
-		</List>
+			}
+			<List
+				class="ui5-tokenizer-list"
+				selectionMode={this._nMoreListMode}
+				separators="None"
+				onKeyDown={this._onPopoverListKeydown}
+				onItemDelete={this.itemDelete}
+			>
+				{this._tokens
+					.filter(token => token._isVisible)
+					.map(token => <ListItemStandard key={String(token._id)} data-ui5-token-ref-id={token._id} wrappingType="Normal">{token.text}</ListItemStandard>)}
+			</List>
 
-		{this._isPhone &&
+			{this._isPhone &&
 			<div slot="footer" class="ui5-responsive-popover-footer">
 				<Button
 					design="Emphasized"
@@ -58,7 +58,7 @@ export default function (this: Tokenizer) {
 					onClick={this.handleDialogButtonPress}
 				>Cancel</Button>
 			</div>
-		}
-	</ResponsivePopover>
+			}
+		</ResponsivePopover>
 	);
-};
+}

@@ -1,5 +1,3 @@
-
-
 import type TableGroupRow from "./TableGroupRow.js";
 
 export default function (this: TableGroupRow) {
@@ -8,7 +6,7 @@ export default function (this: TableGroupRow) {
 			part="group-row"
 			class="ui5-table-group-row-root"
 			aria-label={this.ariaLabelText}
-			tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex): undefined}
+			tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
 			onFocusIn={this._onfocusin}
 		>
 			<td colspan={this.colSpan}>
@@ -16,4 +14,4 @@ export default function (this: TableGroupRow) {
 			</td>
 		</tr>
 	);
-};
+}

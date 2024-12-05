@@ -50,5 +50,5 @@ export default function (this: DatePicker) {
 				}
 			</Input>
 		</div>
-	)
-};
+	);
+}

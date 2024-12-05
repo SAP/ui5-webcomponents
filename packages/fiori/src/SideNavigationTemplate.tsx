@@ -1,15 +1,15 @@
 import overflow from "@ui5/webcomponents-icons/dist/overflow.js";
-import SideNavigation from "./SideNavigation.js";
+import type SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationPopoverTemplate from "./SideNavigationPopoverTemplate.js";
 
-export default function(this: SideNavigation) {
+export default function (this: SideNavigation) {
 	return (<>
 		<nav class={{
-				"ui5-sn-root": true,
-				"ui5-sn-collapsed": this.collapsed,
-			}}
-			role={this._rootRole}
+			"ui5-sn-root": true,
+			"ui5-sn-collapsed": this.collapsed,
+		}}
+		role={this._rootRole}
 		>
 			{header.call(this)}
 
@@ -30,7 +30,7 @@ export default function(this: SideNavigation) {
 						icon={overflow}
 					></SideNavigationItem>
 				</div>
-			:
+				:
 				<ul role="tree"
 					class="ui5-sn-list ui5-sn-flexible"
 					aria-roledescription={this.ariaRoleDescNavigationList}
@@ -49,7 +49,7 @@ export default function(this: SideNavigation) {
 					>
 						<slot name="fixedItems"></slot>
 					</div>
-				:
+					:
 					<ul role="tree"
 						class="ui5-sn-list ui5-sn-fixed"
 						aria-roledescription={this.ariaRoleDescNavigationList}
@@ -61,7 +61,7 @@ export default function(this: SideNavigation) {
 		</nav>
 		{SideNavigationPopoverTemplate.call(this)}
 	</>);
-};
+}
 
 function header(this: SideNavigation) {
 	return this.showHeader ? (

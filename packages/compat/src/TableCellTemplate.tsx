@@ -10,4 +10,4 @@ export default function (this: TableCell) {
 			<slot></slot>
 		</td>
 	);
-};
+}

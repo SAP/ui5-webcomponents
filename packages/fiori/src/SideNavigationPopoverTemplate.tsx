@@ -1,11 +1,11 @@
-import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js"
-import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js"
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js"
-import SideNavigation from "./SideNavigation.js"
-import SideNavigationItem from "./SideNavigationItem.js"
-import SideNavigationSubItem from "./SideNavigationSubItem.js"
+import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import SideNavigation from "./SideNavigation.js";
+import SideNavigationItem from "./SideNavigationItem.js";
+import SideNavigationSubItem from "./SideNavigationSubItem.js";
 
-export default function(this: SideNavigation) {
+export default function (this: SideNavigation) {
 	return (<>
 		<NavigationMenu
 			id={`${this._id}-side-navigation-overflow-menu`}
@@ -25,18 +25,18 @@ export default function(this: SideNavigation) {
 					title={item.title}
 					ref={this.captureRef.bind(item)}
 				>
-						{item.items.map(subItem =>
-							<NavigationMenuItem
-								text={subItem.text}
-								icon={subItem.icon}
-								disabled={subItem.disabled}
-								ref={this.captureRef.bind(subItem)}
-								// expanded={true}
-								href={subItem.href}
-								target={subItem.target}
-								title={subItem.title}
-							></NavigationMenuItem>
-						)}
+					{item.items.map(subItem =>
+						<NavigationMenuItem
+							text={subItem.text}
+							icon={subItem.icon}
+							disabled={subItem.disabled}
+							ref={this.captureRef.bind(subItem)}
+							// expanded={true}
+							href={subItem.href}
+							target={subItem.target}
+							title={subItem.title}
+						></NavigationMenuItem>
+					)}
 				</NavigationMenuItem>
 			)}
 		</NavigationMenu>
@@ -68,21 +68,21 @@ export default function(this: SideNavigation) {
 						onui5-click={this.handlePopupItemClick}
 						ref={this.captureRef.bind(this._popoverContents.item)}
 					>
-					{this._popoverContents.subItems.map(item =>
-						<SideNavigationSubItem
-							text={item.text}
-							tooltip={item._tooltip}
-							href={item._href}
-							target={item._target}
-							disabled={item.disabled}
-							selected={item.selected}
-							onui5-click={this.handlePopupItemClick}
-							ref={this.captureRef.bind(item)}
-						></SideNavigationSubItem>
-					)}
+						{this._popoverContents.subItems.map(item =>
+							<SideNavigationSubItem
+								text={item.text}
+								tooltip={item._tooltip}
+								href={item._href}
+								target={item._target}
+								disabled={item.disabled}
+								selected={item.selected}
+								onui5-click={this.handlePopupItemClick}
+								ref={this.captureRef.bind(item)}
+							></SideNavigationSubItem>
+						)}
 					</SideNavigationItem>
 				</SideNavigation>
 			</>}
 		</ResponsivePopover>
 	</>);
-};
+}

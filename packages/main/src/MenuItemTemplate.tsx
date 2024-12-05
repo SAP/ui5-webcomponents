@@ -17,16 +17,16 @@ export type MenuItemHooks = ListItemHooks & {
 const predefinedHooks: Partial<MenuItemHooks> = {
 	listItemContent,
 	iconBegin,
-}
+};
 
 export default function (this: MenuItem, hooks?: Partial<MenuItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <>
 		{ListItemTemplate.call(this, currentHooks)}
 
 		{listItemPostContent.call(this)}
-	</>
+	</>;
 }
 
 function listItemContent(this: MenuItem) {
@@ -34,7 +34,6 @@ function listItemContent(this: MenuItem) {
 		{this.text && <div class="ui5-menu-item-text">{this.text}</div>}
 
 		{rightContent.call(this)}
-
 
 		{this.hasSubmenu && (
 			<div class="ui5-menu-item-submenu-icon" >
@@ -45,43 +44,43 @@ function listItemContent(this: MenuItem) {
 				/>
 			</div>
 		)}
-	</>)
+	</>);
 }
 
 function rightContent(this: MenuItem) {
 	switch (true) {
-		case this.hasSubmenu:
-			return (
-				<div class="ui5-menu-item-submenu-icon" >
-					<Icon
-						part="subicon"
-						name={slimArrowRight}
-						class="ui5-menu-item-icon-end"
-					/>
-				</div>
-			)
-		case this.hasEndContent:
-			return <slot name="endContent"></slot>
-		case !!this.additionalText:
-			return (
-				<span
-					part="additional-text"
-					class="ui5-li-additional-text"
-					aria-hidden={this._accInfo.ariaHidden}
-				>
-					{this.additionalText}
-				</span>
-			)
+	case this.hasSubmenu:
+		return (
+			<div class="ui5-menu-item-submenu-icon" >
+				<Icon
+					part="subicon"
+					name={slimArrowRight}
+					class="ui5-menu-item-icon-end"
+				/>
+			</div>
+		);
+	case this.hasEndContent:
+		return <slot name="endContent"></slot>;
+	case !!this.additionalText:
+		return (
+			<span
+				part="additional-text"
+				class="ui5-li-additional-text"
+				aria-hidden={this._accInfo.ariaHidden}
+			>
+				{this.additionalText}
+			</span>
+		);
 	}
 }
 
 function iconBegin(this: MenuItem) {
 	if (this.hasIcon) {
-		return <Icon class="ui5-li-icon" name={this.icon} />
+		return <Icon class="ui5-li-icon" name={this.icon} />;
 	}
 
 	if (this._siblingsWithIcon) {
-		return <div class="ui5-menu-item-dummy-icon"></div>
+		return <div class="ui5-menu-item-dummy-icon"></div>;
 	}
 }
 
@@ -151,6 +150,5 @@ function listItemPostContent(this: MenuItem) {
 				/>
 			}
 		</div >
-	</ResponsivePopover >
-
+	</ResponsivePopover >;
 }

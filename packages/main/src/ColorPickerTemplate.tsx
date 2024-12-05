@@ -121,5 +121,5 @@ export default function (this: ColorPicker) {
 				</div>
 			}
 		</section>
-    );
-};
+	);
+}

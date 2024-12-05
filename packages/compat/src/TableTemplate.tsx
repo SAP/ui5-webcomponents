@@ -61,9 +61,9 @@ export default function (this: Table) {
 
 					<tbody>
 						{
-						this.rows.map(row =>
-							<slot name={row._individualSlot}></slot>
-						)}
+							this.rows.map(row =>
+								<slot name={row._individualSlot}></slot>
+							)}
 
 						{!this.rows.length && !this.hideNoData &&
 							<tr class="ui5-table-no-data-row-root">
@@ -86,7 +86,7 @@ export default function (this: Table) {
 			</BusyIndicator>
 		</div>
 	);
-};
+}
 
 function moreRow(this: Table) {
 	return (
@@ -116,7 +116,7 @@ function moreRow(this: Table) {
 			</td>
 		</tr>
 	);
-};
+}
 
 function endRow(this: Table) {
 	return (
@@ -126,4 +126,4 @@ function endRow(this: Table) {
 			</td>
 		</tr>
 	);
-};
+}

@@ -13,7 +13,7 @@ export default function (this: TimelineGroupItem) {
 					<div class="ui5-tlgi-line"></div>
 				</div>
 
-				<ToggleButton 
+				<ToggleButton
 					class="ui5-tlgi-btn"
 					icon={this._groupItemIcon}
 					pressed={this.collapsed}
@@ -31,4 +31,4 @@ export default function (this: TimelineGroupItem) {
 			</ul>
 		</div>
 	);
-};
+}

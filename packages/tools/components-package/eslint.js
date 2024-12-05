@@ -38,6 +38,47 @@ const overrides = tsMode ? [
 		}
 	},
 	{
+		files: ["*.tsx"],
+		parser: "@typescript-eslint/parser",
+		plugins: ["@typescript-eslint"],
+		extends: [
+			"plugin:@typescript-eslint/recommended",
+			"plugin:@typescript-eslint/recommended-requiring-type-checking"
+		],
+		parserOptions: {
+			"project": [
+				"./tsconfig.json",
+				"./cypress/tsconfig.json",
+			],
+			EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
+		},
+		rules: {
+			"no-shadow": "off",
+			"@typescript-eslint/consistent-type-imports": "error",
+			"@typescript-eslint/no-shadow": ["error"],
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-floating-promises": "off",
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-unsafe-assignment": "off",
+			"@typescript-eslint/ban-ts-comment": "off",
+			"@typescript-eslint/no-unsafe-call": "off",
+			"@typescript-eslint/no-non-null-assertion": "off",
+			"@typescript-eslint/no-empty-function": "off",
+			"@typescript-eslint/no-empty-interface": "off",
+			"lines-between-class-members": "off",
+
+			"func-names": "off",
+			"@typescript-eslint/no-unsafe-return": "off",
+			"@typescript-eslint/unbound-method": "off",
+			"operator-linebreak": "off",
+			"@typescript-eslint/no-misused-promises": "off",
+			"no-nested-ternary": "off",
+			"implicit-arrow-linebreak": "off",
+			"function-paren-newline": "off",
+			"comma-dangle": "off"
+		},
+	},
+	{
 		"files": ["**/cypress/**/*.ts"],
 
 		"plugins": [

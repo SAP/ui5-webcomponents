@@ -2,7 +2,7 @@ import type Wizard from "./Wizard.js";
 import WizardTab from "./WizardTab.js";
 import WizardPopoverTemplate from "./WizardPopoverTemplate.js";
 
-export default function(this: Wizard) {
+export default function (this: Wizard) {
 	return (<>
 		<div class="ui5-wiz-root"
 			 aria-label={this.ariaLabelText}
@@ -53,15 +53,15 @@ export default function(this: Wizard) {
 			>
 				{this._steps.map(step =>
 					<div class={{
-							"ui5-wiz-content-item": true,
-							"ui5-wiz-content-item-stretch": step.stretch,
-							"ui5-wiz-content-item-selected": step.selected,
-						}}
-						hidden={step.disabled}
-						part="step-content"
-						aria-label={step.stepContentAriaLabel}
-						role="region"
-						data-ui5-content-item-ref-id={step._id}
+						"ui5-wiz-content-item": true,
+						"ui5-wiz-content-item-stretch": step.stretch,
+						"ui5-wiz-content-item-selected": step.selected,
+					}}
+					hidden={step.disabled}
+					part="step-content"
+					aria-label={step.stepContentAriaLabel}
+					role="region"
+					data-ui5-content-item-ref-id={step._id}
 					>
 						<div class="ui5-wiz-content-item-wrapper">
 							<slot name={step._individualSlot}></slot>

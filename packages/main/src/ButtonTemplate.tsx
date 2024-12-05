@@ -1,4 +1,4 @@
-import type Button from "./Button.js"
+import type Button from "./Button.js";
 import Icon from "./Icon.js";
 
 export default function (this: Button, injectedProps?: {
@@ -67,4 +67,4 @@ export default function (this: Button, injectedProps?: {
 			}
 		</button>
 	</>);
-};
+}

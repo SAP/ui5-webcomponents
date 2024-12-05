@@ -10,4 +10,4 @@ export default function (this: TableColumn) {
 			<slot></slot>
 		</th>
 	);
-};
+}

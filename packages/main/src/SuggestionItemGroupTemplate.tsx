@@ -3,4 +3,4 @@ import type SuggestionItemGroup from "./SuggestionItemGroup.js";
 
 export default function (this: SuggestionItemGroup) {
 	return ListItemGroupTemplate.call(this);
-};
+}

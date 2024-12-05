@@ -15,7 +15,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 export default function (this: Input) {
 	return (
 		<>
-		{this._effectiveShowSuggestions &&
+			{this._effectiveShowSuggestions &&
 			<ResponsivePopover
 				class={this.classes.popover}
 				hideArrow={true}
@@ -34,38 +34,38 @@ export default function (this: Input) {
 			>
 				{this._isPhone &&
 					<>
-					<div slot="header" class="ui5-responsive-popover-header">
-						<div class="row">
-							<span>{this._headerTitleText}</span>
-							<Button
-								class="ui5-responsive-popover-close-btn"
-								icon={decline}
-								design="Transparent"
-								onClick={this._closePicker}
-							>
-							</Button>
-						</div>
-						<div class="row">
-							<div class="input-root-phone native-input-wrapper">
-								<Input
-									class="ui5-input-inner-phone"
-									type={this.inputType}
-									value={this.value}
-									showClearIcon={this.showClearIcon}
-									placeholder={this.placeholder}
-									onInput={this._handleInput}
-									onChange={this._handleChange}
-								></Input>
+						<div slot="header" class="ui5-responsive-popover-header">
+							<div class="row">
+								<span>{this._headerTitleText}</span>
+								<Button
+									class="ui5-responsive-popover-close-btn"
+									icon={decline}
+									design="Transparent"
+									onClick={this._closePicker}
+								>
+								</Button>
+							</div>
+							<div class="row">
+								<div class="input-root-phone native-input-wrapper">
+									<Input
+										class="ui5-input-inner-phone"
+										type={this.inputType}
+										value={this.value}
+										showClearIcon={this.showClearIcon}
+										placeholder={this.placeholder}
+										onInput={this._handleInput}
+										onChange={this._handleChange}
+									></Input>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					{this.hasValueStateMessage &&
+						{this.hasValueStateMessage &&
 						<div class={this.classes.popoverValueState} style={this.styles.suggestionPopoverHeader}>
 							<Icon class="ui5-input-value-state-message-icon" name={valueStateMessageInputIcon.call(this)}></Icon>
 							{ this.open && valueStateMessage.call(this) }
 						</div>
-					}
+						}
 					</>
 				}
 
@@ -97,9 +97,9 @@ export default function (this: Input) {
 					</div>
 				}
 			</ResponsivePopover>
-		}
+			}
 
-		{this.hasValueStateMessage &&
+			{this.hasValueStateMessage &&
 				<Popover
 					preventInitialFocus={true}
 					preventFocusRestore={true}
@@ -117,10 +117,10 @@ export default function (this: Input) {
 						{ this.valueStateOpen && valueStateMessage.call(this) }
 					</div>
 				</Popover>
-		}
+			}
 		</>
 	);
-};
+}
 
 function valueStateMessage(this: Input) {
 	return (
@@ -129,8 +129,8 @@ function valueStateMessage(this: Input) {
 				this.shouldDisplayDefaultValueStateMessage ? <>{this.valueStateText}</> : <slot name="valueStateMessage"></slot>
 			}
 		</>
-	)
-};
+	);
+}
 
 function suggestionsList(this: Input) {
 	return (
@@ -143,8 +143,8 @@ function suggestionsList(this: Input) {
 		>
 			<slot></slot>
 		</List>
-	)
-};
+	);
+}
 
 function valueStateMessageInputIcon(this: Input) {
 	const iconPerValueState = {

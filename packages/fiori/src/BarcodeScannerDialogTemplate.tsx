@@ -3,7 +3,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import type BarcodeScannerDialog from "./BarcodeScannerDialog.js";
 
-export default function(this: BarcodeScannerDialog) {
+export default function (this: BarcodeScannerDialog) {
 	return (<>
 		<Dialog
 			stretch={true}
@@ -35,4 +35,4 @@ export default function(this: BarcodeScannerDialog) {
 			text={this._busyIndicatorText}
 		></BusyIndicator>
 	</>);
-};
+}

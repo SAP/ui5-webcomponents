@@ -1,4 +1,4 @@
-import TabContainer from "./TabContainer.js";
+import type TabContainer from "./TabContainer.js";
 import DropIndicator from "./DropIndicator.js";
 import Button from "./Button.js";
 import TabContainerPopoverTemplate from "./TabContainerPopoverTemplate.js";
@@ -32,7 +32,7 @@ const defaultPartials = {
 	contentArea,
 };
 
-export default function(this: TabContainer, injectedPartials?: Partial<typeof defaultPartials>) {
+export default function (this: TabContainer, injectedPartials?: Partial<typeof defaultPartials>) {
 	const partials = {
 		...defaultPartials,
 		...injectedPartials,
@@ -68,7 +68,7 @@ export default function(this: TabContainer, injectedPartials?: Partial<typeof de
 				>
 					{this.startOverflowButton.length ?
 						<slot name="startOverflowButton"></slot>
-					: // else
+						: // else
 						<Button
 							endIcon={this.overflowMenuIcon}
 							data-ui5-stable="overflow-start"
@@ -103,7 +103,7 @@ export default function(this: TabContainer, injectedPartials?: Partial<typeof de
 				>
 					{this.overflowButton.length ?
 						<slot name="overflowButton"></slot>
-					:
+						:
 						<Button
 							endIcon={this.overflowMenuIcon}
 							data-ui5-stable="overflow-end"
@@ -132,4 +132,4 @@ export default function(this: TabContainer, injectedPartials?: Partial<typeof de
 
 		{ TabContainerPopoverTemplate.call(this) }
 	</>);
-};
+}

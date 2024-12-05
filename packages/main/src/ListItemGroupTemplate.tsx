@@ -1,13 +1,13 @@
-import type ListItemGroup from "./ListItemGroup.js"
-import ListItemGroupHeader from "./ListItemGroupHeader.js"
-import DropIndicator from "./DropIndicator.js"
+import type ListItemGroup from "./ListItemGroup.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import DropIndicator from "./DropIndicator.js";
 
 export default function (this: ListItemGroup, hooks?: { items: () => void }) {
 	const items = hooks?.items || defaultItems;
 
 	return (
-		<ul	
-			role="group" 
+		<ul
+			role="group"
 			class="ui5-group-li-root"
 			onDragEnter={this._ondragenter}
 			onDragOver={this._ondragover}
@@ -25,8 +25,8 @@ export default function (this: ListItemGroup, hooks?: { items: () => void }) {
 			<DropIndicator orientation="Horizontal" ownerReference={this}></DropIndicator>
 		</ul>
 	);
-};
+}
 
 function defaultItems(this: ListItemGroup) {
 	return <slot></slot>;
-};
+}

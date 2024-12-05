@@ -60,7 +60,7 @@ export default function (this: TimePicker) {
 							onChange={this.onTimeSelectionChange}
 							onCloseInputs={this.submitInputsPopover}
 						></TimeSelectionInputs>
-					</div> 
+					</div>
 
 					<div slot="footer" class="ui5-time-picker-footer">
 						<Button id="submitInputs" design="Emphasized" onClick={this.submitInputsPopover}>{this.submitButtonLabel}</Button>
@@ -68,5 +68,6 @@ export default function (this: TimePicker) {
 					</div>
 				</Popover>
 			}
-	</>
-)}
+		</>
+	);
+}

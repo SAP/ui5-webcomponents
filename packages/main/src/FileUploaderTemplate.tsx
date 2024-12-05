@@ -1,4 +1,4 @@
-import type FileUploader from "./FileUploader.js"
+import type FileUploader from "./FileUploader.js";
 import Input from "./Input.js";
 import FileUploaderPopoverTemplate from "./FileUploaderPopoverTemplate.js";
 
@@ -45,4 +45,4 @@ export default function (this: FileUploader) {
 			{ FileUploaderPopoverTemplate.call(this) }
 		</>
 	);
-};
+}

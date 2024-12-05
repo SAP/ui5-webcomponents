@@ -1,7 +1,7 @@
 import type BusyIndicator from "./BusyIndicator.js";
 import Label from "./Label.js";
 
-export default function(this: BusyIndicator) {
+export default function (this: BusyIndicator) {
 	return (
 		<div class="ui5-busy-indicator-root">
 			{this._isBusy && (
@@ -35,7 +35,7 @@ export default function(this: BusyIndicator) {
 			)}
 		</div>
 	);
-};
+}
 
 function BusyIndicatorBusyText(this: BusyIndicator) {
 	return (<>

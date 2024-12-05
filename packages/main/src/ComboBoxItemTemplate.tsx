@@ -2,8 +2,8 @@ import ListItemBaseTemplate from "./ListItemBaseTemplate.js";
 import type ComboBoxItem from "./ComboBoxItem.js";
 
 export default function (this: ComboBoxItem) {
-	return ListItemBaseTemplate.call(this, { listItemContent }, { role: "option" });	
-};
+	return ListItemBaseTemplate.call(this, { listItemContent }, { role: "option" });
+}
 
 function listItemContent(this: ComboBoxItem) {
 	return (
@@ -14,4 +14,4 @@ function listItemContent(this: ComboBoxItem) {
 			</div>
 		</div>
 	);
-};
+}

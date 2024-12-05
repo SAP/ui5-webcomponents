@@ -1,9 +1,9 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import circleTask from "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
-import type SideNavigationSubItem from "./SideNavigationSubItem.js"
+import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
-export default function(this: SideNavigationSubItem) {
+export default function (this: SideNavigationSubItem) {
 	if (this.sideNavCollapsed) {
 		return;
 	}
@@ -12,18 +12,18 @@ export default function(this: SideNavigationSubItem) {
 		<li id={this._id} class="ui5-sn-list-li" role="none">
 			{this._href ?
 				<a class={`ui5-sn-item ui5-sn-item-level2 ${this._classes}`}
-				role="treeitem"
-				data-sap-focus-ref
-				onKeyDown={this._onkeydown}
-				onKeyUp={this._onkeyup}
-				onClick={this._onclick}
-				onFocusIn={this._onfocusin}
-				tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
-				aria-current={this._ariaCurrent}
-				aria-selected={this.selected}
-				title={this._tooltip}
-				href={this._href}
-				target={this._target}
+					role="treeitem"
+					data-sap-focus-ref
+					onKeyDown={this._onkeydown}
+					onKeyUp={this._onkeyup}
+					onClick={this._onclick}
+					onFocusIn={this._onfocusin}
+					tabIndex={this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined}
+					aria-current={this._ariaCurrent}
+					aria-selected={this.selected}
+					title={this._tooltip}
+					href={this._href}
+					target={this._target}
 				>
 					{this.icon &&
 						<Icon class="ui5-sn-item-icon" name={this.icon}></Icon>
@@ -38,7 +38,7 @@ export default function(this: SideNavigationSubItem) {
 						></Icon>
 					}
 				</a>
-			:
+				:
 				<div class={`ui5-sn-item ui5-sn-item-level2 ${this._classes}`}
 					role="treeitem"
 					data-sap-focus-ref
@@ -67,4 +67,4 @@ export default function(this: SideNavigationSubItem) {
 			}
 		</li>
 	);
-};
+}

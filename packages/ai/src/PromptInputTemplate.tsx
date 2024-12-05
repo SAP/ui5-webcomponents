@@ -4,7 +4,7 @@ import Input from "@ui5/webcomponents/dist/Input.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import paperPlane from "@ui5/webcomponents-icons/dist/paper-plane.js";
 
-export default function(this: PromptInput) {
+export default function (this: PromptInput) {
 	return (
 		<div class="ai-prompt-input-wrapper">
 			{this.label &&
@@ -38,7 +38,7 @@ export default function(this: PromptInput) {
 					}
 				</div>
 				<Button
-					icon={paperPlane} 
+					icon={paperPlane}
 					disabled={this._submitButtonDisabled}
 					class="ai-prompt-input-button"
 					design="Emphasized"
@@ -46,4 +46,4 @@ export default function(this: PromptInput) {
 				</Button>
 			</div>
 		</div>);
-};
+}

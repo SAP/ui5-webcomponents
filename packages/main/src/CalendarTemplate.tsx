@@ -79,5 +79,4 @@ export default function (this: Calendar) {
 				<slot name="calendarLegend"></slot>
 			</div>
 		</>);
-};
-
+}

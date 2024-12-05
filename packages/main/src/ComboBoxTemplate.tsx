@@ -6,50 +6,50 @@ import ComboBoxPopoverTemplate from "./ComboBoxPopoverTemplate.js";
 
 export default function (this: ComboBox) {
 	return (
-	<>
-		<div class="ui5-combobox-root ui5-input-focusable-element">
-			{this.hasValueState &&
+		<>
+			<div class="ui5-combobox-root ui5-input-focusable-element">
+				{this.hasValueState &&
 				<span id="value-state-description" class="ui5-hidden-text">{this.ariaValueStateHiddenText}</span>
-			}
+				}
 
-			<input id="ui5-combobox-input"
-				value={this.value}
-				inner-input
-				placeholder={this.placeholder}
-				disabled={this.disabled}
-				readonly={this.readonly}
-				// check this value-state
-				value-state={this.valueState}
-				onKeyDown={this._keydown}
-				onInput={this._input}
-				onChange={this._inputChange}
-				onClick={this._click}
-				onKeyUp={this._keyup}
-				onFocusIn={this._focusin}
-				onFocusOut={this._focusout}
-				aria-expanded={this.open}
-				role="combobox"
-				aria-haspopup="dialog"
-				aria-autocomplete="both"
-				aria-describedby="value-state-description"
-				aria-label={this.ariaLabelText}
-				aria-required={this.required}
-				aria-controls={this.responsivePopoverId}
-				autocomplete="off"
-				data-sap-focus-ref
-			/>
+				<input id="ui5-combobox-input"
+					value={this.value}
+					inner-input
+					placeholder={this.placeholder}
+					disabled={this.disabled}
+					readonly={this.readonly}
+					// check this value-state
+					value-state={this.valueState}
+					onKeyDown={this._keydown}
+					onInput={this._input}
+					onChange={this._inputChange}
+					onClick={this._click}
+					onKeyUp={this._keyup}
+					onFocusIn={this._focusin}
+					onFocusOut={this._focusout}
+					aria-expanded={this.open}
+					role="combobox"
+					aria-haspopup="dialog"
+					aria-autocomplete="both"
+					aria-describedby="value-state-description"
+					aria-label={this.ariaLabelText}
+					aria-required={this.required}
+					aria-controls={this.responsivePopoverId}
+					autocomplete="off"
+					data-sap-focus-ref
+				/>
 
-			{this._effectiveShowClearIcon &&
+				{this._effectiveShowClearIcon &&
 				<div onClick={this._clear} class="ui5-input-clear-icon-wrapper inputIcon" tabindex={-1}>
 					<Icon tabindex={-1} class="ui5-input-clear-icon" name={decline} accessibleName={this.clearIconAccessibleName}></Icon>
 				</div>
-			}
+				}
 
-			{this.icon &&
+				{this.icon &&
 				<slot name="icon"></slot>
-			}
+				}
 
-			{!this.readonly &&
+				{!this.readonly &&
 				<Icon
 					slot="icon"
 					name={slimArrowDown}
@@ -61,10 +61,10 @@ export default function (this: ComboBox) {
 					accessibleName={this._iconAccessibleNameText}
 					onClick={this._arrowClick}
 				></Icon>
-			}
-		</div>
+				}
+			</div>
 
-		{ ComboBoxPopoverTemplate.call(this) }
-	</>	
+			{ ComboBoxPopoverTemplate.call(this) }
+		</>
 	);
-};
+}

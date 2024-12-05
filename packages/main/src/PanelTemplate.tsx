@@ -1,4 +1,4 @@
-import type Panel from "./Panel.js"
+import type Panel from "./Panel.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 
@@ -56,7 +56,7 @@ export default function (this: Panel) {
 											</Icon>
 										</div>
 									</Button>
-								: // else
+									: // else
 									<Icon
 										class={{
 											"ui5-panel-header-button": true,
@@ -73,7 +73,7 @@ export default function (this: Panel) {
 
 						{ this._hasHeader ?
 							<slot name="header"></slot>
-						: // else
+							: // else
 							<div
 								id={ `${this._id}-header-title` }
 								class="ui5-panel-header-title"
@@ -99,4 +99,4 @@ export default function (this: Panel) {
 			</div>
 		</div>
 	</>);
-};
+}

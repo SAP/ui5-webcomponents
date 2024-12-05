@@ -3,7 +3,7 @@ import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import type Wizard from "./Wizard.js";
 
-export default function(this: Wizard) {
+export default function (this: Wizard) {
 	return (
 		<ResponsivePopover
 			horizontalAlign="Center"
@@ -39,4 +39,4 @@ export default function(this: Wizard) {
 			</div>
 		</ResponsivePopover>
 	);
-};
+}

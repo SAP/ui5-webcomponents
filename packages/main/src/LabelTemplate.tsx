@@ -17,4 +17,4 @@ export default function (this: Label) {
 			</span>
 		</label>
 	);
-};
+}

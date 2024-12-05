@@ -1,21 +1,21 @@
-import type YearPicker from "./YearPicker.js"
+import type YearPicker from "./YearPicker.js";
 
 export default function (this: YearPicker) {
 	return (
-	<div
-		class="ui5-yp-root"
-		role="grid"
-		aria-roledescription={this.roleDescription}
-		aria-readonly="false"
-		aria-multiselectable="false"
-		onMouseOver={this._onmouseover}
-		onKeyDown={this._onkeydown}
-		onKeyUp={this._onkeyup}
-		onClick={this._selectYear}
-	>
-		{this._yearsInterval.map(years =>
-			<div role="row" class="ui5-yp-interval-container">
-				{years.map(year => <div
+		<div
+			class="ui5-yp-root"
+			role="grid"
+			aria-roledescription={this.roleDescription}
+			aria-readonly="false"
+			aria-multiselectable="false"
+			onMouseOver={this._onmouseover}
+			onKeyDown={this._onkeydown}
+			onKeyUp={this._onkeyup}
+			onClick={this._selectYear}
+		>
+			{this._yearsInterval.map(years =>
+				<div role="row" class="ui5-yp-interval-container">
+					{years.map(year => <div
 						data-sap-timestamp={year.timestamp}
 						tabindex={year._tabIndex}
 						data-sap-focus-ref={year.focusRef ? "true" : undefined}
@@ -29,15 +29,14 @@ export default function (this: YearPicker) {
 							{year.year}
 						</span>
 						{
-						year.yearInSecType &&
+							year.yearInSecType &&
 							<span class="ui5-yp-year-sec-type">
 								{year.yearInSecType}
 							</span>
 						}
 					</div>
-				)}
-			</div>
-		)}
-</div>);
-};
-
+					)}
+				</div>
+			)}
+		</div>);
+}

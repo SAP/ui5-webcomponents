@@ -12,5 +12,5 @@ export default function (this: TabSeparator) {
 			ref={this.captureRef}
 		>
 		</ListItemCustom>
-	)
-};
+	);
+}

@@ -14,10 +14,10 @@ const predefinedHooks: Partial<MenuItemHooks> = {
 	iconBegin,
 	iconEnd,
 	listItemPostContent: () => {},
-}
+};
 
 export default function (this: NavigationMenuItem, hooks?: Partial<MenuItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks,  }
+	const currentHooks = { ...predefinedHooks, ...hooks, };
 
 	return <>
 		this._href ? (
@@ -31,7 +31,7 @@ export default function (this: NavigationMenuItem, hooks?: Partial<MenuItemHooks
 		) : MenuItemTemplate.call(this, currentHooks);
 
 		{listItemPostContent.call(this)}
-	</>
+	</>;
 }
 
 function listItemContent(this: NavigationMenuItem) {
@@ -43,11 +43,11 @@ function iconBegin(this: NavigationMenuItem) {
 		return <Icon part="icon"
 			class="ui5-li-icon"
 			name={this.icon}
-		/>
+		/>;
 	}
 
 	if (this._siblingsWithIcon) {
-		return <div class="ui5-menu-item-dummy-icon"></div>
+		return <div class="ui5-menu-item-dummy-icon"></div>;
 	}
 }
 
@@ -57,14 +57,14 @@ function iconEnd(this: NavigationMenuItem) {
 			part="icon"
 			name={slimArrowRightIcon}
 			class="ui5-menu-item-icon-end"
-		/>
+		/>;
 	}
 
 	if (this.href) {
 		return <Icon
 			class="ui5-sn-item-external-link-icon"
 			name={arrowRightIcon}
-		/>
+		/>;
 	}
 }
 
@@ -136,5 +136,5 @@ function listItemPostContent(this: NavigationMenuItem) {
 			)}
 		</div>
 
-	</ResponsivePopover >
+	</ResponsivePopover >;
 }

@@ -8,5 +8,5 @@ export default function (this: TabSeparator) {
 			class="ui5-tc__separator"
 			ref={this.captureRef}
 		></div>
-	)
-};
+	);
+}

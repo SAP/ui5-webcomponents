@@ -1,4 +1,4 @@
-import type ToolbarSeparator from "./ToolbarSeparator.js"
+import type ToolbarSeparator from "./ToolbarSeparator.js";
 
 export default function (this: ToolbarSeparator) {
 	return (
@@ -7,4 +7,4 @@ export default function (this: ToolbarSeparator) {
 			data-ui5-external-action-item-id={this._id}
 		></div>
 	);
-};
+}

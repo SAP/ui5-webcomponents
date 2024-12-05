@@ -169,4 +169,4 @@ export default function ViewSettingsDialogTemplate(this: ViewSettingsDialog) {
 			{ViewSettingsDialogTemplateFooter.call(this)}
 		</Dialog>
 	);
-};
+}

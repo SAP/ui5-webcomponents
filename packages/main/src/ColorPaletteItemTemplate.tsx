@@ -13,4 +13,4 @@ export default function (this: ColorPaletteItem) {
 			title={`${this.colorLabel} - ${this.index}: ${this.value}`}
 		></div>
 	);
-};
+}

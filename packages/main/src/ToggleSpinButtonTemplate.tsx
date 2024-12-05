@@ -11,4 +11,4 @@ export default function (this: ToggleSpinButton) {
 			ariaValueText: this.valueText,
 		})}
 	</>);
-};
+}

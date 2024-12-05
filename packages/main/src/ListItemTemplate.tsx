@@ -1,4 +1,4 @@
-import type ListItem from "./ListItem.js"
+import type ListItem from "./ListItem.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import editIcon from "@ui5/webcomponents-icons/dist/edit.js";
@@ -22,10 +22,10 @@ const predefinedHooks: ListItemHooks = {
 	iconBegin,
 	iconEnd,
 	selectionElement,
-}
+};
 
 export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <li
 		part="native-li"
@@ -106,7 +106,7 @@ export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
 			{this._accInfo.ariaSelectedText}
 		</span>
 
-	</li >
+	</li >;
 }
 
 function listItemPreContent(this: ListItem) { }
@@ -116,55 +116,55 @@ function iconBegin(this: ListItem) { }
 function iconEnd(this: ListItem) { }
 function selectionElement(this: ListItem) {
 	switch (true) {
-		case this.modeSingleSelect:
-			return (
-				<RadioButton
-					part="radio"
-					disabled={this.isInactive}
-					accessibleName={this._accInfo.ariaLabelRadioButton}
-					tabindex={-1}
-					id={`${this._id}-singleSelectionElement`}
-					class="ui5-li-singlesel-radiobtn"
-					checked={this.selected}
-					onChange={this.onSingleSelectionComponentPress}
-				/>
-			)
-		case this.modeMultiple:
-			return (
-				<CheckBox
-					part="checkbox"
-					disabled={this.isInactive}
-					indeterminate={this.indeterminate}
-					tabindex={-1}
-					id={`${this._id}-multiSelectionElement`}
-					class="ui5-li-multisel-cb"
-					checked={this.selected}
-					accessibleName={this._accInfo.ariaLabel}
-					onChange={this.onMultiSelectionComponentPress}
-				/>
-			)
-		case this.renderDeleteButton:
-			return (
-				<div class="ui5-li-deletebtn">
-					{
-						this.hasDeleteButtonSlot ?
-							(
-								<slot name="deleteButton"></slot>
-							) : (
-								<Button
-									part="delete-button"
-									tabindex={-1}
-									data-sap-no-tab-ref
-									id={`${this._id}-deleteSelectionElement`}
-									design="Transparent"
-									icon="decline"
-									disabled={this.disableDeleteButton}
-									onClick={this.onDelete}
-									tooltip={this.deleteText}
-								/>
-							)
-					}
-				</div >
-			)
+	case this.modeSingleSelect:
+		return (
+			<RadioButton
+				part="radio"
+				disabled={this.isInactive}
+				accessibleName={this._accInfo.ariaLabelRadioButton}
+				tabindex={-1}
+				id={`${this._id}-singleSelectionElement`}
+				class="ui5-li-singlesel-radiobtn"
+				checked={this.selected}
+				onChange={this.onSingleSelectionComponentPress}
+			/>
+		);
+	case this.modeMultiple:
+		return (
+			<CheckBox
+				part="checkbox"
+				disabled={this.isInactive}
+				indeterminate={this.indeterminate}
+				tabindex={-1}
+				id={`${this._id}-multiSelectionElement`}
+				class="ui5-li-multisel-cb"
+				checked={this.selected}
+				accessibleName={this._accInfo.ariaLabel}
+				onChange={this.onMultiSelectionComponentPress}
+			/>
+		);
+	case this.renderDeleteButton:
+		return (
+			<div class="ui5-li-deletebtn">
+				{
+					this.hasDeleteButtonSlot ?
+						(
+							<slot name="deleteButton"></slot>
+						) : (
+							<Button
+								part="delete-button"
+								tabindex={-1}
+								data-sap-no-tab-ref
+								id={`${this._id}-deleteSelectionElement`}
+								design="Transparent"
+								icon="decline"
+								disabled={this.disableDeleteButton}
+								onClick={this.onDelete}
+								tooltip={this.deleteText}
+							/>
+						)
+				}
+			</div >
+		);
 	}
 }

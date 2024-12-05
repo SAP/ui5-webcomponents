@@ -1,5 +1,5 @@
 import Icon from "./Icon.js";
-import ListItemStandard from "./ListItemStandard.js";
+import type ListItemStandard from "./ListItemStandard.js";
 import ListItemTemplate from "./ListItemTemplate.js";
 import type { ListItemHooks } from "./ListItemTemplate.js";
 
@@ -8,12 +8,12 @@ const predefinedHooks: Partial<ListItemHooks> = {
 	iconBegin,
 	iconEnd,
 	listItemContent
-}
+};
 
 export default function (this: ListItemStandard, hooks?: Partial<ListItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
-	return ListItemTemplate.call(this, currentHooks)
+	return ListItemTemplate.call(this, currentHooks);
 }
 
 function listItemContent(this: ListItemStandard) {
@@ -39,14 +39,14 @@ function listItemContent(this: ListItemStandard) {
 		{!this.description && this.additionalText && (
 			<span part="additional-text" class="ui5-li-additional-text">{this.additionalText}</span>
 		)}
-	</>
+	</>;
 }
 
 function imageBegin(this: ListItemStandard) {
 	if (this.hasImage) {
 		return <div class="ui5-li-image">
 			<slot name="image"></slot>
-		</div>
+		</div>;
 	}
 }
 
@@ -56,7 +56,7 @@ function iconBegin(this: ListItemStandard) {
 			part="icon"
 			name={this.icon}
 			class="ui5-li-icon"
-			mode="Decorative" />
+			mode="Decorative" />;
 	}
 }
 
@@ -66,6 +66,6 @@ function iconEnd(this: ListItemStandard) {
 			part="icon"
 			name={this.icon}
 			class="ui5-li-icon"
-			mode="Decorative" />
+			mode="Decorative" />;
 	}
 }

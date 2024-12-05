@@ -1,12 +1,12 @@
-import type RatingIndicator from "./RatingIndicator.js"
-import type { Star } from "./RatingIndicator.js"
+import type RatingIndicator from "./RatingIndicator.js";
+import { Star } from "./RatingIndicator.js";
 import Icon from "./Icon.js";
 import favorite from "@ui5/webcomponents-icons/dist/favorite.js";
 import unfavorite from "@ui5/webcomponents-icons/dist/unfavorite.js";
 
 export default function (this: RatingIndicator) {
 	return (
-		<div 
+		<div
 			class="ui5-rating-indicator-root"
 			role="slider"
 			aria-roledescription={this._ariaRoleDescription}
@@ -27,11 +27,11 @@ export default function (this: RatingIndicator) {
 			aria-label={this._ariaLabel}
 		>
 			<ul class="ui5-rating-indicator-list" aria-hidden="true">
-				{ this._stars.map(star => Star.call(this, star) )}
+				{ this._stars.map(star => Star.call(this, star))}
 			</ul>
-	</div>
+		</div>
 	);
-};
+}
 
 function Star(this: RatingIndicator, star: Star) {
 	if (star.selected) {
@@ -39,8 +39,8 @@ function Star(this: RatingIndicator, star: Star) {
 			<li data-ui5-value={star.index} class="ui5-rating-indicator-item ui5-rating-indicator-item-sel">
 				<Icon data-ui5-value={star.index} name={favorite}></Icon>
 			</li>
-		)
-	} else if (star.halfStar) {
+		);
+	} if (star.halfStar) {
 		return (
 			<li class="ui5-rating-indicator-item ui5-rating-indicator-item-half">
 				<Icon data-ui5-value={star.index} name={halfStarIconName.call(this)}></Icon>
@@ -48,27 +48,26 @@ function Star(this: RatingIndicator, star: Star) {
 					<Icon data-ui5-value={star.index} name={favorite} class="ui5-rating-indicator-half-icon"></Icon>
 				</div>
 			</li>
-		)
-	} else if (this.readonly) {
+		);
+	} if (this.readonly) {
 		return (
 			<li class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
 				<Icon data-ui5-value={star.index} name={favorite}></Icon>
 			</li>
-		)
-	} else if (this.disabled) {
+		);
+	} if (this.disabled) {
 		return (
 			<li class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
 				<Icon data-ui5-value={star.index} name={favorite}></Icon>
 			</li>
-		)
-	} else {
-		return (
-			<li data-ui5-value={star.index} class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
-				<Icon data-ui5-value={star.index} name={unfavorite}></Icon>
-			</li>
-		)
+		);
 	}
-};
+	return (
+		<li data-ui5-value={star.index} class="ui5-rating-indicator-item ui5-rating-indicator-item-unsel">
+			<Icon data-ui5-value={star.index} name={unfavorite}></Icon>
+		</li>
+	);
+}
 
 function halfStarIconName(this: RatingIndicator) {
 	return this.disabled || this.readonly ? favorite : unfavorite;

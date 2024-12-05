@@ -1,7 +1,7 @@
-import type ListItemGroupHeader from "./ListItemGroupHeader.js"
+import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 export default function (this: ListItemGroupHeader) {
-return (
+	return (
 		<ul
 			role="group"
 			part="native-li"
@@ -20,4 +20,4 @@ return (
 			</div>
 		</ul>
 	);
-};
+}

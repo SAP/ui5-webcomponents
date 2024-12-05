@@ -41,7 +41,7 @@ export default function (this: TimeSelectionClocks) {
 							onFocusIn={this._amPmFocusIn}
 							onFocusOut={this._amPmFocusOut}
 						>
-							{this._periods.map(period => 
+							{this._periods.map(period =>
 								<SegmentedButtonItem selected={period.selected}>{period.label}</SegmentedButtonItem>
 							)}
 						</SegmentedButton>
@@ -54,7 +54,7 @@ export default function (this: TimeSelectionClocks) {
 				role="img"
 				aria-label={this.clockDialAriaLabel}
 			>
-				{this. _entities.map(entity =>
+				{this._entities.map(entity =>
 					<TimePickerClock
 						id={`${this._id}_clock_${entity.entity}`}
 						data-ui5-clock={entity.entity}
@@ -74,5 +74,5 @@ export default function (this: TimeSelectionClocks) {
 				)}
 			</div>
 		</div>
-	)
-};
+	);
+}

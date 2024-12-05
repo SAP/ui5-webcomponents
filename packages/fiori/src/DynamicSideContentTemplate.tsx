@@ -11,7 +11,7 @@ export default function (this: DynamicSideContent) {
 					{ sideContent.call(this) }
 					{ mainContent.call(this) }
 				</>
-			:
+				:
 				<>
 					{ mainContent.call(this) }
 					{ sideContent.call(this) }
@@ -19,7 +19,7 @@ export default function (this: DynamicSideContent) {
 			}
 		</div>
 	);
-};
+}
 
 function mainContent(this: DynamicSideContent) {
 	return (
@@ -28,9 +28,9 @@ function mainContent(this: DynamicSideContent) {
 			style={this.styles.main}
 		>
 			<slot></slot>
-	</div>
-	)
-};
+		</div>
+	);
+}
 
 function sideContent(this: DynamicSideContent) {
 	return (
@@ -42,5 +42,5 @@ function sideContent(this: DynamicSideContent) {
 		>
 			<slot name="sideContent"></slot>
 		</aside>
-	)
-};
+	);
+}

@@ -5,4 +5,4 @@ export default function (this: ToggleButton) {
 	return (<>
 		{ buttonTemplate.call(this, { ariaPressed: this.pressed }) }
 	</>);
-};
+}

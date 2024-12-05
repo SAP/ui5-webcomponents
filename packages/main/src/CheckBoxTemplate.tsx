@@ -33,30 +33,30 @@ export default function (this: CheckBox) {
 			onFocusOut={this._onfocusout}
 		>
 
-		{this.isDisplayOnly ?
-			<div class="ui5-checkbox-display-only-icon-inner">
-				<Icon aria-hidden="true" name={displayOnlyIcon.call(this)} class="ui5-checkbox-display-only-icon" part="icon"></Icon>
-			</div>
-		:
-			<div id={`${this._id}-CbBg`} class="ui5-checkbox-inner">
-				{this.isCompletelyChecked &&
+			{this.isDisplayOnly ?
+				<div class="ui5-checkbox-display-only-icon-inner">
+					<Icon aria-hidden="true" name={displayOnlyIcon.call(this)} class="ui5-checkbox-display-only-icon" part="icon"></Icon>
+				</div>
+				:
+				<div id={`${this._id}-CbBg`} class="ui5-checkbox-inner">
+					{this.isCompletelyChecked &&
 					<Icon aria-hidden="true" name={accept} class="ui5-checkbox-icon" part="icon"></Icon>
-				}
-			</div>
-		}
+					}
+				</div>
+			}
 
-		<input
-			id={`${this._id}-CB`}
-			type="checkbox"
-			checked={this.checked}
-			readonly={this.readonly}
-			disabled={this.disabled}
-			tabindex={-1}
-			aria-hidden="true"
-			data-sap-no-tab-ref
-		/>
+			<input
+				id={`${this._id}-CB`}
+				type="checkbox"
+				checked={this.checked}
+				readonly={this.readonly}
+				disabled={this.disabled}
+				tabindex={-1}
+				aria-hidden="true"
+				data-sap-no-tab-ref
+			/>
 
-		{this.text &&
+			{this.text &&
 			<Label
 				id={`${this._id}-label`}
 				part="label"
@@ -65,12 +65,12 @@ export default function (this: CheckBox) {
 			>
 				{this.text}
 			</Label>
-		}
+			}
 
-		{this.hasValueState &&
+			{this.hasValueState &&
 			<span id={`${this._id}-descr`} class="ui5-hidden-text">{this.valueStateText}</span>
-		}
-	</div>
+			}
+		</div>
 	);
 }
 

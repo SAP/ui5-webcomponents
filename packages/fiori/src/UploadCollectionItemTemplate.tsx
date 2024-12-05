@@ -1,5 +1,5 @@
 import Input from "@ui5/webcomponents/dist/Input.js";
-import UploadCollectionItem from "./UploadCollectionItem.js";
+import type UploadCollectionItem from "./UploadCollectionItem.js";
 import type { ListItemHooks } from "@ui5/webcomponents/dist/ListItemTemplate.js";
 import ListItemTemplate from "@ui5/webcomponents/dist/ListItemTemplate.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
@@ -16,7 +16,7 @@ const predefinedHooks: Partial<ListItemHooks> = {
 };
 
 export default function (this: UploadCollectionItem, hooks?: Partial<ListItemHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks }
+	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return ListItemTemplate.call(this, currentHooks);
 }
@@ -138,6 +138,5 @@ function listItemContent(this: UploadCollectionItem) {
 				</>
 			)}
 		</div>
-	</>
+	</>;
 }
-

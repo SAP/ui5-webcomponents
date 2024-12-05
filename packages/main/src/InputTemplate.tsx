@@ -2,6 +2,7 @@ import type Input from "./Input.js";
 import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import InputPopoverTemplate from "./InputPopoverTemplate.js";
+
 type TemplateHook = () => void;
 
 export default function (this: Input, hooks?: { preContent: TemplateHook, postContent: TemplateHook }) {
@@ -10,60 +11,60 @@ export default function (this: Input, hooks?: { preContent: TemplateHook, postCo
 
 	return (
 		<>
-		<div
-			class="ui5-input-root ui5-input-focusable-element"
-			part="root"
-			onFocusIn={this._onfocusin}
-			onFocusOut={this._onfocusout}
-		>
-			<div class="ui5-input-content">
-				{ preContent.call(this) }
+			<div
+				class="ui5-input-root ui5-input-focusable-element"
+				part="root"
+				onFocusIn={this._onfocusin}
+				onFocusOut={this._onfocusout}
+			>
+				<div class="ui5-input-content">
+					{ preContent.call(this) }
 
-				<input
-					id="inner"
-					part="input"
-					class="ui5-input-inner"
-					style={this.styles.innerInput}
-					type={this.inputNativeType}
-					inner-input
-					inner-input-with-icon={this.icon.length}
-					disabled={this.disabled}
-					readonly={this._readonly}
-					value={this._innerValue}
-					placeholder={this._placeholder}
-					maxlength={this.maxlength}
-					role={this.accInfo.role}
-					aria-controls={this.accInfo.ariaControls}
-					aria-invalid={this.accInfo.ariaInvalid}
-					aria-haspopup={this.accInfo.ariaHasPopup}
-					aria-describedby={this.accInfo.ariaDescribedBy}
-					aria-roledescription={this.accInfo.ariaRoledescription}
-					aria-autocomplete={this.accInfo.ariaAutoComplete}
-					aria-expanded={this.accInfo.ariaExpanded}
-					aria-label={this.accInfo.ariaLabel}
-					aria-required={this.required}
-					autocomplete="off"
-					data-sap-focus-ref
-					step={this.nativeInputAttributes.step}
-					min={this.nativeInputAttributes.min}
-					max={this.nativeInputAttributes.max}
-					onInput={this._handleNativeInput}
-					onChange={this._handleChange}
-					onSelect={this._handleSelect}
-					onKeyDown={this._onkeydown}
-					onKeyUp={this._onkeyup}
-					onClick={this._click}
-					onFocusIn={this.innerFocusIn}
-				/>
+					<input
+						id="inner"
+						part="input"
+						class="ui5-input-inner"
+						style={this.styles.innerInput}
+						type={this.inputNativeType}
+						inner-input
+						inner-input-with-icon={this.icon.length}
+						disabled={this.disabled}
+						readonly={this._readonly}
+						value={this._innerValue}
+						placeholder={this._placeholder}
+						maxlength={this.maxlength}
+						role={this.accInfo.role}
+						aria-controls={this.accInfo.ariaControls}
+						aria-invalid={this.accInfo.ariaInvalid}
+						aria-haspopup={this.accInfo.ariaHasPopup}
+						aria-describedby={this.accInfo.ariaDescribedBy}
+						aria-roledescription={this.accInfo.ariaRoledescription}
+						aria-autocomplete={this.accInfo.ariaAutoComplete}
+						aria-expanded={this.accInfo.ariaExpanded}
+						aria-label={this.accInfo.ariaLabel}
+						aria-required={this.required}
+						autocomplete="off"
+						data-sap-focus-ref
+						step={this.nativeInputAttributes.step}
+						min={this.nativeInputAttributes.min}
+						max={this.nativeInputAttributes.max}
+						onInput={this._handleNativeInput}
+						onChange={this._handleChange}
+						onSelect={this._handleSelect}
+						onKeyDown={this._onkeydown}
+						onKeyUp={this._onkeyup}
+						onClick={this._click}
+						onFocusIn={this.innerFocusIn}
+					/>
 
 					{this._effectiveShowClearIcon &&
-						<div 
+						<div
 							tabindex={-1}
 							class="ui5-input-clear-icon-wrapper inputIcon"
 							onClick={this._clear}
 							onMouseDown={this._iconMouseDown}
 						>
-							<Icon 
+							<Icon
 								part="clear-icon"
 								class="ui5-input-clear-icon"
 								name={decline}
@@ -101,13 +102,13 @@ export default function (this: Input, hooks?: { preContent: TemplateHook, postCo
 						<span id="valueStateDesc" class="ui5-hidden-text">{this.ariaValueStateHiddenText}</span>
 					}
 				</div>
-		</div>
+			</div>
 
-		{ InputPopoverTemplate.call(this) }	
+			{ InputPopoverTemplate.call(this) }
 		</>
 	);
-};
+}
 
-function defaultPreContent() {};
+function defaultPreContent() {}
 
-function defaultPostContent() {};
+function defaultPostContent() {}

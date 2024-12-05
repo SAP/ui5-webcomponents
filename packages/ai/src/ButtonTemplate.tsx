@@ -1,7 +1,7 @@
 import MainButton from "@ui5/webcomponents/dist/Button.js";
-import Button from "./Button.js";
+import type Button from "./Button.js";
 
-export default function(this: Button) {
+export default function (this: Button) {
 	return (<>
 		<MainButton
 			class="ui5-ai-button-inner"
@@ -21,4 +21,4 @@ export default function(this: Button) {
 			design={this.design}
 		></MainButton>
 	</>);
-};
+}

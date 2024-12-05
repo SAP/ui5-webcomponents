@@ -13,8 +13,8 @@ export default function (this: CalendarLegend) {
 				<CalendarLegendItem type={item.type}></CalendarLegendItem>
 			)}
 
-			{this.legendItems.map((item) =>
+			{this.legendItems.map(item =>
 				<slot name={item._individualSlot}></slot>
 			)}
-	</div>);
-};
+		</div>);
+}

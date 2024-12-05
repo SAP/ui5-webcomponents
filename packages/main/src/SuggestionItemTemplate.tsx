@@ -2,8 +2,8 @@ import ListItemBaseTemplate from "./ListItemBaseTemplate.js";
 import type SuggestionItem from "./SuggestionItem.js";
 
 export default function (this: SuggestionItem) {
-	return [ ListItemBaseTemplate.call(this, { listItemContent }) ];
-};
+	return [ListItemBaseTemplate.call(this, { listItemContent })];
+}
 
 function listItemContent(this: SuggestionItem) {
 	return <div part="content" id="content" class="ui5-li-content">
@@ -13,5 +13,5 @@ function listItemContent(this: SuggestionItem) {
 				<span part="additional-text" class="ui5-li-additional-text">{this.additionalText}</span>
 			}
 		</div>
-	</div>
-};
+	</div>;
+}

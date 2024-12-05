@@ -16,7 +16,7 @@ export default function (this: UploadCollection) {
 			onDrop={this._ondrop}
 			onui5-request-delete={this._onItemDelete}
 		>
-			<div  class={{
+			<div class={{
 				"ui5-uc-content": true,
 				"ui5-uc-content-no-data": this.items.length === 0
 			}}>
@@ -60,4 +60,4 @@ export default function (this: UploadCollection) {
 				}
 			</div>
 		</div>);
-};
+}

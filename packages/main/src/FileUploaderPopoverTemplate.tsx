@@ -1,4 +1,4 @@
-import type FileUploader from "./FileUploader.js"
+import type FileUploader from "./FileUploader.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -32,22 +32,21 @@ export default function (this: FileUploader) {
 
 				{ valueStateMessage.call(this) }
 			</div>
-	</Popover>
+		</Popover>
 	);
-};
-
+}
 
 function valueStateMessage(this: FileUploader) {
 	return (
 		<>
 			{
 				this.shouldDisplayDefaultValueStateMessage ?
-				<>
-					{this.valueStateText}
-				</>
-				:
-				<slot name="valueStateMessage"></slot>
+					<>
+						{this.valueStateText}
+					</>
+					:
+					<slot name="valueStateMessage"></slot>
 			}
 		</>
-	)
-};
+	);
+}

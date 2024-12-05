@@ -14,7 +14,7 @@ export default function (this: DateTimePicker) {
 		DatePickerInputTemplate.call(this),
 		DatePickerPopoverTemplate.call(this, { header, content, footer }),
 	];
-};
+}
 
 function header(this: DateTimePicker) {
 	return (
@@ -29,7 +29,7 @@ function header(this: DateTimePicker) {
 			}
 		</>
 	);
-};
+}
 
 function content(this: DateTimePicker) {
 	return (
@@ -79,8 +79,7 @@ function content(this: DateTimePicker) {
 			}
 		</div>
 	);
-};
-
+}
 
 function footer(this: DateTimePicker) {
 	return (
@@ -110,5 +109,4 @@ function footer(this: DateTimePicker) {
 			</Button>
 		</div>
 	);
-};
-
+}

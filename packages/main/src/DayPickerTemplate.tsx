@@ -1,4 +1,4 @@
-import type DayPicker from "./DayPicker.js"
+import type DayPicker from "./DayPicker.js";
 
 export default function (this: DayPicker) {
 	return (
@@ -32,37 +32,36 @@ export default function (this: DayPicker) {
 				</div>
 
 				{this._weeks.map(week => {
-					{ return week.length > 0 ?
+					 return week.length > 0 ?
 						<div class="ui5-dp-weeks-row" role="row">
 							{week.map(day => {
-								{
-									return "timestamp" in day ?
-										<div
-											data-ui5-special-day={day.type ? day.type : undefined}
-											tabindex={day._tabIndex}
-											data-sap-focus-ref={day.focusRef ? "true" : undefined}
+								return "timestamp" in day ?
+									<div
+										data-ui5-special-day={day.type ? day.type : undefined}
+										tabindex={day._tabIndex}
+										data-sap-focus-ref={day.focusRef ? "true" : undefined}
+										data-sap-timestamp={day.timestamp}
+										role="gridcell"
+										aria-selected={day.ariaSelected}
+										aria-label={day.ariaLabel}
+										aria-disabled={day.ariaDisabled}
+										class={day.classes}
+										part={day.parts}>
+										<span
+											class="ui5-dp-daytext"
 											data-sap-timestamp={day.timestamp}
-											role="gridcell"
-											aria-selected={day.ariaSelected}
-											aria-label={day.ariaLabel}
-											aria-disabled={day.ariaDisabled}
-											class={day.classes}
-											part={day.parts}>
-												<span
-													class="ui5-dp-daytext"
-													data-sap-timestamp={day.timestamp}
-												>
-													{day.day}
-												</span>
-												{day._isSecondaryCalendarType &&
+										>
+											{day.day}
+										</span>
+										{day._isSecondaryCalendarType &&
 													<span class="ui5-dp-daytext ui5-dp-daysectext">
 														{day.secondDay}
 													</span>
-												}
-												{day.type &&
+										}
+										{day.type &&
 													<div class={`ui5-dp-specialday ${day.type}`}></div>
-												}
-										</div>
+										}
+									</div>
 									:
 									!day.isHidden && (
 										<div
@@ -72,15 +71,12 @@ export default function (this: DayPicker) {
 										>
 											<span className="ui5-dp-weekname">{day.weekNum}</span>
 										</div>
-									)
-								}
+									);
 							})}
 						</div>
-					:
-						<div class="ui5-dp-empty-week"></div>
-					}
+						:
+						<div class="ui5-dp-empty-week"></div>;
 				})}
 			</div>
-	</div>);
-};
-
+		</div>);
+}

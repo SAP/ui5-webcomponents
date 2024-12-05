@@ -14,13 +14,13 @@ export default function (this: TimePickerClock) {
 			}}
 		>
 
-		<div data-ui5-label={this.label} class="ui5-tp-clock-dial"></div>
+			<div data-ui5-label={this.label} class="ui5-tp-clock-dial"></div>
 
-		<div>
-			{this._items.map((item, i) => (
-				<div class="ui5-tp-clock-item" style={{transform: `translate(-50%) rotate(${(i + 1) * 6}deg` }}>
-					{
-					item.item &&
+			<div>
+				{this._items.map((item, i) => (
+					<div class="ui5-tp-clock-item" style={{ transform: `translate(-50%) rotate(${(i + 1) * 6}deg` }}>
+						{
+							item.item &&
 						<>
 							<span class="ui5-tp-clock-dot"></span>
 							<span id={`${this._id}-${item.item}`}
@@ -40,15 +40,15 @@ export default function (this: TimePickerClock) {
 									</span>
 							}
 						</>
-					}
+						}
 
-					{ !item.item && !this.hideFractions
+						{ !item.item && !this.hideFractions
 						&& <span class="ui5-tp-clock-mid-dot"></span>
-					}
-				</div>
-			))}
+						}
+					</div>
+				))}
 
-			{this._selectedItem.showMarker &&
+				{this._selectedItem.showMarker &&
 				<div
 					class="ui5-tp-clock-item ui5-tp-clock-item-with-marker"
 					style={{ transform: `translate(-50%) rotate(${this._selectedItem.angle || 0}deg)` }}
@@ -64,19 +64,19 @@ export default function (this: TimePickerClock) {
 						style={{ transform: `rotate(-${this._selectedItem.angle || 0}deg)` }}
 					>{this._selectedItem.innerItem}</div>
 				</div>
-			}
-		</div>
+				}
+			</div>
 
-		<div
-			class="ui5-tp-clock-cover"
-			onTouchStart={this._onTouchStart}
-			onTouchMove={this._onTouchMove}
-			onTouchEnd={this._onTouchEnd}
-			onMouseDown={this._onTouchStart}
-			onMouseMove={this._onTouchMove}
-			onMouseUp={this._onTouchEnd}
-			onMouseOut={this._onMouseOut}
-			ref={this._captureClockRef}
-		></div>
-	</div>)
-};
+			<div
+				class="ui5-tp-clock-cover"
+				onTouchStart={this._onTouchStart}
+				onTouchMove={this._onTouchMove}
+				onTouchEnd={this._onTouchEnd}
+				onMouseDown={this._onTouchStart}
+				onMouseMove={this._onTouchMove}
+				onMouseUp={this._onTouchEnd}
+				onMouseOut={this._onMouseOut}
+				ref={this._captureClockRef}
+			></div>
+		</div>);
+}

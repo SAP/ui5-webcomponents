@@ -14,8 +14,8 @@ export default function (this: StepInput) {
 			onFocusIn={this._onfocusin}
 			onFocusOut={this._onfocusout}
 		>
-		{/* Decrement Icon */}
-		{!this.readonly &&
+			{/* Decrement Icon */}
+			{!this.readonly &&
 			<div
 				class="ui5-step-icon ui5-step-dec"
 				title={this.decIconTitle}
@@ -37,7 +37,7 @@ export default function (this: StepInput) {
 					showTooltip={true}
 				></Icon>
 			</div>
-		}
+			}
 
 			{/* INPUT */}
 			<Input
@@ -88,4 +88,4 @@ export default function (this: StepInput) {
 			}
 		</div>
 	);
-};
+}

@@ -1,4 +1,4 @@
-import Token from "./Token.js";
+import type Token from "./Token.js";
 import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 
@@ -21,7 +21,7 @@ export default function (this: Token) {
 				<div class="ui5-token--icon">
 					{this.closeIcon.length > 0 ?
 						<slot name="closeIcon" onClick={this._delete}></slot>
-					:
+						:
 						<Icon
 							name={decline}
 							mode="Decorative"
@@ -34,4 +34,4 @@ export default function (this: Token) {
 			}
 		</div>
 	);
-};
+}

@@ -24,11 +24,11 @@ function preContent(this: MultiInput) {
 				onTokenDelete={this.tokenDelete}
 				onFocusOut={this._tokenizerFocusOut}
 			>
-				{ this.tokens.map(token => <slot name={token._individualSlot}></slot> )}
+				{ this.tokens.map(token => <slot name={token._individualSlot}></slot>)}
 			</Tokenizer>
 		</>
 	);
-};
+}
 
 function postContent(this: MultiInput) {
 	return (
@@ -45,6 +45,4 @@ function postContent(this: MultiInput) {
 			}
 		</>
 	);
-};
-
-
+}
