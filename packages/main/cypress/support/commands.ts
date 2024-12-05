@@ -38,6 +38,7 @@
 
 import { internals, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import "./commands/Menu.commands.js";
+import "./commands/ColorPicker.commands.js";
 
 type SimulationDevices = "phone"
 
@@ -50,6 +51,8 @@ declare global {
 			ui5MenuItemClick(): Chainable<void>
 			ui5DOMRef(): Chainable<void>
 			ui5MenuItemPress(key: any): Chainable<void>
+			ui5ColorPickerToggleColorMode(): Chainable<void>
+			ui5ColorPickerUpdateInput(name: string, value: string): Chainable<void>
 		}
 	}
 }
