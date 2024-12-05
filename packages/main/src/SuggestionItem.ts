@@ -56,11 +56,8 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 		}
 	}
 
-	onBeforeRendering(): void {
-		super.onBeforeRendering();
-
-		// list's item navigation always sets tabIndex to 0 to first item
-		this.forcedTabIndex = "-1";
+	get _effectiveTabIndex(): string {
+		return "-1";
 	}
 }
 

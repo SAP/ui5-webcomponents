@@ -49,11 +49,8 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
 	content!: Array<Node>;
 
-	onBeforeRendering(): void {
-		super.onBeforeRendering();
-
-		// list's item navigation always sets tabIndex to 0 to first item
-		this.forcedTabIndex = "-1";
+	get _effectiveTabIndex(): string {
+		return "-1";
 	}
 }
 
