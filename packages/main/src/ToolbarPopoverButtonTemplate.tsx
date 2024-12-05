@@ -6,8 +6,8 @@ export default function (this: ToolbarButton ) {
 		<Button
 			icon={this.icon}
 			end-icon={this.endIcon}
-			accessible-name={this.accessibleName}
-			accessible-name-ref={this.accessibleNameRef}
+			accessibleName={this.accessibleName}
+			accessibleNameRef={this.accessibleNameRef}
 			accessibilityAttributes={this.accessibilityAttributes}
 			tooltip={this.tooltip}
 			design={this.design}

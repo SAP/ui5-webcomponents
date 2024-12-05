@@ -67,7 +67,10 @@ function content(this: DateTimePicker) {
 			{ this.showTimeView &&
 				<TimeSelectionClocks
 					id={`${this._id}-time-sel`}
-					class="ui5-dt-time {{classes.dateTimeView}}"
+					class={{
+						"ui5-dt-time": true,
+						...this.classes.dateTimeView,
+					}}
 					formatPattern={this._formatPattern}
 					value={this._timeSelectionValue}
 					onChange={this.onTimeSelectionChange}

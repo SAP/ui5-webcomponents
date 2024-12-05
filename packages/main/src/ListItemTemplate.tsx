@@ -65,7 +65,7 @@ export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
 
 		{this._hasHighlightColor && <div class="ui5-li-highlight"></div>}
 
-		<div part="content" id="{{_id}-content" class="ui5-li-content">
+		<div part="content" id={`${this._id}-content`} class="ui5-li-content">
 			{currentHooks.imageBegin.call(this)}
 			{currentHooks.iconBegin.call(this)}
 			{currentHooks.listItemContent.call(this)}
@@ -123,7 +123,7 @@ function selectionElement(this: ListItem) {
 					disabled={this.isInactive}
 					accessibleName={this._accInfo.ariaLabelRadioButton}
 					tabindex={-1}
-					id="{{_id}-singleSelectionElement"
+					id={`${this._id}-singleSelectionElement`}
 					class="ui5-li-singlesel-radiobtn"
 					checked={this.selected}
 					onChange={this.onSingleSelectionComponentPress}

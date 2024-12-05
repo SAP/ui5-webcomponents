@@ -25,7 +25,7 @@ export default function (this: Toolbar) {
                     "ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
                 }}
                 tooltip={this.accInfo.overflowButton.tooltip}
-                accessible-name={this.accInfo.overflowButton.accessibleName}
+                accessibleName={this.accInfo.overflowButton.accessibleName}
                 accessibilityAttributes={this.accInfo.overflowButton.accessibilityAttributes}
             ></ui5-button>
         </div>

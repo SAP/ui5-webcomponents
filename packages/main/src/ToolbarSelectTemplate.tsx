@@ -10,8 +10,8 @@ export default function (this: ToolbarSelect ) {
 			data-ui5-external-action-item-id={this._id}
 			value-state={this.valueState}
 			disabled={this.disabled}
-			accessible-name={this.accessibleName}
-			accessible-name-ref={this.accessibleNameRef}
+			accessibleName={this.accessibleName}
+			accessibleNameRef={this.accessibleNameRef}
 		>
 			{this.options.map((option, index) => (
 				<Option

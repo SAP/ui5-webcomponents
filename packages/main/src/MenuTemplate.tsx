@@ -33,7 +33,7 @@ export default function (this: Menu) {
 					<Button
 						icon={declineIcon}
 						design="Transparent"
-						aria-label="{labelClose}"
+						aria-label={this.labelClose}
 						onClick={this._close}
 					/>
 				</div>
