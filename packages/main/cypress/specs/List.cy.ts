@@ -44,20 +44,18 @@ describe("List Tests", () => {
 
 		cy.get("#lastItem")
 			.shadow()
-			.find("li[role='listitem']")
+			.find("[role='listitem']")
 			.invoke("attr", "tabindex", "0")
 			.focus();
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("ArrowDown");
+		cy.realPress("ArrowDown");
 
 		cy.get("#infiniteScrollEx2")
 			.shadow()
-			.find("[id$=\"growing-btn\"]")
+			.find("[role='button']")
 			.should("be.focused");
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("ArrowUp");
+		cy.realPress("ArrowUp");
 
 		cy.get("#lastItem")
 			.should("be.focused");
@@ -75,14 +73,20 @@ describe("List Tests", () => {
 
 		cy.get("#infiniteScrollEx2")
 			.shadow()
-			.find("[id$=\"growing-btn\"]")
+			.find("[role='button']")
 			.focus();
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("Home");
+		cy.realPress("Home");
 
 		cy.get("#firstItem")
-			.should("be.focused");
+			.should("exist")
+			.and("be.visible");
+
+		cy.get("#firstItem")
+			.shadow()
+			.find("[role='listitem']")
+			.should("have.attr", "tabindex", "0")
+			.and("be.focus");
 	});
 
 	it("End key navigation moves focus from first item to last item and then to growing button", () => {
@@ -97,22 +101,27 @@ describe("List Tests", () => {
 
 		cy.get("#firstItem")
 			.shadow()
-			.find("li[role='listitem']")
+			.find("[role='listitem']")
 			.invoke("attr", "tabindex", "0")
 			.focus();
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("End");
+		cy.realPress("End");
 
 		cy.get("#lastItem")
-			.should("be.focused");
+			.should("exist")
+			.and("be.visible");
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("End");
+		cy.get("#lastItem")
+			.shadow()
+			.find("[role='listitem']")
+			.should("have.attr", "tabindex", "0")
+			.and("be.focused");
+
+		cy.realPress("End");
 
 		cy.get("#infiniteScrollEx2")
 			.shadow()
-			.find("[id$='growing-btn']")
+			.find("[role='button']")
 			.should("be.focused");
 	});
 });
