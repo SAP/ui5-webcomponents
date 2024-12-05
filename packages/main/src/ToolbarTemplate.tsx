@@ -1,5 +1,5 @@
 import Button from "./Button.js";
-import type Toolbar from "./Toolbar.js"
+import type Toolbar from "./Toolbar.js";
 import toolbarPopoverTemplate from "./ToolbarPopoverTemplate.js";
 import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
 

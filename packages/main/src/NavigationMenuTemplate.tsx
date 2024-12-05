@@ -1,8 +1,8 @@
-import List from "./List.js"
-import Button from "./Button.js"
-import BusyIndicator from "./BusyIndicator.js"
-import ResponsivePopover from "./ResponsivePopover.js"
-import type NavigationMenu from "./NavigationMenu.js"
+import List from "./List.js";
+import Button from "./Button.js";
+import BusyIndicator from "./BusyIndicator.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import type NavigationMenu from "./NavigationMenu.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
 export default function (this: NavigationMenu) {

@@ -68,7 +68,7 @@ export default function (this: ColorPicker) {
 						accessibleName={this.hexInputLabel}
 						onChange={this._handleHEXChange}
 						valueState={this.hexInputErrorState}
-						/>
+					/>
 				</div>
 			</div>
 
