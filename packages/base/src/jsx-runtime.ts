@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/extensions
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "./thirdparty/preact/jsxRuntime.module.js";
 import type { JSX as _JSX } from "./thirdparty/preact/jsxRuntime.module.js";
-import { options } from "./thirdparty/preact/preact.module.js";
+import { options, type VNode as _VNode } from "./thirdparty/preact/preact.module.js";
 import type UI5Element from "./UI5Element.js";
 import { preprocess } from "./jsx-utils.js";
+import { jsxDEV } from "./jsx-dev-runtime.js";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace JSX {
@@ -12,6 +13,7 @@ declare namespace JSX {
 	type HTMLAttributesWithClassObj<T extends EventTarget> = Omit<_JSX.HTMLAttributes<T>, "class"> & { class?: object | string | undefined  }
     export interface IntrinsicElements extends JSXWithClassObj {}
     export type ElementClass = UI5Element;
+	export interface Element extends VNode<any> {}
     export interface ElementAttributesProperty<T extends EventTarget> {
 		_jsxProps: HTMLAttributes<T>;
 	}
@@ -41,14 +43,29 @@ options.vnode = vnode => {
 export function Fragment(props: Record<string, any>, context?: any) {
 	return _Fragment(props, context);
 }
-export function jsx(type: string | typeof UI5Element, props: Record<string, any>, key: string) {
+export function jsx(type: string | typeof UI5Element, props: Record<string, any>, key: string): VNode<any> {
 	const tag = preprocess(type, props, key);
 
-	return _jsx(tag, props, key);
+	return _jsx(tag, props, key) as VNode<any>;
 }
-export function jsxs(type: string | typeof UI5Element, props: Record<string, any>, key: string) {
+export function jsxs(type: string | typeof UI5Element, props: Record<string, any>, key: string): VNode<any> {
 	const tag = preprocess(type, props, key);
 
-	return _jsxs(tag, props, key);
+	return _jsxs(tag, props, key) as VNode<any>;
 }
+export { type jsxDEV };
+
+export type ComponentChild =
+	| VNode<any>
+	| object
+	| string
+	| number
+	| bigint
+	| boolean
+	| null
+	| undefined;
+export type ComponentChildren = ComponentChild[] | ComponentChild;
+
+export type VNode<T = {}> = Omit<_VNode<T>, "type" | "props"> & { type: string | typeof UI5Element, props: T & { children: ComponentChildren } };
+
 export { JSX };

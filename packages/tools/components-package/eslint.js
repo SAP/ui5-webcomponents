@@ -68,7 +68,7 @@ const overrides = tsMode ? [
 			"lines-between-class-members": "off",
 
 			"func-names": "off",
-			"@typescript-eslint/no-unsafe-return": "off",
+			// "@typescript-eslint/no-unsafe-return": "off",
 			"@typescript-eslint/unbound-method": "off",
 			"operator-linebreak": "off",
 			"@typescript-eslint/no-misused-promises": "off",

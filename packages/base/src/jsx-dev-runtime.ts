@@ -1,11 +1,10 @@
 // eslint-disable-next-line import/extensions
 import { jsxDEV as _jsxDEV, Fragment as _Fragment } from "./thirdparty/preact/jsxRuntime.module.js";
 import { options } from "./thirdparty/preact/preact.module.js";
+import { type VNode } from "./jsx-runtime.js";
 import type UI5Element from "./UI5Element.js";
 import { isUI5ElementClass, preprocess } from "./jsx-utils.js";
 import { kebabToCamelCase } from "./util/StringHelper.js";
-
-// import classObjToStr from "./util/classObjToString.js";
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const old = options.vnode;
@@ -54,11 +53,11 @@ export function Fragment(props: Record<string, any>, context?: any) {
 	return _Fragment(props, context);
 }
 
-export function jsxDEV(type: string | typeof UI5Element, props: Record<string, any>, key: string) {
+export function jsxDEV(type: string | typeof UI5Element, props: Record<string, any>, key: string): VNode<any> {
 	const tag = preprocess(type, props, key);
 
 	checkBound(props);
 	checkAttributeUsage(type, props);
 
-	return _jsxDEV(tag, props, key);
+	return _jsxDEV(tag, props, key) as VNode<any>;
 }
