@@ -1,19 +1,21 @@
 // eslint-disable-next-line import/extensions
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "preact/jsx-runtime";
-import type { JSX as _JSX } from "preact/jsx-runtime";
-import { options } from "preact";
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "./thirdparty/preact/jsxRuntime.module.js";
+import type { JSX as _JSX } from "./thirdparty/preact/jsxRuntime.module.js";
+import { options } from "./thirdparty/preact/preact.module.js";
 import type UI5Element from "./UI5Element.js";
 import { preprocess } from "./jsx-utils.js";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace JSX {
 	type JSXWithClassObj =  { [K in keyof _JSX.IntrinsicElements]: Omit<_JSX.IntrinsicElements[K], "class"> & { class?: object | string | undefined  } };
+	type AllHTMLAttributesWithClassObj<T extends EventTarget> = Omit<_JSX.AllHTMLAttributes<T>, "class"> & { class?: object | string | undefined  }
 	type HTMLAttributesWithClassObj<T extends EventTarget> = Omit<_JSX.HTMLAttributes<T>, "class"> & { class?: object | string | undefined  }
     export interface IntrinsicElements extends JSXWithClassObj {}
     export type ElementClass = UI5Element;
     export interface ElementAttributesProperty<T extends EventTarget> {
 		_jsxProps: HTMLAttributes<T>;
 	}
+	export interface AllHTMLAttributes<T extends EventTarget> extends AllHTMLAttributesWithClassObj<T> {}
 	export interface HTMLAttributes<T extends EventTarget> extends HTMLAttributesWithClassObj<T> {}
 	export interface DOMAttributes<T extends EventTarget> extends _JSX.DOMAttributes<T> {}
 	export interface SVGAttributes extends _JSX.SVGAttributes {}

@@ -12,7 +12,7 @@ export default function (this: Link) {
 		rel={this._rel}
 		tabindex={this.effectiveTabIndex}
 		title={this.tooltip}
-		disabled={this.disabled}
+		aria-disabled={this.disabled}
 		aria-label={this.ariaLabelText}
 		aria-haspopup={this._hasPopup}
 		aria-expanded={this.accessibilityAttributes.expanded}

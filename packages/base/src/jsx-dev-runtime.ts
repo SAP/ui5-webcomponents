@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/extensions
-import { jsxDEV as _jsxDEV, Fragment as _Fragment } from "preact/jsx-runtime";
-import { options } from "preact";
+import { jsxDEV as _jsxDEV, Fragment as _Fragment } from "./thirdparty/preact/jsxRuntime.module.js";
+import { options } from "./thirdparty/preact/preact.module.js";
 import type UI5Element from "./UI5Element.js";
 import { isUI5ElementClass, preprocess } from "./jsx-utils.js";
 import { kebabToCamelCase } from "./util/StringHelper.js";

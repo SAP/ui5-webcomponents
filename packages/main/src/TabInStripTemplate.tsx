@@ -24,7 +24,6 @@ export default function (this: Tab) {
 			aria-selected={this.effectiveSelected}
 			aria-disabled={this.effectiveDisabled}
 			aria-labelledby={this.ariaLabelledBy}
-			disabled={this.effectiveDisabled}
 			draggable={this.movable}
 			onDragStart={this._ondragstart}
 			onDragEnd={this._ondragend}

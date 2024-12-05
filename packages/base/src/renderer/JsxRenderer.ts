@@ -1,4 +1,4 @@
-import { render } from "preact";
+import { render } from "../thirdparty/preact/preact.module.js";
 import type UI5Element from "../UI5Element.js";
 import type { Renderer } from "../UI5Element.js";
 

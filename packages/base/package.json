@@ -53,8 +53,7 @@
   },
   "dependencies": {
     "@lit-labs/ssr-dom-shim": "^1.1.2",
-    "lit-html": "^2.0.1",
-    "preact": "^10.24.3"
+    "lit-html": "^2.0.1"
   },
   "devDependencies": {
     "@openui5/sap.ui.core": "1.120.17",
