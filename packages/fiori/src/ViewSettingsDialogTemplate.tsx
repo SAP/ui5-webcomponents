@@ -23,7 +23,7 @@ function ViewSettingsDialogTemplateHeader(this: ViewSettingsDialog) {
 							icon={navBackIcon}
 							class="ui5-vsd-back-button"
 							onClick={this._navigateToFilters}
-							/>
+						/>
 					)}
 					<Title
 						wrappingType="None"
