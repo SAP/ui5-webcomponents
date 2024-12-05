@@ -1054,6 +1054,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._clearIconClicked = true;
 	}
 
+	@bound
 	_scroll(e: UI5CustomEvent<ResponsivePopover, "scroll">) {
 		this.fireDecoratorEvent("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
