@@ -151,3 +151,9 @@
     display: flex;
     flex-direction: column;
 }
+
+.shellbar-search-input {
+	height: var(--_ui5_shellbar_search_height);
+	--_ui5_input_icon_width: var(--_ui5_shellbar_search_icon_width);
+	--_ui5_input_custom_icon_padding: var(--_ui5_shellbar_search_icon_padding);
+}
