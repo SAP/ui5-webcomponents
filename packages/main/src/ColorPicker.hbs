@@ -18,10 +18,12 @@
             disabled="{{inputsDisabled}}"
             class="ui5-color-picker-hue-slider"
             min="0"
-            max="1530"
+            max="360"
+            step="1"
             value="{{_hue}}"
             accessible-name="{{hueSliderLabel}}"
             @ui5-input="{{_handleHueInput}}"
+            show-tooltip
         ></ui5-slider>
         {{#if _isDefaultPickerMode}}
             <ui5-slider
@@ -33,6 +35,7 @@
                 value="{{_alpha}}"
                 accessible-name="{{alphaSliderLabel}}"
                 @ui5-input="{{_handleAlphaInput}}"
+                show-tooltip
             ></ui5-slider>
         {{/if}}
     </div>
