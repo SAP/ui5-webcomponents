@@ -226,9 +226,7 @@ type MultiComboboxItemWithSelection = {
  * @since 2.0.0
  * @public
  */
-@event("open", {
-	bubbles: true,
-})
+@event("open")
 
 /**
  * Fired when the dropdown is closed.
