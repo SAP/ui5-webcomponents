@@ -47,7 +47,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Text";`
+ * `import "@ui5/webcomponents/dist/ExpandableText";`
  *
  * @constructor
  * @extends UI5Element
