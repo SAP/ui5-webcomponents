@@ -172,7 +172,7 @@
 		var changeResult = document.getElementById('changeResult');
 		var changeCount = 0;
 		var displayChange = function (event) {
-			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.target.value;
 			changeCount++;
 			changeResult.value = `${changeCount}`;
 		}

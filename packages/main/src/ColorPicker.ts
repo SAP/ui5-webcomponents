@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -22,7 +22,6 @@ import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.j
 import Input from "./Input.js";
 import Slider from "./Slider.js";
 import Label from "./Label.js";
-import ColorPickerDisplayMode from "./types/ColorPickerDisplayMode.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -91,6 +90,9 @@ type ColorCoordinates = {
 	bubbles: true,
 })
 class ColorPicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void;
+	}
 	/**
 	 * Defines the currently selected color of the component.
 	 *
@@ -113,13 +115,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	name?: string;
 
 	/**
-	 * Defines the display mode of the component.
-	 * @default "Default"
+	 * When set to `true`, the alpha slider and inputs for RGB values will not be displayed.
+	 * @default false
 	 * @public
 	 * @since 2.5.0
 	 */
-	@property()
-	displayMode: `${ColorPickerDisplayMode}` = "Default";
+	@property({ type: Boolean })
+	simplified = false;
 
 	/**
 	 * Defines the HEX code of the currently selected color
@@ -540,7 +542,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	get _isDefaultPickerMode() {
-		return this.displayMode === ColorPickerDisplayMode.Default;
+		return !this.simplified;
 	}
 
 	get styles() {
