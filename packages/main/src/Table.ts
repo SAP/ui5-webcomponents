@@ -539,7 +539,9 @@ class Table extends UI5Element {
 		})));
 
 		if (maxRowActionsCount !== 0) {
-			widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${maxRowActionsCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${maxRowActionsCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
+			// TODO: fix calculation (since the rebase, the calc is not working anymore)
+			// widths.push(`var(${getScopedVarName(varName)})`);
+			// `calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${maxRowActionsCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${maxRowActionsCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`;
 		}
 		if (this._renderNavigated) {
 			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);

@@ -5,6 +5,7 @@ import TableRowBase from "./TableRowBase.js";
 import TableHeaderRowTemplate from "./generated/templates/TableHeaderRowTemplate.lit.js";
 import TableHeaderRowStyles from "./generated/themes/TableHeaderRow.css.js";
 import TableHeaderCell from "./TableHeaderCell.js";
+import TableRowAction from "./TableRowAction.js";
 import {
 	TABLE_SELECTION,
 	TABLE_ROW_POPIN,
@@ -36,7 +37,7 @@ import {
 	languageAware: true,
 	styles: [TableRowBase.styles, TableHeaderRowStyles],
 	template: TableHeaderRowTemplate,
-	dependencies: [...TableRowBase.dependencies, TableHeaderCell],
+	dependencies: [...TableRowBase.dependencies, TableHeaderCell, TableRowAction],
 })
 
 /**
@@ -63,6 +64,20 @@ class TableHeaderRow extends TableRowBase {
 		individualSlots: true,
 	})
 	cells!: Array<TableHeaderCell>;
+
+	/**
+	 * Defines the actions of the component.
+	 *
+	 * **Note:** Use `ui5-table-row-action` for the intended design.
+	 *
+	 * @public
+	 */
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: true,
+	})
+	actions!: Array<TableRowAction>;
 
 	/**
 	 * Sticks the `ui5-table-header-row` to the top of a table.

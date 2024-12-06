@@ -6,6 +6,11 @@
 	--_ui5_table_shadow_border_right: inset calc(-1 * var(--sapContent_FocusWidth)) 0 var(--sapContent_FocusColor);
 	--_ui5_table_shadow_border_top: inset 0 var(--sapContent_FocusWidth) var(--sapContent_FocusColor);
 	--_ui5_table_shadow_border_bottom: inset 0 -1px var(--sapContent_FocusColor);
+	--_ui5_table_rowAction_container_width_1: calc(var(--_ui5_button_base_min_width) * 1 + var(--_ui5_table_row_actions_gap) * (1 - 1) + var(--_ui5_table_cell_horizontal_padding) * 2);
+	--_ui5_table_rowAction_container_width_2: calc(var(--_ui5_button_base_min_width) * 2 + var(--_ui5_table_row_actions_gap) * (2 - 1) + var(--_ui5_table_cell_horizontal_padding) * 2);
+	--_ui5_table_rowAction_container_width_3: calc(var(--_ui5_button_base_min_width) * 3 + var(--_ui5_table_row_actions_gap) * (3 - 1) + var(--_ui5_table_cell_horizontal_padding) * 2);
+	
+	
 }
 
 [dir="rtl"] {
