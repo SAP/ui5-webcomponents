@@ -3,10 +3,12 @@ const path = require("path");
 const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
 /**
- * Typescript Rules
+ * Returns eslint rules specific to typescript files
+ * @returns 
  */
-const overrides = tsMode ? [
-	{
+const getTsModeOverrides = () => {	
+	// Default .ts configuration
+	const tsConfiguration = {
 		files: ["*.ts"],
 		parser: "@typescript-eslint/parser",
 		plugins: ["@typescript-eslint"],
@@ -36,49 +38,23 @@ const overrides = tsMode ? [
 			"@typescript-eslint/no-empty-interface": "off",
 			"lines-between-class-members": "off",
 		}
-	},
-	{
-		files: ["*.tsx"],
-		parser: "@typescript-eslint/parser",
-		plugins: ["@typescript-eslint"],
-		extends: [
-			"plugin:@typescript-eslint/recommended",
-			"plugin:@typescript-eslint/recommended-requiring-type-checking"
-		],
-		parserOptions: {
-			"project": [
-				"./tsconfig.json",
-				"./cypress/tsconfig.json",
-			],
-			EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
-		},
-		rules: {
-			"no-shadow": "off",
-			"@typescript-eslint/consistent-type-imports": "error",
-			"@typescript-eslint/no-shadow": ["error"],
-			"@typescript-eslint/no-unsafe-member-access": "off",
-			"@typescript-eslint/no-floating-promises": "off",
-			"@typescript-eslint/no-explicit-any": "off",
-			"@typescript-eslint/no-unsafe-assignment": "off",
-			"@typescript-eslint/ban-ts-comment": "off",
-			"@typescript-eslint/no-unsafe-call": "off",
-			"@typescript-eslint/no-non-null-assertion": "off",
-			"@typescript-eslint/no-empty-function": "off",
-			"@typescript-eslint/no-empty-interface": "off",
-			"lines-between-class-members": "off",
+	};
 
-			"func-names": "off",
-			// "@typescript-eslint/no-unsafe-return": "off",
-			"@typescript-eslint/unbound-method": "off",
-			"operator-linebreak": "off",
-			"@typescript-eslint/no-misused-promises": "off",
-			"no-nested-ternary": "off",
-			"implicit-arrow-linebreak": "off",
-			"function-paren-newline": "off",
-			"comma-dangle": "off"
-		},
-	},
-	{
+	// The default .ts configuration with several exceptions for the purpose of .tsx files
+	const tsxConfiguration = JSON.parse(JSON.stringify(tsConfiguration));
+	tsxConfiguration.files = ["*.tsx"];
+	tsxConfiguration.rules = { ...tsxConfiguration.rules, ...{
+		"@typescript-eslint/unbound-method": "off", // to be able to attach on* listeners
+		"@typescript-eslint/no-misused-promises": "off", // to be able to have async event listeners
+		"operator-linebreak": "off",
+		"no-nested-ternary": "off",
+		"implicit-arrow-linebreak": "off",
+		"function-paren-newline": "off",
+		"comma-dangle": "off"
+	}};
+
+	// cypress *.ts
+	const cypressConfiguration = {
 		"files": ["**/cypress/**/*.ts"],
 
 		"plugins": [
@@ -110,7 +86,13 @@ const overrides = tsMode ? [
 			]
 		}
 	}
-] : [];
+
+	return [
+		tsConfiguration,
+		tsxConfiguration,
+		cypressConfiguration,
+	];
+}
 
 module.exports = {
 	"env": {
@@ -119,7 +101,7 @@ module.exports = {
 	},
 	"root": true,
 	"extends": "airbnb-base",
-	overrides,
+	overrides: tsMode ? getTsModeOverrides() : [],
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"

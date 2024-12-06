@@ -4,7 +4,7 @@ import type MultiInput from "./MultiInput.js";
 import Tokenizer from "./Tokenizer.js";
 import valueHelp from "@ui5/webcomponents-icons/dist/value-help.js";
 
-export default function (this: MultiInput) {
+export default function MultiInputTemplate(this: MultiInput) {
 	return [
 		InputTemplate.call(this, { preContent, postContent }),
 	];

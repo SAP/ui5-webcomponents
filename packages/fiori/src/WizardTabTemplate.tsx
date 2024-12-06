@@ -1,7 +1,7 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type WizardTab from "./WizardTab.js";
 
-export default function (this: WizardTab) {
+export default function WizardTabTemplate(this: WizardTab) {
 	return (
 		<div class="ui5-wiz-step-root"
 			role="listitem"

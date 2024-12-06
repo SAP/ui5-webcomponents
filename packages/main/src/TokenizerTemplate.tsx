@@ -1,7 +1,7 @@
 import type Tokenizer from "./Tokenizer.js";
 import TokenizerPopoverTemplate from "./TokenizerPopoverTemplate.js";
 
-export default function (this: Tokenizer) {
+export default function TokenizerTemplate(this: Tokenizer) {
 	return (
 		<>
 			<div class="ui5-tokenizer-root">

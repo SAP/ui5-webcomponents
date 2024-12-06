@@ -1,7 +1,7 @@
 import ListItemBaseTemplate from "./ListItemBaseTemplate.js";
 import type ComboBoxItem from "./ComboBoxItem.js";
 
-export default function (this: ComboBoxItem) {
+export default function ComboBoxItemTemplate(this: ComboBoxItem) {
 	return ListItemBaseTemplate.call(this, { listItemContent }, { role: "option" });
 }
 

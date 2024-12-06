@@ -8,7 +8,7 @@ import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import error from "@ui5/webcomponents-icons/dist/error.js";
 import alert from "@ui5/webcomponents-icons/dist/alert.js";
 
-export default function (this: MessageStrip) {
+export default function MessageStripTemplate(this: MessageStrip) {
 	return (
 		<div
 			id={this._id}

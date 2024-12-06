@@ -3,7 +3,7 @@ import Input from "./Input.js";
 import SegmentedButton from "./SegmentedButton.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
-export default function (this: TimeSelectionInputs) {
+export default function TimeSelectionInputsTemplate(this: TimeSelectionInputs) {
 	return (
 		<div
 			class="ui5-time-selection-inputs"

@@ -1,6 +1,6 @@
 import type Timeline from "./Timeline.js";
 
-export default function (this: Timeline) {
+export default function TimelineTemplate(this: Timeline) {
 	return (
 		<div class="ui5-timeline-root"
 			onFocusIn={this._onfocusin}

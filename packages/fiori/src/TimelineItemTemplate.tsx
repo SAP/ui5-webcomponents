@@ -3,7 +3,7 @@ import Link from "@ui5/webcomponents/dist/Link.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 
-export default function (this: TimelineItem) {
+export default function TimelineItemTemplate(this: TimelineItem) {
 	return (
 		<div class="ui5-tli-root">
 			<div

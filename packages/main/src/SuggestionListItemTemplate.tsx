@@ -6,7 +6,7 @@ const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent,
 };
 
-export default function (this: SuggestionListItem, hooks?: Partial<ListItemHooks>) {
+export default function SuggestionListItemTemplate(this: SuggestionListItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return ListItemStandardTemplate.call(this, currentHooks);

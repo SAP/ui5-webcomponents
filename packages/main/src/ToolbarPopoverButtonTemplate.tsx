@@ -1,7 +1,7 @@
 import type ToolbarButton from "./ToolbarButton.js";
 import Button from "./Button.js";
 
-export default function (this: ToolbarButton) {
+export default function ToolbarPopoverButtonTemplate(this: ToolbarButton) {
 	return (
 		<Button
 			icon={this.icon}

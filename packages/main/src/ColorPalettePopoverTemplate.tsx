@@ -4,7 +4,7 @@ import Button from "./Button.js";
 import ColorPalette from "./ColorPalette.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 
-export default function (this: ColorPalettePopover) {
+export default function ColorPalettePopoverTemplate(this: ColorPalettePopover) {
 	return (
 		<ResponsivePopover
 			hideArrow={true}

@@ -1,7 +1,7 @@
 import type Form from "./Form.js";
 import Title from "./Title.js";
 
-export default function (this: Form) {
+export default function FormTemplate(this: Form) {
 	return (
 		<div
 			class="ui5-form-root"

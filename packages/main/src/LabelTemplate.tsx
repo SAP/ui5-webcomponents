@@ -1,6 +1,6 @@
 import type Label from "./Label.js";
 
-export default function (this: Label) {
+export default function LabelTemplate(this: Label) {
 	return (
 		<label
 			class="ui5-label-root"

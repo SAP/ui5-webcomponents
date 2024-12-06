@@ -17,7 +17,7 @@ import log from "@ui5/webcomponents-icons/dist/log.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import addEmployee from "@ui5/webcomponents-icons/dist/add-employee.js";
 
-export default function (this: UserMenu) {
+export default function UserMenuTemplate(this: UserMenu) {
 	return (
 		<ResponsivePopover
 			id={`${this._id}-user-menu-rp`}

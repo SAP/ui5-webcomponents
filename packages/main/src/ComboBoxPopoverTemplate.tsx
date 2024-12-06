@@ -9,7 +9,7 @@ import SuggestionItem from "./SuggestionItem.js";
 import type ComboBox from "./ComboBox.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
-export default function (this: ComboBox) {
+export default function ComboBoxPopoverTemplate(this: ComboBox) {
 	return (
 		<>
 			<ResponsivePopover

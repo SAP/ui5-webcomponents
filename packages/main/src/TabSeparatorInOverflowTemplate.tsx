@@ -1,7 +1,7 @@
 import type TabSeparator from "./TabSeparator.js";
 import ListItemCustom from "./ListItemCustom.js";
 
-export default function (this: TabSeparator) {
+export default function TabSeparatorInOverflowTemplate(this: TabSeparator) {
 	return (
 		<ListItemCustom
 			id={this._id}

@@ -5,7 +5,7 @@ import Icon from "./Icon.js";
 import Link from "./Link.js";
 import Label from "./Label.js";
 
-export default function (this: Breadcrumbs) {
+export default function BreadcrumbsTemplate(this: Breadcrumbs) {
 	return (
 		<>
 			<nav class="ui5-breadcrumbs-root" aria-label={this._accessibleNameText}>

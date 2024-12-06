@@ -4,7 +4,7 @@ import Icon from "./Icon.js";
 import slimArowLeft from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import slimArowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
-export default function (this: Calendar) {
+export default function CalendarTemplate(this: Calendar) {
 	return (
 		<div class="ui5-calheader-root">
 			<div

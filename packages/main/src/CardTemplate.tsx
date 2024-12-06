@@ -1,7 +1,7 @@
 import type Card from "./Card.js";
 import BusyIndicator from "./BusyIndicator.js";
 
-export default function (this: Card) {
+export default function CardTemplate(this: Card) {
 	return (
 		<div
 			part="root"

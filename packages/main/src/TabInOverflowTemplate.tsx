@@ -2,7 +2,7 @@ import type Tab from "./Tab.js";
 import Icon from "./Icon.js";
 import ListItemCustom from "./ListItemCustom.js";
 
-export default function (this: Tab) {
+export default function TabInOverflowTemplate(this: Tab) {
 	return (
 		<ListItemCustom
 			id={`${this._id}-li`}

@@ -4,7 +4,7 @@ import verticalGrip from "@ui5/webcomponents-icons/dist/vertical-grip.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type FlexibleColumnLayout from "./FlexibleColumnLayout.js";
 
-export default function (this: FlexibleColumnLayout) {
+export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout) {
 	const hasAnimation = getAnimationMode() !== AnimationMode.None;
 
 	return (

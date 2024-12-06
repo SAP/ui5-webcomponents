@@ -1,7 +1,7 @@
 import type Link from "./Link.js";
 import Icon from "./Icon.js";
 
-export default function (this: Link) {
+export default function LinkTemplate(this: Link) {
 	return (
 		<a
 			part="root"

@@ -4,7 +4,7 @@ import type Switch from "./Switch.js";
 import acceptIcon from "@ui5/webcomponents-icons/dist/accept.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
-export default function (this: Switch) {
+export default function SwitchTemplate(this: Switch) {
 	return (
 		<div
 			class={{

@@ -1,7 +1,7 @@
 import type Toolbar from "./Toolbar.js";
 import Popover from "./Popover.js";
 
-export default function (this: Toolbar) {
+export default function ToolbarPopoverTemplate(this: Toolbar) {
 	return (
 		<Popover
 			class="ui5-overflow-popover"

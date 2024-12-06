@@ -1,7 +1,7 @@
 import type CalendarLegend from "./CalendarLegend.js";
 import CalendarLegendItem from "./CalendarLegendItem.js";
 
-export default function (this: CalendarLegend) {
+export default function CalendarLegendTemplate(this: CalendarLegend) {
 	return (
 		<div class="ui5-calendar-legend-root"
 			onFocusOut={this._onFocusOut}

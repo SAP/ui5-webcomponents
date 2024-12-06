@@ -2,7 +2,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import DropIndicator from "./DropIndicator.js";
 import type List from "./List.js";
 
-export default function (this: List) {
+export default function ListTemplate(this: List) {
 	return (
 		<div
 			class="ui5-list-root"

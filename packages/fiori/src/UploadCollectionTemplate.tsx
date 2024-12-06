@@ -7,7 +7,7 @@ import IllustratedMessage from "./IllustratedMessage.js";
 import type UploadCollection from "./UploadCollection.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
 
-export default function (this: UploadCollection) {
+export default function UploadCollectionTemplate(this: UploadCollection) {
 	return (
 		<div
 			role="region"

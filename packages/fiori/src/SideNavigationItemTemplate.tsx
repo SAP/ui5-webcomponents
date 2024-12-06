@@ -5,7 +5,7 @@ import circleTask from "@ui5/webcomponents-icons/dist/circle-task-2.js";
 import arrowRight from "@ui5/webcomponents-icons/dist/arrow-right.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
 
-export default function (this: SideNavigationItem) {
+export default function SideNavigationItemTemplate(this: SideNavigationItem) {
 	if (this.sideNavCollapsed) {
 		return MenuItemTemplate.call(this);
 	}

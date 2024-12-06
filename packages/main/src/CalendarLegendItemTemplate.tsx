@@ -1,6 +1,6 @@
 import type CalendarLegendItem from "./CalendarLegendItem.js";
 
-export default function (this: CalendarLegendItem) {
+export default function CalendarLegendItemTemplate(this: CalendarLegendItem) {
 	return (
 		<div
 			class="ui5-calendar-legend-item-root"

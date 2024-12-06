@@ -1,6 +1,6 @@
 import type YearPicker from "./YearPicker.js";
 
-export default function (this: YearPicker) {
+export default function YearPickerTemplate(this: YearPicker) {
 	return (
 		<div
 			class="ui5-yp-root"

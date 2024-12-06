@@ -2,7 +2,7 @@ import Icon from "./Icon.js";
 import ListItemBaseTemplate from "./ListItemBaseTemplate.js";
 import type Option from "./Option.js";
 
-export default function (this: Option) {
+export default function OptionTemplate(this: Option) {
 	return ListItemBaseTemplate.call(this, { listItemContent }, { role: "option", title: this.tooltip });
 }
 

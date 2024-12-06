@@ -1,7 +1,7 @@
 import type TimelineGroupItem from "./TimelineGroupItem.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 
-export default function (this: TimelineGroupItem) {
+export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 	return (
 		<div class="ui5-tlgi-root">
 			<div class="ui5-tlgi-btn-root">

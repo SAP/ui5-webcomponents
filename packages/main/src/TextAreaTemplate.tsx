@@ -1,7 +1,7 @@
 import type TextArea from "./TextArea.js";
 import TextAreaPopoverTemplate from "./TextAreaPopoverTemplate.js";
 
-export default function (this: TextArea) {
+export default function TextAreaTemplate(this: TextArea) {
 	return (
 		<>
 			<div

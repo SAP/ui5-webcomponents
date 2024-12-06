@@ -5,7 +5,7 @@ import Button from "./Button.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import ColorPaletteDialogTemplate from "./ColorPaletteDialogTemplate.js";
 
-export default function (this: ColorPalette) {
+export default function ColorPaletteTemplate(this: ColorPalette) {
 	return (
 		<>
 			<div

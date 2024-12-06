@@ -1,6 +1,6 @@
 import type TableGroupRow from "./TableGroupRow.js";
 
-export default function (this: TableGroupRow) {
+export default function TableGroupRowTemplate(this: TableGroupRow) {
 	return (
 		<tr
 			part="group-row"

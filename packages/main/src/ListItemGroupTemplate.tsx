@@ -2,7 +2,7 @@ import type ListItemGroup from "./ListItemGroup.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import DropIndicator from "./DropIndicator.js";
 
-export default function (this: ListItemGroup, hooks?: { items: () => void }) {
+export default function ListItemGroupTemplate(this: ListItemGroup, hooks?: { items: () => void }) {
 	const items = hooks?.items || defaultItems;
 
 	return (

@@ -5,7 +5,7 @@ import Input from "./Input.js";
 import less from "@ui5/webcomponents-icons/dist/less.js";
 import add from "@ui5/webcomponents-icons/dist/add.js";
 
-export default function (this: StepInput) {
+export default function StepInputTemplate(this: StepInput) {
 	return (
 		<div
 			id={`${this._id}`}

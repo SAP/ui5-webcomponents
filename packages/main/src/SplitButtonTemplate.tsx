@@ -2,7 +2,7 @@ import type SplitButton from "./SplitButton.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import Button from "./Button.js";
 
-export default function (this: SplitButton) {
+export default function SplitButtonTemplate(this: SplitButton) {
 	return (
 		<div
 			role="group"

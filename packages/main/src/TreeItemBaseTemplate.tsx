@@ -12,7 +12,7 @@ const predefinedHooks: Partial<ListItemHooks> = {
 	iconBegin,
 };
 
-export default function (this: TreeItemBase, hooks?: Partial<ListItemHooks>) {
+export default function TreeItemBaseTemplate(this: TreeItemBase, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <div>

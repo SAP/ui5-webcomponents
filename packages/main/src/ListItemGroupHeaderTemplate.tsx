@@ -1,6 +1,6 @@
 import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 
-export default function (this: ListItemGroupHeader) {
+export default function ListItemGroupHeaderTemplate(this: ListItemGroupHeader) {
 	return (
 		<ul
 			role="group"

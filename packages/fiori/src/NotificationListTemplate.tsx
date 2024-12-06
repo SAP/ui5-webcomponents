@@ -1,7 +1,7 @@
 import type NotificationList from "./NotificationList.js";
 import NotificationListInternal from "./NotificationListInternal.js";
 
-export default function (this: NotificationList) {
+export default function NotificationListTemplate(this: NotificationList) {
 	return (
 		<NotificationListInternal
 			accessibleName={this._accessibleName}

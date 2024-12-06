@@ -2,7 +2,7 @@ import CheckBox from "./CheckBox.js";
 import ListItemBaseTemplate from "./ListItemBaseTemplate.js";
 import type MultiComboBoxItem from "./MultiComboBoxItem.js";
 
-export default function (this: MultiComboBoxItem) {
+export default function MultiComboBoxItemTemplate(this: MultiComboBoxItem) {
 	return ListItemBaseTemplate.call(this, { listItemContent }, { role: "option" });
 }
 

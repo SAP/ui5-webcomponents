@@ -1,6 +1,6 @@
 import type DynamicSideContent from "./DynamicSideContent.js";
 
-export default function (this: DynamicSideContent) {
+export default function DynamicSideContentTemplate(this: DynamicSideContent) {
 	return (
 		<div
 			class="ui5-dsc-root"

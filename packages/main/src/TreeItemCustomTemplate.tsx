@@ -6,7 +6,7 @@ const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent,
 };
 
-export default function (this: TreeItem, hooks?: Partial<ListItemHooks>) {
+export default function TreeItemCustomTemplate(this: TreeItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return TreeItemBaseTemplate.call(this, currentHooks);

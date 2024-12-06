@@ -1,6 +1,6 @@
 import type Text from "./Text.js";
 
-export default function (this: Text) {
+export default function TextTemplate(this: Text) {
 	return <>
 		<span>
 			<span> { this.emptyIndicatorMode } </span>

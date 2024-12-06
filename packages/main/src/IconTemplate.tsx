@@ -1,6 +1,6 @@
 import type Icon from "./Icon.js";
 
-export default function (this: Icon) {
+export default function IconTemplate(this: Icon) {
 	return (
 		<svg
 			class="ui5-icon-root"

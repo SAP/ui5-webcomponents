@@ -1,6 +1,6 @@
 import type TableColumn from "./TableColumn.js";
 
-export default function (this: TableColumn) {
+export default function TableColumnTemplate(this: TableColumn) {
 	return (
 		<th
 			scope="col"

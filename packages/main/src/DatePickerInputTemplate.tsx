@@ -2,7 +2,7 @@ import type DatePicker from "./DatePicker.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 
-export default function (this: DatePicker) {
+export default function DatePickerInputTemplate(this: DatePicker) {
 	return (
 		<div
 			class="ui5-date-picker-root"

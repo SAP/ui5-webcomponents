@@ -3,7 +3,7 @@ import type Toolbar from "./Toolbar.js";
 import toolbarPopoverTemplate from "./ToolbarPopoverTemplate.js";
 import overflowIcon from "@ui5/webcomponents-icons/dist/overflow.js";
 
-export default function (this: Toolbar) {
+export default function ToolbarTemplate(this: Toolbar) {
 	return (<>
 		<div
 			class={{

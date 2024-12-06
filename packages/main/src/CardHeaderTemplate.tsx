@@ -1,7 +1,7 @@
 import type CardHeader from "./CardHeader.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 
-export default function (this: CardHeader) {
+export default function CardHeaderTemplate(this: CardHeader) {
 	return (
 		<div
 			id={`${this._id}--header`}

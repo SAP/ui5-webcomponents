@@ -4,7 +4,7 @@ import List from "./List.js";
 import Button from "./Button.js";
 import type Tab from "./Tab.js";
 
-export default function (this: TabContainer) {
+export default function TabContainerPopoverTemplate(this: TabContainer) {
 	return (
 		<ResponsivePopover
 			id={`${this._id}-overflowMenu`}

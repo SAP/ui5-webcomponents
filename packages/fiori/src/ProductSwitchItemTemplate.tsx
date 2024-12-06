@@ -1,7 +1,7 @@
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type ProductSwitchItem from "./ProductSwitchItem.js";
 
-export default function (this: ProductSwitchItem) {
+export default function ProductSwitchItemTemplate(this: ProductSwitchItem) {
 	return (
 		<>
 			{this.targetSrc ?

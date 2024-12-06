@@ -1,7 +1,7 @@
 import type Button from "./Button.js";
 import Icon from "./Icon.js";
 
-export default function (this: Button, injectedProps?: {
+export default function ButtonTemplate(this: Button, injectedProps?: {
 		ariaPressed?: boolean,
 		ariaValueMax?: number,
 		ariaValueMin?: number,

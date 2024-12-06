@@ -1,6 +1,6 @@
 import type TableCell from "./TableCell.js";
 
-export default function (this: TableCell) {
+export default function TableCellTemplate(this: TableCell) {
 	return (
 		<td
 			tabindex={-1}

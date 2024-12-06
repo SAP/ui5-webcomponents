@@ -32,7 +32,7 @@ const defaultPartials = {
 	contentArea,
 };
 
-export default function (this: TabContainer, injectedPartials?: Partial<typeof defaultPartials>) {
+export default function TabContainerTemplate(this: TabContainer, injectedPartials?: Partial<typeof defaultPartials>) {
 	const partials = {
 		...defaultPartials,
 		...injectedPartials,

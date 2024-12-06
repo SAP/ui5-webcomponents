@@ -19,7 +19,7 @@ const predefinedHooks: Partial<MenuItemHooks> = {
 	iconBegin,
 };
 
-export default function (this: MenuItem, hooks?: Partial<MenuItemHooks>) {
+export default function MenuItemTemplate(this: MenuItem, hooks?: Partial<MenuItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <>

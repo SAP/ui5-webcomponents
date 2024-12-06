@@ -4,7 +4,7 @@ import Icon from "./Icon.js";
 
 import slimArrowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
-export default function (this: Panel) {
+export default function PanelTemplate(this: Panel) {
 	return (<>
 		<div
 			class="ui5-panel-root"

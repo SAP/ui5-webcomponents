@@ -5,7 +5,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import Title from "./Title.js";
 import type Tokenizer from "./Tokenizer.js";
 
-export default function (this: Tokenizer) {
+export default function TokenizerPopoverTemplate(this: Tokenizer) {
 	return (
 		<ResponsivePopover
 			tokenizer-popover="true"

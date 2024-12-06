@@ -13,7 +13,7 @@ const valueStateIconMappings: Record<string, string> = {
 	"Information": information,
 };
 
-export default function (this: ProgressIndicator) {
+export default function ProgressIndicatorTemplate(this: ProgressIndicator) {
 	return (
 		<div
 			class={{

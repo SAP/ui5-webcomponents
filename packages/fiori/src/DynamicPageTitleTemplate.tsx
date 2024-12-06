@@ -2,7 +2,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type DynamicPageTitle from "./DynamicPageTitle.js";
 import slimArrowDownIcon from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
-export default function (this: DynamicPageTitle) {
+export default function DynamicPageTitleTemplate(this: DynamicPageTitle) {
 	return (
 		<div class="ui5-dynamic-page-title-root">
 			<span class="ui5-dynamic-page-title-focus-area"

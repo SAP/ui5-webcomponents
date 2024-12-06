@@ -1,6 +1,6 @@
 import type MonthPicker from "./MonthPicker.js";
 
-export default function (this: MonthPicker) {
+export default function MonthPickerTemplate(this: MonthPicker) {
 	return (
 		<div
 			class="ui5-mp-root"

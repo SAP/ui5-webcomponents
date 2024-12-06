@@ -3,7 +3,7 @@ import Button from "./Button.js";
 import Dialog from "./Dialog.js";
 import ColorPicker from "./ColorPicker.js";
 
-export default function (this: ColorPalette) {
+export default function ColorPaletteDialogTemplate(this: ColorPalette) {
 	return (
 		<>
 			{

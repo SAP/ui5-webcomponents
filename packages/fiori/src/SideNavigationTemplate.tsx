@@ -3,7 +3,7 @@ import type SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationPopoverTemplate from "./SideNavigationPopoverTemplate.js";
 
-export default function (this: SideNavigation) {
+export default function SideNavigationTemplate(this: SideNavigation) {
 	return (<>
 		<nav class={{
 			"ui5-sn-root": true,

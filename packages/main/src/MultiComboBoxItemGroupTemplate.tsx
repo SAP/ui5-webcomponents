@@ -1,7 +1,7 @@
 import ListItemGroupTemplate from "./ListItemGroupTemplate.js";
 import type MultiComboBoxItemGroup from "./MultiComboBoxItemGroup.js";
 
-export default function (this: MultiComboBoxItemGroup) {
+export default function MultiComboBoxItemGroupTemplate(this: MultiComboBoxItemGroup) {
 	return [ListItemGroupTemplate.call(this, { items })];
 }
 

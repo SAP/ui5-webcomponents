@@ -1,7 +1,7 @@
 import Icon from "./Icon.js";
 import type Tag from "./Tag.js";
 
-export default function (this: Tag) {
+export default function TagTemplate(this: Tag) {
 	return (
 		<>
 			{

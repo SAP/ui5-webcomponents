@@ -1,6 +1,6 @@
 import type Title from "./Title.js";
 
-export default function (this: Title) {
+export default function TitleTemplate(this: Title) {
 	return (
 		<>
 			{

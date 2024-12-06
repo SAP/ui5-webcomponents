@@ -4,7 +4,7 @@ import MonthPicker from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import CalendarHeaderTemplate from "./CalendarHeaderTemplate.js";
 
-export default function (this: Calendar) {
+export default function CalendarTemplate(this: Calendar) {
 	return (
 		<>
 			<div

@@ -2,7 +2,7 @@ import type Wizard from "./Wizard.js";
 import WizardTab from "./WizardTab.js";
 import WizardPopoverTemplate from "./WizardPopoverTemplate.js";
 
-export default function (this: Wizard) {
+export default function WizardTemplate(this: Wizard) {
 	return (<>
 		<div class="ui5-wiz-root"
 			 aria-label={this.ariaLabelText}

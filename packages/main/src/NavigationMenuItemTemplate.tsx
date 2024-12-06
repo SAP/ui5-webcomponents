@@ -18,7 +18,7 @@ const predefinedHooks: Partial<MenuItemHooks> = {
 	listItemPostContent: () => {},
 };
 
-export default function (this: NavigationMenuItem, hooks?: Partial<MenuItemHooks>) {
+export default function NavigationMenuItemTemplate(this: NavigationMenuItem, hooks?: Partial<MenuItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks, };
 
 	return <>

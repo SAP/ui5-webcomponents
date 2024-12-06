@@ -4,7 +4,7 @@ import SegmentedButton from "./SegmentedButton.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import TimePickerClock from "./TimePickerClock.js";
 
-export default function (this: TimeSelectionClocks) {
+export default function TimeSelectionClocksTemplate(this: TimeSelectionClocks) {
 	return (
 		<div
 			id={`${this._id}`}

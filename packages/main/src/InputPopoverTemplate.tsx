@@ -12,7 +12,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-export default function (this: Input) {
+export default function InputPopoverTemplate(this: Input) {
 	return (
 		<>
 			{this._effectiveShowSuggestions &&

@@ -1,6 +1,6 @@
 import type Tab from "./Tab.ts";
 
-export default function (this: Tab) {
+export default function TabTemplate(this: Tab) {
 	return (
 		<div
 			id={this._id}

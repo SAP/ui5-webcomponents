@@ -1,6 +1,6 @@
 import type ProductSwitch from "./ProductSwitch.js";
 
-export default function (this: ProductSwitch) {
+export default function ProductSwitchTemplate(this: ProductSwitch) {
 	return (
 		<div
 			role="list"

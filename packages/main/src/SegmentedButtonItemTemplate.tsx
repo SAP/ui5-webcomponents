@@ -1,7 +1,7 @@
 import type SegmentedButtonItem from "./SegmentedButtonItem.js";
 import Icon from "./Icon.js";
 
-export default function (this: SegmentedButtonItem) {
+export default function SegmentedButtonItemTemplate(this: SegmentedButtonItem) {
 	return (
 		<li
 			role="option"

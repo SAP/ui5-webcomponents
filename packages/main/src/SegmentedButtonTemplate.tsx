@@ -1,6 +1,6 @@
 import type SegmentedButton from "./SegmentedButton.js";
 
-export default function (this: SegmentedButton) {
+export default function SegmentedButtonTemplate(this: SegmentedButton) {
 	return (
 		<ul
 			role="listbox"

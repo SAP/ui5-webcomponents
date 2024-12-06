@@ -1,6 +1,6 @@
 import type TimePickerClock from "./TimePickerClock.js";
 
-export default function (this: TimePickerClock) {
+export default function TimePickerClockTemplate(this: TimePickerClock) {
 	return (
 		<div
 			id={`${this._id}`}

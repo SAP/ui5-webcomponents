@@ -1,6 +1,6 @@
 import type DayPicker from "./DayPicker.js";
 
-export default function (this: DayPicker) {
+export default function DayPickerTemplate(this: DayPicker) {
 	return (
 		<div
 			class={{

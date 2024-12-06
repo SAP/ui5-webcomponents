@@ -25,7 +25,7 @@ const predefinedHooks: ListItemHooks = {
 	selectionElement,
 };
 
-export default function (this: ListItem, hooks?: Partial<ListItemHooks>) {
+export default function ListItemTemplate(this: ListItem, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return <li

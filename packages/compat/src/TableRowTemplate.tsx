@@ -1,7 +1,7 @@
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import type TableRow from "./TableRow.js";
 
-export default function (this: TableRow) {
+export default function TableRowTemplate(this: TableRow) {
 	return (
 		<>
 			<tr

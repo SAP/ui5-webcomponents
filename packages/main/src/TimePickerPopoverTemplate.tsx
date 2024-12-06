@@ -5,7 +5,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
 
-export default function (this: TimePicker) {
+export default function TimePickerPopoverTemplate(this: TimePicker) {
 	return (
 		<>
 			<ResponsivePopover

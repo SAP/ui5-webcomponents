@@ -2,7 +2,7 @@ import type Token from "./Token.js";
 import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 
-export default function (this: Token) {
+export default function TokenTemplate(this: Token) {
 	return (
 		<div
 			role="option"

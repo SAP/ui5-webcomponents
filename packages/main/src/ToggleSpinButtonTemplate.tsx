@@ -1,7 +1,7 @@
 import type ToggleSpinButton from "./ToggleSpinButton.js";
 import buttonTemplate from "./ButtonTemplate.js";
 
-export default function (this: ToggleSpinButton) {
+export default function ToggleSpinButtonTemplate(this: ToggleSpinButton) {
 	return (<>
 		{ buttonTemplate.call(this, {
 			ariaPressed: this.pressed,

@@ -5,7 +5,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
-export default function (this: Menu) {
+export default function MenuTemplate(this: Menu) {
 	return (
 		<ResponsivePopover
 			id={`${this._id}-menu-rp`}

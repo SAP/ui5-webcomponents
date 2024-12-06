@@ -14,7 +14,7 @@ const IconPerValueState = {
 	Information: information,
 };
 
-export default function (this: TextArea) {
+export default function TextAreaPopoverTemplate(this: TextArea) {
 	return (
 		<>
 			{this.displayValueStateMessagePopover &&

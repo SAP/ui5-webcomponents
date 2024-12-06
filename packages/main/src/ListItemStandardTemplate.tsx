@@ -10,7 +10,7 @@ const predefinedHooks: Partial<ListItemHooks> = {
 	listItemContent
 };
 
-export default function (this: ListItemStandard, hooks?: Partial<ListItemHooks>) {
+export default function ListItemStandardTemplate(this: ListItemStandard, hooks?: Partial<ListItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks };
 
 	return ListItemTemplate.call(this, currentHooks);

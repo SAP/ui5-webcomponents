@@ -4,7 +4,7 @@ import Icon from "./Icon.js";
 import favorite from "@ui5/webcomponents-icons/dist/favorite.js";
 import unfavorite from "@ui5/webcomponents-icons/dist/unfavorite.js";
 
-export default function (this: RatingIndicator) {
+export default function RatingIndicatorTemplate(this: RatingIndicator) {
 	return (
 		<div
 			class="ui5-rating-indicator-root"
@@ -27,13 +27,13 @@ export default function (this: RatingIndicator) {
 			aria-label={this._ariaLabel}
 		>
 			<ul class="ui5-rating-indicator-list" aria-hidden="true">
-				{ this._stars.map(star => StarTemplate.call(this, star))}
+				{ this._stars.map(star => starLi.call(this, star))}
 			</ul>
 		</div>
 	);
 }
 
-function StarTemplate(this: RatingIndicator, star: Star) {
+function starLi(this: RatingIndicator, star: Star) {
 	if (star.selected) {
 		return (
 			<li data-ui5-value={star.index} class="ui5-rating-indicator-item ui5-rating-indicator-item-sel">

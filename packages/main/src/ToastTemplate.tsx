@@ -1,6 +1,6 @@
 import type Toast from "./Toast.js";
 
-export default function (this: Toast) {
+export default function ToastTemplate(this: Toast) {
 	return <>
 		this.open &&
 		<div class="ui5-toast-root" role="alert" tabindex={this._tabindex}>

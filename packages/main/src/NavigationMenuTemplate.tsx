@@ -5,7 +5,7 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import type NavigationMenu from "./NavigationMenu.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
 
-export default function (this: NavigationMenu) {
+export default function NavigationMenuTemplate(this: NavigationMenu) {
 	return (
 		<ResponsivePopover
 			id={`${this._id}-navigation-menu-rp`}

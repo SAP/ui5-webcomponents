@@ -2,7 +2,7 @@ import type Table from "./Table.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 
-export default function (this: Table) {
+export default function TableTemplate(this: Table) {
 	return (
 		<div
 			class="ui5-table-root"

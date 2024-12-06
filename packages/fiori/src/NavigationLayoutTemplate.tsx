@@ -1,6 +1,6 @@
 import type NavigationLayout from "./NavigationLayout.js";
 
-export default function (this: NavigationLayout) {
+export default function NavigationLayoutTemplate(this: NavigationLayout) {
 	return (
 		<div class="ui5-nl-root">
 			<header class="ui5-nl-header">

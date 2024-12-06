@@ -1,6 +1,6 @@
 import type Bar from "./Bar.js";
 
-export default function (this: Bar) {
+export default function BarTemplate(this: Bar) {
 	return (
 		<div
 			class="ui5-bar-root"

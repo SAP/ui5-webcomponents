@@ -3,7 +3,7 @@ import Icon from "./Icon.js";
 import Input from "./Input.js";
 import TimePickerPopoverTemplate from "./TimePickerPopoverTemplate.js";
 
-export default function (this: TimePicker) {
+export default function TimePickerTemplate(this: TimePicker) {
 	return (
 		<>
 			<div id={this._id} class="ui5-time-picker-root">

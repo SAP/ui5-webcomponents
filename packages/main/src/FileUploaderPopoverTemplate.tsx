@@ -3,7 +3,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-export default function (this: FileUploader) {
+export default function FileUploaderPopoverTemplate(this: FileUploader) {
 	return (
 		<Popover
 			preventInitialFocus={true}

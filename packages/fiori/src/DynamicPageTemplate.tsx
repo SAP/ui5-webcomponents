@@ -1,7 +1,7 @@
 import type DynamicPage from "./DynamicPage.js";
 import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 
-export default function (this: DynamicPage) {
+export default function DynamicPageTemplate(this: DynamicPage) {
 	return (
 		<div class="ui5-dynamic-page-root">
 			<div class="ui5-dynamic-page-scroll-container"

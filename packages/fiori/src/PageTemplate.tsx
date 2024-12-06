@@ -1,6 +1,6 @@
 import type Page from "./Page.js";
 
-export default function (this: Page) {
+export default function PageTemplate(this: Page) {
 	return (
 		<div class="ui5-page-root">
 			<header

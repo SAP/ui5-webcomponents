@@ -1,6 +1,6 @@
 import type TabSeparator from "./TabSeparator.js";
 
-export default function (this: TabSeparator) {
+export default function TabSeparatorInStripTemplate(this: TabSeparator) {
 	return (
 		<div
 			id={this._id}

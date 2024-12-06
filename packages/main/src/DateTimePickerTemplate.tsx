@@ -9,7 +9,7 @@ import SegmentedButton from "./SegmentedButton.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 
-export default function (this: DateTimePicker) {
+export default function DateTimePickerTemplate(this: DateTimePicker) {
 	return [
 		DatePickerInputTemplate.call(this),
 		DatePickerPopoverTemplate.call(this, { header, content, footer }),

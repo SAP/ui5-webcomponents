@@ -8,7 +8,7 @@ import complete from "@ui5/webcomponents-icons/dist/complete.js";
 import border from "@ui5/webcomponents-icons/dist/border.js";
 import triState from "@ui5/webcomponents-icons/dist/tri-state.js";
 
-export default function (this: CheckBox) {
+export default function CheckBoxTemplate(this: CheckBox) {
 	return (
 		<div
 			class={{

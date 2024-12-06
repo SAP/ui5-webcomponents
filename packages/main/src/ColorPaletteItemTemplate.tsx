@@ -1,6 +1,6 @@
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 
-export default function (this: ColorPaletteItem) {
+export default function ColorPaletteItemTemplate(this: ColorPaletteItem) {
 	return (
 		<div
 			class="ui5-cp-item"

@@ -4,7 +4,7 @@ import Input from "@ui5/webcomponents/dist/Input.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import paperPlane from "@ui5/webcomponents-icons/dist/paper-plane.js";
 
-export default function (this: PromptInput) {
+export default function PromptInputTemplate(this: PromptInput) {
 	return (
 		<div class="ai-prompt-input-wrapper">
 			{this.label &&

@@ -5,7 +5,7 @@ import InputPopoverTemplate from "./InputPopoverTemplate.js";
 
 type TemplateHook = () => void;
 
-export default function (this: Input, hooks?: { preContent: TemplateHook, postContent: TemplateHook }) {
+export default function InputTemplate(this: Input, hooks?: { preContent: TemplateHook, postContent: TemplateHook }) {
 	const preContent = hooks?.preContent || defaultPreContent;
 	const postContent = hooks?.postContent || defaultPostContent;
 

@@ -7,7 +7,7 @@ import decline from "@ui5/webcomponents-icons/dist/decline.js";
 
 type TemplateHook = () => void;
 
-export default function (this: DatePicker, hooks?: { header?: TemplateHook, content?: TemplateHook, footer?: TemplateHook }) {
+export default function DatePickerPopoverTemplate(this: DatePicker, hooks?: { header?: TemplateHook, content?: TemplateHook, footer?: TemplateHook }) {
 	const header = hooks?.header || defaultHeader;
 	const content = hooks?.content || defaultContent;
 	const footer = hooks?.footer || defaultFooter;

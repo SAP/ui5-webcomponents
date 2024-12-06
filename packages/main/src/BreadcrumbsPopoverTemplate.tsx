@@ -4,7 +4,7 @@ import List from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 
-export default function (this: Breadcrumbs) {
+export default function BreadcrumbsPopoverTemplate(this: Breadcrumbs) {
 	return (
 		<ResponsivePopover
 			class="ui5-breadcrumbs-popover"

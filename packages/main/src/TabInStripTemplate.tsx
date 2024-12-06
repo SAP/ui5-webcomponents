@@ -11,7 +11,7 @@ function additionalText(this: Tab) {
 	);
 }
 
-export default function (this: Tab) {
+export default function TabInStripTemplate(this: Tab) {
 	return (
 		<div id={this._id}
 			class={this.stripClasses.itemClasses}

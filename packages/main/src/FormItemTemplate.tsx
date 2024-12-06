@@ -1,7 +1,7 @@
 import type FormItem from "./FormItem.js";
 import type SlottedChild from "@ui5/webcomponents-base/dist/UI5Element.js";
 
-export default function (this: FormItem) {
+export default function FormItemTemplate(this: FormItem) {
 	return (
 		<div class="ui5-form-item-root">
 			<div class="ui5-form-item-layout" part="layout">

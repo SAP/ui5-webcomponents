@@ -1,6 +1,6 @@
 import type ToolbarSeparator from "./ToolbarSeparator.js";
 
-export default function (this: ToolbarSeparator) {
+export default function ToolbarSeparatorTemplate(this: ToolbarSeparator) {
 	return (
 		<div
 			class="ui5-tb-separator ui5-tb-item"

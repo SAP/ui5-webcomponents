@@ -2,7 +2,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type RadioButton from "./RadioButton.js";
 import Label from "./Label.js";
 
-export default function (this: RadioButton) {
+export default function RadioButtonTemplate(this: RadioButton) {
 	return (
 		<div
 			role="radio"

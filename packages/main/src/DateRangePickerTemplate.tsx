@@ -5,7 +5,7 @@ import type DateRangePicker from "./DateRangePicker.js";
 import DatePickerInputTemplate from "./DatePickerInputTemplate.js";
 import DatePickerPopoverTemplate from "./DatePickerPopoverTemplate.js";
 
-export default function (this: DateRangePicker) {
+export default function DateRangePickerTemplate(this: DateRangePicker) {
 	return [
 		DatePickerInputTemplate.call(this),
 		DatePickerPopoverTemplate.call(this, { content }),

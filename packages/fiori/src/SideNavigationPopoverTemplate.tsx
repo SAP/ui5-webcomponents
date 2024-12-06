@@ -5,7 +5,7 @@ import SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 
-export default function (this: SideNavigation) {
+export default function SideNavigationTemplate(this: SideNavigation) {
 	return (<>
 		<NavigationMenu
 			id={`${this._id}-side-navigation-overflow-menu`}

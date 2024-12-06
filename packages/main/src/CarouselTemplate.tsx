@@ -3,7 +3,7 @@ import Button from "./Button.js";
 import slimArrowLeft from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import slimArrowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
-export default function (this: Carousel) {
+export default function CarouselTemplate(this: Carousel) {
 	return (
 		<section
 			class={{

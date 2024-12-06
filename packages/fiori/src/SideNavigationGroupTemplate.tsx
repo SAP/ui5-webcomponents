@@ -3,7 +3,7 @@ import navRightArrow from "@ui5/webcomponents-icons/dist/navigation-right-arrow.
 import navDownArrow from "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
 
-export default function (this: SideNavigationGroup) {
+export default function SideNavigationGroupTemplate(this: SideNavigationGroup) {
 	if (this.sideNavCollapsed) {
 		return (<>
 			<div class={`ui5-sn-item-separator ${this.belowGroupClassName}`}></div>

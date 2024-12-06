@@ -3,7 +3,7 @@ import Label from "./Label.js";
 import Slider from "./Slider.js";
 import Input from "./Input.js";
 
-export default function (this: ColorPicker) {
+export default function ColorPickerTemplate(this: ColorPicker) {
 	return (
 		<section class="ui5-color-picker-root">
 			<div
