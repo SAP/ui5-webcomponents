@@ -9,7 +9,7 @@
 	{{#if _maxCharactersExceeded}}
 		<span class="ui5-exp-text-ellipsis">{{_ellipsisText}}</span>
 		<ui5-link
-			id="{{_id}}-toggle"
+			id="toggle"
 			class="ui5-exp-text-toggle"
 			accessible-role="Button"
 			?accessible-name="{{_accessibleNameForToggle}}"
@@ -23,13 +23,14 @@
 		{{#if _usePopover}}
 			<ui5-responsive-popover
 				?open="{{_expanded}}"
-				opener="{{_id}}-toggle"
+				opener="toggle"
+				accessible-name-ref="popover-text"
 				content-only-on-desktop
 				_hide-header
 				class="ui5-exp-text-popover"
 				@ui5-close="{{_handlePopoverClose}}"
 			>
-				<ui5-text>{{text}}</ui5-text>
+				<ui5-text id="popover-text">{{text}}</ui5-text>
 				<div 
 					slot="footer"
 					class="ui5-exp-text-footer"

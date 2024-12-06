@@ -178,7 +178,6 @@ describe("ExpandableText", () => {
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="5"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
-			cy.get("@expTextShadow").find("[ui5-text]").as("text");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@toggle")
@@ -281,7 +280,6 @@ describe("ExpandableText", () => {
 			cy.mount(html`<ui5-expandable-text text=${text} max-characters="5" overflow-mode="Popover"></ui5-expandable-text>`);
 
 			cy.get("[ui5-expandable-text]").shadow().as("expTextShadow");
-			cy.get("@expTextShadow").find("[ui5-text]").as("text");
 			cy.get("@expTextShadow").find(".ui5-exp-text-toggle").as("toggle");
 
 			cy.get("@toggle")
@@ -293,6 +291,10 @@ describe("ExpandableText", () => {
 					expanded: false,
 					hasPopup: "dialog",
 				});
+
+			cy.get("@expTextShadow")
+				.find("[ui5-responsive-popover]")
+				.should("have.attr", "accessible-name-ref", "popover-text");
 
 			cy.get("@toggle")
 				.realClick();
