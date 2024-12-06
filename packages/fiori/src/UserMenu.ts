@@ -225,7 +225,7 @@ class UserMenu extends UI5Element {
 	}
 
 	@bound
-	_handleAvatarClick(e: MouseEvent) {
+	_handleAvatarClick(e: CustomEvent) {
 		if (e.type === "click") {
 			// TOFIX: Discuss this check: Fire the custom UserMenu#avatar-click only for Avatar#click (not for Avatar#ui5-click as well).
 			this.fireDecoratorEvent("avatar-click");
