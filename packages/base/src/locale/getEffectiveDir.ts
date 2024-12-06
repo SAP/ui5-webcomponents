@@ -1,9 +1,9 @@
 const getEffectiveDir = (element: HTMLElement): "rtl" | "ltr" => {
-	if (element.matches(":dir(rtl)")) {
-		return "rtl";
+	try {
+		return element.matches(":dir(rtl)") ? 'rtl' : 'ltr';
+	} catch {
+		return 'ltr'
 	}
-
-	return "ltr";
 };
 
 export default getEffectiveDir;
