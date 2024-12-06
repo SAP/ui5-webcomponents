@@ -406,6 +406,7 @@ describe("ARIA attributes", () => {
         const title = await browser.$("#page ui5-dynamic-page-title");
         const titleFocusArea = await title.shadow$(".ui5-dynamic-page-title-focus-area");
         const headerWrapper = await page.shadow$(".ui5-dynamic-page-title-header-wrapper");
+        const headerRoot = await page.$("ui5-dynamic-page-header").shadow$(".ui5-dynamic-page-header-root");
         const headerActions = await page.shadow$("ui5-dynamic-page-header-actions");
         const expandButton = await headerActions.shadow$("ui5-button.ui5-dynamic-page-header-action-expand");
         const pinButton = await headerActions.shadow$("ui5-toggle-button.ui5-dynamic-page-header-action-pin");
@@ -418,7 +419,7 @@ describe("ARIA attributes", () => {
             "aria-label value is correct");
         assert.strictEqual(await headerWrapper.getAttribute("aria-expanded"), "true",
             "aria-expanded value is correct");
-        assert.strictEqual(await headerWrapper.getAttribute("role"), "region",
+        assert.strictEqual(await headerRoot.getAttribute("role"), "region",
             "header role is correct");
 
         assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "true",
@@ -453,8 +454,6 @@ describe("ARIA attributes", () => {
             "aria-label value is correct");
         assert.strictEqual(await headerWrapper.getAttribute("aria-expanded"), "false",
             "aria-expanded value is correct");
-        assert.strictEqual(await headerWrapper.getAttribute("role"), "region",
-            "role is correct");
 
         assert.strictEqual(await titleFocusArea.getAttribute("aria-expanded"), "false",
             "aria-expanded value is correct");
