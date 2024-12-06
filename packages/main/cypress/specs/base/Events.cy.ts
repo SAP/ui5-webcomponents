@@ -175,6 +175,11 @@ describe("Event bubbling", () => {
 				dialog.get(0).addEventListener("ui5-close", cy.stub().as("dialogClosed"));
 			});
 
+		cy.get("@dialog")
+			.then(dialog => {
+				dialog.get(0).addEventListener("ui5-open", cy.stub().as("dialogOpened"));
+			});
+
 		cy.get("@select")
 			.then(select => {
 				select.get(0).addEventListener("ui5-close", cy.stub().as("selClosed"));
@@ -190,9 +195,10 @@ describe("Event bubbling", () => {
 				multiCombobox.get(0).addEventListener("ui5-close", cy.stub().as("mcbClosed"));
 			});
 
-		cy.get("@multiCombobox").then((multiCombobox) => {
-			multiCombobox.get(0).addEventListener("open", cy.stub().as("mcbOpen"));
-		});
+		cy.get("@multiCombobox")
+			.then(multiCombobox => {
+				multiCombobox.get(0).addEventListener("open", cy.stub().as("mcbOpened"));
+			});
 
 		cy.get("@dialog").invoke("attr", "open", true);
 
@@ -214,7 +220,8 @@ describe("Event bubbling", () => {
 			.should("be.visible");
 
 		// assert - the open event of the MultiComboBox do not bubble
-		cy.get("@mcbOpen").should("have.been.calledOnce");
+		cy.get("@mcbOpened").should("have.been.calledOnce");
+		cy.get("@dialogOpened").should("have.been.calledTwice");
 
 		cy.get("@multiComboboxIcon")
 			.realClick();
