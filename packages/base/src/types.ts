@@ -25,6 +25,8 @@ type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 
 type ARIARoles = LowercaseString<AriaRole>;
 type ARIAHasPopup = LowercaseString<AriaHasPopup>;
+type ARIACurrent = "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean | undefined;
+type ARIAAutoComplete = "list" | "none" | "inline" | "both" | undefined;
 
 type AccessibilityInfo = {
 	// The WAI-ARIA role of the component.
@@ -54,13 +56,15 @@ type AccessibilityInfo = {
 type AccessibilityAttributes = {
 	ariaSetsize?: number,
 	ariaPosinset?: number,
+	ariaLabel?: string,
 	controls?: LowercaseString<string>
 	expanded?: "true" | "false" | boolean,
 	hasPopup?: ARIAHasPopup,
 	name?: string,
 	role?: ARIARoles,
 	ariaKeyShortcuts?: string,
-	current?: "page" | "step" | "location" | "date" | "time" | "true" | "false" | boolean
+	ariaCurrent?: ARIACurrent,
+	current?: ARIACurrent,
 }
 
 export type {
@@ -75,4 +79,7 @@ export type {
 	ClassMap,
 	ClassMapValue,
 	PassiveEventListenerObject,
+	ARIARoles,
+	ARIAHasPopup,
+	ARIAAutoComplete,
 };

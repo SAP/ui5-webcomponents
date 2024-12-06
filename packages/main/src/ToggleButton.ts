@@ -1,10 +1,11 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
-import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
+import ToggleButtonTemplate from "./ToggleButtonTemplate.js";
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
@@ -44,6 +45,7 @@ class ToggleButton extends Button {
 	@property({ type: Boolean })
 	pressed = false;
 
+	@bound
 	_onclick() {
 		this.pressed = !this.pressed;
 
@@ -52,6 +54,7 @@ class ToggleButton extends Button {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpaceShift(e)) {
 			e.preventDefault();

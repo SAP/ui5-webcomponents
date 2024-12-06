@@ -1,8 +1,9 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element, { type UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isLeft,
 	isRight,
@@ -15,12 +16,11 @@ import {
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -29,7 +29,7 @@ import MenuSeparator from "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
-import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import menuTemplate from "./MenuTemplate.js";
 import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 	MENU_POPOVER_ACCESSIBLE_NAME,
@@ -96,7 +96,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  */
 @customElement({
 	tag: "ui5-menu",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: menuCss,
 	template: menuTemplate,
 	dependencies: [
@@ -253,6 +253,7 @@ class Menu extends UI5Element {
 		});
 	}
 
+	@bound
 	_close() {
 		this.open = false;
 	}
@@ -284,6 +285,7 @@ class Menu extends UI5Element {
 		}
 	}
 
+	@bound
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
@@ -323,6 +325,7 @@ class Menu extends UI5Element {
 		}, MENU_OPEN_DELAY);
 	}
 
+	@bound
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 
@@ -340,6 +343,7 @@ class Menu extends UI5Element {
 		}
 	}
 
+	@bound
 	_itemKeyDown(e: KeyboardEvent) {
 		if (!isLeft(e) && !isRight(e)) {
 			return;
@@ -362,6 +366,7 @@ class Menu extends UI5Element {
 		}
 	}
 
+	@bound
 	_beforePopoverOpen(e: CustomEvent) {
 		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
 
@@ -371,12 +376,14 @@ class Menu extends UI5Element {
 		}
 	}
 
+	@bound
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+	@bound
+	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
 
 		if (prevented) {
@@ -385,6 +392,7 @@ class Menu extends UI5Element {
 		}
 	}
 
+	@bound
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");

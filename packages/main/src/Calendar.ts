@@ -3,6 +3,7 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -43,7 +44,7 @@ import Icon from "./Icon.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 // Template
-import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
+import CalendarTemplate from "./CalendarTemplate.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
@@ -440,6 +441,7 @@ class Calendar extends CalendarPart {
 		return uniqueSpecialDates;
 	}
 
+	@bound
 	_onCalendarLegendSelectionChange(e: CustomEvent<CalendarLegendItemSelectionChangeEventDetail>) {
 		const defaultTypes = ["Working", "NonWorking", "Selected", "Today"];
 		this._selectedItemType = e.detail.item.type;
@@ -507,6 +509,7 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
+	@bound
 	onHeaderShowMonthPress() {
 		this.showMonth();
 		this.fireDecoratorEvent("show-month-view");
@@ -520,6 +523,7 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "year" button in the header
 	 */
+	@bound
 	onHeaderShowYearPress() {
 		this.showYear();
 		this.fireDecoratorEvent("show-year-view");
@@ -634,11 +638,13 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	@bound
 	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._fireEventAndUpdateSelectedDates(e.detail.dates);
 	}
 
+	@bound
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
@@ -651,6 +657,7 @@ class Calendar extends CalendarPart {
 		this._currentPickerDOM._autoFocus = true;
 	}
 
+	@bound
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
@@ -665,10 +672,12 @@ class Calendar extends CalendarPart {
 		this._currentPickerDOM._autoFocus = true;
 	}
 
+	@bound
 	onNavigate(e: CustomEvent) {
 		this.timestamp = e.detail.timestamp;
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
@@ -681,6 +690,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	@bound
 	_onLegendFocusOut() {
 		this._selectedItemType = "None";
 	}
@@ -723,6 +733,7 @@ class Calendar extends CalendarPart {
 		return secondMonthButtonText;
 	}
 
+	@bound
 	onMonthButtonKeyDown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -734,6 +745,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	@bound
 	onMonthButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -742,6 +754,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	@bound
 	onYearButtonKeyDown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -753,6 +766,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	@bound
 	onYearButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.showYear();
@@ -760,6 +774,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	@bound
 	onPrevButtonClick(e: MouseEvent) {
 		if (this._previousButtonDisabled) {
 			e.preventDefault();
@@ -770,6 +785,7 @@ class Calendar extends CalendarPart {
 		e.preventDefault();
 	}
 
+	@bound
 	onNextButtonClick(e: MouseEvent) {
 		if (this._nextButtonDisabled) {
 			e.preventDefault();

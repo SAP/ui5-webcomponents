@@ -1,8 +1,10 @@
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isShow,
 	isBackSpace,
@@ -18,19 +20,18 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
-import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
+import MultiInputTemplate from "./MultiInputTemplate.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
 import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/value-help.js";
 
 import type {
 	InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail,
 } from "./Input.js";
 
-interface IToken extends HTMLElement, ITabbable {
+interface IToken extends UI5Element, ITabbable {
 	text?: string;
 	readonly: boolean,
 	selected: boolean,
@@ -63,7 +64,7 @@ type MultiInputTokenDeleteEventDetail = {
  */
 @customElement({
 	tag: "ui5-multi-input",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
@@ -171,11 +172,13 @@ class MultiInput extends Input implements IFormInputElement {
 		this._valueHelpIconPressed = false;
 	}
 
+	@bound
 	valueHelpPress() {
 		this.closeValueStatePopover();
 		this.fireDecoratorEvent("value-help-trigger");
 	}
 
+	@bound
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		const deletedTokens = e.detail.tokens;
 		const selectedTokens = this.tokens.filter(token => token.selected);
@@ -194,6 +197,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
+	@bound
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
 		this.closeValueStatePopover();
@@ -202,6 +206,7 @@ class MultiInput extends Input implements IFormInputElement {
 		target.focus();
 	}
 
+	@bound
 	_tokenizerFocusOut(e: FocusEvent) {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
@@ -209,12 +214,14 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
+	@bound
 	valueHelpMouseUp() {
 		setTimeout(() => {
 			this._valueHelpIconPressed = false;
 		}, 0);
 	}
 
+	@bound
 	innerFocusIn() {
 		this.tokenizer.expanded = true;
 		this.focused = true;
@@ -225,6 +232,7 @@ class MultiInput extends Input implements IFormInputElement {
 		});
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
@@ -253,6 +261,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
 		if (isRight(e) || isDown(e) || isEnd(e) || rightCtrl) {
@@ -307,6 +316,7 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onfocusout(e: FocusEvent) {
 		super._onfocusout(e);
 		const relatedTarget = e.relatedTarget as HTMLElement;
@@ -325,6 +335,7 @@ class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * @override
 	 */
+	@bound
 	_onfocusin(e: FocusEvent) {
 		const inputDomRef = this.getInputDOMRef();
 
@@ -391,11 +402,9 @@ class MultiInput extends Input implements IFormInputElement {
 	get accInfo() {
 		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 		return {
-			"input": {
-				...super.accInfo.input,
-				"ariaRoledescription": this.ariaRoleDescription,
-				"ariaDescribedBy": ariaDescribedBy,
-			},
+			...super.accInfo,
+			"ariaRoledescription": this.ariaRoleDescription,
+			"ariaDescribedBy": ariaDescribedBy,
 		};
 	}
 

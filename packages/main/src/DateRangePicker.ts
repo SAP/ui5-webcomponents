@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -9,7 +10,7 @@ import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
+import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
@@ -21,6 +22,7 @@ import type {
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
+import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 const DEFAULT_DELIMITER = "-";
 
@@ -136,7 +138,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * Required by DatePicker.js
 	 * @override
 	 */
-	get _calendarSelectionMode() {
+	get _calendarSelectionMode(): `${CalendarSelectionMode}` {
 		return "Range";
 	}
 
@@ -222,6 +224,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
+	@bound
 	 onResponsivePopoverAfterClose() {
 		this._tempValue = ""; // reset _tempValue on popover close
 		super.onResponsivePopoverAfterClose();
@@ -258,6 +261,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
+	@bound
 	onSelectedDatesChange(event: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
 		const values = event.detail.selectedValues;

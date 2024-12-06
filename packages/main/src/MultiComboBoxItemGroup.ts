@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 import type MultiComboBoxItem from "./MultiComboBoxItem.js";
-import MultiComboBoxItemGroupTemplate from "./generated/templates/MultiComboBoxItemGroupTemplate.lit.js";
+import MultiComboBoxItemGroupTemplate from "./MultiComboBoxItemGroupTemplate.js";
 import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxItemGroup from "./ComboBoxItemGroup.js";
 
@@ -21,6 +21,7 @@ import ComboBoxItemGroup from "./ComboBoxItemGroup.js";
 	template: MultiComboBoxItemGroupTemplate,
 })
 class MultiComboBoxItemGroup extends ComboBoxItemGroup implements IMultiComboBoxItem {
+	eventDetails!: ComboBoxItemGroup["eventDetails"];
 	/**
 	 * Defines the items of the <code>ui5-mcb-item-group</code>.
 	 * @public

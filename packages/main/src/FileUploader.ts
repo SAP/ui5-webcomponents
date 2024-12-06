@@ -3,8 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -23,7 +24,7 @@ import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 
 // Template
-import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit.js";
+import FileUploaderTemplate from "./FileUploaderTemplate.js";
 
 // Styles
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
@@ -73,7 +74,7 @@ type FileUploaderChangeEventDetail = {
 	tag: "ui5-file-uploader",
 	languageAware: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [
 		FileUploaderCss,
 		ResponsivePopoverCommonCss,
@@ -250,24 +251,28 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return null;
 	}
 
+	@bound
 	_onmouseover() {
 		this.content.forEach(item => {
 			item.classList.add("ui5_hovered");
 		});
 	}
 
+	@bound
 	_onmouseout() {
 		this.content.forEach(item => {
 			item.classList.remove("ui5_hovered");
 		});
 	}
 
+	@bound
 	_onclick() {
 		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			this._input.click();
 		}
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this._input.click();
@@ -275,6 +280,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._input.click();
@@ -282,11 +288,13 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_ondrag(e: DragEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 	}
 
+	@bound
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 		e.stopPropagation();
@@ -309,10 +317,12 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		});
 	}
 
+	@bound
 	_onfocusin() {
 		this.focused = true;
 	}
 
+	@bound
 	_onfocusout() {
 		this.focused = false;
 	}
@@ -338,6 +348,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 	}
 
+	@bound
 	_onChange(e: Event) {
 		let changedFiles = (e.target as HTMLInputElement).files;
 
@@ -489,26 +500,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		};
 
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
-	}
-
-	get classes() {
-		return {
-			popoverValueState: {
-				"ui5-valuestatemessage-root": true,
-				"ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
-				"ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
-				"ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
-				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
-			},
-		};
-	}
-
-	get styles() {
-		return {
-			popoverHeader: {
-				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,
-			},
-		};
 	}
 
 	get ui5Input() {

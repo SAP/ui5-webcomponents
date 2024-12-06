@@ -2,9 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -17,7 +18,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 
 // Template
-import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
+import DynamicPageTitleTemplate from "./DynamicPageTitleTemplate.js";
 
 // Styles
 import DynamicPageTitleCss from "./generated/themes/DynamicPageTitle.css.js";
@@ -62,7 +63,7 @@ import {
 @customElement({
 	tag: "ui5-dynamic-page-title",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
 	dependencies: [Title, Icon],
@@ -72,13 +73,13 @@ import {
  * Event is fired when the title is toggled.
  * @private
  */
-@event("_toggle-title", {
+@event("toggle-title", {
 	bubbles: true,
 })
 
 class DynamicPageTitle extends UI5Element {
 	eventDetails!: {
-		"_toggle-title": void;
+		"toggle-title": void;
 	}
 	/**
 	 * Defines if the title is snapped.
@@ -242,17 +243,6 @@ class DynamicPageTitle extends UI5Element {
 		this.prepareLayoutActions();
 	}
 
-	get styles() {
-		return {
-			content: {
-				"min-width": this.minContentWidth ? `${this.minContentWidth || 0}px` : undefined,
-			},
-			actions: {
-				"min-width": this.minActionsWidth ? `${this.minActionsWidth || 0}px` : undefined,
-			},
-		};
-	}
-
 	get hasContent() {
 		return !!this.content.length;
 	}
@@ -269,7 +259,7 @@ class DynamicPageTitle extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.interactive ? "0" : undefined;
+		return this.interactive ? 0 : undefined;
 	}
 
 	get _headerExpanded() {
@@ -310,6 +300,7 @@ class DynamicPageTitle extends UI5Element {
 		this.mobileNavigationActions = this.offsetWidth < 1280;
 	}
 
+	@bound
 	onMinContentWidthChange(e: CustomEvent<ToolbarMinWidthChangeEventDetail>) {
 		const slotName = (<HTMLElement>e.target)?.assignedSlot?.name;
 		if (!slotName || slotName === "content") {
@@ -319,14 +310,16 @@ class DynamicPageTitle extends UI5Element {
 		}
 	}
 
+	@bound
 	onTitleClick() {
-		this.fireDecoratorEvent("_toggle-title");
+		this.fireDecoratorEvent("toggle-title");
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();
-			this.fireDecoratorEvent("_toggle-title");
+			this.fireDecoratorEvent("toggle-title");
 		}
 	}
 }

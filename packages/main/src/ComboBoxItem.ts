@@ -3,8 +3,9 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { IComboBoxItem } from "./ComboBox.js";
 import ListItemBase from "./ListItemBase.js";
 
-import ComboBoxItemTemplate from "./generated/templates/ComboBoxItemTemplate.lit.js";
+import ComboBoxItemTemplate from "./ComboBoxItemTemplate.js";
 import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
+
 /**
  * @class
  * The `ui5-cb-item` represents the item for a `ui5-combobox`.
@@ -19,6 +20,7 @@ import ComboboxItemCss from "./generated/themes/ComboBoxItem.css.js";
 	styles: [ListItemBase.styles, ComboboxItemCss],
 })
 class ComboBoxItem extends ListItemBase implements IComboBoxItem {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the text of the component.
 	 * @default undefined

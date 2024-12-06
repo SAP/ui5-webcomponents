@@ -7,7 +7,7 @@ import ListItemBase from "./ListItemBase.js";
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import ListItemGroupHeaderTemplate from "./generated/templates/ListItemGroupHeaderTemplate.lit.js";
+import ListItemGroupHeaderTemplate from "./ListItemGroupHeaderTemplate.js";
 
 // Styles
 import ListItemGroupHeaderCss from "./generated/themes/ListItemGroupHeader.css.js";
@@ -29,6 +29,7 @@ import ListItemGroupHeaderCss from "./generated/themes/ListItemGroupHeader.css.j
 	styles: [ListItemBase.styles, ListItemGroupHeaderCss],
 })
 class ListItemGroupHeader extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the text alternative of the component.
 	 *

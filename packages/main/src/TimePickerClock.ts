@@ -2,11 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 // Template
-import TimePickerClockTemplate from "./generated/templates/TimePickerClockTemplate.lit.js";
+import TimePickerClockTemplate from "./TimePickerClockTemplate.js";
 
 // Styles
 import TimePickerClockCss from "./generated/themes/TimePickerClock.css.js";
@@ -83,7 +84,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  */
 @customElement({
 	tag: "ui5-time-picker-clock",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TimePickerClockCss,
 	template: TimePickerClockTemplate,
 })
@@ -100,8 +101,9 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
 
 class TimePickerClock extends UI5Element {
 	eventDetails!: {
-		"change": TimePickerClockChangeEventDetail
-	}
+		change: TimePickerClockChangeEventDetail,
+	};
+
 	/**
 	 * Determines whether the component is displayed as disabled.
 	 * @default false
@@ -357,6 +359,8 @@ class TimePickerClock extends UI5Element {
 			"showMarker": selectedOuter || selectedInner,
 			"itemClasses": CLOCK_NUMBER_CLASS + (selectedOuter ? ` ${CLOCK_NUMBER_SELECTED_CLASS}` : ""),
 			"innerItemClasses": CLOCK_NUMBER_CLASS + (selectedInner ? ` ${CLOCK_NUMBER_SELECTED_CLASS}` : ""),
+			// eslint-disable-next-line
+			// TODO: styles are added inline in the template: remove after checking
 			"outerStyles": {
 				transform: `translate(-50%) rotate(${currentAngle || 0}deg)`,
 			},
@@ -404,6 +408,8 @@ class TimePickerClock extends UI5Element {
 			valueIndex = i / itemStep - 1;
 			item = i % displayStep !== 0 ? {} : values[valueIndex];
 			item.angle = i * CLOCK_ANGLE_STEP;
+			// eslint-disable-next-line
+			// TODO: styles are added inline in the template: remove after checking
 			item.outerStyles = {
 				transform: `translate(-50%) rotate(${i * 6}deg)`,
 			};
@@ -669,10 +675,21 @@ class TimePickerClock extends UI5Element {
 		this._updateSelectedValueObject(realValue);
 	}
 
+	@bound
+	_captureClockRef(el: HTMLDivElement | null) {
+		if (el) {
+			// @ts-expect-error "mousewheel" is not a standard event
+			el.addEventListener("mousewheel", this._onMouseWheel.bind(this));
+			// @ts-expect-error "DOMMouseScroll" is not a standard event
+			el.addEventListener("DOMMouseScroll", this._onMouseWheel.bind(this));
+		}
+	}
+
 	/**
 	 * TouchStart/MouseDown event handler.
 	 * @param evt Event object
 	 */
+	@bound
 	_onTouchStart(evt: Event) {
 		this._cancelTouchOut = false;
 		if (this.disabled || this._mouseOrTouchDown) {
@@ -692,6 +709,7 @@ class TimePickerClock extends UI5Element {
 	 * TouchMove/MouseMove event handler.
 	 * @param evt Event object
 	 */
+	@bound
 	_onTouchMove(evt: Event) {
 		let	hoveredNumber;
 		const domRef = this.getDomRef();
@@ -728,6 +746,7 @@ class TimePickerClock extends UI5Element {
 	 * TouchEnd/MouseUp event handler.
 	 * @param evt Event object
 	 */
+	@bound
 	_onTouchEnd(evt: Event) {
 		if (!this._mouseOrTouchDown) {
 			return;
@@ -758,12 +777,18 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * MouseOut event handler.
 	 */
+	@bound
 	_onMouseOut() {
 		const hoveredNumber = (this.getDomRef() as HTMLElement).querySelector(this._hoveredId(this._hoveredValue));
 
 		hoveredNumber && hoveredNumber.classList.remove(CLOCK_NUMBER_HOVER_CLASS);
 		this._hoveredValue = -1;
 		this._prevHoveredValue = -1;
+	}
+
+	@bound
+	noop() {
+		return false;
 	}
 }
 

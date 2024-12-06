@@ -119,12 +119,13 @@ type PopupBeforeCloseEventDetail = {
 })
 abstract class Popup extends UI5Element {
 	eventDetails!: {
-		"before-open": void,
-		open: void,
-		"before-close": PopupBeforeCloseEventDetail,
-		close: void,
-		scroll: PopupScrollEventDetail,
+		"before-open": void
+		"open": void
+		"before-close": PopupBeforeCloseEventDetail
+		"close": void
+		"scroll": PopupScrollEventDetail
 	}
+
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
@@ -635,8 +636,4 @@ abstract class Popup extends UI5Element {
 }
 
 export default Popup;
-
-export type {
-	PopupScrollEventDetail,
-	PopupBeforeCloseEventDetail,
-};
+export type { PopupScrollEventDetail, PopupBeforeCloseEventDetail };

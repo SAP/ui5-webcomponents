@@ -1,10 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -55,7 +57,7 @@ import ListSeparator from "./types/ListSeparator.js";
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template
-import ListTemplate from "./generated/templates/ListTemplate.lit.js";
+import ListTemplate from "./ListTemplate.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
@@ -175,7 +177,7 @@ type ListItemClickEventDetail = {
 @customElement({
 	tag: "ui5-list",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: ListTemplate,
 	styles: [
 		listCss,
@@ -594,9 +596,8 @@ class List extends UI5Element {
 		this.getItems().forEach(item => {
 			if (item.hasAttribute("ui5-li-group-header")) {
 				item.addEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
-				item.addEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
-				item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
-				item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+				item.addEventListener("ui5-forward-after", this.onForwardAfterBound as EventListener);
+				item.addEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
 	}
@@ -605,9 +606,8 @@ class List extends UI5Element {
 		this.getItems().forEach(item => {
 			if (item.hasAttribute("ui5-li-group-header")) {
 				item.removeEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
-				item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
-				item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
-				item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+				item.removeEventListener("ui5-forward-after", this.onForwardAfterBound as EventListener);
+				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
 	}
@@ -726,7 +726,7 @@ class List extends UI5Element {
 	}
 
 	get listAccessibleRole() {
-		return this.accessibleRole.toLowerCase();
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get classes(): ClassMap {
@@ -783,6 +783,7 @@ class List extends UI5Element {
 	/*
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
+	@bound
 	onSelectionRequested(e: CustomEvent<SelectionRequestEventDetail>) {
 		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
@@ -887,6 +888,7 @@ class List extends UI5Element {
 		});
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnd(e)) {
 			this._handleEnd();
@@ -957,6 +959,7 @@ class List extends UI5Element {
 		}
 	}
 
+	@bound
 	_onLoadMoreKeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -987,6 +990,7 @@ class List extends UI5Element {
 		}
 	}
 
+	@bound
 	_onLoadMoreKeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._onLoadMoreClick();
@@ -994,14 +998,17 @@ class List extends UI5Element {
 		this._loadMoreActive = false;
 	}
 
+	@bound
 	_onLoadMoreMousedown() {
 		this._loadMoreActive = true;
 	}
 
+	@bound
 	_onLoadMoreMouseup() {
 		this._loadMoreActive = false;
 	}
 
+	@bound
 	_onLoadMoreClick() {
 		this.loadMore();
 	}
@@ -1080,6 +1087,7 @@ class List extends UI5Element {
 		this._shouldFocusGrowingButton();
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent) {
 		const target = getNormalizedTarget(e.target as HTMLElement);
 		// If the focusin event does not origin from one of the 'triggers' - ignore it.
@@ -1115,10 +1123,12 @@ class List extends UI5Element {
 		this.setForwardingFocus(false);
 	}
 
+	@bound
 	_ondragenter(e: DragEvent) {
 		e.preventDefault();
 	}
 
+	@bound
 	_ondragleave(e: DragEvent) {
 		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
 			return;
@@ -1127,6 +1137,7 @@ class List extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
+	@bound
 	_ondragover(e: DragEvent) {
 		const draggedElement = DragRegistry.getDraggedElement();
 
@@ -1178,6 +1189,7 @@ class List extends UI5Element {
 		}
 	}
 
+	@bound
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 		const draggedElement = DragRegistry.getDraggedElement()!;
@@ -1215,11 +1227,13 @@ class List extends UI5Element {
 		return afterElement && afterElement.id === elementId;
 	}
 
+	@bound
 	onItemTabIndexChange(e: CustomEvent) {
 		const target = e.target as ListItemBase;
 		this._itemNavigation.setCurrentItem(target);
 	}
 
+	@bound
 	onItemFocused(e: CustomEvent) {
 		const target = e.target as ListItemBase;
 
@@ -1240,6 +1254,7 @@ class List extends UI5Element {
 		}
 	}
 
+	@bound
 	onItemPress(e: CustomEvent<ListItemBasePressEventDetail>) {
 		const pressedItem = e.detail.item;
 
@@ -1260,6 +1275,7 @@ class List extends UI5Element {
 	}
 
 	// This is applicable to NotificationListItem
+	@bound
 	onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
 		const target = e.target as UI5Element | null;
 		const shouldFireItemClose = target?.hasAttribute("ui5-li-notification") || target?.hasAttribute("ui5-li-notification-group");
@@ -1269,16 +1285,19 @@ class List extends UI5Element {
 		}
 	}
 
+	@bound
 	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
 		this.fireDecoratorEvent("item-toggle", { item: e.detail.item });
 	}
 
+	@bound
 	onForwardBefore(e: CustomEvent) {
 		this.setPreviouslyFocusedItem(e.target as ListItemBase);
 		this.focusBeforeElement();
 		e.stopPropagation();
 	}
 
+	@bound
 	onForwardAfter(e: CustomEvent) {
 		this.setPreviouslyFocusedItem(e.target as ListItemBase);
 
@@ -1364,6 +1383,7 @@ class List extends UI5Element {
 		item.focus();
 	}
 
+	@bound
 	onFocusRequested(e: CustomEvent) {
 		setTimeout(() => {
 			this.setPreviouslyFocusedItem(e.target as ListItemBase);

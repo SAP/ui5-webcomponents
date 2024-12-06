@@ -3,11 +3,14 @@ import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { JSX } from "@ui5/webcomponents-base";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
@@ -50,7 +53,7 @@ type SelectionRequestEventDetail = {
 }
 
 type AccInfo = {
-	role?: string;
+	role?: JSX.AriaRole | undefined;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
@@ -80,6 +83,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  */
 @customElement({
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [
 		ListItemBase.styles,
 		listItemAdditionalTextCss,
@@ -98,13 +102,13 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 @event("detail-click", {
 	bubbles: true,
 })
-@event("_selection-requested", {
+@event("selection-requested", {
 	bubbles: true,
 })
 abstract class ListItem extends ListItemBase {
 	eventDetails!: ListItemBase["eventDetails"] & {
 		"detail-click": { item: ListItem, selected: boolean };
-		"_selection-requested": SelectionRequestEventDetail,
+		"selection-requested": SelectionRequestEventDetail,
 	}
 	/**
 	 * Defines the visual indication and behavior of the list items.
@@ -190,6 +194,9 @@ abstract class ListItem extends ListItemBase {
 	accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
 
 	@property()
+	_forcedAccessibleRole?: string;
+
+	@property()
 	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
@@ -205,7 +212,6 @@ abstract class ListItem extends ListItemBase {
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
-	_ontouchstart: PassiveEventListenerObject;
 	// used in template, implemented in TreeItemBase, ListItemStandard
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
@@ -230,15 +236,6 @@ abstract class ListItem extends ListItemBase {
 				this.active = false;
 			}
 		};
-
-		const handleTouchStartEvent = () => {
-			this._onmousedown();
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
 	}
 
 	onBeforeRendering() {
@@ -259,6 +256,7 @@ abstract class ListItem extends ListItemBase {
 		document.removeEventListener("touchend", this.deactivate);
 	}
 
+	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
 			return;
@@ -286,6 +284,7 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
@@ -298,10 +297,12 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	@bound
 	_onmousedown() {
 		this.activate();
 	}
 
+	@bound
 	_onmouseup() {
 		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
@@ -309,10 +310,12 @@ abstract class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
+	@bound
 	_ontouchend() {
 		this._onmouseup();
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 
@@ -321,6 +324,7 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	@bound
 	_onfocusout(e: FocusEvent) {
 		if (e.target !== this.getFocusDomRef()) {
 			return;
@@ -329,6 +333,7 @@ abstract class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
+	@bound
 	_ondragstart(e: DragEvent) {
 		if (!e.dataTransfer) {
 			return;
@@ -341,6 +346,7 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	@bound
 	_ondragend(e: DragEvent) {
 		if (e.target === this._listItem) {
 			this.removeAttribute("data-moving");
@@ -358,20 +364,22 @@ abstract class ListItem extends ListItemBase {
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
-	onMultiSelectionComponentPress(e: MouseEvent) {
+	@bound
+	onMultiSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}
 
-		this.fireDecoratorEvent("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
-	onSingleSelectionComponentPress(e: MouseEvent) {
+	@bound
+	onSingleSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}
 
-		this.fireDecoratorEvent("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -380,10 +388,12 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	@bound
 	onDelete() {
-		this.fireDecoratorEvent("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent("selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
+	@bound
 	onDetailClick() {
 		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}
@@ -457,7 +467,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get listItemAccessibleRole() {
-		return this.accessibleRole.toLowerCase();
+		return (this._forcedAccessibleRole || this.accessibleRole.toLowerCase()) as JSX.AriaRole | undefined;
 	}
 
 	get ariaSelectedText() {

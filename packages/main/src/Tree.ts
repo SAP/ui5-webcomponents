@@ -1,13 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { bound } from "@ui5/webcomponents-base/dist/decorators.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DropIndicator from "./DropIndicator.js";
 import TreeItem from "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
@@ -28,7 +29,7 @@ import type {
 } from "./List.js";
 
 // Template
-import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
+import TreeTemplate from "./TreeTemplate.js";
 
 // Styles
 import TreeCss from "./generated/themes/Tree.css.js";
@@ -104,7 +105,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @customElement({
 	tag: "ui5-tree",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TreeCss,
 	template: TreeTemplate,
 	dependencies: [
@@ -330,10 +331,12 @@ class Tree extends UI5Element {
 		return !!this.header.length;
 	}
 
+	@bound
 	_ondragenter(e: DragEvent) {
 		e.preventDefault();
 	}
 
+	@bound
 	_ondragleave(e: DragEvent) {
 		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
 			return;
@@ -342,6 +345,7 @@ class Tree extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
+	@bound
 	_ondragover(e: DragEvent) {
 		const draggedElement = DragRegistry.getDraggedElement();
 		const allLiNodesTraversed: Array<HTMLElement> = []; // use the only <li> nodes to determine positioning
@@ -401,6 +405,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 
@@ -418,6 +423,7 @@ class Tree extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
+	@bound
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {
 		const treeItem = e.detail.item;
 		if (treeItem.items.length > 0) {
@@ -427,6 +433,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListItemStepOut(e: CustomEvent<TreeItemBaseStepOutEventDetail>) {
 		const treeItem = e.detail.item;
 		if (treeItem.parentElement !== this) {
@@ -436,6 +443,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
 		const defaultPrevented = !this.fireDecoratorEvent("item-toggle", { item: treeItem });
@@ -444,6 +452,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 
@@ -452,16 +461,19 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListItemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 		this.fireDecoratorEvent("item-delete", { item: treeItem });
 	}
 
+	@bound
 	_onListItemFocus(e: CustomEvent<ListItemFocusEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 		this.fireDecoratorEvent("item-focus", { item: treeItem });
 	}
 
+	@bound
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
@@ -470,6 +482,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListItemMouseOut(e: MouseEvent) {
 		const target = e.target;
 
@@ -478,6 +491,7 @@ class Tree extends UI5Element {
 		}
 	}
 
+	@bound
 	_onListSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		const previouslySelectedItems = e.detail.previouslySelectedItems as Array<TreeItemBase>;
 		const selectedItems = e.detail.selectedItems as Array<TreeItemBase>;

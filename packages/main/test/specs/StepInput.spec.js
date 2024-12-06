@@ -476,7 +476,7 @@ describe("'change' event firing", () => {
 		await browser.keys("Enter");
 
 
-		assert.strictEqual(await input.getProperty("valueState"), "Negative", "value state is set to Error");
+		assert.strictEqual(await input.getProperty("valueState"), "Negative", "value state is set to Negative");
 		assert.strictEqual(await input.getProperty("value"), "0.100", "value is not rounded");
 	})
 

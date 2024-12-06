@@ -3,7 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -18,7 +19,7 @@ import {
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
+import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
 import type Dialog from "./Dialog.js";
@@ -39,7 +40,7 @@ import ColorPaletteDialogCss from "./generated/themes/ColorPaletteDialog.css.js"
  * Interface for components that may be used inside a `ui5-color-palette` or `ui5-color-palette-popover`
  * @public
  */
-interface IColorPaletteItem extends HTMLElement, ITabbable {
+interface IColorPaletteItem extends UI5Element, ITabbable {
 	value?: string,
 	index?: number,
 	selected?: boolean,
@@ -72,7 +73,7 @@ type ColorPaletteItemClickEventDetail = {
  */
 @customElement({
 	tag: "ui5-color-palette",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	features: ["ColorPaletteMoreColors"],
 	template: ColorPaletteTemplate,
 	styles: [ColorPaletteCss, ColorPaletteDialogCss],
@@ -93,6 +94,7 @@ class ColorPalette extends UI5Element {
 	eventDetails!: {
 		"item-click": ColorPaletteItemClickEventDetail,
 	}
+
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
 	 * @private
@@ -289,10 +291,12 @@ class ColorPalette extends UI5Element {
 		});
 	}
 
+	@bound
 	_onclick(e: MouseEvent) {
 		this.handleSelection(e.target as ColorPaletteItem);
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		if (isSpace(e)) {
@@ -301,6 +305,7 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		if (isEnter(e)) {
@@ -341,12 +346,14 @@ class ColorPalette extends UI5Element {
 		this._onDefaultColorClick();
 	}
 
+	@bound
 	_onDefaultColorKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._handleDefaultColorClick(e);
 		}
 	}
 
+	@bound
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
 		if (isTabNext(e) && this.popupMode) {
 			this._handleDefaultColorClick(e);
@@ -376,6 +383,7 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	@bound
 	_onMoreColorsKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const index = this.colorPaletteNavigationElements.indexOf(target);
@@ -402,6 +410,7 @@ class ColorPalette extends UI5Element {
 		return (isUp(e) || isDown(e)) && this._currentlySelected && this.colorPaletteNavigationElements.includes(this._currentlySelected);
 	}
 
+	@bound
 	_onColorContainerKeyDown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
 		const lastElementInNavigation = this.colorPaletteNavigationElements[this.colorPaletteNavigationElements.length - 1];
@@ -440,6 +449,7 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	@bound
 	_onRecentColorsContainerKeyDown(e: KeyboardEvent) {
 		if (this._isUpOrDownNavigatableColorPaletteItem(e)) {
 			this._currentlySelected = undefined;
@@ -473,6 +483,7 @@ class ColorPalette extends UI5Element {
 		return this.colorPaletteNavigationElements[0];
 	}
 
+	@bound
 	_chooseCustomColor() {
 		const colorPicker = this.getColorPicker();
 		this._setColor(colorPicker.value);
@@ -489,16 +500,19 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
+	@bound
 	_closeDialog() {
 		const dialog = this._getDialog();
 		dialog.open = false;
 	}
 
+	@bound
 	_openMoreColorsDialog() {
 		const dialog = this._getDialog();
 		dialog.open = true;
 	}
 
+	@bound
 	_onDefaultColorClick() {
 		if (this.defaultColor) {
 			this._setColor(this.defaultColor);
@@ -617,6 +631,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get classes() {
+		// Remove after deleting the hbs template, it's added in the jsx template
 		return {
 			colorPaletteRoot: {
 				"ui5-cp-root": true,

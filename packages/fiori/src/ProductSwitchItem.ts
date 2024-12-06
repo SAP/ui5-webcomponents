@@ -1,12 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
+import ProductSwitchItemTemplate from "./ProductSwitchItemTemplate.js";
 import type { IProductSwitchItem } from "./ProductSwitch.js";
 
 // Styles
@@ -37,7 +38,7 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  */
 @customElement({
 	tag: "ui5-product-switch-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ProductSwitchItemCss,
 	template: ProductSwitchItemTemplate,
 	dependencies: [Icon],
@@ -160,6 +161,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 		document.removeEventListener("mouseup", this._deactivate);
 	}
 
+	@bound
 	_onmousedown() {
 		this.active = true;
 	}
@@ -168,6 +170,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 		return this.target || "_self";
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
 			this.active = true;
@@ -182,6 +185,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
 			this.active = false;
@@ -195,6 +199,7 @@ class ProductSwitchItem extends UI5Element implements IProductSwitchItem {
 		}
 	}
 
+	@bound
 	_onfocusout() {
 		this.active = false;
 	}

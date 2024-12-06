@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
 	isEnter,
@@ -20,7 +21,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TimeSelectionInputsTemplate from "./generated/templates/TimeSelectionInputsTemplate.lit.js";
+import TimeSelectionInputsTemplate from "./TimeSelectionInputsTemplate.js";
 
 // Styles
 import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.js";
@@ -59,6 +60,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	eventDetails!: TimePickerInternals["eventDetails"] & {
 		"close-inputs": void,
 	}
+
 	@property({ type: Number })
 	_editedInput = -1;
 
@@ -244,6 +246,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 		return num < 10 && prependZero ? `0${num}` : num.toString();
 	}
 
+	@bound
 	_onkeydown(evt: KeyboardEvent) {
 		if (this._activeIndex === -1) {
 			return;
@@ -307,6 +310,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 		}
 	}
 
+	@bound
 	_onfocusin(e: FocusEvent) {
 		const input = e.target as Input;
 		const innerInput = this._innerInput(input);
@@ -316,6 +320,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 		this._activeIndex = this._getIndexFromId(input.id);
 	}
 
+	@bound
 	_onfocusout() {
 		let value = this._inputComponent(this._activeIndex)!.value === "" ? 0 : this._entities[this._activeIndex].value;
 
@@ -327,6 +332,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 		this._activeIndex = -1;
 	}
 
+	@bound
 	_oninput() {
 		const stringValue = this._inputComponent(this._activeIndex)!.value;
 		const value = stringValue === "" ? 0 : parseInt(stringValue);

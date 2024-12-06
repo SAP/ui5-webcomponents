@@ -61,7 +61,7 @@ describe("Carousel general interaction", () => {
 		await carousel.scrollIntoView();
 
 		// show both arrows by navigating to the right and focus the button
-		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
 		await carousel.moveTo();
 
@@ -71,7 +71,7 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons are rendered in the navigation without hovering (arrows-placement)", async () => {
 		const carousel = await browser.$("#carousel3");
-		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
 
 		await carousel.scrollIntoView();
@@ -164,8 +164,8 @@ describe("Carousel general interaction", () => {
 		await carousel.moveTo();
 		const selectedIndex = await browser.$("#result");
 		const eventCounter = await browser.$("#resultCounter");
-		const navigationArrowForward = await carousel.shadow$("ui5-button[arrow-forward]");
-		const navigationArrowsBack = await carousel.shadow$("ui5-button[arrow-back]");
+		const navigationArrowForward = await carousel.shadow$("ui5-button[data-ui5-arrow-forward]");
+		const navigationArrowsBack = await carousel.shadow$("ui5-button[data-ui5-arrow-back]");
 
 		// using the navigation arrows
 		await navigationArrowForward.click(); // forward

@@ -156,7 +156,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 	}
 
-	_onclick(e: PointerEvent) {
+	_onclick(e: MouseEvent) {
 		this._activate(e);
 	}
 
@@ -166,7 +166,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		this.sideNavigation?.focusItem(this);
 	}
 
-	_activate(e: KeyboardEvent | PointerEvent) {
+	_activate(e: KeyboardEvent | MouseEvent) {
 		e.stopPropagation();
 
 		if (this.isOverflow) {
@@ -175,15 +175,6 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
 	}
-
-	get isSideNavigationSelectableItemBase() {
-		return true;
-	}
 }
 
-const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is SideNavigationSelectableItemBase => {
-	return "isSideNavigationSelectableItemBase" in object;
-};
-
 export default SideNavigationSelectableItemBase;
-export { isInstanceOfSideNavigationSelectableItemBase };

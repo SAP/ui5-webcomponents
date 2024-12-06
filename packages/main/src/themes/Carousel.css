@@ -172,7 +172,7 @@
     transition: background-color .1s ease-in;
 }
 
-.ui5-carousel-navigation-dot[active] {
+.ui5-carousel-navigation-dot.ui5-carousel-navigation-dot--active {
     width: .5rem;
     height: .5rem;
     margin: 0 .25rem;

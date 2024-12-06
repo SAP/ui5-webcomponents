@@ -1,9 +1,10 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDown,
 	isUp,
@@ -22,10 +23,8 @@ import {
 	RATING_INDICATOR_TOOLTIP_TEXT,
 	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
-import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
+import RatingIndicatorTemplate from "./RatingIndicatorTemplate.js";
 import Icon from "./Icon.js";
-import "@ui5/webcomponents-icons/dist/favorite.js";
-import "@ui5/webcomponents-icons/dist/unfavorite.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
@@ -74,7 +73,7 @@ type Star = {
 @customElement({
 	tag: "ui5-rating-indicator",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: RatingIndicatorCss,
 	template: RatingIndicatorTemplate,
 	dependencies: [Icon],
@@ -220,6 +219,7 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
+	@bound
 	_onclick(e: MouseEvent) {
 		const target = e.target as UI5Element;
 
@@ -243,6 +243,7 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
 			e.preventDefault();
@@ -279,6 +280,7 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
+	@bound
 	_onfocusin() {
 		if (this.disabled) {
 			return;
@@ -288,17 +290,19 @@ class RatingIndicator extends UI5Element {
 		this._liveValue = this.value;
 	}
 
+	@bound
 	_onfocusout() {
 		this._focused = false;
 	}
 
-	get halfStarIconName() {
-		return this.disabled || this.readonly ? "favorite" : "unfavorite";
-	}
-
 	get effectiveTabIndex() {
 		const tabindex = this.getAttribute("tabindex");
-		return this.disabled ? "-1" : tabindex || "0";
+
+		if (this.disabled) {
+			return -1;
+		}
+
+		return tabindex ? parseInt(tabindex) : 0;
 	}
 
 	get ratingTooltip(): string | undefined {
@@ -336,3 +340,4 @@ class RatingIndicator extends UI5Element {
 RatingIndicator.define();
 
 export default RatingIndicator;
+export type { Star };
