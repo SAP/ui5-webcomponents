@@ -421,34 +421,29 @@ class AvatarGroup extends UI5Element {
 
 	@bound
 	_onClick(e: MouseEvent) {
-		const target = e.target as HTMLElement;
 		e.stopPropagation();
-
-		if (this._isGroup) {
-			this._fireGroupEvent(target);
-		}
+		this._isGroup && this._fireGroupEvent(e.target as HTMLElement);
 	}
 
 	@bound
 	onAvatarClick(e: MouseEvent) {
 		e.stopPropagation();
-		if (e.type === "ui5-click") {
-			return;
+		if (e.type !== "ui5-click") {
+			// Fire the custom AvatarGroup#click only for Avatar#click,
+			// the framework will auto-fire AvatarGroup#ui5-click in addition.
+			this.fireDecoratorEvent("click", {
+				targetRef: e.target as HTMLElement,
+				overflowButtonClicked: false,
+			});
 		}
-		const targetRef = e.target as HTMLElement;
-		this.fireDecoratorEvent("click", {
-			targetRef,
-			overflowButtonClicked: false,
-		});
 	}
 
 	@bound
 	onOverflowButtonClick(e: MouseEvent) {
 		e.stopPropagation();
 
-		const targetRef = e.target as HTMLElement;
 		this.fireDecoratorEvent("click", {
-			targetRef,
+			targetRef: e.target as HTMLElement,
 			overflowButtonClicked: true,
 		});
 	}

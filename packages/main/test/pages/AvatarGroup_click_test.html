@@ -83,66 +83,12 @@
 	var avatarGroupIndividual = document.getElementById("avatar-group-individual");
 	var avatarGroupGroup = document.getElementById("avatar-group-group");
 
-
-	function onButtonClicked(avatarGroup, event) {
-		var hiddenItems = avatarGroup.type === "Group" ? avatarGroup.items : avatarGroup.hiddenItems;
-		var items = avatarGroup.items.slice();
-		var placeholder = groupPop.querySelector(".placeholder");
-		var firstHiddenIndex = avatarGroup.items.length - hiddenItems.length;
-		var color;
-
-		var html = "";
-
-		hiddenItems.forEach(function (avatar, index) {
-			var color = avatarGroup.colorScheme[firstHiddenIndex + index];
-			html += `<div class="avatar-slot avatargroup5auto" >
-						<ui5-avatar interactive icon="${avatar.icon}" initials="${avatar.initials}" background-color="${color}">`;
-			if (avatar.image.length > 0) {
-				html += `<img src="${avatar.image[0].src}">`
-			}
-			html +=`</ui5-avatar></div>`;
-		});
-
-		for (var index = 0; index < hiddenItems; index++) {
-			var avatarRef = items[index];
-
-			html += `<div class="avatar-slot avatargroup5auto" >
-						<ui5-avatar interactive icon="${avatarRef.icon}" initials="${avatarRef.initials}" background-color="${color}">`;
-			if (avatarRef.image.length > 0) {
-				html += `<img src="${avatarRef.image[0].src}">`
-			}
-			html +=`</ui5-avatar></div>`;
-		}
-		placeholder.innerHTML = html;
-
-		groupPop.open = false;
-		groupPop.opener = event.detail.targetRef;
-		groupPop.open = true;
-	}
-
-	function onAvatarClicked(avatarGroup, avatarRef) {
-		while (popAvatar.firstChild) {
-			popAvatar.removeChild(popAvatar.firstChild);
-		}
-
-		for (let i = 0; i < avatarRef.image.length; i++) {
-			popAvatar.appendChild(avatarRef.image[i].cloneNode())
-		}
-		popAvatar.initials = avatarRef.initials;
-		popAvatar.colorScheme = avatarGroup.colorScheme[avatarGroup.items.indexOf(avatarRef)];
-
-		individualPop.open = false;
-		individualPop.opener = avatarRef;
-		individualPop.open = true;
-	}
-
 	avatarGroupIndividual.addEventListener("click", function (event) {
 		console.log("avatarGroupIndividual click", event.detail);
 	});
 	avatarGroupIndividual.addEventListener("ui5-click", function (event) {
 		console.log("avatarGroupIndividual ui5-click", event.detail);
 	});
-
 
 	avatarGroupGroup.addEventListener("ui5-click", function (event) {
 		console.log("avatarGroupGroup ui5-click", event.detail);
