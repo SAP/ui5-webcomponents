@@ -30,7 +30,7 @@ import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
 import Icon from "./Icon.js";
-import Input from "./Input.js";
+import Input, { type InputEventDetail } from "./Input.js";
 import InputType from "./types/InputType.js";
 
 // Styles
@@ -107,10 +107,9 @@ type StepInputValueStateChangeEventDetail = {
 	bubbles: true,
 })
 /**
- * Fired when the value of the component changes at each keystroke,
- * and when a suggestion item has been selected.
+ * Fired when the value of the component changes at each keystroke.
  * @public
- * @since 2.5.0
+ * @since 2.6.0
  */
 @event("input", {
 	cancelable: true,
@@ -132,7 +131,7 @@ type StepInputValueStateChangeEventDetail = {
 class StepInput extends UI5Element implements IFormInputElement {
 	eventDetails!: {
 		change: void
-		input: void
+		input: InputEventDetail
 		"value-state-change": StepInputValueStateChangeEventDetail
 	}
 	/**
@@ -390,8 +389,8 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}, 0);
 	}
 
-	_onInput(e: InputEvent) {
-		const prevented = !this.fireDecoratorEvent("input");
+	_onInput(e: CustomEvent<InputEventDetail>) {
+		const prevented = !this.fireDecoratorEvent("input", { inputType: e.detail.inputType });
 
 		if (prevented) {
 			e.preventDefault();
