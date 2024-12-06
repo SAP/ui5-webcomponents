@@ -4,7 +4,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -15,7 +16,7 @@ import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import type { IAvatarGroupItem } from "./AvatarGroup.js";
 // Template
-import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
+import AvatarTemplate from "./AvatarTemplate.js";
 
 import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 
@@ -29,7 +30,6 @@ import type AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
 
 type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
@@ -59,7 +59,7 @@ type AvatarAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 @customElement({
 	tag: "ui5-avatar",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: AvatarCss,
 	template: AvatarTemplate,
 	dependencies: [Icon],
@@ -234,8 +234,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	@slot()
 	badge!: Array<HTMLElement>;
 
-	_onclick?: (e: MouseEvent) => void;
-
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -247,7 +245,10 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	}
 
 	get tabindex() {
-		return this.forcedTabIndex || (this._interactive ? "0" : "-1");
+		if (this.forcedTabIndex) {
+			return parseInt(this.forcedTabIndex);
+		}
+		return this._interactive ? 0 : -1;
 	}
 
 	/**
@@ -315,10 +316,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		return this.getDomRef()!.querySelector(".ui5-avatar-icon-fallback");
 	}
 
-	onBeforeRendering() {
-		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
-	}
-
 	async onAfterRendering() {
 		await renderFinished();
 		if (this.initials && !this.icon) {
@@ -368,12 +365,13 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		this.fallBackIconDomRef?.classList.add("ui5-avatar-fallback-icon-hidden");
 	}
 
-	_onClickHandler(e: MouseEvent) {
-		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
+	@bound
+	_onclick(e: MouseEvent) {
 		e.stopPropagation();
 		this._fireClick();
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (!this._interactive) {
 			return;
@@ -388,6 +386,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		}
 	}
 
+	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this._interactive && !e.shiftKey && isSpace(e)) {
 			this._fireClick();
