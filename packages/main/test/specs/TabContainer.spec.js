@@ -417,6 +417,16 @@ describe("TabContainer general interaction", () => {
 
 		assert.ok(await listItem.getProperty("selected"), "tab is selected");
 	});
+
+	it("tests unselected tabcontainer", async () => {
+		const tabContainer = await browser.$("#unselectedTabContainer");
+		const tabs = await tabContainer.shadow$$(".ui5-tab-strip-item");
+		const SELECTION_CSS_CLASS = "ui5-tab-strip-item--selected";
+		for(let i = 0; i < tabs.length; i++) {
+            const tabHtml = await tabs[i].getHTML();
+            assert.notInclude(tabHtml, SELECTION_CSS_CLASS, `Tab at index ${i} should not have the CSS class ${SELECTION_CSS_CLASS}`);
+        }
+	});
 });
 
 describe("TabContainer keyboard handling", () => {
