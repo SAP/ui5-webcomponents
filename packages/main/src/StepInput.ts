@@ -31,7 +31,8 @@ import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
 import Icon from "./Icon.js";
-import Input, { type InputAccInfo } from "./Input.js";
+import Input from "./Input.js";
+import type { InputAccInfo, InputEventDetail } from "./Input.js";
 import InputType from "./types/InputType.js";
 
 // Styles
@@ -108,6 +109,15 @@ type StepInputValueStateChangeEventDetail = {
 	bubbles: true,
 })
 /**
+ * Fired when the value of the component changes at each keystroke.
+ * @public
+ * @since 2.6.0
+ */
+@event("input", {
+	cancelable: true,
+	bubbles: true,
+})
+/**
  * Fired before the value state of the component is updated internally.
  * The event is preventable, meaning that if it's default action is
  * prevented, the component will not update the value state.
@@ -122,9 +132,10 @@ type StepInputValueStateChangeEventDetail = {
 })
 class StepInput extends UI5Element implements IFormInputElement {
 	eventDetails!: {
-		"change": void,
-		"value-state-change": StepInputValueStateChangeEventDetail,
-	};
+		change: void
+		input: InputEventDetail
+		"value-state-change": StepInputValueStateChangeEventDetail
+	}
 
 	/**
 	 * Defines a value of the component.
@@ -372,6 +383,15 @@ class StepInput extends UI5Element implements IFormInputElement {
 				this.inputOuter.removeAttribute("focused");
 			}
 		}, 0);
+	}
+
+	@bound
+	_onInput(e: CustomEvent<InputEventDetail>) {
+		const prevented = !this.fireDecoratorEvent("input", { inputType: e.detail.inputType });
+
+		if (prevented) {
+			e.preventDefault();
+		}
 	}
 
 	@bound

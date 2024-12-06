@@ -116,15 +116,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	growingSubText?: string;
 
 	/**
-	 * Disables the growing feature.
-	 *
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled = false;
-
-	/**
 	 * Defines the active state of the growing button.
 	 * Used for keyboard interaction.
 	 * @private
@@ -165,10 +156,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			focusRow?.focus();
 		}
 
-		if (this.disabled) {
-			return;
-		}
-
 		if (this._renderContent !== this.hasGrowingComponent()) {
 			this._invalidate++;
 			return;
@@ -195,10 +182,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	}
 
 	hasGrowingComponent(): boolean {
-		if (this.disabled) {
-			return false;
-		}
-
 		if (this.type === TableGrowingMode.Scroll) {
 			return !!this._table && this._table._scrollContainer.clientHeight >= this._table._tableElement.scrollHeight;
 		}

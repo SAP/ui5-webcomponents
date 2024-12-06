@@ -56,6 +56,7 @@ export default function StepInputTemplate(this: StepInput) {
 				onChange={this._onInputChange}
 				onFocusOut={this._onInputFocusOut}
 				onFocusIn={this._onInputFocusIn}
+				onInput={this._onInput}
 			>
 				{this.valueStateMessage.length > 0 &&
 					<slot name="valueStateMessage" slot="valueStateMessage"></slot>
