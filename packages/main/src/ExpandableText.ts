@@ -35,7 +35,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  * ### Usage
  *
  * #### When to use:
- * - To accommodate long texts in limited space, for example in list items or table cell texts
+ * - To accommodate long texts in limited space, for example in list items, table cell texts, or forms
  *
  * #### When not to use:
  * - The content is critical for the user. In this case use short descriptions that can fit in
