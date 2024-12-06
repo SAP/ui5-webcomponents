@@ -4,7 +4,7 @@ import decline from "@ui5/webcomponents-icons/dist/decline.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import ComboBoxPopoverTemplate from "./ComboBoxPopoverTemplate.js";
 
-export default function ComboBox(this: ComboBox) {
+export default function ComboBoxTemplate(this: ComboBox) {
 	return (
 		<>
 			<div class="ui5-combobox-root ui5-input-focusable-element">

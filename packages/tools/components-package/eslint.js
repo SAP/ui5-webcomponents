@@ -7,7 +7,6 @@ const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
  * @returns 
  */
 const getTsModeOverrides = () => {	
-	// Default .ts configuration
 	const tsConfiguration = {
 		files: ["*.ts"],
 		parser: "@typescript-eslint/parser",
@@ -40,10 +39,10 @@ const getTsModeOverrides = () => {
 		}
 	};
 
-	// The default .ts configuration with several exceptions for the purpose of .tsx files
 	const tsxConfiguration = JSON.parse(JSON.stringify(tsConfiguration));
 	tsxConfiguration.files = ["*.tsx"];
-	tsxConfiguration.rules = { ...tsxConfiguration.rules, ...{
+	tsxConfiguration.rules = {
+		...tsxConfiguration.rules,
 		"@typescript-eslint/unbound-method": "off", // to be able to attach on* listeners
 		"@typescript-eslint/no-misused-promises": "off", // to be able to have async event listeners
 		"operator-linebreak": "off",
@@ -51,9 +50,8 @@ const getTsModeOverrides = () => {
 		"implicit-arrow-linebreak": "off",
 		"function-paren-newline": "off",
 		"comma-dangle": "off"
-	}};
+	};
 
-	// cypress *.ts
 	const cypressConfiguration = {
 		"files": ["**/cypress/**/*.ts"],
 
@@ -101,7 +99,7 @@ module.exports = {
 	},
 	"root": true,
 	"extends": "airbnb-base",
-	overrides: tsMode ? getTsModeOverrides() : [],
+	"overrides": tsMode ? getTsModeOverrides() : [],
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"
