@@ -86,7 +86,7 @@ describe("List Tests", () => {
 			.shadow()
 			.find("[role='listitem']")
 			.should("have.attr", "tabindex", "0")
-			.and("be.focus");
+			.and("be.focused");
 	});
 
 	it("End key navigation moves focus from first item to last item and then to growing button", () => {
