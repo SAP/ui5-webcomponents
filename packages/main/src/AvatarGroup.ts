@@ -428,9 +428,8 @@ class AvatarGroup extends UI5Element {
 	@bound
 	onAvatarClick(e: MouseEvent) {
 		e.stopPropagation();
-		if (e.type !== "ui5-click") {
-			// Fire the custom AvatarGroup#click only for Avatar#click,
-			// the framework will auto-fire AvatarGroup#ui5-click in addition.
+		if (e.type === "click") {
+			// TOFIX: Discuss this check: Fire the custom AvatarGroup#click only for Avatar#click (not for Avatar#ui5-click as well).
 			this.fireDecoratorEvent("click", {
 				targetRef: e.target as HTMLElement,
 				overflowButtonClicked: false,
