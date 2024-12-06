@@ -73,6 +73,12 @@ describe("F6 navigation", () => {
 				<div class="section" data-sap-ui-fastnavgroup="true"  style="visibility: hidden;">
 					<ui5-button>Hidden</ui5-button>
 				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button style="display: none;">Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true"  style="display: none;">
+					<ui5-button>Hidden</ui5-button>
+				</div>
 				<div class="section">
 					<ui5-button>Something focusable</ui5-button>
 				</div>
@@ -459,6 +465,12 @@ describe("F6 navigation", () => {
 					<ui5-button style="visibility: hidden;">Hidden</ui5-button>
 				</div>
 				<div class="section" data-sap-ui-fastnavgroup="true"  style="visibility: hidden;">
+					<ui5-button>Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button style="display: none;">Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true"  style="display: none;">
 					<ui5-button>Hidden</ui5-button>
 				</div>
 				<div class="section">
