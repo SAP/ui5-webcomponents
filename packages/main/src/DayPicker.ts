@@ -223,7 +223,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		const secondaryMonthsNames = this.hasSecondaryCalendarType ? localeData.getMonths("wide", this.secondaryCalendarType) as Array<string> : [];
 		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
-		const calendarLegend = this._calendarLegend[0];
+		const calendarLegend = this._calendarLegend && this._calendarLegend[0];
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
 		const todayDate = CalendarDate.fromLocalJSDate(UI5Date.getInstance(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
