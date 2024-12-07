@@ -3,6 +3,8 @@
 		@focusin="{{_onFocusIn}}"
 		@keydown="{{_onItemKeyDown}}"
 		@mousedown="{{_onMouseDown}}"
+		role="list"
+		aria-roledescription="{{_roleDescription}}"
 	>
 	{{#each defaultItemsMapping}}
 		{{#unless this.hide}}
