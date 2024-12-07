@@ -30,6 +30,7 @@ import {
 	isPageDownAlt,
 	isPageDownShiftCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import CalendarLegend from "./CalendarLegend.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
@@ -72,6 +73,7 @@ type Day = {
 	selected: boolean,
 	_isSecondaryCalendarType: boolean,
 	classes: string,
+	tooltip?: string,
 	ariaLabel: string,
 	ariaSelected: string,
 	ariaDisabled: string | undefined,
@@ -111,6 +113,7 @@ type DayPickerNavigateEventDetail = {
 	tag: "ui5-daypicker",
 	styles: dayPickerCSS,
 	template: DayPickerTemplate,
+	dependencies: [CalendarLegend],
 })
 /**
  * Fired when the selected date(s) change
@@ -168,6 +171,9 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	@property({ type: Array })
 	_dayNames: Array<DayName> = [];
 
+	@property({ type: Array })
+	_calendarLegend!: Array<CalendarLegend>;
+
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
 	 * @private
@@ -218,6 +224,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		const secondaryMonthsNames = this.hasSecondaryCalendarType ? localeData.getMonths("wide", this.secondaryCalendarType) as Array<string> : [];
 		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
+		const calendarLegend = this._calendarLegend[0];
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
 		const todayDate = CalendarDate.fromLocalJSDate(UI5Date.getInstance(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
@@ -237,6 +244,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
 			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
+			const calendarLegendItemText = calendarLegend?.items.find(item => item.type === specialDayType)?.text;
+			const unnamedCalendarTypeLabel = calendarLegendItemText && !this._isDefaultCalendarLegendType(specialDayType) ? calendarLegendItemText : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
@@ -247,16 +256,20 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			const isToday = tempDate.isSame(todayDate);
 			const isFirstDayOfWeek = tempDate.getDay() === firstDayOfWeek;
 
-			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
+			const nonWorkingAriaLabel = (isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working"
+				? `${nonWorkingDayLabel} `
+				: "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
 
 			const tempSecondDateNumber = tempSecondDate ? tempSecondDate.getDate() : "";
 			const tempSecondYearNumber = tempSecondDate ? tempSecondDate.getYear() : "";
 			const secondaryMonthsNamesString = secondaryMonthsNames.length > 0 ? secondaryMonthsNames[tempSecondDate!.getMonth()] : "";
 
+			const tooltip = `${todayAriaLabel}${nonWorkingAriaLabel}${unnamedCalendarTypeLabel}`;
+
 			const ariaLabel = this.hasSecondaryCalendarType
-				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber}`
-				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
+				? `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber} ${tooltip} `
+				: `${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()} ${tooltip}`;
 
 			const day: Day = {
 				timestamp: timestamp.toString(),
@@ -267,6 +280,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
+				tooltip,
 				ariaLabel,
 				ariaSelected: String(isSelected || isSelectedBetween),
 				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
@@ -790,6 +804,15 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_isDayPressed(target: HTMLElement): boolean {
 		const targetParent = target.parentNode as HTMLElement;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
+	}
+
+	_isDefaultCalendarLegendType(type: string): boolean {
+		return type === "NonWorking" || type === "Working" || type === "Today" || type === "Selected" || type === "None";
+	}
+
+	_getCalendarLegendItemText(type: string): string {
+		const calendarLegendItem = this._calendarLegend[0]?.items.find(item => item.type === type);
+		return calendarLegendItem?.text || "";
 	}
 
 	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {
