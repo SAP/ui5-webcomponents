@@ -113,7 +113,6 @@ type DayPickerNavigateEventDetail = {
 	tag: "ui5-daypicker",
 	styles: dayPickerCSS,
 	template: DayPickerTemplate,
-	dependencies: [CalendarLegend],
 })
 /**
  * Fired when the selected date(s) change
@@ -808,11 +807,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	_isDefaultCalendarLegendType(type: string): boolean {
 		return type === "NonWorking" || type === "Working" || type === "Today" || type === "Selected" || type === "None";
-	}
-
-	_getCalendarLegendItemText(type: string): string {
-		const calendarLegendItem = this._calendarLegend[0]?.items.find(item => item.type === type);
-		return calendarLegendItem?.text || "";
 	}
 
 	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {
