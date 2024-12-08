@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_ui5_webcomponents_website=self.webpackChunk_ui5_webcomponents_website||[]).push([[3898],{80204:e=>{e.exports=JSON.parse('{"label":"popover API","permalink":"/ui5-webcomponents/blog/tags/popover-api","allTagsPath":"/ui5-webcomponents/blog/tags","count":1,"unlisted":false}')}}]);
