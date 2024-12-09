@@ -20,7 +20,7 @@
 }
 
 /* hovered and active */
-:host([disabled][actionable]:not([active]):not([selected]):hover),
+:host([disabled][actionable]:not([active]):not(:state(selected)):hover),
 :host([disabled][active][actionable]) {
 	background: var(--ui5-listitem-background-color);
 }
@@ -30,7 +30,7 @@
 	background-color: var(--sapList_Active_Background);
 }
 
-:host(:not([active]):not([selected]):not([disabled]):hover) {
+:host(:not([active]):not(:state(selected)):not([disabled]):hover) {
 	background-color: var(--sapList_Hover_Background);
 }
 

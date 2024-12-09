@@ -267,9 +267,7 @@ class Menu extends UI5Element {
 		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
-		item._popover.opener = item;
-		item._popover.open = true;
-		item.selected = true;
+		item.open = true;
 	}
 
 	_closeItemSubMenu(item: MenuItem) {
@@ -279,8 +277,7 @@ class Menu extends UI5Element {
 				this._closeItemSubMenu(openedSibling);
 			}
 
-			item._popover.open = false;
-			item.selected = false;
+			item.open = false;
 		}
 	}
 
@@ -356,7 +353,7 @@ class Menu extends UI5Element {
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
 		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
-			parentElement._popover.open = false;
+			parentElement.open = false;
 			parentElement.selected = false;
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}

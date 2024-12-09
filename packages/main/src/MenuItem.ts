@@ -109,6 +109,15 @@ class MenuItem extends ListItem implements IMenuItem {
 	disabled = false;
 
 	/**
+	 * Indicates if the menu is open
+	 * @public
+	 * @default false
+	 * @since 1.10.0
+	 */
+	@property({ type: Boolean })
+	open = false;
+
+	/**
 	 * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
 	 * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
@@ -255,11 +264,26 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	onBeforeRendering() {
+		// super.onBeforeRendering();
+		this._toggleSelectedState();
+
 		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
 
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+	}
+
+	get _opener() {
+		return this.getDomRef();
+	}
+
+	_toggleSelectedState() {
+		if (this.open) {
+			this._internals.states.add("selected");
+		} else {
+			this._internals.states.delete("selected");
+		}
 	}
 
 	async focus(focusOptions?: FocusOptions): Promise<void> {
@@ -296,17 +320,12 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	_closeAll() {
-		if (this._popover) {
-			this._popover.open = false;
-		}
-		this.selected = false;
+		this.open = false;
 		this.fireEvent("close-menu", {});
 	}
 
 	_close() {
-		if (this._popover) {
-			this._popover.open = false;
-		}
+		this.open = false;
 		this.selected = false;
 	}
 
