@@ -13,13 +13,14 @@
 	--_ui5_side_navigation_border_right: 1px solid var(--sapGroup_ContentBorderColor);
 	--_ui5_side_navigation_box_shadow: none;
 	--_ui5_side_navigation_triangle_display: block;
+	--_ui5_side_navigation_navigation_indicator: "";
 	--_ui5_side_navigation_phone_width: var(--_ui5_side_navigation_width);
 
 
 	--_ui5_side_navigation_icon_color: var(--sapContent_IconColor);
 	--_ui5_side_navigation_icon_font_size: 1rem;
 	--_ui5_side_navigation_expand_icon_color: var(--sapContent_IconColor);
-	--_ui5_side_navigation_external_link_icon_color: var(--sapContent_LabelColor);
+	--_ui5_side_navigation_expand_icon_width: 2rem;
 	--_ui5_side_navigation_hover_border_style_color: none;
 	--_ui5_side_navigation_hover_border_width: 0;
 	--_ui5_side_navigation_group_border_style_color: solid var(--sapList_BorderColor);
@@ -49,8 +50,9 @@
 	--_ui5_side_navigation_group_bottom_border_color: var(--sapList_BorderColor);
 	--_ui5_side_navigation_group_text_weight: unset;
 	--_ui5_side_navigation_group_bottom_margin_in_popup: 0;
-	--_ui5_side_navigation_padding: 0;
-	--_ui5_side_navigation_padding_compact: 0;
+	--_ui5_side_navigation_group_padding: 0.5rem;
+	--_ui5_side_navigation_padding-flexible: 0;
+	--_ui5_side_navigation_padding-fixed: 0;
 	--_ui5_side_navigation_parent_popup_padding: 0;
 	--_ui5_side_navigation_parent_popup_border_radius: var(--sapPopover_BorderCornerRadius);
 	--_ui5_side_navigation_popup_item_padding: 0 1rem;
@@ -60,18 +62,12 @@
 	--_ui5_side_navigation_popup_title_text_size: var(--sapFontSize);
 	--_ui5_side_navigation_popup_title_line_height: normal;
 	--_ui5_side_navigation_selection_indicator_display: none;
+	--_ui5_side_navigation_first_fixed_item_margin_top: 0;
 
 	--_ui5_side_navigation_item_collapsed_icon_padding: 0;
+	--_ui5_side_navigation_item_expand_icon_visibility: none;
 	--_ui5_side_navigation_item_collapsed_hover_focus_width: 100%;
 	--_ui5_side_navigation_item_collapsed_hover_focus_display: none;
 	--_ui5_side_navigation_item_collapsed_hover_focus_padding_right: 0;
-}
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_side_navigation_navigation_separator_margin: var(--_ui5_side_navigation_navigation_separator_margin_collapsed);
-	--_ui5_side_navigation_padding: var(--_ui5_side_navigation_padding_compact);
-	--_ui5_side_navigation_item_bottom_margin: var(--_ui5_side_navigation_item_bottom_margin_compact);
-	--_ui5_side_navigation_item_height: 2rem;
+	--_ui5_side_navigation_item_collapsed_padding_right: 0;
 }
