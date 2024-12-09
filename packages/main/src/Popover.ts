@@ -301,13 +301,13 @@ class Popover extends Popup {
 			return opener;
 		}
 
-		const rootNode = this.getRootNode();
+		let rootNode = this.getRootNode();
 
-		if (!(rootNode instanceof ShadowRoot || rootNode instanceof Document)) {
-			return;
+		if (rootNode === this) {
+			rootNode = document;
 		}
 
-		let openerHTMLElement = rootNode.getElementById(opener);
+		let openerHTMLElement = (rootNode as Document | ShadowRoot).getElementById(opener);
 
 		if (rootNode instanceof ShadowRoot && !openerHTMLElement) {
 			openerHTMLElement = document.getElementById(opener);
