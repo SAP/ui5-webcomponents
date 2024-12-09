@@ -23,11 +23,12 @@
 	<ui5-list separators="None" @ui5-item-click="{{_handleActionListClick}}">
 		{{#each _hiddenIcons}}
 			<ui5-li
+				data-count="{{this.count}}"
 				data-ui5-external-action-item-id="{{this.refItemid}}"
 				icon="{{this.icon}}"
 				type="Active"
 				@ui5-_press="{{this.press}}"
-				tooltip="{{this.text}}"
+				tooltip="{{this.tooltip}}"
 			>{{this.text}}
 			</ui5-li>
 		{{/each}}
