@@ -5,7 +5,6 @@
 			id="{{_id}}-header"
 			aria-label="{{_headerLabel}}"
 			aria-expanded="{{_headerExpanded}}"
-			role="region"
 			@ui5-_toggle-title={{onToggleTitle}}
 		>
 			<slot name="titleArea"></slot>
@@ -17,7 +16,7 @@
 				{{> header-actions}}
 			{{/if}}
 		</header>
-		
+
 		{{#if headerInContent}}
 			<slot tabindex="{{headerTabIndex}}" ?aria-hidden="{{headerAriaHidden}}" name="headerArea"></slot>
 		{{/if}}
