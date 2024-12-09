@@ -26,6 +26,7 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
+import type MenuItemGroup from "./MenuItemGroup.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -48,6 +49,8 @@ const MENU_OPEN_DELAY = 300;
  */
 interface IMenuItem extends UI5Element {
 	isSeparator: boolean;
+	isGroup: boolean;
+	isSelected?: boolean;
 }
 
 type MenuItemClickEventDetail = {
@@ -237,20 +240,70 @@ class Menu extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	get _menuItems() {
-		return this.items.filter((item): item is MenuItem => !item.isSeparator);
+	get _list() {
+		return this.shadowRoot!.querySelector<List>("[ui5-list]");
 	}
 
 	get acessibleNameText() {
 		return Menu.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	onBeforeRendering() {
-		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
+	/** Returns menu item groups */
+	get _menuItemGroups() {
+		return this.items.filter((item) : item is MenuItemGroup => item.isGroup);
+	}
 
-		this._menuItems.forEach(item => {
+	/** Returns menu items */
+	get _menuItems() {
+		return this.items.filter((item) : item is MenuItem => !item.isSeparator && !item.isGroup);
+	}
+
+	/** Returns all menu items (including those in groups */
+	get _allMenuItems() {
+		const items: Array<MenuItem> = [];
+
+		this.items.forEach(item => {
+			if (item.isGroup) {
+				items.push(...(item as MenuItemGroup)._menuItems);
+			} else if (!item.isSeparator) {
+				items.push(item as MenuItem);
+			}
+		});
+
+		return items;
+	}
+
+	/** Returns menu items included in the ItemNavigation */
+	get _navigatableMenuItems() {
+		const items: Array<MenuItem> = [];
+		const slottedItems = this.getSlottedNodes<MenuItem>("items");
+
+		slottedItems.forEach(item => {
+			if (item.isGroup) {
+				const groupItems = item.getSlottedNodes<MenuItem>("items");
+				items.push(...groupItems);
+			} else if (!item.isSeparator) {
+				items.push(item);
+			}
+		});
+
+		return items;
+	}
+
+	onBeforeRendering() {
+		const siblingsWithIcon = this._allMenuItems.some(menuItem => !!menuItem.icon);
+
+		this._setupItemNavigation();
+
+		this._allMenuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+	}
+
+	_setupItemNavigation() {
+		if (this._list) {
+			this._list._itemNavigation._getItems = () => this._navigatableMenuItems;
+		}
 	}
 
 	_close() {
@@ -267,6 +320,7 @@ class Menu extends UI5Element {
 		this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		}, false, false);
+
 		item._popover.opener = item;
 		item._popover.open = true;
 		item.selected = true;
@@ -274,7 +328,7 @@ class Menu extends UI5Element {
 
 	_closeItemSubMenu(item: MenuItem) {
 		if (item && item._popover) {
-			const openedSibling = item._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
+			const openedSibling = item._allMenuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -314,7 +368,8 @@ class Menu extends UI5Element {
 
 		this._timeout = setTimeout(() => {
 			const opener = item.parentElement as MenuItem | Menu;
-			const openedSibling = opener && opener._menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
+			const menuItems = opener._allMenuItems;
+			const openedSibling = opener && menuItems && menuItems.find(menuItem => menuItem._popover && menuItem._popover.open);
 			if (openedSibling) {
 				this._closeItemSubMenu(openedSibling);
 			}
@@ -325,6 +380,9 @@ class Menu extends UI5Element {
 
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
+		const prevSelected = item.isSelected;
+
+		item.isSelected = !prevSelected;
 
 		if (!item._popover) {
 			const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
@@ -372,7 +430,7 @@ class Menu extends UI5Element {
 	}
 
 	_afterPopoverOpen() {
-		this._menuItems[0]?.focus();
+		this._allMenuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
 
