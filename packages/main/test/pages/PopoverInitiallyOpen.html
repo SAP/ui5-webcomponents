@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Dialog</title>
+	<title>Popover Initially Open</title>
 
 	<script data-ui5-config type="application/json">
 		{
@@ -16,14 +16,14 @@
 	<script>
 		function init() {
 			const popover = document.createElement("ui5-popover");
-			popover.id = "dialogOpen";
-			popover.headerText = "Dialog Header";
+			popover.id = "popoverOpen";
+			popover.headerText = "Popover Header";
 
 			popover.open = true;
 			popover.opener = "btn1";
 
 			const content = document.createElement("div");
-			content.innerHTML = "<button>button</button>";
+			content.innerHTML = "<button id='popoverBtn'>button</button>";
 			popover.appendChild(content);
 
 			document.body.appendChild(popover);

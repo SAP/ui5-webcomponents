@@ -301,7 +301,7 @@ class Popover extends Popup {
 			return opener;
 		}
 
-		const rootNode = this.getRootNode();
+		const rootNode = this.parentNode ? this.getRootNode() : document;
 
 		if (!(rootNode instanceof ShadowRoot || rootNode instanceof Document)) {
 			return;
