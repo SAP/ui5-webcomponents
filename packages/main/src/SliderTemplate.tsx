@@ -3,20 +3,15 @@ import type Slider from "./Slider.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import SliderBaseTemplate from "./SliderBaseTemplate.js";
-import type { SliderBaseHooks } from "./SliderBaseTemplate.js";
 
-const predefinedHooks: Partial<SliderBaseHooks> = {
-	progressBar,
-	handles,
-};
-
-export default function SliderTemplate(this: Slider, hooks?: Partial<SliderBaseHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks };
-
-	return SliderBaseTemplate.call(this, currentHooks);
+export default function SliderTemplate(this: Slider) {
+	return SliderBaseTemplate.call(this, {
+		progressBar,
+		handles,
+	});
 }
 
-function progressBar(this: Slider) {
+export function progressBar(this: Slider) {
 	return (
 		<div
 			class="ui5-slider-progress-container"
@@ -34,7 +29,7 @@ function progressBar(this: Slider) {
 	);
 }
 
-function handles(this: Slider) {
+export function handles(this: Slider) {
 	return (
 		<div class="ui5-slider-handle-container" style={this.styles.handle} part="handle-container">
 			<div class="ui5-slider-handle"

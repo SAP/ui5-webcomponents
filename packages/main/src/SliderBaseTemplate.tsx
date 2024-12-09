@@ -1,20 +1,11 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type SliderBase from "./SliderBase.js";
 
-export type SliderBaseHooks = {
-	handlesAriaText: any
-	progressBar: any
-	handles: any
-}
-
-const predefinedHooks: SliderBaseHooks = {
-	handlesAriaText,
-	progressBar,
-	handles,
-};
-
-export default function SliderBaseTemplate(this: SliderBase, hooks?: Partial<SliderBaseHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks };
+export default function SliderBaseTemplate(this: SliderBase, hooks?: {
+	handlesAriaText?: any
+	progressBar?: any
+	handles?: any
+}) {
 	return (
 		<div
 			class={{
@@ -29,7 +20,7 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: Partial<Sli
 			onKeyUp={this._onKeyupBase}
 			part="root-container"
 		>
-			{currentHooks.handlesAriaText.call(this)}
+			{(hooks?.handlesAriaText || handlesAriaText).call(this)}
 
 			<div class="ui5-slider-inner">
 				{this.step && this.showTickmarks && <>
@@ -56,9 +47,9 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: Partial<Sli
 					}
 				</>}
 
-				{currentHooks.progressBar.call(this)}
+				{(hooks?.progressBar || progressBar).call(this)}
 
-				{currentHooks.handles.call(this)}
+				{(hooks?.handles || handles).call(this)}
 			</div>
 
 			{this.accessibleName &&
@@ -77,6 +68,6 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: Partial<Sli
 	);
 }
 
-function handlesAriaText(this: SliderBase) { }
-function progressBar(this: SliderBase) { }
-function handles(this: SliderBase) { }
+export function handlesAriaText(this: SliderBase) { }
+export function progressBar(this: SliderBase) { }
+export function handles(this: SliderBase) { }

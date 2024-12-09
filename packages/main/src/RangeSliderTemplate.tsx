@@ -3,28 +3,23 @@ import type RangeSlider from "./RangeSlider.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 import SliderBaseTemplate from "./SliderBaseTemplate.js";
-import type { SliderBaseHooks } from "./SliderBaseTemplate.js";
 
-const predefinedHooks: Partial<SliderBaseHooks> = {
-	handlesAriaText,
-	progressBar,
-	handles,
-};
-
-export default function RangeSliderTemplate(this: RangeSlider, hooks?: Partial<SliderBaseHooks>) {
-	const currentHooks = { ...predefinedHooks, ...hooks };
-
-	return SliderBaseTemplate.call(this, currentHooks);
+export default function RangeSliderTemplate(this: RangeSlider) {
+	return SliderBaseTemplate.call(this, {
+		handlesAriaText,
+		progressBar,
+		handles,
+	});
 }
 
-function handlesAriaText(this: RangeSlider) {
+export function handlesAriaText(this: RangeSlider) {
 	return (<>
 		<span id="ui5-slider-startHandleDesc" class="ui5-hidden-text">{this._ariaHandlesText.startHandleText}</span>
 		<span id="ui5-slider-endHandleDesc" class="ui5-hidden-text">{this._ariaHandlesText.endHandleText}</span>
 	</>);
 }
 
-function progressBar(this: RangeSlider) {
+export function progressBar(this: RangeSlider) {
 	return (
 		<div
 			class="ui5-slider-progress-container"
@@ -49,7 +44,7 @@ function progressBar(this: RangeSlider) {
 	);
 }
 
-function handles(this: RangeSlider) {
+export function handles(this: RangeSlider) {
 	return (<>
 		<div class="ui5-slider-handle-container" style={this.styles.startHandle} part="handle-container">
 			<div class="ui5-slider-handle ui5-slider-handle--start"
