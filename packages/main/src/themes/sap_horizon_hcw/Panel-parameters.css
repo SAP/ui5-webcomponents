@@ -7,4 +7,7 @@
 	--_ui5_panel_icon_color: var(--sapButton_Lite_TextColor);
 	--_ui5_panel_content_padding: 0.625rem 1rem;
 	--_ui5_panel_header_background_color: var(--sapGroup_TitleBackground);
+	--_ui5_shellbar_search_height: 2.25rem;
+	--_ui5_shellbar_search_icon_width: 2.25rem;
+	--_ui5_shellbar_search_icon_padding: .5625rem .625rem;
 }
