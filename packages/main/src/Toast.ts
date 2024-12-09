@@ -190,6 +190,15 @@ class Toast extends UI5Element {
 		}
 	}
 
+	onAfterRendering() {
+		if (!this.hasAttribute("popover")) {
+			this.setAttribute("popover", "manual");
+		}
+		if (this.open) {
+			this.showPopover();
+		}
+	}
+
 	_onfocusin() {
 		if (this.focusable) {
 			this.focused = true;
@@ -217,6 +226,7 @@ class Toast extends UI5Element {
 		this.focusable = false;
 		this.focused = false;
 		this.fireDecoratorEvent("close");
+		this.hidePopover();
 	}
 
 	_onmouseover() {

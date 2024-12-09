@@ -258,13 +258,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  * @param {Array<HTMLElement>} array of all the items that disappeared from additional context slot
  * @public
  */
-@event<ShellBarAdditionalContextItemDisappearsEventDetail>("additional-context-disappears", {
-	detail: {
-		/**
-		 * @public
-		 */
-		items: { type: Array<HTMLElement | null> },
-	},
+@event("additional-context-disappears", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -277,6 +271,7 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
+		"additional-context-disappears": ShellBarAdditionalContextItemDisappearsEventDetail,
 	}
 	/**
 	 * Defines the `primaryTitle`.
@@ -920,7 +915,7 @@ class ShellBar extends UI5Element {
 		this._hideAdditionalContext();
 
 		if (this.additionalCoontextHidden && JSON.stringify(this.additionalCoontextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
-			this.fireDecoratorEvent<ShellBarAdditionalContextItemDisappearsEventDetail>("additional-context-disappears", { items: this.additionalCoontextHidden });
+			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalCoontextHidden });
 		}
 
 		this._cachedHiddenContent = this.additionalCoontextHidden;

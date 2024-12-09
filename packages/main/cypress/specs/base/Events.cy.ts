@@ -130,13 +130,13 @@ describe("Event bubbling", () => {
 						<ui5-option>World</ui5-option>
 						<ui5-option>Hello</ui5-option>
 					</ui5-select>
-					
+
 					<ui5-button id="btnOpen">Open Menu</ui5-button>
 					<ui5-menu id="myMenu" header-text="Menu" opener="btnOpen">
 						<ui5-menu-item text="New File"></ui5-menu-item>
 						<ui5-menu-item text="New Folder"></ui5-menu-item>
 					</ui5-menu>
-					
+
 					<ui5-multi-combobox id="myMCB">
 						<ui5-mcb-item text="Cosy"></ui5-mcb-item>
 						<ui5-mcb-item selected text="Compact"></ui5-mcb-item>
@@ -175,6 +175,11 @@ describe("Event bubbling", () => {
 				dialog.get(0).addEventListener("ui5-close", cy.stub().as("dialogClosed"));
 			});
 
+		cy.get("@dialog")
+			.then(dialog => {
+				dialog.get(0).addEventListener("ui5-open", cy.stub().as("dialogOpened"));
+			});
+
 		cy.get("@select")
 			.then(select => {
 				select.get(0).addEventListener("ui5-close", cy.stub().as("selClosed"));
@@ -188,6 +193,11 @@ describe("Event bubbling", () => {
 		cy.get("@multiCombobox")
 			.then(multiCombobox => {
 				multiCombobox.get(0).addEventListener("ui5-close", cy.stub().as("mcbClosed"));
+			});
+
+		cy.get("@multiCombobox")
+			.then(multiCombobox => {
+				multiCombobox.get(0).addEventListener("open", cy.stub().as("mcbOpened"));
 			});
 
 		cy.get("@dialog").invoke("attr", "open", true);
@@ -208,6 +218,10 @@ describe("Event bubbling", () => {
 		cy.get("@multiCombobox")
 			.find("[ui5-mcb-item]")
 			.should("be.visible");
+
+		// assert - the open event of the MultiComboBox do not bubble
+		cy.get("@mcbOpened").should("have.been.calledOnce");
+		cy.get("@dialogOpened").should("have.been.calledTwice");
 
 		cy.get("@multiComboboxIcon")
 			.realClick();
