@@ -1,7 +1,7 @@
 import type Avatar from "./Avatar.js";
 import Icon from "./Icon.js";
 
-export default function (this: Avatar) {
+export default function AvatarTemplate(this: Avatar) {
 	return (
 		<div
 			class="ui5-avatar-root"

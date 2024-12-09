@@ -1,12 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
-import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown, isF2,
 	isEnter,
@@ -171,7 +170,6 @@ abstract class SliderBase extends UI5Element {
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: (e: TouchEvent | MouseEvent) => void;
 	_stateStorage: StateStorage;
-	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
@@ -198,21 +196,13 @@ abstract class SliderBase extends UI5Element {
 			max: undefined,
 			labelInterval: undefined,
 		};
-
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e);
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
-		};
 	}
 
 	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
+	@bound
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
@@ -221,11 +211,11 @@ abstract class SliderBase extends UI5Element {
 
 	// used in base template, but implemented in subclasses
 	abstract styles: {
-		label: object,
-		labelContainer: object,
+		label: Record<string, string>,
+		labelContainer: Record<string, string>,
 	};
 
-	abstract tickmarksObject: any;
+	abstract tickmarksObject: Array<boolean>;
 	abstract _ariaLabelledByText: string;
 
 	static get ACTION_KEYS() {
@@ -260,7 +250,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	static get renderer() {
-		return litRender;
+		return jsxRender;
 	}
 
 	static get styles() {
@@ -297,6 +287,7 @@ abstract class SliderBase extends UI5Element {
 	/** Shows the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
+	@bound
 	_onmouseover() {
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
@@ -307,12 +298,14 @@ abstract class SliderBase extends UI5Element {
 	 * Hides the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
+	@bound
 	_onmouseout() {
 		if (this.showTooltip && !this.shadowRoot!.activeElement) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 	}
 
+	@bound
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 
@@ -332,6 +325,7 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
+	@bound
 	_onInputKeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 
@@ -345,12 +339,14 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
+	@bound
 	_onInputChange() {
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireDecoratorEvent("change");
 		}
 	}
 
+	@bound
 	_onInputInput() {
 		this.fireDecoratorEvent("input");
 	}
@@ -367,6 +363,7 @@ abstract class SliderBase extends UI5Element {
 		this.value = value;
 	}
 
+	@bound
 	_onKeyupBase() {
 		if (this.disabled) {
 			return;
@@ -795,7 +792,7 @@ abstract class SliderBase extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.disabled ? "-1" : "0";
+		return this.disabled ? -1 : 0;
 	}
 
 	get _ariaDescribedByHandleText() {

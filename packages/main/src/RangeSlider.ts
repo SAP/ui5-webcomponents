@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -11,7 +12,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
-import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
+import RangeSliderTemplate from "./RangeSliderTemplate.js";
 import Input from "./Input.js";
 
 // Texts
@@ -275,6 +276,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onfocusin() {
 		// If this is the initial focusin of the component save its initial
 		// value properties so they could be restored on ESC key press
@@ -299,6 +301,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * Resets the stored Range Slider's initial values saved when it was first focused
 	 * @private
 	 */
+	@bound
 	_onfocusout(e: FocusEvent) {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
@@ -314,6 +317,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = e.target as Input;
 		const oppositeTooltipInput: Input = tooltipInput.hasAttribute("data-sap-ui-start-value") ? this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-end-value]")! : this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]")!;
@@ -482,6 +486,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 	 * Called when the user starts interacting with the slider
 	 * @private
 	 */
+	@bound
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		if ((e as MouseEvent)?.button && (e as MouseEvent)?.button !== 0) {
 			return;
@@ -843,6 +848,7 @@ class RangeSlider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onInputKeydown(e: KeyboardEvent): void {
 		const targetedInput = e.target as Input;
 		const startValueInput = this.shadowRoot!.querySelector("[ui5-input][data-sap-ui-start-value]") as Input;

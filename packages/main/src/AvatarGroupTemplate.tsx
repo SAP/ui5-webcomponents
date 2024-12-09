@@ -2,7 +2,7 @@ import type AvatarGroup from "./AvatarGroup.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 
-export default function (this: AvatarGroup) {
+export default function AvatarGroupTemplate(this: AvatarGroup) {
 	return (
 		<div class="ui5-avatar-group-root">
 			<div

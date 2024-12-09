@@ -1,15 +1,17 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
 import Input from "./Input.js";
 
 // Template
-import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
+import SliderTemplate from "./SliderTemplate.js";
 
 // Texts
 import {
@@ -96,7 +98,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	_handlePositionFromStart = 0;
 	_lastValidInputValue: string;
 	_tooltipInputValue: string = this.value.toString();
-	_tooltipInputValueState: string = "None";
+	_tooltipInputValueState: `${ValueState}` = "None";
 
 	get formFormattedValue() {
 		return this.value.toString();
@@ -170,6 +172,7 @@ class Slider extends SliderBase implements IFormInputElement {
 	 * Called when the user starts interacting with the slider
 	 * @private
 	 */
+	@bound
 	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
@@ -195,6 +198,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onfocusin() {
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
@@ -207,6 +211,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		}
 	}
 
+	@bound
 	_onfocusout(e: FocusEvent) {
 		// Prevent focusout when the focus is getting set within the slider internal
 		// element (on the handle), before the Slider' customElement itself is finished focusing
@@ -265,6 +270,7 @@ class Slider extends SliderBase implements IFormInputElement {
 		this._valueOnInteractionStart = undefined;
 	}
 
+	@bound
 	_onInputFocusOut(e: FocusEvent) {
 		const tooltipInput = this.shadowRoot!.querySelector("[ui5-input]") as Input;
 
