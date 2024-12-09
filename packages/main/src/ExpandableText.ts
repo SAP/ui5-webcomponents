@@ -43,7 +43,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  *
  * ### Responsive Behavior
  *
- * On phones, when the component is set to show the full text in a popover, the popover will be displayed full screen.
+ * On phones, if the component is configured to display the full text in a popover, the popover will appear in full screen.
  *
  * ### ES6 Module Import
  *
