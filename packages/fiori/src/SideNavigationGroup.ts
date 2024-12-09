@@ -77,7 +77,7 @@ class SideNavigationGroup extends SideNavigationItemBase {
 			return result.concat(item.overflowItems);
 		}, new Array<HTMLElement>());
 
-		return  [spacer, ...overflowItems];
+		return [spacer, ...overflowItems];
 	}
 
 	get selectableItems() : Array<SideNavigationSelectableItemBase> {
