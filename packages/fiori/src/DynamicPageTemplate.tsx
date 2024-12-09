@@ -12,7 +12,6 @@ export default function DynamicPageTemplate(this: DynamicPage) {
 					id={`${this._id}-header`}
 					aria-label={this._headerLabel}
 					aria-expanded={this._headerExpanded}
-					role="region"
 					onui5-toggle-title={this.onToggleTitle}
 				>
 					<slot name="titleArea"></slot>

@@ -13,6 +13,7 @@ export default function BreadcrumbsPopoverTemplate(this: Breadcrumbs) {
 			contentOnlyOnDesktop={true}
 			placement="Bottom"
 			horizontalAlign="Start"
+			accessibleName={this._accessibleNamePopover}
 			onKeyDown={this._onkeydown}
 		>
 			<List

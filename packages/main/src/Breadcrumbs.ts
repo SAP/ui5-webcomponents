@@ -29,6 +29,7 @@ import {
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
+	FORM_SELECTABLE_AVALIABLE_VALUES,
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
@@ -259,6 +260,14 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		return items;
+	}
+
+	/**
+	 * Returns the translatable accessible name for the popover
+	 * @private
+	 */
+	get _accessibleNamePopover() {
+		return Breadcrumbs.i18nBundle.getText(FORM_SELECTABLE_AVALIABLE_VALUES);
 	}
 
 	@bound
