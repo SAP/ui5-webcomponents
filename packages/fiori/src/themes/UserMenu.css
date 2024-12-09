@@ -20,6 +20,20 @@
     flex-direction: column;
 }
 
+[on-phone] .ui5-pm-header {
+    padding-inline: 0;
+}
+
+.ui5-pm-phone-header::part(startContent),
+.ui5-pm-phone-header::part(endContent) {
+    padding: 0;
+}
+
+.ui5-pm-phone-header [ui5-button] {
+    margin-inline: 0.5rem;
+    font-family: var(--sapFontSemiboldFamily);
+}
+
 .ui5-pm-rp::part(content) {
     padding-top: 0;
     padding-bottom: 0.5rem;

@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	customElement, slot, eventStrict as event, property,
 } from "@ui5/webcomponents-base/dist/decorators.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
@@ -11,6 +12,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import Panel from "@ui5/webcomponents/dist/Panel.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Bar from "@ui5/webcomponents/dist/Bar.js";
 import List, { type ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
@@ -40,6 +42,7 @@ import {
 	USER_MENU_EDIT_AVATAR_TXT,
 	USER_MENU_ADD_ACCOUNT_TXT,
 	USER_MENU_CLOSE_BUTTON_TXT,
+	USER_MENU_CLOSE_DIALOG_BUTTON,
 } from "./generated/i18n/i18n-defaults.js";
 
 type UserMenuItemClickEventDetail = {
@@ -85,6 +88,7 @@ type UserMenuOtherAccountClickEventDetail = {
 		Button,
 		Panel,
 		Icon,
+		Bar,
 		List,
 		ListItemCustom,
 		Tag,
@@ -220,16 +224,92 @@ class UserMenu extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	/**
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_titleMovedToHeader = false;
+
+	/**
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_manageAccountMovedToHeader = false;
+
+	/**
 	 * @private
 	 */
 	_selectedAccount!: UserMenuAccount;
+
+	/**
+	 * @private
+	 */
+	_observer?: IntersectionObserver;
+
+	/**
+	 * @private
+	 */
+	@query("#user-menu-rp")
+	_responsivePopover?: ResponsivePopover;
+
+	/**
+	 * @private
+	 */
+	@query("#selected-account-title")
+	_selectedAccountTitleEl?: Title;
+
+	/**
+	 * @private
+	 */
+	@query("#selected-account-manage-btn")
+	_selectedAccountManageBtn?: Button;
 
 	onBeforeRendering() {
 		this._selectedAccount = this.accounts.find(account => account.selected) || this.accounts[0];
 	}
 
+	onAfterRendering(): void {
+		if (this._isPhone && this._responsivePopover) {
+			const observerOptions = {
+				threshold: [0.15],
+			};
+
+			this._observer?.disconnect();
+			this._observer = new IntersectionObserver(entries => this._handleIntersection(entries), observerOptions);
+
+			if (this._selectedAccountTitleEl) {
+				this._observer.observe(this._selectedAccountTitleEl);
+			}
+
+			if (this._selectedAccountManageBtn) {
+				this._observer.observe(this._selectedAccountManageBtn);
+			}
+		}
+	}
+
 	get _isPhone() {
 		return isPhone();
+	}
+
+	_handleIntersection(entries: IntersectionObserverEntry[]) {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				if (entry.target.id === "selected-account-title") {
+					this._titleMovedToHeader = false;
+				} else if (entry.target.id === "selected-account-manage-btn") {
+					this._manageAccountMovedToHeader = false;
+				}
+
+				return;
+			}
+
+			if (entry.target.id === "selected-account-title") {
+				this._titleMovedToHeader = true;
+			} else if (entry.target.id === "selected-account-manage-btn") {
+				this._manageAccountMovedToHeader = true;
+			}
+		}, this);
 	}
 
 	_handleAvatarClick() {
@@ -322,6 +402,10 @@ class UserMenu extends UI5Element {
 		this.open = false;
 	}
 
+	get _manageAccountVisibleInHeader() {
+		return this.showManageAccount && this._manageAccountMovedToHeader;
+	}
+
 	get _otherAccounts() {
 		return this.accounts.filter(account => account !== this._selectedAccount);
 	}
@@ -348,6 +432,10 @@ class UserMenu extends UI5Element {
 
 	get _addAccountTooltip() {
 		return UserMenu.i18nBundle.getText(USER_MENU_ADD_ACCOUNT_TXT);
+	}
+
+	get _closeDialogAriaLabel() {
+		return UserMenu.i18nBundle.getText(USER_MENU_CLOSE_DIALOG_BUTTON);
 	}
 
 	get accessibleNameText() {
