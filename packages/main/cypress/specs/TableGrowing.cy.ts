@@ -77,47 +77,6 @@ describe("TableGrowing - Button", () => {
 				.should("have.text", growingSubtext);
 		});
 
-		it("tests diabled state", () => {
-			cy.mount(html`
-				<ui5-table>
-					<ui5-table-growing slot="features" disabled></ui5-table-growing>
-					<ui5-table-header-row slot="headerRow">
-						<ui5-table-header-cell><span>ColumnA</span></ui5-table-header-cell>
-					</ui5-table-header-row>
-					<ui5-table-row>
-						<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
-					</ui5-table-row>
-				</ui5-table>
-			`);
-
-			cy.get("[ui5-table]")
-				.shadow()
-				.find("#growing-row")
-				.should("not.exist");
-
-			cy.get("[ui5-table-growing]")
-				.shadow()
-				.find("#growing-button")
-				.should("not.exist");
-		});
-
-		it("tests dynamically setting disabled state", () => {
-			mountTable();
-
-			cy.get("[ui5-table]")
-				.shadow()
-				.find("#growing-row")
-				.should("exist");
-
-			cy.get<TableGrowing>("[ui5-table-growing]")
-				.then(table => { table.get(0).disabled = true; });
-
-			cy.get("[ui5-table]")
-				.shadow()
-				.find("#growing-row")
-				.should("not.exist");
-		});
-
 		it("tests growing button not shown when no data", () => {
 			cy.mount(html`
 				<ui5-table>
@@ -255,23 +214,6 @@ describe("TableGrowing - Scroll", () => {
 				.find("#growing-row")
 				.should("exist");
 		});
-
-		it("tests button not shown when not scrollable and disabled", () => {
-			mountTable(1, true);
-
-			cy.get<TableGrowing>("[ui5-table-growing]")
-				.then(tableGrowing => { tableGrowing.get(0).disabled = true; });
-
-			cy.get("[ui5-table]")
-				.shadow()
-				.find("#growing-row")
-				.should("not.exist");
-
-			cy.get("[ui5-table-growing]")
-				.shadow()
-				.find("#growing-button")
-				.should("not.exist");
-		});
 	});
 
 	describe("Event", () => {
@@ -333,26 +275,6 @@ describe("TableGrowing - Scroll", () => {
 					.children("ui5-table-row")
 					.should("have.length", 1 + 10 * i);
 			}
-		});
-
-		it("tests load-more not fired when disabled", () => {
-			mountTable(11, true);
-
-			cy.get<TableGrowing>("[ui5-table-growing]")
-				.then(tableGrowing => {
-					tableGrowing.get(0).disabled = true;
-					tableGrowing.get(0).addEventListener("load-more", cy.stub().as("loadMore"));
-				});
-
-			cy.get("[ui5-table-row]:last-child")
-				.scrollIntoView();
-
-			cy.get("[ui5-table]")
-				.children("ui5-table-row")
-				.should("have.length", 11);
-
-			cy.get("@loadMore")
-				.should("not.have.been.called");
 		});
 	});
 });

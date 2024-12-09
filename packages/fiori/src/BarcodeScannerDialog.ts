@@ -7,7 +7,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Result, Exception } from "@zxing/library";
@@ -102,17 +102,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
  */
-@event<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
-	detail: {
-		/**
-		 * @public
-		 */
-		text: { type: String },
-		/**
-		 * @public
-		 */
-		rawBytes: { type: Object },
-	},
+@event("scan-success", {
 	bubbles: true,
 })
 
@@ -121,17 +111,16 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @param {string} message the error message
  * @public
  */
-@event<BarcodeScannerDialogScanErrorEventDetail>("scan-error", {
-	detail: {
-		/**
-		 * @public
-		 */
-		message: { type: String },
-	},
+@event("scan-error", {
 	bubbles: true,
 })
 
 class BarcodeScannerDialog extends UI5Element {
+	eventDetails!: {
+		close: void,
+		"scan-success": BarcodeScannerDialogScanSuccessEventDetail,
+		"scan-error": BarcodeScannerDialogScanErrorEventDetail,
+	}
 	/**
 	 * Defines the header HTML Element.
 	 *
@@ -209,7 +198,7 @@ class BarcodeScannerDialog extends UI5Element {
 
 	async onAfterRendering() {
 		if (!this._hasGetUserMedia()) {
-			this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+			this.fireDecoratorEvent("scan-error", { message: "getUserMedia() is not supported by your browser" });
 			return;
 		}
 
@@ -231,7 +220,7 @@ class BarcodeScannerDialog extends UI5Element {
 			video.addEventListener("loadeddata", this._handleVideoPlayingBound);
 			video.srcObject = stream;
 		} catch (error) {
-			this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: (error as Error).message });
+			this.fireDecoratorEvent("scan-error", { message: (error as Error).message });
 			this.loading = false;
 		}
 	}
@@ -412,7 +401,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_handleScanSuccess(result: Result) {
-		this.fireDecoratorEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
+		this.fireDecoratorEvent("scan-success", {
 			text: result.getText(),
 			rawBytes: result.getRawBytes(),
 		});
@@ -423,7 +412,7 @@ class BarcodeScannerDialog extends UI5Element {
 			return;
 		}
 
-		this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: error.message });
+		this.fireDecoratorEvent("scan-error", { message: error.message });
 	}
 
 	_handleVideoPlaying() {

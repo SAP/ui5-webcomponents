@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -184,40 +184,13 @@ type UserDefinedColumnLayouts = {
  * @param {boolean} resized Indicates if the layout was changed by resizing the entire component
  * @public
  */
-@event<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		layout: { type: FCLLayout },
-		/**
-		* @public
-		*/
-		columnLayout: { type: Array },
-		/**
-		* @public
-		*/
-		startColumnVisible: { type: Boolean },
-		/**
-		* @public
-		*/
-		midColumnVisible: { type: Boolean },
-		/**
-		* @public
-		*/
-		endColumnVisible: { type: Boolean },
-		/**
-		 * @public
-		*/
-		separatorsUsed: { type: Boolean },
-		/**
-		 * @public
-		*/
-		resized: { type: Boolean },
-	},
+@event("layout-change", {
 	bubbles: true,
 })
 class FlexibleColumnLayout extends UI5Element {
+	eventDetails!: {
+		"layout-change": FlexibleColumnLayoutLayoutChangeEventDetail,
+	}
 	/**
 	* Defines the columns layout and their proportion.
 	*
@@ -494,7 +467,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
-		this.fireDecoratorEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
+		this.fireDecoratorEvent("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
