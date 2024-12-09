@@ -258,13 +258,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  * @param {Array<HTMLElement>} array of all the items that disappeared from additional context slot
  * @public
  */
-@event<ShellBarAdditionalContextItemDisappearsEventDetail>("additional-context-disappears", {
-	detail: {
-		/**
-		 * @public
-		 */
-		items: { type: Array<HTMLElement | null> },
-	},
+@event("additional-context-disappears", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -277,6 +271,7 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
+		"additional-context-disappears": ShellBarAdditionalContextItemDisappearsEventDetail,
 	}
 	/**
 	 * Defines the `primaryTitle`.
@@ -517,6 +512,7 @@ class ShellBar extends UI5Element {
 	_skipLayout = false;
 	_lastOffsetWidth = 0;
 	_lessSearchSpace = false;
+	_searchButtonInteraction = false;
 
 	_headerPress: () => void;
 
@@ -573,6 +569,10 @@ class ShellBar extends UI5Element {
 			if (this._lastOffsetWidth !== this.offsetWidth) {
 				this._overflowActions();
 				this._searchBarInitialState();
+				if (this._searchButtonInteraction && this._showSearchField)	{
+					this._showSearchField = false;
+					this._searchButtonInteraction = false;
+				}
 			}
 		}, RESIZE_THROTTLE_RATE);
 	}
@@ -872,7 +872,7 @@ class ShellBar extends UI5Element {
 	_handleActionsOverflow() {
 		const itemsToOverflow = this.itemsToOverflow;
 		const container = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-overflow-container-right")!;
-		const searchFieldWidth = this.searchField[0].offsetWidth;
+		const searchFieldWidth = this.searchField[0] ? this.searchField[0].offsetWidth : 0;
 		const nonDisappearingItems = Array.from(container.querySelectorAll<HTMLElement>(".ui5-shellbar-no-overflow-button"));
 		const nonDisappearingItemsWidth = nonDisappearingItems.reduce((acc, el) => acc + el.offsetWidth + this.domCalculatedValues("--_ui5-shellbar-overflow-button-margin"), 0);
 		const totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth - searchFieldWidth;
@@ -920,7 +920,7 @@ class ShellBar extends UI5Element {
 		this._hideAdditionalContext();
 
 		if (this.additionalCoontextHidden && JSON.stringify(this.additionalCoontextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
-			this.fireDecoratorEvent<ShellBarAdditionalContextItemDisappearsEventDetail>("additional-context-disappears", { items: this.additionalCoontextHidden });
+			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalCoontextHidden });
 		}
 
 		this._cachedHiddenContent = this.additionalCoontextHidden;
@@ -995,6 +995,7 @@ class ShellBar extends UI5Element {
 				input.focus();
 			}
 		}, 100);
+		this._searchButtonInteraction = true;
 	}
 
 	async _handleActionListClick() {
@@ -1044,6 +1045,7 @@ class ShellBar extends UI5Element {
 
 	_handleCancelButtonPress() {
 		this._showSearchField = false;
+		this._searchButtonInteraction = false;
 	}
 
 	_handleProductSwitchPress(e: MouseEvent) {

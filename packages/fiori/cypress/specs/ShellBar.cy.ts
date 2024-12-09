@@ -1,7 +1,10 @@
 import { html } from "lit";
 import "../../src/ShellBar.js";
 import "@ui5/webcomponents-icons/dist/activities.js";
+import "@ui5/webcomponents-icons/dist/sys-help.js";
 import "@ui5/webcomponents-icons/dist/da.js";
+import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
+import "@ui5/webcomponents/dist/ToggleButton.js";
 
 describe("Responsiveness", () => {
 	const basicTemplate = html`
@@ -25,14 +28,14 @@ describe("Responsiveness", () => {
 		<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 
 		<ui5-shellbar-item id="disc" icon="activities" text="Disconnect"></ui5-shellbar-item>
-		<ui5-shellbar-item id="call" icon="sys-type" text="Incoming Calls"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" icon="sys-help" text="Incoming Calls"></ui5-shellbar-item>
 
 		<ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
 			<div slot="valueStateMessage">Instructions</div>
 		</ui5-input>
 
 		<ui5-switch design="Textual" text-on="PR0" text-off="PR0" slot="startContent"></ui5-switch>
-		<ui5-toggle-button  slot="endContent" text="PR2" data-priority="2">PR2</ui5-toggle-button>
+		<ui5-toggle-button slot="endContent" text="PR2" data-priority="2">PR2</ui5-toggle-button>
 	</ui5-shellbar>`;
 
 	const templateWithMenuItems = html`
@@ -60,17 +63,11 @@ describe("Responsiveness", () => {
 		<ui5-button icon="nav-back" slot="startButton" id="start-button"></ui5-button>
 
 		<ui5-shellbar-item id="disc" icon="activities" text="Disconnect"></ui5-shellbar-item>
-		<ui5-shellbar-item id="call" icon="sys-type" text="Incoming Calls"></ui5-shellbar-item>
+		<ui5-shellbar-item id="call" icon="sys-help" text="Incoming Calls"></ui5-shellbar-item>
 
 		<ui5-input placeholder="Instructions" slot="searchField" show-suggestions value-state="Information">
 			<div slot="valueStateMessage">Instructions</div>
 		</ui5-input>
-
-		<ui5-li id="menu-item-1" slot="menuItems" data-key="key1">Application 1</ui5-li>
-		<ui5-li id="menu-item-2" slot="menuItems" data-key="key2">Application 2</ui5-li>
-		<ui5-li slot="menuItems" data-key="key3">Application 3</ui5-li>
-		<ui5-li slot="menuItems" data-key="key4">Application 4</ui5-li>
-		<ui5-li slot="menuItems" data-key="key5">Application 5</ui5-li>
 	</ui5-shellbar>`;
 
 	const templateWithOnlyOneAction = html`<ui5-shellbar
@@ -135,6 +132,10 @@ describe("Responsiveness", () => {
 				.find(".ui5-shellbar-button-product-switch")
 				.as("productSwitchIcon");
 
+			cy.get("@shellbar")
+				.find("ui5-toggle-button[slot='assistant']")
+				.as("assistant");
+
 			cy.get("@backButton").should("be.visible");
 			cy.get("@primaryTitle").should("be.visible");
 			cy.get("@secondaryTitle").should("be.visible");
@@ -142,6 +143,7 @@ describe("Responsiveness", () => {
 			cy.get("@notificationsIcon").should("be.visible");
 			cy.get("@profileIcon").should("be.visible");
 			cy.get("@productSwitchIcon").should("be.visible");
+			cy.get("@assistant").should("be.visible");
 
 			cy.get("@searchButton").click();
 

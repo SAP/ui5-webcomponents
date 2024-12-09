@@ -27,7 +27,7 @@ describe("Component Behavior", () => {
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo-area");
 
 			// assert
-			assert.strictEqual(await logoDOM.getAttribute("role"), "button",
+			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
 				"Logo has the correct default role.");
 		});
 
@@ -137,7 +137,7 @@ describe("Component Behavior", () => {
 			const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchField = await browser.$("#shellbar [slot='searchField']");
 			const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(3)");
+			const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
 			const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
@@ -179,7 +179,7 @@ describe("Component Behavior", () => {
 			const secondaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-secondary-title");
 			const searchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-button");
 			const customActionIcon1 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item");
-			const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(3)");
+			const customActionIcon2 = await browser.$("#shellbar").shadow$(".ui5-shellbar-custom-item:nth-child(2)");
 			const notificationsIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-bell-button");
 			const profileIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-image-button");
 			const productSwitchIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-button-product-switch");
@@ -388,7 +388,7 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests logoClick event", async () => {
-				const logo = await browser.$("#shellbarWithLogoClick").shadow$(".ui5-shellbar-logo-area");
+				const logo = await browser.$("#shellbarWithLogoClick").shadow$(".ui5-shellbar-logo");
 				const title = "SAPLabsBulgaria";
 				const input = await browser.$("#press-input2");
 
@@ -409,7 +409,7 @@ describe("Component Behavior", () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 
 				const overflowPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-overflow-popover");
-				const notificationListItem = await overflowPopover.$("ui5-list ui5-li[icon='bell']");
+				const notificationListItem = await overflowPopover.$("ui5-list ui5-li:nth-child(3)");
 				const input = await browser.$("#press-input");
 
 				await overflowButton.click();
@@ -428,22 +428,21 @@ describe("Component Behavior", () => {
 			});
 
 			it("tests productSwitchClick event", async () => {
-				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 
-				const overflowPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-overflow-popover");
-				const incomingCallsIcon = await overflowPopover.$("ui5-list ui5-li[icon='incoming-call']");
+				const psIcon = await browser.$("#shellbar").shadow$(".ui5-shellbar-product-switch-button");
 				const input = await browser.$("#press-input");
 
 				await overflowButton.click();
 				await incomingCallsIcon.click();
 
-				assert.strictEqual(await input.getValue(), "Call", "Input value is set by click event of Product Switch icon");
+				assert.strictEqual(await input.getValue(), "Product Switch", "Input value is set by click event of Product Switch icon");
 			});
 
-			it("tests preventDefault of productSwitchClick event", async () => {
+			it("tests preventDefault of click on a button with default behavior prevented", async () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 
-				const incomingCallsIcon = await overflowPopover.$("ui5-list ui5-li[icon='incoming-call']");
+				const overflowPopover = await browser.$(`#shellbar`).shadow$(".ui5-shellbar-overflow-popover");
+				const incomingCallsIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(5)");
 
 				await overflowButton.click();
 				await incomingCallsIcon.click();
@@ -485,15 +484,15 @@ describe("Component Behavior", () => {
 				await browser.url(`test/pages/ShellBar.html?sap-ui-language=de_DE`);
 				const shellBar = await browser.$("#shellbar");
 				const overflowButton = await shellBar.shadow$(".ui5-shellbar-overflow-button");
-				let psButtonText;
+				let notificationsButtonText;
 
 				const popover = await getOverflowPopover("shellbar");
 				const items = await popover.$$("ui5-li");
 				await overflowButton.click();
 
-				psButtonText = await [...items][4].getText();
+				notificationsButtonText = await[... items].find(item => item.getProperty("icon")==="bell").getText();
 
-				assert.strictEqual(psButtonText, await shellBar.getProperty("_productsText"), "Product switch button text is translated in overflow popover");
+				assert.strictEqual(notificationsButtonText, await shellBar.getProperty("_notificationsText"), "Notifications button text is translated in overflow popover");
 			});
 		});
 	});
