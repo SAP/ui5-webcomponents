@@ -59,7 +59,8 @@ describe("Input Tests", () => {
 			.find("[ui5-suggestion-item-custom]")
 			.shadow()
 			.find("li")
-			.should("not.have.attr", "tabindex", "0");
+			.should("not.have.attr", "tabindex", "0")
+			.should("have.attr", "role", "option");
 	});
 
 	it("tests regular suggestion items tabindex", () => {
@@ -87,7 +88,8 @@ describe("Input Tests", () => {
 			.find("ui5-suggestion-item")
 			.shadow()
 			.find("li")
-			.should("not.have.attr", "tabindex", "0");
+			.should("not.have.attr", "tabindex", "0")
+			.should("have.attr", "role", "option");
 	});
 
 	it("tests suggestion group items tabindex", () => {
