@@ -196,6 +196,30 @@ class SplitButton extends UI5Element {
 	_activeArrowButton = false;
 
 	/**
+	 * Defines the end icon to be displayed as graphical element within the text button of the component.
+	 * The SAP-icons font provides numerous options.
+	 *
+	 * Example:
+	 *
+	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @since 2.5.0
+	 * @private
+	 */
+	@property({ type: String })
+	_endIcon?: string;
+
+	/**
+	 * Defines the visibility of the arrow button of the component.
+	 *
+	 * @default false
+	 * @since 2.5.0
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_hideArrowButton? = false;
+
+	/**
 	 * Defines the text of the component.
 	 *
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -413,10 +437,11 @@ class SplitButton extends UI5Element {
 			}
 		} else {
 			this._textButtonActive = true;
-			this._fireClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;
+				return;
 			}
+			this._fireClick();
 		}
 	}
 
@@ -449,6 +474,7 @@ class SplitButton extends UI5Element {
 	get accInfo() {
 		return {
 			root: {
+				"role": this._hideArrowButton ? "button" : "group",
 				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
 			},
@@ -456,6 +482,7 @@ class SplitButton extends UI5Element {
 				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
 					"hasPopup": AriaHasPopup.Menu.toLocaleLowerCase(),
+					"expanded": this.effectiveActiveArrowButton ? "true" : "false",
 				},
 			},
 		};
