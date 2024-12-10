@@ -31,6 +31,7 @@
 	justify-content: flex-start;
 	width: calc(100% - 6.5rem);
 	padding-right: 1rem;
+	font-family: var(--sapFontHeaderFamily);
 }
 
 .ui5-menu-dialog-title > div {
