@@ -382,8 +382,6 @@ class Menu extends UI5Element {
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}
 
-		console.warn("TODO: handle keyboard navigation");
-
 		if (!item.hasAttribute("ui5-menu-item")) {
 			const menuItem = item.parentElement as MenuItem;
 
