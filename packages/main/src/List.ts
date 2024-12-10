@@ -1216,6 +1216,7 @@ class List extends UI5Element {
 	}
 
 	onItemTabIndexChange(e: CustomEvent) {
+		e.stopPropagation();
 		const target = e.target as ListItemBase;
 		this._itemNavigation.setCurrentItem(target);
 	}
