@@ -588,12 +588,18 @@ class Popover extends Popup {
 		const borderRadius = Number.parseInt(window.getComputedStyle(this).getPropertyValue("border-radius"));
 		const arrowPos = this.getArrowPosition(targetRect, popoverSize, left, top, isVertical, borderRadius);
 
+		this._left += this.getRTLCorrectionLeft();
+
 		return {
 			arrow: arrowPos,
 			top: this._top,
 			left: this._left,
 			placementType,
 		};
+	}
+
+	getRTLCorrectionLeft() {
+		return parseFloat(window.getComputedStyle(this).left) - this.getBoundingClientRect().left;
 	}
 
 	/**
