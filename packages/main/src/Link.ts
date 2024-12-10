@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -90,29 +90,14 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event<LinkClickEventDetail>("click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		altKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		ctrlKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		metaKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		shiftKey: { type: Boolean },
-	},
+@event("click", {
 	bubbles: true,
 	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
+	eventDetails!: {
+		"click": LinkClickEventDetail,
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -227,6 +212,15 @@ class Link extends UI5Element implements ITabbable {
 	accessibilityAttributes: LinkAccessibilityAttributes = {};
 
 	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
+
+	/**
 	 * Defines the icon, displayed as graphical element within the component before the link's text.
 	 * The SAP-icons font provides numerous options.
 	 *
@@ -330,6 +324,10 @@ class Link extends UI5Element implements ITabbable {
 		return this.accessibleRole.toLowerCase();
 	}
 
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+	}
+
 	get _hasPopup() {
 		return this.accessibilityAttributes.hasPopup;
 	}
@@ -344,7 +342,7 @@ class Link extends UI5Element implements ITabbable {
 
 		e.stopImmediatePropagation();
 
-		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent("click", {
 			altKey,
 			ctrlKey,
 			metaKey,

@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -182,13 +182,7 @@ enum TableFocusTargetElement {
  * @param {HTMLElement} row the activated row.
  * @public
  */
-@event<TableRowClickEventDetail>("row-click", {
-	detail: {
-		/**
-		* @public
-		*/
-		row: { type: HTMLElement },
-	},
+@event("row-click", {
 	bubbles: true,
 })
 
@@ -198,15 +192,7 @@ enum TableFocusTargetElement {
  * @since 2.0.0
  * @public
  */
-@event<TablePopinChangeEventDetail>("popin-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		poppedColumns: {
-			type: Array,
-		},
-	},
+@event("popin-change", {
 	bubbles: true,
 })
 
@@ -229,20 +215,16 @@ enum TableFocusTargetElement {
  * @public
  * @since 2.0.0
  */
-@event<TableSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		selectedRows: { type: Array },
-		/**
-		 * @public
-		 */
-		previouslySelectedRows: { type: Array },
-	},
+@event("selection-change", {
 	bubbles: true,
 })
 class Table extends UI5Element {
+	eventDetails!: {
+		"row-click": TableRowClickEventDetail,
+		"popin-change": TablePopinChangeEventDetail,
+		"load-more": void,
+		"selection-change": TableSelectionChangeEventDetail,
+	}
 	/**
 	 * Defines the text that will be displayed when there is no data and `hideNoData` is not present.
 	 * @default undefined
@@ -673,7 +655,7 @@ class Table extends UI5Element {
 
 		const selectedRows = this.selectedRows;
 
-		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -705,7 +687,7 @@ class Table extends UI5Element {
 
 		const selectedRows: Array<ITableRow> = this.selectedRows;
 
-		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -967,7 +949,7 @@ class Table extends UI5Element {
 				}
 			});
 			row.selected = true;
-			this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
+			this.fireDecoratorEvent("selection-change", {
 				selectedRows: [row],
 				previouslySelectedRows,
 			});
@@ -992,7 +974,7 @@ class Table extends UI5Element {
 			this._allRowsSelected = false;
 		}
 
-		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1021,7 +1003,7 @@ class Table extends UI5Element {
 
 		const selectedRows = bAllSelected ? this.rows : [];
 
-		this.fireDecoratorEvent<TableSelectionChangeEventDetail>("selection-change", {
+		this.fireDecoratorEvent("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1096,7 +1078,7 @@ class Table extends UI5Element {
 		// invalidate if hidden columns count has changed or columns are shown
 		if (hiddenColumnsChange || shownColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
-			this.fireDecoratorEvent<TablePopinChangeEventDetail>("popin-change", {
+			this.fireDecoratorEvent("popin-change", {
 				poppedColumns: this._hiddenColumns,
 			});
 		}

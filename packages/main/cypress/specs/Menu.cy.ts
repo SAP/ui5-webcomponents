@@ -205,6 +205,45 @@ describe("Menu interaction", () => {
 			.should("be.focused");
 	});
 
+	it("Set focus on first item", () => {
+		cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>
+		<ui5-menu id="menu" loading loading-delay="100">
+		</ui5-menu>`);
+
+		cy.get("[ui5-menu]")
+			.as("menu").then($menu => {
+				const menu = $menu.get(0) as Menu;
+
+				menu.addEventListener("ui5-before-open", () => {
+					setTimeout(() => {
+						menu.loading = false;
+						menu.loadingDelay = 0;
+
+						const oneNode = document.createElement("ui5-menu-item") as MenuItem;
+						oneNode.text = "Open from Amazon Cloud";
+
+						const twoNode = document.createElement("ui5-menu-item") as MenuItem;
+						twoNode.text = "Open from Google Cloud";
+
+						menu.append(oneNode, twoNode);
+						menu.focus();
+					}, 1000);
+				});
+			});
+
+		cy.get("@menu").ui5MenuOpen({
+			opener: "btnOpen",
+		});
+
+		cy.get("[ui5-menu]")
+			.ui5MenuOpened();
+
+		cy.get("[ui5-menu-item][text='Open from Amazon Cloud']").as("item");
+
+		cy.get("@item")
+			.should("be.focused");
+	});
+
 	describe("Event firing", () => {
 		it("Event firing - 'ui5-item-click' after 'click' on menu item", () => {
 			cy.mount(html`<ui5-button id="btnOpen">Open Menu</ui5-button>

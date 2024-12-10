@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -112,6 +112,10 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	cancelable: true,
 })
 class Button extends UI5Element implements IButton {
+	eventDetails!: {
+		"_active-state-change": void
+		click: void
+	}
 	/**
 	 * Defines the component design.
 	 * @default "Default"
@@ -218,6 +222,15 @@ class Button extends UI5Element implements IButton {
 	 */
 	@property({ type: Object })
 	accessibilityAttributes: ButtonAccessibilityAttributes = {};
+
+	/**
+	 * Defines the accessible description of the component.
+	 * @default undefined
+	 * @public
+	 * @since 2.5.0
+	 */
+	@property()
+	accessibleDescription?: string;
 
 	/**
 	 * Defines whether the button has special form-related functionality.
@@ -525,6 +538,10 @@ class Button extends UI5Element implements IButton {
 
 	get ariaDescribedbyText() {
 		return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+	}
+
+	get ariaDescriptionText() {
+		return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
 	}
 
 	get _isSubmit() {

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -79,6 +79,10 @@ import switchCss from "./generated/themes/Switch.css.js";
 	cancelable: true,
 })
 class Switch extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void
+		"value-changed": void
+	}
 	/**
 	 * Defines the component design.
 	 *

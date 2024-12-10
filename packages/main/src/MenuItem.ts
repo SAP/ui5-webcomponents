@@ -5,6 +5,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -289,6 +290,16 @@ class MenuItem extends ListItem implements IMenuItem {
 		this._menuItems.forEach(item => {
 			item._siblingsWithIcon = siblingsWithIcon;
 		});
+	}
+
+	async focus(focusOptions?: FocusOptions): Promise<void> {
+		await renderFinished();
+
+		if (this.hasSubmenu && this.isSubMenuOpen) {
+			return this._menuItems[0].focus(focusOptions);
+		}
+
+		return super.focus(focusOptions);
 	}
 
 	get _focusable() {

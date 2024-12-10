@@ -218,6 +218,17 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await link.getProperty("accessibleName"), expectedAccessibleName, "label for last link is correct");
 	});
 
+	it("renders accessible name of popover", async () => {
+		await browser.url(`test/pages/Breadcrumbs.html`);
+
+		const externalElement = (await browser.$("#breadcrumbsWithAccName").shadow$$("ui5-link"))[3];
+		const popover = await browser.$(`#breadcrumbs1`).shadow$("ui5-responsive-popover");
+		const expectedAriaLabel = "Available values";
+
+		await externalElement.click();
+		assert.ok(await popover.shadow$(".ui5-popover-root").getProperty("ariaLabel"), expectedAriaLabel);
+	});
+
 	it("cancels default if item-click event listener calls preventDefault", async () => {
 		const breadcrumbs = await browser.$("#breadcrumbsPreventDefault"),
 			link = (await breadcrumbs.shadow$$("ui5-link"))[1];
