@@ -52,7 +52,8 @@ export default function ExpandableTextTemplate(this: ExpandableText) {
 						</div>
 					</ResponsivePopover>
 				}
-			</>}
+			</>
+			}
 		</div>
 	);
 }
