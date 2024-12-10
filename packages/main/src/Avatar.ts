@@ -23,7 +23,7 @@ import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 import AvatarCss from "./generated/themes/Avatar.css.js";
 
 import Icon from "./Icon.js";
-import type AvatarSize from "./types/AvatarSize.js";
+import AvatarSize from "./types/AvatarSize.js";
 import type AvatarShape from "./types/AvatarShape.js";
 import type AvatarColorScheme from "./types/AvatarColorScheme.js";
 
@@ -257,7 +257,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 */
 	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
-		return this.getAttribute("size") as AvatarSize || "S";
+		return this.getAttribute("size") as AvatarSize || AvatarSize.S;
 	}
 
 	/**
