@@ -15,6 +15,7 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Bar from "@ui5/webcomponents/dist/Bar.js";
 import List, { type ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
+import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -320,19 +321,16 @@ class UserMenu extends UI5Element {
 	}
 
 	_handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>) {
-		const accountToSelect = this.getAccountByRefId(e.detail.item.getAttribute("data-ui5-account-ref-id")!);
-
+		const item = e.detail.item as ListItemBase & { associatedAccount: UserMenuAccount };
 		const eventPrevented = !this.fireDecoratorEvent("change-account", {
 			prevSelectedAccount: this._selectedAccount,
-			selectedAccount: accountToSelect,
+			selectedAccount: item.associatedAccount,
 		});
-
 		if (eventPrevented) {
 			return;
 		}
-
 		this._selectedAccount.selected = false;
-		accountToSelect.selected = true;
+		item.associatedAccount.selected = true;
 	}
 
 	_handleSignOutClick() {
