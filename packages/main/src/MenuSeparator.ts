@@ -30,6 +30,10 @@ class MenuSeparator extends ListItemBase implements IMenuItem {
 		return true;
 	}
 
+	get isGroup() {
+		return false;
+	}
+
 	get classes(): ClassMap {
 		return {
 			main: {
