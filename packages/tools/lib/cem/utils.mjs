@@ -162,7 +162,6 @@ const findImportPath = (ts, sourceFile, typeName, modulePath) => {
             // my.package
             // _mypackage
             // mypackage-
-            // @scope/
             // scope/my-package/test
             // @scope/my-package/test
             const match = currentModuleSpecifier?.text.match(/^((@([a-z0-9._-]+)\/)?([a-z0-9._-]+))/);
