@@ -6,11 +6,10 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
-import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
+import ResponsivePopoverTemplate from "./ResponsivePopoverTemplate.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";

@@ -16,7 +16,7 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
 
 // Template
-import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
+import PopoverTemplate from "./PopoverTemplate.js";
 // Styles
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
