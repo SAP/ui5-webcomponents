@@ -107,6 +107,11 @@ declare class Breadcrumbs extends UI5Element {
      * @private
      */
     _getFocusableItems(): ITabbable[];
+    /**
+     * Returns the translatable accessible name for the popover
+     * @private
+     */
+    get _accessibleNamePopover(): string;
     _onfocusin(e: FocusEvent): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;

@@ -1,9 +1,9 @@
-commit 84cf7b2bbdc7eff3c969dff27ff7c4be8ad359a3
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Dec 6 14:36:37 2024 +0200
+commit 7c78317de761a32da529235357475b1e301b6173
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Mon Dec 9 15:18:59 2024 +0200
 
-    feat(ui5-step-input): add input event (#10294)
+    fix(ui5-popover): fix finding opener when popover is not in the DOM (#10338)
     
-    We're proxying the Input event from the ui5-input. We're providing same details and keeping the preventable and bubling behaviour.
+    * fix(ui5-popover): fix finding opener when popover is not in the DOM
     
-    fixes: #5177
+    * chore: improve code

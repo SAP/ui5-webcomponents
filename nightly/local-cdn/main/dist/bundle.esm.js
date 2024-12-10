@@ -42,6 +42,7 @@ import DatePicker from "./DatePicker.js";
 import DateRangePicker from "./DateRangePicker.js";
 import DateTimePicker from "./DateTimePicker.js";
 import Dialog from "./Dialog.js";
+import ExpandableText from "./ExpandableText.js";
 import Form from "./Form.js";
 import FormItem from "./FormItem.js";
 import FormGroup from "./FormGroup.js";

@@ -196,9 +196,9 @@ let Popover = Popover_1 = class Popover extends Popup {
         if (opener === undefined || opener instanceof HTMLElement) {
             return opener;
         }
-        const rootNode = this.getRootNode();
-        if (!(rootNode instanceof ShadowRoot || rootNode instanceof Document)) {
-            return;
+        let rootNode = this.getRootNode();
+        if (rootNode === this) {
+            rootNode = document;
         }
         let openerHTMLElement = rootNode.getElementById(opener);
         if (rootNode instanceof ShadowRoot && !openerHTMLElement) {
