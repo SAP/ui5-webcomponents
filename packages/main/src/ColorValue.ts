@@ -1,5 +1,4 @@
 import {
-	getRGBColor,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
@@ -15,10 +14,10 @@ import type {
  *
  * ### Overview
  *
- * The `ui5-color` class represents the `value` used in `ui5-color-picker`
+ * The `ColorValue` class represents the `value` used in `ui5-color-picker`
  *
- * A color can be represented using rgb, hsl, or hex values. A color also has an alpha value.
- * @public
+ * A color can be represented using RGB, HSL or HEX values. A color also has an alpha value.
+ * @private
  */
 class ColorValue {
 	_rgb: ColorRGB;
@@ -27,8 +26,8 @@ class ColorValue {
 	_hex: string;
 	_valid: boolean;
 
-	constructor(color: string = "rgba(255,255,255,1)") {
-		this._rgb = getRGBColor(color);
+	constructor() {
+		this._rgb = { r: 255, g: 255, b: 255 };
 		this._hsl = RGBToHSL(this._rgb);
 		this._hex = RGBtoHEX(this._rgb);
 		this._alpha = 1;
@@ -71,24 +70,18 @@ class ColorValue {
 		return this._alpha;
 	}
 
-	get HEX() {
+	get HEX(): string {
 		return this._hex;
 	}
 
-	set RGB(value: ColorRGB) {
-		this._rgb = value;
-		if (this._valid) {
-			this._hsl = RGBToHSL(value);
-			this._hex = RGBtoHEX(value);
-		}
+	set RGB(color: ColorRGB) {
+		this.validateRGBColor(color);
+		this._updateRGB(color);
 	}
 
-	set HSL(value: ColorHSL) {
-		this._hsl = value;
-		if (this._valid) {
-			this._rgb = HSLToRGB(value);
-			this._hex = RGBtoHEX(this._rgb);
-		}
+	set HSL(color: ColorHSL) {
+		this.validateHSLColor(color);
+		this._updateHSL(color);
 	}
 
 	set HEX(value: string) {
@@ -101,33 +94,33 @@ class ColorValue {
 	}
 
 	set H(value: number) {
-		this.validateHSLValue(value, true);
-		this.HSL = { h: value, s: this.S, l: this.L };
+		this.validateHValue(value);
+		this._updateHSL({ h: value, s: this.S, l: this.L });
 	}
 
 	set S(value: number) {
-		this.validateHSLValue(value);
-		this.HSL = { h: this.H, s: value, l: this.L };
+		this.validateSLValue(value);
+		this._updateHSL({ h: this.H, s: value, l: this.L });
 	}
 
 	set L(value: number) {
-		this.validateHSLValue(value);
-		this.HSL = { h: this.H, s: this.S, l: value };
+		this.validateSLValue(value);
+		this._updateHSL({ h: this.H, s: this.S, l: value });
 	}
 
 	set R(value: number) {
 		this.validateRGBValue(value);
-		this.RGB = { r: value, g: this.G, b: this.B };
+		this._updateRGB({ r: value, g: this.G, b: this.B });
 	}
 
 	set G(value: number) {
 		this.validateRGBValue(value);
-		this.RGB = { r: this.R, g: value, b: this.B };
+		this._updateRGB(this.RGB = { r: this.R, g: value, b: this.B });
 	}
 
 	set B(value: number) {
 		this.validateRGBValue(value);
-		this.RGB = { r: this.R, g: this.G, b: value };
+		this._updateRGB({ r: this.R, g: this.G, b: value });
 	}
 
 	set Alpha(value: number) {
@@ -142,8 +135,20 @@ class ColorValue {
 		this._valid = this._isValidRGBValue(value);
 	}
 
-	validateHSLValue(value: number, validateHue: boolean = false) {
-		this._valid = validateHue ? this._isValidHValue(value) : this._isValidSLValue(value);
+	validateRGBColor(color: ColorRGB) {
+		this._valid = this._isValidRGBValue(color.r) && this._isValidRGBValue(color.g) && this._isValidRGBValue(color.b);
+	}
+
+	validateHSLColor(color: ColorHSL) {
+		this._valid = this._isValidHValue(color.h) && this._isValidSLValue(color.s) && this._isValidSLValue(color.l);
+	}
+
+	validateHValue(value: number) {
+		this._valid = this._isValidHValue(value);
+	}
+
+	validateSLValue(value: number) {
+		this._valid = this._isValidSLValue(value);
 	}
 
 	validateHEX(value: string) {
@@ -163,7 +168,23 @@ class ColorValue {
 		return value >= 0 && value <= 100;
 	}
 
-	toString(): string {
+	_updateRGB(value: ColorRGB) {
+		this._rgb = value;
+		if (this._valid) {
+			this._hsl = RGBToHSL(value);
+			this._hex = RGBtoHEX(value);
+		}
+	}
+
+	_updateHSL(value: ColorHSL) {
+		this._hsl = value;
+		if (this._valid) {
+			this._rgb = HSLToRGB(value);
+			this._hex = RGBtoHEX(this._rgb);
+		}
+	}
+
+	toRGBString(): string {
 		return `rgba(${this._rgb.r}, ${this._rgb.g}, ${this._rgb.b}, ${this._alpha})`;
 	}
 }

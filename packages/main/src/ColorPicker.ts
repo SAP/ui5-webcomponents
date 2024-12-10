@@ -237,7 +237,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		if (!this._isColorValueEqual(valueAsRGB)) {
 			this._colorValue.RGB = valueAsRGB;
 		}
-		const tempColor = this._colorValue.toString();
+		const tempColor = this._colorValue.toRGBString();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
 	}
@@ -307,7 +307,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 		this._colorValue.Alpha = this._alpha;
 		this._isHueValueChanged = true;
-		this._setColor();
+		this._setValue(this._colorValue.toRGBString());
 	}
 
 	_handleHueInput(e: CustomEvent) {
@@ -321,7 +321,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const normalizedHue = ((hue % 360) + 360) % 360;
 
 		this._colorValue.H = normalizedHue;
-		this._setColor();
+		this._setValue(this._colorValue.toRGBString());
 	}
 
 	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
@@ -345,7 +345,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
-			this._setColor();
+			this._setValue(this._colorValue.toRGBString());
 		}
 	}
 
@@ -383,7 +383,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			break;
 		}
 
-		this._setColor();
+		this._setValue(this._colorValue.toRGBString());
+		this._setValues();
 	}
 
 	_setMainColor(hueValue: number) {
@@ -444,7 +445,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
 			this._colorValue.HSL = tempColor;
-			this._setColor();
+			this._setValue(this._colorValue.toRGBString());
 		}
 	}
 
@@ -461,16 +462,18 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// 4.251 because with 4.25 we get out of the colors range.
 		const h = this._hue / 4.251;
 
-		// 0 ≤ S ≤ 1
-		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
+		let s = +(1 - (y / 256)).toFixed(2);
 
-		// 0 ≤ V ≤ 1
-		const l = +(Math.round(parseFloat((x / 256) + "e+2")) + "e-2"); // eslint-disable-line
+		let l = +(x / 256).toFixed(2);
 
 		if (Number.isNaN(s) || Number.isNaN(l)) {
 			// The event is finished out of the main color section
 			return;
 		}
+
+		// Normalize values to be between 0 and 1 in case of rounding issues
+		s = Math.max(0, Math.min(1, s));
+		l = Math.max(0, Math.min(1, l));
 
 		return {
 			h: Math.round(h),
@@ -479,8 +482,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		};
 	}
 
-	_setColor() {
-		this.value = this._colorValue.toString();
+	_setValue(color: string) {
+		this.value = color;
 		this._wrongHEX = !this._colorValue.isColorValueValid();
 		this.fireDecoratorEvent("change");
 	}
@@ -620,15 +623,12 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return [hueInput, saturationInput, lightInput];
 	}
 
-	get HEX() {
+	get HEX(): string {
 		return this._colorValue.HEX;
 	}
 
 	get colorChannelInputs() {
-		if (!this._displayHSL) {
-			return this.rgbInputs;
-		}
-		return this.hslInputs;
+		return this._displayHSL ? this.hslInputs : this.rgbInputs;
 	}
 
 	get _isDefaultPickerMode() {
