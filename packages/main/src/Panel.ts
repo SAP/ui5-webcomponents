@@ -11,7 +11,6 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { JSX } from "@ui5/webcomponents-base";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import type TitleLevel from "./types/TitleLevel.js";
@@ -230,7 +229,7 @@ class Panel extends UI5Element {
 		return this.noAnimation || getAnimationMode() === AnimationMode.None;
 	}
 
-	_headerClick(e: JSX.TargetedMouseEvent<HTMLDivElement>) {
+	_headerClick(e: MouseEvent) {
 		if (!this.shouldToggle(e.target as HTMLElement)) {
 			return;
 		}
@@ -316,7 +315,7 @@ class Panel extends UI5Element {
 		return !this.collapsed;
 	}
 
-	get accRole(): JSX.AriaRole {
+	get accRole() {
 		return this.accessibleRole.toLowerCase() as Lowercase<PanelAccessibleRole>;
 	}
 

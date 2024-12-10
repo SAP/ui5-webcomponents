@@ -331,8 +331,6 @@ class Button extends UI5Element implements IButton {
 
 	_deactivate: () => void;
 
-	// _ontouchstart: JSX.TouchEventHandler<HTMLButtonElement>;
-
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -373,7 +371,6 @@ class Button extends UI5Element implements IButton {
 		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
-	// @bound
 	_onclick() {
 		if (this.nonInteractive) {
 			return;
@@ -534,15 +531,6 @@ class Button extends UI5Element implements IButton {
 }
 
 Button.define();
-
-declare module "@ui5/webcomponents-base/jsx-runtime" {
-	// eslint-disable-next-line @typescript-eslint/no-namespace
-	namespace JSX {
-		interface IntrinsicElements {
-			"ui5-button": Button["_jsxProps"];
-		}
-	}
-}
 
 export default Button;
 export type {
