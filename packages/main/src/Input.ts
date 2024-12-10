@@ -705,6 +705,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			});
 
 			this._listWidth = await this.Suggestions._getListWidth();
+
+			// disabled ItemNavigation from the list since we are not using it
+			const list = await this.Suggestions._getList();
+
+			list._itemNavigation._getItems().forEach(item => {
+				item.forcedTabIndex = "-1";
+			});
 		}
 
 		if (this.shouldDisplayOnlyValueStateMessage) {
