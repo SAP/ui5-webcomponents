@@ -2,7 +2,7 @@ import ListItemBaseTemplate from "./ListItemBaseTemplate.js";
 import type SuggestionItem from "./SuggestionItem.js";
 
 export default function SuggestionItemTemplate(this: SuggestionItem) {
-	return [ListItemBaseTemplate.call(this, { listItemContent })];
+	return [ListItemBaseTemplate.call(this, { listItemContent }, { role: "option" })];
 }
 
 function listItemContent(this: SuggestionItem) {

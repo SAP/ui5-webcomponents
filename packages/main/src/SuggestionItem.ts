@@ -57,6 +57,10 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 			this.setAttribute("desktop", "");
 		}
 	}
+
+	get _effectiveTabIndex() {
+		return -1;
+	}
 }
 
 SuggestionItem.define();
