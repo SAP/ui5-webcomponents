@@ -102,6 +102,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 *
 	 * **Note:** A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
+	 * @deprecated property should be set on radio button group only. role="radio" does not support aria-readonly attribute.
 	 * @default false
 	 * @public
 	 */
