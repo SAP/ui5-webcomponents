@@ -6,7 +6,7 @@
 	white-space: pre-line;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	cursor: default;
+	cursor: pointer;
 	margin: 0.0625rem 0;
 }
 
@@ -33,7 +33,6 @@
 	white-space: pre-line;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	cursor: default;
 }
 
 :host([type="Today"]) .ui5-calendar-legend-item-box {
