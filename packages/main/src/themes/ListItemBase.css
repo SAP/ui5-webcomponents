@@ -24,7 +24,7 @@
 }
 
 /* selected */
-:host([selected]) {
+:host(:state(selected)) {
 	background-color: var(--sapList_SelectionBackgroundColor);
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 
@@ -34,7 +34,7 @@
 }
 
 /* hovered */
-:host([actionable]:not([active]):not([selected]):not([ui5-li-group-header]):hover) {
+:host([actionable]:not([active]):not(:state(selected)):not([ui5-li-group-header]):hover) {
     background-color: var(--sapList_Hover_Background);
 
 	.ui5-li-additional-text {
@@ -43,13 +43,13 @@
 }
 
 /* selected and hovered */
-:host([actionable][selected]:not([active], [data-moving]):hover) {
+:host([actionable]:state(selected):not([active], [data-moving]):hover) {
 	background-color: var(--sapList_Hover_SelectionBackground);
 }
 
 /* selected and active */
 :host([active][actionable]:not([data-moving])),
-:host([active][actionable][selected]:not([data-moving])) {
+:host([active][actionable]:state(selected):not([data-moving])) {
 	background-color: var(--sapList_Active_Background);
 }
 

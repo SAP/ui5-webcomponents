@@ -122,6 +122,8 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	onBeforeRendering(): void {
 		this.actionable = true;
+
+		this._toggleSelectedState();
 	}
 
 	_onfocusin(e: FocusEvent) {
@@ -131,6 +133,14 @@ class ListItemBase extends UI5Element implements ITabbable {
 		}
 
 		this.fireDecoratorEvent("_focused", e);
+	}
+
+	_toggleSelectedState() {
+		if (this.selected) {
+			this._internals.states.add("selected");
+		} else {
+			this._internals.states.delete("selected");
+		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
