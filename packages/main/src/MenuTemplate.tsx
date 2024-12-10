@@ -26,9 +26,9 @@ export default function MenuTemplate(this: Menu) {
 			{this.isPhone &&
 				<div slot="header" class="ui5-menu-dialog-header">
 					<div class="ui5-menu-dialog-title">
-						<div>
+						<h1>
 							{this.headerText}
-						</div>
+						</h1>
 					</div>
 					<Button
 						icon={declineIcon}

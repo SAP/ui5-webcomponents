@@ -369,33 +369,35 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	_setMainColor(hueValue: number) {
-		if (hueValue <= 255) {
+		const hueValueMod = hueValue * 4.251;
+
+		if (hueValueMod <= 255) {
 			this._mainValue = {
 				r: 255,
-				g: hueValue,
+				g: hueValueMod,
 				b: 0,
 			};
-		} else if (hueValue <= 510) {
+		} else if (hueValueMod <= 510) {
 			this._mainValue = {
-				r: 255 - (hueValue - 255),
+				r: 255 - (hueValueMod - 255),
 				g: 255,
 				b: 0,
 			};
-		} else if (hueValue <= 765) {
+		} else if (hueValueMod <= 765) {
 			this._mainValue = {
 				r: 0,
 				g: 255,
-				b: hueValue - 510,
+				b: hueValueMod - 510,
 			};
-		} else if (hueValue <= 1020) {
+		} else if (hueValueMod <= 1020) {
 			this._mainValue = {
 				r: 0,
-				g: 765 - (hueValue - 255),
+				g: 765 - (hueValueMod - 255),
 				b: 255,
 			};
-		} else if (hueValue <= 1275) {
+		} else if (hueValueMod <= 1275) {
 			this._mainValue = {
-				r: hueValue - 1020,
+				r: hueValueMod - 1020,
 				g: 0,
 				b: 255,
 			};
@@ -403,7 +405,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._mainValue = {
 				r: 255,
 				g: 0,
-				b: 1275 - (hueValue - 255),
+				b: 1275 - (hueValueMod - 255),
 			};
 		}
 	}
@@ -441,7 +443,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// and HSL format, the color will be parsed to RGB
 		// 0 ≤ H < 360
 		// 4.251 because with 4.25 we get out of the colors range.
-		const h = this._hue / 4.251;
+		const h = this._hue;
 
 		// 0 ≤ S ≤ 1
 		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
@@ -502,7 +504,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
-			this._hue = Math.round(hslColours.h * 4.25);
+			this._hue = Math.round(hslColours.h);
 		}
 
 		this._setMainColor(this._hue);

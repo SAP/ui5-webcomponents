@@ -28,9 +28,11 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 					disabled={this.inputsDisabled}
 					class="ui5-color-picker-hue-slider"
 					min={0}
-					max={1530}
+					max={360}
+					step={1}
 					value={this._hue}
 					accessibleName={this.hueSliderLabel}
+					showTooltip={true}
 					onInput={this._handleHueInput}
 				/>
 
@@ -43,6 +45,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 						step={0.01}
 						value={this._alpha}
 						accessibleName={this.alphaSliderLabel}
+						showTooltip={true}
 						onInput={this._handleAlphaInputFromSlider}
 					/>
 				}

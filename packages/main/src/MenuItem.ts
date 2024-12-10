@@ -258,6 +258,7 @@ class MenuItem extends ListItem implements IMenuItem {
 	}
 
 	onBeforeRendering() {
+		super.onBeforeRendering();
 		const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
 
 		this._menuItems.forEach(item => {
