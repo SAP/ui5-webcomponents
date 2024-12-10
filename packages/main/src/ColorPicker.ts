@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -232,19 +231,16 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
 	}
 
-	@bound
 	_handleMouseDown(e: MouseEvent) {
 		this.mouseDown = true;
 		this.mouseIn = true;
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	@bound
 	_handleMouseUp() {
 		this.mouseDown = false;
 	}
 
-	@bound
 	_handleMouseOut(e: MouseEvent) {
 		if (!this.mouseIn || !this.mouseDown) {
 			return;
@@ -284,7 +280,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this.mouseDown = false;
 	}
 
-	@bound
 	_handleMouseMove(e: MouseEvent) {
 		if (!this.mouseDown || !this.mouseIn) {
 			return;
@@ -293,7 +288,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	@bound
 	_handleAlphaInputFromSlider(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
@@ -304,7 +298,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._setColor(this._value);
 	}
 
-	@bound
 	_handleHueInput(e: CustomEvent) {
 		this.selectedHue = (e.target as Slider).value;
 		this._hue = this.selectedHue;
@@ -321,7 +314,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
 		const hexRegex = new RegExp("^[<0-9 abcdef]+$");
 		const input: Input = (e.target as Input);
@@ -353,7 +345,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_handleRGBInputsChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
@@ -417,7 +408,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_handleAlphaChange(e: CustomEvent) {
 		this._handleAlphaInputFromSlider(e);
 
@@ -440,7 +430,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this._handleHEXChange(e);

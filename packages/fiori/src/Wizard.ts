@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -447,7 +446,6 @@ class Wizard extends UI5Element {
 	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	@bound
 	onSelectionChangeRequested(e: CustomEvent) {
 		this.selectionRequestedByClick = true;
 		this.changeSelectionByStepAction(e.target as WizardTab);
@@ -458,7 +456,6 @@ class Wizard extends UI5Element {
 	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	@bound
 	onScroll(e: Event) {
 		if (this.selectionRequestedByClick) {
 			this.selectionRequestedByClick = false;
@@ -475,7 +472,6 @@ class Wizard extends UI5Element {
 	 * **Note:** the handler is bound in the template.
 	 * @private
 	 */
-	@bound
 	onStepInHeaderFocused(e: CustomEvent) {
 		this._itemNavigation.setCurrentItem(e.target as WizardTab);
 	}
@@ -622,7 +618,6 @@ class Wizard extends UI5Element {
 		responsivePopover.open = true;
 	}
 
-	@bound
 	_onGroupedTabClick(e: MouseEvent) {
 		const eTarget = e.target as WizardTab;
 
@@ -635,7 +630,6 @@ class Wizard extends UI5Element {
 		}
 	}
 
-	@bound
 	_onOverflowStepButtonClick(e: MouseEvent) {
 		const tabs = Array.from(this.stepsInHeaderDOM);
 		const eTarget = e.target as HTMLElement;
@@ -649,7 +643,6 @@ class Wizard extends UI5Element {
 		tabs[newlySelectedIndex].focus();
 	}
 
-	@bound
 	_closeRespPopover() {
 		const responsivePopover = this._respPopover();
 		if (responsivePopover) {

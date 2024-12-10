@@ -2,7 +2,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type { JSX } from "@ui5/webcomponents-base";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -292,13 +291,11 @@ class TreeItemBase extends ListItem {
 		this.expanded = !this.expanded;
 	}
 
-	@bound
 	_toggleClick(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
 		this.fireDecoratorEvent("toggle", { item: this });
 	}
 
-	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		await super._onkeydown(e);
 

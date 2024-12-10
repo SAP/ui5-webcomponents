@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -365,13 +364,11 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		this.fallBackIconDomRef?.classList.add("ui5-avatar-fallback-icon-hidden");
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		e.stopPropagation();
 		this._fireClick();
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (!this._interactive) {
 			return;
@@ -386,7 +383,6 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this._interactive && !e.shiftKey && isSpace(e)) {
 			this._fireClick();

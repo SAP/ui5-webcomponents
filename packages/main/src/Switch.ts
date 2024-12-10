@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -213,12 +212,10 @@ class Switch extends UI5Element implements IFormInputElement {
 		return this.checked ? "accept" : "less";
 	}
 
-	@bound
 	_onclick() {
 		this.toggle();
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -229,7 +226,6 @@ class Switch extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._onclick();

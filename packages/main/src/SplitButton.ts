@@ -4,7 +4,6 @@ import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseE
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isEscape,
 	isSpace,
@@ -217,12 +216,10 @@ class SplitButton extends UI5Element {
 		}
 	}
 
-	@bound
 	_handleMouseClick(e: MouseEvent) {
 		this._fireClick(e);
 	}
 
-	@bound
 	_onFocusOut() {
 		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
@@ -232,7 +229,6 @@ class SplitButton extends UI5Element {
 		this._setTabIndexValue();
 	}
 
-	@bound
 	_onFocusIn() {
 		if (this.disabled || this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
@@ -240,14 +236,12 @@ class SplitButton extends UI5Element {
 		this._shiftOrEscapePressed = false;
 	}
 
-	@bound
 	handleTouchStart(e: TouchEvent | MouseEvent) {
 		e.stopPropagation();
 		this._textButtonActive = true;
 		this._tabIndex = -1;
 	}
 
-	@bound
 	_onInnerButtonFocusIn(e: FocusEvent) {
 		e.stopPropagation();
 		this._setTabIndexValue(true);
@@ -255,7 +249,6 @@ class SplitButton extends UI5Element {
 		target.focus();
 	}
 
-	@bound
 	_onKeyDown(e: KeyboardEvent) {
 		this._isKeyDownOperation = true;
 		if (this._isArrowKeyAction(e)) {
@@ -279,7 +272,6 @@ class SplitButton extends UI5Element {
 		this._tabIndex = -1;
 	}
 
-	@bound
 	_onKeyUp(e: KeyboardEvent) {
 		this._isKeyDownOperation = false;
 		if (this._isArrowKeyAction(e)) {
@@ -319,20 +311,17 @@ class SplitButton extends UI5Element {
 		this.fireDecoratorEvent("arrow-click");
 	}
 
-	@bound
 	_textButtonRelease() {
 		this._textButtonActive = false;
 		this._tabIndex = -1;
 	}
 
-	@bound
 	_arrowButtonPress(e: MouseEvent) {
 		e.stopPropagation();
 
 		this._tabIndex = -1;
 	}
 
-	@bound
 	_arrowButtonRelease(e: MouseEvent) {
 		e.preventDefault();
 
@@ -347,7 +336,6 @@ class SplitButton extends UI5Element {
 		}
 	}
 
-	@bound
 	_onArrowButtonActiveStateChange(e: CustomEvent) {
 		if (this.activeArrowButton) {
 			e.preventDefault();
@@ -386,7 +374,6 @@ class SplitButton extends UI5Element {
 	 * @param e - keyboard event
 	 * @private
 	 */
-	@bound
 	_handleArrowButtonAction(e: KeyboardEvent | MouseEvent) {
 		e.preventDefault();
 

@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -335,7 +334,6 @@ class Link extends UI5Element implements ITabbable {
 		return this.accessibilityAttributes.hasPopup;
 	}
 
-	@bound
 	_onclick(e: MouseEvent | KeyboardEvent) {
 		const {
 			altKey,
@@ -358,7 +356,6 @@ class Link extends UI5Element implements ITabbable {
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) && !this.href) {
 			this._onclick(e);
@@ -367,7 +364,6 @@ class Link extends UI5Element implements ITabbable {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (!isSpace(e)) {
 			return;

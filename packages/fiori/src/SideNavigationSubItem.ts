@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
@@ -35,22 +34,18 @@ import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.c
 	],
 })
 class SideNavigationSubItem extends SideNavigationSelectableItemBase {
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		super._onclick(e);
 	}

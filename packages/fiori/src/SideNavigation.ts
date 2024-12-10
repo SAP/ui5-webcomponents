@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
@@ -233,7 +232,6 @@ class SideNavigation extends UI5Element {
 			});
 	}
 
-	@bound
 	_onAfterPopoverOpen() {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
@@ -247,25 +245,21 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	@bound
 	_onBeforePopoverOpen() {
 		const popover = this.getPicker();
 		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
 	}
 
-	@bound
 	_onBeforePopoverClose() {
 		const popover = this.getPicker();
 		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
 	}
 
-	@bound
 	_onBeforeMenuOpen() {
 		const popover = this.getOverflowPopover();
 		(popover?.opener as HTMLElement)?.classList.add("ui5-sn-item-active");
 	}
 
-	@bound
 	_onBeforeMenuClose() {
 		const popover = this.getOverflowPopover();
 		(popover?.opener as HTMLElement)?.classList.remove("ui5-sn-item-active");
@@ -288,7 +282,6 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
 	}
 
-	@bound
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
 
@@ -304,7 +297,6 @@ class SideNavigation extends UI5Element {
 		this._popoverContents.item?.getDomRef()!.classList.add("ui5-sn-item-no-hover-effect");
 	}
 
-	@bound
 	handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>) {
 		const associatedItem = e.detail?.item.associatedItem;
 
@@ -576,7 +568,6 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	@bound
 	_handleOverflowClick() {
 		this._isOverflow = true;
 		this._menuPopoverItems = this._getOverflowItems();

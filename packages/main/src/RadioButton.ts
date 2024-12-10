@@ -5,7 +5,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -316,7 +315,6 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		this._checked = this.checked;
 	}
 
-	@bound
 	_onclick() {
 		return this.toggle();
 	}
@@ -343,7 +341,6 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		RadioButtonGroup.selectPreviousItem(this, currentGroup);
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.active = true;
@@ -366,7 +363,6 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.toggle();
@@ -375,18 +371,15 @@ class RadioButton extends UI5Element implements IFormInputElement {
 		this.active = false;
 	}
 
-	@bound
 	_onmousedown() {
 		this.active = true;
 		activeRadio = this; // eslint-disable-line
 	}
 
-	@bound
 	_onmouseup() {
 		this.active = false;
 	}
 
-	@bound
 	_onfocusout() {
 		this.active = false;
 	}

@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -83,7 +82,6 @@ class TabSeparator extends UI5Element implements ITab {
 		return executeTemplate(TabSeparator.overflowTemplate, this);
 	}
 
-	@bound
 	captureRef(ref: HTMLElement & { realTabReference?: UI5Element} | null) {
 		if (ref) {
 			ref.realTabReference = this;

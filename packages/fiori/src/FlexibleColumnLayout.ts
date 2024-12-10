@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
@@ -479,7 +478,6 @@ class FlexibleColumnLayout extends UI5Element {
 		});
 	}
 
-	@bound
 	onSeparatorPress(e: TouchEvent | MouseEvent) {
 		const pressedSeparator = (e.target as HTMLElement).closest(".ui5-fcl-separator") as HTMLElement;
 		if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
@@ -492,7 +490,6 @@ class FlexibleColumnLayout extends UI5Element {
 		this.separatorMovementSession = this.initSeparatorMovementSession(pressedSeparator, cursorPositionX, isTouch);
 	}
 
-	@bound
 	onSeparatorMove(e: TouchEvent | MouseEvent) {
 		e.preventDefault(); // prevent text selection etc. while dragging
 
@@ -660,7 +657,6 @@ class FlexibleColumnLayout extends UI5Element {
 		return columnLayoutToAdjust;
 	}
 
-	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		const stepSize = 2,
 			bigStepSize = this._width,
@@ -700,7 +696,6 @@ class FlexibleColumnLayout extends UI5Element {
 		separator.focus();
 	}
 
-	@bound
 	_onkeyup() {
 		if (this.separatorMovementSession) {
 			this.onSeparatorMoveEnd();

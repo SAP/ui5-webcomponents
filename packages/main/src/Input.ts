@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type {
 	ARIAAutoComplete,
@@ -757,7 +756,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._performTextSelection = false;
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		this._isKeyNavigation = true;
 		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(e) || isDelete(e) || isEscape(e));
@@ -810,7 +808,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._isKeyNavigation = false;
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		// The native Delete event does not update the value property "on time".
 		// So, the (native) change event is always fired with the old value
@@ -941,7 +938,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		this.focused = true; // invalidating property
 
@@ -958,10 +954,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	 * Called on "focusin" of the native input HTML Element.
 	 * **Note:** implemented in MultiInput, but used in the Input template.
 	 */
-	@bound
 	innerFocusIn(): void | undefined {}
 
-	@bound
 	_onfocusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
 
@@ -1000,7 +994,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.Suggestions?._clearItemFocus();
 	}
 
-	@bound
 	_click() {
 		if (isPhone() && !this.readonly && this.Suggestions) {
 			this.blur();
@@ -1008,7 +1001,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	@bound
 	_handleChange() {
 		if (this._clearIconClicked) {
 			this._clearIconClicked = false;
@@ -1031,7 +1023,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	@bound
 	_clear() {
 		const valueBeforeClear = this.value;
 		this.value = "";
@@ -1049,12 +1040,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	@bound
 	_iconMouseDown() {
 		this._clearIconClicked = true;
 	}
 
-	@bound
 	_scroll(e: UI5CustomEvent<ResponsivePopover, "scroll">) {
 		this.fireDecoratorEvent("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
@@ -1062,19 +1051,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		});
 	}
 
-	@bound
 	_handleSelect() {
 		this.fireDecoratorEvent("select");
 	}
 
-	@bound
 	_handleInput(e: CustomEvent<InputEventDetail>) {
 		const eventType: string = (e.detail && e.detail.inputType) || "";
 
 		this._input(e, eventType);
 	}
 
-	@bound
 	_handleNativeInput(e: InputEvent) {
 		const eventType: string = e.inputType || "";
 
@@ -1175,7 +1161,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 	}
 
-	@bound
 	_handleSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this.Suggestions?.onItemPress(e);
 	}
@@ -1199,12 +1184,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
 	}
 
-	@bound
 	_closePicker() {
 		this.open = false;
 	}
 
-	@bound
 	_afterOpenPicker() {
 		// Set initial focus to the native input
 		if (isPhone()) {
@@ -1214,7 +1197,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this._handlePickerAfterOpen();
 	}
 
-	@bound
 	_afterClosePicker() {
 		this.announceSelectedItem();
 
@@ -1257,7 +1239,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.valueStateOpen = false;
 	}
 
-	@bound
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
 	}
@@ -1406,7 +1387,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		return this.Suggestions?._isScrollable();
 	}
 
-	@bound
 	onItemMouseDown(e: MouseEvent) {
 		e.preventDefault();
 	}
@@ -1421,7 +1401,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		this.acceptSuggestion(suggestionItem, keyboardUsed);
 	}
 
-	@bound
 	_handleSuggestionItemPress(e: CustomEvent<ListItemClickEventDetail>) {
 		this.Suggestions?.onItemPress(e);
 	}

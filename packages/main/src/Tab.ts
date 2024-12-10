@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -495,28 +494,24 @@ class Tab extends UI5Element implements ITabbable, ITab {
 		return TabInOverflowTemplate;
 	}
 
-	@bound
 	_ondragstart(e: DragEvent) {
 		if (e.target instanceof HTMLElement) {
 			e.target.setAttribute("data-moving", "");
 		}
 	}
 
-	@bound
 	_ondragend(e: DragEvent) {
 		if (e.target instanceof HTMLElement) {
 			e.target.removeAttribute("data-moving");
 		}
 	}
 
-	@bound
 	captureRef(ref: HTMLElement & { realTabReference?: UI5Element} | null) {
 		if (ref) {
 			ref.realTabReference = this;
 		}
 	}
 
-	@bound
 	captureButtonRef(ref: HTMLElement & { tab?: UI5Element} | null) {
 		if (ref) {
 			ref.tab = this;

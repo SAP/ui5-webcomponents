@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -300,7 +299,6 @@ class DynamicPageTitle extends UI5Element {
 		this.mobileNavigationActions = this.offsetWidth < 1280;
 	}
 
-	@bound
 	onMinContentWidthChange(e: CustomEvent<ToolbarMinWidthChangeEventDetail>) {
 		const slotName = (<HTMLElement>e.target)?.assignedSlot?.name;
 		if (!slotName || slotName === "content") {
@@ -310,12 +308,10 @@ class DynamicPageTitle extends UI5Element {
 		}
 	}
 
-	@bound
 	onTitleClick() {
 		this.fireDecoratorEvent("toggle-title");
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e) || isSpace(e)) {
 			e.preventDefault();

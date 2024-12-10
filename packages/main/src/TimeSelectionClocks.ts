@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
 	isDown,
@@ -123,7 +122,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * TimePickerClocks focusin event handler. Focuses the active button and switches to active clock.
 	 * @param evt Event object
 	 */
-	@bound
 	_clocksFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
 		if (target.id === this._id) {
@@ -135,7 +133,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * ToggleSpinButton focusin event handler. Switches to clock which button is being focused.
 	 * @param evt Event object
 	 */
-	@bound
 	_buttonFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
 		const name = this._getNameFromId(target.id);
@@ -147,7 +144,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * AM/PM segmented button focusin event handler.
 	 */
-	@bound
 	_amPmFocusIn() {
 		this._amPmFocused = true;
 	}
@@ -155,7 +151,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	/**
 	 * AM/PM segmented button focusout event handler.
 	 */
-	@bound
 	_amPmFocusOut() {
 		this._amPmFocused = false;
 	}
@@ -164,7 +159,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * keyup event handler.
 	 * @param evt Event object
 	 */
-	@bound
 	_onkeyup(evt: KeyboardEvent) {
 		if (isSpace(evt)) {
 			this._spacePressed = false;
@@ -175,7 +169,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * keydown event handler.
 	 * @param evt Event object
 	 */
-	@bound
 	_onkeydown(evt: KeyboardEvent) {
 		let clock;
 		const toggleSpinButtonTarget = evt.target && (evt.target as HTMLElement).tagName.toLowerCase().indexOf("segmented") === -1;
@@ -443,7 +436,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * Clock 'change' event handler.
 	 * @param evt Event object
 	 */
-	@bound
 	_clockChange(evt: CustomEvent<TimePickerClockChangeEventDetail>) {
 		const index = this._getIndexFromId((evt.target as HTMLElement).id);
 		const stringValue = evt.detail.stringValue;

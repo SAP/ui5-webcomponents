@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
@@ -375,7 +374,6 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		if (isF7(e)) {
 			this._handleF7Key(e);
@@ -397,7 +395,6 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		const target = e.target as HTMLElement;
 
@@ -428,14 +425,12 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	@bound
 	_onmouseout() {
 		if (this.arrowsPlacement === CarouselArrowsPlacement.Content) {
 			this._visibleNavigationArrows = false;
 		}
 	}
 
-	@bound
 	_onmouseover() {
 		if (this.arrowsPlacement === CarouselArrowsPlacement.Content) {
 			this._visibleNavigationArrows = true;
@@ -506,7 +501,6 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	@bound
 	_navButtonClick(e: MouseEvent) {
 		const button = e.target as Button;
 		if (button.hasAttribute("data-ui5-arrow-forward")) {

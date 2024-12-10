@@ -3,7 +3,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -145,7 +144,6 @@ class NotificationList extends UI5Element {
 		return this.shadowRoot?.querySelector("[ui5-notification-list-internal]") as NotificationListInternal;
 	}
 
-	@bound
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
@@ -154,7 +152,6 @@ class NotificationList extends UI5Element {
 		}
 	}
 
-	@bound
 	_onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
@@ -163,7 +160,6 @@ class NotificationList extends UI5Element {
 		}
 	}
 
-	@bound
 	_onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
@@ -172,7 +168,6 @@ class NotificationList extends UI5Element {
 		}
 	}
 
-	@bound
 	_onLoadMore() {
 		this.fireDecoratorEvent("load-more");
 	}

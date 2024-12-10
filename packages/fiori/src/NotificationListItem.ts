@@ -5,7 +5,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -498,7 +497,6 @@ class NotificationListItem extends NotificationListItemBase {
 		this._showMorePressed = !this._showMorePressed;
 	}
 
-	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		await super._onkeydown(e);
 
@@ -544,7 +542,6 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 

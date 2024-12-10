@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
-	customElement, slot, eventStrict as event, property, bound,
+	customElement, slot, eventStrict as event, property,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
@@ -224,7 +224,6 @@ class UserMenu extends UI5Element {
 		return isPhone();
 	}
 
-	@bound
 	_handleAvatarClick(e: CustomEvent) {
 		if (e.type === "click") {
 			// TOFIX: Discuss this check: Fire the custom UserMenu#avatar-click only for Avatar#click (not for Avatar#ui5-click as well).
@@ -232,17 +231,14 @@ class UserMenu extends UI5Element {
 		}
 	}
 
-	@bound
 	_handleManageAccountClick() {
 		this.fireDecoratorEvent("manage-account-click");
 	}
 
-	@bound
 	_handleAddAccountClick() {
 		this.fireDecoratorEvent("add-account-click");
 	}
 
-	@bound
 	_handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>) {
 		const accountToSelect = this.getAccountByRefId(e.detail.item.getAttribute("data-ui5-account-ref-id")!);
 
@@ -259,7 +255,6 @@ class UserMenu extends UI5Element {
 		accountToSelect.selected = true;
 	}
 
-	@bound
 	_handleSignOutClick() {
 		const eventPrevented = !this.fireDecoratorEvent("sign-out-click");
 
@@ -270,7 +265,6 @@ class UserMenu extends UI5Element {
 		 this._closeUserMenu();
 	}
 
-	@bound
 	_handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as UserMenuItem; // imrove: improve this ideally without "as" cating
 
@@ -287,17 +281,14 @@ class UserMenu extends UI5Element {
 		}
 	}
 
-	@bound
 	_handleMenuItemClose() {
 		this._closeUserMenu();
 	}
 
-	@bound
 	_handlePopoverAfterClose() {
 		this.open = false;
 	}
 
-	@bound
 	_handleDeclineClick() {
 		this._closeUserMenu();
 	}

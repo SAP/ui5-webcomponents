@@ -1,7 +1,7 @@
 ---
 sidebar_label: Templates
 ---
-# JSX
+# JSX Templates
 
 ## Intro
 JSX is an embeddable XML-like syntax that is transformed into valid JavaScript. TypeScript supports embedding, type checking, and compiling JSX directly to JavaScript.
@@ -80,7 +80,7 @@ This simplifies templates a lot - there is no need to make a distinction between
 Don't:
 ```tsx
 <Icon show-tooltip={false} />
-// this will result in the string "false" being assined and treated as `true`
+// this will result in the string "false" being assigned and treated as `true`
 ```
 
 Do:

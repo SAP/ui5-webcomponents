@@ -3,7 +3,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import {
 	property,
-	bound,
 	eventStrict as event,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import ComboBoxItem from "./ComboBoxItem.js";
@@ -64,7 +63,6 @@ class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxItem {
 		return true;
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		if ((e.target as HTMLElement)?.hasAttribute("ui5-checkbox")) {
 			return this.fireDecoratorEvent("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });

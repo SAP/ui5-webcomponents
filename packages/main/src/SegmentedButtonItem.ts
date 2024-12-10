@@ -18,7 +18,6 @@ import type { IButton } from "./Button.js";
 import Icon from "./Icon.js";
 
 import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 /**
  * @class
  *
@@ -164,7 +163,6 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		super();
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		if (this.disabled) {
 			e.preventDefault();
@@ -184,7 +182,6 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 		this.iconOnly = !willShowContent(this.text);
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpaceShift(e)) {
 			e.preventDefault();

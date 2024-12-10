@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -238,31 +237,26 @@ class PromptInput extends UI5Element {
 	@i18n("@ui5/webcomponents-ai")
 	static i18nBundle: I18nBundle;
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this.fireDecoratorEvent("submit");
 		}
 	}
 
-	@bound
 	_onInnerInput(e: CustomEvent<InputEventDetail>) {
 		this.value = (e.target as Input).value;
 
 		this.fireDecoratorEvent("input");
 	}
 
-	@bound
 	_onInnerChange() {
 		this.fireDecoratorEvent("change");
 	}
 
-	@bound
 	_onButtonClick() {
 		this.fireDecoratorEvent("submit");
 	}
 
-	@bound
 	_onTypeAhead(e: CustomEvent): void {
 		this.value = (e.target as Input).value;
 	}

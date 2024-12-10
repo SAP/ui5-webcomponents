@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
@@ -215,7 +214,6 @@ class Icon extends UI5Element implements IIcon {
 	viewBox?: string;
 	customSvg?: object;
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (this.mode !== IconMode.Interactive) {
 			return;
@@ -230,7 +228,6 @@ class Icon extends UI5Element implements IIcon {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this.mode === IconMode.Interactive && isSpace(e)) {
 			this.fireDecoratorEvent("click");

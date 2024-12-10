@@ -3,7 +3,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
@@ -156,7 +155,6 @@ class Token extends UI5Element implements IToken {
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
-	@bound
 	_handleSelect() {
 		if (!this.toBeDeleted) {
 			this.selected = !this.selected;
@@ -164,23 +162,19 @@ class Token extends UI5Element implements IToken {
 		}
 	}
 
-	@bound
 	_focusin() {
 		this.focused = true;
 	}
 
-	@bound
 	_focusout() {
 		this.focused = !this.focused;
 	}
 
-	@bound
 	_delete() {
 		this.toBeDeleted = true;
 		this.fireDecoratorEvent("delete");
 	}
 
-	@bound
 	_keydown(e: KeyboardEvent) {
 		const isBackSpacePressed = isBackSpace(e);
 		const isDeletePressed = isDelete(e);

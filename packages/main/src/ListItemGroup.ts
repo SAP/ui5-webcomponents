@@ -1,7 +1,6 @@
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -158,12 +157,10 @@ class ListItemGroup extends UI5Element {
 		return this.shadowRoot!.querySelector("[ui5-drop-indicator]");
 	}
 
-	@bound
 	_ondragenter(e: DragEvent) {
 		e.preventDefault();
 	}
 
-	@bound
 	_ondragleave(e: DragEvent) {
 		if (e.relatedTarget instanceof Node && this.shadowRoot!.contains(e.relatedTarget)) {
 			return;
@@ -172,7 +169,6 @@ class ListItemGroup extends UI5Element {
 		this.dropIndicatorDOM!.targetReference = null;
 	}
 
-	@bound
 	_ondragover(e: DragEvent) {
 		const draggedElement = DragRegistry.getDraggedElement();
 
@@ -223,7 +219,6 @@ class ListItemGroup extends UI5Element {
 		}
 	}
 
-	@bound
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 

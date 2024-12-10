@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isUp,
@@ -376,7 +375,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return this.shadowRoot!.querySelector(".ui5-step-input-input")!;
 	}
 
-	@bound
 	_onButtonFocusOut() {
 		setTimeout(() => {
 			if (!this._inputFocused) {
@@ -385,7 +383,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}, 0);
 	}
 
-	@bound
 	_onInput(e: CustomEvent<InputEventDetail>) {
 		const prevented = !this.fireDecoratorEvent("input", { inputType: e.detail.inputType });
 
@@ -394,7 +391,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onInputFocusIn() {
 		this._inputFocused = true;
 		if (this.value !== this._previousValue) {
@@ -402,7 +398,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onInputFocusOut() {
 		this._inputFocused = false;
 		this._onInputChange();
@@ -484,7 +479,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_incValue() {
 		if (this._incIconClickable && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
@@ -492,7 +486,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_decValue() {
 		if (this._decIconClickable && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
@@ -509,7 +502,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 		return decimalPartLength === this.valuePrecision;
 	}
 
-	@bound
 	_onInputChange() {
 		this._setDefaultInputValueIfNeeded();
 
@@ -547,17 +539,14 @@ class StepInput extends UI5Element implements IFormInputElement {
 		this._fireChangeEvent();
 	}
 
-	@bound
 	_onfocusin() {
 		this.focused = true;
 	}
 
-	@bound
 	_onfocusout() {
 		this.focused = false;
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 		if (this.disabled || this.readonly) {
@@ -593,14 +582,12 @@ class StepInput extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_decSpin() {
 		if (!this._decIconDisabled) {
 			this._spinValue(false, true);
 		}
 	}
 
-	@bound
 	_incSpin() {
 		if (!this._incIconDisabled) {
 			this._spinValue(true, true);
@@ -646,7 +633,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 	/**
 	* Resets spin process
 	*/
-	@bound
 	_resetSpin() {
 		clearTimeout(this._spinTimeoutId);
 		this._btnDown = false;
@@ -656,7 +642,6 @@ class StepInput extends UI5Element implements IFormInputElement {
 	/**
 	* Resets spin process when mouse outs + or - buttons
 	*/
-	@bound
 	_resetSpinOut() {
 		if (this._btnDown) {
 			this._resetSpin();

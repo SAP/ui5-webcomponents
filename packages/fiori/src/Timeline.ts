@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
@@ -113,7 +112,6 @@ class Timeline extends UI5Element {
 			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		let target = e.target as ITimelineItem | ToggleButton;
 
@@ -169,7 +167,6 @@ class Timeline extends UI5Element {
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ITimelineItem;
 

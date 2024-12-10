@@ -4,7 +4,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -219,7 +218,6 @@ class UploadCollection extends UI5Element {
 		detachBodyDnDHandler(this._bodyDnDHandler);
 	}
 
-	@bound
 	_ondragenter(e: DragEvent) {
 		if (this.hideDragOverlay) {
 			return;
@@ -232,7 +230,6 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drop;
 	}
 
-	@bound
 	_ondrop(e: DragEvent) {
 		if (this.hideDragOverlay) {
 			return;
@@ -245,7 +242,6 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.None;
 	}
 
-	@bound
 	_ondragover(e: DragEvent) {
 		if (this.hideDragOverlay) {
 			return;
@@ -254,7 +250,6 @@ class UploadCollection extends UI5Element {
 		e.preventDefault();
 	}
 
-	@bound
 	_ondragleave() {
 		if (this.hideDragOverlay) {
 			return;
@@ -263,12 +258,10 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	@bound
 	_onItemDelete(e: CustomEvent) {
 		this.fireDecoratorEvent("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
-	@bound
 	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this.fireDecoratorEvent("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}

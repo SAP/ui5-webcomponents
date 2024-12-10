@@ -84,7 +84,6 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
 import type { InputEventDetail } from "./Input.js";
 import SuggestionItem from "./SuggestionItem.js";
-import { bound } from "@ui5/webcomponents-base/dist/decorators.js";
 
 const SKIP_ITEMS_SIZE = 10;
 
@@ -506,7 +505,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.storeResponsivePopoverWidth();
 	}
 
-	@bound
 	_focusin(e: FocusEvent) {
 		this.focused = true;
 		this._autocomplete = false;
@@ -514,7 +512,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		!isPhone() && (e.target as HTMLInputElement).setSelectionRange(0, this.value.length);
 	}
 
-	@bound
 	_focusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
 		const clearIconWrapper = this.shadowRoot!.querySelector(".ui5-input-clear-icon-wrapper");
@@ -539,20 +536,17 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_beforeOpenPopover() {
 		if (isPhone()) {
 			this._getPickerInput().value = this.value;
 		}
 	}
 
-	@bound
 	_afterOpenPopover() {
 		this._iconPressed = true;
 		this.inner.focus();
 	}
 
-	@bound
 	_afterClosePopover() {
 		this._iconPressed = false;
 		this._filteredItems = this.items;
@@ -586,12 +580,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_handleValueStatePopoverFocusout() {
 		this.focused = false;
 	}
 
-	@bound
 	_handleValueStatePopoverAfterClose() {
 		this.valueStateOpen = false;
 	}
@@ -624,7 +616,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		});
 	}
 
-	@bound
 	_arrowClick() {
 		this.inner.focus();
 		this._resetFilter();
@@ -636,7 +627,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._toggleRespPopover();
 	}
 
-	@bound
 	_handleMobileKeydown(e: KeyboardEvent) {
 		if (isEscape(e)) {
 			this.value = this._lastValue || "";
@@ -645,7 +635,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_handleMobileInput(e: CustomEvent<InputEventDetail>) {
 		const { target } = e;
 		this.filterValue = (target as Input).value;
@@ -653,7 +642,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.fireDecoratorEvent("input");
 	}
 
-	@bound
 	_input(e: InputEvent) {
 		const { value } = e.target as HTMLInputElement;
 		const shouldAutocomplete = this.shouldAutocomplete(e);
@@ -930,12 +918,10 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this._handleItemNavigation(e, this._getItems().length - 1, true /* isForward */);
 	}
 
-	@bound
 	_keyup() {
 		this._userTypedValue = this.value.substring(0, this.inner.selectionStart || 0);
 	}
 
-	@bound
 	_keydown(e: KeyboardEvent) {
 		const isNavKey = isDown(e) || isUp(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e);
 		const allItems: Array<IComboBoxItem> = this._getItems();
@@ -1005,26 +991,22 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_handlePopoverKeydown(e: KeyboardEvent) {
 		if (isTabNext(e)) {
 			this._closeRespPopover();
 		}
 	}
 
-	@bound
 	_handlePopoverFocusout() {
 		this.focused = false;
 	}
 
-	@bound
 	_click() {
 		if (isPhone() && !this.readonly) {
 			this._openRespPopover();
 		}
 	}
 
-	@bound
 	_closeRespPopover(e?: Event | null) {
 		if ((e && (e.target as HTMLElement).classList.contains("ui5-responsive-popover-close-btn"))) {
 			if (this._selectedItemText) {
@@ -1138,17 +1120,14 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_inputChange(e: Event) {
 		e.preventDefault();
 	}
 
-	@bound
 	_itemMousedown(e: MouseEvent) {
 		e.preventDefault();
 	}
 
-	@bound
 	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as ComboBoxItem;
 
@@ -1178,7 +1157,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		this.inner.setSelectionRange(this.value.length, this.value.length);
 	}
 
-	@bound
 	_onItemFocus() {
 		this._itemFocused = true;
 	}
@@ -1199,7 +1177,6 @@ class ComboBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_clear() {
 		const selectedItem = this.items.find(item => item.selected);
 

@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -202,17 +201,14 @@ class TableRow extends UI5Element implements ITableRow {
 	tabbableElements: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 
-	@bound
 	_ontouchstart() {
 		this.activate();
 	}
 
-	@bound
 	_onmouseup() {
 		this.deactivate();
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		const activeElement = getActiveElement() as HTMLElement;
 		const itemActive = this.type === TableRowType.Active;
@@ -256,24 +252,20 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e) || isEnter(e)) {
 			this.deactivate();
 		}
 	}
 
-	@bound
 	_ontouchend() {
 		this.deactivate();
 	}
 
-	@bound
 	_onfocusout() {
 		this.deactivate();
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent, forceSelfFocus = false) {
 		if (forceSelfFocus || this._activeElementHasAttribute("ui5-table-cell")) {
 			this.root.focus();
@@ -283,7 +275,6 @@ class TableRow extends UI5Element implements ITableRow {
 		this.fireDecoratorEvent("_focused");
 	}
 
-	@bound
 	_onrowclick(e: MouseEvent) {
 		const checkboxPressed = (e.target as HTMLElement).classList.contains("ui5-multi-select-checkbox");
 		// If the user tab over a button on IOS device, the document.activeElement
@@ -315,7 +306,6 @@ class TableRow extends UI5Element implements ITableRow {
 		}
 	}
 
-	@bound
 	_handleSelection() {
 		this.fireDecoratorEvent("selection-requested", { row: this });
 	}

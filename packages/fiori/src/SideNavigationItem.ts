@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
@@ -147,14 +146,12 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
-	@bound
 	_onToggleClick(e: PointerEvent) {
 		e.stopPropagation();
 
 		this.expanded = !this.expanded;
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
@@ -169,22 +166,18 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		super._onkeydown(e);
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		super._onclick(e);
 	}
 
-	@bound
 	_onfocusout() {
 		if (!this.sideNavCollapsed) {
 			return;
@@ -193,7 +186,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	@bound
 	_onmouseenter() {
 		if (!this.sideNavCollapsed) {
 			return;
@@ -202,7 +194,6 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		this.getDomRef()!.classList.remove("ui5-sn-item-no-hover-effect");
 	}
 
-	@bound
 	_onmouseleave() {
 		if (!this.sideNavCollapsed || !this._selected) {
 			return;

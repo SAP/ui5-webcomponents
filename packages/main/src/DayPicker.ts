@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
@@ -405,12 +404,10 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
-	@bound
 	_onfocusin() {
 		this._autoFocus = true;
 	}
 
-	@bound
 	_onfocusout() {
 		this._autoFocus = false;
 	}
@@ -596,7 +593,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @param e
 	 * @private
 	 */
-	@bound
 	_onmouseover(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const hoveredItem = target.closest(".ui5-dp-item") as HTMLElement;
@@ -605,7 +601,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 
@@ -653,7 +648,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		// Even if Space+Shift was pressed, ignore the shift unless in Multiple selection
 		if (isSpace(e) || (isSpaceShift(e) && this.selectionMode !== CalendarSelectionMode.Multiple)) {
@@ -669,7 +663,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @param e
 	 * @private
 	 */
-	@bound
 	_onclick(e: MouseEvent) {
 		this._selectDate(e, e.shiftKey);
 	}

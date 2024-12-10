@@ -10,7 +10,6 @@ import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/Focu
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
@@ -256,7 +255,6 @@ abstract class ListItem extends ListItemBase {
 		document.removeEventListener("touchend", this.deactivate);
 	}
 
-	@bound
 	async _onkeydown(e: KeyboardEvent) {
 		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
 			return;
@@ -284,7 +282,6 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 
@@ -297,12 +294,10 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	@bound
 	_onmousedown() {
 		this.activate();
 	}
 
-	@bound
 	_onmouseup() {
 		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
@@ -310,12 +305,10 @@ abstract class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
-	@bound
 	_ontouchend() {
 		this._onmouseup();
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 
@@ -324,7 +317,6 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	@bound
 	_onfocusout(e: FocusEvent) {
 		if (e.target !== this.getFocusDomRef()) {
 			return;
@@ -333,7 +325,6 @@ abstract class ListItem extends ListItemBase {
 		this.deactivate();
 	}
 
-	@bound
 	_ondragstart(e: DragEvent) {
 		if (!e.dataTransfer) {
 			return;
@@ -346,7 +337,6 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	@bound
 	_ondragend(e: DragEvent) {
 		if (e.target === this._listItem) {
 			this.removeAttribute("data-moving");
@@ -364,7 +354,6 @@ abstract class ListItem extends ListItemBase {
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
-	@bound
 	onMultiSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
@@ -373,7 +362,6 @@ abstract class ListItem extends ListItemBase {
 		this.fireDecoratorEvent("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
-	@bound
 	onSingleSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
@@ -388,12 +376,10 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	@bound
 	onDelete() {
 		this.fireDecoratorEvent("selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
-	@bound
 	onDetailClick() {
 		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}

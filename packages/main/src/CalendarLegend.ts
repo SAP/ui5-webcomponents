@@ -17,7 +17,6 @@ import CalendarLegendItem from "./CalendarLegendItem.js";
 
 // Styles
 import CalendarLegendCss from "./generated/themes/CalendarLegend.css.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 type CalendarLegendItemSelectionChangeEventDetail = {
 	item: CalendarLegendItem;
@@ -125,7 +124,6 @@ class CalendarLegend extends UI5Element {
 		}
 	}
 
-	@bound
 	_onMouseDown(e: MouseEvent) {
 		e.stopPropagation();
 		const target = e.target as CalendarLegendItem;
@@ -135,7 +133,6 @@ class CalendarLegend extends UI5Element {
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
 	}
 
-	@bound
 	_onFocusIn(e: FocusEvent) {
 		const target = e.target as CalendarLegendItem;
 
@@ -145,12 +142,10 @@ class CalendarLegend extends UI5Element {
 		this._lastFocusedItemIndex = this.focusableElements.indexOf(target);
 	}
 
-	@bound
 	_onFocusOut() {
 		this.fireDecoratorEvent("calendar-legend-focus-out");
 	}
 
-	@bound
 	_onItemKeyDown(e: KeyboardEvent) {
 		const items = this.focusableElements;
 		const itemsCount = items.length;

@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -191,12 +190,10 @@ class SegmentedButton extends UI5Element {
 		this._selectedItem = item;
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		this._selectItem(e);
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this._selectItem(e);
@@ -205,14 +202,12 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._selectItem(e);
 		}
 	}
 
-	@bound
 	_onmousedown(e: MouseEvent) {
 		const eventTarget = e.target as SegmentedButtonItem;
 		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
@@ -223,7 +218,6 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		// If the component was previously focused,
 		// update the ItemNavigation to sync the button's tabindex values

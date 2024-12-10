@@ -24,7 +24,6 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -166,18 +165,15 @@ class ColorPalettePopover extends UI5Element {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	@bound
 	closePopover() {
 		this.open = false;
 	}
 
-	@bound
 	onAfterClose() {
 		this.closePopover();
 		this.fireDecoratorEvent("close");
 	}
 
-	@bound
 	onAfterOpen() {
 		const colorPalette = this._colorPalette;
 		if (colorPalette._currentlySelected) {
@@ -195,7 +191,6 @@ class ColorPalettePopover extends UI5Element {
 		});
 	}
 
-	@bound
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
 		this.fireDecoratorEvent("item-click", e.detail);

@@ -2,7 +2,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isLeft,
 	isRight,
@@ -135,7 +134,6 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		return SideNavigationGroup.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isLeft(e)) {
 			this.expanded = false;
@@ -147,12 +145,10 @@ class SideNavigationGroup extends SideNavigationItemBase {
 		}
 	}
 
-	@bound
 	_onclick() {
 		this._toggle();
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		e.stopPropagation();
 

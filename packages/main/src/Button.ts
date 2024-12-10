@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isSpace,
@@ -352,7 +351,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	@bound
 	_ontouchstart() {
 		if (this.nonInteractive) {
 			return;
@@ -375,7 +373,7 @@ class Button extends UI5Element implements IButton {
 		this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
 	}
 
-	@bound
+	// @bound
 	_onclick() {
 		if (this.nonInteractive) {
 			return;
@@ -394,7 +392,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	@bound
 	_onmousedown() {
 		if (this.nonInteractive) {
 			return;
@@ -404,7 +401,6 @@ class Button extends UI5Element implements IButton {
 		activeButton = this; // eslint-disable-line
 	}
 
-	@bound
 	_ontouchend(e: TouchEvent) {
 		if (this.disabled) {
 			e.preventDefault();
@@ -420,7 +416,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		this._cancelAction = isShift(e) || isEscape(e);
 
@@ -431,7 +426,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (this._cancelAction) {
 			e.preventDefault();
@@ -444,7 +438,6 @@ class Button extends UI5Element implements IButton {
 		}
 	}
 
-	@bound
 	_onfocusout() {
 		if (this.nonInteractive) {
 			return;

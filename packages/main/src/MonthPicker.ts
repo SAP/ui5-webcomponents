@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
@@ -245,7 +244,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		return isBetween(timestamp, this.selectedDates[0], this.selectedDates[1]);
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 
@@ -316,7 +314,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @param e
 	 * @private
 	 */
-	@bound
 	_onmouseover(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const hoveredItem = target.closest(".ui5-mp-item") as HTMLElement;
@@ -341,7 +338,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this.fireDecoratorEvent("navigate", { timestamp: this.timestamp! });
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._selectMonth(e);
@@ -353,7 +349,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @param e
 	 * @private
 	 */
-	@bound
 	_selectMonth(e: Event) {
 		e.preventDefault();
 		const target = e.target as HTMLElement;

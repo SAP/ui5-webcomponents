@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -251,28 +250,24 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		return null;
 	}
 
-	@bound
 	_onmouseover() {
 		this.content.forEach(item => {
 			item.classList.add("ui5_hovered");
 		});
 	}
 
-	@bound
 	_onmouseout() {
 		this.content.forEach(item => {
 			item.classList.remove("ui5_hovered");
 		});
 	}
 
-	@bound
 	_onclick() {
 		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			this._input.click();
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
 			this._input.click();
@@ -280,7 +275,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this._input.click();
@@ -288,13 +282,11 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_ondrag(e: DragEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 	}
 
-	@bound
 	_ondrop(e: DragEvent) {
 		e.preventDefault();
 		e.stopPropagation();
@@ -317,12 +309,10 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		});
 	}
 
-	@bound
 	_onfocusin() {
 		this.focused = true;
 	}
 
-	@bound
 	_onfocusout() {
 		this.focused = false;
 	}
@@ -348,7 +338,6 @@ class FileUploader extends UI5Element implements IFormInputElement {
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 	}
 
-	@bound
 	_onChange(e: Event) {
 		let changedFiles = (e.target as HTMLInputElement).files;
 

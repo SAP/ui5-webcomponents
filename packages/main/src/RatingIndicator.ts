@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
@@ -219,7 +218,6 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
-	@bound
 	_onclick(e: MouseEvent) {
 		const target = e.target as UI5Element;
 
@@ -243,7 +241,6 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
 			e.preventDefault();
@@ -280,7 +277,6 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
-	@bound
 	_onfocusin() {
 		if (this.disabled) {
 			return;
@@ -290,7 +286,6 @@ class RatingIndicator extends UI5Element {
 		this._liveValue = this.value;
 	}
 
-	@bound
 	_onfocusout() {
 		this._focused = false;
 	}

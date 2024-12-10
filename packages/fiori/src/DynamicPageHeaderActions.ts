@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -172,22 +171,18 @@ class DynamicPageHeaderActions extends UI5Element {
 		this.pinButton?.focus();
 	}
 
-	@bound
 	onExpandClick() {
 		this.fireDecoratorEvent("expand-button-click");
 	}
 
-	@bound
 	onPinClick() {
 		this.fireDecoratorEvent("pin-button-click");
 	}
 
-	@bound
 	onExpandHoverIn() {
 		this.fireDecoratorEvent("expand-button-hover-in");
 	}
 
-	@bound
 	onExpandHoverOut() {
 		this.fireDecoratorEvent("expand-button-hover-out");
 	}

@@ -3,7 +3,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { JSX } from "@ui5/webcomponents-base";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -299,7 +298,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		return this.items.filter((item): item is MenuItem => !item.isSeparator);
 	}
 
-	@bound
 	_closeAll() {
 		if (this._popover) {
 			this._popover.open = false;
@@ -308,7 +306,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireEvent("close-menu", {});
 	}
 
-	@bound
 	_close() {
 		if (this._popover) {
 			this._popover.open = false;
@@ -316,7 +313,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.selected = false;
 	}
 
-	@bound
 	_beforePopoverOpen(e: CustomEvent) {
 		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
 
@@ -325,13 +321,11 @@ class MenuItem extends ListItem implements IMenuItem {
 		}
 	}
 
-	@bound
 	_afterPopoverOpen() {
 		this.items[0]?.focus();
 		this.fireEvent("open", {}, false, false);
 	}
 
-	@bound
 	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
@@ -349,7 +343,6 @@ class MenuItem extends ListItem implements IMenuItem {
 		}
 	}
 
-	@bound
 	_afterPopoverClose() {
 		this.fireEvent("close", {}, false, false);
 	}

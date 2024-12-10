@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -224,7 +223,6 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
-	@bound
 	 onResponsivePopoverAfterClose() {
 		this._tempValue = ""; // reset _tempValue on popover close
 		super.onResponsivePopoverAfterClose();
@@ -261,7 +259,6 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
-	@bound
 	onSelectedDatesChange(event: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
 		const values = event.detail.selectedValues;

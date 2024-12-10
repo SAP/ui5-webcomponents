@@ -3,7 +3,6 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
@@ -381,7 +380,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * @protected
 	 */
-	@bound
 	onResponsivePopoverAfterClose() {
 		this.open = false;
 		if (isPhone()) {
@@ -393,12 +391,10 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		this.fireDecoratorEvent("close");
 	}
 
-	@bound
 	onResponsivePopoverAfterOpen() {
 		this.fireDecoratorEvent("open");
 	}
 
-	@bound
 	onResponsivePopoverBeforeOpen() {
 		this._calendar.timestamp = this._calendarTimestamp;
 		this._calendarCurrentPicker = this.firstPicker;
@@ -458,7 +454,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return [];
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isShow(e)) {
 			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
@@ -576,14 +571,12 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
 	 */
-	@bound
 	_onInputSubmit() {}
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
 	 * @protected
 	 */
-	@bound
 	_onInputChange(e: Event) {
 		this._updateValueAndFireEvents((e.target as DatePicker).value, true, ["change", "value-changed"]);
 	}
@@ -592,7 +585,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * The ui5-input "input" event handler - fire input even when the user types
 	 * @protected
 	 */
-	@bound
 	_onInputInput(e: Event) {
 		this._updateValueAndFireEvents((e.target as DatePicker).value, false, ["input"], false);
 	}
@@ -776,7 +768,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	 * @param e
 	 * @protected
 	 */
-	@bound
 	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
 		const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
@@ -788,7 +779,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	@bound
 	onHeaderShowMonthPress() {
 		this._calendarCurrentPicker = "month";
 	}
@@ -796,7 +786,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	@bound
 	onHeaderShowYearPress() {
 		this._calendarCurrentPicker = "year";
 	}
@@ -812,7 +801,6 @@ class DatePicker extends DateComponentBase implements IFormInputElement {
 		return this.getFormat().format(date);
 	}
 
-	@bound
 	_togglePicker(): void {
 		this.open = !this.open;
 	}

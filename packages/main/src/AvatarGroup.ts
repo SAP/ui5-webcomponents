@@ -7,7 +7,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
@@ -391,7 +390,6 @@ class AvatarGroup extends UI5Element {
 		this._overflowItems();
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (this._isGroup) {
 			if (isEnter(e)) {
@@ -402,7 +400,6 @@ class AvatarGroup extends UI5Element {
 		}
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (!e.shiftKey && isSpace(e) && this._isGroup) {
 			this._fireGroupEvent(e.target as HTMLElement);
@@ -419,13 +416,11 @@ class AvatarGroup extends UI5Element {
 		});
 	}
 
-	@bound
 	_onClick(e: MouseEvent) {
 		e.stopPropagation();
 		this._isGroup && this._fireGroupEvent(e.target as HTMLElement);
 	}
 
-	@bound
 	onAvatarClick(e: MouseEvent) {
 		e.stopPropagation();
 		if (e.type === "click") {
@@ -437,7 +432,6 @@ class AvatarGroup extends UI5Element {
 		}
 	}
 
-	@bound
 	onOverflowButtonClick(e: MouseEvent) {
 		e.stopPropagation();
 
@@ -472,7 +466,6 @@ class AvatarGroup extends UI5Element {
 		});
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		this._itemNavigation.setCurrentItem(e.target as IAvatarGroupItem);
 	}

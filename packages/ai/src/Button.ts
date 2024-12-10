@@ -4,7 +4,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import MainButton from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -220,7 +219,6 @@ class Button extends UI5Element {
 	 * Handles the click event.
 	 * @private
 	 */
-	@bound
 	_onclick(e: MouseEvent): void {
 		e.stopImmediatePropagation();
 		this.fireDecoratorEvent("click");

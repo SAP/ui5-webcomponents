@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -284,12 +283,10 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onclick() {
 		this.toggle();
 	}
 
-	@bound
 	_onmousedown() {
 		if (this.readonly || this.disabled) {
 			return;
@@ -299,17 +296,14 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		activeCb = this; // eslint-disable-line
 	}
 
-	@bound
 	_onmouseup() {
 		this.active = false;
 	}
 
-	@bound
 	_onfocusout() {
 		this.active = false;
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
@@ -326,7 +320,6 @@ class CheckBox extends UI5Element implements IFormInputElement {
 		this.active = true;
 	}
 
-	@bound
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			this.toggle();

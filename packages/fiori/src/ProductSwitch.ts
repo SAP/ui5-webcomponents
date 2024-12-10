@@ -5,7 +5,6 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -141,13 +140,11 @@ class ProductSwitch extends UI5Element {
 		}
 	}
 
-	@bound
 	handleProductSwitchItemClick(e: MouseEvent) {
 		this.items.forEach(item => { item.selected = false; });
 		(e.target as IProductSwitchItem).selected = true;
 	}
 
-	@bound
 	_onfocusin(e: FocusEvent) {
 		const target = e.target as IProductSwitchItem;
 
@@ -160,7 +157,6 @@ class ProductSwitch extends UI5Element {
 		this._itemNavigation.setRowSize(size);
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		if (isDown(e)) {
 			this._handleDown(e);

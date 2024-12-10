@@ -25,15 +25,6 @@ function isBoundOrArrow(func: Function): boolean {
 	return func.name.startsWith("bound ") || func.toString().includes("=>");
 }
 
-function checkBound(props: Record<string, any>) {
-	Object.keys(props).forEach(prop => {
-		if (prop.startsWith("on") && !isBoundOrArrow(props[prop])) {
-			// eslint-disable-next-line no-console
-			console.warn(`Method [${prop}] not bound, accessing [this] won't work correctly. Add \`@bound\` decorator`, props[prop]);
-		}
-	});
-}
-
 function checkAttributeUsage(type: string | typeof UI5Element, props: Record<string, any>) {
 	if (!isUI5ElementClass(type)) {
 		return;
@@ -56,7 +47,6 @@ export function Fragment(props: Record<string, any>, context?: any) {
 export function jsxDEV(type: string | typeof UI5Element, props: Record<string, any>, key: string): VNode<any> {
 	const tag = preprocess(type, props, key);
 
-	checkBound(props);
 	checkAttributeUsage(type, props);
 
 	return _jsxDEV(tag, props, key) as VNode<any>;

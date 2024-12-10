@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
@@ -675,7 +674,6 @@ class TimePickerClock extends UI5Element {
 		this._updateSelectedValueObject(realValue);
 	}
 
-	@bound
 	_captureClockRef(el: HTMLDivElement | null) {
 		if (el) {
 			// @ts-expect-error "mousewheel" is not a standard event
@@ -689,7 +687,6 @@ class TimePickerClock extends UI5Element {
 	 * TouchStart/MouseDown event handler.
 	 * @param evt Event object
 	 */
-	@bound
 	_onTouchStart(evt: Event) {
 		this._cancelTouchOut = false;
 		if (this.disabled || this._mouseOrTouchDown) {
@@ -709,7 +706,6 @@ class TimePickerClock extends UI5Element {
 	 * TouchMove/MouseMove event handler.
 	 * @param evt Event object
 	 */
-	@bound
 	_onTouchMove(evt: Event) {
 		let	hoveredNumber;
 		const domRef = this.getDomRef();
@@ -746,7 +742,6 @@ class TimePickerClock extends UI5Element {
 	 * TouchEnd/MouseUp event handler.
 	 * @param evt Event object
 	 */
-	@bound
 	_onTouchEnd(evt: Event) {
 		if (!this._mouseOrTouchDown) {
 			return;
@@ -777,7 +772,6 @@ class TimePickerClock extends UI5Element {
 	/**
 	 * MouseOut event handler.
 	 */
-	@bound
 	_onMouseOut() {
 		const hoveredNumber = (this.getDomRef() as HTMLElement).querySelector(this._hoveredId(this._hoveredValue));
 
@@ -786,7 +780,6 @@ class TimePickerClock extends UI5Element {
 		this._prevHoveredValue = -1;
 	}
 
-	@bound
 	noop() {
 		return false;
 	}

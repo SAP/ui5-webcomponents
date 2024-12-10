@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isLeft,
 	isRight,
@@ -253,7 +252,6 @@ class Menu extends UI5Element {
 		});
 	}
 
-	@bound
 	_close() {
 		this.open = false;
 	}
@@ -285,7 +283,6 @@ class Menu extends UI5Element {
 		}
 	}
 
-	@bound
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
@@ -325,7 +322,6 @@ class Menu extends UI5Element {
 		}, MENU_OPEN_DELAY);
 	}
 
-	@bound
 	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as MenuItem;
 
@@ -343,7 +339,6 @@ class Menu extends UI5Element {
 		}
 	}
 
-	@bound
 	_itemKeyDown(e: KeyboardEvent) {
 		if (!isLeft(e) && !isRight(e)) {
 			return;
@@ -366,7 +361,6 @@ class Menu extends UI5Element {
 		}
 	}
 
-	@bound
 	_beforePopoverOpen(e: CustomEvent) {
 		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, true);
 
@@ -376,13 +370,11 @@ class Menu extends UI5Element {
 		}
 	}
 
-	@bound
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
 		this.fireEvent("open", {}, false, true);
 	}
 
-	@bound
 	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
 
@@ -392,7 +384,6 @@ class Menu extends UI5Element {
 		}
 	}
 
-	@bound
 	_afterPopoverClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");

@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -178,17 +177,14 @@ class CardHeader extends UI5Element {
 		return !!this.action.length;
 	}
 
-	@bound
 	_actionsFocusin() {
 		this._root.classList.add("ui5-card-header-hide-focus");
 	}
 
-	@bound
 	_actionsFocusout() {
 		this._root.classList.remove("ui5-card-header-hide-focus");
 	}
 
-	@bound
 	_click(e: MouseEvent) {
 		// prevents the native browser "click" event from firing
 		e.stopImmediatePropagation();
@@ -198,7 +194,6 @@ class CardHeader extends UI5Element {
 		}
 	}
 
-	@bound
 	_keydown(e: KeyboardEvent) {
 		if (!this.interactive || !this._root.contains(e.target as HTMLElement)) {
 			return;
@@ -219,7 +214,6 @@ class CardHeader extends UI5Element {
 		}
 	}
 
-	@bound
 	_keyup(e: KeyboardEvent) {
 		if (!this.interactive || !this._root.contains(e.target as HTMLElement)) {
 			return;

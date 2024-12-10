@@ -1,5 +1,4 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -172,7 +171,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
-	@bound
 	onResponsivePopoverAfterClose() {
 		super.onResponsivePopoverAfterClose();
 		this._showTimeView = false;
@@ -195,7 +193,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * @override
 	 * @private
 	 */
-	@bound
 	_togglePicker() {
 		super._togglePicker();
 
@@ -312,7 +309,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * @override
 	 */
-	@bound
 	onSelectedDatesChange(e: CustomEvent<CalendarSelectionChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
@@ -325,7 +321,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 		};
 	}
 
-	@bound
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this._previewValues = {
 			...this._previewValues,
@@ -353,7 +348,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	/**
 	 * Handles clicking on the `submit` button, within the picker`s footer.
 	 */
-	@bound
 	_submitClick() {
 		const selectedDate = this.getSelectedDateTime();
 
@@ -369,7 +363,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * Handles clicking on the `cancel` button, within the picker`s footer,
 	 * that would disregard the user selection.
 	 */
-	@bound
 	_cancelClick() {
 		this._togglePicker();
 	}
@@ -379,7 +372,6 @@ class DateTimePicker extends DatePicker implements IFormInputElement {
 	 * between the date and time views.
 	 * @param e
 	 */
-	@bound
 	_dateTimeSwitchChange(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) { // Note: fix when SegmentedButton is implemented in TS
 		const selectedItem = e.detail.selectedItems[0];
 		this._showTimeView = selectedItem.getAttribute("data-ui5-key") === "Time";

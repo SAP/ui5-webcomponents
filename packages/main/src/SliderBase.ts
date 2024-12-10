@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
@@ -202,7 +201,6 @@ abstract class SliderBase extends UI5Element {
 
 	_handleUp(e: TouchEvent | MouseEvent) {}	// eslint-disable-line
 
-	@bound
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
@@ -287,7 +285,6 @@ abstract class SliderBase extends UI5Element {
 	/** Shows the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
-	@bound
 	_onmouseover() {
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
@@ -298,14 +295,12 @@ abstract class SliderBase extends UI5Element {
 	 * Hides the tooltip(s) if the `showTooltip` property is set to true
 	 * @private
 	 */
-	@bound
 	_onmouseout() {
 		if (this.showTooltip && !this.shadowRoot!.activeElement) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 
@@ -325,7 +320,6 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	@bound
 	_onInputKeydown(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;
 
@@ -339,14 +333,12 @@ abstract class SliderBase extends UI5Element {
 		}
 	}
 
-	@bound
 	_onInputChange() {
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireDecoratorEvent("change");
 		}
 	}
 
-	@bound
 	_onInputInput() {
 		this.fireDecoratorEvent("input");
 	}
@@ -363,7 +355,6 @@ abstract class SliderBase extends UI5Element {
 		this.value = value;
 	}
 
-	@bound
 	_onKeyupBase() {
 		if (this.disabled) {
 			return;

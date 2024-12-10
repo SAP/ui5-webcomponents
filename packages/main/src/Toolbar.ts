@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { JSX } from "@ui5/webcomponents-base";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -468,7 +467,6 @@ class Toolbar extends UI5Element {
 	 * Event Handlers
 	 */
 
-	@bound
 	onOverflowPopoverClosed() {
 		this.popoverOpen = false;
 		if (this.overflowButtonDOM) {
@@ -480,7 +478,6 @@ class Toolbar extends UI5Element {
 		e.preventDefault();
 	}
 
-	@bound
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
 		if (this.overflowButtonDOM) {

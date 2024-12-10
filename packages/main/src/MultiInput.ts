@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import bound from "@ui5/webcomponents-base/dist/decorators/bound.js";
 import {
 	isShow,
 	isBackSpace,
@@ -172,13 +171,11 @@ class MultiInput extends Input implements IFormInputElement {
 		this._valueHelpIconPressed = false;
 	}
 
-	@bound
 	valueHelpPress() {
 		this.closeValueStatePopover();
 		this.fireDecoratorEvent("value-help-trigger");
 	}
 
-	@bound
 	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		const deletedTokens = e.detail.tokens;
 		const selectedTokens = this.tokens.filter(token => token.selected);
@@ -197,7 +194,6 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
-	@bound
 	valueHelpMouseDown(e: MouseEvent) {
 		const target = e.target as Icon;
 		this.closeValueStatePopover();
@@ -206,7 +202,6 @@ class MultiInput extends Input implements IFormInputElement {
 		target.focus();
 	}
 
-	@bound
 	_tokenizerFocusOut(e: FocusEvent) {
 		if (!this.contains(e.relatedTarget as HTMLElement) && !this.shadowRoot!.contains(e.relatedTarget as HTMLElement)) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
@@ -214,14 +209,12 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
-	@bound
 	valueHelpMouseUp() {
 		setTimeout(() => {
 			this._valueHelpIconPressed = false;
 		}, 0);
 	}
 
-	@bound
 	innerFocusIn() {
 		this.tokenizer.expanded = true;
 		this.focused = true;
@@ -232,7 +225,6 @@ class MultiInput extends Input implements IFormInputElement {
 		});
 	}
 
-	@bound
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
@@ -261,7 +253,6 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
 		if (isRight(e) || isDown(e) || isEnd(e) || rightCtrl) {
@@ -316,7 +307,6 @@ class MultiInput extends Input implements IFormInputElement {
 		}
 	}
 
-	@bound
 	_onfocusout(e: FocusEvent) {
 		super._onfocusout(e);
 		const relatedTarget = e.relatedTarget as HTMLElement;
@@ -335,7 +325,6 @@ class MultiInput extends Input implements IFormInputElement {
 	/**
 	 * @override
 	 */
-	@bound
 	_onfocusin(e: FocusEvent) {
 		const inputDomRef = this.getInputDOMRef();
 
