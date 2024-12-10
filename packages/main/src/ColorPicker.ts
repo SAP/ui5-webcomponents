@@ -307,7 +307,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 		this._colorValue.Alpha = this._alpha;
 		this._isHueValueChanged = true;
-		this._setValue(this._colorValue.toRGBString());
+
+		const color = this._colorValue.toRGBString();
+		this._setValue(color);
 	}
 
 	_handleHueInput(e: CustomEvent) {
@@ -321,7 +323,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const normalizedHue = ((hue % 360) + 360) % 360;
 
 		this._colorValue.H = normalizedHue;
-		this._setValue(this._colorValue.toRGBString());
+
+		const color = this._colorValue.toRGBString();
+		this._setValue(color);
 	}
 
 	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
@@ -345,7 +349,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
-			this._setValue(this._colorValue.toRGBString());
+
+			const color = this._colorValue.toRGBString();
+			this._setValue(color);
 		}
 	}
 
@@ -383,7 +389,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			break;
 		}
 
-		this._setValue(this._colorValue.toRGBString());
+		const color = this._colorValue.toRGBString();
+		this._setValue(color);
 		this._setValues();
 	}
 
@@ -445,7 +452,9 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const tempColor = this._calculateColorFromCoordinates(x, y);
 		if (tempColor) {
 			this._colorValue.HSL = tempColor;
-			this._setValue(this._colorValue.toRGBString());
+
+			const color = this._colorValue.toRGBString();
+			this._setValue(color);
 		}
 	}
 
@@ -461,9 +470,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// 0 ≤ H < 360
 		// 4.251 because with 4.25 we get out of the colors range.
 		const h = this._hue / 4.251;
-
 		let s = +(1 - (y / 256)).toFixed(2);
-
 		let l = +(x / 256).toFixed(2);
 
 		if (Number.isNaN(s) || Number.isNaN(l)) {
@@ -645,7 +652,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 				top: `${this._selectedCoordinates.y}px`,
 			},
 			colorSpan: {
-				"background-color": this._colorValue.toString(),
+				"background-color": this._colorValue.toRGBString(),
 			},
 		};
 	}
