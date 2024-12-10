@@ -25,7 +25,8 @@ import {
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
-import type { JSX } from "@ui5/webcomponents-base";
+import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
@@ -487,8 +488,8 @@ class Button extends UI5Element implements IButton {
 		return Button.i18nBundle.getText(Button.typeTextMappings()[this.design]);
 	}
 
-	get effectiveAccRole(): JSX.AriaRole {
-		return this.accessibleRole.toLowerCase() as "button" | "link";
+	get effectiveAccRole(): Lowercase<AriaRole> {
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get tabIndexValue() {

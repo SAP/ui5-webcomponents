@@ -28,6 +28,8 @@ enum AriaRole {
 	Link = "Link",
 
 	Option = "Option",
+
+	SpinButton = "SpinButton",
 }
 
 export default AriaRole;
