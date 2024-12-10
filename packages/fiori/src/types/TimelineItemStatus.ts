@@ -1,5 +1,5 @@
 /**
- * Different statuses of a timeline item.
+ * Available status types of a timeline item.
  * @public
  */
 enum TimelineItemStatus {
@@ -10,25 +10,25 @@ enum TimelineItemStatus {
 	None = "None",
 
 	/**
-	 * Represents an informational status, typically used to display neutral information.
+	 * Represents an informative status to indicate neutral information.
 	 * @public
 	 */
 	Information = "Information",
 
 	/**
-	 * Represents a positive or successful status, indicating that an operation is completed.
+	 * Represents a positive or successfully completed status to indicate a completed operation.
 	 * @public
 	 */
 	Positive = "Positive",
 
 	/**
-	 * Represents a critical status, used to indicate that attention is required.
+	 * Represents a critical status to indicate that attention is required.
 	 * @public
 	 */
 	Critical = "Critical",
 
 	/**
-	 * Represents a negative status, indicating that an operation failed or there is an issue.
+	 * Represents a negative status to indicate that an operation has failed or an issue has occurred.
 	 * @public
 	 */
 	Negative = "Negative",
