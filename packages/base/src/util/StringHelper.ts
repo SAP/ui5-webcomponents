@@ -18,6 +18,10 @@ const camelToKebabCase = (string: string) => {
 	return camelToKebabMap.get(string)!;
 };
 
+const pascalToKebabCase = (pascalString: string) => {
+	return camelToKebabCase(pascalString);
+};
+
 const toCamelCase = (parts: Array<string>) => {
 	return parts.map((string, index) => {
 		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -36,4 +40,9 @@ const kebabToPascalCase = (src: string) => {
 	return result;
 };
 
-export { kebabToCamelCase, camelToKebabCase, kebabToPascalCase };
+export {
+	kebabToCamelCase,
+	camelToKebabCase,
+	pascalToKebabCase,
+	kebabToPascalCase,
+};

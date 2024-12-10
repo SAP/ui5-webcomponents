@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRendererer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -8,7 +8,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ToastPlacement from "./types/ToastPlacement.js";
 
 // Template
-import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
+import ToastTemplate from "./ToastTemplate.js";
 
 // Styles
 import ToastCss from "./generated/themes/Toast.css.js";
@@ -80,7 +80,7 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
  */
 @customElement({
 	tag: "ui5-toast",
-	renderer: litRender,
+	renderer: jsxRendererer,
 	styles: ToastCss,
 	template: ToastTemplate,
 })
@@ -96,8 +96,9 @@ const handleGlobalKeydown = (e: KeyboardEvent) => {
 
 class Toast extends UI5Element {
 	eventDetails!: {
-		"close": void
-	}
+		"close": void,
+	};
+
 	/**
 	 * Defines the duration in milliseconds for which component
 	 * remains on the screen before it's automatically closed.
@@ -245,7 +246,7 @@ class Toast extends UI5Element {
 	}
 
 	get _tabindex() {
-		return this.focused ? "0" : "-1";
+		return this.focused ? 0 : -1;
 	}
 
 	onEnterDOM(): void {

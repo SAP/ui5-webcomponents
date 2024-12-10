@@ -2,16 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
+import WizardTabTemplate from "./WizardTabTemplate.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
 
-type WizardTabInfo = {
-	[key: string]: string,
-}
+type WizardTabAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaSetsize" | "ariaPosinset" | "ariaLabel" | "ariaCurrent">;
 
 /**
  * @class
@@ -32,7 +31,7 @@ type WizardTabInfo = {
 
 @customElement({
 	tag: "ui5-wizard-tab",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: WizardTabCss,
 	template: WizardTabTemplate,
 	dependencies: [Icon],
@@ -139,7 +138,11 @@ class WizardTab extends UI5Element implements ITabbable {
 	@property()
 	forcedTabIndex?: string
 
-	_wizardTabAccInfo? : WizardTabInfo
+	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	_wizardTabAccInfo? : WizardTabAccessibilityAttributes
 
 	_onclick() {
 		if (!this.disabled) {
@@ -164,10 +167,10 @@ class WizardTab extends UI5Element implements ITabbable {
 		}
 
 		if (this.selected || this.forcedTabIndex === "0") {
-			return "0";
+			return 0;
 		}
 
-		return "-1";
+		return -1;
 	}
 
 	_onfocusin() {
@@ -178,7 +181,7 @@ class WizardTab extends UI5Element implements ITabbable {
 		return this.titleText || this.subtitleText;
 	}
 
-	get accInfo() {
+	get accInfo(): WizardTabAccessibilityAttributes {
 		return {
 			"ariaSetsize": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaSetsize,
 			"ariaPosinset": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaPosinset,

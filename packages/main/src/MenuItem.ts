@@ -1,5 +1,8 @@
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { JSX } from "@ui5/webcomponents-base";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -15,13 +18,12 @@ import type PopoverPlacement from "./types/PopoverPlacement.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
-import MenuItemTemplate from "./generated/templates/MenuItemTemplate.lit.js";
+import MenuItemTemplate from "./MenuItemTemplate.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 	MENU_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import type { IMenuItem } from "./Menu.js";
 
 // Styles
@@ -57,6 +59,7 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  */
 @customElement({
 	tag: "ui5-menu-item",
+	renderer: jsxRenderer,
 	template: MenuItemTemplate,
 	styles: [ListItem.styles, menuItemCss],
 	dependencies: [...ListItem.dependencies, ResponsivePopover, List, BusyIndicator, Icon],
@@ -278,7 +281,7 @@ class MenuItem extends ListItem implements IMenuItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: this.accessibilityAttributes.role || "menuitem",
+			role: this.accessibilityAttributes.role || "menuitem" as JSX.AriaRole | undefined,
 			ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup> : undefined,
 			ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
 			ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
@@ -323,7 +326,7 @@ class MenuItem extends ListItem implements IMenuItem {
 		this.fireEvent("open", {}, false, false);
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {

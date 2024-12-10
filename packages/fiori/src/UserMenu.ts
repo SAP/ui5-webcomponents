@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	customElement, slot, eventStrict as event, property,
 } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -20,16 +20,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type UserMenuAccount from "./UserMenuAccount.js";
 import type UserMenuItem from "./UserMenuItem.js";
-import UserMenuTemplate from "./generated/templates/UserMenuTemplate.lit.js";
+import UserMenuTemplate from "./UserMenuTemplate.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
-
-// Icons
-import "@ui5/webcomponents-icons/dist/add-employee.js";
-import "@ui5/webcomponents-icons/dist/edit.js";
-import "@ui5/webcomponents-icons/dist/person-placeholder.js";
-import "@ui5/webcomponents-icons/dist/log.js";
-import "@ui5/webcomponents-icons/dist/user-settings.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
 
 // Texts
 import {
@@ -73,7 +65,7 @@ type UserMenuOtherAccountClickEventDetail = {
 @customElement({
 	tag: "ui5-user-menu",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: UserMenuTemplate,
 	styles: [UserMenuCss],
 	dependencies: [
@@ -232,8 +224,11 @@ class UserMenu extends UI5Element {
 		return isPhone();
 	}
 
-	_handleAvatarClick() {
-		this.fireDecoratorEvent("avatar-click");
+	_handleAvatarClick(e: CustomEvent) {
+		if (e.type === "click") {
+			// TOFIX: Discuss this check: Fire the custom UserMenu#avatar-click only for Avatar#click (not for Avatar#ui5-click as well).
+			this.fireDecoratorEvent("avatar-click");
+		}
 	}
 
 	_handleManageAccountClick() {
@@ -244,10 +239,12 @@ class UserMenu extends UI5Element {
 		this.fireDecoratorEvent("add-account-click");
 	}
 
-	_handleAccountSwitch(e: CustomEvent<{ item: ListItemClickEventDetail & { associatedAccount: UserMenuAccount } }>) {
+	_handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>) {
+		const accountToSelect = this.getAccountByRefId(e.detail.item.getAttribute("data-ui5-account-ref-id")!);
+
 		const eventPrevented = !this.fireDecoratorEvent("change-account", {
 			prevSelectedAccount: this._selectedAccount,
-			selectedAccount: e.detail.item.associatedAccount,
+			selectedAccount: accountToSelect,
 		});
 
 		if (eventPrevented) {
@@ -255,7 +252,7 @@ class UserMenu extends UI5Element {
 		}
 
 		this._selectedAccount.selected = false;
-		e.detail.item.associatedAccount.selected = true;
+		accountToSelect.selected = true;
 	}
 
 	_handleSignOutClick() {
@@ -268,8 +265,8 @@ class UserMenu extends UI5Element {
 		 this._closeUserMenu();
 	}
 
-	_handleMenuItemClick(e: CustomEvent<UserMenuItemClickEventDetail>) {
-		const item = e.detail.item;
+	_handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>) {
+		const item = e.detail.item as UserMenuItem; // imrove: improve this ideally without "as" cating
 
 		if (!item._popover) {
 			const eventPrevented = !this.fireDecoratorEvent("item-click", {
@@ -355,6 +352,10 @@ class UserMenu extends UI5Element {
 			return "";
 		}
 		return `${UserMenu.i18nBundle.getText(USER_MENU_POPOVER_ACCESSIBLE_NAME)} ${this._selectedAccount.titleText}`;
+	}
+
+	getAccountByRefId(refId: string) {
+		return this.accounts.find(account => account._id === refId)!;
 	}
 }
 

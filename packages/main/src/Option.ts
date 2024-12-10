@@ -6,7 +6,7 @@ import ListItemBase from "./ListItemBase.js";
 import Icon from "./Icon.js";
 
 // Template
-import OptionTemplate from "./generated/templates/OptionTemplate.lit.js";
+import OptionTemplate from "./OptionTemplate.js";
 
 // Styles
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
@@ -42,6 +42,8 @@ import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText
 	],
 })
 class Option extends ListItemBase implements IOption {
+	eventDetails!: ListItemBase["eventDetails"];
+
 	/**
 	 * Defines the text of the component.
 	 *

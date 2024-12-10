@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -22,7 +22,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
+import BarcodeScannerDialogTemplate from "./BarcodeScannerDialogTemplate.js";
 
 // Styles
 import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
@@ -77,7 +77,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 @customElement({
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: BarcodeScannerDialogTemplate,
 	styles: [BarcodeScannerDialogCss],
 	dependencies: [

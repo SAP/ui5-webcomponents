@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -34,8 +34,8 @@ import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
-import Input from "./Input.js";
+import TimePickerTemplate from "./TimePickerTemplate.js";
+import Input, { type InputAccInfo } from "./Input.js";
 import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import TimeSelectionInputs from "./TimeSelectionInputs.js";
@@ -129,7 +129,7 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 	languageAware: true,
 	cldr: true,
 	formAssociated: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TimePickerTemplate,
 	styles: [
 		TimePickerCss,
@@ -349,7 +349,7 @@ class TimePicker extends UI5Element implements IFormInputElement {
 		return TimePicker.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
 	}
 
-	get accInfo() {
+	get accInfo(): InputAccInfo {
 		return {
 			"ariaRoledescription": this.dateAriaDescription,
 			"ariaHasPopup": "dialog",
@@ -534,6 +534,10 @@ class TimePicker extends UI5Element implements IFormInputElement {
 	}
 
 	_handleInputLiveChange(e: CustomEvent) {
+		if (this._isPhone) {
+			e.preventDefault();
+		}
+
 		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}
@@ -700,12 +704,6 @@ class TimePicker extends UI5Element implements IFormInputElement {
 				const popover = this._getInputsPopover();
 				popover.applyFocus();
 			}
-			e.preventDefault();
-		}
-	}
-
-	_oninput(e: CustomEvent) {
-		if (this._isPhone) {
 			e.preventDefault();
 		}
 	}

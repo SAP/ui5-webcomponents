@@ -26,6 +26,8 @@ enum AriaRole {
 	 * @public
 	 */
 	Link = "Link",
+
+	Option = "Option",
 }
 
 export default AriaRole;

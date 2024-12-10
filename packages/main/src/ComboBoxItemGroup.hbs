@@ -1,9 +1,0 @@
-{{>include "./ListItemGroup.hbs"}}
-
-{{#*inline "items"}}
-	{{#each items}}
-		{{#if _isVisible}}
-			<slot name="{{this._individualSlot}}"></slot>
-		{{/if}}
-	{{/each}}
-{{/inline}}

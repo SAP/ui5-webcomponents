@@ -179,7 +179,7 @@ describe("Table general interaction", () => {
 			await browser.url(`test/pages/TableGrowingWithButton.html`);
 
 			const inputResult = await browser.$("#inputLoadMoreCounter");
-			const loadMoreTrigger = await browser.$("#tbl").shadow$("[growing-button-inner]");
+			const loadMoreTrigger = await browser.$("#tbl").shadow$(".ui5-table-growing-row-inner");
 
 			// act
 			await loadMoreTrigger.click();

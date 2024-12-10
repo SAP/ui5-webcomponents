@@ -71,11 +71,11 @@ tr {
 	height: 0px;
 }
 
-:host([busy]) [growing-button] {
+:host([busy]) .ui5-table-growing-row {
 	opacity: 0.72;
 }
 
-:host [growing-button] {
+:host .ui5-table-growing-row {
 	border-bottom: var(--_ui5_table_load_more_border-bottom);
 }
 

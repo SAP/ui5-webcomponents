@@ -3,12 +3,12 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
-import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
+import ColorPalettePopoverTemplate from "./ColorPalettePopoverTemplate.js";
 
 // Styles
 import ColorPalettePopoverCss from "./generated/themes/ColorPalettePopover.css.js";
@@ -54,7 +54,7 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  */
 @customElement({
 	tag: "ui5-color-palette-popover",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [ResponsivePopoverCommonCss, ColorPalettePopoverCss],
 	template: ColorPalettePopoverTemplate,
 	dependencies: [
@@ -83,9 +83,10 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 })
 class ColorPalettePopover extends UI5Element {
 	eventDetails!: {
-		"item-click": ColorPalettePopoverItemClickEventDetail
-		close: void
+		"item-click": ColorPalettePopoverItemClickEventDetail,
+		"close": void,
 	}
+
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
 	 * @default false

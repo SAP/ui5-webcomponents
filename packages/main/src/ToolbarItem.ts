@@ -19,6 +19,10 @@ type IEventOptions = {
  * @since 1.17.0
  */
 class ToolbarItem extends UI5Element {
+	// strictEvents: needed for parent class
+	eventDetails!: {
+		click: void
+	}
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.

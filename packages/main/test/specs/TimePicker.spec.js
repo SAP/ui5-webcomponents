@@ -22,9 +22,9 @@ describe("TimePicker general interaction", () => {
 		await timepicker.setProperty("value", "11:12:13");
 		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 
-		const hoursClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="hours"]`).getProperty("selectedValue");
-		const minutesClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="minutes"]`).getProperty("selectedValue");
-		const secondsClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="seconds"]`).getProperty("selectedValue");
+		const hoursClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-ui5-clock="hours"]`).getProperty("selectedValue");
+		const minutesClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-ui5-clock="minutes"]`).getProperty("selectedValue");
+		const secondsClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-ui5-clock="seconds"]`).getProperty("selectedValue");
 
 		// assert
 		assert.strictEqual(hoursClockValue, 11, "Hours are equal");

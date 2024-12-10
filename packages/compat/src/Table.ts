@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -56,7 +56,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import TableTemplate from "./TableTemplate.js";
 
 // Styles
 import tableStyles from "./generated/themes/Table.css.js";
@@ -65,7 +65,7 @@ import tableStyles from "./generated/themes/Table.css.js";
  * Interface for components that may be slotted inside a `ui5-table` as rows
  * @public
  */
-interface ITableRow extends HTMLElement, ITabbable {
+interface ITableRow extends UI5Element, ITabbable {
 	mode: `${TableMode}`,
 	selected: boolean,
 	forcedBusy: boolean,
@@ -174,7 +174,7 @@ enum TableFocusTargetElement {
 	tag: "ui5-table",
 	fastNavigation: true,
 	styles: tableStyles,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TableTemplate,
 	dependencies: [BusyIndicator, CheckBox],
 })
@@ -225,6 +225,7 @@ class Table extends UI5Element {
 		"load-more": void,
 		"selection-change": TableSelectionChangeEventDetail,
 	}
+
 	/**
 	 * Defines the text that will be displayed when there is no data and `hideNoData` is not present.
 	 * @default undefined

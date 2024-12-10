@@ -10,7 +10,7 @@
 	align-items: center;
 }
 
-span[separator] {
+.ui5-time-selection-separator {
 	display: inline-block;
 	min-width: 0.5rem;
 	padding: 0 0.125rem;

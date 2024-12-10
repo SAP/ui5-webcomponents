@@ -108,17 +108,22 @@ describe("Drag and drop tests", () => {
 		let draggedStripItem = displayedStripItems[0];
 		let dropTargetStripItem = displayedStripItems[1];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		let t1 = await tabContainer.getRealTabId(draggedStripItem);
+		let t2 = await tabContainer.getRealTabId(dropTargetStripItem);
 
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "After");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "After");
+		let expectedOrder = moveElementById(currentOrder, t1, t2, "After");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 
 		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
 		draggedStripItem = displayedStripItems[1];
 		dropTargetStripItem = displayedStripItems[displayedStripItems.length - 1];
+		t1 = await tabContainer.getRealTabId(draggedStripItem);
+		t2 = await tabContainer.getRealTabId(dropTargetStripItem);
+
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "After");
-		expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "After");
+		expectedOrder = moveElementById(currentOrder, t1, t2, "After");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -128,17 +133,22 @@ describe("Drag and drop tests", () => {
 		let draggedStripItem = displayedStripItems[displayedStripItems.length - 1];
 		let dropTargetStripItem = displayedStripItems[displayedStripItems.length - 2];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		let t1 = await tabContainer.getRealTabId(draggedStripItem);
+		let t2 = await tabContainer.getRealTabId(dropTargetStripItem);
 
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "Before");
+		let expectedOrder = moveElementById(currentOrder, t1, t2, "Before");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 
 		displayedStripItems = await tabContainer.getDisplayedTabStripItems("tabContainerDnd");
 		draggedStripItem = displayedStripItems[displayedStripItems.length - 1];
 		dropTargetStripItem = displayedStripItems[0];
+		t1 = await tabContainer.getRealTabId(draggedStripItem);
+		t2 = await tabContainer.getRealTabId(dropTargetStripItem);
+
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "Before");
-		expectedOrder = moveElementById(expectedOrder, await tabContainer.getRealTabId(draggedStripItem), await tabContainer.getRealTabId(dropTargetStripItem), "Before");
+		expectedOrder = moveElementById(expectedOrder, t1, t2, "Before");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -154,9 +164,10 @@ describe("Drag and drop tests", () => {
 		let expectedOrder = currentOrder;
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has NOT changed");
+		const t2 = await tabContainer.getRealTabId(dropTargetStripItem);
 
 		await dragAndDropInStrip(draggedStripItem, dropTargetStripItem, "On");
-		expectedOrder = moveElementById(currentOrder, draggedStripItemId, await tabContainer.getRealTabId(dropTargetStripItem), "On");
+		expectedOrder = moveElementById(currentOrder, draggedStripItemId, t2, "On");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -168,9 +179,11 @@ describe("Drag and drop tests", () => {
 		let draggedPopoverItem = displayedPopoverItems[0];
 		let dropTargetPopoverItem = displayedPopoverItems[2];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		let t1 = await tabContainer.getRealTabId(draggedPopoverItem);
+		let t2 = await tabContainer.getRealTabId(dropTargetPopoverItem);
 
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "After");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem), "After");
+		let expectedOrder = moveElementById(currentOrder, t1, t2, "After");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
@@ -181,10 +194,12 @@ describe("Drag and drop tests", () => {
 		let draggedPopoverItem = displayedPopoverItems[2];
 		let dropTargetPopoverItem = displayedPopoverItems[1];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		let t1 = await tabContainer.getRealTabId(draggedPopoverItem);
+		let t2 = await tabContainer.getRealTabId(dropTargetPopoverItem);
 
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "Before");
 
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem), "Before");
+		let expectedOrder = moveElementById(currentOrder, t1, t2, "Before");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 	});
@@ -194,10 +209,12 @@ describe("Drag and drop tests", () => {
 		let draggedPopoverItem = displayedPopoverItems[3];
 		let dropTargetPopoverItem = displayedPopoverItems[4];
 		let currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
+		let t1 = await tabContainer.getRealTabId(draggedPopoverItem);
+		let t2 = await tabContainer.getRealTabId(dropTargetPopoverItem);
 		console.error("POPOVER", await tabContainer.getRealTabId(draggedPopoverItem), "asd:", await tabContainer.getRealTabId(dropTargetPopoverItem))
 
 		await dragAndDropInPopover(draggedPopoverItem, dropTargetPopoverItem, "On");
-		let expectedOrder = moveElementById(currentOrder, await tabContainer.getRealTabId(draggedPopoverItem), await tabContainer.getRealTabId(dropTargetPopoverItem), "On");
+		let expectedOrder = moveElementById(currentOrder, t1, t2, "On");
 		currentOrder = await tabContainer.getItemsIds("tabContainerDnd");
 		assert.deepEqual(currentOrder, expectedOrder, "Items order has changed");
 
