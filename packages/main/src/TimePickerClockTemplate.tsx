@@ -25,7 +25,7 @@ export default function TimePickerClockTemplate(this: TimePickerClock) {
 							<span class="ui5-tp-clock-dot"></span>
 							<span id={`${this._id}-${item.item}`}
 								class="ui5-tp-clock-number"
-								style={{ transform: `rotate(-${i * 6}deg)` }}
+								style={{ transform: `rotate(-${(i + 1) * 6}deg)` }}
 							>
 								{item.item}
 							</span>
@@ -34,7 +34,7 @@ export default function TimePickerClockTemplate(this: TimePickerClock) {
 									<span
 										id={`${this._id}-${item.innerItem}`}
 										class="ui5-tp-clock-number"
-										style={{ transform: `rotate(-${i * 6}deg)` }}
+										style={{ transform: `rotate(-${(i + 1) * 6}deg)` }}
 									>
 										{item.innerItem}
 									</span>
@@ -76,7 +76,7 @@ export default function TimePickerClockTemplate(this: TimePickerClock) {
 				onMouseMove={this._onTouchMove}
 				onMouseUp={this._onTouchEnd}
 				onMouseOut={this._onMouseOut}
-				ref={this._captureClockRef}
+				ref={this._captureClockRef.bind(this)}
 			></div>
 		</div>);
 }

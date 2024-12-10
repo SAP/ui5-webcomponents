@@ -12,7 +12,7 @@ export default function TabInOverflowTemplate(this: Tab) {
 			disabled={this.effectiveDisabled}
 			selected={this.selected}
 			movable={this.movable}
-			ref={this.captureRef}
+			ref={this.captureRef.bind(this)}
 		>
 			<div class="ui5-tab-overflow-itemContent-wrapper">
 				<div class="ui5-tab-overflow-itemContent">

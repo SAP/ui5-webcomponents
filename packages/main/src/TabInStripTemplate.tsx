@@ -28,7 +28,7 @@ export default function TabInStripTemplate(this: Tab) {
 			draggable={this.movable}
 			onDragStart={this._ondragstart}
 			onDragEnd={this._ondragend}
-			ref={this.captureRef}
+			ref={this.captureRef.bind(this)}
 		>
 			{this.icon &&
 				<div class="ui5-tab-strip-item-icon-outer">
@@ -78,7 +78,7 @@ export default function TabInStripTemplate(this: Tab) {
 						class="ui5-tab-expand-button"
 					>
 						<Button
-							ref={this.captureButtonRef}
+							ref={this.captureButtonRef.bind(this)}
 							icon={slimArrowDownIcon}
 							design="Transparent"
 							tabindex={ -1 }

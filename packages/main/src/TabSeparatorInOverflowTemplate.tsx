@@ -9,7 +9,7 @@ export default function TabSeparatorInOverflowTemplate(this: TabSeparator) {
 			class="ui5-tc__separator"
 			disabled={true}
 			style={this._forcedStyleInOverflow}
-			ref={this.captureRef}
+			ref={this.captureRef.bind(this)}
 		>
 		</ListItemCustom>
 	);

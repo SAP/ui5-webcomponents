@@ -6,7 +6,7 @@ export default function TabSeparatorInStripTemplate(this: TabSeparator) {
 			id={this._id}
 			role="separator"
 			class="ui5-tc__separator"
-			ref={this.captureRef}
+			ref={this.captureRef.bind(this)}
 		></div>
 	);
 }
