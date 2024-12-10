@@ -172,22 +172,6 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();
 	}
 
-	get classes() {
-		// Remove the getter a the classes ar added in the jsx template
-		return {
-			indicator: {
-				"ui5-tli-indicator": true,
-				"ui5-tli-indicator-short-line": this.forcedLineWidth === SHORT_LINE_WIDTH,
-				"ui5-tli-indicator-large-line": this.forcedLineWidth === LARGE_LINE_WIDTH,
-			},
-			bubbleArrowPosition: {
-				"ui5-tli-bubble-arrow": true,
-				"ui5-tli-bubble-arrow--left": this.layout === TimelineLayout.Vertical,
-				"ui5-tli-bubble-arrow--top": this.layout === TimelineLayout.Horizontal,
-			},
-		};
-	}
-
 	get isGroupItem() {
 		return false;
 	}
