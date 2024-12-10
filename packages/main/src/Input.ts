@@ -737,6 +737,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		if (this.showSuggestions && this.Suggestions?._getPicker()) {
 			this._listWidth = this.Suggestions._getListWidth();
+
+			// disabled ItemNavigation from the list since we are not using it
+			this.Suggestions._getList()._itemNavigation._getItems = () => [];
 		}
 
 		if (this._performTextSelection) {
