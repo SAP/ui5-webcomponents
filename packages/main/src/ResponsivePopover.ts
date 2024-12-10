@@ -95,6 +95,10 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
+	_dialogCloseButtonClick() {
+		this.closePopup();
+	}
+
 	/**
 	 * Closes the popover/dialog.
 	 * @override

@@ -45,7 +45,7 @@ export default function ResponsivePopoverTemplate(this: ResponsivePopover) {
 								icon={decline}
 								design="Transparent"
 								accessibleName={this._closeDialogAriaLabel}
-								onui5-click={this.closePopup}
+								onClick={this._dialogCloseButtonClick}
 							></Button>
 						}
 					</div>
