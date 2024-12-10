@@ -257,7 +257,7 @@ class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
 	 */
 	get effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
-		return this.getAttribute("size") as AvatarSize;
+		return this.getAttribute("size") as AvatarSize || "S";
 	}
 
 	/**
