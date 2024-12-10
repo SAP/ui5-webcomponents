@@ -150,5 +150,5 @@ function listItemPostContent(this: MenuItem) {
 				/>
 			}
 		</div >
-	</ResponsivePopover >;
+	</ResponsivePopover>;
 }
