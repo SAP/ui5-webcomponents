@@ -6,6 +6,9 @@
 		vertical-align="Bottom"
 		horizontal-align="End"
 		@ui5-close={{_handlePopoverAfterClose}}
+		@ui5-open={{_handlePopoverAfterOpen}}
+		@ui5-before-open={{_handlePopoverBeforeOpen}}
+		@ui5-before-close={{_handlePopoverBeforeClose}}
 		prevent-initial-focus
 		accessible-name={{accessibleNameText}}
 		.open={{open}}
