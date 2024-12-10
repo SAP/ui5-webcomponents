@@ -112,6 +112,7 @@ class RadioButton extends UI5Element implements IFormInputElement {
 	 * Defines whether the component is required.
 	 * @default false
 	 * @public
+	 *  @deprecated property should be set on radio button group only. role="radio" does not support aria-required attribute.
 	 * @since 1.9.0
 	 */
 	@property({ type: Boolean })
