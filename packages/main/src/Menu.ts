@@ -371,6 +371,7 @@ class Menu extends UI5Element {
 
 		if (isTabNext(e) && parentElement.hasAttribute("ui5-menu")) {
 			this._close();
+			return;
 		}
 
 		if (shouldOpenMenu) {
@@ -380,6 +381,8 @@ class Menu extends UI5Element {
 			parentElement.selected = false;
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}
+
+		console.warn("TODO: handle keyboard navigation");
 
 		if (!item.hasAttribute("ui5-menu-item")) {
 			const menuItem = item.parentElement as MenuItem;
