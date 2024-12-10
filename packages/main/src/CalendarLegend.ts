@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -10,10 +11,12 @@ import {
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import CalendarLegendTemplate from "./CalendarLegendTemplate.js";
 import CalendarLegendItem from "./CalendarLegendItem.js";
+import { CAL_LEGEND_ROLE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import CalendarLegendCss from "./generated/themes/CalendarLegend.css.js";
@@ -105,6 +108,9 @@ class CalendarLegend extends UI5Element {
 	_itemNavigation!: ItemNavigation;
 	_lastFocusedItemIndex: number | null;
 
+	@i18n("@ui5/webcomponents")
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 
@@ -194,6 +200,10 @@ class CalendarLegend extends UI5Element {
 		];
 
 		return typeMapping;
+	}
+
+	get _roleDescription() {
+		return CalendarLegend.i18nBundle.getText(CAL_LEGEND_ROLE_DESCRIPTION);
 	}
 }
 

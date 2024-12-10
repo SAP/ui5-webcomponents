@@ -8,6 +8,8 @@ export default function CalendarLegendTemplate(this: CalendarLegend) {
 			onFocusIn={this._onFocusIn}
 			onKeyDown={this._onItemKeyDown}
 			onMouseDown={this._onMouseDown}
+			role="list"
+			aria-roledescription={this._roleDescription}
 		>
 			{this.defaultItemsMapping.filter(item => !item.hide).map(item =>
 				<CalendarLegendItem type={item.type}/>
