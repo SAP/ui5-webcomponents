@@ -220,7 +220,6 @@ onInput -> input
 onMouseMove -> mousemove
 ```
 
-
 TODO: @bound decorator
 
 Custom events from the web components follow the same convention when written in the template, with the difference that they are attached directly with the event name as it is and the framework takes care to match it by firing all events with PascalCase as well.
