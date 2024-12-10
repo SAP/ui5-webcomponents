@@ -33,7 +33,7 @@ const name = "World";
 import type Panel from "./Panel.js";
 
 export default function (this: Panel) {
-	return <div>{this.headerText}</div>;
+    return <div>{this.headerText}</div>;
 }
 ```
 
@@ -63,7 +63,7 @@ TypeScript will check the types of intrinsic elements for known attributes (like
 <MyComponent
     boolProp={false}
     numberProp={5}
-></myComponent>
+></MyComponent>
 ```
 
 since the types are known for all components, TypeScript will do the type checking and the runtime will check if a property exists and use it
@@ -227,8 +227,8 @@ Custom events from the web components follow the same convention when written in
 In teplate:
 ```
 onSeclectionChange -> SelectionChange
-prop: onSelectionChange
-event attached: SelectionChange
+^^^^^^^^^^^^^^^^^^    ^^^^^^^^^^^^^^^
+     prop             event attached
 ```
 
 Event description in component
@@ -246,7 +246,7 @@ firedecoratorEvent("selection-change")
 
 In order for components to be usable in TSX templates, all events must be described in the `eventDetails` field of the class. This will generate the necessary types for the event handler property names.
 
-### Bubbling events
+### Event bubbling
 
 Since the event handler property names are only available on the component instance, it is not possible to use them on another component with event bubbling. Consider the following example:
 
@@ -305,10 +305,14 @@ Ref accept an object with a `obj.current` property that will be assigned the ele
 ```
 
 ```ts
-class MyComponent
-captureRef(ref: HTMLElement & { associatedItem?: UI5Element} | null) {
-    if (ref) {
-        ref.associatedItem = this;
+class MyComponent {
+    captureRef(ref: HTMLElement & { associatedItem?: UI5Element} | null) {
+        if (ref) {
+            ref.associatedItem = this;
+        }
     }
 }
 ```
+
+TODO: Self-closing tags
+TODO: event handler types

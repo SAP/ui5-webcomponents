@@ -152,6 +152,18 @@ type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
 type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref";
 
+type ExtractGeneric<Type> = Type extends JSX.HTMLAttributes<infer X> ? X : never
+type a1 = ExtractGeneric<JSX.HTMLAttributes<HTMLDivElement>>
+type a2 = ExtractGeneric<JSX.IntrinsicElements["button"]>
+type JSXElementType<T extends keyof JSX.IntrinsicElements> = ExtractGeneric<JSX.IntrinsicElements[T]>
+
+type a3 = JSXElementType<"div">;
+type a4 = JSX.DOMAttributes<a3>["onClick"];
+type DOMAttributesOnly<T extends EventTarget> = Omit<JSX.DOMAttributes<T>, "children" | "dangerouslySetInnerHTML">
+export type UI5NativeEvent<N extends keyof JSX.IntrinsicElements, E extends keyof DOMAttributesOnly<any>> = Parameters<Exclude<JSX.DOMAttributes<JSXElementType<N>>[E], undefined>>[0];
+type a5 = UI5NativeEvent<"button", "onClick">;
+type a6 = UI5NativeEvent<"div", "onMouseMove">;
+
 export type UI5CustomEvent<T extends UI5Element, N extends keyof T["eventDetails"]> = CustomEvent<T["eventDetails"][N]>;
 
 /**
@@ -182,8 +194,6 @@ abstract class UI5Element extends HTMLElement {
 	_state: State;
 	_internals: ElementInternals;
 	_individualSlot?: string;
-	// context instance for preact to pass the element instance for usage in event binding as `this`
-	_ctx?: Context<UI5Element>;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
