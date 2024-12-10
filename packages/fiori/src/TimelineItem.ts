@@ -8,12 +8,9 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import type { ITimelineItem } from "./Timeline.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import type TimelineLayout from "./types/TimelineLayout.js";
 // Styles
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
-
-const SHORT_LINE_WIDTH = "ShortLineWidth";
-const LARGE_LINE_WIDTH = "LargeLineWidth";
 
 /**
  * @class

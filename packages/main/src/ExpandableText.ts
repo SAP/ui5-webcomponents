@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Text from "./Text.js";
@@ -20,7 +20,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import ExpandableTextTemplate from "./generated/templates/ExpandableTextTemplate.lit.js";
+import ExpandableTextTemplate from "./ExpandableTextTemplate.js";
 
 // Styles
 import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
@@ -56,7 +56,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  */
 @customElement({
 	tag: "ui5-expandable-text",
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: ExpandableTextCss,
 	template: ExpandableTextTemplate,
 	dependencies: [
@@ -164,7 +164,7 @@ class ExpandableText extends UI5Element {
 			return this._expanded ? ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_LESS_POPOVER_ARIA_LABEL) : ExpandableText.i18nBundle.getText(EXPANDABLE_TEXT_SHOW_MORE_POPOVER_ARIA_LABEL);
 		}
 
-		return null;
+		return undefined;
 	}
 
 	_handlePopoverClose() {
@@ -185,7 +185,7 @@ class ExpandableText extends UI5Element {
 		}
 	}
 
-	_handleCloseButtonClick(e: CustomEvent) {
+	_handleCloseButtonClick(e: MouseEvent) {
 		this._expanded = false;
 		e.stopPropagation();
 	}
