@@ -43,7 +43,7 @@ import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry
 import { getI18nBundle } from "./i18nBundle.js";
 import { fetchCldr } from "./asset-registries/LocaleData.js";
 import getLocale from "./locale/getLocale.js";
-import { Context } from "./thirdparty/preact/preact.module.js";
+import { type Context } from "./thirdparty/preact/preact.module.js";
 
 const DEV_MODE = true;
 let autoId = 0;
