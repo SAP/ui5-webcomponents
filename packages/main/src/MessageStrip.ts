@@ -19,7 +19,11 @@ import type { IIcon } from "./Icon.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import {
-	MESSAGE_STRIP_CLOSE_BUTTON,
+	MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION,
+	MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE,
+	MESSAGE_STRIP_CLOSE_BUTTON_NEGATIVE,
+	MESSAGE_STRIP_CLOSE_BUTTON_CRITICAL,
+	MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM,
 	MESSAGE_STRIP_CLOSABLE,
 	MESSAGE_STRIP_ERROR,
 	MESSAGE_STRIP_WARNING,
@@ -41,6 +45,8 @@ enum DesignClassesMapping {
 }
 
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
+
+type DesignCloseButtonTooltip = Record<MessageStripDesign, string>;
 
 /**
  * @class
@@ -186,8 +192,23 @@ class MessageStrip extends UI5Element {
 		return this.hideIcon;
 	}
 
+	static closeButtonMappings(): DesignCloseButtonTooltip {
+		const getTranslation = (text:I18nText): string => {
+			return MessageStrip.i18nBundle.getText(text);
+		};
+
+		return {
+			Information: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION),
+			Positive: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE),
+			Negative: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_NEGATIVE),
+			Critical: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CRITICAL),
+			ColorSet1: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM),
+			ColorSet2: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM),
+		};
+	}
+
 	get _closeButtonText() {
-		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+		return MessageStrip.closeButtonMappings()[this.design];
 	}
 
 	get _closableText() {

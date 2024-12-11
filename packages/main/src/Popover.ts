@@ -5,9 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -468,20 +466,6 @@ class Popover extends Popup {
 		const actualTop = Math.ceil(this.getBoundingClientRect().top);
 
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
-	}
-
-	_getContainingBlockClientLocation() {
-		let parentElement = getParentElement(this);
-
-		while (parentElement) {
-			if (isElementContainingBlock(parentElement)) {
-				return parentElement.getBoundingClientRect();
-			}
-
-			parentElement = getParentElement(parentElement);
-		}
-
-		return { left: 0, top: 0 };
 	}
 
 	getPopoverSize(): PopoverSize {
