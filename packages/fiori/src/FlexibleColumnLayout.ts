@@ -21,11 +21,15 @@ import {
 	isRightShift,
 	isHome,
 	isEnd,
+	isEnter,
+	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
+	getPhoneTabletLayouts,
+	getDesktopLayouts,
 	getLayoutsByMedia,
 } from "./fcl-utils/FCLLayout.js";
 
@@ -312,6 +316,7 @@ class FlexibleColumnLayout extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	_prevLayout: `${FCLLayout}` | null;
+	_hasBeenInIconVisibleLayout: boolean;
 	_userDefinedColumnLayouts: UserDefinedColumnLayouts = {
 		tablet: {},
 		desktop: {},
@@ -323,6 +328,7 @@ class FlexibleColumnLayout extends UI5Element {
 		super();
 
 		this._prevLayout = null;
+		this._hasBeenInIconVisibleLayout = false;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
 		this._onSeparatorMove = this.onSeparatorMove.bind(this);
@@ -658,13 +664,30 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if (isEnter(e) || isSpace(e)) {
+			e.preventDefault();
+			const focusedElement = e.target as HTMLElement;
+			if (focusedElement === this.startArrowDOM) {
+				this.toggleStartColumnVisibility();
+				return;
+			}
+			return;
+		}
+
 		const stepSize = 2,
 			bigStepSize = this._width,
 			isRTL = this.effectiveDir === "rtl";
 		let step = 0;
+
 		if (isLeft(e)) {
+			if (this.startArrowDOM === e.target) {
+				return;
+			}
 			step = -stepSize * 10;
 		} else if (isRight(e)) {
+			if (this.startArrowDOM === e.target) {
+				return;
+			}
 			step = stepSize * 10;
 		} else if (isLeftShift(e)) {
 			step = -stepSize;
@@ -771,6 +794,33 @@ class FlexibleColumnLayout extends UI5Element {
 		return `${(pxWidth / this._availableWidthForColumns) * 100}%`;
 	}
 
+	toggleStartColumnVisibility() {
+		const isPhoneOrTablet = this.media === MEDIA.PHONE || this.media === MEDIA.TABLET,
+			isDesktop = this.media === MEDIA.DESKTOP,
+			phoneTabletLayouts = getPhoneTabletLayouts(),
+			desktopLayouts = getDesktopLayouts();
+
+		if (this.layout === FCLLayout.ThreeColumnsBeginHiddenMidExpanded || this.layout === FCLLayout.ThreeColumnsBeginHiddenEndExpanded) {
+			this._hasBeenInIconVisibleLayout = true;
+		}
+
+		if (isPhoneOrTablet) {
+			if (this.layout === FCLLayout.ThreeColumnsMidExpanded || phoneTabletLayouts.includes(this.layout)) {
+				this.layout = FCLLayout.ThreeColumnsBeginHiddenMidExpanded;
+			} else if (this.layout === FCLLayout.ThreeColumnsBeginHiddenMidExpanded) {
+				this.layout = FCLLayout.TwoColumnsMidExpanded;
+			}
+		}
+
+		if (isDesktop) {
+			if (desktopLayouts.includes(this.layout)) {
+				this.layout = FCLLayout.ThreeColumnsBeginHiddenMidExpanded;
+			} else if (this.layout === FCLLayout.ThreeColumnsBeginHiddenMidExpanded) {
+				this.layout = FCLLayout.ThreeColumnsMidExpanded;
+			}
+		}
+	}
+
 	getNextLayoutOnSeparatorMovement(separator: HTMLElement, isStartToEndDirection: boolean, fclLayoutBeforeMove: FCLLayout, columnLayoutAfterMove: FlexibleColumnLayoutColumnLayout) {
 		const isStartSeparator = separator === this.startSeparatorDOM,
 			separatorName = isStartSeparator ? "start" : "end",
@@ -828,6 +878,31 @@ class FlexibleColumnLayout extends UI5Element {
 			// ceil before comparing to avoid floating point precision issues
 		}) && ((Math.ceil(newColumnWidths.end) >= COLUMN_MIN_WIDTH))) {
 			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "start",
+			from: FCLLayout.ThreeColumnsBeginHiddenMidExpanded,
+			forward: true,
+		}) && newColumnWidths.start >= 25) {
+			this._hasBeenInIconVisibleLayout = true;
+			return FCLLayout.ThreeColumnsMidExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsBeginHiddenMidExpanded,
+			forward: false,
+		}) && newColumnWidths.mid < newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsBeginHiddenEndExpanded;
+		}
+
+		if (moved({
+			separator: "end",
+			from: FCLLayout.ThreeColumnsBeginHiddenEndExpanded,
+			forward: true,
+		}) && newColumnWidths.mid >= newColumnWidths.end) {
+			return FCLLayout.ThreeColumnsBeginHiddenMidExpanded;
 		}
 
 		if (moved({
@@ -1006,6 +1081,11 @@ class FlexibleColumnLayout extends UI5Element {
 					display: this.showEndSeparatorGrip ? "inline-block" : "none",
 				},
 			},
+			arrow: {
+				start: {
+					display: this.showStartSeparatorGrip ? "inline-block" : "none",
+				},
+			},
 		};
 	}
 
@@ -1059,6 +1139,39 @@ class FlexibleColumnLayout extends UI5Element {
 
 	get endSeparatorDOM() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-separator-end")!;
+	}
+
+	get startArrowDOM() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-fcl-arrow--start")!;
+	}
+
+	get arrowIconName() {
+		const effectiveLayout = this.separatorMovementSession?.tmpFCLLayout || this.layout;
+		const isTablet = this.media === MEDIA.TABLET;
+		const startColumnHidden = !this.startColumnVisible;
+
+		const shouldDisplayIcon = effectiveLayout === FCLLayout.ThreeColumnsBeginHiddenMidExpanded
+			|| effectiveLayout === FCLLayout.ThreeColumnsBeginHiddenEndExpanded
+			|| this._hasBeenInIconVisibleLayout;
+
+		if (!shouldDisplayIcon) {
+			return "";
+		}
+
+		if (effectiveLayout === FCLLayout.ThreeColumnsBeginHiddenMidExpanded
+			|| (effectiveLayout === FCLLayout.ThreeColumnsMidExpanded && isTablet && startColumnHidden)) {
+			return "navigation-right-arrow";
+		}
+
+		if (effectiveLayout === FCLLayout.TwoColumnsMidExpanded
+			|| effectiveLayout === FCLLayout.ThreeColumnsMidExpanded
+			|| effectiveLayout === FCLLayout.TwoColumnsStartExpanded
+			|| effectiveLayout === FCLLayout.ThreeColumnsBeginHiddenEndExpanded
+			|| effectiveLayout === FCLLayout.ThreeColumnsStartExpandedEndHidden
+			|| effectiveLayout === FCLLayout.ThreeColumnsMidExpandedEndHidden) {
+			return "navigation-left-arrow";
+		}
+		return "navigation-right-arrow";
 	}
 
 	get startSeparatorTabIndex() {
