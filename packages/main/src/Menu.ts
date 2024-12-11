@@ -7,6 +7,9 @@ import {
 	isLeft,
 	isRight,
 	isEnter,
+	isTabNext,
+	isDown,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	isPhone,
@@ -341,18 +344,21 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		if (!isLeft(e) && !isRight(e)) {
-			return;
-		}
-
-		const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
+		const shouldCloseMenu = this.isRtl ? isRight(e) || isTabNext(e) : isLeft(e) || isTabNext(e);
 		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
 
-		if (isEnter(e)) {
+		if (isEnter(e) || isTabNext(e)) {
 			e.preventDefault();
+			e.stopImmediatePropagation();
 		}
+
+		if (isTabNext(e) && parentElement.hasAttribute("ui5-menu")) {
+			this._close();
+			return;
+		}
+
 		if (shouldOpenMenu) {
 			this._openItemSubMenu(item);
 		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
@@ -360,6 +366,29 @@ class Menu extends UI5Element {
 			parentElement.selected = false;
 			(parentElement._popover.opener as HTMLElement)?.focus();
 		}
+
+		if (!item.hasAttribute("ui5-menu-item")) {
+			const menuItem = item.parentElement as MenuItem;
+
+			if (isUp(e)) {
+				this._navigateOutOfEndContent(menuItem);
+			} else if (isDown(e)) {
+				this._navigateOutOfEndContent(menuItem, true);
+			}
+		} else if (isRight(e)) {
+			item._navigateToEndContent();
+		} else if (isLeft(e)) {
+			item._navigateToEndContent(true);
+		}
+	}
+
+	_navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean) {
+		const opener = menuItem?.parentElement as MenuItem | Menu;
+		const currentIndex = opener._menuItems.indexOf(menuItem);
+		const nextItem = isDownwards ? opener._menuItems[currentIndex + 1] : opener._menuItems[currentIndex - 1];
+		const focusItem = nextItem || opener._menuItems[currentIndex];
+
+		focusItem.focus();
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
