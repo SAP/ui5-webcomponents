@@ -22,7 +22,7 @@ import Slider from "./Slider.js";
 import Label from "./Label.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import ColorValue from "./ColorValue.js";
+import ColorValue from "./colorpicker-utils/ColorValue.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
