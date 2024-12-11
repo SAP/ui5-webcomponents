@@ -1,0 +1,6 @@
+/* eslint no-unused-vars: 0 */
+import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+function block0(context, tags, suffix) { return html `<li part="native-li" data-sap-focus-ref tabindex="${ifDefined(this._effectiveTabIndex)}" class="${classMap(this.classes.main)}" @focusin="${this._onfocusin}" @keyup="${this._onkeyup}" @keydown="${this._onkeydown}" draggable="${ifDefined(this.movable)}" @click="${this._onclick}"  role="option" ><div part="content" id="content" class="ui5-li-content"><div class="ui5-li-text-wrapper"><span part="title" class="ui5-li-title">${unsafeHTML(this.text)}</span>${this.additionalText ? block1.call(this, context, tags, suffix) : undefined}</div></div></li>`; }
+function block1(context, tags, suffix) { return html `<span part="additional-text" class="ui5-li-additional-text">${ifDefined(this.additionalText)}</span>`; }
+export default block0;
+//# sourceMappingURL=ComboBoxItemTemplate.lit.js.map
