@@ -5,7 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import MainButton from "@ui5/webcomponents/dist/Button.js";
+import SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import ButtonState from "./ButtonState.js";
@@ -22,16 +22,19 @@ import ButtonCss from "./generated/themes/Button.css.js";
  *
  * The `ui5-ai-button` component represents a button used in AI-related scenarios.
  * It enables users to trigger actions by clicking or tapping the `ui5-ai-button`, or by pressing
- * certain keyboard keys, such as Enter.
+ * certain keyboard keys, such as Enter or Space.
  *
  * ### Usage
  *
  * For the `ui5-ai-button` UI, you can define one or more states of the button by placing `ai-button-state` components in its default slot.
  * Each state have a name that identifies it and can have text, icon and end icon defined (in any combination) depending on the state purpose.
+ * Also, there is an option to define a split mode for the button, which will show an arrow button that can be used to trigger additional actions.
  *
  * You can choose from a set of predefined designs (the same as for regular `ui5-button` component) that allow different styling to correspond to the triggered action.
  *
- * `ui5-ai-button` can be activated by clicking or tapping it. The state can be changed in `click` event handler.
+ * `ui5-ai-button` can be activated by clicking or tapping it. The state can be changed in `click` event handler. When the button is in split mode, the default button action
+ * can be activated by clicking or tapping it, or by pressing Enter or Space, and arrow button can be activated by clicking or tapping as well as by pressing Arrow Up,
+ * Arrow Down or F4 key. A menu can be attached to the arrow button to display additional actions.
  *
  * ### ES6 Module Import
  *
@@ -50,7 +53,7 @@ import ButtonCss from "./generated/themes/Button.css.js";
 	renderer: litRender,
 	template: ButtonTemplate,
 	styles: ButtonCss,
-	dependencies: [MainButton, Icon, ButtonState],
+	dependencies: [SplitButton, Icon, ButtonState],
 	shadowRootOptions: { delegatesFocus: true },
 })
 
@@ -62,6 +65,17 @@ import ButtonCss from "./generated/themes/Button.css.js";
 @event("click", {
 	bubbles: true,
 })
+
+/**
+ * Fired when the component is in split mode and arrow button is
+ * activated either with a mouse/tap or by using the Arrow Up/Down,
+ * Alt + Arrow Up/Down or F4 keys.
+ * @public
+ */
+@event("arrow-click", {
+	bubbles: true,
+})
+
 class Button extends UI5Element {
 	eventDetails!: {
 		click: void,
@@ -101,6 +115,14 @@ class Button extends UI5Element {
 	_currentStateObject?: ButtonState;
 
 	/**
+	 * Defines the active state of the internal Arrow Button in split mode.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_activeArrowButton = false;
+
+	/**
 	 * Initiates button elements fade-out phase.
 	 * @default false
 	 * @private
@@ -125,6 +147,35 @@ class Button extends UI5Element {
 	fadeIn = false;
 
 	/**
+	 * Flag for transition between button without end icon or arrow button
+	 * and button with end icon or arrow button.
+	 * This property is animation related only.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	buttonToMenu? = false;
+
+	/**
+	 * Flag for transition between button with end icon or arrow button
+	 * and button without end icon or arrow button.
+	 * This property is animation related only.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	menuToButton? = false;
+
+	/**
+	 * Determines if the button is in icon-only mode.
+	 * This property is animation related only.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	iconOnly? = false;
+
+	/**
 	 * Defines the available states of the component.
 	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use `ui5-ai-button-state` components in order to preserve the intended design.
 	 * @public
@@ -132,100 +183,35 @@ class Button extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	states!: Array<ButtonState>;
 
-	onBeforeRendering(): void {
-		if (this.fadeOut || this.fadeIn) {
-			return;
-		}
-
-		if (!this._currentStateObject?.name) {
-			this._currentStateObject = this._effectiveStateObject;
-		}
-
-		const currentStateName = this._currentStateObject?.name || "";
-
-		if (currentStateName !== "" && currentStateName !== this._effectiveState) {
-			this._fadeOut();
-		}
-	}
-
 	/**
-	 * Starts the fade-out animation.
-	 * @private
+	 * Defines the active state of the internal Arrow Button in split mode.
+	 * It can be set to true when the button is in split mode and the Arrow Button action
+	 * is used to open a menu with additional options, and can be set back to false
+	 * when the menu is closed.
+	 * @default false
+	 * @public
+	 * @since 2.5.0
 	 */
-	async _fadeOut(): Promise<void> {
-		const fadeOutDuration = 180;
+	@property({ type: Boolean })
+	set activeArrowButton(value: boolean) {
+		const splitButton = this._splitButton;
 
-		const button = this._mainButton;
-		const newStateObject = this._effectiveStateObject;
-
-		if (!newStateObject) {
-			// eslint-disable-next-line no-console
-			console.warn(`State with name="${this.state}" doesn't exist!`);
-		} else if (button) {
-			const buttonWidth = button.offsetWidth;
-			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as MainButton;
-			button.style.width = `${buttonWidth}px`;
-			hiddenButton.icon = newStateObject.icon;
-			hiddenButton.endIcon = newStateObject.endIcon;
-			hiddenButton.textContent = newStateObject.text || null;
-
-			await renderFinished();
-			const hiddenButtonWidth = hiddenButton.offsetWidth;
-			this.fadeOut = true;
-			button.style.width = `${hiddenButtonWidth}px`;
-
-			setTimeout(() => {
-				this.fadeMid = true;
-				this._currentStateObject = newStateObject;
-				this._fadeIn();
-			}, fadeOutDuration);
+		if (splitButton) {
+			splitButton.activeArrowButton = value;
 		}
+		this._activeArrowButton = value;
 	}
 
-	/**
-	 * Starts the fade-in animation.
-	 * @private
-	 */
-	_fadeIn(): void {
-		const fadeInDuration = 60;
-
-		setTimeout(() => {
-			this.fadeIn = true;
-			this._resetFade();
-		}, fadeInDuration);
+	get activeArrowButton(): boolean {
+		return this._activeArrowButton;
 	}
 
-	/**
-	 * Resets the fade phases when the animation is completed.
-	 * @private
-	 */
-	_resetFade(): void {
-		const fadeResetDuration = 160;
-
-		setTimeout(() => {
-			this.fadeOut = false;
-			this.fadeMid = false;
-			this.fadeIn = false;
-		}, fadeResetDuration);
-
-		// reset the button's width after animations
-		const button = this._mainButton;
-		if (button) {
-			button.style.width = "";
-		}
+	get _hideArrowButton() {
+		return !this._effectiveStateObject?.splitMode;
 	}
 
-	/**
-	 * Handles the click event.
-	 * @private
-	 */
-	_onclick(e: MouseEvent): void {
-		e.stopImmediatePropagation();
-		this.fireDecoratorEvent("click");
-	}
-
-	get _mainButton() {
-		return this.shadowRoot?.querySelector("[ui5-button]") as MainButton;
+	get _splitButton() {
+		return this.shadowRoot?.querySelector("[ui5-split-button]") as SplitButton;
 	}
 
 	get _effectiveState() {
@@ -249,11 +235,122 @@ class Button extends UI5Element {
 	}
 
 	get _stateEndIcon() {
-		return this._currentStateObject?.endIcon;
+		const endIcon = this._effectiveStateObject?.splitMode ? "" : this._effectiveStateObject?.endIcon;
+		return endIcon;
 	}
 
 	get _hasText() {
 		return !!this._stateText;
+	}
+
+	onBeforeRendering(): void {
+		if (this.fadeOut || this.fadeIn) {
+			return;
+		}
+		if (!this._currentStateObject?.name) {
+			this._currentStateObject = this._effectiveStateObject;
+		}
+
+		const currentStateName = this._currentStateObject?.name || "";
+
+		this.iconOnly = this._stateIconOnly;
+		if (currentStateName !== "" && currentStateName !== this._effectiveState) {
+			this._fadeOut();
+		}
+	}
+
+	/**
+	 * Starts the fade-out animation.
+	 * @private
+	 */
+	async _fadeOut(): Promise<void> {
+		const fadeOutDuration = 180;
+
+		const button = this._splitButton;
+		const newStateObject = this._effectiveStateObject;
+
+		if (!newStateObject) {
+			// eslint-disable-next-line no-console
+			console.warn(`State with name="${this.state}" doesn't exist!`);
+		} else if (button) {
+			const buttonWidth = button.offsetWidth;
+			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as SplitButton;
+
+			this.buttonToMenu = (!this._currentStateObject?.splitMode && newStateObject?.splitMode) || (!this._currentStateObject?.endIcon && !!newStateObject?.endIcon);
+			this.menuToButton = (this._currentStateObject?.splitMode && !newStateObject?.splitMode) || (!!this._currentStateObject?.endIcon && !newStateObject?.endIcon);
+
+			this.style.width = `${buttonWidth}px`;
+			hiddenButton.icon = newStateObject.icon;
+			hiddenButton._endIcon = newStateObject.endIcon;
+			hiddenButton.textContent = newStateObject.text || null;
+			hiddenButton._hideArrowButton = this._hideArrowButton;
+
+			await renderFinished();
+			const hiddenButtonWidth = hiddenButton.offsetWidth;
+			this.style.width = `${hiddenButtonWidth}px`;
+			this.fadeOut = true;
+
+			setTimeout(() => {
+				this.fadeMid = true;
+				button._hideArrowButton = this._hideArrowButton;
+				this._fadeIn();
+			}, fadeOutDuration);
+		}
+	}
+
+	/**
+	 * Starts the fade-in animation.
+	 * @private
+	 */
+	_fadeIn(): void {
+		const fadeInDuration = 60;
+
+		setTimeout(() => {
+			const newStateObject = this._effectiveStateObject;
+			this._currentStateObject = newStateObject;
+			this.fadeIn = true;
+			this._resetFade();
+		}, fadeInDuration);
+	}
+
+	/**
+	 * Resets the fade phases when the animation is completed.
+	 * @private
+	 */
+	_resetFade(): void {
+		const fadeResetDuration = 160;
+
+		setTimeout(() => {
+			this.fadeOut = false;
+			this.fadeMid = false;
+			this.fadeIn = false;
+			this.buttonToMenu = false;
+			this.menuToButton = false;
+		}, fadeResetDuration);
+
+		// reset the button's width after animations
+		const button = this._splitButton;
+		if (button) {
+			button.style.width = "";
+		}
+	}
+
+	/**
+	 * Handles the click event.
+	 * @private
+	 */
+	_onClick(e: MouseEvent): void {
+		e.stopImmediatePropagation();
+		this.fireDecoratorEvent("click");
+	}
+
+	/**
+	 * Handles the arrow-click event (if AI Button is in split mode).
+	 * @private
+	 */
+	_onArrowClick(e: MouseEvent): void {
+		e.stopImmediatePropagation();
+		this.fireDecoratorEvent("arrow-click");
 	}
 }
 
