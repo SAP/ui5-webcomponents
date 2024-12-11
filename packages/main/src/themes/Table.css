@@ -12,7 +12,6 @@
 #table {
     display: grid;
     grid-auto-rows: minmax(min-content, max-content);
-    background: var(--sapList_Background);
 }
 
 :host([overflow-mode="Scroll"]) #table {
