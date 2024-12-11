@@ -86,10 +86,7 @@ type CalculatedPlacement = {
 	template: PopoverTemplate,
 })
 class Popover extends Popup {
-	eventDetails!: Popup["eventDetails"] & {
-		"extra": void
-	}
-
+	eventDetails!: Popup["eventDetails"];
 	/**
 	 * Defines the header text.
 	 *

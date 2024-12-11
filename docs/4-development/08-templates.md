@@ -220,14 +220,12 @@ onInput -> input
 onMouseMove -> mousemove
 ```
 
-TODO: @bound decorator
-
-Custom events from the web components follow the same convention when written in the template, with the difference that they are attached directly with the event name as it is and the framework takes care to match it by firing all events with PascalCase as well.
+Custom events dispatched from the web components follow the same convention when written in the template, with the difference that they are attached directly with the event name as it is and the framework takes care to match it by firing all events with PascalCase as well.
 
 In teplate:
 ```
 onSeclectionChange -> SelectionChange
-^^^^^^^^^^^^^^^^^^    ^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~
      prop             event attached
 ```
 
@@ -246,16 +244,51 @@ firedecoratorEvent("selection-change")
 
 In order for components to be usable in TSX templates, all events must be described in the `eventDetails` field of the class. This will generate the necessary types for the event handler property names.
 
+### Event handler parameter types
+
+When writing an event handler inline, the type of the event parameter will be inferred from the template usage
+
+```tsx
+<ResponsivePopover
+    onBeforeClose={e => e.detail.escPressed}
+//                               ~~~~~~~~~~
+//                    (property) escPressed: boolean
+/>
+```
+
+If however, you specify the handler as a method in the component, you have to provide the event parameter type yourself. For custom events, you can use the `UI5CustomEvent` type helper by providing two generic parameters - the component class and the event name
+
+```tsx
+<ResponsivePopover
+    onBeforeClose={this._beforeCloseHandler}
+/>
+
+import { type UI5CustomEvent } from "@ui5/webcomponents-base";
+class MyCompponent {
+    _beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
+        e.detail.escPressed;
+//               ~~~~~~~~~~
+//      (property) escPressed: boolean
+    }
+}
+```
+
+For native browser events, the most common way is to simply specify `KeyboardEvent` or `MouseEvent`
+
+### Event handlers and `this`
+
+UI5 Web Components are authored as classes and event handlers are methods, they usually access the component state via `this.prop`. In orther for this to work when event handlers are attached to the DOM, the framework automaticall binds all event handlers to the instance that is being rendered, so accessing `this` from the event handlers works as expected without any additional work.
+
 ### Event bubbling
 
-Since the event handler property names are only available on the component instance, it is not possible to use them on another component with event bubbling. Consider the following example:
+Event handler property names are only available on the component instance, it is not possible to use them on another component with event bubbling. Consider the following example:
 
 ```tsx
 <div
     onDetailClick={this.handleDetailClick} // TS error - div does not have a `detail-click` event, so no `onDetailClickProperty
 >
     <ListItem
-        onDetailClick={this.handleDetailClick}
+        onDetailClick={this.handleDetailClick} // this works, the ListItem has an `onDetailClick` property
     ></ListItem>
 </div>
 ```
@@ -296,7 +329,7 @@ It is sometimes necessary to get a reference to a DOM element in the code of the
 
 The way to achieve the same in TSX is to use a `ref=`
 
-Ref accept an object with a `obj.current` property that will be assigned the element in the DOM, or a callback that will be executed with the element passed as an argument
+`ref` properties accept an object with a `obj.current` property that will be assigned the element in the DOM, or a callback that will be executed with the element passed as an argument
 
 ```tsx
 <div
@@ -314,5 +347,15 @@ class MyComponent {
 }
 ```
 
-TODO: Self-closing tags
-TODO: event handler types
+Most of the time you want to pass an additional parameter besides the element that has a ref. This is done by binding the method (either `this` or an element that is iterated). Unlike event handlers, refs are never bound automatically, so make sure to use `.bind()` to set the correct `this`.
+
+```tsx
+<ul
+    // captureListRef will be called with a `<ul>` as a parameter and `this` will be the element that renders the template
+    ref={this.captureListRef.bind(this)}
+    {this.items.map(item => (
+        // captureItemRef will be called with a `<li>` as a parameter and this will be the item that is iterated
+        <li ref={this.captureItemRef.bind(item)}></li>
+    ))}
+></ul>
+```
