@@ -133,25 +133,12 @@
 		console.log("Add account clicked");
 	});
 
-	menu.addEventListener("before-open", function (event) {
-		console.log("Change before open", event.detail);
+	menu.addEventListener("open", function (event) {
+		console.log("Change user menu open", event.detail);
 	});
 
-	menu.addEventListener("before-close", function (event) {
-		console.log("Change before close", event.detail);
-		const result = prompt("Dialog will be closed", "Are you sure you want to close it?");
-		if (result) {
-			menu.setOpen(false);
-		}
-		event.preventDefault();
-	});
-
-	menu.addEventListener("after-open", function (event) {
-		console.log("Change after open", event.detail);
-	});
-
-	menu.addEventListener("after-close", function (event) {
-		console.log("Change after close", event.detail);
+	menu.addEventListener("close", function (event) {
+		console.log("Change user menu close", event.detail);
 	});
 
 	menu.addEventListener("sign-out-click", function (event) {
@@ -162,30 +149,6 @@
 			menu.open = false;
 		}
 		event.preventDefault();
-	});
-
-	menu.addEventListener("item-click", function (event) {
-		const item = event.detail.item.getAttribute("data-id");
-
-		switch (item) {
-			case "setting":
-				console.log("Open Setting Dialog");
-				break;
-			case "privacy-policy":
-				console.log("Privacy Policy");
-				break;
-			case "terms-of-use":
-				console.log("Terms of Use");
-				break;
-			case "account-action1":
-				console.log("Product-specific account action 1");
-				break;
-			case "account-action2":
-				console.log("Product-specific account action 2");
-				break;
-			default:
-				console.log("Default");
-		}
 	});
 
 	menuShellBar.addEventListener("item-click", function (event) {
@@ -233,30 +196,17 @@
 
 		const result = prompt("Sign Out", "Are you sure you want to sign out?");
 		if (result) {
-			menuShellBar.setOpen(false);
+			menuShellBar.open = false;
 		}
 		event.preventDefault();
 	});
 
-	menuShellBar.addEventListener("before-open", function (event) {
-		console.log("Change before open", event.detail);
-		const result = prompt("Dialog will be opened", "Are you sure you want to open it?");
-		event.preventDefault();
-		if (result) {
-			menuShellBar.open =true;
-		}
+	menuShellBar.addEventListener("open", function (event) {
+		console.log("Change user menu open", event.detail);
 	});
 
-	menuShellBar.addEventListener("before-close", function (event) {
-		console.log("Change before close", event.detail);
-	});
-
-	menuShellBar.addEventListener("after-open", function (event) {
-		console.log("Change after open", event.detail);
-	});
-
-	menuShellBar.addEventListener("after-close", function (event) {
-		console.log("Change after close", event.detail);
+	menuShellBar.addEventListener("close", function (event) {
+		console.log("Change user menu close", event.detail);
 	});
 </script>
 </body>

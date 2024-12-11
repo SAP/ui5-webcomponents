@@ -16,9 +16,7 @@ import Bar from "@ui5/webcomponents/dist/Bar.js";
 import List, { type ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
-import ResponsivePopover, {
-	type ResponsivePopoverBeforeCloseEventDetail,
-} from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -135,33 +133,17 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
- * Fired before a user menu is open.
+ * Fired when a user menu is open.
  * @public
  */
-@event("before-open", {
-	cancelable: true,
-	bubbles: true,
-})
+@event("open")
 
 /**
- * Fired after a user menu is open.
+ * Fired when a user menu is close.
  * @public
  */
-@event("after-open")
+@event("close")
 
-/**
- * Fired before a user menu is close.
- * @public
- */
-@event("before-close", {
-	cancelable: true,
-})
-
-/**
- * Fired after a user menu is close.
- * @public
- */
-@event("after-close")
 /**
  * Fired when the "Sign Out" button is selected.
  * @public
@@ -177,10 +159,8 @@ class UserMenu extends UI5Element {
 		"change-account": UserMenuOtherAccountClickEventDetail;
 		"item-click": UserMenuItemClickEventDetail;
 		"sign-out-click": void;
-		"before-open": void;
-		"after-open": void;
-		"before-close": void;
-		"after-close": void;
+		"open": void;
+		"close": void;
 
 	}
 	/**
@@ -404,29 +384,11 @@ class UserMenu extends UI5Element {
 	}
 
 	_handlePopoverAfterOpen() {
-		this.fireDecoratorEvent("after-open");
-	}
-
-	_handlePopoverBeforeOpen(e: CustomEvent) {
-		const eventPrevented = !this.fireDecoratorEvent("before-open");
-
-		if (eventPrevented) {
-			this.open = false;
-			e.preventDefault();
-		}
+		this.fireDecoratorEvent("open");
 	}
 
 	_handlePopoverAfterClose() {
-		this.fireDecoratorEvent("after-close");
-	}
-
-	_handlePopoverBeforeClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const eventPrevented = !this.fireDecoratorEvent("before-close");
-
-		if (eventPrevented) {
-			this._closeUserMenu();
-			e.preventDefault();
-		}
+		this.fireDecoratorEvent("close");
 	}
 
 	_handleDeclineClick() {
