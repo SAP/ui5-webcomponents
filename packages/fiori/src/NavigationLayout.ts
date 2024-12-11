@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import {
 	isPhone,
@@ -12,7 +12,7 @@ import {
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
-import NavigationLayoutTemplate from "./generated/templates/NavigationLayoutTemplate.lit.js";
+import NavigationLayoutTemplate from "./NavigationLayoutTemplate.js";
 
 // Styles
 import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
@@ -46,7 +46,7 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 @customElement({
 	tag: "ui5-navigation-layout",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [
 		browserScrollbarCSS,
 		NavigationLayoutCss,

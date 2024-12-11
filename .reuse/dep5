@@ -50,3 +50,7 @@ License: MIT
 Files: packages/tools/lib/postcss-combine-duplicated-selectors/index.js
 Copyright: 2016 Christian Murphy
 License: MIT
+
+Files: packages/base/src/thirdparty/preact/*
+Copyright: 2015-present Jason Miller
+License: MIT

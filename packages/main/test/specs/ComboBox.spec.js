@@ -994,12 +994,12 @@ describe("Keyboard navigation", async () => {
 
 		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), true, "The value state header should be focused");
 		assert.strictEqual(await combo.getProperty("focused"), false, "The input should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "The value state header should be focused");
 
 		await input.keys("ArrowUp");
 		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
 		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should not be focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "The value state header should not be focused");
 
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");

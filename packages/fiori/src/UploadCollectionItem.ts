@@ -1,4 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -36,7 +37,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
+import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
@@ -59,6 +60,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @customElement({
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
 	dependencies: [
@@ -116,14 +118,14 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @since 1.0.0-rc.8
  * @private
  */
-@event("_focus-requested", {
+@event("focus-requested", {
 	bubbles: true,
 })
 
 /**
  * @private
  */
-@event("_uci-delete", {
+@event("request-delete", {
 	bubbles: true,
 })
 class UploadCollectionItem extends ListItem {
@@ -132,8 +134,9 @@ class UploadCollectionItem extends ListItem {
 		"rename": void;
 		"terminate": void;
 		"retry": void;
-		"_focus-requested": void;
+		"focus-requested": void;
 		"_uci-delete": void;
+		"request-delete": void;
 	}
 	/**
 	 * Holds an instance of `File` associated with this item.
@@ -306,10 +309,10 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	async _onRenameCancel(e: KeyboardEvent) {
+	async _onRenameCancel(e: KeyboardEvent | MouseEvent) {
 		this._editing = false;
 
-		if (isEscape(e)) {
+		if (isEscape(e as KeyboardEvent)) {
 			await renderFinished();
 			this.shadowRoot!.querySelector<Button>(`#${this._id}-editing-button`)!.focus();
 		} else {
@@ -324,7 +327,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireDecoratorEvent("_focus-requested");
+		this.fireDecoratorEvent("focus-requested");
 	}
 
 	_onFileNameClick() {
@@ -352,7 +355,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onDelete() {
-		this.fireDecoratorEvent("_uci-delete");
+		this.fireDecoratorEvent("request-delete");
 	}
 
 	getFocusDomRef() {

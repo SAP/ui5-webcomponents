@@ -4,7 +4,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -16,12 +16,8 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import "@ui5/webcomponents-icons/dist/error.js";
-import "@ui5/webcomponents-icons/dist/alert.js";
-import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import "@ui5/webcomponents-icons/dist/information.js";
 
-import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
+import TextAreaTemplate from "./TextAreaTemplate.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -80,7 +76,7 @@ type ExceededText = {
 		valueStateMessageStyles,
 		getEffectiveScrollbarStyle(),
 	],
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TextAreaTemplate,
 	dependencies: [Popover, Icon],
 })
@@ -559,14 +555,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 		};
 	}
 
-	get styles() {
-		return {
-			valueStateMsgPopover: {
-				"max-width": `${this._width!}px`,
-			},
-		};
-	}
-
 	get tabIndex() {
 		return this.disabled ? -1 : 0;
 	}
@@ -613,8 +601,8 @@ class TextArea extends UI5Element implements IFormInputElement {
 		return "";
 	}
 
-	get ariaInvalid() {
-		return this.valueState === ValueState.Negative ? "true" : null;
+	get _ariaInvalid() {
+		return this.valueState === ValueState.Negative ? "true" : undefined;
 	}
 
 	get openValueStateMsgPopover() {
@@ -635,20 +623,6 @@ class TextArea extends UI5Element implements IFormInputElement {
 
 	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
 		return this.effectiveDir !== "rtl" ? "Start" : "End";
-	}
-
-	/**
-	 * This method is relevant for sap_horizon theme only
-	 */
-	get _valueStateMessageIcon() {
-		const iconPerValueState = {
-			Negative: "error",
-			Critical: "alert",
-			Positive: "sys-enter-2",
-			Information: "information",
-		};
-
-		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 	}
 
 	get valueStateTextMappings() {

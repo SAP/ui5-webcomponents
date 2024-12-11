@@ -5,7 +5,7 @@ import type { IOption } from "./Select.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
-import OptionCustomTemplate from "./generated/templates/OptionCustomTemplate.lit.js";
+import OptionCustomTemplate from "./OptionCustomTemplate.js";
 
 // Styles
 import optionBaseCss from "./generated/themes/OptionBase.css.js";
@@ -37,6 +37,8 @@ import optionBaseCss from "./generated/themes/OptionBase.css.js";
 	],
 })
 class OptionCustom extends ListItemBase implements IOption {
+	eventDetails!: ListItemBase["eventDetails"];
+
 	/**
 	 * Defines the text, displayed inside the `ui5-select` input filed
 	 * when the option gets selected.

@@ -1,7 +1,7 @@
 import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 
-import UserMenuItemTemplate from "./generated/templates/UserMenuItemTemplate.lit.js";
+import UserMenuItemTemplate from "./UserMenuItemTemplate.js";
 
 // Styles
 import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";

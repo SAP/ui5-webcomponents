@@ -9,7 +9,7 @@ import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDr
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DropIndicator from "./DropIndicator.js";
 import TreeItem from "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
@@ -30,7 +30,7 @@ import type {
 } from "./List.js";
 
 // Template
-import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
+import TreeTemplate from "./TreeTemplate.js";
 
 // Styles
 import TreeCss from "./generated/themes/Tree.css.js";
@@ -106,7 +106,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @customElement({
 	tag: "ui5-tree",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TreeCss,
 	template: TreeTemplate,
 	dependencies: [

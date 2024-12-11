@@ -11,7 +11,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
-import RangeSliderTemplate from "./generated/templates/RangeSliderTemplate.lit.js";
+import RangeSliderTemplate from "./RangeSliderTemplate.js";
 import Input from "./Input.js";
 
 // Texts

@@ -9,7 +9,7 @@ import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -19,7 +19,7 @@ import "./illustrations/BeforeSearch.js";
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
 
 // Template
-import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
+import IllustratedMessageTemplate from "./IllustratedMessageTemplate.js";
 
 const getEffectiveIllustrationName = (name: string): string => {
 	if (name.startsWith("Tnt")) {
@@ -80,7 +80,7 @@ const getEffectiveIllustrationName = (name: string): string => {
 	tag: "ui5-illustrated-message",
 	languageAware: true,
 	themeAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: IllustratedMessageCss,
 	template: IllustratedMessageTemplate,
 	dependencies: [Title],

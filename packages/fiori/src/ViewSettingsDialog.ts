@@ -5,7 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
@@ -39,7 +39,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialogTemplate.lit.js";
+import ViewSettingsDialogTemplate from "./ViewSettingsDialogTemplate.js";
 
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
@@ -104,7 +104,7 @@ type VSDInternalSettings = {
  */
 @customElement({
 	tag: "ui5-view-settings-dialog",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: viewSettingsDialogCSS,
 	template: ViewSettingsDialogTemplate,
 	dependencies: [
@@ -512,7 +512,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
-		const mode: ViewSettingsDialogMode = e.detail.selectedItems[0].getAttribute("mode");
+		const mode: ViewSettingsDialogMode = e.detail.selectedItems[0].getAttribute("data-mode");
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
@@ -650,7 +650,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Resets the control settings to their initial state.
 	 */
-	 _resetSettings() {
+	_resetSettings() {
 		this._restoreSettings(this._initialSettings);
 		this._recentlyFocused = this._sortOrder!;
 		this._focusRecentlyUsedControl();
@@ -683,7 +683,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores `Sort By` list as recently used control and its selected item in current state.
 	 */
-	 _onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
+	_onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
 		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {

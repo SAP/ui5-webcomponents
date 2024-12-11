@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -34,7 +34,7 @@ import {
 import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
 // Template
-import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
+import AvatarGroupTemplate from "./AvatarGroupTemplate.js";
 
 /**
  * Interface for components that represent an avatar and may be slotted in numerous higher-order components such as `ui5-avatar-group`
@@ -145,7 +145,7 @@ type AvatarGroupClickEventDetail = {
 
 @customElement({
 	tag: "ui5-avatar-group",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: AvatarGroupTemplate,
 	styles: AvatarGroupCss,
 	dependencies: [Button],
@@ -320,7 +320,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _groupTabIndex() {
-		return this._isGroup ? "0" : "-1";
+		return this._isGroup ? 0 : -1;
 	}
 
 	get _overflowButton() {
@@ -362,19 +362,6 @@ class AvatarGroup extends UI5Element {
 		return this.items[0]?.size ?? AvatarSize.S;
 	}
 
-	get classes() {
-		return {
-			overflowButton: {
-				"ui5-avatar-group-overflow-btn": true,
-				"ui5-avatar-group-overflow-btn-xs": this.firstAvatarSize === AvatarSize.XS,
-				"ui5-avatar-group-overflow-btn-s": this.firstAvatarSize === AvatarSize.S,
-				"ui5-avatar-group-overflow-btn-m": this.firstAvatarSize === AvatarSize.M,
-				"ui5-avatar-group-overflow-btn-l": this.firstAvatarSize === AvatarSize.L,
-				"ui5-avatar-group-overflow-btn-xl": this.firstAvatarSize === AvatarSize.XL,
-			},
-		};
-	}
-
 	onAfterRendering() {
 		this._overflowItems();
 	}
@@ -404,14 +391,10 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		// when type is "Individual" the ui5-avatar and ui5-button both
-		// fire "click" event when SPACE or ENTER are pressed and
-		// AvatarGroup "click" is fired in their handlers (_onClick, _onUI5Click).
 		if (this._isGroup) {
 			if (isEnter(e)) {
 				this._fireGroupEvent(e.target as HTMLElement);
 			} else if (isSpace(e)) {
-				// prevent scrolling
 				e.preventDefault();
 			}
 		}
@@ -434,25 +417,30 @@ class AvatarGroup extends UI5Element {
 	}
 
 	_onClick(e: MouseEvent) {
-		const target = e.target as HTMLElement;
-		// no matter the value of noConflict, the ui5-button and the group container (div) always fire a native click event
-		const isButton = target.hasAttribute("ui5-button");
 		e.stopPropagation();
-
-		if (this._isGroup || isButton) {
-			this._fireGroupEvent(target);
-		}
+		this._isGroup && this._fireGroupEvent(e.target as HTMLElement);
 	}
 
-	_onUI5Click(e: MouseEvent) {
-		const target = e.target as HTMLElement;
-		// when noConflict=true only ui5-avatar will fire ui5-click event
-		const isAvatar = target.hasAttribute("ui5-avatar");
+	onAvatarClick(e: MouseEvent) {
+		e.stopPropagation();
+		this.fireDecoratorEvent("click", {
+			targetRef: e.target as HTMLElement,
+			overflowButtonClicked: false,
+		});
+	}
+
+	onAvatarUI5Click(e: MouseEvent) {
+		// AvatrGroup fires click and ui5-click - Avatar's ui5-click should be stopped.
+		e.stopPropagation();
+	}
+
+	onOverflowButtonClick(e: MouseEvent) {
 		e.stopPropagation();
 
-		if (isAvatar) {
-			this._fireGroupEvent(target);
-		}
+		this.fireDecoratorEvent("click", {
+			targetRef: e.target as HTMLElement,
+			overflowButtonClicked: true,
+		});
 	}
 
 	/**

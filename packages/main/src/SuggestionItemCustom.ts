@@ -5,7 +5,7 @@ import type { IInputSuggestionItemSelectable } from "./Input.js";
 import ListItemBase from "./ListItemBase.js";
 
 // Template
-import SuggestionItemCustomTemplate from "./generated/templates/SuggestionItemCustomTemplate.lit.js";
+import SuggestionItemCustomTemplate from "./SuggestionItemCustomTemplate.js";
 
 // styles
 import styles from "./generated/themes/SuggestionItemCustom.css.js";
@@ -32,6 +32,8 @@ import styles from "./generated/themes/SuggestionItemCustom.css.js";
 	],
 })
 class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemSelectable {
+	eventDetails!: ListItemBase["eventDetails"];
+
 	/**
 	 * Defines the text of the `ui5-suggestion-item-custom`.
 	 * **Note:** The text property is considered only for autocomplete.
@@ -49,8 +51,8 @@ class SuggestionItemCustom extends ListItemBase implements IInputSuggestionItemS
 	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
 	content!: Array<Node>;
 
-	get _effectiveTabIndex(): string {
-		return "-1";
+	get _effectiveTabIndex() {
+		return -1;
 	}
 }
 

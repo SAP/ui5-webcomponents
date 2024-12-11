@@ -88,9 +88,6 @@ import I18nBundle, { getI18nBundle, registerCustomI18nBundleGetter } from "./dis
 // MediaRange.ts
 import MediaRange from "./dist/MediaRange.js";
 
-// PropertiesFileFormat.ts
-import parseProperties from "./dist/PropertiesFileFormat.js";
-
 // Render.ts
 import {
 	renderDeferred,
@@ -194,9 +191,6 @@ export {
 
 	// MediaRange.ts
 	MediaRange,
-
-	// PropertiesFileFormat.ts
-	parseProperties,
 
 	// Render.ts
 	renderDeferred,

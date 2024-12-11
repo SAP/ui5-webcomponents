@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -35,10 +35,10 @@ type ListItemBasePressEventDetail = {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [styles, draggableElementStyles],
 })
-@event("_request-tabindex-change", {
+@event("request-tabindex-change", {
 	bubbles: true,
 })
 @event("_press", {
@@ -47,20 +47,20 @@ type ListItemBasePressEventDetail = {
 @event("_focused", {
 	bubbles: true,
 })
-@event("_forward-after", {
+@event("forward-after", {
 	bubbles: true,
 	cancelable: true,
 })
-@event("_forward-before", {
+@event("forward-before", {
 	bubbles: true,
 })
 class ListItemBase extends UI5Element implements ITabbable {
 	eventDetails!: {
-		"_request-tabindex-change": FocusEvent,
+		"request-tabindex-change": FocusEvent,
 		"_press": ListItemBasePressEventDetail,
 		"_focused": FocusEvent,
-		"_forward-after": void,
-		"_forward-before": void,
+		"forward-after": void,
+		"forward-before": void,
 	}
 	/**
 	 * Defines the selected state of the component.
@@ -125,7 +125,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireDecoratorEvent("_request-tabindex-change", e);
+		this.fireDecoratorEvent("request-tabindex-change", e);
 		if (e.target !== this.getFocusDomRef()) {
 			return;
 		}
@@ -184,7 +184,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 
 	_handleTabNext(e: KeyboardEvent) {
 		if (this.shouldForwardTabAfter()) {
-			if (!this.fireDecoratorEvent("_forward-after")) {
+			if (!this.fireDecoratorEvent("forward-after")) {
 				e.preventDefault();
 			}
 		}
@@ -194,7 +194,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		const target = e.target as HTMLElement;
 
 		if (this.shouldForwardTabBefore(target)) {
-			this.fireDecoratorEvent("_forward-before");
+			this.fireDecoratorEvent("forward-before");
 		}
 	}
 
@@ -240,14 +240,14 @@ class ListItemBase extends UI5Element implements ITabbable {
 		return false;
 	}
 
-	get _effectiveTabIndex(): number | undefined | string {
+	get _effectiveTabIndex() {
 		if (!this._focusable) {
 			return -1;
 		}
 		if (this.selected) {
 			return 0;
 		}
-		return this.forcedTabIndex;
+		return this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined;
 	}
 }
 

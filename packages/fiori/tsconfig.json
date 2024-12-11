@@ -13,6 +13,8 @@
 		"verbatimModuleSyntax": true,
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@ui5/webcomponents-base",
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [
 				"../base/src/*"
