@@ -14,7 +14,7 @@
     </div>
     {{#unless rows.length}}
         <ui5-table-row id="nodata-row">
-            <ui5-table-cell id="nodata-cell" excluded-from-navigation>
+            <ui5-table-cell id="nodata-cell" excluded-from-navigation horizontal-align="center">
             {{#if nodata.length}}
                 <slot name="nodata"></slot>
             {{else}}
