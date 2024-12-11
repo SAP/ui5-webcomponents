@@ -34,8 +34,7 @@ export default function IllustratedMessageTemplate(this: IllustratedMessage) {
 				</div>
 			</div>
 
-			{/* @ts-expect-error - "xmlns:xlink" is not allowed, while xmlnsXlink is allowed, but not converted to xmlns:xlink */}
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="ui5-illustrated-message-util">
+			<svg xmlns="http://www.w3.org/2000/svg" class="ui5-illustrated-message-util">
 				<defs>
 					<pattern id="sapIllus_PatternShadow" data-name="sapIllus_PatternShadow" width="3" height="5.5"
 						patternUnits="userSpaceOnUse" viewBox="0 0 3 5.5">

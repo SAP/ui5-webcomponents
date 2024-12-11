@@ -16,7 +16,7 @@ export default function AvatarGroupTemplate(this: AvatarGroup) {
 				onKeyDown={this._onkeydown}
 				onFocusIn={this._onfocusin}
 			>
-				<slot onClick={this.onAvatarClick} onui5-click={this.onAvatarClick}></slot> 	{/* TOFIX: discsuss this click/ui5-click attachment */}
+				<slot onClick={this.onAvatarClick} onui5-click={this.onAvatarUI5Click}></slot>
 
 				{this._customOverflowButton ?
 					<slot onClick={this.onOverflowButtonClick} name="overflowButton"></slot>

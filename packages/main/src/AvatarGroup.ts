@@ -423,13 +423,15 @@ class AvatarGroup extends UI5Element {
 
 	onAvatarClick(e: MouseEvent) {
 		e.stopPropagation();
-		if (e.type === "click") {
-			// TOFIX: Discuss this check: Fire the custom AvatarGroup#click only for Avatar#click (not for Avatar#ui5-click as well).
-			this.fireDecoratorEvent("click", {
-				targetRef: e.target as HTMLElement,
-				overflowButtonClicked: false,
-			});
-		}
+		this.fireDecoratorEvent("click", {
+			targetRef: e.target as HTMLElement,
+			overflowButtonClicked: false,
+		});
+	}
+
+	onAvatarUI5Click(e: MouseEvent) {
+		// AvatrGroup fires click and ui5-click - Avatar's ui5-click should be stopped.
+		e.stopPropagation();
 	}
 
 	onOverflowButtonClick(e: MouseEvent) {
