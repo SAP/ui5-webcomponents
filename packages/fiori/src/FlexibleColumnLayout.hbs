@@ -41,6 +41,15 @@
 </div>
 
 {{#*inline "gripStart"}}
+	{{#if arrowIconName}}
+		<ui5-icon
+			class="ui5-fcl-arrow ui5-fcl-arrow--start"
+			name="{{arrowIconName}}"
+			style="{{styles.arrow.start}}"
+			@click="{{toggleStartColumnVisibility}}"
+			tabindex="0"
+		></ui5-icon>
+	{{/if}}
 	<ui5-icon
 		class="ui5-fcl-grip ui5-fcl-grip--start"
 		name="vertical-grip"

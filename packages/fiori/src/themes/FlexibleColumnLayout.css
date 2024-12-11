@@ -33,7 +33,6 @@
 	display: none;
 }
 
-/* arrow */
 .ui5-fcl-separator {
 	display: flex;
 	align-items: center;
@@ -50,6 +49,24 @@
 	border:var(--_ui5_fcl_separator_focus_border);
 	outline: none;
 }
+
+/* arrow icon*/
+.ui5-fcl-arrow--start {
+	color: var(--sapButton_TextColor);
+	border-radius: 0.25rem;
+	position: absolute;
+	top: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+	cursor: pointer;
+	z-index: 10;
+}
+
+.ui5-fcl-arrow--start:focus {
+	border: var(--_ui5_fcl_separator_focus_border);
+	outline: none;
+}
+
 .ui5-fcl-grip {
 	cursor: col-resize;
 	overflow: visible;
@@ -59,7 +76,7 @@
 	padding-bottom: 0.3125rem;
 }
 
-/* arrow decoration */
+/* grip decoration */
 .ui5-fcl-grip:before {
 	background-image: var(--_ui5_fcl_decoration_top);
 	bottom: calc(50% + 1rem);
@@ -83,8 +100,14 @@
 	background-position-x: calc(50% - 0.03125rem);
 }
 
-.ui5-fcl-separator:hover .ui5-fcl-grip:before,
-.ui5-fcl-separator:hover .ui5-fcl-grip:after {
+/*only if the arrow is present the lines will be shorten*/
+.ui5-fcl-separator:has(.ui5-fcl-arrow--start):hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:before,
+.ui5-fcl-separator:has(.ui5-fcl-arrow--start):hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:after {
+	height: calc(40% - 1rem);
+}
+
+.ui5-fcl-separator:hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:before,
+.ui5-fcl-separator:hover:not(:has(.ui5-fcl-arrow--start:hover)) .ui5-fcl-grip:after {
 	height: calc(50% - 1rem);
 }
 
