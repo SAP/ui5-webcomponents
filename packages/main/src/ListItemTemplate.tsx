@@ -1,4 +1,3 @@
-import type { JsxTemplate } from "@ui5/webcomponents-base";
 import type ListItem from "./ListItem.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -9,12 +8,12 @@ import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 
 export type ListItemHooks = {
-	listItemPreContent: JsxTemplate
-	listItemContent: JsxTemplate
-	imageBegin: JsxTemplate
-	iconBegin: JsxTemplate
-	iconEnd: JsxTemplate
-	selectionElement: JsxTemplate
+	listItemPreContent: any
+	listItemContent: any
+	imageBegin: any
+	iconBegin: any
+	iconEnd: any
+	selectionElement: any
 }
 
 const predefinedHooks: ListItemHooks = {

@@ -6,9 +6,9 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type {
-	ARIAAutoComplete,
-	ARIARoles,
-	ARIAHasPopup,
+	AriaAutoComplete,
+	AriaRole,
+	AriaHasPopup,
 	ClassMap,
 } from "@ui5/webcomponents-base/dist/types.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -112,9 +112,9 @@ type NativeInputAttributes = {
 type InputAccInfo = {
 	ariaRoledescription?: string,
 	ariaDescribedBy?: string,
-	ariaHasPopup?: ARIAHasPopup,
-	ariaAutoComplete?: ARIAAutoComplete,
-	role?: ARIARoles,
+	ariaHasPopup?: AriaHasPopup,
+	ariaAutoComplete?: AriaAutoComplete,
+	role?: AriaRole,
 	ariaControls?: string,
 	ariaRequired?: boolean,
 	ariaExpanded?: boolean,

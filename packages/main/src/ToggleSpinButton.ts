@@ -1,8 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
-import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
+import type { AriaRole } from "@ui5/webcomponents-base";
 
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
@@ -67,8 +66,8 @@ class ToggleSpinButton extends ToggleButton {
 	/**
 	 * Override
 	 */
-	get effectiveAccRole(): Lowercase<AriaRole> {
-		return toLowercaseEnumValue(AriaRole.SpinButton);
+	get effectiveAccRole(): AriaRole {
+		return "spinbutton";
 	}
 }
 

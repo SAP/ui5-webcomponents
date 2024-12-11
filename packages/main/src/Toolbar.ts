@@ -14,7 +14,6 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -269,7 +268,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: AriaHasPopup.Menu.toLowerCase() as Lowercase<AriaHasPopup.Menu>,
+					hasPopup: "menu" as const,
 				},
 			},
 		};
