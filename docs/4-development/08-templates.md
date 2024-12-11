@@ -23,7 +23,7 @@ Code inside JSX is special code and not JavaScript. To jump out of JSX and use J
 const myClass = "header"
 const name = "World";
 
-<div class={myClass}>Hello ${name}</div>
+<div class={myClass}>Hello {name}</div>
 ```
 
 ## Writing a component template
@@ -45,7 +45,7 @@ TypeScript treats lower-case element names as intrinsic (known to the browser). 
 
 ```tsx
 import Button from "@ui5/webcomponents/dist/Button.js"
-<Button design="Positive">Submit"</Button>
+<Button design="Positive">Submit</Button>
 ```
 
 The component model comes from the browser, so the JSX runtime is not doing anything special with this value, other than rendering the real tag in the DOM. Behind the scenes, the above code get converted to
@@ -124,10 +124,11 @@ Since JSX is compiled to JavaStcript, there is no need for special conditional s
 
 If the condition evaluates to false, the second expression will not be rendered.
 
-**Pitfall**: If you are checking an array and put the array length in the condional check, the framework will render a `0` instead of rendering noething. Always check array length by comparing to 0, so the result of the expression is boolean
+**Pitfall**: If you are checking an array and put the array length in the condional check, the framework will render a `0` instead of rendering nothing. Always check array length by comparing to 0, so the result of the expression is boolean
 ```tsx
 {this.rows.length > 0 &&
-    <CheckBox ...>
+    <CheckBox ... />
+}
 ```
 
 For if/else branches, use a ternary operator:
@@ -187,7 +188,7 @@ Template partials in this case are just function calls that return other templat
     </>
 ```
 
-**Note** Fragments
+**Note: Fragments**
 In the exaple above, we used a construct called a fragment. Use this in places where a single element is expected by the syntax, instead of wrapping the elements you have in unnecessary `span` elements.
 
 ```tsx
@@ -196,7 +197,7 @@ In the exaple above, we used a construct called a fragment. Use this in places w
 
 ### Injecting content when using templates with partials
 
-Other templating engines have mechanisms to include a template and replace part of it with a parital. In JSX, including a template is simply importing the module and calling the template function. Templates that provide partials for replacement, expect the partials to be passed as adidtional optional parameters
+Other templating engines have mechanisms to include a template and replace part of it with a parital. In JSX, including a template is simply importing the module and calling the template function. Templates that provide partials for replacement, expect the partials to be passed as additional optional parameters
 
 ```tsx
 export default BaseTemplate(this: ComponentClass, headerContent?: Function) {
@@ -212,7 +213,7 @@ export default BaseTemplate(this: ComponentClass, headerContent?: Function) {
 
 ## Events
 
-Event handlers are attached with the convention `onEventName`. Any property that starts with `on` is treated as an event handler and the rest of the string is taken as the event name. Standard DOM events are correctly converted from PascalCase do the DOM event name.
+Event handlers are attached with the convention `onEventName`. Any property that starts with `on` is treated as an event handler and the rest of the string is taken as the event name. Standard DOM events are correctly converted from PascalCase to the DOM event name.
 
 ```
 onClick -> click
@@ -222,7 +223,7 @@ onMouseMove -> mousemove
 
 Custom events dispatched from the web components follow the same convention when written in the template, with the difference that they are attached directly with the event name as it is and the framework takes care to match it by firing all events with PascalCase as well.
 
-In teplate:
+In template:
 ```
 onSeclectionChange -> SelectionChange
 ~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~
@@ -238,8 +239,8 @@ eventDetails!: {
 
 When fired at runtime:
 ```ts
-// fires SelectionChange as well so the TSX handler will work
-firedecoratorEvent("selection-change")
+// fires `SelectionChange` as well so the TSX handler will work
+fireDecoratorEvent("selection-change")
 ```
 
 In order for components to be usable in TSX templates, all events must be described in the `eventDetails` field of the class. This will generate the necessary types for the event handler property names.
@@ -277,7 +278,7 @@ For native browser events, the most common way is to simply specify `KeyboardEve
 
 ### Event handlers and `this`
 
-UI5 Web Components are authored as classes and event handlers are methods, they usually access the component state via `this.prop`. In orther for this to work when event handlers are attached to the DOM, the framework automaticall binds all event handlers to the instance that is being rendered, so accessing `this` from the event handlers works as expected without any additional work.
+UI5 Web Components are authored as classes and event handlers are methods, they usually access the component state via `this.prop`. In order for this to work when event handlers are attached to the DOM, the framework automatically binds all event handlers to the instance that is being rendered, so accessing `this` from the event handlers works as expected without any additional work.
 
 ### Event bubbling
 
@@ -285,7 +286,7 @@ Event handler property names are only available on the component instance, it is
 
 ```tsx
 <div
-    onDetailClick={this.handleDetailClick} // TS error - div does not have a `detail-click` event, so no `onDetailClickProperty
+    onDetailClick={this.handleDetailClick} // TS error - div does not have a `detail-click` event, so no `onDetailClick` property
 >
     <ListItem
         onDetailClick={this.handleDetailClick} // this works, the ListItem has an `onDetailClick` property
@@ -306,7 +307,7 @@ This is an example where using a dash in the property name is allowed - all cust
 </div>
 ```
 
-Another realistic example of this pattern is for events that are slotted - they are coming from the light DOM of the component and there is no way to attach handlers to them in the template, but bubbling works.
+Another realistic example of this pattern is for events coming from child components in slots - they are coming from the light DOM of the component and there is no way to attach handlers to them in the template, but bubbling works.
 
 ```tsx
 <List
@@ -327,9 +328,9 @@ It is sometimes necessary to get a reference to a DOM element in the code of the
 ></div>
 ```
 
-The way to achieve the same in TSX is to use a `ref=`
+The way to achieve the same in TSX is to use a `ref`
 
-`ref` properties accept an object with a `obj.current` property that will be assigned the element in the DOM, or a callback that will be executed with the element passed as an argument
+`ref` properties accept an object with a `obj.current` property that will be assigned the DOM element, or a callback that will be executed with the element passed as an argument
 
 ```tsx
 <div
@@ -354,7 +355,7 @@ Most of the time you want to pass an additional parameter besides the element th
     // captureListRef will be called with a `<ul>` as a parameter and `this` will be the element that renders the template
     ref={this.captureListRef.bind(this)}
     {this.items.map(item => (
-        // captureItemRef will be called with a `<li>` as a parameter and this will be the item that is iterated
+        // captureItemRef will be called with a `<li>` as a parameter and `this` will be the `item` that is iterated
         <li ref={this.captureItemRef.bind(item)}></li>
     ))}
 ></ul>

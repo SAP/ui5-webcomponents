@@ -143,14 +143,15 @@ type Equal<X, Y> =
 
 // JSX support
 type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
-type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
-type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
 // type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: T[Property] extends IsAny<T> ? any : (e: CustomEvent<T[Property]>) => void }
 type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
-	? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
-	: T;
+? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
+: T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
+
 type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref";
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
 
 /**
  * @class
