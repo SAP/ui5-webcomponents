@@ -196,6 +196,19 @@ const getRGBColor = (color: string): ColorRGB => {
 	return HEXToRGB(color);
 };
 
+const getAlpha = (color: string): number => {
+	let alpha = 1;
+
+	if (color.startsWith("rgba") || color.startsWith("hsla")) {
+		const parts = color.split(",");
+		if (parts.length === 4) {
+			alpha = parseFloat(parts[3].replace(")", "").trim());
+		}
+	}
+
+	return alpha;
+};
+
 /**
  * Return an object with the properties for each of the main colors(red, green, blue)
  * @param {String} color Receives a color in the following format: "rgba(0, 0, 0, 1)
@@ -394,6 +407,7 @@ const RGBToHSL = (color: ColorRGB): ColorHSL => {
 
 export {
 	getRGBColor,
+	getAlpha,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
