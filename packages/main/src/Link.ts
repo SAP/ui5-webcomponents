@@ -11,7 +11,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import type { JSX } from "@ui5/webcomponents-base";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 import type WrappingType from "./types/WrappingType.js";
@@ -322,8 +322,8 @@ class Link extends UI5Element implements ITabbable {
 		return (this.href && this.href.length > 0) ? this.href : undefined;
 	}
 
-	get effectiveAccRole(): JSX.AriaRole {
-		return this.accessibleRole.toLowerCase() as "button" | "link";
+	get effectiveAccRole() {
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get ariaDescriptionText() {

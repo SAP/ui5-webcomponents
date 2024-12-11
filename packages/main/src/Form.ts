@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import type { JSX } from "@ui5/webcomponents-base";
 // Template
 import FormTemplate from "./FormTemplate.js";
 
@@ -509,7 +508,7 @@ class Form extends UI5Element {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
 
-	get effectiveAccessibleRole(): JSX.AriaRole | undefined {
+	get effectiveAccessibleRole() {
 		return this.hasGroupItems ? "region" : "form";
 	}
 

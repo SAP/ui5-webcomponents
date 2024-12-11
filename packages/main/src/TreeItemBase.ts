@@ -1,6 +1,5 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { JSX } from "@ui5/webcomponents-base";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -260,7 +259,7 @@ class TreeItemBase extends ListItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: "treeitem" as JSX.AriaRole | undefined,
+			role: "treeitem" as const,
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
 			ariaLevel: this.level,
 			posinset: this.forcedPosinset,

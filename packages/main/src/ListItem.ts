@@ -3,7 +3,7 @@ import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { JSX } from "@ui5/webcomponents-base";
+import type { AriaRole } from "@ui5/webcomponents-base";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
@@ -52,7 +52,7 @@ type SelectionRequestEventDetail = {
 }
 
 type AccInfo = {
-	role?: JSX.AriaRole | undefined;
+	role?: AriaRole | undefined;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
@@ -453,7 +453,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get listItemAccessibleRole() {
-		return (this._forcedAccessibleRole || this.accessibleRole.toLowerCase()) as JSX.AriaRole | undefined;
+		return (this._forcedAccessibleRole || this.accessibleRole.toLowerCase()) as AriaRole | undefined;
 	}
 
 	get ariaSelectedText() {
