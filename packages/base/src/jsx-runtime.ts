@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/extensions
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "./thirdparty/preact/jsxRuntime.module.js";
-import type { JSX as _JSX } from "./thirdparty/preact/jsxRuntime.module.js";
+import type { JSX as _JSX } from "./thirdparty/preact/jsxRuntime.module.d.ts";
 import { options, type VNode as _VNode } from "./thirdparty/preact/preact.module.js";
 import type UI5Element from "./UI5Element.js";
 import { preprocess } from "./jsx-utils.js";

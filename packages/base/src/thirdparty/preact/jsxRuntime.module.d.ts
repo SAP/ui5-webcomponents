@@ -8,7 +8,7 @@ import {
 	VNode,
 	Attributes
 } from './preact.module.d.ts';
-import { JSXInternal } from './jsx';
+import { JSXInternal } from './jsx.d.ts';
 
 export function jsx(
 	type: string,
