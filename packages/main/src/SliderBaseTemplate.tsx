@@ -1,10 +1,11 @@
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type { JsxTemplate } from "@ui5/webcomponents-base";
 import type SliderBase from "./SliderBase.js";
 
 export default function SliderBaseTemplate(this: SliderBase, hooks?: {
-	handlesAriaText?: any
-	progressBar?: any
-	handles?: any
+	handlesAriaText?: JsxTemplate
+	progressBar?: JsxTemplate
+	handles?: JsxTemplate
 }) {
 	return (
 		<div

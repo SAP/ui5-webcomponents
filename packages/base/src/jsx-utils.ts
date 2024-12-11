@@ -15,8 +15,8 @@ function convertEventScoping(type: typeof UI5Element, props: Record<string, any>
 
 			// Attach for the "ui5-" preffixed event
 			if (kebabCaseEvent in events) {
-				props[`onui5-${kebabCaseEvent}`] = props[prop];
 				if ((prop !== "onClick")) {
+					props[`onui5-${kebabCaseEvent}`] = props[prop];
 					// TODO keep native events for now, find a way to mark them for runtime
 					delete props[prop];
 				}
