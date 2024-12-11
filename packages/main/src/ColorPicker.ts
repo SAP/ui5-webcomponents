@@ -320,11 +320,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._setMainColor(this._hue);
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
 		this._isHueValueChanged = true;
-
-		const hue = this._hue;
-		const normalizedHue = ((hue % 360) + 360) % 360;
-
-		this._colorValue.H = normalizedHue;
+		this._colorValue.H = this._hue;
 
 		const color = this._colorValue.toRGBString();
 		this._setValue(color);
