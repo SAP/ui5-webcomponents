@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
@@ -21,8 +21,8 @@ import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 
 type ListItemBasePressEventDetail = {
 	item: ListItemBase,
-	selected: boolean,
-	key: string,
+	selected?: boolean,
+	key?: string,
 }
 
 /**
@@ -55,6 +55,13 @@ type ListItemBasePressEventDetail = {
 	bubbles: true,
 })
 class ListItemBase extends UI5Element implements ITabbable {
+	eventDetails!: {
+		"_request-tabindex-change": FocusEvent,
+		"_press": ListItemBasePressEventDetail,
+		"_focused": FocusEvent,
+		"_forward-after": void,
+		"_forward-before": void,
+	}
 	/**
 	 * Defines the selected state of the component.
 	 * @default false
@@ -172,7 +179,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		if (isEnter(e as KeyboardEvent)) {
 			e.preventDefault();
 		}
-		this.fireDecoratorEvent<ListItemBasePressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		this.fireDecoratorEvent("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	_handleTabNext(e: KeyboardEvent) {
@@ -233,7 +240,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		return false;
 	}
 
-	get _effectiveTabIndex() {
+	get _effectiveTabIndex(): number | undefined | string {
 		if (!this._focusable) {
 			return -1;
 		}

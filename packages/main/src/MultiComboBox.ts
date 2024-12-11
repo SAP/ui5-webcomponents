@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ClassMap, Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -226,9 +226,7 @@ type MultiComboboxItemWithSelection = {
  * @since 2.0.0
  * @public
  */
-@event("open", {
-	bubbles: true,
-})
+@event("open")
 
 /**
  * Fired when the dropdown is closed.
@@ -242,18 +240,19 @@ type MultiComboboxItemWithSelection = {
  * @param {IMultiComboBoxItem[]} items an array of the selected items.
  * @public
  */
-@event<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		items: { type: Array<IMultiComboBoxItem> },
-	},
+@event("selection-change", {
 	bubbles: true,
 	cancelable: true,
 })
 
 class MultiComboBox extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void,
+		input: void,
+		open: void,
+		close: void,
+		"selection-change": MultiComboBoxSelectionChangeEventDetail,
+	}
 	/**
 	 * Defines the value of the component.
 	 *
@@ -1495,12 +1494,9 @@ class MultiComboBox extends UI5Element implements IFormInputElement {
 	}
 
 	fireSelectionChange() {
-		const changePrevented = !this.fireDecoratorEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
+		const changePrevented = !this.fireDecoratorEvent("selection-change", {
 			items: this._getSelectedItems(),
 		});
-
-		// Angular 2 way data binding
-		this.fireDecoratorEvent("value-changed");
 
 		return changePrevented;
 	}

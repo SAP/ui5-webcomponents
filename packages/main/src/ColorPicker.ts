@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -22,7 +22,6 @@ import Slider from "./Slider.js";
 import Label from "./Label.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
-import ColorPickerDisplayMode from "./types/ColorPickerDisplayMode.js";
 import ColorValue from "./ColorValue.js";
 
 import {
@@ -106,6 +105,9 @@ type ColorChannelInput = {
 	bubbles: true,
 })
 class ColorPicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void;
+	}
 	/**
 	 * Defines the currently selected color of the component.
 	 *
@@ -128,13 +130,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	name?: string;
 
 	/**
-	 * Defines the display mode of the component.
-	 * @default "Default"
+	 * When set to `true`, the alpha slider and inputs for RGB values will not be displayed.
+	 * @default false
 	 * @public
 	 * @since 2.5.0
 	 */
-	@property()
-	displayMode: `${ColorPickerDisplayMode}` = "Default";
+	@property({ type: Boolean })
+	simplified = false;
 
 	/**
 	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
@@ -319,7 +321,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
 		this._isHueValueChanged = true;
 
-		const hue = Math.round(this._hue / 4.251);
+		const hue = this._hue;
 		const normalizedHue = ((hue % 360) + 360) % 360;
 
 		this._colorValue.H = normalizedHue;
@@ -395,33 +397,35 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	_setMainColor(hueValue: number) {
-		if (hueValue <= 255) {
+		const hueValueMod = hueValue * 4.251;
+
+		if (hueValueMod <= 255) {
 			this._mainValue = {
 				r: 255,
-				g: hueValue,
+				g: hueValueMod,
 				b: 0,
 			};
-		} else if (hueValue <= 510) {
+		} else if (hueValueMod <= 510) {
 			this._mainValue = {
-				r: 255 - (hueValue - 255),
+				r: 255 - (hueValueMod - 255),
 				g: 255,
 				b: 0,
 			};
-		} else if (hueValue <= 765) {
+		} else if (hueValueMod <= 765) {
 			this._mainValue = {
 				r: 0,
 				g: 255,
-				b: hueValue - 510,
+				b: hueValueMod - 510,
 			};
-		} else if (hueValue <= 1020) {
+		} else if (hueValueMod <= 1020) {
 			this._mainValue = {
 				r: 0,
-				g: 765 - (hueValue - 255),
+				g: 765 - (hueValueMod - 255),
 				b: 255,
 			};
-		} else if (hueValue <= 1275) {
+		} else if (hueValueMod <= 1275) {
 			this._mainValue = {
-				r: hueValue - 1020,
+				r: hueValueMod - 1020,
 				g: 0,
 				b: 255,
 			};
@@ -429,7 +433,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._mainValue = {
 				r: 255,
 				g: 0,
-				b: 1275 - (hueValue - 255),
+				b: 1275 - (hueValueMod - 255),
 			};
 		}
 	}
@@ -469,7 +473,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// and HSL format, the color will be parsed to RGB
 		// 0 ≤ H < 360
 		// 4.251 because with 4.25 we get out of the colors range.
-		const h = this._hue / 4.251;
+		const h = this._hue;
 		let s = +(1 - (y / 256)).toFixed(2);
 		let l = +(x / 256).toFixed(2);
 
@@ -508,7 +512,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
-			this._hue = Math.round(hslColours.h * 4.25);
+			this._hue = hslColours.h;
 		}
 
 		this._setMainColor(this._hue);
@@ -639,7 +643,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	get _isDefaultPickerMode() {
-		return this.displayMode === ColorPickerDisplayMode.Default;
+		return !this.simplified;
 	}
 
 	get styles() {

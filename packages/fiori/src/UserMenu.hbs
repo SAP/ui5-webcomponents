@@ -1,0 +1,129 @@
+<ui5-responsive-popover
+		id="user-menu-rp"
+		class="ui5-pm-rp"
+		tabindex="-1"
+		placement="Bottom"
+		vertical-align="Bottom"
+		horizontal-align="End"
+		@ui5-close={{_handlePopoverAfterClose}}
+		prevent-initial-focus
+		accessible-name={{accessibleNameText}}
+		.open={{open}}
+		.opener={{opener}}
+>
+	{{#if _isPhone}}
+		<ui5-bar class="ui5-pm-phone-header" slot="header">
+			{{#if _manageAccountVisibleInHeader}}
+				<ui5-button icon="user-settings" @click="{{_handleManageAccountClick}}" slot="startContent"></ui5-button>
+			{{/if}}
+
+			{{#if _titleMovedToHeader}}
+				<ui5-title
+					level="H1"
+					wrapping-type="None"
+				>
+					{{this._selectedAccount.titleText}}
+				</ui5-title>
+			{{/if}}
+		
+			<ui5-button
+				icon="decline"
+				design="Transparent"
+				accessible-name="{{_closeDialogAriaLabel}}"
+				@click="{{_closeUserMenu}}"
+				slot="endContent"
+			>
+			</ui5-button>
+		</ui5-bar>
+		<div class="ui5-pm-header">
+			{{> headerContent}}
+		</div>
+	{{else}}
+		<div class="ui5-pm-header" slot="header">
+			{{> headerContent}}
+		</div>
+	{{/if}}
+
+	{{#if showOtherAccounts}}
+		<ui5-panel collapsed class="ui5-pm-other-accounts">
+			<div slot="header" class="ui5-user-menu-account-header">
+				<ui5-title slot="header" level="H4">{{_otherAccountsButtonText}} ({{_otherAccounts.length}})</ui5-title>
+				{{#if showAddAccount}}
+					<ui5-button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon="add-employee" @click="{{_handleAddAccountClick}}" tooltip="{{_addAccountTooltip}}"/>
+				{{/if}}
+			</div>
+			{{#if _otherAccounts.length}}
+				<ui5-list @ui5-item-click="{{_handleAccountSwitch}}">
+					{{#each _otherAccounts}}
+						<ui5-li-custom .associatedAccount="{{this}}">
+							<div class="ui5-pm-other-accounts-content">
+								<ui5-avatar slot="image" size="S" .initials="{{_initials}}" fallback-icon="person-placeholder">
+									{{#if avatarSrc}}
+										<img src={{avatarSrc}}/>
+									{{/if}}
+								</ui5-avatar>
+								<div>
+								{{#if titleText}}
+									<ui5-title>{{titleText}}</ui5-title>
+								{{/if}}
+								{{#if subtitleText}}
+									<ui5-label>{{subtitleText}}</ui5-label>
+								{{/if}}
+								{{#if description}}
+									<ui5-label>{{description}}</ui5-label>
+								{{/if}}
+								</div>
+							</div>
+						</ui5-li-custom>
+					{{/each}}
+				</ui5-list>
+			{{/if}}
+		</ui5-panel>
+	{{/if}}
+
+	{{#if menuItems.length}}
+		<ui5-list
+			class="ui5-user-menu-list"
+			selection-mode="None" 
+			separators="None" 
+			accessible-role="Menu"
+			@ui5-item-click={{_handleMenuItemClick}}
+			@ui5-close-menu={{_handleMenuItemClose}}
+			>
+			<slot></slot>
+		</ui5-list>
+	{{/if}}
+
+	<div slot="footer" class="ui5-pm-footer">
+		<ui5-button class="ui5-pm-sign-out-btn" design="Transparent" icon="log" @click="{{_handleSignOutClick}}">{{_signOutButtonText}}</ui5-button>
+	</div>
+</ui5-responsive-popover>
+
+{{#*inline "headerContent"}}
+	{{#if _selectedAccount}}
+		<div class="ui5-pm-selected-account">
+			<ui5-avatar size="L" @click="{{_handleAvatarClick}}" .initials="{{_selectedAccount._initials}}" fallback-icon="person-placeholder" class="ui5-pm--selected-account-avatar">
+				{{#if _selectedAccount.avatarSrc}}
+					<img src={{_selectedAccount.avatarSrc}}/>
+				{{/if}}
+				<ui5-tag slot="badge" wrapping-type="None" design="Set1" color-scheme="5" title="{{_editAvatarTooltip}}">
+					<ui5-icon slot="icon" name="edit"></ui5-icon>
+				</ui5-tag>
+			</ui5-avatar>
+			{{#if _selectedAccount.titleText}}
+				<ui5-title id="selected-account-title" class="ui5-pm-selected-account-title">{{_selectedAccount.titleText}}</ui5-title>
+			{{/if}}
+			
+			{{#if _selectedAccount.subtitleText}}
+				<ui5-text class="ui5-pm-selected-account-subtitleText">{{_selectedAccount.subtitleText}}</ui5-text>
+			{{/if}}
+			{{#if _selectedAccount.description}}
+				<ui5-text class="ui5-pm-selected-account-description">{{_selectedAccount.description}}</ui5-text>
+			{{/if}}
+
+			{{#if showManageAccount}}
+				<ui5-button id="selected-account-manage-btn" icon="user-settings" class="ui5-pm-manage-account-btn" @click="{{_handleManageAccountClick}}">{{_manageAccountButtonText}}</ui5-button>
+			{{/if}}
+		</div>
+	{{/if}}
+{{/inline}}

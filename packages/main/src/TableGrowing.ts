@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -75,6 +75,9 @@ import {
 })
 
 class TableGrowing extends UI5Element implements ITableGrowing {
+	eventDetails!: {
+		"load-more": void;
+	}
 	/**
 	 * Defines the mode of the <code>ui5-table</code> growing.
 	 *
@@ -113,15 +116,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	growingSubText?: string;
 
 	/**
-	 * Disables the growing feature.
-	 *
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	disabled = false;
-
-	/**
 	 * Defines the active state of the growing button.
 	 * Used for keyboard interaction.
 	 * @private
@@ -148,7 +142,7 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 		this._shouldFocusRow = false;
 	}
 
-	onTableRendered(): void {
+	onTableAfterRendering(): void {
 		// Focus the first row after growing, when the growing button is used
 		if (this._shouldFocusRow) {
 			this._shouldFocusRow = false;
@@ -161,10 +155,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 			focusRow ||= this._table?.rows[0] as HTMLElement;
 
 			focusRow?.focus();
-		}
-
-		if (this.disabled) {
-			return;
 		}
 
 		if (this._renderContent !== this.hasGrowingComponent()) {
@@ -193,10 +183,6 @@ class TableGrowing extends UI5Element implements ITableGrowing {
 	}
 
 	hasGrowingComponent(): boolean {
-		if (this.disabled) {
-			return false;
-		}
-
 		if (this.type === TableGrowingMode.Scroll) {
 			return !!this._table && this._table._scrollContainer.clientHeight >= this._table._tableElement.scrollHeight;
 		}
