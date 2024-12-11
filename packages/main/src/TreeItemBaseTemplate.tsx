@@ -56,5 +56,5 @@ function listItemPostContent(this: TreeItemBase) {
 function listItemContent() { }
 function imageBegin() { }
 function iconBegin(this: TreeItemBase) {
-	return this.icon && <Icon part="icon" name={this.icon} class="ui5-li-icon" />;
+	return this.icon ? <Icon part="icon" name={this.icon} class="ui5-li-icon" /> : <></>;
 }

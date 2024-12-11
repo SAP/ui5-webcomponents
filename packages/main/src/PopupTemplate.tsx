@@ -1,9 +1,10 @@
+import type { JsxTemplate } from "@ui5/webcomponents-base";
 import type Popup from "./Popup.js";
 import PopubBlockLayerTemplate from "./PopupBlockLayerTemplate.js";
 
 export default function PopupTemplate(this: Popup, hooks?: {
-	beforeContent?: any
-	afterContent?: any
+	beforeContent?: JsxTemplate
+	afterContent?: JsxTemplate
 }) {
 	return (<>
 		{PopubBlockLayerTemplate.call(this)}

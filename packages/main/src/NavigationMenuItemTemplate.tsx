@@ -37,7 +37,7 @@ export default function NavigationMenuItemTemplate(this: NavigationMenuItem, hoo
 }
 
 function listItemContent(this: NavigationMenuItem) {
-	return this.text;
+	return <>{this.text}</>;
 }
 
 function iconBegin(this: NavigationMenuItem) {
