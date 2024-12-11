@@ -192,14 +192,13 @@ class SplitButton extends UI5Element {
 	_activeArrowButton = false;
 
 	/**
-	 * Defines the end icon to be displayed as graphical element within the text button of the component.
-	 * The SAP-icons font provides numerous options.
+	 * Defines the display of the end icon as a graphical element within the text button of the component.
+	 * The SAP-icons font provides different options.
 	 *
 	 * Example:
 	 *
 	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default undefined
-	 * @since 2.5.0
 	 * @private
 	 */
 	@property({ type: String })
@@ -209,7 +208,6 @@ class SplitButton extends UI5Element {
 	 * Defines the visibility of the arrow button of the component.
 	 *
 	 * @default false
-	 * @since 2.5.0
 	 * @private
 	 */
 	@property({ type: Boolean })

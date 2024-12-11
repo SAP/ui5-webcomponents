@@ -20,21 +20,21 @@ import ButtonCss from "./generated/themes/Button.css.js";
  *
  * ### Overview
  *
- * The `ui5-ai-button` component represents a button used in AI-related scenarios.
- * It enables users to trigger actions by clicking or tapping the `ui5-ai-button`, or by pressing
- * certain keyboard keys, such as Enter or Space.
+ * The `ui5-ai-button` component serves as a button for AI-related scenarios. Users can trigger actions by clicking or tapping the `ui5-ai-button`
+ * or by pressing keyboard keys like [Enter] or [Space].
  *
  * ### Usage
  *
- * For the `ui5-ai-button` UI, you can define one or more states of the button by placing `ai-button-state` components in its default slot.
- * Each state have a name that identifies it and can have text, icon and end icon defined (in any combination) depending on the state purpose.
- * Also, there is an option to define a split mode for the button, which will show an arrow button that can be used to trigger additional actions.
+ * For the `ui5-ai-button` user interface, you can define one or more button states by placing ai-button-state components in their default slot.
+ * Each state has a name for identification and can include text, an icon, and an end icon, as needed for its purpose.
+ * You can define a split mode for the button, which will results in displaying an arrow button for additional actions.
  *
- * You can choose from a set of predefined designs (the same as for regular `ui5-button` component) that allow different styling to correspond to the triggered action.
+ * You can choose from a set of predefined designs for `ui5-ai-button` (as in `ui5-button`) to match the desired styling for the triggered action.
  *
- * `ui5-ai-button` can be activated by clicking or tapping it. The state can be changed in `click` event handler. When the button is in split mode, the default button action
- * can be activated by clicking or tapping it, or by pressing Enter or Space, and arrow button can be activated by clicking or tapping as well as by pressing Arrow Up,
- * Arrow Down or F4 key. A menu can be attached to the arrow button to display additional actions.
+ * The `ui5-ai-button` can be activated by clicking or tapping it. You can change the button state in the click event handler. When the button is
+ * in split mode, you can activate the default button action by clicking or tapping it, or by pressing keyboard keys like [Enter] or [Space].
+ * You can activate the arrow button by clicking or tapping it, or by pressing keyboard keys like [Arrow Up], [Arrow Down], or [F4].
+ * To display additional actions, you can attach a menu to the arrow button.
  *
  * ### ES6 Module Import
  *
@@ -67,9 +67,9 @@ import ButtonCss from "./generated/themes/Button.css.js";
 })
 
 /**
- * Fired when the component is in split mode and arrow button is
- * activated either with a mouse/tap or by using the Arrow Up/Down,
- * Alt + Arrow Up/Down or F4 keys.
+ * Fired when the component is in split mode and after the arrow button
+ * is activated either by clicking or tapping it or by using the [Arrow Up] / [Arrow Down],
+ * [Alt] + [Arrow Up]/ [Arrow Down], or [F4] keyboard keys.
  * @public
  */
 @event("arrow-click", {
@@ -121,6 +121,7 @@ class Button extends UI5Element {
 
 	/**
 	 * Initiates button elements fade-out phase.
+	 * This property is animation related only.
 	 * @default false
 	 * @private
 	 */
@@ -129,6 +130,7 @@ class Button extends UI5Element {
 
 	/**
 	 * Initiates button fade middle phase.
+	 * This property is animation related only.
 	 * @default false
 	 * @private
 	 */
@@ -137,6 +139,7 @@ class Button extends UI5Element {
 
 	/**
 	 * Initiates button elements fade-in phase.
+	 * This property is animation related only.
 	 * @default false
 	 * @private
 	 */
@@ -144,8 +147,8 @@ class Button extends UI5Element {
 	fadeIn = false;
 
 	/**
-	 * Flag for transition between button without end icon or arrow button
-	 * and button with end icon or arrow button.
+	 * Flags transition between a button without end icon/arrow button
+	 * and a button with end icon/arrow button.
 	 * This property is animation related only.
 	 * @default false
 	 * @private
@@ -154,8 +157,8 @@ class Button extends UI5Element {
 	buttonToMenu? = false;
 
 	/**
-	 * Flag for transition between button with end icon or arrow button
-	 * and button without end icon or arrow button.
+	 * Flags transition between a button with end icon or arrow button
+	 * and a button without end icon or arrow button.
 	 * This property is animation related only.
 	 * @default false
 	 * @private
@@ -174,20 +177,20 @@ class Button extends UI5Element {
 
 	/**
 	 * Defines the available states of the component.
-	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use `ui5-ai-button-state` components in order to preserve the intended design.
+	 * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that
+	 * you only use `ui5-ai-button-state` components in order to preserve the intended design.
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	states!: Array<ButtonState>;
 
 	/**
-	 * Defines the active state of the internal Arrow Button in split mode.
-	 * It can be set to true when the button is in split mode and the Arrow Button action
-	 * is used to open a menu with additional options, and can be set back to false
-	 * when the menu is closed.
+	 * Defines the active state of the internal arrow button in split mode.
+	 * Set to true when the button is in split mode and a menu with additional options
+	 * is opened by the arrow button. Set back to false when the menu is closed.
 	 * @default false
 	 * @public
-	 * @since 2.5.0
+	 * @since 2.6.0
 	 */
 	@property({ type: Boolean })
 	set activeArrowButton(value: boolean) {
@@ -269,30 +272,36 @@ class Button extends UI5Element {
 		if (!newStateObject) {
 			// eslint-disable-next-line no-console
 			console.warn(`State with name="${this.state}" doesn't exist!`);
-		} else if (button) {
-			const buttonWidth = button.offsetWidth;
-			const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as SplitButton;
-
-			this.buttonToMenu = (!this._currentStateObject?.splitMode && newStateObject?.splitMode) || (!this._currentStateObject?.endIcon && !!newStateObject?.endIcon);
-			this.menuToButton = (this._currentStateObject?.splitMode && !newStateObject?.splitMode) || (!!this._currentStateObject?.endIcon && !newStateObject?.endIcon);
-
-			this.style.width = `${buttonWidth}px`;
-			hiddenButton.icon = newStateObject.icon;
-			hiddenButton._endIcon = newStateObject.endIcon;
-			hiddenButton.textContent = newStateObject.text || null;
-			hiddenButton._hideArrowButton = this._hideArrowButton;
-
-			await renderFinished();
-			const hiddenButtonWidth = hiddenButton.offsetWidth;
-			this.style.width = `${hiddenButtonWidth}px`;
-			this.fadeOut = true;
-
-			setTimeout(() => {
-				this.fadeMid = true;
-				button._hideArrowButton = this._hideArrowButton;
-				this._fadeIn();
-			}, fadeOutDuration);
+			return;
 		}
+
+		if (!button) {
+			return;
+		}
+
+		const buttonWidth = button.offsetWidth;
+		const hiddenButton = this.shadowRoot?.querySelector(".ui5-ai-button-hidden") as SplitButton;
+		const currentState: Partial<ButtonState> = this._currentStateObject || {};
+
+		this.buttonToMenu = (!currentState.splitMode && newStateObject.splitMode) || (!currentState.endIcon && !!newStateObject.endIcon);
+		this.menuToButton = (currentState.splitMode && !newStateObject.splitMode) || (!!currentState.endIcon && !newStateObject.endIcon);
+
+		this.style.width = `${buttonWidth}px`;
+		hiddenButton.icon = newStateObject.icon;
+		hiddenButton._endIcon = newStateObject.endIcon;
+		hiddenButton.textContent = newStateObject.text || null;
+		hiddenButton._hideArrowButton = this._hideArrowButton;
+
+		await renderFinished();
+		const hiddenButtonWidth = hiddenButton.offsetWidth;
+		this.style.width = `${hiddenButtonWidth}px`;
+		this.fadeOut = true;
+
+		setTimeout(() => {
+			this.fadeMid = true;
+			button._hideArrowButton = this._hideArrowButton;
+			this._fadeIn();
+		}, fadeOutDuration);
 	}
 
 	/**
@@ -342,7 +351,7 @@ class Button extends UI5Element {
 	}
 
 	/**
-	 * Handles the arrow-click event (if AI Button is in split mode).
+	 * Handles the arrow-click event when `ui5-ai-button` is in split mode.
 	 * @private
 	 */
 	_onArrowClick(e: MouseEvent): void {
