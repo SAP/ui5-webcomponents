@@ -199,7 +199,7 @@ const getRGBColor = (color: string): ColorRGB => {
 const getAlpha = (color: string): number => {
 	let alpha = 1;
 
-	if (color.startsWith("rgba")) {
+	if (color.startsWith("rgba") || color.startsWith("hsla")) {
 		const parts = color.split(",");
 		if (parts.length === 4) {
 			alpha = parseFloat(parts[3].replace(")", "").trim());
