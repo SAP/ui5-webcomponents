@@ -8,15 +8,9 @@ export type PromiseResolve = (value: void | PromiseLike<void>) => void;
 export type Timeout = ReturnType<typeof setTimeout>;
 export type Interval = ReturnType<typeof setInterval>;
 
-export type StyleDataCSP = {
-	content: string,
-	packageName: string,
-	fileName: string,
-};
+export type StyleData = string;
 
-export type StyleData = StyleDataCSP | string;
-
-export type ComponentStylesData = Array<ComponentStylesData> | Array<StyleData> | StyleData;
+export type ComponentStylesData = Array<ComponentStylesData> | string;
 export type ClassMapValue = Record<string, boolean>
 
 export type ClassMap = { [x: string] : ClassMapValue | ClassMap };
