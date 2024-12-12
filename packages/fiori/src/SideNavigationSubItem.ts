@@ -1,10 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import "@ui5/webcomponents-icons/dist/circle-task-2.js";
-import "@ui5/webcomponents-icons/dist/arrow-right.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
-import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
+import SideNavigationSubItemTemplate from "./SideNavigationSubItemTemplate.js";
 
 // Styles
 import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.css.js";
@@ -28,7 +26,7 @@ import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.c
  */
 @customElement({
 	tag: "ui5-side-navigation-sub-item",
-	renderer: litRender,
+	renderer: jsxRender,
 	template: SideNavigationSubItemTemplate,
 	styles: SideNavigationSubItemCss,
 	dependencies: [
@@ -36,19 +34,19 @@ import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.c
 	],
 })
 class SideNavigationSubItem extends SideNavigationSelectableItemBase {
-	_onkeydown = (e: KeyboardEvent) => {
+	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 	}
 
-	_onkeyup = (e: KeyboardEvent) => {
+	_onkeyup(e: KeyboardEvent) {
 		super._onkeyup(e);
 	}
 
-	_onfocusin = (e: FocusEvent) => {
+	_onfocusin(e: FocusEvent) {
 		super._onfocusin(e);
 	}
 
-	_onclick = (e: PointerEvent) => {
+	_onclick(e: MouseEvent) {
 		super._onclick(e);
 	}
 }
