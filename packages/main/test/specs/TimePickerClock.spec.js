@@ -34,8 +34,8 @@ describe("Clock API", () => {
 		const hours12 = await browser.$("#myHours12");
 		const hours24 = await browser.$("#myHours24");
 		const minutes10 = await browser.$("#myMinutes10");
-		const numbersInHours12 = await hours12.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
-		const numbersInHours24 = await hours24.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
+		const numbersInHours12 = await hours12.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
+		const numbersInHours24 = await hours24.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
 
 		assert.strictEqual(numbersInHours12.length, 12, "There are 12 numbers rendered in clock with showInnerCircle=false");
 		assert.strictEqual(numbersInHours24.length, 24, "There are 24 numbers rendered in clock with showInnerCircle=true");
@@ -45,9 +45,9 @@ describe("Clock API", () => {
 		const hours12 = await browser.$("#myHours12");
 		const minutes = await browser.$("#myMinutes");
 		const minutes10 = await browser.$("#myMinutes10");
-		const numbersInHours12 = await hours12.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
-		const numbersInMinutes = await minutes.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
-		const numbersInMinutes10 = await minutes10.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
+		const numbersInHours12 = await hours12.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
+		const numbersInMinutes = await minutes.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
+		const numbersInMinutes10 = await minutes10.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
 
 		assert.strictEqual(numbersInHours12.length, 12, "There are 12 numbers rendered in clock with itemMax=12, displayStep=1 and valueStep=1");
 		assert.strictEqual(numbersInMinutes.length, 12, "There are 12 numbers rendered in clock with itemMax=60, displayStep=5 and valueStep=1");
@@ -57,8 +57,8 @@ describe("Clock API", () => {
 	it("'lastItemReplacement' and 'prependZero' properties", async () => {
 		const hours24 = await browser.$("#myHours24");
 		const minutes = await browser.$("#myMinutes");
-		const numbersInHours24 = await hours24.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
-		const numbersInMinutes = await minutes.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
+		const numbersInHours24 = await hours24.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
+		const numbersInMinutes = await minutes.shadow$$(".ui5-tp-clock-item:not(.ui5-tp-clock-item-with-marker) .ui5-tp-clock-number");
 
 		assert.strictEqual(await numbersInHours24[numbersInHours24.length-1].getText(), "00", "The last number element in clock with prependZero=false and no lastItemReplacement property set is '24'");
 		assert.strictEqual(await numbersInMinutes[numbersInMinutes.length-1].getText(), "0", "The last number element in clock with prependZero=false and lastItemReplacement=0 is '0'");

@@ -8,7 +8,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { locationOpen } from "@ui5/webcomponents-base/dist/Location.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import {
@@ -28,6 +28,7 @@ import {
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
+	FORM_SELECTABLE_AVALIABLE_VALUES,
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
@@ -38,10 +39,9 @@ import type { ListSelectionChangeEventDetail } from "./List.js";
 import ListItemStandard from "./ListItemStandard.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
-import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
+import BreadcrumbsTemplate from "./BreadcrumbsTemplate.js";
 
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
@@ -92,7 +92,7 @@ type FocusAdaptor = ITabbable & {
 @customElement({
 	tag: "ui5-breadcrumbs",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: BreadcrumbsTemplate,
 	styles: [breadcrumbsCss, breadcrumbsPopoverCss],
 	dependencies: [
@@ -259,6 +259,14 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		return items;
+	}
+
+	/**
+	 * Returns the translatable accessible name for the popover
+	 * @private
+	 */
+	get _accessibleNamePopover() {
+		return Breadcrumbs.i18nBundle.getText(FORM_SELECTABLE_AVALIABLE_VALUES);
 	}
 
 	_onfocusin(e: FocusEvent) {

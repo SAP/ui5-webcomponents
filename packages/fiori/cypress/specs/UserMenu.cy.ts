@@ -343,3 +343,60 @@ describe("Events", () => {
 		cy.get("@clicked").should("have.been.calledOnce");
 	});
 });
+
+describe("Responsiveness", () => {
+	it("test basic structure on phone", () => {
+		cy.ui5SimulateDevice("phone");
+		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
+							<ui5-user-menu id="userMenuShellBar" open opener="openUserMenuBtn">
+								<ui5-user-menu-account slot="accounts"
+													   title-text="Alain Chevalier 1">
+								</ui5-user-menu-account>
+								<ui5-user-menu-item text="Setting1" data-id="setting1"></ui5-user-menu-item>
+							</ui5-user-menu>`);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu").should("exist");
+		cy.get("@userMenu").shadow().find("[ui5-bar]").as("headerBar");
+		cy.get("@headerBar").should("have.class", "ui5-pm-phone-header");
+	});
+
+	it("tests scroll on phone", () => {
+		cy.ui5SimulateDevice("phone");
+		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
+							<ui5-user-menu id="userMenuShellBar" open opener="openUserMenuBtn"
+										   show-manage-account
+										   show-add-account>
+								<ui5-user-menu-account slot="accounts"
+													   title-text="Alain Chevalier 1">
+								</ui5-user-menu-account>
+								<ui5-user-menu-item text="Setting1" data-id="setting1"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting2" data-id="setting2"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting3" data-id="setting3"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting4" data-id="setting4"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting5" data-id="setting5"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting6" data-id="setting6"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting7" data-id="setting7"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting8" data-id="setting8"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting9" data-id="setting9"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting10" data-id="setting10"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting11" data-id="setting11"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting12" data-id="setting12"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting13" data-id="setting13"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting14" data-id="setting14"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting15" data-id="setting15"></ui5-user-menu-item>
+								<ui5-user-menu-item text="Setting16" data-id="setting16"></ui5-user-menu-item>
+							</ui5-user-menu>`);
+
+		cy.get("[ui5-user-menu]")
+			.shadow()
+			.find("[ui5-responsive-popover]")
+			.shadow()
+			.find("[ui5-dialog]")
+			.shadow()
+			.find(`div[part="content"]`)
+			.scrollTo("bottom");
+		cy.get("[ui5-user-menu]").shadow().find("[ui5-bar]").as("headerBar");
+		cy.get("@headerBar").find("[ui5-title]").contains("Alain Chevalier 1");
+		cy.get("@headerBar").find("[ui5-button]").should("have.length", 2);
+	});
+});

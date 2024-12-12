@@ -3,9 +3,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -18,7 +18,7 @@ import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonSelectionMode from "./types/SegmentedButtonSelectionMode.js";
 
 // Template
-import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
+import SegmentedButtonTemplate from "./SegmentedButtonTemplate.js";
 
 // Styles
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
@@ -57,7 +57,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
 @customElement({
 	tag: "ui5-segmented-button",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SegmentedButtonTemplate,
 	styles: SegmentedButtonCss,
 	dependencies: [SegmentedButtonItem],
