@@ -21,7 +21,7 @@ import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import { MESSAGE_STRIP_CLOSE_BUTTON, MESSAGE_STRIP_CLOSABLE, MESSAGE_STRIP_ERROR, MESSAGE_STRIP_WARNING, MESSAGE_STRIP_SUCCESS, MESSAGE_STRIP_INFORMATION, MESSAGE_STRIP_CUSTOM, } from "./generated/i18n/i18n-defaults.js";
+import { MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION, MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE, MESSAGE_STRIP_CLOSE_BUTTON_NEGATIVE, MESSAGE_STRIP_CLOSE_BUTTON_CRITICAL, MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM, MESSAGE_STRIP_CLOSABLE, MESSAGE_STRIP_ERROR, MESSAGE_STRIP_WARNING, MESSAGE_STRIP_SUCCESS, MESSAGE_STRIP_INFORMATION, MESSAGE_STRIP_CUSTOM, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
 var DesignClassesMapping;
@@ -131,8 +131,21 @@ let MessageStrip = MessageStrip_1 = class MessageStrip extends UI5Element {
         }
         return this.hideIcon;
     }
+    static closeButtonMappings() {
+        const getTranslation = (text) => {
+            return MessageStrip_1.i18nBundle.getText(text);
+        };
+        return {
+            Information: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION),
+            Positive: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE),
+            Negative: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_NEGATIVE),
+            Critical: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CRITICAL),
+            ColorSet1: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM),
+            ColorSet2: getTranslation(MESSAGE_STRIP_CLOSE_BUTTON_CUSTOM),
+        };
+    }
     get _closeButtonText() {
-        return MessageStrip_1.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
+        return MessageStrip_1.closeButtonMappings()[this.design];
     }
     get _closableText() {
         return MessageStrip_1.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE);

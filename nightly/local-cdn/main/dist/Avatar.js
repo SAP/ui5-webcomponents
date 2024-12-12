@@ -22,6 +22,7 @@ import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import AvatarCss from "./generated/themes/Avatar.css.js";
 import Icon from "./Icon.js";
+import AvatarSize from "./types/AvatarSize.js";
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
@@ -135,7 +136,7 @@ let Avatar = Avatar_1 = class Avatar extends UI5Element {
      */
     get effectiveSize() {
         // we read the attribute, because the "size" property will always have a default value
-        return this.getAttribute("size");
+        return this.getAttribute("size") || AvatarSize.S;
     }
     /**
      * Returns the effective background color.

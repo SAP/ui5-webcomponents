@@ -2,8 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import { type MoveEventDetail as ListMoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import type ListAccessibleRole from "./types/ListAccessibleRole.js";
@@ -25,16 +25,6 @@ type ListSelectionChangeEventDetail = {
 };
 type ListItemDeleteEventDetail = {
     item: ListItemBase;
-};
-type ListMoveEventDetail = {
-    originalEvent: Event;
-    source: {
-        element: HTMLElement;
-    };
-    destination: {
-        element: HTMLElement;
-        placement: `${MovePlacement}`;
-    };
 };
 type ListItemCloseEventDetail = {
     item: ListItemBase;

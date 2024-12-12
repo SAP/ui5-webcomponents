@@ -17,6 +17,7 @@ declare enum DesignClassesMapping {
     ColorSet2 = "ui5-message-strip-root--color-set-2"
 }
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
+type DesignCloseButtonTooltip = Record<MessageStripDesign, string>;
 /**
  * @class
  *
@@ -105,6 +106,7 @@ declare class MessageStrip extends UI5Element {
     static designAnnouncementMappings(): DesignTypeAnnouncemnt;
     get hiddenText(): string;
     get shouldHideIcon(): boolean;
+    static closeButtonMappings(): DesignCloseButtonTooltip;
     get _closeButtonText(): string;
     get _closableText(): string;
     get classes(): ClassMap;

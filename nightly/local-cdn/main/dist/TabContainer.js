@@ -27,6 +27,8 @@ import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js"
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE, TABCONTAINER_END_OVERFLOW, TABCONTAINER_POPOVER_CANCEL_BUTTON, TABCONTAINER_SUBTABS_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
@@ -283,32 +285,16 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         }
         else if (closestPosition) {
             const dropTarget = closestPosition.element.realTabReference;
-            let placements = closestPosition.placements;
             if (dropTarget === draggedElement) {
-                placements = placements.filter(placement => placement !== MovePlacement.On);
+                closestPosition.placements = closestPosition.placements.filter(placement => placement !== MovePlacement.On);
             }
-            const acceptedPlacement = placements.find(placement => {
-                const dragOverPrevented = !this.fireDecoratorEvent("move-over", {
-                    source: {
-                        element: draggedElement,
-                    },
-                    destination: {
-                        element: dropTarget,
-                        placement,
-                    },
-                });
-                if (dragOverPrevented) {
-                    e.preventDefault();
-                    this.dropIndicatorDOM.targetReference = closestPosition.element;
-                    this.dropIndicatorDOM.placement = placement;
-                    return true;
-                }
-                return false;
-            });
-            if (acceptedPlacement === MovePlacement.On && closestPosition.element.realTabReference.items.length) {
+            const { targetReference, placement } = handleDragOver(e, this, closestPosition, dropTarget);
+            this.dropIndicatorDOM.targetReference = targetReference;
+            this.dropIndicatorDOM.placement = placement;
+            if (placement === MovePlacement.On && closestPosition.element.realTabReference.items.length) {
                 popoverTarget = closestPosition.element;
             }
-            else if (!acceptedPlacement) {
+            else if (!placement) {
                 this.dropIndicatorDOM.targetReference = null;
             }
         }
@@ -323,19 +309,8 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         if (e.target === this._getStartOverflowBtnDOM() || e.target === this._getEndOverflowBtnDOM()) {
             return;
         }
-        e.preventDefault();
-        const draggedElement = DragRegistry.getDraggedElement();
-        this.fireDecoratorEvent("move", {
-            source: {
-                element: draggedElement,
-            },
-            destination: {
-                element: this.dropIndicatorDOM.targetReference.realTabReference,
-                placement: this.dropIndicatorDOM.placement,
-            },
-        });
+        handleDrop(e, this, this.dropIndicatorDOM.targetReference.realTabReference, this.dropIndicatorDOM.placement);
         this.dropIndicatorDOM.targetReference = null;
-        draggedElement.focus();
     }
     _moveHeaderItem(tab, e) {
         if (!tab.movable) {

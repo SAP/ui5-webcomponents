@@ -16,7 +16,10 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, isEnd, isHome, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DragRegistry, {} from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getAllAccessibleDescriptionRefTexts, getEffectiveAriaDescriptionText, getEffectiveAriaLabelText, registerUI5Element, deregisterUI5Element, getAllAccessibleNameRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -24,8 +27,6 @@ import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalized
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
-import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import DropIndicator from "./DropIndicator.js";
@@ -668,8 +669,7 @@ let List = List_1 = class List extends UI5Element {
         this.dropIndicatorDOM.targetReference = null;
     }
     _ondragover(e) {
-        const draggedElement = DragRegistry.getDraggedElement();
-        if (!(e.target instanceof HTMLElement) || !draggedElement) {
+        if (!(e.target instanceof HTMLElement)) {
             return;
         }
         const closestPosition = findClosestPosition(this.items, e.clientY, Orientation.Vertical);
@@ -677,48 +677,17 @@ let List = List_1 = class List extends UI5Element {
             this.dropIndicatorDOM.targetReference = null;
             return;
         }
-        let placements = closestPosition.placements;
-        if (closestPosition.element === draggedElement) {
-            placements = placements.filter(placement => placement !== MovePlacement.On);
-        }
-        const placementAccepted = placements.some(placement => {
-            const beforeItemMovePrevented = !this.fireDecoratorEvent("move-over", {
-                originalEvent: e,
-                source: {
-                    element: draggedElement,
-                },
-                destination: {
-                    element: closestPosition.element,
-                    placement,
-                },
-            });
-            if (beforeItemMovePrevented) {
-                e.preventDefault();
-                this.dropIndicatorDOM.targetReference = closestPosition.element;
-                this.dropIndicatorDOM.placement = placement;
-                return true;
-            }
-            return false;
-        });
-        if (!placementAccepted) {
-            this.dropIndicatorDOM.targetReference = null;
-        }
+        const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
+        this.dropIndicatorDOM.targetReference = targetReference;
+        this.dropIndicatorDOM.placement = placement;
     }
     _ondrop(e) {
-        e.preventDefault();
-        const draggedElement = DragRegistry.getDraggedElement();
-        this.fireDecoratorEvent("move", {
-            originalEvent: e,
-            source: {
-                element: draggedElement,
-            },
-            destination: {
-                element: this.dropIndicatorDOM.targetReference,
-                placement: this.dropIndicatorDOM.placement,
-            },
-        });
+        if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
+            e.preventDefault();
+            return;
+        }
+        handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
         this.dropIndicatorDOM.targetReference = null;
-        draggedElement.focus();
     }
     isForwardElement(element) {
         const elementId = element.id;

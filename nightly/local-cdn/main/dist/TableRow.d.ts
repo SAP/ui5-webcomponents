@@ -54,6 +54,13 @@ declare class TableRow extends TableRowBase {
      * @public
      */
     navigated: boolean;
+    /**
+     * Defines whether the row is movable.
+     *
+     * @default false
+     * @public
+     */
+    movable: boolean;
     _renderNavigated: boolean;
     onBeforeRendering(): void;
     focus(focusOptions?: FocusOptions | undefined): Promise<void>;

@@ -1,5 +1,5 @@
 const isInstanceOfTable = (obj) => {
-    return "isTable" in obj && !!obj.isTable;
+    return !!obj && "isTable" in obj && !!obj.isTable;
 };
 const isSelectionCheckbox = (e) => {
     return e.composedPath().some((el) => el.hasAttribute?.("ui5-table-selection-component"));

@@ -22,10 +22,12 @@ import TableHeaderRow from "./TableHeaderRow.js";
 import TableExtension from "./TableExtension.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
+import DropIndicator from "./DropIndicator.js";
 import { TABLE_NO_DATA, } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import TableDragAndDrop from "./TableDragAndDrop.js";
 /**
  * @class
  *
@@ -143,7 +145,7 @@ let Table = Table_1 = class Table extends UI5Element {
         this.stickyTop = "0";
         this._invalidate = 0;
         this._renderNavigated = false;
-        this._events = ["keydown", "keyup", "click", "focusin", "focusout"];
+        this._events = ["keydown", "keyup", "click", "focusin", "focusout", "dragenter", "dragleave", "dragover", "drop"];
         this._poppedIn = [];
         this._containerWidth = 0;
         this._onResizeBound = this._onResize.bind(this);
@@ -156,10 +158,12 @@ let Table = Table_1 = class Table extends UI5Element {
         this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
         this.features.forEach(feature => feature.onTableActivate(this));
         this._tableNavigation = new TableNavigation(this);
+        this._tableDragAndDrop = new TableDragAndDrop(this);
     }
     onExitDOM() {
         this._tableNavigation = undefined;
-        this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
+        this._tableDragAndDrop = undefined;
+        this._events.forEach(eventType => this.removeEventListener(eventType, this._onEventBound));
         if (this.overflowMode === TableOverflowMode.Popin) {
             ResizeHandler.deregister(this, this._onResizeBound);
         }
@@ -187,7 +191,7 @@ let Table = Table_1 = class Table extends UI5Element {
     _onEvent(e) {
         const composedPath = e.composedPath();
         const eventOrigin = composedPath[0];
-        const elements = [this._tableNavigation, ...composedPath, ...this.features];
+        const elements = [this._tableNavigation, this._tableDragAndDrop, ...composedPath, ...this.features];
         elements.forEach(element => {
             if (element instanceof TableExtension || (element instanceof HTMLElement && element.localName.includes("ui5-table"))) {
                 const eventHandlerName = `_on${e.type}`;
@@ -375,6 +379,9 @@ let Table = Table_1 = class Table extends UI5Element {
     get isTable() {
         return true;
     }
+    get dropIndicatorDOM() {
+        return this.shadowRoot.querySelector("[ui5-drop-indicator]");
+    }
 };
 __decorate([
     slot({
@@ -437,6 +444,7 @@ Table = Table_1 = __decorate([
             TableHeaderRow,
             TableCell,
             TableRow,
+            DropIndicator,
         ],
     })
     /**
@@ -447,6 +455,43 @@ Table = Table_1 = __decorate([
      */
     ,
     event("row-click", {
+        bubbles: true,
+    })
+    /**
+     * Fired when a movable item is moved over a potential drop target during a dragging operation.
+     *
+     * If the new position is valid, prevent the default action of the event using `preventDefault()`.
+     *
+     * **Note:** If the dragging operation is a cross-browser operation or files are moved to a potential drop target,
+     * the `source` parameter will be `null`.
+     *
+     * @param {Event} originalEvent The original `dragover` event
+     * @param {object} source The source object
+     * @param {object} destination The destination object
+     * @public
+     */
+    ,
+    event("move-over", {
+        cancelable: true,
+        bubbles: true,
+    })
+    /**
+     * Fired when a movable list item is dropped onto a drop target.
+     *
+     * **Notes:**
+     *
+     * The `move` event is fired only if there was a preceding `move-over` with prevented default action.
+     *
+     * If the dragging operation is a cross-browser operation or files are moved to a potential drop target,
+     * the `source` parameter will be `null`.
+     *
+     * @param {Event} originalEvent The original `drop` event
+     * @param {object} source The source object
+     * @param {object} destination The destination object
+     * @public
+     */
+    ,
+    event("move", {
         bubbles: true,
     })
 ], Table);

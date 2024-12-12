@@ -62,6 +62,13 @@ let TableRow = class TableRow extends TableRowBase {
          * @public
          */
         this.navigated = false;
+        /**
+         * Defines whether the row is movable.
+         *
+         * @default false
+         * @public
+         */
+        this.movable = false;
         this._renderNavigated = false;
     }
     onBeforeRendering() {
@@ -75,6 +82,12 @@ let TableRow = class TableRow extends TableRowBase {
         }
         else {
             this.removeAttribute("aria-current");
+        }
+        if (this.movable) {
+            this.setAttribute("draggable", "true");
+        }
+        else {
+            this.removeAttribute("draggable");
         }
     }
     async focus(focusOptions) {
@@ -130,6 +143,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], TableRow.prototype, "navigated", void 0);
+__decorate([
+    property({ type: Boolean })
+], TableRow.prototype, "movable", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], TableRow.prototype, "_renderNavigated", void 0);
