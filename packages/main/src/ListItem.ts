@@ -383,11 +383,14 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	fireItemPress(e: Event) {
+		const activeElement = getActiveElement();
 		if (this.isInactive) {
 			return;
 		}
 		super.fireItemPress(e);
-		this.focus();
+		if (activeElement !== this) {
+			this.focus();
+		}
 	}
 
 	get isInactive() {
