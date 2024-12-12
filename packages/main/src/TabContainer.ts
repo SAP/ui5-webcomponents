@@ -4,7 +4,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
@@ -63,7 +63,7 @@ import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
 
 // Templates
-import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
+import TabContainerTemplate from "./TabContainerTemplate.js";
 
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
@@ -167,7 +167,7 @@ interface ITab extends UI5Element {
 		tabContainerCss,
 		ResponsivePopoverCommonCss,
 	],
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TabContainerTemplate,
 	dependencies: [
 		Button,
@@ -507,7 +507,7 @@ class TabContainer extends UI5Element {
 	}
 
 	@longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
-	_onHeaderDragOver(e: DragEvent, isLongDragOver: boolean) {
+	_onHeaderDragOver(e: DragEvent, isLongDragOver?: boolean) {
 		if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
 			this.dropIndicatorDOM!.targetReference = null;
 			return;

@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
@@ -21,7 +21,7 @@ import type WrappingType from "./types/WrappingType.js";
 import TagDesign from "./types/TagDesign.js";
 import type TagSize from "./types/TagSize.js";
 // Template
-import TagTemplate from "./generated/templates/TagTemplate.lit.js";
+import TagTemplate from "./TagTemplate.js";
 
 import {
 	TAG_DESCRIPTION_TAG,
@@ -60,7 +60,7 @@ import tagCss from "./generated/themes/Tag.css.js";
 @customElement({
 	tag: "ui5-tag",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TagTemplate,
 	styles: tagCss,
 	dependencies: [

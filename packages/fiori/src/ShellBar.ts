@@ -7,8 +7,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -26,7 +24,12 @@ import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import type { Timeout, ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type {
+	Timeout,
+	ClassMap,
+	AccessibilityAttributes,
+	AriaRole,
+} from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
@@ -49,9 +52,8 @@ import {
 	SHELLBAR_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
-type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 type ShellBarLogoAccessibilityAttributes = {
-	role?: Extract<LowercaseString<AriaRole>, "button" | "link">,
+	role?: Extract<AriaRole, "button" | "link">,
 	name?: string,
 }
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
@@ -1175,7 +1177,7 @@ class ShellBar extends UI5Element {
 			overflow: {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || AriaHasPopup.Menu.toLowerCase(),
+					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || "menu" as const,
 					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
 				},
 			},

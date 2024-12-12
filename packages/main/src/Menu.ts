@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { type UI5CustomEvent } from "@ui5/webcomponents-base";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -15,12 +16,11 @@ import {
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
@@ -29,7 +29,7 @@ import MenuSeparator from "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
-import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import menuTemplate from "./MenuTemplate.js";
 import {
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
 	MENU_POPOVER_ACCESSIBLE_NAME,
@@ -96,7 +96,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  */
 @customElement({
 	tag: "ui5-menu",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: menuCss,
 	template: menuTemplate,
 	dependencies: [
@@ -376,7 +376,7 @@ class Menu extends UI5Element {
 		this.fireEvent("open", {}, false, true);
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+	_beforePopoverClose(e: UI5CustomEvent<ResponsivePopover, "before-close">) {
 		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, true);
 
 		if (prevented) {
