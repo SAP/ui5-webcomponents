@@ -1,0 +1,99 @@
+.ui5-sd-dialog {
+	max-width: 100%;
+	max-height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.ui5-sd-dialog::part(content) {
+	padding: 0;
+}
+
+.ui5-sd-root {
+	display: flex;
+	height: 100%;
+}
+
+.ui5-sd-side {
+	flex: 1;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	max-width: 100%;
+}
+
+.ui5-sd-side-header {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1rem;
+}
+
+.ui5-sd-side-search {
+	width: 100%;
+}
+
+.ui5-sd-side-items,
+.ui5-sd-side-fixedItems {
+	border-top: 0.0625rem solid var(--sapList_BorderColor);
+}
+
+.ui5-sd-side-items {
+	flex: 1;
+	min-height: 0;
+}
+
+.ui5-sd-side-fixedItems :last-child {
+	border-bottom: none;
+}
+
+.ui5-sd-content {
+	display: none;
+	flex: 1;
+	background-color: var(--sapGroup_ContentBackground);
+	height: 100%;
+	overflow: hidden;
+}
+
+.ui5-sd-dialog[on-phone] {
+	border-radius: 0;
+}
+
+@media screen and (width < 37.5rem) {
+	.ui5-sd-dialog {
+		border-radius: 0;
+	}
+}
+
+@media screen and (width >= 37.5rem) and (width < 64rem) {
+	.ui5-sd-dialog:not([on-phone]) {
+		max-width: min(40rem, 80%);
+		max-height: min(42.5rem, 88%);
+	}
+}
+
+@media screen and (width < 64rem) {
+	:host([_collapsed]) .ui5-sd-content {
+		display: block;
+	}
+
+	:host([_collapsed]) .ui5-sd-side {
+		display: none;
+	}
+}
+
+@media screen and (width >= 64rem) {
+	.ui5-sd-dialog {
+		width: 60rem;
+		max-height: min(42.5rem, 88%);
+	}
+
+	.ui5-sd-side {
+		max-width: 20rem;
+		border-right: 0.0625rem solid var(--sapList_BorderColor);
+	}
+
+	.ui5-sd-content {
+		display: block;
+	}
+}

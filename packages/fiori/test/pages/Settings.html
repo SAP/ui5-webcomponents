@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Settings</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script data-ui5-config type="application/json">
+		{
+			"rtl": false
+		}
+
+	</script>
+
+	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
+</head>
+
+<body>
+<ui5-button id="btnOpenSettings">User settings</ui5-button>
+<ui5-settings id="setting" header-title="Settings" show-search-field>
+	<!-- Item -->
+	<ui5-setting-item text="Setting 1" tooltip="tooltip" icon="settings" header-title="Header title | Setting 1">
+		<ui5-setting-view text="Setting 1 Tab 1">
+			<ui5-button>Setting 1 Content 1</ui5-button>
+		</ui5-setting-view>
+		<ui5-setting-view text="Setting 1 Tab 2">
+			<ui5-button>Setting 1 Content 2</ui5-button>
+		</ui5-setting-view>
+	</ui5-setting-item>
+
+	<!-- Item -->
+	<ui5-setting-item fixed-item text="Setting 2" header-title="Header title | Setting 2">
+		<ui5-setting-view text="Setting 2 Tab 1">
+			<ui5-button>Setting 2 Content 1</ui5-button>
+		</ui5-setting-view>
+		<ui5-setting-view text="Setting 2 Tab 2">
+			<ui5-button>Setting 2 Content 2</ui5-button>
+		</ui5-setting-view>
+		<ui5-setting-view  text="Setting 2 Tab 3">
+			<ui5-button>Setting 2 Content 3</ui5-button>
+		</ui5-setting-view>
+	</ui5-setting-item>
+
+	<!-- Item -->
+	<ui5-setting-item show-back-navigation text="Setting 3" tooltip="tooltip" icon="accessibility" header-title="Header title | Setting 3">
+		<ui5-setting-view text="Setting 3 Tab 1">
+			<ui5-button>Setting 3 Content 1</ui5-button>
+		</ui5-setting-view>
+	</ui5-setting-item>
+</ui5-settings>
+<script>
+	const settingsDialog = document.getElementById("setting");
+	document.getElementById("btnOpenSettings").addEventListener("click", function () {
+		settingsDialog.open = true;
+	});
+
+	settingsDialog.addEventListener("item-select", function (event) {
+		console.log("Item selected: ", event.detail);
+	});
+
+</script>
+</body>
+</html>
