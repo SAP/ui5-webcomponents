@@ -5,7 +5,7 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import TableSelectionMode from "./types/TableSelectionMode.js";
 import type Table from "./Table.js";
 import type { ITableFeature } from "./Table.js";
@@ -61,6 +61,9 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
 })
 
 class TableSelection extends UI5Element implements ITableFeature {
+	eventDetails!: {
+		change: void,
+	}
 	/**
 	 * Defines the selection mode.
 	 *

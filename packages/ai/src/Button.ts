@@ -2,15 +2,15 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import MainButton from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import ButtonState from "./ButtonState.js";
 
-import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
+import ButtonTemplate from "./ButtonTemplate.js";
 
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
@@ -47,7 +47,7 @@ import ButtonCss from "./generated/themes/Button.css.js";
 @customElement({
 	tag: "ui5-ai-button",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: ButtonTemplate,
 	styles: ButtonCss,
 	dependencies: [MainButton, Icon, ButtonState],
@@ -63,6 +63,9 @@ import ButtonCss from "./generated/themes/Button.css.js";
 	bubbles: true,
 })
 class Button extends UI5Element {
+	eventDetails!: {
+		click: void,
+	}
 	/**
 	 * Defines the component design.
 	 * @default "Default"

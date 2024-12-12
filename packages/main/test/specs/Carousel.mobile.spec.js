@@ -17,7 +17,7 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons (navigation arrows) are rendered in the navigation without hovering (arrows-placement)", async () => {
 		const carousel = await browser.$("#carousel3");
-		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
 
 		await carousel.scrollIntoView();
@@ -28,7 +28,7 @@ describe("Carousel general interaction", () => {
 
 	it("Buttons (navigation arrows) are rendered in the navigation EVEN if the page indicator and the arrows are hidden", async () => {
 		const carousel = await browser.$("#carouselHiddenPageIndicatorHiddenArrows");
-		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[arrow-forward]");
+		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
 
 		await carousel.scrollIntoView();
