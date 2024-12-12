@@ -21,7 +21,7 @@
 }
 
 .ui5-tp-clock-dial::before {
-	content: attr(data-ui5-label);
+	content: attr(data-label);
 	display: flex;
 	align-items: center;
 	justify-content: center;
