@@ -8,6 +8,8 @@ export type PromiseResolve = (value: void | PromiseLike<void>) => void;
 export type Timeout = ReturnType<typeof setTimeout>;
 export type Interval = ReturnType<typeof setInterval>;
 
+export type StyleData = string;
+
 export type ComponentStylesData = Array<ComponentStylesData> | string;
 export type ClassMapValue = Record<string, boolean>
 
