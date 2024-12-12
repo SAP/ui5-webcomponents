@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -71,7 +71,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | TabInStrip;
 
-const tabStyles: Array<StyleData> = [];
+const tabStyles: Array<string> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 type TabContainerStripInfo = {
@@ -354,7 +354,7 @@ class TabContainer extends UI5Element {
 	_handleResizeBound: () => void;
 	_setDraggedElement?: SetDraggedElementFunction;
 
-	static registerTabStyles(styles: StyleData) {
+	static registerTabStyles(styles: string) {
 		tabStyles.push(styles);
 	}
 
