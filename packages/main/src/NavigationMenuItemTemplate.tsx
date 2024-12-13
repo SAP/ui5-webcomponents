@@ -15,22 +15,24 @@ const predefinedHooks: Partial<MenuItemHooks> = {
 	listItemContent,
 	iconBegin,
 	iconEnd,
-	listItemPostContent: () => {},
+	listItemPostContent: () => { },
 };
 
 export default function NavigationMenuItemTemplate(this: NavigationMenuItem, hooks?: Partial<MenuItemHooks>) {
 	const currentHooks = { ...predefinedHooks, ...hooks, };
 
 	return <>
-		this._href ? (
-		<a role="treeitem"
-			class="ui5-navmenu-item-link"
-			href={this.href}
-			target={this.target}
-		>
-			{MenuItemTemplate.call(this, currentHooks)}
-		</a>
-		) : MenuItemTemplate.call(this, currentHooks);
+		{
+			this._href ? (
+				<a role="treeitem"
+					class="ui5-navmenu-item-link"
+					href={this.href}
+					target={this.target}
+				>
+					{MenuItemTemplate.call(this, currentHooks)}
+				</a>
+			) : MenuItemTemplate.call(this, currentHooks)
+		}
 
 		{listItemPostContent.call(this)}
 	</>;

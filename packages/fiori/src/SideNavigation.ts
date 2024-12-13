@@ -4,6 +4,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -119,6 +120,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 		SideNavigationItem,
 		SideNavigationSubItem,
 		NavigationMenu,
+		NavigationMenuItem,
 	],
 })
 /**
@@ -580,7 +582,7 @@ class SideNavigation extends UI5Element {
 		const result: Array<SideNavigationItem> = [];
 
 		this.overflowItems.forEach(item => {
-			if (item.classList.contains(overflowClass)) {
+			if (item.hasAttribute("ui5-side-navigation-item") && item.classList.contains(overflowClass)) {
 				 result.push(item);
 			}
 		});
