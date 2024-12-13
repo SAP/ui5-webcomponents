@@ -1,8 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -56,7 +57,7 @@ import ListSeparator from "./types/ListSeparator.js";
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template
-import ListTemplate from "./generated/templates/ListTemplate.lit.js";
+import ListTemplate from "./ListTemplate.js";
 
 // Styles
 import listCss from "./generated/themes/List.css.js";
@@ -165,7 +166,7 @@ type ListItemClickEventDetail = {
 @customElement({
 	tag: "ui5-list",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: ListTemplate,
 	styles: [
 		listCss,
@@ -584,9 +585,8 @@ class List extends UI5Element {
 		this.getItems().forEach(item => {
 			if (item.hasAttribute("ui5-li-group-header")) {
 				item.addEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
-				item.addEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
-				item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
-				item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+				item.addEventListener("ui5-forward-after", this.onForwardAfterBound as EventListener);
+				item.addEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
 	}
@@ -595,9 +595,8 @@ class List extends UI5Element {
 		this.getItems().forEach(item => {
 			if (item.hasAttribute("ui5-li-group-header")) {
 				item.removeEventListener("ui5-_focused", this.onItemFocusedBound as EventListener);
-				item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound as EventListener);
-				item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound as EventListener);
-				item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound as EventListener);
+				item.removeEventListener("ui5-forward-after", this.onForwardAfterBound as EventListener);
+				item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound as EventListener);
 			}
 		});
 	}
@@ -716,7 +715,7 @@ class List extends UI5Element {
 	}
 
 	get listAccessibleRole() {
-		return this.accessibleRole.toLowerCase();
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get classes(): ClassMap {
@@ -1167,6 +1166,7 @@ class List extends UI5Element {
 	}
 
 	onItemTabIndexChange(e: CustomEvent) {
+		e.stopPropagation();
 		const target = e.target as ListItemBase;
 		this._itemNavigation.setCurrentItem(target);
 	}

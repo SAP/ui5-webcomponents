@@ -2,14 +2,14 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 // Template
-import TextTemplate from "./generated/templates/TextTemplate.lit.js";
+import TextTemplate2 from "./TextTemplate.js";
 
 import {
 	EMPTY_INDICATOR_SYMBOL,
@@ -49,8 +49,8 @@ import styles from "./generated/themes/Text.css.js";
  */
 @customElement({
 	tag: "ui5-text",
-	renderer: litRender,
-	template: TextTemplate,
+	renderer: jsxRenderer,
+	template: TextTemplate2,
 	styles,
 })
 class Text extends UI5Element {
