@@ -22,7 +22,7 @@ export default function IllustratedMessageTemplate(this: IllustratedMessage) {
 							{this.hasFormattedSubtitle ?
 								<slot name="subtitle"></slot>
 								:
-								<>{this.effectiveSubitleText}</>
+								this.effectiveSubitleText
 							}
 						</div>
 					}

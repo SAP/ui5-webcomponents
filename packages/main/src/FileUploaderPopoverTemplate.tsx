@@ -40,12 +40,7 @@ function valueStateMessage(this: FileUploader) {
 	return (
 		<>
 			{
-				this.shouldDisplayDefaultValueStateMessage ?
-					<>
-						{this.valueStateText}
-					</>
-					:
-					<slot name="valueStateMessage"></slot>
+				this.shouldDisplayDefaultValueStateMessage ? this.valueStateText : <slot name="valueStateMessage"></slot>
 			}
 		</>
 	);

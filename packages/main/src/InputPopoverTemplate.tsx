@@ -126,7 +126,7 @@ function valueStateMessage(this: Input) {
 	return (
 		<>
 			{
-				this.shouldDisplayDefaultValueStateMessage ? <>{this.valueStateText}</> : <slot name="valueStateMessage"></slot>
+				this.shouldDisplayDefaultValueStateMessage ? this.valueStateText : <slot name="valueStateMessage"></slot>
 			}
 		</>
 	);

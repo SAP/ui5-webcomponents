@@ -15,7 +15,8 @@ export default function ProductSwitchItemTemplate(this: ProductSwitchItem) {
 					onKeyUp={this._onkeyup}
 					tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
 					href={this.targetSrc}
-					target={this._effectiveTarget}>
+					target={this._effectiveTarget}
+				>
 					{ item.call(this) }
 				</a>
 				:

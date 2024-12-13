@@ -36,17 +36,15 @@ function beforeContent(this: Dialog) {
 						<Title level="H1" id="ui5-popup-header-text" class="ui5-popup-header-text">{this.headerText}</Title>
 					}
 
-					{this.resizable ? <>
-						{this.draggable ?
+					{this.resizable ?
+						this.draggable ?
 							<span id={`${this._id}-descr`} aria-hidden="true" class="ui5-hidden-text">{this.ariaDescribedByHeaderTextDraggableAndResizable}</span>
 							:
 							<span id={`${this._id}-descr`} aria-hidden="true" class="ui5-hidden-text">{this.ariaDescribedByHeaderTextResizable}</span>
-						}
-					</> : <>
-						{this.draggable &&
+						:
+						this.draggable &&
 							<span id={`${this._id}-descr`} aria-hidden="true" class="ui5-hidden-text">{this.ariaDescribedByHeaderTextDraggable}</span>
-						}
-					</>}
+					}
 				</div>
 			</header>
 		}
