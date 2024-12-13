@@ -66,7 +66,7 @@ export default function FormTemplate(this: Form) {
 										</div>
 									);
 								}
-								)}
+							)}
 						</>
 				}
 			</div>
