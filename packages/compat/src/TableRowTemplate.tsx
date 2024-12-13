@@ -38,17 +38,9 @@ export default function TableRowTemplate(this: TableRow) {
 				}
 
 				{this.shouldPopin ?
-					<>
-						{this.visibleCells.map(cell =>
-							<slot name={cell._individualSlot}></slot>
-						)}
-					</>
+					this.visibleCells.map(cell => <slot name={cell._individualSlot}></slot>)
 					:
-					<>
-						{this.cells.map(cell =>
-							<slot name={cell._individualSlot}></slot>
-						)}
-					</>
+					this.cells.map(cell => <slot name={cell._individualSlot}></slot>)
 				}
 
 				<td class="ui5-table-row-navigated" aria-hidden="true">
@@ -79,7 +71,7 @@ export default function TableRowTemplate(this: TableRow) {
 								:
 								<>
 									{cellData.popinText &&
-								<span class="ui5-table-row-popin-title">{cellData.popinText}:</span>
+										<span class="ui5-table-row-popin-title">{cellData.popinText}:</span>
 									}
 									<div>
 										<slot name={cellData.cell?._individualSlot}></slot>
