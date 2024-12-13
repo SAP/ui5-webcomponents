@@ -40,7 +40,7 @@ export default function TableRowTemplate(this: TableRow) {
 				{this.shouldPopin ?
 					this.visibleCells.map(cell => <slot name={cell._individualSlot}></slot>)
 					:
-					this.cells.map(cell =><slot name={cell._individualSlot}></slot>)
+					this.cells.map(cell => <slot name={cell._individualSlot}></slot>)
 				}
 
 				<td class="ui5-table-row-navigated" aria-hidden="true">
