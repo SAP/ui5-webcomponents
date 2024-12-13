@@ -9,17 +9,7 @@ const generate = async () => {
 	const filesPromises = files.map(async file => {
 		let content = await fs.readFile(path.join("src/css/", file));
 		const res = new CleanCSS().minify(`${content}`);
-		content = `import type { StyleData } from "../../types.js";
-
-const styleData: StyleData = {
-	packageName: "@ui5/webcomponents-base",
-	fileName: "${file}",
-	content: \`${res.styles}\`,
-};
-
-export default styleData;
-`;
-
+		content = `export default \`${res.styles}\`;`;
 		return fs.writeFile(path.join("src/generated/css/", `${file}.ts`), content);
 	});
 

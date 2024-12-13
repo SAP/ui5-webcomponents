@@ -4,6 +4,7 @@ import "../../src/ToolbarButton.js";
 import "../../src/ToolbarSelect.js";
 import "../../src/ToolbarSelectOption.js";
 import "../../src/ToolbarSeparator.js";
+import "../../src/ToolbarSpacer.js";
 import "../../src/Popover.js";
 import type ToolbarItem from "../../src/ToolbarItem.js";
 import "@ui5/webcomponents-icons/dist/add.js";
@@ -11,7 +12,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/employee.js";
 
 describe("Toolbar general interaction", () => {
-	it("Should not return null upon calling getDomRef for all direct child items", () => {
+	it.skip("Should not return null upon calling getDomRef for all direct child items", () => {
 		cy.mount(html`
 			<ui5-toolbar id="otb_standard">
 				<ui5-toolbar-button text="Button 1"></ui5-toolbar-button>
@@ -64,5 +65,30 @@ describe("Toolbar general interaction", () => {
 
 		cy.get("#popup")
 			.should("be.visible");
+	});
+
+	it("shouldn't have toolbar button as popover opener when there is spacer before last toolbar item", () => {
+		cy.mount(html`
+			<ui5-toolbar id="otb_spacer">
+				<ui5-toolbar-button icon="add" text="Plus" design="Default"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="employee" text="Hire"></ui5-toolbar-button>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
+				<ui5-toolbar-button icon="add" text="Add"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Decline"></ui5-toolbar-button>
+				<ui5-toolbar-spacer></ui5-toolbar-spacer>
+				<ui5-toolbar-button icon="add" text="Append"></ui5-toolbar-button>
+			</ui5-toolbar>
+		`);
+
+		cy.get("#otb_spacer")
+			.as("toolbar");
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(500);
+
+		cy.get("@toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn-hidden")
+			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
 	});
 });

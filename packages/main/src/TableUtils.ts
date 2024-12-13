@@ -2,7 +2,7 @@ import type Table from "./Table.js";
 import type TableRow from "./TableRow.js";
 
 const isInstanceOfTable = (obj: any): obj is Table => {
-	return "isTable" in obj && !!obj.isTable;
+	return !!obj && "isTable" in obj && !!obj.isTable;
 };
 
 const isSelectionCheckbox = (e: Event) => {
@@ -77,6 +77,16 @@ const isFeature = <T>(element: any, identifier: string): element is T => {
 	return element.identifier === identifier;
 };
 
+const throttle = (callback: () => void) => {
+	let timer: number;
+	return () => {
+		cancelAnimationFrame(timer);
+		timer = requestAnimationFrame(() => {
+			callback();
+		});
+	};
+};
+
 export {
 	isInstanceOfTable,
 	isSelectionCheckbox,
@@ -85,4 +95,5 @@ export {
 	findVerticalScrollContainer,
 	scrollElementIntoView,
 	isFeature,
+	throttle,
 };

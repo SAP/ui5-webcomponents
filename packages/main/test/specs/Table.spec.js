@@ -54,11 +54,11 @@ describe("Table - Popin Mode", async () => {
 		const headerCells = await headerRow.$$("ui5-table-header-cell");
 
 		const testWidths = [
-			{width: 850, poppedIn: []},
-			{width: 700, poppedIn: ["colD"]},
-			{width: 500, poppedIn: ["colD", "colC"]},
-			{width: 300, poppedIn: ["colD", "colC", "colB"]},
-			{width: 150, poppedIn: ["colD", "colC", "colB"]}
+			{width: 1000, poppedIn: []},
+			{width: 849, poppedIn: ["colD"]},
+			{width: 699, poppedIn: ["colD", "colC"]},
+			{width: 499, poppedIn: ["colD", "colC", "colB"]},
+			{width: 299, poppedIn: ["colD", "colC", "colB"]}
 		];
 
 		for (const testWidth of testWidths) {
@@ -87,13 +87,14 @@ describe("Table - Popin Mode", async () => {
 
 		const headerRow = await table.$("ui5-table-header-row");
 		const headerCells = await headerRow.$$("ui5-table-header-cell");
+		const borderWidth = 1;
 
 		const testWidths = [
 			{width: 150, poppedIn: ["colD", "colC", "colB"]},
-			{width: 300, poppedIn: ["colD", "colC", "colB"]},
-			{width: 500, poppedIn: ["colD", "colC"]},
-			{width: 700, poppedIn: ["colD"]},
-			{width: 850, poppedIn: []},
+			{width: 300 + borderWidth, poppedIn: ["colD", "colC", "colB"]},
+			{width: 500 + borderWidth, poppedIn: ["colD", "colC"]},
+			{width: 700 + borderWidth, poppedIn: ["colD"]},
+			{width: 850 + borderWidth, poppedIn: []},
 		];
 
 		for (const testWidth of testWidths) {
@@ -406,10 +407,10 @@ describe("Table - Horizontal alignment of cells", async () => {
 
 		const testWidths = [
 			{width: 1120, poppedIn: []},
-			{width: 900, poppedIn: ["priceCol"]},
-			{width: 800, poppedIn: ["priceCol", "weightCol"]},
-			{width: 500, poppedIn: ["priceCol", "weightCol", "dimensionsCol"]},
-			{width: 300, poppedIn: ["priceCol", "weightCol", "dimensionsCol", "supplierCol"]}
+			{width: 1119, poppedIn: ["priceCol"]},
+			{width: 899, poppedIn: ["priceCol", "weightCol"]},
+			{width: 799, poppedIn: ["priceCol", "weightCol", "dimensionsCol"]},
+			{width: 499, poppedIn: ["priceCol", "weightCol", "dimensionsCol", "supplierCol"]}
 		];
 
 		for (const testWidth of testWidths) {
@@ -440,7 +441,7 @@ describe("Table - Horizontal alignment of cells", async () => {
 					for (const row of tableRows) {
 						const rowCells = await row.$$("ui5-table-cell");
 						const justifyContent = await rowCells[index].getCSSProperty("justify-content");
-			
+
 						assert.equal(justifyContent.value, "normal", "justify-content correctly set.");
 					}
 				}
@@ -563,11 +564,11 @@ describe("Table - Horizontal Scrolling", async () => {
 			return {
 				fixedX: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
 				leftOffset: table.shadowRoot.querySelector("#table")?.scrollLeft || 0
-			}; 
+			};
 		});
 
 		assert.equal(leftOffset, 0, "Table is not scrolled horizontally");
-		assert.equal(fixedX, 0, "Selection column is fixed to the left");
+		assert.equal(fixedX, 1, "Selection column is fixed to the left");
 
 		await lastColumn.scrollIntoView();
 
@@ -576,8 +577,8 @@ describe("Table - Horizontal Scrolling", async () => {
 			const row = document.getElementById("firstRow");
 			return {
 				fixedX2: row.shadowRoot.querySelector("#selection-cell").getBoundingClientRect().x,
-				leftOffset2: table.scrollLeft || 0
-			}; 
+				leftOffset2: table._tableElement.scrollLeft || 0
+			};
 		});
 
 		assert.ok(leftOffset2 > 0, "Table is scrolled horizontally");

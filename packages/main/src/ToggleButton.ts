@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
-import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
+import ToggleButtonTemplate from "./ToggleButtonTemplate.js";
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
