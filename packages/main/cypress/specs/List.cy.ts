@@ -57,10 +57,7 @@ describe("List Tests", () => {
 			.should("be.focused");
 
 		// Press arrow down once to move focus to the growing button
-		cy.get("@list")
-			.find("ui5-li")
-			.last()
-			.realPress("ArrowDown");
+		cy.realPress("ArrowDown");
 
 		// Verify the growing button is focused
 		cy.get("@list")
@@ -69,10 +66,7 @@ describe("List Tests", () => {
 			.should("be.focused");
 
 		// Arrow up once to move focus back to the last item
-		cy.get("@list")
-			.shadow()
-			.find("[id$='growing-btn']")
-			.realPress("ArrowUp");
+		cy.realPress("ArrowUp");
 
 		// Verify the last item is focused
 		cy.get("@list")
@@ -93,23 +87,11 @@ describe("List Tests", () => {
 		cy.get("[ui5-list]")
 			.as("list");
 
-		// Click the last item to set focus
+		// Click the growing button to set focus
 		cy.get("@list")
-			.find("ui5-li")
-			.last()
+			.shadow()
+			.find("[id$='growing-btn']")
 			.click();
-
-		// Wait for the last item to be focused
-		cy.get("@list")
-			.find("ui5-li")
-			.last()
-			.should("be.focused");
-
-		// Press arrow down once to move focus to the growing button
-		cy.get("@list")
-			.find("ui5-li")
-			.last()
-			.realPress("ArrowDown");
 
 		// Wait for the growing button to be focused
 		cy.get("@list")
