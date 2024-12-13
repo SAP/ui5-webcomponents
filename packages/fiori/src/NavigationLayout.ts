@@ -17,7 +17,6 @@ import NavigationLayoutTemplate from "./NavigationLayoutTemplate.js";
 
 // Styles
 import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
-import TableGrowingMode from "@ui5/webcomponents-compat/src/types/TableGrowingMode.js";
 
 /**
  * @class
@@ -64,6 +63,12 @@ class NavigationLayout extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
+	actualSideCollapsed : boolean = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
 	isPhone = isPhone();
 
 	/**
@@ -80,6 +85,7 @@ class NavigationLayout extends UI5Element {
 	@property()
 	set sideCollapsed(value: `${NavigationLayoutCollapsed}`) {
 		this._sideCollapsed = value;
+		this.calcActualSideCollapsed();
 
 		if (isPhone()) {
 			return;
@@ -88,17 +94,7 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			switch (value) {
-			case NavigationLayoutCollapsed.Auto:
-				sideNavigation.collapsed = this._defaultSideCollapsed;
-				break;
-			case NavigationLayoutCollapsed.Collapsed:
-				sideNavigation.collapsed = true;
-				break;
-			case NavigationLayoutCollapsed.Expanded:
-				sideNavigation.collapsed = false;
-				break;
-			}
+			sideNavigation.collapsed = this.actualSideCollapsed;
 		}
 	}
 
@@ -128,6 +124,8 @@ class NavigationLayout extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onBeforeRendering() {
+		this.calcActualSideCollapsed();
+
 		if (isPhone()) {
 			return;
 		}
@@ -135,17 +133,15 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			switch (this.sideCollapsed) {
-			case NavigationLayoutCollapsed.Auto:
-				sideNavigation.collapsed = this._defaultSideCollapsed;
-				break;
-			case NavigationLayoutCollapsed.Collapsed:
-				sideNavigation.collapsed = true;
-				break;
-			case NavigationLayoutCollapsed.Expanded:
-				sideNavigation.collapsed = false;
-				break;
-			}
+			sideNavigation.collapsed = this.actualSideCollapsed;
+		}
+	}
+
+	calcActualSideCollapsed() {
+		if (this.sideCollapsed === NavigationLayoutCollapsed.Auto) {
+			this.actualSideCollapsed = this._defaultSideCollapsed;
+		} else {
+			this.actualSideCollapsed = this.sideCollapsed === NavigationLayoutCollapsed.Collapsed;
 		}
 	}
 }
