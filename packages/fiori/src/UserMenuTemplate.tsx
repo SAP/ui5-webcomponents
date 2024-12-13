@@ -33,7 +33,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 			opener={this.opener}
 			onClose={this._handlePopoverAfterClose}
 		>
-			{this._isPhone ? 
+			{this._isPhone ?
 				<>
 					<Bar class="ui5-pm-phone-header" slot="header">
 						{this._manageAccountVisibleInHeader &&
