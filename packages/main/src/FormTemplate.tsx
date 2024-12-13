@@ -65,8 +65,8 @@ export default function FormTemplate(this: Form) {
 											<slot name={item._individualSlot}></slot>
 										</div>
 									);
-								}
-							)}
+								})
+							}
 						</>
 				}
 			</div>

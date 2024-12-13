@@ -135,8 +135,8 @@ export default function ComboBoxPopoverTemplate(this: ComboBox) {
 
 function valueStateMessage(this: ComboBox) {
 	return (
-		<> 
-			{ this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage"></slot> } 
+		<>
+			{ this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : <slot name="valueStateMessage"></slot> }
 		</>
 	);
 }

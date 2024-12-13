@@ -53,7 +53,7 @@ export default function NavigationMenuTemplate(this: NavigationMenu) {
 						<slot></slot>
 					</List>
 					:
-					this.loading &&  
+					this.loading &&
 						<BusyIndicator
 							id={`${this._id}-menu-busy-indicator`}
 							active={true}
