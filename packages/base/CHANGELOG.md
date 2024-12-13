@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+
+### Bug Fixes
+
+* **ui5-table:** text cut due to column overflow ([#10197](https://github.com/SAP/ui5-webcomponents/issues/10197)) ([cd7a73e](https://github.com/SAP/ui5-webcomponents/commit/cd7a73eb151581b0aec2d29bc6b4f965de68db8f)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+
+
+
 ## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
 
 

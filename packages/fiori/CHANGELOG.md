@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.14](https://github.com/SAP/ui5-webcomponents/compare/v1.24.13...v1.24.14) (2024-12-13)
+
+
+### Bug Fixes
+
+* **ui5-bar:** add parts for content containers ([#10280](https://github.com/SAP/ui5-webcomponents/issues/10280)) ([da3432d](https://github.com/SAP/ui5-webcomponents/commit/da3432d0aad4d6bf8d5b9b3048b408fc726e1786)), closes [#10101](https://github.com/SAP/ui5-webcomponents/issues/10101)
+* **ui5-shellbar:** removed redundant avatar padding ([#10245](https://github.com/SAP/ui5-webcomponents/issues/10245)) ([1309bff](https://github.com/SAP/ui5-webcomponents/commit/1309bffc8b95e59625758432157bdc95bdfdb8ed)), closes [#10217](https://github.com/SAP/ui5-webcomponents/issues/10217)
+* **ui5-table:** text cut due to column overflow ([#10197](https://github.com/SAP/ui5-webcomponents/issues/10197)) ([cd7a73e](https://github.com/SAP/ui5-webcomponents/commit/cd7a73eb151581b0aec2d29bc6b4f965de68db8f)), closes [#10168](https://github.com/SAP/ui5-webcomponents/issues/10168)
+
+
+
+
+
 ## [1.24.13](https://github.com/SAP/ui5-webcomponents/compare/v1.24.12...v1.24.13) (2024-11-07)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
