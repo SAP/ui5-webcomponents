@@ -134,12 +134,14 @@ type UserMenuOtherAccountClickEventDetail = {
 /**
  * Fired when a user menu is close.
  * @public
+ * @since 2.6.0
  */
 @event("close")
 
 /**
  * Fired when the "Sign Out" button is selected.
  * @public
+ * @since 2.6.0
  */
 @event("sign-out-click", {
 	cancelable: true,
