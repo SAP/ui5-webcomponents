@@ -9,6 +9,7 @@ import {
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
+import NavigationLayoutCollapsed from "./types/NavigationLayoutCollapsed.js";
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
@@ -16,6 +17,7 @@ import NavigationLayoutTemplate from "./generated/templates/NavigationLayoutTemp
 
 // Styles
 import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
+import TableGrowingMode from "@ui5/webcomponents-compat/src/types/TableGrowingMode.js";
 
 /**
  * @class
@@ -54,7 +56,9 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 	template: NavigationLayoutTemplate,
 })
 class NavigationLayout extends UI5Element {
-	_sideCollapsed = isPhone() || (isTablet() && !isCombi());
+	_defaultSideCollapsed = isPhone() || (isTablet() && !isCombi());
+
+	_sideCollapsed: `${NavigationLayoutCollapsed}` = "Auto";
 
 	/**
 	 * @private
@@ -70,11 +74,11 @@ class NavigationLayout extends UI5Element {
 
 	/**
 	 * Indicates whether the side navigation is collapsed.
-	 * @default false
+	 * @default NavigationLayoutCollapsed.Auto
 	 * @public
 	 */
-	@property({ type: Boolean })
-	set sideCollapsed(value: boolean) {
+	@property()
+	set sideCollapsed(value: `${NavigationLayoutCollapsed}`) {
 		this._sideCollapsed = value;
 
 		if (isPhone()) {
@@ -84,11 +88,21 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = value;
+			switch (value) {
+			case NavigationLayoutCollapsed.Auto:
+				sideNavigation.collapsed = this._defaultSideCollapsed;
+				break;
+			case NavigationLayoutCollapsed.Collapsed:
+				sideNavigation.collapsed = true;
+				break;
+			case NavigationLayoutCollapsed.Expanded:
+				sideNavigation.collapsed = false;
+				break;
+			}
 		}
 	}
 
-	get sideCollapsed() : boolean {
+	get sideCollapsed() : `${NavigationLayoutCollapsed}` {
 		return this._sideCollapsed;
 	}
 
@@ -121,7 +135,17 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = this.sideCollapsed;
+			switch (this.sideCollapsed) {
+			case NavigationLayoutCollapsed.Auto:
+				sideNavigation.collapsed = this._defaultSideCollapsed;
+				break;
+			case NavigationLayoutCollapsed.Collapsed:
+				sideNavigation.collapsed = true;
+				break;
+			case NavigationLayoutCollapsed.Expanded:
+				sideNavigation.collapsed = false;
+				break;
+			}
 		}
 	}
 }
