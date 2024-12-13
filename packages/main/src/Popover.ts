@@ -312,7 +312,7 @@ class Popover extends Popup {
 		}
 
 		if (openerHTMLElement && this._isUI5Element(openerHTMLElement)) {
-			return openerHTMLElement.getFocusDomRef();
+			return openerHTMLElement.getFocusDomRef() || openerHTMLElement;
 		}
 
 		return openerHTMLElement;
