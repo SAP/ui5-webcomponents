@@ -26,7 +26,7 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(buttons.length, 2, "Navigation arrows are rendered");
 	});
 
-	it("Buttons (navigation arrows) are rendered in the navigation EVEN if the page indicator and the arrows are hidden", async () => {
+	it("Buttons (navigation arrows) are not rendered on touch devices in the navigation if the page indicator and the arrows are hidden", async () => {
 		const carousel = await browser.$("#carouselHiddenPageIndicatorHiddenArrows");
 		const carouselNextButton = await carousel.shadow$(".ui5-carousel-navigation-button[data-ui5-arrow-forward]");
 		await carouselNextButton.click();
@@ -34,9 +34,9 @@ describe("Carousel general interaction", () => {
 		await carousel.scrollIntoView();
 		const buttons = await carousel.shadow$$(".ui5-carousel-navigation-wrapper .ui5-carousel-navigation-button:not(.ui5-carousel-navigation-button--hidden)");
 
-		assert.strictEqual(buttons.length, 2, "Navigation is rendered");
+		assert.notOk(buttons.length, "Navigation arrows are not rendered");
 	});
-	
+
 
 	it("Arrows (navigation arrows) and Dots (page indicator) not displayed in case of single page", async () => {
 		const carousel = await browser.$("#carousel6");
