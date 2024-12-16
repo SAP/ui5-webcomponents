@@ -105,7 +105,6 @@ class NavigationLayout extends UI5Element {
 	/**
 	 * Gets whether the side navigation is collapsed.
 	 * @public
-	 * @type {boolean}
 	 */
 	get effectiveSideCollapsed() : boolean {
 		return this._effectiveSideCollapsed;
