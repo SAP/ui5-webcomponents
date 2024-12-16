@@ -45,7 +45,7 @@ const scripts = {
 	generateProd: {
 		"default": "nps generateProd.remove-dev-mode generateProd.copy-prod",
 		"remove-dev-mode": `node "${LIB}/remove-dev-mode/remove-dev-mode.mjs"`,
-		"copy-prod": `copy-and-watch "dist/sap/**/*" dist/prod/sap/`,
+		"copy-prod": `copy-and-watch "dist/sap/**/*" dist/prod/sap/ "dist/thirdparty/preact/**/*.js" dist/prod/thirdparty/preact/`,
 	},
 	generateAPI: {
 		default: "nps generateAPI.generateCEM generateAPI.validateCEM",
