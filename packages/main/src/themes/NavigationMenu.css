@@ -12,6 +12,6 @@
 	border-radius: 0.75rem;
 }
 
-.ui5-navigation-menu[sub-menu] ::slotted([ui5-navigation-menu-item]) {
+.ui5-navigation-menu.ui5-menu-rp-sub-menu ::slotted([ui5-navigation-menu-item]) {
 	font-weight: normal;
 }

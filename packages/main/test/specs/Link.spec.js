@@ -59,7 +59,7 @@ describe("General API", () => {
 	});
 
 	it("disabled link should not be enabled", async () => {
-		const link = await browser.$("#disabled-link").shadow$("a").getAttribute("disabled");
+		const link = await browser.$("#disabled-link").shadow$("a").getAttribute("aria-disabled");
 
 		assert.ok(link, "Disabled link should not be enabled.");
 	});

@@ -35,7 +35,7 @@ describe("Responsiveness", () => {
 		</ui5-input>
 
 		<ui5-switch design="Textual" text-on="PR0" text-off="PR0" slot="startContent"></ui5-switch>
-		<ui5-toggle-button slot="endContent" text="PR2" data-priority="2">PR2</ui5-toggle-button>
+		<ui5-toggle-button slot="endContent" text="PR2" data-hide-order="2">PR2</ui5-toggle-button>
 	</ui5-shellbar>`;
 
 	const templateWithMenuItems = html`
