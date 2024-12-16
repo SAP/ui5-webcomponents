@@ -1,12 +1,11 @@
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
-import type { StyleData, StyleDataCSP } from "../ManagedStyles.js";
 import { mergeStyles } from "../ManagedStyles.js";
 import { fireThemeRegistered } from "../theming/ThemeRegistered.js";
 
-type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
-type ThemeLoader = (themeName: string) => Promise<ThemeData>;
+type ThemeData = string;
+type ThemeLoader = (themeName: string) => Promise<string>;
 
-const themeStyles = new Map<string, StyleData>();
+const themeStyles = new Map<string, string>();
 const loaders = new Map<string, ThemeLoader>();
 const customLoaders = new Map<string, ThemeLoader>();
 const registeredPackages = new Set<string>();
@@ -68,8 +67,7 @@ const _getThemeProperties = async (packageName: string, themeName: string, forCu
 		return;
 	}
 
-	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
-	return themeProps;
+	return data;
 };
 
 const getRegisteredPackages = () => {

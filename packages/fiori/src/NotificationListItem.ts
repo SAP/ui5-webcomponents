@@ -5,7 +5,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -17,10 +17,10 @@ import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import litRenderer from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
-
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -136,6 +136,7 @@ const ICON_PER_STATUS_DESIGN = {
 	styles: [
 		NotificationListItemCss,
 	],
+	renderer: litRenderer,
 	template: NotificationListItemTemplate,
 	dependencies: [
 		Button,
@@ -155,19 +156,15 @@ const ICON_PER_STATUS_DESIGN = {
  * @param {HTMLElement} item the closed item.
  * @public
  */
-@event<NotificationListItemCloseEventDetail>("close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
+@event("close", {
 	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
+	eventDetails!: NotificationListItemBase["eventDetails"] & {
+		_press: NotificationListItemPressEventDetail,
+		close: NotificationListItemCloseEventDetail,
+	}
 	/**
 	* Defines if the `titleText` and `description` should wrap,
 	* they truncate by default.
@@ -530,6 +527,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const navItems = list.getEnabledItems();
+		// @ts-expect-error TOFIX strictEvents
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {
@@ -555,7 +553,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		if (isDelete(e)) {
-			this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -568,7 +566,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onBtnCloseClick() {
-		this.fireDecoratorEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
@@ -596,7 +594,11 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		this.fireDecoratorEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		// NotificationListItem will never be assigned to a variable of type ListItemBase
+		// typescipt complains here, if that is the case, the parameter to the _press event handler could be a ListItemBase item,
+		// but this is never the case, all components are used by their class and never assigned to a variable with a type of ListItemBase
+		// @ts-expect-error
+		this.fireDecoratorEvent("_press", { item: this });
 	}
 
 	onResize() {

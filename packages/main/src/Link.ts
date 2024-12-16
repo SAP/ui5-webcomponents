@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
@@ -11,12 +11,13 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 import type WrappingType from "./types/WrappingType.js";
 import type LinkAccessibleRole from "./types/LinkAccessibleRole.js";
 // Template
-import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
+import LinkTemplate from "./LinkTemplate.js";
 
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -76,7 +77,7 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
 @customElement({
 	tag: "ui5-link",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: LinkTemplate,
 	styles: linkCss,
 	dependencies: [Icon],
@@ -90,29 +91,14 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
  * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
-@event<LinkClickEventDetail>("click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		altKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		ctrlKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		metaKey: { type: Boolean },
-		/**
-		 * @public
-		 */
-		shiftKey: { type: Boolean },
-	},
+@event("click", {
 	bubbles: true,
 	cancelable: true,
 })
 class Link extends UI5Element implements ITabbable {
+	eventDetails!: {
+		click: LinkClickEventDetail;
+	}
 	/**
 	 * Defines whether the component is disabled.
 	 *
@@ -307,9 +293,10 @@ class Link extends UI5Element implements ITabbable {
 
 	get effectiveTabIndex() {
 		if (this.forcedTabIndex) {
-			return this.forcedTabIndex;
+			return Number.parseInt(this.forcedTabIndex);
 		}
-		return (this.disabled || !this.textContent?.length) ? "-1" : "0";
+
+		return (this.disabled || !this.textContent?.length) ? -1 : 0;
 	}
 
 	get ariaLabelText() {
@@ -336,7 +323,7 @@ class Link extends UI5Element implements ITabbable {
 	}
 
 	get effectiveAccRole() {
-		return this.accessibleRole.toLowerCase();
+		return toLowercaseEnumValue(this.accessibleRole);
 	}
 
 	get ariaDescriptionText() {
@@ -357,7 +344,7 @@ class Link extends UI5Element implements ITabbable {
 
 		e.stopImmediatePropagation();
 
-		const executeEvent = this.fireDecoratorEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.fireDecoratorEvent("click", {
 			altKey,
 			ctrlKey,
 			metaKey,

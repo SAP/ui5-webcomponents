@@ -1,18 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
 import SideContentFallDown from "./types/SideContentFallDown.js";
-import DynamicSideContentTemplate from "./generated/templates/DynamicSideContentTemplate.lit.js";
+import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
 
 // Styles
 import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js";
@@ -109,7 +108,7 @@ type DynamicSideContentLayoutChangeEventDetail = {
  */
 @customElement({
 	tag: "ui5-dynamic-side-content",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [DynamicSideContentCss, getEffectiveScrollbarStyle()],
 	template: DynamicSideContentTemplate,
 })
@@ -121,36 +120,13 @@ type DynamicSideContentLayoutChangeEventDetail = {
  * @param {boolean} sideContentVisible visibility of the side content.
  * @public
  */
-@event<DynamicSideContentLayoutChangeEventDetail>("layout-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		currentBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		previousBreakpoint: {
-			type: String,
-		},
-		/**
-		 * @public
-		 */
-		mainContentVisible: {
-			type: Boolean,
-		},
-		/**
-		 * @public
-		 */
-		sideContentVisible: {
-			type: Boolean,
-		},
-	},
+@event("layout-change", {
 	bubbles: true,
 })
 class DynamicSideContent extends UI5Element {
+	eventDetails!: {
+		"layout-change": DynamicSideContentLayoutChangeEventDetail
+	}
 	/**
 	 * Defines the visibility of the main content.
 	 * @default false
@@ -273,23 +249,21 @@ class DynamicSideContent extends UI5Element {
 		}
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
-			scSpan = this._toggled ? this._mcSpan : this._scSpan,
-			classes: ClassMap = {
-				main: {
-					"ui5-dsc-main": true,
-				},
-				side: {
-					"ui5-dsc-side": true,
-				},
-			};
+			scSpan = this._toggled ? this._mcSpan : this._scSpan;
 
-		classes.main[`${gridPrefix}-${mcSpan}`] = true;
-		classes.side[`${gridPrefix}-${scSpan}`] = true;
-
-		return classes;
+		return {
+			main: {
+				"ui5-dsc-main": true,
+				[`${gridPrefix}-${mcSpan}`]: true,
+			},
+			side: {
+				"ui5-dsc-side": true,
+				[`${gridPrefix}-${scSpan}`]: true,
+			},
+		};
 	}
 
 	get styles() {
@@ -466,7 +440,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireDecoratorEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
+			this.fireDecoratorEvent("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 

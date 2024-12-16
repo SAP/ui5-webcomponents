@@ -12,3 +12,7 @@
 	padding-top: .875rem;
 	box-sizing: border-box;
 }
+
+:host([ui5-cb-item][text][additional-text]) .ui5-li-text-wrapper {
+	gap: 1rem;
+}
