@@ -100,7 +100,9 @@
 	<div style="float: right">
 		<ui5-checkbox id="collapsed" text="Collapsed"></ui5-checkbox>
 		<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
-		<ui5-checkbox id="rtlCb" text="rtl"></ui5-checkbox>
+		<br>
+		<ui5-label for="slider" show-colon>Change width</ui5-label>
+		<ui5-slider id="slider" value="0" min="0" max="600" step="50" show-tickmarks label-interval="2"></ui5-slider>
 	</div>
 
 	<script>
@@ -117,8 +119,8 @@
 			document.body.classList.toggle("ui5-content-density-compact", e.target.checked);
 		});
 
-		rtlCb.addEventListener("ui5-change", function (e) {
-			sn1.setAttribute("dir", rtlCb.checked ? "rtl" : "")
+		slider.addEventListener("ui5-input", function (event) {
+			sn1.style.width = event.target.value + 'px';
 		});
 	</script>
 </body>

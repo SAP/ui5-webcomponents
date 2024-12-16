@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
@@ -113,7 +114,11 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: jsxRender,
 	template: SideNavigationTemplate,
-	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	styles: [
+		SideNavigationCss,
+		SideNavigationPopoverCss,
+		getEffectiveScrollbarStyle(),
+	],
 	dependencies: [
 		ResponsivePopover,
 		SideNavigationGroup,

@@ -79,7 +79,7 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
-	background: var(--sapList_SelectionBackgroundColor);
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled):active .ui5-sn-item-text,
@@ -93,7 +93,7 @@ and there is an additional border that appears on hover. */
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:hover {
-	background: var(--sapList_Hover_SelectionBackground);
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background_hover);
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
@@ -103,10 +103,6 @@ and there is an additional border that appears on hover. */
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected.ui5-sn-item-active {
 	background: var(--sapList_Active_Background);
-}
-
-.ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
-	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
 }
 
 .ui5-sn-item::before {
@@ -179,7 +175,8 @@ and there is an additional border that appears on hover. */
 	display: var(--_ui5_side_navigation_item_expand_icon_visibility);
 	font-size: 0.75rem;
 	position: absolute;
-	left: 1.375rem;
+	left: var(--_ui5_side_navigation_item_expand_icon_left);
+	right: var(--_ui5_side_navigation_item_expand_icon_right);
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item-external-link-icon {
@@ -215,7 +212,8 @@ and there is an additional border that appears on hover. */
 
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):hover .ui5-sn-item-toggle-icon,
 :host([side-nav-collapsed]) .ui5-sn-item:not(.ui5-sn-item-active):not(.ui5-sn-item-no-hover-effect):focus .ui5-sn-item-toggle-icon {
-	display: var(--_ui5_side_navigation_item_collapsed_hover_focus_display);
+	left: var(--_ui5_side_navigation_item_expand_icon_hover_left);
+	right: var(--_ui5_side_navigation_item_expand_icon_hover_right);
 }
 
 .ui5-sn-item[aria-expanded=false] ~  .ui5-sn-item-ul {
