@@ -63,7 +63,7 @@ class NavigationLayout extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	actualSideCollapsed : boolean = false;
+	_effectiveSideCollapsed : boolean = false;
 
 	/**
 	 * @private
@@ -78,14 +78,14 @@ class NavigationLayout extends UI5Element {
 	isTablet = isTablet() && !isCombi();
 
 	/**
-	 * Indicates whether the side navigation is collapsed.
+	 * Indicates whether the side navigation is collapsed mode.
 	 * @default NavigationLayoutCollapsed.Auto
 	 * @public
 	 */
 	@property()
 	set sideCollapsed(value: `${NavigationLayoutCollapsed}`) {
 		this._sideCollapsed = value;
-		this.calcActualSideCollapsed();
+		this.calcEffectiveSideCollapsed();
 
 		if (isPhone()) {
 			return;
@@ -94,12 +94,21 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = this.actualSideCollapsed;
+			sideNavigation.collapsed = this.effectiveSideCollapsed;
 		}
 	}
 
 	get sideCollapsed() : `${NavigationLayoutCollapsed}` {
 		return this._sideCollapsed;
+	}
+
+	/**
+	 * Gets whether the side navigation is collapsed.
+	 * @public
+	 * @type {boolean}
+	 */
+	get effectiveSideCollapsed() : boolean {
+		return this._effectiveSideCollapsed;
 	}
 
 	/**
@@ -124,7 +133,7 @@ class NavigationLayout extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onBeforeRendering() {
-		this.calcActualSideCollapsed();
+		this.calcEffectiveSideCollapsed();
 
 		if (isPhone()) {
 			return;
@@ -133,15 +142,15 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = this.actualSideCollapsed;
+			sideNavigation.collapsed = this.effectiveSideCollapsed;
 		}
 	}
 
-	calcActualSideCollapsed() {
+	calcEffectiveSideCollapsed() {
 		if (this.sideCollapsed === NavigationLayoutCollapsed.Auto) {
-			this.actualSideCollapsed = this._defaultSideCollapsed;
+			this._effectiveSideCollapsed = this._defaultSideCollapsed;
 		} else {
-			this.actualSideCollapsed = this.sideCollapsed === NavigationLayoutCollapsed.Collapsed;
+			this._effectiveSideCollapsed = this.sideCollapsed === NavigationLayoutCollapsed.Collapsed;
 		}
 	}
 }

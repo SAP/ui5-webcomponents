@@ -161,7 +161,7 @@
 
 	<script>
 		document.querySelector("#startButton").addEventListener("click", function (event) {
-			nl1.sideCollapsed = nl1.actualSideCollapsed ? "Expanded" : "Collapsed";
+			nl1.sideCollapsed = nl1.effectiveSideCollapsed ? "Expanded" : "Collapsed";
 		});
 
 		document.querySelector("#sn1").addEventListener("selection-change", function (event) {

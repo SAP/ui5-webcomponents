@@ -1,10 +1,11 @@
 /**
- * Specifies whether the navigation layout is in collapsed or expanded mode.
+ * Specifies the navigation layout collapsed mode.
  * @public
  */
 enum NavigationLayoutCollapsed {
 	/**
-	 * Auto
+	 * Automatically calculate the collapsed mode based on the screen device type.
+	 * `Expanded` on desktop and `Collapsed	 on tablet and phone.
 	 * @public
 	 */
 	Auto = "Auto",
