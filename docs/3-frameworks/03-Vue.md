@@ -57,22 +57,18 @@ npm run dev
 
 ## Setting up a Nuxt project with UI5 Web Components
 
-### Step 1. Setup a Nuxt project.
+Nuxt is a popular JavaScript framework built on Vue.js, designed to create server-rendered, single-page, and statically generated applications. It simplifies the development process by offering features like routing, state management, and an extensive plugin ecosystem.
 
-To initialize a Nuxt project, please follow the instructions provided in the [official Nuxt documentation.](https://nuxt.com/docs/getting-started/installation#new-project)
+### Step 1. Setup a Nuxt project
+
+To initialize a Nuxt project, please follow the instructions provided in the [official Nuxt documentation](https://nuxt.com/docs/getting-started/installation#new-project).
 
 ### Step 2. Add UI5 Web Components
 ```bash
 npm install @ui5/webcomponents
 ```
 
-### Step 3. Configure the Nuxt application.
-
-#### Disable Server-Side Rendering (SSR):
-
-Currently, UI5 Web Components do not support Server-Side Rendering (SSR) as they rely on the browser's DOM APIs to function. To prevent rendering issues, ensure that SSR is disabled in your Nuxt configuration by setting `ssr: false`.
-
-#### Treat UI5 Web Components as custom elements:
+### Step 3. Configure the Nuxt application
 
 To avoid Vue's compiler treating UI5 Web Components as standard Vue components, you need to configure `compilerOptions.isCustomElement` in your `nuxt.config`.
 
@@ -83,8 +79,6 @@ Here's an example:
 
 // https://nuxt.com/docs/api/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
-
   vue: {
     compilerOptions: {
       isCustomElement: (tag) => tag.startsWith("ui5-"),
@@ -93,16 +87,22 @@ export default defineNuxtConfig({
 })
 ```
 
-### Step 4. Import the components that you are going to use.
+### Step 4. Import the components that you are going to use
+
+In Nuxt, auto-import functionality does not work for UI5 Web Components. You must explicitly import each component you plan to use.
 
 ```ts
+<script setup lang="ts">
 import "@ui5/webcomponents/dist/Button.js";
+</script>
 ```
 
-### Step 5. Use the imported elements in your application.
+### Step 5. Use the imported elements in your application
 
 ```html
-<ui5-button>Hello world!</ui5-button>
+<template>
+  <ui5-button>Hello world!</ui5-button>
+</template>
 ```
 
 ### Step 6. Launch the application
