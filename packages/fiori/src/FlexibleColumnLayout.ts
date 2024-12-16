@@ -678,6 +678,10 @@ class FlexibleColumnLayout extends UI5Element {
 			isRTL = this.effectiveDir === "rtl";
 		let step = 0;
 
+		if (!this.startColumnVisible && e.target === this.startSeparatorDOM && isLeft(e)) {
+			return;
+		}
+
 		if (isLeft(e)) {
 			if (this.startArrowDOM === e.target) {
 				return;
