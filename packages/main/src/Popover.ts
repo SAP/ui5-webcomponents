@@ -10,14 +10,13 @@ import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMRe
 
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
-import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
 
 // Template
-import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
+import PopoverTemplate from "./PopoverTemplate.js";
 // Styles
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
@@ -87,6 +86,7 @@ type CalculatedPlacement = {
 	template: PopoverTemplate,
 })
 class Popover extends Popup {
+	eventDetails!: Popup["eventDetails"];
 	/**
 	 * Defines the header text.
 	 *
@@ -312,7 +312,7 @@ class Popover extends Popup {
 		}
 
 		if (openerHTMLElement && this._isUI5Element(openerHTMLElement)) {
-			return openerHTMLElement.getFocusDomRef();
+			return openerHTMLElement.getFocusDomRef() || openerHTMLElement;
 		}
 
 		return openerHTMLElement;
@@ -826,7 +826,3 @@ Popover.define();
 export default Popover;
 
 export { instanceOfPopover };
-
-export type {
-	PopoverBeforeCloseEventDetail,
-};
