@@ -78,7 +78,7 @@ class NavigationLayout extends UI5Element {
 	isTablet = isTablet() && !isCombi();
 
 	/**
-	 * Indicates whether the side navigation is collapsed mode.
+	 * Specifies the side navigation collapsed mode.
 	 * @default NavigationLayoutCollapsed.Auto
 	 * @public
 	 */
@@ -105,6 +105,7 @@ class NavigationLayout extends UI5Element {
 	/**
 	 * Gets whether the side navigation is collapsed.
 	 * @public
+	 * @default false
 	 */
 	get effectiveSideCollapsed() : boolean {
 		return this._effectiveSideCollapsed;
