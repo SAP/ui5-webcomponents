@@ -507,7 +507,6 @@ class ShellBar extends UI5Element {
 	_isInitialRendering: boolean;
 	_defaultItemPressPrevented: boolean;
 	menuItemsObserver: MutationObserver;
-	additionalContextObserver: MutationObserver;
 	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_overflowNotifications: string | null;
@@ -554,10 +553,6 @@ class ShellBar extends UI5Element {
 			this._updateClonedMenuItems();
 		});
 
-		this.additionalContextObserver = new MutationObserver(() => {
-			this._updateAdditionalContextItems();
-		});
-
 		this._headerPress = () => {
 			this._updateClonedMenuItems();
 
@@ -591,6 +586,9 @@ class ShellBar extends UI5Element {
 				this._showSearchField = false;
 			}
 			if (spacerWidth > searchFieldWidth && this.additionalContextHidden.length === 0 && this._showSearchField === false && this._showFullWidthSearch === false) {
+				this._showSearchField = true;
+			}
+			if (this.additionalContext.length === 0 && this._showSearchField === false && this._showFullWidthSearch === false) {
 				this._showSearchField = true;
 			}
 		}
@@ -762,7 +760,6 @@ class ShellBar extends UI5Element {
 		});
 
 		this._observeMenuItems();
-		this._observeAdditionalContextItems();
 		this._updateSeparatorsVisibility();
 	}
 
@@ -1253,32 +1250,12 @@ class ShellBar extends UI5Element {
 		});
 	}
 
-	_updateAdditionalContextItems() {
-		[this.startContent, this.endContent].forEach(context => context.forEach(item => {
-			const clonedItem = item.cloneNode(true) as HTMLElement;
-			clonedItem.removeAttribute("slot");
-
-			context.push(clonedItem);
-		}));
-	}
-
 	_observeMenuItems() {
 		this.menuItems.forEach(item => {
 			this.menuItemsObserver.observe(item, {
 				characterData: true,
 				childList: true,
 				subtree: true,
-				attributes: true,
-			});
-		});
-	}
-
-	_observeAdditionalContextItems() {
-		[...this.endContent, ...this.startContent].forEach(item => {
-			this.additionalContextObserver.observe(item, {
-				characterData: false,
-				childList: false,
-				subtree: false,
 				attributes: true,
 			});
 		});

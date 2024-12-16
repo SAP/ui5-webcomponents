@@ -358,6 +358,7 @@ slot[name="profile"] {
 	flex-grow: 1;
 	height: 1px;
 	flex-basis: 1rem;
+	flex-shrink: 1;
 }
 
 ::slotted(.ui5-shellbar-separator),
