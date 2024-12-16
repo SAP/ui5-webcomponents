@@ -503,6 +503,7 @@ slot[name="profile"] {
 	min-width: var(--_ui5_shellbar_search_field_width);
 }
 
+:host([breakpoint-size="M"]) ::slotted([ui5-input]),
 :host([breakpoint-size="S"]) ::slotted([ui5-input]) {
 	min-width: 0;
 }

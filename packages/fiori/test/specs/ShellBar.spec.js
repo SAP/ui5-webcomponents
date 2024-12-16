@@ -380,6 +380,17 @@ describe("Component Behavior", () => {
 				assert.strictEqual(await input.getValue(), "Application 2", "Input value is set by click event of the second menu item");
 				assert.strictEqual(await inputData.getValue(), "key2", "The user defined attributes are available.");
 			});
+
+			it("tests if searchfield toggles when altering the showSearchField property", async () => {
+				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
+				const shellBar = await browser.$("#shellbar");
+
+				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
+
+				await shellBar.setProperty('showSearchField', true);
+				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
+				await shellBar.setProperty('showSearchField', false); // Clean Up
+			});
 		});
 
 		describe("Small screen", () => {
@@ -467,17 +478,6 @@ describe("Component Behavior", () => {
 
 				await cancelButton.click();
 				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking on the search icon again");
-			});
-
-			it("tests if searchfield toggles when altering the showSearchField property", async () => {
-				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
-				const shellBar = await browser.$("#shellbar");
-
-				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
-
-				await shellBar.setProperty('showSearchField', true);
-				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
-				await shellBar.setProperty('showSearchField', false); // Clean Up
 			});
 
 			it("Shows translated label for predefined buttons, as button text when in Overflow Popover", async () => {
