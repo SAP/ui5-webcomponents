@@ -28,7 +28,7 @@ import SegmentedButtonItem from "./SegmentedButtonItem.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
-import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionClocksTemplate.lit.js";
+import TimeSelectionClocksTemplate from "./TimeSelectionClocksTemplate.js";
 
 // Styles
 import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.js";
@@ -71,8 +71,9 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 
 class TimeSelectionClocks extends TimePickerInternals {
 	eventDetails!: TimePickerInternals["eventDetails"] & {
-		"close-picker": void
-	}
+		"close-picker": void,
+	};
+
 	/**
 	 * Flag for pressed Space key
 	 */

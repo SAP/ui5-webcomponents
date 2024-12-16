@@ -7,8 +7,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import {
 	isSpace,
 	isEnter,
@@ -33,7 +31,11 @@ import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import type { ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import type {
+	ClassMap,
+	AccessibilityAttributes,
+	AriaRole,
+} from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import throttle from "@ui5/webcomponents-base/dist/util/throttle.js";
@@ -66,9 +68,8 @@ import {
 	SHELLBAR_PRODUCT_SWITCH_BTN,
 } from "./generated/i18n/i18n-defaults.js";
 
-type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 type ShellBarLogoAccessibilityAttributes = {
-	role?: Extract<LowercaseString<AriaRole>, "button" | "link">,
+	role?: Extract<AriaRole, "button" | "link">,
 	name?: string,
 }
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
@@ -506,6 +507,7 @@ class ShellBar extends UI5Element {
 	_isInitialRendering: boolean;
 	_defaultItemPressPrevented: boolean;
 	menuItemsObserver: MutationObserver;
+	additionalContextObserver: MutationObserver;
 	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_overflowNotifications: string | null;
@@ -550,6 +552,10 @@ class ShellBar extends UI5Element {
 
 		this.menuItemsObserver = new MutationObserver(() => {
 			this._updateClonedMenuItems();
+		});
+
+		this.additionalContextObserver = new MutationObserver(() => {
+			this._updateAdditionalContextItems();
 		});
 
 		this._headerPress = () => {
@@ -756,11 +762,12 @@ class ShellBar extends UI5Element {
 		});
 
 		this._observeMenuItems();
+		this._observeAdditionalContextItems();
 		this._updateSeparatorsVisibility();
 	}
 
 	get additionalContextSorted() {
-		return [...this.startContent, ...this.endContent].sort((a, b) => {
+		return this.additionalContext.sort((a, b) => {
 			return parseInt(a.getAttribute("data-priority") || "0") - parseInt(b.getAttribute("data-priority") || "0");
 		});
 	}
@@ -1246,12 +1253,32 @@ class ShellBar extends UI5Element {
 		});
 	}
 
+	_updateAdditionalContextItems() {
+		[this.startContent, this.endContent].forEach(context => context.forEach(item => {
+			const clonedItem = item.cloneNode(true) as HTMLElement;
+			clonedItem.removeAttribute("slot");
+
+			context.push(clonedItem);
+		}));
+	}
+
 	_observeMenuItems() {
 		this.menuItems.forEach(item => {
 			this.menuItemsObserver.observe(item, {
 				characterData: true,
 				childList: true,
 				subtree: true,
+				attributes: true,
+			});
+		});
+	}
+
+	_observeAdditionalContextItems() {
+		[...this.endContent, ...this.startContent].forEach(item => {
+			this.additionalContextObserver.observe(item, {
+				characterData: false,
+				childList: false,
+				subtree: false,
 				attributes: true,
 			});
 		});
@@ -1412,13 +1439,15 @@ class ShellBar extends UI5Element {
 	}
 
 	get _additionalContextRole() {
-		const additionalContext = [...this.endContent, ...this.startContent];
-
-		if (additionalContext.length === 1) {
+		if (this.additionalContext.length === 1) {
 			return;
 		}
 
 		return "group";
+	}
+
+	get additionalContext() {
+		return [...this.startContent, ...this.endContent];
 	}
 
 	get _rightChildRole() {
@@ -1462,7 +1491,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get _profileText() {
-		return this.accessibilityAttributes.profile?.name || ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
+		return this.accessibilityAttributes.profile?.name as string || ShellBar.i18nBundle.getText(SHELLBAR_PROFILE);
 	}
 
 	get _productsText() {
@@ -1551,7 +1580,7 @@ class ShellBar extends UI5Element {
 			overflow: {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || AriaHasPopup.Menu.toLowerCase(),
+					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || "menu" as const,
 					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
 				},
 			},
@@ -1559,7 +1588,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get accLogoRole() {
-		return this.accessibilityAttributes.logo?.role || "link";
+		return this.accessibilityAttributes.logo?.role as string || "link";
 	}
 }
 

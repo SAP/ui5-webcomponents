@@ -43,7 +43,7 @@ import Icon from "./Icon.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 // Template
-import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
+import CalendarTemplate from "./CalendarTemplate.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";

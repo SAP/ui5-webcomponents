@@ -156,12 +156,22 @@ const findImportPath = (ts, sourceFile, typeName, modulePath) => {
                     ?.replace("src", "dist")?.replace(".ts", ".js") || undefined
             );
         } else {
-            const packageName = Object.keys(packageJSON?.dependencies || {}).find(
-                (dependency) =>
-                    currentModuleSpecifier?.text?.startsWith(dependency)
-            );
-            return currentModuleSpecifier?.text
-                ?.replace(`${packageName}/`, "") || undefined;
+            // my-package/test
+            // my-package
+            // @scope/my-package
+            // my.package
+            // _mypackage
+            // mypackage-
+            // scope/my-package/test
+            // @scope/my-package/test
+            const match = currentModuleSpecifier?.text.match(/^((@([a-z0-9._-]+)\/)?([a-z0-9._-]+))/);
+            let packageName;
+
+            if (match) {
+                packageName = match[1];
+            }
+
+            return packageName || undefined;
         }
     }
 };

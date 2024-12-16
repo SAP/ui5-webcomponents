@@ -3,7 +3,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { IComboBoxItem } from "./ComboBox.js";
 import ListItemGroup from "./ListItemGroup.js";
 import type ComboBoxItem from "./ComboBoxItem.js";
-import ComboBoxItemGroupTemplate from "./generated/templates/ComboBoxItemGroupTemplate.lit.js";
+import ComboBoxItemGroupTemplate from "./ComboBoxItemGroupTemplate.js";
 
 /**
  * @class
@@ -21,6 +21,7 @@ import ComboBoxItemGroupTemplate from "./generated/templates/ComboBoxItemGroupTe
 	template: ComboBoxItemGroupTemplate,
 })
 class ComboBoxItemGroup extends ListItemGroup implements IComboBoxItem {
+	eventDetails!: ListItemGroup["eventDetails"];
 	/**
 	 * Defines the items of the <code>ui5-cb-item-group</code>.
 	 * @public
