@@ -387,6 +387,9 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 		super.fireItemPress(e);
+		if (document.activeElement !== this) {
+			this.focus();
+		}
 	}
 
 	get isInactive() {
