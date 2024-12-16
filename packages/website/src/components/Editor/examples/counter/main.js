@@ -1,21 +1,24 @@
 export default `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { customElement, property } from "@ui5/webcomponents-base/dist/decorators.js";
 
 @customElement({
   tag: "my-counter",
-  renderer: litRender,
+  renderer: jsxRender,
 })
 export class MyCounter extends UI5Element {
   @property({ type: Number })
   count = 0;
 
   render() {
-    return html \`<div>
-    <slot></slot>
-    <button @click=\${() => {this.count += 2}}>
-        Count \${this.count}
-    </div>\`
+    return (
+      <div>
+        <slot></slot>
+        <button onClick={() => {this.count += 2}}>
+          Count {this.count}
+        </button>
+      </div>
+    );
   }
 
   static styles = \`button {
