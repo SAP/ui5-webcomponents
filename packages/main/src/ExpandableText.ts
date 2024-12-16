@@ -111,7 +111,7 @@ class ExpandableText extends UI5Element {
 			return this.shadowRoot?.querySelector("[ui5-responsive-popover]") as HTMLElement;
 		}
 
-		return this.shadowRoot?.querySelector("ui5-link") as HTMLElement;
+		return this.shadowRoot?.querySelector("[ui5-link]") as HTMLElement;
 	}
 
 	get _displayedText() {
