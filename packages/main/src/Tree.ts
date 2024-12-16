@@ -3,11 +3,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
+import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
 import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import DropIndicator from "./DropIndicator.js";
 import TreeItem from "./TreeItem.js";
 import type TreeItemBase from "./TreeItemBase.js";
@@ -28,7 +30,7 @@ import type {
 } from "./List.js";
 
 // Template
-import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
+import TreeTemplate from "./TreeTemplate.js";
 
 // Styles
 import TreeCss from "./generated/themes/Tree.css.js";
@@ -104,7 +106,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  */
 @customElement({
 	tag: "ui5-tree",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TreeCss,
 	template: TreeTemplate,
 	dependencies: [
@@ -364,58 +366,23 @@ class Tree extends UI5Element {
 			return;
 		}
 
-		let placements = closestPosition.placements;
-
 		closestPosition.element = <HTMLElement>(<ShadowRoot>closestPosition.element.getRootNode()).host;
-
 		if (draggedElement.contains(closestPosition.element)) { return; }
-
 		if (closestPosition.element === draggedElement) {
-			placements = placements.filter(placement => placement !== MovePlacement.On);
+			closestPosition.placements = closestPosition.placements.filter(placement => placement !== MovePlacement.On);
 		}
 
-		const placementAccepted = placements.some(placement => {
-			const closestElement = closestPosition.element;
-			const beforeItemMovePrevented = !this.fireDecoratorEvent("move-over", {
-				source: {
-					element: draggedElement,
-				},
-				destination: {
-					element: closestElement,
-					placement,
-				},
-			});
-
-			if (beforeItemMovePrevented) {
-				e.preventDefault();
-				this.dropIndicatorDOM!.targetReference = closestElement;
-				this.dropIndicatorDOM!.placement = placement;
-				return true;
-			}
-
-			return false;
-		});
-
-		if (!placementAccepted) {
-			this.dropIndicatorDOM!.targetReference = null;
-		}
+		const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element);
+		this.dropIndicatorDOM!.targetReference = targetReference;
+		this.dropIndicatorDOM!.placement = placement;
 	}
 
 	_ondrop(e: DragEvent) {
-		e.preventDefault();
-
-		const draggedElement = DragRegistry.getDraggedElement()!;
-		this.fireDecoratorEvent("move", {
-			source: {
-				element: draggedElement,
-			},
-			destination: {
-				element: this.dropIndicatorDOM!.targetReference!,
-				placement: this.dropIndicatorDOM!.placement,
-			},
-		});
-		draggedElement.focus();
-		this.dropIndicatorDOM!.targetReference = null;
+		if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
+			return;
+		}
+		handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement);
+		this.dropIndicatorDOM.targetReference = null;
 	}
 
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** add subtitle interaction ([#10372](https://github.com/SAP/ui5-webcomponents/issues/10372)) ([ab00713](https://github.com/SAP/ui5-webcomponents/commit/ab00713930d2e50497adad52cfbd1b02557a8f41)), closes [#10347](https://github.com/SAP/ui5-webcomponents/issues/10347)
+
+
+
+
+
+# [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** fix header role ([#10317](https://github.com/SAP/ui5-webcomponents/issues/10317)) ([00823cf](https://github.com/SAP/ui5-webcomponents/commit/00823cf959b42cc4bbee5ea98e98d02f12f01a6a))
+
+
+### Features
+
+* **framework:** add JSX template support with TypeScript ([#10046](https://github.com/SAP/ui5-webcomponents/issues/10046)) ([f42e7c1](https://github.com/SAP/ui5-webcomponents/commit/f42e7c18c846f923df4fec6ae02f1b4c20c006fa))
+* **ui5-user-menu:** add title and manage button to pin header on phone ([#10339](https://github.com/SAP/ui5-webcomponents/issues/10339)) ([a4e6d56](https://github.com/SAP/ui5-webcomponents/commit/a4e6d568f6376e64d4adcd44f1eb95d06cee719d))
+
+
+
+
+
 # [2.5.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0-rc.3...v2.5.0) (2024-12-05)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

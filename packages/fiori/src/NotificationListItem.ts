@@ -17,10 +17,10 @@ import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import litRenderer from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
-
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -136,6 +136,7 @@ const ICON_PER_STATUS_DESIGN = {
 	styles: [
 		NotificationListItemCss,
 	],
+	renderer: litRenderer,
 	template: NotificationListItemTemplate,
 	dependencies: [
 		Button,
@@ -526,6 +527,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const navItems = list.getEnabledItems();
+		// @ts-expect-error TOFIX strictEvents
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {
@@ -592,6 +594,10 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
+		// NotificationListItem will never be assigned to a variable of type ListItemBase
+		// typescipt complains here, if that is the case, the parameter to the _press event handler could be a ListItemBase item,
+		// but this is never the case, all components are used by their class and never assigned to a variable with a type of ListItemBase
+		// @ts-expect-error
 		this.fireDecoratorEvent("_press", { item: this });
 	}
 

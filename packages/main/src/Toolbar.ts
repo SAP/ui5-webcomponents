@@ -4,8 +4,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -14,13 +14,12 @@ import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
-import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
+import ToolbarTemplate from "./ToolbarTemplate.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
@@ -77,7 +76,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 @customElement({
 	tag: "ui5-toolbar",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: ToolbarTemplate,
 })
 /**
@@ -86,6 +85,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 @event("_min-content-width-change", {
 	bubbles: true,
 })
+
 class Toolbar extends UI5Element {
 	eventDetails!: {
 		"_min-content-width-change": ToolbarMinWidthChangeEventDetail
@@ -237,23 +237,6 @@ class Toolbar extends UI5Element {
 		return this.itemsToOverflow.filter(item => !(item.ignoreSpace || item.isSeparator)).length === 0;
 	}
 
-	get classes() {
-		return {
-			items: {
-				"ui5-tb-items": true,
-				"ui5-tb-items-full-width": this.hasFlexibleSpacers,
-			},
-			overflow: {
-				"ui5-overflow-list--alignleft": this.hasItemWithText,
-			},
-			overflowButton: {
-				"ui5-tb-item": true,
-				"ui5-tb-overflow-btn": true,
-				"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
-			},
-		};
-	}
-
 	get interactiveItemsCount() {
 		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
 	}
@@ -267,7 +250,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get accessibleRole() {
-		return this.hasAriaSemantics ? "toolbar" : undefined;
+		return this.hasAriaSemantics ? "toolbar" as const : undefined;
 	}
 
 	get ariaLabelText() {
@@ -285,7 +268,7 @@ class Toolbar extends UI5Element {
 				tooltip: Toolbar.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
 				accessibilityAttributes: {
 					expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-					hasPopup: AriaHasPopup.Menu.toLowerCase(),
+					hasPopup: "menu" as const,
 				},
 			},
 		};
@@ -490,6 +473,10 @@ class Toolbar extends UI5Element {
 		}
 	}
 
+	onBeforeClose(e: UI5CustomEvent<Popover, "before-close">) {
+		e.preventDefault();
+	}
+
 	onOverflowPopoverOpened() {
 		this.popoverOpen = true;
 		if (this.overflowButtonDOM) {
@@ -575,12 +562,13 @@ class Toolbar extends UI5Element {
 			}
 
 			const toolbarItem = {
-				toolbarTemplate: executeTemplate(ElementClass.toolbarTemplate, item),
-				toolbarPopoverTemplate: executeTemplate(ElementClass.toolbarPopoverTemplate, item),
+				toolbarTemplate: ElementClass.toolbarTemplate,
+				toolbarPopoverTemplate: ElementClass.toolbarPopoverTemplate,
+				context: item,
 			};
 
 			return toolbarItem;
-		});
+		}).filter(item => !!item);
 	}
 
 	getItemWidth(item: ToolbarItem): number {
