@@ -593,9 +593,6 @@ class ShellBar extends UI5Element {
 			if (spacerWidth > searchFieldWidth && this.additionalContextHidden.length === 0 && this._showSearchField === false && this._showFullWidthSearch === false) {
 				this._showSearchField = true;
 			}
-			if (this.additionalContext.length === 0 && this._showSearchField === false && this._showFullWidthSearch === false) {
-				this._showSearchField = true;
-			}
 		}
 	}
 
