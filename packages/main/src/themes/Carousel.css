@@ -157,6 +157,10 @@
     align-items: center;
 }
 
+.ui5-carousel-navigation:empty {
+    width: 1rem;
+}
+
 .ui5-carousel-navigation-dot {
     box-sizing: border-box;
     width: var(--ui5_carousel_inactive_dot_size);
@@ -168,7 +172,7 @@
     transition: background-color .1s ease-in;
 }
 
-.ui5-carousel-navigation-dot[active] {
+.ui5-carousel-navigation-dot.ui5-carousel-navigation-dot--active {
     width: .5rem;
     height: .5rem;
     margin: 0 .25rem;

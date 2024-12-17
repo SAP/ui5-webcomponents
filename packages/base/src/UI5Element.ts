@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
+import type { JSX } from "./jsx-runtime.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -22,22 +23,26 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
-import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
+import executeTemplate from "./renderer/executeTemplate.js";
+import { shouldScopeCustomElement } from "./CustomElementsScopeUtils.js";
+import type { TemplateFunction } from "./renderer/executeTemplate.js";
 import type {
 	AccessibilityInfo,
 	PromiseResolve,
 	ComponentStylesData,
 	ClassMap,
 } from "./types.js";
-import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import type { IFormInputElement } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getI18nBundle } from "./i18nBundle.js";
+import { fetchCldr } from "./asset-registries/LocaleData.js";
+import getLocale from "./locale/getLocale.js";
 
 const DEV_MODE = true;
 let autoId = 0;
@@ -45,15 +50,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => void;
-
-type RendererOptions = {
-	/**
-	 * An object to use as the `this` value for event listeners. It's often
-	 * useful to set this to the host component rendering a template.
-	 */
-	host?: object,
-}
+type Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => void;
 
 type ChangeInfo = {
 	type: "property" | "slot",
@@ -70,6 +67,8 @@ type InvalidationInfo = ChangeInfo & { target: UI5Element };
 type ChildChangeListener = (param: InvalidationInfo) => void;
 
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
+
+type SlottedChild = Record<string, any>;
 
 const defaultConverter = {
 	fromAttribute(value: string | null, type: unknown) {
@@ -137,6 +136,23 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 	} while (proto && proto !== HTMLElement.prototype);
 }
 
+type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
+type Equal<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? true : false
+
+// JSX support
+type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
+// type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: T[Property] extends IsAny<T> ? any : (e: CustomEvent<T[Property]>) => void }
+type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
+? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
+: T;
+type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
+
+type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref";
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
+
 /**
  * @class
  * Base class for all UI5 Web Components
@@ -145,6 +161,11 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
+	eventDetails!: NotEqual<this, UI5Element> extends true ? object : {
+		[k: string]: any
+	};
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"]>
+	_jsxProps!: Pick<JSX.AllHTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
@@ -158,7 +179,8 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	_internals?: ElementInternals;
+	_internals: ElementInternals;
+	_individualSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -203,6 +225,7 @@ abstract class UI5Element extends HTMLElement {
 				this.initializedProperties.set(propertyName, value);
 			}
 		});
+		this._internals = this.attachInternals();
 
 		this._initShadowRoot();
 	}
@@ -259,7 +282,7 @@ abstract class UI5Element extends HTMLElement {
 			// when an element is connected, check if it exists in the `dependencies` of the parent
 			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
 				const klass = rootNode.host.constructor as typeof UI5Element;
-				const hasDependency = getTagsToScope(rootNode.host).includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
+				const hasDependency = klass.tagsToScope.includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
 				if (!hasDependency) {
 					// eslint-disable-next-line no-console
 					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
@@ -297,6 +320,10 @@ abstract class UI5Element extends HTMLElement {
 
 		if (!this._inDOM) { // Component removed from DOM while _processChildren was running
 			return;
+		}
+
+		if (!ctor.asyncFinished) {
+			await ctor.definePromise;
 		}
 
 		renderImmediately(this);
@@ -434,7 +461,7 @@ abstract class UI5Element extends HTMLElement {
 			if (slotData.individualSlots) {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
-				(child as Record<string, any>)._individualSlot = `${slotName}-${nextIndex}`;
+				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements
@@ -613,7 +640,7 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 
-		attachFormElementInternals(this);
+		updateFormValue(this);
 	}
 
 	static get formAssociated() {
@@ -645,16 +672,20 @@ abstract class UI5Element extends HTMLElement {
 				// eslint-disable-next-line
 				console.error(`[UI5-FWK] numeric value for property [${name}] of component [${tag}] is missing "{ type: Number }" in its property decorator. Attribute conversion will treat it as a string. If this is intended, pass the value converted to string, otherwise add the type to the property decorator`);
 			}
+			if (typeof newValue === "string" && propData.type && propData.type !== String) {
+				// eslint-disable-next-line
+				console.error(`[UI5-FWK] string value for property [${name}] of component [${tag}] which has a non-string type [${propData.type}] in its property decorator. Attribute conversion will stop and keep the string value in the property.`);
+			}
 		}
 
 		const newAttrValue = converter.toAttribute(newValue, propData.type);
+		this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 		if (newAttrValue === null || newAttrValue === undefined) { // null means there must be no attribute for the current value of the property
-			this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 			this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
-			this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 		} else {
-			this.setAttribute(attrName, newAttrValue);
+			this.setAttribute(attrName, newAttrValue); // setting attributes from properties should not trigger the property setter again
 		}
+		this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 	}
 
 	/**
@@ -794,17 +825,20 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		this.onBeforeRendering();
-		if (!this._rendered) {
-			// first time rendering, previous setters might have been initializers from the constructor - update attributes here
-			this.updateAttributes();
+		try	{
+			this.onBeforeRendering();
+
+			if (!this._rendered) {
+				// first time rendering, previous setters might have been initializers from the constructor - update attributes here
+				this.updateAttributes();
+			}
+
+			// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
+			this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
+		} finally {
+			// always resume normal invalidation handling
+			this._suppressInvalidation = false;
 		}
-
-		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
-		this._componentStateFinalizedEventProvider.fireEvent("componentStateFinalized");
-
-		// resume normal invalidation handling
-		this._suppressInvalidation = false;
 
 		// Update the shadow root with the render result
 		/*
@@ -931,13 +965,44 @@ abstract class UI5Element extends HTMLElement {
 	 * @param cancelable - true, if the user can call preventDefault on the event object
 	 * @param bubbles - true, if the event bubbles
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 * @deprecated use fireDecoratorEvent instead
 	 */
 	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true): boolean {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
-		const camelCaseEventName = kebabToCamelCase(name);
+		const pascalCaseEventName = kebabToPascalCase(name);
 
-		if (camelCaseEventName !== name) {
-			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable, bubbles);
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
+		}
+
+		return eventResult;
+	}
+
+	/**
+	 * Fires a custom event, configured via the "event" decorator.
+	 * @public
+	 * @param name - name of the event
+	 * @param data - additional data for the event
+	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
+	 */
+	fireDecoratorEvent<N extends keyof this["eventDetails"]>(name: N, data?: this["eventDetails"][N] | undefined): boolean {
+		const eventData = this.getEventData(name as string);
+		const cancellable = eventData ? eventData.cancelable : false;
+		const bubbles = eventData ? eventData.bubbles : false;
+
+		const eventResult = this._fireEvent(name as string, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name as string);
+
+		// pascal events are more convinient for native react usage
+		// live-change:
+		//	 Before: onlive-change
+		//	 After: onLiveChange
+		if (pascalCaseEventName !== name) {
+			return eventResult && this._fireEvent(pascalCaseEventName, data, cancellable, bubbles);
 		}
 
 		return eventResult;
@@ -970,6 +1035,12 @@ abstract class UI5Element extends HTMLElement {
 
 		// Return false if any of the two events was prevented (its result was false).
 		return normalEventResult && noConflictEventResult;
+	}
+
+	getEventData(name: string) {
+		const ctor = this.constructor as typeof UI5Element;
+		const eventMap = ctor.getMetadata().getEvents();
+		return eventMap[name];
 	}
 
 	/**
@@ -1040,6 +1111,22 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
+	}
+
+	/**
+	 * Returns all tags, used inside component's template subject to scoping.
+	 * returns {Array[]} // TODO add @
+	 * @private
+	 */
+	static get tagsToScope(): Array<string> {
+		const componentTag = this.getMetadata().getPureTag();
+		const tagsToScope = this.getUniqueDependencies().map((dep: typeof UI5Element) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+
+		if (shouldScopeCustomElement(componentTag)) {
+			tagsToScope.push(componentTag);
+		}
+
+		return tagsToScope;
 	}
 
 	/**
@@ -1188,32 +1275,53 @@ abstract class UI5Element extends HTMLElement {
 	}
 
 	/**
-	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
-	 */
-	static whenDependenciesDefined(): Promise<Array<typeof UI5Element>> {
-		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
-	}
-
-	/**
 	 * Hook that will be called upon custom element definition
 	 *
 	 * @protected
+	 * @deprecated use the "i18n" decorator for fetching message bundles and the "cldr" option in the "customElements" decorator for fetching CLDR
 	 */
 	static async onDefine(): Promise<void> {
 		return Promise.resolve();
 	}
 
+	static fetchI18nBundles() {
+		return Promise.all(Object.entries(this.getMetadata().getI18n()).map(pair => {
+			const { bundleName } = pair[1];
+			return getI18nBundle(bundleName);
+		}));
+	}
+
+	static fetchCLDR() {
+		if (this.getMetadata().needsCLDR()) {
+			return fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript());
+		}
+		return Promise.resolve();
+	}
+
+	static asyncFinished: boolean;
+	static definePromise: Promise<void> | undefined;
+
 	/**
 	 * Registers a UI5 Web Component in the browser window object
 	 * @public
 	 */
-	static async define(): Promise<typeof UI5Element> {
-		await boot();
-
-		await Promise.all([
-			this.whenDependenciesDefined(),
-			this.onDefine(),
-		]);
+	static define(): typeof UI5Element {
+		const defineSequence = async () => {
+			await boot(); // boot must finish first, because it initializes configuration
+			const result = await Promise.all([
+				this.fetchI18nBundles(), // uses configuration
+				this.fetchCLDR(),
+				this.onDefine(),
+			]);
+			const [i18nBundles] = result;
+			Object.entries(this.getMetadata().getI18n()).forEach((pair, index) => {
+				const propertyName = pair[0];
+				const targetClass = pair[1].target;
+				(targetClass as Record<string, any>)[propertyName] = i18nBundles[index];
+			});
+			this.asyncFinished = true;
+		};
+		this.definePromise = defineSequence();
 
 		const tag = this.getMetadata().getTag();
 
@@ -1237,6 +1345,7 @@ abstract class UI5Element extends HTMLElement {
 			registerTag(tag);
 			customElements.define(tag, this as unknown as CustomElementConstructor);
 		}
+
 		return this;
 	}
 
@@ -1262,10 +1371,10 @@ abstract class UI5Element extends HTMLElement {
 		return this._metadata;
 	}
 
-	get validity() { return this._internals?.validity; }
-	get validationMessage() { return this._internals?.validationMessage; }
-	checkValidity() { return this._internals?.checkValidity(); }
-	reportValidity() { return this._internals?.reportValidity(); }
+	get validity() { return this._internals.validity; }
+	get validationMessage() { return this._internals.validationMessage; }
+	checkValidity() { return this._internals.checkValidity(); }
+	reportValidity() { return this._internals.reportValidity(); }
 }
 
 /**
@@ -1281,6 +1390,7 @@ export {
 };
 export type {
 	ChangeInfo,
+	InvalidationInfo,
 	Renderer,
-	RendererOptions,
+	SlottedChild,
 };

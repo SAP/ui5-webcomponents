@@ -1,18 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
 import type { ITimelineItem } from "./Timeline.js";
-import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import TimelineItemTemplate from "./TimelineItemTemplate.js";
+import type TimelineLayout from "./types/TimelineLayout.js";
 // Styles
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
-
-const SHORT_LINE_WIDTH = "ShortLineWidth";
-const LARGE_LINE_WIDTH = "LargeLineWidth";
 
 /**
  * @class
@@ -24,11 +22,10 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
- * @slot {Node[]} default - Determines the description of the `ui5-timeline-item`.
  */
 @customElement({
 	tag: "ui5-timeline-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TimelineItemCss,
 	template: TimelineItemTemplate,
 	dependencies: [
@@ -44,8 +41,13 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * attribute is not set.
  * @public
  */
-@event("name-click")
+@event("name-click", {
+	bubbles: true,
+})
 class TimelineItem extends UI5Element implements ITimelineItem {
+	eventDetails!: {
+		"name-click": void
+	}
 	/**
 	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
@@ -89,8 +91,27 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	@property()
 	subtitleText?: string;
 
+	/**
+	 * Defines the content of the `ui5-timeline-item`.
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<Node>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	firstItemInTimeline = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	isNextItemGroup = false;
+
 	@property({ noAttribute: true })
-	forcedTabIndex?: string;
+	forcedTabIndex = "-1";
 
 	/**
 	 * Defines the items orientation.
@@ -104,15 +125,41 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * Defines the indicator line width.
 	 * @private
 	 */
-	@property()
+	@property({ noAttribute: true })
 	forcedLineWidth?: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hideBubble = false;
+
+	/**
+	 * Marks the last `<ui5-timeline-item>`
+	 * @private
+	 */
+	@property({ type: Boolean })
+	lastItem = false;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hidden = false;
+
+	/**
+	 * Defines the position of the item in a group.
+	 * @private
+	 */
+	@property({ type: Number })
+	positionInGroup?: number;
 
 	constructor() {
 		super();
 	}
 
 	onNamePress() {
-		this.fireEvent("name-click", {});
+		this.fireDecoratorEvent("name-click");
 	}
 
 	/**
@@ -122,19 +169,8 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();
 	}
 
-	get classes() {
-		return {
-			indicator: {
-				"ui5-tli-indicator": true,
-				"ui5-tli-indicator-short-line": this.forcedLineWidth === SHORT_LINE_WIDTH,
-				"ui5-tli-indicator-large-line": this.forcedLineWidth === LARGE_LINE_WIDTH,
-			},
-			bubbleArrowPosition: {
-				"ui5-tli-bubble-arrow": true,
-				"ui5-tli-bubble-arrow--left": this.layout === TimelineLayout.Vertical,
-				"ui5-tli-bubble-arrow--top": this.layout === TimelineLayout.Horizontal,
-			},
-		};
+	get isGroupItem() {
+		return false;
 	}
 }
 

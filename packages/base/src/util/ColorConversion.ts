@@ -332,7 +332,7 @@ const HEXToRGB = (hex: string): ColorRGB => {
  * @param {Object} color Receives an object with the properties for each of the main colors(r, g, b)
  */
 const RGBtoHEX = (color: ColorRGB): string => {
-	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E"];
+	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
 	let hexValue = "#";
 
 	let divisionNumber = color.r / 16;

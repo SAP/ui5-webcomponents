@@ -31,6 +31,7 @@
 
 :host .ui5-step-input-input {
 	text-align: inherit;
+	height: inherit;
 }
 
 :host(:not([value-state]):not([readonly]):not([disabled])){
@@ -166,6 +167,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	height: inherit;
 }
 
 :host .ui5-step-input-input[text-align=left] {
@@ -203,16 +205,16 @@
 	right: var(--_ui5_step_input_button_right);
 }
 
-:host .ui5-step-icon *:not([clickable]),
-:host .ui5-step-icon *:not([clickable]):active,
-:host .ui5-step-icon *:not([clickable]):hover {
+:host .ui5-step-icon *:not(.ui5-step-input-icon--clickable),
+:host .ui5-step-icon *:not(.ui5-step-input-icon--clickable):active,
+:host .ui5-step-icon *:not(.ui5-step-input-icon--clickable):hover {
 	opacity: 0.5;
 	background-color: transparent;
 	color: var(--sapContent_IconColor);
 }
 
-:host .ui5-step-icon :not([clickable]) *:hover,
-:host .ui5-step-icon :not([clickable]) *:active {
+:host .ui5-step-icon :not(.ui5-step-input-icon--clickable) *:hover,
+:host .ui5-step-icon :not(.ui5-step-input-icon--clickable) *:active {
 	background-color: var(--sapField_Background);
 	color: var(--sapContent_IconColor);
 }

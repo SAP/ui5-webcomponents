@@ -1,11 +1,10 @@
 import { isSpace, isF2 } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 // Texts
@@ -23,6 +22,7 @@ import {
  * @public
  */
 class NotificationListItemBase extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"];
 	/**
 	 * Defines the `titleText` of the item.
 	 * @default undefined
@@ -59,6 +59,7 @@ class NotificationListItemBase extends ListItemBase {
 	@property({ type: Number })
 	loadingDelay = 1000;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nFioriBundle: I18nBundle;
 
 	get hasTitleText() {
@@ -75,7 +76,7 @@ class NotificationListItemBase extends ListItemBase {
 	async _onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
-		if (isSpace(e) && getEventMark(e) !== "button") {
+		if (isSpace(e) && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			e.preventDefault();
 			return;
 		}
@@ -103,10 +104,6 @@ class NotificationListItemBase extends ListItemBase {
 		const aContent = getTabbableElements(this.getHeaderDomRef()!);
 
 		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
-	}
-
-	static async onDefine() {
-		NotificationListItemBase.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

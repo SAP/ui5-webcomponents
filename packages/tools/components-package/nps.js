@@ -3,7 +3,7 @@ const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
 let websiteBaseUrl = "/";
 
-if (process.env.DEPOY) {
+if (process.env.DEPLOY) {
 	websiteBaseUrl = "/ui5-webcomponents/";
 } else if (process.env.DEPLOY_NIGHTLY) {
 	websiteBaseUrl = "/ui5-webcomponents/nightly/";
@@ -64,11 +64,11 @@ const getScripts = (options) => {
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
 			default: `${tsCrossEnv} nps prepare.all`,
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copyProps" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		prepare: {
-			default: `${tsCrossEnv} nps clean prepare.all copy prepare.typescript generateAPI`,
+			default: `${tsCrossEnv} nps clean prepare.all ${options.legacy ? "copy" : ""} copyProps prepare.typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 			typescript: tsCommandOld,
@@ -99,19 +99,19 @@ const getScripts = (options) => {
 			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
+		copyProps: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.{js,json}" dist/`,
-			// srcGenerated2: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.{js,json}" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/i18n/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.typescript" ${options.legacy ? '"nps watch.src"' : ""} "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommandStandalone,
-			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			props: 'nps "copyProps --watch --safe --skip-initial-copy"',
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 			styles: {
 				default: 'concurrently "nps watch.styles.themes" "nps watch.styles.components"',
 				themes: 'nps "build.styles.themes -w"',
@@ -122,8 +122,8 @@ const getScripts = (options) => {
 		},
 		start: "nps prepare watch.devServer",
 		test: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-cy-ci": `yarn cypress run --component --browser chrome --config-file config/cypress.config.js`,
-		"test-cy-open": `yarn cypress open --component --browser chrome --config-file config/cypress.config.js`,
+		"test-cy-ci": `yarn cypress run --component --browser chrome`,
+		"test-cy-open": `yarn cypress open --component --browser chrome`,
 		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
@@ -137,8 +137,8 @@ const getScripts = (options) => {
 				replace: `node "${LIB}/scoping/scope-test-pages.js" test/pages/scoped demo`,
 			},
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
-			watch: 'concurrently "nps watch.templates" "nps watch.src" "nps watch.props" "nps watch.styles"',
-			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
+			watch: 'concurrently "nps watch.templates" "nps watch.props" "nps watch.styles"',
+			bundle: `node ${LIB}/dev-server/dev-server.mjs ${viteConfig}`,
 		},
 		generateAPI: {
 			default: tsOption ? "nps generateAPI.generateCEM generateAPI.validateCEM" : "",

@@ -156,12 +156,22 @@ const findImportPath = (ts, sourceFile, typeName, modulePath) => {
                     ?.replace("src", "dist")?.replace(".ts", ".js") || undefined
             );
         } else {
-            const packageName = Object.keys(packageJSON?.dependencies || {}).find(
-                (dependency) =>
-                    currentModuleSpecifier?.text?.startsWith(dependency)
-            );
-            return currentModuleSpecifier?.text
-                ?.replace(`${packageName}/`, "") || undefined;
+            // my-package/test
+            // my-package
+            // @scope/my-package
+            // my.package
+            // _mypackage
+            // mypackage-
+            // scope/my-package/test
+            // @scope/my-package/test
+            const match = currentModuleSpecifier?.text.match(/^((@([a-z0-9._-]+)\/)?([a-z0-9._-]+))/);
+            let packageName;
+
+            if (match) {
+                packageName = match[1];
+            }
+
+            return packageName || undefined;
         }
     }
 };
@@ -222,7 +232,7 @@ const commonTags = ["public", "protected", "private", "since", "deprecated"];
 const allowedTags = {
     field: [...commonTags, "formEvents", "formProperty", "default"],
     slot: [...commonTags, "default"],
-    event: [...commonTags, "param", "allowPreventDefault", "native"],
+    event: [...commonTags, "param", "native", "allowPreventDefault"],
     eventParam: [...commonTags],
     method: [...commonTags, "param", "returns", "override"],
     class: [...commonTags, "constructor", "class", "abstract", "experimental", "implements", "extends", "slot", "csspart"],
@@ -283,7 +293,7 @@ const findAllTags = (jsDoc, tagName) => {
 };
 
 const validateJSDocTag = (tag) => {
-    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "native", "formProperty", "constructor", "override"];
+    const booleanTags = ["private", "protected", "public", "abstract", "native", "allowPreventDefault", "formProperty", "constructor", "override"];
     let tagName = tag.tag;
 
     if (booleanTags.includes(tag.tag)) {

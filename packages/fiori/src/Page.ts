@@ -1,16 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
-import PageTemplate from "./generated/templates/PageTemplate.lit.js";
+import PageTemplate from "./PageTemplate.js";
 
 // Styles
 import PageCss from "./generated/themes/Page.css.js";
@@ -27,7 +27,7 @@ import PageCss from "./generated/themes/Page.css.js";
  * The top most area of the page is occupied by the header. The standard header includes a navigation button and a title.
  * #### Content
  * The content occupies the main part of the page. Only the content area is scrollable by default.
- * This can be prevented by setting  `enableScrolling` to `false`.
+ * This can be prevented by setting `noScrolling` to `true`.
  * #### Footer
  * The footer is optional and occupies the part above the bottom part of the content. Alternatively, the footer can be fixed at the bottom of the page by enabling the `fixedFooter` property.
  *
@@ -47,10 +47,10 @@ import PageCss from "./generated/themes/Page.css.js";
 @customElement({
 	tag: "ui5-page",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [
-		browserScrollbarCSS,
 		PageCss,
+		getEffectiveScrollbarStyle(),
 	],
 	template: PageTemplate,
 })
@@ -93,14 +93,6 @@ class Page extends UI5Element {
 	hideFooter = false;
 
 	/**
-	 * Defines the current media query size.
-	 * @private
-	 * @since 1.0.0-rc.15
-	 */
-	@property()
-	mediaRange = "S";
-
-	/**
 	 * Defines the header HTML Element.
 	 * @public
 	 */
@@ -121,24 +113,12 @@ class Page extends UI5Element {
 	@slot()
 	footer!: Array<HTMLElement>;
 
-	_updateMediaRange: ResizeObserverCallback;
-
 	constructor() {
 		super();
-
-		this._updateMediaRange = this.updateMediaRange.bind(this);
 	}
 
-	onEnterDOM() {
-		ResizeHandler.register(this, this._updateMediaRange);
-	}
-
-	onExitDOM() {
-		ResizeHandler.deregister(this, this._updateMediaRange);
-	}
-
-	updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
+	onEnterDOM(): void {
+		this.style.setProperty(getScopedVarName("--_ui5-page-animation-duration"), getAnimationMode() === AnimationMode.None ? "0s" : "0.35s");
 	}
 
 	get _contentBottom() {
@@ -157,10 +137,10 @@ class Page extends UI5Element {
 		return {
 			content: {
 				"padding-bottom": this.footer.length && this._contentPaddingBottom,
+				"scroll-padding-bottom": this.footer.length && this._contentPaddingBottom,
 				"bottom": this.footer.length && this._contentBottom,
 				"top": this._contentTop,
 			},
-			footer: {},
 		};
 	}
 }

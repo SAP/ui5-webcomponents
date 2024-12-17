@@ -1,9 +1,10 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "./MenuItem.js";
 import NavigationMenu from "./NavigationMenu.js";
-import NavigationMenuItemTemplate from "./generated/templates/NavigationMenuItemTemplate.lit.js";
+import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
 
 // Styles
 import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js";
@@ -35,6 +36,7 @@ import {
  * @private
  */
 @customElement({
+	renderer: jsxRenderer,
 	tag: "ui5-navigation-menu-item",
 	template: NavigationMenuItemTemplate,
 	styles: [MenuItem.styles, navigationMenuItemCss],
@@ -81,7 +83,7 @@ class NavigationMenuItem extends MenuItem {
 
 	get _accInfo() {
 		const accInfoSettings = {
-			role: this.href ? "none" : "treeitem",
+			role: this.href ? "none" as const : "treeitem" as const,
 		};
 
 		return { ...super._accInfo, ...accInfoSettings };

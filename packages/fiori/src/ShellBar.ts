@@ -3,11 +3,10 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type AriaRole from "@ui5/webcomponents-base/dist/types/AriaRole.js";
-import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
@@ -18,14 +17,19 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
-import type { Timeout, ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import type {
+	Timeout,
+	ClassMap,
+	AccessibilityAttributes,
+	AriaRole,
+} from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
@@ -48,9 +52,8 @@ import {
 	SHELLBAR_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
-type LowercaseString<T> = T extends string ? Lowercase<T> : never;
 type ShellBarLogoAccessibilityAttributes = {
-	role?: Extract<LowercaseString<AriaRole>, "button" | "link">,
+	role?: Extract<AriaRole, "button" | "link">,
 	name?: string,
 }
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
@@ -161,17 +164,12 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  *
  * Fired, when the notification icon is activated.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event<ShellBarNotificationsClickEventDetail>("notifications-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
+@event("notifications-click", {
+	cancelable: true,
+	bubbles: true,
 })
 
 /**
@@ -179,30 +177,20 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event<ShellBarProfileClickEventDetail>("profile-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
+@event("profile-click", {
+	bubbles: true,
 })
 
 /**
  * Fired, when the product switch icon is activated.
  *
  * **Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @public
  */
-@event<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
+@event("product-switch-click", {
+	cancelable: true,
+	bubbles: true,
 })
 
 /**
@@ -211,13 +199,8 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event<ShellBarLogoClickEventDetail>("logo-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		targetRef: { type: HTMLElement },
-	},
+@event("logo-click", {
+	bubbles: true,
 })
 
 /**
@@ -228,33 +211,34 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.10
  * @public
  */
-@event<ShellBarMenuItemClickEventDetail>("menu-item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("menu-item-click", {
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
  * Fired, when the search button is activated.
  *
  * **Note:** You can prevent expanding/collapsing of the search field by calling `event.preventDefault()`.
- * @allowPreventDefault
  * @param {HTMLElement} targetRef dom ref of the activated element
  * @param {Boolean} searchFieldVisible whether the search field is visible
  * @public
  */
 
-@event<ShellBarSearchButtonEventDetail>("search-button-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-		searchFieldVisible: { type: Boolean },
-	},
+@event("search-button-click", {
+	cancelable: true,
+	bubbles: true,
 })
 
 class ShellBar extends UI5Element {
+	eventDetails!: {
+		"notifications-click": ShellBarNotificationsClickEventDetail,
+		"profile-click": ShellBarProfileClickEventDetail,
+		"product-switch-click": ShellBarProductSwitchClickEventDetail,
+		"logo-click": ShellBarLogoClickEventDetail,
+		"menu-item-click": ShellBarMenuItemClickEventDetail,
+		"search-button-click": ShellBarSearchButtonEventDetail,
+	}
 	/**
 	 * Defines the `primaryTitle`.
 	 *
@@ -320,7 +304,7 @@ class ShellBar extends UI5Element {
 	 * - **notifications** - `notifications.expanded` and `notifications.hasPopup`.
 	 * - **profile** - `profile.expanded`, `profile.hasPopup` and `profile.name`.
 	 * - **product** - `product.expanded` and `product.hasPopup`.
-	 * - **search** - `search.expanded` and `search.hasPopup`.
+	 * - **search** - `search.hasPopup`.
 	 * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
 	 *
 	 * The accessibility attributes support the following values:
@@ -451,6 +435,7 @@ class ShellBar extends UI5Element {
 	@slot()
 	midContent!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 	overflowPopover?: Popover | null;
 	menuPopover?: Popover | null;
@@ -526,17 +511,17 @@ class ShellBar extends UI5Element {
 	}
 
 	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
-		const shouldContinue = this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+		const shouldContinue = this.fireDecoratorEvent("menu-item-click", {
 			item: e.detail.selectedItems[0],
-		}, true);
+		});
 		if (shouldContinue) {
 			this.menuPopover!.open = false;
 		}
 	}
 
 	_logoPress() {
-		this.fireEvent<ShellBarLogoClickEventDetail>("logo-click", {
-			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo")!,
+		this.fireDecoratorEvent("logo-click", {
+			targetRef: this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-logo")!,
 		});
 	}
 
@@ -730,10 +715,10 @@ class ShellBar extends UI5Element {
 
 	_handleSearchIconPress() {
 		const searchButtonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button")!;
-		const defaultPrevented = !this.fireEvent<ShellBarSearchButtonEventDetail>("search-button-click", {
+		const defaultPrevented = !this.fireDecoratorEvent("search-button-click", {
 			targetRef: searchButtonRef,
 			searchFieldVisible: this.showSearchField,
-		}, true);
+		});
 
 		if (defaultPrevented) {
 			return;
@@ -793,13 +778,13 @@ class ShellBar extends UI5Element {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
-		}, true);
+		});
 	}
 
 	_handleProfilePress() {
-		this.fireEvent<ShellBarProfileClickEventDetail>("profile-click", {
+		this.fireDecoratorEvent("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
 	}
@@ -812,9 +797,9 @@ class ShellBar extends UI5Element {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
+		this._defaultItemPressPrevented = !this.fireDecoratorEvent("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
-		}, true);
+		});
 	}
 
 	/**
@@ -1159,7 +1144,6 @@ class ShellBar extends UI5Element {
 	}
 
 	get accInfo() {
-		const searchExpanded = this.accessibilityAttributes.search?.expanded;
 		const overflowExpanded = this.accessibilityAttributes.overflow?.expanded;
 
 		return {
@@ -1188,13 +1172,12 @@ class ShellBar extends UI5Element {
 				"title": this._searchText,
 				"accessibilityAttributes": {
 					hasPopup: this.accessibilityAttributes.search?.hasPopup,
-					expanded: searchExpanded === undefined ? this.showSearchField : searchExpanded,
 				},
 			},
 			overflow: {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
-					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || AriaHasPopup.Menu.toLowerCase(),
+					hasPopup: this.accessibilityAttributes.overflow?.hasPopup || "menu" as const,
 					expanded: overflowExpanded === undefined ? this._overflowPopoverExpanded : overflowExpanded,
 				},
 			},
@@ -1203,10 +1186,6 @@ class ShellBar extends UI5Element {
 
 	get accLogoRole() {
 		return this.accessibilityAttributes.logo?.role || "button";
-	}
-
-	static async onDefine() {
-		ShellBar.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
 }
 

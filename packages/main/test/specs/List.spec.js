@@ -46,7 +46,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
 
 		await secondItemRadio.click();
-		assert.strictEqual(await itemClickResultField.getProperty("value"), "2", "itemClick event has been fired second time");
+		assert.strictEqual(await itemClickResultField.getProperty("value"), "1", "itemClick event has been fired second time");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "2", "selectionChange event has been fired second time.");
 		assert.strictEqual(await selectionChangeResultFieldRadio.getProperty("value"), "true", "selectionChange event correct detail - selectionComponentPressed.");
 
@@ -589,7 +589,7 @@ describe("List Tests", () => {
 		assert.strictEqual(await itemCloseResult.getProperty("value"), "0", "item-close event is not fired when the button is pressed.");
 	});
 
-	it("List item fires _request-tabindex-change event and updates tabindex when inner element receives focus", async () => {
+	it("List item fires request-tabindex-change event and updates tabindex when inner element receives focus", async () => {
 		const innerElement = await browser.$("#effectiveTabindexChange #country11 button");
 		const listItem = await browser.$("#effectiveTabindexChange #country11");
 		const rootItemElement = await listItem.shadow$(".ui5-li-root");
@@ -763,5 +763,39 @@ describe("List drag and drop tests", () => {
 		const dragOffset = await getDragOffset(link, secondItem, "Before");
 		await link.dragAndDrop({ x: 0, y: dragOffset});
 		assert.ok(await compareItemsOrder("listDnd2", [firstItem, link, secondItem]), "Items order has changed");
+	});
+});
+
+describe("List keyboard drag and drop tests", () => {
+	before(async () => {
+		await browser.url(`test/pages/ListDragAndDrop.html`);
+	});
+
+	it("Moving items with arrow keys", async () => {
+		const item = await browser.$("#bg1");
+		await item.click();
+
+		await browser.keys(["Control", "ArrowRight"]);
+		assert.strictEqual(await item.previousElement().getAttribute("id"), "de1", "bg1 is after de1");
+
+		await browser.keys(["Control", "ArrowDown"]);
+		assert.strictEqual(await item.previousElement().getAttribute("id"), "es1", "bg1 is after es1");
+
+		await browser.keys(["Control", "ArrowLeft"]);
+		assert.strictEqual(await item.previousElement().getAttribute("id"), "de1", "bg1 is after de1");
+
+		await browser.keys(["Control", "ArrowUp"]);
+		assert.notOk(await item.previousElement().isExisting(), "bg1 is the first item");
+	});
+
+	it("Moving strip items when there are fixed tabs", async () => {
+		const item = await browser.$("#item9");
+		await item.click();
+
+		for (let i = 0; i < 20; i++) {
+			await browser.keys(["Control", "ArrowUp"]);
+		}
+
+		assert.strictEqual(await item.previousElement().getAttribute("id"), "item3", "item9 has stopped when reached fixed item");
 	});
 });

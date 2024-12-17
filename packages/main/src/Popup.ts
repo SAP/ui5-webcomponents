@@ -1,10 +1,10 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
 	isChrome,
@@ -12,16 +12,16 @@ import {
 	isPhone,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyles.js";
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import Title from "./Title.js";
-import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
+import PopupTemplate from "./PopupTemplate.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
@@ -75,7 +75,7 @@ type PopupBeforeCloseEventDetail = {
  * @public
  */
 @customElement({
-	renderer: litRender,
+	renderer: jsxRender,
 	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
 	dependencies: [
@@ -83,37 +83,30 @@ type PopupBeforeCloseEventDetail = {
 	],
 })
 /**
- * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
+ * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening.
  * @public
- * @allowPreventDefault
  */
-@event("before-open")
+@event("before-open", {
+	cancelable: true,
+})
 
 /**
- * Fired after the component is opened. **This event does not bubble.**
+ * Fired after the component is opened.
  * @public
  */
 @event("open")
 
 /**
- * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**
+ * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing.
  * @public
- * @allowPreventDefault
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  */
-@event<PopupBeforeCloseEventDetail>("before-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		escPressed: {
-			type: Boolean,
-		},
-	},
+@event("before-close", {
+	cancelable: true,
 })
 
 /**
- * Fired after the component is closed. **This event does not bubble.**
+ * Fired after the component is closed.
  * @public
  */
 @event("close")
@@ -122,8 +115,18 @@ type PopupBeforeCloseEventDetail = {
  * Fired whenever the popup content area is scrolled
  * @private
  */
-@event("scroll")
+@event("scroll", {
+	bubbles: true,
+})
 abstract class Popup extends UI5Element {
+	eventDetails!: {
+		"before-open": void
+		"open": void
+		"before-close": PopupBeforeCloseEventDetail
+		"close": void
+		"scroll": PopupScrollEventDetail
+	}
+
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
@@ -252,6 +255,10 @@ abstract class Popup extends UI5Element {
 		}
 
 		this.tabIndex = -1;
+
+		if (this.open) {
+			this.showPopover();
+		}
 	}
 
 	onExitDOM() {
@@ -293,7 +300,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent("before-open", {}, true, false);
+		const prevented = !this.fireDecoratorEvent("before-open");
 
 		if (prevented || this._opened) {
 			return;
@@ -326,7 +333,7 @@ abstract class Popup extends UI5Element {
 		await this.applyInitialFocus();
 
 		if (this.isConnected) {
-			this.fireEvent("open", {}, false, false);
+			this.fireDecoratorEvent("open");
 		}
 	}
 
@@ -370,7 +377,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<PopupScrollEventDetail>("scroll", {
+		this.fireDecoratorEvent("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -509,7 +516,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed });
 		if (prevented) {
 			return;
 		}
@@ -531,7 +538,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("close", {}, false, false);
+		this.fireDecoratorEvent("close");
 	}
 
 	/**
@@ -598,11 +605,11 @@ abstract class Popup extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-popup-root")!;
 	}
 
-	get _role(): string | undefined {
-		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : this.accessibleRole.toLowerCase();
+	get _role() {
+		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : toLowercaseEnumValue(this.accessibleRole);
 	}
 
-	get _ariaModal(): string | undefined {
+	get _ariaModal(): "true" | undefined {
 		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
@@ -621,7 +628,6 @@ abstract class Popup extends UI5Element {
 		return {
 			root: {
 				"ui5-popup-root": true,
-				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 			content: {
 				"ui5-popup-content": true,
@@ -631,8 +637,4 @@ abstract class Popup extends UI5Element {
 }
 
 export default Popup;
-
-export type {
-	PopupScrollEventDetail,
-	PopupBeforeCloseEventDetail,
-};
+export type { PopupScrollEventDetail, PopupBeforeCloseEventDetail };

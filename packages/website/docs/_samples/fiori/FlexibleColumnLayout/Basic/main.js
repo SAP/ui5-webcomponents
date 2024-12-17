@@ -27,6 +27,8 @@ import "@ui5/webcomponents-icons/dist/ipad.js";
 import "@ui5/webcomponents-icons/dist/menu2.js";
 import "@ui5/webcomponents-icons/dist/menu.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import "@ui5/webcomponents-icons/dist/full-screen.js";
+import "@ui5/webcomponents-icons/dist/add.js";
 
 let midFullScreen = false;
 let endFullScreen = false;

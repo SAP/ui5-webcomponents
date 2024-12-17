@@ -2,17 +2,17 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
-import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
+import SegmentedButtonItemTemplate from "./SegmentedButtonItemTemplate.js";
 
 import type { IButton } from "./Button.js";
 import Icon from "./Icon.js";
@@ -41,7 +41,7 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
  */
 @customElement({
 	tag: "ui5-segmented-button-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SegmentedButtonItemTemplate,
 	styles: segmentedButtonItemCss,
 	dependencies: [Icon],
@@ -152,6 +152,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	get ariaDescription() {
@@ -206,11 +207,7 @@ class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButto
 	}
 
 	get showIconTooltip() {
-		return this.iconOnly && !this.tooltip;
-	}
-
-	static async onDefine() {
-		SegmentedButtonItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+		return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
 	}
 }
 

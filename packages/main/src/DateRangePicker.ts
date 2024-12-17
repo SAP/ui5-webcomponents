@@ -9,12 +9,11 @@ import {
 	DATERANGE_DESCRIPTION,
 	DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
-import DateRangePickerTemplate from "./generated/templates/DateRangePickerTemplate.lit.js";
+import DateRangePickerTemplate from "./DateRangePickerTemplate.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 
 import type {
@@ -22,6 +21,7 @@ import type {
 	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
 } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
+import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 const DEFAULT_DELIMITER = "-";
 
@@ -137,7 +137,7 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 	 * Required by DatePicker.js
 	 * @override
 	 */
-	get _calendarSelectionMode() {
+	get _calendarSelectionMode(): `${CalendarSelectionMode}` {
 		return "Range";
 	}
 
@@ -380,13 +380,6 @@ class DateRangePicker extends DatePicker implements IFormInputElement {
 		}
 
 		return "";
-	}
-
-	/**
-	 * @override
-	 */
-	get _calendarPickersMode() {
-		return CalendarPickersMode.DAY_MONTH_YEAR;
 	}
 }
 

@@ -152,6 +152,20 @@
 		<h3>DatePicker with format `yyyy` should open picker on years</h3>
 		<ui5-date-picker id="dpCalendarModeYears" format-pattern="yyyy"></ui5-date-picker>
 
+		<section>
+			<ui5-title>DatePicker with CalendarWeekNumbering ISO_8601</ui5-title>
+			<ui5-date-picker id="datepicker8" calendar-week-numbering="ISO_8601">
+			</ui5-date-picker>
+
+			<ui5-title>DatePicker with CalendarWeekNumbering MiddleEastern</ui5-title>
+			<ui5-date-picker id="datepicker9" calendar-week-numbering="MiddleEastern">
+			</ui5-date-picker>
+
+			<ui5-title>DatePicker with CalendarWeekNumbering WesternTraditional</ui5-title>
+			<ui5-date-picker id="datepicker10" calendar-week-numbering="WesternTraditional">
+			</ui5-date-picker>
+		</section>
+
 	</div>
 	<script>
 		var dp = document.getElementById('dp5');
@@ -207,6 +221,14 @@
 	
 		datePickerValueStateChangePrevented.addEventListener("value-state-change", function(e) {
 			e.preventDefault();
+	});
+
+	dpCalendarModeDays.addEventListener("ui5-open", function(e) {
+		console.log("Picker is opened");
+	});
+
+	dpCalendarModeDays.addEventListener("ui5-close", function(e) {
+		console.log("Picker is closed");
 	});
 
 	</script>

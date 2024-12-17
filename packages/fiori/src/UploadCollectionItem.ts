@@ -1,8 +1,9 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
@@ -36,7 +37,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import UploadCollectionItemTemplate from "./generated/templates/UploadCollectionItemTemplate.lit.js";
+import UploadCollectionItemTemplate from "./UploadCollectionItemTemplate.js";
 
 // Styles
 import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css.js";
@@ -59,6 +60,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 @customElement({
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
 	dependencies: [
@@ -77,7 +79,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * **Note:** This event is only available when `fileNameClickable` property is `true`.
  * @public
  */
-@event("file-name-click")
+@event("file-name-click", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `fileName` property gets changed.
@@ -86,7 +90,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * when the `ui5-upload-collection-item` `type` property is set to `Detail`.
  * @public
  */
-@event("rename")
+@event("rename", {
+	bubbles: true,
+})
 
 /**
  * Fired when the terminate button is pressed.
@@ -94,7 +100,9 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * **Note:** Terminate button is displayed when `uploadState` property is set to `Uploading`.
  * @public
  */
-@event("terminate")
+@event("terminate", {
+	bubbles: true,
+})
 
 /**
  * Fired when the retry button is pressed.
@@ -102,19 +110,34 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * **Note:** Retry button is displayed when `uploadState` property is set to `Error`.
  * @public
  */
-@event("retry")
+@event("retry", {
+	bubbles: true,
+})
 
 /**
  * @since 1.0.0-rc.8
  * @private
  */
-@event("_focus-requested")
+@event("focus-requested", {
+	bubbles: true,
+})
 
 /**
  * @private
  */
-@event("_uci-delete")
+@event("request-delete", {
+	bubbles: true,
+})
 class UploadCollectionItem extends ListItem {
+	eventDetails!: ListItem["eventDetails"] & {
+		"file-name-click": void;
+		"rename": void;
+		"terminate": void;
+		"retry": void;
+		"focus-requested": void;
+		"_uci-delete": void;
+		"request-delete": void;
+	}
 	/**
 	 * Holds an instance of `File` associated with this item.
 	 * @default null
@@ -214,14 +237,8 @@ class UploadCollectionItem extends ListItem {
 	@slot({ type: HTMLElement })
 	thumbnail!: Array<HTMLElement>;
 
+	@i18n("@ui5/webcomponents-fiori")
 	static i18nFioriBundle: I18nBundle;
-
-	static async onDefine() {
-		[UploadCollectionItem.i18nFioriBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents-fiori"),
-			super.onDefine(),
-		]);
-	}
 
 	/**
 	 * @override
@@ -280,7 +297,7 @@ class UploadCollectionItem extends ListItem {
 	_onRename() {
 		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
 		this.fileName = inp.value + this._fileExtension;
-		this.fireEvent("rename");
+		this.fireDecoratorEvent("rename");
 
 		this._editing = false;
 		this._focus();
@@ -292,10 +309,10 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
-	async _onRenameCancel(e: KeyboardEvent) {
+	async _onRenameCancel(e: KeyboardEvent | MouseEvent) {
 		this._editing = false;
 
-		if (isEscape(e)) {
+		if (isEscape(e as KeyboardEvent)) {
 			await renderFinished();
 			this.shadowRoot!.querySelector<Button>(`#${this._id}-editing-button`)!.focus();
 		} else {
@@ -310,15 +327,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireEvent("_focus-requested");
+		this.fireDecoratorEvent("focus-requested");
 	}
 
 	_onFileNameClick() {
-		this.fireEvent("file-name-click");
+		this.fireDecoratorEvent("file-name-click");
 	}
 
 	_onRetry() {
-		this.fireEvent("retry");
+		this.fireDecoratorEvent("retry");
 	}
 
 	_onRetryKeyup(e: KeyboardEvent) {
@@ -328,7 +345,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onTerminate() {
-		this.fireEvent("terminate");
+		this.fireDecoratorEvent("terminate");
 	}
 
 	_onTerminateKeyup(e: KeyboardEvent) {
@@ -338,7 +355,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onDelete() {
-		this.fireEvent("_uci-delete");
+		this.fireDecoratorEvent("request-delete");
 	}
 
 	getFocusDomRef() {

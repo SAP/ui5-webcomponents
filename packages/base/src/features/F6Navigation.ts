@@ -4,9 +4,23 @@ import { instanceOfUI5Element } from "../UI5Element.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
 import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
+import { getCurrentRuntimeIndex, compareRuntimes } from "../Runtimes.js";
+import getSharedResource from "../getSharedResource.js";
+
+type F6Registry = {
+	instance?: F6Navigation,
+}
+
+const currentRuntimeINdex = getCurrentRuntimeIndex();
+
+const shouldUpdate = (runtimeIndex: number | undefined) => {
+	if (runtimeIndex === undefined) {
+		return true;
+	}
+	return compareRuntimes(currentRuntimeINdex, runtimeIndex) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
+};
 
 class F6Navigation {
-	static _instance: F6Navigation;
 	keydownHandler: (event: KeyboardEvent) => void;
 	selectedGroup: HTMLElement | null = null;
 	groups: Array<HTMLElement> = [];
@@ -20,8 +34,16 @@ class F6Navigation {
 		document.addEventListener("keydown", this.keydownHandler);
 	}
 
+	removeEventListeners() {
+		document.removeEventListener("keydown", this.keydownHandler);
+	}
+
 	async groupElementToFocus(nextElement: HTMLElement) {
-		const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+		let nextElementDomRef = nextElement;
+
+		if (instanceOfUI5Element(nextElement)) {
+			nextElementDomRef = nextElement.getDomRef() || nextElement.firstElementChild as HTMLElement;
+		}
 
 		if (nextElementDomRef) {
 			if (isElementClickable(nextElementDomRef)) {
@@ -149,10 +171,6 @@ class F6Navigation {
 		elementToFocus?.focus();
 	}
 
-	removeEventListeners() {
-		document.removeEventListener("keydown", this.keydownHandler);
-	}
-
 	updateGroups() {
 		this.setSelectedGroup();
 		this.groups = getFastNavigationGroups(document.body);
@@ -181,12 +199,19 @@ class F6Navigation {
 		this.removeEventListeners();
 	}
 
-	static init() {
-		if (!this._instance) {
-			this._instance = new F6Navigation();
-		}
+	get _ui5RuntimeIndex() {
+		return currentRuntimeINdex;
+	}
 
-		return this._instance;
+	static init() {
+		const f6Registry = getSharedResource<F6Registry>("F6Registry", {});
+
+		if (!f6Registry.instance) {
+			f6Registry.instance = new F6Navigation();
+		} else if (shouldUpdate(f6Registry.instance?._ui5RuntimeIndex)) {
+			f6Registry.instance?.destroy();
+			f6Registry.instance = new F6Navigation();
+		}
 	}
 }
 

@@ -8,12 +8,12 @@ import styles from "./index.module.css";
 import { ThemeContext, ContentDensityContext, TextDirectionContext } from "@site/src/theme/Root";
 import { encodeToBase64, decodeFromBase64 } from "./share.js";
 import clsx from "clsx";
-import ShareIcon from "../../../local-cdn/local-cdn/icons/dist/v5/share-2.svg";
+import ShareIcon from "@ui5/webcomponents-icons/dist/v5/share-2.svg";
 import { Splitter } from 'react-splitter-light';
-import DownloadIcon from "../../../local-cdn/local-cdn/icons/dist/v5/download-from-cloud.svg";
-import EditIcon from "../../../local-cdn/local-cdn/icons/dist/v5/edit.svg";
-import ActionIcon from "../../../local-cdn/local-cdn/icons/dist/v5/action.svg";
-import HideIcon from "../../../local-cdn/local-cdn/icons/dist/v5/hide.svg";
+import DownloadIcon from "@ui5/webcomponents-icons/dist/v5/download-from-cloud.svg";
+import EditIcon from "@ui5/webcomponents-icons/dist/v5/edit.svg";
+import ActionIcon from "@ui5/webcomponents-icons/dist/v5/action.svg";
+import HideIcon from "@ui5/webcomponents-icons/dist/v5/hide.svg";
 import downloadSample from './download.js';
 import ExamplesMenu from '../ExamplesMenu/index.tsx';
 
@@ -61,30 +61,56 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
   const [copied, setCopied] = useState(false);
   const [ activeExample, setActiveExample ] = useState("");
 
-  function addImportMap(html) {
+  function calcImports() {
+    if (process.env.NODE_ENV === 'development' || siteConfig.customFields.ui5DeploymentType === "nightly") {
+      return {
+        "@ui5/webcomponents/": `${getHostBaseUrl()}local-cdn/main/`,
+        "@ui5/webcomponents-ai/": `${getHostBaseUrl()}local-cdn/ai/`,
+        "@ui5/webcomponents-fiori/": `${getHostBaseUrl()}local-cdn/fiori/`,
+        "@ui5/webcomponents-compat/": `${getHostBaseUrl()}local-cdn/compat/`,
+        "@ui5/webcomponents-base/jsx-runtime": `${getHostBaseUrl()}local-cdn/base/dist/jsx-runtime.js`,
+        "@ui5/webcomponents-base/": `${getHostBaseUrl()}local-cdn/base/`,
+        "@ui5/webcomponents-icons/": `${getHostBaseUrl()}local-cdn/icons/`,
+        "@ui5/webcomponents-localization/": `${getHostBaseUrl()}local-cdn/localization/`,
+        "@ui5/webcomponents-theming/": `${getHostBaseUrl()}local-cdn/theming/`,
+        "lit-html": `${getHostBaseUrl()}local-cdn/lit-html/lit-html.js`,
+        "lit-html/": `${getHostBaseUrl()}local-cdn/lit-html/`,
+        "@zxing/library/": `${getHostBaseUrl()}local-cdn/zxing/`,
+      };
+    } else {
+      return {
+        "@ui5/webcomponents/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-ai/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-ai@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-fiori/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-fiori@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-compat/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-compat@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-base/jsx-runtime": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-base@${siteConfig.customFields.ui5Version}/dist/jsx-runtime.js`,
+        "@ui5/webcomponents-base/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-base@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-icons/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-icons@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-localization/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-localization@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-theming/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-theming@${siteConfig.customFields.ui5Version}/`,
+        "lit-html": `https://cdn.jsdelivr.net/npm/lit-html@2`,
+        "lit-html/": `https://cdn.jsdelivr.net/npm/lit-html@2/`,
+        "@zxing/library/": `https://cdn.jsdelivr.net/npm/@zxing/library@0/`,
+      };
+    }
+  }
+
+  function addHeadContent(html) {
     return html.replace("<head>", `
 <head>
     <script type="importmap">
       {
-        "imports": {
-          "@ui5/webcomponents/": "${getHostBaseUrl()}local-cdn/main/",
-          "@ui5/webcomponents-ai/": "${getHostBaseUrl()}local-cdn/ai/",
-          "@ui5/webcomponents-fiori/": "${getHostBaseUrl()}local-cdn/fiori/",
-          "@ui5/webcomponents-base/": "${getHostBaseUrl()}local-cdn/base/",
-          "@ui5/webcomponents-icons/": "${getHostBaseUrl()}local-cdn/icons/",
-          "@ui5/webcomponents-localization/": "${getHostBaseUrl()}local-cdn/localization/",
-          "@ui5/webcomponents-theming/": "${getHostBaseUrl()}local-cdn/theming/",
-          "lit-html": "${getHostBaseUrl()}local-cdn/lit-html/lit-html.js",
-          "lit-html/": "${getHostBaseUrl()}local-cdn/lit-html/",
-          "@zxing/library/umd/": "${getHostBaseUrl()}local-cdn/zxing/umd/",
-          "@zxing/library/esm5/": "${getHostBaseUrl()}local-cdn/zxing/esm5/"
-        }
+        "imports": ${JSON.stringify(calcImports())}
       }
     </script>
     <style>
       *:not(:defined) {
         display: none;
       }
+
+    html {
+      forced-color-adjust: none;
+    }
     </style>
 `)
   }
@@ -101,7 +127,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     if (activeExample === "hello-world") {
       return { html: hellowWorldHTML, js: hellowWorldTS }
     }
-    
+
     if (activeExample === "counter") {
       return { html: counterHTML, js: counterTS }
     }
@@ -211,7 +237,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
     let newConfig = {
       files: {
         "index.html": {
-          content: addImportMap(fixAssetPaths(_html)),
+          content: addHeadContent(fixAssetPaths(_html)),
         },
         "playground-support.js": {
           content: playgroundSupport({theme, textDirection, contentDensity, iframeId}),
@@ -230,16 +256,7 @@ ${fixAssetPaths(_js)}`,
         },
       },
       importMap: {
-        "imports": {
-          "@ui5/webcomponents/": `${getHostBaseUrl()}local-cdn/main/`,
-          "@ui5/webcomponents-fiori/": `${getHostBaseUrl()}local-cdn/fiori/`,
-          "@ui5/webcomponents-compat/": `${getHostBaseUrl()}local-cdn/compat/`,
-          "@ui5/webcomponents-ai/": `${getHostBaseUrl()}local-cdn/ai/`,
-          "@ui5/webcomponents-base/": `${getHostBaseUrl()}local-cdn/base/`,
-          "@ui5/webcomponents-icons/": `${getHostBaseUrl()}local-cdn/icons/`,
-          "@ui5/webcomponents-localization/": `${getHostBaseUrl()}local-cdn/localization/`,
-          "@ui5/webcomponents-theming/": `${getHostBaseUrl()}local-cdn/theming/`
-        }
+        "imports": calcImports(),
       }
     }
     if (newConfig.files["main.css"].hidden) {
@@ -252,7 +269,7 @@ ${fixAssetPaths(_js)}`,
       if (savedProject) {
         try {
           const savedConfig = JSON.parse(savedProject);
-          savedConfig["index.html"].content = addImportMap(fixAssetPaths(savedConfig["index.html"].content));
+          savedConfig["index.html"].content = addHeadContent(fixAssetPaths(savedConfig["index.html"].content));
           if (savedConfig["main.js"] && newConfig.files["main.ts"]) {
             delete newConfig.files["main.ts"];
           }
@@ -267,7 +284,7 @@ ${fixAssetPaths(_js)}`,
     if (location.pathname.includes("/play") && location.hash) {
       try {
         const sharedConfig = JSON.parse(decodeFromBase64(location.hash.replace("#", "")));
-        sharedConfig["index.html"].content = addImportMap(fixAssetPaths(sharedConfig["index.html"].content));
+        sharedConfig["index.html"].content = addHeadContent(fixAssetPaths(sharedConfig["index.html"].content));
         if (sharedConfig["main.js"] && newConfig.files["main.ts"]) {
           delete newConfig.files["main.ts"];
         }
@@ -290,6 +307,14 @@ ${fixAssetPaths(_js)}`,
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
     previewRef.current.project = projectRef.current;
+
+    // algolia search opens the search on key `/` because this custom element is the event target but has no `isContentEditable`
+    Object.defineProperty(fileEditorRef.current, "isContentEditable", {
+        configurable: true,
+        get() {
+            return true;
+        },
+    });
 
     tabBarRef.current.editor = fileEditorRef.current;
 
@@ -428,7 +453,7 @@ ${fixAssetPaths(_js)}`,
                 <ShareIcon className={`${styles.btn__icon}`}/>
                   Share
                 </button>
-               
+
               </div>
             </div>
           </>

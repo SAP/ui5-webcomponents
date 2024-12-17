@@ -699,6 +699,28 @@
 	</section>
 
 	<section>
+		<h2>Transparent TabContainer in Content</h2>
+		<ui5-tabcontainer id="tabContainerTransparentContent" header-background-design="Solid" content-background-design="Transparent">
+			<ui5-tab text="Tab 1" selected>
+				<ui5-tabcontainer id="tabContainerBackgroundDesign" header-background-design="Transparent" content-background-design="Transparent">
+					<ui5-tab text="Tab 1" selected>
+						<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptates accusamus est quibusdam inventore ipsam?</ui5-label>
+					</ui5-tab>
+					<ui5-tab text="Tab 2">
+						<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+					</ui5-tab>
+					<ui5-tab text="Tab 3">
+						<ui5-label>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!</ui5-label>
+					</ui5-tab>
+				</ui5-tabcontainer>
+			</ui5-tab>
+			<ui5-tab text="Tab 2">
+				<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+			</ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
+	<section>
 		<h2>Text only Start And End Overflow Custom Overflow Buttons</h2>
 		<ui5-tabcontainer id="tabContainerCustomOverflowButtons" overflow-mode="StartAndEnd" collapsed>
 				<ui5-button slot="startOverflowButton" id="startOverflowButton">Start</ui5-button>
@@ -740,13 +762,13 @@
 				<ui5-button>Button 1</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Second tab" design="Critical" additional-text="2">
-				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 2</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Third tab" design="Negative" additional-text="3">
-				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 3</ui5-button>
 			</ui5-tab>
 			<ui5-tab text="Fourth tab" design="Neutral" additional-text="4">
-				<ui5-button>Button 1</ui5-button>
+				<ui5-button>Button 4</ui5-button>
 			</ui5-tab>
 		</ui5-tabcontainer>
 

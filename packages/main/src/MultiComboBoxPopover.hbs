@@ -2,6 +2,7 @@
 	placement="Bottom"
 	horizontal-align="Start"
 	class="{{classes.popover}}"
+	id="{{responsivePopoverId}}"
 	hide-arrow
 	prevent-initial-focus
 	style="{{styles.suggestionsPopover}}"
@@ -79,33 +80,13 @@
 	{{#if filterSelected}}
 		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
 			{{#each selectedItems}}
-				{{#if isGroupItem}}
-					<ui5-li-group header-text="{{this.headerText}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
-						{{#each this.items}}
-							{{#if _isVisible}}
-								{{> listItem}}
-							{{/if}}
-						{{/each}}
-					</ui5-li-group>
-				{{else}}
-					{{> listItem}}
-				{{/if}}
+				{{> listItem}}
 			{{/each}}
 		</ui5-list>
 	{{else}}
-		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox">
+		<ui5-list separators="None" selection-mode="Multiple" class="ui5-multi-combobox-all-items-list" accessible-role="ListBox" @keydown="{{_onItemKeydown}}">
 			{{#each _filteredItems}}
-				{{#if isGroupItem}}
-					<ui5-li-group header-text="{{this.headerText}}" data-ui5-stable="{{this.stableDomRef}}" @keydown="{{../_onItemKeydown}}">
-						{{#each this.items}}
-							{{#if _isVisible}}
-								{{> listItem}}
-							{{/if}}
-						{{/each}}
-					</ui5-li-group>
-				{{else}}
-					{{> listItem}}
-				{{/if}}
+				{{> listItem}}
 			{{/each}}
 		</ui5-list>
 	{{/if}}
@@ -151,24 +132,13 @@
 {{/inline}}
 
 {{#*inline "listItem"}}
-	<ui5-li
-		wrapping-type="Normal"
-		type="{{../_listItemsType}}"
-		additional-text={{this.additionalText}}
-		?selected={{this.selected}}
-		data-ui5-token-id="{{this._id}}"
-		data-ui5-stable="{{this.stableDomRef}}"
-		@keydown="{{../_onItemKeydown}}"
-		accessible-role="Option"
-	>
-		{{this.text}}
-	</ui5-li>
+	<slot name="{{this._individualSlot}}"></slot>
 {{/inline}}
 
 {{#*inline "selectAllWrapper"}}
 	{{#if showSelectAll}}
 		<div class="ui5-mcb-select-all-header" @keydown="{{_onListHeaderKeydown}}" tabindex="0">
-			<ui5-checkbox ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
+			<ui5-checkbox ?disabled={{this.readonly}} ?checked={{_allSelected}} class="ui5-mcb-select-all-checkbox" text="{{selectAllCheckboxLabel}}" @ui5-change="{{_handleSelectAllCheckboxClick}}"></ui5-checkbox>
 		</div>
 	{{/if}}
 {{/inline}}

@@ -4,10 +4,11 @@ import {
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
 import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationListItem from "./NotificationListItem.js";
@@ -29,6 +30,7 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
@@ -71,6 +73,7 @@ type NotificationListGroupItemToggleEventDetail = {
 @customElement({
 	tag: "ui5-li-notification-group",
 	languageAware: true,
+	renderer: litRender,
 	styles: [
 		NotificationListGroupItemCss,
 	],
@@ -87,9 +90,25 @@ type NotificationListGroupItemToggleEventDetail = {
  * Fired when the `ui5-li-notification-group` is expanded/collapsed by user interaction.
  * @public
  */
-@event("toggle")
+@event("toggle", {
+	bubbles: true,
+})
+
+/**
+ * Fired when additional items are requested.
+ *
+ * @public
+ * @since 2.2.0
+ */
+@event("load-more", {
+	bubbles: true,
+})
 
 class NotificationListGroupItem extends NotificationListItemBase {
+	eventDetails!: NotificationListItemBase["eventDetails"] & {
+		toggle: NotificationListGroupItemToggleEventDetail;
+		"load-more": void;
+	}
 	/**
 	 * Defines if the group is collapsed or expanded.
 	 * @default false
@@ -97,6 +116,16 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	@property({ type: Boolean })
 	collapsed = false;
+
+	/**
+	 * Defines whether the component will have growing capability by pressing a `More` button.
+	 * When button is pressed `load-more` event will be fired.
+	 * @default "None"
+	 * @public
+	 * @since 2.2.0
+	 */
+	@property()
+	growing: `${NotificationListGrowingMode}` = "None";
 
 	/**
 	 * Defines the items of the `ui5-li-notification-group`,
@@ -165,7 +194,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		return ids.join(" ");
 	}
 
-	get _ariaExpanded() {
+	get _expanded() {
 		return !this.collapsed;
 	}
 
@@ -179,7 +208,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 
 	toggleCollapsed() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
+		this.fireDecoratorEvent("toggle", { item: this });
 	}
 
 	/**
@@ -188,6 +217,15 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	_onHeaderToggleClick() {
 		this.toggleCollapsed();
+	}
+
+	_onLoadMore() {
+		this.fireDecoratorEvent("load-more");
+	}
+
+	get loadMoreButton() {
+		const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]") as NotificationListGroupList;
+		return innerList.getDomRef()?.querySelector(".ui5-growing-button-inner") as HTMLElement;
 	}
 
 	async _onkeydown(e: KeyboardEvent) {

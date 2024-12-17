@@ -1,12 +1,11 @@
 import {
 	isUpShift,
-	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import TableSelectionMode from "./types/TableSelectionMode.js";
 import type Table from "./Table.js";
 import type { ITableFeature } from "./Table.js";
@@ -57,9 +56,14 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  *
  * @public
  */
-@event("change")
+@event("change", {
+	bubbles: true,
+})
 
 class TableSelection extends UI5Element implements ITableFeature {
+	eventDetails!: {
+		change: void,
+	}
 	/**
 	 * Defines the selection mode.
 	 *
@@ -192,7 +196,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 	_informRowSelectionChange(row: TableRow) {
 		const isRowSelected = this.isMultiSelect() ? !this.isSelected(row) : true;
 		this._selectRow(row, isRowSelected);
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	_informHeaderRowSelectionChange() {
@@ -203,7 +207,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			selectedSet[isRowSelected ? "delete" : "add"](rowIdentifier);
 		});
 		this.selectedAsSet = selectedSet;
-		this.fireEvent("change");
+		this.fireDecoratorEvent("change");
 	}
 
 	_invalidateTableAndRows() {
@@ -252,11 +256,9 @@ class TableSelection extends UI5Element implements ITableFeature {
 			return;
 		}
 
-		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !isShift(e)) {
-			// Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
-			if (isSelectionCheckbox(e)) {
-				this._stopRangeSelection();
-			}
+		if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !e.shiftKey) {
+			// Stop range selection if a) Shift is relased or b) the event target is not a row
+			this._stopRangeSelection();
 		}
 
 		if (this._rangeSelection) {
@@ -360,7 +362,7 @@ class TableSelection extends UI5Element implements ITableFeature {
 			}, selectionChanged) || false;
 		}
 
-		selectionChanged && this._fireEvent("change");
+		selectionChanged && this.fireDecoratorEvent("change");
 	}
 
 	_stopRangeSelection() {

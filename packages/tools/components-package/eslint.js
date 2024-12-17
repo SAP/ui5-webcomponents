@@ -3,36 +3,95 @@ const path = require("path");
 const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
 /**
- * Typescript Rules
+ * Returns eslint rules specific to typescript files
+ * @returns
  */
-const overrides = tsMode ? [{
-	files: ["*.ts"],
-	parser: "@typescript-eslint/parser",
-	plugins: ["@typescript-eslint"],
-	extends: [
-		"plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking"
-	],
-	parserOptions: {
-	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
-	  EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
-	},
-	rules: {
-		"no-shadow": "off",
-		"@typescript-eslint/consistent-type-imports": "error",
-		"@typescript-eslint/no-shadow": ["error"],
-		"@typescript-eslint/no-unsafe-member-access": "off",
-		"@typescript-eslint/no-floating-promises": "off",
-		"@typescript-eslint/no-explicit-any": "off",
-		"@typescript-eslint/no-unsafe-assignment": "off",
-		"@typescript-eslint/ban-ts-comment": "off",
-		"@typescript-eslint/no-unsafe-call": "off",
-		"@typescript-eslint/no-non-null-assertion": "off",
-		"@typescript-eslint/no-empty-function": "off",
-		"@typescript-eslint/no-empty-interface": "off",
-		"lines-between-class-members": "off",
+const getTsModeOverrides = () => {
+	const tsConfiguration = {
+		files: ["*.ts"],
+		parser: "@typescript-eslint/parser",
+		plugins: ["@typescript-eslint"],
+		extends: [
+			"plugin:@typescript-eslint/recommended",
+			"plugin:@typescript-eslint/recommended-requiring-type-checking"
+		],
+		parserOptions: {
+			"project": [
+				"./tsconfig.json",
+				"./cypress/tsconfig.json",
+			],
+			EXPERIMENTAL_useSourceOfProjectReferenceRedirect: true,
+		},
+		rules: {
+			"no-shadow": "off",
+			"@typescript-eslint/consistent-type-imports": "error",
+			"import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+			"@typescript-eslint/no-shadow": ["error"],
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-floating-promises": "off",
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-unsafe-assignment": "off",
+			"@typescript-eslint/ban-ts-comment": "off",
+			"@typescript-eslint/no-unsafe-call": "off",
+			"@typescript-eslint/no-non-null-assertion": "off",
+			"@typescript-eslint/no-empty-function": "off",
+			"@typescript-eslint/no-empty-interface": "off",
+			"lines-between-class-members": "off",
+		}
+	};
+
+	const tsxConfiguration = JSON.parse(JSON.stringify(tsConfiguration));
+	tsxConfiguration.files = ["*.tsx"];
+	tsxConfiguration.rules = {
+		...tsxConfiguration.rules,
+		"@typescript-eslint/unbound-method": "off", // to be able to attach on* listeners
+		"@typescript-eslint/no-misused-promises": "off", // to be able to have async event listeners
+		"operator-linebreak": "off",
+		"no-nested-ternary": "off",
+		"implicit-arrow-linebreak": "off",
+		"function-paren-newline": "off",
+		"comma-dangle": "off"
+	};
+
+	const cypressConfiguration = {
+		"files": ["**/cypress/**/*.ts"],
+
+		"plugins": [
+			"cypress"
+		],
+		extends: [
+			"plugin:cypress/recommended"
+		],
+		"env": {
+			"cypress/globals": true
+		},
+		"rules": {
+			"max-nested-callbacks": 0,
+			"@typescript-eslint/no-namespace": "off",
+			"cypress/no-assigning-return-values": "error",
+			"cypress/no-unnecessary-waiting": "error",
+			"cypress/assertion-before-screenshot": "warn",
+			"cypress/no-force": "warn",
+			"cypress/no-async-tests": "error",
+			"cypress/no-async-before": "error",
+			"cypress/no-pause": "error",
+			"import/no-extraneous-dependencies": [
+				"error",
+				{
+					"devDependencies": [
+						"**/cypress/**/*.ts"
+					]
+				}
+			]
+		}
 	}
-}] : [];
+
+	return [
+		tsConfiguration,
+		tsxConfiguration,
+		cypressConfiguration,
+	];
+}
 
 module.exports = {
 	"env": {
@@ -41,7 +100,7 @@ module.exports = {
 	},
 	"root": true,
 	"extends": "airbnb-base",
-	overrides,
+	"overrides": tsMode ? getTsModeOverrides() : [],
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"
@@ -84,6 +143,7 @@ module.exports = {
 		"curly": [2, "all"],
 		// "default-case": 1, // removed for UI5 WebComponents
 		"import/extensions": ["error", "always"], // override for UI5 WebComponents
+		"import/order": "off",
 		"no-alert": 2,
 		"no-caller": 2,
 		"no-div-regex": 2,
@@ -125,7 +185,7 @@ module.exports = {
 		"no-shadow-restricted-names": 2,
 		"no-undef-init": 2,
 		"no-undef": 2,
-		"no-unused-vars": [2, {"vars":"all", "args":"none"}],
+		"no-unused-vars": [2, { "vars": "all", "args": "none" }],
 
 		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
 		"camelcase": [1, { "properties": "never" }], // added for UI5 WebComponents
@@ -141,7 +201,7 @@ module.exports = {
 		"no-new-object": 2,
 		"no-spaced-func": 2,
 		"quote-props": [2, "as-needed", { "keywords": true, "unnecessary": false }],
-		"semi-spacing": [1, {"before": false, "after": true}],
+		"semi-spacing": [1, { "before": false, "after": true }],
 		"semi": 2,
 		"keyword-spacing": 2,
 		"space-infix-ops": 2,

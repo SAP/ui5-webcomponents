@@ -1,32 +1,31 @@
+// eslint-disable-next-line max-classes-per-file
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isBackSpace,
 	isSpace,
 	isDelete,
 	isSpaceCtrl,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/sys-cancel.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
 import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type { IToken } from "./MultiInput.js";
-import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
+import TokenTemplate from "./TokenTemplate.js";
 
 // Styles
 import tokenStyles from "./generated/themes/Token.css.js";
 
 type TokenDeleteEventDetail = {
-	backSpace: boolean;
-	delete: boolean;
+	backSpace?: boolean;
+	delete?: boolean;
 }
 
 /**
@@ -48,17 +47,18 @@ type TokenDeleteEventDetail = {
 @customElement({
 	tag: "ui5-token",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TokenTemplate,
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
-
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
  * @private
  */
-@event("select")
+@event("select", {
+	bubbles: true,
+})
 
 /**
  * Fired when the backspace, delete or close icon of the token is pressed
@@ -66,14 +66,14 @@ type TokenDeleteEventDetail = {
  * @param {Boolean} delete Indicates whether token is deleted by delete key.
  * @private
  */
-@event<TokenDeleteEventDetail>("delete", {
-	detail: {
-		"backSpace": { type: Boolean },
-		"delete": { type: Boolean },
-	},
+@event("delete", {
+	bubbles: true,
 })
-
 class Token extends UI5Element implements IToken {
+	eventDetails!: {
+		"select": void
+		"delete": TokenDeleteEventDetail
+	}
 	/**
 	 * Defines the text of the token.
 	 * @default undefined
@@ -152,12 +152,13 @@ class Token extends UI5Element implements IToken {
 	@slot()
 	closeIcon!: Array<IIcon>;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	_handleSelect() {
 		if (!this.toBeDeleted) {
 			this.selected = !this.selected;
-			this.fireEvent("select");
+			this.fireDecoratorEvent("select");
 		}
 	}
 
@@ -171,7 +172,7 @@ class Token extends UI5Element implements IToken {
 
 	_delete() {
 		this.toBeDeleted = true;
-		this.fireEvent("delete");
+		this.fireDecoratorEvent("delete");
 	}
 
 	_keydown(e: KeyboardEvent) {
@@ -181,7 +182,7 @@ class Token extends UI5Element implements IToken {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireEvent<TokenDeleteEventDetail>("delete", {
+			this.fireDecoratorEvent("delete", {
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});
@@ -196,6 +197,7 @@ class Token extends UI5Element implements IToken {
 
 	onBeforeRendering() {
 		this.toBeDeleted = false;
+		// this.fireMyEvent("select");
 	}
 
 	get tokenDeletableText() {
@@ -224,9 +226,9 @@ class Token extends UI5Element implements IToken {
 		return description;
 	}
 
-	static async onDefine() {
-		Token.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
+	// fireMyEvent(name: keyof this["_events"]) {
+	// 	console.log(name);
+	// }
 }
 
 Token.define();

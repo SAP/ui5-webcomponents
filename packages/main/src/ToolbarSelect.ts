@@ -1,15 +1,15 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 // Templates
 
-import ToolbarSelectTemplate from "./generated/templates/ToolbarSelectTemplate.lit.js";
-import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSelectTemplate.lit.js";
+import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
+import ToolbarPopoverSelectTemplate from "./ToolbarPopoverSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
 import Select from "./Select.js";
 import Option from "./Option.js";
@@ -42,31 +42,33 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 
 /**
  * Fired when the selected option changes.
- * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
-@event<ToolbarSelectChangeEventDetail>("change", {
-	detail: {
-		/**
-		* @public
-		*/
-		selectedOption: { type: HTMLElement },
-	},
+@event("change", {
+	bubbles: true,
+	cancelable: true,
 })
 
 /**
  * Fired after the component's dropdown menu opens.
  * @public
  */
-@event("open")
+@event("open", {
+	bubbles: true,
+})
+
 /**
  * Fired after the component's dropdown menu closes.
  * @public
  */
 @event("close")
-
 class ToolbarSelect extends ToolbarItem {
+	eventDetails!: ToolbarItem["eventDetails"] & {
+		change: ToolbarSelectChangeEventDetail;
+		open: void;
+		close: void;
+	}
 	/**
 	 * Defines the width of the select.
 	 *

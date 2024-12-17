@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isIOS, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import TableRowBase from "./TableRowBase.js";
@@ -62,6 +61,15 @@ class TableRow extends TableRowBase {
 	rowKey = "";
 
 	/**
+	 * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
+	 *
+     * @default -1
+     * @public
+     */
+	@property({ type: Number })
+	position = -1;
+
+	/**
 	 * Defines the interactive state of the row.
 	 *
 	 * @default false
@@ -79,24 +87,33 @@ class TableRow extends TableRowBase {
 	@property({ type: Boolean })
 	navigated = false;
 
+	/**
+	 * Defines whether the row is movable.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	movable = false;
+
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
-
-	static async onDefine() {
-		await super.onDefine();
-		if (isSafari() && isIOS()) {
-			// Safari on iOS does not use the :active state unless there is a touchstart event handler on the <body> element
-			document.body.addEventListener("touchstart", () => {});
-		}
-	}
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.toggleAttribute("_interactive", this._isInteractive);
+		if (this.position !== -1) {
+			this.setAttribute("aria-rowindex", `${this.position + 1}`);
+		}
 		if (this._renderNavigated && this.navigated) {
 			this.setAttribute("aria-current", "true");
 		} else {
 			this.removeAttribute("aria-current");
+		}
+		if (this.movable) {
+			this.setAttribute("draggable", "true");
+		} else {
+			this.removeAttribute("draggable");
 		}
 	}
 

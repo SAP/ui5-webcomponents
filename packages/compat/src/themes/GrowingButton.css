@@ -1,4 +1,4 @@
-[growing-button] {
+.ui5-table-growing-row {
 	display: flex;
 	align-items: center;
 	padding: var(--_ui5_load_more_padding);
@@ -9,7 +9,7 @@
 	outline: none;
 }
 
-[growing-button-inner] {
+.ui5-table-growing-row-inner {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -23,29 +23,29 @@
 	box-sizing: border-box;
 }
 
-[growing-button-inner]:focus-visible {
+.ui5-table-growing-row-inner:focus-visible {
 	outline: var(--_ui5_load_more_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: -0.125rem;
 	border-color: transparent;
 }
 
-[growing-button-inner]:hover {
+.ui5-table-growing-row-inner:hover {
 	background-color: var(--sapList_Hover_Background);
 }
 
-[growing-button-inner]:active,
-[growing-button-inner][active] {
+.ui5-table-growing-row-inner:active,
+.ui5-table-growing-row-inner.ui5-table-growing-row-inner--active {
 	background-color: var(--sapList_Active_Background);
 	border-color: var(--sapList_Active_Background);
 }
 
-[growing-button-inner]:active > *,
-[growing-button-inner][active] > * {
+.ui5-table-growing-row-inner:active > *,
+.ui5-table-growing-row-inner.ui5-table-growing-row-inner--active > * {
 	color: var(--sapList_Active_TextColor);
 }
 
-[growing-button-text],
-[growing-button-subtext] {
+.ui5-table-growing-row-text,
+.ui5-table-growing-row-subtext {
 	width: 100%;
 	text-align: center;
 	font-family: "72override", var(--sapFontFamily);
@@ -55,14 +55,14 @@
 	box-sizing: border-box;
 }
 
-[growing-button-text] {
+.ui5-table-growing-row-text {
 	height: var(--_ui5_load_more_text_height);
 	padding: 0.875rem 1rem 0 1rem;
 	font-size: var(--_ui5_load_more_text_font_size);
 	font-weight: bold;
 }
 
-[growing-button-subtext] {
+.ui5-table-growing-row-subtext {
 	font-size: var(--sapFontSize);
 	padding: var(--_ui5_load_more_desc_padding);
 }

@@ -3,11 +3,11 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
@@ -16,10 +16,11 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import litRenderer from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import NotificationListItemImportance from "./types/NotificationListItemImportance.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationList from "./NotificationList.js";
-
 // Icons
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -135,6 +136,7 @@ const ICON_PER_STATUS_DESIGN = {
 	styles: [
 		NotificationListItemCss,
 	],
+	renderer: litRenderer,
 	template: NotificationListItemTemplate,
 	dependencies: [
 		Button,
@@ -145,25 +147,24 @@ const ICON_PER_STATUS_DESIGN = {
 	],
 })
 
-@event("_press")
+@event("_press", {
+	bubbles: true,
+})
 
 /**
  * Fired when the `Close` button is pressed.
  * @param {HTMLElement} item the closed item.
  * @public
  */
-@event<NotificationListItemCloseEventDetail>("close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
+@event("close", {
+	bubbles: true,
 })
 
 class NotificationListItem extends NotificationListItemBase {
+	eventDetails!: NotificationListItemBase["eventDetails"] & {
+		_press: NotificationListItemPressEventDetail,
+		close: NotificationListItemCloseEventDetail,
+	}
 	/**
 	* Defines if the `titleText` and `description` should wrap,
 	* they truncate by default.
@@ -257,6 +258,15 @@ class NotificationListItem extends NotificationListItemBase {
 	@slot({ type: Node, "default": true })
 	description!: Array<Node>;
 
+	@query(".ui5-nli-title-text")
+	titleTextDOM?: HTMLElement;
+
+	@query(".ui5-nli-menu-btn")
+	menuButtonDOM?: HTMLElement;
+
+	@query(".ui5-nli-description")
+	descriptionDOM?: HTMLElement;
+
 	_titleTextOverflowHeight: number;
 	_descOverflowHeight: number;
 	_onResizeBound: ResizeObserverCallback;
@@ -290,7 +300,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get hasDesc() {
-		return !!this.description.length;
+		return willShowContent(this.description);
 	}
 
 	get hasImportance() {
@@ -331,14 +341,6 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		return true;
-	}
-
-	get descriptionDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-description");
-	}
-
-	get titleTextDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-title-text");
 	}
 
 	get titleTextHeight() {
@@ -479,10 +481,6 @@ class NotificationListItem extends NotificationListItemBase {
 		};
 	}
 
-	get menuButtonDOM() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-menu-btn")!;
-	}
-
 	get showMenu() {
 		return !!this.getMenu();
 	}
@@ -490,8 +488,8 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Event handlers
 	 */
-	_onclick(e: MouseEvent) {
-		this.fireItemPress(e);
+	_onclick() {
+		this.fireItemPress();
 	}
 
 	_onShowMoreClick(e: MouseEvent) {
@@ -529,6 +527,7 @@ class NotificationListItem extends NotificationListItemBase {
 		}
 
 		const navItems = list.getEnabledItems();
+		// @ts-expect-error TOFIX strictEvents
 		const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
 		const nextItem = navItems[index] as NotificationListItemBase;
 		if (!nextItem) {
@@ -548,13 +547,13 @@ class NotificationListItem extends NotificationListItemBase {
 
 		const space = isSpace(e);
 
-		if (space && getEventMark(e) === "link") {
+		if (space && this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			this._onShowMoreClick(e as unknown as MouseEvent);
 			return;
 		}
 
 		if (isDelete(e)) {
-			this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+			this.fireDecoratorEvent("close", { item: this });
 		}
 
 		if (isF10Shift(e)) {
@@ -567,7 +566,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemCloseEventDetail>("close", { item: this });
+		this.fireDecoratorEvent("close", { item: this });
 	}
 
 	_onBtnMenuClick() {
@@ -590,12 +589,16 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Private
 	 */
-	fireItemPress(e: Event) {
-		if (getEventMark(e) === "button" || getEventMark(e) === "link") {
+	fireItemPress() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 
-		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		// NotificationListItem will never be assigned to a variable of type ListItemBase
+		// typescipt complains here, if that is the case, the parameter to the _press event handler could be a ListItemBase item,
+		// but this is never the case, all components are used by their class and never assigned to a variable with a type of ListItemBase
+		// @ts-expect-error
+		this.fireDecoratorEvent("_press", { item: this });
 	}
 
 	onResize() {

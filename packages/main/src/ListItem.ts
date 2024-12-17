@@ -1,17 +1,16 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import {
 	isSpace, isEnter, isDelete, isF2,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, AriaRole, AriaHasPopup } from "@ui5/webcomponents-base";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import Highlight from "./types/Highlight.js";
@@ -51,13 +50,13 @@ type SelectionRequestEventDetail = {
 }
 
 type AccInfo = {
-	role?: string;
+	role?: AriaRole | undefined;
 	ariaExpanded?: boolean;
 	ariaLevel?: number;
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: `${Lowercase<AriaHasPopup>}`;
+	ariaHaspopup?: `${AriaHasPopup}`;
 	posinset?: number;
 	setsize?: number;
 	ariaSelected?: boolean;
@@ -81,6 +80,7 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  */
 @customElement({
 	languageAware: true,
+	renderer: jsxRenderer,
 	styles: [
 		ListItemBase.styles,
 		listItemAdditionalTextCss,
@@ -96,10 +96,17 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
  * Fired when the user clicks on the detail button when type is `Detail`.
  * @public
  */
-@event("detail-click")
-@event("_focused")
-@event("_selection-requested")
+@event("detail-click", {
+	bubbles: true,
+})
+@event("selection-requested", {
+	bubbles: true,
+})
 abstract class ListItem extends ListItemBase {
+	eventDetails!: ListItemBase["eventDetails"] & {
+		"detail-click": { item: ListItem, selected: boolean };
+		"selection-requested": SelectionRequestEventDetail,
+	}
 	/**
 	 * Defines the visual indication and behavior of the list items.
 	 * Available options are `Active` (by default), `Inactive`, `Detail` and `Navigation`.
@@ -184,6 +191,9 @@ abstract class ListItem extends ListItemBase {
 	accessibleRole: `${ListItemAccessibleRole}` = "ListItem";
 
 	@property()
+	_forcedAccessibleRole?: string;
+
+	@property()
 	_selectionMode: `${ListSelectionMode}` = "None";
 
 	/**
@@ -199,7 +209,6 @@ abstract class ListItem extends ListItemBase {
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
-	_ontouchstart: PassiveEventListenerObject;
 	// used in template, implemented in TreeItemBase, ListItemStandard
 	accessibleName?: string;
 	// used in ListItem template but implemented in TreeItemBase
@@ -207,6 +216,7 @@ abstract class ListItem extends ListItemBase {
 	// Used in UploadCollectionItem
 	disableDeleteButton?: boolean;
 
+	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
 	constructor() {
@@ -222,15 +232,6 @@ abstract class ListItem extends ListItemBase {
 			if (this.active) {
 				this.active = false;
 			}
-		};
-
-		const handleTouchStartEvent = (e: TouchEvent) => {
-			this._onmousedown(e as unknown as MouseEvent);
-		};
-
-		this._ontouchstart = {
-			handleEvent: handleTouchStartEvent,
-			passive: true,
 		};
 	}
 
@@ -253,6 +254,10 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	async _onkeydown(e: KeyboardEvent) {
+		if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
+			return;
+		}
+
 		super._onkeydown(e);
 
 		const itemActive = this.type === ListItemType.Active,
@@ -287,25 +292,34 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
-			return;
-		}
+	_onmousedown() {
 		this.activate();
 	}
 
-	_onmouseup(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
+	_onmouseup() {
+		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
 			return;
 		}
 		this.deactivate();
 	}
 
-	_ontouchend(e: TouchEvent) {
-		this._onmouseup(e as unknown as MouseEvent);
+	_ontouchend() {
+		this._onmouseup();
 	}
 
-	_onfocusout() {
+	_onfocusin(e: FocusEvent) {
+		super._onfocusin(e);
+
+		if (e.target !== this.getFocusDomRef()) {
+			this.deactivate();
+		}
+	}
+
+	_onfocusout(e: FocusEvent) {
+		if (e.target !== this.getFocusDomRef()) {
+			return;
+		}
+
 		this.deactivate();
 	}
 
@@ -327,24 +341,31 @@ abstract class ListItem extends ListItemBase {
 		}
 	}
 
+	_isTargetSelfFocusDomRef(e: KeyboardEvent): boolean {
+		const target = e.target as HTMLElement,
+			focusDomRef = this.getFocusDomRef();
+
+		return target !== focusDomRef;
+	}
+
 	/**
 	 * Called when selection components in Single (ui5-radio-button)
 	 * and Multi (ui5-checkbox) selection modes are used.
 	 */
-	onMultiSelectionComponentPress(e: MouseEvent) {
+	onMultiSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
-	onSingleSelectionComponentPress(e: MouseEvent) {
+	onSingleSelectionComponentPress(e: CustomEvent) {
 		if (this.isInactive) {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
+		this.fireDecoratorEvent("selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -354,11 +375,11 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDelete() {
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireDecoratorEvent("selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick() {
-		this.fireEvent("detail-click", { item: this, selected: this.selected });
+		this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
 	}
 
 	fireItemPress(e: Event) {
@@ -366,6 +387,9 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 		super.fireItemPress(e);
+		if (document.activeElement !== this) {
+			this.focus();
+		}
 	}
 
 	get isInactive() {
@@ -430,7 +454,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	get listItemAccessibleRole() {
-		return this.accessibleRole.toLowerCase();
+		return (this._forcedAccessibleRole || this.accessibleRole.toLowerCase()) as AriaRole | undefined;
 	}
 
 	get ariaSelectedText() {
@@ -490,10 +514,6 @@ abstract class ListItem extends ListItemBase {
 
 	get _listItem() {
 		return this.shadowRoot!.querySelector("li");
-	}
-
-	static async onDefine() {
-		ListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 
