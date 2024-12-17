@@ -112,12 +112,12 @@ function processEvent(ts, event, classNode, moduleDoc) {
 			: sinceTag.name;
 	}
 
-	const eventDetailType = classNode.members?.find(member => member.name.text === "eventDetails")?.type;
+	const eventDetailType = classNode.members?.find(member => {
+		return ts.isPropertyDeclaration(member) && member.name.text === "eventDetails"
+	})?.type;
 	const eventDetailRef = eventDetailType?.members?.find(member => member.name.text === name) || eventDetailType?.types?.[eventDetailType?.types?.length - 1]?.members?.find(member => member.name.text === name);
 	const hasGeneric = !!event?.expression?.typeArguments
-	// if (name ==="value-state-change") {
-	// 	debugger
-	// }
+
 	if (commentParams.length) {
 		if (eventDetailRef && hasGeneric) {
 			logDocumentationError(moduleDoc.path, `Event details for event '${name}' has to be defined either with generic or with eventDetails.`)
