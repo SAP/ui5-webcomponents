@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo, InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -315,6 +315,8 @@ class Calendar extends CalendarPart {
 	@property()
 	_selectedItemType: `${CalendarLegendItemType}` = "None";
 
+	_onCalendarLegendInvalidateBound: (invalidationInfo: InvalidationInfo) => void;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -322,7 +324,15 @@ class Calendar extends CalendarPart {
 		super();
 
 		this._valueIsProcessed = false;
+		this._onCalendarLegendInvalidateBound = this._onCalendarLegendInvalidate.bind(this);
 	}
+
+	_onCalendarLegendInvalidate(invalidationInfo: InvalidationInfo) {
+		if (invalidationInfo.reason === "childchange") {
+			this._specialCalendarDates;
+			invalidationInfo.target.detachInvalidate(this._onCalendarLegendInvalidateBound);
+		}
+	};
 
 	/**
 	 * @private
@@ -472,6 +482,11 @@ class Calendar extends CalendarPart {
 
 	onBeforeRendering() {
 		this._normalizeCurrentPicker();
+		const calendarLegend = this.calendarLegend.length ? this.calendarLegend[0] : undefined;
+
+		if (calendarLegend) {
+			calendarLegend.attachInvalidate(this._onCalendarLegendInvalidateBound)
+		}
 
 		if (!this._valueIsProcessed) {
 			if (this._selectedDatesTimestamps) {
