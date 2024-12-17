@@ -793,7 +793,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_isDefaultCalendarLegendType(type: string): boolean {
-		return type === "NonWorking" || type === "Working" || type === "Today" || type === "Selected" || type === "None";
+		return ["NonWorking", "Working", "Today", "Selected", "None"].includes(type);
 	}
 
 	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {
