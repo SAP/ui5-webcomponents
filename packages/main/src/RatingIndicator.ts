@@ -27,6 +27,7 @@ import Icon from "./Icon.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
+import type RatingIndicatorSize from "./types/RatingIndicatorSize.js";
 
 type Star = {
 	selected: boolean,
@@ -111,6 +112,14 @@ class RatingIndicator extends UI5Element {
 	 */
 	@property({ type: Number })
 	max: number = 5;
+
+	/**
+	 * Defines predefined size of the component.
+	 * @default "M"
+	 * @public
+	 */
+	@property()
+	size: `${RatingIndicatorSize}` = "M";
 
 	/**
 	 * Defines whether the component is disabled.
