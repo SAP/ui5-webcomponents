@@ -249,7 +249,6 @@ class Button extends UI5Element {
 			button._hideArrowButton = this._hideArrowButton;
 			this._fadeIn();
 		}, fadeOutDuration);
-
 	}
 
 	/**
@@ -284,8 +283,9 @@ class Button extends UI5Element {
 
 		// reset the button's width after animations
 		const button = this._splitButton;
-		if (this._splitButton) {
-			this._splitButton.style.width = "";
+
+		if (button) {
+			button.style.width = "";
 		}
 	}
 

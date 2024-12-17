@@ -470,7 +470,7 @@ class SplitButton extends UI5Element {
 				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
 					"hasPopup": "menu" as AriaHasPopup,
-					"expanded": this.effectiveActiveArrowButton ? true : false,
+					"expanded": this.effectiveActiveArrowButton,
 				},
 			},
 		};
