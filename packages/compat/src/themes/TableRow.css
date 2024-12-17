@@ -27,6 +27,7 @@
 
 .ui5-table-row-root:focus::after,
 .ui5-table-row-root:focus ~ .ui5-table-popin-row::after {
+	pointer-events: none;
 	position: absolute;
 	content: "";
 	inset: var(--ui5_table_focus_outline_offset);
