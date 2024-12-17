@@ -369,13 +369,10 @@ class Menu extends UI5Element {
 				parentElement.selected = false;
 				(parentElement._popover.opener as HTMLElement)?.focus();
 			}
-		} else {
-			const menuItem = item.parentElement as MenuItem;
-			if (isUp(e)) {
-				this._navigateOutOfEndContent(menuItem);
-			} else if (isDown(e)) {
-				this._navigateOutOfEndContent(menuItem, true);
-			}
+		} else if (isUp(e)) {
+			this._navigateOutOfEndContent(parentElement);
+		} else if (isDown(e)) {
+			this._navigateOutOfEndContent(parentElement, true);
 		}
 	}
 
