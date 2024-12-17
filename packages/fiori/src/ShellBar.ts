@@ -507,6 +507,7 @@ class ShellBar extends UI5Element {
 	_isInitialRendering: boolean;
 	_defaultItemPressPrevented: boolean;
 	menuItemsObserver: MutationObserver;
+	additionalContextObserver: MutationObserver;
 	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_overflowNotifications: string | null;
@@ -551,6 +552,10 @@ class ShellBar extends UI5Element {
 
 		this.menuItemsObserver = new MutationObserver(() => {
 			this._updateClonedMenuItems();
+		});
+
+		this.additionalContextObserver = new MutationObserver(() => {
+			this._updateAdditionalContextItems();
 		});
 
 		this._headerPress = () => {
@@ -760,6 +765,7 @@ class ShellBar extends UI5Element {
 		});
 
 		this._observeMenuItems();
+		this._observeAdditionalContextItems();
 		this._updateSeparatorsVisibility();
 	}
 
@@ -967,6 +973,7 @@ class ShellBar extends UI5Element {
 
 	onExitDOM() {
 		this.menuItemsObserver.disconnect();
+		this.additionalContextObserver.disconnect();
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
@@ -1250,6 +1257,10 @@ class ShellBar extends UI5Element {
 		});
 	}
 
+	_updateAdditionalContextItems() {
+		this._handleActionsOverflow();
+	}
+
 	_observeMenuItems() {
 		this.menuItems.forEach(item => {
 			this.menuItemsObserver.observe(item, {
@@ -1257,6 +1268,18 @@ class ShellBar extends UI5Element {
 				childList: true,
 				subtree: true,
 				attributes: true,
+			});
+		});
+	}
+
+	_observeAdditionalContextItems() {
+		this.additionalContext.forEach(item => {
+			this.additionalContextObserver.observe(item, {
+				characterData: false,
+				childList: false,
+				subtree: false,
+				attributes: true,
+				attributeFilter: ["data-hide-order"],
 			});
 		});
 	}
