@@ -57,7 +57,13 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 class NavigationLayout extends UI5Element {
 	_defaultMode = isPhone() || (isTablet() && !isCombi());
 
-	_mode: `${NavigationLayoutMode}` = "Auto";
+	/**
+	 * Specifies the side navigation mode.
+	 * @default NavigationLayoutCollapsed.Auto
+	 * @public
+	 */
+	@property()
+	mode: `${NavigationLayoutMode}` = "Auto";
 
 	/**
 	 * @private
@@ -76,31 +82,6 @@ class NavigationLayout extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	isTablet = isTablet() && !isCombi();
-
-	/**
-	 * Specifies the side navigation mode.
-	 * @default NavigationLayoutCollapsed.Auto
-	 * @public
-	 */
-	@property()
-	set mode(value: `${NavigationLayoutMode}`) {
-		this._mode = value;
-		this.calcEffectiveMode();
-
-		if (isPhone()) {
-			return;
-		}
-
-		const sideNavigation = this.sideContent[0];
-
-		if (sideNavigation) {
-			sideNavigation.collapsed = this.effectiveMode;
-		}
-	}
-
-	get mode() : `${NavigationLayoutMode}` {
-		return this._mode;
-	}
 
 	/**
 	 * Gets whether the side navigation is collapsed.
