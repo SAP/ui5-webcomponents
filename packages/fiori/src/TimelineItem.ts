@@ -110,7 +110,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	 * Defines the status of the icon displayed in the `ui5-timeline-item`.
 	 * @default "None"
 	 * @public
-	 * @since 2.5.0
+	 * @since 2.6.0
 	 */
 	@property()
 	status: `${TimelineItemStatus}` = "None";
