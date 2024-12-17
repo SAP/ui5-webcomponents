@@ -20,7 +20,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TimeSelectionInputsTemplate from "./generated/templates/TimeSelectionInputsTemplate.lit.js";
+import TimeSelectionInputsTemplate from "./TimeSelectionInputsTemplate.js";
 
 // Styles
 import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.js";
@@ -59,6 +59,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	eventDetails!: TimePickerInternals["eventDetails"] & {
 		"close-inputs": void,
 	}
+
 	@property({ type: Number })
 	_editedInput = -1;
 

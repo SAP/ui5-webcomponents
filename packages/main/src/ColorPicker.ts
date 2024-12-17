@@ -3,9 +3,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
@@ -16,7 +17,7 @@ import type {
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import "@ui5/webcomponents-icons/dist/expand.js";
-import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
+import ColorPickerTemplate from "./ColorPickerTemplate.js";
 import Input from "./Input.js";
 import Slider from "./Slider.js";
 import Label from "./Label.js";
@@ -84,7 +85,7 @@ type ColorChannelInput = {
 
 @customElement({
 	tag: "ui5-color-picker",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,
@@ -301,7 +302,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: CustomEvent) {
+	_handleAlphaInputFromSlider(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
 		if (Number.isNaN(this._alpha)) {
@@ -357,7 +358,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._displayHSL = !this._displayHSL;
 	}
 
-	_handleColorInputChange(e: CustomEvent) {
+	_handleColorInputChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
 
@@ -434,9 +435,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_handleAlphaChange() {
+	_handleAlphaChange(e: CustomEvent) {
+		this._handleAlphaInputFromSlider(e);
+
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
+
+		// Todo - Add wrongHSL check because the input no longer stays updated with this
 		this._colorValue.Alpha = this._alpha;
 	}
 
@@ -568,8 +573,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return this._wrongHEX ? true : undefined;
 	}
 
-	get hexInputErrorState() {
-		return this._wrongHEX ? "Error" : undefined;
+	get hexInputErrorState(): `${ValueState}` {
+		return this._wrongHEX ? "Negative" : "None";
 	}
 
 	get rgbInputs(): Array<ColorChannelInput> {
@@ -640,21 +645,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 	get _isDefaultPickerMode() {
 		return !this.simplified;
-	}
-
-	get styles() {
-		return {
-			mainColor: {
-				"background-color": `rgb(${this._mainValue.r}, ${this._mainValue.g}, ${this._mainValue.b})`,
-			},
-			circle: {
-				left: `${this._selectedCoordinates.x}px`,
-				top: `${this._selectedCoordinates.y}px`,
-			},
-			colorSpan: {
-				"background-color": this._colorValue.toRGBString(),
-			},
-		};
 	}
 }
 

@@ -1,5 +1,6 @@
 :host {
     background: var(--sapList_HeaderBackground);
+    border-top: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
     border-bottom: var(--sapList_BorderWidth) solid var(--sapList_HeaderBorderColor);
 }
 

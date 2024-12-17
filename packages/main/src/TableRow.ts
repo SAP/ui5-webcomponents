@@ -87,6 +87,15 @@ class TableRow extends TableRowBase {
 	@property({ type: Boolean })
 	navigated = false;
 
+	/**
+	 * Defines whether the row is movable.
+	 *
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	movable = false;
+
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
 
@@ -100,6 +109,11 @@ class TableRow extends TableRowBase {
 			this.setAttribute("aria-current", "true");
 		} else {
 			this.removeAttribute("aria-current");
+		}
+		if (this.movable) {
+			this.setAttribute("draggable", "true");
+		} else {
+			this.removeAttribute("draggable");
 		}
 	}
 
