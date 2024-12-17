@@ -26,7 +26,7 @@ import "@ui5/webcomponents-icons/dist/compare.js";
 import "@ui5/webcomponents-icons/dist/locked.js";
 
 document.querySelector("#startButton").addEventListener("click", function (event) {
-	nl1.sideCollapsed = nl1.effectiveSideCollapsed ? "Expanded" : "Collapsed";
+	nl1.mode = nl1.effectiveMode ? "Expanded" : "Collapsed";
 });
 
 document.querySelector("#sn1").addEventListener("selection-change", function (event) {

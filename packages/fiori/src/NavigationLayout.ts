@@ -9,7 +9,7 @@ import {
 	isTablet,
 	isCombi,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import NavigationLayoutCollapsed from "./types/NavigationLayoutCollapsed.js";
+import NavigationLayoutMode from "./types/NavigationLayoutMode.js";
 import type SideNavigation from "./SideNavigation.js";
 
 // Template
@@ -33,8 +33,8 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
  * ### Responsive Behavior
  *
  * On desktop and tablet devices, the side navigation remains visible and can
- * be expanded or collapsed using the `sideCollapsed` property. On phone devices, the side navigation
- * is hidden by default but can be displayed using the same `sideCollapsed` property.
+ * be expanded or collapsed using the `mode` property. On phone devices, the side navigation
+ * is hidden by default but can be displayed using the same `mode` property.
  *
  * ### ES6 Module Import
  *
@@ -55,15 +55,15 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
 	template: NavigationLayoutTemplate,
 })
 class NavigationLayout extends UI5Element {
-	_defaultSideCollapsed = isPhone() || (isTablet() && !isCombi());
+	_defaultMode = isPhone() || (isTablet() && !isCombi());
 
-	_sideCollapsed: `${NavigationLayoutCollapsed}` = "Auto";
+	_mode: `${NavigationLayoutMode}` = "Auto";
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_effectiveSideCollapsed : boolean = false;
+	_effectiveMode : boolean = false;
 
 	/**
 	 * @private
@@ -78,14 +78,14 @@ class NavigationLayout extends UI5Element {
 	isTablet = isTablet() && !isCombi();
 
 	/**
-	 * Specifies the side navigation collapsed mode.
+	 * Specifies the side navigation mode.
 	 * @default NavigationLayoutCollapsed.Auto
 	 * @public
 	 */
 	@property()
-	set sideCollapsed(value: `${NavigationLayoutCollapsed}`) {
-		this._sideCollapsed = value;
-		this.calcEffectiveSideCollapsed();
+	set mode(value: `${NavigationLayoutMode}`) {
+		this._mode = value;
+		this.calcEffectiveMode();
 
 		if (isPhone()) {
 			return;
@@ -94,12 +94,12 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = this.effectiveSideCollapsed;
+			sideNavigation.collapsed = this.effectiveMode;
 		}
 	}
 
-	get sideCollapsed() : `${NavigationLayoutCollapsed}` {
-		return this._sideCollapsed;
+	get mode() : `${NavigationLayoutMode}` {
+		return this._mode;
 	}
 
 	/**
@@ -107,8 +107,8 @@ class NavigationLayout extends UI5Element {
 	 * @public
 	 * @default false
 	 */
-	get effectiveSideCollapsed() : boolean {
-		return this._effectiveSideCollapsed;
+	get effectiveMode() : boolean {
+		return this._effectiveMode;
 	}
 
 	/**
@@ -133,7 +133,7 @@ class NavigationLayout extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	onBeforeRendering() {
-		this.calcEffectiveSideCollapsed();
+		this.calcEffectiveMode();
 
 		if (isPhone()) {
 			return;
@@ -142,15 +142,15 @@ class NavigationLayout extends UI5Element {
 		const sideNavigation = this.sideContent[0];
 
 		if (sideNavigation) {
-			sideNavigation.collapsed = this.effectiveSideCollapsed;
+			sideNavigation.collapsed = this.effectiveMode;
 		}
 	}
 
-	calcEffectiveSideCollapsed() {
-		if (this.sideCollapsed === NavigationLayoutCollapsed.Auto) {
-			this._effectiveSideCollapsed = this._defaultSideCollapsed;
+	calcEffectiveMode() {
+		if (this.mode === NavigationLayoutMode.Auto) {
+			this._effectiveMode = this._defaultMode;
 		} else {
-			this._effectiveSideCollapsed = this.sideCollapsed === NavigationLayoutCollapsed.Collapsed;
+			this._effectiveMode = this.mode === NavigationLayoutMode.Collapsed;
 		}
 	}
 }

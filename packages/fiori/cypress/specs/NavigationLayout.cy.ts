@@ -76,13 +76,13 @@ describe("Rendering and interaction", () => {
 			.should("have.prop", "collapsed", false);
 
 		cy.get("[ui5-navigation-layout]")
-			.invoke("prop", "sideCollapsed", "Collapsed");
+			.invoke("prop", "mode", "Collapsed");
 
 		cy.get("[ui5-side-navigation]")
 			.should("have.prop", "collapsed", true);
 
 		cy.get("[ui5-navigation-layout]")
-			.invoke("prop", "sideCollapsed", "Expanded");
+			.invoke("prop", "mode", "Expanded");
 
 		cy.get("[ui5-side-navigation]")
 			.should("have.prop", "collapsed", false);
@@ -97,7 +97,7 @@ describe("Navigation Layout on Phone", () => {
 
 	it("tests initial rendering", () => {
 		cy.get("[ui5-navigation-layout]")
-			.should("have.prop", "effectiveSideCollapsed", true);
+			.should("have.prop", "effectiveMode", true);
 
 		cy.get("[ui5-side-navigation]")
 			.should("have.prop", "collapsed", false);
@@ -110,7 +110,7 @@ describe("Navigation Layout on Phone", () => {
 
 	it("tests collapsing", () => {
 		cy.get("[ui5-navigation-layout]")
-			.invoke("prop", "sideCollapsed", "Expanded");
+			.invoke("prop", "mode", "Expanded");
 
 		cy.get("[ui5-navigation-layout]")
 			.shadow()
@@ -118,7 +118,7 @@ describe("Navigation Layout on Phone", () => {
 			.should("be.visible");
 
 		cy.get("[ui5-navigation-layout]")
-			.invoke("prop", "sideCollapsed", "Collapsed");
+			.invoke("prop", "mode", "Collapsed");
 
 		cy.get("[ui5-navigation-layout]")
 			.shadow()
