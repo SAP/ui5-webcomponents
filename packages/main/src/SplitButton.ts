@@ -16,6 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { AriaHasPopup } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -196,6 +197,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the display of the end icon as a graphical element within the text button of the component.
 	 * The SAP-icons font provides different options.
+	 * Note: This property takes effect if the `_aiButtonMode` property is set.
 	 *
 	 * Example:
 	 *
@@ -208,12 +210,13 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Defines the visibility of the arrow button of the component.
+	 * Note: This property takes effect if the `_aiButtonMode` property is set.
 	 *
 	 * @default false
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_hideArrowButton? = false;
+	_hideArrowButton = false;
 
 	/**
 	 * Defines the text of the component.
@@ -460,15 +463,14 @@ class SplitButton extends UI5Element {
 	get accInfo() {
 		return {
 			root: {
-				"role": this._hideArrowButton ? "button" : "group",
 				"description": SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
 				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
 			},
 			arrowButton: {
 				"title": this.arrowButtonTooltip,
 				"accessibilityAttributes": {
-					"hasPopup": AriaHasPopup.Menu.toLocaleLowerCase(),
-					"expanded": this.effectiveActiveArrowButton ? "true" : "false",
+					"hasPopup": "menu" as AriaHasPopup,
+					"expanded": this.effectiveActiveArrowButton ? true : false,
 				},
 			},
 		};
