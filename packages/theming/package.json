@@ -30,7 +30,7 @@
     "directory": "packages/theming"
   },
   "dependencies": {
-    "@sap-theming/theming-base-content": "11.17.1",
+    "@sap-theming/theming-base-content": "11.24.0",
     "@ui5/webcomponents-base": "2.6.0-rc.1"
   },
   "devDependencies": {
