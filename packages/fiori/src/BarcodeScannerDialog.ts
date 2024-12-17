@@ -1,13 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Result, Exception } from "@zxing/library";
@@ -22,7 +22,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
+import BarcodeScannerDialogTemplate from "./BarcodeScannerDialogTemplate.js";
 
 // Styles
 import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
@@ -77,7 +77,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 @customElement({
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: BarcodeScannerDialogTemplate,
 	styles: [BarcodeScannerDialogCss],
 	dependencies: [
@@ -102,17 +102,7 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @param {Object} rawBytes the scan result as a Uint8Array
  * @public
  */
-@event<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
-	detail: {
-		/**
-		 * @public
-		 */
-		text: { type: String },
-		/**
-		 * @public
-		 */
-		rawBytes: { type: Object },
-	},
+@event("scan-success", {
 	bubbles: true,
 })
 
@@ -121,17 +111,16 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @param {string} message the error message
  * @public
  */
-@event<BarcodeScannerDialogScanErrorEventDetail>("scan-error", {
-	detail: {
-		/**
-		 * @public
-		 */
-		message: { type: String },
-	},
+@event("scan-error", {
 	bubbles: true,
 })
 
 class BarcodeScannerDialog extends UI5Element {
+	eventDetails!: {
+		close: void,
+		"scan-success": BarcodeScannerDialogScanSuccessEventDetail,
+		"scan-error": BarcodeScannerDialogScanErrorEventDetail,
+	}
 	/**
 	 * Defines the header HTML Element.
 	 *
@@ -209,7 +198,7 @@ class BarcodeScannerDialog extends UI5Element {
 
 	async onAfterRendering() {
 		if (!this._hasGetUserMedia()) {
-			this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+			this.fireDecoratorEvent("scan-error", { message: "getUserMedia() is not supported by your browser" });
 			return;
 		}
 
@@ -231,7 +220,7 @@ class BarcodeScannerDialog extends UI5Element {
 			video.addEventListener("loadeddata", this._handleVideoPlayingBound);
 			video.srcObject = stream;
 		} catch (error) {
-			this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: (error as Error).message });
+			this.fireDecoratorEvent("scan-error", { message: (error as Error).message });
 			this.loading = false;
 		}
 	}
@@ -412,7 +401,7 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_handleScanSuccess(result: Result) {
-		this.fireDecoratorEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success", {
+		this.fireDecoratorEvent("scan-success", {
 			text: result.getText(),
 			rawBytes: result.getRawBytes(),
 		});
@@ -423,7 +412,7 @@ class BarcodeScannerDialog extends UI5Element {
 			return;
 		}
 
-		this.fireDecoratorEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: error.message });
+		this.fireDecoratorEvent("scan-error", { message: error.message });
 	}
 
 	_handleVideoPlaying() {
