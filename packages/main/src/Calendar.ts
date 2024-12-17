@@ -43,7 +43,7 @@ import Icon from "./Icon.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 
 // Template
-import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
+import CalendarTemplate from "./CalendarTemplate.js";
 
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
@@ -81,6 +81,7 @@ type CalendarSelectionChangeEventDetail = {
 type SpecialCalendarDateT = {
 	specialDateTimestamp: number;
 	type: `${CalendarLegendItemType}`;
+	tooltip?: string;
 };
 
 /**
@@ -422,6 +423,11 @@ class Calendar extends CalendarPart {
 			return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
 		});
 
+		validSpecialDates.forEach(date => {
+			const refLegendItem = this.calendarLegend.length ? this.calendarLegend[0].items.find(item => item.type === date.type) : undefined;
+			date._tooltip = refLegendItem?.text || "";
+		});
+
 		const uniqueDates = new Set();
 		const uniqueSpecialDates: Array<SpecialCalendarDateT> = [];
 
@@ -433,7 +439,8 @@ class Calendar extends CalendarPart {
 				uniqueDates.add(timestamp);
 				const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
 				const type = date.type;
-				uniqueSpecialDates.push({ specialDateTimestamp, type });
+				const tooltip = date._tooltip;
+				uniqueSpecialDates.push({ specialDateTimestamp, type, tooltip });
 			}
 		});
 

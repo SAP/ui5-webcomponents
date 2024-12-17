@@ -37,7 +37,6 @@ import CalendarUtils from "@ui5/webcomponents-localization/dist/CalendarUtils.js
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
-import type CalendarLegend from "./CalendarLegend.js";
 import type {
 	ICalendarPicker,
 	SpecialCalendarDateT,
@@ -51,7 +50,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import DayPickerTemplate from "./DayPickerTemplate.js";
 
 // Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
@@ -69,14 +68,14 @@ type Day = {
 	timestamp: string,
 	day: number,
 	focusRef: boolean,
-	_tabIndex: string,
+	_tabIndex: number,
 	selected: boolean,
 	_isSecondaryCalendarType: boolean,
 	classes: string,
 	tooltip?: string,
 	ariaLabel: string,
-	ariaSelected: string,
-	ariaDisabled: string | undefined,
+	ariaSelected: boolean,
+	ariaDisabled: boolean | undefined,
 	disabled: boolean,
 	secondDay?: number,
 	weekNum?: number,
@@ -127,10 +126,11 @@ type DayPickerNavigateEventDetail = {
 	bubbles: true,
 })
 class DayPicker extends CalendarPart implements ICalendarPicker {
-	eventDetails!: {
+	eventDetails!: CalendarPart["eventDetails"] & {
 		"change": DayPickerChangeEventDetail,
 		"navigate": DayPickerNavigateEventDetail,
-	}
+	};
+
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @default []
@@ -169,9 +169,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	@property({ type: Array })
 	_dayNames: Array<DayName> = [];
-
-	@property({ type: Array })
-	_calendarLegend!: Array<CalendarLegend>;
 
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
@@ -223,7 +220,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		const secondaryMonthsNames = this.hasSecondaryCalendarType ? localeData.getMonths("wide", this.secondaryCalendarType) as Array<string> : [];
 		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
 		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
-		const calendarLegend = this._calendarLegend && this._calendarLegend[0];
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
 		const todayDate = CalendarDate.fromLocalJSDate(UI5Date.getInstance(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
@@ -243,8 +239,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 			const specialCalendarDate = specialCalendarDates.find(specialDate => specialDate.specialDateTimestamp === timestamp);
 			const specialDayType = specialCalendarDate ? specialCalendarDate.type : "";
-			const calendarLegendItemText = calendarLegend?.items.find(item => item.type === specialDayType)?.text;
-			const unnamedCalendarTypeLabel = calendarLegendItemText && !this._isDefaultCalendarLegendType(specialDayType) ? calendarLegendItemText : "";
+			const specialDayTooltip = specialCalendarDate ? specialCalendarDate.tooltip : "";
+			const unnamedCalendarTypeLabel = specialDayTooltip && !this._isDefaultCalendarLegendType(specialDayType) ? specialDayTooltip : "";
 
 			const isFocused = tempDate.getMonth() === calendarDate.getMonth() && tempDate.getDate() === calendarDate.getDate();
 			const isSelected = this._isDaySelected(timestamp);
@@ -273,7 +269,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			const day: Day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
-				_tabIndex: isFocused ? "0" : "-1",
+				_tabIndex: isFocused ? 0 : -1,
 				selected: isSelected || isSelectedBetween,
 				day: tempDate.getDate(),
 				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
@@ -281,8 +277,8 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				tooltip,
 				ariaLabel,
-				ariaSelected: String(isSelected || isSelectedBetween),
-				ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
+				ariaSelected: isSelected || isSelectedBetween,
+				ariaDisabled: isDisabled || isOtherMonth,
 				disabled: isDisabled,
 				type: specialDayType,
 				parts: "day-cell",
@@ -778,15 +774,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		}
 
 		return this.hideWeekNumbers;
-	}
-
-	get classes() {
-		return {
-			root: {
-				"ui5-dp-root": true,
-				"ui5-dp-twocalendartypes": this.hasSecondaryCalendarType,
-			},
-		};
 	}
 
 	_isWeekend(oDate: CalendarDate): boolean {

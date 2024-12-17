@@ -4,7 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -50,6 +50,7 @@ import {
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import type { ListItemDeleteEventDetail } from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
@@ -58,7 +59,7 @@ import ListItemStandard from "./ListItemStandard.js";
 import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
-import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
+import TokenizerTemplate from "./TokenizerTemplate.js";
 import {
 	MULTIINPUT_SHOW_MORE_TOKENS,
 	TOKENIZER_ARIA_LABEL,
@@ -139,7 +140,7 @@ enum ClipboardDataOperation {
 @customElement({
 	tag: "ui5-tokenizer",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: TokenizerTemplate,
 	styles: [
 		TokenizerCss,
@@ -195,11 +196,12 @@ enum ClipboardDataOperation {
 
 class Tokenizer extends UI5Element {
 	eventDetails!: {
-		"token-delete": TokenizerTokenDeleteEventDetail;
-		"selection-change": TokenizerSelectionChangeEventDetail;
-		"show-more-items-press": void;
-		"before-more-popover-open": void;
-	}
+		"token-delete": TokenizerTokenDeleteEventDetail,
+		"selection-change": TokenizerSelectionChangeEventDetail,
+		"show-more-items-press": void,
+		"before-more-popover-open": void,
+	};
+
 	/**
 	 * Defines whether the component is read-only.
 	 *
@@ -561,8 +563,9 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	async itemDelete(e: CustomEvent) {
-		const token = e.detail.item.tokenRef;
+	async itemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
+		const token = this.getTokenByRefId(e.detail.item.getAttribute("data-ui5-token-ref-id")!);
+
 		const tokensArray = this._tokens;
 
 		// delay the token deletion in order to close the popover before removing token of the DOM
@@ -578,7 +581,7 @@ class Tokenizer extends UI5Element {
 		} else {
 			if (isPhone()) {
 				token._isVisible = false;
-				this._deletedDialogItems.push(token as Token);
+				this._deletedDialogItems.push(token);
 			} else {
 				this.fireDecoratorEvent("token-delete", { tokens: [token] });
 			}
@@ -1185,6 +1188,10 @@ class Tokenizer extends UI5Element {
 
 	getPopover() {
 		return this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	getTokenByRefId(refId: string) {
+		return this.tokens.find(token => token._id === refId)!;
 	}
 }
 

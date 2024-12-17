@@ -9,11 +9,7 @@ describe("Framework boot", () => {
 
 		cy.wrap({ registerThemePropertiesLoader })
 			.invoke("registerThemePropertiesLoader", "@ui5/webcomponents-theming", "sap_horizon", () => {
-				return Promise.resolve({
-					content: `:root{ --customCol: #fff; --customBg: #000; }`,
-					packageName: "",
-					fileName: "",
-				});
+				return Promise.resolve(`:root{ --customCol: #fff; --customBg: #000; }`);
 			});
 
 		cy.wrap({ hasStyle })
