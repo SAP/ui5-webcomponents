@@ -445,14 +445,6 @@ slot[name="profile"] {
 	min-width: 0.75rem;
 }
 
-
-[data-ui5-compact-size] .ui5-shellbar-button[data-count=" "]::before,
-.ui5-content-density-compact .ui5-shellbar-button[data-count=" "]::before,
-.sapUiSizeCompact .ui5-shellbar-button[data-count=" "]::before {
-	height: 0.625rem;
-	min-width: 0.625rem;
-}
-
 .ui5-shellbar-menu-button {
 	margin-inline-start: 0.5rem;
 }

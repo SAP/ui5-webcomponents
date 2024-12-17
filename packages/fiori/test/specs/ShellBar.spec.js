@@ -385,11 +385,11 @@ describe("Component Behavior", () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
 				const shellBar = await browser.$("#shellbar");
 
-				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
+				assert.ok(await searchField.isDisplayed(), "Search is hidden by default");
 
-				await shellBar.setProperty('showSearchField', true);
-				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
-				await shellBar.setProperty('showSearchField', false); // Clean Up
+				await shellBar.setProperty('showSearchField', false);
+				assert.notOk(await searchField.isDisplayed(), "Search is invisible after altering the showSearchField property of the ShellBar");
+				await shellBar.setProperty('showSearchField', true); // Clean Up
 			});
 		});
 

@@ -1,10 +1,16 @@
 import { html } from "lit";
 import "../../src/ShellBar.js";
+import "../../src/ShellBarItem.js";
 import "@ui5/webcomponents-icons/dist/activities.js";
 import "@ui5/webcomponents-icons/dist/sys-help.js";
 import "@ui5/webcomponents-icons/dist/da.js";
-import "@ui5/webcomponents-fiori/dist/ShellBarItem.js";
 import "@ui5/webcomponents/dist/ToggleButton.js";
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Switch.js";
+import "@ui5/webcomponents/dist/Tag.js";
+import "@ui5/webcomponents/dist/Avatar.js";
+import "@ui5/webcomponents/dist/Input.js";
+import "@ui5/webcomponents/dist/List.js";
 
 describe("Responsiveness", () => {
 	const basicTemplate = html`
@@ -156,14 +162,14 @@ describe("Responsiveness", () => {
 	});
 
 	it("tests S Breakpoint 320px", () => {
-		cy.get("html").viewport("iphone-x").then(() => {
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-overflow-button")
-				.should("exist");
-			cy.get("ui5-switch")
-				.should("be.hidden");
-		});
+		cy.get("html")
+			.viewport("iphone-x");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-overflow-button")
+			.should("exist");
+		cy.get("ui5-switch")
+			.should("be.hidden");
 	});
 
 	it("tests items visibility in Lean mode", () => {

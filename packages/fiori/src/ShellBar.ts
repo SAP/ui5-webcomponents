@@ -112,6 +112,11 @@ type ShellBarSearchButtonEventDetail = {
 	searchFieldVisible: boolean;
 };
 
+type ShellBarAssistantActionDisappearsEventDetail= {
+	item: HTMLElement;
+	isHidden: boolean;
+}
+
 interface IShelBarItemInfo {
 	id: string,
 	icon?: string,
@@ -264,6 +269,18 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 	cancelable: true,
 })
 
+/**
+ * Fired, when the assistant action is hidden
+ *
+ * @param {HTMLElement} item DOM ref of the hidden assistant action
+ * @param {Boolean} isHidden whether the assistant action is hidden
+ * @public
+ */
+@event("assistant-action-disappears", {
+	bubbles: true,
+	cancelable: true,
+})
+
 class ShellBar extends UI5Element {
 	eventDetails!: {
 		"notifications-click": ShellBarNotificationsClickEventDetail,
@@ -273,6 +290,7 @@ class ShellBar extends UI5Element {
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
 		"additional-context-disappears": ShellBarAdditionalContextItemDisappearsEventDetail,
+		"assistant-action-disappears": ShellBarAssistantActionDisappearsEventDetail,
 	}
 	/**
 	 * Defines the `primaryTitle`.
@@ -399,9 +417,6 @@ class ShellBar extends UI5Element {
 	_overflowPopoverExpanded = false;
 
 	@property({ type: Boolean, noAttribute: true })
-	_isSBreakpoint = false;
-
-	@property({ type: Boolean, noAttribute: true })
 	hasVisibleStartContent = false;
 
 	@property({ type: Boolean, noAttribute: true })
@@ -511,7 +526,6 @@ class ShellBar extends UI5Element {
 	_hiddenIcons: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_overflowNotifications: string | null;
-	_skipLayout = false;
 	_lastOffsetWidth = 0;
 	_lessSearchSpace = false;
 	_searchButtonInteraction = false;
@@ -596,6 +610,8 @@ class ShellBar extends UI5Element {
 			if (this.additionalContext.length === 0 && this._showSearchField === false && this._showFullWidthSearch === false) {
 				this._showSearchField = true;
 			}
+		} else if (this._showSearchField === true && this._searchButtonInteraction === false) {
+			this._showSearchField = false;
 		}
 	}
 
@@ -788,6 +804,7 @@ class ShellBar extends UI5Element {
 			const targetWidth = targetContainer?.offsetWidth || 0;
 			this._lessSearchSpace = this.hasAdditionalContext && targetWidth <= 0;
 		});
+		setTimeout(() => this._searchBarInitialState(), RESIZE_THROTTLE_RATE);
 	}
 
 	/**
@@ -811,8 +828,6 @@ class ShellBar extends UI5Element {
 		if (this.breakpointSize !== mappedSize) {
 			this.breakpointSize = mappedSize;
 		}
-
-		this._isSBreakpoint = this.breakpointSize === "S";
 		return mappedSize;
 	}
 
@@ -953,8 +968,10 @@ class ShellBar extends UI5Element {
 		if (this.assistant.length) {
 			const assistantInfo = items.find(item => item.text === "Assistant");
 			this.assistant[0].classList.remove("ui5-shellbar-hidden-button");
+			this.fireDecoratorEvent("assistant-action-disappears", { item: this.assistant[0], isHidden: false });
 			if (assistantInfo && assistantInfo.classes.indexOf("ui5-shellbar-hidden-button") > 0) {
 				this.assistant[0].classList.add("ui5-shellbar-hidden-button");
+				this.fireDecoratorEvent("assistant-action-disappears", { item: this.assistant[0], isHidden: true });
 			}
 		}
 	}
@@ -976,7 +993,6 @@ class ShellBar extends UI5Element {
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
-		setTimeout(() => this._searchBarInitialState(), 100);
 	}
 
 	onExitDOM() {
@@ -1523,7 +1539,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get showAdditionalContext() {
-		return !this._isSBreakpoint && this.hasAdditionalContext;
+		return !this.isSBreakPoint && this.hasAdditionalContext;
 	}
 
 	get _hasVisibleStartContent() {
@@ -1602,6 +1618,10 @@ class ShellBar extends UI5Element {
 	get accLogoRole() {
 		return this.accessibilityAttributes.logo?.role as string || "link";
 	}
+
+	get isSBreakPoint() {
+		return this.breakpointSize === "S";
+	}
 }
 
 ShellBar.define();
@@ -1617,4 +1637,5 @@ export type {
 	ShellBarMenuItemClickEventDetail,
 	ShellBarAccessibilityAttributes,
 	ShellBarSearchButtonEventDetail,
+	ShellBarAssistantActionDisappearsEventDetail,
 };
