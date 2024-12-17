@@ -286,8 +286,9 @@ class SideNavigation extends UI5Element {
 	}
 
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
-		e.stopPropagation()
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
+
+		e.stopPropagation();
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
