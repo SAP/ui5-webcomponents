@@ -310,6 +310,7 @@ ${fixAssetPaths(_js)}`,
 
     // algolia search opens the search on key `/` because this custom element is the event target but has no `isContentEditable`
     Object.defineProperty(fileEditorRef.current, "isContentEditable", {
+        configurable: true,
         get() {
             return true;
         },
