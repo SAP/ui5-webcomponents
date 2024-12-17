@@ -32,9 +32,10 @@ import NavigationLayoutCss from "./generated/themes/NavigationLayout.css.js";
  *
  * ### Responsive Behavior
  *
- * On desktop and tablet devices, the side navigation remains visible and can
- * be expanded or collapsed using the `mode` property. On phone devices, the side navigation
- * is hidden by default but can be displayed using the same `mode` property.
+ * On desktop and tablet devices, the side navigation is visible
+ * by default and can be expanded or collapsed using the `mode` property.
+ * On phone devices, the side navigation is hidden by default and can
+ * be displayed using the `mode` property.
  *
  * ### ES6 Module Import
  *
