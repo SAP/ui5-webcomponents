@@ -332,7 +332,7 @@ class Calendar extends CalendarPart {
 			this._specialCalendarDates;
 			invalidationInfo.target.detachInvalidate(this._onCalendarLegendInvalidateBound);
 		}
-	};
+	}
 
 	/**
 	 * @private
@@ -485,7 +485,7 @@ class Calendar extends CalendarPart {
 		const calendarLegend = this.calendarLegend.length ? this.calendarLegend[0] : undefined;
 
 		if (calendarLegend) {
-			calendarLegend.attachInvalidate(this._onCalendarLegendInvalidateBound)
+			calendarLegend.attachInvalidate(this._onCalendarLegendInvalidateBound);
 		}
 
 		if (!this._valueIsProcessed) {
