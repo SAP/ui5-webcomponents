@@ -11,7 +11,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITimelineItem } from "./Timeline.js";
 import type TimelineItemStatus from "./types/TimelineItemStatus.js";
-import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
+import TimelineItemTemplate from "./TimelineItemTemplate.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 
 import {
@@ -40,7 +40,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  */
 @customElement({
 	tag: "ui5-timeline-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: TimelineItemCss,
 	template: TimelineItemTemplate,
 	dependencies: [
@@ -60,6 +60,9 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	bubbles: true,
 })
 class TimelineItem extends UI5Element implements ITimelineItem {
+	eventDetails!: {
+		"name-click": void
+	}
 	/**
 	 * Defines the icon to be displayed as graphical element within the `ui5-timeline-item`.
 	 * SAP-icons font provides numerous options.
@@ -183,7 +186,7 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	}
 
 	onNamePress() {
-		this.fireDecoratorEvent("name-click", {});
+		this.fireDecoratorEvent("name-click");
 	}
 
 	/**
