@@ -506,7 +506,11 @@ slot[name="profile"] {
 
 :host([breakpoint-size="M"]) ::slotted([ui5-input]),
 :host([breakpoint-size="S"]) ::slotted([ui5-input]) {
-	min-width: 0;
+	min-width: 1rem;
+}
+
+:host([breakpoint-size="M"][_show-search-field]) .ui5-shellbar-overflow-container-right-child {
+	flex-grow: 1;
 }
 
 ::slotted([ui5-input]:hover) {
