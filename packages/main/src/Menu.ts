@@ -8,6 +8,7 @@ import {
 	isRight,
 	isEnter,
 	isTabNext,
+	isTabPrevious,
 	isDown,
 	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -344,41 +345,37 @@ class Menu extends UI5Element {
 	}
 
 	_itemKeyDown(e: KeyboardEvent) {
-		const shouldCloseMenu = this.isRtl ? isRight(e) || isTabNext(e) : isLeft(e) || isTabNext(e);
-		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
+		const isTabNextPrevoius = isTabNext(e) || isTabPrevious(e);
 		const item = e.target as MenuItem;
 		const parentElement = item.parentElement as MenuItem;
+		const shouldCloseMenu = parentElement.hasAttribute("ui5-menu-item") && (this.isRtl ? isRight(e) : isLeft(e));
+		const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
 
-		if (isEnter(e) || isTabNext(e)) {
-			e.preventDefault();
-			e.stopImmediatePropagation();
-		}
+		if (item.hasAttribute("ui5-menu-item")) {
+			if (isEnter(e) || isTabNextPrevoius) {
+				e.preventDefault();
+			}
 
-		if (isTabNext(e) && parentElement.hasAttribute("ui5-menu")) {
-			this._close();
-			return;
-		}
+			if (isRight(e)) {
+				item._navigateToEndContent();
+			} else if (isLeft(e)) {
+				item._navigateToEndContent(true);
+			}
 
-		if (shouldOpenMenu) {
-			this._openItemSubMenu(item);
-		} else if (shouldCloseMenu && parentElement.hasAttribute("ui5-menu-item") && parentElement._popover) {
-			parentElement._popover.open = false;
-			parentElement.selected = false;
-			(parentElement._popover.opener as HTMLElement)?.focus();
-		}
-
-		if (!item.hasAttribute("ui5-menu-item")) {
+			if (shouldOpenMenu) {
+				this._openItemSubMenu(item);
+			} else if ((shouldCloseMenu || isTabNextPrevoius) && parentElement._popover) {
+				parentElement._popover.open = false;
+				parentElement.selected = false;
+				(parentElement._popover.opener as HTMLElement)?.focus();
+			}
+		} else {
 			const menuItem = item.parentElement as MenuItem;
-
 			if (isUp(e)) {
 				this._navigateOutOfEndContent(menuItem);
 			} else if (isDown(e)) {
 				this._navigateOutOfEndContent(menuItem, true);
 			}
-		} else if (isRight(e)) {
-			item._navigateToEndContent();
-		} else if (isLeft(e)) {
-			item._navigateToEndContent(true);
 		}
 	}
 
