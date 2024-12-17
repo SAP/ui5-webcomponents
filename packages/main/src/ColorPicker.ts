@@ -581,7 +581,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const redInput = {
 			id: "red",
 			value: this._colorValue.R,
-			disabled: this.inputsDisabled,
 			label: "R",
 			accessibleName: this.redInputLabel,
 		};
@@ -589,7 +588,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const greenInput = {
 			id: "green",
 			value: this._colorValue.G,
-			disabled: this.inputsDisabled,
 			label: "G",
 			accessibleName: this.greenInputLabel,
 		};
@@ -597,7 +595,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const blueInput = {
 			id: "blue",
 			value: this._colorValue.B,
-			disabled: this.inputsDisabled,
 			label: "B",
 			accessibleName: this.blueInputLabel,
 		};
@@ -609,7 +606,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const hueInput = {
 			id: "hue",
 			value: this._colorValue.H,
-			disabled: this.inputsDisabled,
 			label: "H",
 			accessibleName: this.hueInputLabel,
 		};
@@ -617,7 +613,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const saturationInput = {
 			id: "saturation",
 			value: this._colorValue.S,
-			disabled: this.inputsDisabled,
 			label: "S",
 			accessibleName: this.saturationInputLabel,
 			showPercentSymbol: true,
@@ -626,7 +621,6 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const lightInput = {
 			id: "light",
 			value: this._colorValue.L,
-			disabled: this.inputsDisabled,
 			label: "L",
 			accessibleName: this.lightInputLabel,
 			showPercentSymbol: true,
