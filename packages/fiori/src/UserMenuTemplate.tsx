@@ -33,34 +33,35 @@ export default function UserMenuTemplate(this: UserMenu) {
 			opener={this.opener}
 			onClose={this._handlePopoverAfterClose}
 		>
-			{this._isPhone ? <>
-				<Bar class="ui5-pm-phone-header" slot="header">
-					{this._manageAccountVisibleInHeader &&
-						<Button icon={userSettings} onClick={this._handleManageAccountClick} slot="startContent"></Button>
-					}
+			{this._isPhone ?
+				<>
+					<Bar class="ui5-pm-phone-header" slot="header">
+						{this._manageAccountVisibleInHeader &&
+							<Button icon={userSettings} onClick={this._handleManageAccountClick} slot="startContent"></Button>
+						}
 
-					{this._titleMovedToHeader &&
-						<Title
-							level="H1"
-							wrappingType="None"
+						{this._titleMovedToHeader &&
+							<Title
+								level="H1"
+								wrappingType="None"
+							>
+								{this._selectedAccount.titleText}
+							</Title>
+						}
+
+						<Button
+							icon={decline}
+							design="Transparent"
+							accessibleName={this._closeDialogAriaLabel}
+							onClick={this._closeUserMenu}
+							slot="endContent"
 						>
-							{this._selectedAccount.titleText}
-						</Title>
-					}
-
-					<Button
-						icon={decline}
-						design="Transparent"
-						accessibleName={this._closeDialogAriaLabel}
-						onClick={this._closeUserMenu}
-						slot="endContent"
-					>
-					</Button>
-				</Bar>
-				<div class="ui5-pm-header">
-					{headerContent.call(this)}
-				</div>
-			</>
+						</Button>
+					</Bar>
+					<div class="ui5-pm-header">
+						{headerContent.call(this)}
+					</div>
+				</>
 				:
 				<div class="ui5-pm-header" slot="header">
 					{headerContent.call(this)}

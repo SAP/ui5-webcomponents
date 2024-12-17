@@ -6,7 +6,8 @@ import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Text from "./Text.js";
-import Link, { type LinkAccessibilityAttributes } from "./Link.js";
+import Link from "./Link.js";
+import type { LinkAccessibilityAttributes } from "./Link.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
@@ -111,7 +112,7 @@ class ExpandableText extends UI5Element {
 			return this.shadowRoot?.querySelector("[ui5-responsive-popover]") as HTMLElement;
 		}
 
-		return this.shadowRoot?.querySelector("ui5-link") as HTMLElement;
+		return this.shadowRoot?.querySelector("[ui5-link]") as HTMLElement;
 	}
 
 	get _displayedText() {

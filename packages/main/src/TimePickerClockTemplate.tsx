@@ -14,7 +14,7 @@ export default function TimePickerClockTemplate(this: TimePickerClock) {
 			}}
 		>
 
-			<div data-ui5-label={this.label} class="ui5-tp-clock-dial"></div>
+			<div data-label={this.label} class="ui5-tp-clock-dial"></div>
 
 			<div>
 				{this._items.map((item, i) => (

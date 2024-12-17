@@ -12,8 +12,6 @@
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
-		"jsx": "react-jsx",
-		"jsxImportSource": "@ui5/webcomponents-base",
 		"verbatimModuleSyntax": true,
 		"paths": {
 			"@ui5/webcomponents-base/dist/*": [

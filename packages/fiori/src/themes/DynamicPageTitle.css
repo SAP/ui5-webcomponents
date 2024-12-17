@@ -151,6 +151,11 @@
     align-items: center;
 }
 
+.ui5-dynamic-page-title--subheading{
+    max-width: fit-content;
+    z-index: 1;
+}
+
 /* focus */
 :host([desktop]:focus),
 .ui5-dynamic-page-title-focus-area:focus-visible {
