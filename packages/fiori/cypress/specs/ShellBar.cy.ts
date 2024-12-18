@@ -1,6 +1,4 @@
 import { html } from "lit";
-import "../../src/ShellBar.js";
-import "../../src/ShellBarItem.js";
 import "@ui5/webcomponents-icons/dist/activities.js";
 import "@ui5/webcomponents-icons/dist/sys-help.js";
 import "@ui5/webcomponents-icons/dist/da.js";
@@ -10,7 +8,13 @@ import "@ui5/webcomponents/dist/Switch.js";
 import "@ui5/webcomponents/dist/Tag.js";
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Input.js";
+import "@ui5/webcomponents/dist/features/InputSuggestions.js";
+import "@ui5/webcomponents/dist/SuggestionItem.js";
+import "@ui5/webcomponents/dist/SuggestionItemCustom.js";
+import "@ui5/webcomponents/dist/SuggestionItemGroup.js";
 import "@ui5/webcomponents/dist/List.js";
+import "../../src/ShellBar.js";
+import "../../src/ShellBarItem.js";
 
 describe("Responsiveness", () => {
 	const basicTemplate = html`
@@ -98,77 +102,77 @@ describe("Responsiveness", () => {
 	});
 
 	it("tests XXL Breakpoint 1920px", () => {
-		cy.viewport(1920, 1080).then(() => {
-			cy.get("@shellbar")
-				.find("ui5-button[slot='startButton']")
-				.as("backButton");
+		cy.viewport(1920, 1080);
+		cy.get("@shellbar")
+			.find("ui5-button[slot='startButton']")
+			.as("backButton");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-title")
-				.as("primaryTitle");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-title")
+			.as("primaryTitle");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-secondary-title")
-				.as("secondaryTitle");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-secondary-title")
+			.as("secondaryTitle");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-search-button")
-				.as("searchButton");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-search-button")
+			.as("searchButton");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-custom-item")
-				.as("customActionIcon1");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-custom-item")
+			.as("customActionIcon1");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-bell-button")
-				.as("notificationsIcon");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-bell-button")
+			.as("notificationsIcon");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-image-button")
-				.as("profileIcon");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-image-button")
+			.as("profileIcon");
 
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-button-product-switch")
-				.as("productSwitchIcon");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-button-product-switch")
+			.as("productSwitchIcon");
 
-			cy.get("@shellbar")
-				.find("ui5-toggle-button[slot='assistant']")
-				.as("assistant");
+		cy.get("@shellbar")
+			.find("ui5-toggle-button[slot='assistant']")
+			.as("assistant");
 
-			cy.get("@backButton").should("be.visible");
-			cy.get("@primaryTitle").should("be.visible");
-			cy.get("@secondaryTitle").should("be.visible");
-			cy.get("@customActionIcon1").should("be.visible");
-			cy.get("@notificationsIcon").should("be.visible");
-			cy.get("@profileIcon").should("be.visible");
-			cy.get("@productSwitchIcon").should("be.visible");
-			cy.get("@assistant").should("be.visible");
+		cy.get("@backButton").should("be.visible");
+		cy.get("@primaryTitle").should("be.visible");
+		cy.get("@secondaryTitle").should("be.visible");
+		cy.get("@customActionIcon1").should("be.visible");
+		cy.get("@notificationsIcon").should("be.visible");
+		cy.get("@profileIcon").should("be.visible");
+		cy.get("@productSwitchIcon").should("be.visible");
+		cy.get("@assistant").should("be.visible");
 
-			cy.get("@searchButton").click();
+		cy.get("@searchButton").click();
 
-			cy.get("@shellbar")
-				.find("ui5-input[slot='searchField']")
-				.as("searchField").should("be.visible");
+		cy.get("@shellbar")
+			.find("ui5-input[slot='searchField']")
+			.as("searchField").should("be.visible");
 
-			cy.get("@searchButton").click();
-		});
+		cy.get("@searchButton").click();
 	});
 
 	it("tests S Breakpoint 320px", () => {
-		cy.get("html")
-			.viewport("iphone-x");
+		cy.get("html").viewport("iphone-x");
 		cy.get("@shellbar")
 			.shadow()
 			.find(".ui5-shellbar-overflow-button")
 			.should("exist");
-		cy.get("ui5-switch")
+		cy.get("@shellbar")
+			.shadow()
+			.get("ui5-switch")
 			.should("be.hidden");
 	});
 
@@ -220,22 +224,18 @@ describe("Responsiveness", () => {
 
 	it("tests XXL Breakpoint Search bar", () => {
 		cy.get("@shellbar").invoke("attr", "show-search-field", "true");
-		cy.viewport(2560, 1080).then(() => {
-			cy.get("[slot='searchField']")
-				.should("exist");
-
-			// cy.get("searchField").should("exist");
-		});
+		cy.viewport(2560, 1080);
+		cy.get("[slot='searchField']")
+			.should("exist");
 	});
 
 	it("Test overflow button not showing, when only one action is presented", () => {
 		cy.mount(templateWithOnlyOneAction).as("html1");
 
-		cy.get("html").viewport("iphone-6").then(() => {
-			cy.get("@shellbar")
-				.shadow()
-				.find(".ui5-shellbar-overflow-button")
-				.should("be.hidden");
-		});
+		cy.get("html").viewport("iphone-6");
+		cy.get("@shellbar")
+			.shadow()
+			.find(".ui5-shellbar-overflow-button")
+			.should("be.hidden");
 	});
 });
