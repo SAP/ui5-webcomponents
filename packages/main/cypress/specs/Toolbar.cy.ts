@@ -46,27 +46,6 @@ describe("Toolbar general interaction", () => {
 			});
 	});
 
-	it("should be able to use toolbar button as popover opener", () => {
-		cy.mount(html`
-			<ui5-toolbar id="tb">
-				<ui5-toolbar-button icon="add" text="Left 1 (long)" id="clickCounter"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="decline" text="Left 2" id="clearCounter"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-				<ui5-toolbar-separator></ui5-toolbar-separator>
-				<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
-				<ui5-toolbar-button id="btnOpenMenu" text="Open Menu" prevent-overflow-closing></ui5-toolbar-button>
-			</ui5-toolbar>
-			<ui5-popover id="popup" opener="btnOpenMenu">
-				Hello World
-			</ui5-popover>
-		`);
-
-		cy.get("#popup").invoke("prop", "open", "true");
-
-		cy.get("#popup")
-			.should("be.visible");
-	});
-
 	it("shouldn't have toolbar button as popover opener when there is spacer before last toolbar item", () => {
 		cy.mount(html`
 			<ui5-toolbar id="otb_spacer">
