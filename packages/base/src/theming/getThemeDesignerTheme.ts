@@ -68,7 +68,7 @@ const processThemeMetadata = (metadata: ThemeMetadata): ThemeDescriptor | undefi
 	let baseThemeName;
 
 	try {
-		themeName = metadata.Path.match(/\.([^.]+)\.css_variables$/)![1];
+		themeName = metadata.Path.split(".")![2];
 		baseThemeName = metadata.Extends[0];
 	} catch (ex) {
 		if (!warnings.has("object")) {
