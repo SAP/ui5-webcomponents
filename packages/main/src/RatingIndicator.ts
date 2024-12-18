@@ -114,7 +114,7 @@ class RatingIndicator extends UI5Element {
 	max: number = 5;
 
 	/**
-	 * Defines predefined size of the component.
+	 * Defines the size of the component.
 	 * @default "M"
 	 * @public
 	 * @since 2.6.0

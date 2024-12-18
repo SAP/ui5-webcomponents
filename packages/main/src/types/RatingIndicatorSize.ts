@@ -1,6 +1,6 @@
 /**
- * Enumeration of different icon sizes used in the RatingIndicator.
- * This enum provides predefined size categories to ensure consistent scaling and spacing of icons.
+ * Types of icon sizes used in the RatingIndicator.
+ * Provides predefined size categories to ensure consistent scaling and spacing of icons.
  * @public
  * @since 2.6.0
  */
