@@ -5,6 +5,7 @@ import "@ui5/webcomponents-icons/dist/ai.js";
 import "@ui5/webcomponents-icons/dist/stop.js";
 import "@ui5/webcomponents-fiori/dist/Page.js";
 import "@ui5/webcomponents-fiori/dist/ShellBar.js";
+import "@ui5/webcomponents-fiori/dist/DynamicPage.js";
 import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/BusyIndicator.js";
 import "@ui5/webcomponents/dist/Text.js";
@@ -28,13 +29,13 @@ const toggleDialog = (dialog, isOpen) => {
 
 dialogCloser.addEventListener("click", () => toggleDialog(dialog, false));
 
-myAiButtonRegeneratePattern.addEventListener("click", () => {
-	if (myAiButtonRegeneratePattern.state !== "generating") {
+myAiButton.addEventListener("click", () => {
+	if (myAiButton.state !== "generating") {
 		toggleDialog(dialog, true);
 	}
 });
 
-document.getElementById("dialogCloserOK").addEventListener("click", () => {
+document.getElementById("dialogProceed").addEventListener("click", () => {
 	toggleDialog(dialog, false);
 	startGenerationHandler();
 });
@@ -42,7 +43,7 @@ document.getElementById("dialogCloserOK").addEventListener("click", () => {
 let generationIntervals = [];
 
 const startGenerationHandler = () => {
-	const button = myAiButtonRegeneratePattern;
+	const button = myAiButton;
 	if (button.state === "" || button.state === "regenerate") {
 		button.state = "generating";
 		startTextGeneration(button);
@@ -131,9 +132,9 @@ const typeText = (text, output) => {
 	});
 };
 
-myAiButtonRegeneratePattern.addEventListener("click", () => {
-	if (myAiButtonRegeneratePattern.state === "generating") {
-		myAiButtonRegeneratePattern.state = "regenerate";
+myAiButton.addEventListener("click", () => {
+	if (myAiButton.state === "generating") {
+		myAiButton.state = "regenerate";
 		stopTextGeneration();
 	}
 });
