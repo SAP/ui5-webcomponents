@@ -18,6 +18,7 @@ import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js"
 
 // Texts
 import {
+	DSC_MAIN_ARIA_LABEL,
 	DSC_SIDE_ARIA_LABEL,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -32,6 +33,11 @@ type DynamicSideContentLayoutChangeEventDetail = {
 	previousBreakpoint: string | undefined,
 	mainContentVisible: boolean,
 	sideContentVisible: boolean,
+}
+
+type DynamicSideContentAccessibilityAttributes = {
+	mainContentLabel?: string,
+	sideContentLabel?: string,
 }
 
 /**
@@ -187,6 +193,21 @@ class DynamicSideContent extends UI5Element {
 	equalSplit = false;
 
 	/**
+	* Defines additional accessibility attributes on different areas of the component.
+	*
+	* The accessibilityAttributes object has the following fields:
+	*
+	*  - **mainContentLabel**: defines the aria-label of the main content area. Accepts any string.
+	*  - **sideContentLabel**: defines the aria-label of the side content area. Accepts any string.
+	*
+	* @default {}
+	* @public
+	* @since 2.6.0
+	*/
+	@property({ type: Object })
+	accessibilityAttributes: DynamicSideContentAccessibilityAttributes = {};
+
+	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
@@ -287,7 +308,8 @@ class DynamicSideContent extends UI5Element {
 
 	get accInfo() {
 		return {
-			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			"mainContentLabel": this.accessibilityAttributes.mainContentLabel || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
+			"sideContentLabel": this.accessibilityAttributes.sideContentLabel || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
 		};
 	}
 
@@ -462,4 +484,5 @@ DynamicSideContent.define();
 export default DynamicSideContent;
 export type {
 	DynamicSideContentLayoutChangeEventDetail,
+	DynamicSideContentAccessibilityAttributes,
 };
