@@ -49,25 +49,12 @@ function HomepageHeader() {
   );
 }
 
-
-function Banner() {
-  return (
-    <div className="alert alert--info" role="alert" style={{fontSize: "1.5rem", textAlign: "center"}}>
-        🎉&nbsp;<b>UI5 Web Components 2.0 is released!</b>
-          <div>Discover <b><a href="https://github.com/SAP/ui5-webcomponents/releases/tag/v2.0.0"> all the exciting features in store!
-            </a></b>&nbsp;🎉
-          </div>
-    </div>
-  );
-}
-
 export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
-      <Banner />
       <HomepageHeader />
       <main>
         <HomepageFeatures />
