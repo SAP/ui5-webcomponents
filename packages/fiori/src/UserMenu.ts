@@ -128,6 +128,7 @@ type UserMenuOtherAccountClickEventDetail = {
 /**
  * Fired when a user menu is open.
  * @public
+ * @since 2.6.0
  */
 @event("open")
 
@@ -385,6 +386,7 @@ class UserMenu extends UI5Element {
 	}
 
 	_handlePopoverAfterClose() {
+		this.open = false;
 		this.fireDecoratorEvent("close");
 	}
 
