@@ -117,6 +117,7 @@ class RatingIndicator extends UI5Element {
 	 * Defines predefined size of the component.
 	 * @default "M"
 	 * @public
+	 * @since 2.6.0
 	 */
 	@property()
 	size: `${RatingIndicatorSize}` = "M";

@@ -1,26 +1,25 @@
 /**
- * Different types of RatingIndicatorSize.
+ * Enumeration of different icon sizes used in the RatingIndicator.
+ * This enum provides predefined size categories to ensure consistent scaling and spacing of icons.
  * @public
+ * @since 2.6.0
  */
 enum RatingIndicatorSize {
 	/**
-	 * icon size - 1.375rem
-	 * spacing between icons - 0.1875rem
+	 * Small size for compact layouts.
 	 * @public
 	 */
 	S = "S",
 
 	/**
-     * default
-     * icon size - 1.5rem
-	 * spacing between icons - 0.1875rem
+	 * Medium size, used as the default option.
+	 * Offers a balanced appearance for most scenarios.
 	 * @public
 	 */
 	M = "M",
 
 	/**
-     * icon size - 2rem
-	 * spacing between icons - 0.25rem
+	 * Large size for prominent or spacious layouts.
 	 * @public
 	 */
 	L = "L",
