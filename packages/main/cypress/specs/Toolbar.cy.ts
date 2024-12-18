@@ -70,4 +70,30 @@ describe("Toolbar general interaction", () => {
 			.find(".ui5-tb-overflow-btn-hidden")
 			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
 	});
+
+	it("shouldn't show overflow button if there is enough space", () => {
+		cy.mount(html`
+			<ui5-toolbar style="width:fit-content;max-width:100%;">
+				<ui5-toolbar-button icon="decline">
+				</ui5-toolbar-button>
+
+				<ui5-toolbar-button icon="add">
+				</ui5-toolbar-button>
+
+				<ui5-toolbar-button icon="employee">
+				</ui5-toolbar-button>
+			</ui5-toolbar>
+		`);
+
+		cy.get("[ui5-toolbar]")
+			.as("toolbar");
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(500);
+
+		cy.get("@toolbar")
+			.shadow()
+			.find(".ui5-tb-overflow-btn-hidden")
+			.should("exist", "hidden class attached to tb button, meaning it's not shown as expected");
+	});
 });

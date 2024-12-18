@@ -1,4 +1,5 @@
 :host {
+	--table-row-border-styles: var(--ui5_table_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	display: contents;
 }
 
@@ -11,12 +12,46 @@
 	background-color: var(--sapList_Background);
 	color: var(--sapList_TextColor);
 	border-top: 1px solid var(--sapList_BorderColor);
+	position: relative;
+}
+
+/* FOCUS START */
+.ui5-table-row-root,
+.ui5-table-popin-row {
+	position: relative;
 }
 
 .ui5-table-row-root:focus {
-	outline: var(--ui5_table_row_outline_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
-	outline-offset: var(--ui5_table_focus_outline_offset);
+	outline: none
 }
+
+.ui5-table-row-root:focus::after,
+.ui5-table-row-root:focus ~ .ui5-table-popin-row::after {
+	pointer-events: none;
+	position: absolute;
+	content: "";
+	inset: var(--ui5_table_focus_outline_offset);
+	border:  var(--table-row-border-styles);
+}
+
+.ui5-table-row-root:has(+ .ui5-table-popin-row):focus::after  {
+	bottom: 0;
+	border-bottom: none;
+}
+
+.ui5-table-row-root:focus ~ .ui5-table-popin-row::after {
+	top: 0;
+	bottom: 0;
+	border-top: none;
+	border-bottom: none;
+}
+
+
+.ui5-table-row-root:focus ~ .ui5-table-popin-row:last-child:after {
+	top: 0;
+	border-bottom:  var(--table-row-border-styles);
+}
+/* FOCUS END */
 
 .ui5-table-popin-row {
 	background-color: var(--sapList_Background);
