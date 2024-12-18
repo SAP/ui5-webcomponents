@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* **ui5-list:** focus list on non-focusable child click ([#10124](https://github.com/SAP/ui5-webcomponents/issues/10124)) ([6f98645](https://github.com/SAP/ui5-webcomponents/commit/6f9864593f4c4e54162ba203d10734d308c14e4f)), closes [#10096](https://github.com/SAP/ui5-webcomponents/issues/10096)
+* **ui5-list:** stop tab index change propagation ([#10354](https://github.com/SAP/ui5-webcomponents/issues/10354)) ([d130b8f](https://github.com/SAP/ui5-webcomponents/commit/d130b8f1d28b8fac3c78fb786dc0d57c5841043e)), closes [#10120](https://github.com/SAP/ui5-webcomponents/issues/10120)
+* **ui5-popover:** fix finding opener ([#10360](https://github.com/SAP/ui5-webcomponents/issues/10360)) ([941c6eb](https://github.com/SAP/ui5-webcomponents/commit/941c6eb215daf664d79448e7fe10d2e3ca7289e2))
+
+
+
+
+
 # [2.6.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.5.0...v2.6.0-rc.0) (2024-12-12)
 
 

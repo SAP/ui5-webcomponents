@@ -64,7 +64,9 @@ export default function DynamicPageTitleTemplate(this: DynamicPageTitle) {
 							</>}
 						</div>
 					</div>
-					<slot name={this.subheadingSlotName}></slot>
+					<div class="ui5-dynamic-page-title--subheading">
+						<slot name={this.subheadingSlotName}></slot>
+					</div>
 				</>}
 
 			<span id={`${this._id}-toggle-description`}
