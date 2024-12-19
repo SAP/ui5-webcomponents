@@ -15,7 +15,7 @@
     width: 16rem;
     height: 16rem;
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--_ui5_color_picker_main_color_margin_bottom);
     border: 1px solid var(--sapContent_ForegroundBorderColor);
     background-size: 100%;
     background-image: -webkit-linear-gradient(left, #000, rgba(0,0,0,0)),-webkit-linear-gradient(top, rgba(255,255,255,0), #fff);
@@ -56,11 +56,12 @@
 [ui5-slider] {
     --_ui5_slider_active_progress_border: none;
     --_ui5_slider_progress_box_sizing: content-box;
+    height: var(--_ui5_color_picker_sliders_height);
 }
 
 [ui5-slider]::part(handle) {
     width: 0.9375rem;
-    height: 1.5rem;
+    height: var(--_ui_color_picker_slider_handle_height);
     background: transparent;
     box-sizing: border-box;
 }
@@ -79,7 +80,7 @@
     content: "";
     border: 2px solid #fff;
     display: block;
-    height: 1.25rem;
+    height: var(--_ui_color_picker_slider_handle_after_height);
     border-radius: 1rem;
     width: 100%;
     box-sizing: border-box;
@@ -91,7 +92,7 @@
 
 [ui5-slider]::part(progress-container) {
     width: calc(100% + 11px);
-    height: 18px;
+    height: var(--_ui_color_picker_slider_progress_container_height);
     position: absolute;
     margin-top: var(--_ui5_color_picker_slider_container_margin_top);
     border-radius: 0;
@@ -124,7 +125,7 @@
 .ui5-color-picker-colors-wrapper {
     display: flex;
     flex-wrap: nowrap;
-    height: 1.5rem;
+    height: var(--_ui5_color_picker_colors_wrapper_height);
     border: 1px solid var(--sapField_BorderColor);
 }
 
@@ -206,7 +207,7 @@
     content: "";
     border: var(--_ui5_color_picker_slider_handle_inline_focus);
     display: block;
-    height: 1.625rem;
+    height: var(--_ui_color_picker_slider_handle_focus_height);
     border-radius: 1rem;
     width: 1.05rem;
     box-sizing: border-box;

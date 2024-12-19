@@ -36,6 +36,15 @@
 	--_ui5-calendar-legend-item-box-margin: 0.25rem;
 	--_ui5-calendar-legend-item-box-inner-margin: 0.5rem;
 
+	/* ColorPicker */
+	--_ui_color_picker_slider_progress_container_height: 1.625rem;
+	--_ui_color_picker_slider_handle_height: 2rem;
+	--_ui_color_picker_slider_handle_after_height: 1.75rem;
+	--_ui_color_picker_slider_handle_focus_height: 2.125rem;
+	--_ui5_color_picker_colors_wrapper_height: 2.25rem;
+	--_ui5_color_picker_sliders_height: 3rem;
+	--_ui5_color_picker_main_color_margin_bottom: 1rem;
+
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
 	 --_ui5_color-palette-item-hover-height: 2.375rem;
@@ -204,6 +213,15 @@
 	--_ui5_checkbox_inner_width_height: var(--_ui5_checkbox_compact_inner_size);
 	--_ui5_checkbox_icon_size: .75rem;
 	--_ui5_checkbox_partially_icon_size: .5rem;
+
+	/* ColorPicker */
+	--_ui_color_picker_slider_progress_container_height: 1.125rem;
+	--_ui_color_picker_slider_handle_height: 1.5rem;
+	--_ui_color_picker_slider_handle_after_height: 1.25rem;
+	--_ui_color_picker_slider_handle_focus_height: 1.625rem;
+	--_ui5_color_picker_colors_wrapper_height: 1.5rem;
+	--_ui5_color_picker_sliders_height: 2.25rem;
+	--_ui5_color_picker_main_color_margin_bottom: 0.75rem;
 
 	/* ColorPalette */
 	--_ui5_color-palette-item-height: 1.25rem;
