@@ -20,6 +20,7 @@ export default function NavigationMenuTemplate(this: NavigationMenu) {
 			onOpen={this._afterPopoverOpen}
 			onBeforeClose={this._beforePopoverClose}
 			onClose={this._afterPopoverClose}
+			hideArrow={true}
 		>
 			<span id={`${this._id}-navigationMenuPopoverText`} class="ui5-hidden-text">{this.accSideNavigationPopoverHiddenText}</span>
 			{this.isPhone &&

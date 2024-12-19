@@ -6,9 +6,8 @@ import type SideNavigationGroup from "./SideNavigationGroup.js";
 export default function SideNavigationGroupTemplate(this: SideNavigationGroup) {
 	if (this.sideNavCollapsed) {
 		return (<>
-			<div class={`ui5-sn-item-separator ${this.belowGroupClassName}`}></div>
+			<div role="separator" class="ui5-sn-spacer"></div>
 			<slot></slot>
-			<div class="ui5-sn-item-separator"></div>
 		</>);
 	}
 
@@ -21,7 +20,6 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 			class={`ui5-sn-list-li ${this.belowGroupClassName}`}
 			role="none"
 		>
-			<div class="ui5-sn-item-separator"></div>
 			<div class={`ui5-sn-item ui5-sn-item-group ${this._classes}`}
 				role="treeitem"
 				data-sap-focus-ref
@@ -41,6 +39,7 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 					/>
 				}
 			</div>
+			<div role="separator" class="ui5-sn-spacer"></div>
 			{!!this.items.length &&
 				<ul id={this._groupId}
 					class="ui5-sn-item-ul"
@@ -49,7 +48,6 @@ function TreeItemTemplate(this: SideNavigationGroup) {
 					<slot></slot>
 				</ul>
 			}
-			<div class="ui5-sn-item-separator"></div>
 		</li>
 	);
 }

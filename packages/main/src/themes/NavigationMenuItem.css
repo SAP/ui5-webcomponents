@@ -21,6 +21,9 @@
 	color: var(--sapList_TextColor);
 	font-weight: bold;
 	font-size: var(--sapFontSize);
+}
+
+:host([ui5-navigation-menu-item][selected]) {
 	border-bottom: none;
 }
 
@@ -38,7 +41,6 @@
 }
 
 .ui5-navigation-menu-item-root .ui5-sn-item-external-link-icon {
-	color: var(--_ui5_side_navigation_external_link_icon_color);
 	min-width: 2rem;
 	height: 0.875rem;
 }
