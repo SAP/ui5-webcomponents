@@ -34,9 +34,11 @@ document.querySelector("#sn1").addEventListener("selection-change", function (ev
 		return;
 	}
 
-	const contentItems = document.querySelectorAll(".contentItem");
+	const contentItems = document.querySelectorAll(".contentItem"),
+		divId = "cont" + event.detail.item.getAttribute("href").replace("#", "").charAt(0).toUpperCase() + event.detail.item.getAttribute("href").replace("#", "").slice(1);
+
 	contentItems.forEach(item => {
 		item.classList.remove("contentItemVisible");
 	});
-	document.getElementById(event.detail.item.getAttribute("href").replace("#", "")).classList.add("contentItemVisible");
+	document.getElementById(divId)?.classList.add("contentItemVisible");
 });
