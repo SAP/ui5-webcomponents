@@ -26,11 +26,11 @@ import ButtonCss from "./generated/themes/Button.css.js";
  *
  * ### Usage
  *
- * For the `ui5-ai-button` user interface, you can define one or more button states by placing ai-button-state components in their default slot.
+ * For the `ui5-ai-button` user interface, you can define one or more button states by placing `ui5-ai-button-state` components in their default slot.
  * Each state has a name for identification and can include text, an icon, and an end icon, as needed for its purpose.
- * You can define a split mode for the button, which will results in displaying an arrow button for additional actions.
+ * You can define a split mode for the `ui5-ai-button`, which will results in displaying an arrow button for additional actions.
  *
- * You can choose from a set of predefined designs for `ui5-ai-button` (as in `ui5-button`) to match the desired styling for the triggered action.
+ * You can choose from a set of predefined designs for `ui5-ai-button` (as in `ui5-button`) to match the desired styling.
  *
  * The `ui5-ai-button` can be activated by clicking or tapping it. You can change the button state in the click event handler. When the button is
  * in split mode, you can activate the default button action by clicking or tapping it, or by pressing keyboard keys like [Enter] or [Space].
@@ -110,7 +110,7 @@ class Button extends UI5Element {
 	state?: string;
 
 	/**
-	 * Defines the active state of the internal Arrow Button in split mode.
+	 * Defines the active state of the arrow button in split mode.
 	 * Set to true when the button is in split mode and a menu with additional options
 	 * is opened by the arrow button. Set back to false when the menu is closed.
 	 * @default false
