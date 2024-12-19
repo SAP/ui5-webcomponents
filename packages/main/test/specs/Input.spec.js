@@ -1154,6 +1154,24 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(await input.getValue(), "Test", "The value is not cleared");
 	});
+
+	it("Tests if toggling of show-suggestions attribute works correctly", async () => {
+		const input = await $("#clear-input-suggestions");
+		const button = await $("#toggle-suggestions");
+
+		await button.click();
+		await button.click();
+
+		await input.click();
+		await input.keys("a");
+
+		// check if popup is open
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#clear-input-suggestions");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// popover should be open
+		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+	});
 });
 
 describe("Input arrow navigation", () => {
