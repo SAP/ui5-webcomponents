@@ -11,6 +11,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getRGBColor,
+	getAlpha,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import type {
 	ColorHSL,
@@ -239,6 +240,11 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		const valueAsRGB = getRGBColor(this.value);
 		if (!this._isColorValueEqual(valueAsRGB)) {
 			this._colorValue.RGB = valueAsRGB;
+		}
+		const alpha = getAlpha(this.value);
+		if (alpha !== this._colorValue.Alpha) {
+			this._colorValue.Alpha = alpha;
+			this._alpha = this._colorValue.Alpha;
 		}
 		const tempColor = this._colorValue.toRGBString();
 		this._setValues();

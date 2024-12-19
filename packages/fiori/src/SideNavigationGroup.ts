@@ -69,9 +69,9 @@ class SideNavigationGroup extends SideNavigationItemBase {
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
-	get overflowItems() : Array<SideNavigationItem> {
-		const separator1 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:first-child") as SideNavigationItem;
-		const separator2 = this.shadowRoot!.querySelector(".ui5-sn-item-separator:last-child") as SideNavigationItem;
+	get overflowItems() : Array<HTMLElement> {
+		const separator1 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:first-child")!;
+		const separator2 = this.shadowRoot!.querySelector<HTMLElement>(".ui5-sn-item-separator:last-child")!;
 
 		const overflowItems = this.items.reduce((result, item) => {
 			return result.concat(item.overflowItems);
