@@ -8,6 +8,8 @@
 	--_ui5_rating_indicator_readonly_item_spacing: 0px;
 	--_ui5_rating_indicator_component_spacing: 0.5rem 0px;
 	--_ui5_rating_indicator_component_padding: 0.25rem;
+	--_ui5_rating_indicator_item_size_s: 1.375rem;
+	--_ui5_rating_indicator_item_size_l: 2rem;
 }
 
 [data-ui5-compact-size],
