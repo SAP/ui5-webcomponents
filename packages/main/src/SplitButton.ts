@@ -16,6 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import type { AriaHasPopup } from "@ui5/webcomponents-base";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -111,7 +112,7 @@ class SplitButton extends UI5Element {
 	 *
 	 * Example:
 	 *
-	 * See all the available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * See all available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default undefined
 	 * @public
 	 */
@@ -192,6 +193,28 @@ class SplitButton extends UI5Element {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_activeArrowButton = false;
+
+	/**
+	 * Defines the display of the end icon as a graphical element within the default action of the component after the button text.
+	 * The SAP-icons font provides different options.
+	 *
+	 * Example:
+	 *
+	 * See all available icons in the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+	 * @default undefined
+	 * @private
+	 */
+	@property({ type: String })
+	_endIcon?: string;
+
+	/**
+	 * Defines the visibility of the arrow button of the component.
+	 *
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_hideArrowButton = false;
 
 	/**
 	 * Defines the text of the component.
@@ -401,10 +424,11 @@ class SplitButton extends UI5Element {
 			}
 		} else {
 			this._textButtonActive = true;
-			this._fireClick();
 			if (wasSpacePressed) {
 				this._spacePressed = true;
+				return;
 			}
+			this._fireClick();
 		}
 	}
 
@@ -441,9 +465,10 @@ class SplitButton extends UI5Element {
 				"keyboardHint": SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
 			},
 			arrowButton: {
-				title: this.arrowButtonTooltip,
-				accessibilityAttributes: {
-					hasPopup: "menu" as const,
+				"title": this.arrowButtonTooltip,
+				"accessibilityAttributes": {
+					"hasPopup": "menu" as AriaHasPopup,
+					"expanded": this.effectiveActiveArrowButton,
 				},
 			},
 		};
