@@ -59,6 +59,73 @@ describe("F6 navigation", () => {
 				.should("be.focused");
 		});
 
+		it("tests navigation with hidden elements", () => {
+			cy.mount(html`<div>
+				<div class="section">
+					<button id="before">Before element</button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button id="first">First focusable</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button style="visibility: hidden;">Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true"  style="visibility: hidden;">
+					<ui5-button>Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button style="display: none;">Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true"  style="display: none;">
+					<ui5-button>Hidden</ui5-button>
+				</div>
+				<div class="section">
+					<ui5-button>Something focusable</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button id="second">Second focusable</ui5-button>
+				</div>
+				<div class="section">
+					<ui5-button>Something focusable</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button id="third">Third focusable</ui5-button>
+				</div>
+				<div class="section">
+					<ui5-button>After Element</ui5-button>
+				</div>
+			</div`);
+
+			// act
+			cy.get("#before").focus();
+			cy.realPress("F6");
+
+			// assert 1st group is focused
+			cy.get("#first")
+				.should("be.focused");
+
+			// act
+			cy.realPress("F6");
+
+			// assert 2nd group is focused
+			cy.get("#second")
+				.should("be.focused");
+
+			// act
+			cy.realPress("F6");
+
+			// assert 3rd group is focused
+			cy.get("#third")
+				.should("be.focused");
+
+			// act
+			cy.realPress("F6");
+
+			// assert 1st group is focused agian
+			cy.get("#first")
+				.should("be.focused");
+		});
+
 		it("tests navigation with empty group", () => {
 			cy.mount(html`<div>
 				<div class="section">
@@ -338,6 +405,73 @@ describe("F6 navigation", () => {
 				</div>
 				<div class="section" data-sap-ui-fastnavgroup="true">
 					<ui5-button id="first">First focusable</ui5-button>
+				</div>
+				<div class="section">
+					<ui5-button>Something focusable</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button id="second">Second focusable</ui5-button>
+				</div>
+				<div class="section">
+					<ui5-button>Something focusable</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button id="third">Third focusable</ui5-button>
+				</div>
+				<div class="section">
+					<ui5-button>After Element</ui5-button>
+				</div>
+			</div`);
+
+			// act
+			cy.get("#before").focus();
+			cy.realPress(["Shift", "F6"]);
+
+			// assert 3rd group is focused
+			cy.get("#third")
+				.should("be.focused");
+
+			// act
+			cy.realPress(["Shift", "F6"]);
+
+			// assert 2nd group is focused
+			cy.get("#second")
+				.should("be.focused");
+
+			// act
+			cy.realPress(["Shift", "F6"]);
+
+			// assert 1st group is focused
+			cy.get("#first")
+				.should("be.focused");
+
+			// act
+			cy.realPress(["Shift", "F6"]);
+
+			// assert 3rd group is focused agian
+			cy.get("#third")
+				.should("be.focused");
+		});
+
+		it("tests navigation with hidden elements", () => {
+			cy.mount(html`<div>
+				<div class="section">
+					<button id="before">Before element</button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button id="first">First focusable</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button style="visibility: hidden;">Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true"  style="visibility: hidden;">
+					<ui5-button>Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true">
+					<ui5-button style="display: none;">Hidden</ui5-button>
+				</div>
+				<div class="section" data-sap-ui-fastnavgroup="true"  style="display: none;">
+					<ui5-button>Hidden</ui5-button>
 				</div>
 				<div class="section">
 					<ui5-button>Something focusable</ui5-button>
