@@ -1676,3 +1676,49 @@ describe("Lazy loading", () => {
 		assert.strictEqual(await respPopover.getProperty("opened"), true, "Picker should not be open");
 	});
 });
+
+describe("Accsessibility", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Input.html`);
+	});
+
+	it("Checks suggestion item's tabindex", async () => {
+		const input = await $("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		const item = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[0].shadow$("li");
+
+		await input.click();
+		await input.keys("c");
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await item.getAttribute("tabindex"), "-1", "The first suggestion item is should not have tabindex");
+	});
+
+	it("Checks suggetion item's role attribute", async () => {
+		const input = await $("#myInput2");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput2");
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		
+		await input.click();
+		await input.keys("c");
+		
+		const item = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[0].shadow$("li");
+
+		assert.strictEqual(await item.getAttribute("role"), "option", "The first suggestion item has correct role attribute");
+	});
+
+	it("Checks group items tabindex", async () => {
+		const input = await $("#myInput");
+		const staticAreaClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaClassName}`).shadow$("ui5-responsive-popover");
+		
+		await input.click();
+		await input.keys("a");
+		await input.keys("ArrowDown");
+
+		const item = await respPopover.$("ui5-list").$$("ui5-li-groupheader")[0].shadow$("ul");
+
+		assert.strictEqual(await item.getAttribute("tabindex"), "-1", "The first group item is should not have tabindex");
+	});
+});
