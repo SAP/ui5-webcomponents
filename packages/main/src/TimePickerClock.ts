@@ -676,10 +676,8 @@ class TimePickerClock extends UI5Element {
 
 	_captureClockRef(el: HTMLDivElement | null) {
 		if (el) {
-			// @ts-expect-error "mousewheel" is not a standard event
-			el.addEventListener("mousewheel", this._onMouseWheel.bind(this));
-			// @ts-expect-error "DOMMouseScroll" is not a standard event
-			el.addEventListener("DOMMouseScroll", this._onMouseWheel.bind(this));
+			const onMouseWheel = this._onMouseWheel.bind(this);
+			el.addEventListener("wheel", onMouseWheel);
 		}
 	}
 
