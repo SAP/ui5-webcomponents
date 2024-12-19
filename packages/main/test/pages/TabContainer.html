@@ -885,6 +885,16 @@
 		</ui5-tabcontainer>
 	</section>
 
+	<section>
+		<h3>Unselected Tab Container</h3>
+		<ui5-tabcontainer id="unselectedTabContainer" unselected>
+			<ui5-tab text="One"></ui5-tab>
+			<ui5-tab text="Two"></ui5-tab>
+			<ui5-tab text="Three"></ui5-tab>
+			<ui5-tab text="Four"></ui5-tab>
+		</ui5-tabcontainer>
+	</section>
+
 	<script>
 		document.getElementById("tabContainer1").addEventListener("ui5-tab-select", async function (event) {
 			result.innerHTML = event.detail.tab.text;
