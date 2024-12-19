@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "technicalscenario";
+const pathData = "M2.5 461v-82c0-4 2-7 5-8l55-32c3-1 5-4 5-8v-74c0-10 5-15 14-15h149c7 0 10-3 10-10v-51c0-4-2-7-5-8l-55-32c-3-1-5-4-5-8V51c0-4 2-7 5-8l70-41h11l70 41c3 1 5 4 5 8v82c0 4-2 7-5 8l-55 32c-3 1-5 4-5 8v51c0 7 3 10 10 10h148c8 0 15 6 15 15v74c0 4 2 7 5 8l55 32c3 1 5 4 5 8v82c0 4-2 7-5 8l-70 41c-3 1-5 2-5 2-2 0-4-1-5-2l-70-41c-3-1-5-4-5-8v-82c0-4 2-7 5-8l55-32c3-1 5-4 5-8v-59h-317v59c0 4 2 7 5 8l55 32c3 1 5 4 5 8v82c0 4-2 7-5 8l-70 41c-3 1-5 2-5 2-2 0-4-1-5-2l-70-41c-3-1-5-4-5-8zm208-338l40 24c1 1 2 1 5 1s5 0 6-1l41-24c3-1 5-4 5-8V68c0-4-2-7-5-8l-41-24h-11l-40 24c-3 1-5 4-5 8v47c0 4 2 7 5 8zm169 274v47c0 4 2 7 5 8l40 24c1 1 2 1 5 1s4 0 5-1l40-24c3-1 5-4 5-8v-47c0-4-2-7-5-8l-40-24h-10l-40 24c-3 1-5 4-5 8zm-342 55l40 24c1 1 2 1 5 1s4 0 5-1l40-24c3-1 5-4 5-8v-47c0-4-2-7-5-8l-40-24h-10l-40 24c-3 1-5 4-5 8v47c0 4 2 7 5 8z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/technicalscenario";
+export { pathData, ltr, accData };
