@@ -477,9 +477,16 @@ describe("Initially opened", () => {
 	});
 
 	it("test _open", async () => {
-		assert.ok(await browser.$("#popoverOpen")._open, "_open is set");
-		assert.ok(await browser.$("#popover1")._open, "_open is set");
-		assert.ok(await browser.$("#popover2")._open, "_open is set");
+
+		const popoverOpen = await browser.$("#popoverOpen");
+		const popover1 = await browser.$("#popover1");
+		const popover2 = await browser.$("#popover2");
+		const popoverCont1 = await browser.$("#popoverCont1");
+
+		assert.ok(await popoverOpen.getProperty("_opened"), "_opened is set");
+		assert.ok(await popover1.getProperty("_opened"), "_opened is set");
+		assert.ok(await popover2.getProperty("_opened"), "_opened is set");
+		assert.ok(await popoverCont1.getProperty("_opened"), "_opened is set");
 	});
 });
 
