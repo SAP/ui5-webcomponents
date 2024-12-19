@@ -30,6 +30,7 @@ import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generat
 
 import Avatar from "./Avatar.js";
 import AvatarGroup from "./AvatarGroup.js";
+import AINotice from "./AINotice.js";
 import Bar from "./Bar.js";
 import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
