@@ -1,11 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 // Template
-import FormItemTemplate from "./generated/templates/FormItemTemplate.lit.js";
+import FormItemTemplate from "./FormItemTemplate.js";
 
 // Styles
 import FormItemCss from "./generated/themes/FormItem.css.js";
@@ -42,7 +42,7 @@ import type FormItemSpacing from "./types/FormItemSpacing.js";
  */
 @customElement({
 	tag: "ui5-form-item",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: FormItemCss,
 	template: FormItemTemplate,
 })
@@ -79,12 +79,6 @@ class FormItem extends UI5Element implements IFormItem {
 		individualSlots: true,
 	})
 	content!: Array<HTMLElement>;
-
-	/**
-	 * @private
-	 */
-	@property()
-	labelSpan = "S12 M4 L4 XL4";
 
 	/**
 	 * @private

@@ -237,7 +237,7 @@ describe("General interaction", () => {
 		const combo = await browser.$("#change-cb");
 		const placeholder = await browser.$("#change-placeholder");
 		const arrow = await combo.shadow$(".inputIcon");
-		
+
 		await combo.scrollIntoView();
 		await arrow.click();
 
@@ -495,9 +495,9 @@ describe("General interaction", () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$(".inputIcon");
 		const popover = await combo.shadow$("ui5-responsive-popover");
-		
+
 		await arrow.click();
-		
+
 		let listItems = await getVisibleItems(combo);
 		assert.strictEqual(listItems.length, 4, "Items should be 4");
 
@@ -713,8 +713,6 @@ describe("Grouping", () => {
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
-		await input.keys("ArrowDown");
 
 		const groupItem = (await getVisibleGroupItems(combo))[1];
 
@@ -725,11 +723,11 @@ describe("Grouping", () => {
 
 	it ("Pressing enter on a group item should not close the picker", async () => {
 		const combo = await browser.$("#combo-grouping");
+		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
 
-		await input.click();
-		await input.keys("a");
+		await arrow.click();
 		await input.keys("ArrowDown");
 		await input.keys("Enter");
 
@@ -763,8 +761,8 @@ describe("Accessibility", async () => {
 		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const itemAnnouncement1 = "List item 1 of 11";
-		const itemAnnouncement2 = "List item 2 of 11";
+		const itemAnnouncement1 = "List item 10 of 11";
+		const itemAnnouncement2 = "List item 11 of 11";
 
 		await arrow.click();
 
@@ -804,8 +802,8 @@ describe("Accessibility", async () => {
 		const arrow = await combo.shadow$(".inputIcon");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const itemAnnouncement1 = "DZ List item 1 of 10";
-		const itemAnnouncement2 = "AR List item 2 of 10";
+		const itemAnnouncement1 = "CA List item 9 of 10";
+		const itemAnnouncement2 = "CL List item 10 of 10";
 
 		await arrow.click();
 
@@ -940,9 +938,9 @@ describe("Accessibility", async () => {
 		const combo = await browser.$("#combo");
 		const innerInput = await combo.shadow$("input");
 		const popover = await combo.shadow$("ui5-responsive-popover");
-	
+
 		await combo.scrollIntoView();
-	
+
 		assert.strictEqual(await innerInput.getAttribute("aria-controls"), await popover.getAttribute("id"), "aria-controls attribute is correct.");
 	});
 });
@@ -996,12 +994,12 @@ describe("Keyboard navigation", async () => {
 
 		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), true, "The value state header should be focused");
 		assert.strictEqual(await combo.getProperty("focused"), false, "The input should not be focused");
-		assert.notEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should be focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), true, "The value state header should be focused");
 
 		await input.keys("ArrowUp");
 		assert.strictEqual(await combo.getProperty("focused"), true, "The input should be focused");
 		assert.strictEqual(await combo.getProperty("_isValueStateFocused"), false, "Value State should not be focused");
-		assert.strictEqual(await valueStateHeader.getAttribute("focused"), null, "The value state header should not be focused");
+		assert.strictEqual(await valueStateHeader.hasClass("ui5-responsive-popover-header--focused"), false, "The value state header should not be focused");
 
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
@@ -1377,6 +1375,7 @@ describe("Keyboard navigation", async () => {
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const arrow = await combo.shadow$(".inputIcon");
 
+
 		await combo.scrollIntoView();
 
 		await arrow.click();
@@ -1407,8 +1406,10 @@ describe("Keyboard navigation", async () => {
 		assert.notOk(isInVisibleArea, "Item should not be displayed in the viewport");
 
 		// click ArrowDown 16 times
-		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
-		await input.keys(["ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown", "ArrowDown"]);
+		for (let i = 0; i < 16; i++) {
+            await browser.keys("ArrowDown"),
+            await browser.pause(10);
+        }
 
 		isInVisibleArea = await browser.executeAsync(async done => {
 			const combobox = document.getElementById("combo-grouping");

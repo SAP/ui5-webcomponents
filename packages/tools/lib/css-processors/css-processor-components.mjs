@@ -28,7 +28,7 @@ let customPlugin = {
 
                 // JS/TS
                 const jsPath = f.path.replace(/dist[\/\\]css/, "src/generated/").replace(".css", extension);
-                const jsContent = getFileContent(tsMode, jsPath, packageJSON.name, "\`" + newText + "\`", true);
+                const jsContent = getFileContent(packageJSON.name, "\`" + newText + "\`", true);
                 writeFileIfChanged(jsPath, jsContent);
             });
         })

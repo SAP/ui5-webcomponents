@@ -1,15 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getRGBColor,
+	getAlpha,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
@@ -18,11 +20,10 @@ import type {
 	ColorHSL,
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
-import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
+import ColorPickerTemplate from "./ColorPickerTemplate.js";
 import Input from "./Input.js";
 import Slider from "./Slider.js";
 import Label from "./Label.js";
-import ColorPickerDisplayMode from "./types/ColorPickerDisplayMode.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -72,7 +73,7 @@ type ColorCoordinates = {
 
 @customElement({
 	tag: "ui5-color-picker",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,
@@ -91,6 +92,9 @@ type ColorCoordinates = {
 	bubbles: true,
 })
 class ColorPicker extends UI5Element implements IFormInputElement {
+	eventDetails!: {
+		change: void;
+	}
 	/**
 	 * Defines the currently selected color of the component.
 	 *
@@ -113,13 +117,13 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	name?: string;
 
 	/**
-	 * Defines the display mode of the component.
-	 * @default "Default"
+	 * When set to `true`, the alpha slider and inputs for RGB values will not be displayed.
+	 * @default false
 	 * @public
 	 * @since 2.5.0
 	 */
-	@property()
-	displayMode: `${ColorPickerDisplayMode}` = "Default";
+	@property({ type: Boolean })
+	simplified = false;
 
 	/**
 	 * Defines the HEX code of the currently selected color
@@ -222,7 +226,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	onBeforeRendering() {
 		// we have the color & ._mainValue properties here
 		this._value = getRGBColor(this.value);
-		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},1)`;
+		this._alpha = getAlpha(this.value);
+		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},${this._alpha})`;
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
@@ -285,7 +290,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: CustomEvent) {
+	_handleAlphaInputFromSlider(e: CustomEvent) {
 		const aphaInputValue: string = (e.target as Input).value;
 		this._alpha = parseFloat(aphaInputValue);
 		if (Number.isNaN(this._alpha)) {
@@ -342,7 +347,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		}
 	}
 
-	_handleRGBInputsChange(e: CustomEvent) {
+	_handleRGBInputsChange(e: Event) {
 		const target = e.target as Input;
 		const targetValue = parseInt(target.value) || 0;
 		let tempColor;
@@ -366,33 +371,35 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	}
 
 	_setMainColor(hueValue: number) {
-		if (hueValue <= 255) {
+		const hueValueMod = hueValue * 4.251;
+
+		if (hueValueMod <= 255) {
 			this._mainValue = {
 				r: 255,
-				g: hueValue,
+				g: hueValueMod,
 				b: 0,
 			};
-		} else if (hueValue <= 510) {
+		} else if (hueValueMod <= 510) {
 			this._mainValue = {
-				r: 255 - (hueValue - 255),
+				r: 255 - (hueValueMod - 255),
 				g: 255,
 				b: 0,
 			};
-		} else if (hueValue <= 765) {
+		} else if (hueValueMod <= 765) {
 			this._mainValue = {
 				r: 0,
 				g: 255,
-				b: hueValue - 510,
+				b: hueValueMod - 510,
 			};
-		} else if (hueValue <= 1020) {
+		} else if (hueValueMod <= 1020) {
 			this._mainValue = {
 				r: 0,
-				g: 765 - (hueValue - 255),
+				g: 765 - (hueValueMod - 255),
 				b: 255,
 			};
-		} else if (hueValue <= 1275) {
+		} else if (hueValueMod <= 1275) {
 			this._mainValue = {
-				r: hueValue - 1020,
+				r: hueValueMod - 1020,
 				g: 0,
 				b: 255,
 			};
@@ -400,12 +407,14 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._mainValue = {
 				r: 255,
 				g: 0,
-				b: 1275 - (hueValue - 255),
+				b: 1275 - (hueValueMod - 255),
 			};
 		}
 	}
 
-	_handleAlphaChange() {
+	_handleAlphaChange(e: CustomEvent) {
+		this._handleAlphaInputFromSlider(e);
+
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
 	}
@@ -436,7 +445,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		// and HSL format, the color will be parsed to RGB
 		// 0 ≤ H < 360
 		// 4.251 because with 4.25 we get out of the colors range.
-		const h = this._hue / 4.251;
+		const h = this._hue;
 
 		// 0 ≤ S ≤ 1
 		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
@@ -497,7 +506,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._isHueValueChanged = false;
 			this._hue = this.selectedHue ? this.selectedHue : this._hue;
 		} else {
-			this._hue = Math.round(hslColours.h * 4.25);
+			this._hue = Math.round(hslColours.h);
 		}
 
 		this._setMainColor(this._hue);
@@ -535,15 +544,16 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		return this._wrongHEX ? true : undefined;
 	}
 
-	get hexInputErrorState() {
-		return this._wrongHEX ? "Error" : undefined;
+	get hexInputErrorState(): `${ValueState}` {
+		return this._wrongHEX ? "Negative" : "None";
 	}
 
 	get _isDefaultPickerMode() {
-		return this.displayMode === ColorPickerDisplayMode.Default;
+		return !this.simplified;
 	}
 
 	get styles() {
+		// Remove after deleting the hbs template as the styles are added via the jsx template
 		return {
 			mainColor: {
 				"background-color": `rgb(${this._mainValue.r}, ${this._mainValue.g}, ${this._mainValue.b})`,

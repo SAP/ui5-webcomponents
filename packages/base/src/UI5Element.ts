@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import "@ui5/webcomponents-base/dist/ssr-dom.js";
+import type { JSX } from "./jsx-runtime.js";
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -27,8 +28,9 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
-import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
+import executeTemplate from "./renderer/executeTemplate.js";
+import { shouldScopeCustomElement } from "./CustomElementsScopeUtils.js";
+import type { TemplateFunction } from "./renderer/executeTemplate.js";
 import type {
 	AccessibilityInfo,
 	PromiseResolve,
@@ -48,15 +50,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, options: RendererOptions) => void;
-
-type RendererOptions = {
-	/**
-	 * An object to use as the `this` value for event listeners. It's often
-	 * useful to set this to the host component rendering a template.
-	 */
-	host?: object,
-}
+type Renderer = (instance: UI5Element, container: HTMLElement | DocumentFragment) => void;
 
 type ChangeInfo = {
 	type: "property" | "slot",
@@ -73,6 +67,8 @@ type InvalidationInfo = ChangeInfo & { target: UI5Element };
 type ChildChangeListener = (param: InvalidationInfo) => void;
 
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
+
+type SlottedChild = Record<string, any>;
 
 const defaultConverter = {
 	fromAttribute(value: string | null, type: unknown) {
@@ -140,6 +136,23 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
 	} while (proto && proto !== HTMLElement.prototype);
 }
 
+type NotEqual<X, Y> = true extends Equal<X, Y> ? false : true
+type Equal<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+  (<T>() => T extends Y ? 1 : 2) ? true : false
+
+// JSX support
+type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N
+// type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: T[Property] extends IsAny<T> ? any : (e: CustomEvent<T[Property]>) => void }
+type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}`
+? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}`
+: T;
+type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
+
+type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref";
+type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
+type Convert<T> = { [Property in keyof T as `on${KebabToPascal<string & Property>}` ]: IsAny<T[Property], any, (e: CustomEvent<T[Property]>) => void> }
+
 /**
  * @class
  * Base class for all UI5 Web Components
@@ -148,6 +161,11 @@ function getPropertyDescriptor(proto: any, name: PropertyKey): PropertyDescripto
  * @public
  */
 abstract class UI5Element extends HTMLElement {
+	eventDetails!: NotEqual<this, UI5Element> extends true ? object : {
+		[k: string]: any
+	};
+	_jsxEvents!: Omit<JSX.DOMAttributes<this>, keyof Convert<this["eventDetails"]> | "onClose" | "onToggle" | "onChange" | "onSelect" | "onInput"> & Convert<this["eventDetails"]>
+	_jsxProps!: Pick<JSX.AllHTMLAttributes<HTMLElement>, GlobalHTMLAttributeNames> & ElementProps<this> & Partial<this["_jsxEvents"]> & { key?: any };
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
@@ -162,6 +180,7 @@ abstract class UI5Element extends HTMLElement {
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
 	_internals: ElementInternals;
+	_individualSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
 
 	static template?: TemplateFunction;
@@ -263,7 +282,7 @@ abstract class UI5Element extends HTMLElement {
 			// when an element is connected, check if it exists in the `dependencies` of the parent
 			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
 				const klass = rootNode.host.constructor as typeof UI5Element;
-				const hasDependency = getTagsToScope(rootNode.host).includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
+				const hasDependency = klass.tagsToScope.includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
 				if (!hasDependency) {
 					// eslint-disable-next-line no-console
 					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
@@ -442,7 +461,7 @@ abstract class UI5Element extends HTMLElement {
 			if (slotData.individualSlots) {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
-				(child as Record<string, any>)._individualSlot = `${slotName}-${nextIndex}`;
+				(child as SlottedChild)._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements
@@ -970,13 +989,13 @@ abstract class UI5Element extends HTMLElement {
 	 * @param data - additional data for the event
 	 * @returns false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireDecoratorEvent<T>(name: string, data?: T): boolean {
-		const eventData = this.getEventData(name);
+	fireDecoratorEvent<N extends keyof this["eventDetails"]>(name: N, data?: this["eventDetails"][N] | undefined): boolean {
+		const eventData = this.getEventData(name as string);
 		const cancellable = eventData ? eventData.cancelable : false;
 		const bubbles = eventData ? eventData.bubbles : false;
 
-		const eventResult = this._fireEvent(name, data, cancellable, bubbles);
-		const pascalCaseEventName = kebabToPascalCase(name);
+		const eventResult = this._fireEvent(name as string, data, cancellable, bubbles);
+		const pascalCaseEventName = kebabToPascalCase(name as string);
 
 		// pascal events are more convinient for native react usage
 		// live-change:
@@ -1092,6 +1111,22 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	static get observedAttributes() {
 		return this.getMetadata().getAttributesList();
+	}
+
+	/**
+	 * Returns all tags, used inside component's template subject to scoping.
+	 * returns {Array[]} // TODO add @
+	 * @private
+	 */
+	static get tagsToScope(): Array<string> {
+		const componentTag = this.getMetadata().getPureTag();
+		const tagsToScope = this.getUniqueDependencies().map((dep: typeof UI5Element) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+
+		if (shouldScopeCustomElement(componentTag)) {
+			tagsToScope.push(componentTag);
+		}
+
+		return tagsToScope;
 	}
 
 	/**
@@ -1357,5 +1392,5 @@ export type {
 	ChangeInfo,
 	InvalidationInfo,
 	Renderer,
-	RendererOptions,
+	SlottedChild,
 };

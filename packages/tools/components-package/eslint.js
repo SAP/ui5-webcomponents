@@ -3,10 +3,11 @@ const path = require("path");
 const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
 /**
- * Typescript Rules
+ * Returns eslint rules specific to typescript files
+ * @returns
  */
-const overrides = tsMode ? [
-	{
+const getTsModeOverrides = () => {
+	const tsConfiguration = {
 		files: ["*.ts"],
 		parser: "@typescript-eslint/parser",
 		plugins: ["@typescript-eslint"],
@@ -24,6 +25,7 @@ const overrides = tsMode ? [
 		rules: {
 			"no-shadow": "off",
 			"@typescript-eslint/consistent-type-imports": "error",
+			"import/consistent-type-specifier-style": ["error", "prefer-top-level"],
 			"@typescript-eslint/no-shadow": ["error"],
 			"@typescript-eslint/no-unsafe-member-access": "off",
 			"@typescript-eslint/no-floating-promises": "off",
@@ -36,8 +38,22 @@ const overrides = tsMode ? [
 			"@typescript-eslint/no-empty-interface": "off",
 			"lines-between-class-members": "off",
 		}
-	},
-	{
+	};
+
+	const tsxConfiguration = JSON.parse(JSON.stringify(tsConfiguration));
+	tsxConfiguration.files = ["*.tsx"];
+	tsxConfiguration.rules = {
+		...tsxConfiguration.rules,
+		"@typescript-eslint/unbound-method": "off", // to be able to attach on* listeners
+		"@typescript-eslint/no-misused-promises": "off", // to be able to have async event listeners
+		"operator-linebreak": "off",
+		"no-nested-ternary": "off",
+		"implicit-arrow-linebreak": "off",
+		"function-paren-newline": "off",
+		"comma-dangle": "off"
+	};
+
+	const cypressConfiguration = {
 		"files": ["**/cypress/**/*.ts"],
 
 		"plugins": [
@@ -69,7 +85,13 @@ const overrides = tsMode ? [
 			]
 		}
 	}
-] : [];
+
+	return [
+		tsConfiguration,
+		tsxConfiguration,
+		cypressConfiguration,
+	];
+}
 
 module.exports = {
 	"env": {
@@ -78,7 +100,7 @@ module.exports = {
 	},
 	"root": true,
 	"extends": "airbnb-base",
-	overrides,
+	"overrides": tsMode ? getTsModeOverrides() : [],
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"
@@ -121,6 +143,7 @@ module.exports = {
 		"curly": [2, "all"],
 		// "default-case": 1, // removed for UI5 WebComponents
 		"import/extensions": ["error", "always"], // override for UI5 WebComponents
+		"import/order": "off",
 		"no-alert": 2,
 		"no-caller": 2,
 		"no-div-regex": 2,
