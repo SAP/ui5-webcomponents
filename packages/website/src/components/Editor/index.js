@@ -68,6 +68,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         "@ui5/webcomponents-ai/": `${getHostBaseUrl()}local-cdn/ai/`,
         "@ui5/webcomponents-fiori/": `${getHostBaseUrl()}local-cdn/fiori/`,
         "@ui5/webcomponents-compat/": `${getHostBaseUrl()}local-cdn/compat/`,
+        "@ui5/webcomponents-base/jsx-runtime": `${getHostBaseUrl()}local-cdn/base/dist/jsx-runtime.js`,
         "@ui5/webcomponents-base/": `${getHostBaseUrl()}local-cdn/base/`,
         "@ui5/webcomponents-icons/": `${getHostBaseUrl()}local-cdn/icons/`,
         "@ui5/webcomponents-localization/": `${getHostBaseUrl()}local-cdn/localization/`,
@@ -82,6 +83,7 @@ export default function Editor({html, js, css, mainFile = "main.js", canShare = 
         "@ui5/webcomponents-ai/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-ai@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-fiori/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-fiori@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-compat/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-compat@${siteConfig.customFields.ui5Version}/`,
+        "@ui5/webcomponents-base/jsx-runtime": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-base@${siteConfig.customFields.ui5Version}/dist/jsx-runtime.js`,
         "@ui5/webcomponents-base/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-base@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-icons/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-icons@${siteConfig.customFields.ui5Version}/`,
         "@ui5/webcomponents-localization/": `https://cdn.jsdelivr.net/npm/@ui5/webcomponents-localization@${siteConfig.customFields.ui5Version}/`,
@@ -305,9 +307,10 @@ ${fixAssetPaths(_js)}`,
     tabBarRef.current.project = projectRef.current;
     fileEditorRef.current.project = projectRef.current;
     previewRef.current.project = projectRef.current;
-	  
+
     // algolia search opens the search on key `/` because this custom element is the event target but has no `isContentEditable`
     Object.defineProperty(fileEditorRef.current, "isContentEditable", {
+        configurable: true,
         get() {
             return true;
         },

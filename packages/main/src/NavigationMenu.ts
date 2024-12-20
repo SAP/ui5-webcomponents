@@ -1,13 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import Menu from "./Menu.js";
 import type MenuItem from "./MenuItem.js";
 import type NavigationMenuItem from "./NavigationMenuItem.js";
-import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
+import NavigationMenuTemplate from "./NavigationMenuTemplate.js";
 
 // Styles
 import navigationMenuCss from "./generated/themes/NavigationMenu.css.js";
@@ -39,9 +39,9 @@ import {
  */
 @customElement({
 	tag: "ui5-navigation-menu",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: [menuCss, navigationMenuCss],
-	template: menuTemplate,
+	template: NavigationMenuTemplate,
 })
 
 class NavigationMenu extends Menu {

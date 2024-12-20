@@ -2,6 +2,11 @@
 	background: var(--sapList_Background);
 }
 
+:host([position]) {
+	height: var(--row-height);
+	overflow: clip;
+}
+
 :host([aria-selected=true]) {
 	background-color: var(--sapList_SelectionBackgroundColor);
 	border-bottom: var(--sapList_BorderWidth) solid var(--sapList_SelectionBorderColor);

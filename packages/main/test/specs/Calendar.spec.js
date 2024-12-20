@@ -432,7 +432,7 @@ describe("Calendar general interaction", () => {
 		const calendar = await browser.$("#calendar3");
 		const dayPickerRoot = await calendar.shadow$("ui5-daypicker").shadow$(".ui5-dp-root");
 
-		const specialDate = await dayPickerRoot.$$(`div[special-day]`);
+		const specialDate = await dayPickerRoot.$$(`div[data-ui5-special-day]`);
 
 		assert.strictEqual(specialDate.length, 1, "Special date is rendered");
 	});
