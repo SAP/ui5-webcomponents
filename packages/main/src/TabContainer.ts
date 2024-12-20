@@ -291,6 +291,14 @@ class TabContainer extends UI5Element {
 	@property()
 	mediaRange?: string;
 
+	/**
+	 * Defines whether the first tab is selected by default if no tab is selected.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	unselected = false;
+
 	@property({ type: Object })
 	_selectedTab?: Tab;
 
@@ -384,6 +392,8 @@ class TabContainer extends UI5Element {
 
 		if (selectedTab) {
 			this._selectedTab = selectedTab;
+		} else if (this.unselected) {
+			this._selectedTab = undefined;
 		} else {
 			this._selectedTab = this._itemsFlat[0] as Tab;
 		}
