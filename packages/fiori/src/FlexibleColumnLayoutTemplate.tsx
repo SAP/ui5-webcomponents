@@ -84,11 +84,22 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 
 function gripStart(this: FlexibleColumnLayout) {
 	return (
-		<Icon
-			name={verticalGrip}
-			class="ui5-fcl-grip ui5-fcl-grip--start"
-			style={{ display: this.showStartSeparatorGrip ? "inline-block" : "none" }}
-		/>
+		<div>
+			{ this.arrowIconName && (
+				<Icon
+					class="ui5-fcl-arrow ui5-fcl-arrow--start"
+					name={this.arrowIconName}
+					style={{ display: this.showStartSeparatorGrip ? "inline-block" : "none" }}
+					onClick={this.toggleStartColumnVisibility}
+					tabIndex={0}
+				/>
+			)}
+			<Icon
+				name={verticalGrip}
+				class="ui5-fcl-grip ui5-fcl-grip--start"
+				style={{ display: this.showStartSeparatorGrip ? "inline-block" : "none" }}
+			/>
+		</div>
 	);
 }
 

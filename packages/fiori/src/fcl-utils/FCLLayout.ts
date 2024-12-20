@@ -65,6 +65,20 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 					{ visible: true, gripVisible: true },
 				],
 			},
+			"ThreeColumnsBeginHiddenMidExpanded": {
+				layout: ["0px", "67%", "33%"],
+				separators: [
+					{ visible: true, gripVisible: true },
+					{ visible: true, gripVisible: true },
+				],
+			},
+			"ThreeColumnsBeginHiddenEndExpanded": {
+				layout: ["0px", "33%", "67%"],
+				separators: [
+					{ visible: true, gripVisible: false },
+					{ visible: true, gripVisible: true },
+				],
+			},
 			"MidColumnFullScreen": {
 				layout: ["0px", "100%", "0px"],
 				separators: [
@@ -127,6 +141,20 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 				layout: ["33%", "67%", "0px"],
 				separators: [
 					{ visible: true, gripVisible: true },
+					{ visible: true, gripVisible: true },
+				],
+			},
+			"ThreeColumnsBeginHiddenMidExpanded": {
+				layout: ["0px", "67%", "33%"],
+				separators: [
+					{ visible: true, gripVisible: true },
+					{ visible: true, gripVisible: true },
+				],
+			},
+			"ThreeColumnsBeginHiddenEndExpanded": {
+				layout: ["0px", "33%", "67%"],
+				separators: [
+					{ visible: false },
 					{ visible: true, gripVisible: true },
 				],
 			},
@@ -195,6 +223,20 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 					{ visible: false },
 				],
 			},
+			"ThreeColumnsBeginHiddenMidExpanded": {
+				layout: ["0px", "100%", "0px"],
+				separators: [
+					{ visible: false },
+					{ visible: false },
+				],
+			},
+			"ThreeColumnsBeginHiddenEndExpanded": {
+				layout: ["0px", "0px", "100%"],
+				separators: [
+					{ visible: false },
+					{ visible: false },
+				],
+			},
 			"MidColumnFullScreen": {
 				layout: ["0px", "100%", "0px"],
 				separators: [
@@ -213,7 +255,30 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 	};
 };
 
+const getPhoneTabletLayouts = () => {
+	return [
+		"TwoColumnsMidExpanded",
+		"ThreeColumnsMidExpanded",
+		"ThreeColumnsBeginHiddenEndExpanded",
+		"TwoColumnsStartExpanded",
+		"ThreeColumnsStartExpandedEndHidden",
+		"ThreeColumnsMidExpandedEndHidden",
+	];
+};
+
+const getDesktopLayouts = () => {
+	return [
+		"TwoColumnsMidExpanded",
+		"ThreeColumnsMidExpanded",
+		"TwoColumnsStartExpanded",
+		"ThreeColumnsStartExpandedEndHidden",
+		"ThreeColumnsMidExpandedEndHidden",
+	];
+};
+
 export {
+	getPhoneTabletLayouts,
+	getDesktopLayouts,
 	getLayoutsByMedia,
 };
 
