@@ -32,7 +32,7 @@ import SearchCss from "./generated/themes/Search.css.js";
 import SearchField from "./SearchField.js";
 import { StartsWith } from "@ui5/webcomponents/dist/Filters.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-
+import type SearchItem from "./SearchItem.js";
 
 interface ISearchSuggestionItem extends UI5Element {
 	headingText: string;
@@ -149,7 +149,7 @@ class Search extends SearchField {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<HTMLElement>;
+	items!: Array<SearchItem>;
 
 	/**
 	 * Defines the illustrated message to be shown in the popup.
@@ -178,10 +178,21 @@ class Search extends SearchField {
 		// If there is already a selection the autocomplete has already been performed
 		if (this._shouldAutocomplete && !autoCompletedChars) {
 			const item = this._getFirstMatchingItem(this.value);
+
 			if (item) {
 				this._handleTypeAhead(item);
+			} else {
+				this.typedInValue = this.value;
 			}
+		} else {
+			this.typedInValue = this.value;
 		}
+
+		this.items.forEach(item => {
+			item.highlightText = this.typedInValue;
+		});
+
+		this._shouldAutocomplete = false;
 	}
 
 	get _flattenItems(): Array<ISearchSuggestionItem> {
@@ -209,7 +220,6 @@ class Search extends SearchField {
 		this._innerValue = value;
 		this.value = value;
 		this._performTextSelection = true;
-		this._shouldAutocomplete = false;
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
@@ -266,6 +276,10 @@ class Search extends SearchField {
 		if (!this.matches(":focus-within")) {
 			this._open = false;
 		}
+	}
+
+	_handleSearchIconFocusOut() {
+		this._open = false;
 	}
 
 	_handleClose() {

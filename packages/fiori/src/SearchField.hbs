@@ -29,6 +29,7 @@
 				icon="search"
 				design={{_searchDesign}}
 				@click={{_handleSearchIconPress}}
+				@focusout="{{_handleSearchIconFocusOut}}"
 			></ui5-button>
 
 			{{#if _effectiveShowClearIcon}}

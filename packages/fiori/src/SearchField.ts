@@ -203,6 +203,8 @@ class SearchField extends UI5Element {
 		this.fireDecoratorEvent("search");
 	}
 
+	_handleSearchIconFocusOut() {}
+
 	_handleSearchIconPress() {
 		if (this.value.length) {
 			this.fireDecoratorEvent("search");

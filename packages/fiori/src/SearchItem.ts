@@ -11,6 +11,7 @@ import SearchItemTemplate from "./generated/templates/SearchItemTemplate.lit.js"
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
+import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 
 /**
  * @class
@@ -49,7 +50,7 @@ import Tag from "@ui5/webcomponents/dist/Tag.js";
 
 class SearchItem extends ListItemBase {
 	@property()
-	headingText?: string;
+	headingText = "";
 
 	@property()
 	subheadingText?: string;
@@ -63,6 +64,9 @@ class SearchItem extends ListItemBase {
 	@property()
 	icon?: string;
 
+	@property()
+	highlightText = "";
+
 	@property({ type: Boolean })
 	selected = false;
 
@@ -72,8 +76,17 @@ class SearchItem extends ListItemBase {
 	@slot()
 	avatar!: Array<HTMLElement>;
 
+	_markupText = "";
+
 	get _hasAvatar(): boolean {
 		return !!this.avatar.length;
+	}
+
+	onBeforeRendering(): void {
+		super.onBeforeRendering();
+
+		// bold the matched text
+		this._markupText = this.highlightText ? generateHighlightedMarkup(this.headingText, this.highlightText) : this.headingText;
 	}
 }
 

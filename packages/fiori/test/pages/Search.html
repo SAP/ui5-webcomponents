@@ -84,6 +84,12 @@
 		</ui5-search>
 	</div>
 
+
+	<div class="container">
+		<ui5-label>Filtering</ui5-label>
+		<ui5-search id="filtering" expanded show-clear-icon placeholder="Start typing ..."></ui5-search>
+	</div>
+
 	<script>
 		const search = document.getElementById('search');
 		const scopedSearch = document.getElementById('scoped-search');
@@ -95,6 +101,32 @@
 		});
 		scopedSearch.addEventListener('ui5-scope-change', (event) => {
 			console.log('scope-change', event.detail.item);
+		});
+
+		const data = [
+			{ name: 'Apple', category: 'Fruit' },
+			{ name: 'Banana', category: 'Fruit' },
+			{ name: 'Carrot', category: 'Vegetable' },
+			{ name: 'Cucumber', category: 'Vegetable' },
+			{ name: 'Orange', category: 'Fruit' },
+			{ name: 'Tomato', category: 'Vegetable' },
+		];
+
+		const filtering = document.getElementById('filtering');
+		filtering.addEventListener('ui5-input', (event) => {
+			const value = event.target.value.toLowerCase();
+			const filteredData = data.filter(item => item.name.toLowerCase().includes(value));
+			
+			// clear search items
+			filtering.innerHTML = '';
+
+			// create search items based on search
+			const searchItems = filteredData.forEach(item => {
+				const searchItem = document.createElement('ui5-search-item');
+				searchItem.headingText = item.name;
+				searchItem.icon = 'search';
+				filtering.appendChild(searchItem);
+			});
 		});
 	</script>
 </body>
