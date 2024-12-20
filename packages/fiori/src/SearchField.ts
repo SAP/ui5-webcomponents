@@ -16,7 +16,6 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
-
 /**
  * Interface for components that may be slotted inside a `ui5-search`
  * @public
@@ -28,7 +27,7 @@ interface ISearchFieldScopeOption extends UI5Element {
 }
 
 type SearchFieldScopeSelectionChangeDetails = {
-	scope: ISearchFieldScopeOption | null;
+	scope: ISearchFieldScopeOption | undefined;
 }
 
 /**
@@ -104,6 +103,11 @@ type SearchFieldScopeSelectionChangeDetails = {
 })
 
 class SearchField extends UI5Element {
+	eventDetails!: {
+		search: void,
+		input: void,
+		"scope-change": SearchFieldScopeSelectionChangeDetails,
+	}
 	/**
 	 * Defines whether scope select should be shown.
 	 *
@@ -230,7 +234,9 @@ class SearchField extends UI5Element {
 	}
 
 	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
-		this.fireDecoratorEvent("scope-change", { scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id) });
+		this.fireDecoratorEvent("scope-change", {
+			scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id)
+		});
 	}
 
 	get _searchDesign() {

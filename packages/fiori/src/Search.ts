@@ -74,6 +74,9 @@ import SearchField from "./SearchField.js";
 @event("load-more")
 
 class Search extends SearchField {
+	eventDetails!: SearchField["eventDetails"] & {
+		"load-more": void,
+	}
 	/**
 	 * Defines the visualisation mode of the search component.
 	 *
