@@ -3,7 +3,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -14,10 +13,31 @@ import List from "@ui5/webcomponents/dist/List.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Text from "@ui5/webcomponents/dist/Text.js";
+import {
+	isUp,
+	isDown,
+	isEnter,
+	isBackSpace,
+	isDelete,
+	isEscape,
+	isTabNext,
+	isPageUp,
+	isPageDown,
+	isHome,
+	isEnd,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 
 import SearchTemplate from "./generated/templates/SearchTemplate.lit.js";
 import SearchCss from "./generated/themes/Search.css.js";
 import SearchField from "./SearchField.js";
+import { StartsWith } from "@ui5/webcomponents/dist/Filters.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+
+
+interface ISearchSuggestionItem extends UI5Element {
+	headingText: string;
+	items?: ISearchSuggestionItem[];
+}
 
 /**
  * @class
@@ -86,6 +106,14 @@ class Search extends SearchField {
 	@property()
 	popupMode: `${SearchPopupMode}` = "List";
 
+	/**
+	 * Defines whether the value will be autcompleted to match an item
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	noTypeahead = false;
+
 	@property()
 	headerText?: string;
 
@@ -106,11 +134,21 @@ class Search extends SearchField {
 	_open = false;
 
 	/**
+	 * Defines the inner stored value of the component.
+	 *
+	 * **Note:** The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
+	 * @default ""
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_innerValue = "";
+
+	/**
 	 * Defines the Search suggestion items.
 	 *
 	 * @public
 	 */
-	@slot()
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<HTMLElement>;
 
 	/**
@@ -121,7 +159,99 @@ class Search extends SearchField {
 	@slot()
 	illustration!: HTMLElement;
 
+	_shouldAutocomplete?: boolean;
+	_performTextSelection?: boolean;
+	typedInValue: string;
+
+	constructor() {
+		super();
+
+		// The typed in value.
+		this.typedInValue = "";
+	}
+
+	onBeforeRendering() {
+		const innerInput = this.nativeInput;
+		const autoCompletedChars = innerInput && (innerInput.selectionEnd! - innerInput.selectionStart!);
+
+		// Typehead causes issues on Android devices, so we disable it for now
+		// If there is already a selection the autocomplete has already been performed
+		if (this._shouldAutocomplete && !autoCompletedChars) {
+			const item = this._getFirstMatchingItem(this.value);
+			if (item) {
+				this._handleTypeAhead(item);
+			}
+		}
+	}
+
+	get _flattenItems(): Array<ISearchSuggestionItem> {
+		return this.getSlottedNodes<ISearchSuggestionItem>("items").flatMap(item => {
+			return this._isGroupItem(item) ? [item, ...item.items!] : [item];
+		});
+	}
+
+	_getFirstMatchingItem(current: string): ISearchSuggestionItem | undefined {
+		if (!this._flattenItems.length) {
+			return;
+		}
+
+		const matchingItems = this._startsWithMatchingItems(current).filter(item => !this._isGroupItem(item));
+
+		if (matchingItems.length) {
+			return matchingItems[0];
+		}
+	}
+
+	_handleTypeAhead(item: ISearchSuggestionItem) {
+		const value = item.headingText ? item.headingText : "";
+
+		this.typedInValue = this.value;
+		this._innerValue = value;
+		this.value = value;
+		this._performTextSelection = true;
+		this._shouldAutocomplete = false;
+	}
+
+	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
+		return StartsWith(str, this._flattenItems, "headingText");
+	}
+
+	_isGroupItem(item: ISearchSuggestionItem) {
+		return item.hasAttribute("ui5-search-item-group");
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		this._shouldAutocomplete = !this.noTypeahead &&
+			!(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
+	}
+
+	/**
+	 * Returns a reference to the native input element
+	 * @protected
+	 */
+	get nativeInput() {
+		const domRef = this.getDomRef();
+
+		return domRef ? domRef.querySelector<HTMLInputElement>(`input`) : null;
+	}
+
 	onAfterRendering(): void {
+		const innerInput = this.nativeInput!;
+
+		if (this._performTextSelection) {
+			// this is required to syncronize lit-html input's value and user's input
+			// lit-html does not sync its stored value for the value property when the user is typing
+			if (innerInput.value !== this._innerValue) {
+				innerInput.value = this._innerValue;
+			}
+
+			if (this.typedInValue.length && this.value.length) {
+				innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
+			}
+		}
+
+		this._performTextSelection = false;
+
 		this.style.setProperty("--search_width", `${this.getBoundingClientRect().width}px`);
 	}
 
@@ -148,10 +278,6 @@ class Search extends SearchField {
 
 	get _showIllustration() {
 		return !!this.illustration && this.popupMode === SearchPopupMode.Illustration;
-	}
-
-	get _searchDesign() {
-		return this.value.length && this.focusedInnerInput ? ButtonDesign.Emphasized : ButtonDesign.Transparent;
 	}
 
 	get _showLoading() {
