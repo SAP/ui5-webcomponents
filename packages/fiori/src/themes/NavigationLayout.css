@@ -52,11 +52,11 @@
 	overflow: auto;
 }
 
-:host([_effective-mode][is-phone]) .ui5-nl-aside {
+:host([side-collapsed][is-phone]) .ui5-nl-aside {
 	transform: translateX(-100%);
 }
 
-:host([_effective-mode][is-phone]) :dir(rtl) .ui5-nl-aside {
+:host([side-collapsed][is-phone]) :dir(rtl) .ui5-nl-aside {
 	transform: translateX(100%);
 }
 
