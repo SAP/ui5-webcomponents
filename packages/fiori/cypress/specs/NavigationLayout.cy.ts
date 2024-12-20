@@ -97,7 +97,7 @@ describe("Navigation Layout on Phone", () => {
 
 	it("tests initial rendering", () => {
 		cy.get("[ui5-navigation-layout]")
-			.should("have.prop", "effectiveMode", true);
+			.should("have.prop", "sideCollapsed", true);
 
 		cy.get("[ui5-side-navigation]")
 			.should("have.prop", "collapsed", false);
