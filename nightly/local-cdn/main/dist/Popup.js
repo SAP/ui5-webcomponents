@@ -127,6 +127,7 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         this.tabIndex = -1;
         if (this.open) {
             this.showPopover();
+            this.openPopup();
         }
     }
     onExitDOM() {

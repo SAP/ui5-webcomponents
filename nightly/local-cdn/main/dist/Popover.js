@@ -191,8 +191,11 @@ let Popover = Popover_1 = class Popover extends Popup {
         removeOpenedPopover(this);
     }
     getOpenerHTMLElement(opener) {
-        if (opener === undefined || opener instanceof HTMLElement) {
+        if (opener === undefined) {
             return opener;
+        }
+        if (opener instanceof HTMLElement) {
+            return this._isUI5Element(opener) ? opener.getFocusDomRef() : opener;
         }
         let rootNode = this.getRootNode();
         if (rootNode === this) {
