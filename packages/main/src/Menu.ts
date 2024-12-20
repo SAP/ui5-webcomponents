@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -118,21 +117,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @param { string } text The text of the currently clicked menu item.
  * @public
  */
-@event<MenuItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: {
-			type: HTMLElement,
-		},
-		/**
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-	},
+@event("item-click", {
 	cancelable: true,
 })
 
@@ -145,16 +130,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @since 1.10.0
  * @param { HTMLElement } item The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.
  */
-@event<MenuBeforeOpenEventDetail>("before-open", {
-	detail: {
-		/**
-		 * @public
-		 * @since 1.14.0
-		 */
-		item: {
-			type: HTMLElement,
-		},
-	},
+@event("before-open", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -183,15 +159,7 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
  * @param {boolean} escPressed Indicates that `ESC` key has triggered the event.
  * @since 1.10.0
  */
-@event<MenuBeforeCloseEventDetail>("before-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		escPressed: {
-			type: Boolean,
-		},
-	},
+@event("before-close", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -210,6 +178,7 @@ class Menu extends UI5Element {
 		"open": void,
 		"before-close": MenuBeforeCloseEventDetail,
 		"close": void,
+		"close-menu": void,
 	}
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
@@ -313,7 +282,7 @@ class Menu extends UI5Element {
 			return;
 		}
 
-		this.fireDecoratorEvent<MenuBeforeOpenEventDetail>("before-open", {
+		this.fireDecoratorEvent("before-open", {
 			item,
 		});
 		item._popover.opener = item;
@@ -376,13 +345,13 @@ class Menu extends UI5Element {
 		const item = e.detail.item as MenuItem;
 
 		if (!item._popover) {
-			const prevented = !this.fireDecoratorEvent<MenuItemClickEventDetail>("item-click", {
+			const prevented = !this.fireDecoratorEvent("item-click", {
 				"item": item,
 				"text": item.text || "",
 			});
 
 			if (!prevented && this._popover) {
-				item.fireDecoratorEvent("close-menu", {});
+				item.fireDecoratorEvent("close-menu");
 			}
 		} else {
 			this._openItemSubMenu(item);
@@ -412,7 +381,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireDecoratorEvent<MenuBeforeOpenEventDetail>("before-open", {});
+		const prevented = !this.fireDecoratorEvent("before-open", {});
 
 		if (prevented) {
 			this.open = false;
@@ -422,11 +391,11 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this._menuItems[0]?.focus();
-		this.fireDecoratorEvent("open", {});
+		this.fireDecoratorEvent("open");
 	}
 
-	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireDecoratorEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed });
+	_beforePopoverClose(e: CustomEvent) {
+		const prevented = !this.fireDecoratorEvent("before-close", { escPressed: e.detail.escPressed });
 
 		if (prevented) {
 			this.open = true;
