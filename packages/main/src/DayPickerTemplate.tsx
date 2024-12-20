@@ -42,6 +42,7 @@ export default function DayPickerTemplate(this: DayPicker) {
 										data-sap-focus-ref={day.focusRef ? "true" : undefined}
 										data-sap-timestamp={day.timestamp}
 										role="gridcell"
+										title={day.tooltip}
 										aria-selected={day.ariaSelected}
 										aria-label={day.ariaLabel}
 										aria-disabled={day.ariaDisabled}
