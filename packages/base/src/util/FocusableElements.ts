@@ -52,22 +52,24 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 	while (child) {
 		const originalChild: HTMLElement | undefined = child;
 
-		if (instanceOfUI5Element(child)) {
-			child = await child.getFocusDomRefAsync();
-		}
-
-		if (!child) {
-			return null;
-		}
-
-		if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
-			if (isElementClickable(child)) {
-				return (child && typeof child.focus === "function") ? child : null;
+		if (!isElementHidden(originalChild)) {
+			if (instanceOfUI5Element(child)) {
+				child = await child.getFocusDomRefAsync();
 			}
 
-			focusableDescendant = await findFocusableElement(child, forward);
-			if (focusableDescendant) {
-				return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
+			if (!child || isElementHidden(child)) {
+				return null;
+			}
+
+			if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
+				if (isElementClickable(child)) {
+					return (child && typeof child.focus === "function") ? child : null;
+				}
+
+				focusableDescendant = await findFocusableElement(child, forward);
+				if (focusableDescendant) {
+					return (focusableDescendant && typeof focusableDescendant.focus === "function") ? focusableDescendant : null;
+				}
 			}
 		}
 
