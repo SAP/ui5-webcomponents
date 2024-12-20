@@ -110,7 +110,6 @@ export default function NotificationListItemTemplate(this: NotificationListItem)
 								onClick={this._onShowMoreClick}
 								wrappingType="None"
 								href="#" // --without href ENTER does not trigger click
-								showMore-btn
 								accessibleName={this.moreLinkAccessibleName}
 								accessibleRole="Button"
 								accessibilityAttributes={this.moreLinkAccessibilityAttributes}
@@ -138,7 +137,6 @@ export default function NotificationListItemTemplate(this: NotificationListItem)
 								onClick={this._onBtnCloseClick}
 								tooltip={this.closeBtnAccessibleName}
 								accessibleName={this.closeBtnAccessibleName}
-								close-btn
 							/>
 						)}
 					</div>
