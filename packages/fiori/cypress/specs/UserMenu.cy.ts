@@ -342,6 +342,47 @@ describe("Events", () => {
 
 		cy.get("@clicked").should("have.been.calledOnce");
 	});
+
+	it("tests open event", () => {
+		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
+						<ui5-user-menu opener="openUserMenuBtn">
+							<ui5-user-menu-item text="Setting" data-id="setting"></ui5-user-menu-item>
+						</ui5-user-menu>`);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu")
+			.then($userMenu => {
+				$userMenu.get(0).addEventListener("open", cy.stub().as("opened"));
+			});
+
+		cy.get("@userMenu")
+			.ui5UserMenuOpen();
+
+		cy.get("@opened").should("have.been.calledOnce");
+	});
+
+	it("tests close event", () => {
+		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
+						<ui5-user-menu opener="openUserMenuBtn">
+						</ui5-user-menu>`);
+		cy.get("[ui5-user-menu]").as("userMenu");
+		cy.get("@userMenu").should("exist");
+
+		cy.get("@userMenu")
+			.then($userMenu => {
+				$userMenu.get(0).addEventListener("close", cy.stub().as("closed"));
+			});
+
+		cy.get("@userMenu")
+			.ui5UserMenuOpen();
+
+		cy.get("@userMenu")
+			.ui5UserMenuOpened();
+		cy.get("@userMenu").shadow().find("[ui5-button]").as("signOutBtn");
+		cy.get("@signOutBtn")
+			.click();
+
+		cy.get("@closed").should("have.been.calledOnce");
+	});
 });
 
 describe("Responsiveness", () => {

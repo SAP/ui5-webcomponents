@@ -32,6 +32,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 			open={this.open}
 			opener={this.opener}
 			onClose={this._handlePopoverAfterClose}
+			onOpen={this._handlePopoverAfterOpen}
 		>
 			{this._isPhone ?
 				<>
