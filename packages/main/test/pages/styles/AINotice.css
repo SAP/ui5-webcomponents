@@ -1,0 +1,16 @@
+ui5-hbox {
+		display: flex;
+		margin-bottom: 0.5rem;
+}
+
+ui5-icon {
+		margin-right: 0.5rem;
+}
+
+#popover {
+		max-width: 25rem;
+}
+
+.container {
+		max-width: 31.25rem;
+}

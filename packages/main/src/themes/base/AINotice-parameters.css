@@ -1,0 +1,8 @@
+:root{
+    --ui5-ai-notice-height: 2.5rem;
+    --ui5-ai-notice-font-size: 0.875rem;
+    --ui5-ai-notice-overflow: hidden;
+    --ui5-ai-notice-align-items: center;
+    --ui5-ai-notice-verification-text-padding-left: 0.25rem;
+    --ui5-ai-notice-verification-text-white-space: nowrap;
+}
