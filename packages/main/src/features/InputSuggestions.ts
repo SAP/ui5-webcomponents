@@ -251,11 +251,13 @@ class Suggestions {
 		return sc.offsetHeight < sc.scrollHeight;
 	}
 
-	open() {
+	async open() {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		this.responsivePopover!.showAt(this._getComponent());
+		this.responsivePopover = await this._getSuggestionPopover();
+
+		this.responsivePopover.showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
@@ -263,7 +265,7 @@ class Suggestions {
 
 		this._getComponent().open = false;
 		this.responsivePopover = await this._getSuggestionPopover();
-		this.responsivePopover.close(false, false, preventFocusRestore);
+		this.responsivePopover?.close(false, false, preventFocusRestore);
 
 		if (selectedItem && selectedItem.focused) {
 			selectedItem.focused = false;
@@ -344,14 +346,14 @@ class Suggestions {
 
 	async _attachItemsListeners() {
 		const list = await this._getList();
-		list.removeEventListener("ui5-item-click", this.fnOnSuggestionItemPress as EventListener);
-		list.addEventListener("ui5-item-click", this.fnOnSuggestionItemPress as EventListener);
-		list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress as EventListener);
-		list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress as EventListener);
-		list.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
-		list.addEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
-		list.removeEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
-		list.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
+		list?.removeEventListener("ui5-item-click", this.fnOnSuggestionItemPress as EventListener);
+		list?.addEventListener("ui5-item-click", this.fnOnSuggestionItemPress as EventListener);
+		list?.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress as EventListener);
+		list?.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress as EventListener);
+		list?.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
+		list?.addEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
+		list?.removeEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
+		list?.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
 	}
 
 	_attachPopupListeners() {
@@ -575,12 +577,12 @@ class Suggestions {
 
 	async _getList() {
 		this.responsivePopover = await this._getSuggestionPopover();
-		return this.responsivePopover.querySelector<List>("[ui5-list]")!;
+		return this.responsivePopover?.querySelector<List>("[ui5-list]");
 	}
 
 	async _getListWidth() {
 		const list = await this._getList();
-		return list.offsetWidth;
+		return list?.offsetWidth;
 	}
 
 	_getRealItems() {
@@ -588,10 +590,6 @@ class Suggestions {
 	}
 
 	async _getSuggestionPopover() {
-		if (this.responsivePopover) {
-			return this.responsivePopover;
-		}
-
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
 		this.responsivePopover = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
