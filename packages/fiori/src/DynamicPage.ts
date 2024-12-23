@@ -369,6 +369,9 @@ class DynamicPage extends UI5Element {
 
 	async onPinClick() {
 		this.headerPinned = !this.headerPinned;
+		if (this.headerPinned) {
+			this.showHeaderInStickArea = true;
+		}
 		this.fireDecoratorEvent("pin-button-toggle");
 		await renderFinished();
 		this.headerActions?.focusPinButton();
