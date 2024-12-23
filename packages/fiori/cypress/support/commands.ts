@@ -37,3 +37,13 @@
 // }
 
 import "../../../main/cypress/support/commands.js";
+import "./commands/UserMenu.commands.js";
+
+declare global {
+	namespace Cypress {
+		interface Chainable {
+			ui5UserMenuOpen(options?: { opener?: string }): Chainable<void>
+			ui5UserMenuOpened(): Chainable<void>
+		}
+	}
+}
