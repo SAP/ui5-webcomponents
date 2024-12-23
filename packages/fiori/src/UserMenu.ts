@@ -127,8 +127,23 @@ type UserMenuOtherAccountClickEventDetail = {
 })
 
 /**
+ * Fired when a user menu is open.
+ * @public
+ * @since 2.6.0
+ */
+@event("open")
+
+/**
+ * Fired when a user menu is close.
+ * @public
+ * @since 2.6.0
+ */
+@event("close")
+
+/**
  * Fired when the "Sign Out" button is selected.
  * @public
+ * @since 2.6.0
  */
 @event("sign-out-click", {
 	cancelable: true,
@@ -141,6 +156,9 @@ class UserMenu extends UI5Element {
 		"change-account": UserMenuOtherAccountClickEventDetail;
 		"item-click": UserMenuItemClickEventDetail;
 		"sign-out-click": void;
+		"open": void;
+		"close": void;
+
 	}
 	/**
 	 * Defines if the User Menu is opened.
@@ -364,8 +382,13 @@ class UserMenu extends UI5Element {
 		this._closeUserMenu();
 	}
 
+	_handlePopoverAfterOpen() {
+		this.fireDecoratorEvent("open");
+	}
+
 	_handlePopoverAfterClose() {
 		this.open = false;
+		this.fireDecoratorEvent("close");
 	}
 
 	_handleDeclineClick() {
