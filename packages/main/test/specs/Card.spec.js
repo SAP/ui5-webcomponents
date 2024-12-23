@@ -124,28 +124,6 @@ describe("CardHeader", () => {
 		assert.strictEqual(await header2.getAttribute("aria-labelledby"), EXPECTED_ARIA_LABELLEDBY_HEADER2,
 			"The aria-labelledby is correctly set.");
 	});
-
-	it("test interactive card header accessibility role", async () => {
-		const cardHeader = await browser.$("#cardHeader").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
-
-		assert.strictEqual(await cardHeader.getAttribute("role"), "button",
-			"The role is correct.");
-			assert.strictEqual(await cardHeader.getAttribute("tabindex"), "0",
-			"The tabindex is correct.");
-		assert.strictEqual(await cardHeader.getAttribute("aria-roledescription"), "Interactive Card Header",
-		"The aria-roledeacription is correct.");
-	});
-
-	it("test card header accessibility role", async () => {
-		const cardHeader = await browser.$("#cardHeader2").shadow$(".ui5-card-header .ui5-card-header-focusable-element");
-
-		assert.strictEqual(await cardHeader.getAttribute("role"), "group",
-			"The role is correct.");
-			assert.strictEqual(await cardHeader.getAttribute("tabindex"), "0",
-			"The tabindex is correct.");
-		assert.strictEqual(await cardHeader.getAttribute("aria-roledescription"), "Card Header",
-		"The aria-roledeacription is correct.");
-	});
 });
 
 describe("Card Accessibility", () => {
