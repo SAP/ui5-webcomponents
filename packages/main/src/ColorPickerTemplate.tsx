@@ -47,7 +47,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 						value={this._alpha}
 						accessibleName={this.alphaSliderLabel}
 						showTooltip={true}
-						onInput={this._handleAlphaInputFromSlider}
+						onInput={this._handleAlphaInput}
 					/>
 				}
 			</div>
@@ -81,7 +81,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 					class="ui5-color-channel-inputs-wrapper"
 					onui5-change={this._handleColorInputChange}
 				>
-					{this.colorChannelInputs.map(input => 
+					{this.colorChannelInputs.map(input =>
 						<><div class="ui5-color-channel">
 							<Input
 								id={input.id}
@@ -97,7 +97,7 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 							}
 						</div></>
 					)}
-	
+
 					<div class="ui5-color-channel">
 						<Input
 							id="alpha"
@@ -106,20 +106,21 @@ export default function ColorPickerTemplate(this: ColorPicker) {
 							value={String(this._alpha)}
 							accessibleName={this.alphaInputLabel}
 							onChange={this._handleAlphaChange}
+							onInput={this._handleAlphaInput}
 						/>
 						<Label>A</Label>
 					</div>
 
 					<div>
-                        <Button
-                            class="ui5-color-channel-toggle"
-                            id="toggle-picker-mode"
-                            icon="expand" 
-                            design="Transparent" 
-                            tooltip={this.toggleModeTooltip}
-                            onClick={this._togglePickerMode}
-                        />
-                    </div>
+						<Button
+							class="ui5-color-channel-toggle"
+							id="toggle-picker-mode"
+							icon="expand"
+							design="Transparent"
+							tooltip={this.toggleModeTooltip}
+							onClick={this._togglePickerMode}
+						/>
+					</div>
 				</div>
 			}
 		</section>
