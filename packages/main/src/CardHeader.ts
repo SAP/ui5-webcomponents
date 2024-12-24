@@ -140,7 +140,7 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaRoleFocusableElement() {
-		return this.interactive ? "button" : undefined;
+		return this.interactive ? "button" : "group";
 	}
 
 	get ariaCardAvatarLabel() {
