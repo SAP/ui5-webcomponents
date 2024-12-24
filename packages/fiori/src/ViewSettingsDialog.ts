@@ -18,7 +18,8 @@ import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
-
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
 import "@ui5/webcomponents-icons/dist/filter.js";
@@ -36,6 +37,9 @@ import {
 	VSD_ORDER_ASCENDING,
 	VSD_ORDER_DESCENDING,
 	VSD_FILTER_BY,
+	VSD_SORT_TOOLTIP,
+	VSD_FILTER_TOOLTIP,
+	VSD_RESET_BUTTON_ACTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -358,6 +362,18 @@ class ViewSettingsDialog extends UI5Element {
 		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY);
 	}
 
+	get _sortButtonTooltip() {
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_TOOLTIP);
+	}
+
+	get _filterButtonTooltip() {
+		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_TOOLTIP);
+	}
+
+	get _resetButtonAction() {
+		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON_ACTION);
+	}
+
 	get _isPhone() {
 		return isPhone();
 	}
@@ -654,6 +670,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._restoreSettings(this._initialSettings);
 		this._recentlyFocused = this._sortOrder!;
 		this._focusRecentlyUsedControl();
+		announce(this._resetButtonAction, InvisibleMessageMode.Polite);
 	}
 
 	/**
