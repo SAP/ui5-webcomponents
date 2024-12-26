@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* custom theme detection ([#10410](https://github.com/SAP/ui5-webcomponents/issues/10410)) ([303344b](https://github.com/SAP/ui5-webcomponents/commit/303344bc22dbe5a461b77d752b11016cbbe137b1))
+* **ui5-dynamic-page:** correct z-index for dynamic page header ([#10425](https://github.com/SAP/ui5-webcomponents/issues/10425)) ([5af40ae](https://github.com/SAP/ui5-webcomponents/commit/5af40ae08423bafee67129b4583b891d4ac71674)), closes [#10399](https://github.com/SAP/ui5-webcomponents/issues/10399)
+* **ui5-navigation-layout:** fix example ([#10421](https://github.com/SAP/ui5-webcomponents/issues/10421)) ([2a4691e](https://github.com/SAP/ui5-webcomponents/commit/2a4691e3f378d8339fb151473c6e63f52413700d))
+* **ui5-popover:** allow setting `opener` to an abstract element DOM reference ([#10419](https://github.com/SAP/ui5-webcomponents/issues/10419)) ([1dd8c2e](https://github.com/SAP/ui5-webcomponents/commit/1dd8c2e4d1d8f5d1fcc57f0d5d53c8639e271cb5))
+* **ui5-popover:** fix finding opener ([#10414](https://github.com/SAP/ui5-webcomponents/issues/10414)) ([36f1565](https://github.com/SAP/ui5-webcomponents/commit/36f1565a0880af8a24a82d9ae5c57f25cff2f53b))
+* **ui5-side-navigation:** fix expand and collapse ([#10418](https://github.com/SAP/ui5-webcomponents/issues/10418)) ([4d17e57](https://github.com/SAP/ui5-webcomponents/commit/4d17e575857fbc2665cb9a277418f3e6b9b9433c))
+
+
+### Features
+
+* **ui5-ai-button:** implement split button functionality ([#10242](https://github.com/SAP/ui5-webcomponents/issues/10242)) ([55c9e4d](https://github.com/SAP/ui5-webcomponents/commit/55c9e4d67800d82a0d357eda8859b78d69dc25ab))
+* **ui5-rating-indicator:** provide the possibility to set size of the icons ([#10406](https://github.com/SAP/ui5-webcomponents/issues/10406)) ([a01eccb](https://github.com/SAP/ui5-webcomponents/commit/a01eccb150e631cb5609ccef1579b52f2399975e))
+* **ui5-user-menu:** add open and close events ([#10363](https://github.com/SAP/ui5-webcomponents/issues/10363)) ([8109bfd](https://github.com/SAP/ui5-webcomponents/commit/8109bfd85d54374f007564c66df1404fef1a340c))
+
+
+
+
+
 # [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
 
 
