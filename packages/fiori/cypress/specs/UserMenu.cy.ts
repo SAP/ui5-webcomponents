@@ -7,6 +7,11 @@ import "@ui5/webcomponents/dist/Avatar.js";
 import "@ui5/webcomponents/dist/Button.js";
 import "@ui5/webcomponents-icons/dist/action-settings.js";
 
+import {
+	USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT,
+	USER_MENU_OTHER_ACCOUNT_BUTTON_TXT,
+} from "../../src/generated/i18n/i18n-defaults.js";
+
 describe("Initial rendering", () => {
 	it("tests no config provided", () => {
 		cy.mount(html`<ui5-button id="openUserMenuBtn">Open User Menu</ui5-button>
@@ -33,7 +38,7 @@ describe("Initial rendering", () => {
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-responsive-popover]").as("responsivePopover");
 		cy.get("@responsivePopover").should("exist");
-		cy.get("@responsivePopover").find("[ui5-button]").contains("Manage account");
+		cy.get("@responsivePopover").find("[ui5-button]").contains(USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT.defaultText);
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 2);
 	});
 
@@ -56,7 +61,7 @@ describe("Initial rendering", () => {
 		cy.get("@userMenu").should("exist");
 		cy.get("@userMenu").shadow().find("[ui5-responsive-popover]").as("responsivePopover");
 		cy.get("@responsivePopover").should("exist");
-		cy.get("@responsivePopover").find("[ui5-panel]").contains("Other accounts (1)");
+		cy.get("@responsivePopover").find("[ui5-panel]").contains(`${USER_MENU_OTHER_ACCOUNT_BUTTON_TXT.defaultText} (1)`);
 		cy.get("@responsivePopover").find("[ui5-button]").should("have.length", 1);
 	});
 
