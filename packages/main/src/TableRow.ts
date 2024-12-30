@@ -4,14 +4,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import Button from "./Button.js";
-import Popover from "./Popover.js";
 import RadioButton from "./RadioButton.js";
-import TableRowAction from "./TableRowAction.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";
 import TableCell from "./TableCell.js";
-import Menu from "./Menu.js";
+import type TableRowActionBase from "./TableRowActionBase.js";
 
 /**
  * @class
@@ -34,7 +32,7 @@ import Menu from "./Menu.js";
 	tag: "ui5-table-row",
 	styles: [TableRowBase.styles, TableRowCss],
 	template: TableRowTemplate,
-	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell, Button, Popover, TableRowAction, Menu],
+	dependencies: [...TableRowBase.dependencies, RadioButton, TableCell, Button],
 })
 class TableRow extends TableRowBase {
 	/**
@@ -58,34 +56,15 @@ class TableRow extends TableRowBase {
 	/**
 	 * Defines the actions of the component.
 	 *
-	 * **Note:** Use `ui5-table-row-action` for the intended design.
+	 * **Note:** Use `ui5-table-row-action-base` subclasses for the intended design.
 	 *
 	 * @public
 	 */
 	@slot({
 		type: HTMLElement,
 		individualSlots: true,
-		invalidateOnChildChange: true,
 	})
-	actions!: Array<TableRowAction>;
-
-	/**
-	 * Defines the visible actions of the component.
-	 *
-	 * **Note:** Use `ui5-table-row-action` for the intended design.
-	 *
-	 * @public
-	 */
-	visibleActions : Array<TableRowAction> = [];
-
-	/**
-	 * Defines the visible actions of the component.
-	 *
-	 * **Note:** Use `ui5-table-row-action` for the intended design.
-	 *
-	 * @public
-	 */
-	popoverActions : Array<TableRowAction> = [];
+	actions!: Array<TableRowActionBase>;
 
 	/**
 	 * Unique identifier of the row.
@@ -139,7 +118,6 @@ class TableRow extends TableRowBase {
 
 	onBeforeRendering() {
 		super.onBeforeRendering();
-		this._updateActions();
 		this.toggleAttribute("_interactive", this._isInteractive);
 		if (this.position !== -1) {
 			this.setAttribute("aria-rowindex", `${this.position + 1}`);
@@ -170,29 +148,13 @@ class TableRow extends TableRowBase {
 
 		if (eventOrigin === this && this._isInteractive && isEnter(e)) {
 			this.toggleAttribute("_active", true);
-			this._table?._onRowPress(this);
+			this._table?._onRowClick(this);
 		}
 	}
 
 	_onclick() {
 		if (this._isInteractive && this === getActiveElement()) {
-			this._table?._onRowPress(this);
-		}
-	}
-
-	_onTableRowActionClick(e: MouseEvent) {
-		e?.stopImmediatePropagation();
-
-		this._table?._onTableRowActionPress(e.currentTarget as TableRowAction);
-	}
-
-	_handleRowActionPopoverClick(e: KeyboardEvent) {
-		const tableRowActionPopoverButton = e.currentTarget as HTMLElement;
-		const tableRowActionPopover = tableRowActionPopoverButton.nextSibling as Menu;
-
-		if (tableRowActionPopoverButton && tableRowActionPopover) {
-			tableRowActionPopover.opener = tableRowActionPopoverButton;
-			tableRowActionPopover.open = !tableRowActionPopover.open;
+			this._table?._onRowClick(this);
 		}
 	}
 
@@ -204,59 +166,73 @@ class TableRow extends TableRowBase {
 		this.removeAttribute("_active");
 	}
 
-	_updateActions() {
-		if (this.visibleActions.length === 0 && this.popoverActions.length === 0) { // onBeforeRendering is called twice
-			const actionsLength = this.actions.filter(action => { return action.type !== "Navigation"; }).length;
-			const visibleActionsCount = this._visibleActionsCount;
-			let actionCounter = 0;
-			while (this.visibleActions.length < visibleActionsCount && actionCounter < this.actions.length && this.visibleActions.length < actionsLength) {
-				if (this.actions[actionCounter].type !== "Navigation") {
-					this.visibleActions.push(this.actions[actionCounter]);
-				}
-				actionCounter++;
-			}
-			for (let i = visibleActionsCount; i < this.actions.length; i++) {
-				if (this.actions[i].type !== "Navigation") {
-					this.popoverActions.push(this.actions[i]);
-				}
-			}
-			this.popoverActions.forEach(action => { action.menuItem = true; });
-		}
-	}
-
-	get _visibleActionsCount() {
-		const actionsLength = this.actions.filter(action => { return action.type !== "Navigation"; }).length;
-		const visibleActionsPerRowDefault = 2;
-		// handle case with only one visible rowaction
-		const actionlengthRowActionCount = (actionsLength > 1 ? 0 : 1);
-		let rowActionCount = this._table?.rowActionCount ?? visibleActionsPerRowDefault;
-		rowActionCount = rowActionCount === 1 ? actionlengthRowActionCount : rowActionCount;
-
-		let visibleActionsCount = Math.min(rowActionCount, actionsLength, visibleActionsPerRowDefault);
-		if (this._hasRowActionNavigation && visibleActionsCount === 2 && actionsLength > 2) {
-			visibleActionsCount = 1;
-		}
-		return visibleActionsCount;
+	_onOverflowButtonClick(e: PointerEvent) {
+		const ctor = this.actions[0].constructor as typeof TableRowActionBase;
+		ctor.showMenu(this._overflowActions, e.target as HTMLElement);
 	}
 
 	get _isInteractive() {
 		return this.interactive;
 	}
 
+	get _tableRowActionCount() {
+		return this._table?.rowActionCount || 0;
+	}
+
 	get _hasRowActions() {
-		return this._table?.querySelector("ui5-table-row-action") !== null;
+		return this._tableRowActionCount > 0 && this.actions.some(action => !action.hidden);
 	}
 
-	get _hasRowActionNavigation() {
-		return this.actions.find(action => action.type === "Navigation") !== undefined;
+	get _hasOverflowActions() {
+		let renderedActionsCount = 0;
+		return this.actions.some(action => {
+			if (action.isFixedAction() || !action.hidden) {
+				renderedActionsCount++;
+			}
+			return renderedActionsCount > this._tableRowActionCount;
+		});
 	}
 
-	get _hasRowActionPopover() {
-		return this.popoverActions.length !== 0;
+	get _flexibleActions() {
+		const flexibleActions = this.actions.filter(action => !action.isFixedAction());
+		const fixedActionsCount = this.actions.length - flexibleActions.length;
+		let maxFlexibleActionsCount = this._tableRowActionCount - fixedActionsCount;
+		if (maxFlexibleActionsCount < 1) {
+			return []; // fixed actions occupy all the available space
+		}
+		if (flexibleActions.length <= maxFlexibleActionsCount) {
+			return flexibleActions; // all actions fit the available space
+		}
+
+		const visibleFlexibleActions = flexibleActions.filter(action => !action.hidden);
+		if (visibleFlexibleActions.length > maxFlexibleActionsCount) {
+			maxFlexibleActionsCount--;	// preserve space for the overflow button
+		}
+
+		return visibleFlexibleActions.slice(0, maxFlexibleActionsCount);
 	}
 
-	get _actionCount() {
-		return this.actions.length;
+	get _fixedActions() {
+		let maxFixedActionsCount = this._tableRowActionCount;
+		if (this._hasOverflowActions) {
+			maxFixedActionsCount--;
+		}
+
+		const fixedActions = this.actions.filter(action => action.isFixedAction());
+		return fixedActions.slice(0, maxFixedActionsCount);
+	}
+
+	get _overflowActions() {
+		const fixedActions = this._fixedActions;
+		const flexibleActions = this._flexibleActions;
+		const overflowActions: Array<TableRowActionBase> = [];
+		this.actions.forEach(action => {
+			if (!action.hidden && !fixedActions.includes(action) && !flexibleActions.includes(action)) {
+				overflowActions.push(action);
+			}
+		});
+
+		return overflowActions;
 	}
 }
 

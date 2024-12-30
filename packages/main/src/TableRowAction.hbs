@@ -1,14 +1,8 @@
-{{#if _getMenuItem}}
-    <ui5-menu-item
-        text="{{text}}"
-        icon="{{icon}}"
-        @click="{{_onTableRowActionClick}}">
-    </ui5-menu-item>
-{{else}}
-    <ui5-button
-        icon="{{icon}}"
-        text="{{text}}"
-        design="Transparent"
-        @click={{_onTableRowActionClick}}>
-    </ui5-button>
-{{/if}}
+<ui5-button
+    icon="{{icon}}"
+    text="{{text}}"
+    tooltip="{{text}}"
+    disabled="{{disabled}}"
+    design="Transparent"
+    @click={{onActionClick}}>
+</ui5-button>
