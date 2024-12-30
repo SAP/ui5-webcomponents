@@ -28,7 +28,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
-import type TableRowAction from "./TableRowAction.js";
+import type TableRowActionBase from "./TableRowActionBase.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
 
 /**
@@ -78,11 +78,12 @@ type TableRowClickEventDetail = {
 };
 
 /**
- * Fired when row action is clicked.
+ * Fired when a row action is clicked.
+ * @param {TableRowActionBase} action The row action instance
  * @public
  */
-type TableRowActionClickEvent = {
-	action: TableRowAction;
+type TableRowActionClickEventDetail = {
+	action: TableRowActionBase,
 };
 
 /**
@@ -188,7 +189,7 @@ type TableRowActionClickEvent = {
  * @public
  */
 @event("row-click", {
-	bubbles: true,
+	bubbles: false,
 })
 
 /**
@@ -228,16 +229,27 @@ type TableRowActionClickEvent = {
 	bubbles: true,
 })
 
+/**
+ * Fired when a row action is clicked.
+ *
+ * @param {TableRowActionBase} action The row action instance
+ * @public
+ */
+@event("row-action-click", {
+	bubbles: false,
+})
+
 class Table extends UI5Element {
 	eventDetails!: {
 		"row-click": TableRowClickEventDetail;
 		"move-over": TableMoveEventDetail;
 		"move": TableMoveEventDetail;
+		"row-action-click": TableRowActionClickEventDetail;
 	}
 	/**
 	 * Defines the rows of the component.
 	 *
-	 * Note: Use <code>ui5-table-row</code> for the intended design.
+	 * **Note:** Use <code>ui5-table-row</code> for the intended design.
 	 *
 	 * @public
 	 */
@@ -254,7 +266,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines the header row of the component.
 	 *
-	 * Note: Use <code>ui5-table-header-row</code> for the intended design.
+	 * **Note:** Use <code>ui5-table-header-row</code> for the intended design.
 	 *
 	 * @public
 	 */
@@ -321,7 +333,7 @@ class Table extends UI5Element {
 	/**
 	 * Defines if the loading indicator should be shown.
 	 *
-	 * <b>Note:</b> When the component is loading, it is non-interactive.
+	 * **Note:** When the component is loading, it is non-interactive.
 	 * @default false
 	 * @public
 	 */
@@ -342,20 +354,22 @@ class Table extends UI5Element {
 	@property()
 	stickyTop = "0";
 
+	/**
+	 * Defines the number of row actions to be displayed, which determines the width of the row action column.
+	 *
+	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may occupy too much space on small screens.
+	 *
+	 * @default 0
+	 * @public
+	 */
+	@property({ type: Number })
+	rowActionCount = 0;
+
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
-
-	/**
-	 * Defines the number of row actions.
-	 *
-	 * @default 2
-	 * @public
-	 */
-	@property({ type: Number })
-	rowActionCount = 2;
 
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
@@ -529,12 +543,12 @@ class Table extends UI5Element {
 		return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
 	}
 
-	_onRowPress(row: TableRow) {
+	_onRowClick(row: TableRow) {
 		this.fireDecoratorEvent("row-click", { row });
 	}
 
-	_onTableRowActionPress(clickedAction: TableRowAction) {
-		this.fireEvent<TableRowActionClickEvent>("row-action-click", { action: clickedAction });
+	_onRowActionClick(action: TableRowActionBase) {
+		this.fireDecoratorEvent("row-action-click", { action });
 	}
 
 	get styles() {
@@ -576,17 +590,14 @@ class Table extends UI5Element {
 			return `minmax(${cell.width}, ${cell.width})`;
 		}));
 
-		// search for the most actions in a row but not more than 3
-		const maxRowActionsCount = Math.min(3, Math.max(...this.rows.map(row => {
-			return row._visibleActionsCount + (row._hasRowActionNavigation ? 1 : 0);
-		})));
-
-		if (maxRowActionsCount !== 0) {
-			widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${maxRowActionsCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${maxRowActionsCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
+		if (this.rowActionCount > 0) {
+			widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${this.rowActionCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${this.rowActionCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
 		}
+
 		if (this._renderNavigated) {
 			widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
 		}
+
 		return widths.join(" ");
 	}
 
@@ -663,7 +674,7 @@ class Table extends UI5Element {
 	}
 
 	get _hasRowActions() {
-		return this.rows.find(row => row._hasRowActions) !== undefined;
+		return this.rowActionCount > 0;
 	}
 }
 
@@ -676,5 +687,5 @@ export type {
 	ITableGrowing,
 	TableRowClickEventDetail,
 	TableMoveEventDetail as TableTableMoveEventDetail,
-	TableRowActionClickEvent,
+	TableRowActionClickEventDetail,
 };

@@ -34,3 +34,13 @@
 				var(--_ui5_table_shadow_border_left),
 				var(--_ui5_table_shadow_border_bottom); /* There is a 1px difference between row and cell, therefore the outline is also 1px difference between their outline offsets */
 }
+
+#actions-cell {
+	position: sticky;
+	right: 0;
+	background-color: inherit;
+}
+
+:dir(rtl)#actions-cell {
+	left: 0;
+}

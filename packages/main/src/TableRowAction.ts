@@ -1,35 +1,26 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Button from "./Button.js";
-import TableRowActionBase from "./TableRowActionBase.js";
-
 import TableRowActionTemplate from "./generated/templates/TableRowActionTemplate.lit.js";
-import MenuItem from "./MenuItem.js";
-import Menu from "./Menu.js";
-
-@event("row-action-click")
+import TableRowActionBase from "./TableRowActionBase.js";
+import Button from "./Button.js";
 
 /**
  * @class
  * A class to serve as a foundation for the `TableRow` and `TableHeaderRow` classes.
  * @constructor
  * @abstract
- * @extends UI5Element
- * @since 2.0
+ * @extends TableRowActionBase
+ * @since 2.6.0
  * @public
  */
 @customElement({
 	tag: "ui5-table-row-action",
-	template: TableRowActionTemplate,
-	renderer: litRender,
-	dependencies: [Button, MenuItem, Menu],
+	dependencies: [Button],
 })
 
-class TableRowAction extends TableRowActionBase {	/**
-	 * Defines the `icon` source URI.
+class TableRowAction extends TableRowActionBase {
+	/**
+	 * Defines the icon of the row action.
 	 *
 	 * **Note:** SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
@@ -40,9 +31,8 @@ class TableRowAction extends TableRowActionBase {	/**
 	icon?: string
 
 	/**
-	 * Defines the text of the component.
+	 * Defines the text of the row action.
 	 *
-	 * **Note:** A text attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 	 * @default undefined
 	 * @public
 	 */
@@ -50,29 +40,24 @@ class TableRowAction extends TableRowActionBase {	/**
 	text?: string
 
 	/**
-	 * Defines the type of the action.
-	 * @default undefined
-	 * @public
-	 */
-	@property()
-	type?: string
-
-	/**
-	 * Defines if RowAction is stored in Menu.
+	 * Defines the disabled state of the row action.
+	 *
 	 * @default false
 	 * @public
 	 */
-	@property({ noAttribute: true })
-	menuItem?: boolean = false
+	@property({ type: Boolean })
+	disabled = false;
 
-	_onTableRowActionClick(e: MouseEvent) {
-		e?.stopImmediatePropagation();
-
-		this._table?._onTableRowActionPress(this);
+	static get actionTemplate() {
+		return TableRowActionTemplate;
 	}
 
-	get _getMenuItem() {
-		return this.menuItem;
+	getOverflowInfo() {
+		return {
+			text: this.text,
+			icon: this.icon,
+			disabled: this.disabled,
+		};
 	}
 }
 
