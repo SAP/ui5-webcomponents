@@ -151,7 +151,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	 * Defines the currenty selected color.
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Object })
 	_colorValue: ColorValue;
 
 	/**
