@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* **ui5-dynamic-page:** correct z-index for dynamic page header ([#10425](https://github.com/SAP/ui5-webcomponents/issues/10425)) ([5af40ae](https://github.com/SAP/ui5-webcomponents/commit/5af40ae08423bafee67129b4583b891d4ac71674)), closes [#10399](https://github.com/SAP/ui5-webcomponents/issues/10399)
+* **ui5-navigation-layout:** fix example ([#10421](https://github.com/SAP/ui5-webcomponents/issues/10421)) ([2a4691e](https://github.com/SAP/ui5-webcomponents/commit/2a4691e3f378d8339fb151473c6e63f52413700d))
+* **ui5-side-navigation:** fix expand and collapse ([#10418](https://github.com/SAP/ui5-webcomponents/issues/10418)) ([4d17e57](https://github.com/SAP/ui5-webcomponents/commit/4d17e575857fbc2665cb9a277418f3e6b9b9433c))
+
+
+### Features
+
+* **ui5-user-menu:** add open and close events ([#10363](https://github.com/SAP/ui5-webcomponents/issues/10363)) ([8109bfd](https://github.com/SAP/ui5-webcomponents/commit/8109bfd85d54374f007564c66df1404fef1a340c))
+
+
+
+
+
+# [2.6.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.1...v2.6.0-rc.2) (2024-12-19)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [2.6.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.0...v2.6.0-rc.1) (2024-12-16)
 
 

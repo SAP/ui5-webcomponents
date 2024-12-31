@@ -258,6 +258,7 @@ abstract class Popup extends UI5Element {
 
 		if (this.open) {
 			this.showPopover();
+			this.openPopup();
 		}
 	}
 

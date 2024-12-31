@@ -111,7 +111,8 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-						onui5-click={this._onToggleClick}
+						// @ts-expect-error
+						onClick={this._onToggleClick}
 					/>
 					}
 				</a>
@@ -142,7 +143,8 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					{!!this.items.length &&
 					<Icon class="ui5-sn-item-toggle-icon"
 						name={this.expanded ? navDownArrow : navRightArrow}
-						onui5-click={this._onToggleClick}
+						// @ts-expect-error
+						onClick={this._onToggleClick}
 					/>
 					}
 				</div>
