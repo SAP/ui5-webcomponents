@@ -240,3 +240,6 @@ and there is an additional border that appears on hover. */
 	bottom: 0.125rem;
 }
 
+.ui5-sn-item-separator {
+	min-height: 0.5rem;
+}
