@@ -16,6 +16,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type WizardContentLayout from "./types/WizardContentLayout.js";
+import "./WizardStep.js";
 
 // Texts
 import {
