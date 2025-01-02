@@ -70,6 +70,9 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
+// eslint-disable-next-line
+import "./ListItemGroup.js";
+// eslint-disable-next-line
 import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 import type ListItemGroup from "./ListItemGroup.js";
 

@@ -73,6 +73,9 @@ import type Popover from "./Popover.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
+// eslint-disable-next-line
+import "./ComboBoxItemGroup.js";
+// eslint-disable-next-line
 import { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
 import type ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
