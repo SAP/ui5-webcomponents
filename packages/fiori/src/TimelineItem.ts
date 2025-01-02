@@ -12,7 +12,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITimelineItem } from "./Timeline.js";
 import type TimelineItemStatus from "./types/TimelineItemStatus.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import type TimelineLayout from "./types/TimelineLayout.js";
 
 import {
 	TIMELINE_ITEM_INFORMATION_STATUS_TEXT,
@@ -23,9 +23,6 @@ import {
 
 // Styles
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
-
-const SHORT_LINE_WIDTH = "ShortLineWidth";
-const LARGE_LINE_WIDTH = "LargeLineWidth";
 
 /**
  * @class
