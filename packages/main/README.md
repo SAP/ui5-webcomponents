@@ -46,7 +46,9 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/ListItemStandard.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/ListItemCustom.js";`      |
 | List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
-| Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Menu                     | `ui5-menu`                  | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Menu Item                | `ui5-menu-item`             | comes with `ui5-menu`                                      |
+| Menu Separator           | `ui5-menu-separator`        | comes with `ui5-menu`                                      |
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
