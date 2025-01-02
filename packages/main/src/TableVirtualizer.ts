@@ -125,22 +125,20 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 		this._onRowInvalidateBound = this._onRowInvalidate.bind(this);
 	}
 
-	onTableActivate(table: Table): void {
-		this._table = table;
-		this._scrollContainer.addEventListener("scroll", this._onScrollBound, { passive: true });
-		this._onScroll();
-	}
-
 	onAfterRendering(): void {
 		this._table && this._table._invalidate++;
 	}
 
-	onTableAfterRendering(): void {
+	onTableAfterRendering(table: Table): void {
 		if (!this._table) {
-			return;
+			this._table = table;
+			this._scrollContainer.addEventListener("scroll", this._onScrollBound, { passive: true });
+			this._updateRowsHeight();
+			this._onScroll();
+		} else {
+			this._updateRowsHeight();
 		}
 
-		this._updateRowsHeight();
 		if (this._tabBlockingState & TabBlocking.Released) {
 			const tabBlockingRow = this._table.rows.at(this._tabBlockingState & TabBlocking.Next ? -1 : 0) as HTMLElement;
 			const tabForwardingElement = getTabbableElements(tabBlockingRow).at(this._tabBlockingState & TabBlocking.Next ? 0 : -1);
@@ -161,10 +159,12 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 	reset(): void {
 		this._lastRowPosition = -1;
 		this._firstRowPosition = -1;
-		if (this._scrollContainer.scrollTop > 0) {
-			this._scrollContainer.scrollTop = 0;
-		} else {
-			this._onScroll();
+		if (this._table) {
+			if (this._scrollContainer.scrollTop > 0) {
+				this._scrollContainer.scrollTop = 0;
+			} else {
+				this._onScroll();
+			}
 		}
 	}
 
@@ -177,11 +177,7 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 	}
 
 	_onScroll(): void {
-		if (!this._table) {
-			return;
-		}
-
-		const headerRow = this._table.headerRow[0];
+		const headerRow = this._table!.headerRow[0];
 		const headerHeight = headerRow.offsetHeight;
 		let scrollTop = this._scrollContainer.scrollTop;
 		let scrollableHeight = this._scrollContainer.clientHeight;

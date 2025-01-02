@@ -175,7 +175,6 @@ class Carousel extends UI5Element {
 	 * Defines the visibility of the navigation arrows.
 	 * If set to true the navigation arrows will be hidden.
 	 *
-	 * **Note:** The navigation arrows are always displayed on touch devices.
 	 * @since 1.0.0-rc.15
 	 * @default false
 	 * @public
@@ -595,7 +594,7 @@ class Carousel extends UI5Element {
 			return false;
 		}
 
-		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop())) {
+		if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows) {
 			return true;
 		}
 
@@ -620,11 +619,11 @@ class Carousel extends UI5Element {
 				"ui5-carousel-content": true,
 				"ui5-carousel-content-no-animation": this.suppressAnimation,
 				"ui5-carousel-content-has-navigation": this.renderNavigation,
-				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop()),
+				"ui5-carousel-content-has-navigation-and-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 			},
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
-				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && (!this.hideNavigationArrows || !isDesktop()),
+				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
 				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
 				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
 			},
@@ -661,8 +660,8 @@ class Carousel extends UI5Element {
 	get showArrows() {
 		const displayArrows = this._visibleNavigationArrows && this.hasManyPages;
 		return {
-			content: (!this.hideNavigationArrows || !isDesktop()) && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: (!this.hideNavigationArrows || !isDesktop()) && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 

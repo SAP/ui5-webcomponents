@@ -11,6 +11,7 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import {
 	getRGBColor,
+	getAlpha,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
@@ -225,7 +226,8 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 	onBeforeRendering() {
 		// we have the color & ._mainValue properties here
 		this._value = getRGBColor(this.value);
-		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},1)`;
+		this._alpha = getAlpha(this.value);
+		const tempColor = `rgba(${this._value.r},${this._value.g},${this._value.b},${this._alpha})`;
 		this._setHex();
 		this._setValues();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);

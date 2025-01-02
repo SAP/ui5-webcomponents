@@ -3587,10 +3587,10 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@sap-theming/theming-base-content@11.17.1":
-  version "11.17.1"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.17.1.tgz#82665ba782f39e419e67993379ce3d7b9d154de6"
-  integrity sha512-C13DbCBGkLYRZtQU7d6TmDHChA+S7bs26xk+fqHL0pBJTOm4V8NP1sj1SPfI9mbkUp+f5QLcWaENwUoTF00ElA==
+"@sap-theming/theming-base-content@11.24.0":
+  version "11.24.0"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.24.0.tgz#13195b6a345292576aac1c69386facbb91bd396a"
+  integrity sha512-Mtk011SHZhmhnRaD7B0eMVqGwPBuu1d9PaWkTpSD30MUuLZ0Uag4OMczWDT1oJwq0zGFYxGZxwtiCMwkwBxCKw==
 
 "@semantic-release/error@^4.0.0":
   version "4.0.0"
