@@ -4,6 +4,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js";
 import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -23,6 +24,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
+import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
 import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem, { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
@@ -119,6 +121,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 		SideNavigationItem,
 		SideNavigationSubItem,
 		NavigationMenu,
+		NavigationMenuItem,
 	],
 })
 /**
@@ -284,6 +287,8 @@ class SideNavigation extends UI5Element {
 
 	handlePopupItemClick(e: KeyboardEvent | PointerEvent) {
 		const associatedItem = (e.target as PopupSideNavigationItem).associatedItem;
+
+		e.stopPropagation();
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
@@ -478,7 +483,7 @@ class SideNavigation extends UI5Element {
 
 		itemsHeight = overflowItem.offsetHeight;
 
-		const selectedItem = overflowItems.find(item => item._selected);
+		const selectedItem = overflowItems.filter(isInstanceOfSideNavigationSelectableItemBase).find(item => item._selected);
 
 		if (selectedItem) {
 			const selectedItemDomRef = selectedItem.getDomRef();
@@ -537,10 +542,10 @@ class SideNavigation extends UI5Element {
 		return this._getSelectableItems(items).find(item => item._selected);
 	}
 
-	get overflowItems() : Array<SideNavigationItem> {
+	get overflowItems() : Array<HTMLElement> {
 		return (this.items as Array<SideNavigationItem | SideNavigationGroup>).reduce((result, item) => {
 			return result.concat(item.overflowItems);
-		}, new Array<SideNavigationItem>());
+		}, new Array<HTMLElement>());
 	}
 
 	_handleItemClick(e: KeyboardEvent | MouseEvent, item: SideNavigationSelectableItemBase) {
@@ -580,7 +585,7 @@ class SideNavigation extends UI5Element {
 		const result: Array<SideNavigationItem> = [];
 
 		this.overflowItems.forEach(item => {
-			if (item.classList.contains(overflowClass)) {
+			if (isInstanceOfSideNavigationItem(item) && item.classList.contains(overflowClass)) {
 				 result.push(item);
 			}
 		});

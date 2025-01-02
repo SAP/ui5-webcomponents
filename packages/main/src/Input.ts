@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { type UI5CustomEvent } from "@ui5/webcomponents-base";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -594,6 +594,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_changeToBeFired?: boolean; // used to wait change event firing after suggestion item selection
 	_performTextSelection?: boolean;
 	_isLatestValueFromSuggestions: boolean;
+	_isChangeTriggeredBySuggestion: boolean;
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 
@@ -650,6 +651,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		// Indicates whether the value of the input is comming from a suggestion item
 		this._isLatestValueFromSuggestions = false;
+
+		this._isChangeTriggeredBySuggestion = false;
 
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -969,7 +972,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 		this._keepInnerValue = false;
 		this.focused = false; // invalidating property
-
+		this._isChangeTriggeredBySuggestion = false;
 		if (this.showClearIcon && !this._effectiveShowClearIcon) {
 			this._clearIconClicked = false;
 			this._handleChange();
@@ -1012,9 +1015,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const fireChange = () => {
-			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+			if (!this._isChangeTriggeredBySuggestion) {
+				this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+			}
 			this.previousValue = this.value;
 			this.typedInValue = this.value;
+			this._isChangeTriggeredBySuggestion = false;
 		};
 
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
@@ -1284,6 +1290,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 
 			this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
 
+			this._isChangeTriggeredBySuggestion = true;
 			// value might change in the change event handler
 			this.typedInValue = this.value;
 			this.previousValue = this.value;
