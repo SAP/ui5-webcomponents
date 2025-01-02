@@ -15,8 +15,6 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./TimelineTemplate.js";
-import TimelineItem from "./TimelineItem.js";
-import TimelineGroupItem from "./TimelineGroupItem.js";
 
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
@@ -65,7 +63,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	renderer: jsxRenderer,
 	styles: TimelineCss,
 	template: TimelineTemplate,
-	dependencies: [TimelineItem, TimelineGroupItem],
 })
 class Timeline extends UI5Element {
 	/**

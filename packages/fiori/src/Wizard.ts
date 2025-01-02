@@ -14,8 +14,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
@@ -33,8 +32,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Step in header and content
-import WizardTab from "./WizardTab.js";
-import WizardStep from "./WizardStep.js";
+import type WizardTab from "./WizardTab.js";
+import type WizardStep from "./WizardStep.js";
 
 // Template and Styles
 import WizardTemplate from "./WizardTemplate.js";
@@ -192,12 +191,6 @@ type StepInfo = {
 		getEffectiveScrollbarStyle(),
 	],
 	template: WizardTemplate,
-	dependencies: [
-		WizardTab,
-		WizardStep,
-		ResponsivePopover,
-		Button,
-	],
 })
 
 /**
