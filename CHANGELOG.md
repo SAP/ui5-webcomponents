@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
+
+
+### Features
+
+* **ui5-user-menu:** add open and close events ([#10363](https://github.com/SAP/ui5-webcomponents/issues/10363)) ([f57125a](https://github.com/SAP/ui5-webcomponents/commit/f57125a27b9d7aa7a9f3554db374f1d7da589e6e))
+
+
+
+
+
 # [2.6.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.2...v2.6.0-rc.3) (2024-12-26)
 
 
