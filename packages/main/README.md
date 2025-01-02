@@ -81,6 +81,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Token                    | `ui5-token`                 | comes with `ui5-multi-input`                               |
 | Tree                     | `ui5-tree`                  | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`             | comes with `ui5-tree`                                      |
+| Tree Item Custom         | `ui5-tree-item-custom`      | comes with `ui5-tree`                                      |
 
 ## Provided assets
 
