@@ -48,9 +48,9 @@ export default function SettingsTemplate(this: Settings) {
                     </div>
                 </div>
 
-                <Toolbar slot="footer">
-                    <ToolbarButton design="Transparent" text="Close" onClick={this._onClose} />
-                </Toolbar>
-            </Dialog>
-    );
+            <Toolbar slot="footer" design="Transparent">
+                <ToolbarButton text={this.closeButtonText} onClick={this._onClose} />
+            </Toolbar>
+        </Dialog>
+);
 }

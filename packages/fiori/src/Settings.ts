@@ -23,6 +23,7 @@ import SettingsCss from "./generated/themes/Settings.css.js";
 import {
 	SETTINGS_DIALOG_ACCESSIBLE_NAME,
 	SETTING_LIST_ARIA_ROLE_DESC,
+	SETTINGS_DIALOG_CLOSE_BUTTON_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 type SettingsItemSelectEventDetail = {
@@ -209,6 +210,10 @@ class Settings extends UI5Element {
 
 	get ariaRoleDescList() {
 		return Settings.i18nBundle.getText(SETTING_LIST_ARIA_ROLE_DESC);
+	}
+
+	get closeButtonText() {
+		return Settings.i18nBundle.getText(SETTINGS_DIALOG_CLOSE_BUTTON_TEXT);
 	}
 
 	get _selectedItemSlotName() {
