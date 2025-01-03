@@ -1,17 +1,13 @@
+import type { JsxTemplateResult } from "@ui5/webcomponents-base/dist/index.js";
 import Input from "../Input.js";
 import Icon from "../Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
-import error from "@ui5/webcomponents-icons/dist/error.js";
-import alert from "@ui5/webcomponents-icons/dist/alert.js";
-import sysEnter2 from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
-import information from "@ui5/webcomponents-icons/dist/information.js";
 
 import List from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import Button from "../Button.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-export default function InputSuggestionsTemplate(this: Input) {
+export default function InputSuggestionsTemplate(this: Input, valueStateMessage: (this: Input) => JsxTemplateResult, valueStateMessageInputIcon: (this: Input) => string) {
 	return (
 		<ResponsivePopover
 			class={this.classes.popover}
@@ -97,16 +93,6 @@ export default function InputSuggestionsTemplate(this: Input) {
 	);
 }
 
-function valueStateMessage(this: Input) {
-	return (
-		<>
-			{
-				this.shouldDisplayDefaultValueStateMessage ? this.valueStateText : <slot name="valueStateMessage"></slot>
-			}
-		</>
-	);
-}
-
 function suggestionsList(this: Input) {
 	return (
 		<List
@@ -119,15 +105,4 @@ function suggestionsList(this: Input) {
 			<slot></slot>
 		</List>
 	);
-}
-
-function valueStateMessageInputIcon(this: Input) {
-	const iconPerValueState = {
-		Negative: error,
-		Critical: alert,
-		Positive: sysEnter2,
-		Information: information,
-	};
-
-	return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
 }

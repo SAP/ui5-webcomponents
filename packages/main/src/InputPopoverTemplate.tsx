@@ -11,7 +11,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 export default function InputPopoverTemplate(this: Input) {
 	return (
 		<>
-			{this._effectiveShowSuggestions && this.Suggestions?.template.call(this) }
+			{this._effectiveShowSuggestions && this.Suggestions?.template.call(this, valueStateMessage, valueStateMessageInputIcon) }
 
 			{this.hasValueStateMessage &&
 				<Popover
