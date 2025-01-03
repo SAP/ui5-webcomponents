@@ -1,0 +1,13 @@
+import { registerIcon } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+
+const name = "internal-block-diagram";
+const pathData = "M1 243l18-52-18-53c-1-1-1-3-1-5 0-4 3-12 11-15l142-48c1-1 2-1 5-1 7 0 12 4 15 11l6 18 6-18c3-7 8-11 15-11 3 0 4 0 5 1l135 45 14-11v-2h-1c0-2 0-4-1-5V32c0-19 13-32 32-32h64c19 0 32 13 32 32v64c0 19-13 32-32 32h-64c-1 0-3 0-6-1v-1h-2l-21 18-16 47 17 49h28v-16c0-19 13-32 32-32h64c19 0 32 13 32 32v64c0 19-13 32-32 32h-64c-19 0-32-13-32-32v-16h-45v92l37 22h2v-1c2 0 4 0 5-1h65c19 0 32 13 32 32v64c0 19-13 32-32 32h-64c-19 0-32-13-32-32v-64c0-1 0-2 1-5v-1h1v-2l-21-12c-3 1-2 3-5 3l-141 48c-1 1-3 1-8 1-4 0-7 0-8-1L30 399c-7-3-11-8-11-15V266l-8-2c-8-3-11-11-11-16 0-1 0-3 1-5zM384 96h64V32h-64v64zM36 143l10 28 111-38-9-28zm174-38l-9 28 111 38 10-28zm-31 55l-92 31 92 31 92-31-78-27zM46 211l-10 28 15 4 97 33 9-28zm155 37l9 28 98-33v-31zm215-24v64h64v-64h-64zm-221 87v100l113-38v-96l-103 35h-5c-3 0-2-1-5-1zm-42 1L51 277v96l112 38V311c-3 0-2 1-5 1h-5zm295 104h-64v64h64v-64z";
+const ltr = false;
+const accData = null;
+const collection = "tnt-v3";
+const packageName = "@ui5/webcomponents-icons-tnt";
+
+registerIcon(name, { pathData, ltr, collection, packageName });
+
+export default "tnt-v3/internal-block-diagram";
+export { pathData, ltr, accData };

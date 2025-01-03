@@ -1,0 +1,13 @@
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "@ui5/webcomponents-base/jsx-runtime";
+import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
+import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js";
+import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import SideNavigation from "./SideNavigation.js";
+import SideNavigationItem from "./SideNavigationItem.js";
+import SideNavigationSubItem from "./SideNavigationSubItem.js";
+export default function SideNavigationTemplate() {
+    return (_jsxs(_Fragment, { children: [_jsx(NavigationMenu, { id: `${this._id}-side-navigation-overflow-menu`, onBeforeOpen: this._onBeforeMenuOpen, onBeforeClose: this._onBeforeMenuClose, "onui5-item-click": this.handleOverflowItemClick, class: "ui5-side-navigation-popover ui5-side-navigation-overflow-menu", children: this._menuPopoverItems.map(item => _jsx(NavigationMenuItem, { text: item.text, icon: item.icon, disabled: item.disabled, 
+                    // expanded={true}
+                    href: item.href, target: item.target, title: item.title, ref: this.captureRef.bind(item), children: item.items.map(subItem => _jsx(NavigationMenuItem, { text: subItem.text, icon: subItem.icon, disabled: subItem.disabled, ref: this.captureRef.bind(subItem), href: subItem.href, target: subItem.target, title: subItem.title })) })) }), _jsx(ResponsivePopover, { verticalAlign: "Top", class: "ui5-side-navigation-popover", accessibleNameRef: `${this._id}-sideNavigationPopoverText`, onOpen: this._onAfterPopoverOpen, onBeforeOpen: this._onBeforePopoverOpen, onBeforeClose: this._onBeforePopoverClose, children: this._popoverContents && _jsxs(_Fragment, { children: [_jsx("span", { id: `${this._id}-sideNavigationPopoverText`, class: "ui5-hidden-text", children: this.accSideNavigationPopoverHiddenText }), _jsx(SideNavigation, { inPopover: true, class: "ui5-side-navigation-in-popover", children: _jsx(SideNavigationItem, { text: this._popoverContents.item.text, tooltip: this._popoverContents.item._tooltip, href: this._popoverContents.item._href, target: this._popoverContents.item._target, disabled: this._popoverContents.item.disabled, expanded: true, _fixed: true, selected: this._popoverContents.item.selected, "onui5-click": this.handlePopupItemClick, ref: this.captureRef.bind(this._popoverContents.item), children: this._popoverContents.subItems.map(item => _jsx(SideNavigationSubItem, { text: item.text, tooltip: item._tooltip, href: item._href, target: item._target, disabled: item.disabled, selected: item.selected, "onui5-click": this.handlePopupItemClick, ref: this.captureRef.bind(item) })) }) })] }) })] }));
+}
+//# sourceMappingURL=SideNavigationPopoverTemplate.js.map
