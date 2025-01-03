@@ -850,7 +850,7 @@ abstract class UI5Element extends HTMLElement {
 		*/
 		this._changedState = [];
 
-		// Update shadow root and static area item
+		// Update shadow root
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
@@ -1233,9 +1233,11 @@ abstract class UI5Element extends HTMLElement {
 	static styles: ComponentStylesData = "";
 
 	/**
-	 * Returns an array with the dependencies for this UI5 Web Component (slotted components that the component may need to communicate with)
-	 * The component will always await for the dependencies to be defined before defining itself
+	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
+	 *  - composed components (used in its shadow root)
+	 *  - slotted components that the component may need to communicate with
 	 *
+	 * @deprecated no longer necessary for jsxRenderer-enabled components
 	 * @protected
 	 */
 	static get dependencies(): Array<typeof UI5Element> {
