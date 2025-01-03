@@ -22,6 +22,7 @@ class TableRowAction extends TableRowActionBase {
 	/**
 	 * Defines the icon of the row action.
 	 *
+	 * **Note:** This property is mandatory for row actions to work properly.
 	 * **Note:** SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
 	 * [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
 	 * @default undefined
@@ -32,6 +33,8 @@ class TableRowAction extends TableRowActionBase {
 
 	/**
 	 * Defines the text of the row action.
+	 *
+	 * **Note:** This property is mandatory for row actions to work properly.
 	 *
 	 * @default undefined
 	 * @public

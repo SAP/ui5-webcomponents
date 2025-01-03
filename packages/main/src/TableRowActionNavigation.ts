@@ -6,6 +6,7 @@ import TableRowActionBase from "./TableRowActionBase.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import { TABLE_NAVIGATION } from "./generated/i18n/i18n-defaults.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 
 /**
  * @class
