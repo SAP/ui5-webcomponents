@@ -29,8 +29,7 @@ import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
-import Icon from "./Icon.js";
-import Input from "./Input.js";
+import type Input from "./Input.js";
 import type { InputAccInfo, InputEventDetail } from "./Input.js";
 import InputType from "./types/InputType.js";
 
@@ -95,10 +94,6 @@ type StepInputValueStateChangeEventDetail = {
 	renderer: jsxRenderer,
 	styles: StepInputCss,
 	template: StepInputTemplate,
-	dependencies: [
-		Icon,
-		Input,
-	],
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.

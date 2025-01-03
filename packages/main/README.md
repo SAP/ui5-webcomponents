@@ -10,15 +10,18 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 |--------------------------|-----------------------------|------------------------------------------------------------|
 | Avatar                   | `ui5-avatar`                | `import "@ui5/webcomponents/dist/Avatar.js";`              |
 | Avatar Group             | `ui5-avatar-group`          | `import "@ui5/webcomponents/dist/AvatarGroup.js";`         |
-| Tag                    | `ui5-tag`                 | `import "@ui5/webcomponents/dist/Tag.js";`               |
 | Bar                      | `ui5-bar`                   | `import "@ui5/webcomponents/dist/Bar.js";`                 |
 | Breadcrumbs              | `ui5-breadcrumbs`           | `import "@ui5/webcomponents/dist/Breadcrumbs.js";`         |
 | Breadcrumbs Item         | `ui5-breadcrumbs-item`      | comes with `ui5-breadcrumbs`                               |
-| Tag                    | `ui5-tag`                 | `import "@ui5/webcomponents/dist/Tag.js";`               |
+| Tag                      | `ui5-tag`                   | `import "@ui5/webcomponents/dist/Tag.js";`                 |
 | Busy Indicator           | `ui5-busy-indicator`        | `import "@ui5/webcomponents/dist/BusyIndicator.js";`       |
 | Button                   | `ui5-button`                | `import "@ui5/webcomponents/dist/Button.js";`              |
 | Calendar                 | `ui5-calendar`              | `import "@ui5/webcomponents/dist/Calendar.js";`            |
-| Calendar Date            | `ui5-calendar-date`         | comes with `ui5-calendar`                                  |
+| Calendar Date            | `ui5-date`                  | comes with `ui5-calendar`                                  |
+| Calendar Date Range      | `ui5-date-range`            | comes with `ui5-calendar`                                  |
+| Calendar Special Date    | `ui5-date-special`          | comes with `ui5-calendar`                                  |
+| Calendar Legend          | `ui5-calendar-legend`       | `import "@ui5/webcomponents/dist/CalendarLegend.js";`      |
+| Calendar Legend Item     | `ui5-calendar-legend-item`  | comes with `ui5-calendar-legend`                           |
 | Card                     | `ui5-card`                  | `import "@ui5/webcomponents/dist/Card.js";`                |
 | CardHeader               | `ui5-card-header`           | `import "@ui5/webcomponents/dist/CardHeader.js";`          |
 | Carousel                 | `ui5-carousel`              | `import "@ui5/webcomponents/dist/Carousel.js";`            |
@@ -43,7 +46,9 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | List - Standard Item     | `ui5-li`                    | `import "@ui5/webcomponents/dist/ListItemStandard.js";`    |
 | List - Custom Item       | `ui5-li-custom`             | `import "@ui5/webcomponents/dist/ListItemCustom.js";`      |
 | List - Group Item        | `ui5-li-group`              | `import "@ui5/webcomponents/dist/ListItemGroup.js";`       |
-| Menu                     | `ui5-menu        `          | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Menu                     | `ui5-menu`                  | `import "@ui5/webcomponents/dist/Menu.js";`                |
+| Menu Item                | `ui5-menu-item`             | comes with `ui5-menu`                                      |
+| Menu Separator           | `ui5-menu-separator`        | comes with `ui5-menu`                                      |
 | Message Strip            | `ui5-message-strip`         | `import "@ui5/webcomponents/dist/MessageStrip.js";`        |
 | Multi ComboBox           | `ui5-multi-combobox`        | `import "@ui5/webcomponents/dist/MultiComboBox.js";`       |
 | Multi ComboBox Item      | `ui5-mcb-item`              | comes with `ui5-multi-combobox`                            |
@@ -76,6 +81,7 @@ Provides general purpose UI building blocks such as buttons, labels, inputs and 
 | Token                    | `ui5-token`                 | comes with `ui5-multi-input`                               |
 | Tree                     | `ui5-tree`                  | `import "@ui5/webcomponents/dist/Tree.js";`                |
 | Tree Item                | `ui5-tree-item`             | comes with `ui5-tree`                                      |
+| Tree Item Custom         | `ui5-tree-item-custom`      | comes with `ui5-tree`                                      |
 
 ## Provided assets
 

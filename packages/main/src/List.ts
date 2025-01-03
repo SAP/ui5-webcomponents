@@ -49,13 +49,12 @@ import type ListItemBase from "./ListItemBase.js";
 import type {
 	ListItemBasePressEventDetail,
 } from "./ListItemBase.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
 import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
 } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
-import BusyIndicator from "./BusyIndicator.js";
 
 // Template
 import ListTemplate from "./ListTemplate.js";
@@ -71,7 +70,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import type CheckBox from "./CheckBox.js";
 import type RadioButton from "./RadioButton.js";
-import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
+import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
+import type ListItemGroup from "./ListItemGroup.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -173,7 +173,6 @@ type ListItemClickEventDetail = {
 		listCss,
 		getEffectiveScrollbarStyle(),
 	],
-	dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
 })
 /**
  * Fired when an item is activated, unless the item's `type` property

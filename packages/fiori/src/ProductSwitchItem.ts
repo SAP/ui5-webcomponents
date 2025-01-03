@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -40,7 +39,6 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 	renderer: jsxRenderer,
 	styles: ProductSwitchItemCss,
 	template: ProductSwitchItemTemplate,
-	dependencies: [Icon],
 })
 /**
  * Fired when the `ui5-product-switch-item` is activated either with a

@@ -17,7 +17,6 @@ import {
 	isUp,
 	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import Label from "./Label.js";
 import RadioButtonGroup from "./RadioButtonGroup.js";
 import type WrappingType from "./types/WrappingType.js";
 
@@ -77,7 +76,6 @@ let activeRadio: RadioButton;
 	renderer: jsxRenderer,
 	template: RadioButtonTemplate,
 	styles: radioButtonCss,
-	dependencies: [Label],
 })
 /**
  * Fired when the component checked state changes.

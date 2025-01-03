@@ -31,15 +31,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
-import Icon from "./Icon.js";
-import Popover from "./Popover.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type Popover from "./Popover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./TimePickerTemplate.js";
-import Input from "./Input.js";
+import type Input from "./Input.js";
 import type { InputAccInfo } from "./Input.js";
-import Button from "./Button.js";
-import TimeSelectionClocks from "./TimeSelectionClocks.js";
-import TimeSelectionInputs from "./TimeSelectionInputs.js";
+import type TimeSelectionInputs from "./TimeSelectionInputs.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
@@ -136,15 +133,6 @@ type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 		TimePickerCss,
 		ResponsivePopoverCommonCss,
 		TimePickerPopoverCss,
-	],
-	dependencies: [
-		Icon,
-		Popover,
-		ResponsivePopover,
-		TimeSelectionClocks,
-		TimeSelectionInputs,
-		Input,
-		Button,
 	],
 })
 /**

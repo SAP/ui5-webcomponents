@@ -5,8 +5,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
+import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
@@ -51,7 +51,6 @@ type DynamicPageHeaderActionsAccessibilityAttributes = Pick<AccessibilityAttribu
 	renderer: jsxRenderer,
 	styles: DynamicPageHeaderActionsCss,
 	template: DynamicPageHeaderActionsTemplate,
-	dependencies: [Button, ToggleButton],
 })
 
 /**

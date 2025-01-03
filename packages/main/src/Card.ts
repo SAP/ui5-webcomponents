@@ -7,8 +7,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import CardTemplate from "./CardTemplate.js";
-import Icon from "./Icon.js";
-import BusyIndicator from "./BusyIndicator.js";
 
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
@@ -47,7 +45,6 @@ import cardCss from "./generated/themes/Card.css.js";
 	renderer: jsxRenderer,
 	template: CardTemplate,
 	styles: cardCss,
-	dependencies: [Icon, BusyIndicator],
 })
 class Card extends UI5Element {
 	/**

@@ -13,8 +13,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Popover from "./Popover.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 import TextAreaTemplate from "./TextAreaTemplate.js";
@@ -78,7 +77,6 @@ type ExceededText = {
 	],
 	renderer: jsxRenderer,
 	template: TextAreaTemplate,
-	dependencies: [Popover, Icon],
 })
 /**
  * Fired when the text has changed and the focus leaves the component.

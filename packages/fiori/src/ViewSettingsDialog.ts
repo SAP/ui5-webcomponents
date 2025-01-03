@@ -8,16 +8,9 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import Dialog from "@ui5/webcomponents/dist/Dialog.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
-import List from "@ui5/webcomponents/dist/List.js";
+import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
+import type List from "@ui5/webcomponents/dist/List.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
-import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
@@ -107,17 +100,6 @@ type VSDInternalSettings = {
 	renderer: jsxRenderer,
 	styles: viewSettingsDialogCSS,
 	template: ViewSettingsDialogTemplate,
-	dependencies: [
-		Button,
-		Title,
-		Dialog,
-		Label,
-		List,
-		ListItemStandard,
-		ListItemGroup,
-		SegmentedButton,
-		SegmentedButtonItem,
-	],
 })
 
 /**

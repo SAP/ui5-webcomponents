@@ -7,11 +7,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import ListItem from "@ui5/webcomponents/dist/ListItem.js";
 import getFileExtension from "@ui5/webcomponents-base/dist/util/getFileExtension.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -63,14 +60,6 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 	renderer: jsxRenderer,
 	styles: [ListItem.styles, UploadCollectionItemCss],
 	template: UploadCollectionItemTemplate,
-	dependencies: [
-		...ListItem.dependencies,
-		Button,
-		Input,
-		Link,
-		Label,
-		ProgressIndicator,
-	],
 })
 
 /**

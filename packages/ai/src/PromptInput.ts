@@ -8,9 +8,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import type { IInputSuggestionItem, InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
-import Input from "@ui5/webcomponents/dist/Input.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -46,11 +44,6 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
 	renderer: jsxRenderer,
 	styles: PromptInputCss,
 	template: PromptInputTemplate,
-	dependencies: [
-		Input,
-		Label,
-		Button,
-	],
 })
 
 /**

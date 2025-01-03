@@ -11,8 +11,6 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 import ToolbarSelectTemplate from "./ToolbarSelectTemplate.js";
 import ToolbarPopoverSelectTemplate from "./ToolbarPopoverSelectTemplate.js";
 import ToolbarItem from "./ToolbarItem.js";
-import Select from "./Select.js";
-import Option from "./Option.js";
 import type ToolbarSelectOption from "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
@@ -37,7 +35,6 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
  */
 @customElement({
 	tag: "ui5-toolbar-select",
-	dependencies: [Select, Option],
 })
 
 /**

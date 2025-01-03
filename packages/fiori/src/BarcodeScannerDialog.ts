@@ -2,9 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Dialog from "@ui5/webcomponents/dist/Dialog.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
@@ -80,11 +78,6 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 	renderer: jsxRenderer,
 	template: BarcodeScannerDialogTemplate,
 	styles: [BarcodeScannerDialogCss],
-	dependencies: [
-		Dialog,
-		BusyIndicator,
-		Button,
-	],
 })
 
 /**

@@ -45,16 +45,14 @@ import {
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
 	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
-import Button from "./Button.js";
-import Icon from "./Icon.js";
-import List from "./List.js";
-import DropIndicator from "./DropIndicator.js";
+import type Button from "./Button.js";
+import type List from "./List.js";
+import type DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
 import type { TabInStrip, TabInOverflow } from "./Tab.js";
 import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
-import ListItemCustom from "./ListItemCustom.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
 import type BackgroundDesign from "./types/BackgroundDesign.js";
@@ -169,14 +167,6 @@ interface ITab extends UI5Element {
 	],
 	renderer: jsxRenderer,
 	template: TabContainerTemplate,
-	dependencies: [
-		Button,
-		Icon,
-		List,
-		ResponsivePopover,
-		DropIndicator,
-		ListItemCustom,
-	],
 })
 /**
  * Fired when a tab is selected.

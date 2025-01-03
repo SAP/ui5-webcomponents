@@ -5,11 +5,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Text from "./Text.js";
-import Link from "./Link.js";
 import type { LinkAccessibilityAttributes } from "./Link.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Button from "./Button.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
 import type TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 import {
@@ -60,12 +57,6 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
 	renderer: jsxRender,
 	styles: ExpandableTextCss,
 	template: ExpandableTextTemplate,
-	dependencies: [
-		Text,
-		Link,
-		ResponsivePopover,
-		Button,
-	],
 })
 class ExpandableText extends UI5Element {
 	/**

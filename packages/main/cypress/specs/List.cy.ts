@@ -1,5 +1,6 @@
 import { html } from "lit";
 import "../../src/List.js";
+import "../../src/ListItemStandard.js";
 import type List from "../../src/List.js";
 
 describe("List Tests", () => {

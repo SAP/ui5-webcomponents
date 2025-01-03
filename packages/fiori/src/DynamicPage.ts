@@ -25,7 +25,7 @@ import DynamicPageCss from "./generated/themes/DynamicPage.css.js";
 
 import DynamicPageHeader from "./DynamicPageHeader.js";
 import DynamicPageTitle from "./DynamicPageTitle.js";
-import DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
+import type DynamicPageHeaderActions from "./DynamicPageHeaderActions.js";
 
 // Texts
 import {
@@ -101,7 +101,6 @@ const SCROLL_THRESHOLD = 10; // px
 	renderer: jsxRenderer,
 	styles: DynamicPageCss,
 	template: DynamicPageTemplate,
-	dependencies: [DynamicPageHeaderActions],
 })
 
 /**

@@ -34,8 +34,7 @@ import type BackgroundDesign from "./types/BackgroundDesign.js";
 import type BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./CarouselTemplate.js";
 
-import Button from "./Button.js";
-import Label from "./Label.js";
+import type Button from "./Button.js";
 
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
@@ -109,10 +108,6 @@ type ItemsInfo = {
 	renderer: jsxRenderer,
 	styles: CarouselCss,
 	template: CarouselTemplate,
-	dependencies: [
-		Button,
-		Label,
-	],
 })
 /**
  * Fired whenever the page changes due to user interaction,

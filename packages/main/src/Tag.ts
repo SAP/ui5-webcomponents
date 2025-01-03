@@ -11,7 +11,6 @@ import {
 	isDesktop,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type { IIcon } from "./Icon.js";
-import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/sys-help-2.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -63,9 +62,6 @@ import tagCss from "./generated/themes/Tag.css.js";
 	renderer: jsxRenderer,
 	template: TagTemplate,
 	styles: tagCss,
-	dependencies: [
-		Icon,
-	],
 })
 
 /**

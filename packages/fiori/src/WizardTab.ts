@@ -6,7 +6,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WizardTabTemplate from "./WizardTabTemplate.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
 
@@ -34,7 +33,6 @@ type WizardTabAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaSetsi
 	renderer: jsxRenderer,
 	styles: WizardTabCss,
 	template: WizardTabTemplate,
-	dependencies: [Icon],
 })
 
 /**

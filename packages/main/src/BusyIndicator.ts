@@ -11,7 +11,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
-import Label from "./Label.js";
 
 // Template
 import BusyIndicatorTemplate from "./BusyIndicatorTemplate.js";
@@ -65,7 +64,6 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
 	styles: busyIndicatorCss,
 	renderer: jsxRenderer,
 	template: BusyIndicatorTemplate,
-	dependencies: [Label],
 })
 class BusyIndicator extends UI5Element {
 	/**

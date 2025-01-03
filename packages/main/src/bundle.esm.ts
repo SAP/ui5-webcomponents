@@ -35,6 +35,7 @@ import Breadcrumbs from "./Breadcrumbs.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import Card from "./Card.js";
+import CalendarLegend from "./CalendarLegend.js";
 import CardHeader from "./CardHeader.js";
 import Carousel from "./Carousel.js";
 import CheckBox from "./CheckBox.js";

@@ -6,8 +6,7 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import SliderBase from "./SliderBase.js";
-import Icon from "./Icon.js";
-import Input from "./Input.js";
+import type Input from "./Input.js";
 
 // Template
 import SliderTemplate from "./SliderTemplate.js";
@@ -78,7 +77,6 @@ import {
 	languageAware: true,
 	formAssociated: true,
 	template: SliderTemplate,
-	dependencies: [Icon, Input],
 })
 class Slider extends SliderBase implements IFormInputElement {
 	/**

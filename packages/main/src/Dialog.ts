@@ -12,7 +12,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
 import Popup from "./Popup.js";
-import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -111,10 +110,6 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 		PopupsCommonCss,
 		dialogCSS,
 		getEffectiveScrollbarStyle(),
-	],
-	dependencies: [
-		Icon,
-		...Popup.dependencies,
 	],
 })
 class Dialog extends Popup {

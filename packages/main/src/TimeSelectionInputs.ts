@@ -7,9 +7,7 @@ import {
 	isNumber,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TimePickerInternals from "./TimePickerInternals.js";
-import Input from "./Input.js";
-import SegmentedButton from "./SegmentedButton.js";
-import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import type Input from "./Input.js";
 
 import InputType from "./types/InputType.js";
 
@@ -46,11 +44,6 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 	tag: "ui5-time-selection-inputs",
 	styles: TimeSelectionInputsCss,
 	template: TimeSelectionInputsTemplate,
-	dependencies: [
-		Input,
-		SegmentedButton,
-		SegmentedButtonItem,
-	],
 })
 @event("close-inputs", {
 	bubbles: true,

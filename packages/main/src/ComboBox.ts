@@ -67,23 +67,20 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
-import ComboBoxItem from "./ComboBoxItem.js";
-import Icon from "./Icon.js";
-import Popover from "./Popover.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import List from "./List.js";
+import "./ComboBoxItem.js";
+import type ComboBoxItem from "./ComboBoxItem.js";
+import type Popover from "./Popover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
-import BusyIndicator from "./BusyIndicator.js";
-import Button from "./Button.js";
-import ListItemStandard from "./ListItemStandard.js";
-import ComboBoxItemGroup, { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
-import ListItemGroup from "./ListItemGroup.js";
-import ListItemGroupHeader from "./ListItemGroupHeader.js";
+// eslint-disable-next-line
+import "./ComboBoxItemGroup.js";
+// eslint-disable-next-line
+import { isInstanceOfComboBoxItemGroup } from "./ComboBoxItemGroup.js";
 import type ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
-import Input from "./Input.js";
+import type Input from "./Input.js";
 import type { InputEventDetail } from "./Input.js";
-import SuggestionItem from "./SuggestionItem.js";
 
 const SKIP_ITEMS_SIZE = 10;
 
@@ -167,21 +164,6 @@ type ComboBoxSelectionChangeEventDetail = {
 		SuggestionsCss,
 	],
 	template: ComboBoxTemplate,
-	dependencies: [
-		ComboBoxItem,
-		Icon,
-		ResponsivePopover,
-		List,
-		BusyIndicator,
-		Button,
-		ListItemStandard,
-		ListItemGroup,
-		ListItemGroupHeader,
-		Popover,
-		ComboBoxItemGroup,
-		Input,
-		SuggestionItem,
-	],
 })
 /**
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.

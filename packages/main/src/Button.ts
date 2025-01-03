@@ -30,7 +30,6 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import Icon from "./Icon.js";
 
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -88,7 +87,6 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	renderer: jsxRenderer,
 	template: ButtonTemplate,
 	styles: buttonCss,
-	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**

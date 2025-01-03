@@ -3,7 +3,6 @@ import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
@@ -36,9 +35,6 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
 	renderer: jsxRender,
 	template: SideNavigationItemTemplate,
 	styles: SideNavigationItemCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationItem extends SideNavigationSelectableItemBase {
 	/**

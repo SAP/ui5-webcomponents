@@ -10,20 +10,14 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import ToggleButton from "./ToggleButton.js";
-import SegmentedButton from "./SegmentedButton.js";
 import type { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
-import SegmentedButtonItem from "./SegmentedButtonItem.js";
-import Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
 import type {
 	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
 	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
 } from "./DatePicker.js";
-import TimeSelectionClocks from "./TimeSelectionClocks.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 // i18n texts
@@ -121,15 +115,6 @@ type PreviewValues = {
 		DatePicker.styles,
 		DateTimePickerCss,
 		DateTimePickerPopoverCss,
-	],
-	dependencies: [
-		...DatePicker.dependencies,
-		Calendar,
-		Button,
-		ToggleButton,
-		SegmentedButton,
-		SegmentedButtonItem,
-		TimeSelectionClocks,
 	],
 })
 class DateTimePicker extends DatePicker implements IFormInputElement {

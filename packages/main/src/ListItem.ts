@@ -17,9 +17,8 @@ import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
-import RadioButton from "./RadioButton.js";
-import CheckBox from "./CheckBox.js";
-import Button from "./Button.js";
+import type RadioButton from "./RadioButton.js";
+import type CheckBox from "./CheckBox.js";
 import type { IButton } from "./Button.js";
 import {
 	DELETE,
@@ -85,11 +84,6 @@ type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" 
 		ListItemBase.styles,
 		listItemAdditionalTextCss,
 		styles,
-	],
-	dependencies: [
-		Button,
-		RadioButton,
-		CheckBox,
 	],
 })
 /**
