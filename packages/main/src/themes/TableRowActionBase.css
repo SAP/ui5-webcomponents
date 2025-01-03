@@ -1,3 +1,4 @@
 :host([hidden]) {
     display: block;
+    width: var(--_ui5_button_base_min_width);
 }

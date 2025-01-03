@@ -233,6 +233,7 @@ type TableRowActionClickEventDetail = {
  * Fired when a row action is clicked.
  *
  * @param {TableRowActionBase} action The row action instance
+ * @since 2.6.0
  * @public
  */
 @event("row-action-click", {
@@ -355,11 +356,12 @@ class Table extends UI5Element {
 	stickyTop = "0";
 
 	/**
-	 * Defines the number of row actions to be displayed, which determines the width of the row action column.
+	 * Defines the maximum number of row actions to be displayed, which determines the width of the row action column.
 	 *
-	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may occupy too much space on small screens.
+	 * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may take up excessive space on smaller screens.
 	 *
 	 * @default 0
+	 * @since 2.6.0
 	 * @public
 	 */
 	@property({ type: Number })
@@ -410,13 +412,14 @@ class Table extends UI5Element {
 	}
 
 	onBeforeRendering(): void {
-		const renderNavigated = this._renderNavigated;
 		this._renderNavigated = this.rows.some(row => row.navigated);
-		if (renderNavigated !== this._renderNavigated) {
-			this.rows.forEach(row => {
-				row._renderNavigated = this._renderNavigated;
-			});
+		if (this.headerRow[0]) {
+			this.headerRow[0]._rowActionCount = this.rowActionCount;
 		}
+		this.rows.forEach(row => {
+			row._renderNavigated = this._renderNavigated;
+			row._rowActionCount = this.rowActionCount;
+		});
 
 		this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
 		this._refreshPopinState();

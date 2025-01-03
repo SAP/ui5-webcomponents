@@ -3,7 +3,7 @@ import { customElement, property } from "@ui5/webcomponents-base/dist/decorators
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableRowActionBaseTemplate from "./generated/templates/TableRowActionBaseTemplate.lit.js";
 import TableRowActionBaseStyles from "./generated/themes/TableRowActionBase.css.js";
-import executeTemplate, { type TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import MenuItem from "./MenuItem.js";
 import Menu from "./Menu.js";
@@ -11,10 +11,11 @@ import type Table from "./Table.js";
 import type TableRow from "./TableRow.js";
 import type TableRowAction from "./TableRowAction.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 
 /**
  * @class
- * A class to serve as a foundation for row actions.
+ * A class to serve as a foundation for table row actions.
  * @constructor
  * @abstract
  * @extends UI5Element
