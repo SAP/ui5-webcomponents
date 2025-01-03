@@ -34,6 +34,9 @@ abstract class TableRowBase extends UI5Element {
 	@property({ type: Number, noAttribute: true })
 	_invalidate = 0;
 
+	@property({ type: Number, noAttribute: true })
+	_rowActionCount = 0;
+
 	@i18n("@ui5/webcomponents")
 	static i18nBundle: I18nBundle;
 

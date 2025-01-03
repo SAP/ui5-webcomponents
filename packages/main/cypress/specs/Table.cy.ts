@@ -21,7 +21,7 @@ describe("Table - Rendering", () => {
 					<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
 					<ui5-table-cell><ui5-label>Cell B</ui5-label></ui5-table-cell>
 				</ui5-table-row>
-			</ui5-table>	
+			</ui5-table>
 		`);
 
 		cy.get("ui5-table").should("exist");

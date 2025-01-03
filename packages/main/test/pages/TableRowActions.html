@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
-
 	<title>Table (in development)</title>
-	<meta name="viewport"
-		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
-
 	<script src="%VITE_BUNDLE_PATH%" type="module"></script>
-
 	<style>
 	</style>
 </head>
@@ -18,307 +13,75 @@
 <body>
 	<!-- toolbar with ui5-bar -->
 	<ui5-bar design="Header" accessible-name-ref="title" style="position: sticky; top: 0; z-index: 2; height: 50px;">
-		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Selectable Products (3)</ui5-title>
-		<ui5-slider id="slider" min="0" max="100" step="1" value="100"
-			label-interval="0"></ui5-slider>
+		<ui5-title tabindex="0" level="H3" id="title" slot="startContent">My Products</ui5-title>
+		<ui5-slider id="slider" min="0" max="5" step="1" value="3" show-tickmarks></ui5-slider>
 	</ui5-bar>
 
-	<!-- <div style="height: 300px; overflow: auto;"> -->
-
-		<!-- row-action-count="" -->
-		<!-- 	<ui5-table id="table" overflow-mode="Popin" sticky-top="50px" -->
-	<ui5-table id="table" overflow-mode="Scroll" sticky-top="50px"
-
-			row-action-count="3"
-
-		accessible-name-ref="title">
-		<!-- <ui5-table id="table" overflow-mode="Scroll" sticky-top="50px" accessible-name-ref="title"> -->
-		<ui5-table-selection id="selection" selected="0 2" slot="features"></ui5-table-selection>
-
+	<ui5-table id="table" row-action-count="3" sticky-top="50px" accessible-name-ref="title" overflow-mode="Popin">
+		<ui5-table-selection id="selection" slot="features"></ui5-table-selection>
 		<ui5-table-header-row slot="headerRow">
-			<ui5-table-header-cell width="1000px">Product</ui5-table-header-cell>
+			<ui5-table-header-cell>Product</ui5-table-header-cell>
 			<ui5-table-header-cell>Supplier</ui5-table-header-cell>
 			<ui5-table-header-cell>Dimensions</ui5-table-header-cell>
 			<ui5-table-header-cell>Weight</ui5-table-header-cell>
 			<ui5-table-header-cell horizontal-align="End">Price</ui5-table-header-cell>
 		</ui5-table-header-row>
-		<!-- <ui5-table-row row-key="0" navigated>
+		<ui5-table-row row-key="1">
 			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>0 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>0 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-		</ui5-table-row> -->
-
-		<ui5-table-row row-key="1" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
+			<ui5-table-cell><ui5-label style="color: #648564"><b>4.2</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>399.99</b> EUR</ui5-label></ui5-table-cell>
-			<ui5-table-row-action slot="actions" type="Navigation"></ui5-table-row-action>
+			<ui5-table-row-action-navigation slot="actions"></ui5-table-row-action-navigation>
 		</ui5-table-row>
-
 		<ui5-table-row row-key="2" interactive>
 			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label><b>399.99</b> EUR</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action3" slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action4" slot="actions" icon="add" text="Add"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action5" slot="actions" icon="disconnected" text="Navigation"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action6" slot="actions" icon="detail-more" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action7" slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action8" slot="actions" icon="heart" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action-navigation slot="actions"></ui5-table-row-action-navigation>
-		</ui5-table-row>
-
-		<!--
-		<ui5-table-row row-key="10" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>0 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action0" slot="actions" icon="database" text="Delete"></ui5-table-row-action>
-		</ui5-table-row>
-
-		<ui5-table-row row-key="10" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>0 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>2 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action0" slot="actions" icon="database" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action0" slot="actions" icon="add" text="add"></ui5-table-row-action>
-
-		</ui5-table-row>
-		<ui5-table-row row-key="10" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>0 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>3 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action0" slot="actions" icon="database" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action0" slot="actions" icon="add" text="add"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action22" slot="actions" icon="heart" text="Add"></ui5-table-row-action>
-		</ui5-table-row>
-		<ui5-table-row row-key="2" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Action</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action0" slot="actions" icon="database" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action slot="actions" type="Navigation"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="delete" text="Delete"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="add" text="Add"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="disconnected" text="Disconnect"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="share" text="Share"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="heart" text="TestAction2"></ui5-table-row-action>
+			<ui5-table-row-action-navigation slot="actions" interactive></ui5-table-row-action-navigation>
 		</ui5-table-row>
 		<ui5-table-row row-key="3" navigated>
 			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>2 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action1" slot="actions" icon="da" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action2" slot="actions" icon="add" text="Add"></ui5-table-row-action>
-			<ui5-table-row-action slot="actions" type="Navigation"></ui5-table-row-action>
+			<ui5-table-cell><ui5-label><b>399.99</b> EUR</ui5-label></ui5-table-cell>
+			<ui5-table-row-action slot="actions" icon="database" text="Delete" disabled></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="disconnected" invisible text="Disconnect"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="detail-more" text="TestAction1"></ui5-table-row-action>
 		</ui5-table-row>
-		<ui5-table-row row-key="4" navigated>
+		<ui5-table-row row-key="4">
 			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
 			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>3 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action21" slot="actions" icon="da" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action22" slot="actions" icon="add" text="Add"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action22" slot="actions" icon="heart" text="Add"></ui5-table-row-action>
-			<ui5-table-row-action slot="actions" type="Navigation"></ui5-table-row-action>
+			<ui5-table-cell><ui5-label><b>399.99</b> EUR</ui5-label></ui5-table-cell>
+			<ui5-table-row-action slot="actions" icon="database" text="Database"></ui5-table-row-action>
+			<ui5-table-row-action slot="actions" icon="add" text="Add"></ui5-table-row-action>
 		</ui5-table-row>
-		<ui5-table-row row-key="5" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>6 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-			<ui5-table-row-action action-id="action3" slot="actions" icon="pixelate" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action4" slot="actions" icon="add" text="Add"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action5" slot="actions" icon="disconnected" text="Navigation"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action6" slot="actions" icon="detail-more" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action7" slot="actions" icon="goal" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action8" slot="actions" icon="heart" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action slot="actions" type="Navigation"></ui5-table-row-action>
-		</ui5-table-row>
-		<ui5-table-row row-key="6" navigated>
-			<ui5-table-cell><ui5-label><b>Notebook Basic 15</b><br><a href="#">HT-1000</a></ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>Very Best Screens</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>30 x 18 x 3 cm</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>4.2</b> KG</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>1 Navigation</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>11 Actions</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal2</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal3</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal4</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal5</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal6</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal7</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal8</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal9</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal10</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal11</ui5-label></ui5-table-cell>
-			<ui5-table-cell><ui5-label>TestVal12</ui5-label></ui5-table-cell>
-
-			<ui5-table-row-action action-id="action9" slot="actions" icon="Netweaver-business-client" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action10" slot="actions" icon="add-equipment" text="Delete"></ui5-table-row-action>
-
-			<ui5-table-row-action action-id="action11" slot="actions" icon="add" text="Add"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action12" slot="actions" icon="disconnected" text="Navigation"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action13" slot="actions" icon="detail-more" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action14" slot="actions" icon="goal" text="Delete"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action15" slot="actions" icon="heart-2" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action16" slot="actions" icon="heart" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action17" slot="actions" icon="goalseek" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action18" slot="actions" icon="hello-world" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action action-id="action19" slot="actions" icon="light-mode" text="TestAction1"></ui5-table-row-action>
-			<ui5-table-row-action slot="actions" type="NavigationActive"></ui5-table-row-action>
-		</ui5-table-row> -->
 	</ui5-table>
 
 	<ui5-input value="after table" data-sap-ui-fastnavgroup="true"></ui5-input>
 	<script>
-		const slider = document.getElementById("slider");
 		const table = document.getElementById("table");
-		slider.addEventListener("input", (e) => {
-			table.style.width = `${e.target.value}%`;
-		});
 		table.addEventListener("row-click", (e) => {
-			console.log(`${Date.now()}: Row with the row-key ${e.detail.row.rowKey} is clicked`);
+			console.log(`Row with the row-key ${e.detail.row.rowKey} is clicked`);
 		});
-
-/* 		const growing = document.getElementById("growing");
-		growing.addEventListener("load-more", (e) => {
-			table.loading = true;
-			table.disabled = true;
-			// add 10 more additional rows to the ui5-table element by utilizing a loop
-			for (let i = 0; i < 10; i++) {
-				const newRow = document.createElement("ui5-table-row");
-				newRow.setAttribute("row-key", table.rows.length + i);
-				newRow.innerHTML = `
-					<ui5-table-cell><ui5-label><b>Notebook Basic ${15 + table.rows.length + i}</b><br><a href="#">HT-100${table.rows.length + i}</a></ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label>Technocom</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label>32 x 21 x 4 cm</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label style="color: #2b7c2b"><b>3.7</b> KG</ui5-label></ui5-table-cell>
-					<ui5-table-cell><ui5-label><b>29</b> EUR</ui5-label></ui5-table-cell>
-				`;
-				table.appendChild(newRow);
-			}
-			setTimeout(() => {
-				table.loading = false;
-			}, 500);
-		}); */
-
-		const selection = document.getElementById("selection");
-		selection.addEventListener("change", (e) => {
-			console.log(e.target.selected);
-		});
-
 		table.addEventListener("row-action-click", (e) => {
-			console.log(`Action icon ${e.detail.action.icon}, action text ${e.detail.action.text} is clicked`);
+			const { row, action } = e.detail;
+			console.log(`Row ${row.rowKey}, ${action.text || "navigation"} action is clicked`);
+		});
+
+		const slider = document.getElementById("slider");
+		slider.addEventListener("input", (e) => {
+			table.rowActionCount = e.target.value;
 		});
 
 	</script>

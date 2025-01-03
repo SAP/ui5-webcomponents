@@ -1,26 +1,18 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import TableRowActionNavigationTemplate from "./generated/templates/TableRowActionNavigationTemplate.lit.js";
-import TableRowActionNavigationCss from "./generated/themes/TableRowActionNavigation.css.js";
 import TableRowActionBase from "./TableRowActionBase.js";
-import Button from "./Button.js";
-import Icon from "./Icon.js";
 import { TABLE_NAVIGATION } from "./generated/i18n/i18n-defaults.js";
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 
 /**
  * @class
- * A class for the navigation row action.
+ * The `TableRowActionNavigation` class defines a navigation actio‚n for table rows.
  * @constructor
- * @abstract
  * @extends TableRowActionBase
- * @since 2.6.0
+ * @since 2.7.0
  * @public
  */
-@customElement({
-	tag: "ui5-table-row-action-navigation",
-	styles: [TableRowActionBase.styles, TableRowActionNavigationCss],
-	dependencies: [Button, Icon],
-})
+@customElement({ tag: "ui5-table-row-action-navigation" })
 
 class TableRowActionNavigation extends TableRowActionBase {
 	/**
@@ -32,20 +24,16 @@ class TableRowActionNavigation extends TableRowActionBase {
 	@property({ type: Boolean })
 	interactive = false;
 
-	static get actionTemplate() {
-		return TableRowActionNavigationTemplate;
+	getRenderInfo() {
+		return {
+			text: this._i18nNavigation,
+			icon: "navigation-right-arrow",
+			interactive: this.interactive,
+		};
 	}
 
 	isFixedAction() {
 		return true;
-	}
-
-	getOverflowInfo() {
-		return {
-			text: this._i18nNavigation,
-			icon: "navigation-right-arrow",
-			disabled: !this.interactive,
-		};
 	}
 
 	get _i18nNavigation() {

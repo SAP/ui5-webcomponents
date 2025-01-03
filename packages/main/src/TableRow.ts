@@ -10,6 +10,7 @@ import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";
 import TableCell from "./TableCell.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 
 /**
  * @class
@@ -56,8 +57,9 @@ class TableRow extends TableRowBase {
 	/**
 	 * Defines the actions of the component.
 	 *
-	 * **Note:** Use `ui5-table-row-action-base` subclasses for the intended design.
+	 * **Note:** Use `ui5-table-row-action` or `ui5-table-row-action-navigation` for the intended design.
 	 *
+	 * @since 2.7.0
 	 * @public
 	 */
 	@slot({
@@ -76,7 +78,7 @@ class TableRow extends TableRowBase {
 	rowKey = "";
 
 	/**
-	 * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
+	 * Defines the position of the row respect to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
 	 *
      * @default -1
 	 * @since 2.5.0
@@ -175,28 +177,24 @@ class TableRow extends TableRowBase {
 		return this.interactive;
 	}
 
-	get _tableRowActionCount() {
-		return this._table?.rowActionCount || 0;
-	}
-
 	get _hasRowActions() {
-		return this._tableRowActionCount > 0 && this.actions.some(action => !action.hidden);
+		return this._rowActionCount > 0 && this.actions.some(action => action.isFixedAction() || !action.invisible);
 	}
 
 	get _hasOverflowActions() {
 		let renderedActionsCount = 0;
 		return this.actions.some(action => {
-			if (action.isFixedAction() || !action.hidden) {
+			if (action.isFixedAction() || !action.invisible) {
 				renderedActionsCount++;
 			}
-			return renderedActionsCount > this._tableRowActionCount;
+			return renderedActionsCount > this._rowActionCount;
 		});
 	}
 
 	get _flexibleActions() {
 		const flexibleActions = this.actions.filter(action => !action.isFixedAction());
 		const fixedActionsCount = this.actions.length - flexibleActions.length;
-		let maxFlexibleActionsCount = this._tableRowActionCount - fixedActionsCount;
+		let maxFlexibleActionsCount = this._rowActionCount - fixedActionsCount;
 		if (maxFlexibleActionsCount < 1) {
 			return []; // fixed actions occupy all the available space
 		}
@@ -204,7 +202,7 @@ class TableRow extends TableRowBase {
 			return flexibleActions; // all actions fit the available space
 		}
 
-		const visibleFlexibleActions = flexibleActions.filter(action => !action.hidden);
+		const visibleFlexibleActions = flexibleActions.filter(action => !action.invisible);
 		if (visibleFlexibleActions.length > maxFlexibleActionsCount) {
 			maxFlexibleActionsCount--;	// preserve space for the overflow button
 		}
@@ -213,7 +211,7 @@ class TableRow extends TableRowBase {
 	}
 
 	get _fixedActions() {
-		let maxFixedActionsCount = this._tableRowActionCount;
+		let maxFixedActionsCount = this._rowActionCount;
 		if (this._hasOverflowActions) {
 			maxFixedActionsCount--;
 		}
@@ -227,7 +225,7 @@ class TableRow extends TableRowBase {
 		const flexibleActions = this._flexibleActions;
 		const overflowActions: Array<TableRowActionBase> = [];
 		this.actions.forEach(action => {
-			if (!action.hidden && !fixedActions.includes(action) && !flexibleActions.includes(action)) {
+			if (!action.invisible && !fixedActions.includes(action) && !flexibleActions.includes(action)) {
 				overflowActions.push(action);
 			}
 		});
