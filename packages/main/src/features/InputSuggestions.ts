@@ -2,12 +2,11 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import List from "../List.js";
+import type List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
-import SuggestionItem from "../SuggestionItem.js";
-import Button from "../Button.js";
-import Icon from "../Icon.js";
+import "../SuggestionItem.js";
+import type SuggestionItem from "../SuggestionItem.js";
 import type ListItemGroupHeader from "../ListItemGroupHeader.js";
 
 import {
@@ -15,7 +14,7 @@ import {
 	LIST_ITEM_GROUP_HEADER,
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemBase from "../ListItemBase.js";
-import SuggestionItemGroup from "../SuggestionItemGroup.js";
+import type SuggestionItemGroup from "../SuggestionItemGroup.js";
 import type { IInputSuggestionItem, IInputSuggestionItemSelectable } from "../Input.js";
 
 interface SuggestionComponent extends UI5Element {
@@ -549,16 +548,6 @@ class Suggestions extends ComponentFeature {
 	_clearSelectedSuggestionAndaccInfo() {
 		this.accInfo = undefined;
 		this.selectedItemIndex = 0;
-	}
-
-	static get dependencies() {
-		return [
-			SuggestionItem,
-			SuggestionItemGroup,
-			List,
-			Button,
-			Icon,
-		];
 	}
 }
 
