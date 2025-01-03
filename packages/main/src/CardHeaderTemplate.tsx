@@ -12,8 +12,6 @@ export default function CardHeaderTemplate(this: CardHeader) {
 				"ui5-card-header-ff": isFirefox(),
 			}}
 			part="root"
-			role="group"
-			aria-roledescription={this.ariaRoleDescription}
 			onClick={this._click}
 			onKeyDown={this._keydown}
 			onKeyUp={this._keyup}
@@ -21,6 +19,7 @@ export default function CardHeaderTemplate(this: CardHeader) {
 			<div
 				class="ui5-card-header-focusable-element"
 				aria-labelledby={this.ariaLabelledBy}
+				aria-roledescription={this.ariaRoleDescription}
 				role={this.ariaRoleFocusableElement}
 				data-sap-focus-ref
 				tabindex={0}
