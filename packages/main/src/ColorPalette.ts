@@ -203,8 +203,8 @@ class ColorPalette extends UI5Element {
 
 		if (this.showMoreColors) {
 			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-			ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
 			if (ColorPaletteMoreColorsClass) {
+				ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
 				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
 			}
 		}

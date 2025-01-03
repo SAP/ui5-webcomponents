@@ -1259,8 +1259,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		Suggestions.i18nBundle = Input.i18nBundle;
 		if (Suggestions) {
+			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		}
 	}
