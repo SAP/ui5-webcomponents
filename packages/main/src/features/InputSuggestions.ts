@@ -6,8 +6,10 @@ import type List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import type ResponsivePopover from "../ResponsivePopover.js";
 import "../SuggestionItem.js";
+import "../SuggestionItemGroup.js";
 import type SuggestionItem from "../SuggestionItem.js";
 import type ListItemGroupHeader from "../ListItemGroupHeader.js";
+import InputSuggestionsTemplate from "./InputSuggestionsTemplate.js";
 
 import {
 	LIST_ITEM_POSITION,
@@ -56,6 +58,10 @@ class Suggestions extends ComponentFeature {
 	attachedAfterClose?: boolean;
 	static i18nBundle: I18nBundle;
 	static SCROLL_STEP = 60;
+
+	get template() {
+		return InputSuggestionsTemplate;
+	}
 
 	constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean) {
 		super();
