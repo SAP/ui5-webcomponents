@@ -37,7 +37,7 @@ const registerComponentFeature = async (name: string, feature: typeof ComponentF
 	notifyForFeatureLoad(name);
 };
 
-const getComponentFeature = <T>(name: string): T => {
+const getComponentFeature = <T>(name: string): T | undefined => {
 	return componentFeatures.get(name) as T;
 };
 
