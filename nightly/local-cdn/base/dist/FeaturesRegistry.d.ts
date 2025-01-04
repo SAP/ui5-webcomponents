@@ -10,6 +10,6 @@ declare abstract class ComponentFeature {
 declare const registerFeature: (name: string, feature: object) => void;
 declare const getFeature: <T>(name: string) => T;
 declare const registerComponentFeature: (name: string, feature: typeof ComponentFeature) => Promise<void>;
-declare const getComponentFeature: <T>(name: string) => T;
+declare const getComponentFeature: <T>(name: string) => T | undefined;
 declare const subscribeForFeatureLoad: (name: string, klass: typeof UI5Element, callback: () => void) => void;
 export { registerFeature, getFeature, registerComponentFeature, getComponentFeature, subscribeForFeatureLoad, ComponentFeature, };

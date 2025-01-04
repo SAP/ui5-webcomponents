@@ -743,8 +743,8 @@ let Input = Input_1 = class Input extends UI5Element {
             return;
         }
         const Suggestions = getComponentFeature("InputSuggestions");
-        Suggestions.i18nBundle = Input_1.i18nBundle;
         if (Suggestions) {
+            Suggestions.i18nBundle = Input_1.i18nBundle;
             this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
         }
     }

@@ -101,8 +101,8 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
         });
         if (this.showMoreColors) {
             const ColorPaletteMoreColorsClass = getComponentFeature("ColorPaletteMoreColors");
-            ColorPaletteMoreColorsClass.i18nBundle = ColorPalette_1.i18nBundle;
             if (ColorPaletteMoreColorsClass) {
+                ColorPaletteMoreColorsClass.i18nBundle = ColorPalette_1.i18nBundle;
                 this.moreColorsFeature = new ColorPaletteMoreColorsClass();
             }
         }
