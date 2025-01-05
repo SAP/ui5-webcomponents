@@ -15,6 +15,12 @@
 	padding: 1rem 1rem 0.5rem;
 }
 
+.ui5-setting-item-loading-container {
+	position: relative;
+}
+
+.ui5-setting-item-view-container,
+.ui5-setting-item-loading-container,
 .ui5-setting-item-tabs {
 	flex: 1;
 	min-height: 0;
@@ -27,8 +33,6 @@
 
 .ui5-setting-item-view-container {
 	overflow: auto;
-	min-height: 0;
-	flex: 1;
 }
 
 :host([disabled]) {
