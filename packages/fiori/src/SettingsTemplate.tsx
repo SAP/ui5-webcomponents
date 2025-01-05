@@ -14,7 +14,7 @@ export default function SettingsTemplate(this: Settings) {
 
 		<Dialog class="ui5-sd-dialog" open={this.open} onui5-_collapse={this._handleCollapseClick} accessibleName={this.accessibleNameText}>
 			<div class="ui5-sd-root">
-				<div class="ui5-sd-side" aria-orientation="vertical" aria-roledescription="{{ariaRoleDescList}}">
+				<div class="ui5-sd-side" aria-orientation="vertical" aria-roledescription={this.ariaRoleDescList}>
 					<div class="ui5-sd-side-header">
 						{this.headerTitle &&
 							<Title level="H4" size="H4">{this.headerTitle}</Title>
