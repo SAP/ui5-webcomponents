@@ -193,15 +193,14 @@ class Settings extends UI5Element {
 		});
 		this._collapsed = true;
 
-		if (eventPrevented) {
-			return;
+		if (!eventPrevented) {
+			this.items.forEach(item => {
+				item.selected = false;
+			});
+			settingItem.selected = true;
 		}
 
-		this.items.forEach(item => {
-			item.selected = false;
-		});
-		settingItem.selected = true;
-		this._selectedSetting = settingItem;
+		this._selectedSetting = this.items.find(item => item.selected);
 	}
 
 	get accessibleNameText() {
