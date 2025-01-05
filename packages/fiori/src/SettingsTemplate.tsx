@@ -12,7 +12,7 @@ import search from "@ui5/webcomponents-icons/dist/search.js";
 export default function SettingsTemplate(this: Settings) {
     return (
 
-        <Dialog class="ui5-sd-dialog" open={this.open} onui5-collapse={this._handleCollapseClick} accessibleName={this.accessibleNameText}>
+        <Dialog class="ui5-sd-dialog" open={this.open} onui5-_collapse={this._handleCollapseClick} accessibleName={this.accessibleNameText}>
             <div class="ui5-sd-root">
                 <div class="ui5-sd-side" aria-orientation="vertical" aria-roledescription="{{ariaRoleDescList}}">
                     <div class="ui5-sd-side-header">
