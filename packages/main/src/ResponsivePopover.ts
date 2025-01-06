@@ -8,8 +8,7 @@ import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-de
 
 import ResponsivePopoverTemplate from "./ResponsivePopoverTemplate.js";
 import Popover from "./Popover.js";
-import Dialog from "./Dialog.js";
-import Button from "./Button.js";
+import type Dialog from "./Dialog.js";
 
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
@@ -40,11 +39,6 @@ import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 	tag: "ui5-responsive-popover",
 	styles: [Popover.styles, ResponsivePopoverCss],
 	template: ResponsivePopoverTemplate,
-	dependencies: [
-		...Popover.dependencies,
-		Button,
-		Dialog,
-	],
 })
 class ResponsivePopover extends Popover {
 	eventDetails!: Popover["eventDetails"]

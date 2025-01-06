@@ -13,8 +13,7 @@ import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import type { ToolbarMinWidthChangeEventDetail } from "@ui5/webcomponents/dist/Toolbar.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
+import type Title from "@ui5/webcomponents/dist/Title.js";
 
 // Template
 import DynamicPageTitleTemplate from "./DynamicPageTitleTemplate.js";
@@ -65,7 +64,6 @@ import {
 	renderer: jsxRenderer,
 	styles: DynamicPageTitleCss,
 	template: DynamicPageTitleTemplate,
-	dependencies: [Title, Icon],
 })
 
 /**

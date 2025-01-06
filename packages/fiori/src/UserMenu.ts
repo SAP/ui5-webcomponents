@@ -5,20 +5,11 @@ import {
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-import Avatar from "@ui5/webcomponents/dist/Avatar.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
-import Text from "@ui5/webcomponents/dist/Text.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import Label from "@ui5/webcomponents/dist/Label.js";
-import Panel from "@ui5/webcomponents/dist/Panel.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Bar from "@ui5/webcomponents/dist/Bar.js";
-import List from "@ui5/webcomponents/dist/List.js";
+import type Title from "@ui5/webcomponents/dist/Title.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
-import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
-import Tag from "@ui5/webcomponents/dist/Tag.js";
-import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -73,20 +64,6 @@ type UserMenuOtherAccountClickEventDetail = {
 	renderer: jsxRenderer,
 	template: UserMenuTemplate,
 	styles: [UserMenuCss],
-	dependencies: [
-		ResponsivePopover,
-		Avatar,
-		Title,
-		Text,
-		Label,
-		Button,
-		Panel,
-		Icon,
-		Bar,
-		List,
-		ListItemCustom,
-		Tag,
-	],
 })
 
 /**

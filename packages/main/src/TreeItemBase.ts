@@ -10,7 +10,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
-import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 import {
@@ -47,10 +46,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 	styles: [
 		ListItem.styles,
 		treeItemCss,
-	],
-	dependencies: [
-		...ListItem.dependencies,
-		Icon,
 	],
 })
 /**

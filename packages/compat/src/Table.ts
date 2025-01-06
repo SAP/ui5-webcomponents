@@ -32,8 +32,6 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import type {
 	TableRowClickEventDetail,
@@ -176,7 +174,6 @@ enum TableFocusTargetElement {
 	styles: tableStyles,
 	renderer: jsxRenderer,
 	template: TableTemplate,
-	dependencies: [BusyIndicator, CheckBox],
 })
 /** Fired when a row in `Active` mode is clicked or `Enter` key is pressed.
  * @param {HTMLElement} row the activated row.

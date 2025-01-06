@@ -10,8 +10,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./MessageStripTemplate.js";
 import type { IIcon } from "./Icon.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
 import {
 	MESSAGE_STRIP_CLOSE_BUTTON_INFORMATION,
 	MESSAGE_STRIP_CLOSE_BUTTON_POSITIVE,
@@ -83,7 +81,6 @@ type DesignCloseButtonTooltip = Record<MessageStripDesign, string>;
 	renderer: jsxRenderer,
 	template: MessageStripTemplate,
 	styles: messageStripCss,
-	dependencies: [Icon, Button],
 })
 /**
  * Fired when the close button is pressed either with a

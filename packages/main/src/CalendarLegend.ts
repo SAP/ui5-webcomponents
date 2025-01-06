@@ -15,7 +15,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import CalendarLegendTemplate from "./CalendarLegendTemplate.js";
-import CalendarLegendItem from "./CalendarLegendItem.js";
+import "./CalendarLegendItem.js";
+import type CalendarLegendItem from "./CalendarLegendItem.js";
 import { CAL_LEGEND_ROLE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -47,7 +48,6 @@ type CalendarLegendItemSelectionChangeEventDetail = {
 	renderer: jsxRenderer,
 	styles: CalendarLegendCss,
 	template: CalendarLegendTemplate,
-	dependencies: [CalendarLegendItem],
 })
 @event("calendar-legend-selection-change", {
 	bubbles: true,

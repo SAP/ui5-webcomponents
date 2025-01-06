@@ -4,7 +4,6 @@ import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import menuSeparatorTemplate from "./MenuSeparatorTemplate.js";
 import menuSeparatorCss from "./generated/themes/MenuSeparator.css.js";
 import ListItemBase from "./ListItemBase.js";
-import ListItemCustom from "./ListItemCustom.js";
 import type { IMenuItem } from "./Menu.js";
 /**
  * @class
@@ -20,9 +19,6 @@ import type { IMenuItem } from "./Menu.js";
 	renderer: jsxRendererer,
 	styles: [menuSeparatorCss],
 	template: menuSeparatorTemplate,
-	dependencies: [
-		ListItemCustom,
-	],
 })
 
 class MenuSeparator extends ListItemBase implements IMenuItem {
