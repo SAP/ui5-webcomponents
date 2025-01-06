@@ -89,6 +89,7 @@ class NavigationLayout extends UI5Element {
 	 * @public
 	 */
 	isSideCollapsed() : boolean {
+		this.calcSideCollapsed();
 		return this.sideCollapsed;
 	}
 
