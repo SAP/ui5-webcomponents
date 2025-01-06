@@ -48,13 +48,10 @@ import {
 	isEscape,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import List, { type ListItemDeleteEventDetail } from "./List.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type List from "./List.js";
+import type { ListItemDeleteEventDetail } from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
-import Title from "./Title.js";
-import Button from "./Button.js";
-import Icon from "./Icon.js";
-import ListItemStandard from "./ListItemStandard.js";
 import type Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
@@ -147,14 +144,6 @@ enum ClipboardDataOperation {
 		SuggestionsCss,
 		TokenizerPopoverCss,
 		getEffectiveScrollbarStyle(),
-	],
-	dependencies: [
-		ResponsivePopover,
-		List,
-		ListItemStandard,
-		Title,
-		Button,
-		Icon,
 	],
 })
 

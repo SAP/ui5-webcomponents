@@ -88,8 +88,6 @@
 	const shellbar = document.getElementById("shellbar");
 	const menuShellBar = document.getElementById("userMenuShellBar");
 
-
-
 	shellbar.addEventListener("ui5-profile-click", (event) => {
 		menuShellBar.opener = event.detail.targetRef;
 		if(menuShellBar.open){
@@ -135,8 +133,12 @@
 		console.log("Add account clicked");
 	});
 
-	menu.addEventListener("change-account", function (event) {
-		console.log("Change account account", event.detail);
+	menu.addEventListener("open", function (event) {
+		console.log("Change user menu open");
+	});
+
+	menu.addEventListener("close", function (event) {
+		console.log("Change user menu close");
 	});
 
 	menu.addEventListener("sign-out-click", function (event) {
@@ -194,9 +196,17 @@
 
 		const result = prompt("Sign Out", "Are you sure you want to sign out?");
 		if (result) {
-			menu2.open = false;
+			menuShellBar.open = false;
 		}
 		event.preventDefault();
+	});
+
+	menuShellBar.addEventListener("open", function (event) {
+		console.log("Change user menu open");
+	});
+
+	menuShellBar.addEventListener("close", function (event) {
+		console.log("Change user menu close");
 	});
 </script>
 </body>

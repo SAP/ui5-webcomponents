@@ -8,7 +8,7 @@ import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegi
 import { findClosestPosition } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
 import type ListItemBase from "./ListItemBase.js";
 
 // Template
@@ -16,8 +16,7 @@ import ListItemGroupTemplate from "./ListItemGroupTemplate.js";
 
 // Styles
 import ListItemGroupCss from "./generated/themes/ListItemGroup.css.js";
-import ListItemStandard from "./ListItemStandard.js";
-import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 
 type ListItemGroupMoveEventDetail = {
 	source: {
@@ -50,7 +49,6 @@ type ListItemGroupMoveEventDetail = {
 	languageAware: true,
 	template: ListItemGroupTemplate,
 	styles: [ListItemGroupCss],
-	dependencies: [ListItemStandard, ListItemGroupHeader, DropIndicator],
 })
 
 /**

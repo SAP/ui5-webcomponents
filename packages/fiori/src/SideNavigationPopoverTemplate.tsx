@@ -31,7 +31,6 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 							icon={subItem.icon}
 							disabled={subItem.disabled}
 							ref={this.captureRef.bind(subItem)}
-							// expanded={true}
 							href={subItem.href}
 							target={subItem.target}
 							title={subItem.title}
@@ -62,7 +61,7 @@ export default function SideNavigationTemplate(this: SideNavigation) {
 						href={this._popoverContents.item._href}
 						target={this._popoverContents.item._target}
 						disabled={this._popoverContents.item.disabled}
-						// expanded={true}
+						expanded={true}
 						_fixed={true}
 						selected={this._popoverContents.item.selected}
 						onui5-click={this.handlePopupItemClick}
