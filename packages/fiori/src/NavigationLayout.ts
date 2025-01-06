@@ -59,7 +59,7 @@ class NavigationLayout extends UI5Element {
 	_defaultSideCollapsed = isPhone() || (isTablet() && !isCombi());
 
 	/**
-	 * Specifies the navigation mode.
+	 * Specifies the navigation layout mode.
 	 * @default "Auto"
 	 * @public
 	 */

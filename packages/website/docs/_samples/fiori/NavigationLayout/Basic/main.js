@@ -25,8 +25,10 @@ import "@ui5/webcomponents-icons/dist/document-text.js";
 import "@ui5/webcomponents-icons/dist/compare.js";
 import "@ui5/webcomponents-icons/dist/locked.js";
 
+import NavigationLayoutMode from "@ui5/webcomponents-fiori/dist/types/NavigationLayoutMode.js";
+
 document.querySelector("#startButton").addEventListener("click", function (event) {
-	nl1.mode = nl1.isSideCollapsed() ? "Expanded" : "Collapsed";
+	nl1.mode = nl1.isSideCollapsed() ? NavigationLayoutMode.Expanded : NavigationLayoutMode.Collapsed;
 });
 
 document.querySelector("#sn1").addEventListener("selection-change", function (event) {
