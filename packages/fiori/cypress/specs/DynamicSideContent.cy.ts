@@ -61,8 +61,12 @@ describe("Accessibility", () => {
 		cy.get<DynamicSideContent>("@dsc")
 			.then($dsc => {
 				$dsc.get(0).accessibilityAttributes = {
-					mainContentLabel: customMainContentLabel,
-					sideContentLabel: customSideContentLabel,
+					"mainContent": {
+						"ariaLabel": customMainContentLabel,
+					},
+					"sideContent": {
+						"ariaLabel": customSideContentLabel,
+					},
 				};
 			});
 

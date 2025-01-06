@@ -36,8 +36,12 @@ type DynamicSideContentLayoutChangeEventDetail = {
 }
 
 type DynamicSideContentAccessibilityAttributes = {
-	mainContentLabel?: string,
-	sideContentLabel?: string,
+	mainContent?: {
+		ariaLabel: string,
+	},
+	sideContent?: {
+		ariaLabel: string,
+	},
 }
 
 /**
@@ -197,8 +201,8 @@ class DynamicSideContent extends UI5Element {
 	*
 	* The accessibilityAttributes object has the following fields:
 	*
-	*  - **mainContentLabel**: defines the aria-label of the main content area. Accepts any string.
-	*  - **sideContentLabel**: defines the aria-label of the side content area. Accepts any string.
+	*  - **mainContent**: `mainContent.ariaLabel` defines the aria-label of the main content area. Accepts any string.
+	*  - **sideContent**: `sideContent.ariaLabel` defines the aria-label of the side content area. Accepts any string.
 	*
 	* @default {}
 	* @public
@@ -308,8 +312,12 @@ class DynamicSideContent extends UI5Element {
 
 	get accInfo() {
 		return {
-			"mainContentLabel": this.accessibilityAttributes.mainContentLabel || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
-			"sideContentLabel": this.accessibilityAttributes.sideContentLabel || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			mainContent: {
+				ariaLabel: (this.accessibilityAttributes.mainContent && this.accessibilityAttributes.mainContent.ariaLabel) || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
+			},
+			sideContent: {
+				ariaLabel: (this.accessibilityAttributes.sideContent && this.accessibilityAttributes.sideContent.ariaLabel) || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			},
 		};
 	}
 
