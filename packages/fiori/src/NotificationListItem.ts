@@ -9,12 +9,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
 import type { ButtonAccessibilityAttributes } from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Tag from "@ui5/webcomponents/dist/Tag.js";
-import Link from "@ui5/webcomponents/dist/Link.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
+import type Link from "@ui5/webcomponents/dist/Link.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import type Menu from "@ui5/webcomponents/dist/Menu.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -139,13 +135,6 @@ const ICON_PER_STATUS_DESIGN = {
 	],
 	renderer: jsxRenderer,
 	template: NotificationListItemTemplate,
-	dependencies: [
-		Button,
-		Icon,
-		BusyIndicator,
-		Link,
-		Tag,
-	],
 })
 
 @event("_press", {

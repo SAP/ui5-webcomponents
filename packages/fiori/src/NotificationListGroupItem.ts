@@ -6,11 +6,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import type NotificationListGrowingMode from "@ui5/webcomponents/dist/types/NotificationListGrowingMode.js";
-import NotificationListGroupList from "./NotificationListGroupList.js";
+import type NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 import type NotificationListItem from "./NotificationListItem.js";
 
@@ -78,12 +75,6 @@ type NotificationListGroupItemToggleEventDetail = {
 		NotificationListGroupItemCss,
 	],
 	template: NotificationListGroupItemTemplate,
-	dependencies: [
-		NotificationListGroupList,
-		Button,
-		Icon,
-		BusyIndicator,
-	],
 })
 
 /**
