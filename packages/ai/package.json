@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-ai",
-  "version": "2.6.0-rc.1",
+  "version": "2.6.0-rc.4",
   "description": "UI5 Web Components: webcomponents.ai",
   "ui5": {
     "webComponentsPackage": true
@@ -45,13 +45,13 @@
     "directory": "packages/ai"
   },
   "dependencies": {
-    "@ui5/webcomponents": "2.6.0-rc.1",
-    "@ui5/webcomponents-base": "2.6.0-rc.1",
-    "@ui5/webcomponents-icons": "2.6.0-rc.1",
-    "@ui5/webcomponents-theming": "2.6.0-rc.1"
+    "@ui5/webcomponents": "2.6.0-rc.4",
+    "@ui5/webcomponents-base": "2.6.0-rc.4",
+    "@ui5/webcomponents-icons": "2.6.0-rc.4",
+    "@ui5/webcomponents-theming": "2.6.0-rc.4"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "2.6.0-rc.1",
+    "@ui5/webcomponents-tools": "2.6.0-rc.4",
     "chromedriver": "^131.0.0"
   }
 }

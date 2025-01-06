@@ -600,7 +600,7 @@ class ShellBar extends UI5Element {
 	_searchBarInitialState() {
 		const spacerWidth = this.shadowRoot!.querySelector(".ui5-shellbar-spacer") ? this.shadowRoot!.querySelector(".ui5-shellbar-spacer")!.getBoundingClientRect().width : 0;
 		const searchFieldWidth = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
-		if (this.showSearchField) {
+		if (this.showSearchField && !this._searchButtonInteraction) {
 			if ((spacerWidth <= 16 || this.additionalContextHidden.length !== 0) && this._showSearchField === true) {
 				this._showSearchField = false;
 			}
@@ -895,10 +895,9 @@ class ShellBar extends UI5Element {
 	_handleActionsOverflow() {
 		const itemsToOverflow = this.itemsToOverflow;
 		const container = this.shadowRoot!.querySelector<HTMLElement>(".ui5-shellbar-overflow-container-right")!;
-		const searchFieldWidth = this.searchField[0] ? this.searchField[0].offsetWidth : 0;
 		const nonDisappearingItems = Array.from(container.querySelectorAll<HTMLElement>(".ui5-shellbar-no-overflow-button"));
 		const nonDisappearingItemsWidth = nonDisappearingItems.reduce((acc, el) => acc + el.offsetWidth + this.domCalculatedValues("--_ui5-shellbar-overflow-button-margin"), 0);
-		const totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth - searchFieldWidth;
+		const totalWidth = container.offsetWidth - nonDisappearingItemsWidth - this.separatorsWidth;
 
 		let usedWidth = 0;
 		let hiddenItems = 0;

@@ -4,9 +4,9 @@ const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
 /**
  * Returns eslint rules specific to typescript files
- * @returns 
+ * @returns
  */
-const getTsModeOverrides = () => {	
+const getTsModeOverrides = () => {
 	const tsConfiguration = {
 		files: ["*.ts"],
 		parser: "@typescript-eslint/parser",
@@ -25,6 +25,7 @@ const getTsModeOverrides = () => {
 		rules: {
 			"no-shadow": "off",
 			"@typescript-eslint/consistent-type-imports": "error",
+			"import/consistent-type-specifier-style": ["error", "prefer-top-level"],
 			"@typescript-eslint/no-shadow": ["error"],
 			"@typescript-eslint/no-unsafe-member-access": "off",
 			"@typescript-eslint/no-floating-promises": "off",

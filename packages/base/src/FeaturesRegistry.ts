@@ -9,6 +9,9 @@ abstract class ComponentFeature {
 	 * @deprecated assign the feature's "i18nBundle" static member directly from the component that uses the feature
 	 */
 	static define?: () => Promise<void>;
+	/**
+	 * @deprecated no longer necessary for jsxRenderer-enabled components
+	 */
 	static dependencies?: Array<typeof UI5Element>
 }
 
@@ -37,7 +40,7 @@ const registerComponentFeature = async (name: string, feature: typeof ComponentF
 	notifyForFeatureLoad(name);
 };
 
-const getComponentFeature = <T>(name: string): T => {
+const getComponentFeature = <T>(name: string): T | undefined => {
 	return componentFeatures.get(name) as T;
 };
 

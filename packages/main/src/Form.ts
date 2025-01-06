@@ -10,7 +10,6 @@ import FormTemplate from "./FormTemplate.js";
 // Styles
 import FormCss from "./generated/themes/Form.css.js";
 
-import Title from "./Title.js";
 import type FormItemSpacing from "./types/FormItemSpacing.js";
 import type FormGroup from "./FormGroup.js";
 
@@ -206,7 +205,6 @@ type ItemsInfo = {
 	renderer: jsxRenderer,
 	styles: FormCss,
 	template: FormTemplate,
-	dependencies: [Title],
 })
 class Form extends UI5Element {
 	/**
