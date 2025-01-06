@@ -329,7 +329,6 @@ class DynamicPage extends UI5Element {
 
 		if (this._headerSnapped && scrollTop > headerHeight) {
 			this.showHeaderInStickArea = false;
-			return;
 		}
 
 		const shouldSnap = !this._headerSnapped && scrollTop > headerHeight + SCROLL_THRESHOLD;
