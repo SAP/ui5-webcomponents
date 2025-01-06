@@ -400,9 +400,6 @@ class SideNavigation extends UI5Element {
 
 		this._getFocusableItems(items).forEach(item => {
 			if (this.collapsed && item.classList.contains("ui5-sn-item-hidden")) {
-				if (item === this._overflowItem) {
-					result.push(item);
-				}
 				return;
 			}
 
