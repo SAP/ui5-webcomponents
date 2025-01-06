@@ -1,17 +1,19 @@
 import { property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Select from "@ui5/webcomponents/dist/Select.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
 
 import SearchItemTemplate from "./generated/templates/SearchItemTemplate.lit.js";
+// import SearchItemTemplate from "./generated/templates/SearchItemTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
+// import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 /**
  * @class
@@ -80,6 +82,16 @@ class SearchItem extends ListItemBase {
 
 	get _hasAvatar(): boolean {
 		return !!this.avatar.length;
+	}
+
+	_onfocusin(e: FocusEvent) {
+		super._onfocusin(e);
+
+		this.selected = true;
+	}
+
+	_onfocusout() {
+		this.selected = false;
 	}
 
 	onBeforeRendering(): void {

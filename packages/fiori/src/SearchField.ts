@@ -3,18 +3,19 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import SearchFieldTemplate from "./generated/templates/SearchFieldTemplate.lit.js";
+import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import Select, { type SelectChangeEventDetail } from "@ui5/webcomponents/dist/Select.js";
+import Select from "@ui5/webcomponents/dist/Select.js";
+import type SelectChangeEventDetail from "@ui5/webcomponents/dist/Select.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
 
 import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-search`
@@ -57,7 +58,7 @@ type SearchFieldScopeSelectionChangeDetails = {
 @customElement({
 	tag: "ui5-search-field",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SearchFieldTemplate,
 	styles: [
 		SearchFieldCss,
@@ -237,7 +238,7 @@ class SearchField extends UI5Element {
 
 	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
 		this.fireDecoratorEvent("scope-change", {
-			scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id)
+			scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id),
 		});
 	}
 

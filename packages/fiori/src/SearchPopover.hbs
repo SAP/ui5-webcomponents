@@ -23,7 +23,7 @@
 		{{/if}}
 
 		<main>
-			<ui5-list class="ui5-search-list" @ui5-load-more="{{_handleMore}}" separators="None" growing-button-text="{{moreButtonText}}" growing="{{_effectiveGrowing}}">
+			<ui5-list class="ui5-search-list" @ui5-load-more="{{_handleMore}}" separators="None" growing-button-text="{{moreButtonText}}" growing="{{_effectiveGrowing}}" @keydown="{{_onItemKeydown}}">
 				<slot></slot>
 			</ui5-list>
 		</main>

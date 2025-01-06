@@ -17,7 +17,7 @@ import SearchItemGroupCss from "./generated/themes/SearchItemGroup.css.js";
 	styles: [
 		ListItemGroup.styles,
 		SearchItemGroupCss,
-	]
+	],
 })
 class SearchItemGroup extends ListItemGroup {
 

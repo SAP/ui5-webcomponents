@@ -2,7 +2,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import SearchPopupMode from "@ui5/webcomponents/dist/types/SearchPopupMode.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
@@ -25,16 +24,20 @@ import {
 	isPageDown,
 	isHome,
 	isEnd,
+	isRight,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
-import SearchTemplate from "./generated/templates/SearchTemplate.lit.js";
+import SearchTemplate from "./SearchTemplate.js";
 import SearchCss from "./generated/themes/Search.css.js";
 import SearchField from "./SearchField.js";
-import { StartsWith } from "@ui5/webcomponents/dist/Filters.js";
+import { StartsWith, StartsWithPerTerm } from "@ui5/webcomponents/dist/Filters.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type SearchItem from "./SearchItem.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
 interface ISearchSuggestionItem extends UI5Element {
+	selected: boolean;
 	headingText: string;
 	items?: ISearchSuggestionItem[];
 }
@@ -66,7 +69,7 @@ interface ISearchSuggestionItem extends UI5Element {
 @customElement({
 	tag: "ui5-search",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SearchTemplate,
 	styles: [
 		SearchField.styles,
@@ -162,12 +165,14 @@ class Search extends SearchField {
 	_shouldAutocomplete?: boolean;
 	_performTextSelection?: boolean;
 	typedInValue: string;
+	partialMatches: boolean;
 
 	constructor() {
 		super();
 
 		// The typed in value.
 		this.typedInValue = "";
+		this.partialMatches = false;
 	}
 
 	onBeforeRendering() {
@@ -181,6 +186,7 @@ class Search extends SearchField {
 
 			if (item) {
 				this._handleTypeAhead(item);
+				item.selected = true;
 			} else {
 				this.typedInValue = this.value;
 			}
@@ -202,23 +208,33 @@ class Search extends SearchField {
 	}
 
 	_getFirstMatchingItem(current: string): ISearchSuggestionItem | undefined {
-		if (!this._flattenItems.length) {
+		if (!this._flattenItems.length || !current) {
 			return;
 		}
 
-		const matchingItems = this._startsWithMatchingItems(current).filter(item => !this._isGroupItem(item));
+		const startsWithMatches = this._startsWithMatchingItems(current).filter(item => !this._isGroupItem(item));
+		const partialMatches = this._startsWithPerTermMatchingItems(current).filter(item => !this._isGroupItem(item));
 
-		if (matchingItems.length) {
-			return matchingItems[0];
+		if (this._flattenItems.indexOf(startsWithMatches[0]) <= this._flattenItems.indexOf(partialMatches[0])) {
+			return startsWithMatches[0];
 		}
+		return partialMatches[0] || undefined;
 	}
 
 	_handleTypeAhead(item: ISearchSuggestionItem) {
-		const value = item.headingText ? item.headingText : "";
+		const originalValue = item.headingText || "";
+		let displayValue = originalValue;
+
+		if (!originalValue.toLowerCase().startsWith(this.value.toLowerCase())) {
+			this.partialMatches = true;
+			displayValue = `${this.value} - ${originalValue}`;
+		} else {
+			this.partialMatches = false;
+		}
 
 		this.typedInValue = this.value;
-		this._innerValue = value;
-		this.value = value;
+		this._innerValue = displayValue;
+		this.value = displayValue;
 		this._performTextSelection = true;
 	}
 
@@ -226,13 +242,67 @@ class Search extends SearchField {
 		return StartsWith(str, this._flattenItems, "headingText");
 	}
 
+	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
+		return StartsWithPerTerm(str, this._flattenItems, "headingText");
+	}
+
 	_isGroupItem(item: ISearchSuggestionItem) {
 		return item.hasAttribute("ui5-search-item-group");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		this._shouldAutocomplete = !this.noTypeahead &&
-			!(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
+		this._shouldAutocomplete = !this.noTypeahead
+			&& !(isBackSpace(e) || isDelete(e) || isEscape(e) || isUp(e) || isDown(e) || isTabNext(e) || isEnter(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e) || isEscape(e));
+
+		if (isRight(e)) {
+			this.handleRight(e);
+		}
+
+		if (isDown(e)) {
+			this.handleDown(e);
+		}
+	}
+
+	async handleDown(e: KeyboardEvent) {
+		if (this._open) {
+			e.preventDefault();
+			await this._handleArrowDown();
+		}
+	}
+
+	async _handleArrowDown() {
+		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
+		const focusRef = firstListItem?.hasAttribute("ui5-mcb-item-group") ? firstListItem.getFocusDomRef() : firstListItem;
+
+		if (this._open) {
+			firstListItem && focusRef && this._getItemsList()?._itemNavigation.setCurrentItem(focusRef);
+			this.value = this.typedInValue || this.value;
+
+			// wait item navigation to apply correct tabindex
+			await renderFinished();
+			firstListItem?.focus();
+		}
+	}
+
+	handleRight(e: KeyboardEvent) {
+		if (this.partialMatches) {
+			e.preventDefault();
+			this.value = this.typedInValue;
+			this._innerValue = this.typedInValue;
+		}
+	}
+
+	_onItemKeydown(e: KeyboardEvent) {
+		const isFirstItemGroup = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[1] === e.target && this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0].hasAttribute("ui5-li-group");
+		const isFirstItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0] === e.target || isFirstItemGroup;
+		const isArrowUp = isUp(e);
+
+		e.preventDefault();
+
+		if (isFirstItem && isArrowUp) {
+			this.nativeInput?.focus();
+			this._shouldAutocomplete = true;
+		}
 	}
 
 	/**
@@ -243,6 +313,14 @@ class Search extends SearchField {
 		const domRef = this.getDomRef();
 
 		return domRef ? domRef.querySelector<HTMLInputElement>(`input`) : null;
+	}
+
+	_getPicker() {
+		return this.shadowRoot!.querySelector<Popover>("[ui5-popover]")!;
+	}
+
+	_getItemsList(): List {
+		return this._getPicker().querySelector(".ui5-search-list") as List;
 	}
 
 	onAfterRendering(): void {
