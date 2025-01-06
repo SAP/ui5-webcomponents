@@ -9,19 +9,19 @@ date: 2025-01-09T10:00
 
 We are proud to announce that the 2.6.0 release of the web components adds support for using [JSX templates](https://github.com/SAP/ui5-webcomponents/pull/10046).
 
-Until now, Handlebars was the only templating language that could be used. The main goal of the project since the beginning was to have declarative renderers, and Handlebars served this purposse well. There were some drawbacks however.
+Until now, Handlebars was the only templating language that could be used. The main goal of the project since the beginning was to have declarative renderers, and Handlebars served this purpose well. There were some drawbacks however.
 
 ## Own HBS compiler
-Since handlebars originally works with strings only and cannot update the DOM effectively, we had to build our own HBS -> lit-html compiler. This added some technical debt, as not all features from handlerbars were implemented. It also added maintenance effort for a tool we had to update and evolve, when switching to TypeScript for example, or when encountering edge cases not previously considered.
+Since handlebars originally works with strings only and cannot update the DOM effectively, we had to build our own HBS -> lit-html compiler. This added some technical debt, as not all features from Handlebars were implemented. It also added maintenance effort for a tool we had to update and evolve, when switching to TypeScript for example, or when encountering edge cases not previously considered.
 
 ## Development experience
 All templating languages are by default not understood by IDEs out of the box.
 
-Code completion is the beggest gap we were seeing - there was simply no way to tell the IDE what to do without writing a plugin, which would be further development effort.
+Code completion is the biggest gap we were seeing - there was simply no way to tell the IDE what to do without writing a plugin, which would be further development effort.
 
 While we added type checking (the compiled HBS code is in a `.ts` file so there is some typechecking), it was never complete - type errors are shown in the console, not in the IDE. They were also only top level property type checks - no typechecks inside loops, no typechecks for events and event handlers.
 
-Code navigation was also missing - you could not click on a property in a HBS template to navigate to the property definition in the compoment itself.
+Code navigation was also missing - you could not click on a property in a HBS template to navigate to the property definition in the component itself.
 
 ## JSX
 
