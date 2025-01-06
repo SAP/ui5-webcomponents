@@ -327,7 +327,7 @@ describe("Notification List Item Tests", () => {
 		const loadingId =  `${await fourthGroupItem.getProperty("_id")}-loading`;
 		const EXPECTED_LOADING_ARIA_LABELLED_BY = `${loadingId}`;
 
-		assert.strictEqual(await firstGroupList.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
+		assert.strictEqual(await firstGroupList.getAttribute("accessible-name-ref"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await firstGroupRoot.getAttribute("aria-labelledby"), id, "The aria-lebelledby is correct.");
 		assert.strictEqual(await fourthGroupRoot.getAttribute("aria-labelledby"), EXPECTED_LOADING_ARIA_LABELLED_BY, "The aria-lebelledby is correct.");
 	});

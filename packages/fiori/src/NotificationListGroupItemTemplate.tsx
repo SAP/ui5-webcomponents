@@ -59,8 +59,7 @@ export default function NotificationListItemTemplate(this: NotificationListGroup
 					<NotificationListGroupList
 						id={`${this._id}-notificationsList`}
 						class="ui5-nli-group-items"
-						role="list"
-						aria-labelledby={`${this._id}-title-text`}
+						accessibleNameRef={`${this._id}-title-text`}
 						growing={this.growing}
 						onLoadMore={this._onLoadMore}
 					>
