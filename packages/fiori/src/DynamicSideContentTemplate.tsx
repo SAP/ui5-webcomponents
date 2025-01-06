@@ -25,7 +25,7 @@ function mainContent(this: DynamicSideContent) {
 	return (
 		<div
 			role="main"
-			aria-label={this.accInfo.mainContent.ariaLabel}
+			aria-label={this.accInfo.mainContent?.ariaLabel}
 			class={this.classes.main}
 			style={this.styles.main}
 		>
@@ -38,7 +38,7 @@ function sideContent(this: DynamicSideContent) {
 	return (
 		<aside
 			role="complementary"
-			aria-label={this.accInfo.sideContent.ariaLabel}
+			aria-label={this.accInfo.sideContent?.ariaLabel}
 			class={this.classes.side}
 			style={this.styles.side}
 		>

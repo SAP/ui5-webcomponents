@@ -12,6 +12,9 @@ import SideContentPosition from "./types/SideContentPosition.js";
 import SideContentVisibility from "./types/SideContentVisibility.js";
 import SideContentFallDown from "./types/SideContentFallDown.js";
 import DynamicSideContentTemplate from "./DynamicSideContentTemplate.js";
+import type {
+	AccessibilityAttributes,
+} from "@ui5/webcomponents-base";
 
 // Styles
 import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js";
@@ -35,13 +38,10 @@ type DynamicSideContentLayoutChangeEventDetail = {
 	sideContentVisible: boolean,
 }
 
+type DynamicSideContentAriaAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaLabel">;
 type DynamicSideContentAccessibilityAttributes = {
-	mainContent?: {
-		ariaLabel: string,
-	},
-	sideContent?: {
-		ariaLabel: string,
-	},
+	mainContent?: DynamicSideContentAriaAccessibilityAttributes,
+	sideContent?: DynamicSideContentAriaAccessibilityAttributes,
 }
 
 /**
@@ -310,13 +310,13 @@ class DynamicSideContent extends UI5Element {
 		};
 	}
 
-	get accInfo() {
+	get accInfo(): DynamicSideContentAccessibilityAttributes {
 		return {
 			mainContent: {
-				ariaLabel: (this.accessibilityAttributes.mainContent && this.accessibilityAttributes.mainContent.ariaLabel) || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
+				ariaLabel: this.accessibilityAttributes.mainContent?.ariaLabel || DynamicSideContent.i18nBundle.getText(DSC_MAIN_ARIA_LABEL),
 			},
 			sideContent: {
-				ariaLabel: (this.accessibilityAttributes.sideContent && this.accessibilityAttributes.sideContent.ariaLabel) || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+				ariaLabel: this.accessibilityAttributes.sideContent?.ariaLabel || DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
 			},
 		};
 	}
