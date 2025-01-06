@@ -21,10 +21,8 @@ import {
 	isColon,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TimePickerInternals from "./TimePickerInternals.js";
-import TimePickerClock from "./TimePickerClock.js";
-import ToggleSpinButton from "./ToggleSpinButton.js";
-import SegmentedButton from "./SegmentedButton.js";
-import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import type TimePickerClock from "./TimePickerClock.js";
+import type ToggleSpinButton from "./ToggleSpinButton.js";
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
@@ -61,12 +59,6 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 	tag: "ui5-time-selection-clocks",
 	styles: TimeSelectionClocksCss,
 	template: TimeSelectionClocksTemplate,
-	dependencies: [
-		TimePickerClock,
-		ToggleSpinButton,
-		SegmentedButton,
-		SegmentedButtonItem,
-	],
 })
 
 class TimeSelectionClocks extends TimePickerInternals {

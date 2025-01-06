@@ -42,11 +42,11 @@ interface ITableFeature extends UI5Element {
 	 * Called when the table is activated.
 	 * @param table table instance
 	 */
-	onTableActivate(table: Table): void;
+	onTableActivate?(table: Table): void;
 	/**
 	 * Called when the table finished rendering.
 	 */
-	onTableAfterRendering?(): void;
+	onTableAfterRendering?(table?: Table): void;
 }
 
 /**
@@ -363,7 +363,7 @@ class Table extends UI5Element {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
-		this.features.forEach(feature => feature.onTableActivate(this));
+		this.features.forEach(feature => feature.onTableActivate?.(this));
 		this._tableNavigation = new TableNavigation(this);
 		this._tableDragAndDrop = new TableDragAndDrop(this);
 	}
@@ -391,7 +391,7 @@ class Table extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		this.features.forEach(feature => feature.onTableAfterRendering?.());
+		this.features.forEach(feature => feature.onTableAfterRendering?.(this));
 	}
 
 	_getSelection(): TableSelection | undefined {
@@ -504,7 +504,7 @@ class Table extends UI5Element {
 	}
 
 	_isFeature(feature: any) {
-		return Boolean(feature.onTableActivate && feature.onTableAfterRendering);
+		return Boolean(feature.onTableActivate || feature.onTableAfterRendering);
 	}
 
 	_isGrowingFeature(feature: any) {

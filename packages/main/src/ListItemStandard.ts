@@ -5,8 +5,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import type { IAccessibleListItem } from "./ListItem.js";
-import Icon from "./Icon.js";
-import Avatar from "./Avatar.js";
 import type WrappingType from "./types/WrappingType.js";
 import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 
@@ -39,11 +37,6 @@ import ListItemStandardTemplate from "./ListItemStandardTemplate.js";
 	tag: "ui5-li",
 	renderer: jsxRenderer,
 	template: ListItemStandardTemplate,
-	dependencies: [
-		...ListItem.dependencies,
-		Icon,
-		Avatar,
-	],
 })
 class ListItemStandard extends ListItem implements IAccessibleListItem {
 	/**

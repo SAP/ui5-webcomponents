@@ -278,19 +278,6 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	async connectedCallback() {
 		if (DEV_MODE) {
-			const rootNode = this.getRootNode();
-			// when an element is connected, check if it exists in the `dependencies` of the parent
-			if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
-				const klass = rootNode.host.constructor as typeof UI5Element;
-				const hasDependency = klass.tagsToScope.includes((this.constructor as typeof UI5Element).getMetadata().getPureTag());
-				if (!hasDependency) {
-					// eslint-disable-next-line no-console
-					console.error(`[UI5-FWK] ${(this.constructor as typeof UI5Element).getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
-				}
-			}
-		}
-
-		if (DEV_MODE) {
 			const props = (this.constructor as typeof UI5Element).getMetadata().getProperties();
 			for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
 				if (Object.hasOwn(this, prop) && !this.initializedProperties.has(prop)) {
@@ -863,7 +850,7 @@ abstract class UI5Element extends HTMLElement {
 		*/
 		this._changedState = [];
 
-		// Update shadow root and static area item
+		// Update shadow root
 		if (ctor._needsShadowDOM()) {
 			updateShadowRoot(this);
 		}
@@ -1247,9 +1234,10 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Returns an array with the dependencies for this UI5 Web Component, which could be:
-	 *  - composed components (used in its shadow root or static area item)
+	 *  - composed components (used in its shadow root)
 	 *  - slotted components that the component may need to communicate with
 	 *
+	 * @deprecated no longer necessary for jsxRenderer-enabled components
 	 * @protected
 	 */
 	static get dependencies(): Array<typeof UI5Element> {
