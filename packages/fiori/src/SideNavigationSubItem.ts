@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationSubItemTemplate from "./SideNavigationSubItemTemplate.js";
 
@@ -29,9 +28,6 @@ import SideNavigationSubItemCss from "./generated/themes/SideNavigationSubItem.c
 	renderer: jsxRender,
 	template: SideNavigationSubItemTemplate,
 	styles: SideNavigationSubItemCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationSubItem extends SideNavigationSelectableItemBase {
 	_onkeydown(e: KeyboardEvent) {

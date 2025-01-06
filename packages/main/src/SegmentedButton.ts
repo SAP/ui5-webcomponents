@@ -14,7 +14,8 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
-import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import "./SegmentedButtonItem.js";
+import type SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonSelectionMode from "./types/SegmentedButtonSelectionMode.js";
 
 // Template
@@ -60,7 +61,6 @@ type SegmentedButtonSelectionChangeEventDetail = {
 	renderer: jsxRenderer,
 	template: SegmentedButtonTemplate,
 	styles: SegmentedButtonCss,
-	dependencies: [SegmentedButtonItem],
 })
 /**
  * Fired when the selected item changes.

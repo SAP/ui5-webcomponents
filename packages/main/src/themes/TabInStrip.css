@@ -7,7 +7,6 @@
 	padding: 0 var(--_ui5_tc_headeritem_padding);
 	font-size: var(--sapFontSmallSize);
 	font-weight: var(--_ui5_tc_headeritem_text_font_weight);
-	text-shadow: var(--sapContent_TextShadow);
 	position: relative;
 	display: flex;
 	align-items: center;
@@ -16,6 +15,7 @@
 	min-width: 2rem;
 	max-width: 100%;
 	box-sizing: border-box;
+	outline: none;
 }
 
 .ui5-tab-strip-item[data-moving] {
@@ -160,10 +160,6 @@
 .ui5-tab-strip-item--disabled {
 	cursor: default;
 	opacity: var(--sapContent_DisabledOpacity);
-}
-
-.ui5-tab-strip-item {
-	outline: none;
 }
 
 :host([desktop]) .ui5-tab-strip-item--textOnly:focus:not([data-moving]) .ui5-tab-strip-itemText::before,

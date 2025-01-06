@@ -23,10 +23,10 @@ import {
 	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./RatingIndicatorTemplate.js";
-import Icon from "./Icon.js";
 
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
+import type RatingIndicatorSize from "./types/RatingIndicatorSize.js";
 
 type Star = {
 	selected: boolean,
@@ -75,7 +75,6 @@ type Star = {
 	renderer: jsxRenderer,
 	styles: RatingIndicatorCss,
 	template: RatingIndicatorTemplate,
-	dependencies: [Icon],
 })
 /**
  * The event is fired when the value changes.
@@ -111,6 +110,15 @@ class RatingIndicator extends UI5Element {
 	 */
 	@property({ type: Number })
 	max: number = 5;
+
+	/**
+	 * Defines the size of the component.
+	 * @default "M"
+	 * @public
+	 * @since 2.6.0
+	 */
+	@property()
+	size: `${RatingIndicatorSize}` = "M";
 
 	/**
 	 * Defines whether the component is disabled.
