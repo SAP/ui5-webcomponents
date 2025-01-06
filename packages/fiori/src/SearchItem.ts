@@ -6,14 +6,14 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Select from "@ui5/webcomponents/dist/Select.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
 
-import SearchItemTemplate from "./generated/templates/SearchItemTemplate.lit.js";
-// import SearchItemTemplate from "./generated/templates/SearchItemTemplate.js";
+// import SearchItemTemplate from "./generated/templates/SearchItemTemplate.lit.js";
+import SearchItemTemplate from "./SearchItemTemplate.js";
 import SearchItemCss from "./generated/themes/SearchItem.css.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Tag from "@ui5/webcomponents/dist/Tag.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-// import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+// import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 /**
  * @class
@@ -35,7 +35,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 @customElement({
 	tag: "ui5-search-item",
 	languageAware: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	template: SearchItemTemplate,
 	styles: [
 		ListItemBase.styles,

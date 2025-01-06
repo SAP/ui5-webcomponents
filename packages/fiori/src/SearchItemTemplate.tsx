@@ -8,6 +8,7 @@ export default function SearchFieldTemplate(this: SearchItem) {
 	return (
 		<li
 			part="native-li"
+			class="ui5-li-root ui5-li--focusable"
 			data-sap-focus-ref
 			onFocusIn={this._onfocusin}
 			onFocusOut={this._onfocusout}
@@ -18,7 +19,7 @@ export default function SearchFieldTemplate(this: SearchItem) {
 						<slot name="avatar"></slot>
 						: (
 							this.icon &&
-							<Icon class="ui5-search-item-icon" name="{{icon}}"></Icon>
+							<Icon class="ui5-search-item-icon" name={this.icon}></Icon>
 						)
 					}
 
@@ -29,7 +30,7 @@ export default function SearchFieldTemplate(this: SearchItem) {
 					}
 
 					<div class="ui5-search-item-titles-container">
-						<span part="title" class="ui5-search-item-heading">{this._markupText}</span>
+						<span part="title" class="ui5-search-item-heading" dangerouslySetInnerHTML={{ __html: this._markupText }}></span>
 
 						{this.subheadingText &&
 							<div class="ui5-search-item-byline-container">

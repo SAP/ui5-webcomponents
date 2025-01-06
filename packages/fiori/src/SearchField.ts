@@ -238,7 +238,7 @@ class SearchField extends UI5Element {
 
 	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
 		this.fireDecoratorEvent("scope-change", {
-			scope: this.scopeOptions.find(option => e.detail.selectedOption.id === option._id),
+			scope: this.scopeOptions.find(option => e.detail.selectedOption!.id === option._id),
 		});
 	}
 

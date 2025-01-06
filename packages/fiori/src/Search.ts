@@ -194,8 +194,8 @@ class Search extends SearchField {
 			this.typedInValue = this.value;
 		}
 
-		this.items.forEach(item => {
-			item.highlightText = this.typedInValue;
+		this._flattenItems.forEach(item => {
+			(item as SearchItem).highlightText = this.typedInValue;
 		});
 
 		this._shouldAutocomplete = false;
