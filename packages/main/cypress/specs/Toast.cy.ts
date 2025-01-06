@@ -2,6 +2,7 @@ import { html } from "lit";
 import "../../src/Toast.js";
 import "../../src/Button.js";
 import "../../src/List.js";
+import "../../src/ListItemStandard.js";
 import type Toast from "../../src/Toast.js";
 
 describe("Toast - test popover API", () => {
