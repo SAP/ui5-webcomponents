@@ -60,7 +60,7 @@ class NavigationLayout extends UI5Element {
 
 	/**
 	 * Specifies the navigation mode.
-	 * @default NavigationLayoutCollapsed.Auto
+	 * @default "Auto"
 	 * @public
 	 */
 	@property()
