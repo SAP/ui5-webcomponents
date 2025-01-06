@@ -582,7 +582,7 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	getMenu() {
-		const menu = this.querySelector<Menu>("ui5-menu")!;
+		const menu = this.querySelector<Menu>("[ui5-menu]")!;
 		return menu;
 	}
 
