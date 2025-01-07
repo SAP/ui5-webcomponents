@@ -1,13 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
-import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
+import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -15,7 +16,7 @@ import "@ui5/webcomponents-icons/dist/pushpin-off.js";
 import "@ui5/webcomponents-icons/dist/pushpin-on.js";
 
 // Template
-import DynamicPageHeaderActionsTemplate from "./generated/templates/DynamicPageHeaderActionsTemplate.lit.js";
+import DynamicPageHeaderActionsTemplate from "./DynamicPageHeaderActionsTemplate.js";
 
 // Styles
 import DynamicPageHeaderActionsCss from "./generated/themes/DynamicPageHeaderActions.css.js";
@@ -26,6 +27,9 @@ import {
 	DYNAMIC_PAGE_ARIA_LABEL_SNAP_HEADER,
 	DYNAMIC_PAGE_ARIA_LABEL_PIN_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
+
+type DynamicPageHeaderActionsAccessibilityAttributes = Pick<AccessibilityAttributes, "controls">;
+
 /**
  * @class
  *
@@ -44,10 +48,9 @@ import {
  */
 @customElement({
 	tag: "ui5-dynamic-page-header-actions",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: DynamicPageHeaderActionsCss,
 	template: DynamicPageHeaderActionsTemplate,
-	dependencies: [Button, ToggleButton],
 })
 
 /**
@@ -85,6 +88,12 @@ import {
 	bubbles: true,
 })
 class DynamicPageHeaderActions extends UI5Element {
+	eventDetails!: {
+		"expand-button-click": void;
+		"pin-button-click": void;
+		"expand-button-hover-in": void;
+		"expand-button-hover-out": void;
+	}
 	/**
 	 * Defines whether the header is pinned.
 	 *
@@ -119,7 +128,7 @@ class DynamicPageHeaderActions extends UI5Element {
 	 * @default {}
 	 */
 	@property({ type: Object })
-	accessibilityAttributes: { controls?: string } = {};
+	accessibilityAttributes: DynamicPageHeaderActionsAccessibilityAttributes = {};
 
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;

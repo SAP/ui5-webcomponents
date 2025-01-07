@@ -1,14 +1,13 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Button from "./Button.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import type { ButtonAccessibilityAttributes } from "./Button.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 import type { IEventOptions } from "./ToolbarItem.js";
-import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
-import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
+import ToolbarButtonTemplate from "./ToolbarButtonTemplate.js";
+import ToolbarPopoverButtonTemplate from "./ToolbarPopoverButtonTemplate.js";
 
 import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
@@ -33,7 +32,6 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
  */
 @customElement({
 	tag: "ui5-toolbar-button",
-	dependencies: [Button],
 	styles: ToolbarButtonPopoverCss,
 })
 
@@ -51,6 +49,9 @@ type ToolbarButtonAccessibilityAttributes = ButtonAccessibilityAttributes;
 })
 
 class ToolbarButton extends ToolbarItem {
+	eventDetails!: ToolbarItem["eventDetails"] & {
+		"click": void
+	}
 	/**
 	 * Defines if the action is disabled.
 	 *

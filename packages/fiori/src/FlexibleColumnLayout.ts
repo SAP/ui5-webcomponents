@@ -2,16 +2,14 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
-import type AriaLandmarkRole from "@ui5/webcomponents-base/dist/types/AriaLandmarkRole.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/vertical-grip.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
@@ -22,7 +20,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { PassiveEventListenerObject, AriaLandmarkRole } from "@ui5/webcomponents-base";
 import FCLLayout from "./types/FCLLayout.js";
 import type { LayoutConfiguration } from "./fcl-utils/FCLLayout.js";
 import {
@@ -39,7 +37,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import FlexibleColumnLayoutTemplate from "./generated/templates/FlexibleColumnLayoutTemplate.lit.js";
+import FlexibleColumnLayoutTemplate from "./FlexibleColumnLayoutTemplate.js";
 
 // Styles
 import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css.js";
@@ -81,7 +79,7 @@ type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	resized: boolean,
 };
 
-type FCLAccessibilityRoles = Extract<Lowercase<AriaLandmarkRole>, "none" | "complementary" | "contentinfo" | "main" | "region">
+type FCLAccessibilityRoles = Extract<AriaLandmarkRole, "none" | "complementary" | "contentinfo" | "main" | "region">
 type FCLAccessibilityAttributes = {
 	startColumn?: {
 		role: FCLAccessibilityRoles,
@@ -166,10 +164,9 @@ type UserDefinedColumnLayouts = {
 @customElement({
 	tag: "ui5-flexible-column-layout",
 	fastNavigation: true,
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: FlexibleColumnLayoutCss,
 	template: FlexibleColumnLayoutTemplate,
-	dependencies: [Icon],
 })
 
 /**
@@ -184,40 +181,13 @@ type UserDefinedColumnLayouts = {
  * @param {boolean} resized Indicates if the layout was changed by resizing the entire component
  * @public
  */
-@event<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
-	detail: {
-		/**
-		* @public
-		*/
-		layout: { type: FCLLayout },
-		/**
-		* @public
-		*/
-		columnLayout: { type: Array },
-		/**
-		* @public
-		*/
-		startColumnVisible: { type: Boolean },
-		/**
-		* @public
-		*/
-		midColumnVisible: { type: Boolean },
-		/**
-		* @public
-		*/
-		endColumnVisible: { type: Boolean },
-		/**
-		 * @public
-		*/
-		separatorsUsed: { type: Boolean },
-		/**
-		 * @public
-		*/
-		resized: { type: Boolean },
-	},
+@event("layout-change", {
 	bubbles: true,
 })
 class FlexibleColumnLayout extends UI5Element {
+	eventDetails!: {
+		"layout-change": FlexibleColumnLayoutLayoutChangeEventDetail,
+	}
 	/**
 	* Defines the columns layout and their proportion.
 	*
@@ -494,7 +464,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(separatorUsed: boolean, resized: boolean) {
-		this.fireDecoratorEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
+		this.fireDecoratorEvent("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
@@ -986,54 +956,6 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get visibleColumns(): number {
 		return this._visibleColumns;
-	}
-
-	get classes() {
-		const hasAnimation = getAnimationMode() !== AnimationMode.None;
-
-		return {
-			root: {
-				"ui5-fcl-root": true,
-			},
-			columns: {
-				start: {
-					"ui5-fcl-column": true,
-					"ui5-fcl-column-animation": hasAnimation,
-					"ui5-fcl-column--start": true,
-				},
-				middle: {
-					"ui5-fcl-column": true,
-					"ui5-fcl-column-animation": hasAnimation,
-					"ui5-fcl-column--middle": true,
-				},
-				end: {
-					"ui5-fcl-column": true,
-					"ui5-fcl-column-animation": hasAnimation,
-					"ui5-fcl-column--end": true,
-				},
-			},
-		};
-	}
-
-	get styles() {
-		return {
-			separator: {
-				start: {
-					display: this.showStartSeparator ? "flex" : "none",
-				},
-				end: {
-					display: this.showEndSeparator ? "flex" : "none",
-				},
-			},
-			grip: {
-				start: {
-					display: this.showStartSeparatorGrip ? "inline-block" : "none",
-				},
-				end: {
-					display: this.showEndSeparatorGrip ? "inline-block" : "none",
-				},
-			},
-		};
 	}
 
 	get startColumnWidth() {

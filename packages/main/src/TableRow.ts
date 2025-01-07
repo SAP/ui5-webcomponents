@@ -64,6 +64,7 @@ class TableRow extends TableRowBase {
 	 * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
 	 *
      * @default -1
+	 * @since 2.5.0
      * @public
      */
 	@property({ type: Number })
@@ -87,6 +88,16 @@ class TableRow extends TableRowBase {
 	@property({ type: Boolean })
 	navigated = false;
 
+	/**
+	 * Defines whether the row is movable.
+	 *
+	 * @default false
+	 * @since 2.6.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	movable = false;
+
 	@property({ type: Boolean, noAttribute: true })
 	_renderNavigated = false;
 
@@ -100,6 +111,11 @@ class TableRow extends TableRowBase {
 			this.setAttribute("aria-current", "true");
 		} else {
 			this.removeAttribute("aria-current");
+		}
+		if (this.movable) {
+			this.setAttribute("draggable", "true");
+		} else {
+			this.removeAttribute("draggable");
 		}
 	}
 

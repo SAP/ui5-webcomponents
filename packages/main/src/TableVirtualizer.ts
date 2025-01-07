@@ -11,10 +11,11 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import UI5Element, { type InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { throttle } from "./TableUtils.js";
@@ -56,6 +57,7 @@ type RangeChangeEventDetail = {
  * `import "@ui5/webcomponents/dist/TableVirtualizer.js";`
  *
  * @constructor
+ * @since 2.5.0
  * @extends UI5Element
  * @public
  * @experimental This component is not intended to be used in a productive enviroment. The API is under development and may be changed in the future.
@@ -69,20 +71,12 @@ type RangeChangeEventDetail = {
  * @param {number} last The 0-based index of the last children currently rendered
  * @public
  */
-@event<RangeChangeEventDetail>("range-change", {
-	detail: {
-		/**
-		 * @public
-		 */
-		first: { type: Number },
-		/**
-		 * @public
-		 */
-		last: { type: Number },
-	},
-})
+@event("range-change")
 
 class TableVirtualizer extends UI5Element implements ITableFeature {
+	eventDetails!: {
+		"range-change": RangeChangeEventDetail
+	}
 	/**
 	 * Defines the height of the rows in the table.
 	 *
@@ -132,22 +126,20 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 		this._onRowInvalidateBound = this._onRowInvalidate.bind(this);
 	}
 
-	onTableActivate(table: Table): void {
-		this._table = table;
-		this._scrollContainer.addEventListener("scroll", this._onScrollBound, { passive: true });
-		this._onScroll();
-	}
-
 	onAfterRendering(): void {
 		this._table && this._table._invalidate++;
 	}
 
-	onTableAfterRendering(): void {
+	onTableAfterRendering(table: Table): void {
 		if (!this._table) {
-			return;
+			this._table = table;
+			this._scrollContainer.addEventListener("scroll", this._onScrollBound, { passive: true });
+			this._updateRowsHeight();
+			this._onScroll();
+		} else {
+			this._updateRowsHeight();
 		}
 
-		this._updateRowsHeight();
 		if (this._tabBlockingState & TabBlocking.Released) {
 			const tabBlockingRow = this._table.rows.at(this._tabBlockingState & TabBlocking.Next ? -1 : 0) as HTMLElement;
 			const tabForwardingElement = getTabbableElements(tabBlockingRow).at(this._tabBlockingState & TabBlocking.Next ? 0 : -1);
@@ -168,10 +160,12 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 	reset(): void {
 		this._lastRowPosition = -1;
 		this._firstRowPosition = -1;
-		if (this._scrollContainer.scrollTop > 0) {
-			this._scrollContainer.scrollTop = 0;
-		} else {
-			this._onScroll();
+		if (this._table) {
+			if (this._scrollContainer.scrollTop > 0) {
+				this._scrollContainer.scrollTop = 0;
+			} else {
+				this._onScroll();
+			}
 		}
 	}
 
@@ -184,11 +178,7 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 	}
 
 	_onScroll(): void {
-		if (!this._table) {
-			return;
-		}
-
-		const headerRow = this._table.headerRow[0];
+		const headerRow = this._table!.headerRow[0];
 		const headerHeight = headerRow.offsetHeight;
 		let scrollTop = this._scrollContainer.scrollTop;
 		let scrollableHeight = this._scrollContainer.clientHeight;
@@ -210,7 +200,7 @@ class TableVirtualizer extends UI5Element implements ITableFeature {
 
 		this._lastRowPosition = lastRowPosition;
 		this._firstRowPosition = firstRowPosition;
-		this.fireDecoratorEvent<RangeChangeEventDetail>("range-change", {
+		this.fireDecoratorEvent("range-change", {
 			first: firstRowPosition,
 			last: lastRowPosition,
 		});

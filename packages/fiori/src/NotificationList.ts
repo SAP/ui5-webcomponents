@@ -1,8 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -12,10 +12,10 @@ import type {
 	ListItemCloseEventDetail,
 } from "@ui5/webcomponents/dist/List.js";
 import type NotificationListItemBase from "./NotificationListItemBase.js";
-import NotificationListInternal from "./NotificationListInternal.js";
+import type NotificationListInternal from "./NotificationListInternal.js";
 
 // Template
-import NotificationListTemplate from "./generated/templates/NotificationListTemplate.lit.js";
+import NotificationListTemplate from "./NotificationListTemplate.js";
 
 // Styles
 import NotificationListCss from "./generated/themes/NotificationList.css.js";
@@ -66,13 +66,10 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  */
 @customElement({
 	tag: "ui5-notification-list",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	languageAware: true,
 	styles: [NotificationListCss],
 	template: NotificationListTemplate,
-	dependencies: [
-		NotificationListInternal,
-	],
 })
 
 /**
@@ -80,13 +77,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * @param {HTMLElement} item The clicked item.
  * @public
  */
-@event<NotificationItemClickEventDetail>("item-click", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-click", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -96,13 +87,7 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * @param {HTMLElement} item the item about to be closed.
  * @public
  */
-@event<NotificationItemCloseEventDetail>("item-close", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-close", {
 	bubbles: true,
 	cancelable: true,
 })
@@ -113,18 +98,18 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
  * @param {HTMLElement} item the toggled item.
  * @public
  */
-@event<NotificationItemToggleEventDetail>("item-toggle", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: HTMLElement },
-	},
+@event("item-toggle", {
 	bubbles: true,
 	cancelable: true,
 })
 
 class NotificationList extends UI5Element {
+	eventDetails!: {
+		"item-click": NotificationItemClickEventDetail,
+		"item-close": NotificationItemCloseEventDetail,
+		"item-toggle": NotificationItemToggleEventDetail,
+		"load-more": void,
+	}
 	/**
 	 * Defines the items of the component.
 	 *
@@ -159,7 +144,7 @@ class NotificationList extends UI5Element {
 	_onItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireDecoratorEvent<NotificationItemClickEventDetail>("item-click", { item })) {
+		if (!this.fireDecoratorEvent("item-click", { item })) {
 			e.preventDefault();
 		}
 	}
@@ -167,7 +152,7 @@ class NotificationList extends UI5Element {
 	_onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireDecoratorEvent<NotificationItemCloseEventDetail>("item-close", { item })) {
+		if (!this.fireDecoratorEvent("item-close", { item })) {
 			e.preventDefault();
 		}
 	}
@@ -175,7 +160,7 @@ class NotificationList extends UI5Element {
 	_onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
 		const item = e.detail.item as NotificationListItemBase;
 
-		if (!this.fireDecoratorEvent<NotificationItemToggleEventDetail>("item-toggle", { item })) {
+		if (!this.fireDecoratorEvent("item-toggle", { item })) {
 			e.preventDefault();
 		}
 	}

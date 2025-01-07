@@ -4,7 +4,7 @@ import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 
 import type { IInputSuggestionItemSelectable } from "./Input.js";
 import ListItemBase from "./ListItemBase.js";
-import SuggestionItemTemplate from "./generated/templates/SuggestionItemTemplate.lit.js";
+import SuggestionItemTemplate from "./SuggestionItemTemplate.js";
 
 import styles from "./generated/themes/SuggestionItem.css.js";
 
@@ -23,6 +23,8 @@ import styles from "./generated/themes/SuggestionItem.css.js";
 	styles: [ListItemBase.styles, styles],
 })
 class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelectable {
+	eventDetails!: ListItemBase["eventDetails"];
+
 	/**
 	 * Defines the text of the component.
 	 * @default undefined
@@ -54,6 +56,10 @@ class SuggestionItem extends ListItemBase implements IInputSuggestionItemSelecta
 		if (isDesktop()) {
 			this.setAttribute("desktop", "");
 		}
+	}
+
+	get _effectiveTabIndex() {
+		return -1;
 	}
 }
 

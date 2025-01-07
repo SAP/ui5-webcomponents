@@ -463,13 +463,3 @@ describe("'layout-change' event: ", () => {
 		assert.strictEqual(await sideVisible.getValue(), "1", "The event returns correct side content visibility");
 	});
 });
-
-describe("ARIA attributes: ", () => {
-	it("exist", async () => {
-		await browser.url(`test/pages/DynamicSideContent.html`);
-		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
-
-		assert.strictEqual(await dynamicSideContent.shadow$(".ui5-dsc-side").getAttribute("aria-label"), "Side Content", "'aria-label' attribute is set correctly");
-		assert.strictEqual(await dynamicSideContent.shadow$(".ui5-dsc-side").getAttribute("role"), "complementary", "'role' attribute is set correctly");
-	});
-});

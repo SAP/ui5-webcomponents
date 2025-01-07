@@ -1,7 +1,7 @@
 import { customElement, slot } from "@ui5/webcomponents-base/dist/decorators.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 
-import UserMenuItemTemplate from "./generated/templates/UserMenuItemTemplate.lit.js";
+import UserMenuItemTemplate from "./UserMenuItemTemplate.js";
 
 // Styles
 import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";
@@ -33,7 +33,6 @@ import userMenuItemCss from "./generated/themes/UserMenuItem.css.js";
 	tag: "ui5-user-menu-item",
 	template: UserMenuItemTemplate,
 	styles: [MenuItem.styles, userMenuItemCss],
-	dependencies: [...MenuItem.dependencies],
 })
 class UserMenuItem extends MenuItem {
 	/**

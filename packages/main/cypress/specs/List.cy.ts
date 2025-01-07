@@ -1,5 +1,6 @@
 import { html } from "lit";
 import "../../src/List.js";
+import "../../src/ListItemStandard.js";
 import type List from "../../src/List.js";
 
 describe("List Tests", () => {
@@ -34,83 +35,119 @@ describe("List Tests", () => {
 
 	it("Arrow down and up navigation between last item and growing button", () => {
 		cy.mount(html`
-		<ui5-list id="infiniteScrollEx2" growing="Button">
-			<ui5-li>Laptop Lenovo</ui5-li>
-			<ui5-li>IPhone 3</ui5-li>
-			<ui5-li>HP Monitor 24</ui5-li>
-			<ui5-li id="lastItem">Last Item</ui5-li>
-		</ui5-list>
+			<ui5-list growing="Button">
+				<ui5-li>Laptop Lenovo</ui5-li>
+				<ui5-li>IPhone 3</ui5-li>
+				<ui5-li>HP Monitor 24</ui5-li>
+			</ui5-list>
 		`);
 
-		cy.get("#lastItem")
-			.shadow()
-			.find("li[role='listitem']")
-			.invoke("attr", "tabindex", "0")
-			.focus();
+		cy.get("[ui5-list]")
+			.as("list");
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("ArrowDown");
+		// Click the last item to set focus
+		cy.get("@list")
+			.find("ui5-li")
+			.last()
+			.click();
 
-		cy.get("#infiniteScrollEx2")
-			.shadow()
-			.find("[id$=\"growing-btn\"]")
+		// Verify the last item is focused
+		cy.get("@list")
+			.find("ui5-li")
+			.last()
 			.should("be.focused");
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("ArrowUp");
+		// Press arrow down once to move focus to the growing button
+		cy.realPress("ArrowDown");
 
-		cy.get("#lastItem")
+		// Verify the growing button is focused
+		cy.get("@list")
+			.shadow()
+			.find("[id$='growing-btn']")
+			.should("be.focused");
+
+		// Arrow up once to move focus back to the last item
+		cy.realPress("ArrowUp");
+
+		// Verify the last item is focused
+		cy.get("@list")
+			.find("ui5-li")
+			.last()
 			.should("be.focused");
 	});
 
 	it("Home key on growing button moves focus to first item", () => {
 		cy.mount(html`
-		<ui5-list id="infiniteScrollEx2" growing="Button">
-			<ui5-li id="firstItem">Laptop Lenovo</ui5-li>
-			<ui5-li>IPhone 3</ui5-li>
-			<ui5-li>HP Monitor 24</ui5-li>
-			<ui5-li id="lastItem">Last Item</ui5-li>
-		</ui5-list>
+			<ui5-list growing="Button">
+				<ui5-li>Laptop Lenovo</ui5-li>
+				<ui5-li>IPhone 3</ui5-li>
+				<ui5-li>HP Monitor 24</ui5-li>
+			</ui5-list>
 		`);
 
-		cy.get("#infiniteScrollEx2")
+		cy.get("[ui5-list]")
+			.as("list");
+
+		// Click the growing button to set focus
+		cy.get("@list")
 			.shadow()
-			.find("[id$=\"growing-btn\"]")
-			.focus();
+			.find("[id$='growing-btn']")
+			.click();
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("Home");
+		// Wait for the growing button to be focused
+		cy.get("@list")
+			.shadow()
+			.find("[id$='growing-btn']")
+			.should("be.focused");
 
-		cy.get("#firstItem")
+		// Press Home key to move focus to the first item
+		cy.realPress("Home");
+
+		// Verify the first item is focused
+		cy.get("@list")
+			.find("ui5-li")
+			.first()
 			.should("be.focused");
 	});
 
 	it("End key navigation moves focus from first item to last item and then to growing button", () => {
 		cy.mount(html`
-		<ui5-list id="infiniteScrollEx2" growing="Button">
-			<ui5-li id="firstItem">Laptop Lenovo</ui5-li>
-			<ui5-li>IPhone 3</ui5-li>
-			<ui5-li>HP Monitor 24</ui5-li>
-			<ui5-li id="lastItem">Last Item</ui5-li>
-		</ui5-list>
+			<ui5-list growing="Button">
+				<ui5-li>Laptop Lenovo</ui5-li>
+				<ui5-li>IPhone 3</ui5-li>
+				<ui5-li>HP Monitor 24</ui5-li>
+			</ui5-list>
 		`);
 
-		cy.get("#firstItem")
-			.shadow()
-			.find("li[role='listitem']")
-			.invoke("attr", "tabindex", "0")
-			.focus();
+		cy.get("[ui5-list]")
+			.as("list");
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("End");
+		// Click the first item to set focus
+		cy.get("@list")
+			.find("ui5-li")
+			.first()
+			.click();
 
-		cy.get("#lastItem")
+		// Wait for the first item to be focused
+		cy.get("@list")
+			.find("ui5-li")
+			.first()
 			.should("be.focused");
 
-		cy.get("#infiniteScrollEx2")
-			.realPress("End");
+		// Press End key to move focus to the last item
+		cy.realPress("End");
 
-		cy.get("#infiniteScrollEx2")
+		// Verify the last item is focused
+		cy.get("@list")
+			.find("ui5-li")
+			.last()
+			.should("be.focused");
+
+		// Press End key again to move focus to the growing button
+		cy.realPress("End");
+
+		// Verify the growing button is focused
+		cy.get("@list")
 			.shadow()
 			.find("[id$='growing-btn']")
 			.should("be.focused");

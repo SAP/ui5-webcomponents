@@ -3,15 +3,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 // Template
-import FormTemplate from "./generated/templates/FormTemplate.lit.js";
+import FormTemplate from "./FormTemplate.js";
 
 // Styles
 import FormCss from "./generated/themes/Form.css.js";
 
-import Title from "./Title.js";
 import type FormItemSpacing from "./types/FormItemSpacing.js";
 import type FormGroup from "./FormGroup.js";
 
@@ -42,18 +40,17 @@ interface IFormItem extends UI5Element {
 	colsM?: number;
 	colsS?: number;
 	columnSpan?: number;
+	headerText?: string;
 }
 
 type GroupItemsInfo = {
 	groupItem: IFormItem,
-	classes: string,
 	items: Array<ItemsInfo>,
 	accessibleNameRef: string | undefined
 }
 
 type ItemsInfo = {
 	item: IFormItem,
-	classes: string,
 }
 
 /**
@@ -205,10 +202,9 @@ type ItemsInfo = {
  */
 @customElement({
 	tag: "ui5-form",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: FormCss,
 	template: FormTemplate,
-	dependencies: [Title],
 })
 class Form extends UI5Element {
 	/**
@@ -510,7 +506,7 @@ class Form extends UI5Element {
 		return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
 	}
 
-	get effectiveAccessibleRole(): string | undefined {
+	get effectiveAccessibleRole() {
 		return this.hasGroupItems ? "region" : "form";
 	}
 
@@ -541,7 +537,6 @@ class Form extends UI5Element {
 			return {
 				groupItem,
 				accessibleNameRef: (groupItem as FormGroup).headerText ? `${groupItem._id}-group-header-text` : undefined,
-				classes: `ui5-form-column-spanL-${groupItem.colsL} ui5-form-column-spanXL-${groupItem.colsXl} ui5-form-column-spanM-${groupItem.colsM} ui5-form-column-spanS-${groupItem.colsS}`,
 				items: this.getItemsInfo((Array.from(groupItem.children) as Array<IFormItem>)),
 			};
 		});
@@ -555,7 +550,12 @@ class Form extends UI5Element {
 		return (items || this.items).map((item: IFormItem) => {
 			return {
 				item,
+				// eslint-disable-next-line
+				// TODO: remove classes and classMap after deleting the hbs template
 				classes: item.columnSpan ? `ui5-form-item-span-${item.columnSpan}` : "",
+				classMap: {
+					[`ui5-form-item-span-${item.columnSpan}`]: item.columnSpan !== undefined,
+				},
 			};
 		});
 	}
