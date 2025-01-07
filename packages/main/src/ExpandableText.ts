@@ -50,7 +50,7 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.5.0
+ * @since 2.6.0
  */
 @customElement({
 	tag: "ui5-expandable-text",
@@ -62,7 +62,7 @@ class ExpandableText extends UI5Element {
 	/**
 	 * Text of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -82,7 +82,7 @@ class ExpandableText extends UI5Element {
 	 * @public
 	 */
 	@property()
-	overflowMode: `${ExpandableTextOverflowMode}` = ExpandableTextOverflowMode.InPlace
+	overflowMode: `${ExpandableTextOverflowMode}` = "InPlace"
 
 	/**
 	 * Specifies if an empty indicator should be displayed when there is no text.
