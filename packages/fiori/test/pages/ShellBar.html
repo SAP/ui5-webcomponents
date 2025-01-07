@@ -309,10 +309,6 @@
 		Array.from(document.querySelectorAll("ui5-shellbar-item")).forEach(function(item) {
 			item.addEventListener("ui5-click", function(event) {
 				wcToastTC.open = true;
-				if (event.target.icon === "call") {
-					event.preventDefault();
-					window["press-input"].value = "Call";
-				}
 			});
 		});
 

@@ -104,7 +104,7 @@ type ShellBarMenuItemClickEventDetail = {
 };
 
 type ShellBarAdditionalContextItemDisappearsEventDetail = {
-	items: Array<HTMLElement | null>
+	items: Array<HTMLElement>
 };
 
 type ShellBarSearchButtonEventDetail = {
@@ -263,6 +263,7 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  *
  * @param {Array<HTMLElement>} array of all the items that disappeared from additional context slot
  * @public
+ * @since 2.6.1
  */
 @event("additional-context-disappears", {
 	bubbles: true,
@@ -275,10 +276,11 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  * @param {HTMLElement} item DOM ref of the hidden assistant action
  * @param {Boolean} isHidden whether the assistant action is hidden
  * @public
+ * @since 2.6.1
  */
 @event("assistant-action-disappears", {
 	bubbles: true,
-	cancelable: true,
+	cancelable: false,
 })
 
 class ShellBar extends UI5Element {
@@ -941,7 +943,7 @@ class ShellBar extends UI5Element {
 		// last, start hiding the items that are in the additional context
 		this._hideAdditionalContext();
 
-		if (this.additionalContextHidden && JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
+		if (this.additionalContextHidden.length && JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
 			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalContextHidden });
 		}
 
