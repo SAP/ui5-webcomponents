@@ -39,12 +39,19 @@ class TableCell extends TableCellBase {
 		}
 	}
 
-	get _popinHeader() {
+	get _headerCell() {
 		const row = this.parentElement as TableRow;
 		const table = row.parentElement as Table;
 		const index = row.cells.indexOf(this);
-		const headerCell = table.headerRow[0].cells[index];
-		return headerCell.content[0]?.cloneNode(true);
+		return table.headerRow[0].cells[index];
+	}
+
+	get _popinText() {
+		return this._headerCell?.popinText;
+	}
+
+	get _popinHeader() {
+		return this._headerCell?.content[0]?.cloneNode(true);
 	}
 
 	get _i18nPopinColon() {

@@ -5,6 +5,7 @@ import "../../src/TableHeaderRow.js";
 import "../../src/TableCell.js";
 import "../../src/TableRow.js";
 import "../../src/TableSelection.js";
+import Table from "../../src/Table.js";
 
 // Porting Table.spec.js (wdio tests) to cypress tests
 const ROLE_COLUMN_HEADER = "columnheader";
@@ -21,7 +22,7 @@ describe("Table - Rendering", () => {
 					<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
 					<ui5-table-cell><ui5-label>Cell B</ui5-label></ui5-table-cell>
 				</ui5-table-row>
-			</ui5-table>	
+			</ui5-table>
 		`);
 
 		cy.get("ui5-table").should("exist");
@@ -193,6 +194,29 @@ describe("Table - Popin Mode", () => {
 					.should(shouldBePoppedIn ? "not.exist" : "exist");
 			});
 		}
+	});
+
+	it("should show the popin-text in the popin area", () => {
+		cy.get("ui5-table").then($table => {
+			$table.css("width", "150px");
+		});
+
+		cy.get("ui5-table").then($table => {
+			const table = $table[0] as Table;
+			// eslint-disable-next-line no-restricted-syntax
+			for (const row of table.rows) {
+				// eslint-disable-next-line no-restricted-syntax
+				for (const cell of row.cells) {
+					if (cell._popin) {
+						const popinText = cell._headerCell.popinText || cell._headerCell.textContent;
+						if (cell.shadowRoot!.textContent !== `${popinText}:`) {
+							return false;
+						}
+					}
+				}
+			}
+			return true;
+		}).should("be.true");
 	});
 });
 
