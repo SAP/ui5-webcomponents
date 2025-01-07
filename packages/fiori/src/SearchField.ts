@@ -9,13 +9,13 @@ import SearchFieldCss from "./generated/themes/SearchField.css.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Select from "@ui5/webcomponents/dist/Select.js";
-import type SelectChangeEventDetail from "@ui5/webcomponents/dist/Select.js";
 import Option from "@ui5/webcomponents/dist/Option.js";
 
 import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base/dist/index.js";
 
 /**
  * Interface for components that may be slotted inside a `ui5-search`
@@ -236,7 +236,7 @@ class SearchField extends UI5Element {
 		this.focus();
 	}
 
-	_handleScopeChange(e: CustomEvent<SelectChangeEventDetail>) {
+	_handleScopeChange(e: UI5CustomEvent<Select, "change">) {
 		this.fireDecoratorEvent("scope-change", {
 			scope: this.scopeOptions.find(option => e.detail.selectedOption!.id === option._id),
 		});

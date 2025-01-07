@@ -212,8 +212,8 @@ class Search extends SearchField {
 			return;
 		}
 
-		const startsWithMatches = this._startsWithMatchingItems(current).filter(item => !this._isGroupItem(item));
-		const partialMatches = this._startsWithPerTermMatchingItems(current).filter(item => !this._isGroupItem(item));
+		const startsWithMatches = this._startsWithMatchingItems(current);
+		const partialMatches = this._startsWithPerTermMatchingItems(current);
 
 		if (this._flattenItems.indexOf(startsWithMatches[0]) <= this._flattenItems.indexOf(partialMatches[0])) {
 			return startsWithMatches[0];
@@ -239,11 +239,11 @@ class Search extends SearchField {
 	}
 
 	_startsWithMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWith(str, this._flattenItems, "headingText");
+		return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
 	}
 
 	_startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem> {
-		return StartsWithPerTerm(str, this._flattenItems, "headingText");
+		return StartsWithPerTerm(str, this._flattenItems.filter(item => !this._isGroupItem(item)), "headingText");
 	}
 
 	_isGroupItem(item: ISearchSuggestionItem) {
@@ -272,7 +272,7 @@ class Search extends SearchField {
 
 	async _handleArrowDown() {
 		const firstListItem = this._getItemsList()?.getSlottedNodes<ISearchSuggestionItem>("items")[0];
-		const focusRef = firstListItem?.hasAttribute("ui5-mcb-item-group") ? firstListItem.getFocusDomRef() : firstListItem;
+		const focusRef = firstListItem && this._isGroupItem(firstListItem) ? firstListItem.getFocusDomRef() : firstListItem;
 
 		if (this._open) {
 			firstListItem && focusRef && this._getItemsList()?._itemNavigation.setCurrentItem(focusRef);

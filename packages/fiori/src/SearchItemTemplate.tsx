@@ -10,8 +10,13 @@ export default function SearchFieldTemplate(this: SearchItem) {
 			part="native-li"
 			class="ui5-li-root ui5-li--focusable"
 			data-sap-focus-ref
+			draggable={this.movable}
+			tabindex={this._effectiveTabIndex}
 			onFocusIn={this._onfocusin}
 			onFocusOut={this._onfocusout}
+			onKeyUp={this._onkeyup}
+			onKeyDown={this._onkeydown}
+			onClick={this._onclick}
 		>
 			<div part="content" class="ui5-search-item-content">
 				<div class="ui5-search-item-begin-content">
