@@ -1,9 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import {
-	customElement, property, slot, event,
+	customElement, property, slot, eventStrict as event,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import Input, { type InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import Input from "@ui5/webcomponents/dist/Input.js";
+import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
@@ -16,7 +17,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import SettingsTemplate from "./SettingsTemplate.js";
-import SettingItem from "./SettingItem.js";
+import type SettingItem from "./SettingItem.js";
 import SettingsCss from "./generated/themes/Settings.css.js";
 
 // Texts
@@ -52,35 +53,29 @@ type SettingsItemSelectEventDetail = {
  * @param {SettingItem} item The selected `setting item`.
  * @public
  */
-@event<SettingsItemSelectEventDetail>("item-select", {
-	detail: {
-		/**
-		 * @public
-		 */
-		item: { type: SettingItem },
-	},
+@event("item-select", {
 	cancelable: true,
 })
 
 /**
-	 * @class
-	 * ### Overview
-	 *
-	 * The `ui5-settings` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
-	 * and allows the user to easily see information and settings for the current account.
-	 *
-	 * ### ES6 Module Import
-	 * `import "@ui5/webcomponents-fiori/dist/Settings.js";`
-	 *
-	 * @constructor
-	 * @extends UI5Element
-	 * @experimental
-	 * @public
-	 */
+ * @class
+ * ### Overview
+ *
+ * The `ui5-settings` is an SAP Fiori specific web component that is used in `ui5-profile-menu`
+ * and allows the user to easily see information and settings for the current account.
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/Settings.js";`
+ *
+ * @constructor
+ * @extends UI5Element
+ * @experimental
+ * @public
+ */
 class Settings extends UI5Element {
 	eventDetails!: {
-		"item-select": SettingsItemSelectEventDetail;
-	}
+		"item-select": SettingsItemSelectEventDetail,
+	};
 	/**
 	 * Defines, if the Settings Dialog is opened.
 	 *
@@ -185,7 +180,7 @@ class Settings extends UI5Element {
 		}
 	}
 
-	setSelectedItem(e: CustomEvent<ListItemClickEventDetail>) {
+	_handleItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const setting = e.detail.item as ListItemBase & { associatedSettingItem: SettingItem };
 		const settingItem = setting.associatedSettingItem;
 		const eventPrevented = !this.fireDecoratorEvent("item-select", {

@@ -1,12 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import {
-	customElement, property, slot, event,
+	customElement, property, slot, eventStrict as event,
 } from "@ui5/webcomponents-base/dist/decorators.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
+import type { TabContainerTabSelectEventDetail } from "@ui5/webcomponents/dist/TabContainer.js";
 import Tab from "@ui5/webcomponents/dist/Tab.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SettingItemTemplate from "./SettingItemTemplate.js";
@@ -17,9 +18,14 @@ import SettingsItemCss from "./generated/themes/SettingsItem.css.js";
 import "@ui5/webcomponents-icons/dist/globe.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 
-type SettingItemBackEventDetail = {
-	item: SettingItem;
-};
+type SettingItemViewSelectEventDetail = {
+	view: SettingView;
+}
+
+
+type SettingItemBackClickEventDetail = {
+	view: SettingView;
+}
 
 @customElement({
 	tag: "ui5-setting-item",
@@ -36,6 +42,26 @@ type SettingItemBackEventDetail = {
 })
 
 /**
+ * Fired when a view is selected.
+ * @param {SettingView} view The selected `view`.
+ * @public
+ */
+@event("view-select", {
+	bubbles: true,
+	cancelable: true,
+})
+
+/**
+ * Fired when a back button is clicked in a page view.
+ * @param {SettingView} view The selected `view`.
+ * @public
+ */
+@event("back-click", {
+	bubbles: true,
+	cancelable: true,
+})
+
+/**
  *
  * @private
  */
@@ -43,36 +69,31 @@ type SettingItemBackEventDetail = {
 	bubbles: true,
 })
 
-@event<SettingItemBackEventDetail>("back-navigation", {
-	detail: {
-		item: { type: SettingItem },
-	},
-	cancelable: true,
-})
-
 /**
-	 * @class
-	 * ### Overview
-	 *
-	 * The `ui5-setting-item` represents an item in the `ui5-settings-dialog`.
-	 *
-	 * ### ES6 Module Import
-	 * `import "@ui5/webcomponents-fiori/dist/SettingItem.js";`
-	 *
-	 * You can disable the <code>SettingItem</code> by setting the <code>enabled</code> property to <code>false</code>,
-	 * or use the <code>SettingItem</code> in read-only mode by setting the <code>editable</code> property to false.
-	 *
-	 * <b>Note:</b> Disabled and read-only states shouldn't be used together.
-	 *
-	 * @constructor
-	 * @extends UI5Element
-	 * @experimental
-	 * @public
-	 */
+ * @class
+ * ### Overview
+ *
+ * The `ui5-setting-item` represents an item in the `ui5-settings dialog`.
+ *
+ * ### ES6 Module Import
+ * `import "@ui5/webcomponents-fiori/dist/SettingItem.js";`
+ *
+ * You can disable the <code>SettingItem</code> by setting the <code>enabled</code> property to <code>false</code>,
+ * or use the <code>SettingItem</code> in read-only mode by setting the <code>editable</code> property to false.
+ *
+ * <b>Note:</b> Disabled and read-only states shouldn't be used together.
+ *
+ * @constructor
+ * @extends UI5Element
+ * @experimental
+ * @public
+ */
 class SettingItem extends UI5Element {
 	eventDetails!: {
-		"_collapse": void;
-		"back-navigation": SettingItemBackEventDetail;
+		"_collapse": void,
+		"view-select": SettingItemViewSelectEventDetail,
+		"back-click": SettingItemBackClickEventDetail,
+
 	}
 	/**
 	 * Defines the text of the item.
@@ -142,12 +163,12 @@ class SettingItem extends UI5Element {
 	loading = false;
 
 	/**
-	 * Indicates is there back navigation button.
+	 * Indicates weather the back button should be shown. It will be shown only on page views if their `selected` property is set to `true`.
 	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showBackNavigation = false;
+	showBackButton = false;
 
 	/**
 	 * Defines the position of the item.
@@ -176,13 +197,6 @@ class SettingItem extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the text of the tooltip for the menu item.
-	 * @default undefined
-	 * @public
-	 * @since 1.23.0
-	 */
-
-	/**
 	 * Defines the views of the setting item.
 	 *
 	 * **Note:** If there is one view, it will be rendered as a single view. If more than one view is provided, they will be rendered as tabs if the mode of the
@@ -203,14 +217,33 @@ class SettingItem extends UI5Element {
 	/**
 	 * @private
 	 */
+	_tabViews!: Array<SettingView>;
+
+	/**
+	 * @private
+	 */
+	_pageViews!: Array<SettingView>;
+
+	/**
+	 * @private
+	 */
 	_individualSlot?: string;
+
+	onBeforeRendering() {
+		this._tabViews = this.views.filter(view => view.type === "Tab");
+		this._pageViews = this.views.filter(view => view.type === "Page");
+	}
+
+	get _hasSelectedPageView() {
+		return this._pageViews.some(view => view.selected);
+	}
+
+	get _selectedPageView() {
+		return this._pageViews.find(view => view.selected) || this._pageViews[0];
+	}
 
 	get ariaLabelledByText() {
 		return `${this.text} ${this.accessibleName}`.trim();
-	}
-
-	get _shouldHaveTabs() {
-		return this.views.length > 1;
 	}
 
 	get _tooltip() {
@@ -225,14 +258,44 @@ class SettingItem extends UI5Element {
 		return `sap-icon://${this.icon}`;
 	}
 
-	_handleCollapseClick() {
-		this.fireDecoratorEvent("_collapse");
+	_handleBackButtonClick() {
+		if (this._shouldShowBackButton) {
+			const selectedPageView = this._selectedPageView;
+			const eventPrevented = !this.fireDecoratorEvent("back-click", {
+				view: selectedPageView,
+			});
+
+			selectedPageView.selected = false;
+		} else {
+			this.fireDecoratorEvent("_collapse");
+		}
 	}
 
-	_handleBackNavigationClick() {
-		!this.fireDecoratorEvent("back-navigation", {
-			item: this,
+	_handleTabSelect(e: CustomEvent<TabContainerTabSelectEventDetail>) {
+		const tab = e.detail.tab as Tab & { associatedSettingView: SettingView };
+		const tabView = tab.associatedSettingView;
+		const eventPrevented = !this.fireDecoratorEvent("view-select", {
+			view: tabView,
 		});
+
+		if (eventPrevented) {
+			e.preventDefault();
+		} else {
+			this._tabViews.forEach(view => {
+				view.selected = false;
+			});
+			tabView.selected = true;
+		}
+	}
+
+	get _shouldShowBackButton() {
+		return this.showBackButton && this._hasSelectedPageView;
+	}
+
+	captureRef(this: SettingView, ref: HTMLElement & { associatedSettingView?: SettingView} | null) {
+		if (ref) {
+			ref.associatedSettingView = this;
+		}
 	}
 }
 
@@ -240,5 +303,6 @@ SettingItem.define();
 
 export default SettingItem;
 export type {
-	SettingItemBackEventDetail,
-};
+	SettingItemViewSelectEventDetail,
+	SettingItemBackClickEventDetail
+}

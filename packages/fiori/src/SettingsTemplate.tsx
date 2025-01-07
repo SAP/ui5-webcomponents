@@ -26,7 +26,7 @@ export default function SettingsTemplate(this: Settings) {
 						}
 					</div>
 
-					<List accessibleRole="Menu" onItemClick={this.setSelectedItem} class="ui5-sd-side-items">
+					<List accessibleRole="Menu" onItemClick={this._handleItemClick} class="ui5-sd-side-items">
 						<>
 							{this._normalItems.map(normalItem => (
 								<ListItemStandard icon={normalItem._icon} tooltip={normalItem._tooltip} ref={this.captureRef.bind(normalItem)} selected={normalItem.selected} disabled={normalItem.disabled} accessibleName={normalItem.ariaLabelledByText}>{normalItem.text}</ListItemStandard>
@@ -35,7 +35,7 @@ export default function SettingsTemplate(this: Settings) {
 					</List>
 
 					{this._fixedItems.length > 0 &&
-						<List accessibleRole="Menu" onItemClick={this.setSelectedItem} class="ui5-sd-side-fixedItems">
+						<List accessibleRole="Menu" onItemClick={this._handleItemClick} class="ui5-sd-side-fixedItems">
 							{this._fixedItems.map(fixedItem => (
 								<ListItemStandard icon={fixedItem._icon} tooltip={fixedItem._tooltip} ref={this.captureRef.bind(fixedItem)} selected={fixedItem.selected} disabled={fixedItem.disabled} accessibleName={fixedItem.ariaLabelledByText}>{fixedItem.text}</ListItemStandard>
 							))}

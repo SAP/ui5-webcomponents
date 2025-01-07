@@ -17,13 +17,13 @@
 <body>
 <ui5-button id="btnOpenSettings">User settings</ui5-button>
 <ui5-settings id="setting" header-title="Settings" show-search-field>
-	<ui5-setting-item text="User Account" tooltip="User Account" header-title="User Account" icon="user-settings">
+	<ui5-setting-item icon="user-settings" text="User Account" tooltip="User Account" header-title="User Account">
 		<ui5-setting-view type="Page">
 			User Account content
 		</ui5-setting-view>
 	</ui5-setting-item>
 
-	<ui5-setting-item text="Appearance" tooltip="Appearance" header-title="Appearance" icon="palette">
+	<ui5-setting-item icon="palette" text="Appearance" tooltip="Appearance" header-title="Appearance">
 		<ui5-setting-view text="Themes">
 			Themes content
 		</ui5-setting-view>
@@ -38,17 +38,18 @@
 		</ui5-setting-view>
 	</ui5-setting-item>
 
-	<ui5-setting-item text="Notifications" tooltip="Notifications" header-title="Notifications" icon="bell">
+	<ui5-setting-item icon="bell" text="Notifications" tooltip="Notifications" header-title="Notifications" show-back-button>
 		<ui5-setting-view type="Page">
-			Notifications content
+			<ui5-button id="product1-button">Product 1</ui5-button>
+			<ui5-button id="product2-button">Product 2</ui5-button>
 		</ui5-setting-view>
 
-		<ui5-setting-view type="Page">
-			Inner page
+		<ui5-setting-view type="Page" id="notification-second-page">
+			Notification second page content
 		</ui5-setting-view>
 	</ui5-setting-item>
 
-	<ui5-setting-item fixed-item text="Reset Settings" tooltip="Reset Settings" header-title="Reset Settings" icon="reset">
+	<ui5-setting-item icon="reset" fixed-item text="Reset Settings" tooltip="Reset Settings" header-title="Reset Settings">
 		<ui5-setting-view text="Reset Personalization">
 			Reset Personalization content
 		</ui5-setting-view>
@@ -59,12 +60,36 @@
 </ui5-settings>
 <script>
 	const settingsDialog = document.getElementById("setting");
+	const notificationButton = document.getElementById("notification-button");
+	const notificationSecondPage = document.getElementById("notification-second-page");
+	const product1Button = document.getElementById("product1-button");
+	const product2Button = document.getElementById("product2-button");
+
 	document.getElementById("btnOpenSettings").addEventListener("click", function () {
 		settingsDialog.open = true;
 	});
 
+	product1Button.addEventListener("click", function () {
+		notificationSecondPage.selected = true;
+		notificationSecondPage.text = "Product 1";
+	});
+
+	product2Button.addEventListener("click", function () {
+		notificationSecondPage.selected = true;
+		notificationSecondPage.text = "Product 2";
+	});
+
 	settingsDialog.addEventListener("item-select", function (event) {
-		console.log("Item selected: ", event.detail);
+		console.log(`Item selected: ${event.detail.item.text}`, event.detail);
+	});
+
+	settingsDialog.addEventListener("view-select", function (event) {
+		console.log(`View selected: ${event.detail.view.text}`, event.detail);
+	});
+
+	settingsDialog.addEventListener("back-click", function (event) {
+		event.detail.view = false;
+		console.log(`Back navigation on view: ${event.detail.view.text}`, event.detail);
 	});
 
 </script>
