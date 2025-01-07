@@ -531,6 +531,7 @@ class ShellBar extends UI5Element {
 	_lastOffsetWidth = 0;
 	_lessSearchSpace = false;
 	_searchButtonInteraction = false;
+	_observableContent: Array<HTMLElement> = [];
 
 	_headerPress: () => void;
 
@@ -999,6 +1000,7 @@ class ShellBar extends UI5Element {
 	onExitDOM() {
 		this.menuItemsObserver.disconnect();
 		this.additionalContextObserver.disconnect();
+		this._observableContent = [];
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
@@ -1298,15 +1300,21 @@ class ShellBar extends UI5Element {
 	}
 
 	_observeAdditionalContextItems() {
+		if (JSON.stringify(this.additionalContext) === JSON.stringify(this._observableContent)) {
+			return false;
+		}
 		this.additionalContext.forEach(item => {
-			this.additionalContextObserver.observe(item, {
-				characterData: false,
-				childList: false,
-				subtree: false,
-				attributes: true,
-				attributeFilter: ["data-hide-order"],
-			});
+			if (!this._observableContent.includes(item)) {
+				this.additionalContextObserver.observe(item, {
+					characterData: false,
+					childList: false,
+					subtree: false,
+					attributes: true,
+					attributeFilter: ["data-hide-order"],
+				});
+			}
 		});
+		this._observableContent = this.additionalContext;
 	}
 
 	_getOverflowPopover() {
