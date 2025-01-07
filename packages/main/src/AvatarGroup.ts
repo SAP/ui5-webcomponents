@@ -16,7 +16,7 @@ import {
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import Button from "./Button.js";
+import type Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
@@ -148,7 +148,6 @@ type AvatarGroupClickEventDetail = {
 	renderer: jsxRenderer,
 	template: AvatarGroupTemplate,
 	styles: AvatarGroupCss,
-	dependencies: [Button],
 })
 /**
  * Fired when the component is activated either with a

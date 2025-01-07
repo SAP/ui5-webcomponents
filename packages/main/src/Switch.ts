@@ -11,7 +11,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Acc
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
-import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 import { FORM_CHECKABLE_REQUIRED } from "./generated/i18n/i18n-defaults.js";
 
@@ -56,7 +55,6 @@ import switchCss from "./generated/themes/Switch.css.js";
 	styles: switchCss,
 	renderer: jsxRenderer,
 	template: SwitchTemplate,
-	dependencies: [Icon],
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**

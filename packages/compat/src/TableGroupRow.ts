@@ -5,7 +5,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./TableGroupRowTemplate.js";
 import TableMode from "./types/TableMode.js";
@@ -39,9 +38,6 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 	styles: tableGroupRowStyles,
 	renderer: jsxRenderer,
 	template: TableGroupRowTemplate,
-	dependencies: [
-		CheckBox,
-	],
 })
 @event("_focused", {
 	bubbles: true,

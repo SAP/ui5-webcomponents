@@ -21,9 +21,8 @@ import type {
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import ColorPickerTemplate from "./ColorPickerTemplate.js";
-import Input from "./Input.js";
-import Slider from "./Slider.js";
-import Label from "./Label.js";
+import type Input from "./Input.js";
+import type Slider from "./Slider.js";
 
 import {
 	COLORPICKER_ALPHA_SLIDER,
@@ -77,11 +76,6 @@ type ColorCoordinates = {
 	formAssociated: true,
 	styles: ColorPickerCss,
 	template: ColorPickerTemplate,
-	dependencies: [
-		Input,
-		Slider,
-		Label,
-	],
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**

@@ -30,6 +30,7 @@ such as a common header (ShellBar).
 | Side Navigation                           | `ui5-side-navigation`          | `import "@ui5/webcomponents-fiori/dist/SideNavigation.js";`           |
 | Side Navigation Item                      | `ui5-side-navigation-item`     | `import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";`       |
 | Side Navigation Sub Item                  | `ui5-side-navigation-sub-item` | `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`    |
+| Side Navigation Group                     | `ui5-side-navigation-group`    | `import "@ui5/webcomponents-fiori/dist/SideNavigationGroup.js";`      |
 | Timeline                                  | `ui5-timeline`                 | `import "@ui5/webcomponents-fiori/dist/Timeline.js";`                 |
 | Timeline Item                             | `ui5-timeline-item`            | comes with `ui5-timeline`                                             |
 | Upload Collection                         | `ui5-upload-collection`        | `import "@ui5/webcomponents-fiori/dist/UploadCollection.js";`         |
