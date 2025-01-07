@@ -140,6 +140,13 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return "page";
 	}
 
+	/**
+	 * @override
+	 */
+	isSelectable() {
+		return !this.disabled;
+	}
+
 	_onkeydown(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();

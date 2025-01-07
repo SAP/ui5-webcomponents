@@ -123,6 +123,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	get isSideNavigationItemBase() {
 		return true;
 	}
+
+	isSelectable() {
+		return false;
+	}
 }
 
 const isInstanceOfSideNavigationItemBase = (object: any): object is SideNavigationItemBase => {

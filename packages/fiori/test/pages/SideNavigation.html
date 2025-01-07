@@ -54,6 +54,11 @@
 				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item disabled id="item1" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Home (Leaves Only)" icon="home" interaction-mode="SelectLeavesOnly"></ui5-side-navigation-item>
+			<ui5-side-navigation-item text="Home (Leaves Only)" icon="home" interaction-mode="SelectLeavesOnly">
+				<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+			</ui5-side-navigation-item>
 
 			<!-- Fixed Items -->
 			<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" tooltip="Useful links tooltip">
@@ -63,6 +68,7 @@
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems" text="Quick Create" icon="write-new" type="Action"></ui5-side-navigation-item>
 		</ui5-side-navigation>
 		<div class="inner-content">
 			<div>
@@ -80,9 +86,6 @@
 		</div>
 	</div>
 
-
-
-
 	<script>
 		var sideNavigation = document.querySelector("ui5-side-navigation"),
 			input = document.querySelector("#counter"),
@@ -99,6 +102,7 @@
 		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
 			item.addEventListener("ui5-click", function (event) {
 				clickInput.value = `${++clickCounter}`;
+				debugger
 			});
 		});
 

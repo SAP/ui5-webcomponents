@@ -7,6 +7,10 @@ import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
+import type SideNavigationItemType from "./types/SideNavigationItemType.js";
+import type SideNavigationItemInteractionMode from "./types/SideNavigationItemInteractionMode.js";
+
+// Templates
 import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
 
 // Styles
@@ -45,6 +49,18 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	 */
 	@property({ type: Boolean })
 	expanded = false;
+
+	/**
+	 * @public
+	 */
+	@property()
+	type: `${SideNavigationItemType}` = "Default";
+
+	/**
+	 * @public
+	 */
+	@property()
+	interactionMode: `${SideNavigationItemInteractionMode}` = "Select";
 
 	/**
 	 * Defines if the item should be collapsible or not.
@@ -140,6 +156,13 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		}
 
 		return this.selected;
+	}
+
+	/**
+	 * @override
+	 */
+	isSelectable() {
+		return super.isSelectable() && this.interactionMode === "Select" && this.type === "Default";
 	}
 
 	_onToggleClick(e: PointerEvent) {
