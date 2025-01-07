@@ -5,9 +5,12 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import {
 	isTabNext,
 	isTabPrevious,
+	isSpace,
+	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
@@ -15,12 +18,14 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./TimelineTemplate.js";
-import "./TimelineItem.js";
-import "./TimelineGroupItem.js";
-
+import TimelineItem from "./TimelineItem.js";
+import TimelineGroupItem from "./TimelineGroupItem.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import {TimelineLayout, TimeLineGrowingMode} from "./types/TimelineLayout.js";
 
 /**
  * Interface for components that may be slotted inside `ui5-timeline` as items
@@ -43,6 +48,7 @@ interface ITimelineItem extends UI5Element, ITabbable {
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
 const LARGE_LINE_WIDTH = "LargeLineWidth";
+const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 /**
  * @class
@@ -65,8 +71,24 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 	renderer: jsxRenderer,
 	styles: TimelineCss,
 	template: TimelineTemplate,
+	dependencies: [BusyIndicator, TimelineItem, TimelineGroupItem],
 })
+
+/**
+ * Fired when the user presses the `More` button or scrolls to the Timeline's end.
+ *
+ * **Note:** The event will be fired if `growing` is set to `Button` or `Scroll`.
+ * @public
+ * @since 2.0.0
+ */
+@event("load-more", {
+	bubbles: true,
+})
+
 class Timeline extends UI5Element {
+	eventDetails!: {
+		"load-more": void,
+	}
 	/**
 	 * Defines the items orientation.
 	 * @default "Vertical"
@@ -86,6 +108,52 @@ class Timeline extends UI5Element {
 	accessibleName?: string;
 
 	/**
+	 * Defines if the component would display a loading indicator over the Timeline.
+	 *
+	 * @default false
+	 * @since 2.0.0
+	 * @public
+	 */
+	@property({ type: Boolean })
+	loading = false;
+
+	/**
+	 * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
+	 * @default 1000
+	 * @public
+	 */
+	@property({ type: Number })
+	loadingDelay = 1000;
+
+	/**
+	 * Defines whether the Timeline will have growing capability either by pressing a `More` button,
+	 * or via user scroll. In both cases `load-more` event is fired.
+	 *
+	 * Available options:
+	 *
+	 * `Button` - Shows a `More` button at the bottom of the Timeline, pressing of which triggers the `load-more` event.
+	 *
+	 * `Scroll` - The `load-more` event is triggered when the user scrolls to the bottom of the Timeline;
+	 *
+	 * `None` (default) - The growing is off.
+	 *
+	 * **Restrictions:** `growing="Scroll"` is not supported for Internet Explorer,
+	 * and the component will fallback to `growing="Button"`.
+	 * @default "None"
+	 * @since 2.0.0
+	 * @public
+	 */
+	@property()
+	growing: `${TimeLineGrowingMode}` = "None";
+
+	/**
+	 * Defines the active state of the `More` button.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_loadMoreActive = false;
+
+	/**
 	 * Determines the content of the `ui5-timeline`.
 	 * @public
 	 */
@@ -96,6 +164,9 @@ class Timeline extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
+	growingIntersectionObserver?: IntersectionObserver | null;
+	timeLineEndObserved: boolean;
+	initialIntersection: boolean;
 
 	constructor() {
 		super();
@@ -103,12 +174,128 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this._navigatableItems,
 		});
+
+		this.timeLineEndObserved = false;
+
+		// Indicates the Timeline bottom most part has been detected by the IntersectionObserver
+		// for the first time.
+		this.initialIntersection = true;
 	}
 
 	get ariaLabel() {
 		return this.accessibleName
 			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL)} ${this.accessibleName}`
 			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+	}
+
+	get growsOnScroll(): boolean {
+		return this.growing === TimeLineGrowingMode.Scroll;
+	}
+
+	get timeLineEndDOM(): Element {
+		return this.shadowRoot!.querySelector(".ui5-time-line-end-marker")!;
+	}
+
+	get growingButtonIcon() {
+		return this.layout === TimelineLayout.Horizontal ? "process" : "drill-down";
+	}
+
+	get moreBtn(): HTMLElement | null {
+		const domRef = this.getDomRef();
+
+		if (this.growsWithButton && domRef) {
+			return domRef.querySelector<HTMLElement>(`#${this._id}-growingButton`);
+		}
+
+		return null;
+	}
+
+	get showBusyIndicatorOverlay() {
+		return !this.growsWithButton && this.loading;
+	}
+
+	get growsWithButton(): boolean {
+		return this.growing === TimeLineGrowingMode.Button;
+	}
+
+	onAfterRendering() {
+		if (this.growsOnScroll) {
+			this.observeTimeLineEnd();
+		}
+	}
+
+	onEnterDOM() {
+		this.growingIntersectionObserver = this.getIntersectionObserver();
+	}
+
+	onExitDOM() {
+		this.growingIntersectionObserver!.disconnect();
+		this.growingIntersectionObserver = null;
+		this.timeLineEndObserved = false;
+	}
+
+	observeTimeLineEnd() {
+		if (!this.timeLineEndObserved) {
+			this.getIntersectionObserver().observe(this.timeLineEndDOM);
+			this.timeLineEndObserved = true;
+		}
+	}
+
+	getIntersectionObserver(): IntersectionObserver {
+		if (!this.growingIntersectionObserver) {
+			this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
+				root: document,
+				threshold: 1.0,
+			});
+		}
+
+		return this.growingIntersectionObserver;
+	}
+
+	onInteresection(entries: Array<IntersectionObserverEntry>) {
+		if (this.initialIntersection) {
+			this.initialIntersection = false;
+			return;
+		}
+
+		if (entries.some(entry => entry.isIntersecting)) {
+			debounce(this.loadMore.bind(this), GROWING_WITH_SCROLL_DEBOUNCE_RATE);
+		}
+	}
+
+	loadMore() {
+		this.fireDecoratorEvent("load-more");
+	}
+
+	_onLoadMoreKeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+			this._loadMoreActive = true;
+		}
+
+		if (isEnter(e)) {
+			this._onLoadMoreClick();
+			this._loadMoreActive = true;
+		}
+	}
+
+	_onLoadMoreKeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._onLoadMoreClick();
+		}
+		this._loadMoreActive = false;
+	}
+
+	onInvalidation(change: ChangeInfo) {
+		console.error(change)
+		if (change.type === "property" && change.name === "growing") {
+			this.timeLineEndObserved = false;
+			this.getIntersectionObserver().disconnect();
+		}
+	}
+
+	_onLoadMoreClick() {
+		this.fireDecoratorEvent("load-more");
 	}
 
 	_onfocusin(e: FocusEvent) {

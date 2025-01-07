@@ -141,9 +141,9 @@
 					<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP D-com"><ui5-avatar initials="SK"></ui5-avatar></ui5-timeline-item>
 					<ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" name="SAP iXP Party">20.02.2017 11:30</ui5-timeline-item>
 				</ui5-timeline-group-item>
-				
+
 				<!-- <ui5-timeline-item id="testItem" class="group-item" title-text="Event" subtitle-text="20.02.2017 11:30" icon="calendar" name="SAP iXP Party"></ui5-timeline-item> -->
-					
+
 				<ui5-timeline-group-item group-name="Meetings">
 					<ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="20.02.2017 11:30" icon="calendar" name="Team Balkan Meeting"></ui5-timeline-item>
 					<ui5-timeline-item id="testItem" class="group-item" title-text="coming up" subtitle-text="20.02.2017 11:30"  name="Team Balkan Meeting">20.02.2017 11:30</ui5-timeline-item>
@@ -228,7 +228,7 @@
 <section style="width: 100%;">
 	<h2>Advanced Timeline - Horizontal With Groups and Diverse Components</h2>
 	<div style="width: 800px;">
-		<ui5-timeline layout="Horizontal" id="horizontalWithGrps">
+		<ui5-timeline layout="Horizontal" id="horizontalWithGrpsGrowing"  growing ="Scroll">
 			<ui5-timeline-group-item group-name="SAP Events">
 				<ui5-timeline-item title-text="Online Meeting" subtitle-text="20.02.2017 11:30" icon="calendar">
 					<div>Discussion about upcoming projects</div>
@@ -294,6 +294,28 @@
 	document.getElementById("test-item").addEventListener("ui5-name-click", function (event) {
 		result.innerHTML = event.target.getAttribute("name");
 	});
+
+	const growing = document.getElementById("horizontalWithGrpsGrowing");
+		growing.addEventListener("load-more", (e) => {
+			const newGroup = document.createElement("ui5-timeline-group-item");
+
+			newGroup.setAttribute("group-name", "test");
+
+			for (let i = 0; i < 10; i++) {
+				newGroup.innerHTML += `
+					<ui5-timeline-item title-text="Review Meeting" subtitle-text="26.02.2017 09:30" icon="meeting-room">
+						<ui5-avatar-group type="Group" avatar-size="S">
+							<ui5-avatar initials="LK"></ui5-avatar>
+							<ui5-avatar initials="AW"></ui5-avatar>
+							<ui5-avatar initials="BR"></ui5-avatar>
+						</ui5-avatar-group>
+						<div>Review project deliverables</div>
+					</ui5-timeline-item>
+				`;
+				growing.appendChild(newGroup);
+			}
+
+		});
 </script>
 </body>
 </html>

@@ -14,6 +14,21 @@
 	padding: 0;
 }
 
+:host([layout="Horizontal"]) .ui5-timeline-list-item.ui5-timeline-list-growing {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+:host([layout="Vertical"]) .ui5-timeline-list-item.ui5-timeline-list-growing {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+:host .ui5-time-line-end-marker {
+	margin: -1px;
+}
+
 :host([layout="Vertical"]) .ui5-timeline-list {
 	display: flex;
 	flex-direction: column;
