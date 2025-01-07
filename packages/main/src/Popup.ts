@@ -20,7 +20,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import toLowercaseEnumValue from "@ui5/webcomponents-base/dist/util/toLowercaseEnumValue.js";
-import Title from "./Title.js";
 import PopupTemplate from "./PopupTemplate.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -78,9 +77,6 @@ type PopupBeforeCloseEventDetail = {
 	renderer: jsxRender,
 	styles: [popupStlyes, popupBlockLayerStyles],
 	template: PopupTemplate,
-	dependencies: [
-		Title,
-	],
 })
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening.

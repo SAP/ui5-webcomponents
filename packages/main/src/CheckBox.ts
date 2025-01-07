@@ -10,8 +10,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import Icon from "./Icon.js";
-import Label from "./Label.js";
 import type WrappingType from "./types/WrappingType.js";
 import {
 	VALUE_STATE_ERROR,
@@ -78,10 +76,6 @@ let activeCb: CheckBox;
 	renderer: jsxRenderer,
 	template: CheckBoxTemplate,
 	styles: checkboxCss,
-	dependencies: [
-		Label,
-		Icon,
-	],
 })
 /**
  * Fired when the component checked state changes.

@@ -12,7 +12,7 @@ import type {
 	ListItemCloseEventDetail,
 } from "@ui5/webcomponents/dist/List.js";
 import type NotificationListItemBase from "./NotificationListItemBase.js";
-import NotificationListInternal from "./NotificationListInternal.js";
+import type NotificationListInternal from "./NotificationListInternal.js";
 
 // Template
 import NotificationListTemplate from "./NotificationListTemplate.js";
@@ -70,9 +70,6 @@ type NotificationItemCloseEventDetail = NotificationItemEventDetail;
 	languageAware: true,
 	styles: [NotificationListCss],
 	template: NotificationListTemplate,
-	dependencies: [
-		NotificationListInternal,
-	],
 })
 
 /**

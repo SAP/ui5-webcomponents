@@ -57,6 +57,7 @@ type RangeChangeEventDetail = {
  * `import "@ui5/webcomponents/dist/TableVirtualizer.js";`
  *
  * @constructor
+ * @since 2.5.0
  * @extends UI5Element
  * @public
  * @experimental This component is not intended to be used in a productive enviroment. The API is under development and may be changed in the future.

@@ -30,7 +30,6 @@ import DropIndicatorCss from "./generated/themes/DropIndicator.css.js";
 	renderer: jsxRenderer,
 	styles: DropIndicatorCss,
 	template: DropIndicatorTemplate,
-	dependencies: [],
 })
 class DropIndicator extends UI5Element {
 	/**

@@ -350,9 +350,9 @@ describe("DateRangePicker general interaction", () => {
 
 		const yearPicker = await browser.$(`#daterange-picker10`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`);
 		const years = await yearPicker.shadow$(`.ui5-yp-root`).$$("div > .ui5-yp-item");
-		const startSelectionYear = await years[10];
-		const yearInBetween = await years[12];
-		const endSelectionYear = await years[14];
+		const startSelectionYear = years[9];
+		const yearInBetween = years[11];
+		const endSelectionYear = years[13];
 
 		assert.ok((await startSelectionYear.getAttribute("class")).includes("ui5-yp-item--selected"), "The start year has the correct selection class");
 		assert.ok((await yearInBetween.getAttribute("class")).includes("ui5-yp-item--selected-between"), "The in-between year has the correct selection class");
