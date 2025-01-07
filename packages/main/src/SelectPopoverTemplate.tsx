@@ -21,9 +21,9 @@ export default function SelectPopoverTemplate(this: Select) {
 					horizontalAlign="Start"
 					hideArrow={true}
 					preventInitialFocus={true}
-					onui5-open={this._afterOpen}
-					onui5-before-open={this._beforeOpen}
-					onui5-close={this._afterClose}
+					onOpen={this._afterOpen}
+					onBeforeOpen={this._beforeOpen}
+					onClose={this._afterClose}
 					onKeyDown={this._onkeydown}
 				>
 					{this._isPhone &&
@@ -64,7 +64,7 @@ export default function SelectPopoverTemplate(this: Select) {
 						selectionMode="SingleAuto"
 						separators="None"
 						onMouseDown={this._itemMousedown}
-						onui5-item-click={this._handleItemPress}
+						onItemClick={this._handleItemPress}
 					>
 						<slot></slot>
 					</List>
