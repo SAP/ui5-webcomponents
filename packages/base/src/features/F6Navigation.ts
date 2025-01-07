@@ -172,8 +172,25 @@ class F6Navigation {
 	}
 
 	updateGroups() {
+		const scope = this.findScope();
+
 		this.setSelectedGroup();
-		this.groups = getFastNavigationGroups(document.body);
+		this.groups = getFastNavigationGroups(scope || document.body);
+	}
+
+	findScope() {
+		const htmlElement = window.document.querySelector("html");
+		let element: Element | null | ParentNode = this.deepActive(window.document);
+
+		while (element && element !== htmlElement) {
+			const closestScopeEl = (element as HTMLElement).closest("[data-sap-ui-fastnavmode='scope']") as HTMLElement | undefined;
+
+			if (closestScopeEl) {
+				return closestScopeEl;
+			}
+
+			element = element.parentElement ? element.parentNode : (element.parentNode as ShadowRoot).host;
+		}
 	}
 
 	setSelectedGroup(root: DocumentOrShadowRoot = window.document) {
