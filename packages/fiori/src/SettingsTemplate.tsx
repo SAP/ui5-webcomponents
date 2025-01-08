@@ -13,7 +13,13 @@ import type SettingItem from "./SettingItem.js";
 export default function SettingsTemplate(this: Settings) {
 	return (
 
-		<Dialog class="ui5-sd-dialog" open={this.open} onui5-_collapse={this._handleCollapseClick} accessibleName={this.accessibleNameText}>
+		<Dialog class="ui5-sd-dialog"
+			open={this.open}
+			accessibleName={this.accessibleNameText}
+			onui5-_collapse={this._handleCollapseClick}
+			onClose={this._handlePopoverAfterClose}
+			onOpen={this._handlePopoverAfterOpen}
+		>
 			<div class="ui5-sd-root">
 				<div class="ui5-sd-side" aria-orientation="vertical" aria-roledescription={this.ariaRoleDescList}>
 					<div class="ui5-sd-side-header">

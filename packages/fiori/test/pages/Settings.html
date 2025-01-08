@@ -91,6 +91,14 @@
 		console.log(`Back navigation on view: ${event.detail.view.text}`, event.detail);
 	});
 
+	settingsDialog.addEventListener("close", function (event) {
+		console.log("Settings dialog closed", event.detail);
+	});
+
+	settingsDialog.addEventListener("open", function (event) {
+		console.log("Settings dialog opened", event.detail);
+	});
+
 </script>
 </body>
 </html>

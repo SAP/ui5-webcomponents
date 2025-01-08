@@ -58,6 +58,18 @@ type SettingsItemSelectEventDetail = {
 })
 
 /**
+ * Fired when a settings dialog is open.
+ * @public
+ */
+@event("open")
+
+/**
+ * Fired when a settings dialog is close.
+ * @public
+ */
+@event("close")
+
+/**
  * @class
  * ### Overview
  *
@@ -75,6 +87,8 @@ type SettingsItemSelectEventDetail = {
 class Settings extends UI5Element {
 	eventDetails!: {
 		"item-select": SettingsItemSelectEventDetail,
+		"open": void,
+		"close": void,
 	};
 	/**
 	 * Defines, if the Settings Dialog is opened.
@@ -214,6 +228,15 @@ class Settings extends UI5Element {
 			});
 			settingItem.selected = true;
 		}
+	}
+
+	_handlePopoverAfterOpen() {
+		this.fireDecoratorEvent("open");
+	}
+
+	_handlePopoverAfterClose() {
+		this.open = false;
+		this.fireDecoratorEvent("close");
 	}
 
 	get accessibleNameText() {
