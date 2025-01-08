@@ -22,7 +22,6 @@ type SettingItemViewSelectEventDetail = {
 	view: SettingView;
 }
 
-
 type SettingItemBackClickEventDetail = {
 	view: SettingView;
 }
@@ -265,7 +264,9 @@ class SettingItem extends UI5Element {
 				view: selectedPageView,
 			});
 
-			selectedPageView.selected = false;
+			if (!eventPrevented) {
+				selectedPageView.selected = false;
+			}
 		} else {
 			this.fireDecoratorEvent("_collapse");
 		}
@@ -304,5 +305,5 @@ SettingItem.define();
 export default SettingItem;
 export type {
 	SettingItemViewSelectEventDetail,
-	SettingItemBackClickEventDetail
-}
+	SettingItemBackClickEventDetail,
+};
