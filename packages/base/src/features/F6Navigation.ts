@@ -172,25 +172,27 @@ class F6Navigation {
 	}
 
 	updateGroups() {
-		const scope = this.findScope();
+		const container = this.findContaienr();
 
 		this.setSelectedGroup();
-		this.groups = getFastNavigationGroups(scope || document.body);
+		this.groups = getFastNavigationGroups(container);
 	}
 
-	findScope() {
+	findContaienr() {
 		const htmlElement = window.document.querySelector("html");
-		let element: Element | null | ParentNode = this.deepActive(window.document);
+		let element = this.deepActive(window.document);
 
 		while (element && element !== htmlElement) {
-			const closestScopeEl = (element as HTMLElement).closest("[data-sap-ui-fastnavmode='scope']") as HTMLElement | undefined;
+			const closestScopeEl = element.closest<HTMLElement>("[data-sap-ui-fastnavgroup-container='true']");
 
 			if (closestScopeEl) {
 				return closestScopeEl;
 			}
 
-			element = element.parentElement ? element.parentNode : (element.parentNode as ShadowRoot).host;
+			element = element.parentElement ? element.parentElement : (element.parentNode as ShadowRoot).host;
 		}
+
+		return document.body;
 	}
 
 	setSelectedGroup(root: DocumentOrShadowRoot = window.document) {

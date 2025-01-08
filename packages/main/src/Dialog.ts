@@ -346,7 +346,7 @@ class Dialog extends Popup {
 
 		this.addEventListener("dragstart", this._dragStartHandler);
 
-		this.setAttribute("data-sap-ui-fastnavmode", "scope");
+		this.setAttribute("data-sap-ui-fastnavgroup-container", "true");
 	}
 
 	onExitDOM() {
