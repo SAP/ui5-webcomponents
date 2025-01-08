@@ -6,9 +6,9 @@ import Tab from "@ui5/webcomponents/dist/Tab.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 
 export default function SettingItemTemplate(this: SettingItem) {
-	const content = this._tabViews.length > 0 && !this._hasSelectedPageView ?
+	const content = this.tabs.length > 0 && !this._hasSelectedPageView ?
 		<TabContainer contentBackgroundDesign="Transparent" class="ui5-setting-item-tabs" onTabSelect={this._handleTabSelect}>
-			{this._tabViews.map(view =>
+			{this.tabs.map(view =>
 				<Tab text={view.text} selected={view.selected} ref={this.captureRef.bind(view)}>
 					<slot name={view._individualSlot} />
 				</Tab>

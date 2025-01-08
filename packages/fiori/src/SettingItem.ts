@@ -187,10 +187,9 @@ class SettingItem extends UI5Element {
 	accessibleName?: string;
 
 	/**
-	 * Defines the views of the setting item.
+	 * Defines the tab views of the setting item.
 	 *
-	 * **Note:** If there is one view, it will be rendered as a single view. If more than one view is provided, they will be rendered as tabs if the mode of the
-	 * `Setting Dialog` is set to `Tabs` and as navigation views if the mode is set to `Navigation`.
+	 * The tab views are displayed by default if there is no selected page view.
 	 * @public
 	 */
 	@slot({
@@ -202,34 +201,36 @@ class SettingItem extends UI5Element {
 			slots: false,
 		},
 	})
-	views!: Array<SettingView>;
+	tabs!: Array<SettingView>;
 
 	/**
-	 * @private
+	 * Defines the page views of the setting item. 
+	 * 
+	 * If there are no tab views, the first page view will be shown unless there is selected one. If there is selected page view it will be shown no matter if there are tab views.
+	 *
+	 * @public
 	 */
-	_tabViews!: Array<SettingView>;
-
-	/**
-	 * @private
-	 */
-	_pageViews!: Array<SettingView>;
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: true,
+			slots: false,
+		},
+	})
+	pages!: Array<SettingView>;
 
 	/**
 	 * @private
 	 */
 	_individualSlot?: string;
 
-	onBeforeRendering() {
-		this._tabViews = this.views.filter(view => view.type === "Tab");
-		this._pageViews = this.views.filter(view => view.type === "Page");
-	}
-
 	get _hasSelectedPageView() {
-		return this._pageViews.some(view => view.selected);
+		return this.pages.some(view => view.selected);
 	}
 
 	get _selectedPageView() {
-		return this._pageViews.find(view => view.selected) || this._pageViews[0];
+		return this.pages.find(view => view.selected) || this.pages[0];
 	}
 
 	get ariaLabelledByText() {
@@ -273,7 +274,7 @@ class SettingItem extends UI5Element {
 		if (eventPrevented) {
 			e.preventDefault();
 		} else {
-			this._tabViews.forEach(view => {
+			this.tabs.forEach(view => {
 				view.selected = false;
 			});
 			tabView.selected = true;
