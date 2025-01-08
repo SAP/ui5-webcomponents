@@ -16,7 +16,6 @@
 	--_ui5_side_navigation_phone_width: 100%;
 
 	--_ui5_side_navigation_icon_color: var(--sapList_TextColor);
-	--_ui5_side_navigation_icon_font_size: 1.125rem;
 	--_ui5_side_navigation_expand_icon_color: var(--sapList_TextColor);
 	--_ui5_side_navigation_expand_icon_width: 3rem;
 	--_ui5_side_navigation_group_border_style_color: none;
@@ -30,7 +29,8 @@
 	--_ui5_side_navigation_collapsed_selected_item_background_hover: 0 100% / 0.188rem 100%  no-repeat linear-gradient(0deg, var(--sapHighlightColor), var(--sapHighlightColor)), var(--sapList_Hover_SelectionBackground);
 	--_ui5_side_navigation_selected_border_style_color: none;
 	--_ui5_side_navigation_selected_and_focused_border_style_color: var(--_ui5_side_navigation_selected_border_style_color);
-	--_ui5_side_navigation_group_icon_width: 3rem;
+	--_ui5_side_navigation_group_icon_width: 2.5rem;
+	--_ui5_side_navigation_icon_padding_inline_end: 0.5rem;
 	--_ui5_side_navigation_group_text_weight: bold;
 	--_ui5_side_navigation_group_bottom_margin_in_popup: 0.75rem;
 	--_ui5_side_navigation_group_padding: 1rem;

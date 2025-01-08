@@ -115,7 +115,7 @@ type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
 	fastNavigation: true,
 	renderer: jsxRender,
 	template: SideNavigationTemplate,
-	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	styles: [SideNavigationCss, SideNavigationPopoverCss, getEffectiveScrollbarStyle()],
 })
 /**
  * Fired when the selection has changed via user interaction

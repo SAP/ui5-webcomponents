@@ -134,8 +134,8 @@ and there is an additional border that appears on hover. */
 
 .ui5-sn-item-icon {
 	color: var(--_ui5_side_navigation_icon_color);
-	height: var(--_ui5_side_navigation_icon_font_size);
-	min-width: var(--_ui5_side_navigation_group_icon_width);
+	padding-inline-start: 1rem;
+	padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
 }
 
 .ui5-sn-item-toggle-icon,
@@ -164,7 +164,7 @@ and there is an additional border that appears on hover. */
  }
 
 :host([side-nav-collapsed]) .ui5-sn-item-icon {
-	padding: var(--_ui5_side_navigation_item_collapsed_icon_padding);
+	padding-inline-end: 1rem;
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item-text {
@@ -175,8 +175,7 @@ and there is an additional border that appears on hover. */
 	display: var(--_ui5_side_navigation_item_expand_icon_visibility);
 	font-size: 0.75rem;
 	position: absolute;
-	left: var(--_ui5_side_navigation_item_expand_icon_left);
-	right: var(--_ui5_side_navigation_item_expand_icon_right);
+	inset-inline-end: var(--_ui5_side_navigation_item_expand_icon_right);
 }
 
 :host([side-nav-collapsed]) .ui5-sn-item-external-link-icon {
