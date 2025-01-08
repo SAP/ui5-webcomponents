@@ -252,6 +252,7 @@
 
 /* Slotted Badge */
 ::slotted([slot="badge"]) {
+	pointer-events: initial;
 	position: absolute;
 	bottom: 0;
 	right: 0;
