@@ -8,6 +8,7 @@ import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import ToolbarButton from "@ui5/webcomponents/dist/ToolbarButton.js";
 import Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
+import type SettingItem from "./SettingItem.js";
 
 export default function SettingsTemplate(this: Settings) {
 	return (
@@ -26,21 +27,9 @@ export default function SettingsTemplate(this: Settings) {
 						}
 					</div>
 
-					<List accessibleRole="Menu" onItemClick={this._handleItemClick} class="ui5-sd-side-items">
-						<>
-							{this._normalItems.map(normalItem => (
-								<ListItemStandard icon={normalItem._icon} tooltip={normalItem._tooltip} ref={this.captureRef.bind(normalItem)} selected={normalItem.selected} disabled={normalItem.disabled} accessibleName={normalItem.ariaLabelledByText}>{normalItem.text}</ListItemStandard>
-							))}
-						</>
-					</List>
+					{renderList.call(this, this._normalItems, "ui5-sd-side-items")}
 
-					{this._fixedItems.length > 0 &&
-						<List accessibleRole="Menu" onItemClick={this._handleItemClick} class="ui5-sd-side-fixedItems">
-							{this._fixedItems.map(fixedItem => (
-								<ListItemStandard icon={fixedItem._icon} tooltip={fixedItem._tooltip} ref={this.captureRef.bind(fixedItem)} selected={fixedItem.selected} disabled={fixedItem.disabled} accessibleName={fixedItem.ariaLabelledByText}>{fixedItem.text}</ListItemStandard>
-							))}
-						</List>
-					}
+					{this._fixedItems.length > 0 && renderList.call(this, this._fixedItems, "ui5-sd-side-fixedItems")}
 				</div>
 
 				<div class="ui5-sd-content">
@@ -53,4 +42,12 @@ export default function SettingsTemplate(this: Settings) {
 			</Toolbar>
 		</Dialog>
 	);
+}
+
+function renderList(this: Settings, items: Array<SettingItem> = [], classes: string) {
+	return <List accessibleRole="Menu" onItemClick={this._handleItemClick} class={classes}>
+		{items.map(item => (
+			<ListItemStandard icon={item._icon} tooltip={item._tooltip} ref={this.captureRef.bind(item)} selected={item.selected} disabled={item.disabled} accessibleName={item.ariaLabelledByText}>{item.text}</ListItemStandard>
+		))}
+	</List>;
 }
