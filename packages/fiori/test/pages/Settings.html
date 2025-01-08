@@ -33,7 +33,7 @@
 	</ui5-setting-item>
 
 	<ui5-setting-item text="Language & Region" tooltip="Language & Region" header-title="Language & Region">
-		<ui5-setting-view text="Themes" type="Page">
+		<ui5-setting-view type="Page">
 			Language & Region content
 		</ui5-setting-view>
 	</ui5-setting-item>
@@ -44,12 +44,12 @@
 			<ui5-button id="product2-button">Product 2</ui5-button>
 		</ui5-setting-view>
 
-		<ui5-setting-view type="Page" id="notification-second-page">
+		<ui5-setting-view type="Page" text="Inner Page" id="notification-second-page">
 			Notification second page content
 		</ui5-setting-view>
 	</ui5-setting-item>
 
-	<ui5-setting-item icon="reset" fixed-item text="Reset Settings" tooltip="Reset Settings" header-title="Reset Settings">
+	<ui5-setting-item icon="reset" slot="fixedItems" text="Reset Settings" tooltip="Reset Settings" header-title="Reset Settings">
 		<ui5-setting-view text="Reset Personalization">
 			Reset Personalization content
 		</ui5-setting-view>
@@ -88,7 +88,6 @@
 	});
 
 	settingsDialog.addEventListener("back-click", function (event) {
-		event.detail.view = false;
 		console.log(`Back navigation on view: ${event.detail.view.text}`, event.detail);
 	});
 

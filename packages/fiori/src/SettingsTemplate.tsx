@@ -27,9 +27,9 @@ export default function SettingsTemplate(this: Settings) {
 						}
 					</div>
 
-					{renderList.call(this, this._normalItems, "ui5-sd-side-items")}
+					{renderList.call(this, this._filteredItems, "ui5-sd-side-items")}
 
-					{this._fixedItems.length > 0 && renderList.call(this, this._fixedItems, "ui5-sd-side-fixedItems")}
+					{this._filteredFixedItems.length > 0 && renderList.call(this, this._filteredFixedItems, "ui5-sd-side-fixedItems")}
 				</div>
 
 				<div class="ui5-sd-content">

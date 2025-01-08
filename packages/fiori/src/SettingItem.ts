@@ -170,15 +170,6 @@ class SettingItem extends UI5Element {
 	showBackButton = false;
 
 	/**
-	 * Defines the position of the item.
-	 *
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	fixedItem = false;
-
-	/**
 	 * Defines the icon of the component.
 	 *
 	 * @default undefined

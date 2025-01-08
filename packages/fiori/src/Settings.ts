@@ -121,6 +121,21 @@ class Settings extends UI5Element {
 	})
 	items!: Array<SettingItem>;
 
+	/**
+	 * Defines the fixed setting items.
+	 *
+	 * @public
+	 */
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: true,
+			slots: true,
+		},
+	})
+	fixedItems!: Array<SettingItem>;
+
 	@i18n("@ui5/webcomponents-fiori")
 	static i18nBundle: I18nBundle;
 
@@ -145,29 +160,31 @@ class Settings extends UI5Element {
 	/**
 	 * @private
 	 */
-	_normalItems: Array<SettingItem> = [];
+	_filteredItems: Array<SettingItem> = [];
 
 	/**
 	 * @private
 	 */
-	_fixedItems: Array<SettingItem> = [];
+	_filteredFixedItems: Array<SettingItem> = [];
 
 	onBeforeRendering() {
-		if (!this.items.length) {
-			return;
-		}
-
 		const searchValue = this._searchValue.toLowerCase();
-		this._selectedSetting = undefined;
-		this._normalItems = [];
-		this._fixedItems = [];
+		this._filteredItems = [];
+		this._filteredFixedItems = [];
+
 		this.items.forEach(item => {
-			if (item.fixedItem && item.text.toLowerCase().includes(searchValue)) {
-				this._fixedItems.push(item);
+			if (item.text.toLowerCase().includes(searchValue)) {
+				this._filteredItems.push(item);
 			}
 
-			if (!item.fixedItem && item.text.toLowerCase().includes(searchValue)) {
-				this._normalItems.push(item);
+			if (item.selected) {
+				this._selectedSetting = item;
+			}
+		});
+
+		this.fixedItems.forEach(item => {
+			if (item.text.toLowerCase().includes(searchValue)) {
+				this._filteredFixedItems.push(item);
 			}
 
 			if (item.selected) {
@@ -176,7 +193,7 @@ class Settings extends UI5Element {
 		});
 
 		if (!this._selectedSetting) {
-			this._selectedSetting = this._normalItems[0] || this.items[0];
+			this._selectedSetting = this.items[0] || this.fixedItems[0];
 		}
 	}
 
@@ -192,10 +209,11 @@ class Settings extends UI5Element {
 			this.items.forEach(item => {
 				item.selected = false;
 			});
+			this.fixedItems.forEach(item => {
+				item.selected = false;
+			});
 			settingItem.selected = true;
 		}
-
-		this._selectedSetting = this.items.find(item => item.selected);
 	}
 
 	get accessibleNameText() {
