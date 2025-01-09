@@ -66,7 +66,7 @@ export default function ColorPaletteTemplate(this: ColorPalette) {
 				}
 			</div>
 
-			{ this.showMoreColorsTemplateModule?.default.call(this) }
+			{ this.showMoreColors && this.showMoreColorsTemplateModule?.default.call(this) }
 		</>
 	);
 }
