@@ -10,7 +10,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import type { MoveEventDetail as TableMoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -75,6 +75,8 @@ interface ITableGrowing extends ITableFeature {
 type TableRowClickEventDetail = {
 	row: TableRow,
 };
+
+type TableMoveEventDetail = MoveEventDetail;
 
 /**
  * @class
@@ -640,5 +642,5 @@ export type {
 	ITableFeature,
 	ITableGrowing,
 	TableRowClickEventDetail,
-	TableMoveEventDetail as TableTableMoveEventDetail,
+	TableMoveEventDetail,
 };
