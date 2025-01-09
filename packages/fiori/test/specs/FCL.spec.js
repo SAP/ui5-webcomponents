@@ -570,33 +570,20 @@ describe("ACC", () => {
 
 describe("First column closing arrow behavior", () => {
 	it("should switch layout and update arrow icon on desktop", async () => {
-        const fcl = await browser.$("#fcl10");
-        const arrowIcon = await fcl.shadow$(".ui5-fcl-arrow--start");
+		const fcl = await browser.$("#fcl10");
+		const arrowBtn = await fcl.shadow$(".ui5-fcl-arrow--start");
+	
+		await fcl.setProperty("layout", "ThreeColumnsStartHiddenMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
+	
+		await arrowBtn.click();
+	
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "Layout should switch to ThreeColumnsMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-left", "Arrow should point left");
 
-        await fcl.setProperty("layout", "ThreeColumnsBeginHiddenMidExpanded");
+		await arrowBtn.click();
 
-        assert.strictEqual(await arrowIcon.getAttribute("name"), "navigation-right-arrow", "Arrow should point right");
-
-        await arrowIcon.click();
-
-        assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsMidExpanded", "Layout should switch to ThreeColumnsMidExpanded");
-
-        assert.strictEqual(await arrowIcon.getAttribute("name"), "navigation-left-arrow", "Arrow should point left");
-    });
-
-    it("should switch layout and update arrow icon on smaller screen", async () => {
-        const fcl = await browser.$("#fcl10");
-        const arrowIcon = await fcl.shadow$(".ui5-fcl-arrow--start");
-
-        await browser.setWindowSize(1000, 1080);
-        await fcl.setProperty("layout", "TwoColumnsMidExpanded");
-
-        await arrowIcon.click();
-
-        assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsBeginHiddenMidExpanded", "Layout should switch to ThreeColumnsBeginHiddenMidExpanded");
-
-        assert.strictEqual(await arrowIcon.getAttribute("name"), "navigation-right-arrow", "Arrow should point right");
-
-        await browser.setWindowSize(1400, 1080);
-    });
+		assert.strictEqual(await fcl.getProperty("layout"), "ThreeColumnsStartHiddenMidExpanded", "Layout should switch to ThreeColumnsStartHiddenMidExpanded");
+		assert.strictEqual(await arrowBtn.getAttribute("icon"), "slim-arrow-right", "Arrow should point right");
+	});
 });

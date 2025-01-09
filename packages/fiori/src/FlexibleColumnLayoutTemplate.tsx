@@ -87,13 +87,12 @@ export default function FlexibleColumnLayoutTemplate(this: FlexibleColumnLayout)
 function arrowStart(this: FlexibleColumnLayout) {
 	return (
 		<Button
-			icon="slim-arrow-right"
+			icon={this.startArrowDirection === "backward" ? "slim-arrow-left" : "slim-arrow-right"}
 			design="Transparent"
 			onClick={this.switchLayoutOnArrowPress}
 			class="ui5-fcl-arrow ui5-fcl-arrow--start"
 			style={{
 				display: this.showStartSeparatorArrow ? "inline-block" : "none",
-				transform: this.startArrowDirection === "backward" ? "rotate(180deg)" : ""
 			}}
 		/>
 	);
