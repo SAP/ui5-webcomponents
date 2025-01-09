@@ -98,7 +98,12 @@
 	position: absolute;
 	inset: 0.125rem;
 	pointer-events: none;
-	top: calc(50% + 0.125rem);
+	top: 50%;
+}
+
+:host([header-text=""]) .ui5-list-nodata:focus::after,
+:host(:not([header-text])) .ui5-list-nodata:focus::after {
+  top: 0.125rem;
 }
 
 .ui5-list-nodata-text {
