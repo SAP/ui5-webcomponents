@@ -41,6 +41,14 @@ class SettingView extends UI5Element {
 	selected = false;
 
 	/**
+	 * Indicates weather the view is a secondary. It is relevant only if the view is used in `pages` slot of `ui5-settings-item` and controls the visibility of the back button.
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	secondary = false;
+
+	/**
 	 * Defines the content of the view.
 	 *
 	 * @public

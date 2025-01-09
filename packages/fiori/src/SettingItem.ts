@@ -163,14 +163,6 @@ class SettingItem extends UI5Element {
 	loading = false;
 
 	/**
-	 * Indicates weather the back button should be shown. It will be shown only on page views if their `selected` property is set to `true`.
-	 * @default false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	showBackButton = false;
-
-	/**
 	 * Defines the icon of the component.
 	 *
 	 * @default undefined
@@ -205,8 +197,8 @@ class SettingItem extends UI5Element {
 	tabs!: Array<SettingView>;
 
 	/**
-	 * Defines the page views of the setting item. 
-	 * 
+	 * Defines the page views of the setting item.
+	 *
 	 * If there are no tab views, the first page view will be shown unless there is selected one. If there is selected page view it will be shown no matter if there are tab views.
 	 *
 	 * @public
@@ -283,7 +275,7 @@ class SettingItem extends UI5Element {
 	}
 
 	get _shouldShowBackButton() {
-		return this.showBackButton && this._hasSelectedPageView;
+		return !!(this._hasSelectedPageView && this._selectedPageView.secondary);
 	}
 
 	captureRef(this: SettingView, ref: HTMLElement & { associatedSettingView?: SettingView} | null) {
