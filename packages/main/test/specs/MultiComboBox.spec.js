@@ -120,8 +120,8 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await browser.$("#mcb-select-all-vs");
 			const arrow = await mcb.shadow$(".inputIcon");
 			const tokenizer = await mcb.shadow$("ui5-tokenizer");
-			const body = await browser.$(".multicombobox1auto");
 			const nMoreText = await tokenizer.shadow$(".ui5-tokenizer-more-text");
+			const btnAfter = await browser.$("#btnAfter");
 			const firstItemCheckbox = await mcb.$("ui5-mcb-item").shadow$("ui5-checkbox");
 
 			await arrow.click();
@@ -130,15 +130,17 @@ describe("MultiComboBox general interaction", () => {
 
 			// select all items
 			await browser.keys("Space");
-
-			assert.ok(await tokenizer.getProperty("expanded"), "The tokenizer is expanded");
-
-			await body.click();
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "The tokenizer is expanded - all items are selected");
+			
+			await btnAfter.click();
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "The tokenizer is collapsed - pressing outside");
+			
 			await nMoreText.click();
-			await firstItemCheckbox.click();
-			await body.click();
+			assert.strictEqual(await tokenizer.getProperty("expanded"), true, "The tokenizer is expanded - n-more clicked");
 
-			assert.notOk(await tokenizer.getProperty("expanded"), "The tokenizer is collapsed");
+			await firstItemCheckbox.click();
+			await btnAfter.click();
+			assert.strictEqual(await tokenizer.getProperty("expanded"), false, "The tokenizer is collapsed - pressing outside");
 		});
 	});
 

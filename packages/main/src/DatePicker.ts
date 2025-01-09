@@ -41,14 +41,12 @@ import {
 	DATEPICKER_POPOVER_ACCESSIBLE_NAME,
 } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
-import Icon from "./Icon.js";
-import Button from "./Button.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Calendar from "./Calendar.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import type CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import CalendarDateComponent from "./CalendarDate.js";
-import Input, { type InputAccInfo } from "./Input.js";
+import type Input from "./Input.js";
+import type { InputAccInfo } from "./Input.js";
 import InputType from "./types/InputType.js";
 import IconMode from "./types/IconMode.js";
 import DatePickerTemplate from "./DatePickerTemplate.js";
@@ -168,14 +166,6 @@ type Picker = "day" | "month" | "year";
 		datePickerCss,
 		ResponsivePopoverCommonCss,
 		datePickerPopoverCss,
-	],
-	dependencies: [
-		Icon,
-		ResponsivePopover,
-		Calendar,
-		CalendarDateComponent,
-		Input,
-		Button,
 	],
 })
 /**

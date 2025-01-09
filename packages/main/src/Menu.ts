@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { type UI5CustomEvent } from "@ui5/webcomponents-base";
+import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -20,12 +20,10 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Button from "./Button.js";
-import List from "./List.js";
-import BusyIndicator from "./BusyIndicator.js";
-import MenuItem from "./MenuItem.js";
-import MenuSeparator from "./MenuSeparator.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
+import type MenuItem from "./MenuItem.js";
+import "./MenuItem.js";
+import "./MenuSeparator.js";
 import type {
 	ListItemClickEventDetail,
 } from "./List.js";
@@ -99,14 +97,6 @@ type MenuBeforeCloseEventDetail = { escPressed: boolean };
 	renderer: jsxRenderer,
 	styles: menuCss,
 	template: menuTemplate,
-	dependencies: [
-		ResponsivePopover,
-		Button,
-		List,
-		MenuItem,
-		MenuSeparator,
-		BusyIndicator,
-	],
 })
 
 /**

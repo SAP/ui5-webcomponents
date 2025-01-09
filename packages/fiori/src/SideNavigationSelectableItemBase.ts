@@ -175,6 +175,17 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 			this.sideNavigation?._handleItemClick(e, this);
 		}
 	}
+
+	get isSideNavigationSelectableItemBase() {
+		return true;
+	}
 }
 
+const isInstanceOfSideNavigationSelectableItemBase = (object: any): object is SideNavigationSelectableItemBase => {
+	return "isSideNavigationSelectableItemBase" in object;
+};
+
 export default SideNavigationSelectableItemBase;
+export {
+	isInstanceOfSideNavigationSelectableItemBase,
+};

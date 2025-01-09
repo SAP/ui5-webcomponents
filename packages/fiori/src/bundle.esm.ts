@@ -32,6 +32,7 @@ import ShellBarItem from "./ShellBarItem.js";
 import SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationGroup from "./SideNavigationGroup.js";
 import SortItem from "./SortItem.js";
 import Timeline from "./Timeline.js";
 import NavigationLayout from "./NavigationLayout.js";

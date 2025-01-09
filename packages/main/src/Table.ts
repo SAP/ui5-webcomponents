@@ -10,7 +10,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import type { MoveEventDetail as TableMoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -42,11 +42,11 @@ interface ITableFeature extends UI5Element {
 	 * Called when the table is activated.
 	 * @param table table instance
 	 */
-	onTableActivate(table: Table): void;
+	onTableActivate?(table: Table): void;
 	/**
 	 * Called when the table finished rendering.
 	 */
-	onTableAfterRendering?(): void;
+	onTableAfterRendering?(table?: Table): void;
 }
 
 /**
@@ -75,6 +75,8 @@ interface ITableGrowing extends ITableFeature {
 type TableRowClickEventDetail = {
 	row: TableRow,
 };
+
+type TableMoveEventDetail = MoveEventDetail;
 
 /**
  * @class
@@ -363,7 +365,7 @@ class Table extends UI5Element {
 			ResizeHandler.register(this, this._onResizeBound);
 		}
 		this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound));
-		this.features.forEach(feature => feature.onTableActivate(this));
+		this.features.forEach(feature => feature.onTableActivate?.(this));
 		this._tableNavigation = new TableNavigation(this);
 		this._tableDragAndDrop = new TableDragAndDrop(this);
 	}
@@ -391,7 +393,7 @@ class Table extends UI5Element {
 	}
 
 	onAfterRendering(): void {
-		this.features.forEach(feature => feature.onTableAfterRendering?.());
+		this.features.forEach(feature => feature.onTableAfterRendering?.(this));
 	}
 
 	_getSelection(): TableSelection | undefined {
@@ -504,7 +506,7 @@ class Table extends UI5Element {
 	}
 
 	_isFeature(feature: any) {
-		return Boolean(feature.onTableActivate && feature.onTableAfterRendering);
+		return Boolean(feature.onTableActivate || feature.onTableAfterRendering);
 	}
 
 	_isGrowingFeature(feature: any) {
@@ -640,5 +642,5 @@ export type {
 	ITableFeature,
 	ITableGrowing,
 	TableRowClickEventDetail,
-	TableMoveEventDetail as TableTableMoveEventDetail,
+	TableMoveEventDetail,
 };

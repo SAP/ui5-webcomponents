@@ -5,10 +5,8 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import Text from "./Text.js";
-import Link, { type LinkAccessibilityAttributes } from "./Link.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Button from "./Button.js";
+import type { LinkAccessibilityAttributes } from "./Link.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 import ExpandableTextOverflowMode from "./types/ExpandableTextOverflowMode.js";
 import type TextEmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
 import {
@@ -52,25 +50,19 @@ import ExpandableTextCss from "./generated/themes/ExpandableText.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.5.0
+ * @since 2.6.0
  */
 @customElement({
 	tag: "ui5-expandable-text",
 	renderer: jsxRender,
 	styles: ExpandableTextCss,
 	template: ExpandableTextTemplate,
-	dependencies: [
-		Text,
-		Link,
-		ResponsivePopover,
-		Button,
-	],
 })
 class ExpandableText extends UI5Element {
 	/**
 	 * Text of the component.
 	 *
-	 * @default ""
+	 * @default undefined
 	 * @public
 	 */
 	@property()
@@ -90,7 +82,7 @@ class ExpandableText extends UI5Element {
 	 * @public
 	 */
 	@property()
-	overflowMode: `${ExpandableTextOverflowMode}` = ExpandableTextOverflowMode.InPlace
+	overflowMode: `${ExpandableTextOverflowMode}` = "InPlace"
 
 	/**
 	 * Specifies if an empty indicator should be displayed when there is no text.

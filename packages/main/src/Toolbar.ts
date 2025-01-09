@@ -34,11 +34,10 @@ import type ToolbarSeparator from "./ToolbarSeparator.js";
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
-	getRegisteredDependencies,
 } from "./ToolbarRegistry.js";
 
-import Button from "./Button.js";
-import Popover from "./Popover.js";
+import type Button from "./Button.js";
+import type Popover from "./Popover.js";
 
 type ToolbarMinWidthChangeEventDetail = {
 	minWidth: number,
@@ -174,15 +173,6 @@ class Toolbar extends UI5Element {
 			ToolbarCss,
 			ToolbarPopoverCss,
 			...styles,
-		];
-	}
-
-	static get dependencies() {
-		const deps = getRegisteredDependencies();
-		return [
-			Popover,
-			Button,
-			...deps,
 		];
 	}
 
@@ -365,7 +355,11 @@ class Toolbar extends UI5Element {
 	processOverflowLayout() {
 		const containerWidth = this.offsetWidth - this.padding;
 		const contentWidth = this.itemsWidth;
-		const overflowSpace = contentWidth - containerWidth + this.overflowButtonSize;
+		let overflowSpace = contentWidth - containerWidth + this.overflowButtonSize;
+
+		if (contentWidth <= containerWidth) {
+			overflowSpace = 0;
+		}
 
 		// skip calculation if the width has not been changed or if the items width has not been changed
 		if (this.width === containerWidth && this.contentWidth === contentWidth) {

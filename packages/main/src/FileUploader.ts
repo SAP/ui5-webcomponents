@@ -18,9 +18,8 @@ import {
 	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 
-import Input from "./Input.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Input from "./Input.js";
+import type Popover from "./Popover.js";
 
 // Template
 import FileUploaderTemplate from "./FileUploaderTemplate.js";
@@ -80,11 +79,6 @@ type FileUploaderChangeEventDetail = {
 		ValueStateMessageCss,
 	],
 	template: FileUploaderTemplate,
-	dependencies: [
-		Input,
-		Popover,
-		Icon,
-	],
 })
 /**
  * Event is fired when the value of the file path has been changed.
@@ -263,7 +257,7 @@ class FileUploader extends UI5Element implements IFormInputElement {
 	}
 
 	_onclick() {
-		if (this.getFocusDomRef()!.matches(":has(:focus-within)")) {
+		if (this.getFocusDomRef()?.matches(":has(:focus-within)")) {
 			this._input.click();
 		}
 	}
