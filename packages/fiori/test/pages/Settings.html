@@ -91,14 +91,20 @@
 		console.log(`Back navigation on view: ${event.detail.view.text}`, event.detail);
 	});
 
-	settingsDialog.addEventListener("close", function (event) {
-		console.log("Settings dialog closed", event.detail);
-	});
-
 	settingsDialog.addEventListener("open", function (event) {
-		console.log("Settings dialog opened", event.detail);
+		console.log("Settings dialog opened", event);
 	});
 
+	settingsDialog.addEventListener("before-close", function (event) {
+		console.log("Settings dialog before close", event.detail);
+		if (!confirm("Are you sure you want to close the dialog?")) {
+			event.preventDefault();
+		}
+	});
+
+	settingsDialog.addEventListener("close", function (event) {
+		console.log("Settings dialog closed", event);
+	});
 </script>
 </body>
 </html>

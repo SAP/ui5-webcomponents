@@ -16,6 +16,7 @@ import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import type { PopupBeforeCloseEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 import SettingsTemplate from "./SettingsTemplate.js";
 import type SettingItem from "./SettingItem.js";
 import SettingsCss from "./generated/themes/Settings.css.js";
@@ -30,6 +31,8 @@ import {
 type SettingsItemSelectEventDetail = {
 	item: SettingItem;
 }
+
+type SettingsBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 
 @customElement({
 	tag: "ui5-settings",
@@ -64,6 +67,14 @@ type SettingsItemSelectEventDetail = {
 @event("open")
 
 /**
+ * Fired before the settings dialog is closed.
+ * @public
+ */
+@event("before-close", {
+	cancelable: true,
+})
+
+/**
  * Fired when a settings dialog is close.
  * @public
  */
@@ -88,6 +99,7 @@ class Settings extends UI5Element {
 	eventDetails!: {
 		"item-select": SettingsItemSelectEventDetail,
 		"open": void,
+		"before-close": SettingsBeforeCloseEventDetail,
 		"close": void,
 	};
 	/**
@@ -230,11 +242,23 @@ class Settings extends UI5Element {
 		}
 	}
 
-	_handlePopoverAfterOpen() {
+	_handleDialogAfterOpen() {
 		this.fireDecoratorEvent("open");
 	}
 
-	_handlePopoverAfterClose() {
+	_handleDialogBeforeClose(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+		if (!e.detail.escPressed) {
+			return;
+		}
+
+		const eventPrevented = !this.fireDecoratorEvent("before-close", e.detail);
+
+		if (eventPrevented) {
+			e.preventDefault();
+		}
+	}
+
+	_handleDialogAfterClose() {
 		this.open = false;
 		this.fireDecoratorEvent("close");
 	}
@@ -255,8 +279,12 @@ class Settings extends UI5Element {
 		return this._selectedSetting ? this._selectedSetting._individualSlot : "";
 	}
 
-	_onClose() {
-		this.open = false;
+	_handleCloseButtonClick() {
+		const eventPrevented = !this.fireDecoratorEvent("before-close", { escPressed: false });
+
+		if (!eventPrevented) {
+			this.open = false;
+		}
 	}
 
 	_handleCollapseClick() {
@@ -279,4 +307,5 @@ Settings.define();
 export default Settings;
 export type {
 	SettingsItemSelectEventDetail,
+	SettingsBeforeCloseEventDetail,
 };

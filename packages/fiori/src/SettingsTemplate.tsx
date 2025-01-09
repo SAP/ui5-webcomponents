@@ -17,8 +17,9 @@ export default function SettingsTemplate(this: Settings) {
 			open={this.open}
 			accessibleName={this.accessibleNameText}
 			onui5-_collapse={this._handleCollapseClick}
-			onClose={this._handlePopoverAfterClose}
-			onOpen={this._handlePopoverAfterOpen}
+			onOpen={this._handleDialogAfterOpen}
+			onBeforeClose={this._handleDialogBeforeClose}
+			onClose={this._handleDialogAfterClose}
 		>
 			<div class="ui5-sd-root">
 				<div class="ui5-sd-side" aria-orientation="vertical" aria-roledescription={this.ariaRoleDescList}>
@@ -44,7 +45,7 @@ export default function SettingsTemplate(this: Settings) {
 			</div>
 
 			<Toolbar slot="footer" design="Transparent">
-				<ToolbarButton text={this.closeButtonText} onClick={this._onClose} />
+				<ToolbarButton text={this.closeButtonText} onClick={this._handleCloseButtonClick} />
 			</Toolbar>
 		</Dialog>
 	);
