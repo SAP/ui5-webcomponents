@@ -21,6 +21,7 @@ export default function ToolbarTemplate(this: Toolbar) {
 				aria-hidden={this.hideOverflowButton}
 				icon={overflowIcon}
 				design="Transparent"
+				onClick={this.toggleOverflow}
 				class={{
 					"ui5-tb-item": true,
 					"ui5-tb-overflow-btn": true,
