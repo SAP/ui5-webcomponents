@@ -223,7 +223,7 @@ describe("Responsiveness", () => {
 	});
 
 	it("tests XXL Breakpoint Search bar", () => {
-		cy.get("@shellbar").invoke("attr", "show-search-field", "true");
+		cy.get("@shellbar").invoke("attr", "show-open-search-field", "true");
 		cy.viewport(2560, 1080);
 		cy.get("[slot='searchField']")
 			.should("exist");

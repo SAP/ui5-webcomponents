@@ -501,7 +501,7 @@ slot[name="profile"] {
 	min-width: 1rem;
 }
 
-:host([breakpoint-size="M"][_show-search-field]) .ui5-shellbar-overflow-container-right-child {
+:host([breakpoint-size="M"][show-search-field]) .ui5-shellbar-overflow-container-right-child {
 	flex-grow: 1;
 }
 
