@@ -10,6 +10,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type { JsxTemplateModule } from "@ui5/webcomponents-base/dist/index.js";
 import {
 	isSpace,
 	isEnter,
@@ -17,18 +18,19 @@ import {
 	isUp,
 	isTabNext,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 import type Button from "./Button.js";
 import type Dialog from "./Dialog.js";
-import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
 	COLOR_PALETTE_DEFAULT_COLOR_TEXT,
+	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
+	COLOR_PALETTE_DIALOG_OK_BUTTON,
+	COLOR_PALETTE_DIALOG_TITLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -73,7 +75,6 @@ type ColorPaletteItemClickEventDetail = {
 @customElement({
 	tag: "ui5-color-palette",
 	renderer: jsxRenderer,
-	features: ["ColorPaletteMoreColors"],
 	template: ColorPaletteTemplate,
 	styles: [ColorPaletteCss, ColorPaletteDialogCss],
 })
@@ -149,6 +150,13 @@ class ColorPalette extends UI5Element {
 	onPhone = false;
 
 	/**
+	 * The showMoreColors template module.
+	 * @private
+	 */
+	@property({ type: Object })
+	showMoreColorsTemplateModule?: JsxTemplateModule;
+
+	/**
 	 * Defines the `ui5-color-palette-item` elements.
 	 * @public
 	 */
@@ -164,7 +172,6 @@ class ColorPalette extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
-	moreColorsFeature?: ColorPaletteMoreColors;
 	_currentlySelected?: ColorPaletteItem;
 	_shouldFocusRecentColors = false;
 
@@ -201,19 +208,13 @@ class ColorPalette extends UI5Element {
 			item.index = index + 1;
 		});
 
-		if (this.showMoreColors) {
-			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-			if (ColorPaletteMoreColorsClass) {
-				ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
-				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
-			}
+		if (this.showMoreColors && !this.showMoreColorsTemplateModule) {
+			import("./features/ColorPaletteMoreColorsTemplate.js").then(module => {
+				this.showMoreColorsTemplateModule = module;
+			});
 		}
 
 		this.onPhone = isPhone();
-	}
-
-	get _effectiveShowMoreColors() {
-		return !!(this.showMoreColors && this.moreColorsFeature);
 	}
 
 	onAfterRendering() {
@@ -526,15 +527,15 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorPaletteDialogTitle() {
-		return this.moreColorsFeature?.colorPaletteDialogTitle;
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DIALOG_TITLE);
 	}
 
 	get colorPaletteDialogOKButton() {
-		return this.moreColorsFeature?.colorPaletteDialogOKButton;
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DIALOG_OK_BUTTON);
 	}
 
 	get colorPaletteCancelButton() {
-		return this.moreColorsFeature?.colorPaletteCancelButton;
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 
 	/**
@@ -559,10 +560,6 @@ class ColorPalette extends UI5Element {
 
 	get colorPaletteDefaultColorText() {
 		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_DEFAULT_COLOR_TEXT);
-	}
-
-	get _showMoreColors() {
-		return this.showMoreColors && this.moreColorsFeature;
 	}
 
 	get rowSize() {
