@@ -80,7 +80,7 @@ enum FCLLayout {
      * Use to display the Mid and End columns while the Start column is hidden.
      * @public
      */
-	 ThreeColumnsBeginHiddenMidExpanded = "ThreeColumnsBeginHiddenMidExpanded",
+	 ThreeColumnsStartHiddenMidExpanded = "ThreeColumnsStartHiddenMidExpanded",
 
 	 /**
 	  * Desktop: Defaults to 0 - 33 - 67 percent widths of columns. Start is hidden, Mid and End (expanded) columns are displayed.
@@ -90,7 +90,7 @@ enum FCLLayout {
 	  * Use to display the Mid column and expanded End column while the grip of the separator is not visible.
 	  * @public
 	  */
-	 ThreeColumnsBeginHiddenEndExpanded = "ThreeColumnsBeginHiddenEndExpanded",
+	 ThreeColumnsStartHiddenEndExpanded = "ThreeColumnsStartHiddenEndExpanded",
 
 	/**
 	 * Desktop: Fixed -- 100 -- percent widths of columns, only the Mid column is displayed

@@ -33,6 +33,7 @@
 	display: none;
 }
 
+/* separator */
 .ui5-fcl-separator {
 	display: flex;
 	align-items: center;
@@ -49,24 +50,6 @@
 	border:var(--_ui5_fcl_separator_focus_border);
 	outline: none;
 }
-
-/* arrow icon*/
-.ui5-fcl-arrow--start {
-	color: var(--sapButton_TextColor);
-	border-radius: 0.25rem;
-	position: absolute;
-	top: 1rem;
-	left: 50%;
-	transform: translateX(-50%);
-	cursor: pointer;
-	z-index: 10;
-}
-
-.ui5-fcl-arrow--start:focus {
-	border: var(--_ui5_fcl_separator_focus_border);
-	outline: none;
-}
-
 .ui5-fcl-grip {
 	cursor: col-resize;
 	overflow: visible;
@@ -74,6 +57,18 @@
 	color: var(--sapButton_TextColor);
 	padding-top: 0.3125rem;
 	padding-bottom: 0.3125rem;
+}
+
+.ui5-fcl-arrow {
+	position: absolute;
+    top: 1rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	min-width: 1.5rem;
+	will-change: transform;
+	overflow: visible;
+	z-index: 10;
+	cursor: pointer;
 }
 
 /* grip decoration */
