@@ -21,7 +21,6 @@ import {
 import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 import type Button from "./Button.js";
-import type Dialog from "./Dialog.js";
 import type ColorPicker from "./ColorPicker.js";
 
 import {
@@ -155,6 +154,18 @@ class ColorPalette extends UI5Element {
 	 */
 	@property({ type: Object })
 	showMoreColorsTemplateModule?: JsxTemplateModule;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	dialogOpen = false;
+
+	/**
+	 * @private
+	 */
+	@property()
+	colorPickerValue = "rgba(255,255,255,1)";
 
 	/**
 	 * Defines the `ui5-color-palette-item` elements.
@@ -471,9 +482,12 @@ class ColorPalette extends UI5Element {
 		return this.colorPaletteNavigationElements[0];
 	}
 
+	onColorPickerChange(e: Event) {
+		this.colorPickerValue = (e.target as ColorPicker).value;
+	}
+
 	_chooseCustomColor() {
-		const colorPicker = this.getColorPicker();
-		this._setColor(colorPicker.value);
+		this._setColor(this.colorPickerValue);
 		this._closeDialog();
 		this._shouldFocusRecentColors = true;
 	}
@@ -488,19 +502,16 @@ class ColorPalette extends UI5Element {
 	}
 
 	_closeDialog() {
-		const dialog = this._getDialog();
-		dialog.open = false;
+		this.dialogOpen = false;
 	}
 
 	_openMoreColorsDialog() {
-		const dialog = this._getDialog();
-		const colorPicker = this.getColorPicker();
 		const value = this._currentlySelected ? this._currentlySelected.value : undefined;
 
 		if (value) {
-			colorPicker.value = value;
+			this.colorPickerValue = value;
 		}
-		dialog.open = true;
+		this.dialogOpen = true;
 	}
 
 	_onDefaultColorClick() {
@@ -624,15 +635,6 @@ class ColorPalette extends UI5Element {
 				"ui5-cp-root-phone": isPhone(),
 			},
 		};
-	}
-
-	_getDialog() {
-		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
-	}
-
-	getColorPicker() {
-		const dialog = this._getDialog();
-		return dialog.content[0].querySelector<ColorPicker>("[ui5-color-picker]")!;
 	}
 }
 
