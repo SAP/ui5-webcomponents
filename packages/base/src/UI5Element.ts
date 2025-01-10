@@ -234,7 +234,9 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
-			this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+			if (!this.shadowRoot) { // if there is already a declarative shadow root, do not destroy it
+				this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
+			}
 
 			const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
 			if (slotsAreManaged) {
