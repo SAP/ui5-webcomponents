@@ -274,8 +274,8 @@ class DynamicPageTitle extends UI5Element {
 		}
 	}
 
-	get _needsSeparator() {
-		return (this.navigationBar.length && this.actionsBar.length);
+	get _needsSeparator(): boolean {
+		return (this.navigationBar.length > 0 && this.actionsBar.length > 0);
 	}
 
 	prepareLayoutActions() {

@@ -15,7 +15,7 @@ export default function TreeItemTemplate(this: TreeItem, hooks?: Partial<ListIte
 function listItemContent(this: TreeItem) {
 	return <>
 		<div class="ui5-li-text-wrapper">
-			{this._showTitle &&
+			{!!this._showTitle &&
 				<div part="title" class="ui5-li-title"> {this.text}</div>
 			}
 		</div>
