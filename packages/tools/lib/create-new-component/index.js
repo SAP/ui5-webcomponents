@@ -1,6 +1,7 @@
 const fs = require("fs");
 const prompts = require("prompts");
-const tsFileContentTemplate = require("./tsFileContentTemplate.js");
+const Component = require("./Component.js");
+const ComponentTemplate= require("./ComponentTemplate.js");
 
 /**
  * Hyphanates the given PascalCase string, f.e.:
@@ -61,12 +62,12 @@ const generateFiles = (componentName, tagName, library, packageName) => {
 	const filePaths = {
 		"main": `./src/${componentName}.ts`,
 		"css": `./src/themes/${componentName}.css`,
-		"template": `./src/${componentName}.hbs`,
+		"template": `./src/${componentName}Template.tsx`,
 	};
 
-	fs.writeFileSync(filePaths.main, tsFileContentTemplate(componentName, tagName, library, packageName), { flag: "wx+" });
+	fs.writeFileSync(filePaths.main, Component(componentName, tagName, library, packageName), { flag: "wx+" });
 	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
-	fs.writeFileSync(filePaths.template, "<div>Hello World</div>", { flag: "wx+" });
+	fs.writeFileSync(filePaths.template, ComponentTemplate(componentName), { flag: "wx+" });
 
 	console.log(`Successfully generated ${filePaths.main}`);
 	console.log(`Successfully generated ${filePaths.css}`);
@@ -74,8 +75,8 @@ const generateFiles = (componentName, tagName, library, packageName) => {
 
 	// Change the color of the output
 	console.warn('\x1b[33m%s\x1b[0m', `
-	Make sure to import the component in your bundle by using:
-	import "./dist/${componentName}.js";`);
+Now, import the component via: "import ${componentName} from ./${componentName}.js";
+And, add it to your HTML: <${componentName}></${componentName}>.`);
 }
 
 // Main function
