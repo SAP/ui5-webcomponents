@@ -182,7 +182,6 @@ abstract class UI5Element extends HTMLElement {
 	_internals: ElementInternals;
 	_individualSlot?: string;
 	_getRealDomRef?: () => HTMLElement;
-	_skipFirstRender?: boolean;
 
 	static template?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
@@ -235,9 +234,7 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		if (ctor._needsShadowDOM()) {
 			const defaultOptions = { mode: "open" } as ShadowRootInit;
-			if (this.shadowRoot) { // if there is already a declarative shadow root, do not destroy it
-				this._skipFirstRender = true;
-			} else {
+			if (!this.shadowRoot) { // if there is already a declarative shadow root, do not destroy it
 				this.attachShadow({ ...defaultOptions, ...ctor.getMetadata().getShadowRootOptions() });
 			}
 
@@ -857,8 +854,7 @@ abstract class UI5Element extends HTMLElement {
 
 		// Update shadow root
 		if (ctor._needsShadowDOM()) {
-			updateShadowRoot(this, this._skipFirstRender);
-			this._skipFirstRender = false;
+			updateShadowRoot(this);
 		}
 		this._rendered = true;
 
