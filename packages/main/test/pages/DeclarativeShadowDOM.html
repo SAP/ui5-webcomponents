@@ -18,7 +18,7 @@
 
 <body>
 
-<!-- Declarative -->
+<h1>Declarative</h1>
 
 <ui5-button icon="add">
 	<template shadowrootmode="open" shadowrootdelegatesfocus="true">
@@ -31,18 +31,28 @@
 			<span id="ui5wc_1-content" class="ui5-button-text"><bdi><slot></slot></bdi></span>
 		</button>
 	</template>
-	With declarative shadow DOM
+	Button
 </ui5-button>
+
+<ui5-avatar initials="XL" color-scheme="Accent5" size="XL">
+	<template shadowrootmode="open">
+		<div class="ui5-avatar-root" data-sap-focus-ref="true" role="img" aria-label="Avatar"><span class="ui5-avatar-initials">XL</span>
+			<ui5-icon class="ui5-avatar-icon ui5-avatar-icon-fallback ui5-avatar-fallback-icon-hidden" ui5-icon="" design="Default" name="employee" mode="Image" desktop="">
+				<template shadowrootmode="open">
+					<svg class="ui5-icon-root" part="root" viewBox="0 0 512 512" role="img" focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g role="presentation"><path d="M326 352q11 0 18.5 7.5T352 378t-7.5 18-18.5 7h-12q-11 0-18.5-7t-7.5-18 7.5-18.5T314 352h12zm16-97q48 23 77 67.5t29 99.5v32q0 11-7.5 18.5T422 480H90q-11 0-18.5-7.5T64 454v-32q0-55 29-99.5t77-67.5l-5-4q-18-18-27.5-41.5T128 160q0-27 10-50t27.5-40.5 41-27.5T256 32t49.5 10.5 41 28T374 111t10 49q0 27-11 52t-31 43zm-112 86l-25-15q-13-7-13-19v-6q-34 17-55.5 49T115 422v7h115v-88zm-51-181q0 32 22.5 54.5T256 237t54.5-22.5T333 160t-22.5-54.5T256 83t-54.5 22.5T179 160zm218 262q0-40-21.5-72T320 301v6q0 12-13 19l-26 15v88h116v-7z"></path></g></svg>
+				</template>
+			</ui5-icon>
+			<slot name="badge"></slot>
+		</div>
+	</template>
+</ui5-avatar>
 
 <br>
 
-<!-- Imperative -->
+<h1>Imperative</h1>
 
-<ui5-button icon="add">Normal</ui5-button>
-
-
-
-
+<ui5-button icon="add">Button</ui5-button>
+<ui5-avatar initials="XL" color-scheme="Accent5" size="XL"></ui5-avatar>
 
 <script>
 	[...document.querySelectorAll("ui5-button")].forEach(button => {
