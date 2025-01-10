@@ -2,10 +2,10 @@ import getConstructableStyle from "./theming/getConstructableStyle.js";
 import type UI5Element from "./UI5Element.js";
 
 /**
- * Updates the shadow root of a UI5Element or its static area item
+ * Updates the shadow root of a UI5Element (both CSS and HTML)
  * @param element
  */
-const updateShadowRoot = (element: UI5Element) => {
+const updateShadowRoot = (element: UI5Element, skipDOMUpdate = false) => {
 	const ctor = element.constructor as typeof UI5Element;
 	const shadowRoot = element.shadowRoot;
 
@@ -15,7 +15,9 @@ const updateShadowRoot = (element: UI5Element) => {
 	}
 
 	shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor);
-	ctor.renderer(element, shadowRoot);
+	if (!skipDOMUpdate) {
+		ctor.renderer(element, shadowRoot);
+	}
 };
 
 export default updateShadowRoot;
