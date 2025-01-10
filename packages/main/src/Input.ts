@@ -22,7 +22,6 @@ import {
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isUp,
 	isDown,
@@ -206,7 +205,6 @@ type InputSuggestionScrollEventDetail = {
 		ValueStateMessageCss,
 		SuggestionsCss,
 	],
-	features: ["InputSuggestions"],
 })
 
 /**
@@ -526,6 +524,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_accessibleLabelsRefTexts?: string;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	Suggestions?: InputSuggestions;
+
+	/**
 	 * Defines the suggestion items.
 	 *
 	 * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -583,7 +587,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 	_shouldAutocomplete?: boolean;
 	_keyDown?: boolean;
 	_isKeyNavigation?: boolean;
-	Suggestions?: InputSuggestions;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
@@ -1258,11 +1261,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 			return;
 		}
 
-		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		if (Suggestions) {
+		import("./features/InputSuggestions.js").then(SuggestionsModule => {
+			const Suggestions = SuggestionsModule.default;
 			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
-		}
+		});
 	}
 
 	acceptSuggestion(item: IInputSuggestionItemSelectable, keyboardUsed: boolean) {
