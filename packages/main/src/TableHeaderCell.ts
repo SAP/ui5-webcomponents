@@ -75,6 +75,16 @@ class TableHeaderCell extends TableCellBase {
 	@property({ type: Number })
 	importance = 0;
 
+	/**
+	 * The text for the column when it pops in.
+	 *
+	 * @default undefined
+	 * @since 2.7.0
+	 * @public
+	 */
+	@property()
+	popinText?: string;
+
 	@property({ type: Boolean, noAttribute: true })
 	_popin = false;
 
