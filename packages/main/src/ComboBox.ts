@@ -1118,15 +1118,16 @@ class ComboBox extends UI5Element implements IFormInputElement {
 
 		const sameItemSelected = this.value === this._selectedItemText;
 		const sameSelectionPerformed = this.value.toLowerCase() === this.filterValue.toLowerCase();
+		const shouldFireSelectionEvent = this.noTypeahead && this._lastValue !== this.value;
 
-		if (sameItemSelected && sameSelectionPerformed) {
+		if (sameItemSelected && sameSelectionPerformed && !shouldFireSelectionEvent) {
 			this._fireChangeEvent(); // Click on an already typed, but not memoized value shouold also trigger the change event
 			return this._closeRespPopover();
 		}
 
 		this.value = this._selectedItemText;
 
-		if (!item.selected) {
+		if (!item.selected || shouldFireSelectionEvent) {
 			this.fireDecoratorEvent("selection-change", {
 				item,
 			});
