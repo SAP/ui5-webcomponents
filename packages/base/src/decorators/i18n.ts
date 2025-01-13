@@ -25,6 +25,7 @@ const i18n = (bundleName: string): i18nDecorator => {
 			get() {
 				return target.i18nBundles[propertyName];
 			},
+			set() {},
 		});
 
 		target.metadata.i18n[propertyName] = {

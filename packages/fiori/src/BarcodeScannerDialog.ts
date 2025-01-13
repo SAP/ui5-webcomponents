@@ -185,10 +185,6 @@ class BarcodeScannerDialog extends UI5Element {
 		this._handleCaptureRegionBound = this._handleDrawCaptureRegion.bind(this);
 	}
 
-	static async onDefine() {
-		BarcodeScannerDialog.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
 	async onAfterRendering() {
 		if (!this._hasGetUserMedia()) {
 			this.fireDecoratorEvent("scan-error", { message: "getUserMedia() is not supported by your browser" });
