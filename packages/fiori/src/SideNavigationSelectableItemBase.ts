@@ -88,19 +88,35 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	target?: string;
 
 	/**
+	 * Item design.
+	 *
 	 * @public
+	 * @default "Default"
+	 * @since 2.7.0
 	 */
 	@property()
 	design: `${SideNavigationItemDesign}` = "Default";
 
 	/**
+	 * Whether clicking on the item will result in the item being selected. By default all items are selectable.
+	 *
 	 * @public
+	 * @default false
+	 * @since 2.7.0
 	 */
 	@property({ type: Boolean })
 	unselectable = false;
 
 	/**
+	 * Defines the additional accessibility attributes that will be applied to the component.
+	 * The following fields are supported:
+	 *
+	 * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+	 * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+	 *
 	 * @public
+	 * @default {}
+	 * @since 2.7.0
 	 */
 	@property({ type: Object })
 	accessibilityAttributes: SideNavigationItemAccessibilityAttributes = {};
