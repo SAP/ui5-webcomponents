@@ -1,5 +1,6 @@
 import { html } from "lit";
 import "../../src/ComboBoxItem.js";
+import "../../src/ComboBox.js";
 import type ComboBox from "../../src/ComboBox.js";
 
 describe("Security", () => {
@@ -24,20 +25,19 @@ describe("Security", () => {
 describe("Events testing", () => {
 	it("Selection-change: event fires when item is fully typed and selected from the items list", () => {
 		cy.mount(html`
-			<ui5-combobox no-typeahead>
-				<ui5-cb-item text="Albania"></ui5-cb-item>
+			<ui5-combobox no-typeahead="true">
+				<ui5-cb-item text="Algeria"></ui5-cb-item>
 				<ui5-cb-item text="Bulgaria"></ui5-cb-item>
 			</ui5-combobox>
 		`);
 
-		cy.get("ui5-combobox").as("combobox");
+		cy.get("[ui5-combobox]").as("combobox");
+		cy.get<ComboBox>("@combobox").shadow().find("input").as("inner");
 
 		cy.get<ComboBox>("@combobox")
 			.then($combobox => {
 				$combobox.get(0).addEventListener("selection-change", cy.stub().as("selectionChange"));
 			});
-
-		cy.get<ComboBox>("@combobox").shadow().find("input").as("inner");
 
 		cy.get("@inner").realClick();
 		cy.get("@inner").type("Bulgaria");
