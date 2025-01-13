@@ -77,7 +77,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 								<Button slot="header" class="ui5-pm-add-account-btn" design="Transparent" icon={addEmployee} onClick={this._handleAddAccountClick} tooltip={this._addAccountTooltip}/>
 							}
 						</div>
-						{this._otherAccounts.length &&
+						{this._otherAccounts.length > 0 &&
 							<List onItemClick={this._handleAccountSwitch}>
 								{this._otherAccounts.map(account =>
 									<ListItemCustom
@@ -108,7 +108,7 @@ export default function UserMenuTemplate(this: UserMenu) {
 					</Panel>
 			}
 
-			{this.menuItems.length &&
+			{this.menuItems.length > 0 &&
 					<List
 						class="ui5-user-menu-list"
 						selectionMode="None"

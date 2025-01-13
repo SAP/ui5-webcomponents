@@ -24,7 +24,7 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: {
 			{(hooks?.handlesAriaText || handlesAriaText).call(this)}
 
 			<div class="ui5-slider-inner">
-				{this.step && this.showTickmarks && <>
+				{!!this.step && this.showTickmarks && <>
 					<ul class="ui5-slider-tickmarks">
 						{this.tickmarksObject.map(tm => <>
 							{tm ?
@@ -34,7 +34,7 @@ export default function SliderBaseTemplate(this: SliderBase, hooks?: {
 							}
 						</>)}
 					</ul>
-					{this.labelInterval &&
+					{!!this.labelInterval &&
 							<ul class={{
 								"ui5-slider-labels": true,
 								"ui5-slider-hidden-labels": this._labelsOverlapping,
