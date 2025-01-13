@@ -73,7 +73,9 @@
   },
   "peerDependencies": {
     "chromedriver": "*",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "puppeteer": "^21.3.8",
+    "prettier": "^3.0.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
