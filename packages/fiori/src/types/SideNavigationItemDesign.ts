@@ -1,8 +1,8 @@
 /**
- * SideNavigationItem types.
+ * SideNavigationItem designs.
  * @public
  */
-enum SideNavigationItemType {
+enum SideNavigationItemDesign {
 	/**
 	 * @public
 	 */
@@ -14,4 +14,4 @@ enum SideNavigationItemType {
 	Action = "Action",
 }
 
-export default SideNavigationItemType;
+export default SideNavigationItemDesign;

@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 
 /**
  * Fired when the component is activated either with a
@@ -84,6 +85,15 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	target?: string;
 
 	/**
+	 * @public
+	 */
+	@property()
+	design: `${SideNavigationItemDesign}` = "Default";
+
+	@property({ type: Boolean })
+	unselectable = false;
+
+	/**
 	 * @private
 	 * @default false
 	 */
@@ -144,7 +154,7 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	 * @override
 	 */
 	isSelectable() {
-		return !this.disabled;
+		return !this.unselectable && !this.disabled;
 	}
 
 	_onkeydown(e: KeyboardEvent) {

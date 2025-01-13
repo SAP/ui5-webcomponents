@@ -28,6 +28,14 @@
 	display: none;
 }
 
+:host([design="Action"]) {
+	color: var(--sapButton_TextColor);
+
+	& .ui5-sn-item-icon {
+		color: var(--sapButton_TextColor);
+	}
+}
+
 .ui5-sn-item:focus {
 	outline: none;
 }
