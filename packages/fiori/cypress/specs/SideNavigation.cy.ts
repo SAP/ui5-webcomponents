@@ -59,11 +59,45 @@ describe("Side Navigation interaction", () => {
 			{ id: "item4", expectedIsSelectable: true },
 			{ id: "item5", expectedIsSelectable: false },
 			{ id: "item6", expectedIsSelectable: true },
-			{ id: "item6", expectedIsSelectable: false },
+			{ id: "item7", expectedIsSelectable: false },
 		].forEach(({ id, expectedIsSelectable }) => {
-			cy.get(id)
+			cy.get(`#${id}`)
 				.invoke("prop", "isSelectable")
 				.should("equal", expectedIsSelectable);
 		});
+	});
+
+	it("Tests expanding and collapsing of unselectable items", () => {
+		cy.mount(`
+			<ui5-side-navigation>
+				<ui5-side-navigation-item id="item1" text="1" unselectable>
+					<ui5-side-navigation-sub-item text="2"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		// act
+		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
+
+		// assert
+		cy.get("#item1").should("have.attr", "expanded");
+
+		// act
+		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
+
+		// assert
+		cy.get("#item1").should("not.have.attr", "expanded");
+
+		// act
+		cy.get("#item1").shadow().find(".ui5-sn-item-text").realClick();
+
+		// assert
+		cy.get("#item1").should("have.attr", "expanded");
+
+		// act
+		cy.get("#item1").shadow().find(".ui5-sn-item-text").realClick();
+
+		// assert
+		cy.get("#item1").should("not.have.attr", "expanded");
 	});
 });

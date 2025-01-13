@@ -144,10 +144,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 		return this.selected;
 	}
 
-	_onToggleClick(e: PointerEvent) {
+	_onToggleClick(e: CustomEvent) {
 		e.stopPropagation();
 
-		this.expanded = !this.expanded;
+		this._toggle();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -173,6 +173,13 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	_onclick(e: MouseEvent) {
+		if (this.unselectable) {
+			e.stopPropagation();
+			this._toggle();
+
+			return;
+		}
+
 		super._onclick(e);
 	}
 
@@ -202,6 +209,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	get isSideNavigationItem() {
 		return true;
+	}
+
+	_toggle() {
+		this.expanded = !this.expanded;
 	}
 }
 
