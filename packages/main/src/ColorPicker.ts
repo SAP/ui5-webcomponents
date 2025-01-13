@@ -237,7 +237,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 			this._alpha = this._colorValue.Alpha;
 		}
 		const tempColor = this._colorValue.toRGBString();
-		this._setValues();
+		this._updateColorGrid();
 		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
 	}
 
@@ -386,7 +386,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 
 		const color = this._colorValue.toRGBString();
 		this._setValue(color);
-		this._setValues();
+		this._updateColorGrid();
 	}
 
 	_setMainColor(hueValue: number) {
@@ -493,7 +493,7 @@ class ColorPicker extends UI5Element implements IFormInputElement {
 		this.fireDecoratorEvent("change");
 	}
 
-	_setValues() {
+	_updateColorGrid() {
 		const hslColours: ColorHSL = this._colorValue.HSL;
 		this._selectedCoordinates = {
 			x: ((hslColours.l * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
