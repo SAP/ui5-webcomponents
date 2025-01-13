@@ -68,6 +68,7 @@ import TabContainerTemplate from "./TabContainerTemplate.js";
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 
 type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | TabInStrip;
 
@@ -956,7 +957,18 @@ class TabContainer extends UI5Element {
 			.filter((item): item is Tab => !item.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
+		const baseThemes = ["sap_horizon", "sap_horizon_dark", "sap_fiori_3", "sap_fiori_3_dark"];
+		const isBaseTheme = (theme: string) => baseThemes.includes(theme);
+
 		walk(items, (item, level) => {
+			const hasSemanticIcon = !item.isSeparator && (item as Tab).design !== SemanticColor.Default && (item as Tab).design !== SemanticColor.Neutral;
+
+			let extraIndentValue;
+			if (isBaseTheme(getTheme())) {
+				extraIndentValue = "0rem";
+			} else {
+				extraIndentValue = hasSemanticIcon ? "1.5rem" : "1rem";
+			}
 			item.receiveOverflowInfo({
 				getElementInOverflow: () => {
 					return this._findTabInOverflow(item);
@@ -964,6 +976,8 @@ class TabContainer extends UI5Element {
 				style: {
 					[getScopedVarName("--_ui5-tab-indentation-level")]: item.isSeparator ? level + 1 : level,
 					[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
+					[getScopedVarName("--_ui5_tc_overflowItem_extraIndent")]: extraIndentValue,
+					[getScopedVarName("--_ui5-tab-indent-multiplier")]: hasSemanticIcon ? "1.5rem" : ".5rem",
 				},
 			});
 		});

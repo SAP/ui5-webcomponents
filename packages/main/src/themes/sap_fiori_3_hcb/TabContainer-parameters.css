@@ -40,6 +40,4 @@
 	--_ui5_tc_overflowItem_critical_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_default_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_current_color: var(--_ui5_tc_overflowItem_default_color);
-	--_ui5_tc_overflowItem_extraIndent: 1.5rem;
-	--_ui5-tab-indent-multiplier: 1.5rem;
 }
