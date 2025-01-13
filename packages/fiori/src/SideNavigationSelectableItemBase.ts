@@ -4,6 +4,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+
+type SideNavigationItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup">;
 
 /**
  * Fired when the component is activated either with a
@@ -90,8 +93,17 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	@property()
 	design: `${SideNavigationItemDesign}` = "Default";
 
+	/**
+	 * @public
+	 */
 	@property({ type: Boolean })
 	unselectable = false;
+
+	/**
+	 * @public
+	 */
+	@property({ type: Object })
+	accessibilityAttributes: SideNavigationItemAccessibilityAttributes = {};
 
 	/**
 	 * @private

@@ -131,6 +131,7 @@ function TreeItemTemplate(this: SideNavigationItem) {
 					aria-expanded={this._expanded}
 					aria-current={this._ariaCurrent}
 					aria-selected={this.selected}
+					aria-haspopup={this._ariaHasPopup}
 					title={this._tooltip}
 					aria-owns={this._groupId}
 				>

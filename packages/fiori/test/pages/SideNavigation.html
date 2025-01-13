@@ -69,7 +69,7 @@
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>
 			<ui5-side-navigation-item slot="fixedItems" text="External Link" icon="chain-link" href="https://sap.com" target="_blank"></ui5-side-navigation-item>
-			<ui5-side-navigation-item slot="fixedItems" text="Quick Create" icon="write-new" design="Action" unselectable></ui5-side-navigation-item>
+			<ui5-side-navigation-item slot="fixedItems" text="Quick Create" icon="write-new" design="Action" unselectable id="quickCreate"></ui5-side-navigation-item>
 		</ui5-side-navigation>
 		<div class="inner-content">
 			<div>
@@ -118,6 +118,10 @@
 
 			input.value = `${++counter}`;
 		});
+
+		document.getElementById("quickCreate").accessibilityAttributes = {
+			hasPopup: "dialog"
+		};
 
 	</script>
 </body>

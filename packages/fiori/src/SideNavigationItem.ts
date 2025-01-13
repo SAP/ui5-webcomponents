@@ -91,6 +91,10 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 	}
 
 	get _ariaHasPopup() {
+		if (this.accessibilityAttributes?.hasPopup) {
+			return this.accessibilityAttributes.hasPopup;
+		}
+
 		if (!this.disabled && this.sideNavCollapsed && this.items.length) {
 			return "tree";
 		}
