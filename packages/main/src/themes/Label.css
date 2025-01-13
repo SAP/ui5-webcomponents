@@ -44,7 +44,7 @@
 :host([required]) .ui5-label-required-colon:after {
 	content:"*";
 	color: var(--sapField_RequiredColor);
-	font-size: 1.25rem;
+	font-size: var(--sapFontLargeSize);
 	font-weight: bold;
 	position: relative;
 	font-style: normal;

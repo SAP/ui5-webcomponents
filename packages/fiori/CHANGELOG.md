@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/SAP/ui5-webcomponents/compare/v2.6.2-rc.0...v2.6.2) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [2.6.2-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.1...v2.6.2-rc.0) (2025-01-09)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [2.6.1](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0...v2.6.1) (2025-01-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.6.0](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.5...v2.6.0) (2025-01-07)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [2.6.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.4...v2.6.0-rc.5) (2025-01-07)
+
+
+### Bug Fixes
+
+* remove dependencies for TSX components and fix features ([#10449](https://github.com/SAP/ui5-webcomponents/issues/10449)) ([a2b5f6f](https://github.com/SAP/ui5-webcomponents/commit/a2b5f6fb768499a8b757a9b7abad5f19033a33a7))
+* **ui5-dynamic-page:** prevent scroll position reset on unpinning the header ([#10441](https://github.com/SAP/ui5-webcomponents/issues/10441)) ([9f5a67a](https://github.com/SAP/ui5-webcomponents/commit/9f5a67ac185a087f65548ace894747dafa8c217a))
+* **ui5-dynamic-page:** update header sticky on manual snap ([#10431](https://github.com/SAP/ui5-webcomponents/issues/10431)) ([1975d56](https://github.com/SAP/ui5-webcomponents/commit/1975d56e45a4cc0d3f272ad31cb081b91a1b0d1d)), closes [#10430](https://github.com/SAP/ui5-webcomponents/issues/10430)
+* **ui5-navigation-layout:** replace "sideCollapsed" property with "mode" property ([#10390](https://github.com/SAP/ui5-webcomponents/issues/10390)) ([ae562dd](https://github.com/SAP/ui5-webcomponents/commit/ae562ddd8c5eeb43d07857743c640e1a3d7d60e2))
+* **ui5-notification-list-item:** scoping issue ([#10458](https://github.com/SAP/ui5-webcomponents/issues/10458)) ([6cc4615](https://github.com/SAP/ui5-webcomponents/commit/6cc46157deec42f207a528f37962b8fd7b968f2b))
+* **ui5-side-navigation:** ensure all items are focusable after expand ([#10453](https://github.com/SAP/ui5-webcomponents/issues/10453)) ([e60ad85](https://github.com/SAP/ui5-webcomponents/commit/e60ad858431eda48db44fc7fa22cfd4843b22aea)), closes [#10391](https://github.com/SAP/ui5-webcomponents/issues/10391)
+
+
+### Features
+
+* **ui5-dynamic-side-content:** add customizable aria labels ([#10416](https://github.com/SAP/ui5-webcomponents/issues/10416)) ([5887d29](https://github.com/SAP/ui5-webcomponents/commit/5887d29bbe26ddc73c5a6eb3be14985126e9490f)), closes [#8612](https://github.com/SAP/ui5-webcomponents/issues/8612)
+
+
+
+
+
 # [2.6.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v2.6.0-rc.3...v2.6.0-rc.4) (2025-01-02)
 
 

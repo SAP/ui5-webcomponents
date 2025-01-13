@@ -13,7 +13,7 @@ export default function DialogTemplate(this: Dialog) {
 
 function beforeContent(this: Dialog) {
 	return (<>
-		{this._displayHeader &&
+		{!!this._displayHeader &&
 			<header>
 				<div
 					class="ui5-popup-header-root"
