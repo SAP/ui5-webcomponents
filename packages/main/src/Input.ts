@@ -53,8 +53,8 @@ import type SuggestionItem from "./SuggestionItem.js";
 import type { SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
 import InputType from "./types/InputType.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
+import type Popover from "./Popover.js";
+import type Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 // Templates
@@ -86,7 +86,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
-import ResponsivePopover from "./ResponsivePopover.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
@@ -207,10 +207,6 @@ type InputSuggestionScrollEventDetail = {
 		SuggestionsCss,
 	],
 	features: ["InputSuggestions"],
-	get dependencies() {
-		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		return ([Popover, ResponsivePopover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
-	},
 })
 
 /**
@@ -1263,8 +1259,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormInputElement
 		}
 
 		const Suggestions = getComponentFeature<typeof InputSuggestions>("InputSuggestions");
-		Suggestions.i18nBundle = Input.i18nBundle;
 		if (Suggestions) {
+			Suggestions.i18nBundle = Input.i18nBundle;
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		}
 	}

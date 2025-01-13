@@ -10,7 +10,6 @@ import FormTemplate from "./FormTemplate.js";
 // Styles
 import FormCss from "./generated/themes/Form.css.js";
 
-import Title from "./Title.js";
 import type FormItemSpacing from "./types/FormItemSpacing.js";
 import type FormGroup from "./FormGroup.js";
 
@@ -27,10 +26,10 @@ const breakpoints = ["S", "M", "L", "Xl"];
 const MAX_FORM_ITEM_CELLS = 12;
 const DEFAULT_FORM_ITEM_LAYOUT = "4fr 8fr 0fr";
 const DEFAULT_FORM_ITEM_LAYOUT_S = "1fr";
+
 /**
  * Interface for components that can be slotted inside `ui5-form` as items.
  * @public
- * @experimental
  * @since 2.0.0
  */
 interface IFormItem extends UI5Element {
@@ -198,7 +197,6 @@ type ItemsInfo = {
  *
  * @public
  * @since 2.0.0
- * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  * @extends UI5Element
  */
 @customElement({
@@ -206,7 +204,6 @@ type ItemsInfo = {
 	renderer: jsxRenderer,
 	styles: FormCss,
 	template: FormTemplate,
-	dependencies: [Title],
 })
 class Form extends UI5Element {
 	/**

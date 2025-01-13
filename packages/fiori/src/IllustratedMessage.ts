@@ -8,7 +8,6 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Title from "@ui5/webcomponents/dist/Title.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageDesign from "./types/IllustrationMessageDesign.js";
@@ -83,7 +82,6 @@ const getEffectiveIllustrationName = (name: string): string => {
 	renderer: jsxRenderer,
 	styles: IllustratedMessageCss,
 	template: IllustratedMessageTemplate,
-	dependencies: [Title],
 })
 class IllustratedMessage extends UI5Element {
 	/**

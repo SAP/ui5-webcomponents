@@ -34,6 +34,7 @@
 			<ui5-toolbar-separator></ui5-toolbar-separator>
 			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
 			<ui5-toolbar-button id="btnOpenMenu" text="Open Menu" prevent-overflow-closing></ui5-toolbar-button>
+			<ui5-toolbar-button id="btnOpenMenu2" text="Open Menu 2" prevent-overflow-closing></ui5-toolbar-button>
 		</ui5-toolbar>
 		<ui5-menu header-text="Basic Menu with Items" id="menu" opener="btnOpenMenu">
 			<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
@@ -45,7 +46,14 @@
 			<ui5-menu-item text="Preferences" icon="action-settings"></ui5-menu-item>
 			<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 		</ui5-menu>
-
+		<ui5-menu header-text="Basic Menu 2 with Items" id="menu2">
+			<ui5-menu-item text="New File" icon="add-document"></ui5-menu-item>
+			<ui5-menu-item text="New Window" icon="add-folder" disabled></ui5-menu-item>
+			<ui5-menu-item text="Open.." icon="open-folder"></ui5-menu-item>
+			<ui5-menu-item text="Open Folder" icon="open-folder"></ui5-menu-item>
+			<ui5-menu-item text="Save" icon="save"></ui5-menu-item>
+		</ui5-menu>
+  
 		<ui5-input id="input" value="0"></ui5-input>
 
 		<br /><br />
@@ -374,10 +382,19 @@
 		})
 
 		const btnOpenMenu = document.getElementById("btnOpenMenu");
+		const btnOpenMenu2 = document.getElementById("btnOpenMenu2");
 		const menu = document.getElementById("menu");
+		const menu2 = document.getElementById("menu2");
 
-		btnOpenMenu.addEventListener("ui5-click", function (event) {
+		btnOpenMenu.addEventListener("ui5-click", function(event) {
+			// opener is set as string (the ID of the ui5-toolbar-button#btnOpenMenu)
 			menu.open = !menu.open;
+		});
+
+		btnOpenMenu2.addEventListener("ui5-click", function(event) {
+			// opener is set as property (the DOM reference of the ui5-toolbar-button#btnOpenMenu2)
+			menu2.open = !menu2.open;
+			menu2.opener = btnOpenMenu2;
 		});
 	</script>
 </body>

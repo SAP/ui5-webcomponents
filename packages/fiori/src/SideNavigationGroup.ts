@@ -8,7 +8,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationItem from "./SideNavigationItem.js";
@@ -44,9 +43,6 @@ import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.j
 	renderer: jsxRender,
 	template: SideNavigationGroupTemplate,
 	styles: SideNavigationGroupCss,
-	dependencies: [
-		Icon,
-	],
 })
 class SideNavigationGroup extends SideNavigationItemBase {
 	/**

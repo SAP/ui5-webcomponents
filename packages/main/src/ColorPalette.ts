@@ -19,11 +19,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
-import ColorPaletteItem from "./ColorPaletteItem.js";
-import Button from "./Button.js";
+import type ColorPaletteItem from "./ColorPaletteItem.js";
+import type Button from "./Button.js";
 import type Dialog from "./Dialog.js";
 import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
+import "./ColorPaletteItem.js";
 
 import {
 	COLORPALETTE_CONTAINER_LABEL,
@@ -76,10 +77,6 @@ type ColorPaletteItemClickEventDetail = {
 	features: ["ColorPaletteMoreColors"],
 	template: ColorPaletteTemplate,
 	styles: [ColorPaletteCss, ColorPaletteDialogCss],
-	get dependencies() {
-		const colorPaletteMoreColors = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
-	},
 })
 
 /**
@@ -207,8 +204,8 @@ class ColorPalette extends UI5Element {
 
 		if (this.showMoreColors) {
 			const ColorPaletteMoreColorsClass = getComponentFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-			ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
 			if (ColorPaletteMoreColorsClass) {
+				ColorPaletteMoreColorsClass.i18nBundle = ColorPalette.i18nBundle;
 				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
 			}
 		}
