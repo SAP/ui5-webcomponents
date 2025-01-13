@@ -1080,6 +1080,10 @@ abstract class UI5Element extends HTMLElement {
 		return true;
 	}
 
+	get isUI5AbstractElement(): boolean {
+		return !(this.constructor as typeof UI5Element)._needsShadowDOM();
+	}
+
 	get classes(): ClassMap {
 		return {};
 	}
