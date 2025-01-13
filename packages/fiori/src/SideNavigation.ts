@@ -586,7 +586,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_selectItem(item: SideNavigationSelectableItemBase) {
-		if (!item.isSelectable()) {
+		if (!item.isSelectable) {
 			return;
 		}
 

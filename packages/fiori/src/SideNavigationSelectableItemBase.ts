@@ -108,6 +108,10 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		return "treeitem";
 	}
 
+	get isSelectable() {
+		return !this.unselectable && !this.disabled;
+	}
+
 	get _href() {
 		return (!this.disabled && this.href) ? this.href : undefined;
 	}
@@ -148,13 +152,6 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 		}
 
 		return "page";
-	}
-
-	/**
-	 * @override
-	 */
-	isSelectable() {
-		return !this.unselectable && !this.disabled;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
