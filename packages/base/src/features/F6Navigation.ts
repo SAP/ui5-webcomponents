@@ -172,13 +172,13 @@ class F6Navigation {
 	}
 
 	updateGroups() {
-		const container = this.findContaienr();
+		const container = this.findContainer();
 
 		this.setSelectedGroup();
 		this.groups = getFastNavigationGroups(container);
 	}
 
-	findContaienr() {
+	findContainer() {
 		const htmlElement = window.document.querySelector("html");
 		let element = this.deepActive(window.document);
 
