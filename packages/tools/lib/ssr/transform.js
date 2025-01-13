@@ -74,6 +74,7 @@ const generateSSRPage = async (testPageURL, outputPath) => {
       });
     </script>`, '');
    html = html.replace(`<script type="module" src="/@vite-plugin-checker-client"></script>`, '');
+   html = html.replace(`<script type="module" src="/@vite/client"></script>`, '');
 
    fs.writeFileSync(outputPath, html);
    console.log("Done");
