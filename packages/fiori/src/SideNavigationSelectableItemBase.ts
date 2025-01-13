@@ -231,3 +231,6 @@ export default SideNavigationSelectableItemBase;
 export {
 	isInstanceOfSideNavigationSelectableItemBase,
 };
+export type {
+	SideNavigationItemAccessibilityAttributes,
+};
