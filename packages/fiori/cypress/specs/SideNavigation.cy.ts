@@ -24,7 +24,7 @@ describe("Side Navigation interaction", () => {
 		cy.get("#item1").shadow().find(".ui5-sn-item-toggle-icon").realClick();
 
 		// assert
-		cy.get("#item1").should("have.attr", "expanded");
+		cy.get("#item1").should("not.have.attr", "expanded");
 	});
 
 	it("Tests expanding and collapsing of unselectable items", () => {
