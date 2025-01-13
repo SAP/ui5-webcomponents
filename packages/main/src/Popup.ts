@@ -482,7 +482,6 @@ abstract class Popup extends UI5Element {
 			}
 			element.focus();
 		}
-		console.log("==== applyFocus")
 	}
 
 	isFocusWithin() {
