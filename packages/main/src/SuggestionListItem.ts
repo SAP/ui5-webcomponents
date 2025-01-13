@@ -46,7 +46,7 @@ class SuggestionListItem extends ListItemStandard {
 	}
 
 	get hasDescription() {
-		return this.richDescription.length || this.description;
+		return this.richDescription.length > 0 || this.description;
 	}
 
 	get groupItem() {
