@@ -1582,7 +1582,7 @@ class ShellBar extends UI5Element {
 		const targetWidth = targetContainer?.offsetWidth || 0;
 		const searchFieldWidth = this.domCalculatedValues("--_ui5_shellbar_search_field_width");
 		const isFullSearchOpen = this.classList.contains("ui5-shellbar-with-full-searchfield");
-		return (this.hasAdditionalContext && targetWidth <= 0) || (!isFullSearchOpen && targetWidth <= searchFieldWidth && this.breakpointSize === "M");
+		return this.breakpointSize === "M" && ((this.hasAdditionalContext && targetWidth <= 0) || (!isFullSearchOpen && targetWidth <= searchFieldWidth));
 	}
 
 	get accInfo() {
