@@ -4,7 +4,7 @@ const prettier = require('prettier');
 
 const args = process.argv.slice(2); // Skip the first two elements
 const packageName = args[0] || "main";
-const pageName = args[1] || "Panel";
+const pageName = args[1] || "Button";
 
 const projectRoot = __dirname.split("/packages/tools/lib/ssr")[0];
 const serverRoot = `http://localhost:8080`;
