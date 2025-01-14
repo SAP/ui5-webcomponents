@@ -80,7 +80,50 @@
 			</ui5-avatar-group>
 		</ui5-form-item>
 		<ui5-form-item>
-			<span slot="labelContent">MultiComboBox</span>
+			<span slot="labelContent">ui5-checkbox</span>
+			<ui5-checkbox></ui5-checkbox>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-switch</span>
+			<ui5-switch></ui5-switch>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-radio-button</span>
+			<ui5-radio-button name="proba" text="tests"></ui5-radio-button>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-radio-button</span>
+			<ui5-radio-button name="proba"></ui5-radio-button>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-combobox</span>
+			<ui5-combobox></ui5-combobox>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-date-picker</span>
+			<ui5-date-picker value="now"></ui5-date-picker>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-daterange-picker</span>
+			<ui5-daterange-picker value="now"></ui5-daterange-picker>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-datetime-picker</span>
+			<ui5-datetime-picker value="now"></ui5-datetime-picker>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-file-uploader</span>
+			<ui5-file-uploader>
+				<ui5-button>Upload</ui5-button>
+			</ui5-file-uploader>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-input</span>
+			<ui5-input
+				value="Very long long long long long long long long long long long long long long long long long long value"></ui5-input>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-multi-combobox</span>
 			<ui5-multi-combobox style="width: 100%;">
 				<ui5-mcb-item-group header-text="Asia">
 					<ui5-mcb-item selected text="Afghanistan"></ui5-mcb-item>
@@ -119,60 +162,6 @@
 					<ui5-mcb-item text="United States"></ui5-mcb-item>
 				</ui5-mcb-item-group>
 			</ui5-multi-combobox>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">Tokenizer</span>
-			<ui5-tokenizer style="width: 100%;" expanded>
-				<ui5-token text="Andora"></ui5-token>
-				<ui5-token text="Bulgaria"></ui5-token>
-				<ui5-token text="Canada"></ui5-token>
-				<ui5-token text="Denmark"></ui5-token>
-				<ui5-token text="Estonia"></ui5-token>
-				<ui5-token text="Andora"></ui5-token>
-				<ui5-token text="Bulgaria"></ui5-token>
-				<ui5-token text="Canada"></ui5-token>
-				<ui5-token text="Denmark"></ui5-token>
-				<ui5-token text="Estonia"></ui5-token>
-				<ui5-token text="Andora"></ui5-token>
-				<ui5-token text="Bulgaria"></ui5-token>
-				<ui5-token text="Canada"></ui5-token>
-				<ui5-token text="Denmark"></ui5-token>
-				<ui5-token text="Estonia"></ui5-token>
-			</ui5-tokenizer>
-		</ui5-form-item>
-
-
-
-		<ui5-form-item>
-			<span slot="labelContent">ui5-combobox</span>
-			<ui5-combobox></ui5-combobox>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">ui5-date-picker</span>
-			<ui5-date-picker value="now"></ui5-date-picker>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">ui5-daterange-picker</span>
-			<ui5-daterange-picker value="now"></ui5-daterange-picker>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">ui5-datetime-picker</span>
-			<ui5-datetime-picker value="now"></ui5-datetime-picker>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">ui5-file-uploader</span>
-			<ui5-file-uploader>
-				<ui5-button>Upload</ui5-button>
-			</ui5-file-uploader>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">ui5-input</span>
-			<ui5-input
-				value="Very long long long long long long long long long long long long long long long long long long value"></ui5-input>
-		</ui5-form-item>
-		<ui5-form-item>
-			<span slot="labelContent">ui5-multi-combobox</span>
-			<ui5-multi-combobox></ui5-multi-combobox>
 		</ui5-form-item>
 		<ui5-form-item>
 			<span slot="labelContent">ui5-multi-input</span>
@@ -220,6 +209,26 @@
 		<ui5-form-item>
 			<span slot="labelContent">ui5-time-picker></span>
 			<ui5-time-picker value="now"></ui5-time-picker>
+		</ui5-form-item>
+		<ui5-form-item>
+			<span slot="labelContent">ui5-tokenizer</span>
+			<ui5-tokenizer style="width: 100%;">
+				<ui5-token text="Andora"></ui5-token>
+				<ui5-token text="Bulgaria"></ui5-token>
+				<ui5-token text="Canada"></ui5-token>
+				<ui5-token text="Denmark"></ui5-token>
+				<ui5-token text="Estonia"></ui5-token>
+				<ui5-token text="Andora"></ui5-token>
+				<ui5-token text="Bulgaria"></ui5-token>
+				<ui5-token text="Canada"></ui5-token>
+				<ui5-token text="Denmark"></ui5-token>
+				<ui5-token text="Estonia"></ui5-token>
+				<ui5-token text="Andora"></ui5-token>
+				<ui5-token text="Bulgaria"></ui5-token>
+				<ui5-token text="Canada"></ui5-token>
+				<ui5-token text="Denmark"></ui5-token>
+				<ui5-token text="Estonia"></ui5-token>
+			</ui5-tokenizer>
 		</ui5-form-item>
 	</ui5-form-group>
 	</ui5-form>
