@@ -30,10 +30,6 @@
 
 :host([design="Action"]) {
 	color: var(--sapButton_TextColor);
-
-	& .ui5-sn-item-icon {
-		color: var(--sapButton_TextColor);
-	}
 }
 
 .ui5-sn-item:focus {
@@ -148,6 +144,10 @@ and there is an additional border that appears on hover. */
 	color: var(--_ui5_side_navigation_icon_color);
 	height: var(--_ui5_side_navigation_icon_font_size);
 	min-width: var(--_ui5_side_navigation_group_icon_width);
+}
+
+:host([design="Action"]) .ui5-sn-item-icon {
+	color: var(--sapButton_TextColor);
 }
 
 .ui5-sn-item-toggle-icon,

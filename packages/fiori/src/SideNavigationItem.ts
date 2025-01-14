@@ -178,10 +178,7 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 	_onclick(e: MouseEvent) {
 		if (this.unselectable) {
-			e.stopPropagation();
 			this._toggle();
-
-			return;
 		}
 
 		super._onclick(e);

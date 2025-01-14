@@ -92,58 +92,78 @@ describe("Side Navigation interaction", () => {
 		});
 	});
 
-	it("Tests click event", () => {
+	it("Tests 'click' event", () => {
 		cy.mount(html`
 			<ui5-side-navigation id="sideNav">
-				<ui5-side-navigation-item id="item1" text="1"></ui5-side-navigation-item>
-				<ui5-side-navigation-item id="item3" text="3" unselectable></ui5-side-navigation-item>
-				<ui5-side-navigation-item id="item4" text="4">
-					<ui5-side-navigation-sub-item text="5"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableItem" text="2" unselectable></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="parentItem" text="3">
+					<ui5-side-navigation-sub-item text="3.1"></ui5-side-navigation-sub-item>
 				</ui5-side-navigation-item>
-				<ui5-side-navigation-item id="item6" text="6" expanded>
-					<ui5-side-navigation-sub-item id="item7" text="7"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-item text="4" expanded>
+					<ui5-side-navigation-sub-item id="childItem" text="4.1"></ui5-side-navigation-sub-item>
 				</ui5-side-navigation-item>
-				<ui5-side-navigation-item id="item8" text="8" unselectable>
-					<ui5-side-navigation-sub-item id="text9" text="9"></ui5-side-navigation-sub-item>
+				<ui5-side-navigation-item id="unselectableParentItem" text="5" unselectable>
+					<ui5-side-navigation-sub-item id="text9" text="5.1"></ui5-side-navigation-sub-item>
 				</ui5-side-navigation-item>
 			</ui5-side-navigation>
 		`);
 
-		cy.get("#sideNav")
-			.then(sideNav => {
-				sideNav.get(0).addEventListener("click", cy.stub().as("clickHandler"));
-			});
+		[
+			{ element: cy.get("#item"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableItem"), expectedCallCount: 1 },
+			{ element: cy.get("#parentItem"), expectedCallCount: 1 },
+			{ element: cy.get("#childItem"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableParentItem"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableParentItem").shadow().find(".ui5-sn-item-toggle-icon"), expectedCallCount: 0 },
+		].forEach(({ element, expectedCallCount }) => {
+			cy.get("#sideNav")
+				.then(sideNav => {
+					sideNav.get(0).addEventListener("click", cy.stub().as("clickHandler"));
+				});
+			// act
+			element.realClick();
 
-		// act
-		cy.get("#item1").realClick();
+			// assert
+			cy.get("@clickHandler").should("have.callCount", expectedCallCount);
+		});
+	});
 
-		// assert
-		cy.get("@clickHandler").should("have.callCount", 1);
+	it("Tests 'selection-change' event", () => {
+		cy.mount(html`
+			<ui5-side-navigation id="sideNav">
+				<ui5-side-navigation-item id="item" text="1"></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableItem" text="2" unselectable></ui5-side-navigation-item>
+				<ui5-side-navigation-item id="parentItem" text="3">
+					<ui5-side-navigation-sub-item text="3.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item text="4" expanded>
+					<ui5-side-navigation-sub-item id="childItem" text="4.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+				<ui5-side-navigation-item id="unselectableParentItem" text="5" unselectable>
+					<ui5-side-navigation-sub-item id="text9" text="5.1"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
 
-		// act
-		cy.get("#item3").realClick();
+		[
+			{ element: cy.get("#item"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableItem"), expectedCallCount: 0 },
+			{ element: cy.get("#parentItem"), expectedCallCount: 1 },
+			{ element: cy.get("#childItem"), expectedCallCount: 1 },
+			{ element: cy.get("#unselectableParentItem"), expectedCallCount: 0 },
+			{ element: cy.get("#unselectableParentItem").shadow().find(".ui5-sn-item-toggle-icon"), expectedCallCount: 0 },
+		].forEach(({ element, expectedCallCount }) => {
+			cy.get("#sideNav")
+				.then(sideNav => {
+					sideNav.get(0).addEventListener("ui5-selection-change", cy.stub().as("clickHandler"));
+				});
+			// act
+			element.realClick();
 
-		// assert
-		cy.get("@clickHandler").should("have.callCount", 1);
-
-		// act
-		cy.get("#item4").realClick();
-
-		// assert
-		cy.get("@clickHandler").should("have.callCount", 2);
-
-		// act
-		cy.get("#item7").realClick();
-
-		// assert
-		cy.get("@clickHandler").should("have.callCount", 3);
-
-		// act
-		cy.get("#item8").realClick();
-		cy.get("#item8").shadow().find(".ui5-sn-item-toggle-icon").realClick();
-
-		// assert
-		cy.get("@clickHandler").should("have.callCount", 3);
+			// assert
+			cy.get("@clickHandler").should("have.callCount", expectedCallCount);
+		});
 	});
 });
 
