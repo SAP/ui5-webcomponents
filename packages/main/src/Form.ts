@@ -26,10 +26,10 @@ const breakpoints = ["S", "M", "L", "Xl"];
 const MAX_FORM_ITEM_CELLS = 12;
 const DEFAULT_FORM_ITEM_LAYOUT = "4fr 8fr 0fr";
 const DEFAULT_FORM_ITEM_LAYOUT_S = "1fr";
+
 /**
  * Interface for components that can be slotted inside `ui5-form` as items.
  * @public
- * @experimental
  * @since 2.0.0
  */
 interface IFormItem extends UI5Element {
@@ -197,7 +197,6 @@ type ItemsInfo = {
  *
  * @public
  * @since 2.0.0
- * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  * @extends UI5Element
  */
 @customElement({

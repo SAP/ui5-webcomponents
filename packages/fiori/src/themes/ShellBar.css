@@ -233,6 +233,7 @@ slot[name="profile"] {
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
 
+.ui5-shellbar-logo:hover,
 .ui5-shellbar-logo-area:hover {
 	box-shadow: var(--_ui5_shellbar_button_box_shadow);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
