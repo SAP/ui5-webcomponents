@@ -61,6 +61,41 @@ describe("Side Navigation interaction", () => {
 		cy.get("#item1").should("not.have.attr", "expanded");
 	});
 
+	it("Tests expanding and collapsing of unselectable items with Space and Enter", () => {
+		cy.mount(html`
+			<ui5-side-navigation>
+				<ui5-side-navigation-item id="unselectableItem" text="1" unselectable>
+					<ui5-side-navigation-sub-item text="1.2"></ui5-side-navigation-sub-item>
+				</ui5-side-navigation-item>
+			</ui5-side-navigation>
+		`);
+
+		// act
+		cy.get("#unselectableItem").shadow().find(".ui5-sn-item").focus();
+		cy.realPress("Space");
+
+		// assert
+		cy.get("#unselectableItem").should("have.attr", "expanded");
+
+		// act
+		cy.realPress("Space");
+
+		// assert
+		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+
+		// act
+		cy.realPress("Enter");
+
+		// assert
+		cy.get("#unselectableItem").should("have.attr", "expanded");
+
+		// act
+		cy.realPress("Enter");
+
+		// assert
+		cy.get("#unselectableItem").should("not.have.attr", "expanded");
+	});
+
 	it("Tests isSelectable", () => {
 		cy.mount(`
 			<ui5-side-navigation>

@@ -2,7 +2,12 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isLeft,
+	isRight,
+	isSpace,
+	isEnter,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
@@ -162,6 +167,11 @@ class SideNavigationItem extends SideNavigationSelectableItemBase {
 
 		if (isRight(e)) {
 			this.expanded = true;
+			return;
+		}
+
+		if (this.unselectable && (isSpace(e) || isEnter(e))) {
+			this._toggle();
 			return;
 		}
 
