@@ -77,11 +77,15 @@
 					 aria-label="{{_additionalContextText}}"
 					 role="{{_additionalContextRole}}">
 					{{#each startContent}}
-						<slot name="{{this._individualSlot}}"></slot>
+						<div id="{{this._individualSlot}}" class="ui5-shellbar-additional-content-item">
+							<slot name="{{this._individualSlot}}"></slot>
+						</div>
 					{{/each}}
 						<div class="ui5-shellbar-spacer"></div>
 					{{#each endContent}}
-						<slot name="{{this._individualSlot}}"></slot>
+						<div id="{{this._individualSlot}}" class="ui5-shellbar-additional-content-item">
+							<slot name="{{this._individualSlot}}"></slot>
+						</div>
 					{{/each}}
 				</div>
 				<div
@@ -130,7 +134,9 @@
 						></ui5-button>
 					{{/if}}
 					{{#if hasAssistant}}
+						<div id="assistant" class="{{classes.items.assistant}}">
 							<slot name="assistant"></slot>
+						</div>
 					{{/if}}
 
 				{{#if showNotifications}}

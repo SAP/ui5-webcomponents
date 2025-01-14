@@ -397,13 +397,18 @@ slot[name="profile"] {
 
 ::slotted([slot^="startContent"]),
 ::slotted([slot^="endContent"]) {
-	flex-shrink: 0;
  	margin-inline-start: var(--_ui5-shellbar-content-margin-start);
 }
 
 ::slotted([slot^="startContent"][slot$="-1"]),
 ::slotted([slot^="endContent"][slot$="-1"]) {
 	margin-inline-start: 0;
+}
+
+.ui5-shellbar-additional-content-item {
+	flex-shrink: 0;
+	margin: 0;
+	padding: 0;
 }
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {

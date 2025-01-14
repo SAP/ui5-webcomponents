@@ -271,20 +271,6 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
 	cancelable: true,
 })
 
-/**
- * Fired, when the assistant action is hidden
- *
- * @param {HTMLElement} item DOM ref of the hidden assistant action
- * @param {Boolean} isHidden whether the assistant action is hidden
- * @public
- * @since 2.6.1
- * @experimental This API is subject to change.
- */
-@event("assistant-action-disappears", {
-	bubbles: true,
-	cancelable: false,
-})
-
 class ShellBar extends UI5Element {
 	eventDetails!: {
 		"notifications-click": ShellBarNotificationsClickEventDetail,
@@ -293,8 +279,7 @@ class ShellBar extends UI5Element {
 		"logo-click": ShellBarLogoClickEventDetail,
 		"menu-item-click": ShellBarMenuItemClickEventDetail,
 		"search-button-click": ShellBarSearchButtonEventDetail,
-		"additional-context-disappears": ShellBarAdditionalContextItemDisappearsEventDetail,
-		"assistant-action-disappears": ShellBarAssistantActionDisappearsEventDetail,
+		"additional-context-disappears": ShellBarAdditionalContextItemDisappearsEventDetail
 	}
 	/**
 	 * Defines the `primaryTitle`.
@@ -883,13 +868,14 @@ class ShellBar extends UI5Element {
 
 		for (let i = 0; i < additionalContextSorted.length; i++) {
 			const item = additionalContextSorted[i];
-			item.classList.remove("ui5-shellbar-hidden-button");
+			const itemWrapper = this.shadowRoot!.getElementById(item.slot);
+			itemWrapper && itemWrapper.classList.remove("ui5-shellbar-hidden-button");
 
 			const itemWidth = item.offsetWidth + parseInt(getComputedStyle(item).getPropertyValue("margin-inline-start"));
 			usedWidth += itemWidth;
 
 			if (usedWidth > totalWidth) {
-				item.classList.add("ui5-shellbar-hidden-button");
+				itemWrapper && itemWrapper.classList.add("ui5-shellbar-hidden-button");
 			}
 		}
 	}
@@ -909,7 +895,12 @@ class ShellBar extends UI5Element {
 		for (let i = 0; i < itemsToOverflow.length; i++) {
 			// reset item visibility before calculating
 			const item = itemsToOverflow[i];
-			if (item.classList.contains("ui5-shellbar-hidden-button")) {
+			const isAdditionalContext = this.additionalContextSorted.includes(item);
+			const itemWrapper = this.shadowRoot!.getElementById(itemsToOverflow[i].slot)!;
+			if (isAdditionalContext && itemWrapper && itemWrapper.classList.contains("ui5-shellbar-hidden-button")) {
+				itemWrapper.classList.remove("ui5-shellbar-hidden-button");
+				restoreVisibility = true;
+			} else if (item.classList.contains("ui5-shellbar-hidden-button")) {
 				item.classList.remove("ui5-shellbar-hidden-button");
 				restoreVisibility = true;
 			}
@@ -917,7 +908,11 @@ class ShellBar extends UI5Element {
 			const itemWidth = item.offsetWidth + gap;
 
 			if (restoreVisibility) {
-				item.classList.add("ui5-shellbar-hidden-button");
+				if (isAdditionalContext && itemWrapper) {
+					itemWrapper.classList.add("ui5-shellbar-hidden-button");
+				} else {
+					item.classList.add("ui5-shellbar-hidden-button");
+				}
 				restoreVisibility = false;
 			}
 			usedWidth += itemWidth;
@@ -966,12 +961,11 @@ class ShellBar extends UI5Element {
 
 	_updateAssistantIconVisibility(items: IShelBarItemInfo[]) {
 		if (this.assistant.length) {
+			const assistantWrapper = this.shadowRoot!.getElementById("assistant");
 			const assistantInfo = items.find(item => item.text === "Assistant");
-			this.assistant[0].classList.remove("ui5-shellbar-hidden-button");
-			this.fireDecoratorEvent("assistant-action-disappears", { item: this.assistant[0], isHidden: false });
+			assistantWrapper && assistantWrapper.classList.remove("ui5-shellbar-hidden-button");
 			if (assistantInfo && assistantInfo.classes.indexOf("ui5-shellbar-hidden-button") > 0) {
-				this.assistant[0].classList.add("ui5-shellbar-hidden-button");
-				this.fireDecoratorEvent("assistant-action-disappears", { item: this.assistant[0], isHidden: true });
+				assistantWrapper && assistantWrapper.classList.add("ui5-shellbar-hidden-button");
 			}
 		}
 	}
@@ -1550,11 +1544,11 @@ class ShellBar extends UI5Element {
 	}
 
 	get _hasVisibleStartContent() {
-		return this.startContent.some(item => !item.classList.contains("ui5-shellbar-hidden-button"));
+		return this.startContent.some(item => this.shadowRoot!.getElementById(item.slot) && !this.shadowRoot!.getElementById(item.slot)!.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
 	get _hasVisibleEndContent() {
-		return this.endContent.some(item => !item.classList.contains("ui5-shellbar-hidden-button"));
+		return this.endContent.some(item => this.shadowRoot!.getElementById(item.slot) && !this.shadowRoot!.getElementById(item.slot)!.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
 	get itemsToOverflow(): HTMLElement [] {
@@ -1578,7 +1572,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get additionalContextHidden() {
-		return [...this.endContent, ...this.startContent].filter(item => item.classList.contains("ui5-shellbar-hidden-button"));
+		return [...this.endContent, ...this.startContent].filter(item => this.shadowRoot!.getElementById(item.slot)! && this.shadowRoot!.getElementById(item.slot)!.classList.contains("ui5-shellbar-hidden-button"));
 	}
 
 	get _lessSearchSpace() {
