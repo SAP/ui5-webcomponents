@@ -61,7 +61,6 @@ export default function SelectPopoverTemplate(this: Select) {
 					}
 
 					<List
-						selectionMode="SingleAuto"
 						separators="None"
 						onMouseDown={this._itemMousedown}
 						onItemClick={this._handleItemPress}
