@@ -5,6 +5,7 @@ import "../../src/TableHeaderRow.js";
 import "../../src/TableCell.js";
 import "../../src/TableRow.js";
 import "../../src/TableSelection.js";
+import type Table from "../../src/Table.js";
 
 // Porting Table.spec.js (wdio tests) to cypress tests
 const ROLE_COLUMN_HEADER = "columnheader";
@@ -21,7 +22,7 @@ describe("Table - Rendering", () => {
 					<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
 					<ui5-table-cell><ui5-label>Cell B</ui5-label></ui5-table-cell>
 				</ui5-table-row>
-			</ui5-table>	
+			</ui5-table>
 		`);
 
 		cy.get("ui5-table").should("exist");
@@ -60,7 +61,7 @@ describe("Table - Popin Mode", () => {
 					<ui5-table-header-cell id="colA" min-width="300px"><span>ColumnA</span></ui5-table-header-cell>
 					<ui5-table-header-cell id="colB" min-width="200px">Column B</ui5-table-header-cell>
 					<ui5-table-header-cell id="colC" min-width="200px">Column C</ui5-table-header-cell>
-					<ui5-table-header-cell id="colD" min-width="150px">Column D</ui5-table-header-cell>
+					<ui5-table-header-cell id="colD" min-width="150px" popin-text="Column ?">Column D</ui5-table-header-cell>
 				</ui5-table-header-row>
 				<ui5-table-row>
 					<ui5-table-cell><ui5-label>Cell A</ui5-label></ui5-table-cell>
@@ -193,6 +194,35 @@ describe("Table - Popin Mode", () => {
 					.should(shouldBePoppedIn ? "not.exist" : "exist");
 			});
 		}
+	});
+
+	it("should show the popin-text in the popin area", () => {
+		cy.get("ui5-table").then($table => {
+			$table.css("width", "150px");
+		});
+
+		// eslint-disable-next-line cypress/no-unnecessary-waiting
+		cy.wait(50);
+
+		cy.get("ui5-table").then($table => {
+			let popinCellCount = 0;
+			let validPopinTextCount = 0;
+			const table = $table[0] as Table;
+			// eslint-disable-next-line no-restricted-syntax
+			for (const row of table.rows) {
+				// eslint-disable-next-line no-restricted-syntax
+				for (const cell of row.cells) {
+					if (cell._popin) {
+						popinCellCount++;
+						const popinText = cell._headerCell.popinText || cell._headerCell.textContent;
+						if (cell.shadowRoot!.textContent === `${popinText}:`) {
+							validPopinTextCount++;
+						}
+					}
+				}
+			}
+			return popinCellCount && popinCellCount === validPopinTextCount;
+		}).should("be.true");
 	});
 });
 
