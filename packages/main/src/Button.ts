@@ -90,18 +90,6 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 	shadowRootOptions: { delegatesFocus: true },
 })
 /**
- * Fired when the component is activated either with a
- * mouse/tap or by using the Enter or Space key.
- *
- * **Note:** The event will not be fired if the `disabled`
- * property is set to `true`.
- * @public
- * @native
- */
-// @event("click", {
-// 	bubbles: true,
-// })
-/**
  * Fired whenever the active state of the component changes.
  * @private
  */
@@ -111,9 +99,9 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
 })
 class Button extends UI5Element implements IButton {
 	eventDetails!: {
-		"active-state-change": void
-		// click: void
-	}
+		"active-state-change": void,
+	};
+
 	/**
 	 * Defines the component design.
 	 * @default "Default"
