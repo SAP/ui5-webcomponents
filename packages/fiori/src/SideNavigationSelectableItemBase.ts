@@ -90,6 +90,8 @@ class SideNavigationSelectableItemBase extends SideNavigationItemBase {
 	/**
 	 * Item design.
 	 *
+	 * **Note:** Items with "Action" design must not have sub items.
+	 *
 	 * @public
 	 * @default "Default"
 	 * @since 2.7.0
