@@ -21,10 +21,29 @@
     <slot name="{{_individualSlot}}"></slot>
 {{/each}}
 
-{{#if _renderNavigated}}
-    <ui5-table-cell id="navigated-cell" excluded-from-navigation>
-        <div id="navigated"></div>
+{{#if _hasRowActions}}
+    <ui5-table-cell id="actions-cell">
+        {{#each _flexibleActions}}
+            <slot name="{{_individualSlot}}"></slot>
+        {{/each}}
+        {{#if _hasOverflowActions}}
+            <ui5-button
+                id="overflow"
+                icon="overflow"
+                design="Transparent"
+                @click="{{_onOverflowButtonClick}}">
+            </ui5-button>
+        {{/if}}
+         {{#each _fixedActions}}
+            <slot name="{{_individualSlot}}"></slot>
+        {{/each}}
     </ui5-table-cell>
+{{/if}}
+
+{{#if _renderNavigated}}
+        <ui5-table-cell id="navigated-cell" excluded-from-navigation>
+            <div id="navigated"></div>
+        </ui5-table-cell>
 {{/if}}
 
 {{#if _popinCells.length}}
