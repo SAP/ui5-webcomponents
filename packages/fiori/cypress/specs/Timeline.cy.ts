@@ -17,7 +17,7 @@ describe("Accessibility", () => {
 						subtitle="Testing suite A"
 						icon="sap-icon://accept"
 						name="Testing suite A"
-						status="Positive"
+						state="Positive"
 					>
 						Compilation succeeded.
 					</ui5-timeline-item>
@@ -37,16 +37,16 @@ describe("Accessibility", () => {
 		cy.get("#test-timeline").as("timeline");
 	});
 
-	it("item with status attribute has aria-description, item without status does not", () => {
-		cy.get(`ui5-timeline-item[status="Positive"]`).each($itemWithStatus => {
-			cy.wrap($itemWithStatus)
+	it("item with state attribute has aria-description, item without state does not", () => {
+		cy.get(`ui5-timeline-item[state="Positive"]`).each($itemWithState => {
+			cy.wrap($itemWithState)
 				.shadow()
 				.find(".ui5-tli-bubble")
 				.should("have.attr", "aria-description");
 		});
 
-		cy.get(`ui5-timeline-item:not([status="Positive"])`).each($itemWithoutStatus => {
-			cy.wrap($itemWithoutStatus)
+		cy.get(`ui5-timeline-item:not([state="Positive"])`).each($itemWithoutState => {
+			cy.wrap($itemWithoutState)
 				.shadow()
 				.find(".ui5-tli-bubble")
 				.should("not.have.attr", "aria-description");

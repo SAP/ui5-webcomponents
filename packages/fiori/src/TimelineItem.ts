@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
@@ -9,15 +9,15 @@ import type Link from "@ui5/webcomponents/dist/Link.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITimelineItem } from "./Timeline.js";
-import type TimelineItemStatus from "./types/TimelineItemStatus.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
 import type TimelineLayout from "./types/TimelineLayout.js";
 
 import {
-	TIMELINE_ITEM_INFORMATION_STATUS_TEXT,
-	TIMELINE_ITEM_POSITIVE_STATUS_TEXT,
-	TIMELINE_ITEM_NEGATIVE_STATUS_TEXT,
-	TIMELINE_ITEM_CRITICAL_STATUS_TEXT,
+	TIMELINE_ITEM_INFORMATION_STATE_TEXT,
+	TIMELINE_ITEM_POSITIVE_STATE_TEXT,
+	TIMELINE_ITEM_NEGATIVE_STATE_TEXT,
+	TIMELINE_ITEM_CRITICAL_STATE_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -99,13 +99,13 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 	subtitleText?: string;
 
 	/**
-	 * Defines the status of the icon displayed in the `ui5-timeline-item`.
+	 * Defines the state of the icon displayed in the `ui5-timeline-item`.
 	 * @default "None"
 	 * @public
-	 * @since 2.6.0
+	 * @since 2.7.0
 	 */
 	@property()
-	status: `${TimelineItemStatus}` = "None";
+	state: `${ValueState}` = "None";
 
 	/**
 	 * Defines the content of the `ui5-timeline-item`.
@@ -190,15 +190,15 @@ class TimelineItem extends UI5Element implements ITimelineItem {
 
 	static typeTextMappings(): Record<string, I18nText> {
 		return {
-			"Information": TIMELINE_ITEM_INFORMATION_STATUS_TEXT,
-			"Positive": TIMELINE_ITEM_POSITIVE_STATUS_TEXT,
-			"Negative": TIMELINE_ITEM_NEGATIVE_STATUS_TEXT,
-			"Critical": TIMELINE_ITEM_CRITICAL_STATUS_TEXT,
+			"Information": TIMELINE_ITEM_INFORMATION_STATE_TEXT,
+			"Positive": TIMELINE_ITEM_POSITIVE_STATE_TEXT,
+			"Negative": TIMELINE_ITEM_NEGATIVE_STATE_TEXT,
+			"Critical": TIMELINE_ITEM_CRITICAL_STATE_TEXT,
 		};
 	}
 
-	get timelineItemStatusText() {
-		return this.status !== "None" ? TimelineItem.i18nBundle.getText(TimelineItem.typeTextMappings()[this.status]) : undefined;
+	get timelineItemStateText() {
+		return this.state !== "None" ? TimelineItem.i18nBundle.getText(TimelineItem.typeTextMappings()[this.state]) : undefined;
 	}
 
 	get isGroupItem() {

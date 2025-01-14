@@ -4,12 +4,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import TimelineLayout from "./types/TimelineLayout.js";
+import type TimelineLayout from "./types/TimelineLayout.js";
 import type { ITimelineItem } from "./Timeline.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import TimelineGroupItemTemplate from "./TimelineGroupItemTemplate.js";
 
 // Styles
@@ -164,14 +160,6 @@ class TimelineGroupItem extends UI5Element implements ITimelineItem {
 
 	get _groupName() {
 		return this.groupName;
-	}
-
-	get _groupItemIcon() {
-		if (this.layout === TimelineLayout.Vertical) {
-			return this.collapsed ? "slim-arrow-left" : "slim-arrow-down";
-		}
-
-		return this.collapsed ? "slim-arrow-up" : "slim-arrow-right";
 	}
 }
 

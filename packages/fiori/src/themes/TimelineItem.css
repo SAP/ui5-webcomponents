@@ -33,19 +33,19 @@
 	inset-inline-start: 50%;
 }
 
-:host([status="Positive"]) .ui5-tli-icon {
+:host([state="Positive"]) .ui5-tli-icon {
 	color: var(--sapPositiveElementColor);
 }
 
-:host([status="Negative"]) .ui5-tli-icon {
+:host([state="Negative"]) .ui5-tli-icon {
 	color: var(--sapNegativeElementColor);
 }
 
-:host([status="Critical"]) .ui5-tli-icon {
+:host([state="Critical"]) .ui5-tli-icon {
 	color: var(--sapCriticalElementColor);
 }
 
-:host([status="Information"]) .ui5-tli-icon {
+:host([state="Information"]) .ui5-tli-icon {
 	color: var(--sapInformativeElementColor);
 }
 

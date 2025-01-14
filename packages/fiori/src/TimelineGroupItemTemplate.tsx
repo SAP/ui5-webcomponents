@@ -1,5 +1,10 @@
 import type TimelineGroupItem from "./TimelineGroupItem.js";
+import TimelineLayout from "./types/TimelineLayout.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import slimArrowleft from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import slimArrowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import slimArrowup from "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 
 export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 	return (
@@ -15,7 +20,7 @@ export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 
 				<ToggleButton
 					class="ui5-tlgi-btn"
-					icon={this._groupItemIcon}
+					icon={getEffectiveGroupIcon.call(this)}
 					pressed={this.collapsed}
 					onClick={this.onGroupItemClick}
 				>
@@ -31,4 +36,12 @@ export default function TimelineGroupItemTemplate(this: TimelineGroupItem) {
 			</ul>
 		</div>
 	);
+}
+
+function getEffectiveGroupIcon(this: TimelineGroupItem): string {
+	if (this.layout === TimelineLayout.Vertical) {
+		return this.collapsed ? slimArrowleft : slimArrowDown;
+	}
+
+	return this.collapsed ? slimArrowup : slimArrowRight;
 }

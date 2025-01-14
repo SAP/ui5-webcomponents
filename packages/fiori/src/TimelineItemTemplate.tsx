@@ -28,7 +28,7 @@ export default function TimelineItemTemplate(this: TimelineItem) {
 					data-sap-focus-ref
 					class="ui5-tli-bubble"
 					tabindex={parseInt(this.forcedTabIndex)}
-					aria-description={this.timelineItemStatusText}
+					aria-description={this.timelineItemStateText}
 				>
 					<div class="ui5-tli-title">
 						{ this.name && name.call(this) }
