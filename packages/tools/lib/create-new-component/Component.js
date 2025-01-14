@@ -1,12 +1,12 @@
-const tsFileContentTemplate = (componentName, tagName, library, packageName) => {
+const Component = (componentName, tagName, library, packageName) => {
 	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 
-import ${componentName}Template from "./generated/templates/${componentName}Template.lit.js";
+import ${componentName}Template from "./${componentName}Template.js";
 
 // Styles
 import ${componentName}Css from "./generated/themes/${componentName}.css.js";
@@ -30,10 +30,9 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  */
 @customElement({
 	tag: "${tagName}",
-	renderer: litRender,
+	renderer: jsxRenderer,
 	styles: ${componentName}Css,
 	template: ${componentName}Template,
-	dependencies: [],
 })
 
 /**
@@ -42,8 +41,12 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  *
  * @public
  */
-@event("interact", { detail: { /* event payload ( optional ) */ } })
+@event("interact")
 class ${componentName} extends UI5Element {
+	eventDetails!: {
+		"interact": void,
+	};
+
 	/**
 	 * Defines the value of the component.
 	 *
@@ -68,4 +71,4 @@ export default ${componentName};
 `;
 };
 
-module.exports = tsFileContentTemplate;
+module.exports = Component;

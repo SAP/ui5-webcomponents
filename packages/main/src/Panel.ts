@@ -11,8 +11,6 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import Button from "./Button.js";
-import Icon from "./Icon.js";
 import type TitleLevel from "./types/TitleLevel.js";
 import type PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./PanelTemplate.js";
@@ -84,7 +82,6 @@ import panelCss from "./generated/themes/Panel.css.js";
 	renderer: jsxRenderer,
 	template: PanelTemplate,
 	styles: panelCss,
-	dependencies: [Button, Icon],
 })
 /**
  * Fired when the component is expanded/collapsed by user interaction.

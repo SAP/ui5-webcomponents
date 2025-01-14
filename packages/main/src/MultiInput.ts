@@ -21,10 +21,11 @@ import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL } from "./
 import Input from "./Input.js";
 import MultiInputTemplate from "./MultiInputTemplate.js";
 import styles from "./generated/themes/MultiInput.css.js";
-import Token from "./Token.js";
-import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
+import type Token from "./Token.js";
+import type Tokenizer from "./Tokenizer.js";
+import { getTokensCountText } from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
-import Icon from "./Icon.js";
+import type Icon from "./Icon.js";
 
 import type {
 	InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail,
@@ -67,15 +68,6 @@ type MultiInputTokenDeleteEventDetail = {
 	formAssociated: true,
 	template: MultiInputTemplate,
 	styles: [Input.styles, styles],
-	get dependencies() {
-		return [
-			...Input.dependencies,
-			Input,
-			Tokenizer,
-			Token,
-			Icon,
-		];
-	},
 })
 /**
  * Fired when the value help icon is pressed

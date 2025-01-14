@@ -15,7 +15,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableMode from "./types/TableMode.js";
@@ -69,7 +68,6 @@ type TableRowF7PressEventDetail = {
 	styles: tableRowStyles,
 	renderer: jsxRenderer,
 	template: TableRowTemplate,
-	dependencies: [CheckBox],
 })
 /**
  * Fired when a row in `Active` mode is clicked or `Enter` key is pressed.

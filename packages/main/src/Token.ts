@@ -15,7 +15,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { TOKEN_ARIA_DELETABLE, TOKEN_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 
-import Icon from "./Icon.js";
 import type { IIcon } from "./Icon.js";
 import type { IToken } from "./MultiInput.js";
 import TokenTemplate from "./TokenTemplate.js";
@@ -50,7 +49,6 @@ type TokenDeleteEventDetail = {
 	renderer: jsxRenderer,
 	template: TokenTemplate,
 	styles: tokenStyles,
-	dependencies: [Icon],
 })
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
