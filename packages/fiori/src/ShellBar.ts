@@ -268,7 +268,6 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  */
 @event("additional-context-disappears", {
 	bubbles: true,
-	cancelable: true,
 })
 
 /**
@@ -282,7 +281,6 @@ const PREDEFINED_PLACE_ACTIONS = ["feedback", "sys-help"];
  */
 @event("assistant-action-disappears", {
 	bubbles: true,
-	cancelable: false,
 })
 
 class ShellBar extends UI5Element {
