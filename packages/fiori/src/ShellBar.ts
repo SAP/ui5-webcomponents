@@ -779,7 +779,7 @@ class ShellBar extends UI5Element {
 	get additionalContextSorted() {
 		return this.additionalContext.sort((a, b) => {
 			return parseInt(a.getAttribute("data-hide-order") || "0") - parseInt(b.getAttribute("data-hide-order") || "0");
-		});
+		}).map(item => this.shadowRoot!.querySelector<HTMLElement>(`#${item.slot}`)).filter(item => item !== null);
 	}
 
 	get additionalContextContainer() {
@@ -867,14 +867,13 @@ class ShellBar extends UI5Element {
 
 		for (let i = 0; i < additionalContextSorted.length; i++) {
 			const item = additionalContextSorted[i];
-			const itemWrapper = this.shadowRoot!.getElementById(item.slot);
-			itemWrapper && itemWrapper.classList.remove("ui5-shellbar-hidden-button");
+			item.classList.remove("ui5-shellbar-hidden-button");
 
 			const itemWidth = item.offsetWidth + parseInt(getComputedStyle(item).getPropertyValue("margin-inline-start"));
 			usedWidth += itemWidth;
 
 			if (usedWidth > totalWidth) {
-				itemWrapper && itemWrapper.classList.add("ui5-shellbar-hidden-button");
+				item.classList.add("ui5-shellbar-hidden-button");
 			}
 		}
 	}
@@ -895,23 +894,16 @@ class ShellBar extends UI5Element {
 			// reset item visibility before calculating
 			const item = itemsToOverflow[i];
 			const isAdditionalContext = this.additionalContextSorted.includes(item);
-			const itemWrapper = this.shadowRoot!.getElementById(itemsToOverflow[i].slot)!;
-			if (isAdditionalContext && itemWrapper && itemWrapper.classList.contains("ui5-shellbar-hidden-button")) {
-				itemWrapper.classList.remove("ui5-shellbar-hidden-button");
-				restoreVisibility = true;
-			} else if (item.classList.contains("ui5-shellbar-hidden-button")) {
+
+			if (item.classList.contains("ui5-shellbar-hidden-button")) {
 				item.classList.remove("ui5-shellbar-hidden-button");
 				restoreVisibility = true;
 			}
-			const gap = parseInt(getComputedStyle(item).getPropertyValue("margin-inline-start"));
+			// exlcude the gap if an item is in the additional context as the wrapped element's width is already including the gap
+			const gap = isAdditionalContext ? 0 : parseInt(getComputedStyle(item).getPropertyValue("margin-inline-start"));
 			const itemWidth = item.offsetWidth + gap;
-
 			if (restoreVisibility) {
-				if (isAdditionalContext && itemWrapper) {
-					itemWrapper.classList.add("ui5-shellbar-hidden-button");
-				} else {
-					item.classList.add("ui5-shellbar-hidden-button");
-				}
+				item.classList.add("ui5-shellbar-hidden-button");
 				restoreVisibility = false;
 			}
 			usedWidth += itemWidth;
@@ -936,7 +928,7 @@ class ShellBar extends UI5Element {
 		// last, start hiding the items that are in the additional context
 		this._hideAdditionalContext();
 
-		if (this.additionalContextHidden.length && JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
+		if (JSON.stringify(this.additionalContextHidden) !== JSON.stringify(this._cachedHiddenContent)) {
 			this.fireDecoratorEvent("additional-context-disappears", { items: this.additionalContextHidden });
 		}
 
