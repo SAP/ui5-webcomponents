@@ -41,7 +41,7 @@ No properties available for this component.`
 |-------------|---|
 | Description | ${processDescription(property.description)} |
 | Type        | ${processType(property.type)}               |
-| Default     | ${property.default}                         |`
+| Default     | ${property.default.replace("{}", "\\{\\}")}                         |`
 
 
         if (property.readonly) {

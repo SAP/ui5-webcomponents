@@ -1,3 +1,4 @@
+import { instanceOfUI5Element } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -7,7 +8,6 @@ import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUti
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
@@ -300,7 +300,7 @@ class Popover extends Popup {
 		}
 
 		if (opener instanceof HTMLElement) {
-			return this._isUI5Element(opener) ? opener.getFocusDomRef() : opener;
+			return this._isUI5AbstractElement(opener) ? opener.getFocusDomRef() : opener;
 		}
 
 		let rootNode = this.getRootNode();
@@ -315,8 +315,8 @@ class Popover extends Popup {
 			openerHTMLElement = document.getElementById(opener);
 		}
 
-		if (openerHTMLElement && this._isUI5Element(openerHTMLElement)) {
-			return openerHTMLElement.getFocusDomRef() || openerHTMLElement;
+		if (openerHTMLElement) {
+			return this._isUI5AbstractElement(openerHTMLElement) ? openerHTMLElement.getFocusDomRef() : openerHTMLElement;
 		}
 
 		return openerHTMLElement;
@@ -379,7 +379,7 @@ class Popover extends Popup {
 
 		const opener = this.getOpenerHTMLElement(this.opener);
 
-		if (opener && this._isUI5Element(opener) && !opener.getDomRef()) {
+		if (opener && instanceOfUI5Element(opener) && !opener.getDomRef()) {
 			return;
 		}
 
@@ -487,8 +487,8 @@ class Popover extends Popup {
 		});
 	}
 
-	_isUI5Element(el: HTMLElement): el is UI5Element {
-		return "isUI5Element" in el;
+	_isUI5AbstractElement(el: HTMLElement): el is UI5Element {
+		return instanceOfUI5Element(el) && el.isUI5AbstractElement;
 	}
 
 	get arrowDOM() {
