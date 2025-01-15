@@ -3,7 +3,7 @@ import type ListItemGroupHeader from "./ListItemGroupHeader.js";
 export default function ListItemGroupHeaderTemplate(this: ListItemGroupHeader) {
 	return (
 		<ul
-			role="group"
+			role="listitem"
 			part="native-li"
 			tabindex={this.forcedTabIndex ? parseInt(this.forcedTabIndex) : undefined}
 			class={{
